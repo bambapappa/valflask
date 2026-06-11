@@ -1,0 +1,50 @@
+name: pipeline
+on:
+  schedule:
+    - cron: "10 3,9,15 * * *"   # UTC → 05:10, 11:10, 17:10 svensk sommartid
+  workflow_dispatch: {}
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: pipeline
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: pnpm/action-setup@a7487ba4d6cb4837adb8a2c0b3249c27b4ab13c0  # v4.1.0
+        with:
+          version: 9
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4.4.0
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: site/pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: site
+      - name: Run pipeline
+        run: pnpm pipeline:run
+        working-directory: pipeline
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          LLM_FALLBACK_BASE_URL: ${{ secrets.LLM_FALLBACK_BASE_URL }}
+          LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+          MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
+          MODEL_VERIFY: ${{ vars.MODEL_VERIFY }}
+          MODEL_COPY: ${{ vars.MODEL_COPY }}
+          PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
+      - name: Commit data if changed
+        run: |
+          git config user.name "drygast-bot"
+          git config user.email "bot@drygast.nu"
+          git add data/
+          git diff --cached --quiet || git commit -m "data: pipeline run ${{ github.run_id }}"
+          git push
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
+        with:
+          name: run-report
+          path: pipeline/.report/
+          if-no-files-found: ignore

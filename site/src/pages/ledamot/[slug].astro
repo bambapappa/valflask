@@ -1,0 +1,13 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'exempelledamot' } },
+  ];
+}
+const { slug } = Astro.params;
+---
+<!DOCTYPE html>
+<html lang="sv">
+<head><meta charset="UTF-8" /><title>Ledamot {slug} — drygast.nu</title></head>
+<body><h1>Ledamot: {slug}</h1></body>
+</html>

@@ -1,0 +1,13 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { path: 'p-2026-0001/exempelslug' } },
+  ];
+}
+const { path } = Astro.params;
+---
+<!DOCTYPE html>
+<html lang="sv">
+<head><meta charset="UTF-8" /><title>Löfte — drygast.nu</title></head>
+<body><h1>Löfte: {path}</h1></body>
+</html>

@@ -1,0 +1,13 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { slug: '2026-24' } },
+  ];
+}
+const { slug } = Astro.params;
+---
+<!DOCTYPE html>
+<html lang="sv">
+<head><meta charset="UTF-8" /><title>Veckans fläsk {slug} — drygast.nu</title></head>
+<body><h1>Veckans fläsk: {slug}</h1></body>
+</html>

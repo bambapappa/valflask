@@ -1,0 +1,32 @@
+name: mirror
+on:
+  workflow_run:
+    workflows: [build]
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  netlify:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: pnpm/action-setup@a7487ba4d6cb4837adb8a2c0b3249c27b4ab13c0
+        with:
+          version: 9
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: site/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+        working-directory: site
+      - run: pnpm build
+        working-directory: site
+      - name: Deploy to Netlify
+        run: |
+          npx netlify-cli deploy --prod --dir site/dist --auth "$NETLIFY_AUTH_TOKEN" --site "$NETLIFY_SITE_ID"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

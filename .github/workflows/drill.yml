@@ -1,0 +1,27 @@
+name: drill
+on:
+  schedule:
+    - cron: "0 6 1 * *"   # Månadsvis, 1:a varje månad 06:00 UTC
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  drill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: pnpm/action-setup@a7487ba4d6cb4837adb8a2c0b3249c27b4ab13c0
+        with:
+          version: 9
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: site/pnpm-lock.yaml
+      - name: Run recovery drill
+        run: bash ops/drill.sh
+      - name: Verify data_hash
+        run: |
+          pnpm install --frozen-lockfile --dir site
+          pnpm --dir site build
+          echo "Drill complete: $(date -u +%Y-%m-%dT%H:%M:%SZ)"

@@ -1,0 +1,20 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { kod: 's' } },
+    { params: { kod: 'm' } },
+    { params: { kod: 'sd' } },
+    { params: { kod: 'c' } },
+    { params: { kod: 'v' } },
+    { params: { kod: 'kd' } },
+    { params: { kod: 'l' } },
+    { params: { kod: 'mp' } },
+  ];
+}
+const { kod } = Astro.params;
+---
+<!DOCTYPE html>
+<html lang="sv">
+<head><meta charset="UTF-8" /><title>Parti {kod} — drygast.nu</title></head>
+<body><h1>Parti: {kod}</h1></body>
+</html>

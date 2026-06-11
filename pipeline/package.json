@@ -1,0 +1,12 @@
+{
+  "name": "drygast-pipeline",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "pipeline:run": "node --import tsx/esm src/index.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
