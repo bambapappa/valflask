@@ -28,6 +28,7 @@ const requiredPaths = [
   "index.html",
   "api/index.html",
   "api/v1/summary.json",
+  "api/v1/promises.json",
   "jamfor/index.html",
   "metod/index.html",
   "om/index.html",

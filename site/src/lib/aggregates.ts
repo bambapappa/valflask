@@ -1,0 +1,389 @@
+import type { PromisePost, Party, Constants, ConstantItem } from "./data";
+
+export type { PromisePost, Party, Constants, ConstantItem };
+
+export function promiseTotalMsek(p: PromisePost): number {
+  const multiplier = p.cost.period === "per_ar" ? 4 : 1;
+  return p.cost.msek_base * multiplier;
+}
+
+export function promiseTotalLowMsek(p: PromisePost): number {
+  const multiplier = p.cost.period === "per_ar" ? 4 : 1;
+  return p.cost.msek_low * multiplier;
+}
+
+export function promiseTotalHighMsek(p: PromisePost): number {
+  const multiplier = p.cost.period === "per_ar" ? 4 : 1;
+  return p.cost.msek_high * multiplier;
+}
+
+export function isActive(p: PromisePost): boolean {
+  return p.status !== "tillbakadragen";
+}
+
+export function isCostType(p: PromisePost): boolean {
+  return p.cost.type === "utgift" || p.cost.type === "intäktsminskning";
+}
+
+export function isBesparing(p: PromisePost): boolean {
+  return p.cost.type === "besparing";
+}
+
+export function totalFlasket(promises: PromisePost[]): number {
+  return promises.filter((p) => isCostType(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+}
+
+export function totalBesparingar(promises: PromisePost[]): number {
+  return promises.filter((p) => isBesparing(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+}
+
+export function totalFinancingClaimed(promises: PromisePost[]): number {
+  return promises.reduce((s, p) => s + (p.financing_claimed.msek ?? 0), 0);
+}
+
+export function financingGap(promises: PromisePost[]): number {
+  return totalFlasket(promises) - totalBesparingar(promises) - totalFinancingClaimed(promises);
+}
+
+export function partyTotalMsek(promises: PromisePost[], partyCode: string): number {
+  return promises.filter((p) => isActive(p) && p.parties.includes(partyCode)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+}
+
+export function getPromisesForParty(promises: PromisePost[], code: string): PromisePost[] {
+  return promises.filter((p) => isActive(p) && p.parties.includes(code));
+}
+
+export function countPromises(promises: PromisePost[]): number {
+  return promises.filter(isActive).length;
+}
+
+export function flasketPerRost(totalMsek: number, votes: number): number {
+  return votes > 0 ? (totalMsek * 1000) / votes : 0;
+}
+
+export interface CategoryBreakdown {
+  category: string;
+  totalMsek: number;
+  count: number;
+}
+
+export function categoryBreakdown(promises: PromisePost[]): CategoryBreakdown[] {
+  const map = new Map<string, { total: number; count: number }>();
+  for (const p of promises.filter(isActive)) {
+    const entry = map.get(p.category) ?? { total: 0, count: 0 };
+    entry.total += promiseTotalMsek(p);
+    entry.count += 1;
+    map.set(p.category, entry);
+  }
+  return Array.from(map.entries())
+    .map(([category, { total, count }]) => ({ category, totalMsek: total, count }))
+    .sort((a, b) => b.totalMsek - a.totalMsek);
+}
+
+export interface GroupNote {
+  group_id: string;
+  parties: string[];
+  minMsek: number;
+  maxMsek: number;
+  hasSpread: boolean;
+}
+
+export interface CoalitionResult {
+  totalFlasket: number;
+  totalBesparingar: number;
+  totalFinancingClaimed: number;
+  financingGap: number;
+  promisesCount: number;
+  mandatesSum: number;
+  groupNotes: GroupNote[];
+}
+
+export function coalitionAggregates(
+  promises: PromisePost[],
+  parties: Party[],
+  partyCodes: string[]
+): CoalitionResult {
+  const partySet = new Set(partyCodes);
+  const relevant = promises.filter(
+    (p) => isActive(p) && p.parties.some((c) => partySet.has(c))
+  );
+
+  const seenGroups = new Map<string, { min: number; max: number; parties: Set<string> }>();
+  let totalFlasketVal = 0;
+  let totalBesparingVal = 0;
+  let totalFinancingVal = 0;
+  let promisesCount = 0;
+  const countedIds = new Set<string>();
+
+  for (const p of relevant) {
+    const t = promiseTotalMsek(p);
+
+    if (p.group_id) {
+      const existing = seenGroups.get(p.group_id);
+      if (existing) {
+        existing.min = Math.min(existing.min, t);
+        existing.max = Math.max(existing.max, t);
+        for (const c of p.parties) existing.parties.add(c);
+      } else {
+        seenGroups.set(p.group_id, {
+          min: t,
+          max: t,
+          parties: new Set(p.parties),
+        });
+      }
+    }
+
+    if (p.group_id && countedIds.has(p.group_id)) continue;
+
+    if (isCostType(p)) totalFlasketVal += t;
+    else if (isBesparing(p)) totalBesparingVal += t;
+
+    totalFinancingVal += p.financing_claimed.msek ?? 0;
+    promisesCount += 1;
+
+    if (p.group_id) {
+      countedIds.add(p.group_id);
+    } else {
+      countedIds.add(p.id);
+    }
+  }
+
+  const groupNotes: GroupNote[] = Array.from(seenGroups.entries())
+    .filter(([, v]) => v.min !== v.max)
+    .map(([gid, v]) => ({
+      group_id: gid,
+      parties: Array.from(v.parties),
+      minMsek: v.min,
+      maxMsek: v.max,
+      hasSpread: true,
+    }));
+
+  const mandatesSum = parties
+    .filter((p) => partySet.has(p.code))
+    .reduce((s, p) => s + p.mandate_2022, 0);
+
+  return {
+    totalFlasket: totalFlasketVal,
+    totalBesparingar: totalBesparingVal,
+    totalFinancingClaimed: totalFinancingVal,
+    financingGap: totalFlasketVal - totalBesparingVal - totalFinancingVal,
+    promisesCount,
+    mandatesSum,
+    groupNotes,
+  };
+}
+
+export function isFixture(promises: PromisePost[]): boolean {
+  return promises.some((p) => p.extraction.run_id.startsWith("fixture-"));
+}
+
+export interface ComparisonResult {
+  constantId: string;
+  label: string;
+  computed: number;
+  unit: string;
+  kind: string;
+  unverifiable: boolean;
+}
+
+export function computeComparisons(
+  promise: PromisePost,
+  constants: Constants
+): ComparisonResult[] {
+  const totalKronor = promiseTotalMsek(promise) * 1_000_000;
+  const ids = promise.comparisons ?? [];
+  const results: ComparisonResult[] = [];
+
+  const vardagliga: ComparisonResult[] = [];
+  const kosmiska: ComparisonResult[] = [];
+  const infra: ComparisonResult[] = [];
+
+  for (const id of ids) {
+    const c = constants.items.find((it) => it.id === id);
+    if (!c) continue;
+    if (c.value === "VERIFIERA") {
+      const r: ComparisonResult = {
+        constantId: c.id,
+        label: c.label,
+        computed: 0,
+        unit: c.unit,
+        kind: c.kind,
+        unverifiable: true,
+      };
+      pushByKind(r);
+      continue;
+    }
+    let computed: number;
+    if (c.unit === "kr") {
+      computed = totalKronor / c.value;
+    } else if (c.unit === "m") {
+      computed = totalKronor * c.value;
+    } else {
+      computed = totalKronor / c.value;
+    }
+    const r: ComparisonResult = {
+      constantId: c.id,
+      label: c.label,
+      computed,
+      unit: c.unit,
+      kind: c.kind,
+      unverifiable: false,
+    };
+    pushByKind(r);
+  }
+
+  function pushByKind(r: ComparisonResult) {
+    if (r.kind === "vardaglig") vardagliga.push(r);
+    else if (r.kind === "kosmisk") kosmiska.push(r);
+    else infra.push(r);
+  }
+
+  const out: ComparisonResult[] = [];
+  if (vardagliga.length > 0) out.push(vardagliga[0]);
+  if (infra.length > 0) out.push(infra[0]);
+  if (kosmiska.length > 0 && out.length < 3) out.push(kosmiska[0]);
+  if (out.length < 2 && vardagliga.length > 1) out.push(vardagliga[1]);
+  if (out.length < 3 && infra.length > 1) out.push(infra[1]);
+
+  return out.slice(0, 3);
+}
+
+export function deterministComparisons(
+  promiseId: string,
+  comparisons: string[],
+  constants: Constants
+): ComparisonResult[] {
+  const totalKronorPlaceholder = 0;
+
+  function stableHash(s: string): number {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) {
+      h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+    }
+    return h;
+  }
+
+  const vardagliga: ComparisonResult[] = [];
+  const kosmiska: ComparisonResult[] = [];
+  const infras: ComparisonResult[] = [];
+
+  for (const id of comparisons) {
+    const c = constants.items.find((it) => it.id === id);
+    if (!c) continue;
+    const unverifiable = c.value === "VERIFIERA";
+    const r: ComparisonResult = {
+      constantId: c.id,
+      label: c.label,
+      computed: 0,
+      unit: c.unit,
+      kind: c.kind,
+      unverifiable,
+    };
+    if (c.kind === "vardaglig") vardagliga.push(r);
+    else if (c.kind === "kosmisk") kosmiska.push(r);
+    else infras.push(r);
+  }
+
+  const out: ComparisonResult[] = [];
+
+  if (vardagliga.length > 0) {
+    const idx = Math.abs(stableHash(promiseId)) % vardagliga.length;
+    out.push(vardagliga[idx]);
+  }
+  if (infras.length > 0) {
+    const idx = Math.abs(stableHash(promiseId + "infra")) % infras.length;
+    out.push(infras[idx]);
+  }
+  if (kosmiska.length > 0 && out.length < 3) {
+    const idx = Math.abs(stableHash(promiseId + "kosmisk")) % kosmiska.length;
+    out.push(kosmiska[idx]);
+  }
+
+  return out.slice(0, 3);
+}
+
+export interface SummaryData {
+  generated_at: string;
+  data_hash: string;
+  total_parties: number;
+  total_promises: number;
+  total_msek_flasket: number;
+  total_msek_besparingar: number;
+  total_financing_claimed_msek: number;
+  financing_gap_msek: number;
+  reformutrymme_msek_per_ar: number | "VERIFIERA";
+  reformutrymme_total_msek: number | null;
+  parties: Array<{
+    code: string;
+    name: string;
+    total_msek: number;
+    mandates: number;
+    votes: number;
+    per_vote: number;
+    promises_count: number;
+    financing_gap_msek: number;
+  }>;
+}
+
+export function buildSummary(
+  promises: PromisePost[],
+  parties: Party[],
+  constants: Constants,
+  changelog: Array<{ data_hash: string }>
+): SummaryData {
+  const hash =
+    changelog.length > 0
+      ? changelog[changelog.length - 1].data_hash
+      : "0000000000000000000000000000000000000000000000000000000000000000";
+
+  const reformutrymme = constants.reformutrymme_msek_per_ar.value;
+  const refTotal =
+    reformutrymme !== "VERIFIERA" ? (reformutrymme as number) * 4 : null;
+
+  return {
+    generated_at: new Date().toISOString(),
+    data_hash: hash,
+    total_parties: parties.length,
+    total_promises: countPromises(promises),
+    total_msek_flasket: totalFlasket(promises),
+    total_msek_besparingar: totalBesparingar(promises),
+    total_financing_claimed_msek: totalFinancingClaimed(promises),
+    financing_gap_msek: financingGap(promises),
+    reformutrymme_msek_per_ar: reformutrymme,
+    reformutrymme_total_msek: refTotal,
+    parties: parties.map((p) => {
+      const pp = getPromisesForParty(promises, p.code);
+      const t = partyTotalMsek(promises, p.code);
+      const pf = pp.filter(isCostType).reduce((s, x) => s + promiseTotalMsek(x), 0);
+      const pb = pp.filter(isBesparing).reduce((s, x) => s + promiseTotalMsek(x), 0);
+      const pfc = pp.reduce((s, x) => s + (x.financing_claimed.msek ?? 0), 0);
+      return {
+        code: p.code,
+        name: p.name,
+        total_msek: t,
+        mandates: p.mandate_2022,
+        votes: p.votes_2022,
+        per_vote: flasketPerRost(t, p.votes_2022),
+        promises_count: pp.length,
+        financing_gap_msek: pf - pb - pfc,
+      };
+    }),
+  };
+}
+
+export function formatComparison(r: ComparisonResult): string {
+  if (r.unverifiable) return "Värde ej verifierat";
+  const val = r.computed;
+  if (r.unit === "kr") {
+    if (val >= 1_000_000) return `${(val / 1_000_000).toFixed(1).replace(".", ",")} miljoner ${r.label.toLowerCase()}`;
+    if (val >= 1000) return `${Math.round(val).toLocaleString("sv-SE")} ${r.label.toLowerCase()}`;
+    return `${val.toFixed(1).replace(".", ",")} ${r.label.toLowerCase()}`;
+  }
+  if (r.unit === "m") {
+    if (val > 1_000_000_000) return `${(val / 1_000_000_000).toFixed(0)} Gm (${r.label.toLowerCase()})`;
+    if (val > 1_000_000) return `${(val / 1_000_000).toFixed(0)} miljoner km (${r.label.toLowerCase()})`;
+    if (val > 1000) return `${(val / 1000).toFixed(0)} km (${r.label.toLowerCase()})`;
+    return `${val.toFixed(1).replace(".", ",")} m (${r.label.toLowerCase()})`;
+  }
+  return `${val.toFixed(1).replace(".", ",")} ${r.unit}`;
+}

@@ -1,61 +1,116 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getPromises, getParties } from "../lib/data";
-import { formatMsek, promiseTotalMsek, partyTotalMsek, getPromisesForParty } from "../lib/calc";
+import MetodLank from "../components/MetodLank.astro";
+import { getPromises, getParties, getConstants } from "../lib/data";
+import { formatMsek } from "../lib/calc";
+import { coalitionAggregates } from "../lib/aggregates";
 
 const promises = getPromises();
 const parties = getParties();
-const active = promises.filter((p) => p.status !== 'tillbakadragen');
+const constants = getConstants();
+const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 ---
-<Layout title="Jämför partiernas vallöften — drygast.nu" description="Jämför riksdagspartiernas vallöften sida vid sida. Se kostnader per parti och rak summa.">
+<Layout title="Jämför partiernas vallöften — drygast.nu" description="Jämför riksdagspartiernas vallöften sida vid sida. Kryssa partier för att se summa, finansieringsgap och R3-dedup.">
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
-      <h1>Jämför partiernas löften</h1>
-      <p>Här kan du jämföra riksdagspartiernas vallöften sida vid sida. Kombinator-ön (kryssa partier → summa med R3-dedup) kommer i M4.</p>
+      <h1>Jämför partier</h1>
+      <p>Kryssa i de partier du vill kombinera. Summan beräknas med R3-dedup: varje group_id räknas exakt en gång. Läser data från <a href="/api/v1/summary.json">/api/v1/summary.json</a>.</p>
     </div>
 
-    <div class="datavy datavy--scroll datavy--offset">
-      <table>
-        <thead>
-          <tr>
-            <th class="radnr">#</th>
-            <th>Parti</th>
-            <th class="num">Rak summa (mdkr)</th>
-            <th class="num">Löften</th>
-            <th>Koalitionssumma</th>
-          </tr>
-        </thead>
-        <tbody>
-          {parties.map((p, i) => {
-            const pp = getPromisesForParty(promises, p.code);
-            const t = partyTotalMsek(promises, p.code);
-            return (
-              <tr>
-                <td class="radnr">{i + 1}</td>
-                <td><a href={`/parti/${p.code}`}>{p.name}</a></td>
-                <td class="num">{formatMsek(t)}</td>
-                <td class="num">{pp.length}</td>
-                <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <MetodLank />
+
+    <noscript>
+      <div class="noscript-links etikett">
+        <p>Javascript saknas — se förvalda konstellationer på <a href="/regeringar">/regeringar</a>.</p>
+      </div>
+    </noscript>
+
+    <section class="sektion" id="kombinator" data-reformutrymme={reformutrymme === "VERIFIERA" ? "" : String(reformutrymme)}>
+      <div class="etikett">VÄLJ PARTIER</div>
+      <div class="partival">
+        {parties.map((p) => (
+          <label class="partival__label">
+            <input type="checkbox" name="party" value={p.code} />
+            <span>{p.name} ({p.code.toUpperCase()})</span>
+          </label>
+        ))}
+      </div>
+
+      <div class="resultat" id="kombinator-resultat" aria-live="polite">
+        <div class="resultat__tom">Välj minst ett parti ovan.</div>
+      </div>
+    </section>
   </div>
 </Layout>
+
+<script is:inline src="/kombinator.js"></script>
 
 <style>
   .prosa-content--centered {
     margin: 0 auto;
   }
-  .datavy--scroll {
-    overflow-x: auto;
-  }
-  .datavy--offset {
+  .sektion {
     margin-top: 1.5rem;
   }
-  .etikett--dis {
+  .noscript-links {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    border: 1px solid var(--linje-svag);
+  }
+  .partival {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.75rem 0;
+  }
+  .partival__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    text-transform: uppercase;
+    letter-spacing: var(--sparrning-etikett);
+    cursor: pointer;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--svarta);
+  }
+  .partival__label:has(input:checked) {
+    background: var(--svarta);
+    color: var(--papper);
+  }
+  .partival__label input {
+    margin: 0;
+  }
+  .partival__label:focus-within {
+    outline: 3px solid var(--svarta);
+    outline-offset: 2px;
+  }
+  .resultat {
+    margin-top: 1.5rem;
+  }
+  .resultat__tom {
     color: var(--dis);
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+  }
+  .resultat__tabell {
+    margin-top: 0.75rem;
+  }
+  .resultat__fotnot {
+    font-size: var(--steg--1);
+    color: var(--dis);
+    font-family: var(--font-mono);
+    margin: 0.25rem 0;
+  }
+  .resultat__gap {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    text-transform: uppercase;
+    letter-spacing: var(--sparrning-etikett);
+    margin-top: 0.5rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
   }
 </style>

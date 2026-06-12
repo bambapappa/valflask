@@ -4,7 +4,8 @@ import Lopsedel from "../components/Lopsedel.astro";
 import GapMatare from "../components/GapMatare.astro";
 import MetodLank from "../components/MetodLank.astro";
 import { getPromises, getParties, getConstants, getChangelog } from "../lib/data";
-import { totalFlasket, financingGap, formatMsek, formatMsekShort, countPromises, partyTotalMsek, promiseTotalMsek, formatDateShort, dataHash } from "../lib/calc";
+import { totalFlasket, financingGap, formatMsek, formatMsekShort, countPromises, dataHash, formatDateShort } from "../lib/calc";
+import { partyTotalMsek, promiseTotalMsek } from "../lib/aggregates";
 
 const promises = getPromises();
 const parties = getParties();

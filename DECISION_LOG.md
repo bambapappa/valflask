@@ -136,3 +136,38 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 **Förkastade alternativ:** Full LLM-kostnadssteg nu (over engineering för M2); hårdkodade belopp utan marginal (brott mot §8:s spann-krav).
 **Påverkan:** `pipeline/src/cost.ts`.
 
+## 2026-06-12 — M4 Räkneverk: delad beräkningslib i site/src/lib/aggregates.ts
+
+**Beslut:** All aggregeringslogik (R1-normalisering, R3-koalitionsdedup, R4-totaler, fläsk-per-röst, kategorifördelning, jämförelsemotor) samlas i `site/src/lib/aggregates.ts`. `calc.ts` behåller formateringsfunktioner och re-exporterar allt från aggregates. Inga lokala summeringar i sidor/skript — OG-buggen från M1-granskningen (hardcoded totals) kan inte återuppstå.
+**Motiv:** §4 kräver delad lib importbar från pipeline; §5.3 invarianter ska testas enhetligt; DRY-princip. Egen fil separerar beräkning från presentation.
+**Förkastade alternativ:** Beräkningar i varje sida (OG-buggen); monolitisk calc.ts (blandar formatering och logik).
+**Påverkan:** `site/src/lib/aggregates.ts`, `site/src/lib/calc.ts` (re-exports), alla sidor som beräknar summor.
+
+## 2026-06-12 — M4 R3-dedup: gruppspårning före dedup-check
+
+**Beslut:** I `coalitionAggregates()` spåras group_id-min/max/parties för ALLA relevanta löften INNAN dedup-checken (`countedIds`). Endast den första posten per group_id bidrar till summan och antal. Detta gör att beloppsintervall (min–max) registreras korrekt även när det andra löftet i gruppen har ett annat belopp.
+**Motiv:** Spec §5.3 R3 kräver att "skiljer sig beloppen inom gruppen visas intervallet min–max och fotnot". Att spåra efter dedup hade missat intervallet.
+**Förkastade alternativ:** Spåra endast efter dedup (missar intervall); summera alla poster (brott mot R3 "räknas exakt en gång").
+**Påverkan:** `site/src/lib/aggregates.ts`, `site/src/scripts/kombinator.ts`, `pipeline/tests/t8-invariants.test.ts`.
+
+## 2026-06-12 — M4 Kombinator-ön: esbuild via Astro transitivt beroende
+
+**Beslut:** Kombinatorn (`site/src/scripts/kombinator.ts`) kompileras till minifierad IIFE (3,6 kB) med esbuild som finns som transitivt beroende via Astro. `scripts/build-kombinator.mts` letar upp esbuild-binären i pnpm-arkivet. Inget nytt direkt beroende tillagt.
+**Motiv:** DESIGN.md §10 kräver ≤25 kB vanilla-TS-ö; esbuild redan installerat via Astro; samma mönster som taxametern (is:inline, public/).
+**Förkastade alternativ:** Nya beroenden (brott mot §14 utan starkt motiv); Astro island med framework (överdrivet); SWC/Terser (nya deps).
+**Påverkan:** `site/scripts/build-kombinator.mts`, `site/public/kombinator.js` (genereras), `site/package.json` (build-script).
+
+## 2026-06-12 — M4 Konstellationer: sex förvalda regeringsunderlag
+
+**Beslut:** `data/constellations.json` definierar sex konstellationer: nuvarande regeringsunderlag (M+KD+L+SD-budget), rödgrönt (S+V+MP), center-allians (C+L+S), borgerligt block (M+C+KD+L), blocköverskridande (S+C+L+KD), alla åtta partier. Urval baserat på politisk realism och val 2022-blockstruktur.
+**Motiv:** Rimliga, politiskt relevanta kombinationer. "Alla åtta" visar R3-dedup maximalt.
+**Förkastade alternativ:** Endast två block (för få); alla 255 möjliga kombinationer (overkill); SD+V (orealistiskt).
+**Påverkan:** `data/constellations.json`, `site/src/pages/regeringar.astro`.
+
+## 2026-06-12 — M4 GapMatare: overifierat läge när reformutrymme="VERIFIERA"
+
+**Beslut:** När `reformutrymme_msek_per_ar.value === "VERIFIERA"` visas mätaren med endast fläsket (svärta-stapeln), en stämpel "REFORMUTRYMME: VERIFIERA" och en metodnot som förklarar att värdet saknas. Inget påhittat tal.
+**Motiv:** §8 "hitta INTE på ett tal"; DESIGN §5 kräver metodnot vid overifierat värde.
+**Förkastade alternativ:** Dölj mätaren helt (förlorar Fläsket-viz); använd 0 (vilseledande).
+**Påverkan:** `site/src/components/GapMatare.astro`.
+

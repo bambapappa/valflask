@@ -5,7 +5,8 @@ import GapMatare from "../../components/GapMatare.astro";
 import MetodLank from "../../components/MetodLank.astro";
 import KallRad from "../../components/KallRad.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
-import { formatMsek, formatMsekShort, formatMsekOg, promiseTotalMsek, partyTotalMsek, financingGap, totalFlasket, getPromisesForParty, countPromises, formatDateShort } from "../../lib/calc";
+import { formatMsek, formatMsekShort } from "../../lib/calc";
+import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseTotalMsek } from "../../lib/aggregates";
 
 export function getStaticPaths() {
   const parties = getParties();
@@ -22,18 +23,46 @@ const total = partyTotalMsek(promises, kod);
 const flasket = totalFlasket(promises);
 const gap = financingGap(promises);
 const reformutrymme = constants.reformutrymme_msek_per_ar.value;
+const perRost = flasketPerRost(total, party.votes_2022);
+const categories = categoryBreakdown(partyPromises);
 ---
 <Layout title={`${party.name}s vallöften 2026: ${formatMsekShort(total)} mdkr — drygast.nu`} description={`${party.name}s vallöften 2026 kostar ${formatMsekShort(total)} mdkr för mandatperioden. Oberoende, källspårad.`} ogImage={`/og/parti-${kod}.png`}>
   <div class="page-content">
     <Lopsedel total={formatMsek(total)} subtitle={party.name.toUpperCase()} count={partyPromises.length} date="2026" />
 
     <div class="prosa-content prosa-content--centered">
-      <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num">{formatMsekShort(total)} mdkr</strong> för mandatperioden 2027–2030, fördelat på {partyPromises.length} löften.</p>
+      <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num">{formatMsekShort(total)} mdkr</strong> för mandatperioden 2027–2030, fördelat på {partyPromises.length} löften. Fläsk per röst: <strong class="num">{Math.round(perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
     </div>
 
     <MetodLank />
 
     <GapMatare flasket={flasket} reformutrymme={reformutrymme} />
+
+    <section class="sektion">
+      <h2>Kategorifördelning</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Kategori</th>
+              <th class="num">Totalt (mdkr)</th>
+              <th class="num">Löften</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories.map((cat, i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td>{cat.category}</td>
+                <td class="num">{formatMsek(cat.totalMsek)}</td>
+                <td class="num">{cat.count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
 
     <section class="sektion">
       <h2>{party.name}:s löften</h2>

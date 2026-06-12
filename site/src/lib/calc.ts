@@ -1,5 +1,37 @@
 import type { PromisePost } from "./data";
 
+export {
+  promiseTotalMsek,
+  partyTotalMsek,
+  totalFlasket,
+  totalBesparingar,
+  totalFinancingClaimed,
+  financingGap,
+  getPromisesForParty,
+  countPromises,
+  isFixture,
+  flasketPerRost,
+  categoryBreakdown,
+  coalitionAggregates,
+  computeComparisons,
+  deterministComparisons,
+  buildSummary,
+  formatComparison,
+  isActive,
+  isCostType,
+  isBesparing,
+  promiseTotalLowMsek,
+  promiseTotalHighMsek,
+} from "./aggregates";
+
+export type {
+  CoalitionResult,
+  GroupNote,
+  ComparisonResult,
+  CategoryBreakdown,
+  SummaryData,
+} from "./aggregates";
+
 export function formatMsek(msek: number, basis?: string): string {
   const prefix = basis === "llm_estimat" ? "≈ " : "";
   if (msek >= 1000) {
@@ -23,47 +55,6 @@ export function formatMsekBare(msek: number): string {
 
 export function formatMsekShort(msek: number): string {
   return formatMsekBare(msek);
-}
-
-export function promiseTotalMsek(p: PromisePost): number {
-  const multiplier = p.cost.period === "per_ar" ? 4 : 1;
-  return p.cost.msek_base * multiplier;
-}
-
-export function partyTotalMsek(promises: PromisePost[], partyCode: string): number {
-  return getPromisesForParty(promises, partyCode).reduce((sum, p) => sum + promiseTotalMsek(p), 0);
-}
-
-export function totalFlasket(promises: PromisePost[]): number {
-  return promises
-    .filter((p) => p.cost.type === "utgift" || p.cost.type === "intäktsminskning")
-    .reduce((sum, p) => sum + promiseTotalMsek(p), 0);
-}
-
-export function totalBesparingar(promises: PromisePost[]): number {
-  return promises
-    .filter((p) => p.cost.type === "besparing")
-    .reduce((sum, p) => sum + promiseTotalMsek(p), 0);
-}
-
-export function totalFinancingClaimed(promises: PromisePost[]): number {
-  return promises.reduce((sum, p) => sum + (p.financing_claimed.msek ?? 0), 0);
-}
-
-export function financingGap(promises: PromisePost[]): number {
-  return totalFlasket(promises) - totalBesparingar(promises) - totalFinancingClaimed(promises);
-}
-
-export function getPromisesForParty(promises: PromisePost[], code: string): PromisePost[] {
-  return promises.filter((p) => p.parties.includes(code) && p.status !== "tillbakadragen");
-}
-
-export function countPromises(promises: PromisePost[]): number {
-  return promises.filter((p) => p.status !== "tillbakadragen").length;
-}
-
-export function isFixture(promises: PromisePost[]): boolean {
-  return promises.some((p) => p.extraction.run_id.startsWith("fixture-"));
 }
 
 export function formatDate(dateStr: string): string {

@@ -3,6 +3,7 @@ interface Props {
   flasket: number;
   reformutrymme: number | "VERIFIERA";
 }
+
 const { flasket, reformutrymme } = Astro.props;
 const hasRef = reformutrymme !== "VERIFIERA" && typeof reformutrymme === "number";
 const ref4 = hasRef ? (reformutrymme as number) * 4 : 0;
@@ -13,23 +14,42 @@ const flasketPx = maxVal > 0 ? Math.round((flasket / maxVal) * barWidth) : 0;
 const refPx = hasRef && maxVal > 0 ? Math.round((ref4 / maxVal) * barWidth) : 0;
 const flasketMdkr = (flasket / 1000).toFixed(0);
 const ref4Mdkr = hasRef ? (ref4 / 1000).toFixed(0) : "";
+const overcovered = hasRef && flasket < ref4;
 ---
 <div class="gapmatare">
-  <div class="etikett gapmatare__label">Fläsket vs. reformutrymme · mandatperioden</div>
-  <svg class="gapmatare__svg" viewBox={`0 0 ${barWidth} 32`} preserveAspectRatio="none" aria-hidden="true">
-    <rect class="gapmatare__bg" x="0" y="0" width={barWidth} height="32" />
-    <rect class="gapmatare__fill" x="0" y="0" width={flasketPx} height="32" />
-    {hasRef && refPx <= barWidth && (
-      <rect class="gapmatare__ref" x="0" y="0" width={refPx} height="32" />
-    )}
-  </svg>
+  <div class="etikett gapmatare__label">Fläsket vs. reformutrymme · mandatperioden 2027–2030</div>
+  {hasRef ? (
+    <svg class="gapmatare__svg" viewBox={`0 0 ${barWidth} 40`} preserveAspectRatio="none" role="img" aria-label={`Fläsket ${flasketMdkr} mdkr mot reformutrymme ${ref4Mdkr} mdkr`}>
+      <rect class="gapmatare__bg" x="0" y="0" width={barWidth} height="40" />
+      <rect class="gapmatare__ref" x="0" y="0" width={refPx} height="40" />
+      <rect class="gapmatare__fill" x="0" y="0" width={flasketPx} height="40" />
+      {gap > 0 && (
+        <rect class="gapmatare__gap-bar" x={refPx} y="0" width={Math.abs(flasketPx - refPx)} height="40" />
+      )}
+    </svg>
+  ) : (
+    <div class="gapmatare__unverified">
+      <svg class="gapmatare__svg" viewBox={`0 0 ${barWidth} 40`} preserveAspectRatio="none" role="img" aria-label={`Fläsket ${flasketMdkr} mdkr, reformutrymme ej verifierat`}>
+        <rect class="gapmatare__bg" x="0" y="0" width={barWidth} height="40" />
+        <rect class="gapmatare__fill" x="0" y="0" width={flasketPx} height="40" />
+      </svg>
+      <div class="gapmatare__method-note">
+        <span class="stampel">REFORMUTRYMME: VERIFIERA</span> — reformutrymmet saknar verifierat värde från Konjunkturinstitutet/ESV. Mätaren visar endast fläsket.
+      </div>
+    </div>
+  )}
   <div class="gapmatare__legend">
-    <span class="num">{hasRef ? `${flasketMdkr} mdkr` : `≈ ${flasketMdkr} mdkr (totalt)`}</span>
-    <span class="num">{hasRef ? `Reformutrymme ×4: ${ref4Mdkr} mdkr` : 'Reformutrymme: VERIFIERA'}</span>
+    <span class="num">Fläsket: {flasketMdkr} mdkr</span>
+    <span class="num">{hasRef ? `Reformutrymme ×4: ${ref4Mdkr} mdkr` : 'Reformutrymme: ej verifierat'}</span>
   </div>
   {hasRef && gap > 0 && (
     <div class="etikett gapmatare__gap">
       <span class="markering">GAP ≈ {(gap / 1000).toFixed(0)} MDKR</span>
+    </div>
+  )}
+  {overcovered && (
+    <div class="etikett gapmatare__gap">
+      <span class="stampel">ÖVERTÄCKT</span> Löftessumman understiger reformutrymmet ×4
     </div>
   )}
 </div>
@@ -44,7 +64,7 @@ const ref4Mdkr = hasRef ? (ref4 / 1000).toFixed(0) : "";
   .gapmatare__svg {
     display: block;
     width: 100%;
-    height: 2rem;
+    height: 2.5rem;
   }
   .gapmatare__bg {
     fill: var(--papper);
@@ -58,6 +78,19 @@ const ref4Mdkr = hasRef ? (ref4 / 1000).toFixed(0) : "";
     fill: transparent;
     stroke: var(--gul);
     stroke-width: 2;
+  }
+  .gapmatare__gap-bar {
+    fill: var(--gul);
+    opacity: 0.6;
+  }
+  .gapmatare__unverified {
+    position: relative;
+  }
+  .gapmatare__method-note {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    color: var(--dis);
+    margin-top: 0.35rem;
   }
   .gapmatare__legend {
     display: flex;

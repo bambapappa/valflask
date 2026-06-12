@@ -1,7 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getPromises, getParties, getPeople } from "../lib/data";
-import { formatMsek, promiseTotalMsek, partyTotalMsek, getPromisesForParty } from "../lib/calc";
+import { formatMsek } from "../lib/calc";
+import { promiseTotalMsek, partyTotalMsek, getPromisesForParty, flasketPerRost, categoryBreakdown } from "../lib/aggregates";
 
 const promises = getPromises();
 const parties = getParties();
@@ -13,7 +14,7 @@ const fetaste = [...active].sort((a, b) => promiseTotalMsek(b) - promiseTotalMse
 const partyTotals = parties.map((p) => ({
   ...p,
   total: partyTotalMsek(promises, p.code),
-  perVote: p.votes_2022 > 0 ? (partyTotalMsek(promises, p.code) * 1000 / p.votes_2022) : 0,
+  perVote: flasketPerRost(partyTotalMsek(promises, p.code), p.votes_2022),
 })).sort((a, b) => b.total - a.total);
 
 const partyPerVote = [...partyTotals].sort((a, b) => b.perVote - a.perVote);
@@ -27,11 +28,8 @@ const personTotals = people
   .filter((p) => p.count > 0)
   .sort((a, b) => b.total - a.total);
 
-const categories: Record<string, number> = {};
-for (const p of active) {
-  categories[p.category] = (categories[p.category] || 0) + promiseTotalMsek(p);
-}
-const categorySorted = Object.entries(categories).sort((a, b) => b[1] - a[1]);
+const categories = categoryBreakdown(active);
+const categorySorted = categories.map((c) => [c.category, c.totalMsek] as [string, number]);
 ---
 <Layout title="Topplistor — drygast.nu" description="Fetaste enskilda fläsket, fläskigaste partiet, dyraste kategorin. Rena datasorteringar.">
   <div class="page-content">

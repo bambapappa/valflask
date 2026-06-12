@@ -6,8 +6,9 @@ import Citat from "../../components/Citat.astro";
 import Marginalanteckning from "../../components/Marginalanteckning.astro";
 import MetodLank from "../../components/MetodLank.astro";
 import KallRad from "../../components/KallRad.astro";
-import { getPromises, getParties, getPeople } from "../../lib/data";
-import { formatMsek, formatBasisLabel, promiseTotalMsek, formatDate, formatDateShort, getPartyByCode } from "../../lib/calc";
+import { getPromises, getParties, getPeople, getConstants } from "../../lib/data";
+import { formatMsek, formatBasisLabel, formatDateShort, getPartyByCode } from "../../lib/calc";
+import { promiseTotalMsek, computeComparisons, formatComparison } from "../../lib/aggregates";
 
 export function getStaticPaths() {
   const promises = getPromises();
@@ -20,9 +21,11 @@ export function getStaticPaths() {
 const { promise } = Astro.props;
 const parties = getParties();
 const people = getPeople();
+const constants = getConstants();
 const partyNames = promise.parties.map((c) => getPartyByCode(parties, c)?.name || c).join(', ');
 const total = formatMsek(promiseTotalMsek(promise), promise.cost.basis);
 const personName = promise.person?.name || null;
+const comparisons = computeComparisons(promise, constants);
 ---
 <Layout title={`${promise.title} — drygast.nu`} description={`${partyNames} lovar: ${promise.title}. Kostnad: ${total}.`} ogImage={`/og/${promise.id}/og.png`}>
   <div class="page-content">
@@ -85,6 +88,23 @@ const personName = promise.person?.name || null;
       </section>
 
       <MetodLank />
+
+      {comparisons.length > 0 && (
+        <section class="sektion">
+          <h2>Jämförelser</h2>
+          <ul class="jamforelse-list">
+            {comparisons.map((c) => (
+              <li>
+                {c.unverifiable ? (
+                  <span class="etikett etikett--dis-unverified">Värde ej verifierat — {c.label}</span>
+                ) : (
+                  <span><strong class="num">{formatComparison(c)}</strong></span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {!promise.financing_claimed.described && (
         <div class="stampel-wrap">
@@ -154,5 +174,18 @@ const personName = promise.person?.name || null;
     margin: var(--mellanrum) 0;
     font-family: var(--font-mono);
     font-size: var(--steg--1);
+  }
+  .jamforelse-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .jamforelse-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--linje-svag);
+    font-size: var(--steg-1);
+  }
+  .etikett--dis-unverified {
+    color: var(--dis);
   }
 </style>

@@ -1,53 +1,95 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MetodLank from "../components/MetodLank.astro";
 import { getPromises, getParties } from "../lib/data";
-import { formatMsek, partyTotalMsek } from "../lib/calc";
+import { formatMsek } from "../lib/calc";
+import { coalitionAggregates } from "../lib/aggregates";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const promises = getPromises();
 const parties = getParties();
+const constellations = JSON.parse(
+  readFileSync(resolve(process.cwd(), "../data/constellations.json"), "utf8")
+);
+
+type ConstellationDef = { id: string; label: string; description: string; parties: string[] };
+
+const results = (constellations as ConstellationDef[]).map((c) => ({
+  ...c,
+  aggregates: coalitionAggregates(promises, parties, c.parties),
+}));
 ---
-<Layout title="Regeringsunderlag — drygast.nu" description="Förvalda konstellationer med kostnader och finansieringsgap.">
+<Layout title="Regeringsunderlag — drygast.nu" description="Förvalda konstellationer med kostnader, finansieringsgap och R3-dedup.">
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Regeringar</h1>
-      <p>Förvalda konstellationer med beräknade kostnader. Koalitionsaggregat med R3-dedup och kombinator-ön kommer i M4.</p>
+      <p>Förvalda konstellationer med beräknade kostnader och finansieringsgap. Varje group_id räknas exakt en gång (R3-dedup). Löften med delad group_id men olika belopp visas som intervall.</p>
     </div>
 
-    <section class="sektion">
-      <div class="datavy datavy--scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Konstellation</th>
-              <th class="num">Rak summa (mdkr)</th>
-              <th>R3-dedup summa</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Nuvarande regeringsunderlag (M, KD, L + SD-budget)</td>
-              <td class="num">{formatMsek(['m','kd','l','sd'].reduce((s, c) => s + partyTotalMsek(promises, c), 0))}</td>
-              <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
-            </tr>
-            <tr>
-              <td>Rödgrönt (S, V, MP)</td>
-              <td class="num">{formatMsek(['s','v','mp'].reduce((s, c) => s + partyTotalMsek(promises, c), 0))}</td>
-              <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
-            </tr>
-            <tr>
-              <td>Center-allians (C, L, S)</td>
-              <td class="num">{formatMsek(['c','l','s'].reduce((s, c) => s + partyTotalMsek(promises, c), 0))}</td>
-              <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
-            </tr>
-            <tr>
-              <td>Alla åtta partier</td>
-              <td class="num">{formatMsek(parties.reduce((s, p) => s + partyTotalMsek(promises, p.code), 0))}</td>
-              <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <MetodLank />
+
+    {results.map((c) => {
+      const a = c.aggregates;
+      const gapLabel = a.financingGap < 0 ? `ÖVERTÄCKT (${formatMsek(Math.abs(a.financingGap))})` : formatMsek(a.financingGap);
+      return (
+        <section class="sektion">
+          <h2>{c.label}</h2>
+          <p class="etikett">{c.description} · {a.mandatesSum} mandat</p>
+          <div class="datavy datavy--scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th class="radnr">#</th>
+                  <th>Parti</th>
+                  <th class="num">Löften</th>
+                  <th class="num">Mandat</th>
+                </tr>
+              </thead>
+              <tbody>
+                {c.parties.map((code: string, i: number) => {
+                  const party = parties.find((p) => p.code === code);
+                  return party ? (
+                    <tr>
+                      <td class="radnr">{i + 1}</td>
+                      <td><a href={`/parti/${code}`}>{party.name}</a></td>
+                      <td class="num">{a.promisesCount}</td>
+                      <td class="num">{party.mandate_2022}</td>
+                    </tr>
+                  ) : null;
+                })}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2"><strong>Fläsket (R3-dedup)</strong></td>
+                  <td class="num" colspan="2"><strong class="num">{formatMsek(a.totalFlasket)}</strong></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Besparingar</td>
+                  <td class="num" colspan="2">{formatMsek(a.totalBesparingar)}</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Finansiering angiven</td>
+                  <td class="num" colspan="2">{formatMsek(a.totalFinancingClaimed)}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><strong>Finansieringsgap</strong></td>
+                  <td class="num" colspan="2"><strong class="num">{gapLabel}</strong></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          {a.groupNotes.length > 0 && (
+            <div class="fotnoter">
+              <div class="etikett">R3-DEDUP-FOTNOTER</div>
+              {a.groupNotes.map((gn) => (
+                <p class="fotnot">{gn.group_id}: belopp varierar mellan {formatMsek(gn.minMsek)} och {formatMsek(gn.maxMsek)} ({gn.parties.join(", ")})</p>
+              ))}
+            </div>
+          )}
+        </section>
+      );
+    })}
   </div>
 </Layout>
 
@@ -56,12 +98,20 @@ const parties = getParties();
     margin: 0 auto;
   }
   .sektion {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
   }
   .datavy--scroll {
     overflow-x: auto;
   }
-  .etikett--dis {
+  .fotnoter {
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--linje-svag);
+  }
+  .fotnot {
+    font-size: var(--steg--1);
     color: var(--dis);
+    margin: 0.25rem 0;
+    font-family: var(--font-mono);
   }
 </style>

@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { resolve, join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -38,6 +38,7 @@ const schemaFiles: Record<string, string> = {
   "changelog.json": "changelog.schema.json",
   "needs_review.json": "needs_review.schema.json",
   "seen.json": "seen.schema.json",
+  "constellations.json": "constellations.schema.json",
 };
 
 for (const [dataFile, schemaFile] of Object.entries(schemaFiles)) {
@@ -213,6 +214,19 @@ if (existsSync(startPage)) {
   fail("start page index.html not found");
 }
 check("data-taxameter with correct flasket total on start page", taxameterOk);
+
+// Part 10: kombinator bundle size ≤ 25 kB
+console.log("\n--- Kombinator bundle size ---");
+const kombinatorPath = resolve(ROOT, "site/public/kombinator.js");
+let kombinatorSizeOk = false;
+if (existsSync(kombinatorPath)) {
+  const stat = statSync(kombinatorPath);
+  const kB = stat.size / 1024;
+  kombinatorSizeOk = stat.size <= 25 * 1024;
+  check(`kombinator.js ≤ 25 kB`, kombinatorSizeOk, `${kB.toFixed(1)} kB`);
+} else {
+  fail("public/kombinator.js not found");
+}
 
 console.log("");
 console.log(errors === 0 ? "T3: ALL CHECKS PASSED" : `T3: ${errors} FAILURES`);
