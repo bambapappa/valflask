@@ -20,7 +20,74 @@ allowlist_domains:
   - aftonbladet.se
   - gp.se
   - di.se
-feeds: []
+
+feeds:
+  # --- Partier (verifierade 2026-06-12 via live HTTP) ---
+  - id: moderaterna
+    type: rss
+    url: "https://moderaterna.se/feed/"
+    verified: "2026-06-12 — 200, RSS 2.0, WordPress"
+
+  - id: sverigedemokraterna
+    type: rss
+    url: "https://www.sd.se/feed/"
+    verified: "2026-06-12 — 200, RSS 2.0, WordPress"
+
+  - id: vansterpartiet
+    type: rss
+    url: "https://www.vansterpartiet.se/feed/"
+    verified: "2026-06-12 — 200, RSS 2.0, WordPress"
+
+  - id: liberalerna
+    type: rss
+    url: "https://www.liberalerna.se/feed/"
+    verified: "2026-06-12 — 200, RSS 2.0, WordPress"
+
+  - id: miljopartiet
+    type: rss
+    url: "https://www.mp.se/wp-content/themes/mp/assets/php/rss/rss-news.php"
+    verified: "2026-06-12 — 200, RSS, custom PHP endpoint"
+
+  # Socialdemokraterna: INGEN RSS hittad (SiteVision CMS). Press via tt.se.
+  # Centerpartiet: INGEN RSS hittad (SiteVision CMS). Inget offentligt flöde.
+  # Kristdemokraterna: INGEN RSS hittad (SiteVision + Notified). Press via press.kristdemokraterna.se.
+
+  # --- Riksdagen API (verifierade 2026-06-12 via live HTTP) ---
+  - id: riksdagen-motioner
+    type: riksdagen_api
+    url: "https://data.riksdagen.se/dokumentlista/?doktyp=mot&utformat=json&sort=datum&a=S%C3%A5Sedan"
+    verified: "2026-06-12 — 200, JSON, 257928 träffar, sidor 12897"
+
+  - id: riksdagen-anforanden
+    type: riksdagen_api
+    url: "https://data.riksdagen.se/anforandelista/?utformat=json&a=S%C3%A5Sedan"
+    verified: "2026-06-12 — 200, JSON, separat endpoint (ej dokumentlista)"
+
+  # --- Medier (verifierade 2026-06-12 via live HTTP) ---
+  - id: dn-politik
+    type: rss
+    url: "https://www.dn.se/rss/politik"
+    verified: "2026-06-12 — 200, RSS 2.0, dedikerad svensk politik"
+
+  - id: sr-ekot
+    type: rss
+    url: "https://api.sr.se/api/rss/program/4540"
+    verified: "2026-06-12 — 200, Atom, Ekot program 4540"
+
+  - id: svt-nyheter
+    type: rss
+    url: "https://www.svt.se/rss.xml"
+    verified: "2026-06-12 — 200, RSS 2.0, bred nyhetstäckning med politik"
+
+  - id: di
+    type: rss
+    url: "https://www.di.se/rss"
+    verified: "2026-06-12 — 200, RSS 2.0, ekonomi/politik-overlap"
+
+  # SvD: INGEN offentlig RSS hittad (404 på /rss, /feed, /nyheter/rss).
+  # Expressen, Aftonbladet, GP, Altinget, TT: ej testade i denna omgång;
+  # kan läggas till efter verifiering.
+
 limits:
   max_articles_per_run: 120
   min_chars: 400

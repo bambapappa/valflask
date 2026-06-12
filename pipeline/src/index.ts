@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { resolve } from "node:path";
 import type { LlmClient } from "./llm.ts";
-import type { ArticleSource } from "./fetch.ts";
+import type { ArticleSource, SourceConfig, SourceFeed } from "./fetch.ts";
 import { dedup, loadSeen, sha256 } from "./fetch.ts";
 import { extractFromArticle } from "./extract.ts";
 import { runGates, type NormalizedArticle } from "./gates.ts";
@@ -38,6 +39,16 @@ export interface PipelineResult {
   errors: Array<{ url: string; error: string }>;
   dataHash: string;
   changelogEntry: ChangelogEntry;
+}
+
+export interface DryRunResult {
+  runId: string;
+  timestamp: string;
+  fetchStats: Map<string, number>;
+  totalFetched: number;
+  afterDedup: number;
+  afterMinChars: number;
+  errors: Array<{ url: string; error: string }>;
 }
 
 interface ProcessedCandidate {
@@ -233,6 +244,73 @@ export async function runPipeline(
     dataHash: publishResult.dataHash,
     changelogEntry: publishResult.changelogEntry,
   };
+}
+
+/* ──────────────────────── Dry-run (endast fetch+dedup) ── */
+
+export async function runDryRunFetch(
+  articleSource: ArticleSource,
+  dataDir: string,
+): Promise<DryRunResult> {
+  const runId = `dry-run-${new Date().toISOString().slice(0, 16)}`;
+  const timestamp = new Date().toISOString();
+
+  const articles = await articleSource.fetch();
+  const totalFetched = articles.length;
+
+  const seenPath = resolve(dataDir, "seen.json");
+  const existingSeen = loadSeen(seenPath);
+  const { newArticles } = dedup(articles, existingSeen);
+
+  const afterDedup = newArticles.length;
+  const afterMinChars = newArticles.filter((a) => a.text.length >= 400).length;
+
+  const stats = new Map<string, number>();
+  if ("getStats" in articleSource && typeof (articleSource as { getStats?: () => Map<string, number> }).getStats === "function") {
+    const sourceStats = (articleSource as { getStats: () => Map<string, number> }).getStats();
+    for (const [k, v] of sourceStats) stats.set(k, v);
+  }
+
+  const result: DryRunResult = {
+    runId,
+    timestamp,
+    fetchStats: stats,
+    totalFetched,
+    afterDedup,
+    afterMinChars,
+    errors: [],
+  };
+
+  const reportDir = resolve(dataDir, "../.report");
+  try {
+    mkdirSync(reportDir, { recursive: true });
+    const statsObj: Record<string, number> = {};
+    for (const [k, v] of stats) statsObj[k] = v;
+    writeFileSync(
+      `${reportDir}/${runId}.json`,
+      JSON.stringify({
+        ...result,
+        fetchStats: statsObj,
+      }, null, 2) + "\n",
+    );
+  } catch {
+    // best-effort
+  }
+
+  console.log("\n=== DRY-RUN FETCH-RAPPORT ===");
+  console.log(`Körning: ${runId}`);
+  console.log(`Tidpunkt: ${timestamp}`);
+  console.log(`\nArtiklar per källa:`);
+  for (const [source, count] of stats) {
+    console.log(`  ${source}: ${count}`);
+  }
+  console.log(`\nTotalt hämtade: ${totalFetched}`);
+  console.log(`Efter dedup: ${afterDedup}`);
+  console.log(`Efter min_chars-filtrering (≥400): ${afterMinChars}`);
+  console.log(`\nInga LLM-steg körda. Ingen data commit.`);
+  console.log("========================================\n");
+
+  return result;
 }
 
 function writeRunReport(

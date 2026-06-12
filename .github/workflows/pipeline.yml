@@ -28,6 +28,10 @@ jobs:
       - name: Run pipeline tests
         run: pnpm test
         working-directory: pipeline
+      - name: T7 check
+        run: pnpm check-t7
+        working-directory: pipeline
+        continue-on-error: true
       - name: Install site deps
         run: pnpm install --frozen-lockfile
         working-directory: site
@@ -42,6 +46,7 @@ jobs:
           MODEL_VERIFY: ${{ vars.MODEL_VERIFY }}
           MODEL_COPY: ${{ vars.MODEL_COPY }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
+          ALERT_EMAIL: ${{ vars.ALERT_EMAIL }}
       - name: Commit data if changed
         run: |
           git config user.name "drygast-bot"

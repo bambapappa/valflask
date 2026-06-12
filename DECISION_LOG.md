@@ -206,3 +206,39 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 **Förkastade alternativ:** Extrahera till delat paket (överengineering för två funktioner); importera från pipeline (cirkulärt beroende site→pipeline→data); olika algoritmer (dataintegriteten går sönder).
 **Påverkan:** `site/src/lib/canonical.ts`, `site/src/lib/calc.ts` (re-export).
 
+## 2026-06-12 — M3 Källverifiering: 5/8 partier, 4 medie-RSS, riksdagen API
+
+**Beslut:** Källor verifierade med riktiga HTTP-anrop 2026-06-12. Verifierade partifeeds: Moderaterna (WordPress /feed/), Sverigedemokraterna (WordPress /feed/), Vänsterpartiet (WordPress /feed/), Liberalerna (WordPress /feed/), Miljöpartiet (custom PHP RSS). INGEN RSS hittad för Socialdemokraterna (SiteVision CMS), Centerpartiet (SiteVision CMS), Kristdemokraterna (SiteVision/Notified). Verifierade mediefeeds: DN Politik (/rss/politik), SR Ekot (Atom, program 4540), SVT (/rss.xml), DI (/rss). Riksdagen API: dokumentlista (mot, prop m.fl.), anforandelista (separat endpoint, ej dokumentlista), personlista — alla 200 + giltig JSON. Quirk: enskilt resultat = dict, flera = array; hanteras i parse-funktionerna. SvD saknar offentlig RSS (404).
+**Motiv:** Spec §6.1 kräver verifierade endpoints; "hitta aldrig på URL:er" (§0). SiteVision-CMS:er erbjuder inga RSS-flöden; press sker via TT.se eller Notified.
+**Förkastade alternativ:** Skrapa partisidor (brott mot robots/crawl-etikett, mer belastning); kontakta partier för API (utanför M3-scope).
+**Påverkan:** `data/sources.yaml`, `pipeline/src/fetch.ts`.
+
+## 2026-06-12 — M3 fast-xml-parser som XML-beroende
+
+**Beslut:** `fast-xml-parser@^5.0` som runtime-beroende för RSS/Atom-parsning. Ren ESM, aktivt underhållet, liten footprint (~30 kB), hanterar namespaces och CDATA.
+**Motiv:** §14 tillåter motiverade beroenden med DECISION_LOG-rad. RSS/Atom-parsning kräver robust XML-stöd; egen parsning vore skör och underhållstung.
+**Förkastade alternativ:** xml2js (större, callback-baserad); egen minimal parsning (skört); saxon-js (komplett, överdrivet).
+**Påverkan:** `pipeline/package.json`.
+
+## 2026-06-12 — M3 Robots.txt: längst matchande UA-grupp, prefix-match
+
+**Beslut:** Robots.txt-parsern samlar regler per User-agent-grupp och väljer den grupp vars UA-namn är längst substräng-match mot botens UA (exempel: "DrygastBot" matchar "DrygastBot/1.0 (+https://drygast.nu/om)"). Finns ingen specifik match faller den tillbaka på `*`. Endast den valda gruppens regler tillämpas (inte alla gruppers).
+**Motiv:** RFC 9309 §2.3: "A robot must use the rules from the record with the longest matching user-agent." Standardiserat beteende.
+**Förkastade alternativ:** Exakt strängmatch (missar "DrygastBot" i "DrygastBot/1.0"); first-match-wins (icke-deterministiskt); alla gruppers regler samlat (brott mot spec).
+**Påverkan:** `pipeline/src/fetch.ts` (`parseRobotsTxt`, `isPathAllowed`).
+
+## 2026-06-12 — M3 LiveSource: injicerbar HttpFetchFn, robots-cache, ETag/IMS
+
+**Beslut:** `LiveSource` accepterar `HttpFetchFn` (identisk med global fetch-signaturen) för alla nätverksanrop — robots.txt, RSS-flöden, riksdagen API. robots.txt cachas per domän i minnet; ETag/If-Modified-Since cachas i `.cache/etag-cache.json`. Riksdagen-dokumenttexter hämtas individuellt per dokument. All nätverkskod är mockbar utan internetanslutning i testläge.
+**Motiv:** M2:s injicerbara design fortsätts; §19 kräver offline-tester; ETag minskar onödig belastning på källorna.
+**Förkastade alternativ:** Global fetch direkt (omöjlig att mocka offline); nock/interceptor-bibliotek (nytt stort beroende); ingen ETag-caching (onödig belastning).
+**Påverkan:** `pipeline/src/fetch.ts` (`LiveSource`), `pipeline/tests/fetch.test.ts`.
+
+## 2026-06-12 — M3 archive.ts: timeout, backoff, injicerbar fetch
+
+**Beslut:** `createArchiveFn` tar valfri `HttpFetchFn` och timeout (default 15s). Retry: upp till 2 extra försök med exponentiell backoff (1s, 2s). 403/503 → retry=true. Alla fel ger `{ archive_url: null, retry: true }`. Befintlig `archiveViaWayback` behålls för bakåtkompatibilitet.
+**Motiv:** §6.2 kräver Wayback-snapshot per källa; timeout/backoff hanterar nätverksinstabilitet; injicerbar fetch för offline-test.
+**Förkastade alternativ:** Ingen retry (fäller permanent vid tillfälligt fel); fast retry-intervall (riskerar rate-limit).
+**Påverkan:** `pipeline/src/archive.ts`.
+
+

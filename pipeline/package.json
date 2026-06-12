@@ -4,11 +4,15 @@
   "version": "0.1.0",
   "scripts": {
     "pipeline:run": "node --import tsx/esm src/index.ts",
+    "pipeline:dry-run": "node --import tsx/esm src/cli-dry-run.ts",
+    "review": "node --import tsx/esm src/review.ts",
+    "check-t7": "node --import tsx/esm scripts/check-t7.mts",
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "ajv": "^8.17.1",
+    "fast-xml-parser": "^5.0.0",
     "yaml": "^2.9.0"
   },
   "devDependencies": {
