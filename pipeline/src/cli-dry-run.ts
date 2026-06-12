@@ -5,6 +5,7 @@ import { LiveSource, type SourceConfig } from "./fetch.ts";
 import { runDryRunFetch } from "./index.ts";
 
 const DATA_DIR = resolve(process.cwd(), "../data");
+const REPORT_DIR = resolve(process.cwd(), ".report");
 
 async function main(): Promise<void> {
   const sourcesPath = resolve(DATA_DIR, "sources.yaml");

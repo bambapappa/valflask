@@ -157,7 +157,11 @@ function coalitionAggregates(
 
 function mkPromise(
   id: string,
-  opts: Partial<TestPromise> & { msek_base: number; parties: string[] }
+  opts: Partial<Omit<TestPromise, "cost">> & {
+    msek_base: number;
+    parties: string[];
+    cost?: Partial<TestPromise["cost"]>;
+  }
 ): TestPromise {
   return {
     id,
@@ -237,10 +241,11 @@ describe("T8: Invariant tests", () => {
     ];
     const result = coalitionAggregates(promises, PARTIES, ["a", "b"]);
     assert.equal(result.groupNotes.length, 1, "should have one group note");
-    assert.equal(result.groupNotes[0].group_id, "g-diff");
-    assert.equal(result.groupNotes[0].minMsek, 4000, "min should be 1000 × 4");
-    assert.equal(result.groupNotes[0].maxMsek, 12000, "max should be 3000 × 4");
-    assert.deepEqual(result.groupNotes[0].parties.sort(), ["a", "b"]);
+    const note = result.groupNotes[0]!;
+    assert.equal(note.group_id, "g-diff");
+    assert.equal(note.minMsek, 4000, "min should be 1000 × 4");
+    assert.equal(note.maxMsek, 12000, "max should be 3000 × 4");
+    assert.deepEqual(note.parties.sort(), ["a", "b"]);
   });
 
   it("R4: gap = flasket − besparingar − financing_claimed", () => {
