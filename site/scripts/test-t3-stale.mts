@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync, copyFileSync, renameSync, unlinkSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, copyFileSync, renameSync, rmSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execSync } from "node:child_process";
@@ -36,6 +36,17 @@ if (!existsSync(PROMISES_PATH)) {
 }
 copyFileSync(PROMISES_PATH, BACKUP_PATH);
 
+// Isolering: bevara befintlig dist/ så att efterföljande sviter (T9: data_hash-
+// integritet) inte ser den stale-byggda varianten. Återställs i finally nedan.
+const DIST_BACKUP = `${DIST_DIR}.pre-stale`;
+rmSync(DIST_BACKUP, { recursive: true, force: true });
+if (existsSync(DIST_DIR)) renameSync(DIST_DIR, DIST_BACKUP);
+
+function restoreDist() {
+  rmSync(DIST_DIR, { recursive: true, force: true });
+  if (existsSync(DIST_BACKUP)) renameSync(DIST_BACKUP, DIST_DIR);
+}
+
 // Modify fetched_at to >36h ago AND set at least one run_id to non-fixture
 // so that isFixture=false and stale banner can appear
 const OLD_DATE = new Date(Date.now() - (37 * 60 * 60 * 1000)).toISOString();
@@ -59,6 +70,7 @@ try {
   fail("Build failed with stale data");
   // Restore
   renameSync(BACKUP_PATH, PROMISES_PATH);
+  restoreDist();
   process.exit(1);
 }
 
@@ -80,6 +92,7 @@ if (existsSync(indexPath)) {
 
 // Restore
 renameSync(BACKUP_PATH, PROMISES_PATH);
+restoreDist();
 
 console.log("");
 console.log(errors === 0 ? "T3-stale: ALL CHECKS PASSED" : `T3-stale: ${errors} FAILURES`);
