@@ -1,11 +1,13 @@
 import { getPromises, getConstants } from "../../../lib/data";
 import { computeComparisons } from "../../../lib/aggregates";
+import { computeDataHash } from "../../../lib/canonical";
 
 export const prerender = true;
 
 export async function GET() {
   const promises = getPromises();
   const constants = getConstants();
+  const data_hash = computeDataHash(promises);
 
   const comparisons = promises.map((p) => ({
     promise_id: p.id,
@@ -21,6 +23,8 @@ export async function GET() {
 
   const body = {
     generated_at: new Date().toISOString(),
+    data_hash,
+    license: "CC-BY-4.0",
     data: comparisons,
   };
 

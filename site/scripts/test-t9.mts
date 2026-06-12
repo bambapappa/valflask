@@ -56,8 +56,8 @@ if (existsSync(integrityPath)) {
   }
 }
 
-// 3. All API endpoints exist
-console.log("\n--- API endpoints ---");
+// 3. All API endpoints exist + uniform envelope (generated_at + data_hash)
+console.log("\n--- API endpoints (envelope) ---");
 const apiEndpoints = [
   "api/v1/summary.json",
   "api/v1/promises.json",
@@ -67,7 +67,13 @@ const apiEndpoints = [
   "api/v1/integrity.json",
 ];
 for (const ep of apiEndpoints) {
-  check(`${ep} exists`, existsSync(resolve(DIST_DIR, ep)));
+  const fullPath = resolve(DIST_DIR, ep);
+  check(`${ep} exists`, existsSync(fullPath));
+  if (existsSync(fullPath)) {
+    const json = JSON.parse(readFileSync(fullPath, "utf8"));
+    check(`${ep} has generated_at`, typeof json.generated_at === "string" && json.generated_at.length > 0);
+    check(`${ep} has data_hash`, typeof json.data_hash === "string" && json.data_hash.length === 64, `got: ${typeof json.data_hash} ${String(json.data_hash).slice(0, 20)}`);
+  }
 }
 
 // 4. CORS headers would be set by CDN (_headers file)
