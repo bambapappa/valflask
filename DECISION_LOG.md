@@ -108,3 +108,31 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 **Förkastade alternativ:** WOFF2-stöd i satori (finns ej); Googles og-image-paket (brott mot "inga externa tjänster"); hoppa över OG i M1 (brott mot §18 leverans D).
 **Påverkan:** `site/scripts/generate-og.mts`, `site/public/fonts/*.ttf`, CI-workflow.
 
+## 2026-06-12 — M2 Pipeline: LlmClient-injicerbar, egen OpenAI-kompatibel klient utan SDK
+
+**Beslut:** `LlmClient` definieras som smalt interface (`complete(prompt, opts?) → text`) i `pipeline/src/llm.ts`. Produktionsimplementation `OpenRouterClient` använder Nodes inbyggda `fetch` mot OpenAI-kompatibelt `/chat/completions`. Fallback-kedja: primär endpoint → `LLM_FALLBACK_BASE_URL`/`LLM_FALLBACK_API_KEY`. Modellnamn injiceras via `opts.model` (sätts av orkestratorn från `MODEL_EXTRACT`/`MODEL_VERIFY`/`MODEL_COPY`). Temperatur 0 för alla anrop i M2; `response_format: {type:"json_object"}` stöds men ej tvingat (validering + max 1 retry i extract.ts). Inget LLM-SDK-beroende (§14).
+**Motiv:** Spec §7 kräver injicerbar LLM; §14 kräver minimala beroenden; OpenAI-kompatibelt API täcker OpenRouter, z.ai och direkt-endpoints utan SDK-overhead.
+**Förkastade alternativ:** openai-sdk (överflödigt runtime-beroende); langchain/llamaindex (massivt träd); hårdkodad modell (brott mot §20).
+**Påverkan:** `pipeline/src/llm.ts`, alla pipeline-steg som anropar LLM (extract, verify, copy).
+
+## 2026-06-12 — M2 Pipeline: yaml-parser för sources.yaml
+
+**Beslut:** `yaml@^2.9` som runtime-beroende för att parsa `data/sources.yaml` (allowlist + feeds). Paketet är liten (~72 kB minified), aktivt underhållet, ren ESM.
+**Motiv:** §14 tillåter motiverade runtime-beroende med DECISION_LOG-rad; sources.yaml måste parsas av orkestratorn.
+**Förkastade alternativ:** js-yaml (större, commonjs); manuell YAML-parsning (skört); byta till JSON-format (brott mot spec §6.1).
+**Påverkan:** `pipeline/package.json`, `pipeline/src/index.ts` (ej aktuellt i M2 — används i M3 vid skarp källkoppling).
+
+## 2026-06-12 — M2 Pipeline: FixtureMockLlm istället för ScriptedLlm för tester
+
+**Beslut:** Testernas mock-LLM är URL-nycklad (`FixtureMockLlm`): extract/verify-anrop matchas på `<KALLTEXT url="...">`, quip-anrop matchas på kandidattiteln i prompten. Eliminerar beroendet av anropsordning — artiklar sorteras per URL i orkestratorn oavsett fixture-laddningsordning.
+**Motiv:** Orkestratorn sorterar artiklar per URL; en strikt sekventiell mock ger feltolkningar när sorteringen skiljer sig från fixture-ordningen.
+**Förkastade alternativ:** ScriptedLlm med fast kö (spricker vid URL-omsortering); separat fixture-katalog per test (onödig duplikering).
+**Påverkan:** `pipeline/tests/pipeline.test.ts`.
+
+## 2026-06-12 — M2 Pipeline: kostnadsuppskattning enkel derivat från amount_in_text_msek
+
+**Beslut:** `cost.ts` deriverar kostnadsintervall direkt från `amount_in_text_msek` med ±25%/+35% marginal. Inget LLM-anrop för kostnad i M2 (alla fixtures har angivna belopp). Källhierarkin (rut/myndighet → parti → media → llm_estimat) är implementerad som `basis`-fält; full LLM-kostnadsuppskattning läggs i M3 när skarpa artiklar utan belopp kan förekomma.
+**Motiv:** M2 är offline-pipeline med fixtures som alla har amount_in_text_msek; LLM-kostnadsanrop skulle kräva ytterligare mock-respons utan att testa mer.
+**Förkastade alternativ:** Full LLM-kostnadssteg nu (over engineering för M2); hårdkodade belopp utan marginal (brott mot §8:s spann-krav).
+**Påverkan:** `pipeline/src/cost.ts`.
+

@@ -22,7 +22,13 @@ jobs:
           node-version: 22
           cache: pnpm
           cache-dependency-path: site/pnpm-lock.yaml
-      - name: Install dependencies
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Run pipeline tests
+        run: pnpm test
+        working-directory: pipeline
+      - name: Install site deps
         run: pnpm install --frozen-lockfile
         working-directory: site
       - name: Run pipeline
