@@ -1,7 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Om", "item": "https://drygast.nu/om" },
+    ],
+  },
+];
 ---
-<Layout title="Om drygast.nu — Fläskvågen" description="Oberoende, neutral och källspårad sammanställning av svenska riksdagspartiers vallöften inför valet 2026.">
+<Layout title="Om drygast.nu — Fläskvågen" description="Oberoende, neutral och källspårad sammanställning av svenska riksdagspartiers vallöften inför valet 2026." jsonLd={jsonLd} canonicalPath="/om">
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Om drygast.nu</h1>

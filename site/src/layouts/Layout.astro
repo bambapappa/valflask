@@ -18,11 +18,15 @@ interface Props {
   description?: string;
   ogImage?: string;
   hasTaxameter?: boolean;
+  jsonLd?: object | object[];
+  canonicalPath?: string;
 }
 
 const canonicalBase = Astro.site?.origin ?? "https://drygast.nu";
-const { title, description = "Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften.", ogImage = "/og/start.png", hasTaxameter = false } = Astro.props;
+const { title, description = "Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften.", ogImage = "/og/start.png", hasTaxameter = false, jsonLd, canonicalPath } = Astro.props;
 const ogImageUrl = ogImage.startsWith("https://") ? ogImage : `${canonicalBase}${ogImage}`;
+const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new URL(Astro.url.pathname, canonicalBase).href;
+const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 <!DOCTYPE html>
 <html lang="sv">
@@ -41,9 +45,13 @@ const ogImageUrl = ogImage.startsWith("https://") ? ogImage : `${canonicalBase}$
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="sv_SE" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href={canonicalUrl} />
   <link rel="preload" href="/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/ibm-plex-mono-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  {jsonLdArray.map((item) => (
+    <script type="application/ld+json" set:html={JSON.stringify(item)} />
+  ))}
 </head>
 <body>
   <a href="#main" class="skiplank">Hoppa till huvudinnehåll</a>

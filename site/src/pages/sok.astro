@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Sök", "item": "https://drygast.nu/sok" },
+    ],
+  },
+];
+---
+<Layout title="Sök löften — drygast.nu" description="Sök bland riksdagspartiernas vallöften 2026." jsonLd={jsonLd} canonicalPath="/sok">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Sök löften</h1>
+      <p>Sök bland alla vallöften i drygast.nu:s databas.</p>
+
+      <noscript>
+        <div class="noscript-links etikett">
+          <p>Javascript saknas — se alla löften på <a href="/topplistor">topplistor</a> eller <a href="/sitemap.xml">sitemap</a>.</p>
+        </div>
+      </noscript>
+
+      <div id="search"></div>
+    </div>
+  </div>
+</Layout>
+
+<script is:inline>
+(function() {
+  var el = document.getElementById("search");
+  if (!el) return;
+  var s = document.createElement("script");
+  s.src = "/pagefind/ui.js";
+  s.onload = function() {
+    new PagefindUI({ element: "#search", showSubResults: true, showImages: false });
+  };
+  s.onerror = function() {
+    el.innerHTML = '<p>Sökfunktionen kunde inte laddas. Se <a href="/topplistor">topplistor</a>.</p>';
+  };
+  document.body.appendChild(s);
+})();
+</script>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+  .noscript-links {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    border: 1px solid var(--linje-svag);
+  }
+</style>

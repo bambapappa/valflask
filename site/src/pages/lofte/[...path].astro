@@ -26,8 +26,41 @@ const partyNames = promise.parties.map((c) => getPartyByCode(parties, c)?.name |
 const total = formatMsek(promiseTotalMsek(promise), promise.cost.basis);
 const personName = promise.person?.name || null;
 const comparisons = computeComparisons(promise, constants);
+const canonicalPath = `/lofte/${promise.id}/${promise.slug}`;
+const totalBasis = promise.cost.basis;
+
+const pageTitle = totalBasis === 'llm_estimat'
+  ? `Vad kostar löftet "${promise.title}"? ≈ ${formatMsek(promiseTotalMsek(promise), totalBasis)} — drygast.nu`
+  : `Vad kostar löftet "${promise.title}"? ${formatMsek(promiseTotalMsek(promise), totalBasis)} — drygast.nu`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": promise.title,
+    "description": `${partyNames} lovar: ${promise.title}. Kostnad: ${total}.`,
+    "url": `https://drygast.nu${canonicalPath}`,
+    "datePublished": promise.date_stated,
+    "author": {
+      "@type": "Organization",
+      "name": "drygast.nu",
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "drygast.nu",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": promise.title, "item": `https://drygast.nu${canonicalPath}` },
+    ],
+  },
+];
 ---
-<Layout title={`${promise.title} — drygast.nu`} description={`${partyNames} lovar: ${promise.title}. Kostnad: ${total}.`} ogImage={`/og/${promise.id}/og.png`}>
+<Layout title={pageTitle} description={`${partyNames} lovar: ${promise.title}. Kostnad: ${total}.`} ogImage={`/og/${promise.id}/og.png`} jsonLd={jsonLd} canonicalPath={canonicalPath}>
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <ArendeHuvud id={promise.id} dateStated={promise.date_stated} domain={promise.source.domain} status={promise.status} />
@@ -54,7 +87,7 @@ const comparisons = computeComparisons(promise, constants);
         archiveUrl={promise.source.archive_url}
       />
 
-      <section class="sektion">
+      <section class="sektion" id="kostnad">
         <h2>Kostnad</h2>
         <div class="datavy datavy--scroll">
           <table>
@@ -90,7 +123,7 @@ const comparisons = computeComparisons(promise, constants);
       <MetodLank />
 
       {comparisons.length > 0 && (
-        <section class="sektion">
+        <section class="sektion" id="jamforelse">
           <h2>Jämförelser</h2>
           <ul class="jamforelse-list">
             {comparisons.map((c) => (
@@ -143,7 +176,9 @@ const comparisons = computeComparisons(promise, constants);
         </section>
       )}
 
-      <KallRad source={formatBasisLabel(promise.cost.basis)} date={formatDateShort(promise.source.fetched_at)} />
+      <div id="kallor">
+        <KallRad source={formatBasisLabel(promise.cost.basis)} date={formatDateShort(promise.source.fetched_at)} />
+      </div>
     </div>
   </div>
 </Layout>

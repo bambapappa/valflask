@@ -1,9 +1,11 @@
 import { getPromises } from "../../../lib/data";
+import { computeDataHash } from "../../../lib/canonical";
 
 export const prerender = true;
 
 export async function GET() {
   const promises = getPromises();
+  const data_hash = computeDataHash(promises);
   const cleaned = promises.map((p) => ({
     id: p.id,
     group_id: p.group_id,
@@ -22,7 +24,14 @@ export async function GET() {
     status: p.status,
   }));
 
-  return new Response(JSON.stringify(cleaned, null, 2), {
-    headers: { 'Content-Type': 'application/json' }
+  const body = {
+    generated_at: new Date().toISOString(),
+    data_hash,
+    license: "CC-BY-4.0",
+    data: cleaned,
+  };
+
+  return new Response(JSON.stringify(body, null, 2), {
+    headers: { "Content-Type": "application/json" },
   });
 }

@@ -2,8 +2,49 @@
 import Layout from "../layouts/Layout.astro";
 
 const title = "Metod — drygast.nu";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Hur beräknas kostnader?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Alla belopp räknas i fasta priser 2026, bruttoperspektiv. Per år-löften multipliceras med 4 (mandatperioden), engångslöften med 1. Källhierarkin: RUT/myndighet > parti > media > LLM-estimat.",
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "Vad är R3-dedup?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Löften som delas av flera partier (group_id) räknas exakt en gång i koalitionssummor, så att gemensamma löften inte dubbelräknas.",
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "Vilka datakällor används?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Belopp hämtas i fallande prioritetsordning: Riksdagens utredningstjänst/myndighet, partiets egen beräkning, etablerad media, eller LLM-estimat med spann.",
+        },
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Metod", "item": "https://drygast.nu/metod" },
+    ],
+  },
+];
 ---
-<Layout title={title} description="Så här räknar vi: metod, källhierarki och transparens för drygast.nu:s kostnadsuppskattningar.">
+<Layout title={title} description="Så här räknar vi: metod, källhierarki och transparens för drygast.nu:s kostnadsuppskattningar." jsonLd={jsonLd} canonicalPath="/metod">
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Metod</h1>

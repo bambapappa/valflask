@@ -9,8 +9,19 @@ const promises = getPromises();
 const parties = getParties();
 const constants = getConstants();
 const reformutrymme = constants.reformutrymme_msek_per_ar.value;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Jämför", "item": "https://drygast.nu/jamfor" },
+    ],
+  },
+];
 ---
-<Layout title="Jämför partiernas vallöften — drygast.nu" description="Jämför riksdagspartiernas vallöften sida vid sida. Kryssa partier för att se summa, finansieringsgap och R3-dedup.">
+<Layout title="Jämför partiernas vallöften — drygast.nu" description="Jämför riksdagspartiernas vallöften sida vid sida. Kryssa partier för att se summa, finansieringsgap och R3-dedup." jsonLd={jsonLd} canonicalPath="/jamfor">
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Jämför partier</h1>

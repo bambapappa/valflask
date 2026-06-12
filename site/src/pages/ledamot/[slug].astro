@@ -20,8 +20,20 @@ const parties = getParties();
 const personPromises = promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen');
 const party = parties.find((p) => p.code === person.party);
 const totalMsek = personPromises.reduce((sum, p) => sum + promiseTotalMsek(p), 0);
+const canonicalPath = `/ledamot/${person.slug}`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": person.name, "item": `https://drygast.nu${canonicalPath}` },
+    ],
+  },
+];
 ---
-<Layout title={`${person.name} — drygast.nu`} description={`${person.name} (${party?.name}): ${personPromises.length} vallöften tillhörande ${person.role}.`}>
+<Layout title={`${person.name} — drygast.nu`} description={`${person.name} (${party?.name}): ${personPromises.length} vallöften tillhörande ${person.role}.`} jsonLd={jsonLd} canonicalPath={canonicalPath}>
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>{person.name}</h1>

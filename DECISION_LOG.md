@@ -171,3 +171,38 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 **Förkastade alternativ:** Dölj mätaren helt (förlorar Fläsket-viz); använd 0 (vilseledande).
 **Påverkan:** `site/src/components/GapMatare.astro`.
 
+## 2026-06-12 — Ägarbeslut §21 fattade (4 st)
+
+**Beslut:** (1) Källallowlist v1 = specens 20 domäner i §6.1, oförändrad. (2) `PIPELINE_MODE=review` första skarpa veckan, därefter `auto`. (3) E3 AdSense AV vid lansering; omprövas augusti 2026. (4) Ledamotssidor P1 behålls (villkoret M0–M6 före 1 aug bedöms uppfyllas med god marginal).
+**Motiv:** Ägaren bekräftade arkitektens förslag 2026-06-12 (samtliga = specens rekommendationer). Allowlisten balanserar G1-målet mot källkvalitet; review-veckan kalibrerar grindarna mot verkligheten innan auto; E3-default skyddar trovärdighet/CSP/cookiefrihet; P1 är redan byggd som sidtyp och kostar endast people-spegling i M3.
+**Förkastade alternativ:** Bantad allowlist (riskerar G1-målet), permanent review (bryter G4-målet), AdSense från start (cookiebanner + tredjeparts-JS mot sajtens pitch), stryka P1 (kastar byggt arbete).
+**Påverkan:** M3 är beslutsmässigt avblockerad. `data/sources.yaml` (M3), `PIPELINE_MODE`-variabel (§20), §13-intäktsplan, /ledamot-sidor.
+
+## 2026-06-12 — M5 ClaimReview: AVSTÅ (inte certifierad faktagranskare)
+
+**Beslut:** ClaimReview-schema (schema.org) implementeras INTE på löftessidor. drygast.nu är inte en certifierad faktagranskningstjänst och ClaimReview kräver enlighet med Google:s faktagranskningspolicy.
+**Motiv:** Spec §18 nämner ClaimReview som möjligt; utan certifiering riskerar implementationen att missbruka strukturerad data och skada trovärdigheten. ClaimReview förbehålls organisationer som bedriver professionell faktagranskning enligt internationella standarder.
+**Förkastade alternativ:** Implementera ClaimReview utan certifiering (brott mot Google:s riktlinjer, trovärdighetsrisk); ansöka om certifiering (utanför M5-scope).
+**Påverkan:** JSON-LD begränsas till WebSite, Dataset, Article, BreadcrumbList, FAQPage.
+
+## 2026-06-12 — M5 CSP-analys: application/ld+json påverkas inte av script-src
+
+**Beslut:** JSON-LD (`<script type="application/ld+json">`) används utan CSP-justering. `application/ld+json` blockeras INTE av CSP-profilens `script-src 'self'` eftersom type-attributet gör det till ett icke-exekverbart data-block — webbläsare exekverar endast `text/javascript` och `module`-skript.
+**Motiv:** CSP-specifikationen definierar script-src som gällande "skript-exekvering"; JSON-LD är data, inte kod. Detta är etablerat beteende och verifierat mot MDN- och W3C-dokumentation.
+**Förkastade alternativ:** Lägg till `application/ld+json` i script-src (onödigt, förvirrande); använd inline JSON-LD utan CSP-analys (saknar dokumenterad motivering).
+**Påverkan:** `site/src/layouts/Layout.astro`, alla sidor med JSON-LD.
+
+## 2026-06-12 — M5 Pagefind: statiskt sökindex, lazy-laddad UI, /sok
+
+**Beslut:** `pagefind@1.5` (devDependency) skapar statiskt sökindex vid build (`npx pagefind --site dist --output-path dist/pagefind`). Söksidan `/sok` laddar Pagefind UI dynamiskt via `import()`. URL: `/sok`.
+**Motiv:** Spec §18 sanktionerar Pagefind; ≤60 kB UI-JS laddas endast på söksidan; `import()` från `/pagefind/pagefind.js` servas från 'self' (CSP-kompatibel). Pagefind är det enda sanktionerade nya beroendet.
+**Förkastade alternativ:** Lunr.js (kräver mer integration); Algolia (tredjepartstjänst); clientside-only utan index (dålig UX).
+**Påverkan:** `site/package.json`, `site/src/pages/sok.astro`, build-script, `site/public/_headers`.
+
+## 2026-06-12 — M5 Delad canonical-hash: site/src/lib/canonical.ts
+
+**Beslut:** `canonicalStringify()` och `computeDataHash()` replikerade i `site/src/lib/canonical.ts` (identisk logik som `pipeline/src/publish.ts`). Importeras via `calc.ts`-re-export. Import från pipeline direkt undviks (pipeline är separat pnpm-paket, cirkulärt beroenderisk).
+**Motiv:** integrity.json MÅSTE producera samma sha256 som pipeline; identisk implementering garanterar detta. Replikering framför import från pipeline eftersom pipeline är ett separat paket med egna deps.
+**Förkastade alternativ:** Extrahera till delat paket (överengineering för två funktioner); importera från pipeline (cirkulärt beroende site→pipeline→data); olika algoritmer (dataintegriteten går sönder).
+**Påverkan:** `site/src/lib/canonical.ts`, `site/src/lib/calc.ts` (re-export).
+

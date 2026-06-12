@@ -4,10 +4,11 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "node --experimental-strip-types scripts/build-kombinator.mts && astro build && node --experimental-strip-types scripts/generate-og.mts",
+    "build": "node --experimental-strip-types scripts/build-kombinator.mts && astro build && npx pagefind --site dist --output-path dist/pagefind && node --experimental-strip-types scripts/generate-og.mts",
     "test:t1": "node --experimental-strip-types scripts/test-t1.mts",
     "test:t3": "node --experimental-strip-types scripts/test-t3.mts",
-    "test": "node --experimental-strip-types scripts/test-t1.mts && node --experimental-strip-types scripts/test-t3.mts",
+    "test:t9": "node --experimental-strip-types scripts/test-t9.mts",
+    "test": "node --experimental-strip-types scripts/test-t1.mts && node --experimental-strip-types scripts/test-t3.mts && node --experimental-strip-types scripts/test-t9.mts",
     "preview": "astro preview"
   },
   "dependencies": {
@@ -17,6 +18,7 @@
     "satori": "^0.26.0"
   },
   "devDependencies": {
+    "pagefind": "^1.5.2",
     "typescript": "^5.0.0"
   }
 }

@@ -10,7 +10,14 @@ export async function GET() {
   const changelog = getChangelog();
   const summary = buildSummary(promises, parties, constants, changelog);
 
-  return new Response(JSON.stringify(summary, null, 2), {
-    headers: { 'Content-Type': 'application/json' }
+  const body = {
+    generated_at: summary.generated_at,
+    data_hash: summary.data_hash,
+    license: "CC-BY-4.0",
+    data: summary,
+  };
+
+  return new Response(JSON.stringify(body, null, 2), {
+    headers: { "Content-Type": "application/json" },
   });
 }

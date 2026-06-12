@@ -1,5 +1,7 @@
 import type { PromisePost } from "./data";
 
+export { canonicalStringify, computeDataHash } from "./canonical";
+
 export {
   promiseTotalMsek,
   partyTotalMsek,
