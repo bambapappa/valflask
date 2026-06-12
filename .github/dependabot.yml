@@ -1,0 +1,23 @@
+# Dependabot-policy (§14: minimalt beroendeträd, inga byten utan DECISION_LOG-rad).
+# Säkerhetsuppdateringar förblir aktiva; major-versioner hålls tillbaka manuellt
+# under valrörelsen (en major-bump av t.ex. Astro är ett DECISION_LOG-beslut).
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/site"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: "npm"
+    directory: "/pipeline"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
