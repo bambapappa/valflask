@@ -299,4 +299,14 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 **Påverkan:** `site/src/config.ts`, `site/src/components/LasVidare.astro`, `site/src/components/Annonslank.astro`, `site/src/pages/om.astro`.
 
+## 2026-06-12 — M7 Ytterligare verifieringsrunda: 1-krona och Mars min-avstånd verifierade
+
+**Beslut:** Två ytterligare konstanter verifierade i andra rundan: `enkrona_tjocklek_m` (0.00179 m) från Wikipedia "Svenska mynt" som citerar Riksbankens specifikation för 2016 års myntserie; `avstand_mars_min_m` (54 000 000 000 m) från Wikipedia "Mars" — "The distance at close approach varies between about 54 and 103 million km". Totalt 4/10 verifierade.
+
+**Motiv:** Riksbankens egna myntspec-URL:er gav fortsatt 404; Wikipedia har dock den exakta siffran 1.79 mm som uttryckligen tillskrivs Riksbankens myntspecifikation. Mars minimum hittades i orbital-sektionen på engelska Wikipedia ("Closest approaches") — tydligt angivet 54–103M km range. Fem konstanter kunde inte verifieras pga interaktiva databaser (SCB), plattformsbyte (SKR), brutna rapport-URL:er (Livsmedelsverket), eller icke-publicerat värde (FMV styckpris, KI reformutrymme).
+
+**Förkastade alternativ:** Fortsätta jaga Riksbanken-URL:er som ger 404 (tidsslöseri); gissa JAS 39E-styckpris från Brasilien-affären ($85M ≈ 850M SEK — olika kontraktsvillkor, ej trovärdig svensk källa).
+
+**Påverkan:** `data/constants.json`, `DECISION_LOG.md`.
+
 
