@@ -255,4 +255,48 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 **Förkastade alternativ:** Hoppa över taggning tills GPG finns (brott mot §16 S7); försöka signera utan nyckel (failar).
 **Påverkan:** `.github/workflows/release.yml`, `ops/RUNBOOK.md`.
 
+## 2026-06-12 — M7 Konstantverifiering (bilaga D): 2/10 verifierade, 8/10 kvarstår
+
+**Beslut:** Genomfört verifieringsrunda mot auktoritativa källor via riktiga webbanrop (2026-06-12). Två konstanter kunde verifieras och källsättas: `avstand_manen_m` (384 400 000 m, NASA science.nasa.gov/moon/facts/) och `forbifart_sthlm` (51 500 000 000 kr, Trafikverket). Åtta konstanter kvarstår "VERIFIERA" — antingen för att primärkällans webbplats gav 404 (Riksbanken: alla myntspecifikations-URL), kräver interaktivt databasutdrag (SCB: lönestrukturstatistik för ssk/lärare), har bytt plattform (SKR), har brutna rapport-URL:er (Livsmedelsverket), inte publicerar efterfrågat värde (FMV: inget styckpris; totalprogramkostnad 47 mdkr), inte var tillgänglig (NASA NSSDC: nere för underhåll), eller kräver PDF-tolkning (Konjunkturinstitutet/ESV via riksdagen.se).
+
+**Motiv:** Spec §0 regel 2: "Hitta aldrig på siffror." Hellre "VERIFIERA" med utförlig metodnot än ett fabricerat värde. Se per-post-noter i data/constants.json för exakta URL:er och felorsaker. Rimlighetskontroller godkända för de två verifierade värdena (månavstånd 3.844e8 m, Förbifarten 51.5 mdkr inom förväntat 40–50 mdkr-spann — överskridningen förklaras av 2021 års prisnivå och kostnadsökningar).
+
+**Förkastade alternativ:** Använda Wikipedia/sekundärkällor för myntspecifikationer, marsavstånd och jas-styckpris (otillräcklig auktoritet för sajtens trovärdighetsvaluta); uppskatta ssk/lärarlöner från allmän kännedom (påhitt); använda Brasiliens Gripen-affär som svenskt styckpris (olika kontraktsvillkor).
+
+**Påverkan:** `data/constants.json`, `pipeline/schemas/constants.schema.json` (conditional required source_date), `DECISION_LOG.md`.
+
+## 2026-06-12 — M7 Schemauppdatering: source_date conditional required, fetched_date tillagd
+
+**Beslut:** `constants.schema.json` uppdaterad med JSON Schema `if/then`: när `value` är `number` krävs `source_date`. Fältet `fetched_date` tillagt (valfritt) för spårbarhet av verifieringsdatum. Gäller både `reformutrymme_msek_per_ar` och `items[]`.
+
+**Motiv:** Spec §9 och bilaga D kräver source_url + source_date för verifierade värden. Att göra source_date villkorat krävt (endast när value är nummer) gör att "VERIFIERA"-poster kan ha tom source_date medan verifierade tvingas ange datum.
+
+**Förkastade alternativ:** Alltid kräva source_date (blockerar "VERIFIERA"-poster); inget fetched_date (sämre spårbarhet av verifieringsrundan).
+
+**Påverkan:** `pipeline/schemas/constants.schema.json`.
+
+## 2026-06-12 — M7 Innehållsgenomgång: /om, /metod, /press, /rattelser (§17/§13)
+
+**Beslut:** Samtliga fyra innehållssidor uppdaterade enligt §17-krav.
+- `/om`: neutralitetslöftet komplett med metodik- och transparensbeskrivning. E2-platshållare "Stöd vägningen" i diskret ruta med "KOMMER SNART"-stämpel (Swish/BMC är ägarsteg — inga döda betalningslänkar).
+- `/metod`: §8-metodiken komplett: källhierarki (RUT→parti→media→LLM), alla fem summeringsregler (R1–R5), skatter/besparingar, jämförelsemotorn, verbatim-grinden, reformutrymmeshantering. Ärlighetsregeln explicit: "vi säger när vi uppskattar".
+- `/press`: citatpolicy med rekommenderat citatformat och API-hänvisning. OG-bildbeskrivning med exempel-URL:er. Kontakt-platshållare med stämpel. Rättelsehänvisning.
+- `/rattelser`: full förklaring av correction:-flödet: commit-prefix, pipeline-omkörning, kronologisk listning, anmälningsväg.
+
+**Motiv:** Spec §17 kräver neutralitet, transparens och ärlighetsregel på innehållssidorna. §18 M7 kräver innehållsgenomgång före lansering.
+
+**Förkastade alternativ:** Hårdkoda Swish-nummer/BMC-länk (döda betalningslänkar — ägarsteg); utelämna R5-beloppsspärren från /metod (ofullständig metodik); publicera e-postadress (spamrisk innan ägaren konfigurerat).
+
+**Påverkan:** `site/src/pages/om.astro`, `site/src/pages/metod.astro`, `site/src/pages/press.astro`, `site/src/pages/rattelser.astro`.
+
+## 2026-06-12 — M7 E1/E2 scaffolding: feature flag + "Läs vidare"-komponent + "Annonslänk"
+
+**Beslut:** Skapat feature flag-mekanism i `site/src/config.ts` med två flaggor: `E1_AFFILIATE` (AV — false) och `E3_ADSENSE` (AV — false). Komponenter: `Annonslank.astro` (textstämpel "Annonslänk" i mono) och `LasVidare.astro` (villkorad på E1_AFFILIATE-flaggan, renderar boklista med rel="sponsored nofollow" och Annonslänk-märkning). E2 är innehållsplatshållare på /om, ej komponentkrävande. Inga betalningslänkar innan ägaren ansluter affiliatenätverk.
+
+**Motiv:** §13 intäktsplan aktiveras stegvis. E1-komponenten är kodad, testbar och redo — men flaggan är AV tills affiliatenätverk (Adtraction/Awin) är kontrakterat (ägarsteg). Annonslänk-märkning enligt marknadsföringslagen förberedd. E2 är enbart innehållsplatshållare — Swish-QR/BMC-länk kräver ägarens betalningsuppgifter.
+
+**Förkastade alternativ:** Hårdkoda affiliatelänkar utan nätverksavtal (döda/borttagna länkar); aktivera E1_AFFILIATE true direkt (falsk marknadsföring innan avtal finns); E2 som separat komponent (överengineering för en platshållare).
+
+**Påverkan:** `site/src/config.ts`, `site/src/components/LasVidare.astro`, `site/src/components/Annonslank.astro`, `site/src/pages/om.astro`.
+
 

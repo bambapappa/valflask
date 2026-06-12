@@ -18,6 +18,14 @@ const jsonLd = [
       },
       {
         "@type": "Question",
+        "name": "Hur garanteras neutralitet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Identisk insamling, identiska grindar och identisk humorton för samtliga åtta riksdagspartier. Inga partivärderingar, inga redaktionella urval i topplistorna.",
+        },
+      },
+      {
+        "@type": "Question",
         "name": "Vad är R3-dedup?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -48,31 +56,39 @@ const jsonLd = [
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Metod</h1>
-      <p>Här förklaras hur drygast.nu beräknar kostnader för vallöften. Allt är öppet och granskningsbart.</p>
+      <p>Här förklaras hur drygast.nu beräknar kostnader för vallöften. Allt är öppet och granskningsbart — metodiken är identisk för samtliga åtta riksdagspartier.</p>
 
       <h2>Bruttoperspektiv, fasta priser 2026</h2>
       <p>Vi räknar i fasta priser 2026, bruttoperspektiv på offentliga finanser. Inga dynamiska effekter (de redovisas inte konsekvent av någon part — vi väljer jämförbarhet före precision och säger det öppet).</p>
 
       <h2>Källhierarki för belopp</h2>
       <ol>
-        <li>Riksdagens utredningstjänst/myndighet</li>
-        <li>Partiets egen kostnadsberäkning</li>
-        <li>Etablerad media</li>
-        <li>LLM-estimat med spann</li>
+        <li><strong>Riksdagens utredningstjänst/myndighet</strong> — högsta prioritet. Myndighetsberäknade kostnader.</li>
+        <li><strong>Partiets egen kostnadsberäkning</strong> — när partiet anger ett belopp i sin egen kommunikation.</li>
+        <li><strong>Etablerad media</strong> — belopp från källansvariga medier i allowlist.</li>
+        <li><strong>LLM-estimat med spann</strong> — maskinell uppskattning baserad på jämförbara reformer. Typograferas med "≈" och intervall.</li>
       </ol>
-      <p>Nivån syns alltid (fältet <code>basis</code>) och LLM-estimat typograferas med "≈" och spann.</p>
+      <p>Nivån syns alltid (fältet <code>basis</code>) och LLM-estimat typograferas med "≈" och spann. Ärlighetsregeln: vi säger när vi uppskattar. Inga dynamiska effekter, ingen dold finansiering.</p>
 
       <h2>Summeringsregler</h2>
       <p><strong>R1 — Summeringsfönster:</strong> Mandatperioden 2027–2030. Per år-löften ×4, engångslöften ×1.</p>
-      <p><strong>R2 — Intervallordning:</strong> low ≤ base ≤ high. LLM-estimat kräver high ≥ 1.5×low.</p>
-      <p><strong>R3 — Koalitionsdedup:</strong> Löften som delas av flera partier (group_id) räknas en gång i koalitionssummor.</p>
-      <p><strong>R4 — Totaler:</strong> Fläsket = Σ(utgifter + intäktsminskningar). Finansieringsgap = Fläsket − Σ(besparingar + finansiering).</p>
+      <p><strong>R2 — Intervallordning:</strong> low ≤ base ≤ high. LLM-estimat kräver high ≥ 1.5×low (ärlig osäkerhet).</p>
+      <p><strong>R3 — Koalitionsdedup:</strong> Löften som delas av flera partier (group_id) räknas exakt en gång i koalitionssummor. Skiljer sig beloppen mellan partierna visas intervallet min–max med fotnot.</p>
+      <p><strong>R4 — Totaler:</strong> Fläsket = Σ(utgifter + intäktsminskningar). Finansieringsgap = Fläsket − Σ(besparingar + angiven finansiering).</p>
+      <p><strong>R5 — Beloppsspärr:</strong> Enskilda löften med basbelopp över 1 500 mdkr publiceras inte automatiskt.</p>
+
+      <h2>Skatter och besparingar</h2>
+      <p>Skattesänkningar räknas som intäktsminskning och ingår i Fläsket. Uttalade besparingar redovisas separat som negativ post — de "försvinner" inte in i totalen (annars kan ett parti nolla sig med en rad "effektiviseringar").</p>
 
       <h2>Jämförelser</h2>
-      <p>Alla jämförelsetal lagras i constants.json med källa. Inga påhittade siffror. Värden markerade "VERIFIERA" är platshållare som verifieras före lansering.</p>
+      <p>Alla jämförelsetal lagras i <code>constants.json</code> med källa och hämtdatum. Inga påhittade siffror — varje konstant har en spårbar käll-URL. Värden markerade "VERIFIERA" är platshållare som bekräftas mot auktoritativ källa före publicering.</p>
+      <p>Varje löfte visas med 1–3 jämförelser: minst en vardaglig (löner, vårdplatser, skolmåltider), max en kosmisk (myntstapel mot månen/Mars). Valet är deterministiskt på löftes-id.</p>
 
-      <h2>Finansieringsanspråk</h2>
-      <p>Uttalade besparingar redovisas separat — de "försvinner" inte in i totalen. Ofinansierade löften märks tydligt.</p>
+      <h2>Verbatim- och grindkedjan</h2>
+      <p>Alla löftescitat kontrolleras ordagrant mot källtexten (G3 — verbatimgrinden). LLM-extraherade belopp dubbelkollas av en oberoende modell från annan modellfamilj (G4). Fullständig grindlogik i <code>pipeline/src/gates.ts</code>.</p>
+
+      <h2>Reformutrymme</h2>
+      <p>Reformutrymmet hämtas från senaste bedömning av Konjunkturinstitutet/ESV. Gap-mätaren ställer Fläsket mot reformutrymmet × 4. Är reformutrymmet overifierat visas endast fläsket med metodnot.</p>
     </div>
   </div>
 </Layout>

@@ -16,16 +16,21 @@ const jsonLd = [
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Om drygast.nu</h1>
-      <p>drygast.nu ("Fläskvågen") är en oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför riksdagsvalet söndagen den 13 september 2026.</p>
+      <p>drygast.nu ("Fläskvågen") är en oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför riksdagsvalet söndagen den 13 september 2026. Varje löfte fångas, prissätts, summeras per parti och koalition — och översätts till jämförelser som alla förstår.</p>
 
       <h2>Neutralitetslöfte</h2>
-      <p>Identisk insamling, metod, grindar och humorton för samtliga åtta riksdagspartier. Topplistor är rena datasorteringar. Ingen valrekommendation, ingen värdering av sakfrågor.</p>
+      <p>Identisk insamling, metod, grindar och humorton för samtliga åtta riksdagspartier. Topplistor är rena datasorteringar — inga redaktionella urval. Ingen valrekommendation, ingen värdering av sakfrågor. Sajten värderar inte om ett löfte är bra — bara vad det kostar och om finansiering anges.</p>
+      <p>All kod och all data är publikt granskningsbar. Pipelinens promptmallar, grindlogik och kostnadsmetodik ligger öppet i repot. Git-historiken är en publik revisionslogg — varje sifferändring är spårbar till sin källa.</p>
 
       <h2>Vem ligger bakom?</h2>
-      <p>drygast.nu drivs som ett oberoende projekt med öppen källkod. All kod och all data är publikt granskningsbar.</p>
+      <p>drygast.nu drivs som ett oberoende projekt med öppen källkod. Ingen partitillhörighet, inga redaktionella bindningar. Byggd och underhållen av en autonom pipeline med mänsklig granskning av gränsfall.</p>
 
-      <h2>Stöd projektet</h2>
-      <p>Projektet drivs ideellt. Vill du stödja vägningen? Swisha en slant eller sprid ordet.</p>
+      <h2>Stöd vägningen</h2>
+      <div class="stod-box">
+        <p>Projektet drivs ideellt och finansieras helt av driftkostnaderna (under 2&nbsp;500 kr/år). Vill du stödja vägningen?</p>
+        <p class="stod-box__placeholder stampel">SWISH / BUY ME A COFFEE — KOMMER SNART</p>
+        <p class="stod-box__note">Betalningsuppgifter kompletteras av ägaren före lansering.</p>
+      </div>
 
       <h2>Kontakt</h2>
       <p>För press och frågor, se <a href="/press">presssidan</a>.</p>
@@ -36,5 +41,22 @@ const jsonLd = [
 <style>
   .prosa-content--centered {
     margin: 0 auto;
+  }
+  .stod-box {
+    border: 1px solid var(--linje-svag);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .stod-box__placeholder {
+    display: block;
+    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+  }
+  .stod-box__note {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    color: var(--dis);
+    margin-top: 0.35rem;
   }
 </style>

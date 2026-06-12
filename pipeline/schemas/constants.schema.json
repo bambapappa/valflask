@@ -13,7 +13,14 @@
     "reformutrymme_msek_per_ar": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["value", "source_url", "source_date"],
+      "required": ["value", "source_url"],
+      "if": {
+        "properties": { "value": { "type": "number" } },
+        "required": ["value"]
+      },
+      "then": {
+        "required": ["source_date"]
+      },
       "properties": {
         "value": {
           "oneOf": [
@@ -22,7 +29,8 @@
           ]
         },
         "source_url": { "type": "string" },
-        "source_date": { "type": "string" }
+        "source_date": { "type": "string" },
+        "fetched_date": { "type": "string" }
       }
     },
     "items": {
@@ -31,6 +39,13 @@
         "type": "object",
         "additionalProperties": false,
         "required": ["id", "label", "value", "unit", "kind", "source_url"],
+        "if": {
+          "properties": { "value": { "type": "number" } },
+          "required": ["value"]
+        },
+        "then": {
+          "required": ["source_date"]
+        },
         "properties": {
           "id": {
             "type": "string",
@@ -56,6 +71,9 @@
             "type": "string"
           },
           "source_date": {
+            "type": "string"
+          },
+          "fetched_date": {
             "type": "string"
           }
         }

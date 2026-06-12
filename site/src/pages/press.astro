@@ -19,13 +19,18 @@ const jsonLd = [
       <p>drygast.nu är en oberoende, neutral sammanställning av vallöften. Journalister och media är välkomna att använda data med angivande av källa.</p>
 
       <h2>Citatpolicy</h2>
-      <p>Data får fritt citeras med källangivelse "drygast.nu". OG-bilder får användas i redaktionellt syfte.</p>
+      <p>Data får fritt citeras med källangivelse "drygast.nu". Rekommenderat citatformat: "Enligt drygast.nu (hämtat ÅÅÅÅ-MM-DD) uppgår [parti]s vallöften till ≈ X mdkr för mandatperioden."</p>
+      <p>OG-bilder får användas i redaktionellt syfte. Siffror får inte ändras eller tas ur sitt sammanhang. Citera hellre ur API:et (<a href="/api">/api</a>) än från skärmdumpar — datan är maskinläsbar och versionerad med <code>data_hash</code>.</p>
 
       <h2>OG-bilder</h2>
-      <p>Varje löfte och parti har en OG-bild i svart/gul kostym. Bilderna är genererade vid byggtid och tillgängliga via sidornas metadata.</p>
+      <p>Varje löfte och parti har en OG-bild i svart/gul kostym (sajtens identitet, inte partifärg). Bilderna genereras vid byggtid och är tillgängliga via sidornas <code>og:image</code>-metadata. Exempel: <code>/og/parti-s.png</code>, <code>/og/lofte-p-2026-0142.png</code>.</p>
 
       <h2>Kontakt</h2>
-      <p>För pressförfrågningar, kontakta oss via e-post. Kontaktuppgifter kompletteras före lansering.</p>
+      <p>För pressförfrågningar, rättelser och övrig kontakt: e-postadress kompletteras av ägaren före lansering.</p>
+      <p class="press__contact-placeholder stampel">KONTAKTUPPGIFTER — KOMMER SNART</p>
+
+      <h2>Rättelser</h2>
+      <p>Fel rättas synligt — aldrig i tysthet. Se <a href="/rattelser">rättelsesidan</a> för fullständig logg. Kontaktväg för partier, journalister och allmänhet: se ovan.</p>
     </div>
   </div>
 </Layout>
@@ -33,5 +38,11 @@ const jsonLd = [
 <style>
   .prosa-content--centered {
     margin: 0 auto;
+  }
+  .press__contact-placeholder {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
   }
 </style>

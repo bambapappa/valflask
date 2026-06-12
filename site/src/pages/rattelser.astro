@@ -16,7 +16,15 @@ const jsonLd = [
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Rättelser</h1>
-      <p>Fel rättas synligt på denna sida, aldrig i tysthet. Rättelser hämtas automatiskt från git-commits taggade <code>correction:</code>.</p>
+      <p>Fel rättas synligt på denna sida, aldrig i tysthet. Tyst rättelse är förbjuden — varje korrigering har ett publikt spår.</p>
+
+      <h2>Så fungerar rättelseflödet</h2>
+      <p>När ett fel upptäcks (i en siffra, ett citat, en källhänvisning eller en kostnadsberäkning) görs en rättelse-commit till repots <code>main</code>-gren. Committen taggas med prefixet <code>correction:</code> följt av en beskrivning av vad som rättats och varför.</p>
+      <p>Exempel: <code>correction: p-2026-0142 — belopp rättat från 12 000 till 8 000 msek efter nyTT-källa</code></p>
+      <p>Pipelinen kör automatiskt om data vid nästa schemalagda körning, och sajten byggs om med korrigerade värden. Alla rättelse-commits listas på denna sida — sorterade kronologiskt med datum och commit-hash.</p>
+      <p>Partier, journalister och allmänhet kan anmäla fel via kontaktuppgifterna på <a href="/press">presssidan</a>. Varje anmälan granskas mot källmaterialet innan rättelse publiceras.</p>
+
+      <h2>Registrerade rättelser</h2>
       <p>Inga rättelser har registrerats ännu.</p>
     </div>
   </div>
