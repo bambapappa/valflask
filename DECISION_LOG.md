@@ -17,3 +17,94 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 **Motiv:** Spec kräver att byggagenten beslutar och loggar designriktning; Fable hanterar M1.
 **Förkastade alternativ:** Förvala riktning A i M0 — felaktigt, beslutsmandat tillhör M1-fasen.
 
+## 2026-06-12 — Designriktning A vald: "Diarienummer möter löpsedel" (Fable, M1)
+
+**Beslut:** Riktning A genomförs kompromisslöst. Två strikt åtskilda röster: "Akten" (riksdagstryck: hårlinjer, tabellverk, marginalnoter, stämplar, serif) bär allt; "Löpet" (svart platta, gul jättesiffra, kondenserad versal) tillåts ENDAST för nyckeltal och sajtidentitet. Formregler: border-radius 0 överallt, inga skuggor/gradienter/transitions; enda rörelsen är taxametern på `/` (1100 ms, respekterar prefers-reduced-motion). Bindande detaljspec i `site/DESIGN.md`; tokens i `site/src/styles/tokens.css`.
+**Motiv:** Konceptet speglar tonkravet §1.5 exakt (allvarlig stomme, deadpan glasyr) och innehållets natur: byråkratisk registrering av sensationella summor. Svart/gult skrik appliceras identiskt på alla partier (neutralitet §17) och ger maximalt skärmdumpbara OG-bilder (delningsbilden är främsta marknadsföringen, §11).
+**Förkastade alternativ:** B "Kvittorullen" — en stark engångsvits som inte bär krönikor, metodsidor och fyra månaders valrörelse; mono-allt skadar läsbarheten. C "Statistisk plansch 1972" — offsetpalett krockar med en-signalfärgsregeln och riskerar färgkollision med partifärger i dataviz; kräver omfattande egenproducerad illustration.
+**Påverkan:** `site/DESIGN.md`, `site/src/styles/{tokens,base}.css`; all M1-komponentbyggnad (Sonnet) sker mot dessa.
+
+## 2026-06-12 — Typografi: Anton + IBM Plex Mono + Source Serif 4, egna subsets
+
+**Beslut:** Display: Anton 400 (versal, aldrig tal). Siffror/stämpel: IBM Plex Mono 400/700 — ALLA tal utanför brödtext sätts i mono (tabulär per konstruktion; taxametern kräver fast sifferbredd). Brödtext: Source Serif 4 variabel 400–700 (opsz pinnad 20) + statisk italic 400, med global `font-variant-numeric: tabular-nums`. Självhostade woff2 i `site/public/fonts/` (~148 kB, budget ≤ 170 kB), OFL-licenser bredvid. Mono + serif är EGNA subsets från kompletta releaser (`@ibm/plex-mono@2.5.0`, `source-serif@4.5.1`): fontsources färdiga latin-subset saknar `≈` (U+2248) som §8 kräver framför LLM-estimat, samt `→`/`↗`. Teckenset + regenereringskommandon i `site/public/fonts/README.md`.
+**Motiv:** Anton är genuint löpsedelskondenserad; Plex Mono ger stämpel-/diarienummerkaraktären och säkrar tabularitet där siffran är produkten; Source Serif 4 är utredningstryckets serif med dokumenterad tnum (verifierad i subset). Alla tre har fullt svenskt teckenstöd (verifierat med fontTools mot cmap) och OFL tillåter incheckning i publikt repo.
+**Förkastade alternativ:** Bebas Neue (saknar gemener), Oswald (urvattnad webbdefault), Courier Prime (för spinkig i jättestorlek), JetBrains/Space Mono (fel register: terminal/tech; Space-familjen dessutom angränsande till förbjudna Space Grotesk), STIX Two/Literata/PT Serif (tyngre filer eller fel karaktär), fontsource-subsets rakt av (saknar ≈ — verifierat brott mot §8-typografin).
+**Påverkan:** `site/public/fonts/*`, `site/src/styles/base.css` (@font-face), prestandabudget §10 i DESIGN.md.
+
+## 2026-06-12 — Färgsystem: papper/svärta + EN signalfärg (löpsedelsgul)
+
+**Beslut:** `--papper #F6F3EC`, `--svarta #111111`, signalfärg `--gul #FFD600` med uttömmande användningslista (DESIGN.md §3). Ingen röd/grön-semantik: gap, överskridanden och statusar uttrycks med svärta/gul/stämpeltext. Partifärger existerar endast inuti datavisualisering (ur `parties.json`, AA-justerad textvariant). OG-bilder bär alltid sajtens svart/gula kostym — aldrig partifärg. Ingen dark mode (`color-scheme: light`): papper är konceptet. Alla använda kontrastpar dokumenterade ≥ AA (svärta/gul ≈ 12,9:1).
+**Motiv:** §11 kräver papper/svärta + EN signalfärg och total partifärgsneutralitet i kostymen; röd/grön hade smugit in värdering i datan (§17). Gul/svart är löpsedelns genrefärger och ger identisk "skrik-nivå" åt alla partier.
+**Förkastade alternativ:** Stämpelröd som signal (associerar till varning/avslag = värdering); partifärgade OG-bilder (neutralitetsbrott + 8 olika kostymer); dark mode (dubblerad testyta utan funktion för ett "tryckt" koncept).
+**Påverkan:** `tokens.css`, all dataviz (M4), OG-generering (M1), `parties.json` (AA-varianter, M1-fixtures).
+
+## 2026-06-12 — Grindlogik §7: arkitektur och exekveringsordning (Fable)
+
+**Beslut:** `pipeline/src/gates.ts` implementerad som ren, deterministisk modul utan LLM och utan I/O efter init; klocka (`now`) och allowlist injiceras (`GateContext`). Exekveringsordning: G2 (artikelnivå) → G5 (artikelnivå) → per kandidat G1 → G3+G4, där alla fallerande grindar per kandidat samlas. Underkänt går ALLTID till review (`needs_review`) — grindarna fäller aldrig permanent. Kandidatschema i `pipeline/schemas/extraction.schema.json` (draft 2020-12) med `additionalProperties:false` som injektionshygien; schemat tillåter upp till 100 kandidater i arrayen så att >5 fälls semantiskt korrekt av G5 (hela artikeln) i stället för som schemafel.
+**Motiv:** Determinism är förutsättningen för T4-snapshots; artikelnivågrindar först gör att otillåten källa/bomb aldrig processas vidare; samlade grindfel ger användbara review-issues; review-i-stället-för-avslag bevarar G4-målet (människa avgör gränsfall, inget tyst datatapp).
+**Förkastade alternativ:** Numerisk exekvering G1→G5 (slösar arbete på kandidater ur redan ogiltig källa); first-fail per kandidat (sämre review-underlag); hårt avslag i grind (tyst datatapp, bryter mot §7:s review-flöde); schema-tak på 5 kandidater (G5-bomb hade rapporterats som obegripligt G1-fel).
+**Påverkan:** `gates.ts`, `extraction.schema.json`, `extract.ts`/`publish.ts` (M2 konsumerar kontraktet), T4–T6.
+
+## 2026-06-12 — G3-verbatimkanon: definierad normalisering, skiftlägeskänslig, citatgolv 5 ord
+
+**Beslut:** Verbatimjämförelsen använder exakt denna kanon, identiskt applicerad på källtext och citat: Unicode NFC → borttag av osynliga/format-/biditecken (soft hyphen, zero-width, BOM, U+202A–E m.fl.) → typografiska citattecken→raka → alla streckvarianter→bindestreck-minus → `…`→`...` → allt whitespace (inkl. NBSP/smala mellanrum)→ett blanksteg → trim. Jämförelsen är SKIFTLÄGESKÄNSLIG substring-match. Utöver specens tak 40 ord införs ett golv: < 5 ord ⇒ review.
+**Motiv:** Specen säger "whitespace-normaliserad jämförelse"; ren whitespace-normalisering fäller legitima citat på CMS-typografi (”…”, NBSP, mjuka bindestreck) och släpper igenom bidi-gömd text. Kanonen neutraliserar endast typografisk variation — båda sidor transformeras lika, så fabricerad text kan aldrig passera. Golvet: citat under 5 ord kan inte uppfylla löftesdefinitionen (A1) och är triviala att hitta var som helst i en text, vilket skulle urholka grinden.
+**Förkastade alternativ:** Endast whitespace-kollaps (falska underkännanden på typografi ⇒ review-brus som driver ägaren att lita mindre på grinden); case-insensitive match (försvagar "ordagrant" utan dokumenterad vinst); fuzzy-/likhetsmatchning (öppnar exakt det hallucinationsfönster G3 ska stänga).
+**Påverkan:** `normalizeForVerbatim()` exporteras och ska återanvändas av T5/T6-fixtures (M2) så att fixtures testar samma kanon.
+
+## 2026-06-12 — G2-kanonisering: https, defaultport, exakt match efter singel-www-strip
+
+**Beslut:** Käll-URL godkänns endast om: protokoll exakt `https:`, ingen explicit port, värdnamn (lowercase, IDNA/punycode via WHATWG URL, trailing dot strippad) matchar allowlist EXAKT efter strip av högst ETT ledande `www.`. Övriga subdomäner kräver egen allowlist-rad. Dessutom korsvalideras fetch-stegets `domain`-fält mot URL-härledd domän; avvikelse ⇒ review.
+**Motiv:** §6.1 kräver exakt domänmatch med https. `www.`-varianten ägs per definition av samma zonägare och förekommer i praktiken i mediers RSS-länkar — utan strip hade i princip alla DN/SvD-artiklar fällts felaktigt. IDN-homografer faller automatiskt (punycode-form matchar aldrig ASCII-allowlisten). Konsistenskontrollen fångar interna buggar och manipulationsförsök mellan pipeline-steg.
+**Förkastade alternativ:** Generell subdomän-wildcard (öppnar t.ex. fritt bloggutrymme under mediedomäner); PSL-/eTLD+1-bibliotek (nytt beroende + bredare matchning än specens "exakt"); att lita på fetch-stegets `domain`-fält utan korsvalidering.
+**Påverkan:** `canonicalDomain()` i `gates.ts`; `sources.yaml` behåller exakta domäner (data.riksdagen.se står redan separat).
+
+## 2026-06-12 — G4: datumfönster ±548 dygn; R5-spärren även i publish
+
+**Beslut:** Rimlighetsdatum implementeras som |körningstid − `published`| ≤ 548 dygn (≈18 mån, fast tal för determinism); oparsebart/saknat datum ⇒ review. R5 (1 500 000 msek) tillämpas i G4 på `amount_in_text_msek` och MÅSTE återtillämpas i publish-steget på cost-stegets `msek_base` via exporterade `passesAmountCapR5()` — grinden körs före kostnadssättningen och kan inte se LLM-estimat.
+**Motiv:** §7 anger ±18 mån utan dygnsdefinition; 548 dygn är deterministiskt och testbart (månadsaritmetik varierar med kalendern). R5 på två punkter är försvar i djupet: belopp kan uppstå/växa i cost-steget efter att G4 passerats.
+**Förkastade alternativ:** Kalendermånadsaritmetik (icke-deterministisk runt månadsskiften); R5 enbart i grindsteget (lucka för cost-genererade belopp); asymmetriskt fönster (specen säger ±).
+**Påverkan:** `gates.ts` (konstanter exporterade), `publish.ts` (M2 ska anropa `passesAmountCapR5` — kontraktet står i gates.ts-huvudet).
+
+## 2026-06-12 — Pipelineberoenden: ajv (runtime), tsx/@types/node (dev), node:test som testrunner
+
+**Beslut:** `ajv@^8.17` som enda runtime-beroende i pipelinen (G1/schemavalidering); `tsx` + `@types/node` som dev-beroenden; tester körs med Nodes inbyggda `node:test` (`pnpm test`); `pnpm-lock.yaml` incheckad för frozen-lockfile i CI. `ajv-formats` utelämnas (schemat använder inga format; datum valideras i kod i G4).
+**Motiv:** §14 kräver minimalt beroendeträd med DECISION_LOG-rad per beroende; ajv är redan sanktionerad av specen (T3 nämner ajv-validering); tsx krävs av M0:s befintliga `pipeline:run`-script men fanns inte deklarerad — bugg rättad. node:test ger noll extra beroenden.
+**Förkastade alternativ:** vitest/jest (stora träd för behov som node:test täcker); zod i stället för ajv (schemat måste vara JSON Schema — delas med sajt och /api-dokumentation per §4); ajv-formats (onödig yta).
+**Påverkan:** `pipeline/package.json`, `pipeline/pnpm-lock.yaml`, `pipeline/tsconfig.json` (ny), `pipeline/tests/gates.test.ts` (18 tester, gröna 2026-06-12 inkl. typecheck).
+
+## 2026-06-12 — M1-data: Fixturer fiktiva, spärr i Layout (Sonnet)
+
+**Beslut:** Alla fixture-löften i `data/promises.json` (28 stycken, jämnt över 8 partier) är fiktiva — inga härrör från verkliga källor. Varje fixture-löfte har `extraction.run_id` som börjar med "fixture-". Sajten visar en diskret gul list "EXEMPELDATA — skarp insamling startar i M3" (DESIGN.md §15-stil) så länge någon post har fixture-run_id. Spärren sitter i Layout.astro via `isFixture()`-checken som körs per sidladdning.
+**Motiv:** Spec §18 kräver att fixtures är realistiska men fiktiva; fixture-run_id möjliggör enkel identifiering och borttagning när skarp data börjar flöda i M3. Gul banner varnar besökare utan att blockera innehåll.
+**Förkastade alternativ:** Ingen spärr (publicerar ovetandeskaplig data utan varning); dölj fixtures helt (ingen testbar sajt i M1).
+**Påverkan:** `data/promises.json`, `site/src/layouts/Layout.astro`, `site/src/lib/calc.ts` (`isFixture()`).
+
+## 2026-06-12 — Sajtberoenden: satori, @resvg/resvg-js, ajv (Sonnet, M1)
+
+**Beslut:** `satori@^0.26` + `@resvg/resvg-js@^2.6` för OG-bildgenerering vid build (§3, DESIGN.md §7). `ajv@^8.20` duplicerat i sajten för T3-validering av data/*.json. Inga andra nya beroenden.
+**Motiv:** Spec §3 sanktionerar satori + resvg explicit. ajv krävs för §5 (sajten ska validera data och faila hellre än publicera trasig data). Samma version som pipelinen.
+**Förkastade alternativ:** Sharp för OG (tyngre, kräver native); skippa sajtsidans validering (brott mot §5); zod (schemat måste vara JSON Schema per §4).
+**Påverkan:** `site/package.json`, `site/pnpm-lock.yaml`.
+
+## 2026-06-12 — Taxameter: förkompilerad IIFE i public/, is:inline (Sonnet, M1)
+
+**Beslut:** Taxameter-skriptet förkompileras från TS till minifierad IIFE (~680 byte) med esbuild och placeras som `public/taxameter.js`. Laddas via `<script is:inline src="/taxameter.js">` — aldrig Astro-modulbundet (CSP tillåter inte inline-skript). Slutvärdet står alltid i HTML:en (SSG), JS animerar bara upp till det. Respekterar prefers-reduced-motion. Inga andra öar i M1.
+**Motiv:** DESIGN.md §8 kräver <2 kB vanilla-TS, 0→total easeOutQuart 1100ms, mono/tabular, slutvärde i HTML. is:inline är enda sättet att undvika Astro:s modulembedding (vilket skapar inline-skript som bryter mot CSP bilaga C).
+**Förkastade alternativ:** Astro `<script>` utan is:inline (skapar inline-modulembedding → CSP-brott); Astro island med framework (överdrivet för 30 rader kod).
+**Påverkan:** `site/src/scripts/taxameter.ts` (källa), `site/public/taxameter.js` (förkompilerad), `site/src/layouts/Layout.astro`.
+
+## 2026-06-12 — Datadir via process.cwd() (Sonnet, M1)
+
+**Beslut:** `site/src/lib/data.ts` använder `process.cwd()` + "../data" för att hitta datakatalogen — inte `import.meta.url`. Under `astro build` är cwd `site/`, så `../data` pekar korrekt på repo-data. Vid testkörsning同理.
+**Motiv:** `import.meta.url` pekar efter Vite-bundling på fel plats (dist/chunks/); process.cwd() är stabil i både dev och build.
+**Förkastade alternativ:** Astro content collections (kräver omstrukturering till content-dir); symlink (plattformsospecificerat); hardcodad absolut sökväg (icke-portabelt).
+**Påverkan:** `site/src/lib/data.ts`.
+
+## 2026-06-12 — OG-bilder: satori med TTF-konvertering vid build (Sonnet, M1)
+
+**Beslut:** OG-bilder genereras i ett post-build-skript (`scripts/generate-og.mts`). WOFF2-fonter konverteras till TTF med `fonttools ttLib.woff2 decompress` (kräver fonttools + brotli i CI) eftersom satori inte stödjer WOFF2 direkt. TTF-filerna ligger i `public/fonts/` men används inte av webbläsaren (endast WOFF2 laddas). Svart/gul kostym för alla, aldrig partifärg (DESIGN.md §7).
+**Motiv:** DESIGN.md §7 kräver satori + resvg. Satori kräver TrueType/OpenType, inte WOFF2. Fonttools är etablerat och deterministiskt.
+**Förkastade alternativ:** WOFF2-stöd i satori (finns ej); Googles og-image-paket (brott mot "inga externa tjänster"); hoppa över OG i M1 (brott mot §18 leverans D).
+**Påverkan:** `site/scripts/generate-og.mts`, `site/public/fonts/*.ttf`, CI-workflow.
+

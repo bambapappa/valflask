@@ -1,8 +1,175 @@
 ---
-const title = "topplistor — drygast.nu";
+import Layout from "../layouts/Layout.astro";
+import { getPromises, getParties, getPeople } from "../lib/data";
+import { formatMsek, promiseTotalMsek, partyTotalMsek, getPromisesForParty } from "../lib/calc";
+
+const promises = getPromises();
+const parties = getParties();
+const people = getPeople();
+const active = promises.filter((p) => p.status !== 'tillbakadragen');
+
+const fetaste = [...active].sort((a, b) => promiseTotalMsek(b) - promiseTotalMsek(a));
+
+const partyTotals = parties.map((p) => ({
+  ...p,
+  total: partyTotalMsek(promises, p.code),
+  perVote: p.votes_2022 > 0 ? (partyTotalMsek(promises, p.code) * 1000 / p.votes_2022) : 0,
+})).sort((a, b) => b.total - a.total);
+
+const partyPerVote = [...partyTotals].sort((a, b) => b.perVote - a.perVote);
+
+const personTotals = people
+  .map((person) => ({
+    ...person,
+    total: promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen').reduce((s, p) => s + promiseTotalMsek(p), 0),
+    count: promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen').length,
+  }))
+  .filter((p) => p.count > 0)
+  .sort((a, b) => b.total - a.total);
+
+const categories: Record<string, number> = {};
+for (const p of active) {
+  categories[p.category] = (categories[p.category] || 0) + promiseTotalMsek(p);
+}
+const categorySorted = Object.entries(categories).sort((a, b) => b[1] - a[1]);
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>{title}</title></head>
-<body><h1>topplistor</h1></body>
-</html>
+<Layout title="Topplistor — drygast.nu" description="Fetaste enskilda fläsket, fläskigaste partiet, dyraste kategorin. Rena datasorteringar.">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Topplistor</h1>
+      <p>Rena datasorteringar — inga redaktionella urval. Samma metod för alla partier.</p>
+    </div>
+
+    <section class="sektion">
+      <h2>Fetaste enskilda fläsket</h2>
+      <ol class="promise-list">
+        {fetaste.slice(0, 10).map((p) => (
+          <li>
+            <a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a>
+            <div class="etikett etikett--sub">
+              {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num">{formatMsek(promiseTotalMsek(p))}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="sektion sektion--lg">
+      <h2>Fläskigaste partiet (totalt)</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Parti</th>
+              <th class="num">Totalt (mdkr)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partyTotals.map((p, i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td><a href={`/parti/${p.code}`}>{p.name}</a></td>
+                <td class="num">{formatMsek(p.total)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sektion sektion--lg">
+      <h2>Fläskigaste partiet (per röst)</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Parti</th>
+              <th class="num">Kr per röst</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partyPerVote.map((p, i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td><a href={`/parti/${p.code}`}>{p.name}</a></td>
+                <td class="num">{Math.round(p.perVote).toLocaleString('sv-SE')} kr</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sektion sektion--lg">
+      <h2>Frikostigaste politikern</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Politiker</th>
+              <th>Parti</th>
+              <th class="num">Totalt (mdkr)</th>
+              <th class="num">Löften</th>
+            </tr>
+          </thead>
+          <tbody>
+            {personTotals.map((p, i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td><a href={`/ledamot/${p.slug}`}>{p.name}</a></td>
+                <td>{parties.find((pp) => pp.code === p.party)?.name}</td>
+                <td class="num">{formatMsek(p.total)}</td>
+                <td class="num">{p.count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sektion sektion--lg">
+      <h2>Dyraste kategorin</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Kategori</th>
+              <th class="num">Totalt (mdkr)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categorySorted.map(([cat, total], i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td>{cat}</td>
+                <td class="num">{formatMsek(total)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+  .sektion {
+    margin-top: 1.5rem;
+  }
+  .sektion--lg {
+    margin-top: 2rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+  .etikett--sub {
+    margin-top: 0.15rem;
+  }
+</style>

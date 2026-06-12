@@ -1,0 +1,10 @@
+---
+interface Props {
+  source: string;
+  date?: string;
+}
+const { source, date } = Astro.props;
+---
+<div class="kallrad">
+  Källa: {source}{date ? ` · Hämtad ${date}` : ''} · drygast.nu
+</div>

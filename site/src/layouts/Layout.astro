@@ -1,0 +1,60 @@
+---
+import "../styles/tokens.css";
+import "../styles/base.css";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { getPromises, getParties, getChangelog } from "../lib/data";
+import { dataHash, isFixture } from "../lib/calc";
+
+const promises = getPromises();
+const parties = getParties();
+const changelog = getChangelog();
+const hash = dataHash(changelog);
+const fixture = isFixture(promises);
+const lastRun = promises.length > 0 ? promises[0].source.fetched_at : new Date().toISOString();
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  hasTaxameter?: boolean;
+}
+
+const canonicalBase = Astro.site?.origin ?? "https://drygast.nu";
+const { title, description = "Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften.", ogImage = "/og/start.png", hasTaxameter = false } = Astro.props;
+const ogImageUrl = ogImage.startsWith("https://") ? ogImage : `${canonicalBase}${ogImage}`;
+---
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:image" content={ogImageUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="sv_SE" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/ibm-plex-mono-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+</head>
+<body>
+  <a href="#main" class="skiplank">Hoppa till huvudinnehåll</a>
+  <SiteHeader hash={hash} lastRun={lastRun} parties={parties} />
+  {fixture && (
+    <div class="fixture-banner etikett" role="status">EXEMPELDATA — skarp insamling startar i M3</div>
+  )}
+  <main id="main">
+    <slot />
+  </main>
+  <SiteFooter hash={hash} />
+  {hasTaxameter && <script is:inline src="/taxameter.js"></script>}
+</body>
+</html>

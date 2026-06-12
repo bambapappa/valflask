@@ -1,13 +1,38 @@
 ---
+import Layout from "../../layouts/Layout.astro";
+import MetodLank from "../../components/MetodLank.astro";
+
 export function getStaticPaths() {
   return [
-    { params: { slug: '2026-24' } },
+    { params: { slug: "2026-24" } },
   ];
 }
+
 const { slug } = Astro.params;
+const [year, week] = slug.split("-");
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>Veckans fläsk {slug} — drygast.nu</title></head>
-<body><h1>Veckans fläsk: {slug}</h1></body>
-</html>
+<Layout title={`Veckans fläsk v${week} ${year} — drygast.nu`} description={`Krönika vecka ${week} ${year}: Sammanfattning av veckans vallöften.`}>
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <div class="etikett etikett--week">Veckans fläsk · Vecka {week} {year}</div>
+      <h1>Veckans fläsk: Exempelkrönika</h1>
+
+      <p>Detta är en exempelkrönika för vecka {week} {year}. När den skarpa insamlingen startar i M3 genereras veckokrönikor automatiskt av LLM C enligt prompt A4.</p>
+
+      <p>Varje vecka sammanfattas de nya och ändrade löftena med deadpan humor och torr statistik. Varje sakpåstående är spårbart till ett löftes-id i hakparenteser.</p>
+
+      <p>Underlaget består av fixture-data — 28 låtsaslöften jämnt fördelat över åtta partier. Den verkliga insamlingen börjar senare under 2026.</p>
+
+      <MetodLank />
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+  .etikett--week {
+    margin-bottom: 0.5rem;
+  }
+</style>

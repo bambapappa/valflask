@@ -1,0 +1,35 @@
+---
+interface Props {
+  rows: Array<Record<string, any>>;
+  columns: Array<{ key: string; label: string; num?: boolean }>;
+}
+const { rows, columns } = Astro.props;
+---
+<div class="datavy datavy--scroll">
+  <table>
+    <thead>
+      <tr>
+        <th class="radnr">#</th>
+        {columns.map((col) => (
+          <th class={col.num ? 'num' : ''}>{col.label}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, i) => (
+        <tr>
+          <td class="radnr">{i + 1}</td>
+          {columns.map((col) => (
+            <td class={col.num ? 'num' : ''} set:html={row[col.key] ?? ''} />
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+</style>

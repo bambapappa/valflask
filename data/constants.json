@@ -1,5 +1,91 @@
 {
   "generated_note": "Varje post kräver source_url + source_date. Värden nedan är PLATSHÅLLARE.",
-  "reformutrymme_msek_per_ar": { "value": "VERIFIERA", "source_url": "Konjunkturinstitutet/ESV", "source_date": "" },
-  "items": []
+  "reformutrymme_msek_per_ar": {
+    "value": "VERIFIERA",
+    "source_url": "Konjunkturinstitutet/ESV",
+    "source_date": ""
+  },
+  "items": [
+    {
+      "id": "ssk_arskostnad",
+      "label": "arbetskraftskostnad, sjuksköterska/år",
+      "value": "VERIFIERA",
+      "unit": "kr",
+      "kind": "vardaglig",
+      "source_url": "SCB/SKR",
+      "source_date": ""
+    },
+    {
+      "id": "larare_arskostnad",
+      "label": "arbetskraftskostnad, lärare/år",
+      "value": "VERIFIERA",
+      "unit": "kr",
+      "kind": "vardaglig",
+      "source_url": "SCB",
+      "source_date": ""
+    },
+    {
+      "id": "vardplats_ar",
+      "label": "en vårdplats, drift/år",
+      "value": "VERIFIERA",
+      "unit": "kr",
+      "kind": "vardaglig",
+      "source_url": "SKR",
+      "source_date": ""
+    },
+    {
+      "id": "skolmaltid_elev_ar",
+      "label": "skolmåltider per elev och år",
+      "value": "VERIFIERA",
+      "unit": "kr",
+      "kind": "vardaglig",
+      "source_url": "Livsmedelsverket",
+      "source_date": ""
+    },
+    {
+      "id": "enkrona_tjocklek_m",
+      "label": "tjocklek 1-krona",
+      "value": "VERIFIERA",
+      "unit": "m",
+      "kind": "kosmisk",
+      "source_url": "Riksbanken",
+      "source_date": ""
+    },
+    {
+      "id": "avstand_manen_m",
+      "label": "avstånd till månen (medel)",
+      "value": "VERIFIERA",
+      "unit": "m",
+      "kind": "kosmisk",
+      "source_url": "NASA",
+      "source_date": ""
+    },
+    {
+      "id": "avstand_mars_min_m",
+      "label": "avstånd till Mars (minsta)",
+      "value": "VERIFIERA",
+      "unit": "m",
+      "kind": "kosmisk",
+      "source_url": "NASA",
+      "source_date": ""
+    },
+    {
+      "id": "forbifart_sthlm",
+      "label": "Förbifart Stockholm, totalkostnad",
+      "value": "VERIFIERA",
+      "unit": "kr",
+      "kind": "infrastruktur",
+      "source_url": "Trafikverket",
+      "source_date": ""
+    },
+    {
+      "id": "jas39e_styck",
+      "label": "JAS 39E, styckpris",
+      "value": "VERIFIERA",
+      "unit": "kr",
+      "kind": "infrastruktur",
+      "source_url": "FMV",
+      "source_date": ""
+    }
+  ]
 }

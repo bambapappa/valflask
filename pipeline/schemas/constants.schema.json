@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drygast.nu/schemas/constants.schema.json",
+  "title": "Jämförelsekonstanter",
+  "description": "Jämförelsetal med källor (§9, bilaga D). Varje post kräver source_url + source_date. Värden är antingen siffervärden eller 'VERIFIERA'.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["generated_note", "reformutrymme_msek_per_ar", "items"],
+  "properties": {
+    "generated_note": {
+      "type": "string"
+    },
+    "reformutrymme_msek_per_ar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "source_url", "source_date"],
+      "properties": {
+        "value": {
+          "oneOf": [
+            { "type": "number" },
+            { "const": "VERIFIERA" }
+          ]
+        },
+        "source_url": { "type": "string" },
+        "source_date": { "type": "string" }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "value", "unit", "kind", "source_url"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+$"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {
+            "oneOf": [
+              { "type": "number" },
+              { "const": "VERIFIERA" }
+            ]
+          },
+          "unit": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": ["vardaglig", "kosmisk", "infrastruktur"]
+          },
+          "source_url": {
+            "type": "string"
+          },
+          "source_date": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

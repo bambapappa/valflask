@@ -1,0 +1,27 @@
+---
+interface Props {
+  quote: string;
+  person: string | null;
+  party: string;
+  domain: string;
+  date: string;
+  sourceUrl: string;
+  archiveUrl: string | null;
+}
+const { quote, person, party, domain, date, sourceUrl, archiveUrl } = Astro.props;
+---
+<blockquote>
+  <p>{quote}</p>
+</blockquote>
+<div class="etikett citat-attribution">
+  — {person || party}, {domain}, {date}
+  {' '}· <a href={sourceUrl}>källa ↗</a>
+  {archiveUrl && <> · <a href={archiveUrl}>arkiv ↗</a></>}
+</div>
+
+<style>
+  .citat-attribution {
+    margin-top: -0.5rem;
+    margin-bottom: var(--mellanrum);
+  }
+</style>

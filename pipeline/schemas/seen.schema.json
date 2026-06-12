@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drygast.nu/schemas/seen.schema.json",
+  "title": "Sedda URL:er",
+  "description": "SHA-256-hashlista över behandlade URL:er (§7 steg 1). Nyckel = hash, värde = timestamp.",
+  "type": "object",
+  "additionalProperties": {
+    "type": "string"
+  }
+}

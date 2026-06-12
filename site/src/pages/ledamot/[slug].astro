@@ -1,13 +1,66 @@
 ---
+import Layout from "../../layouts/Layout.astro";
+import { getPromises, getPeople, getParties } from "../../lib/data";
+import { promiseTotalMsek, formatDateShort } from "../../lib/calc";
+
 export function getStaticPaths() {
-  return [
-    { params: { slug: 'exempelledamot' } },
-  ];
+  const people = getPeople();
+  const promises = getPromises();
+  return people
+    .filter((person) => promises.some((p) => p.person?.name === person.name))
+    .map((person) => ({
+      params: { slug: person.slug },
+      props: { person },
+    }));
 }
-const { slug } = Astro.params;
+
+const { person } = Astro.props;
+const promises = getPromises();
+const parties = getParties();
+const personPromises = promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen');
+const party = parties.find((p) => p.code === person.party);
+const totalMsek = personPromises.reduce((sum, p) => sum + promiseTotalMsek(p), 0);
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>Ledamot {slug} — drygast.nu</title></head>
-<body><h1>Ledamot: {slug}</h1></body>
-</html>
+<Layout title={`${person.name} — drygast.nu`} description={`${person.name} (${party?.name}): ${personPromises.length} vallöften tillhörande ${person.role}.`}>
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>{person.name}</h1>
+      <div class="etikett etikett--role">
+        {party?.name} · {person.role}
+      </div>
+      <p><strong>{person.name}</strong> ({party?.name}, {person.role}) har {personPromises.length} vallöften med en sammanlagd kostnad av <strong class="num">{(totalMsek / 1000).toFixed(1).replace('.', ',')} mdkr</strong> för mandatperioden.</p>
+
+      <section class="sektion">
+        <h2>Löften</h2>
+        <ol class="promise-list">
+          {personPromises.map((p) => (
+            <li>
+              <a href={`/lofte/${p.id}/${p.slug}`}>
+                <strong>{p.title}</strong>
+              </a>
+              <div class="etikett etikett--sub">
+                <span class="num">{(promiseTotalMsek(p) / 1000).toFixed(1).replace('.', ',')} mdkr</span>
+                {' '}· {p.category} · {formatDateShort(p.date_stated)}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+  .etikett--role {
+    margin-bottom: var(--mellanrum);
+  }
+  .sektion {
+    margin-top: 1.5rem;
+  }
+  .etikett--sub {
+    margin-top: 0.15rem;
+  }
+</style>

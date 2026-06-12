@@ -1,20 +1,80 @@
 ---
+import Layout from "../../layouts/Layout.astro";
+import Lopsedel from "../../components/Lopsedel.astro";
+import GapMatare from "../../components/GapMatare.astro";
+import MetodLank from "../../components/MetodLank.astro";
+import KallRad from "../../components/KallRad.astro";
+import { getPromises, getParties, getConstants } from "../../lib/data";
+import { formatMsek, formatMsekShort, formatMsekOg, promiseTotalMsek, partyTotalMsek, financingGap, totalFlasket, getPromisesForParty, countPromises, formatDateShort } from "../../lib/calc";
+
 export function getStaticPaths() {
-  return [
-    { params: { kod: 's' } },
-    { params: { kod: 'm' } },
-    { params: { kod: 'sd' } },
-    { params: { kod: 'c' } },
-    { params: { kod: 'v' } },
-    { params: { kod: 'kd' } },
-    { params: { kod: 'l' } },
-    { params: { kod: 'mp' } },
-  ];
+  const parties = getParties();
+  return parties.map((p) => ({ params: { kod: p.code } }));
 }
+
 const { kod } = Astro.params;
+const promises = getPromises();
+const parties = getParties();
+const constants = getConstants();
+const party = parties.find((p) => p.code === kod)!;
+const partyPromises = getPromisesForParty(promises, kod);
+const total = partyTotalMsek(promises, kod);
+const flasket = totalFlasket(promises);
+const gap = financingGap(promises);
+const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>Parti {kod} — drygast.nu</title></head>
-<body><h1>Parti: {kod}</h1></body>
-</html>
+<Layout title={`${party.name}s vallöften 2026: ${formatMsekShort(total)} mdkr — drygast.nu`} description={`${party.name}s vallöften 2026 kostar ${formatMsekShort(total)} mdkr för mandatperioden. Oberoende, källspårad.`} ogImage={`/og/parti-${kod}.png`}>
+  <div class="page-content">
+    <Lopsedel total={formatMsek(total)} subtitle={party.name.toUpperCase()} count={partyPromises.length} date="2026" />
+
+    <div class="prosa-content prosa-content--centered">
+      <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num">{formatMsekShort(total)} mdkr</strong> för mandatperioden 2027–2030, fördelat på {partyPromises.length} löften.</p>
+    </div>
+
+    <MetodLank />
+
+    <GapMatare flasket={flasket} reformutrymme={reformutrymme} />
+
+    <section class="sektion">
+      <h2>{party.name}:s löften</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Löfte</th>
+              <th>Kategori</th>
+              <th class="num">Kostnad (mdkr)</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partyPromises.map((p, i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td>
+                <td>{p.category}</td>
+                <td class="num">{formatMsek(promiseTotalMsek(p), p.cost.basis)}</td>
+                <td>{p.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <KallRad source={`${party.name}:s valprogram`} />
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 1.5rem auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+</style>

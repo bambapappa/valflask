@@ -1,8 +1,59 @@
 ---
-const title = "api — drygast.nu";
+import Layout from "../layouts/Layout.astro";
+import { getPromises, getParties } from "../lib/data";
+
+const promises = getPromises();
+const parties = getParties();
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>{title}</title></head>
-<body><h1>api</h1></body>
-</html>
+<Layout title="API-dokumentation — drygast.nu" description="Öppet statiskt JSON-API för drygast.nu. Maskinläsbara data under CC BY 4.0.">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>API</h1>
+      <p>drygast.nu erbjuder ett öppet, statiskt JSON-API. All data är licensierad under CC BY 4.0 — ange "drygast.nu" som källa.</p>
+
+      <h2>Endpoints</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Endpoint</th>
+              <th>Beskrivning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>/api/v1/summary.json</code></td>
+              <td>Sammanfattning: totalsumma, antal löften, finansieringsgap</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/promises.json</code></td>
+              <td>Alla löften (kompletta postformat)</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/parties.json</code></td>
+              <td>Partimetadata</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Format</h2>
+      <p>JSON, UTF-8. Varje svar innehåller <code>generated_at</code> och <code>data_hash</code>.</p>
+
+      <h2>CORS</h2>
+      <p><code>Access-Control-Allow-Origin: *</code> — fritt att använda från alla domäner.</p>
+
+      <h2>Schemas</h2>
+      <p>JSON Schemas (draft 2020-12) finns i <code>pipeline/schemas/</code> i repot.</p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+</style>

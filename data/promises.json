@@ -1,1 +1,1218 @@
-[]
+[
+  {
+    "id": "p-2026-0001",
+    "group_id": null,
+    "title": "Höjd a-kassa till 90 procent av lönen",
+    "slug": "hojd-a-kassa-90-procent",
+    "parties": ["s"],
+    "person": {
+      "name": "Magdalena Andersson",
+      "role": "partiledare",
+      "riksdagen_id": "0987654321098"
+    },
+    "quote": "Vi lovar att höja a-kassan till 90 procent av lönen från år 2027 för alla förvärvsarbetande.",
+    "date_stated": "2026-05-12",
+    "source": {
+      "url": "https://www.dn.se/sverige/socialdemokraterna-lovar-hojd-a-kassa/",
+      "domain": "dn.se",
+      "archive_url": "https://web.archive.org/web/20260512160000/https://www.dn.se/sverige/socialdemokraterna-lovar-hojd-a-kassa/",
+      "fetched_at": "2026-05-12T15:10:00Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 8000,
+      "msek_base": 12000,
+      "msek_high": 18000,
+      "basis": "parti",
+      "basis_url": "https://socialdemokraterna.se/val2026/a-kassa",
+      "method_note": "Partiets egen beräkning baserad på försäkringskassans statistik över ersättningsnivåer.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": ["ssk_arskostnad"],
+    "quip": "Tolv miljarder om året — eller ungefär ett års sjukvård för en medelstor region.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-12T15"
+    }
+  },
+  {
+    "id": "p-2026-0002",
+    "group_id": "g-hojd-forsvarsanslag",
+    "title": "Permanent höjning av försvarsanslaget med 40 mdkr per år",
+    "slug": "hojt-forsvarsanslag-40-mdkr",
+    "parties": ["m"],
+    "person": {
+      "name": "Ulf Kristersson",
+      "role": "statsminister",
+      "riksdagen_id": "0123456789012"
+    },
+    "quote": "Vi föreslår en permanent höjning av försvarsanslaget med 40 miljarder kronor per år fram till 2030.",
+    "date_stated": "2026-04-20",
+    "source": {
+      "url": "https://www.svt.se/nyheter/inrikes/regeringen-hojer-forsvarsanslaget",
+      "domain": "svt.se",
+      "archive_url": "https://web.archive.org/web/20260420120000/https://www.svt.se/nyheter/inrikes/regeringen-hojer-forsvarsanslaget",
+      "fetched_at": "2026-04-20T10:30:00Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 38000,
+      "msek_base": 40000,
+      "msek_high": 42000,
+      "basis": "myndighet",
+      "basis_url": "https://regeringen.se/pressmeddelande/forsvarsanslag-2026",
+      "method_note": "Regeringens proposition baserad på försvarsberedningens underlag.",
+      "confidence": 0.95
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom omfördelning inom budget och tillväxteffekter.",
+      "msek": 40000
+    },
+    "comparisons": ["jas39e_styck", "forbifart_sthlm"],
+    "quip": "Fyrtio miljarder om året — det är drygt en Förbifart Stockholm per år, fast under marken.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-04-20T10"
+    }
+  },
+  {
+    "id": "p-2026-0003",
+    "group_id": "g-hojd-forsvarsanslag",
+    "title": "Försvarsanslaget måste upp till 3 procent av BNP",
+    "slug": "forsvarsanslag-3-procent-bnp",
+    "parties": ["sd"],
+    "person": {
+      "name": "Jimmie Åkesson",
+      "role": "partiledare",
+      "riksdagen_id": "0234567890123"
+    },
+    "quote": "Försvarsanslaget måste upp till minst 3 procent av BNP för att möta det hotbildsläge vi nu ser i Östersjöområdet.",
+    "date_stated": "2026-05-03",
+    "source": {
+      "url": "https://www.svd.se/a/3procentBnpForsvarSD",
+      "domain": "svd.se",
+      "archive_url": null,
+      "fetched_at": "2026-05-03T08:45:00Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50000,
+      "msek_base": 65000,
+      "msek_high": 80000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat: 3% av BNP minus nuvarande anslag ca 2%. BNP 2026 uppskattat till ca 6 500 mdkr.",
+      "confidence": 0.5
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": ["jas39e_styck"],
+    "quip": "Tre procent av BNP till försvaret — varifrån resten ska komma förblir en övning för läsaren.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-03T08"
+    }
+  },
+  {
+    "id": "p-2026-0004",
+    "group_id": null,
+    "title": "Sänkt inkomstskatt med 5 miljarder per år",
+    "slug": "sankt-skatt-5-mdkr",
+    "parties": ["l"],
+    "person": null,
+    "quote": "Liberalerna vill sänka inkomstskatten med 5 miljarder kronor per år genom att höja brytpunkten för statlig skatt.",
+    "date_stated": "2026-03-15",
+    "source": {
+      "url": "https://www.di.se/politik/liberalerna- vill-sanka-skatten/",
+      "domain": "di.se",
+      "archive_url": "https://web.archive.org/web/20260315140000/https://www.di.se/politik/liberalerna-vill-sanka-skatten/",
+      "fetched_at": "2026-03-15T12:00:00Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 4500,
+      "msek_base": 5000,
+      "msek_high": 5500,
+      "basis": "parti",
+      "basis_url": "https://liberalerna.se/val2026/skatteprogram",
+      "method_note": "Partiets kalkyl baserad på SCB:s inkomstfördelningsdata.",
+      "confidence": 0.75
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom besparingar i statsförvaltningen.",
+      "msek": 5000
+    },
+    "comparisons": ["ssk_arskostnad"],
+    "quip": "Fem miljarder i sänkt skatt — finansierat med besparingar som ännu inte har en adress.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-03-15T12"
+    }
+  },
+  {
+    "id": "p-2026-0005",
+    "group_id": null,
+    "title": "Investering i järnvägen Stockholm–Malmö 20 mdkr",
+    "slug": "investering-jarnvag-sthlm-malmo",
+    "parties": ["c"],
+    "person": {
+      "name": "Muharrem Demirok",
+      "role": "partiledare",
+      "riksdagen_id": null
+    },
+    "quote": "Vi vill investera 20 miljarder kronor i en ny snabbjärnväg mellan Stockholm och Malmö för att korta restiden.",
+    "date_stated": "2026-04-01",
+    "source": {
+      "url": "https://www.gp.se/nyheter/sverige/c-investering-jarnvag",
+      "domain": "gp.se",
+      "archive_url": "https://web.archive.org/web/20260401090000/https://www.gp.se/nyheter/sverige/c-investering-jarnvag",
+      "fetched_at": "2026-04-01T07:30:00Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 18000,
+      "msek_base": 20000,
+      "msek_high": 25000,
+      "basis": "parti",
+      "basis_url": "https://centerpartiet.se/infrastrukturplan",
+      "method_note": "Partiets uppskattning baserad på Trafikverkets förstudie.",
+      "confidence": 0.6
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Halvfinansierat genom EU-medel och lånemodell.",
+      "msek": 10000
+    },
+    "comparisons": ["forbifart_sthlm"],
+    "quip": "Tjugo miljarder för en snabbare tågresa — Förbifart Stockholm var billigare och den är inte ens klar.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-04-01T07"
+    }
+  },
+  {
+    "id": "p-2026-0006",
+    "group_id": null,
+    "title": "Avskaffa vinstsyfte i välfärden",
+    "slug": "avskaffa-vinstsyfte-valfarden",
+    "parties": ["v"],
+    "person": {
+      "name": "Nooshi Dadgostar",
+      "role": "partiledare",
+      "riksdagen_id": "0345678901234"
+    },
+    "quote": "Vi kräver att vinstdrivande välfärd avskaffas helt och att alla välfärdstjänster drivs i allmän regi.",
+    "date_stated": "2026-05-20",
+    "source": {
+      "url": "https://www.aftonbladet.se/nyheter/a/vansterpartiet-vinstforbud",
+      "domain": "aftonbladet.se",
+      "archive_url": "https://web.archive.org/web/20260520110000/https://www.aftonbladet.se/nyheter/a/vansterpartiet-vinstforbud",
+      "fetched_at": "2026-05-20T09:00:00Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 5000,
+      "msek_high": 8000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat baserat på uppskattade övergångskostnader vid förstatligande av privata vårdgivare.",
+      "confidence": 0.4
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": ["vardplats_ar"],
+    "quip": "Fem miljarder om året för att ta bort vinster — kostnaden för att ta över är, ironiskt nog, en vinst för byråkratin.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-20T09"
+    }
+  },
+  {
+    "id": "p-2026-0007",
+    "group_id": null,
+    "title": "Gratis tandvård till alla vuxna",
+    "slug": "gratis-tandvard-vuxna",
+    "parties": ["kd"],
+    "person": {
+      "name": "Ebba Busch",
+      "role": "partiledare",
+      "riksdagen_id": "0456789012345"
+    },
+    "quote": "Kristdemokraterna vill införa gratis tandvård för alla vuxna, inte bara barn och ungdomar.",
+    "date_stated": "2026-04-10",
+    "source": {
+      "url": "https://www.expressen.se/nyheter/kd-gratis-tandvard/",
+      "domain": "expressen.se",
+      "archive_url": "https://web.archive.org/web/20260410130000/https://www.expressen.se/nyheter/kd-gratis-tandvard/",
+      "fetched_at": "2026-04-10T11:00:00Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 14000,
+      "msek_high": 18000,
+      "basis": "media",
+      "basis_url": "https://www.svt.se/nyheter/inrikes/tandvardskostnader-scb",
+      "method_note": "Baserat på SCB:s statistik över totala tandvårdskostnader för vuxna i Sverige.",
+      "confidence": 0.65
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom höjd tobaksskatt och besparingar i Försäkringskassan.",
+      "msek": 8000
+    },
+    "comparisons": ["ssk_arskostnad", "skolmaltid_elev_ar"],
+    "quip": "Fjorton miljarder för gratis tandvård — priset för att Sverige ska kunna le utan att det kostar.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-04-10T11"
+    }
+  },
+  {
+    "id": "p-2026-0008",
+    "group_id": null,
+    "title": "Klimatbonus för elbilar på 80 000 kr per bil",
+    "slug": "klimatbonus-elbil-80000",
+    "parties": ["mp"],
+    "person": null,
+    "quote": "Miljöpartiet föreslår en klimatbonus på 80 000 kronor för varje ny elbil som säljs under nästa mandatperiod.",
+    "date_stated": "2026-03-28",
+    "source": {
+      "url": "https://www.sverigesradio.se/artikel/mp-klimatbonus-elbil",
+      "domain": "sverigesradio.se",
+      "archive_url": "https://web.archive.org/web/20260328100000/https://www.sverigesradio.se/artikel/mp-klimatbonus-elbil",
+      "fetched_at": "2026-03-28T08:15:00Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 4000,
+      "msek_high": 6000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat: ca 50 000–75 000 sålda elbilar/år × 80 000 kr per bil.",
+      "confidence": 0.45
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom höjd fordonsskatt på fossilbilar.",
+      "msek": 3500
+    },
+    "comparisons": ["forbifart_sthlm"],
+    "quip": "Fyra miljarder om året i bidrag till elbilar — batterierna laddas med hopp och skattemedel.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-03-28T08"
+    }
+  },
+  {
+    "id": "p-2026-0009",
+    "group_id": null,
+    "title": "Meritlärarsteg med 3 500 kr mer i lön per månad",
+    "slug": "meritlararsteg-3500-manad",
+    "parties": ["s"],
+    "person": null,
+    "quote": "Vi vill införa ett nationellt meritlärarsteg som ger 3 500 kronor mer i månadslön för de mest erfarna lärarna.",
+    "date_stated": "2026-05-05",
+    "source": {
+      "url": "https://www.dn.se/sverige/s-meritlararsteg/",
+      "domain": "dn.se",
+      "archive_url": "https://web.archive.org/web/20260505140000/https://www.dn.se/sverige/s-meritlararsteg/",
+      "fetched_at": "2026-05-05T12:00:00Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3500,
+      "msek_base": 4200,
+      "msek_high": 5000,
+      "basis": "parti",
+      "basis_url": "https://socialdemokraterna.se/val2026/lararloner",
+      "method_note": "Partiets kalkyl: ca 100 000 behöriga lärare × 42 000 kr/år.",
+      "confidence": 0.8
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Ingår i utbildningsbudgeten, finansierat genom ökad tillväxt.",
+      "msek": 4200
+    },
+    "comparisons": ["larare_arskostnad"],
+    "quip": "Fyra komma två miljarder till lärarlöner — eller drygt hundra lärarkostnader per år per lärare.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-05T12"
+    }
+  },
+  {
+    "id": "p-2026-0010",
+    "group_id": null,
+    "title": "Utbyggnad av kärnkraft med två nya reaktorer",
+    "slug": "karnkraft-tva-nya-reaktorer",
+    "parties": ["m"],
+    "person": null,
+    "quote": "Regeringen vill möjliggöra byggnation av två nya kärnkraftsreaktorer till 2035.",
+    "date_stated": "2026-02-15",
+    "source": {
+      "url": "https://www.di.se/politik/regeringen-karnkraft-utbyggnad/",
+      "domain": "di.se",
+      "archive_url": "https://web.archive.org/web/20260215100000/https://www.di.se/politik/regeringen-karnkraft-utbyggnad/",
+      "fetched_at": "2026-02-15T08:00:00Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 80000,
+      "msek_base": 120000,
+      "msek_high": 160000,
+      "basis": "media",
+      "basis_url": "https://www.svt.se/nyheter/inrikes/karnkostnad-reaktor",
+      "method_note": "Baserat på internationella uppskattningar av kärnkraftsbyggnation.",
+      "confidence": 0.5
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Huvuddelen finansieras av marknaden via elprisgaranti.",
+      "msek": 40000
+    },
+    "comparisons": ["forbifart_sthlm", "jas39e_styck"],
+    "quip": "Hundra tjugo miljarder för två reaktorer — ringa in 2027 och fråga om strömmen är på 2035.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-02-15T08"
+    }
+  },
+  {
+    "id": "p-2026-0011",
+    "group_id": null,
+    "title": "Skärpta straff för grov brottslighet",
+    "slug": "skarpta-straff-grov-brottslighet",
+    "parties": ["sd"],
+    "person": null,
+    "quote": "Vi föreslår skärpta straff för grov brottslighet, inklusive dubbelt så lång fängelsetid för skjutningar.",
+    "date_stated": "2026-04-25",
+    "source": {
+      "url": "https://www.svt.se/nyheter/inrikes/sd-skarpa-straff",
+      "domain": "svt.se",
+      "archive_url": "https://web.archive.org/web/20260425110000/https://www.svt.se/nyheter/inrikes/sd-skarpa-straff",
+      "fetched_at": "2026-04-25T09:30:00Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 3500,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat baserat på Kriminalvårdens kostnad per plats och beräknad ökning av antalet platser.",
+      "confidence": 0.4
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": ["vardplats_ar"],
+    "quip": "Tre komma fem miljarder för längre straff — pris per fängelseplats avrundat till närmaste valfläsk.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-04-25T09"
+    }
+  },
+  {
+    "id": "p-2026-0012",
+    "group_id": null,
+    "title": "Höjd barnbidrag med 500 kr per barn och månad",
+    "slug": "hojt-barnbidrag-500-manad",
+    "parties": ["v"],
+    "person": null,
+    "quote": "Vänsterpartiet vill höja barnbidraget med 500 kronor per barn och månad från januari 2027.",
+    "date_stated": "2026-05-15",
+    "source": {
+      "url": "https://www.aftonbladet.se/nyheter/a/v-hojt-barnbidrag",
+      "domain": "aftonbladet.se",
+      "archive_url": "https://web.archive.org/web/20260515130000/https://www.aftonbladet.se/nyheter/a/v-hojt-barnbidrag",
+      "fetched_at": "2026-05-15T11:00:00Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5800,
+      "msek_base": 6100,
+      "msek_high": 6400,
+      "basis": "rut",
+      "basis_url": "https://www.forsakringskassan.se/statistik/barnbidrag",
+      "method_note": "Baserat på Försäkringskassans statistik: ca 1,8 miljoner barn × 6 000 kr/år.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom höjd kapitalbeskattning.",
+      "msek": 6100
+    },
+    "comparisons": ["skolmaltid_elev_ar"],
+    "quip": "Sex komma ett miljarder i höjt barnbidrag — varje barnfamiljs lilla bidrag blir statens stora utgift.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0013",
+    "group_id": null,
+    "title": "Renoveringsavdrag utökat till 75 000 kr per år",
+    "slug": "renoveringsavdrag-75000",
+    "parties": ["c"],
+    "person": null,
+    "quote": "Centerpartiet vill utöka rot-avdraget så att hushåll kan dra av 75 000 kronor per år för renoveringar.",
+    "date_stated": "2026-04-18",
+    "source": {
+      "url": "https://www.di.se/bostad/c-utokat-rotavdrag/",
+      "domain": "di.se",
+      "archive_url": "https://web.archive.org/web/20260418100000/https://www.di.se/bostad/c-utokat-rotavdrag/",
+      "fetched_at": "2026-04-18T08:30:00Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 4500,
+      "msek_high": 6000,
+      "basis": "parti",
+      "basis_url": "https://centerpartiet.se/skatteprogram",
+      "method_note": "Partiets beräkning baserad på Skatteverkets statistik över ROT-avdrag.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom minskade subventioner till fossil energi.",
+      "msek": 3000
+    },
+    "comparisons": ["ssk_arskostnad"],
+    "quip": "Fyra komma fem miljarder i renoveringsavdrag — fast hemsnickaren tar fortfarande kontanter.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-04-18T08"
+    }
+  },
+  {
+    "id": "p-2026-0014",
+    "group_id": null,
+    "title": "Nationell satsning på psykiatrisk vård: 8 mdkr",
+    "slug": "psykiatri-satsning-8-mdkr",
+    "parties": ["kd"],
+    "person": null,
+    "quote": "Vi föreslår en nationell satsning på psykiatrisk vård om 8 miljarder kronor under nästa mandatperiod.",
+    "date_stated": "2026-05-08",
+    "source": {
+      "url": "https://www.svt.se/nyheter/inrikes/kd-psykiatri-satsning",
+      "domain": "svt.se",
+      "archive_url": "https://web.archive.org/web/20260508140000/https://www.svt.se/nyheter/inrikes/kd-psykiatri-satsning",
+      "fetched_at": "2026-05-08T12:00:00Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 7000,
+      "msek_base": 8000,
+      "msek_high": 9000,
+      "basis": "parti",
+      "basis_url": "https://kristdemokraterna.se/psykiatriplan",
+      "method_note": "Partiets programkostnad baserad på SKR:s uppskattning av vårdbehov.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom överskott i statsbudgeten.",
+      "msek": 8000
+    },
+    "comparisons": ["vardplats_ar", "ssk_arskostnad"],
+    "quip": "Åtta miljarder för psykiatrin — det är tanken som räknas, bokstavligen.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-08T12"
+    }
+  },
+  {
+    "id": "p-2026-0015",
+    "group_id": null,
+    "title": "Bistånd till 1 procent av BNI",
+    "slug": "bistand-1-procent-bni",
+    "parties": ["mp"],
+    "person": null,
+    "quote": "Miljöpartiet vill återgå till 1-procentmålet för bistånd och säkerställa att Sverige är en ledande donator.",
+    "date_stated": "2026-04-12",
+    "source": {
+      "url": "https://www.sverigesradio.se/artikel/mp-bistand-en-procent",
+      "domain": "sverigesradio.se",
+      "archive_url": "https://web.archive.org/web/20260412090000/https://www.sverigesradio.se/artikel/mp-bistand-en-procent",
+      "fetched_at": "2026-04-12T07:00:00Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 15000,
+      "msek_base": 22000,
+      "msek_high": 29000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat: 1% av BNI uppskattat till ca 6 500 mdkr minus nuvarande biståndsnivå ca 0,7%.",
+      "confidence": 0.4
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": ["forbifart_sthlm"],
+    "quip": "Tjugo två miljarder mer i bistånd — Sverige ska vara generöst, pengarna finns någonstans.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-04-12T07"
+    }
+  },
+  {
+    "id": "p-2026-0016",
+    "group_id": null,
+    "title": "Nollning av rörelsekapitalbeskattning för småföretag",
+    "slug": "nollning-rorelsekapital-sma-foretag",
+    "parties": ["l"],
+    "person": null,
+    "quote": "Liberalerna vill slopa expansionsfondsbeskattningen för företag med färre än 50 anställda.",
+    "date_stated": "2026-05-01",
+    "source": {
+      "url": "https://www.di.se/politik/l-slopad-expansionsfondsskatt/",
+      "domain": "di.se",
+      "archive_url": null,
+      "fetched_at": "2026-05-01T09:00:00Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 2000,
+      "msek_high": 3000,
+      "basis": "parti",
+      "basis_url": "https://liberalerna.se/foretagsprogram",
+      "method_note": "Partiets kalkyl baserad på Skatteverkets statistik över expansionsfondsbeskattning.",
+      "confidence": 0.65
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom ökad tillväxt och fler företag.",
+      "msek": null
+    },
+    "comparisons": ["larare_arskostnad"],
+    "quip": "Två miljarder i intäktsminskning — finansierat med tillväxt som, i teorin, betalar sig själv.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-01T09"
+    }
+  },
+  {
+    "id": "p-2026-0017",
+    "group_id": "g-hojd-a-kassa",
+    "title": "Höjd a-kassa till 80 procent av lönen",
+    "slug": "hojd-a-kassa-80-procent",
+    "parties": ["v"],
+    "person": null,
+    "quote": "Vi vill höja a-kassan till minst 80 procent av lönen för att stärka tryggheten för alla arbetslösa.",
+    "date_stated": "2026-05-10",
+    "source": {
+      "url": "https://www.aftonbladet.se/nyheter/a/v-hojd-akassa",
+      "domain": "aftonbladet.se",
+      "archive_url": "https://web.archive.org/web/20260510140000/https://www.aftonbladet.se/nyheter/a/v-hojd-akassa",
+      "fetched_at": "2026-05-10T12:00:00Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 7000,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat baserat på försäkringskassans ersättningsdata och skillnaden mellan nuvarande och föreslagen nivå.",
+      "confidence": 0.5
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": ["ssk_arskostnad"],
+    "quip": "Sju miljarder för högre a-kassa — arbetslöshetens pris har aldrig varit högre.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-10T12"
+    }
+  },
+  {
+    "id": "p-2026-0018",
+    "group_id": "g-hojd-a-kassa",
+    "title": "Höjd a-kassa till 80 procent av lönen",
+    "slug": "hojd-a-kassa-mp",
+    "parties": ["mp"],
+    "person": null,
+    "quote": "Miljöpartiet stödjer en höjning av a-kassan till 80 procent för att säkra övergången till en grön ekonomi.",
+    "date_stated": "2026-05-18",
+    "source": {
+      "url": "https://www.dn.se/sverige/mp-stodjer-hojd-akassa/",
+      "domain": "dn.se",
+      "archive_url": "https://web.archive.org/web/20260518110000/https://www.dn.se/sverige/mp-stodjer-hojd-akassa/",
+      "fetched_at": "2026-05-18T09:30:00Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 7000,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat med samma metod som p-2026-0017 (80 procent av lönen).",
+      "confidence": 0.5
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": ["ssk_arskostnad"],
+    "quip": "Grön a-kassa kostar samma som vanlig a-kassa — färgen är gratis.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-18T09"
+    }
+  },
+  {
+    "id": "p-2026-0019",
+    "group_id": null,
+    "title": "Inför riktad flygskatt med 3 mdkr i intäkter",
+    "slug": "riktad-flygskatt-3-mdkr",
+    "parties": ["mp"],
+    "person": null,
+    "quote": "Vi föreslår en riktad flygskatt som beräknas ge 3 miljarder kronor per år i intäkter.",
+    "date_stated": "2026-04-08",
+    "source": {
+      "url": "https://www.sverigesradio.se/artikel/mp-flygskatt",
+      "domain": "sverigesradio.se",
+      "archive_url": "https://web.archive.org/web/20260408100000/https://www.sverigesradio.se/artikel/mp-flygskatt",
+      "fetched_at": "2026-04-08T08:00:00Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 2500,
+      "msek_base": 3000,
+      "msek_high": 3500,
+      "basis": "parti",
+      "basis_url": "https://mp.se/flygskatt",
+      "method_note": "Partiets beräkning baserad på antalet flygningar och genomsnittligt biljettpris.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Intäkter öronmärkta för klimatomställning.",
+      "msek": 3000
+    },
+    "comparisons": ["forbifart_sthlm"],
+    "quip": "Tre miljarder i flygskatt — det är dyrt att flyga, men klimatet får en påsen.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-04-08T08"
+    }
+  },
+  {
+    "id": "p-2026-0020",
+    "group_id": null,
+    "title": "Effektiviseringar i statsförvaltningen: 10 mdkr per år",
+    "slug": "effektiviseringar-statsforvaltningen-10-mdkr",
+    "parties": ["sd"],
+    "person": null,
+    "quote": "Vi anser att statsförvaltningen kan effektiviseras med minst 10 miljarder kronor per år utan att försämra servicen.",
+    "date_stated": "2026-03-20",
+    "source": {
+      "url": "https://www.svd.se/a/sd-effektivisering-forvaltning",
+      "domain": "svd.se",
+      "archive_url": "https://web.archive.org/web/20260320110000/https://www.svd.se/a/sd-effektivisering-forvaltning",
+      "fetched_at": "2026-03-20T09:00:00Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 8000,
+      "msek_base": 10000,
+      "msek_high": 12000,
+      "basis": "parti",
+      "basis_url": "https://sd.se/statsforvaltning",
+      "method_note": "Partiets uppskattning baserad på jämförelse med andra länders förvaltningskostnader.",
+      "confidence": 0.5
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Besparing som finansierar andra reformer.",
+      "msek": 10000
+    },
+    "comparisons": ["ssk_arskostnad", "forbifart_sthlm"],
+    "quip": "Tio miljarder i effektiviseringar — varje regering säger det, ingen har hittat dem.",
+    "status": "uppdaterad",
+    "history": [
+      {
+        "date": "2026-05-01",
+        "change": "Belopp justerat uppåt från 8 till 10 mdkr per år efter intern granskning.",
+        "commit": "abc1234"
+      }
+    ],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-03-20T09"
+    }
+  },
+  {
+    "id": "p-2026-0021",
+    "group_id": null,
+    "title": "Avskaffa pantbanken och inför insättningsgaranti för alla",
+    "slug": "avskaffa-pantbanken-insattningsgaranti",
+    "parties": ["kd"],
+    "person": null,
+    "quote": "Vi vill utöka insättningsgarantin till att gälla alla typer av finansiella institutioner.",
+    "date_stated": "2026-03-05",
+    "source": {
+      "url": "https://www.di.se/politik/kd-insattningsgaranti/",
+      "domain": "di.se",
+      "archive_url": null,
+      "fetched_at": "2026-03-05T10:00:00Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 800,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat baserat på Riksbankens garantikostnader.",
+      "confidence": 0.3
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": "Åttahundra miljoner för att garantera pengarna — själva pengarna får finna sig.",
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-04-15",
+        "change": "Löftet tillbakadraget efter intern genomgång — finansiering ej klarlagd.",
+        "commit": "def5678"
+      }
+    ],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-03-05T10"
+    }
+  },
+  {
+    "id": "p-2026-0022",
+    "group_id": null,
+    "title": "Klimatlagen ska ha bindande mellanutsläppsmål",
+    "slug": "klimatlagen-mellanutslappsmal",
+    "parties": ["mp"],
+    "person": null,
+    "quote": "Vi vill stärka klimatlagen med bindande mellanutsläppsmål för varje sektor fram till 2045.",
+    "date_stated": "2026-05-25",
+    "source": {
+      "url": "https://www.dn.se/sverige/mp-klimatlagen-starkt/",
+      "domain": "dn.se",
+      "archive_url": "https://web.archive.org/web/20260525100000/https://www.dn.se/sverige/mp-klimatlagen-starkt/",
+      "fetched_at": "2026-05-25T08:30:00Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 4500,
+      "msek_high": 7000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat: kostnad för implementering av sektorsvisa utsläppsmål, osäkerhet stor.",
+      "confidence": 0.35
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": ["enkrona_tjocklek_m", "avstand_manen_m"],
+    "quip": "Fyra komma fem miljarder för bindande klimatmål — målet är bindande, budgeten är inte det.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-25T08"
+    }
+  },
+  {
+    "id": "p-2026-0023",
+    "group_id": null,
+    "title": "Digitalisering av sjukvården: 2 mdkr investering",
+    "slug": "digitalisering-sjukvard-2-mdkr",
+    "parties": ["l"],
+    "person": {
+      "name": "Johan Pehrson",
+      "role": "partiledare",
+      "riksdagen_id": "0567890123456"
+    },
+    "quote": "Vi vill investera 2 miljarder kronor i att digitalisera svensk sjukvård med AI-verktyg och moderna journalsystem.",
+    "date_stated": "2026-04-30",
+    "source": {
+      "url": "https://www.expressen.se/nyheter/l-digitalisering-sjukvard/",
+      "domain": "expressen.se",
+      "archive_url": "https://web.archive.org/web/20260430120000/https://www.expressen.se/nyheter/l-digitalisering-sjukvard/",
+      "fetched_at": "2026-04-30T10:00:00Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 1500,
+      "msek_base": 2000,
+      "msek_high": 2500,
+      "basis": "parti",
+      "basis_url": "https://liberalerna.se/digitalisering",
+      "method_note": "Partiets beräkning baserad på 21st Century Cures Act-liknande investering.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras inom ramen för digitaliseringsbudgeten.",
+      "msek": 2000
+    },
+    "comparisons": ["vardplats_ar"],
+    "quip": "Två miljarder för AI i vården — om algoritmen kan bota dig spar vi resten.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-04-30T10"
+    }
+  },
+  {
+    "id": "p-2026-0024",
+    "group_id": null,
+    "title": "Asylrätten ska vara absolut och inte kunna begränsas",
+    "slug": "asylratt-absolut",
+    "parties": ["v"],
+    "person": null,
+    "quote": "Asylrätten är en universell rättighet som inte ska kunna begränsas, oavsett försörjningskrav eller andra villkor.",
+    "date_stated": "2026-05-28",
+    "source": {
+      "url": "https://www.sverigesradio.se/artikel/v-asylratt-absolut",
+      "domain": "sverigesradio.se",
+      "archive_url": "https://web.archive.org/web/20260528100000/https://www.sverigesradio.se/artikel/v-asylratt-absolut",
+      "fetched_at": "2026-05-28T08:00:00Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4000,
+      "msek_base": 6000,
+      "msek_high": 9000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat: ökade mottagningskostnader vid slopade begränsningar.",
+      "confidence": 0.3
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": ["vardplats_ar"],
+    "quip": "Sex miljarder för absolut asylrätt — mänskliga rättigheter har ett pris, frågan är vem som betalar.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-28T08"
+    }
+  },
+  {
+    "id": "p-2026-0025",
+    "group_id": null,
+    "title": "Sänkt bolagsskatt till 18 procent",
+    "slug": "sankt-bolagsskatt-18-procent",
+    "parties": ["m"],
+    "person": null,
+    "quote": "Moderaterna vill sänka bolagsskatten från 20,6 till 18 procent för att öka Sveriges konkurrenskraft.",
+    "date_stated": "2026-05-15",
+    "source": {
+      "url": "https://www.di.se/politik/m-bolagsskatt-18-procent/",
+      "domain": "di.se",
+      "archive_url": "https://web.archive.org/web/20260515120000/https://www.di.se/politik/m-bolagsskatt-18-procent/",
+      "fetched_at": "2026-05-15T10:00:00Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 8000,
+      "msek_base": 12000,
+      "msek_high": 16000,
+      "basis": "parti",
+      "basis_url": "https://moderaterna.se/skatteprogram",
+      "method_note": "Partiets kalkyl baserad på totala bolagsvinster i Sverige enligt SCB.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom tillväxteffekter och ökad sysselsättning.",
+      "msek": null
+    },
+    "comparisons": ["ssk_arskostnad", "larare_arskostnad"],
+    "quip": "Tolv miljarder i sänkt bolagsskatt — företagen jublar, finansministern räknar.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-15T10"
+    }
+  },
+  {
+    "id": "p-2026-0026",
+    "group_id": null,
+    "title": "Rätten till hemtjänst ska vara lagstadgad",
+    "slug": "ratt-hemtjanst-lagstadgad",
+    "parties": ["s"],
+    "person": null,
+    "quote": "Vi vill införa en lagstadgad rätt till hemtjänst så att äldre kan bo kvar hemma med värdig omsorg.",
+    "date_stated": "2026-06-01",
+    "source": {
+      "url": "https://www.dn.se/sverige/s-hemtjanst-lagstadgad/",
+      "domain": "dn.se",
+      "archive_url": "https://web.archive.org/web/20260601100000/https://www.dn.se/sverige/s-hemtjanst-lagstadgad/",
+      "fetched_at": "2026-06-01T08:00:00Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 6000,
+      "msek_base": 9000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat baserat på SKR:s hemtjänststatistik och beräknad ökning vid lagstadgad rätt.",
+      "confidence": 0.45
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom kommunala skatteutjämningsbidrag.",
+      "msek": 9000
+    },
+    "comparisons": ["ssk_arskostnad"],
+    "quip": "Nio miljarder för hemtjänst för alla — värdigheten har ett pris, men den saknar ofta en faktura.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-06-01T08"
+    }
+  },
+  {
+    "id": "p-2026-0027",
+    "group_id": null,
+    "title": "Forskningssatsning 5 mdkr per år på AI och framtidsteknik",
+    "slug": "forskning-ai-5-mdkr",
+    "parties": ["m"],
+    "person": null,
+    "quote": "Vi vill investera 5 miljarder kronor per år i strategisk forskning inom AI, kvantteknik och rymd.",
+    "date_stated": "2026-05-20",
+    "source": {
+      "url": "https://www.di.se/politik/m-forskning-ai/",
+      "domain": "di.se",
+      "archive_url": "https://web.archive.org/web/20260520110000/https://www.di.se/politik/m-forskning-ai/",
+      "fetched_at": "2026-05-20T09:00:00Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4500,
+      "msek_base": 5000,
+      "msek_high": 5500,
+      "basis": "parti",
+      "basis_url": "https://moderaterna.se/forskningsprogram",
+      "method_note": "Partiets budgetförslag fram till 2030.",
+      "confidence": 0.85
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Omfördelning inom forskningsbudgeten.",
+      "msek": 5000
+    },
+    "comparisons": ["larare_arskostnad"],
+    "quip": "Fem miljarder till AI-forskning — snart kan AI räkna ut hur vi betalar för allt det andra.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-20T09"
+    }
+  },
+  {
+    "id": "p-2026-0028",
+    "group_id": null,
+    "title": "Inför extremvädertillägg i försäkringssystemet",
+    "slug": "extremvader-tillagg-forsakring",
+    "parties": ["c"],
+    "person": null,
+    "quote": "Vi föreslår ett statligt extremvädertillägg som hjälper drabbade lantbrukare och fastighetsägare.",
+    "date_stated": "2026-05-12",
+    "source": {
+      "url": "https://www.gp.se/nyheter/sverige/c-extremvader-tillagg",
+      "domain": "gp.se",
+      "archive_url": "https://web.archive.org/web/20260512100000/https://www.gp.se/nyheter/sverige/c-extremvader-tillagg",
+      "fetched_at": "2026-05-12T08:00:00Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 2000,
+      "msek_high": 3000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-estimat baserat på MSB:s skadedata från tidigare extremvädershändelser.",
+      "confidence": 0.4
+    },
+    "financing_claimed": {
+      "described": true,
+      "summary": "Finansieras genom premiebaserat system.",
+      "msek": 2000
+    },
+    "comparisons": ["skolmaltid_elev_ar"],
+    "quip": "Två miljarder för extremvädertillägg — klimatet levererar, fickan blöder.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "fixture",
+      "verified_by": "fixture",
+      "run_id": "fixture-2026-05-12T08"
+    }
+  }
+]

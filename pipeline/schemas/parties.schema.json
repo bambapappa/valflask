@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drygast.nu/schemas/parties.schema.json",
+  "title": "Partier",
+  "description": "Svenska riksdagspartier med metadata (§5.2). Källa: val.se/riksdagen — VERIFIERA.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["code", "name", "color", "color_text", "mandate_2022", "votes_2022", "block"],
+    "properties": {
+      "code": {
+        "enum": ["s", "m", "sd", "c", "v", "kd", "l", "mp"]
+      },
+      "name": {
+        "type": "string",
+        "minLength": 2
+      },
+      "color": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]{6}$"
+      },
+      "color_text": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]{6}$"
+      },
+      "mandate_2022": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "votes_2022": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "block": {
+        "type": "string",
+        "enum": ["rödgrönt", "borgerligt", "okenämpad"]
+      },
+      "source_mandate": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+---
+interface Props {
+  text: string | null;
+}
+const { text } = Astro.props;
+---
+{text && (
+  <aside class="marginalanteckning">
+    <div class="etikett marginalanteckning__label">Marginalanteckning</div>
+    <p class="marginalanteckning__text">{text}</p>
+  </aside>
+)}
+
+<style>
+  .marginalanteckning {
+    border-top: var(--linje-sektion);
+    margin-top: 1.5rem;
+    padding-top: 0.75rem;
+  }
+  .marginalanteckning__label {
+    margin-bottom: 0.25rem;
+  }
+  .marginalanteckning__text {
+    font-style: italic;
+    font-family: var(--font-brod);
+    margin: 0;
+  }
+</style>

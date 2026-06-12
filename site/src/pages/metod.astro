@@ -1,8 +1,43 @@
 ---
-const title = "metod — drygast.nu";
+import Layout from "../layouts/Layout.astro";
+
+const title = "Metod — drygast.nu";
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>{title}</title></head>
-<body><h1>metod</h1></body>
-</html>
+<Layout title={title} description="Så här räknar vi: metod, källhierarki och transparens för drygast.nu:s kostnadsuppskattningar.">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Metod</h1>
+      <p>Här förklaras hur drygast.nu beräknar kostnader för vallöften. Allt är öppet och granskningsbart.</p>
+
+      <h2>Bruttoperspektiv, fasta priser 2026</h2>
+      <p>Vi räknar i fasta priser 2026, bruttoperspektiv på offentliga finanser. Inga dynamiska effekter (de redovisas inte konsekvent av någon part — vi väljer jämförbarhet före precision och säger det öppet).</p>
+
+      <h2>Källhierarki för belopp</h2>
+      <ol>
+        <li>Riksdagens utredningstjänst/myndighet</li>
+        <li>Partiets egen kostnadsberäkning</li>
+        <li>Etablerad media</li>
+        <li>LLM-estimat med spann</li>
+      </ol>
+      <p>Nivån syns alltid (fältet <code>basis</code>) och LLM-estimat typograferas med "≈" och spann.</p>
+
+      <h2>Summeringsregler</h2>
+      <p><strong>R1 — Summeringsfönster:</strong> Mandatperioden 2027–2030. Per år-löften ×4, engångslöften ×1.</p>
+      <p><strong>R2 — Intervallordning:</strong> low ≤ base ≤ high. LLM-estimat kräver high ≥ 1.5×low.</p>
+      <p><strong>R3 — Koalitionsdedup:</strong> Löften som delas av flera partier (group_id) räknas en gång i koalitionssummor.</p>
+      <p><strong>R4 — Totaler:</strong> Fläsket = Σ(utgifter + intäktsminskningar). Finansieringsgap = Fläsket − Σ(besparingar + finansiering).</p>
+
+      <h2>Jämförelser</h2>
+      <p>Alla jämförelsetal lagras i constants.json med källa. Inga påhittade siffror. Värden markerade "VERIFIERA" är platshållare som verifieras före lansering.</p>
+
+      <h2>Finansieringsanspråk</h2>
+      <p>Uttalade besparingar redovisas separat — de "försvinner" inte in i totalen. Ofinansierade löften märks tydligt.</p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+</style>

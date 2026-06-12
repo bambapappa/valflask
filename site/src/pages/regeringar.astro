@@ -1,8 +1,67 @@
 ---
-const title = "regeringar — drygast.nu";
+import Layout from "../layouts/Layout.astro";
+import { getPromises, getParties } from "../lib/data";
+import { formatMsek, partyTotalMsek } from "../lib/calc";
+
+const promises = getPromises();
+const parties = getParties();
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>{title}</title></head>
-<body><h1>regeringar</h1></body>
-</html>
+<Layout title="Regeringsunderlag — drygast.nu" description="Förvalda konstellationer med kostnader och finansieringsgap.">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Regeringar</h1>
+      <p>Förvalda konstellationer med beräknade kostnader. Koalitionsaggregat med R3-dedup och kombinator-ön kommer i M4.</p>
+    </div>
+
+    <section class="sektion">
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Konstellation</th>
+              <th class="num">Rak summa (mdkr)</th>
+              <th>R3-dedup summa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Nuvarande regeringsunderlag (M, KD, L + SD-budget)</td>
+              <td class="num">{formatMsek(['m','kd','l','sd'].reduce((s, c) => s + partyTotalMsek(promises, c), 0))}</td>
+              <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
+            </tr>
+            <tr>
+              <td>Rödgrönt (S, V, MP)</td>
+              <td class="num">{formatMsek(['s','v','mp'].reduce((s, c) => s + partyTotalMsek(promises, c), 0))}</td>
+              <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
+            </tr>
+            <tr>
+              <td>Center-allians (C, L, S)</td>
+              <td class="num">{formatMsek(['c','l','s'].reduce((s, c) => s + partyTotalMsek(promises, c), 0))}</td>
+              <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
+            </tr>
+            <tr>
+              <td>Alla åtta partier</td>
+              <td class="num">{formatMsek(parties.reduce((s, p) => s + partyTotalMsek(promises, p.code), 0))}</td>
+              <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+  .sektion {
+    margin-top: 1.5rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+  .etikett--dis {
+    color: var(--dis);
+  }
+</style>

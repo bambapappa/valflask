@@ -1,8 +1,61 @@
 ---
-const title = "jamfor — drygast.nu";
+import Layout from "../layouts/Layout.astro";
+import { getPromises, getParties } from "../lib/data";
+import { formatMsek, promiseTotalMsek, partyTotalMsek, getPromisesForParty } from "../lib/calc";
+
+const promises = getPromises();
+const parties = getParties();
+const active = promises.filter((p) => p.status !== 'tillbakadragen');
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>{title}</title></head>
-<body><h1>jamfor</h1></body>
-</html>
+<Layout title="Jämför partiernas vallöften — drygast.nu" description="Jämför riksdagspartiernas vallöften sida vid sida. Se kostnader per parti och rak summa.">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Jämför partiernas löften</h1>
+      <p>Här kan du jämföra riksdagspartiernas vallöften sida vid sida. Kombinator-ön (kryssa partier → summa med R3-dedup) kommer i M4.</p>
+    </div>
+
+    <div class="datavy datavy--scroll datavy--offset">
+      <table>
+        <thead>
+          <tr>
+            <th class="radnr">#</th>
+            <th>Parti</th>
+            <th class="num">Rak summa (mdkr)</th>
+            <th class="num">Löften</th>
+            <th>Koalitionssumma</th>
+          </tr>
+        </thead>
+        <tbody>
+          {parties.map((p, i) => {
+            const pp = getPromisesForParty(promises, p.code);
+            const t = partyTotalMsek(promises, p.code);
+            return (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td><a href={`/parti/${p.code}`}>{p.name}</a></td>
+                <td class="num">{formatMsek(t)}</td>
+                <td class="num">{pp.length}</td>
+                <td><span class="etikett etikett--dis">BERÄKNAS I M4</span></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+  .datavy--offset {
+    margin-top: 1.5rem;
+  }
+  .etikett--dis {
+    color: var(--dis);
+  }
+</style>

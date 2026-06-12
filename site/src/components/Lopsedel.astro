@@ -1,0 +1,41 @@
+---
+interface Props {
+  total: string;
+  subtitle?: string;
+  count?: number;
+  date?: string;
+  taxameterValue?: number;
+}
+const { total, subtitle, count, date, taxameterValue } = Astro.props;
+---
+<div class="platta lopsedel">
+  <h1 class="lopsedel__title">{subtitle || 'FLÄSKVÅGEN'}</h1>
+  <div class="num-stor" {...(taxameterValue != null ? { "data-taxameter": String(taxameterValue) } : {})}>{total}</div>
+  <div class="lopsedel__meta">
+    för mandatperioden 2027–2030{count ? ` · ${count} löften` : ''}{date ? ` · ${date}` : ''}
+  </div>
+</div>
+
+<style>
+  .lopsedel {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    width: 100%;
+  }
+  .lopsedel__title {
+    color: var(--platta-text);
+    font-family: var(--font-display);
+    font-size: var(--steg-2);
+    text-transform: uppercase;
+    letter-spacing: var(--sparrning-display);
+    margin: 0 0 0.25rem;
+    font-weight: 400;
+    line-height: var(--radavstand-display);
+  }
+  .lopsedel__meta {
+    font-family: var(--font-mono);
+    font-size: var(--steg-0);
+    color: var(--platta-text);
+    margin-top: 0.25rem;
+  }
+</style>

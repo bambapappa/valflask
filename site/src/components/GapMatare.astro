@@ -1,0 +1,73 @@
+---
+interface Props {
+  flasket: number;
+  reformutrymme: number | "VERIFIERA";
+}
+const { flasket, reformutrymme } = Astro.props;
+const hasRef = reformutrymme !== "VERIFIERA" && typeof reformutrymme === "number";
+const ref4 = hasRef ? (reformutrymme as number) * 4 : 0;
+const gap = hasRef ? Math.max(0, flasket - ref4) : 0;
+const maxVal = hasRef ? Math.max(flasket, ref4) : flasket;
+const barWidth = 600;
+const flasketPx = maxVal > 0 ? Math.round((flasket / maxVal) * barWidth) : 0;
+const refPx = hasRef && maxVal > 0 ? Math.round((ref4 / maxVal) * barWidth) : 0;
+const flasketMdkr = (flasket / 1000).toFixed(0);
+const ref4Mdkr = hasRef ? (ref4 / 1000).toFixed(0) : "";
+---
+<div class="gapmatare">
+  <div class="etikett gapmatare__label">Fläsket vs. reformutrymme · mandatperioden</div>
+  <svg class="gapmatare__svg" viewBox={`0 0 ${barWidth} 32`} preserveAspectRatio="none" aria-hidden="true">
+    <rect class="gapmatare__bg" x="0" y="0" width={barWidth} height="32" />
+    <rect class="gapmatare__fill" x="0" y="0" width={flasketPx} height="32" />
+    {hasRef && refPx <= barWidth && (
+      <rect class="gapmatare__ref" x="0" y="0" width={refPx} height="32" />
+    )}
+  </svg>
+  <div class="gapmatare__legend">
+    <span class="num">{hasRef ? `${flasketMdkr} mdkr` : `≈ ${flasketMdkr} mdkr (totalt)`}</span>
+    <span class="num">{hasRef ? `Reformutrymme ×4: ${ref4Mdkr} mdkr` : 'Reformutrymme: VERIFIERA'}</span>
+  </div>
+  {hasRef && gap > 0 && (
+    <div class="etikett gapmatare__gap">
+      <span class="markering">GAP ≈ {(gap / 1000).toFixed(0)} MDKR</span>
+    </div>
+  )}
+</div>
+
+<style>
+  .gapmatare {
+    margin: 1.5rem 0;
+  }
+  .gapmatare__label {
+    margin-bottom: 0.5rem;
+  }
+  .gapmatare__svg {
+    display: block;
+    width: 100%;
+    height: 2rem;
+  }
+  .gapmatare__bg {
+    fill: var(--papper);
+    stroke: var(--linje-svag);
+    stroke-width: 1;
+  }
+  .gapmatare__fill {
+    fill: var(--svarta);
+  }
+  .gapmatare__ref {
+    fill: transparent;
+    stroke: var(--gul);
+    stroke-width: 2;
+  }
+  .gapmatare__legend {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    margin-top: 0.25rem;
+  }
+  .gapmatare__gap {
+    color: var(--svarta);
+    margin-top: 0.25rem;
+  }
+</style>

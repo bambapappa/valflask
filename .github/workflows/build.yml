@@ -2,6 +2,8 @@ name: build
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch: {}
 permissions:
   contents: read
@@ -11,7 +13,7 @@ concurrency:
   group: pages
   cancel-in-progress: false
 jobs:
-  build:
+  test-pipeline:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -22,22 +24,59 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
+      - name: Install pipeline dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Run pipeline tests
+        run: pnpm test
+        working-directory: pipeline
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    needs: test-pipeline
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: pnpm/action-setup@a7487ba4d6cb4837adb8a2c0b3249c27b4ab13c0
+        with:
+          version: 9
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: pnpm
           cache-dependency-path: site/pnpm-lock.yaml
-      - name: Install dependencies
+      - name: Install python fonttools
+        run: pip install --user fonttools brotli
+      - name: Decompress fonts for OG generation
+        run: |
+          cd site/public/fonts
+          for f in *.woff2; do
+            ttf="${f%.woff2}.ttf"
+            fonttools ttLib.woff2 decompress "$f" --output "$ttf" || true
+          done
+      - name: Install site dependencies
         run: pnpm install --frozen-lockfile
         working-directory: site
-      - name: Build site
+      - name: Build site + OG images
         run: pnpm build
         working-directory: site
-      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa  # v3.0.1
+      - name: Run T1 (build output)
+        run: pnpm test:t1
+        working-directory: site
+      - name: Run T3 (schema + HTML validation)
+        run: pnpm test:t3
+        working-directory: site
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
         with:
           path: site/dist
+
   deploy-pages:
-    needs: build
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e  # v4.0.5
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e

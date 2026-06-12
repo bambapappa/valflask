@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drygast.nu/schemas/people.schema.json",
+  "title": "Personer",
+  "description": "Personer med ≥1 löfte, speglade från riksdagens ledamots-API (§5.2).",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["name", "slug", "party", "role"],
+    "properties": {
+      "name": {
+        "type": "string",
+        "minLength": 2
+      },
+      "slug": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "party": {
+        "enum": ["s", "m", "sd", "c", "v", "kd", "l", "mp"]
+      },
+      "role": {
+        "type": "string",
+        "minLength": 2
+      },
+      "riksdagen_id": {
+        "type": ["string", "null"],
+        "pattern": "^[0-9]{1,20}$"
+      },
+      "image_url": {
+        "type": ["string", "null"]
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+---
+interface Props {
+  hash: string;
+}
+const { hash } = Astro.props;
+---
+<footer class="sitefooter">
+  <div class="etikett sitefooter__data">
+    Datahash: <a href="/api/v1/summary.json" class="sitefooter__hash">{hash.slice(0, 12)}</a>
+  </div>
+  <div class="sitefooter__meta">
+    <a href="/metod">Metod</a> · <a href="/rattelser">Rättelser</a> · <a href="/press">Press</a> · <a href="/api">API</a>
+    <br />
+    Licens: CC BY 4.0 — ange "drygast.nu" som källa.
+    <br />
+    Uppskattningar enligt öppen metod — inte facit, inte rådgivning.
+  </div>
+</footer>
+
+<style>
+  .sitefooter {
+    border-top: var(--linje-sektion);
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+  }
+  .sitefooter__data {
+    margin-bottom: 0.5rem;
+  }
+  .sitefooter__hash {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+  }
+  .sitefooter__meta {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    color: var(--dis);
+    line-height: var(--radavstand-mono);
+  }
+</style>

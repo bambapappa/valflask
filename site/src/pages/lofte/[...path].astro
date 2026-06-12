@@ -1,13 +1,158 @@
 ---
+import Layout from "../../layouts/Layout.astro";
+import ArendeHuvud from "../../components/ArendeHuvud.astro";
+import Stampel from "../../components/Stampel.astro";
+import Citat from "../../components/Citat.astro";
+import Marginalanteckning from "../../components/Marginalanteckning.astro";
+import MetodLank from "../../components/MetodLank.astro";
+import KallRad from "../../components/KallRad.astro";
+import { getPromises, getParties, getPeople } from "../../lib/data";
+import { formatMsek, formatBasisLabel, promiseTotalMsek, formatDate, formatDateShort, getPartyByCode } from "../../lib/calc";
+
 export function getStaticPaths() {
-  return [
-    { params: { path: 'p-2026-0001/exempelslug' } },
-  ];
+  const promises = getPromises();
+  return promises.map((p) => ({
+    params: { path: `${p.id}/${p.slug}` },
+    props: { promise: p },
+  }));
 }
-const { path } = Astro.params;
+
+const { promise } = Astro.props;
+const parties = getParties();
+const people = getPeople();
+const partyNames = promise.parties.map((c) => getPartyByCode(parties, c)?.name || c).join(', ');
+const total = formatMsek(promiseTotalMsek(promise), promise.cost.basis);
+const personName = promise.person?.name || null;
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>Löfte — drygast.nu</title></head>
-<body><h1>Löfte: {path}</h1></body>
-</html>
+<Layout title={`${promise.title} — drygast.nu`} description={`${partyNames} lovar: ${promise.title}. Kostnad: ${total}.`} ogImage={`/og/${promise.id}/og.png`}>
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <ArendeHuvud id={promise.id} dateStated={promise.date_stated} domain={promise.source.domain} status={promise.status} />
+
+      <h1>{promise.title}</h1>
+
+      {(promise.status === 'uppdaterad' || promise.status === 'tillbakadragen') && (
+        <div class="stampel-wrap">
+          <Stampel text={promise.status === 'uppdaterad' ? 'UPPDATERAT' : 'TILLBAKADRAGET'} />
+        </div>
+      )}
+
+      <p class="lofte-summary">
+        {partyNames} lovar {promise.title.toLowerCase()}. Kostnad: <strong class="num">{total}</strong> för mandatperioden.
+      </p>
+
+      <Citat
+        quote={promise.quote}
+        person={personName}
+        party={partyNames}
+        domain={promise.source.domain}
+        date={formatDateShort(promise.date_stated)}
+        sourceUrl={promise.source.url}
+        archiveUrl={promise.source.archive_url}
+      />
+
+      <section class="sektion">
+        <h2>Kostnad</h2>
+        <div class="datavy datavy--scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Typ</th>
+                <th>Period</th>
+                <th class="num">Lågt (mkr)</th>
+                <th class="num">Bas (mkr)</th>
+                <th class="num">Högt (mkr)</th>
+                <th class="num">Totalt (mdkr)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{promise.cost.type}</td>
+                <td>{promise.cost.period === 'per_ar' ? 'per år' : 'engång'}</td>
+                <td class="num">{promise.cost.msek_low.toLocaleString('sv-SE')}</td>
+                <td class="num">{promise.cost.msek_base.toLocaleString('sv-SE')}</td>
+                <td class="num">{promise.cost.msek_high.toLocaleString('sv-SE')}</td>
+                <td class="num">{formatMsek(promiseTotalMsek(promise), promise.cost.basis)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kostnad-meta">
+          Grund: {formatBasisLabel(promise.cost.basis)}{promise.cost.basis_url ? ` · <a href="${promise.cost.basis_url}">källa ↗</a>` : ''}
+          <br />
+          {promise.cost.method_note}
+        </div>
+      </section>
+
+      <MetodLank />
+
+      {!promise.financing_claimed.described && (
+        <div class="stampel-wrap">
+          <Stampel text="FINANSIERING EJ ANGIVEN" />
+        </div>
+      )}
+
+      {promise.financing_claimed.described && promise.financing_claimed.summary && (
+        <div class="finansiering-meta">
+          Finansiering: {promise.financing_claimed.summary}
+          {promise.financing_claimed.msek && ` (${formatMsek(promise.financing_claimed.msek)})`}
+        </div>
+      )}
+
+      <Marginalanteckning text={promise.quip} />
+
+      {promise.history.length > 0 && (
+        <section class="sektion">
+          <h2>Historik</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Ändring</th>
+              </tr>
+            </thead>
+            <tbody>
+              {promise.history.map((h) => (
+                <tr>
+                  <td class="num">{formatDateShort(h.date)}</td>
+                  <td>{h.change}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
+
+      <KallRad source={formatBasisLabel(promise.cost.basis)} date={formatDateShort(promise.source.fetched_at)} />
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+  .stampel-wrap {
+    margin: 0.5rem 0;
+  }
+  .lofte-summary {
+    margin-bottom: var(--mellanrum);
+  }
+  .sektion {
+    margin-top: 1.5rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+  .kostnad-meta {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    color: var(--dis);
+    margin-top: 0.5rem;
+  }
+  .finansiering-meta {
+    margin: var(--mellanrum) 0;
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+  }
+</style>

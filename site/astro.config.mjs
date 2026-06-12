@@ -5,5 +5,14 @@ export default defineConfig({
   output: 'static',
   build: {
     format: 'directory',
+    inlineStylesheets: 'never',
+  },
+  vite: {
+    resolve: {
+      alias: {
+        '@/schemas': '../../pipeline/schemas',
+        '@/data': '../../data',
+      },
+    },
   },
 });

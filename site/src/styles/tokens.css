@@ -1,0 +1,56 @@
+/* tokens.css — designtokens för riktning A: "Diarienummer möter löpsedel".
+ * Beslutade i M1 (Fable, 2026-06-12). Se site/DESIGN.md — ändringar kräver DECISION_LOG-rad.
+ * Komponenter får ALDRIG hårdkoda färger, mått eller fontnamn: använd tokens. */
+
+:root {
+  /* ── Färg (EN signalfärg; partifärger endast i dataviz via parties.json) ── */
+  --papper: #f6f3ec;        /* bakgrund: varmt myndighetspapper */
+  --svarta: #111111;        /* tryckbläck: text, hårlinjer, plattor */
+  --gul: #ffd600;           /* signalfärgen: löpsedelsgul (användning: DESIGN.md §3) */
+  --grafit: #3f3d38;        /* sekundärtext, ~9,3:1 på papper */
+  --dis: #6e6a61;           /* metadata/bildtext, ~5,6:1 på papper */
+  --linje-svag: #c9c3b6;    /* underordnade hårlinjer */
+  --platta-text: #f6f3ec;   /* text på svärta-plattor */
+
+  /* ── Typografi (självhostad, se public/fonts/ + base.css) ── */
+  --font-display: "Anton", sans-serif;            /* rubriker/kickers, alltid versal, aldrig tal */
+  --font-mono: "IBM Plex Mono", monospace;        /* alla tal, etiketter, stämplar, nav, källrader */
+  --font-brod: "Source Serif 4", serif;           /* brödtext, ingresser, citat */
+
+  /* Typskala (rem) */
+  --steg--1: 0.8125rem;                /* mono-metadata, källrader */
+  --steg-0: 1.0625rem;                 /* brödtext */
+  --steg-1: 1.25rem;                   /* ingress, citat */
+  --steg-2: 1.5625rem;                 /* h3/nyckeltal små */
+  --steg-3: 2rem;                      /* h2 */
+  --steg-4: 2.75rem;                   /* h1 */
+  --steg-5: clamp(3.25rem, 8vw, 6rem); /* löpsedelsrubrik */
+  --steg-6: clamp(4.5rem, 12vw, 9rem); /* jättesiffran (taxametern) */
+
+  --radavstand-brod: 1.6;
+  --radavstand-mono: 1.45;
+  --radavstand-display: 1.04;
+  --sparrning-etikett: 0.07em;   /* mono-etiketter, versala */
+  --sparrning-display: 0.01em;
+
+  /* ── Hårlinjegrammatik (§4) ── */
+  --linje-sektion: 1px solid var(--svarta);
+  --linje-under: 1px solid var(--linje-svag);
+  --linje-tabell-ytter: 2px solid var(--svarta);
+  --stampel-ram: 2px solid currentColor;
+
+  /* ── Layout ── */
+  --matt-prosa: 66ch;
+  --matt-data: 80rem;
+  --matt-marginalspalt: 17rem;
+  --mellanrum: 1rem;          /* basenhet; multiplar därav, inga godtyckliga mått */
+
+  /* ── Form: trycket är kantigt och stilla ── */
+  --radie: 0;                 /* border-radius är alltid 0 (DESIGN.md §4) */
+  --stampel-rotation: -2.5deg;
+
+  /* ── Motion: enda effekten är taxametern på / ── */
+  --taxameter-tid: 1100ms;
+
+  color-scheme: light;        /* papper är konceptet; ingen dark mode */
+}

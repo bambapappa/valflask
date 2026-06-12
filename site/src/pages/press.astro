@@ -1,8 +1,26 @@
 ---
-const title = "press — drygast.nu";
+import Layout from "../layouts/Layout.astro";
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head><meta charset="UTF-8" /><title>{title}</title></head>
-<body><h1>press</h1></body>
-</html>
+<Layout title="Press — drygast.nu" description="Presskit, citatpolicy och kontaktinformation för drygast.nu.">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Press</h1>
+      <p>drygast.nu är en oberoende, neutral sammanställning av vallöften. Journalister och media är välkomna att använda data med angivande av källa.</p>
+
+      <h2>Citatpolicy</h2>
+      <p>Data får fritt citeras med källangivelse "drygast.nu". OG-bilder får användas i redaktionellt syfte.</p>
+
+      <h2>OG-bilder</h2>
+      <p>Varje löfte och parti har en OG-bild i svart/gul kostym. Bilderna är genererade vid byggtid och tillgängliga via sidornas metadata.</p>
+
+      <h2>Kontakt</h2>
+      <p>För pressförfrågningar, kontakta oss via e-post. Kontaktuppgifter kompletteras före lansering.</p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+</style>

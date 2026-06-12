@@ -1,15 +1,121 @@
 ---
-const title = "Fläskvågen — drygast.nu";
+import Layout from "../layouts/Layout.astro";
+import Lopsedel from "../components/Lopsedel.astro";
+import GapMatare from "../components/GapMatare.astro";
+import MetodLank from "../components/MetodLank.astro";
+import { getPromises, getParties, getConstants, getChangelog } from "../lib/data";
+import { totalFlasket, financingGap, formatMsek, formatMsekShort, countPromises, partyTotalMsek, promiseTotalMsek, formatDateShort, dataHash } from "../lib/calc";
+
+const promises = getPromises();
+const parties = getParties();
+const constants = getConstants();
+const changelog = getChangelog();
+const flasket = totalFlasket(promises);
+const gap = financingGap(promises);
+const total = formatMsek(flasket);
+const totalShort = formatMsekShort(flasket);
+const count = countPromises(promises);
+const reformutrymme = constants.reformutrymme_msek_per_ar.value;
+const hash = dataHash(changelog);
+
+const partyRows = parties.map((p) => ({
+  code: p.code,
+  name: p.name,
+  total: partyTotalMsek(promises, p.code),
+  color: p.color,
+})).sort((a, b) => b.total - a.total);
 ---
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title}</title>
-</head>
-<body>
-  <h1>Fläskvågen</h1>
-  <p>Riksdagspartiernas vallöften 2026 — kostar hittills ≈ 0 mdkr för mandatperioden.</p>
-</body>
-</html>
+<Layout title={`Riksdagspartiernas vallöften 2026 kostar ${totalShort} mdkr — drygast.nu`} description={`Riksdagspartiernas vallöften 2026 kostar hittills ${totalShort} mdkr för mandatperioden. Oberoende, källspårad sammanställning.`} ogImage="/og/start.png" hasTaxameter={true}>
+  <div class="page-content">
+    <Lopsedel total={total} subtitle="Valfläsket hittills" count={count} date="2026" taxameterValue={flasket} />
+
+    <div class="prosa-content prosa-content--centered">
+      <p>Riksdagspartiernas vallöften 2026 kostar hittills <strong class="num">{totalShort} mdkr</strong> för mandatperioden 2027–2030, fördelat på {count} löften från åtta partier.</p>
+    </div>
+
+    <MetodLank />
+
+    <GapMatare flasket={flasket} reformutrymme={reformutrymme} />
+
+    <section class="sektion">
+      <h2>Fläsk per parti</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Parti</th>
+              <th class="num">Totalt (mdkr)</th>
+              <th class="num">Löften</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partyRows.map((row, i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td><a href={`/parti/${row.code}`}>{row.name}</a></td>
+                <td class="num">{formatMsek(row.total)}</td>
+                <td class="num">{promises.filter((p) => p.parties.includes(row.code) && p.status !== 'tillbakadragen').length}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sektion">
+      <h2>Dyreste löftena</h2>
+      <ol class="promise-list">
+        {promises
+          .filter((p) => p.status !== 'tillbakadragen')
+          .sort((a, b) => promiseTotalMsek(b) - promiseTotalMsek(a))
+          .slice(0, 5)
+          .map((p) => (
+            <li>
+              <a href={`/lofte/${p.id}/${p.slug}`}>
+                <strong>{p.title}</strong>
+              </a>
+              <div class="etikett etikett--sub">
+                {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num">{formatMsek(promiseTotalMsek(p), p.cost.basis)}</span>
+              </div>
+            </li>
+          ))}
+      </ol>
+    </section>
+
+    <section class="sektion">
+      <h2>Senaste löften</h2>
+      <ol class="promise-list">
+        {promises
+          .filter((p) => p.status !== 'tillbakadragen')
+          .sort((a, b) => b.date_stated.localeCompare(a.date_stated))
+          .slice(0, 5)
+          .map((p) => (
+            <li>
+              <a href={`/lofte/${p.id}/${p.slug}`}>
+                <strong>{p.title}</strong>
+              </a>
+              <div class="etikett etikett--sub">
+                {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · {formatDateShort(p.date_stated)}
+              </div>
+            </li>
+          ))}
+      </ol>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 1.5rem auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+  .etikett--sub {
+    margin-top: 0.15rem;
+  }
+</style>

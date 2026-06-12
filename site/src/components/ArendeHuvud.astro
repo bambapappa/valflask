@@ -1,0 +1,20 @@
+---
+interface Props {
+  id: string;
+  dateStated: string;
+  domain: string;
+  status: string;
+}
+const { id, dateStated, domain, status } = Astro.props;
+---
+<div class="arendehuvud">
+  ÄRENDE {id} · REGISTRERAT {dateStated} · KÄLLA {domain} · STATUS {status.toUpperCase()}
+</div>
+
+<style>
+  .arendehuvud {
+    border: 1px solid var(--svarta);
+    padding: 0.5rem 0.75rem;
+    margin-bottom: var(--mellanrum);
+  }
+</style>
