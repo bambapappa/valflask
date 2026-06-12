@@ -13,6 +13,12 @@ const hash = dataHash(changelog);
 const fixture = isFixture(promises);
 const lastRun = promises.length > 0 ? promises[0].source.fetched_at : new Date().toISOString();
 
+// Stale-läge §15: data >36h äldre än byggtid ⇒ diskret gul banner
+const STALE_MS = 36 * 60 * 60 * 1000;
+const buildTime = new Date();
+const lastRunDate = new Date(lastRun);
+const isStale = !fixture && (buildTime.getTime() - lastRunDate.getTime()) > STALE_MS;
+
 interface Props {
   title: string;
   description?: string;
@@ -58,6 +64,9 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <SiteHeader hash={hash} lastRun={lastRun} parties={parties} />
   {fixture && (
     <div class="fixture-banner etikett" role="status">EXEMPELDATA — skarp insamling startar i M3</div>
+  )}
+  {isStale && (
+    <div class="fixture-banner etikett" role="status">Senast uppdaterad {new Date(lastRun).toLocaleDateString("sv-SE")} — data kan vara inaktuell</div>
   )}
   <main id="main">
     <slot />

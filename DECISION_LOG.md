@@ -241,4 +241,18 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 **Förkastade alternativ:** Ingen retry (fäller permanent vid tillfälligt fel); fast retry-intervall (riskerar rate-limit).
 **Påverkan:** `pipeline/src/archive.ts`.
 
+## 2026-06-12 — M6 Härdning + ops: implementation
+
+**Beslut:** (1) RUNBOOK.md komplett med S1–S7, stoppurfält, nyckelrotationsschema, ägarsteg. (2) `ops/rollback-data.sh` defensiv med dry-run och smutsigt-träd-koll. (3) `ops/drill.sh` ren klon, hash-verifiering, tidtagning, max 15 min. (4) `drill.yml` månadscron + issue-larm. (5) `mirror.yml` Netlify-deploy villkorad på token-existens. (6) `release.yml` veckovis taggning + GitHub Release, osignerat tills GPG-nyckel finns. (7) Stale-banner i Layout.astro (>36h, gul list, återanvänder fixture-stil). (8) `dns-zone-backup.txt` mall. (9) `test-t3-stale.mts` simulerar gammalt generated_at.
+**Motiv:** SPEC §16 M6 oblockerad del — allt som inte kräver externa konton/secrets implementeras nu; konton delegeras till ägarsteg och dokumenteras i RUNBOOK.
+**Förkastade alternativ:** Implementera riktiga Cloudflare/Netlify/UptimeRobot-anrop utan konton (omöjligt); skippa drill (brott mot T10); hoppa över stale-banner (brott mot §15).
+**Påverkan:** `ops/*`, `.github/workflows/*`, `site/src/layouts/Layout.astro`, `site/scripts/test-t3-stale.mts`, `site/package.json`, `DECISION_LOG.md`.
+
+## 2026-06-12 — M6 GPG-signering: osignerat tills nyckel finns
+
+**Beslut:** Release-taggning (`release.yml`) använder `git tag -a` (annoterad, osignerad) tills ägaren konfigurerar GPG-nyckel. Loggat i RUNBOOK och workflow-kommentar.
+**Motiv:** GPG-nyckel kräver ägarsteg (generering, GitHub-konfiguration, Secrets). Osignerad tagg är bättre än ingen tagg; workflow är klar för byte till `git tag -s`.
+**Förkastade alternativ:** Hoppa över taggning tills GPG finns (brott mot §16 S7); försöka signera utan nyckel (failar).
+**Påverkan:** `.github/workflows/release.yml`, `ops/RUNBOOK.md`.
+
 

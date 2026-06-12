@@ -1,7 +1,42 @@
-; drygast.nu DNS zone backup
-; Uppdatera manuellt varje kvartal eller efter DNS-ändring
-; Senast uppdaterad: VERIFIERA
-;
-; @  IN  A      <CLOUDFLARE-IP>
-; @  IN  AAAA   <CLOUDFLARE-IPv6>
-; www IN CNAME  drygast.nu.
+# DNS-zon för drygast.nu
+# FYLL I från Cloudflare efter DNS-uppsättning (ägarsteg)
+
+# --- APEX / WWW ---
+# Cloudflare Pages använder CNAME på www och A/AAAA på apex
+# (alternativt CNAME-flattening om Cloudflare DNS hanterar apex)
+
+# APEX (root)
+# A    drygast.nu     <Cloudflare Pages IP — fyll i från dashboard>
+# AAAA drygast.nu     <Cloudflare Pages IPv6 — fyll i från dashboard>
+
+# WWW
+# CNAME www.drygast.nu  <Cloudflare Pages domän — t.ex. drygast.pages.dev>
+
+# --- TXT / SPF / DMARC (om e-post aktiveras senare) ---
+# TXT drygast.nu "v=spf1 -all"
+# TXT _dmarc.drygast.nu "v=DMARC1; p=reject;"
+
+# --- Verifieringar ---
+# TXT drygast.nu "google-site-verification=..."  (om Google Search Console)
+
+# --- Reserv-DNS (S4) ---
+# Vid Cloudflare-utfall: byt NS hos registrar till:
+# ns1.he.net
+# ns2.he.net
+# ns3.he.net
+# ns4.he.net
+# ns5.he.net
+# (Hurricane Electric — gratis, robust, registrering krävs)
+# Ladda sedan zonfilen nedan till HE.
+
+# ============================================
+# Komplett zonfil (fyll i IPs/domän från Cloudflare)
+# ============================================
+# $ORIGIN drygast.nu.
+# $TTL 300
+# @   IN  A     <PAGES_IP>
+# @   IN  AAAA  <PAGES_IPV6>
+# www IN  CNAME <PAGES_CNAME>.
+
+# FYLL I från Cloudflare efter DNS-uppsättning (ägarsteg)
+# Spara inte verkliga IP/domän här förrän de är fasta.

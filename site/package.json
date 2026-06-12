@@ -8,7 +8,7 @@
     "test:t1": "node --experimental-strip-types scripts/test-t1.mts",
     "test:t3": "node --experimental-strip-types scripts/test-t3.mts",
     "test:t9": "node --experimental-strip-types scripts/test-t9.mts",
-    "test": "node --experimental-strip-types scripts/test-t1.mts && node --experimental-strip-types scripts/test-t3.mts && node --experimental-strip-types scripts/test-t9.mts",
+    "test": "node --experimental-strip-types scripts/test-t1.mts && node --experimental-strip-types scripts/test-t3.mts && node --experimental-strip-types scripts/test-t3-stale.mts && node --experimental-strip-types scripts/test-t9.mts",
     "preview": "astro preview"
   },
   "dependencies": {
