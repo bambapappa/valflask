@@ -28,8 +28,8 @@ const jsonLd = [
       <h2>Stöd vägningen</h2>
       <div class="stod-box">
         <p>Projektet drivs ideellt och finansieras helt av driftkostnaderna (under 2&nbsp;500 kr/år). Vill du stödja vägningen?</p>
-        <p class="stod-box__placeholder stampel">SWISH / BUY ME A COFFEE — KOMMER SNART</p>
-        <p class="stod-box__note">Betalningsuppgifter kompletteras av ägaren före lansering.</p>
+        <p><a class="stod-box__bmc" href="https://buymeacoffee.com/drygast.nu" rel="noopener noreferrer" target="_blank">Buy Me a Coffee ↗</a></p>
+        <p class="stod-box__note">Direkt stöd, inga villkor. Swish kan tillkomma senare.</p>
       </div>
 
       <h2>Kontakt</h2>
@@ -47,11 +47,19 @@ const jsonLd = [
     padding: 1rem 1.25rem;
     margin: 1rem 0 1.5rem;
   }
-  .stod-box__placeholder {
-    display: block;
+  .stod-box__bmc {
+    display: inline-block;
     margin-top: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--svarta);
     font-family: var(--font-mono);
     font-size: var(--steg--1);
+    text-decoration: none;
+    color: var(--svarta);
+  }
+  .stod-box__bmc:hover {
+    background: var(--svarta);
+    color: var(--papper);
   }
   .stod-box__note {
     font-family: var(--font-mono);
