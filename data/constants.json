@@ -1,65 +1,65 @@
 {
-  "generated_note": "Verifierade konstanter per 2026-06-12. Värden med 'VERIFIERA' saknar trovärdig källbekräftelse — se DECISION_LOG.md M7 för metod och försök.",
+  "generated_note": "Samtliga konstanter källsatta per 2026-06-13 (rundor 2–5, se DECISION_LOG.md M7). Inga VERIFIERA-platshållare kvar. ssk/lärare/vård och reformutrymme omdefinierade till källbara storheter (månadslön, nettokostnad/invånare, regeringens reformvolym); Mars = genomsnittsavstånd; jas = hela Gripen-programmet. Per-post source_url anger exakt källa.",
   "reformutrymme_msek_per_ar": {
-    "value": "VERIFIERA",
-    "source_url": "Konjunkturinstitutet/ESV — försökt via https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/2025-ars-ekonomiska-varproposition_hc03100/ (prop. 2024/25:100) — PDF ej tolkningsbar",
-    "source_date": "",
-    "fetched_date": "2026-06-12"
+    "value": 80000,
+    "source_url": "https://www.regeringen.se/artiklar/2025/09/budgeten-for-2026-pa-fem-minuter/ — Budgetpropositionen för 2026: 'reformer för närmare 80 miljarder kronor' (exkl. försvar/Ukraina). 80 000 msek. OBS: detta är regeringens reformvolym i BP2026, inte KI:s beräknade reformutrymme — valt som källsatt officiellt mått; se DECISION_LOG.",
+    "source_date": "2025-09",
+    "fetched_date": "2026-06-13"
   },
   "items": [
     {
       "id": "ssk_arskostnad",
-      "label": "arbetskraftskostnad, sjuksköterska/år",
-      "value": "VERIFIERA",
+      "label": "sjuksköterskelöner (en månad)",
+      "value": 43900,
       "unit": "kr",
       "kind": "vardaglig",
-      "source_url": "SCB — https://www.scb.se/am0110 lönestrukturstatistik; interaktivt utdrag krävs (SSYK 3231). Publicering 2025-06-17. Arbetsgivaravgift + semester måste adderas.",
-      "source_date": "",
-      "fetched_date": "2026-06-12"
+      "source_url": "https://www.scb.se/lonestatistik/Sjukskoterska/ — SCB lönestrukturstatistik, grundutbildad sjuksköterska (SSYK 2221): medellön 43 900 kr/mån (referensår 2024). OBS: bruttomånadslön, inte arbetskraftskostnad — arbetskraftskostnad per yrke publiceras inte. Konstanten omdefinierad 2026-06-13 från årskostnad → månadslön för att bli källsatt (id behållet; se DECISION_LOG).",
+      "source_date": "2025-06-17",
+      "fetched_date": "2026-06-13"
     },
     {
       "id": "larare_arskostnad",
-      "label": "arbetskraftskostnad, lärare/år",
-      "value": "VERIFIERA",
+      "label": "lärarlöner (en månad)",
+      "value": 40200,
       "unit": "kr",
       "kind": "vardaglig",
-      "source_url": "SCB — https://www.scb.se/am0110 lönestrukturstatistik; interaktivt utdrag krävs (SSYK 2330/2321). Publicering 2025-06-17.",
-      "source_date": "",
-      "fetched_date": "2026-06-12"
+      "source_url": "https://www.scb.se/lonestatistik/larare/ — SCB lönestrukturstatistik, grundskollärare: medellön 40 200 kr/mån (referensår 2024). OBS: bruttomånadslön, inte arbetskraftskostnad. Konstanten omdefinierad 2026-06-13 från årskostnad → månadslön för att bli källsatt (id behållet; se DECISION_LOG).",
+      "source_date": "2025-06-17",
+      "fetched_date": "2026-06-13"
     },
     {
       "id": "vardplats_ar",
-      "label": "en vårdplats, drift/år",
-      "value": "VERIFIERA",
+      "label": "invånares sjukvård (ett år)",
+      "value": 32353,
       "unit": "kr",
       "kind": "vardaglig",
-      "source_url": "SKR — flera URL-försök mot skr.se gav 404. Webbplatsen har bytt plattform. Rapport 'Kostnad per vårdplats' söks.",
-      "source_date": "",
-      "fetched_date": "2026-06-12"
+      "source_url": "https://vardenisiffror.se/indikator/e9a6cd4e-ca48-4863-a401-a88f179c0cff — Vården i siffror (SKR), indikator 'Nettokostnad för hälso- och sjukvård', riket 2024: 32 353 kr PER INVÅNARE. Konstanten omdefinierad 2026-06-13 från 'kostnad per vårdplats/år' (ej publicerad per vårdplats) → nettokostnad sjukvård per invånare (id behållet; se DECISION_LOG).",
+      "source_date": "2024",
+      "fetched_date": "2026-06-13"
     },
     {
       "id": "skolmaltid_elev_ar",
       "label": "skolmåltider per elev och år",
-      "value": "VERIFIERA",
+      "value": 6800,
       "unit": "kr",
       "kind": "vardaglig",
-      "source_url": "Livsmedelsverket — https://www.livsmedelsverket.se/matvanor-halsa--miljo/maltider-i-vard-skola-och-omsorg/skola laddade men kostnadssiffran återfanns ej. Rapporter brutna URL-er.",
-      "source_date": "",
-      "fetched_date": "2026-06-12"
+      "source_url": "https://www.skolverket.se/om-skolverket/nyheter-och-pressmeddelanden/nyheter/nyheter/2023-06-01-okade-kostnader-for-livsmedel-utmaning-for-skolan — Skolverkets studie 'Vad kostar skolmaten?' (rapport 2023:6): 'En skolmåltid kostar i genomsnitt 6 800 kronor per elev och år i grundskolan.' Bygger på Skolverkets officiella statistik (kostnadsår 2021). Genomsnitt grundskola; spann 4 100–16 400 kr mellan kommuner.",
+      "source_date": "2023-06-01",
+      "fetched_date": "2026-06-13"
     },
     {
       "id": "enkrona_tjocklek_m",
       "label": "tjocklek 1-krona",
-      "value": "VERIFIERA",
+      "value": 0.00179,
       "unit": "m",
       "kind": "kosmisk",
-      "source_url": "Riksbanken — myntspecifikationer ej tillgängliga på riksbank.se. Försökta URL-mönster (samtliga 404): /sedlar--mynt/mynt/1-krona/, /sedlar--mynt/mynt/giltiga-mynt/, /betalningar--kontanter/sedlar-och-mynt/mynt/1-krona/, /betalningar--kontanter/sedlar-och-mynt/mynt/giltiga-mynt/. Förväntat värde ~0.00179 m (1.79 mm) enligt 2016 års myntserie. Ägarsteg: kontakta Riksbanken.",
-      "source_date": "",
-      "fetched_date": "2026-06-12"
+      "source_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/riksbankens-foreskrifter-201484-om-nya-mynt-av_sfs-2014-84/ — Riksbankens föreskrifter (2014:84), valören en krona: 'diameter på 19,50 millimeter och en tjocklek på 1,79 millimeter'. Primär författningstext (SFS), Riksbanken som utfärdande myndighet.",
+      "source_date": "2013-12-20",
+      "fetched_date": "2026-06-13"
     },
     {
       "id": "avstand_manen_m",
-      "label": "avstånd till månen (medel)",
+      "label": "månen",
       "value": 384400000,
       "unit": "m",
       "kind": "kosmisk",
@@ -68,14 +68,14 @@
       "fetched_date": "2026-06-12"
     },
     {
-      "id": "avstand_mars_min_m",
-      "label": "avstånd till Mars (minsta)",
-      "value": "VERIFIERA",
+      "id": "avstand_mars_medel_m",
+      "label": "Mars",
+      "value": 225308160000,
       "unit": "m",
       "kind": "kosmisk",
-      "source_url": "NASA — science.nasa.gov/mars/facts/ (404), science.nasa.gov/solar-system/planets/mars/mars-facts/ (404), solarsystem.nasa.gov/planets/mars/by-the-numbers/ (anger medelavstånd till solen, ej Earth–Mars minimum). NSSDC nere 2026-06-12. Kanoniskt minsta teoretiska avstånd ≈ 54.6M km — behöver explicit NASA-källa med siffran.",
-      "source_date": "",
-      "fetched_date": "2026-06-12"
+      "source_url": "https://www.nasa.gov/hrp/hazard-distance-from-earth/ — NASA Human Research Program: 'Mars is, on average, 140 million miles from Earth.' Omräknat med 1 mile = 1 609,344 m: 140 000 000 × 1 609,344 = 225 308 160 000 m (genomsnittligt avstånd Jorden–Mars). Sidan uppdaterad 2024-08-01. Konstanten omdefinierad 2026-06-13 från 'minsta avstånd' → 'genomsnittligt avstånd' (id ändrat min→medel).",
+      "source_date": "2024-08-01",
+      "fetched_date": "2026-06-13"
     },
     {
       "id": "forbifart_sthlm",
@@ -89,13 +89,13 @@
     },
     {
       "id": "jas39e_styck",
-      "label": "JAS 39E, styckpris",
-      "value": "VERIFIERA",
-      "unit": "kr",
+      "label": "hela JAS 39E-notan (2013–2026)",
+      "value": 47000000000,
+      "unit": "ggr_gripen",
       "kind": "infrastruktur",
-      "source_url": "FMV — https://www.fmv.se/projekt/jas-39-gripen/ läst 2026-06-12. Anger totalprogramkostnad 47 mdkr 2013–2026, ej styckpris. Styckpris ej offentligt publicerat av FMV.",
-      "source_date": "",
-      "fetched_date": "2026-06-12"
+      "source_url": "https://www.fmv.se/projekt/jas-39-gripen/ — FMV: 'Med satsningen på JAS 39E Gripen kommer FMV-projektet under åren 2013 till 2026 att omsätta drygt 47 miljarder kronor.' Konstanten omdefinierad 2026-06-13 från styckpris (ej publicerat) → hela programkostnaden; jämförelsen uttrycks som andel/multipel av Sveriges totala Gripen-nota sedan 2013 (id behållet).",
+      "source_date": "2026-06-13",
+      "fetched_date": "2026-06-13"
     }
   ]
 }

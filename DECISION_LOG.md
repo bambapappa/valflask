@@ -309,4 +309,42 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 **Påverkan:** `data/constants.json`, `DECISION_LOG.md`.
 
+## 2026-06-13 — M7 Konstantverifiering, runda 3: enkrona + skolmåltid källsatta mot primärkällor; Wikipedia-värden ersatta
+
+**Beslut:** Två konstanter verifierade och källsatta mot auktoritativa primärkällor: `enkrona_tjocklek_m` = 0,00179 m ur **Riksbankens föreskrifter (2014:84)** (SFS-fulltext via riksdagen.se: valören en krona "diameter på 19,50 millimeter och en tjocklek på 1,79 millimeter") och `skolmaltid_elev_ar` = 6 800 kr ur **Skolverkets** studie "Vad kostar skolmaten?" (rapport 2023:6: "i genomsnitt 6 800 kronor per elev och år i grundskolan", kostnadsår 2021). Sex poster står kvar som "VERIFIERA" med skärpta per-post-noter. Detta ersätter de Wikipedia-härledda värdena från 2026-06-12-rundan (commit 03683f2 återställde dem till VERIFIERA — Wikipedia underkänd som auktoritativ för sajtens trovärdighetsvaluta); enkronan har nu sin egentliga primärkälla (författningstexten Wikipedia citerade), och Mars förblir VERIFIERA tills en stabil NASA-URL anger 54,6M km.
+
+**Motiv:** Spec §0 regel 2 ("hitta aldrig på siffror") + §9-trovärdighet. Författningstext och en statlig myndighets (Skolverket) officiella statistik är de starkaste tillgängliga källorna och slår både Wikipedia och marknadsföringssidor. Riksbankens egna myntsidor gav fortsatt 404, men föreskriften 2014:84 innehåller exakt samma specifikation och är primärkällan. För de sex kvarvarande: SCB publicerar månadslön (ej arbetskraftskostnad — multiplikatorn vore ett antagande), SKR:s KPP är per patient (ej per vårdplats/år), KI:s reformutrymme är en rörlig prognos (ägarbeslut om vintage), FMV publicerar inget JAS-styckpris, och NASA:s Mars-minimumsida redirectar numera till en faktasida utan siffran.
+
+**Förkastade alternativ:** Behålla Wikipedia-värdena (underkänt 2026-06-12); härleda arbetskraftskostnad ur månadslön × egen avgiftsmultiplikator (påhittad precision); pinna ett reformutrymme ur sekundärrapportering (rörlig prognos, kräver ägarbeslut); citera en NASA-URL som 302-redirectar bort från siffran.
+
+**Påverkan:** `data/constants.json` (2 värden + 6 skärpta noter + generated_note), `DECISION_LOG.md`. T3/T9 gröna efter ändringen (verifierat i /tmp-klon).
+
+## 2026-06-13 — M7 Konstanter runda 4: tre konstanter omdefinierade till källsatta storheter + kosmisk jämförelsemotor fixad (ägarbeslut)
+
+**Beslut:** Fyra konstanter ändrade efter ägarbeslut, plus en motorfix:
+- `ssk_arskostnad` → **43 900 kr**, omdefinierad från "arbetskraftskostnad/år" till **sjuksköterskelöner (en månad)**, källa SCB lönestrukturstatistik (SSYK 2221, referensår 2024). Id behållet (refereras av ~10 löften).
+- `larare_arskostnad` → **40 200 kr**, omdefinierad till **lärarlöner (en månad)**, källa SCB (grundskollärare, 2024). Id behållet.
+- `vardplats_ar` → **32 353 kr**, omdefinierad från "kostnad per vårdplats/år" (ej publicerad) till **nettokostnad hälso- och sjukvård per invånare**, källa Vården i siffror (SKR), riket 2024. Id behållet.
+- `avstand_mars_min_m` → id ändrat till `avstand_mars_medel_m`, **225 308 160 000 m**, omdefinierad från "minsta" till **genomsnittligt avstånd**, källa NASA HRP (140 milj. miles × 1 609,344). Id-byte ofarligt (refererades av inga löften).
+- **Motorfix (`aggregates.ts`):** den kosmiska jämförelsen räknade tidigare `totalKronor × värde` för unit `m` — dimensionellt fel för ett avstånd. Nu: enkronan (`enkrona_tjocklek_m`) är intern myntstapel-byggsten (renderas aldrig fristående), och avståndskonstanter beräknas som `(totalKronor × enkronans tjocklek) / avstånd` = andel av vägen, renderad "X % av vägen till månen/Mars" (ny unit `andel_avstand` + gren i `formatComparison`).
+
+**Motiv:** Spec §0 "hitta aldrig på siffror" + §8 källhierarki. Arbetskraftskostnad och kostnad-per-vårdplats publiceras inte per yrke/vårdplats av någon myndighet (konstaterat runda 3), så de enda källsatta storheterna är månadslön (SCB) resp. nettokostnad per invånare (SKR/Vården i siffror). Storheterna är svagare men ärliga och spårbara — bättre än VERIFIERA eller härledda tal. Motorfixen realiserar den design metod-sidan redan beskriver ("myntstapel mot månen/Mars") och som koden aldrig implementerat korrekt.
+
+**Förkastade alternativ:** Härleda arbetskraftskostnad ur lön × egen avgiftsmultiplikator (påhittad precision, §0-brott); citera KPP:s räkneexempel 55 000 kr som snitt (ej bekräftat snitt); byta `avstand_mars_min` mot jordvarv (NASA-källa för Mars-snitt fanns, så Mars behölls); byta constant-id för ssk/lärare/vård (hade krävt ändring i ~12 löften — id behålls, label bär betydelsen).
+
+**Påverkan:** `data/constants.json` (4 konstanter), `site/src/lib/aggregates.ts` (computeComparisons + formatComparison), `site/src/pages/metod.astro` (copy), `data/promises.json` (1 fixture: enkrona→mars i kosmisk lista), `DECISION_LOG.md`. Verifierat i /tmp-klon: T3, T1, T9 gröna, bygge OK, rendering bekräftad ("8,4 % av vägen till månen", "12 813 sjuksköterskelöner (en månad)", "726 invånares sjukvård (ett år)"). KVARSTÅR VERIFIERA: `reformutrymme_msek_per_ar`, `jas39e_styck`.
+
+## 2026-06-13 — M7 Konstanter runda 5: reformutrymme + Gripen källsatta (de sista två); quips städade
+
+**Beslut:** De två sista VERIFIERA-konstanterna källsatta (alla 10 bilaga-D-konstanter nu satta):
+- `reformutrymme_msek_per_ar` → **80 000 msek**, källa Regeringen, Budgetpropositionen för 2026 ("reformer för närmare 80 miljarder kronor", exkl. försvar/Ukraina). OBS: regeringens reformvolym i BP2026, inte KI:s beräknade reformutrymme — valt som ett officiellt, källsatt mått. Aktiverar gap-mätarens fulla läge (verifierat: "GAP ≈ 792 MDKR").
+- `jas39e_styck` → **47 000 000 000 kr** (drygt 47 mdkr), källa FMV ("FMV-projektet under åren 2013 till 2026 ... omsätta drygt 47 miljarder kronor"). Omdefinierad från styckpris (ej publicerat) → hela Gripen-programmet. Ny unit `ggr_gripen` + gren i `formatComparison`: jämförelsen renderas "X gånger / X % av hela JAS 39E-notan (2013–2026)" i stället för antal plan. Id behållet (refereras av löften).
+- **Quip-städning:** fixture-quip på löfte p-… ("hundra lärarkostnader per år per lärare", inkonsekvent efter års→månadslön-bytet) omskriven till "räcker till en extra månadslön åt drygt 100 000 lärare". Övriga quips genomgångna — 39 (regionsjukvård) och 311 (tandvård) stämmer fortsatt.
+
+**Motiv:** Spec §0/§8. Regeringens och FMV:s egna publikationer är primärkällor. Reformutrymme som "konstant" är en förenkling (rörlig prognos) men regeringens BP-volym är ett konkret, citerbart årsmått. Gripen-omframningen gör konstanten källsatt OCH ger en mer begriplig jämförelse (andel av en känd nationell satsning) än ett icke-publicerat styckpris.
+
+**Förkastade alternativ:** KI:s ~34 mdkr (sekundärrapportering, ej maskinläst primärkälla); behålla jas som styckpris (ej publicerat ⇒ VERIFIERA för evigt); gissa styckpris ur utländska Gripen-affärer (olika kontraktsvillkor).
+
+**Påverkan:** `data/constants.json` (2 konstanter), `site/src/lib/aggregates.ts` (`formatComparison` ggr_gripen-gren), `data/promises.json` (1 quip), `DECISION_LOG.md`. /tmp-klon: T3/T1/T9 gröna, bygge OK, rendering bekräftad. **Alla 10 konstanter i bilaga D nu källsatta — inga VERIFIERA kvar.**
+
 
