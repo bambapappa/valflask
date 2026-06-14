@@ -141,8 +141,11 @@ async function init() {
       fetch("/api/v1/summary.json"),
       fetch("/api/v1/promises.json"),
     ]);
-    summaryData = await sumResp.json();
-    promisesData = await promResp.json();
+    // API:t paketerar nyttolasten i ett kuvert { generated_at, data_hash, license, data } (§5/M5).
+    const sumJson = await sumResp.json();
+    const promJson = await promResp.json();
+    summaryData = sumJson && sumJson.data ? sumJson.data : sumJson;
+    promisesData = promJson && promJson.data ? promJson.data : promJson;
   } catch {
     resultDiv.innerHTML = '<div class="resultat__tom">Kunde inte ladda data.</div>';
     return;
