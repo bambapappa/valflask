@@ -198,9 +198,16 @@ export function computeComparisons(
   const kosmiska: ComparisonResult[] = [];
   const infra: ComparisonResult[] = [];
 
+  // Enkronan är myntstapelns byggsten — intern referens, inte en egen jämförelse.
+  const COIN_ID = "enkrona_tjocklek_m";
+  const coin = constants.items.find((it) => it.id === COIN_ID);
+  const coinThicknessM =
+    coin && coin.value !== "VERIFIERA" ? (coin.value as number) : null;
+
   for (const id of ids) {
     const c = constants.items.find((it) => it.id === id);
     if (!c) continue;
+    if (c.id === COIN_ID) continue; // intern, renderas aldrig fristående
     if (c.value === "VERIFIERA") {
       const r: ComparisonResult = {
         constantId: c.id,
@@ -214,18 +221,33 @@ export function computeComparisons(
       continue;
     }
     let computed: number;
-    if (c.unit === "kr") {
-      computed = totalKronor / c.value;
-    } else if (c.unit === "m") {
-      computed = totalKronor * c.value;
+    let unitOut = c.unit;
+    if (c.unit === "m") {
+      // Kosmisk: hur långt når en stapel av enkronor för pengarna, mot avståndet?
+      if (coinThicknessM === null) {
+        const r: ComparisonResult = {
+          constantId: c.id,
+          label: c.label,
+          computed: 0,
+          unit: c.unit,
+          kind: c.kind,
+          unverifiable: true,
+        };
+        pushByKind(r);
+        continue;
+      }
+      const stackHeightM = totalKronor * coinThicknessM;
+      computed = stackHeightM / c.value;
+      unitOut = "andel_avstand";
     } else {
+      // unit "kr": antal enheter pengarna räcker till
       computed = totalKronor / c.value;
     }
     const r: ComparisonResult = {
       constantId: c.id,
       label: c.label,
       computed,
-      unit: c.unit,
+      unit: unitOut,
       kind: c.kind,
       unverifiable: false,
     };
@@ -374,6 +396,18 @@ export function buildSummary(
 export function formatComparison(r: ComparisonResult): string {
   if (r.unverifiable) return "Värde ej verifierat";
   const val = r.computed;
+  if (r.unit === "ggr_gripen") {
+    // Andel/multipel av hela Gripen-programmet (2013–2026).
+    if (val >= 1) return `${val.toFixed(1).replace(".", ",")} gånger ${r.label}`;
+    if (val >= 0.01) return `${(val * 100).toFixed(0)} % av ${r.label}`;
+    return `${(val * 100).toFixed(1).replace(".", ",")} % av ${r.label}`;
+  }
+  if (r.unit === "andel_avstand") {
+    // Myntstapeln (enkronor) jämförd med ett avstånd.
+    if (val >= 1) return `${val.toFixed(1).replace(".", ",")} gånger till ${r.label}`;
+    if (val >= 0.01) return `${(val * 100).toFixed(1).replace(".", ",")} % av vägen till ${r.label}`;
+    return `${(val * 100).toFixed(2).replace(".", ",")} % av vägen till ${r.label}`;
+  }
   if (r.unit === "kr") {
     if (val >= 1_000_000) return `${(val / 1_000_000).toFixed(1).replace(".", ",")} miljoner ${r.label.toLowerCase()}`;
     if (val >= 1000) return `${Math.round(val).toLocaleString("sv-SE")} ${r.label.toLowerCase()}`;

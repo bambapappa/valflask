@@ -82,7 +82,7 @@ const jsonLd = [
 
       <h2>Jämförelser</h2>
       <p>Alla jämförelsetal lagras i <code>constants.json</code> med källa och hämtdatum. Inga påhittade siffror — varje konstant har en spårbar käll-URL. Värden markerade "VERIFIERA" är platshållare som bekräftas mot auktoritativ källa före publicering.</p>
-      <p>Varje löfte visas med 1–3 jämförelser: minst en vardaglig (löner, vårdplatser, skolmåltider), max en kosmisk (myntstapel mot månen/Mars). Valet är deterministiskt på löftes-id.</p>
+      <p>Varje löfte visas med 1–3 jämförelser: minst en vardaglig (månadslöner, sjukvård per invånare, skolmåltider), max en kosmisk (en stapel enkronor mätt mot avståndet till månen/Mars). Den kosmiska uttrycks som hur stor andel av vägen stapeln räcker. Valet är deterministiskt på löftes-id.</p>
 
       <h2>Verbatim- och grindkedjan</h2>
       <p>Alla löftescitat kontrolleras ordagrant mot källtexten (G3 — verbatimgrinden). LLM-extraherade belopp dubbelkollas av en oberoende modell från annan modellfamilj (G4). Fullständig grindlogik i <code>pipeline/src/gates.ts</code>.</p>
