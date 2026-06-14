@@ -1,42 +1,58 @@
-# DNS-zon för drygast.nu
-# FYLL I från Cloudflare efter DNS-uppsättning (ägarsteg)
+;;
+;; Domain:     drygast.nu.
+;; Exported:   2026-06-14 20:49:41
+;;
+;; This file is intended for use for informational and archival
+;; purposes ONLY and MUST be edited before use on a production
+;; DNS server.  In particular, you must:
+;;   -- update the SOA record with the correct authoritative name server
+;;   -- update the SOA record with the contact e-mail address information
+;;   -- update the NS record(s) with the authoritative name servers for this domain.
+;;
+;; For further information, please consult the BIND documentation
+;; located on the following website:
+;;
+;; http://www.isc.org/
+;;
+;; And RFC 1035:
+;;
+;; http://www.ietf.org/rfc/rfc1035.txt
+;;
+;; Please note that we do NOT offer technical support for any use
+;; of this zone data, the BIND name server, or any other third-party
+;; DNS software.
+;;
+;; Use at your own risk.
+;; SOA Record
+drygast.nu	3600	IN	SOA	lola.ns.cloudflare.com. dns.cloudflare.com. 2053313678 10000 2400 604800 3600
 
-# --- APEX / WWW ---
-# Cloudflare Pages använder CNAME på www och A/AAAA på apex
-# (alternativt CNAME-flattening om Cloudflare DNS hanterar apex)
+;; NS Records
+drygast.nu.	86400	IN	NS	lola.ns.cloudflare.com.
+drygast.nu.	86400	IN	NS	porter.ns.cloudflare.com.
 
-# APEX (root)
-# A    drygast.nu     <Cloudflare Pages IP — fyll i från dashboard>
-# AAAA drygast.nu     <Cloudflare Pages IPv6 — fyll i från dashboard>
+;; A Records
+autoconfig.drygast.nu.	1	IN	A	198.23.53.75 ; cf_tags=cf-proxied:true
 
-# WWW
-# CNAME www.drygast.nu  <Cloudflare Pages domän — t.ex. drygast.pages.dev>
+;; CNAME Records
+drygast.nu.	1	IN	CNAME	valflask.pages.dev. ; cf_tags=cf-proxied:true
+protonmail2._domainkey.drygast.nu.	1	IN	CNAME	protonmail2.domainkey.dtjcdt5cjygmf3eyowfxz3lz2r3qktgwppq4oc2ypdtlrtnoqhsma.domains.proton.ch. ; cf_tags=cf-proxied:false
+protonmail3._domainkey.drygast.nu.	1	IN	CNAME	protonmail3.domainkey.dtjcdt5cjygmf3eyowfxz3lz2r3qktgwppq4oc2ypdtlrtnoqhsma.domains.proton.ch. ; cf_tags=cf-proxied:false
+protonmail._domainkey.drygast.nu.	1	IN	CNAME	protonmail.domainkey.dtjcdt5cjygmf3eyowfxz3lz2r3qktgwppq4oc2ypdtlrtnoqhsma.domains.proton.ch. ; cf_tags=cf-proxied:false
+www.drygast.nu.	1	IN	CNAME	valflask.pages.dev. ; cf_tags=cf-proxied:true
 
-# --- TXT / SPF / DMARC (om e-post aktiveras senare) ---
-# TXT drygast.nu "v=spf1 -all"
-# TXT _dmarc.drygast.nu "v=DMARC1; p=reject;"
+;; MX Records
+drygast.nu.	1	IN	MX	10 mail.protonmail.ch.
+www.drygast.nu.	1	IN	MX	20 mailsec.protonmail.ch.
 
-# --- Verifieringar ---
-# TXT drygast.nu "google-site-verification=..."  (om Google Search Console)
+;; SRV Records
+_autodiscover._tcp.admin.drygast.nu.	1	IN	SRV	10 1 443 autodiscover.cloudlogin.co.
+_autodiscover._tcp.drygast.nu.	1	IN	SRV	10 1 443 autodiscover.cloudlogin.co.
 
-# --- Reserv-DNS (S4) ---
-# Vid Cloudflare-utfall: byt NS hos registrar till:
-# ns1.he.net
-# ns2.he.net
-# ns3.he.net
-# ns4.he.net
-# ns5.he.net
-# (Hurricane Electric — gratis, robust, registrering krävs)
-# Ladda sedan zonfilen nedan till HE.
-
-# ============================================
-# Komplett zonfil (fyll i IPs/domän från Cloudflare)
-# ============================================
-# $ORIGIN drygast.nu.
-# $TTL 300
-# @   IN  A     <PAGES_IP>
-# @   IN  AAAA  <PAGES_IPV6>
-# www IN  CNAME <PAGES_CNAME>.
-
-# FYLL I från Cloudflare efter DNS-uppsättning (ägarsteg)
-# Spara inte verkliga IP/domän här förrän de är fasta.
+;; TXT Records
+default._domainkey.drygast.nu.	1	IN	TXT	"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC41vG+wqCWOd0F/oWYE+eCCtVzX+orzBn5+rXS54pC3nxuqVNMZpLiq38bIyJsAIROsvvfmDtoh5XdP8Y1PB9RYVMmqvU4wGyd2xV+9eGeH3SOHL6RYPLmhXY9v0XKamfbTfUZT8k13T5MHJZRQg1MUGJkKWVyB6IHFL7NyciBIwIDAQAB"
+_dmarc.drygast.nu.	1	IN	TXT	"v=DMARC1; p=quarantine"
+_dmarc.mail.drygast.nu.	1	IN	TXT	"v=DMARC1; p=none;"
+_dmarc.www.drygast.nu.	1	IN	TXT	"v=DMARC1; p=none;"
+_domainkey.drygast.nu.	1	IN	TXT	"o=~"
+drygast.nu.	1	IN	TXT	"v=spf1 include:_spf.protonmail.ch ~all"
+drygast.nu.	1	IN	TXT	"protonmail-verification=ed51852b426d13b016d0c681abba82c5962cb411"
