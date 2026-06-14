@@ -24,26 +24,13 @@ const jsonLd = [
         </div>
       </noscript>
 
+      <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
       <div id="search"></div>
     </div>
   </div>
 </Layout>
 
-<script is:inline>
-(function() {
-  var el = document.getElementById("search");
-  if (!el) return;
-  var s = document.createElement("script");
-  s.src = "/pagefind/ui.js";
-  s.onload = function() {
-    new PagefindUI({ element: "#search", showSubResults: true, showImages: false });
-  };
-  s.onerror = function() {
-    el.innerHTML = '<p>Sökfunktionen kunde inte laddas. Se <a href="/topplistor">topplistor</a>.</p>';
-  };
-  document.body.appendChild(s);
-})();
-</script>
+<script is:inline src="/sok-init.js"></script>
 
 <style>
   .prosa-content--centered {
