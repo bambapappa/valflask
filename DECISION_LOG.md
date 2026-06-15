@@ -347,4 +347,16 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 **Påverkan:** `data/constants.json` (2 konstanter), `site/src/lib/aggregates.ts` (`formatComparison` ggr_gripen-gren), `data/promises.json` (1 quip), `DECISION_LOG.md`. /tmp-klon: T3/T1/T9 gröna, bygge OK, rendering bekräftad. **Alla 10 konstanter i bilaga D nu källsatta — inga VERIFIERA kvar.**
 
+## 2026-06-15 — M3: produktions-entrypoint för pipelinen (`cli-run.ts`) + modellval §20
+
+**Beslut:** Lagt `pipeline/src/cli-run.ts` som skarp entrypoint och pekat om `pipeline:run` dit (tidigare `src/index.ts`, som bara exporterade `runPipeline` utan `main()` — `pnpm pipeline:run` var en tyst no-op och inget läste miljövariabler eller instansierade `OpenRouterClient`). `cli-run.ts` exporterar en ren, testbar `buildContextFromEnv(env, {config, dataDir})` som validerar env (`OPENROUTER_API_KEY`, valfritt `LLM_FALLBACK_*` som par, `MODEL_EXTRACT/VERIFY/COPY`, `PIPELINE_MODE`), instansierar `OpenRouterClient` (med fallback) + `LiveSource` (från `sources.yaml`) + `createArchiveFn`, och kör `runPipeline`. `main()` körs bara som direkt entrypoint (`import.meta.url`-grind) så tester/`cli-dry-run` inte triggar den. Exit 1 vid felkonfig och vid "noll producerade + fel" så CI larmar. §20-krav hårdkodat: kastar om `MODEL_VERIFY === MODEL_EXTRACT`.
+
+**Modellval (§20, första skarpa körningen):** primär OpenRouter saknar kredit ⇒ all trafik faller över till OpenCode Go (OpenAI-kompatibel endpoint `https://opencode.ai/zen/go/v1`, satt som `LLM_FALLBACK_BASE_URL`). Valda modeller: `MODEL_EXTRACT=deepseek-v4-pro` (DeepSeek), `MODEL_VERIFY=kimi-k2.7` (Moonshot — annan familj än extract, uppfyller §20), `MODEL_COPY=glm-5.1` (GLM). Endast modeller på Go:s **chat/completions**-endpoint används; Qwen/MiniMax ligger på `/v1/messages` (Anthropic-format) och är inkompatibla med pipelinens OpenAI-klient.
+
+**Motiv:** Utan entrypoint kunde M3 "skarp körning" aldrig starta. Ren `buildContextFromEnv` gör env-limmet enhetstestbart utan nät (10 nya tester). Fallback-kedjan i `OpenRouterClient` (primär → fallback vid valfritt fel) gör att en kreditlös primär automatiskt går på OpenCode Go.
+
+**Förkastade alternativ:** lägga `main()` direkt i `index.ts` (skulle köra vid import från `cli-dry-run`/tester); läsa env utspritt i modulerna (otestbart, dolt); välja Qwen/MiniMax (fel API-format för klienten).
+
+**Påverkan:** `pipeline/src/cli-run.ts` (ny), `pipeline/tests/cli-run.test.ts` (ny, 10 tester), `pipeline/package.json` (`pipeline:run`→`cli-run.ts`), `DECISION_LOG.md`. /tmp-klon: typecheck rent, 81/81 tester gröna, check-t7 OK, exit 1 vid saknad env verifierat.
+
 
