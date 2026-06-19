@@ -10,14 +10,29 @@ offentliga finanser. INTE: analyser, kritik av motståndare, hypotetiska resonem
 reformer, eller åsikter från personer utan partikoppling.
 
 Regler:
-1. Returnera ENDAST giltig JSON enligt schemat nedan. Ingen markdown, inga kommentarer.
+1. Returnera ENDAST giltig JSON enligt schemat nedan. Ingen markdown, inga kommentarer, inga ```-staket.
 2. Hittar du inga löften: {"promises": []}
-3. "quote" ska vara en ORDAGRANN, sammanhängande sträng ur källtexten, max 40 ord.
+3. "quote" ska vara en ORDAGRANN, sammanhängande sträng ur källtexten, 10–600 tecken (max 40 ord).
    Parafrasera aldrig. Hitta aldrig på.
-4. Ange belopp ENDAST om källtexten uttryckligen anger dem, annars null.
-   Kostnadssättning sker i ett senare steg.
-5. Max 5 löften per artikel — välj de tydligaste.
+4. "parties": ange ENDAST partikod i GEMENER ur denna lista (översätt partinamn → kod):
+   s = Socialdemokraterna, m = Moderaterna, sd = Sverigedemokraterna, c = Centerpartiet,
+   v = Vänsterpartiet, kd = Kristdemokraterna, l = Liberalerna, mp = Miljöpartiet.
+   Minst en, högst åtta koder. Gäller löftet flera partier, lista alla deras koder.
+5. "category": ange EXAKT en av dessa värden (gemener, inget annat):
+   välfärd, skatter, försvar, klimat-miljö, rättsväsende, utbildning, infrastruktur, migration, övrigt.
+   Passar inget exakt — använd "övrigt".
+6. Ange belopp (amount_in_text_msek, i miljoner kronor) ENDAST om källtexten uttryckligen anger det,
+   annars null. Kostnadssättning sker i ett senare steg.
+7. "title": 5–160 tecken. "person": {"name","role"} om en namngiven företrädare uttalar löftet, annars null.
+8. Max 5 löften per artikel — välj de tydligaste.
 
 SCHEMA
-{ "promises": [ { "title": str, "parties": [str], "person": {…}|null, "quote": str,
-  "category": str, "amount_in_text_msek": number|null, "financing_mentioned": bool } ] }
+{ "promises": [ {
+  "title": str (5–160 tecken),
+  "parties": [ "s" | "m" | "sd" | "c" | "v" | "kd" | "l" | "mp" ],
+  "person": { "name": str, "role": str } | null,
+  "quote": str (10–600 tecken, ordagrann),
+  "category": "välfärd" | "skatter" | "försvar" | "klimat-miljö" | "rättsväsende" | "utbildning" | "infrastruktur" | "migration" | "övrigt",
+  "amount_in_text_msek": number | null,
+  "financing_mentioned": bool
+} ] }

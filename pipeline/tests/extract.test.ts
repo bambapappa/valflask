@@ -1,6 +1,35 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { extractJsonPayload } from "../src/extract.ts";
+import { extractJsonPayload, normalizeCandidate } from "../src/extract.ts";
+import type { ExtractionCandidate } from "../src/gates.ts";
+
+function cand(partial: Partial<ExtractionCandidate>): ExtractionCandidate {
+  return {
+    title: "Titel",
+    parties: ["mp"],
+    person: null,
+    quote: "ordagrann text",
+    category: "skatter",
+    amount_in_text_msek: null,
+    financing_mentioned: false,
+    ...partial,
+  } as ExtractionCandidate;
+}
+
+describe("normalizeCandidate", () => {
+  it("gemenar partikoder", () => {
+    const c = normalizeCandidate(cand({ parties: ["MP", "V"] as unknown as ExtractionCandidate["parties"] }));
+    assert.deepEqual(c.parties, ["mp", "v"]);
+  });
+  it("gemenar kategori", () => {
+    assert.equal(normalizeCandidate(cand({ category: "Skatter" as ExtractionCandidate["category"] })).category, "skatter");
+  });
+  it("lämnar redan korrekta värden orörda", () => {
+    const c = normalizeCandidate(cand({ parties: ["s"], category: "välfärd" }));
+    assert.deepEqual(c.parties, ["s"]);
+    assert.equal(c.category, "välfärd");
+  });
+});
 
 describe("extractJsonPayload", () => {
   it("lämnar rent JSON-objekt orört", () => {
