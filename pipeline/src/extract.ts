@@ -25,6 +25,25 @@ export function extractJsonPayload(raw: string): string {
   return s;
 }
 
+/**
+ * Normaliserar skiftläge i partikoder och kategori. Modeller råkar ofta skriva
+ * "MP"/"Skatter" — schemat (G1) kräver gemener. Ändrar inte värdemängden:
+ * ogiltiga värden (t.ex. "statistik/register") faller fortfarande på G1.
+ */
+export function normalizeCandidate(c: ExtractionCandidate): ExtractionCandidate {
+  if (!c || typeof c !== "object") return c;
+  const out = c as unknown as Record<string, unknown>;
+  if (Array.isArray(out.parties)) {
+    out.parties = out.parties.map((p) =>
+      typeof p === "string" ? p.toLowerCase().trim() : p,
+    );
+  }
+  if (typeof out.category === "string") {
+    out.category = out.category.toLowerCase().trim();
+  }
+  return c;
+}
+
 export async function extractFromArticle(
   article: NormalizedArticle,
   llm: LlmClient,
@@ -69,9 +88,11 @@ export async function extractFromArticle(
     );
   }
 
+  const normalized = candidates.map(normalizeCandidate);
+
   console.error(
-    `[extract] ${article.url} | text=${article.text.length}ch | kandidater=${candidates.length}`,
+    `[extract] ${article.url} | text=${article.text.length}ch | kandidater=${normalized.length}`,
   );
 
-  return candidates;
+  return normalized;
 }
