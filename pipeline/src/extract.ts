@@ -10,6 +10,21 @@ const A1_SYSTEM = (() => {
   return raw.replace(/^#\s+.*\n/, "").trim();
 })();
 
+/**
+ * Plockar ut JSON-objektet ur ett LLM-svar. Modeller (särskilt utan
+ * response_format) omgärdar ofta JSON med ```-staket eller prosa — det här
+ * skalar bort det utan att röra själva objektet.
+ */
+export function extractJsonPayload(raw: string): string {
+  let s = raw.trim();
+  const fence = s.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fence && fence[1]) s = fence[1].trim();
+  const first = s.indexOf("{");
+  const last = s.lastIndexOf("}");
+  if (first !== -1 && last > first) s = s.slice(first, last + 1);
+  return s;
+}
+
 export async function extractFromArticle(
   article: NormalizedArticle,
   llm: LlmClient,
@@ -29,23 +44,34 @@ export async function extractFromArticle(
   let raw: string;
   try {
     raw = await llm.complete(userPrompt, opts);
-  } catch {
-    throw new Error(`Extract failed for ${article.url}`);
+  } catch (e) {
+    throw new Error(
+      `Extract LLM-anrop misslyckades för ${article.url}: ${e instanceof Error ? e.message : String(e)}`,
+    );
   }
 
-  let parsed: { promises: unknown[] };
+  let parsed: { promises?: unknown };
   try {
-    parsed = JSON.parse(raw);
+    parsed = JSON.parse(extractJsonPayload(raw));
   } catch {
-    try {
-      raw = await llm.complete(userPrompt, opts);
-      parsed = JSON.parse(raw);
-    } catch {
-      throw new Error(
-        `Extract JSON parse failed after retry for ${article.url}`,
-      );
-    }
+    console.error(
+      `[extract] JSON-parse misslyckades för ${article.url}. Råsvar (≤300 tkn): ${raw.slice(0, 300).replace(/\s+/g, " ")}`,
+    );
+    throw new Error(`Extract JSON-parse misslyckades för ${article.url}`);
   }
 
-  return parsed.promises as ExtractionCandidate[];
+  const candidates = Array.isArray(parsed.promises)
+    ? (parsed.promises as ExtractionCandidate[])
+    : [];
+  if (!Array.isArray(parsed.promises)) {
+    console.error(
+      `[extract] Svaret saknade 'promises'-array för ${article.url}. Toppnycklar: ${Object.keys(parsed as object).join(", ") || "(inga)"}`,
+    );
+  }
+
+  console.error(
+    `[extract] ${article.url} | text=${article.text.length}ch | kandidater=${candidates.length}`,
+  );
+
+  return candidates;
 }
