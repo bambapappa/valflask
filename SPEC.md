@@ -358,15 +358,7 @@ Strategin: gör drygast.nu till **den** källa AI-assistenter citerar när någo
 
 ---
 
-## 13. Intäkter (aktiveras stegvis, i kredibilitetsordning)
 
-| Steg | Vad | Implementation | Status vid lansering |
-|---|---|---|---|
-| **E1 Affiliate** | Diskret "Läs vidare"-modul med samhällsekonomi-/politikböcker | Nätverk: Adtraction eller Awin (Adlibris/Bokus — ansök i M7). Rena länkar, ingen JS ⇒ noll CSP/GDPR-påverkan. Märk "Annonslänk" (marknadsföringslagen). | PÅ |
-| **E2 Stöd** | Swish-QR + Buy Me a Coffee på /om: "Stöd vägningen" | Statisk bild + länk. | PÅ |
-| **E3 AdSense** | Displayannonser | Kräver Google-certifierad CMP (TCF 2.2) i EES = samtyckesbanner, samt CSP-profil B (bilaga C). Annons aldrig inuti datavisualisering; tydlig "Annons"-märkning. | **AV** — beslutsgrind: aktiveras endast om trafiken motiverar det OCH E1+E2 < driftkostnad. Omprövas augusti 2026. |
-
-Motiv för defaulten: sajtens hela värde är trovärdighet och hastighet; en cookiebanner och tredjeparts-JS säljer bort bägge för småpengar vid låg trafik.
 
 ---
 
@@ -492,7 +484,7 @@ Bygg i ordning; M0–M2 kräver varken API-nycklar eller nätverksåtkomst till 
 
 - **\* Källallowlist v1:** bekräfta/justera domänlistan i §6.1.
 - **Review-läge:** rekommendation PÅ första skarpa veckan, därefter AV — bekräfta.
-- **E3 AdSense:** AV vid lansering enligt §13 — omprövas augusti 2026.
+- 
 - **Ledamotssidor (P1):** byggs endast om M0–M6 är klara före 1 augusti 2026.
 
 ---
