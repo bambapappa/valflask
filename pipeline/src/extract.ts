@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import type { LlmClient, LlmOptions } from "./llm.ts";
+import { QUOTE_MAX_WORDS } from "./gates.ts";
 import type { NormalizedArticle, ExtractionCandidate } from "./gates.ts";
 
 const A1_SYSTEM = (() => {
@@ -30,6 +31,24 @@ export function extractJsonPayload(raw: string): string {
  * "MP"/"Skatter" — schemat (G1) kräver gemener. Ändrar inte värdemängden:
  * ogiltiga värden (t.ex. "statistik/register") faller fortfarande på G1.
  */
+/**
+ * Kortar ett citat till högst maxWords ord — ett ORDAGRANT citat förblir
+ * ordagrant (vi tar bara ett prefix). Modeller tar ofta i 1–3 ord över taket;
+ * detta är skyddsnätet så G3-ordgränsen inte fäller annars korrekta citat.
+ * Avslutar helst vid sista meningsslut inom taket för ett rent citat.
+ * Påverkar INTE parafraserade citat — de förblir icke-ordagranna och fälls av G3.
+ */
+export function trimQuoteToWords(quote: string, maxWords: number): string {
+  const words = quote.trim().split(/\s+/);
+  if (words.length <= maxWords) return quote;
+  const hardCut = words.slice(0, maxWords).join(" ");
+  const sentence = hardCut.match(/^[\s\S]*[.!?]/);
+  if (sentence && sentence[0].trim().split(/\s+/).length >= 5) {
+    return sentence[0].trim();
+  }
+  return hardCut;
+}
+
 export function normalizeCandidate(c: ExtractionCandidate): ExtractionCandidate {
   if (!c || typeof c !== "object") return c;
   const out = c as unknown as Record<string, unknown>;
@@ -40,6 +59,9 @@ export function normalizeCandidate(c: ExtractionCandidate): ExtractionCandidate 
   }
   if (typeof out.category === "string") {
     out.category = out.category.toLowerCase().trim();
+  }
+  if (typeof out.quote === "string") {
+    out.quote = trimQuoteToWords(out.quote, QUOTE_MAX_WORDS);
   }
   return c;
 }

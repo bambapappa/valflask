@@ -59,7 +59,7 @@ export class OpenRouterClient implements LlmClient {
     this.timeoutMs = opts.timeoutMs ?? 90_000;
     this.maxRetries = opts.maxRetries ?? 4;
     this.baseDelayMs = opts.baseDelayMs ?? 2_000;
-    this.minIntervalMs = opts.minIntervalMs ?? 1_200;
+    this.minIntervalMs = opts.minIntervalMs ?? 2_500;
     this.httpFetch =
       opts.httpFetch ?? (globalThis.fetch.bind(globalThis) as HttpFetch);
     this.sleep = opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)));

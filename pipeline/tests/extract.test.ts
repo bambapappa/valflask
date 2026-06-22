@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { extractJsonPayload, normalizeCandidate } from "../src/extract.ts";
+import { extractJsonPayload, normalizeCandidate, trimQuoteToWords } from "../src/extract.ts";
 import type { ExtractionCandidate } from "../src/gates.ts";
 
 function cand(partial: Partial<ExtractionCandidate>): ExtractionCandidate {
@@ -15,6 +15,26 @@ function cand(partial: Partial<ExtractionCandidate>): ExtractionCandidate {
     ...partial,
   } as ExtractionCandidate;
 }
+
+describe("trimQuoteToWords", () => {
+  it("lämnar citat inom gränsen orört", () => {
+    const q = "ett kort citat med fem ord";
+    assert.equal(trimQuoteToWords(q, 40), q);
+  });
+
+  it("kortar för långt citat och behåller prefix (ordagrant bevaras)", () => {
+    const q = Array.from({ length: 45 }, (_, i) => `ord${i + 1}`).join(" ");
+    const out = trimQuoteToWords(q, 40);
+    assert.equal(out.split(/\s+/).length, 40);
+    assert.ok(q.startsWith(out), "resultatet ska vara ett prefix av originalet");
+  });
+
+  it("avslutar vid sista meningsslut inom taket (om ≥5 ord)", () => {
+    const q = "Vi vill sänka skatten rejält för alla hushåll. " + Array.from({ length: 40 }, () => "extra").join(" ");
+    const out = trimQuoteToWords(q, 40);
+    assert.equal(out, "Vi vill sänka skatten rejält för alla hushåll.");
+  });
+});
 
 describe("normalizeCandidate", () => {
   it("gemenar partikoder", () => {
