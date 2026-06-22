@@ -25,6 +25,8 @@ export interface PipelineContext {
   dataDir: string;
   allowlist: readonly string[];
   mode: "auto" | "review";
+  /** Max antal NYA (osedda) artiklar att bearbeta per körning. Odefinierat = alla. */
+  maxNewArticles?: number;
   archiveFn: ArchiveFn;
   models: {
     extract: string;
@@ -70,13 +72,23 @@ export async function runPipeline(
 
   const seenPath = `${ctx.dataDir}/seen.json`;
   const existingSeen = loadSeen(seenPath);
-  const { newArticles, seen: updatedSeen } = dedup(articles, existingSeen);
+  const { newArticles } = dedup(articles, existingSeen);
+
+  // Kapa PROCESS-budgeten på nya artiklar (inte på hämtade). URL-sortering ovan
+  // ger data.riksdagen.se först → motioner/anföranden prioriteras. Endast de
+  // faktiskt bearbetade markeras som sedda, så överskottet tas nästa körning.
+  const toProcess =
+    ctx.maxNewArticles && ctx.maxNewArticles > 0
+      ? newArticles.slice(0, ctx.maxNewArticles)
+      : newArticles;
+  const updatedSeen = new Map(existingSeen);
+  for (const a of toProcess) updatedSeen.set(sha256(a.url), a.url);
 
   const reviewItems: NeedsReviewEntry[] = [];
   const processedCandidates: ProcessedCandidate[] = [];
   const errors: Array<{ url: string; error: string }> = [];
 
-  for (const article of newArticles) {
+  for (const article of toProcess) {
     try {
       const candidates = await extractFromArticle(
         article,
@@ -183,11 +195,11 @@ export async function runPipeline(
     }
   }
 
-  const errorRate = newArticles.length > 0
-    ? errors.length / newArticles.length
+  const errorRate = toProcess.length > 0
+    ? errors.length / toProcess.length
     : 0;
 
-  if (errorRate >= 0.5 && newArticles.length > 0) {
+  if (errorRate >= 0.5 && toProcess.length > 0) {
     writeRunReport(ctx, { processed: 0, review: reviewItems.length, errors: errors.length, dataHash: null });
     const result: PipelineResult = {
       promises: [],

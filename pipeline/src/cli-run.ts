@@ -87,6 +87,7 @@ export function buildContextFromEnv(
     dataDir,
     allowlist: config.allowlist_domains,
     mode,
+    maxNewArticles: config.limits.max_articles_per_run,
     archiveFn: createArchiveFn(),
     models: { extract, verify, copy },
   };

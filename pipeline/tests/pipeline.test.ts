@@ -343,3 +343,29 @@ describe("T6: injection suite — zero published", () => {
     }
   });
 });
+
+describe("Process-budget: kapar nya artiklar, markerar bara bearbetade som sedda", () => {
+  test("maxNewArticles=1 → en bearbetas, seen.json får exakt en post", async () => {
+    const fixtures = loadFixtures(["normal-1.json", "normal-2.json", "normal-3.json"]);
+    const tmp = makeTmp();
+    try {
+      await runPipeline({ ...makeContext(fixtures, tmp), maxNewArticles: 1 });
+      const seen = JSON.parse(readFileSync(join(tmp, "seen.json"), "utf8")) as Record<string, string>;
+      assert.equal(Object.keys(seen).length, 1, "bara den bearbetade artikeln markeras sedd");
+    } finally {
+      rmSync(tmp, { recursive: true });
+    }
+  });
+
+  test("utan kapning → alla tre bearbetas och markeras sedda", async () => {
+    const fixtures = loadFixtures(["normal-1.json", "normal-2.json", "normal-3.json"]);
+    const tmp = makeTmp();
+    try {
+      await runPipeline(makeContext(fixtures, tmp));
+      const seen = JSON.parse(readFileSync(join(tmp, "seen.json"), "utf8")) as Record<string, string>;
+      assert.equal(Object.keys(seen).length, 3);
+    } finally {
+      rmSync(tmp, { recursive: true });
+    }
+  });
+});

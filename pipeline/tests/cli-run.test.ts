@@ -43,6 +43,7 @@ describe("cli-run buildContextFromEnv", () => {
       copy: "glm-5.1",
     });
     assert.deepEqual([...ctx.allowlist], ["data.riksdagen.se", "www.dn.se"]);
+    assert.equal(ctx.maxNewArticles, 10);
     assert.equal(ctx.runId, "run-2026-06-14-21-30");
     assert.equal(ctx.outputDir, "/tmp/drygast-test");
     assert.ok(ctx.llm && ctx.articleSource && ctx.archiveFn);
