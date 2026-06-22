@@ -359,4 +359,20 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 **Påverkan:** `pipeline/src/cli-run.ts` (ny), `pipeline/tests/cli-run.test.ts` (ny, 10 tester), `pipeline/package.json` (`pipeline:run`→`cli-run.ts`), `DECISION_LOG.md`. /tmp-klon: typecheck rent, 81/81 tester gröna, check-t7 OK, exit 1 vid saknad env verifierat.
 
+## 2026-06-15..19 — M3 produktionshärdning av LLM-pipelinen (tre rundor mot verkliga modeller)
+
+Första skarpa körningarna mot OpenCode Go (fallback, OpenRouter saknar kredit) avslöjade tre fel som inte fångades av offline-testerna (mock-LLM). Åtgärdade i tur och ordning:
+
+**1. JSON-extraktion (fence-stripping).** Modeller utan `response_format` lindar ofta JSON i ```-staket/prosa → `JSON.parse` small → de löftesrika artiklarna blev (tysta) fel medan tomma parsades fint → noll kandidater. `extract.ts` plockar nu ut objektet via `extractJsonPayload` (skalar staket/prosa) + per-artikel-diagnostik (`text=Nch | kandidater=M`).
+
+**2. Schema-enum-krock (G1).** Modellen returnerade `parties:["MP"]` och fria/versaliserade kategorier (`"Skatter"`, `"Statistik/register"`) → alla kandidater föll på G1. A1-prompten listar nu exakt de 8 partikoderna (gemener, med namn→kod-mappning) och de 9 tillåtna kategorierna; `extract.ts` gemenar koder/kategori som skyddsnät (`normalizeCandidate`). Schemat förblir strikt (`additionalProperties:false`).
+
+**3. Rate limit / timeout (resiliens).** ~80 artiklar × (extract+verify+copy) i snabb följd översteg budget-endpointens gränser → massvis timeouts → errorRate ≥ 0.5 → hela batchen kastades (tom review). `OpenRouterClient` har nu: per-anrops-timeout (90s), retry med exponentiell backoff+jitter på 429/5xx/nätfel (respekterar `Retry-After`), icke-retrybara 4xx hoppar direkt till nästa endpoint (sparar onödiga primär-retries), och **proaktiv throttle** (minsta intervall mellan anrop, default 1,2s). `max_articles_per_run` sänkt 120 → 25 så schemalagda körningar (3×/dygn) betar av flödet utan burst. Allt injicerbart (fetch/sleep/now) för test.
+
+**Motiv:** §19 kräver offline-tester men de mockar LLM:en, så verkligt modellbeteende (staket, enum-skiftläge) och driftvillkor (rate limits) testades först skarpt. Throttle + retry passar en schemalagd, icke-realtidspipeline (ägaren: "det får ta tid").
+
+**Förkastade alternativ:** tvinga `response_format:json_object` (risk för 400 på OpenCode-endpointen — fence-stripping är endpoint-oberoende); luckra upp G1-schemat (försvagar injektionshygienen — bättre styra modellen via prompt); parallella LLM-anrop (förvärrar rate limit).
+
+**Påverkan:** `pipeline/src/extract.ts`, `pipeline/prompts/A1-extract.md`, `pipeline/src/llm.ts`, `data/sources.yaml` (batch 25), nya tester `extract.test.ts`/`llm.test.ts`. /tmp-klon: typecheck rent, 94/94 tester, check-t7 OK.
+
 
