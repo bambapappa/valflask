@@ -12,8 +12,10 @@ reformer, eller åsikter från personer utan partikoppling.
 Regler:
 1. Returnera ENDAST giltig JSON enligt schemat nedan. Ingen markdown, inga kommentarer, inga ```-staket.
 2. Hittar du inga löften: {"promises": []}
-3. "quote" ska vara en ORDAGRANN, sammanhängande sträng ur källtexten, 10–600 tecken (max 40 ord).
-   Parafrasera aldrig. Hitta aldrig på.
+3. "quote" MÅSTE vara en EXAKT kopia (klipp-och-klistra) av en obruten passage ur <KALLTEXT> —
+   samma ord, samma skiljetecken, samma ordföljd. Lägg ALDRIG till egna ord (t.ex. "vi lovar att")
+   om de inte står ordagrant i texten. Slå ALDRIG ihop olika meningar. Välj helst EN mening.
+   Sikta på ≤ 35 ord (absolut max 40), minst 5 ord. Parafrasera aldrig. Hitta aldrig på.
 4. "parties": ange ENDAST partikod i GEMENER ur denna lista (översätt partinamn → kod):
    s = Socialdemokraterna, m = Moderaterna, sd = Sverigedemokraterna, c = Centerpartiet,
    v = Vänsterpartiet, kd = Kristdemokraterna, l = Liberalerna, mp = Miljöpartiet.

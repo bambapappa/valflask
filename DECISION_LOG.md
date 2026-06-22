@@ -375,4 +375,17 @@ Första skarpa körningarna mot OpenCode Go (fallback, OpenRouter saknar kredit)
 
 **Påverkan:** `pipeline/src/extract.ts`, `pipeline/prompts/A1-extract.md`, `pipeline/src/llm.ts`, `data/sources.yaml` (batch 25), nya tester `extract.test.ts`/`llm.test.ts`. /tmp-klon: typecheck rent, 94/94 tester, check-t7 OK.
 
+## 2026-06-19 — M3 G3-verbatim: ordgräns-skyddsnät + skärpt citatprompt; lugnare takt
+
+Första skarpa batchen gav 4 kandidater, alla fällda på G3 (verbatim). Två orsaker:
+(a) ordagranna citat som spräckte 40-ordstaket med 1–3 ord; (b) modellen parafraserade ("vi lovar att … en halv miljon kronor" i stället för källans ord).
+
+**Beslut:** (a) `trimQuoteToWords` i `extract.ts` kortar ett citat till ≤ `QUOTE_MAX_WORDS` genom att ta ett PREFIX (ett ordagrant citat förblir ordagrant) och avslutar helst vid sista meningsslut inom taket (om ≥ 5 ord, annars hård kapning). Påverkar inte parafraser — de förblir icke-ordagranna och fälls korrekt av G3. (b) A1-prompten skärpt: citatet MÅSTE vara exakt klipp-och-klistra, inga egna inledningar, inga ihopslagna meningar, helst en mening, sikta ≤ 35 ord. Dessutom takt neddragen: `max_articles_per_run` 25 → 15 och klientens throttle 1,2 → 2,5 s (färre rate limit-fel; pipelinen är schemalagd, inte realtid).
+
+**Motiv:** G3 ska fälla hallucinationer, inte annars korrekta citat som råkar bli 1–3 ord för långa. Prefix-kapning bevarar ordagrannheten. Parafraser ska fortsatt till review (§7 människa-i-loop). Lägre takt + cheaper/snabbare modell (ägarsteg: `MODEL_*` → flash-nivå) minskar felen.
+
+**Förkastade alternativ:** höja 40-ordstaket i schemat (spec §5.1-avvikelse + längre citat); luckra G3-substringmatchen (öppnar hallucinationsfönstret); quote-snapping av parafraser (komplex, risk att välja fel källspann — review är säkrare).
+
+**Påverkan:** `pipeline/src/extract.ts` (+`trimQuoteToWords`), `pipeline/prompts/A1-extract.md`, `data/sources.yaml` (15), `pipeline/src/llm.ts` (throttle 2,5 s), `pipeline/tests/extract.test.ts`. /tmp-klon: typecheck rent, 97/97 tester.
+
 
