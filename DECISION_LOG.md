@@ -388,4 +388,16 @@ Första skarpa batchen gav 4 kandidater, alla fällda på G3 (verbatim). Två or
 
 **Påverkan:** `pipeline/src/extract.ts` (+`trimQuoteToWords`), `pipeline/prompts/A1-extract.md`, `data/sources.yaml` (15), `pipeline/src/llm.ts` (throttle 2,5 s), `pipeline/tests/extract.test.ts`. /tmp-klon: typecheck rent, 97/97 tester.
 
+## 2026-06-19 — M3 Feed-rättvisa: kapa på NYA artiklar, inte hämtade (motionerna svältes ut)
+
+**Problem:** `LiveSource.fetch()` hämtade feeds i ordning och bröt vid `max_articles_per_run` — och partiernas RSS ligger före riksdagen i `sources.yaml`. När batchen sänktes (120→25→15) för rate limit fyllde partifeederna budgeten innan riksdagen ens hämtades → motioner/anföranden + media svältes ut (förklarar varför endast partisidor dök upp efter sänkningen, och att första körningens motioner "försvann"). Dessutom kapades på *hämtade* artiklar före dedup, så redan sedda poster åt upp platserna.
+
+**Beslut:** `fetch()` hämtar nu ALLA feeds (ingen global kapning där). Processbudgeten flyttad till `runPipeline`: efter URL-sortering (ger `data.riksdagen.se` först → motioner prioriteras) och dedup kapas **nya** (osedda) artiklar till `ctx.maxNewArticles` (ny, valfri; sätts av cli-run från `max_articles_per_run`). Endast de FAKTISKT bearbetade markeras som sedda — överskottet tas nästa körning (inget tappas). `max_articles_per_run` 15→20.
+
+**Motiv:** Throttle + retry (förra rundan) gör att en större process-budget är säker; den verkliga felkällan var burst utan paus, inte modellen. Kapning på nya artiklar + "markera bara bearbetade" gör att alla feeds når fram över ett par schemalagda körningar utan att svälta varandra, och utan att tappa poster.
+
+**Förkastade alternativ:** bara höja batchen (partifeeds kan ändå fylla den före riksdagen); omordna feeds (skör — URL-sortering är deterministisk och ger redan riksdagen först); låta fetch känna till seen (kopplar ihop hämtning och tillstånd).
+
+**Påverkan:** `pipeline/src/fetch.ts` (ingen global kapning), `pipeline/src/index.ts` (`maxNewArticles`, kapa toProcess, markera bara bearbetade sedda), `pipeline/src/cli-run.ts`, `data/sources.yaml` (20), tester `pipeline.test.ts`/`cli-run.test.ts`. /tmp-klon: typecheck rent, 99/99 tester, check-t7 OK.
+
 

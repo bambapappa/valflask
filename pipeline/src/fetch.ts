@@ -366,16 +366,16 @@ export class LiveSource implements ArticleSource {
     const articles: NormalizedArticle[] = [];
     const etagCache = loadEtagCache(this.cacheDir);
 
+    // Hämta ALLA feeds (ingen global kapning här). Annars äter feeds högt upp i
+    // listan — partiernas RSS — upp budgeten innan riksdagen/media ens hämtas.
+    // Processbudgeten (på NYA artiklar) tillämpas i runPipeline efter dedup.
     for (const feed of this.feeds) {
-      if (articles.length >= this.limits.max_articles_per_run) break;
-
       try {
         const feedArticles = feed.type === "riksdagen_api"
           ? await this.fetchRiksdagen(feed, etagCache)
           : await this.fetchRss(feed, etagCache);
 
         for (const article of feedArticles) {
-          if (articles.length >= this.limits.max_articles_per_run) break;
           if (article.text.length < this.limits.min_chars) continue;
           articles.push(article);
         }
