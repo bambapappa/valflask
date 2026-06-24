@@ -82,8 +82,7 @@ export async function runPipeline(
     ctx.maxNewArticles && ctx.maxNewArticles > 0
       ? newArticles.slice(0, ctx.maxNewArticles)
       : newArticles;
-  const updatedSeen = new Map(existingSeen);
-  for (const a of toProcess) updatedSeen.set(sha256(a.url), a.url);
+  // seen byggs EFTER loopen (nedan) så att failade artiklar inte markeras sedda.
 
   const reviewItems: NeedsReviewEntry[] = [];
   const processedCandidates: ProcessedCandidate[] = [];
@@ -244,27 +243,13 @@ export async function runPipeline(
     }
   }
 
-  const errorRate = toProcess.length > 0
-    ? errors.length / toProcess.length
-    : 0;
-
-  if (errorRate >= 0.5 && toProcess.length > 0) {
-    writeRunReport(ctx, { processed: 0, review: reviewItems.length, errors: errors.length, dataHash: null });
-    const result: PipelineResult = {
-      promises: [],
-      needsReview: reviewItems,
-      errors,
-      dataHash: "",
-      changelogEntry: {
-        run_id: ctx.runId,
-        added: [],
-        updated: [],
-        retracted: [],
-        data_hash: "",
-        timestamp: ctx.now.toISOString(),
-      },
-    };
-    return result;
+  // Markera SEDDA endast artiklar som inte kastade fel — failade (rate limit/timeout)
+  // lämnas osedda och provas om nästa körning. Inget partiellt resultat slängs:
+  // de artiklar som lyckades publiceras/granskas; resten retas.
+  const erroredUrls = new Set(errors.map((e) => e.url));
+  const updatedSeen = new Map(existingSeen);
+  for (const a of toProcess) {
+    if (!erroredUrls.has(a.url)) updatedSeen.set(sha256(a.url), a.url);
   }
 
   const publishResult = publish({
