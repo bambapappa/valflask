@@ -8,6 +8,7 @@ import { runGates, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
 import type { ArchiveFn } from "./archive.ts";
 import { estimateCost } from "./cost.ts";
+import { findPossibleDuplicate, type ExistingPromiseLite } from "./similarity.ts";
 import { generateQuip } from "./copy.ts";
 import {
   publish,
@@ -88,6 +89,23 @@ export async function runPipeline(
   const processedCandidates: ProcessedCandidate[] = [];
   const errors: Array<{ url: string; error: string }> = [];
 
+  // Befintliga löften laddas i förväg — för dublettkoll mot redan publicerade.
+  let existingPromises: PipelinePromise[] = [];
+  try {
+    existingPromises = JSON.parse(
+      readFileSync(`${ctx.dataDir}/promises.json`, "utf8"),
+    ) as PipelinePromise[];
+  } catch {
+    existingPromises = [];
+  }
+  const dedupPool: ExistingPromiseLite[] = existingPromises.map((p) => ({
+    id: p.id,
+    title: p.title,
+    parties: p.parties,
+    category: p.category,
+    group_id: p.group_id,
+  }));
+
   for (const article of toProcess) {
     try {
       const candidates = await extractFromArticle(
@@ -143,14 +161,44 @@ export async function runPipeline(
           continue;
         }
 
-        const cost = estimateCost(accepted);
-        if (cost.confidence < 0.6) {
+        // Dublettkoll: troligen samma löfte som ett redan publicerat — eller ett
+        // tidigare i samma körning? → till review för manuell länkning (delad group_id).
+        const dup = findPossibleDuplicate(
+          { title: accepted.title, parties: accepted.parties, category: accepted.category },
+          dedupPool,
+        );
+        if (dup) {
           reviewItems.push({
             candidate: accepted,
             failures: [],
             articleUrl: article.url,
             articleTitle: article.title,
-            costReason: `Low confidence: ${cost.confidence}`,
+            duplicateOf: dup.id,
+          });
+          continue;
+        }
+        dedupPool.push({
+          id: "(denna körning)",
+          title: accepted.title,
+          parties: accepted.parties,
+          category: accepted.category,
+          group_id: null,
+        });
+
+        const cost = await estimateCost(accepted, ctx.llm, ctx.models.extract);
+        // Hybrid (§8, ägarbeslut): LLM-estimat går ALLTID till review så människan
+        // bekräftar/justerar beloppet; även låg confidence. Kostnaden bärs med.
+        if (cost.basis === "llm_estimat" || cost.confidence < 0.6) {
+          reviewItems.push({
+            candidate: accepted,
+            failures: [],
+            articleUrl: article.url,
+            articleTitle: article.title,
+            cost,
+            costReason:
+              cost.basis === "llm_estimat"
+                ? `LLM-estimat (confidence ${cost.confidence}) — bekräfta/justera belopp`
+                : `Låg kostnadssäkerhet: ${cost.confidence}`,
           });
           continue;
         }
@@ -190,6 +238,7 @@ export async function runPipeline(
         failures: [],
         articleUrl: pc.article.url,
         articleTitle: pc.article.title,
+        cost: pc.cost,
         verifyReason: "PIPELINE_MODE=review: all items to review",
       });
     }
@@ -216,15 +265,6 @@ export async function runPipeline(
       },
     };
     return result;
-  }
-
-  let existingPromises: PipelinePromise[] = [];
-  try {
-    existingPromises = JSON.parse(
-      readFileSync(`${ctx.dataDir}/promises.json`, "utf8"),
-    ) as PipelinePromise[];
-  } catch {
-    existingPromises = [];
   }
 
   const publishResult = publish({

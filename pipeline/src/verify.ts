@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import type { LlmClient, LlmOptions } from "./llm.ts";
+import { extractJsonPayload } from "./extract.ts";
 import type { NormalizedArticle, ExtractionCandidate } from "./gates.ts";
 
 const A2_SYSTEM = (() => {
@@ -37,7 +38,7 @@ export async function verifyCandidate(
   const raw = await llm.complete(userPrompt, opts);
 
   try {
-    return JSON.parse(raw) as VerifyResult;
+    return JSON.parse(extractJsonPayload(raw)) as VerifyResult;
   } catch {
     return {
       is_promise: false,
