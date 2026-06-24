@@ -453,4 +453,24 @@ Skarp körning med pro gav rena kandidater men tre kvarvarande hål: verify-steg
 
 **Påverkan:** `pipeline/src/index.ts`, `pipeline/src/cli-run.ts`, nytt test i `pipeline/tests/pipeline.test.ts`. /tmp-klon: typecheck rent, 113 tester gröna, check-t7 OK.
 
+## 2026-06-24 — LLM: modell per endpoint (OpenRouter primär + OpenCode Go äkta fallback)
+
+**Problem:** Samma `model`-sträng skickades till BÅDA endpoints (`llm.ts` rad 85 + 98). Primären (OpenRouter, `https://openrouter.ai/api/v1`) och fallbacken (OpenCode Go/Zen) har olika namnscheman: Zen-namnen (`deepseek-v4-pro` m.fl.) ger 4xx på OpenRouter → all trafik föll till Go oavsett OpenRouter-krediter, och Go-planens tak slog i. Detta var roten till rate-limit/timeout-stormen — OpenRouter anropades aldrig. Bekräftat i kod och via OpenRouter-modellistan (slug-format = `leverantör/modell`).
+
+**Beslut:** Modell per endpoint via en sträng→sträng-map i `OpenRouterClient` (`fallbackModelMap`). Primären får model-strängen oförändrad; fallbacken översätter primär-ID → fallback-ID (saknas nyckel → primär-strängen, dvs. tidigare no-op-beteende bevaras bakåtkompatibelt). Tre nya GitHub Variables `MODEL_EXTRACT_FALLBACK`/`MODEL_VERIFY_FALLBACK`/`MODEL_COPY_FALLBACK` (alla tre tillsammans eller ingen) bär Zen-namnen; `cli-run.ts` bygger mappen och skickar den till klienten. Rekommenderade värden (slugar verifierade på openrouter.ai/models 2026-06-24):
+
+| Variable | Primär (OpenRouter) | `*_FALLBACK` (OpenCode Go/Zen) |
+|---|---|---|
+| MODEL_EXTRACT | `deepseek/deepseek-v4-pro` | `deepseek-v4-pro` |
+| MODEL_VERIFY | `moonshotai/kimi-k2.7-code` (annan familj, §20) | `kimi-k2.7` |
+| MODEL_COPY | `z-ai/glm-5.2` | `glm-5.1` |
+
+De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_FALLBACK`; de tre primära får de prefixade OpenRouter-slugarna. Med OpenRouter-krediter kör primären på pay-per-use (högt tak) → rate limit löses utan kvalitetstapp, och Go finns kvar som äkta reserv.
+
+**Motiv:** Ägarkravet är ingen kvalitetssänkning (behåll stark extract). Felet var endpoint/namn-mismatch, inte modellval. En sträng-map låter samtliga anropsställen vara oförändrade (de skickar fortsatt primärmodellen) och kräver minimal kod + tre variabler — exakt det ägaren bad om ("möjlighet till både primär och fallback … öka på antalet variabler").
+
+**Förkastade alternativ:** Byta MODEL_* till OpenRouter-slugar UTAN map (då blir Go-fallbacken en no-op — ingen äkta reserv); modell-objekt per anropsställe (ändrar alla signaturer i onödan); enbart OpenCode Zen "Use balance" eller fundad OpenRouter utan kodfix (löser krediter men inte att OpenRouter aldrig anropas pga namn-mismatch).
+
+**Påverkan:** `pipeline/src/llm.ts` (`fallbackModelMap`, modell per endpoint), `pipeline/src/cli-run.ts` (tre nya env, all-or-none-validering, mapbygge), `pipeline/tests/{llm,cli-run}.test.ts` (4 nya tester). /tmp-klon: typecheck rent, 117 tester gröna, check-t7 OK. **Kvar (ägarsteg):** sätt de 6 GitHub Variables (3 nya + uppdatera de 3 primära till slugar), öppna PR enligt §7, kör om.
+
 

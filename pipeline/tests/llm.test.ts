@@ -81,6 +81,49 @@ describe("OpenRouterClient resiliens", () => {
     assert.equal(urls.filter((u) => u.includes("openrouter")).length, 1);
   });
 
+  it("översätter modell-ID för fallback-endpointen via fallbackModelMap", async () => {
+    const sent: Array<{ url: string; model: string }> = [];
+    const httpFetch = async (url: string, init?: RequestInit) => {
+      const model = JSON.parse(String(init?.body)).model as string;
+      sent.push({ url, model });
+      // Primären svarar 404 (känner inte igen primär-slugen) → faller till fallback.
+      return url.includes("openrouter") ? resp(404, "unknown model") : ok("OK");
+    };
+    const c = new OpenRouterClient({
+      apiKey: "k",
+      fallbackBaseUrl: "https://opencode.ai/zen/go/v1",
+      fallbackApiKey: "f",
+      fallbackModelMap: { "deepseek/deepseek-v4-pro": "deepseek-v4-pro" },
+      httpFetch,
+      ...fast,
+    });
+    assert.equal(
+      await c.complete("p", { model: "deepseek/deepseek-v4-pro" }),
+      "OK",
+    );
+    const primary = sent.find((s) => s.url.includes("openrouter"));
+    const fallback = sent.find((s) => s.url.includes("opencode"));
+    assert.equal(primary?.model, "deepseek/deepseek-v4-pro", "primär oförändrad");
+    assert.equal(fallback?.model, "deepseek-v4-pro", "fallback översatt");
+  });
+
+  it("använder primär-strängen på fallbacken när ingen mappning finns", async () => {
+    const sent: Array<{ url: string; model: string }> = [];
+    const httpFetch = async (url: string, init?: RequestInit) => {
+      sent.push({ url, model: JSON.parse(String(init?.body)).model as string });
+      return url.includes("openrouter") ? resp(404, "unknown model") : ok("OK");
+    };
+    const c = new OpenRouterClient({
+      apiKey: "k",
+      fallbackBaseUrl: "https://opencode.ai/zen/go/v1",
+      fallbackApiKey: "f",
+      httpFetch,
+      ...fast,
+    });
+    assert.equal(await c.complete("p", { model: "m" }), "OK");
+    assert.equal(sent.find((s) => s.url.includes("opencode"))?.model, "m");
+  });
+
   it("throttle väntar mellan anrop", async () => {
     let t = 0;
     const slept: number[] = [];
