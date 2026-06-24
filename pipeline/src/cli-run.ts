@@ -118,14 +118,20 @@ async function main(): Promise<void> {
     console.error(`  FEL ${e.url}: ${e.error}`);
   }
 
-  // Larma CI om körningen producerade ingenting men hade fel.
+  // Transienta LLM-fel (rate limit/timeout) ska INTE göra körningen röd — det
+  // ger larm-trötthet och misconfig döljs. Failade artiklar är osedda och retas
+  // nästa körning; ihållande avbrott syns via stale-banner/UptimeRobot (§15).
+  // Endast konfigfel (saknad env, trasig sources.yaml) avslutar med kod 1 — det
+  // sköts av buildContextFromEnv som kastar och fångas i main().
   if (
     result.promises.length === 0 &&
     result.needsReview.length === 0 &&
     result.errors.length > 0
   ) {
-    console.error("Inga kandidater producerade och fel uppstod — markerar körningen misslyckad.");
-    process.exit(1);
+    console.warn(
+      "Varning: inga kandidater producerade men fel uppstod (sannolikt rate limit/timeout). " +
+        "Failade artiklar provas om nästa körning. Körningen markeras INTE misslyckad.",
+    );
   }
 }
 

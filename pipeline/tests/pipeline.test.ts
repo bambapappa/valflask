@@ -369,3 +369,52 @@ describe("Process-budget: kapar nya artiklar, markerar bara bearbetade som sedda
     }
   });
 });
+
+describe("Resiliens: failade artiklar markeras inte sedda (retas nästa körning)", () => {
+  test("artikel vars extract kastar lämnas osedd; lyckad markeras sedd", async () => {
+    const a: NormalizedArticle = {
+      url: "https://data.riksdagen.se/a",
+      domain: "data.riksdagen.se",
+      title: "A",
+      text: "x".repeat(50),
+      published: "2026-06-10T08:00:00Z",
+    };
+    const b: NormalizedArticle = {
+      url: "https://data.riksdagen.se/b",
+      domain: "data.riksdagen.se",
+      title: "B",
+      text: "y".repeat(50),
+      published: "2026-06-10T08:00:00Z",
+    };
+    const llm: LlmClient = {
+      complete: async (prompt: string) => {
+        if (prompt.includes("https://data.riksdagen.se/a")) throw new Error("rate limit");
+        return '{"promises":[]}';
+      },
+    };
+    const tmp = makeTmp();
+    try {
+      writeExistingPromises(tmp, []);
+      const result = await runPipeline({
+        now: NOW,
+        runId: RUN_ID,
+        llm,
+        articleSource: new MemorySource([a, b]),
+        outputDir: tmp,
+        dataDir: tmp,
+        allowlist: ALLOWLIST,
+        mode: "review",
+        archiveFn: mockArchive,
+        models: { extract: "m", verify: "m", copy: "m" },
+      });
+      assert.equal(result.errors.length, 1, "artikel A felade");
+      const urls = Object.values(
+        JSON.parse(readFileSync(join(tmp, "seen.json"), "utf8")) as Record<string, string>,
+      );
+      assert.ok(urls.includes("https://data.riksdagen.se/b"), "lyckad B är sedd");
+      assert.ok(!urls.includes("https://data.riksdagen.se/a"), "failad A är INTE sedd");
+    } finally {
+      rmSync(tmp, { recursive: true });
+    }
+  });
+});

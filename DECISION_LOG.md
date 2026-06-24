@@ -443,4 +443,14 @@ Skarp körning med pro gav rena kandidater men tre kvarvarande hål: verify-steg
 
 **Påverkan:** `.github/workflows/pipeline.yml`. (Exakt orsak till en specifik körning kräver Actions-loggen — GitHub-kopplingen stödjer ej auto-OAuth här; kör `/mcp` för manuell inloggning om certainty behövs. Fixen adresserar den mest sannolika systemiska orsaken oavsett.)
 
+## 2026-06-24 — CI: "Run pipeline" failar inte på transienta LLM-fel; failade artiklar retas
+
+**Problem:** "Run pipeline"-steget lyste rött vid rate-limit/timeout-storm (bekräftat: rött just på det steget). Två orsaker: (1) `index.ts` markerade ALLA bearbetade artiklar som sedda — även de som kastade fel → de provades aldrig om (tyst dataförlust); (2) `cli-run.ts` avslutade med kod 1 när inget producerats men fel uppstått → röd CI på transienta fel (larm-trötthet, döljer dessutom äkta misconfig).
+
+**Beslut:** (1) seen markeras nu BARA för artiklar som inte finns i `errors` — failade lämnas osedda och retas nästa körning. (2) `errorRate>=0.5`-kortslutningen som slängde HELA batchen är borttagen — partiella lyckade resultat behålls och publiceras/granskas. (3) `cli-run` avslutar med kod 0 vid transient/partiellt (loggar varning); kod 1 endast vid konfigfel (saknad env/sources — kastas i `buildContextFromEnv`, fångas i `main()`). Ihållande avbrott syns via §15 (stale-banner >36h, UptimeRobot), inte via röd CI. Ingen påverkan på modellkvalitet (ägarens krav).
+
+**Förkastade alternativ:** behålla röd CI (larm-trötthet, ej actionable, döljer misconfig); slänga partiella resultat (slöseri med LLM-arbete + budget); markera failade som sedda (tyst dataförlust); byta till flash-modell (ägaren: ingen kvalitetstulln — lös rate limit via betald högre limit, OpenCode Zen "Use balance" eller fundad OpenRouter-primär).
+
+**Påverkan:** `pipeline/src/index.ts`, `pipeline/src/cli-run.ts`, nytt test i `pipeline/tests/pipeline.test.ts`. /tmp-klon: typecheck rent, 113 tester gröna, check-t7 OK.
+
 
