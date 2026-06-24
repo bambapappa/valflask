@@ -61,8 +61,23 @@ jobs:
           git config user.name "drygast-bot"
           git config user.email "bot@drygast.nu"
           git add data/
-          git diff --cached --quiet || git commit -m "data: pipeline run ${{ github.run_id }}"
-          git push
+          if git diff --cached --quiet; then
+            echo "Inga dataändringar — inget att committa."
+            exit 0
+          fi
+          git commit -m "data: pipeline run ${{ github.run_id }}"
+          # main kan ha gått vidare (mergad PR) sedan checkout → rebasa och försök igen,
+          # annars avvisas push:en som non-fast-forward och hela körningen failar.
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push; then
+              echo "Push lyckades (försök $attempt)."
+              exit 0
+            fi
+            echo "Push-försök $attempt misslyckades (main har troligen gått vidare). Försöker igen..."
+            sleep $((attempt * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
           name: run-report
