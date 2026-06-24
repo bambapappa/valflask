@@ -54,6 +54,10 @@ export interface NeedsReviewEntry {
   articleTitle: string;
   verifyReason?: string;
   costReason?: string;
+  /** Beräknad kostnad (om steget hanns med) — så review kan visa och redigera den. */
+  cost?: CostEstimate;
+  /** Id på troligt befintligt löfte detta är en dublett av (manuell länkning i review). */
+  duplicateOf?: string;
 }
 
 export interface ChangelogEntry {

@@ -400,4 +400,37 @@ Första skarpa batchen gav 4 kandidater, alla fällda på G3 (verbatim). Två or
 
 **Påverkan:** `pipeline/src/fetch.ts` (ingen global kapning), `pipeline/src/index.ts` (`maxNewArticles`, kapa toProcess, markera bara bearbetade sedda), `pipeline/src/cli-run.ts`, `data/sources.yaml` (20), tester `pipeline.test.ts`/`cli-run.test.ts`. /tmp-klon: typecheck rent, 99/99 tester, check-t7 OK.
 
+## 2026-06-24 — M3 Kostnadssteg (§8) + redigerbar review + manuell inrapportering (ägarbeslut)
+
+Skarp körning med pro gav rena kandidater men tre kvarvarande hål: verify-steget small på samma JSON-staket som extract; löften utan belopp fastnade på en hårdkodad platshållare; och review bar aldrig med sig kostnaden (approve publicerade nollor).
+
+**Beslut (efter ägarbeslut: hybrid med mänsklig sista hand + redigerbarhet + manuell inrapportering):**
+- **verify-fix:** `verify.ts` använder nu `extractJsonPayload` (staket-rensning) — återställer "ogiltig JSON"-poster.
+- **LLM-kostnadsestimat (§8):** ny prompt `A5-cost.md`; `estimateCost` är async — har källtexten belopp härleds spann deterministiskt (basis "parti", conf 0,7), annars LLM-estimat (basis "llm_estimat", ≈ på sajten) med `extractJsonPayload`, tvingad ordning low ≤ base ≤ high, R2 (high ≥ 1,5×low), R5-tak, confidence kapad till 0,65 (under verifierat). Återanvänder extract-modellen — ingen ny variabel.
+- **Hybrid-routning:** alla LLM-estimat går ALLTID till review (även hög confidence); endast löften med explicit belopp kan auto-publiceras. Kostnaden bärs med i review-posten (`NeedsReviewEntry.cost`).
+- **Redigerbar approve:** `review approve <index> [low base high]` publicerar den medburna kostnaden, eller granskarens egen (conf 0,9, basis "media"); bär även med kategori/parti/citat/person och hanterar fritextkälla utan att krascha.
+- **Manuell inrapportering:** `review add <fil.json>` lägger ett löfte modellen missat (t.ex. uttalande i rikssänd TV) i needs_review; granskaren vouchar för källan och sätter kostnad vid approve.
+
+**Motiv:** §8 etablerar llm_estimat som lägsta källtier (markeras ≈). Ägaren ville behålla mänsklig kontroll (allt estimat → review, redigerbart) och kunna fånga löften utanför allowlistade källor (TV) där hen själv bedömer källans trovärdighet.
+
+**Förkastade alternativ:** auto-publicera LLM-estimat (ägaren vill granska först); hårdkodad platshållarkostnad (vilseledande "fläsk"); ny `MODEL_COST`-variabel (onödig konfig — extract-modellen räcker).
+
+**Påverkan:** `pipeline/src/{verify,cost,index,publish,review}.ts`, `pipeline/prompts/A5-cost.md` (ny), `pipeline/tests/cost.test.ts` (ny). /tmp-klon: typecheck rent, 106 tester gröna, check-t7 OK, CLI-flöde (add→list→approve med override) verifierat.
+
+## 2026-06-24 — M3 Dubletthantering (heuristik-flagg + manuell länkning) + review-schema-fix
+
+**Problem:** dedup skedde bara på URL — ett partipressmeddelande och en tidning om samma löfte gav två poster, båda med `group_id: null`, dubbelräknade i fläsk-totalen. Dessutom upptäcktes en latent bugg: `review.ts approve` byggde löften UTAN obligatoriska schemafält (slug, person, comparisons, quip, history) → review-godkända löften hade fällt sajtens T3-validering.
+
+**Beslut (ägarval: heuristik + manuell länkning):**
+- **Dublett-flagg:** `similarity.ts` — Jaccard-titellikhet; en kandidat flaggas som trolig dublett om den delar parti (överlapp) + kategori + titellikhet ≥ 0,3 med ett befintligt löfte (eller ett tidigare i samma körning). Tröskeln satt lågt med flit: felflagg går bara till review. `runPipeline` kollar mot förladdade `existingPromises` + en växande pool för in-batch-dubletter; flaggade går till review (`duplicateOf`), ingen kostnad beräknas i onödan.
+- **Manuell länkning:** `review approve <i> --group p-XXXX` ger nya löftet samma `group_id` som målet (skapar gruppen om den saknas) → R3 räknar gruppen EN gång men båda källor syns. `list` föreslår länk-kommandot.
+- **Manuell inrapportering härdad:** `add` kräver https-källa (citerbarhet — t.ex. SVT-programlänk; människan vouchar och kringgår allowlisten medvetet) samt giltiga partikoder/kategori.
+- **Schema-fix:** `review approve` producerar nu alla obligatoriska fält (slug via slugify, person, comparisons [], quip null, history [], group_id). Verifierat: godkänt löfte validerar mot `promises.schema.json` (ajv).
+
+**Motiv:** §5.3-anda (varje group_id räknas en gång) fanns redan i R3-aggregeringen men `group_id` sattes aldrig. Heuristik + människa-i-loop undviker felaktiga auto-sammanslagningar. Schema-fixen är nödvändig — annars kraschar bygget när första review-godkända löftet publiceras.
+
+**Förkastade alternativ:** LLM-dedup (fler anrop, kan fela — heuristik + människa räcker); auto-sammanslå (riskabelt); tillåta icke-https-källa (löften måste vara citerbara).
+
+**Påverkan:** `pipeline/src/similarity.ts` (ny), `pipeline/src/{index,publish,review}.ts`, `pipeline/tests/similarity.test.ts` (ny). /tmp-klon: typecheck rent, 112+ tester gröna, check-t7 OK, approve→promises.schema.json validerar.
+
 
