@@ -433,4 +433,14 @@ Skarp körning med pro gav rena kandidater men tre kvarvarande hål: verify-steg
 
 **Påverkan:** `pipeline/src/similarity.ts` (ny), `pipeline/src/{index,publish,review}.ts`, `pipeline/tests/similarity.test.ts` (ny). /tmp-klon: typecheck rent, 112+ tester gröna, check-t7 OK, approve→promises.schema.json validerar.
 
+## 2026-06-24 — CI: pipelinens datapush rebasar + retryar (intermittenta non-fast-forward-fail)
+
+**Problem:** `pipeline.yml` commit-steg gjorde ett rått `git push` utan `git pull --rebase`. `concurrency`-gruppen serialiserar bara pipeline-körningar mot varandra, inte mot människors PR-merges. När en PR mergades medan en (throttlad, flerminuters) körning pågick gick `main` vidare → botens push avvisades som non-fast-forward → körningen failade. Loggen visar mönstret (bot-commits varvat med merges); förklarar intermittenta fail som körning #41.
+
+**Beslut:** commit-steget hoppar tidigt om inga dataändringar, och pushar i en loop med `git pull --rebase origin main` + upp till 5 försök med växande backoff. Rebasen lägger datacommiten ovanpå senaste main → fast-forward; retry fångar en merge som landar under rebasfönstret.
+
+**Förkastade alternativ:** vidga concurrency till att blockera merges (omöjligt/olämpligt); `git push --force` (förstör andras commits); ignorera (fortsatt intermittenta fail).
+
+**Påverkan:** `.github/workflows/pipeline.yml`. (Exakt orsak till en specifik körning kräver Actions-loggen — GitHub-kopplingen stödjer ej auto-OAuth här; kör `/mcp` för manuell inloggning om certainty behövs. Fixen adresserar den mest sannolika systemiska orsaken oavsett.)
+
 
