@@ -50,6 +50,22 @@ export function buildContextFromEnv(
     );
   }
 
+  // Fallback-modeller: primärmodellernas motsvarigheter på fallback-endpointens
+  // namnschema (t.ex. OpenCode Zens ID:n). Primären (OpenRouter) och fallbacken
+  // (Go) har olika namnscheman; utan översättning skickas samma sträng till båda
+  // och den ena svarar 4xx. Alla tre sätts tillsammans eller ingen.
+  const extractFallback = getEnv(env, "MODEL_EXTRACT_FALLBACK");
+  const verifyFallback = getEnv(env, "MODEL_VERIFY_FALLBACK");
+  const copyFallback = getEnv(env, "MODEL_COPY_FALLBACK");
+  const fallbackModelCount = [extractFallback, verifyFallback, copyFallback].filter(
+    Boolean,
+  ).length;
+  if (fallbackModelCount !== 0 && fallbackModelCount !== 3) {
+    throw new Error(
+      "MODEL_EXTRACT_FALLBACK, MODEL_VERIFY_FALLBACK och MODEL_COPY_FALLBACK måste sättas alla tre tillsammans (eller ingen).",
+    );
+  }
+
   const modeRaw = (getEnv(env, "PIPELINE_MODE") ?? "review").toLowerCase();
   if (modeRaw !== "review" && modeRaw !== "auto") {
     throw new Error(`Ogiltig PIPELINE_MODE: "${modeRaw}" (tillåtet: review | auto)`);
@@ -64,9 +80,27 @@ export function buildContextFromEnv(
     throw new Error("sources.yaml: tom allowlist_domains.");
   }
 
+  // Primär→fallback-översättning byggs bara när både fallback-endpoint och de tre
+  // fallback-modellerna är satta. Annars blir fallbacken en no-op (den får
+  // primär-strängen och känner inte igen den) — endpointen finns kvar men kan
+  // inte svara förrän översättningen är konfigurerad.
+  const fallbackModelMap: Record<string, string> =
+    fallbackBaseUrl && fallbackApiKey && fallbackModelCount === 3
+      ? {
+          [extract]: extractFallback as string,
+          [verify]: verifyFallback as string,
+          [copy]: copyFallback as string,
+        }
+      : {};
+
   const llm =
     fallbackBaseUrl && fallbackApiKey
-      ? new OpenRouterClient({ apiKey, fallbackBaseUrl, fallbackApiKey })
+      ? new OpenRouterClient({
+          apiKey,
+          fallbackBaseUrl,
+          fallbackApiKey,
+          fallbackModelMap,
+        })
       : new OpenRouterClient({ apiKey });
 
   const articleSource = new LiveSource({

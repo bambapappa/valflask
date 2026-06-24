@@ -94,6 +94,27 @@ describe("cli-run buildContextFromEnv", () => {
     assert.ok(ctx.llm);
   });
 
+  it("kastar när bara en fallback-modell är satt (kräver alla tre)", () => {
+    assert.throws(
+      () => buildContextFromEnv(envWith({ MODEL_EXTRACT_FALLBACK: "deepseek-v4-pro" }), opts),
+      /alla tre tillsammans/,
+    );
+  });
+
+  it("accepterar komplett fallback-endpoint + fallback-modeller", () => {
+    const ctx = buildContextFromEnv(
+      envWith({
+        LLM_FALLBACK_BASE_URL: "https://opencode.ai/zen/go/v1",
+        LLM_FALLBACK_API_KEY: "oc-test",
+        MODEL_EXTRACT_FALLBACK: "deepseek-v4-pro",
+        MODEL_VERIFY_FALLBACK: "kimi-k2.7",
+        MODEL_COPY_FALLBACK: "glm-5.1",
+      }),
+      opts,
+    );
+    assert.ok(ctx.llm);
+  });
+
   it("kastar vid tom allowlist i sources.yaml", () => {
     assert.throws(
       () => buildContextFromEnv(baseEnv as NodeJS.ProcessEnv, {

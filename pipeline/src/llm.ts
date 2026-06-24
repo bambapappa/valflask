@@ -26,6 +26,7 @@ export class OpenRouterClient implements LlmClient {
   private baseUrl: string;
   private fallbackBaseUrl: string | undefined;
   private fallbackApiKey: string | undefined;
+  private fallbackModelMap: Record<string, string>;
   private timeoutMs: number;
   private maxRetries: number;
   private baseDelayMs: number;
@@ -40,6 +41,13 @@ export class OpenRouterClient implements LlmClient {
     baseUrl?: string;
     fallbackBaseUrl?: string;
     fallbackApiKey?: string;
+    /**
+     * Översätter primärmodell-ID (OpenRouters leverantör/modell-slug) till
+     * fallback-endpointens eget modell-ID (t.ex. OpenCode Zens namn). Samma
+     * model-sträng skickas annars till båda endpoints, vilket gör att den ena
+     * inte känner igen den → 4xx. Saknas en nyckel används primär-strängen.
+     */
+    fallbackModelMap?: Record<string, string>;
     /** Per-anrops-timeout (ms). Default 90s. */
     timeoutMs?: number;
     /** Max antal extra försök per endpoint vid retrybara fel. Default 4. */
@@ -56,6 +64,7 @@ export class OpenRouterClient implements LlmClient {
     this.baseUrl = opts.baseUrl ?? "https://openrouter.ai/api/v1";
     this.fallbackBaseUrl = opts.fallbackBaseUrl;
     this.fallbackApiKey = opts.fallbackApiKey;
+    this.fallbackModelMap = opts.fallbackModelMap ?? {};
     this.timeoutMs = opts.timeoutMs ?? 90_000;
     this.maxRetries = opts.maxRetries ?? 4;
     this.baseDelayMs = opts.baseDelayMs ?? 2_000;
@@ -81,8 +90,9 @@ export class OpenRouterClient implements LlmClient {
   }
 
   async complete(prompt: string, opts?: LlmOptions): Promise<string> {
+    const primaryModel = opts?.model ?? "";
     const body: Record<string, unknown> = {
-      model: opts?.model ?? "",
+      model: primaryModel,
       messages: [
         ...(opts?.systemPrompt
           ? [{ role: "system" as const, content: opts.systemPrompt }]
@@ -95,19 +105,23 @@ export class OpenRouterClient implements LlmClient {
       body.response_format = opts.responseFormat;
     }
 
-    const endpoints: Array<{ url: string; key: string }> = [
-      { url: `${this.baseUrl}/chat/completions`, key: this.apiKey },
+    // Modell per endpoint: primären får model-strängen som den är; fallbacken
+    // översätts via fallbackModelMap (saknas nyckel → primär-strängen).
+    const endpoints: Array<{ url: string; key: string; model: string }> = [
+      { url: `${this.baseUrl}/chat/completions`, key: this.apiKey, model: primaryModel },
     ];
     if (this.fallbackBaseUrl && this.fallbackApiKey) {
       endpoints.push({
         url: `${this.fallbackBaseUrl}/chat/completions`,
         key: this.fallbackApiKey,
+        model: this.fallbackModelMap[primaryModel] ?? primaryModel,
       });
     }
 
     let lastError: Error | undefined;
 
     for (const ep of endpoints) {
+      body.model = ep.model;
       for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
         await this.throttle();
         try {
