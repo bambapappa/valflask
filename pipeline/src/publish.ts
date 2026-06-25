@@ -231,9 +231,35 @@ export function publish(input: PublishInput): PublishResult {
     `${outputDir}/promises.json`,
     JSON.stringify(allPromises, null, 2) + "\n",
   );
+  // Slå ihop med befintlig review-kö i stället för att skriva över den. Annars
+  // raderar en efterföljande (ofta tom) körning poster som väntar på mänsklig
+  // granskning innan någon hunnit titta på dem (datatapp: 22→0 sågs i drift).
+  // Kön töms ENBART av review-CLI:t (approve/reject/add); pipelinen får bara
+  // LÄGGA TILL nya poster. Dedup på artikel-URL + titel så att en omläsning
+  // (nollställd seen) inte dubblerar samma kandidat.
+  const reviewKey = (r: NeedsReviewEntry): string =>
+    `${r.articleUrl ?? ""}::${(r.candidate as { title?: string } | null | undefined)?.title ?? ""}`;
+  const existingReview: NeedsReviewEntry[] = (() => {
+    try {
+      return JSON.parse(
+        readFileSync(`${outputDir}/needs_review.json`, "utf8"),
+      ) as NeedsReviewEntry[];
+    } catch {
+      return [];
+    }
+  })();
+  const mergedReview = [...existingReview];
+  const existingKeys = new Set(existingReview.map(reviewKey));
+  for (const r of reviewItems) {
+    const k = reviewKey(r);
+    if (!existingKeys.has(k)) {
+      mergedReview.push(r);
+      existingKeys.add(k);
+    }
+  }
   writeFileSync(
     `${outputDir}/needs_review.json`,
-    JSON.stringify(reviewItems, null, 2) + "\n",
+    JSON.stringify(mergedReview, null, 2) + "\n",
   );
 
   const existingChangelog = (() => {

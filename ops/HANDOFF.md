@@ -57,7 +57,9 @@ Se `ops/AGARSTEG.md`. Kvar: Cloudflare custom domain `drygast.nu`+`www`, zonfils
 `pipeline/src/`: `cli-run.ts` (entrypoint, env→ctx), `index.ts` (`runPipeline`), `fetch.ts` (`LiveSource`, hämtar alla feeds; kapning på nya artiklar sker i runPipeline), `extract.ts` (A1 + staket-rensning + normalisering), `gates.ts` (G1–G5), `verify.ts` (A2), `cost.ts` (A5 + härlett/LLM-estimat), `copy.ts` (A3/A4 quip), `publish.ts`, `review.ts` (CLI), `similarity.ts` (dubletter), `llm.ts` (OpenRouterClient: timeout+retry+backoff+throttle, primär→fallback). Prompts i `pipeline/prompts/`. Sajt i `site/` (Astro SSG; comparison-motor i `site/src/lib/aggregates.ts`, R3-dedup på group_id).
 
 
-## 9. Modell per endpoint — KOD KLAR 2026-06-24 (väntar PR + variabelbyte)
+## 9. Modell per endpoint — KLART & DEPLOYAT 2026-06-25 (PR #24 mergad, 6 variabler satta)
+**Status:** PR #24 (`f0eed34`/`f0b3f39`) i main. Alla 6 GitHub Variables satta (verifierat `gh variable list`). Bekräftat i drift att extraktionen fungerar utmärkt på OpenRouter-primären (`Klart: 28 publicerade, 22 till review, 0 fel`, 1–5 kandidater/artikel). Modellbytet var ALDRIG problemet — se §10.
+
 **Bakgrund (förra sessionen, slut på tokens mitt i):** ägaren misstänkte att OpenRouter (primär) aldrig kördes. Bekräftat: samma model-sträng skickades till båda endpoints; Zen-namnen (`deepseek-v4-pro` m.fl.) ger 4xx på OpenRouter → allt föll till Go → Go-taket slog i. Ägaren ville behålla **både** primär och fallback ("ändra i koden och öka på antalet variabler").
 
 **Gjort i denna session (i arbetsträdet, ocommittat):**
@@ -73,6 +75,41 @@ Se `ops/AGARSTEG.md`. Kvar: Cloudflare custom domain `drygast.nu`+`www`, zonfils
 4. **Kör om pipeline** → trafiken går nu via OpenRouter; Go är äkta reserv.
 
 Arkitekturnot: §20 (oberoende verify, annan familj) hålls av valda modeller (deepseek vs moonshot); `cli-run` kräver i kod bara `extract ≠ verify` som sträng. Om primär `MODEL_COPY` skulle sättas lika med `MODEL_EXTRACT` kolliderar map-nyckeln (copy-fallback skrivs över) — undvik genom att hålla copy som egen modell (glm).
+
+## 10. Review-kön wipades varje körning — FIXAT 2026-06-25 (i arbetsträdet, väntar PR)
+**Detta var den verkliga orsaken till "grön körning, 0 review".** `publish()` skrev `needs_review.json` enbart från aktuell körnings poster (replace). Nästa körning med 0 nya artiklar (allt sett) skrev `[]` och raderade väntande granskningsposter. Git-historiken visar mönstret: 16→0→4→9→0→3→**22→0**. Den lyckade körningen (run `28131406485`, commit `5a03184`) hade 22 poster; nästa schemalagda körning (`5130d36`) wipade dem.
+
+**Fix:** `publish.ts` slår nu ihop nya review-poster med befintlig kö (dedup på `articleUrl::title`) i stället för att skriva över. Kön töms ENBART av review-CLI:t. `pipeline/tests/publish.test.ts` (ny). /tmp-klon: typecheck rent, **119 tester gröna**.
+
+**Ändrade filer (denna PR):** `pipeline/src/publish.ts`, `pipeline/tests/publish.test.ts`, `DECISION_LOG.md`, `ops/HANDOFF.md`. Öppna PR enligt §7.
+
+### Ren omläsning ("rensa allt läst, läs in på nytt") — REKOMMENDERAD ordning EFTER att fixen mergats
+Syfte: börja om från en stabil, tom kö och re-extrahera allt feedsen serverar just nu. Gör i denna ordning:
+1. **Merge §10-fixen först** — annars wipas den nya kön igen vid nästa tomma körning.
+2. `data/promises.json` → `[]` — rensar EXEMPELDATA (28 st) + släcker EXEMPELDATA-bannern och undviker att dubblettkollen jämför mot påhittade löften.
+3. `data/needs_review.json` → `[]` — börja kön rent (de gamla posterna återskapas av omläsningen).
+4. `data/seen.json` → `{}` — gör att ALLA feed-artiklar räknas som nya → re-extraheras.
+5. (Valfritt) höj tillfälligt `max_articles_per_run` i `data/sources.yaml` så backloggen dräneras på färre körningar; annars tar 3×/dygn-schemat ett par dygn.
+6. Kör pipeline manuellt; granska med `pnpm review list`.
+
+**Förbehåll:** (a) Feeds serverar bara SENASTE posterna (RSS ~10–50, riksdagen paginerat) → "allt" = det som finns i feed-fönstret nu, inte all historik. (b) Re-extraktion = nya LLM-anrop för varje artikel → verklig OpenRouter-kostnad (måttlig). (c) Gör detta som ett medvetet "skarp lansering"-steg.
+
+Färdigt kommandoblock (kör EFTER att §10-fixen mergats; main är PR-skyddad så reset går via egen PR):
+```
+cd ~/Dev/projects/val
+git checkout main && git pull
+git checkout -b chore-clean-reread
+printf '[]\n'  > data/promises.json
+printf '[]\n'  > data/needs_review.json
+printf '{}\n'  > data/seen.json
+git add data/promises.json data/needs_review.json data/seen.json
+git commit -m "chore(data): ren omlasning - toma promises/needs_review/seen for full re-extraktion"
+git push -u origin chore-clean-reread
+gh pr create --base main --head chore-clean-reread --fill && gh pr merge chore-clean-reread --merge --delete-branch
+git checkout main && git pull
+gh workflow run pipeline.yml   # trigga; granska sedan med: cd pipeline && pnpm review list
+```
+Vill man behålla de 22 verbatim i stället för att återskapa dem: `git show 5a03184:data/needs_review.json > data/needs_review.json` (övriga två töms som ovan).
 
 
 

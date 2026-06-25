@@ -473,4 +473,16 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 
 **Påverkan:** `pipeline/src/llm.ts` (`fallbackModelMap`, modell per endpoint), `pipeline/src/cli-run.ts` (tre nya env, all-or-none-validering, mapbygge), `pipeline/tests/{llm,cli-run}.test.ts` (4 nya tester). /tmp-klon: typecheck rent, 117 tester gröna, check-t7 OK. **Kvar (ägarsteg):** sätt de 6 GitHub Variables (3 nya + uppdatera de 3 primära till slugar), öppna PR enligt §7, kör om.
 
+## 2026-06-25 — Datatapp: review-kön skrevs över varje körning (merge i stället för replace)
+
+**Problem:** `publish()` skrev `needs_review.json` enbart från den AKTUELLA körningens `reviewItems` (replace). Eftersom en efterföljande körning ofta hittar 0 nya artiklar (allt redan sett) skrev den `[]` och **raderade poster som väntade på mänsklig granskning innan någon hunnit titta**. Bekräftat i drift via git-historiken: antalet review-poster pendlade 16→0→4→9→0→3→**22→0**. Den "tomma" körningen ägaren såg var i själva verket en lyckad körning (`Klart: 28 publicerade, 22 till review, 0 fel` — extraktion gav 1–5 kandidater/artikel, modell-per-endpoint funkar) vars 22 poster (commit `5a03184`) wipades 2h senare av nästa schemalagda körning (`5130d36`). Inget med modellbytet — ren tillståndsbugg.
+
+**Beslut:** `needs_review.json` är en BESTÅENDE kö som ENBART töms av review-CLI:t (`approve`/`reject` filtrerar bort åtgärdad post; `add` lägger till). Pipelinen får bara LÄGGA TILL: `publish()` läser nu in befintlig kö och slår ihop nya poster, dedupat på `articleUrl::candidate.title` (så att en omläsning med nollställd `seen` inte dubblerar). `promises.json` (ackumuleras) och `changelog.json` (appendas) var redan korrekta; bara review-kön var fel. Returvärdet (`PipelineResult.needsReview`) lämnas som körningens egna poster (oförändrad summeringssemantik i `cli-run`).
+
+**Motiv:** Människa-i-loop (§8) kräver att kandidater överlever tills en människa agerat. Replace gjorde kön flyktig — varje schemalagd körning förstörde ogranskat arbete (och LLM-kostnad). Merge + dedup är minimalt och rör inte övriga datafiler.
+
+**Förkastade alternativ:** Låta pipelinen aldrig skriva tom kö (skör — döljer att inget nytt hände); flytta review-state till annan lagring (överarbete); skriva merge i `index.ts` (publish äger filskrivningen). De 22 wipade posterna återskapas vid en omläsning (nollställd `seen`) och finns kvar i git (`git show 5a03184:data/needs_review.json`) om verbatim-återställning önskas.
+
+**Påverkan:** `pipeline/src/publish.ts` (merge + dedup av review-kön), `pipeline/tests/publish.test.ts` (ny — bevarar kö över tom körning, dedup, respekterar CLI-tömning). /tmp-klon: typecheck rent, 119 tester gröna.
+
 
