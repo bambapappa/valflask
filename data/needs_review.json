@@ -449,5 +449,153 @@
       "confidence": 0.7
     },
     "verifyReason": "PIPELINE_MODE=review: all items to review"
+  },
+  {
+    "candidate": {
+      "title": "Historisk satsning i infrastruktur fortsätter",
+      "parties": [
+        "m",
+        "kd",
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi kommer fortsätta vår historiska satsning i infrastruktur, med både underhåll och investeringar i nya vägar och järnvägar samt forskning och innovation.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
+    "articleTitle": "Partiledarnas möte i Strängnäs 2025"
+  },
+  {
+    "candidate": {
+      "title": "Fortsätta den kraftfulla förstärkningen av försvaret",
+      "parties": [
+        "m",
+        "kd",
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi kommer att fortsätta den mest kraftfulla förstärkningen av försvaret sedan kalla kriget.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
+    "articleTitle": "Partiledarnas möte i Strängnäs 2025",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20000,
+      "msek_base": 30000,
+      "msek_high": 60000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Skillnad mellan 2% och 1,5% av BNP (tidigare mål). BNP ~6 200 mdkr ger 0,5 % ≈ 31 mdkr/år. Osäkerhet kring BNP-tillväxt och ev. höjd NATO-ambition.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Inga skattehöjningar på arbete och sparande",
+      "parties": [
+        "m",
+        "kd",
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi är överens om att fler tillväxtreformer ska stå i fokus under nästa mandatperiod och att skatterna på arbete och sparande inte ska höjas.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
+    "articleTitle": "Partiledarnas möte i Strängnäs 2025",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 10000,
+      "msek_high": 15000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar att inflationsjustering av skiktgränser för att undvika reala skattehöjningar på arbete är nödvändig, vilket grovt kostar 5-15 mdkr/år.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Minska asylinvandringen till EU:s rättsliga miniminivå",
+      "parties": [
+        "m",
+        "kd",
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi är överens om att fortsätta arbetet med att få ned asylinvandringen till en EU:s rättsliga miniminivå.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
+    "articleTitle": "Partiledarnas möte i Strängnäs 2025",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 5000,
+      "msek_high": 15000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Minskad asylinvandring sänker statens mottagnings- och etableringskostnader. Antagande: minskning med 10 000–15 000 asylsökande per år, sparar grovt 0,5–1,5 mdkr per 10 000 personer.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Införa hinder mot framtida avveckling av kärnkraft",
+      "parties": [
+        "m",
+        "kd",
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi kommer också att införa hinder som stoppar framtida regeringar från att tvinga fram en avveckling av kärnkraft.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
+    "articleTitle": "Partiledarnas möte i Strängnäs 2025",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 1,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagstiftningsprocess kräver utredning och riksdagsarbete; engångskostnad av administrativ karaktär. Inga löpande statliga utgifter antas.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   }
 ]
