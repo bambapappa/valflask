@@ -597,5 +597,89 @@
       "confidence": 0.3
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Höjt barnbidrag med 500 kr/mån och prisindexering",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Vänsterpartiet vill höja barnbidraget med 500 kronor i månaden och att bidraget prisindexeras för att skydda mot framtida inflation.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
+    "articleTitle": "På hushållens sida genom kostnadskrisen",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 9500,
+      "msek_base": 11100,
+      "msek_high": 14500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Höjning 500 kr/mån per barn, ca 1,85 miljoner barn 0-15 år ger 11,1 mdkr/år. Indexering påverkar ej fastprisberäkning.",
+      "confidence": 0.65
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Återinfört tilläggsbidrag i bostadsbidrag och höjt bostadstillägg",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Dessutom föreslås i vårändringsmotionen att Sverige återinför tilläggsbidraget i bostadsbidraget och att bostadstillägget höjs för ålderspensionärer och för de som får sjuk- och aktivitetsersättning.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
+    "articleTitle": "På hushållens sida genom kostnadskrisen",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 3000,
+      "msek_high": 6000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning baserad på ungefärliga antal mottagare av bostadsbidrag och bostadstillägg samt typiska höjningsnivåer. Ingen preciserad nivå i löftet ger stor osäkerhet.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Brett transportstöd med Sverigekort, elbilspremie och drivmedelsstöd",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Förslaget omfattar ett billigt Sverigekort för kollektivtrafiken, en bred elbilspremie samt ett tillfälligt stöd till bilägare med låga och medelinkomster som drabbats av höga drivmedelspriser till följd av kriget i Mellanöstern.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
+    "articleTitle": "På hushållens sida genom kostnadskrisen",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 15000,
+      "msek_base": 35000,
+      "msek_high": 60000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Sverigekort (lågpris nationellt) kan kosta 10-20 mdkr/år. Bred elbilspremie (50-100k/bil) 5-15 mdkr/år. Drivmedelsstöd till låg-/medelinkomst 5-25 mdkr/år. Summerat intervall med stor osäkerhet.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   }
 ]
