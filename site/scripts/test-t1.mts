@@ -46,7 +46,6 @@ const requiredPaths = [
   "sitemap.xml",
   "llms.txt",
   "llms-full.txt",
-  "lofte/p-2026-0001/hojd-a-kassa-90-procent/index.html",
   "parti/s/index.html",
   "parti/m/index.html",
   "parti/sd/index.html",
@@ -55,7 +54,6 @@ const requiredPaths = [
   "parti/kd/index.html",
   "parti/l/index.html",
   "parti/mp/index.html",
-  "ledamot/magdalena-andersson/index.html",
   "og/start.png",
   "og/parti-s.png",
 ];
@@ -63,6 +61,18 @@ const requiredPaths = [
 for (const p of requiredPaths) {
   const fullPath = resolve(DIST_DIR, p);
   check(`  ${p} exists`, existsSync(fullPath));
+}
+
+// Datadriven: första löftets sida ska finnas (slug-oberoende av exempeldata).
+const promises = JSON.parse(
+  readFileSync(resolve(__dirname, "../../data/promises.json"), "utf8"),
+) as Array<{ id: string; slug: string; person: unknown }>;
+if (promises.length > 0) {
+  const first = promises[0]!;
+  check(
+    `lofte/${first.id}/${first.slug} exists`,
+    existsSync(resolve(DIST_DIR, `lofte/${first.id}/${first.slug}/index.html`)),
+  );
 }
 
 const lofteDir = resolve(DIST_DIR, "lofte");

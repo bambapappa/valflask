@@ -1,466 +1,309 @@
 [
   {
     "candidate": {
-      "title": "Stärkt skydd mot våld i digitala miljöer för barn",
+      "title": "Vi vill bekämpa massarbetslösheten",
       "parties": [
-        "m"
+        "s"
       ],
-      "person": null,
-      "quote": "Därför stärker vi nu skyddet mot våld i digitala miljöer.",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/barn-ska-skyddas-battre-mot-vald/",
-    "articleTitle": "Barn ska skyddas bättre mot våld",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 400,
-      "msek_high": 1000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Vagt löfte utan belopp. Kostnad för ökad polisiär övervakning, it-forensik, utbildning och ev. krav på techplattformar. Baserat på jämförbara IT-satsningar inom rättsväsendet.",
-      "confidence": 0.3
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Sänkt skatt för alla som arbetar och har arbetat med upp till 1 000 kronor i månaden",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Moderaternas nya vallöfte är därför att sänka skatten för alla som arbetar och har arbetat med upp till 1 000 kronor i månaden.",
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "företrädare"
+      },
+      "quote": "Vi vill bekämpa massarbetslösheten.",
       "category": "skatter",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/vallofte-sankt-skatt-for-alla-som-arbetar-och-har-arbetat/",
-    "articleTitle": "Vallöfte: Sänkt skatt för alla som arbetar och har arbetat",
-    "cost": {
-      "type": "intäktsminskning",
-      "period": "per_ar",
-      "msek_low": 16000,
-      "msek_base": 30000,
-      "msek_high": 60000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Baseras på antagande om 6-7 miljoner sysselsatta/pensionärer med arbetsinkomst. En skattesänkning på max 12 000 kr/år multiplicerat med antal individer ger ett intervall där låg nivå antar en mer begr",
-      "confidence": 0.5
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Trygghetspaket för äldre med utredning, valfrihet och stödlinje",
-      "parties": [
-        "m",
-        "kd",
-        "l"
-      ],
-      "person": null,
-      "quote": "Den moderatledda regeringen går vidare med ett trygghetspaket för äldre: En trygghetsutredning, rätten att välja, och välja bort, personal i äldreomsorgen, och en stödlinje för äldre […]",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/vi-starker-seniorers-trygghet-och-sakerhet/",
-    "articleTitle": "Vi stärker seniorers trygghet och säkerhet",
-    "verifyReason": "Texten innehåller ett tydligt löfte om ett trygghetspaket för äldre, men källtexten är från Moderaterna och nämner endast 'den moderatledda regeringen' utan att ange KD eller L. Partsangivelsen kan därför inte verifieras i den aktuella källtexten. Inget belopp förekommer."
-  },
-  {
-    "candidate": {
-      "title": "Fortsatt arbete för rekordlåg asylinvandring, lägre bränslepriser, skärpta straff och fler utvisningar",
-      "parties": [
-        "sd"
-      ],
-      "person": null,
-      "quote": "Med ert fortsatta förtroende kan vi fortsätta arbetet för rekordlåg asylinvandring, lägre bränslepriser, skärpta straff och fler utvisningar av utländska kriminella.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.sd.se/se-var-nya-valfilm-med-den-nyinspelade-vallaten-sol-igen/",
-    "articleTitle": "Den 13 september är det val!",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 20000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Sammanslagning av straffskärpningar, utvisningar (utgifter) och sänkt bränsleskatt (intäktsminskning). Grov uppskattning baserad på jämförbara reformer.",
-      "confidence": 0.3
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Bygga 20 000 nya hyresrätter per år med överkomliga hyror",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Målet är att skapa förutsättningar för omkring 20 000 nya hyresrätter om året med hyror som vanliga låg- och medelinkomsttagare har råd att betala.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
-    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 7500,
-      "msek_high": 15000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antagande: statligt investeringsstöd per hyresrätt. Låg: 100 tkr/lgh, bas: 375 tkr/lgh, hög: 750 tkr/lgh. 20 000 lgh per år.",
-      "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Skapa hyressystem utifrån betalningsförmåga, inte avkastningskrav",
-      "parties": [
-        "v"
-      ],
-      "person": {
-        "name": "Ida Gabrielsson",
-        "role": "riksdagsledamot"
-      },
-      "quote": "Med NABY vill vi skapa ett system där hyrorna utgår från människors betalningsförmåga och inte från fastighetsmarknadens avkastningskrav",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
-    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 5000,
-      "msek_high": 20000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antar subvention till hyresgäster med låg betalningsförmåga. Osäker omfattning och konstruktion gör intervallet brett.",
-      "confidence": 0.2
-    },
-    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Pressa ned hyrorna genom konkurrens istället för vinstjakt",
-      "parties": [
-        "v"
-      ],
-      "person": {
-        "name": "Ida Gabrielsson",
-        "role": "riksdagsledamot"
-      },
-      "quote": "Vi använder marknadens konkurrens för att pressa ned hyrorna istället för att pressa upp vinsterna. Den som kan bygga bäst och billigast ska också få bygga",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
-    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 10,
-      "msek_base": 30,
-      "msek_high": 100,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet är vagt. Antar att genomförandet kräver utredningar, förändringar i regelverk och eventuella pilotprojekt för att öka konkurrensen, vilket medför en engångs administrationskostnad. Inga löpande",
-      "confidence": 0.3
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Vänsterpartiet lovar höja kvinnors löner",
-      "parties": [
-        "v"
-      ],
-      "person": {
-        "name": "Nooshi Dadgostar",
-        "role": "Partiledare"
-      },
-      "quote": "Idag på första maj har vi ett nytt politiskt förslag: höj kvinnors löner! Det är vårt vallöfte!",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostars-forsta-maj-tal/",
-    "articleTitle": "Nooshi Dadgostars första maj-tal",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 20000,
-      "msek_high": 60000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antar riktat statsbidrag till kvinnodominerade yrken i offentlig sektor (vård, omsorg). Kostnad baserad på lönegap om 5-15% för ca 500 000 anställda. Mycket brett spann pga ospecificerat löfte utan be",
-      "confidence": 0.25
-    },
-    "costReason": "LLM-estimat (confidence 0.25) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Införa tillståndsplikt för hyresvärdar",
-      "parties": [
-        "v"
-      ],
-      "person": {
-        "name": "Nooshi Dadgostar",
-        "role": "partiledare för Vänsterpartiet"
-      },
-      "quote": "Därför föreslår Vänsterpartiet en tillståndsplikt för hyresvärdar, som kan återkallas om det missköts, för att minska risken för oseriösa och oansvariga slumvärdar tillåts ta över fler hyresrätter.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostars-tal-pa-jarvaveckan/",
-    "articleTitle": "Nooshi Dadgostars tal på Järvaveckan",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 150,
-      "msek_high": 500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antagande om antal hyresvärdar (50 000–500 000) och handläggningskostnad per tillstånd (2 000–10 000 kr).",
-      "confidence": 0.3
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Införa tillståndsplikt för att få hyra ut bostäder",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Därför kommer Vänsterpartiet att prioritera att införa en tillståndsplikt för att få hyra ut bostäder i regeringsförhandlingar efter valet.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
-    "articleTitle": "Slumhyresvärdar ska bort från bostadsmarknaden",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 20,
-      "msek_base": 80,
-      "msek_high": 300,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Kostnaden beror på omfattning och avgiftsfinansiering. Lågt: ett enklare register med begränsad handläggning. Högt: fullständig tillsyn och många tillståndsärenden, vilket kräver statlig kompensation ",
-      "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Återinföra skattefria avsättningar för renovering och underhåll",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "återinföra möjligheten till skattefria avsättningar för renovering och underhåll, så att fler fastighetsägare investerar långsiktigt i sina hus",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
-    "articleTitle": "Slumhyresvärdar ska bort från bostadsmarknaden",
-    "cost": {
-      "type": "intäktsminskning",
-      "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1200,
-      "msek_high": 2500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Baserat på att det tidigare ROT-avdraget och schablonbeskattning av uppskovsbelopp kostat miljarder. En skattefri avsättning (liknande periodiseringsfond för privatpersoner) antas omfatta ett mindre a",
-      "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Ge allmännyttan förköpsrätt vid misskötta fastigheter",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Därför vill vi att allmännyttan ska få förköpsrätt att ta över misskötta fastigheter.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
-    "articleTitle": "Slumhyresvärdar ska bort från bostadsmarknaden",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 200,
-      "msek_high": 500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Kostnaden beror på hur många fastigheter som omfattas, hur 'misskötsamhet' definieras och om kommunen måste betala marknadspris eller kan förvärva till reducerat pris. Jämförbara förköpsrättsmodeller ",
-      "confidence": 0.3
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Införa statligt stöd till kommunala bostadsbolag för att rädda förfallna områden",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Vi vill också införa statligt stöd så att kommunala bostadsbolag har möjlighet att rädda områden som fått förfalla.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
-    "articleTitle": "Slumhyresvärdar ska bort från bostadsmarknaden",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 200,
-      "msek_high": 500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Uppskattning baserat på tidigare statliga stöd till kommunala bostadsbolag och utsatta områden; inget konkret belopp i löftet.",
-      "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Införa åtgärdstrappa med krav, sanktioner och böter mot slumhyresvärdar",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "införa en tydlig åtgärdstrappa med krav, sanktioner och böter",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
-    "articleTitle": "Slumhyresvärdar ska bort från bostadsmarknaden",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 20,
-      "msek_base": 60,
-      "msek_high": 150,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Uppskattning baserad på en ny tillsynsfunktion med personal, it och administration. Jämförs med mindre tillsynsenheter. Stor osäkerhet då löftet saknar konkreta nivåer.",
-      "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Höjd gräns för skattefritt sparande på ISK till 500 000 kronor",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Därför lovar vi att höja gränsen för skattefritt sparande på ISK till en halv miljon kronor.",
-      "category": "skatter",
-      "amount_in_text_msek": 0.5,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/vallofte-sankt-skatt-pa-sparande/",
-    "articleTitle": "Vallöfte: Sänkt skatt på sparande",
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Plan för Sverige - En stark ekonomi",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 0.5,
-      "msek_high": 1,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
-    },
-    "verifyReason": "PIPELINE_MODE=review: all items to review"
+      "method_note": "Ej kvantifierbart — politiskt inriktninglöfte utan specifikt belopp",
+      "confidence": 0.2
+    }
   },
   {
     "candidate": {
-      "title": "Kvinnolönelyftet: 30 miljarder kronor för att minska lönegap i välfärden",
+      "title": "Aktivklubbar ska omedelbart förbjudas",
       "parties": [
-        "v"
+        "s"
       ],
-      "person": null,
-      "quote": "Vänsterpartiet presenterar därför idag, på arbetarrörelsens kampdag 1 maj, Kvinnolönelyftet, en satsning på 30 miljarder kronor över tio år för att minska lönegapet mellan kvinnodominerade välfärdsyrken och mansdominerade yrken.",
-      "category": "välfärd",
-      "amount_in_text_msek": 30000,
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "företrädare"
+      },
+      "quote": "Aktivklubbar ska omedelbart förbjudas.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/kvinnolonelyftet-dags-att-ge-valfardens-kvinnor-ratt-lon/",
-    "articleTitle": "Kvinnolönelyftet &#8211; dags att ge välfärdens kvinnor rätt lön",
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Plan för Sverige - En stark gemenskap",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 22500,
-      "msek_base": 30000,
-      "msek_high": 40500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
-    },
-    "verifyReason": "PIPELINE_MODE=review: all items to review"
+      "method_note": "Förbudslag — administrativ kostnad minimal",
+      "confidence": 0.2
+    }
   },
   {
     "candidate": {
-      "title": "Historisk satsning i infrastruktur fortsätter",
+      "title": "Stärka brottsoffrets ställning genom att underlätta för brottsoffer att få sitt skadestånd (bland annat genom att ge ersättning direkt från",
       "parties": [
-        "m",
-        "kd",
-        "l",
-        "sd"
+        "m"
       ],
       "person": null,
-      "quote": "Vi kommer fortsätta vår historiska satsning i infrastruktur, med både underhåll och investeringar i nya vägar och järnvägar samt forskning och innovation.",
+      "quote": "Stärka brottsoffrets ställning genom att underlätta för brottsoffer att få sitt skadestånd (bland annat genom att ge ersättning direkt från staten som i sin tur får driva in pengarna från gärningspersonen), möjliggöra mer utmätning till förmån för brottsoffer, stärka rätten till målsägandebiträde (särskilt för äldre och för våldsutsatta kvinnor).",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 49 ord — max 40 tillåts (§5.1)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/lag-och-ordning-2/",
+    "articleTitle": "Ingår i Tidöavtalet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Statlig ersättning till brottsoffer + indrivning. ~1 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Snart utvidgas det straffbara området för äktenskapstvång och äktenskapsresebrott samtidigt som straffen skärps, hemliga tvångsmedel ska",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Snart utvidgas det straffbara området för äktenskapstvång och äktenskapsresebrott samtidigt som straffen skärps, hemliga tvångsmedel ska kunna användas i utredningarna och förbudet mot att erkänna otillåtna utländska äktenskap ska gälla utan undantag. Lagändringarna föreslås träda i kraft den 2 juli 2026.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 41 ord — max 40 tillåts (§5.1)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/lag-och-ordning-2/",
+    "articleTitle": "Ingår i Tidöavtalet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 750,
+      "msek_base": 1500,
+      "msek_high": 2250,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Utvidgat straffbara område hedersbrott, hemliga tvångsmedel. ~1,5 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Moderaterna står bakom Natos konventionella och nukleära avskräckning",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna står bakom Natos konventionella och nukleära avskräckning. Det är inte aktuellt med kärnvapen på svenskt territorium i fredstid. Om det blir krig är vi beredda att vidta de åtgärder som behövs för att säkra försvaret av Sverige och våra allierade.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 41 ord — max 40 tillåts (§5.1)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/forsvar-och-krisberedskap/",
+    "articleTitle": "Moderaterna står bakom Natos konventionella och nukleära avskräckning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart — politiskt inriktninglöfte",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Stärka arbetslinjen, eftersom arbete är den bästa vägen till integration",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Stärka arbetslinjen, eftersom arbete är den bästa vägen till integration. Deltagande i etableringsprogrammet ska kunna kombineras med föräldraledighet för att öka genomströmningen för kvinnor. Etableringsersättningen ska utformas så att de ekonomiska drivkrafterna för arbete och självförsörjning stärks. Nyanlända ska matchas mot arbete i hela landet.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 45 ord — max 40 tillåts (§5.1)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/integration/",
+    "articleTitle": "Ny politik från Moderaternas stämma 2025",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 750,
+      "msek_base": 1500,
+      "msek_high": 2250,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Stärkt arbetslinje integration, etableringsprogram kombinerat med föräldraledighet. ~1,5 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Uppvärdera det svenska medborgarskapet genom att bland annat förlänga hemvistkravet till minst åtta år och införa krav på kunskaper i",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Uppvärdera det svenska medborgarskapet genom att bland annat förlänga hemvistkravet till minst åtta år och införa krav på kunskaper i svenska språket, samhällskunskap och egen försörjning för att förvärva medborgarskap. De nya kraven föreslås träda i kraft den 1 juni 2026.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 41 ord — max 40 tillåts (§5.1)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/integration/",
+    "articleTitle": "Ingår i Tidöavtalet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 140,
+      "msek_base": 200,
+      "msek_high": 260,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Hemvistkrav 8 år, språk/samhällskunskapskrav för medborgarskap. Administrativt. ~0,2 mdr/år.",
+      "confidence": 0.55
+    }
+  },
+  {
+    "candidate": {
+      "title": "Att SFI för personer med kort utbildningsbakgrund som huvudregel ska kombineras med yrkespraktik och motsvara en heltidsaktivering, med",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Att SFI för personer med kort utbildningsbakgrund som huvudregel ska kombineras med yrkespraktik och motsvara en heltidsaktivering, med möjlighet till specialutbildningar för dem med mycket kort eller ingen utbildning.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/integration/",
+    "articleTitle": "Ny politik från Moderaternas stämma 2025",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 250,
+      "msek_base": 500,
+      "msek_high": 750,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: SFI kombinerat med yrkespraktik heltid. ~0,5 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Höja försörjningskravet (lönekravet) för arbetskraftsinvandrare från länder utanför EU",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Höja försörjningskravet (lönekravet) för arbetskraftsinvandrare från länder utanför EU.  Den 1 juni 2026 höjs det till 90 procent av medianlönen, motsvarande drygt 33 000 kronor.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/migration/",
+    "articleTitle": "Ingår i Tidöavtalet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Källan anger: '90 procent av medianlönen, motsvarande drygt 33 000 kronor'. Detta är ett lönekrav, inte en statlig utgift. Kostnad = 0 för staten. Kostnad bärs av arbetsgivare.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi lovar ett systemskifte i tågpolitiken",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Vi lovar ett systemskifte i tågpolitiken. Svenska folket vill åka tåg, och dom vill att tågen ska gå i tid. Då är det politikens uppgift att leverera det.",
       "category": "infrastruktur",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -471,253 +314,1133 @@
         "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
       }
     ],
-    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
-    "articleTitle": "Partiledarnas möte i Strängnäs 2025"
-  },
-  {
-    "candidate": {
-      "title": "Fortsätta den kraftfulla förstärkningen av försvaret",
-      "parties": [
-        "m",
-        "kd",
-        "l",
-        "sd"
-      ],
-      "person": null,
-      "quote": "Vi kommer att fortsätta den mest kraftfulla förstärkningen av försvaret sedan kalla kriget.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
-    "articleTitle": "Partiledarnas möte i Strängnäs 2025",
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Vi lovar ett systemskifte i tågpolitiken",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 20000,
-      "msek_base": 30000,
-      "msek_high": 60000,
+      "msek_low": 3000,
+      "msek_base": 15000,
+      "msek_high": 27000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Skillnad mellan 2% och 1,5% av BNP (tidigare mål). BNP ~6 200 mdkr ger 0,5 % ≈ 31 mdkr/år. Osäkerhet kring BNP-tillväxt och ev. höjd NATO-ambition.",
-      "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+      "method_note": "Estimat: Systemskifte i tågpolitiken. Investeringar i järnvägsunderhåll, nya spår, kapacitet. Trafikverket järnvägsbudget ca 35 mdr/år. 'Systemskifte' = merkostnad estimerat 15 mdr/år.",
+      "confidence": 0.3
+    }
   },
   {
     "candidate": {
-      "title": "Inga skattehöjningar på arbete och sparande",
+      "title": "Med vårt Sverigekort kan du resa fritt på all kollektivtrafik i hela landet till en billig penning",
       "parties": [
-        "m",
-        "kd",
-        "l",
-        "sd"
+        "mp"
       ],
-      "person": null,
-      "quote": "Vi är överens om att fler tillväxtreformer ska stå i fokus under nästa mandatperiod och att skatterna på arbete och sparande inte ska höjas.",
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Med vårt Sverigekort kan du resa fritt på all kollektivtrafik i hela landet till en billig penning. 499 kronor i månaden för vuxna, och 249 kronor för unga, studenter och pensionärer.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": 18000,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Med vårt Sverigekort kan du resa fritt på all kollektivtrafik i hela landet till en billig penning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 15300,
+      "msek_base": 18000,
+      "msek_high": 20700,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Källan anger: 499 kr/mån vuxna, 249 kr unga/studenter/pensionärer. Uträkning: Sveriges kollektivtrafik omsätter ca 75 mdr/år. Sverigekort till subventionerat pris. Om 5M vuxna × 499 × 12 = 29,94 mdr +",
+      "confidence": 0.85
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi ser också till, att alla som behöver bilen har råd att byta till en elbil",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Vi ser också till, att alla som behöver bilen har råd att byta till en elbil. Med vår rättvisa elbilsbonus kan den som bor på landsbygden få upp till 60 000 kronor i bonus.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": 6000,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Vi ser också till, att alla som behöver bilen har råd att byta till en elbil",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5100,
+      "msek_base": 6000,
+      "msek_high": 6900,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Källan anger: 'upp till 60 000 kronor i bonus'. Tidigare elbilsbonus (borttagen 2022) kostade ca 2,5 mdr/år vid 70 000 kr/bil och ca 100 000 sålda elbilar/år. Med 60 000 kr × 100 000 bilar = 6 mdr/år.",
+      "confidence": 0.85
+    }
+  },
+  {
+    "candidate": {
+      "title": "Med vårt leasingstöd kan man komma ner till 1500 kronor i månaden för att leasa en elbil",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Med vårt leasingstöd kan man komma ner till 1500 kronor i månaden för att leasa en elbil.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": 3600,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Med vårt leasingstöd kan man komma ner till 1500 kronor i månaden för att leasa en elbil",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3060,
+      "msek_base": 3600,
+      "msek_high": 4140,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Källan anger: '1500 kronor i månaden för att leasa en elbil'. Om stödet täcker skillnaden mellan elbil och fossilbil: ca 1500 kr/mån subvention. Om 200 000 elbilar × 1500 × 12 = 3,6 mdr/år.",
+      "confidence": 0.85
+    }
+  },
+  {
+    "candidate": {
+      "title": "Därför vill Miljöpartiet se en miljardärsskatt, så att dom som har tjänat allra mest på dom senaste decenniernas utveckling är med och",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Därför vill Miljöpartiet se en miljardärsskatt, så att dom som har tjänat allra mest på dom senaste decenniernas utveckling är med och bidrar lite mer.",
       "category": "skatter",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [],
-    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
-    "articleTitle": "Partiledarnas möte i Strängnäs 2025",
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Därför vill Miljöpartiet se en miljardärsskatt, så att dom som har tjänat allra mest på dom senaste decenniernas utveckling är med och",
     "cost": {
       "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Miljardärsskatt = INTÄKT, inte kostnad. Förmögenhetsskatt på högsta inkomsterna. Beror på utformning. Historisk förmögenhetsskatt gav ca 5-10 mdr/år. Med miljardärsnivå estimerat 5-15 mdr/år ",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Därför börjar vi med att höja barnbidraget och införa ett tillägg för ensamstående föräldrar",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Därför börjar vi med att höja barnbidraget och införa ett tillägg för ensamstående föräldrar.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Därför börjar vi med att höja barnbidraget och införa ett tillägg för ensamstående föräldrar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2500,
+      "msek_base": 5000,
+      "msek_high": 7500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Höjt barnbidrag för alla + tillägg ensamstående. Barnbidrag gäller ca 2,1M barn. Om höjning 200 kr/mån × 2,1M × 12 = 5,04 mdr + ensamståendetillägg. Estimat 5-7 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Sverige vinner på slopad karensdag och kortare arbetstid",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Sverige vinner på slopad karensdag och kortare arbetstid.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Sverige vinner på slopad karensdag och kortare arbetstid",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1600,
+      "msek_base": 8000,
+      "msek_high": 14400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Slopad karensdag för alla anställda. Ca 5,4M sysselsatta, snitt 7 sjukdagar/år. Karensdagen kostar ca 1000 kr/dag. 5,4M × 3 karensdagar × 1000 = 16,2 mdr brutto, men endast en andel använder.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Därför vill vi korta normalarbetstiden",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Därför vill vi korta normalarbetstiden. Först till 35-timmarsvecka, sedan till fyra dagars arbetsvecka.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Därför vill vi korta normalarbetstiden",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30000,
+      "msek_base": 150000,
+      "msek_high": 270000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Sänka arbetstid från 40 till 35 tim/vecka = 12,5% mindre arbetstid. Om hela arbetskraften: 5,4M × 5 tim × 52 veckor × 250 kr/tim = 351 mdr teoretiskt. Men löntagare tar del av kostnaden via l",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Därför ska vi ha en human och rättssäker migrationspolitik",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Därför ska vi ha en human och rättssäker migrationspolitik.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Därför ska vi ha en human och rättssäker migrationspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart — politiskt inriktninglöfte",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi säger nej till inhumana tonårsutvisningar",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Vi säger nej till inhumana tonårsutvisningar.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Vi säger nej till inhumana tonårsutvisningar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart — politiskt inriktninglöfte",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi säger nej till en politik som medvetet splittrar familjer",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Vi säger nej till en politik som medvetet splittrar familjer.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Vi säger nej till en politik som medvetet splittrar familjer",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart — politiskt inriktninglöfte",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi säger nej till tillfälliga uppehållstillstånd, som låser in människor i ovisshet och otrygghet",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Vi säger nej till tillfälliga uppehållstillstånd, som låser in människor i ovisshet och otrygghet.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Vi säger nej till tillfälliga uppehållstillstånd, som låser in människor i ovisshet och otrygghet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart — politiskt inriktninglöfte",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi behöver stärka svenskt lantbruk",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Amanda Lind",
+        "role": "språkrör"
+      },
+      "quote": "Vi behöver stärka svenskt lantbruk. Vi behöver en strategi för att göra matproduktionen fossiloberoende och minska lantbrukets sårbarhet. Det är så vi blir fria från skurkstaters grepp, samtidigt som vi stärker den egna beredskapen och den svenska matproduktionen.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Vi behöver stärka svenskt lantbruk",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 600,
+      "msek_base": 3000,
+      "msek_high": 5400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Stöd till lantbruk för fossilfrihet, investeringsstöd. ~3 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet vill ta fram en handlingsplan för det svenska lantbrukets behov av näring och fossilfri gödsel",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill ta fram en handlingsplan för det svenska lantbrukets behov av näring och fossilfri gödsel. Målet är att minska beroendet av importerad mineralgödsel, stärka svensk produktion och öka livsmedelssystemets motståndskraft.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet vill ta fram en handlingsplan för det svenska lantbrukets behov av näring och fossilfri gödsel",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 250,
+      "msek_base": 500,
+      "msek_high": 750,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Handlingsplan för fossilfri gödsel, minskat beroende import. ~0,5 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet vill därför öka produktionen av hållbara biodrivmedel, femdubbla den svenska biogasproduktionen och påskynda elektrifieringen",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill därför öka produktionen av hållbara biodrivmedel, femdubbla den svenska biogasproduktionen och påskynda elektrifieringen av jordbrukets maskiner.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": 10000,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet vill därför öka produktionen av hållbara biodrivmedel, femdubbla den svenska biogasproduktionen och påskynda elektrifieringen",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 8500,
+      "msek_base": 10000,
+      "msek_high": 11500,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Källan anger: 'femdubbla den svenska biogasproduktionen'. Nuvarande biogasproduktion ca 2 TWh. Femdubbling = 10 TWh ny produktion. Investering estimerat 30-50 mdr totalt, spritt över flera år. Årlig k",
+      "confidence": 0.85
+    }
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet vill införa regionala mål för livsmedelsproduktionen för att stärka Sveriges försörjningsförmåga och beredskap",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill införa regionala mål för livsmedelsproduktionen för att stärka Sveriges försörjningsförmåga och beredskap.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet vill införa regionala mål för livsmedelsproduktionen för att stärka Sveriges försörjningsförmåga och beredskap",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 140,
+      "msek_base": 200,
+      "msek_high": 260,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Administrering av regionala mål. ~0,2 mdr/år.",
+      "confidence": 0.55
+    }
+  },
+  {
+    "candidate": {
+      "title": "Liberalerna vill halvera den statliga inkomstskatten och skapa fler incitament för människor att utbilda sig, arbeta och ta ansvar",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill halvera den statliga inkomstskatten och skapa fler incitament för människor att utbilda sig, arbeta och ta ansvar",
+      "category": "skatter",
+      "amount_in_text_msek": 40000,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-kraver-sankt-statlig-inkomstskatt",
+    "articleTitle": "Liberalerna vill halvera den statliga inkomstskatten och skapa fler incitament för människor att utbilda sig, arbeta och ta ansvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 34000,
+      "msek_base": 40000,
+      "msek_high": 46000,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Källan anger: 'halvera den statliga inkomstskatten'. Statlig inkomstskatt ger ca 80 mdr/år i intäkter. Halvering = -40 mdr/år i statliga intäkter.",
+      "confidence": 0.85
+    }
+  },
+  {
+    "candidate": {
+      "title": "Om Tidöpartierna vinner valet kommer Liberalerna redan i första budgeten driva på ett första steg mot en halvering av den statliga",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Om Tidöpartierna vinner valet kommer Liberalerna redan i första budgeten driva på ett första steg mot en halvering av den statliga inkomstskatten",
+      "category": "skatter",
+      "amount_in_text_msek": 40000,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-kraver-sankt-statlig-inkomstskatt",
+    "articleTitle": "Om Tidöpartierna vinner valet kommer Liberalerna redan i första budgeten driva på ett första steg mot en halvering av den statliga",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 34000,
+      "msek_base": 40000,
+      "msek_high": 46000,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Samma löfte som #116, 'första budgeten första steget'. Helhetsmålet är halvering (-40 mdr). Första steget kan vara mindre.",
+      "confidence": 0.85
+    }
+  },
+  {
+    "candidate": {
+      "title": "Det är orimligt att två av tre akademiker någon gång i livet betalar mer än hälften av en löneökning i skatt",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare"
+      },
+      "quote": "Det är orimligt att två av tre akademiker någon gång i livet betalar mer än hälften av en löneökning i skatt. Det vill Liberalerna ändra på.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-kraver-sankt-statlig-inkomstskatt",
+    "articleTitle": "Det är orimligt att två av tre akademiker någon gång i livet betalar mer än hälften av en löneökning i skatt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 15000,
+      "msek_high": 27000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Ändra så att <50% av löneökning går till skatt för akademiker. Berör ca 1M akademiker. Estimat 15 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Jag vill att Sverige ska vara EU:s smartaste land inom tio år genom satsningar på skola, forskning och genom att avskaffa straffskatten på",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare"
+      },
+      "quote": "Jag vill att Sverige ska vara EU:s smartaste land inom tio år genom satsningar på skola, forskning och genom att avskaffa straffskatten på utbildning.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-kraver-sankt-statlig-inkomstskatt",
+    "articleTitle": "Jag vill att Sverige ska vara EU:s smartaste land inom tio år genom satsningar på skola, forskning och genom att avskaffa straffskatten på",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 10000,
+      "msek_high": 18000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Satsningar på skola, forskning + avskaffa 'straffskatt på utbildning'. Estimat 10 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Staten måste alltså fortsätta att investera i infrastruktur som möjliggör tillväxt och nya jobb samtidigt som vi fullföljer det svenska",
+      "parties": [
+        "kd"
+      ],
+      "person": {
+        "name": "Ebba Busch",
+        "role": "partiledare"
+      },
+      "quote": "Staten måste alltså fortsätta att investera i infrastruktur som möjliggör tillväxt och nya jobb samtidigt som vi fullföljer det svenska kärnkraftsprogrammet.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "articleTitle": "Staten måste alltså fortsätta att investera i infrastruktur som möjliggör tillväxt och nya jobb samtidigt som vi fullföljer det svenska",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20000,
+      "msek_base": 100000,
+      "msek_high": 180000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Fortsatt kärnkraftsprogram. Jätteinvestering. Samma som M #90. ~100 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Därför går vi till val på att förbjuda burka och niqab i offentliga miljöer",
+      "parties": [
+        "kd"
+      ],
+      "person": {
+        "name": "Ebba Busch",
+        "role": "partiledare"
+      },
+      "quote": "Därför går vi till val på att förbjuda burka och niqab i offentliga miljöer.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "articleTitle": "Därför går vi till val på att förbjuda burka och niqab i offentliga miljöer",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Förbudslag, övervakning, ev kompensation. ~0,1 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Därför presenterar vi den största förändringen av svensk bostadspolitik på över trettio år",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "citat"
+      },
+      "quote": "Därför presenterar vi den största förändringen av svensk bostadspolitik på över trettio år",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "Bostadspolitiskt löfte — strukturreformen NABY.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 10000,
+      "msek_high": 18000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Största förändringen på 30 år. Investeringar/subventioner. ~10 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Målet är att skapa förutsättningar för omkring 20 000 nya hyresrätter om året med hyror som vanliga låg- och medelinkomsttagare har råd att",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Målet är att skapa förutsättningar för omkring 20 000 nya hyresrätter om året med hyror som vanliga låg- och medelinkomsttagare har råd att betala.",
+      "category": "välfärd",
+      "amount_in_text_msek": 20000,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "NABY-modellens konkretiserade mål.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 17000,
+      "msek_base": 20000,
+      "msek_high": 23000,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Källan anger: '20 000 nya hyresrätter om året'. Kostnad subvention per hyresrätt ca 1M kr. 20 000 × 1M = 20 mdr/år i subventioner/byggstöd.",
+      "confidence": 0.85
+    }
+  },
+  {
+    "candidate": {
+      "title": "Med NABY vill vi skapa ett system där hyrorna utgår från människors betalningsförmåga och inte från fastighetsmarknadens avkastningskrav",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Ida Gabrielsson",
+        "role": "citat"
+      },
+      "quote": "Med NABY vill vi skapa ett system där hyrorna utgår från människors betalningsförmåga och inte från fastighetsmarknadens avkastningskrav",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "Bostadsministerkandidat talesperson.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart — politiskt inriktninglöfte",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "göra klimatomställningen enklare, billigare och snabbare",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "företrädare"
+      },
+      "quote": "göra klimatomställningen enklare, billigare och snabbare. Vi vill bygga ut energin, elektrifiera transporter och industri, stärka företagens innovationskraft och visa att klimatansvar och tillväxt hör ihop",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G2",
+        "reason": "Domänen \"val2026.centerpartiet.se\" finns inte i allowlist (exakt match krävs)"
+      }
+    ],
+    "articleUrl": "https://val2026.centerpartiet.se/",
+    "articleTitle": "Klimatlöfte från valmanifestet.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4000,
+      "msek_base": 20000,
+      "msek_high": 36000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Elektrifiering transporter/industri + innovation. Estimat 20 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "korta köerna, stärka den nära vården, satsa på ungas psykiska hälsa och ge skolan bättre förutsättningar att hjälpa varje elev",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "företrädare"
+      },
+      "quote": "korta köerna, stärka den nära vården, satsa på ungas psykiska hälsa och ge skolan bättre förutsättningar att hjälpa varje elev",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G2",
+        "reason": "Domänen \"val2026.centerpartiet.se\" finns inte i allowlist (exakt match krävs)"
+      }
+    ],
+    "articleUrl": "https://val2026.centerpartiet.se/",
+    "articleTitle": "Välfärdslöfte från valmanifestet.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 15000,
+      "msek_high": 27000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Korta köer, nära vård, ungas psykiska hälsa, skola. ~15 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "stärka landsbygderna med bättre vård och skola nära människor, fungerande vägar, järnvägar och digital infrastruktur, enklare villkor för",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "företrädare"
+      },
+      "quote": "stärka landsbygderna med bättre vård och skola nära människor, fungerande vägar, järnvägar och digital infrastruktur, enklare villkor för företag och starkare gröna näringar",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G2",
+        "reason": "Domänen \"val2026.centerpartiet.se\" finns inte i allowlist (exakt match krävs)"
+      }
+    ],
+    "articleUrl": "https://val2026.centerpartiet.se/",
+    "articleTitle": "Landsbygdslöfte från valmanifestet.",
+    "cost": {
+      "type": "utgift",
       "period": "per_ar",
       "msek_low": 5000,
       "msek_base": 10000,
       "msek_high": 15000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar att inflationsjustering av skiktgränser för att undvika reala skattehöjningar på arbete är nödvändig, vilket grovt kostar 5-15 mdkr/år.",
-      "confidence": 0.3
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+      "method_note": "Estimat: Vägar, järnväg, digital infrastruktur landsbygd. ~10 mdr/år.",
+      "confidence": 0.4
+    }
   },
   {
     "candidate": {
-      "title": "Minska asylinvandringen till EU:s rättsliga miniminivå",
+      "title": "fler synliga poliser, fler lösta brott och en rättskedja som fungerar",
       "parties": [
-        "m",
-        "kd",
-        "l",
-        "sd"
+        "c"
       ],
-      "person": null,
-      "quote": "Vi är överens om att fortsätta arbetet med att få ned asylinvandringen till en EU:s rättsliga miniminivå.",
-      "category": "migration",
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "företrädare"
+      },
+      "quote": "fler synliga poliser, fler lösta brott och en rättskedja som fungerar. Den kriminella ekonomin ska strypas, brottsoffer skyddas bättre och barn ska räddas från att dras in i kriminalitet",
+      "category": "rättsväsende",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [],
-    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
-    "articleTitle": "Partiledarnas möte i Strängnäs 2025",
+    "failures": [
+      {
+        "gate": "G2",
+        "reason": "Domänen \"val2026.centerpartiet.se\" finns inte i allowlist (exakt match krävs)"
+      }
+    ],
+    "articleUrl": "https://val2026.centerpartiet.se/",
+    "articleTitle": "Rättsstatslöfte från valmanifestet.",
     "cost": {
-      "type": "besparing",
+      "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
+      "msek_low": 2500,
       "msek_base": 5000,
-      "msek_high": 15000,
+      "msek_high": 7500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Minskad asylinvandring sänker statens mottagnings- och etableringskostnader. Antagande: minskning med 10 000–15 000 asylsökande per år, sparar grovt 0,5–1,5 mdkr per 10 000 personer.",
-      "confidence": 0.3
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+      "method_note": "Estimat: Fler poliser, rättskedja. ~5 mdr/år.",
+      "confidence": 0.4
+    }
   },
   {
     "candidate": {
-      "title": "Införa hinder mot framtida avveckling av kärnkraft",
+      "title": "bygga starkare allianser, stötta Ukraina, stärka totalförsvaret och göra samhället mer motståndskraftigt",
       "parties": [
-        "m",
-        "kd",
-        "l",
-        "sd"
+        "c"
       ],
-      "person": null,
-      "quote": "Vi kommer också att införa hinder som stoppar framtida regeringar från att tvinga fram en avveckling av kärnkraft.",
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "företrädare"
+      },
+      "quote": "bygga starkare allianser, stötta Ukraina, stärka totalförsvaret och göra samhället mer motståndskraftigt",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G2",
+        "reason": "Domänen \"val2026.centerpartiet.se\" finns inte i allowlist (exakt match krävs)"
+      }
+    ],
+    "articleUrl": "https://val2026.centerpartiet.se/",
+    "articleTitle": "Utrikes-/säkerhetspolitiskt löfte från valmanifestet.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 7500,
+      "msek_base": 15000,
+      "msek_high": 22500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Stärkt totalförsvar + Ukraina. ~15 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Fördubbla elproduktionen av utsläppsfri och förnybar energi i Sverige och ta vara på Sveriges gröna industriboom, med en utsläppsfri",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "företrädare"
+      },
+      "quote": "Fördubbla elproduktionen av utsläppsfri och förnybar energi i Sverige och ta vara på Sveriges gröna industriboom, med en utsläppsfri infrastruktur och utbyggda elnät",
       "category": "klimat-miljö",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [],
-    "articleUrl": "https://www.sd.se/partiledarnas-mote-i-strangnas-2025/",
-    "articleTitle": "Partiledarnas möte i Strängnäs 2025",
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik",
+    "articleTitle": "Energipolitiskt huvudlöfte från C:s politik-sida.",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 1,
-      "msek_high": 5,
+      "period": "per_ar",
+      "msek_low": 30000,
+      "msek_base": 150000,
+      "msek_high": 270000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Lagstiftningsprocess kräver utredning och riksdagsarbete; engångskostnad av administrativ karaktär. Inga löpande statliga utgifter antas.",
+      "method_note": "Estimat: Fördubbla utsläppsfri elproduktion. Nu ca 170 TWh. Dubbla = 340 TWh. Investering i vind/sol/kärnkraft. Enorm investering över decennier. Årlig investering estimerat 150 mdr/år.",
       "confidence": 0.3
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+    }
   },
   {
     "candidate": {
-      "title": "Höjt barnbidrag med 500 kr/mån och prisindexering",
+      "title": "Det vi lovar är att bygga ett starkare, friare och tryggare Sverige genom en rättvis klimatomställning",
       "parties": [
-        "v"
+        "mp"
       ],
-      "person": null,
-      "quote": "Vänsterpartiet vill höja barnbidraget med 500 kronor i månaden och att bidraget prisindexeras för att skydda mot framtida inflation.",
-      "category": "välfärd",
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Det vi lovar är att bygga ett starkare, friare och tryggare Sverige genom en rättvis klimatomställning. Ett Sverige som fungerar i människors vardag.",
+      "category": "klimat-miljö",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
-    "articleTitle": "På hushållens sida genom kostnadskrisen",
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Almedalen 2026, Visby",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 9500,
-      "msek_base": 11100,
-      "msek_high": 14500,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
       "basis_url": null,
-      "method_note": "Höjning 500 kr/mån per barn, ca 1,85 miljoner barn 0-15 år ger 11,1 mdkr/år. Indexering påverkar ej fastprisberäkning.",
-      "confidence": 0.65
-    },
-    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+      "method_note": "Paraplylöfte — kostnaden ligger i de specifika delöftena (Sverigekort, elbilsbonus, leasingstöd, tågsystemskifte, kortare arbetstid etc.) som redan är kostnadsberäknade separat i Fas 1 och undviker du",
+      "confidence": 0.2
+    }
   },
   {
     "candidate": {
-      "title": "Återinfört tilläggsbidrag i bostadsbidrag och höjt bostadstillägg",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Dessutom föreslås i vårändringsmotionen att Sverige återinför tilläggsbidraget i bostadsbidraget och att bostadstillägget höjs för ålderspensionärer och för de som får sjuk- och aktivitetsersättning.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
-    "articleTitle": "På hushållens sida genom kostnadskrisen",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 6000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Uppskattning baserad på ungefärliga antal mottagare av bostadsbidrag och bostadstillägg samt typiska höjningsnivåer. Ingen preciserad nivå i löftet ger stor osäkerhet.",
-      "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Brett transportstöd med Sverigekort, elbilspremie och drivmedelsstöd",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Förslaget omfattar ett billigt Sverigekort för kollektivtrafiken, en bred elbilspremie samt ett tillfälligt stöd till bilägare med låga och medelinkomster som drabbats av höga drivmedelspriser till följd av kriget i Mellanöstern.",
-      "category": "infrastruktur",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
-    "articleTitle": "På hushållens sida genom kostnadskrisen",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 15000,
-      "msek_base": 35000,
-      "msek_high": 60000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Sverigekort (lågpris nationellt) kan kosta 10-20 mdkr/år. Bred elbilspremie (50-100k/bil) 5-15 mdkr/år. Drivmedelsstöd till låg-/medelinkomst 5-25 mdkr/år. Summerat intervall med stor osäkerhet.",
-      "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Sänkt skatt för arbetande föräldrar – 5000 kr mer i månaden",
+      "title": "Moderaterna kommer gå till val på en stor reform för alla Sveriges hårt arbetande barnfamiljer",
       "parties": [
         "m"
       ],
-      "person": null,
-      "quote": "Om vi vinner valet kommer vi sänka skatten för alla föräldrar som jobbar – det kommer ge 5 000 kronor mer i plånboken i månaden för en vanlig barnfamilj.",
+      "person": {
+        "name": "Ulf Kristersson",
+        "role": "partiledare"
+      },
+      "quote": "Moderaterna kommer gå till val på en stor reform för alla Sveriges hårt arbetande barnfamiljer. Vi kallar den reformen föräldraavdraget. Och det är en skattesänkning för småbarnsföräldrar som jobbar. Inget nytt bidrag. Inget krångel. Inget ökat beroende av stat och kommun. Utan lägre skatt på arbete för dem i Sverige som tar ansvar för både jobbet och familjen.",
       "category": "skatter",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/nytt-vallofte-sankt-skatt-for-foraldrar-som-jobbar/",
-    "articleTitle": "Nytt vallöfte: Sänkt skatt för föräldrar som jobbar",
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 58 ord — max 40 tillåts (§5.1)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/nyhet/ulf-kristerssons-tal-i-almedalen-2026/",
+    "articleTitle": "Almedalsparken, Visby (Almedalstal)",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "utgift",
       "period": "per_ar",
-      "msek_low": 25000,
-      "msek_base": 45000,
-      "msek_high": 75000,
+      "msek_low": 5000,
+      "msek_base": 25000,
+      "msek_high": 45000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Baseras på 5 000 kr netto/mån för en genomsnittlig barnfamilj, omräknat till bruttoskattesänkning utifrån marginalskatt ~32 %. Antal arbetande föräldrar skattas till 1,3–1,7 milj, vilket ger årlig int",
-      "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+      "method_note": "Mål: barnfamilj ska behålla +5000 kr/mån = 60000 kr/år per familj. Antal barnfamiljer (hushåll med barn 0-17): ca 1,2 miljoner. Hela 5000 kr/mån = 1,2M × 60000 = 72 mdr kr/år. MEN föräldraavdraget bes",
+      "confidence": 0.3
+    }
   },
   {
     "candidate": {
-      "title": "Återinfört förstärkt bostadsbidrag",
+      "title": "Därför vill vi hjälpa ofrivilligt barnlösa med ytterligare tre betalda IVF-försök",
       "parties": [
-        "v"
+        "m"
       ],
-      "person": null,
-      "quote": "Höjt bostadsbidrag: återinförd förstärkning",
+      "person": {
+        "name": "Ulf Kristersson",
+        "role": "partiledare"
+      },
+      "quote": "Därför vill vi hjälpa ofrivilligt barnlösa med ytterligare tre betalda IVF-försök. Och dessutom rätt till syskonförsök.",
       "category": "välfärd",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -725,20 +1448,73 @@
     "failures": [
       {
         "gate": "G3",
-        "reason": "Citatet har 4 ord — minst 5 krävs"
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
       }
     ],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/vansterpartiets-familjepaket-16-miljarder-till-barnen/",
-    "articleTitle": "Vänsterpartiets familjepaket – 16 miljarder till barnen"
+    "articleUrl": "https://moderaterna.se/nyhet/ulf-kristerssons-tal-i-almedalen-2026/",
+    "articleTitle": "Almedalsparken, Visby (Almedalstal)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan kvantifierbar kostnad.",
+      "confidence": 0.3
+    }
   },
   {
     "candidate": {
-      "title": "100 nya öppna förskolor",
+      "title": "Vi har ändrat lagen, så att den som har kommit hit och begått brott, ska utvisas från Sverige",
+      "parties": [
+        "m"
+      ],
+      "person": {
+        "name": "Ulf Kristersson",
+        "role": "partiledare"
+      },
+      "quote": "Vi har ändrat lagen, så att den som har kommit hit och begått brott, ska utvisas från Sverige. Det gäller framför allt de som våldtar och begår sexuella övergrepp. De som skjuter, rånar och hotar. De som utsätter sin familj för hedersbrott.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 42 ord — max 40 tillåts (§5.1)"
+      },
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/nyhet/ulf-kristerssons-tal-i-almedalen-2026/",
+    "articleTitle": "Almedalsparken, Visby (Almedalstal)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan kvantifierbar kostnad.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "hon presenterade också Vänsterpartiets prioriteringar inför valet",
       "parties": [
         "v"
       ],
-      "person": null,
-      "quote": "100 nya öppna förskolor",
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "partiledare"
+      },
+      "quote": "hon presenterade också Vänsterpartiets prioriteringar inför valet: ... avgiftsfri tandvård ...",
       "category": "välfärd",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -746,83 +1522,1059 @@
     "failures": [
       {
         "gate": "G3",
-        "reason": "Citatet har 4 ord — minst 5 krävs"
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
       }
     ],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/vansterpartiets-familjepaket-16-miljarder-till-barnen/",
-    "articleTitle": "Vänsterpartiets familjepaket – 16 miljarder till barnen"
-  },
-  {
-    "candidate": {
-      "title": "Bebispeng på 15 000 kronor för förstagångsföräldrar",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Därför vill Vänsterpartiet införa en bebispeng på 15 000 kronor till förstagångsföräldrar.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/vansterpartiets-familjepaket-16-miljarder-till-barnen/",
-    "articleTitle": "Vänsterpartiets familjepaket – 16 miljarder till barnen",
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostar-i-almedalen-adjo-tido/",
+    "articleTitle": "Almedalen, Visby (Almedalstal)",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 600,
-      "msek_base": 750,
-      "msek_high": 1200,
+      "msek_low": 7500,
+      "msek_base": 15000,
+      "msek_high": 22500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar 50 000 förstabarn/år à 15 000 kr. Osäkerhet kring exakt definition, antal och om båda förstagångsföräldrar får bidrag.",
+      "method_note": "Befolkning 10,55 miljoner. Genomsnittlig årlig tandvårdskostnad per capita ca 1800 kr (inkl. tandläkare + specialistvård; folktandvården + privat). Total tandvårdsmarknad: 10,55M × 1800 = ca 19 mdr kr",
       "confidence": 0.4
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+    }
   },
   {
     "candidate": {
-      "title": "Höjt barnbidrag med 500 kronor per månad",
+      "title": "Vi är också för en återhållsam migrationspolitik, men det finns en konflikt mellan oss och S när det gäller arbetskraftsinvandringen",
       "parties": [
-        "v"
+        "c"
       ],
-      "person": null,
-      "quote": "Samtidigt höjs barnbidraget med 500 kronor i månaden.",
-      "category": "välfärd",
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "företrädare"
+      },
+      "quote": "Vi är också för en återhållsam migrationspolitik, men det finns en konflikt mellan oss och S när det gäller arbetskraftsinvandringen.",
+      "category": "migration",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/vansterpartiets-familjepaket-16-miljarder-till-barnen/",
-    "articleTitle": "Vänsterpartiets familjepaket – 16 miljarder till barnen",
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.svt.se/nyheter/inrikes/partiernas-press-pa-s-behover-se-over-hela-migrationspolitiken",
+    "articleTitle": "SVT Nyheter (intervju Almedalen 2026)",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 9000,
-      "msek_base": 11400,
-      "msek_high": 14000,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
       "basis_url": null,
-      "method_note": "500 kr/mån x 12 x ca 1,9 milj barn (0–15 år). Osäkerhet främst i antal barn. Låg=1,5 milj, hög=2,2 milj.",
-      "confidence": 0.65
-    },
-    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+      "method_note": "Ej kvantifierbart — position om arbetskraftsinvandring",
+      "confidence": 0.2
+    }
   },
   {
     "candidate": {
-      "title": "Ensamståendetillägg på 300 kronor per månad",
+      "title": "De kommande fyra åren behöver välfärdens kärna gå först, före skattesänkningar",
       "parties": [
-        "v"
+        "kd"
       ],
-      "person": null,
-      "quote": "Ensamståendetillägg: +300 kronor per månad för ensamstående",
+      "person": {
+        "name": "Ebba Busch",
+        "role": "företrädare"
+      },
+      "quote": "De kommande fyra åren behöver välfärdens kärna gå först, före skattesänkningar.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.svt.se/nyheter/inrikes/kristersson-ratar-buschs-lofte-om-hogre-barnbidrag",
+    "articleTitle": "SVT Nyheter (uttalande Almedalen 2026)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart — prioritering mellan välfärd och skattesänkningar",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi vill se lägre skatt för de som tar ansvar både för jobbet och familjen",
+      "parties": [
+        "m"
+      ],
+      "person": {
+        "name": "Ulf Kristersson",
+        "role": "företrädare"
+      },
+      "quote": "Vi vill se lägre skatt för de som tar ansvar både för jobbet och familjen.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.svt.se/nyheter/inrikes/kristersson-ratar-buschs-lofte-om-hogre-barnbidrag",
+    "articleTitle": "SVT Nyheter (uttalande Almedalen 2026)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 12500,
+      "msek_base": 25000,
+      "msek_high": 37500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Skattesänkning riktad mot föräldrar som jobbar (\"föräldraavdraget\" från Almedalstalet). Om ca 1,5M småbarnsföräldrar × 1500 kr/mån × 12 = 27 mdr. Estimat 25 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Jag vill fördubbla antalet miljardärer i Sverige de kommande tio åren",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "företrädare"
+      },
+      "quote": "Jag vill fördubbla antalet miljardärer i Sverige de kommande tio åren.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.svt.se/nyheter/inrikes/kristersson-ratar-buschs-lofte-om-hogre-barnbidrag",
+    "articleTitle": "SVT Nyheter (citerad i Almedalen 2026)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart — målsättning om fler miljardärer, indirekt kopplat till skatte- och näringspolitik",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "ett medborgarveto, ett medborgarveto som innebär att om grannarna i villaområdet inte vill att det ska byggas hyreshus i området, så kommer",
+      "parties": [
+        "sd"
+      ],
+      "person": {
+        "name": "Jimmie Åkesson",
+        "role": "partiledare"
+      },
+      "quote": "ett medborgarveto, ett medborgarveto som innebär att om grannarna i villaområdet inte vill att det ska byggas hyreshus i området, så kommer man inte få lov att bygga hyreshus i området.",
       "category": "välfärd",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/vansterpartiets-familjepaket-16-miljarder-till-barnen/",
-    "articleTitle": "Vänsterpartiets familjepaket – 16 miljarder till barnen",
-    "duplicateOf": "(denna körning)"
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=NZyztg_ESaY",
+    "articleTitle": "Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Medborgarveto mot bebyggelse — administrativ regel. Kan indirekt minska byggande.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Det det här valet handlar om den 13 september att vi ska fortsätta på den här vägen som vi har slagit in på nu de senaste åren eller om vi",
+      "parties": [
+        "sd"
+      ],
+      "person": {
+        "name": "Jimmie Åkesson",
+        "role": "partiledare"
+      },
+      "quote": "Det det här valet handlar om den 13 september att vi ska fortsätta på den här vägen som vi har slagit in på nu de senaste åren eller om vi ska återgå till det gamla till det där gamla som svenska folket faktiskt röstade nej till förra gången det begrav sig.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 51 ord — max 40 tillåts (§5.1)"
+      },
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=NZyztg_ESaY",
+    "articleTitle": "Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 50000,
+      "msek_high": 90000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Löfte inom Energi. ~50 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Och faktum är ju faktiskt att nio av tio svenskar skulle tjäna på socialdemokratisk ekonomisk politik med höjda barnbidrag, rätt vid",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "partiledare"
+      },
+      "quote": "Och faktum är ju faktiskt att nio av tio svenskar skulle tjäna på socialdemokratisk ekonomisk politik med höjda barnbidrag, rätt vid skattesänkning, slopad karens.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=TBHUne2xwvs",
+    "articleTitle": "Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 7500,
+      "msek_base": 15000,
+      "msek_high": 22500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Skattesänkning inom Ekonomi/Skatt. ~15 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi ska titta lite på vad de andra partierna har haft för sig idag också",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "företrädare"
+      },
+      "quote": "Vi ska titta lite på vad de andra partierna har haft för sig idag också.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=oBFihqSHisQ",
+    "articleTitle": "Viktor möter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart från transkriptet.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi är grunden positiva till att vi ska bygga ut ny kärnkraft och jag men jag har ingen aning om hur det här kontraktet ser ut, avtalet ser",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "företrädare"
+      },
+      "quote": "Vi är grunden positiva till att vi ska bygga ut ny kärnkraft och jag men jag har ingen aning om hur det här kontraktet ser ut, avtalet ser ut.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=oBFihqSHisQ",
+    "articleTitle": "Viktor möter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 50000,
+      "msek_high": 90000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Löfte inom Energi. ~50 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Jag ville vända krisen i skolan och sjukvården där sjukvården är någonting som ju Kristdemokraterna brukar värna om även om man sutt i en",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "företrädare"
+      },
+      "quote": "Jag ville vända krisen i skolan och sjukvården där sjukvården är någonting som ju Kristdemokraterna brukar värna om även om man sutt i en regering nu som vi har sett de längsta vårdköerna som någonsin har uppmetts och jag vill också återupprätta tryggheten på gator och torg så att det är ju liksom det som kommer vara mitt fokus efter valet.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 61 ord — max 40 tillåts (§5.1)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=oBFihqSHisQ",
+    "articleTitle": "Viktor möter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 5000,
+      "msek_high": 9000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Löfte inom Sjukvård. ~5 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Se till att vi kan ha en regering som sätter Sverige och svenska folkets bästa i första rummet som kan öka sammanhållningen i vårt land kan",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "företrädare"
+      },
+      "quote": "Se till att vi kan ha en regering som sätter Sverige och svenska folkets bästa i första rummet som kan öka sammanhållningen i vårt land kan stoppa den här som jag sa mitt tal att det känns som det har blåst en iskall vind genom vårt land och att vi behöver vända det blir ett varmare land och såklart ha en politik som förbättrar vardagen för för vanligt folk.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 69 ord — max 40 tillåts (§5.1)"
+      },
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=oBFihqSHisQ",
+    "articleTitle": "Viktor möter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart från transkriptet.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi kommer vi har både reformer på kort och lång sikt för att få ner matpriserna",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "företrädare"
+      },
+      "quote": "Vi kommer vi har både reformer på kort och lång sikt för att få ner matpriserna.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=nzYmcPx0jJc",
+    "articleTitle": "Viktor möter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart från transkriptet.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Eh, vi vill ju nu frysa hyrorna för den ändringen av regelverket 2023 som regeringen införde har gjort att hyresvärdarna kan runda",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "företrädare"
+      },
+      "quote": "Eh, vi vill ju nu frysa hyrorna för den ändringen av regelverket 2023 som regeringen införde har gjort att hyresvärdarna kan runda förhandlingssystemet och höja hyrorna utan att passera egentligen hyresgästföreningen eller bara passera och gå vidare.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=nzYmcPx0jJc",
+    "articleTitle": "Viktor möter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 10000,
+      "msek_high": 18000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Löfte inom Bostad. ~10 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Nej, nej, vi ska inte alls på den så jag vet inte",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "företrädare"
+      },
+      "quote": "Nej, nej, vi ska inte alls på den så jag vet inte.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=nzYmcPx0jJc",
+    "articleTitle": "Viktor möter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart från transkriptet.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Det ska liksom inte vara där det ligger utan vi säger ju att vi ska försöka hitta mer på att säga kollektiva men lösningar som gör att ni",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "företrädare"
+      },
+      "quote": "Det ska liksom inte vara där det ligger utan vi säger ju att vi ska försöka hitta mer på att säga kollektiva men lösningar som gör att ni hänger inte bara på dig själv utan det allmänna måste ta ett ansvar.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 41 ord — max 40 tillåts (§5.1)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=MCCUtB4Ycqw",
+    "articleTitle": "Viktor möter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart från transkriptet.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Och för alla er, för alla er främst kvinnor som deltidsarbetar inom omsorg, handel och service kan det innebära en skattesänkning på 2000",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "partiledare"
+      },
+      "quote": "Och för alla er, för alla er främst kvinnor som deltidsarbetar inom omsorg, handel och service kan det innebära en skattesänkning på 2000 kr månaden, 24.000 kr om året.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=iwXT2XAad-w",
+    "articleTitle": "Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 7500,
+      "msek_base": 15000,
+      "msek_high": 22500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Skattesänkning inom Ekonomi/Skatt. ~15 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi har sagt enligt våra beräkningar så är det till och med så här, det är en 500.000 en halv miljon fler betande djur för att vi ska slippa",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "partiledare"
+      },
+      "quote": "Vi har sagt enligt våra beräkningar så är det till och med så här, det är en 500.000 en halv miljon fler betande djur för att vi ska slippa importera så mycket kött.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=hWMm8EF5Qh4",
+    "articleTitle": "Debatt C vs SD",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart från transkriptet.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Ska ge dig det så här typ en 10 15 av de här 67 förslagen som ni la fram inom förra året, de har ni genomfört och vi har en hel del som är",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "partiledare"
+      },
+      "quote": "Ska ge dig det så här typ en 10 15 av de här 67 förslagen som ni la fram inom förra året, de har ni genomfört och vi har en hel del som är på orange liksom ni försökt börja men inte drivit så att men jag vill att du ska veta att jag pratar sanning så att här är den.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 61 ord — max 40 tillåts (§5.1)"
+      },
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=hWMm8EF5Qh4",
+    "articleTitle": "Debatt C vs SD",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 50000,
+      "msek_high": 90000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Löfte inom Energi. ~50 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Ja, men vi har ju en prioritering som att vi kommer inte vilja få igen någonting med Vänsterpartiet men med andra partier som vi tror som",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Elisabeth Thand Ringqvist",
+        "role": "partiledare"
+      },
+      "quote": "Ja, men vi har ju en prioritering som att vi kommer inte vilja få igen någonting med Vänsterpartiet men med andra partier som vi tror som också har folkrörelsebakgrund som bygger Sverige underfå så vid det är vårt val.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=hWMm8EF5Qh4",
+    "articleTitle": "Debatt C vs SD",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 50000,
+      "msek_high": 90000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Löfte inom Energi. ~50 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi ska ta inte när det handlar om att sjunga tyska hatvisor för det accepterar",
+      "parties": [
+        "sd"
+      ],
+      "person": {
+        "name": "Jimmie Åkesson",
+        "role": "partiledare"
+      },
+      "quote": "Vi ska ta inte när det handlar om att sjunga tyska hatvisor för det accepterar.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=EHRLoIRh_EQ",
+    "articleTitle": "SVT Aktuellt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart från transkriptet.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Ja, vi är överens om en sak åtminstone principiellt och det är att det är väldigt bra att i första hand sänka skatter för de som har mer",
+      "parties": [
+        "sd"
+      ],
+      "person": {
+        "name": "Jimmie Åkesson",
+        "role": "partiledare"
+      },
+      "quote": "Ja, vi är överens om en sak åtminstone principiellt och det är att det är väldigt bra att i första hand sänka skatter för de som har mer normala inkomster.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte i det sparade transkriptet (uppmjukad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=EHRLoIRh_EQ",
+    "articleTitle": "SVT Aktuellt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 7500,
+      "msek_base": 15000,
+      "msek_high": 22500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat: Skattesänkning inom Ekonomi/Skatt. ~15 mdr/år.",
+      "confidence": 0.4
+    }
+  },
+  {
+    "candidate": {
+      "title": "Nu ledde du in oss på karensavdraget och vi ska faktiskt prata om den för i valkompassen så står det nämligen att karensavdraget vid",
+      "parties": [
+        "sd"
+      ],
+      "person": {
+        "name": "Jimmie Åkesson",
+        "role": "partiledare"
+      },
+      "quote": "Nu ledde du in oss på karensavdraget och vi ska faktiskt prata om den för i valkompassen så står det nämligen att karensavdraget vid sjukdom ska avskaffas och ni nu ni tycker att det är ett ganska bra förslag medans socialdemokraterna tycker att det är ett mycket bra förslag.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 49 ord — max 40 tillåts (§5.1)"
+      }
+    ],
+    "articleUrl": "https://youtube.com/watch?v=EHRLoIRh_EQ",
+    "articleTitle": "SVT Aktuellt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart från transkriptet.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "innebär ökad möjlighet att genomföra aborter i hemmet samt att bl.a",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "innebär ökad möjlighet att genomföra aborter i hemmet samt att bl.a.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.riksdagen.se/sv/dokument-lagar/dokument/hd024197",
+    "articleTitle": "Riksdagsmotion hd024197",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "De olika trafikslagen måste komplettera, knyta samman och förstärka varandra – där knutpunkter, noder och intermodalitet ska vara",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "De olika trafikslagen måste komplettera, knyta samman och förstärka varandra – där knutpunkter, noder och intermodalitet ska vara vägledande principer.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.riksdagen.se/sv/dokument-lagar/dokument/hd024162",
+    "articleTitle": "Riksdagsmotion hd024162",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 15000,
+      "msek_high": 27000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat från Infrastruktur-kategori. ~15 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Samordningen mellan lokal, regional och nationell nivå behöver stärkas",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Samordningen mellan lokal, regional och nationell nivå behöver stärkas. Kapacitet är beredskap.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.riksdagen.se/sv/dokument-lagar/dokument/hd024162",
+    "articleTitle": "Riksdagsmotion hd024162",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 50000,
+      "msek_high": 90000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat från Energi-kategori. ~50 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Detta är viktigt för att stärka beredskapen och få bättre kontroll över kostnader och genomförande",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Detta är viktigt för att stärka beredskapen och få bättre kontroll över kostnader och genomförande. Vi vill bryta den upphandlingsmodell som i dag driver upp kostnaderna och splittrar ansvaret.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.riksdagen.se/sv/dokument-lagar/dokument/hd024162",
+    "articleTitle": "Riksdagsmotion hd024162",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 50000,
+      "msek_high": 90000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat från Energi-kategori. ~50 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "För att stärka Arlanda vill vi bl.a",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "För att stärka Arlanda vill vi bl.a.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.riksdagen.se/sv/dokument-lagar/dokument/hd024162",
+    "articleTitle": "Riksdagsmotion hd024162",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart.",
+      "confidence": 0.2
+    }
+  },
+  {
+    "candidate": {
+      "title": "Det enklaste sättet att minska byråkrati i det svenska skogsbruket är att höja gränsen för anmälnings&#xad;plikt vid avverkning där gränsen",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Det enklaste sättet att minska byråkrati i det svenska skogsbruket är att höja gränsen för anmälnings&#xad;plikt vid avverkning där gränsen i dag ligger på 0,5 hektar.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.riksdagen.se/sv/dokument-lagar/dokument/hd024143",
+    "articleTitle": "Riksdagsmotion hd024143",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 2000,
+      "msek_high": 3600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat från Näringsliv/Skog-kategori. ~2 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Dessa utgångspunkter leder oss till att föreslå att en del av budgeten för inlösen av skog ska riktas till inlösen av de sista resterna av",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Dessa utgångspunkter leder oss till att föreslå att en del av budgeten för inlösen av skog ska riktas till inlösen av de sista resterna av urskog och urskogsliknande skog i södra Sverige till särskilt gynnsamma villkor.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.riksdagen.se/sv/dokument-lagar/dokument/hd024143",
+    "articleTitle": "Riksdagsmotion hd024143",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 50000,
+      "msek_high": 90000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimat från Energi-kategori. ~50 mdr/år.",
+      "confidence": 0.3
+    }
+  },
+  {
+    "candidate": {
+      "title": "Vi vill möjliggöra för markägare att frivilligt gynna naturen",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill möjliggöra för markägare att frivilligt gynna naturen.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.riksdagen.se/sv/dokument-lagar/dokument/hd024143",
+    "articleTitle": "Riksdagsmotion hd024143",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Ej kvantifierbart.",
+      "confidence": 0.2
+    }
   }
 ]

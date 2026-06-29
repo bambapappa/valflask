@@ -111,6 +111,29 @@ gh workflow run pipeline.yml   # trigga; granska sedan med: cd pipeline && pnpm 
 ```
 Vill man behålla de 22 verbatim i stället för att återskapa dem: `git show 5a03184:data/needs_review.json > data/needs_review.json` (övriga två töms som ovan).
 
+## 11. Seed-import från vallen-2026 — BYGGD & KÖRD LOKALT 2026-06-29 (väntar PR + vault-commit)
+
+**Vad:** Hela databasen seedades från det privata granskningsarkivet `github.com/bambapappa/vallen-2026` via en ny importer som kör vallen-posterna genom valflasks grindkedja (ej direktskrivning). Se DECISION_LOG 2026-06-29 för besluten. Resultat i arbetsträdet: **promises.json = 312 löften** (S59 M80 SD37 C45 V32 KD22 L20 MP17 — alla 8 partier), needs_review +75, Fläsket ≈ 13 059 mdkr (80 %-band 10 748–15 371, ρ=0,3).
+
+**Tre metodändringar (i drift framåt):**
+1. LLM/parti-estimat **auto-publiceras med intervall** [low,base,high]; ingen review-spärr på `confidence`. Totalen = `aggregates.totalFlasketInterval` (triangelvarians + ρ=0,3), inte naiv summa.
+2. **transkript-källtyp**: youtube-källor verifieras med uppmjukad (skiftläges-okänslig) verbatim mot sparat transkript i `vallen-2026/transcripts/`. Webbkällor = strikt G3 som förut.
+3. Bevisvalvsuppdelning: full HTML/transkript bara i privata vallen-2026; valflask får bara citat+metadata.
+
+**Köra om importen** (från `pipeline/`, med en checkout av vallen-2026):
+```
+pnpm import:vallen <sökväg-till-vallen-2026> --dry-run   # statistik + totalband, skriver inget
+pnpm import:vallen <sökväg-till-vallen-2026>             # skarpt: skriver data/promises.json + needs_review + changelog
+```
+Importen är idempotent-vänlig: kör mot redan publicerade → `findPossibleDuplicate` skickar troliga dubletter till review i stället för att dubblera. Stabila `p-2026-NNNN` bevaras.
+
+**Kvar (ägarsteg, EJ gjort — push hålls):**
+1. **Commit av 9 transkript** (`vallen-2026/transcripts/*.txt` + `MANIFEST.json`) till det PRIVATA vallen-2026-repot (bevisvalv). Hämtade med `yt-dlp --write-auto-subs --sub-langs sv`.
+2. **PR med kod + data** till valflask enligt §7 (ändrade filer listade i DECISION_LOG 2026-06-29).
+3. De 16 gamla RSS-review-posterna ligger kvar i kön (merge, ej raderade) — granska/avvisa vid behov med `pnpm review`.
+4. /metod-text om totalformeln (ρ-band) + transkript-uppmjukningen innan drygast.nu pekas live.
+5. Justera ρ om bandet ska vara bredare/smalare (`totalFlasketInterval(promises, rho)`).
+
 
 
 

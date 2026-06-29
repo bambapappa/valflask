@@ -5,6 +5,7 @@
   "scripts": {
     "pipeline:run": "node --import tsx/esm src/cli-run.ts",
     "pipeline:dry-run": "node --import tsx/esm src/cli-dry-run.ts",
+    "import:vallen": "node --import tsx/esm src/cli-import-vallen.ts",
     "review": "node --import tsx/esm src/review.ts",
     "check-t7": "node --import tsx/esm scripts/check-t7.mts",
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
