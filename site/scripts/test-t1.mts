@@ -41,7 +41,6 @@ const requiredPaths = [
   "regeringar/index.html",
   "topplistor/index.html",
   "sok/index.html",
-  "veckans-flask/2026-24/index.html",
   "rss.xml",
   "sitemap.xml",
   "llms.txt",
@@ -73,6 +72,19 @@ if (promises.length > 0) {
     `lofte/${first.id}/${first.slug} exists`,
     existsSync(resolve(DIST_DIR, `lofte/${first.id}/${first.slug}/index.html`)),
   );
+}
+
+// Datadriven: senaste veckokrönikans sida ska finnas (om någon krönika genererats).
+const chroniclesPath = resolve(__dirname, "../../data/chronicles.json");
+if (existsSync(chroniclesPath)) {
+  const chronicles = JSON.parse(readFileSync(chroniclesPath, "utf8")) as Array<{ slug: string }>;
+  if (chronicles.length > 0) {
+    const c = chronicles[0]!;
+    check(
+      `veckans-flask/${c.slug} exists`,
+      existsSync(resolve(DIST_DIR, `veckans-flask/${c.slug}/index.html`)),
+    );
+  }
 }
 
 const lofteDir = resolve(DIST_DIR, "lofte");

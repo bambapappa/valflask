@@ -125,6 +125,28 @@ export function getChangelog(): ChangelogEntry[] {
   return loadData<ChangelogEntry[]>("changelog.json");
 }
 
+export interface Chronicle {
+  year: number;
+  week: number;
+  slug: string;
+  headline: string;
+  body_md: string;
+  promise_ids: string[];
+  total_msek: number;
+  gap_msek: number;
+  generated_at: string;
+  run_id: string;
+}
+
+/** Veckokrönikor. Saknas filen (innan första körningen) → tom lista. */
+export function getChronicles(): Chronicle[] {
+  try {
+    return loadData<Chronicle[]>("chronicles.json");
+  } catch {
+    return [];
+  }
+}
+
 export function getPartyByCode(parties: Party[], code: string): Party | undefined {
   return parties.find((p) => p.code === code);
 }
