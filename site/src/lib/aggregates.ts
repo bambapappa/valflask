@@ -37,6 +37,69 @@ export function totalBesparingar(promises: PromisePost[]): number {
   return promises.filter((p) => isBesparing(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
 }
 
+/**
+ * Varians för en triangelfördelning (min=low, läge=base, max=high), i (msek)².
+ * Källa: standardformeln Var = (a²+b²+c²−ab−ac−bc)/18.
+ */
+function triangularVariance(low: number, base: number, high: number): number {
+  return (low * low + base * base + high * high - low * base - low * high - base * high) / 18;
+}
+
+export interface FlasketInterval {
+  /** Punktsumma = Σ msek_base × periodmultiplikator (= totalFlasket). */
+  base: number;
+  /** Nedre/övre gräns för det valda sannolikhetsintervallet (msek), ≥ 0. */
+  low: number;
+  high: number;
+  /** Standardavvikelse för totalsumman (msek). */
+  sd: number;
+  /** Andel av intervallet, t.ex. 0.8. */
+  level: number;
+}
+
+/**
+ * Fläsket som ett HEDERLIGT intervall i stället för en falsk exakt siffra
+ * (DECISION_LOG 2026-06-29). Varje löfte är en triangelfördelning [low,base,high];
+ * summan propageras analytiskt: väntevärden (≈ base) adderas, varianser adderas
+ * med en korrelationsfaktor ρ. ρ interpolerar mellan ytterligheterna:
+ *   ρ=0 → oberoende fel (centrala gränsvärdessatsen, smalt band)
+ *   ρ=1 → perfekt korrelerade fel (= naiv Σlow–Σhigh, brett band)
+ * Default ρ=0,3 fångar att estimaten delar systematisk metodbias utan att
+ * blåsa upp osäkerheten orealistiskt. `level` via normalapproximationens z.
+ *
+ * Var_total = (1−ρ)·Σσ²ᵢ + ρ·(Σσᵢ)²
+ */
+export function totalFlasketInterval(
+  promises: PromisePost[],
+  rho = 0.3,
+  level = 0.8,
+): FlasketInterval {
+  const cost = promises.filter((p) => isCostType(p));
+  let base = 0;
+  let sumVar = 0;
+  let sumSd = 0;
+  for (const p of cost) {
+    const mult = p.cost.period === "per_ar" ? 4 : 1;
+    const lo = p.cost.msek_low * mult;
+    const ba = p.cost.msek_base * mult;
+    const hi = p.cost.msek_high * mult;
+    base += ba;
+    const v = Math.max(0, triangularVariance(lo, ba, hi));
+    sumVar += v;
+    sumSd += Math.sqrt(v);
+  }
+  const varTotal = (1 - rho) * sumVar + rho * sumSd * sumSd;
+  const sd = Math.sqrt(Math.max(0, varTotal));
+  const z = zForLevel(level);
+  return { base, low: Math.max(0, base - z * sd), high: base + z * sd, sd, level };
+}
+
+/** Tvåsidig normal-z för en täckningsgrad (0.8 → 1.2816, 0.9 → 1.6449, 0.95 → 1.96). */
+function zForLevel(level: number): number {
+  const table: Record<string, number> = { "0.8": 1.2816, "0.9": 1.6449, "0.95": 1.96 };
+  return table[level.toString()] ?? 1.2816;
+}
+
 export function totalFinancingClaimed(promises: PromisePost[]): number {
   return promises.reduce((s, p) => s + (p.financing_claimed.msek ?? 0), 0);
 }

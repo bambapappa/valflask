@@ -79,6 +79,9 @@ export interface PublishInput {
     archiveUrl: string | null;
     extractModel: string;
     verifyModel: string;
+    /** Förvald koalitionsgrupp (R3). Sätts av seed-importen för identiska
+     *  cross-party-citat; RSS-flödet lämnar den odefinierad → group_id null. */
+    groupId?: string | null;
   }>;
   reviewItems: NeedsReviewEntry[];
   existingPromises: PipelinePromise[];
@@ -176,7 +179,7 @@ export function publish(input: PublishInput): PublishResult {
 
     const p: PipelinePromise = {
       id,
-      group_id: null,
+      group_id: pc.groupId ?? null,
       title: pc.candidate.title,
       slug: slugify(pc.candidate.title),
       parties: pc.candidate.parties,
