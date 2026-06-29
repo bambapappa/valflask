@@ -75,13 +75,20 @@ jobs:
       # bygger då inget själv. Hoppar graciöst om token saknas (som Netlify nedan).
       - name: Deploy to Cloudflare Pages (if token exists)
         if: github.ref == 'refs/heads/main'
+        # Icke-blockerande: en CF-felkonfiguration får ALDRIG fälla det kanoniska
+        # GitHub Pages-bygget nedan. Vid fel listas tillgängliga projektnamn.
+        continue-on-error: true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CF_PROJECT: ${{ vars.CLOUDFLARE_PROJECT_NAME || 'drygast' }}
         run: |
           if [ -n "${CLOUDFLARE_API_TOKEN}" ] && [ -n "${CLOUDFLARE_ACCOUNT_ID}" ]; then
-            npx --yes wrangler@3 pages deploy site/dist --project-name "${CF_PROJECT}" --branch main
+            npx --yes wrangler@3 pages deploy site/dist --project-name "${CF_PROJECT}" --branch main || {
+              echo "::warning::Cloudflare-deploy misslyckades för projekt '${CF_PROJECT}'. Tillgängliga projekt:"
+              npx --yes wrangler@3 pages project list || true
+              exit 1
+            }
           else
             echo "SKIP: Cloudflare deploy skipped — secrets.CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID not set."
             echo "Ägarsteg: lägg CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID som GitHub Secrets"
