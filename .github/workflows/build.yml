@@ -87,7 +87,7 @@ jobs:
             echo "Ägarsteg: lägg CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID som GitHub Secrets"
             echo "(och ev. CLOUDFLARE_PROJECT_NAME som variabel om projektet inte heter 'drygast')."
           fi
-      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
         with:
           path: site/dist
 
