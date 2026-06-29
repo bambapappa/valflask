@@ -35,14 +35,14 @@ const jsonLd = [
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Regeringar</h1>
-      <p>Förvalda konstellationer med beräknade kostnader och finansieringsgap. Varje group_id räknas exakt en gång (R3-dedup). Löften med delad group_id men olika belopp visas som intervall.</p>
+      <p>Färdiga partikombinationer med uträknade kostnader och hur mycket som saknar täckning. Lovar flera partier i en grupp samma sak räknas det en gång. Har de satt olika prislapp på samma löfte visar vi spannet mellan dem.</p>
     </div>
 
     <MetodLank />
 
     {results.map((c) => {
       const a = c.aggregates;
-      const gapLabel = a.financingGap < 0 ? `ÖVERTÄCKT (${formatMsek(Math.abs(a.financingGap))})` : formatMsek(a.financingGap);
+      const gapLabel = a.financingGap < 0 ? `RYMS (${formatMsek(Math.abs(a.financingGap))} över)` : formatMsek(a.financingGap);
       return (
         <section class="sektion">
           <h2>{c.label}</h2>
@@ -72,19 +72,19 @@ const jsonLd = [
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="2"><strong>Fläsket (R3-dedup)</strong></td>
+                  <td colspan="2"><strong>Fläsket (delade löften räknas en gång)</strong></td>
                   <td class="num" colspan="2"><strong class="num">{formatMsek(a.totalFlasket)}</strong></td>
                 </tr>
                 <tr>
-                  <td colspan="2">Besparingar</td>
+                  <td colspan="2">Sparande</td>
                   <td class="num" colspan="2">{formatMsek(a.totalBesparingar)}</td>
                 </tr>
                 <tr>
-                  <td colspan="2">Finansiering angiven</td>
+                  <td colspan="2">Angiven finansiering</td>
                   <td class="num" colspan="2">{formatMsek(a.totalFinancingClaimed)}</td>
                 </tr>
                 <tr>
-                  <td colspan="2"><strong>Finansieringsgap</strong></td>
+                  <td colspan="2"><strong>Saknar täckning</strong></td>
                   <td class="num" colspan="2"><strong class="num">{gapLabel}</strong></td>
                 </tr>
               </tfoot>
@@ -92,9 +92,9 @@ const jsonLd = [
           </div>
           {a.groupNotes.length > 0 && (
             <div class="fotnoter">
-              <div class="etikett">R3-DEDUP-FOTNOTER</div>
+              <div class="etikett">DELADE LÖFTEN</div>
               {a.groupNotes.map((gn) => (
-                <p class="fotnot">{gn.group_id}: belopp varierar mellan {formatMsek(gn.minMsek)} och {formatMsek(gn.maxMsek)} ({gn.parties.join(", ")})</p>
+                <p class="fotnot">Ett löfte som flera partier delar — prislappen varierar mellan {formatMsek(gn.minMsek)} och {formatMsek(gn.maxMsek)} ({gn.parties.join(", ")})</p>
               ))}
             </div>
           )}

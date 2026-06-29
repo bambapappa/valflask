@@ -47,7 +47,7 @@ const jsonLd = [
     <Lopsedel total={formatMsek(total)} subtitle={party.name.toUpperCase()} count={partyPromises.length} date="2026" />
 
     <div class="prosa-content prosa-content--centered">
-      <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num">{formatMsekShort(total)} mdkr</strong> för mandatperioden 2027–2030, fördelat på {partyPromises.length} löften. Fläsk per röst: <strong class="num">{Math.round(perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
+      <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num">{formatMsekShort(total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {partyPromises.length} löften. Fläsk per röst: <strong class="num">{Math.round(perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
     </div>
 
     <MetodLank />

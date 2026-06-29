@@ -7,7 +7,7 @@ import Marginalanteckning from "../../components/Marginalanteckning.astro";
 import MetodLank from "../../components/MetodLank.astro";
 import KallRad from "../../components/KallRad.astro";
 import { getPromises, getParties, getPeople, getConstants } from "../../lib/data";
-import { formatMsek, formatBasisLabel, formatDateShort, getPartyByCode } from "../../lib/calc";
+import { formatMsek, formatBasisLabel, formatCostType, formatDateShort, getPartyByCode } from "../../lib/calc";
 import { promiseTotalMsek, computeComparisons, formatComparison } from "../../lib/aggregates";
 
 export function getStaticPaths() {
@@ -74,7 +74,7 @@ const jsonLd = [
       )}
 
       <p class="lofte-summary">
-        {partyNames} lovar {promise.title.toLowerCase()}. Kostnad: <strong class="num">{total}</strong> för mandatperioden.
+        {partyNames} lovar {promise.title.toLowerCase()}. Kostnad: <strong class="num">{total}</strong> för de fyra åren 2027–2030.
       </p>
 
       <Citat
@@ -89,21 +89,21 @@ const jsonLd = [
 
       <section class="sektion" id="kostnad">
         <h2>Kostnad</h2>
-        <div class="datavy datavy--scroll">
+        <div class="datavy datavy--scroll" tabindex="0" role="region" aria-label="Kostnadstabell">
           <table>
             <thead>
               <tr>
                 <th>Typ</th>
                 <th>Period</th>
-                <th class="num">Lågt (mkr)</th>
-                <th class="num">Bas (mkr)</th>
-                <th class="num">Högt (mkr)</th>
+                <th class="num">Lägsta (mkr)</th>
+                <th class="num">Troligast (mkr)</th>
+                <th class="num">Högsta (mkr)</th>
                 <th class="num">Totalt (mdkr)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>{promise.cost.type}</td>
+                <td>{formatCostType(promise.cost.type)}</td>
                 <td>{promise.cost.period === 'per_ar' ? 'per år' : 'engång'}</td>
                 <td class="num">{promise.cost.msek_low.toLocaleString('sv-SE')}</td>
                 <td class="num">{promise.cost.msek_base.toLocaleString('sv-SE')}</td>

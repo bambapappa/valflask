@@ -10,34 +10,34 @@ const jsonLd = [
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Hur beräknas kostnader?",
+        "name": "Hur räknar ni ut vad ett löfte kostar?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Alla belopp räknas i fasta priser 2026, bruttoperspektiv. Per år-löften multipliceras med 4 (mandatperioden), engångslöften med 1. Källhierarkin: RUT/myndighet > parti > media > LLM-estimat.",
+          "text": "Vi räknar i 2026 års penningvärde och tittar på vad löftet kostar under hela mandatperioden, alltså de fyra åren 2027–2030. Ett löfte som kostar varje år räknas gånger fyra. Vi använder helst en officiell siffra; finns ingen gör vi en egen uppskattning och märker den tydligt.",
         },
       },
       {
         "@type": "Question",
-        "name": "Hur garanteras neutralitet?",
+        "name": "Är ni rättvisa mot alla partier?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Identisk insamling, identiska grindar och identisk humorton för samtliga åtta riksdagspartier. Inga partivärderingar, inga redaktionella urval i topplistorna.",
+          "text": "Ja. Vi samlar in, räknar och skämtar exakt likadant om alla åtta riksdagspartier. Vi säger aldrig om en politik är bra eller dålig, och topplistorna är ren sortering av siffror, inte våra åsikter.",
         },
       },
       {
         "@type": "Question",
-        "name": "Vad är R3-dedup?",
+        "name": "Varför visar ni ett spann i stället för en exakt siffra?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Löften som delas av flera partier (group_id) räknas exakt en gång i koalitionssummor, så att gemensamma löften inte dubbelräknas.",
+          "text": "Eftersom en exakt prislapp sällan finns. Varje löfte får ett lägsta, ett troligast och ett högsta belopp. När vi lägger ihop allt blir totalen ett spann — en siffra plus ett intervall som täcker det troliga utfallet. Siffran är inte facit, spannet är ärligheten.",
         },
       },
       {
         "@type": "Question",
-        "name": "Vilka datakällor används?",
+        "name": "Hur hanterar ni löften som sägs i tal eller på video?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Belopp hämtas i fallande prioritetsordning: Riksdagens utredningstjänst/myndighet, partiets egen beräkning, etablerad media, eller LLM-estimat med spann.",
+          "text": "Löften ur text måste stå ordagrant i källan. Löften ur tal jämför vi mot en sparad textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken, eftersom en automatisk textversion ofta blir slarvig med det. Vi skriver alltid ut när ett löfte kommer från ett tal och sparar texten så att vem som helst kan kontrollera den i efterhand.",
         },
       },
     ],
@@ -52,43 +52,53 @@ const jsonLd = [
   },
 ];
 ---
-<Layout title={title} description="Så här räknar vi: metod, källhierarki och transparens för drygast.nu:s kostnadsuppskattningar." jsonLd={jsonLd} canonicalPath="/metod">
+<Layout title={title} description="Så räknar vi ut vad partiernas vallöften kostar — förklarat i klartext, lika för alla åtta partier." jsonLd={jsonLd} canonicalPath="/metod">
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Metod</h1>
-      <p>Här förklaras hur drygast.nu beräknar kostnader för vallöften. Allt är öppet och granskningsbart — metodiken är identisk för samtliga åtta riksdagspartier.</p>
+      <p>Här förklarar vi i klartext hur vi räknar ut vad partiernas vallöften kostar. Allt är öppet — vem som helst kan kontrollera siffrorna. Och vi räknar på exakt samma sätt för alla åtta riksdagspartier.</p>
 
-      <h2>Bruttoperspektiv, fasta priser 2026</h2>
-      <p>Vi räknar i fasta priser 2026, bruttoperspektiv på offentliga finanser. Inga dynamiska effekter (de redovisas inte konsekvent av någon part — vi väljer jämförbarhet före precision och säger det öppet).</p>
+      <h2>Så räknar vi pengarna</h2>
+      <p>Vi räknar allt i 2026 års penningvärde, så att äldre och nyare löften går att jämföra rakt av. Och vi räknar bara vad ett löfte <em>kostar</em> — inte vad det längre fram kanske skulle dra in eller spara. Sådana "om&nbsp;det&nbsp;här,&nbsp;så&nbsp;det&nbsp;där"-effekter räknar inget parti på samma sätt, så vi låter bli helt och säger det rakt ut. Hellre jämförbart än krångligt.</p>
 
-      <h2>Källhierarki för belopp</h2>
+      <h2>Var siffrorna kommer ifrån</h2>
+      <p>Helst vill vi ha en siffra som någon med insyn redan har räknat på. Vi tar dem i den här ordningen, med den mest pålitliga först:</p>
       <ol>
-        <li><strong>Riksdagens utredningstjänst/myndighet</strong> — högsta prioritet. Myndighetsberäknade kostnader.</li>
-        <li><strong>Partiets egen kostnadsberäkning</strong> — när partiet anger ett belopp i sin egen kommunikation.</li>
-        <li><strong>Etablerad media</strong> — belopp från källansvariga medier i allowlist.</li>
-        <li><strong>LLM-estimat med spann</strong> — maskinell uppskattning baserad på jämförbara reformer. Typograferas med "≈" och intervall.</li>
+        <li><strong>En myndighet</strong> — till exempel Riksdagens utredningstjänst, som räknar åt riksdagens ledamöter. Det vi litar mest på.</li>
+        <li><strong>Partiet självt</strong> — när partiet har satt en egen prislapp på sitt löfte.</li>
+        <li><strong>Etablerade medier</strong> — siffror från de nyhetskällor vi har godkänt i förväg.</li>
+        <li><strong>En egen uppskattning</strong> — när ingen annan angett ett belopp gör vi en datorgjord uppskattning utifrån vad liknande reformer har kostat. Den märks alltid med ett ungefär-tecken och ett spann, så att man ser att det är en uppskattning.</li>
       </ol>
-      <p>Nivån syns alltid (fältet <code>basis</code>) och LLM-estimat typograferas med "≈" och spann. Ärlighetsregeln: vi säger när vi uppskattar. Inga dynamiska effekter, ingen dold finansiering.</p>
+      <p>Vilken av nivåerna en siffra kommer från syns alltid på löftessidan. Vi hittar aldrig på, och vi visar aldrig en uppskattning som om den vore exakt.</p>
 
-      <h2>Summeringsregler</h2>
-      <p><strong>R1 — Summeringsfönster:</strong> Mandatperioden 2027–2030. Per år-löften ×4, engångslöften ×1.</p>
-      <p><strong>R2 — Intervallordning:</strong> low ≤ base ≤ high. LLM-estimat kräver high ≥ 1.5×low (ärlig osäkerhet).</p>
-      <p><strong>R3 — Koalitionsdedup:</strong> Löften som delas av flera partier (group_id) räknas exakt en gång i koalitionssummor. Skiljer sig beloppen mellan partierna visas intervallet min–max med fotnot.</p>
-      <p><strong>R4 — Totaler:</strong> Fläsket = Σ(utgifter + intäktsminskningar). Finansieringsgap = Fläsket − Σ(besparingar + angiven finansiering).</p>
-      <p><strong>R5 — Beloppsspärr:</strong> Enskilda löften med basbelopp över 1 500 mdkr publiceras inte automatiskt.</p>
+      <h2>Vad vi räknar ihop</h2>
+      <ul>
+        <li><strong>Hela mandatperioden.</strong> Vi summerar kostnaden för de fyra åren 2027–2030, då nästa regering sitter. Ett löfte som kostar varje år räknas gånger fyra; en engångskostnad räknas en gång.</li>
+        <li><strong>Skattesänkningar räknas som en kostnad.</strong> Om staten får in mindre pengar är det lika mycket ett hål i kassan som en ny utgift.</li>
+        <li><strong>Sparande räknas separat.</strong> Säger ett parti att de ska spara in pengar någon annanstans drar vi av det tydligt och för sig — så att ingen kan nolla sin nota med en svepande rad om "effektiviseringar".</li>
+        <li><strong>Samma löfte räknas bara en gång.</strong> Lovar flera partier exakt samma sak räknas det en enda gång när vi summerar en tänkt regering, annars skulle samma krona räknas dubbelt. Skiljer sig prislapparna åt visar vi spannet mellan dem.</li>
+        <li><strong>Orimligt stora löften granskas för hand.</strong> Ett enskilt löfte med en osannolikt hög prislapp publiceras inte automatiskt — en människa tittar på det först, som en spärr mot uppenbara fel.</li>
+      </ul>
 
-      <h2>Skatter och besparingar</h2>
-      <p>Skattesänkningar räknas som intäktsminskning och ingår i Fläsket. Uttalade besparingar redovisas separat som negativ post — de "försvinner" inte in i totalen (annars kan ett parti nolla sig med en rad "effektiviseringar").</p>
+      <h2>Totalsumman är ett spann, inte en exakt siffra</h2>
+      <p>En enda prislapp är sällan exakt. Därför ger vi varje löfte ett spann — ett lägsta, ett troligast och ett högsta belopp — i stället för en tvärsäker siffra. Hur brett spannet är beror på hur säker källan är: en officiell siffra får ett smalt spann, en egen uppskattning ett bredare.</p>
+      <p>De egna uppskattningarna publicerar vi direkt, med sitt spann. Vi låter ingen sitta och gå igenom dem en och en — ingen hinner finputsa hundratals grova uppskattningar, och det skulle inte bli ärligare av det. Bättre att visa osäkerheten öppet.</p>
+      <p>När vi sedan lägger ihop alla löften till en totalsumma blir den faktiskt <em>säkrare</em> än varje enskild gissning. Tänk dig att du gissar vikten på hundra paket. På en del gissar du för högt, på andra för lågt — och felen tar till stor del ut varandra, så din gissning på den totala vikten hamnar närmare sanningen än de flesta enskilda gissningarna. Samma sak här: totalens spann blir tätare än om man bara la ihop alla lägsta belopp för sig och alla högsta för sig (vilket skulle anta att vi råkat gissa fel åt precis samma håll på allt — osannolikt).</p>
+      <p>Men eftersom våra uppskattningar är gjorda på samma sätt drar de ändå åt lite samma håll, så vi snävar inte till spannet ända in. Vi visar totalen som en siffra plus ett spann som täcker det troliga utfallet i ungefär fyra fall av fem. Siffran är inte ett facit — spannet är ärligheten. Hela uträkningen ligger öppet i koden bakom sajten, fri att granska.</p>
 
-      <h2>Jämförelser</h2>
-      <p>Alla jämförelsetal lagras i <code>constants.json</code> med källa och hämtdatum. Inga påhittade siffror — varje konstant har en spårbar käll-URL. Värden markerade "VERIFIERA" är platshållare som bekräftas mot auktoritativ källa före publicering.</p>
-      <p>Varje löfte visas med 1–3 jämförelser: minst en vardaglig (månadslöner, sjukvård per invånare, skolmåltider), max en kosmisk (en stapel enkronor mätt mot avståndet till månen/Mars). Den kosmiska uttrycks som hur stor andel av vägen stapeln räcker. Valet är deterministiskt på löftes-id.</p>
+      <h2>Jämförelser som alla förstår</h2>
+      <p>Siffror i miljarder är svåra att känna. Därför översätter vi dem till sådant man känner igen — månadslöner, vårdplatser, skolluncher. Varje jämförelsetal har en angiven källa och ett datum; vi hittar aldrig på dem.</p>
+      <p>Varje löfte visas med en till tre jämförelser: minst en vardaglig och på sin höjd en på skoj-i-rymden (till exempel en trave enkronor jämförd med avståndet till månen, redovisad som hur stor del av vägen traven räcker). Samma löfte visar alltid samma jämförelser, så att de går att känna igen och dela vidare.</p>
 
-      <h2>Verbatim- och grindkedjan</h2>
-      <p>Alla löftescitat kontrolleras ordagrant mot källtexten (G3 — verbatimgrinden). LLM-extraherade belopp dubbelkollas av en oberoende modell från annan modellfamilj (G4). Fullständig grindlogik i <code>pipeline/src/gates.ts</code>.</p>
+      <h2>Vi kontrollerar varje citat</h2>
+      <p>Varje citat vi publicerar måste stå <strong>ordagrant</strong> i källan. Hittar vi inte exakt de orden stryker vi citatet. Det är vårt starkaste skydd mot påhitt — ingen kan smuggla in ett löfte som ingen faktiskt har sagt. När en dator föreslår ett belopp får dessutom en annan, oberoende dator dubbelkolla det. All kontroll sker automatiskt, och koden ligger öppen för den som vill granska den.</p>
 
-      <h2>Reformutrymme</h2>
-      <p>Reformutrymmet hämtas från senaste bedömning av Konjunkturinstitutet/ESV. Gap-mätaren ställer Fläsket mot reformutrymmet × 4. Är reformutrymmet overifierat visas endast fläsket med metodnot.</p>
+      <h3>Löften från tal och video</h3>
+      <p>De flesta löften kommer från text — partiernas webbplatser, riksdagens dokument, nyhetsartiklar — och då kräver vi att citatet står exakt så i texten. Men en del löften sägs i tal, till exempel i Almedalen, där det enda som finns är talarens egna ord i en film.</p>
+      <p>Då jämför vi citatet mot en sparad textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken — eftersom en automatisk textversion av tal ofta blir slarvig med just det. Det är en medveten och liten uppmjukning som <strong>bara</strong> gäller tal; text behåller den strikta kontrollen. Vi skriver alltid ut när ett löfte kommer från ett tal, och vi sparar talets textversion så att vem som helst kan kontrollera den i efterhand — även om filmen senare tas bort.</p>
+
+      <h2>Hur mycket finns det egentligen att röra sig med?</h2>
+      <p>Det finns en gräns för hur mycket nya pengar staten realistiskt har att lägga på reformer. Den gränsen bedöms av de myndigheter som följer ekonomin, som Konjunkturinstitutet. Vår mätare ställer summan av alla löften mot det utrymmet för hela mandatperioden — och blir nästan alltid övertrasserad. Det är liksom poängen. Saknas en pålitlig siffra för utrymmet visar vi bara löftessumman och säger varför.</p>
     </div>
   </div>
 </Layout>
