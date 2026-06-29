@@ -10,6 +10,7 @@ import type { ArchiveFn } from "./archive.ts";
 import { estimateCost } from "./cost.ts";
 import { findPossibleDuplicate, type ExistingPromiseLite } from "./similarity.ts";
 import { generateQuip } from "./copy.ts";
+import { maybeGenerateWeekly, type ChronicleEntry } from "./chronicle.ts";
 import {
   publish,
   type PipelinePromise,
@@ -266,6 +267,36 @@ export async function runPipeline(
     seenObj[k] = v;
   }
   writeFileSync(`${ctx.outputDir}/seen.json`, JSON.stringify(seenObj, null, 2) + "\n");
+
+  // Veckans fläsk (A4, §7 steg 7): generera/uppdatera krönikan för aktuell
+  // ISO-vecka ur veckans nya löften. Best-effort — fel fäller aldrig körningen.
+  try {
+    const existingChronicles: ChronicleEntry[] = (() => {
+      try {
+        return JSON.parse(readFileSync(`${ctx.outputDir}/chronicles.json`, "utf8")) as ChronicleEntry[];
+      } catch {
+        return [];
+      }
+    })();
+    const fullChangelog = JSON.parse(
+      readFileSync(`${ctx.outputDir}/changelog.json`, "utf8"),
+    ) as ChangelogEntry[];
+    const { chronicles, generated } = await maybeGenerateWeekly({
+      now: ctx.now,
+      allPromises: publishResult.promises,
+      changelog: fullChangelog,
+      existing: existingChronicles,
+      llm: ctx.llm,
+      copyModel: ctx.models.copy,
+      runId: ctx.runId,
+    });
+    if (generated) {
+      writeFileSync(`${ctx.outputDir}/chronicles.json`, JSON.stringify(chronicles, null, 2) + "\n");
+      console.log(`Veckans fläsk: genererade krönika ${generated.slug} (${generated.promise_ids.length} löften).`);
+    }
+  } catch (e) {
+    console.warn("Veckokrönika hoppades över:", e instanceof Error ? e.message : e);
+  }
 
   writeRunReport(ctx, {
     processed: publishResult.promises.length,

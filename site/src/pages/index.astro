@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Lopsedel from "../components/Lopsedel.astro";
 import GapMatare from "../components/GapMatare.astro";
 import MetodLank from "../components/MetodLank.astro";
-import { getPromises, getParties, getConstants, getChangelog } from "../lib/data";
+import { getPromises, getParties, getConstants, getChangelog, getChronicles } from "../lib/data";
 import { totalFlasket, financingGap, formatMsek, formatMsekShort, countPromises, dataHash, formatDateShort } from "../lib/calc";
 import { partyTotalMsek, promiseTotalMsek } from "../lib/aggregates";
 
@@ -18,6 +18,8 @@ const totalShort = formatMsekShort(flasket);
 const count = countPromises(promises);
 const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 const hash = dataHash(changelog);
+
+const latestChronicle = [...getChronicles()].sort((a, b) => b.slug.localeCompare(a.slug))[0] ?? null;
 
 const partyRows = parties.map((p) => ({
   code: p.code,
@@ -52,6 +54,13 @@ const jsonLd = [
     <MetodLank />
 
     <GapMatare flasket={flasket} reformutrymme={reformutrymme} />
+
+    {latestChronicle && (
+      <section class="sektion veckans-teaser">
+        <div class="etikett">Veckans fläsk · Vecka {latestChronicle.week} {latestChronicle.year}</div>
+        <h2><a href={`/veckans-flask/${latestChronicle.slug}`}>{latestChronicle.headline}</a></h2>
+      </section>
+    )}
 
     <section class="sektion">
       <h2>Fläsk per parti</h2>
