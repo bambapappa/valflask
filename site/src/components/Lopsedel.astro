@@ -12,7 +12,7 @@ const { total, subtitle, count, date, taxameterValue } = Astro.props;
   <h1 class="lopsedel__title">{subtitle || 'FLÄSKVÅGEN'}</h1>
   <div class="num-stor" {...(taxameterValue != null ? { "data-taxameter": String(taxameterValue) } : {})}>{total}</div>
   <div class="lopsedel__meta">
-    för mandatperioden 2027–2030{count ? ` · ${count} löften` : ''}{date ? ` · ${date}` : ''}
+    för de fyra åren 2027–2030{count ? ` · ${count} löften` : ''}{date ? ` · ${date}` : ''}
   </div>
 </div>
 

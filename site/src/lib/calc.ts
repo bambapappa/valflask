@@ -92,11 +92,22 @@ export function formatMsekOg(msek: number, basis?: string): string {
 
 export function formatBasisLabel(basis: string): string {
   const labels: Record<string, string> = {
-    rut: "RUT/utredning",
+    rut: "Riksdagens utredningstjänst",
     myndighet: "Myndighet",
-    parti: "Partiets beräkning",
-    media: "Media",
-    llm_estimat: "LLM-estimat",
+    parti: "Partiets egen siffra",
+    media: "Nyhetsmedier",
+    llm_estimat: "Datoruppskattning",
   };
   return labels[basis] ?? basis;
+}
+
+/** Plain-språksetikett för kostnadstyp — råa enum-värden ("intäktsminskning")
+ *  är obegripliga för en bred läsekrets. */
+export function formatCostType(type: string): string {
+  const labels: Record<string, string> = {
+    utgift: "utgift",
+    intäktsminskning: "minskad inkomst för staten (t.ex. skattesänkning)",
+    besparing: "besparing",
+  };
+  return labels[type] ?? type;
 }

@@ -15,8 +15,8 @@ const { quote, person, party, domain, date, sourceUrl, archiveUrl } = Astro.prop
 </blockquote>
 <div class="etikett citat-attribution">
   — {person || party}, {domain}, {date}
-  {' '}· <a href={sourceUrl}>källa ↗</a>
-  {archiveUrl && <> · <a href={archiveUrl}>arkiv ↗</a></>}
+  {' '}· <a href={sourceUrl}>källa<span aria-hidden="true"> ↗</span></a>
+  {archiveUrl && <> · <a href={archiveUrl}>arkiv<span aria-hidden="true"> ↗</span></a></>}
 </div>
 
 <style>

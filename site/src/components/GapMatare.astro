@@ -17,9 +17,9 @@ const ref4Mdkr = hasRef ? (ref4 / 1000).toFixed(0) : "";
 const overcovered = hasRef && flasket < ref4;
 ---
 <div class="gapmatare">
-  <div class="etikett gapmatare__label">Fläsket vs. reformutrymme · mandatperioden 2027–2030</div>
+  <div class="etikett gapmatare__label">Löftena mot vad staten har råd att satsa · 2027–2030</div>
   {hasRef ? (
-    <svg class="gapmatare__svg" viewBox={`0 0 ${barWidth} 40`} preserveAspectRatio="none" role="img" aria-label={`Fläsket ${flasketMdkr} mdkr mot reformutrymme ${ref4Mdkr} mdkr`}>
+    <svg class="gapmatare__svg" viewBox={`0 0 ${barWidth} 40`} preserveAspectRatio="none" role="img" aria-label={`Löftena ${flasketMdkr} miljarder mot utrymmet för satsningar ${ref4Mdkr} miljarder`}>
       <rect class="gapmatare__bg" x="0" y="0" width={barWidth} height="40" />
       <rect class="gapmatare__ref" x="0" y="0" width={refPx} height="40" />
       <rect class="gapmatare__fill" x="0" y="0" width={flasketPx} height="40" />
@@ -29,18 +29,18 @@ const overcovered = hasRef && flasket < ref4;
     </svg>
   ) : (
     <div class="gapmatare__unverified">
-      <svg class="gapmatare__svg" viewBox={`0 0 ${barWidth} 40`} preserveAspectRatio="none" role="img" aria-label={`Fläsket ${flasketMdkr} mdkr, reformutrymme ej verifierat`}>
+      <svg class="gapmatare__svg" viewBox={`0 0 ${barWidth} 40`} preserveAspectRatio="none" role="img" aria-label={`Löftena ${flasketMdkr} miljarder, utrymmet ännu inte fastställt`}>
         <rect class="gapmatare__bg" x="0" y="0" width={barWidth} height="40" />
         <rect class="gapmatare__fill" x="0" y="0" width={flasketPx} height="40" />
       </svg>
       <div class="gapmatare__method-note">
-        <span class="stampel">REFORMUTRYMME: VERIFIERA</span> — reformutrymmet saknar verifierat värde från Konjunkturinstitutet/ESV. Mätaren visar endast fläsket.
+        <span class="stampel">SIFFRA SAKNAS</span> — vi har ännu ingen pålitlig siffra för hur mycket staten har råd att satsa (vi väntar på Konjunkturinstitutets bedömning). Mätaren visar därför bara löftessumman.
       </div>
     </div>
   )}
   <div class="gapmatare__legend">
-    <span class="num">Fläsket: {flasketMdkr} mdkr</span>
-    <span class="num">{hasRef ? `Reformutrymme ×4: ${ref4Mdkr} mdkr` : 'Reformutrymme: ej verifierat'}</span>
+    <span class="num">Löftena: {flasketMdkr} mdkr</span>
+    <span class="num">{hasRef ? `Att satsa (4 år): ${ref4Mdkr} mdkr` : 'Att satsa: siffra saknas'}</span>
   </div>
   {hasRef && gap > 0 && (
     <div class="etikett gapmatare__gap">
@@ -49,7 +49,7 @@ const overcovered = hasRef && flasket < ref4;
   )}
   {overcovered && (
     <div class="etikett gapmatare__gap">
-      <span class="stampel">ÖVERTÄCKT</span> Löftessumman understiger reformutrymmet ×4
+      <span class="stampel">RYMS</span> Löftena ryms i det staten har råd att satsa
     </div>
   )}
 </div>
