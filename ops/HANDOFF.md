@@ -134,6 +134,19 @@ Importen är idempotent-vänlig: kör mot redan publicerade → `findPossibleDup
 4. /metod-text om totalformeln (ρ-band) + transkript-uppmjukningen innan drygast.nu pekas live.
 5. Justera ρ om bandet ska vara bredare/smalare (`totalFlasketInterval(promises, rho)`).
 
+## 12. Deploy: Cloudflare Pages via wrangler (CI Direct Upload) 2026-06-29
+
+**Problem:** drygast.nu (Cloudflare Pages, primär) fastnade på bygget från 14 juni — CF:s git-integrerade bygge **failar** (`cd site && pnpm install && pnpm build` → "No preset version installed for command pnpm"; dessutom saknar CF-miljön Python-`fonttools` för OG-bilderna). GitHub Pages-spegeln (`bambapappa.github.io/valflask`) byggdes och deployades korrekt hela tiden.
+
+**Lösning:** `build.yml` laddar nu upp de FÄRDIGBYGGDA `site/dist` till Cloudflare Pages med wrangler (Direct Upload) efter T1/T3 — CF bygger inget själv. Steget hoppas graciöst om token saknas (samma mönster som Netlify).
+
+**Ägarsteg för att tända drygast.nu:**
+1. Lägg GitHub Secrets: `CLOUDFLARE_API_TOKEN` (scope: Account → Cloudflare Pages → Edit) och `CLOUDFLARE_ACCOUNT_ID`.
+2. Om CF-projektet INTE heter `drygast`: sätt GitHub-variabeln `CLOUDFLARE_PROJECT_NAME`.
+3. Säkerställ att projektets production branch är `main`.
+4. (Rekommenderat) Koppla bort CF:s git-integration / sätt build command = none, så CF slutar köra sitt failande bygge — wrangler-uppladdningen sköter deployen.
+5. Kör `build`-workflowen (push till main eller manuell dispatch) → drygast.nu serverar senaste bygget. Verifiera: `curl -s https://drygast.nu/api/v1/summary.json` ska visa aktuell `data_hash`.
+
 
 
 

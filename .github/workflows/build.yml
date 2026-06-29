@@ -69,6 +69,24 @@ jobs:
       - name: Run T3 (schema + HTML validation)
         run: pnpm test:t3
         working-directory: site
+      # Cloudflare Pages (primär, drygast.nu): CF:s egen byggmiljö saknar pnpm +
+      # Python-fonttools och failar därför sitt git-integrerade bygge. Vi laddar
+      # i stället upp de FÄRDIGBYGGDA filerna med wrangler (Direct Upload) — CF
+      # bygger då inget själv. Hoppar graciöst om token saknas (som Netlify nedan).
+      - name: Deploy to Cloudflare Pages (if token exists)
+        if: github.ref == 'refs/heads/main'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_PROJECT: ${{ vars.CLOUDFLARE_PROJECT_NAME || 'drygast' }}
+        run: |
+          if [ -n "${CLOUDFLARE_API_TOKEN}" ] && [ -n "${CLOUDFLARE_ACCOUNT_ID}" ]; then
+            npx --yes wrangler@3 pages deploy site/dist --project-name "${CF_PROJECT}" --branch main
+          else
+            echo "SKIP: Cloudflare deploy skipped — secrets.CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID not set."
+            echo "Ägarsteg: lägg CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID som GitHub Secrets"
+            echo "(och ev. CLOUDFLARE_PROJECT_NAME som variabel om projektet inte heter 'drygast')."
+          fi
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
         with:
           path: site/dist
