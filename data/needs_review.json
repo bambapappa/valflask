@@ -2604,5 +2604,33 @@
       "confidence": 0.4
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa mängdrabatten för brott",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill avskaffa mängdrabatten för brott.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/det-ar-inte-rimligt-att-vissa-brott-i-praktiken-blir-gratis-om-man-har-begatt-manga-brott/",
+    "articleTitle": "”Det är inte rimligt att vissa brott i praktiken blir gratis om man har begått många brott&#8221;",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avskaffad mängdrabatt ökar fängelsetider. Uppskattning baserad på antaganden om fler fängelseår (ca 500) och kostnad per plats (ca 1 mkr/år). Osäkerhet kring beteendeeffekter och domstolars praxis.",
+      "confidence": 0.5
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
   }
 ]
