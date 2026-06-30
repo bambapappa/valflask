@@ -25,9 +25,14 @@ jobs:
       - run: pnpm build
         working-directory: site
       - name: Deploy to Netlify (if token exists)
+        # Netlify är en VARM RESERV (§16), inte primär — ett deploy-fel (t.ex.
+        # 403 på utgången token) får aldrig fälla speglingen. Loggar en varning
+        # och fortsätter. Primären (GitHub Pages) är opåverkad.
         run: |
           if [ -n "${NETLIFY_AUTH_TOKEN}" ]; then
-            npx netlify-cli deploy --prod --dir site/dist --auth "$NETLIFY_AUTH_TOKEN" --site "$NETLIFY_SITE_ID"
+            npx netlify-cli deploy --prod --dir site/dist --auth "$NETLIFY_AUTH_TOKEN" --site "$NETLIFY_SITE_ID" || {
+              echo "::warning::Netlify-deploy misslyckades (sannolikt ogiltig NETLIFY_AUTH_TOKEN eller fel NETLIFY_SITE_ID — 403). Speglingen hoppas över; ej kritiskt. Återställ genom att förnya token + verifiera site-id."
+            }
           else
             echo "SKIP: Netlify deploy skipped — secrets.NETLIFY_AUTH_TOKEN not set."
             echo "Ägarsteg: configure NETLIFY_AUTH_TOKEN + NETLIFY_SITE_ID in GitHub Secrets."
