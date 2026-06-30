@@ -60,11 +60,14 @@ const jsonLd = [
               <tbody>
                 {c.parties.map((code: string, i: number) => {
                   const party = parties.find((p) => p.code === code);
+                  const partyPromiseCount = promises.filter(
+                    (p) => p.parties.includes(code) && p.status !== "tillbakadragen",
+                  ).length;
                   return party ? (
                     <tr>
                       <td class="radnr">{i + 1}</td>
                       <td><a href={`/parti/${code}`}>{party.name}</a></td>
-                      <td class="num">{a.promisesCount}</td>
+                      <td class="num">{partyPromiseCount}</td>
                       <td class="num">{party.mandate_2022}</td>
                     </tr>
                   ) : null;
