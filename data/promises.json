@@ -14413,5 +14413,93 @@
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
       "run_id": "import-vallen-2026-06-29"
     }
+  },
+  {
+    "id": "p-2026-0313",
+    "group_id": null,
+    "title": "Avskaffa mängdrabatten för brott",
+    "slug": "avskaffa-mangdrabatten-for-brott",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Vi vill avskaffa mängdrabatten för brott.",
+    "date_stated": "2026-07-01",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/det-ar-inte-rimligt-att-vissa-brott-i-praktiken-blir-gratis-om-man-har-begatt-manga-brott/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-07-01T18:11:59.318Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avskaffad mängdrabatt ökar fängelsetider. Uppskattning baserad på antaganden om fler fängelseår (ca 500) och kostnad per plats (ca 1 mkr/år). Osäkerhet kring beteendeeffekter och domstolars praxis.",
+      "confidence": 0.5
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-07-01T18"
+    }
+  },
+  {
+    "id": "p-2026-0314",
+    "group_id": null,
+    "title": "Moderaterna vill kriminalisera spridning av kränkande deepfakes",
+    "slug": "moderaterna-vill-kriminalisera-spridning-av-krankande-deepfakes",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Därför vill vi kriminalisera spridning av kränkande deepfakes i de allvarligaste fallen.",
+    "date_stated": "2026-07-01",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/vi-vill-gora-krankande-ai-bilder-olagliga/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-07-01T18:11:59.626Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 80,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar få ärenden inledningsvis men utredningskostnader för IT-brott. Jämförs med liknande nykriminaliseringar.",
+      "confidence": 0.4
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-07-01T18"
+    }
   }
 ]
