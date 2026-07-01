@@ -8,7 +8,7 @@ set -euo pipefail
 MAX_MINUTES=15
 START_TIME=$(date +%s)
 
-REPO_URL="https://github.com/bambapappa/val.git"
+REPO_URL="https://github.com/bambapappa/valflask.git"
 TMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TMP_DIR"' EXIT
 
