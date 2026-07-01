@@ -34,20 +34,17 @@ cd ..
 # 4. Hash-verifiering
 echo "[4/4] Verifierar data_hash ..."
 
-# sha256 av data/promises.json
-if command -v sha256sum >/dev/null 2>&1; then
-  DATA_HASH=$(sha256sum data/promises.json | awk '{print $1}')
-else
-  DATA_HASH=$(shasum -a 256 data/promises.json | awk '{print $1}')
-fi
+# OBS: data_hash är sha256 av en KANONISK serialisering av promises.json (sorterade
+# nycklar, minifierad) — inte sha256sum av råfilen. Vi jämför därför den byggda
+# integrity.json mot changeloggens sista data_hash (pipelinens kanoniska hash för
+# samma promises.json). En ren ombyggnad ska reproducera exakt samma hash.
+EXPECTED_HASH=$(node -e "const c=JSON.parse(require('fs').readFileSync('data/changelog.json','utf8')); console.log(c[c.length-1].data_hash)")
+BUILT_HASH=$(node -e "console.log(JSON.parse(require('fs').readFileSync('site/dist/api/v1/integrity.json','utf8')).data_hash)")
 
-# integrity.json har data_hash
-INTEGRITY_HASH=$(node -e "console.log(JSON.parse(require('fs').readFileSync('site/dist/api/v1/integrity.json','utf8')).data_hash)")
-
-if [[ "$DATA_HASH" != "$INTEGRITY_HASH" ]]; then
+if [[ "$EXPECTED_HASH" != "$BUILT_HASH" ]]; then
   echo "ERROR: data_hash mismatch!"
-  echo "  data/promises.json:  $DATA_HASH"
-  echo "  integrity.json:      $INTEGRITY_HASH"
+  echo "  changelog (förväntat):  $EXPECTED_HASH"
+  echo "  integrity.json (byggt): $BUILT_HASH"
   exit 3
 fi
 
