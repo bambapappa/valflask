@@ -134,18 +134,29 @@ Importen är idempotent-vänlig: kör mot redan publicerade → `findPossibleDup
 4. /metod-text om totalformeln (ρ-band) + transkript-uppmjukningen innan drygast.nu pekas live.
 5. Justera ρ om bandet ska vara bredare/smalare (`totalFlasketInterval(promises, rho)`).
 
-## 12. Deploy: Cloudflare Pages via wrangler (CI Direct Upload) 2026-06-29
+## 12. Driftläge (deploy, HTTPS, headers) — AKTUELLT per 2026-07-01
 
-**Problem:** drygast.nu (Cloudflare Pages, primär) fastnade på bygget från 14 juni — CF:s git-integrerade bygge **failar** (`cd site && pnpm install && pnpm build` → "No preset version installed for command pnpm"; dessutom saknar CF-miljön Python-`fonttools` för OG-bilderna). GitHub Pages-spegeln (`bambapappa.github.io/valflask`) byggdes och deployades korrekt hela tiden.
+**drygast.nu är LIVE och härdad.** Arkitekturen bytte från Cloudflare Pages till **GitHub Pages bakom Cloudflare-proxy** efter att CF Pages eget bygge visade sig ohjälpligt (se nedan).
 
-**Lösning:** `build.yml` laddar nu upp de FÄRDIGBYGGDA `site/dist` till Cloudflare Pages med wrangler (Direct Upload) efter T1/T3 — CF bygger inget själv. Steget hoppas graciöst om token saknas (samma mönster som Netlify).
+**Så ser kedjan ut nu:**
+- **Origin/primär: GitHub Pages.** `build.yml`-jobbet `deploy-pages` bygger `site/dist` och deployar vid varje push till main. GitHub Pages custom domain = `drygast.nu` (satt via `gh api PUT repos/bambapappa/valflask/pages cname=drygast.nu`).
+- **DNS (Cloudflare):** apex `drygast.nu` → fyra A-poster `185.199.108–111.153`; `www` → CNAME `bambapappa.github.io`. **Proxyade (orange moln)**, SSL/TLS-läge = **Full**. Cloudflare-edge → GitHub Pages-origin.
+- **HTTPS:** GitHub Pages-cert utfärdat (state `approved`, giltigt t.o.m. 2026-09-28, täcker apex+www); Cloudflare Universal SSL vid edge; `https_enforced=true`; http→https 301.
+- **Säkerhetsheaders:** GitHub Pages struntar i `_headers`, så de sätts via en **Cloudflare Transform Rule** ("Säkerhetsheaders", Modify Response Header, All incoming requests): CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, Cross-Origin-Opener-Policy, Access-Control-Allow-Origin `*`. Värden speglar `site/public/_headers`. Verifierat att alla sex slår igenom.
+- **⚠️ Rocket Loader måste vara AV** (Cloudflare Speed) — den injicerar JS som strikt CSP (`script-src 'self'`) blockerar → skulle bryta sökrutan.
+- **Verifiera drift:** `curl -sI https://drygast.nu/` (→ `HTTP/2 200`, `server: cloudflare`, `via: varnish`, headersen); `curl -s https://drygast.nu/api/v1/summary.json` (aktuell `data_hash`).
 
-**Ägarsteg för att tända drygast.nu:**
-1. Lägg GitHub Secrets: `CLOUDFLARE_API_TOKEN` (scope: Account → Cloudflare Pages → Edit) och `CLOUDFLARE_ACCOUNT_ID`.
-2. Om CF-projektet INTE heter `drygast`: sätt GitHub-variabeln `CLOUDFLARE_PROJECT_NAME`.
-3. Säkerställ att projektets production branch är `main`.
-4. (Rekommenderat) Koppla bort CF:s git-integration / sätt build command = none, så CF slutar köra sitt failande bygge — wrangler-uppladdningen sköter deployen.
-5. Kör `build`-workflowen (push till main eller manuell dispatch) → drygast.nu serverar senaste bygget. Verifiera: `curl -s https://drygast.nu/api/v1/summary.json` ska visa aktuell `data_hash`.
+**HSTS — MEDVETET UPPSKJUTEN (ej glömd).** Enda §14/T2-punkten som saknas. Motiv: publik statisk läs-sajt utan cookies/inloggning/känslig data → låg nytta; deployen har varit skör → undvik HTTPS-utelåsning. Slå på senare när HTTPS rullat stabilt: SSL/TLS → Edge Certificates → HSTS, börja **6 mån + includeSubDomains, ingen preload**; höj sedan till 2 år + preload (som `_headers` siktar på).
+
+**Övergivet/icke-blockerande:**
+- **Cloudflare Pages** (ursprunglig primär): skrotad — dess git-bygge failar (`No preset version installed for command pnpm`; saknar även Python-`fonttools` för OG). wrangler-Direct-Upload-steget finns kvar i `build.yml` men dess token saknar Pages-scope; steget är `continue-on-error` (varnar bara). Kan tas bort.
+- **Netlify-spegel:** token ger 403 (ogiltig/utgången). `mirror.yml`-steget gjort icke-blockerande (varnar, fäller ej). **Rekommendation (option B):** släpp Netlify — redundansen ligger nu i Cloudflare-proxyns cache framför GitHub Pages (+ git = klon, DNS ompekbar på minuter). Återställ annars genom att förnya `NETLIFY_AUTH_TOKEN` + verifiera `NETLIFY_SITE_ID`.
+
+**Konto:** drygast.nu ligger på Martin.kronvall@outlook.com's Cloudflare-konto. Presskontakt `hej@drygast.nu`.
+
+## 13. Månadsdrill (§16/T10) — FIXAD & GRÖN 2026-07-01
+
+Drillen hade aldrig gått grön (tre latenta buggar sedan M6): (1) fel klon-URL `bambapappa/val` → `valflask`; (2) `drill.yml` satte inte upp node/pnpm → `pnpm install` exit 127; (3) `drill.sh` jämförde `sha256sum` av råa promises.json mot den KANONISKA `data_hash` — matchar aldrig; jämför nu byggd `integrity.json` mot changeloggens sista `data_hash`. Manuell körning nu **grön på 23s** (< 15-minutersgränsen). PR #39/#41/#43.
 
 
 
