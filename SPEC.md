@@ -317,7 +317,7 @@ Permalänkar är heliga: en publicerad URL ändras aldrig. Löftes-URL:er bär `
 | `/topplistor` | Fetaste enskilda fläsket · Fläskigaste partiet (totalt och per röst) · Frikostigaste politikern · Dyraste kategorin · Veckans raket. Rena datasorteringar — inga redaktionella urval. |
 | `/veckans-flask/[ar]-[vecka]` | Autogenererad måndagskrönika (A4). Sajtens färskvara för SEO och RSS. |
 | `/ledamot/[slug]` | P1 — endast personer med ≥ 1 löfte. |
-| `/metod`, `/om`, `/rattelser`, `/press`, `/api` | Metodik (FAQ-markup), om + neutralitetslöfte + stöd-knappar, rättelselogg (auto ur git-commits taggade `correction:`), presskit (citatpolicy, OG-bilder, kontakt), API-dokumentation. |
+| `/metod`, `/om`, `/rattelser`, `/press`, `/api` | Metodik (FAQ-markup), om + neutralitetslöfte, rättelselogg (auto ur git-commits taggade `correction:`), presskit (citatpolicy, OG-bilder, kontakt), API-dokumentation. |
 | `/rss.xml`, `/sitemap.xml` | Nya löften + krönikor; full sitemap. |
 
 ---
@@ -427,7 +427,7 @@ Allt nedan formaliseras i `ops/RUNBOOK.md` med exakta kommandon och ett "senast 
 ## 17. Juridik, etik och neutralitet
 
 - **Upphovsrätt:** ordagranna citat ≤ 40 ord med källangivelse (citaträtten); aldrig fulltextlagring eller återpublicering av artiklar; arkivlänk i stället för kopia. Inga pressbilder eller partiloggor i annat än faktasammanhang — sajtens grafik är egenproducerad.
-- **GDPR:** grundläget är cookiefritt utan spårning ⇒ ingen banner. Politikers offentliga uttalanden i offentlig roll behandlas inom journalistiskt/opinionsbildande ändamål; publicera en integritetssida. CMP tillkommer endast om E3 aktiveras.
+- **GDPR:** grundläget är cookiefritt utan spårning ⇒ ingen banner. Politikers offentliga uttalanden i offentlig roll behandlas inom journalistiskt/opinionsbildande ändamål; publicera en integritetssida. Ingen reklam, inga intäkter, ingen tredjepartsspårning — en del av oberoendet.
 - **Neutralitetslöftet (publiceras på /om):** identisk insamling, metod, grindar och humorton för samtliga åtta partier. Topplistor är rena datasorteringar. Ingen valrekommendation, ingen "bra/dålig politik"-värdering.
 - **Humorpolicyn (verkställs i A3):** skämten riktas mot belopp, prislappar och fenomenet valfläsk — aldrig mot person, utseende, grupp, väljare eller sakfrågans angelägenhet. Samma stenansikte åt alla.
 - **Rättelser:** fel rättas synligt på /rattelser (auto ur git), aldrig i tysthet. Kontaktväg för partier, journalister och allmänhet på /press, med utlovad svarstid.
@@ -448,7 +448,7 @@ Bygg i ordning; M0–M2 kräver varken API-nycklar eller nätverksåtkomst till 
 | **M4 Räkneverk** | Aggregat, koalitionsdedup (R3), kombinator-ön, /regeringar, gap-mätare, topplistor. | T8 grönt (invariant-enhetstester med kända tal). |
 | **M5 SEO/AI-lager** | /api v1, JSON-LD, llms.txt, robots.txt, feeds, Pagefind, svarsförst-copy. | T9 grönt. |
 | **M6 Härdning + ops** | Speglar, RUNBOOK, drill-workflow, övervakning, larm, release-taggning, nyckelrotationsschema. | T10: drill genomförd < 15 min, dokumenterad. |
-| **M7 Lansering** | Innehållsgenomgång (/om, /metod, /press, /rattelser), konstanter verifierade (bilaga D), E1+E2 på, DNS skarp mot drygast.nu. | Alla T gröna; G1–G5-mål i §1.3 mätbara. |
+| **M7 Lansering** | Innehållsgenomgång (/om, /metod, /press, /rattelser), konstanter verifierade (bilaga D), DNS skarp mot drygast.nu. | Alla T gröna; G1–G5-mål i §1.3 mätbara. |
 
 ---
 
@@ -634,10 +634,6 @@ jobs:
 /api/*
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=300
-
-# Profil B — endast om E3 (AdSense) aktiveras: utöka script-src/frame-src med Googles
-# aktuella annons- och CMP-domäner. VERIFIERA listan mot Googles dokumentation vid aktivering;
-# hårdkoda aldrig från minnet.
 ```
 
 ---

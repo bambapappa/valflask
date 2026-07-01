@@ -45,7 +45,7 @@ Kvaliteten på extract är viktigast (ordagranna citat, hitta löften). Behåll 
 Vår throttle (2,5 s) + retry + batch 20 + (efter fix 4) retry-av-failade gör att låg, jämn volym sällan slår i taket — overflow-betalning täcker resten.
 
 ## 6. Återstående ägarsteg
-Se `ops/AGARSTEG.md`. Kvar: Cloudflare custom domain `drygast.nu`+`www`, zonfilsbackup; Netlify-secrets (`NETLIFY_SITE_ID` ska vara **Secret**, inte Variable); UptimeRobot; E1 affiliate; ev. GPG-signering av release-taggar.
+Se `ops/AGARSTEG.md`. Kvar: UptimeRobot; ev. GPG-signering av release-taggar. (Se §12 för det aktuella deploy-läget — Cloudflare/DNS är löst.) OBS: intäktsplanen (E1–E3 affiliate/stöd/AdSense) är SKROTAD 2026-07-01 — sajten körs utan reklam och intäkter, se DECISION_LOG.
 
 ## 7. Arbetsflöde & konventioner
 - **PR-krav:** rulesetet kräver PR till `main` för människor; GitHub App-boten (`BOT_APP_ID/KEY`) är bypassad och pushar pipelinedata direkt.

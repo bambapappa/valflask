@@ -1,4 +1,6 @@
-# Profil A — grundläge (inga tredjepartsskript, inga cookies)
+# Säkerhetsheaders (inga tredjepartsskript, inga cookies). OBS: GitHub Pages
+# respekterar inte denna fil — headersen sätts i drift via en Cloudflare
+# Transform Rule (se ops/HANDOFF §12). Filen är källa för värdena.
 /*
   Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self' 'wasm-unsafe-eval'; font-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
@@ -10,7 +12,3 @@
 /api/*
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=300
-
-# Profil B — endast om E3 (AdSense) aktiveras: utöka script-src/frame-src med Googles
-# aktuella annons- och CMP-domäner. VERIFIERA listan mot Googles dokumentation vid aktivering;
-# hårdkoda aldrig från minnet.
