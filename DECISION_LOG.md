@@ -501,6 +501,18 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 
 **Förkastade alternativ:** direktskrivning till promises.json (kringgår G3/verify — bryter metodkontraktet); skicka alla estimat till review (ägaren kan inte tillföra värde, skalar inte); exkludera YouTube (bryter neutralitet §17); re-extrahera ur skrivna almedalstal-texter (matchar inte de talade citaten, S saknas pga 404); naiv Σlow–Σhigh för totalen (överdriver osäkerheten, antar perfekt korrelation).
 
+## 2026-07-01 — Intäktsplanen (E1–E3) SKROTAD
+
+**Beslut:** Hela intäktsskiktet tas bort. Ägaren är inte längre intresserad av intjäning; målet är bara att inte gå back nämnvärt (driftkostnad < 2 500 kr/år). Borttaget: `site/src/config.ts` (feature flags E1_AFFILIATE/E3_ADSENSE), `site/src/components/LasVidare.astro` + `Annonslank.astro` (döda — renderades ingenstans), "Stöd vägningen"-rutan med Buy Me a Coffee-länk på `/om`, Profil B-kommentaren (AdSense) i `_headers`/bilaga C, samt E1/E2/E3-referenser i SPEC (§10-tabell, GDPR §17, M7 §18) och HANDOFF. `/om` "Vem ligger bakom?" formulerar nu frånvaron av reklam/intäkter/finansiär som en del av OBEROENDET.
+
+**Motiv:** Ingen reklam, inga intäkter och ingen finansiär stärker neutralitets-/trovärdighetsanspråket (§17) snarare än att bara vara ett bortfall — särskilt för en tjänst vars hela värde är opartiskhet. Att bygga och driva den kostar nästan inget (statisk sajt på gratis-hosting), så cost-recovery via donation behövs inte.
+
+**Behållet med flit:** de HISTORISKA DECISION_LOG-posterna om E1/E2/E3 (2026-06-11, 06-12) står kvar — en revisionslogg skrivs inte om; "vi planerade, sen skrotade vi" är mer trovärdigt än att låtsas att det aldrig fanns.
+
+**Förkastade alternativ:** behålla en diskret cost-recovery-donation (ägaren vill distansera sig helt från pengar-aspekten); radera de gamla loggposterna (bryter mot append-only-revisionsprincipen §14).
+
+**Påverkan:** raderade `drygast-systemspec.md` (dubblett av SPEC.md), `site/src/config.ts`, `site/src/components/{LasVidare,Annonslank}.astro`; ändrade `site/src/pages/om.astro`, `site/public/_headers`, `SPEC.md`, `ops/HANDOFF.md`, `README.md`.
+
 **Påverkan:** nya `pipeline/src/import-vallen.ts`, `pipeline/src/cli-import-vallen.ts`, `pipeline/import/category-map.json`, `pipeline/tests/import-vallen.test.ts` (14 tester); `site/src/lib/aggregates.ts` (`totalFlasketInterval`), `site/scripts/test-interval.mts` (10 tester); utökat `pipeline/src/publish.ts` (`groupId`, bakåtkompatibelt); fix `pipeline/schemas/needs_review.schema.json`, `site/scripts/test-t1.mts`; npm-script `import:vallen` + `test:interval`. Lokalt: typecheck rent, **132 pipeline-tester + alla site-tester (T1/T3/T9/stale/intervall) gröna**, skarp import skrev 312 löften (data_hash 2a9ba9cd10bc) och sajten byggde (312 löftessidor, OG visar 13 059 MDKR). **Kvar (ägarsteg):** commit av 9 transkript till privata vallen-2026; PR med kod+data till valflask enligt §7; verifiera ρ=0,3 ger önskat band; senare /metod-text om totalformeln + transkript-uppmjukningen.
 
 

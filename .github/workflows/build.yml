@@ -74,7 +74,7 @@ jobs:
       # i stället upp de FÄRDIGBYGGDA filerna med wrangler (Direct Upload) — CF
       # bygger då inget själv. Hoppar graciöst om token saknas (som Netlify nedan).
       - name: Deploy to Cloudflare Pages (if token exists)
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         # Icke-blockerande: en CF-felkonfiguration får ALDRIG fälla det kanoniska
         # GitHub Pages-bygget nedan. Vid fel listas tillgängliga projektnamn.
         continue-on-error: true
