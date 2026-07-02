@@ -89,6 +89,32 @@ feeds:
   # Expressen, Aftonbladet, GP, Altinget, TT: ej testade i denna omgång;
   # kan läggas till efter verifiering.
 
+  # --- Skrivna manifest/policysidor (page) ---
+  # Partiernas skrivna löften finns inte som RSS. "page"-typen hämtar en HTML-sida,
+  # strippar den till text och kör LLM-extraktion + grindarna. Så fångas manifest
+  # löpande i stället för manuell skörd. Lägg till policy-undersidor för mer djup.
+  # (S och C saknar RSS helt — page är enda vägen för deras skrivna löften.)
+  - id: c-valmanifest
+    type: page
+    url: "https://val2026.centerpartiet.se/"
+    verified: "2026-07-02 — 200, Centerpartiets valmanifest 2026"
+  - id: sd-vadvivill
+    type: page
+    url: "https://sd.se/vad-vi-vill/"
+    verified: "2026-07-02 — 200 (via redirect), SD:s politik"
+  - id: s-valmanifest
+    type: page
+    url: "https://www.socialdemokraterna.se/val-2026"
+    verified: "seed 2026-06 — S:s val-2026-sida (ingen RSS)"
+  - id: mp-almedalstal
+    type: page
+    url: "https://www.mp.se/just-nu/daniel-helldens-almedalstal/"
+    verified: "2026-07-02 — 200, Daniel Helldéns Almedalstal (skriven)"
+  - id: mp-matstrategi
+    type: page
+    url: "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/"
+    verified: "2026-07-02 — 200, MP fossilfri matproduktion"
+
 limits:
   max_articles_per_run: 20
   min_chars: 400

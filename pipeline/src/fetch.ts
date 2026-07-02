@@ -33,7 +33,7 @@ export class FixtureSource implements ArticleSource {
 
 export interface SourceFeed {
   id: string;
-  type: "rss" | "riksdagen_api";
+  type: "rss" | "riksdagen_api" | "page";
   url: string;
   verified?: string;
 }
@@ -148,12 +148,16 @@ export function isPathAllowed(path: string, rules: RobotsRule[]): boolean {
 /* ──────────────────────── HTML-stripping (fulltext extraktion) ── */
 
 const HTML_ENTITIES: Record<string, string> = {
-  "&amp;": "&",
-  "&lt;": "<",
-  "&gt;": ">",
-  "&quot;": '"',
-  "&apos;": "'",
-  "&nbsp;": " ",
+  "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&apos;": "'",
+  "&nbsp;": " ", "&shy;": "",
+  // Svenska + typografiska namngivna entiteter — måste avkodas, annars matchar
+  // inte det verbatim-extraherade citatet källtexten i G3 (t.ex. sidor som
+  // serverar &auml; i stället för ä).
+  "&auml;": "ä", "&ouml;": "ö", "&aring;": "å",
+  "&Auml;": "Ä", "&Ouml;": "Ö", "&Aring;": "Å",
+  "&eacute;": "é", "&egrave;": "è", "&uuml;": "ü",
+  "&ndash;": "–", "&mdash;": "—", "&hellip;": "…",
+  "&rsquo;": "’", "&lsquo;": "‘", "&rdquo;": "”", "&ldquo;": "“",
 };
 
 export function stripHtml(html: string): string {
@@ -165,7 +169,7 @@ export function stripHtml(html: string): string {
     .replace(/<[^>]+>/g, "")
     .replace(/&#(\d+);/g, (_, code: string) => String.fromCharCode(parseInt(code, 10)))
     .replace(/&#x([0-9a-fA-F]+);/g, (_, hex: string) => String.fromCharCode(parseInt(hex, 16)))
-    .replace(/&(amp|lt|gt|quot|apos|nbsp);/g, (m) => HTML_ENTITIES[m] ?? m)
+    .replace(/&[a-zA-Z]+;/g, (m) => HTML_ENTITIES[m] ?? m)
     .replace(/\n{3,}/g, "\n\n")
     .replace(/[ \t]+/g, " ")
     .trim();
@@ -373,7 +377,9 @@ export class LiveSource implements ArticleSource {
       try {
         const feedArticles = feed.type === "riksdagen_api"
           ? await this.fetchRiksdagen(feed, etagCache)
-          : await this.fetchRss(feed, etagCache);
+          : feed.type === "page"
+            ? await this.fetchPage(feed, etagCache)
+            : await this.fetchRss(feed, etagCache);
 
         for (const article of feedArticles) {
           if (article.text.length < this.limits.min_chars) continue;
@@ -489,6 +495,41 @@ export class LiveSource implements ArticleSource {
     }
 
     return articles;
+  }
+
+  /**
+   * "page"-källa: hämtar en enskild HTML-sida (t.ex. ett partis valmanifest eller
+   * policysida), strippar den till text och returnerar EN artikel. Extract-steget
+   * kör LLM A på den som vanligt. Så fångas skrivna manifest — som inte finns som
+   * RSS — automatiskt och löpande, i stället för manuell skörd. (A1-prompten tar
+   * de ≤5 tydligaste löftena per sida; lista policy-undersidor för mer djup.)
+   */
+  private async fetchPage(
+    feed: SourceFeed,
+    etagCache: Map<string, CacheEntry>,
+  ): Promise<NormalizedArticle[]> {
+    const allowed = await this.checkRobots(feed.url);
+    if (!allowed) {
+      console.log(`[fetch] robots.txt blockerar ${feed.id}`);
+      return [];
+    }
+
+    const result = await this.fetchWithCache(feed.url, etagCache, {
+      Accept: "text/html,application/xhtml+xml",
+    });
+    if (!result) return [];
+
+    const titleMatch = result.text.match(/<title[^>]*>([^<]*)<\/title>/i);
+    const title = titleMatch ? stripHtml(titleMatch[1]!) : feed.id;
+    const text = stripHtml(result.text);
+
+    return [{
+      url: feed.url,
+      domain: extractDomain(feed.url),
+      title,
+      text,
+      published: new Date().toISOString(),
+    }];
   }
 
   private async fetchRiksdagen(
