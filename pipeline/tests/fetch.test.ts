@@ -458,6 +458,68 @@ describe("LiveSource med mock-HTTP", () => {
     assert.equal(receivedHeaders["User-Agent"], "DrygastBot/1.0 (+https://drygast.nu/om)");
   });
 
+  test("hämtar page-källa (HTML-sida) via mock", async () => {
+    const html =
+      "<html><head><title>Centerpartiets valmanifest 2026</title></head>" +
+      "<body><h1>Vår politik</h1><p>Vi lovar att korta köerna i vården och " +
+      "anställa fler poliser under nästa mandatperiod.</p></body></html>";
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      if (url.includes("val2026.centerpartiet.se")) {
+        return new Response(html, { status: 200, headers: { "content-type": "text/html" } });
+      }
+      return new Response("Not found", { status: 404 });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "c-valmanifest", type: "page", url: "https://val2026.centerpartiet.se/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 1, "Page-källa ger exakt en artikel");
+    assert.equal(articles[0]!.url, "https://val2026.centerpartiet.se/");
+    assert.equal(articles[0]!.domain, "val2026.centerpartiet.se");
+    assert.equal(articles[0]!.title, "Centerpartiets valmanifest 2026", "Title ur <title>");
+    assert.ok(articles[0]!.text.includes("korta köerna i vården"), `Text: ${articles[0]!.text}`);
+    assert.ok(!articles[0]!.text.includes("<"), "HTML-taggar strippade");
+  });
+
+  test("page-källa avkodar HTML-entiteter så G3 verbatim matchar", async () => {
+    // mp.se serverar &ouml;/&auml;/&aring; i stället för ö/ä/å. Utan avkodning
+    // blir verbatim-grinden (G3) 0/5 fastän löftet finns på sidan.
+    const html =
+      "<html><head><title>Almedalstal</title></head><body>" +
+      "<p>Vi lovar ett systemskifte i t&aring;gpolitiken och att korta k&ouml;erna.</p>" +
+      "</body></html>";
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      return new Response(html, { status: 200 });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "mp-almedalstal", type: "page", url: "https://www.mp.se/just-nu/daniel-helldens-almedalstal/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 1);
+    assert.ok(
+      articles[0]!.text.includes("systemskifte i tågpolitiken"),
+      `å avkodad: ${articles[0]!.text}`,
+    );
+    assert.ok(articles[0]!.text.includes("korta köerna"), "ö avkodad");
+    assert.ok(!articles[0]!.text.includes("&aring;"), "inga råa entiteter kvar");
+  });
+
   test("hämtar riksdagen motioner via mock", async () => {
     const motJson = readFixture("riksdagen-mot.json");
     const motText = "Detta är motionens fulla text om att höja a-kassan till nittio procent av lönen vilket beräknas kosta ungefär tolv miljarder kronor per år en partiets egen beräkning.";
