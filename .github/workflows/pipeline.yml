@@ -56,10 +56,27 @@ jobs:
           MODEL_COPY: ${{ vars.MODEL_COPY }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
           ALERT_EMAIL: ${{ vars.ALERT_EMAIL }}
+      # App-tokens lever 1 h. Pipelinesteget kan ta längre (första manifest-
+      # körningen tog 71 min) — då är jobbstart-tokenen död vid push och datan
+      # går förlorad (run 28673246764). Mynta därför en FÄRSK token efter
+      # LLM-steget, precis före commit/push.
+      - name: Mint fresh push token
+        id: push-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Commit data if changed
+        env:
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "drygast-bot"
           git config user.email "bot@drygast.nu"
+          # Checkout-stegets persisted auth-header bär jobbstart-tokenen (kan ha
+          # gått ut) och vinner över remote-URL:en — rensa den och pusha med den
+          # färska tokenen i stället.
+          git config --local --unset-all http.https://github.com/.extraheader || true
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           git add data/
           if git diff --cached --quiet; then
             echo "Inga dataändringar — inget att committa."
