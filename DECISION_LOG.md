@@ -564,3 +564,13 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Förkastade alternativ:** dedup på enbart content-hash utan URL (tappar spårbarhet per källa); omprocessa page-feeds varje körning (LLM-kostnad utan signal); följa PDF-länkar över domängränser (öppnar för länkinjektion — G2 skyddar nedströms men discovery ska också vara snäv); färskhetsspärr även på kuraterade feeds (ägarens explicita val ska inte tyst-filtreras); blind ihopslagning av radbrutna ord utan avstavningssignal ("ska"+"skapa"→"skaskapa" — omöjligt utan ordlista).
 
 **Påverkan:** `pipeline/src/fetch.ts` (slice borttagen, `seenKey`/`contentHash`, `findManifestPdfLinks` + auto-följ med färskhetsspärr, script/style-strip, mjukt-bindestreck-hantering i `joinPdfLines`, injicerbar klocka), `pipeline/src/gates.ts` (`contentHash`/`feedType` på NormalizedArticle), `pipeline/src/index.ts` (prioritetssortering, seenKey), `data/sources.yaml` (14 page-feeds — alla åtta partier), `pipeline/facit/` (36 poster, README). Typecheck rent, **152 pipeline-tester gröna**, facit live 36/36, dry-run mot live grön.
+
+## 2026-07-03 — Push-token myntas efter LLM-steget (run 28673246764 föll på 1 h-TTL)
+
+**Beslut:** Första skarpa B-körningen (28673246764) gick igenom hela pipelinen felfritt på 71 minuter — staleness-spärren, PDF-chunkarna och extraktionen fungerade live ("220 publicerade, 86 till review, 0 fel") — men GitHub App-tokenen som myntas vid jobbstart lever 1 timme, så alla fem push-försök föll ("could not read Username") och körningens data gick förlorad i runnern. Fix i pipeline.yml: ett andra `create-github-app-token`-steg EFTER pipelinesteget myntar en färsk push-token; commit-steget rensar checkoutens persisted auth-header (bär den gamla tokenen och vinner annars över remote-URL:en) och pekar om origin till `https://x-access-token:<färsk>@github.com/...`.
+
+**Motiv:** Tidigare körningar var korta (<15 min) och träffade aldrig taket; manifest-backloggen gör att LLM-steget kan ta >60 min tills kön är genomtuggad (och kan göra det igen vid stora manifestsläpp i augusti). Datat som förlorades reproduceras automatiskt: seen.json pushades aldrig, så nästa körning processar om samma artiklar.
+
+**Förkastade alternativ:** förlänga token-TTL (går inte — GitHubs tak är 1 h); minska maxNewArticles så körningen hinner (angriper symptomet, gör backloggen långsammare); pusha data i delsteg under körningen (komplext, halvfärdiga körningar på main).
+
+**Påverkan:** `.github/workflows/pipeline.yml` (nytt steg `Mint fresh push token`, commit-steget använder den). Ingen pipelinekod ändrad.
