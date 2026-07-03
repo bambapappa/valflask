@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 import type { LlmClient } from "./llm.ts";
 import type { ArticleSource, SourceConfig, SourceFeed } from "./fetch.ts";
-import { dedup, loadSeen, sha256 } from "./fetch.ts";
+import { dedup, loadSeen, seenKey } from "./fetch.ts";
 import { extractFromArticle } from "./extract.ts";
 import { runGates, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
@@ -70,7 +70,13 @@ export async function runPipeline(
   ctx: PipelineContext,
 ): Promise<PipelineResult> {
   const articles = await ctx.articleSource.fetch();
-  articles.sort((a, b) => a.url.localeCompare(b.url));
+  // Processprioritet inom budgeten: (1) page — partiernas egna skrivna manifest
+  // är projektets primärkälla och ger bara artiklar när innehåll är nytt/ändrat,
+  // så de får aldrig svältas ut av flödesbrus; (2) riksdagen (motioner/anföranden);
+  // (3) övriga. URL-sortering inom varje grupp ger determinism.
+  const prio = (a: NormalizedArticle): number =>
+    a.feedType === "page" ? 0 : a.domain === "data.riksdagen.se" ? 1 : 2;
+  articles.sort((a, b) => prio(a) - prio(b) || a.url.localeCompare(b.url));
 
   const seenPath = `${ctx.dataDir}/seen.json`;
   const existingSeen = loadSeen(seenPath);
@@ -250,7 +256,7 @@ export async function runPipeline(
   const erroredUrls = new Set(errors.map((e) => e.url));
   const updatedSeen = new Map(existingSeen);
   for (const a of toProcess) {
-    if (!erroredUrls.has(a.url)) updatedSeen.set(sha256(a.url), a.url);
+    if (!erroredUrls.has(a.url)) updatedSeen.set(seenKey(a), a.url);
   }
 
   const publishResult = publish({

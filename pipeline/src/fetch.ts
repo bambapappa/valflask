@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
-import type { NormalizedArticle } from "./gates.ts";
+import { DATE_WINDOW_DAYS, type NormalizedArticle } from "./gates.ts";
 
 /* ──────────────────────── ArticleSource (M2 injicerbart gränssnitt) ── */
 
@@ -162,6 +162,13 @@ const HTML_ENTITIES: Record<string, string> = {
 
 export function stripHtml(html: string): string {
   return html
+    // script/style/noscript-INNEHÅLL bort (inte bara taggarna): JS-kod är brus
+    // för LLM A, en injektionsyta, och gör sidans innehålls-hash instabil när
+    // inline-skript bär nonces/tidsstämplar.
+    .replace(/<script\b[\s\S]*?<\/script>/gi, "\n")
+    .replace(/<style\b[\s\S]*?<\/style>/gi, "\n")
+    .replace(/<noscript\b[\s\S]*?<\/noscript>/gi, "\n")
+    .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/<br\s*\/?>/gi, "\n")
     .replace(/<\/p>/gi, "\n")
     .replace(/<\/div>/gi, "\n")
@@ -214,17 +221,26 @@ export function looksLikePdf(contentType: string | null, bytes: Uint8Array): boo
  */
 export function joinPdfLines(lines: string[]): string {
   let text = "";
+  let prevSoftBreak = false;
   for (const raw of lines) {
-    const line = raw.replace(/­/gu, "").trim(); // mjuka bindestreck bort
+    const trimmed = raw.trim();
+    // Mjukt bindestreck (U+00AD) SIST på raden = avstavning utan synligt streck
+    // (InDesign gör så): nästa rad är alltid en ordfortsättning. Inuti raden är
+    // det bara en osynlig brytpunktsmarkör och strippas.
+    const softBreak = /­$/u.test(trimmed);
+    const line = trimmed.replace(/­/gu, "");
     if (line === "") continue;
     const continuesWord = /^[a-zåäöé]/u.test(line) && !/^(och|eller|samt)\b/u.test(line);
-    if (continuesWord && /[a-zåäöé]-$/u.test(text)) {
+    if (prevSoftBreak && /\p{L}$/u.test(text) && /^\p{L}/u.test(line)) {
+      text = text + line; // avstavad med mjukt streck: sy ihop rakt av
+    } else if (continuesWord && /[a-zåäöé]-$/u.test(text)) {
       text = text.slice(0, -1) + line; // avstavning: strecket bort
     } else if (continuesWord && /[A-ZÅÄÖ0-9]-$/u.test(text)) {
       text = text + line; // sammansättning med äkta bindestreck: strecket kvar
     } else {
       text = text === "" ? line : `${text}\n${line}`;
     }
+    prevSoftBreak = softBreak;
   }
   return text;
 }
@@ -293,6 +309,54 @@ export async function extractPdfText(bytes: Uint8Array): Promise<PdfExtract> {
   } finally {
     await loadingTask.destroy();
   }
+}
+
+/**
+ * Max antal manifest-PDF:er som auto-följs från EN page-feed per hämtning.
+ * Skydd mot länkfarmar; riktiga valsidor länkar 1–2 dokument.
+ */
+export const MAX_FOLLOWED_PDFS = 3;
+
+/**
+ * Hittar länkar till manifest-PDF:er i en HTML-sida: href som pekar på .pdf
+ * på SAMMA kanoniska domän och vars sökväg ser ut som ett valdokument.
+ * Detta är B:s "automatisk täckning": partier länkar sina manifest som PDF
+ * från valsidan (S/L/C gör redan så), och partier som ännu inte publicerat
+ * (M/SD/KD i juli 2026) fångas den dag PDF-länken dyker upp — utan att någon
+ * behöver registrera en ny feed. Externa domäner följs aldrig (och G2
+ * allowlist-grindar dessutom varje artikel nedströms).
+ */
+export function findManifestPdfLinks(html: string, baseUrl: string): string[] {
+  let baseHost: string;
+  try {
+    baseHost = canonicalHost(new URL(baseUrl).hostname);
+  } catch {
+    return [];
+  }
+  const links = new Set<string>();
+  for (const m of html.matchAll(/href="([^"]+)"/gi)) {
+    const raw = m[1]!.replace(/&amp;/g, "&");
+    let abs: URL;
+    try {
+      abs = new URL(raw, baseUrl);
+    } catch {
+      continue;
+    }
+    if (abs.protocol !== "https:") continue;
+    if (!/\.pdf$/iu.test(abs.pathname)) continue;
+    if (!/(manifest|valplattform|valprogram|handlingsprogram)/iu.test(abs.pathname)) continue;
+    if (canonicalHost(abs.hostname) !== baseHost) continue;
+    abs.hash = "";
+    links.add(abs.href);
+    if (links.size >= MAX_FOLLOWED_PDFS) break;
+  }
+  return [...links];
+}
+
+function canonicalHost(hostname: string): string {
+  let host = hostname.replace(/\.$/u, "");
+  if (host.startsWith("www.")) host = host.slice(4);
+  return host;
 }
 
 /* ──────────────────────── RSS/Atom-parsning ── */
@@ -427,6 +491,20 @@ export function sha256(input: string): string {
   return createHash("sha256").update(input).digest("hex");
 }
 
+/**
+ * Seen-nyckel för en artikel. RSS/API: sha256(url) — en URL är en artikel.
+ * Page-artiklar bär contentHash: nyckeln blir sha256(url + "\n" + contentHash),
+ * så samma sida med NYTT innehåll får ny nyckel och processas om (B:s löpande
+ * bevakning av manifest), medan oförändrat innehåll är sett och hoppas över.
+ * Ompublicering av redan fångade löften stoppas nedströms av dublettkollen
+ * (findPossibleDuplicate → review med duplicateOf), aldrig av seen.
+ */
+export function seenKey(article: Pick<NormalizedArticle, "url" | "contentHash">): string {
+  return article.contentHash
+    ? sha256(`${article.url}\n${article.contentHash}`)
+    : sha256(article.url);
+}
+
 export function dedup(
   articles: NormalizedArticle[],
   existingSeen: ReadonlyMap<string, string>,
@@ -434,7 +512,7 @@ export function dedup(
   const newArticles: NormalizedArticle[] = [];
   const seen = new Map(existingSeen);
   for (const article of articles) {
-    const hash = sha256(article.url);
+    const hash = seenKey(article);
     if (!seen.has(hash)) {
       newArticles.push(article);
       seen.set(hash, article.url);
@@ -466,18 +544,23 @@ export class LiveSource implements ArticleSource {
   private robotsCache: Map<string, RobotsRule[]>;
   private stats: Map<string, number>;
 
+  private now: () => Date;
+
   constructor(opts: {
     feeds: SourceFeed[];
     limits: { max_articles_per_run: number; min_chars: number };
     httpFetch?: HttpFetchFn;
     cacheDir?: string | null;
     userAgent?: string;
+    /** Injicerbar klocka (test-determinism för färskhetsspärren på följda PDF:er). */
+    now?: () => Date;
   }) {
     this.feeds = opts.feeds;
     this.limits = opts.limits;
     this.httpFetch = opts.httpFetch ?? globalThis.fetch.bind(globalThis);
     this.cacheDir = opts.cacheDir ?? null;
     this.userAgent = opts.userAgent ?? USER_AGENT;
+    this.now = opts.now ?? (() => new Date());
     this.robotsCache = new Map();
     this.stats = new Map();
   }
@@ -503,7 +586,7 @@ export class LiveSource implements ArticleSource {
 
         for (const article of feedArticles) {
           if (article.text.length < this.limits.min_chars) continue;
-          articles.push(article);
+          articles.push({ ...article, feedType: feed.type });
         }
 
         this.stats.set(feed.id, feedArticles.length);
@@ -514,7 +597,11 @@ export class LiveSource implements ArticleSource {
     }
 
     saveEtagCache(this.cacheDir, etagCache);
-    return articles.slice(0, this.limits.max_articles_per_run);
+    // INGEN slice här — den globala kapningen stred mot kommentaren ovan och
+    // svalt page-feedsen (sist i sources.yaml): partiernas RSS + riksdagen
+    // fyllde alltid max_articles_per_run innan manifesten ens nådde dedup.
+    // Budgeten på NYA artiklar ligger i runPipeline (maxNewArticles).
+    return articles;
   }
 
   private async checkRobots(feedUrl: string): Promise<boolean> {
@@ -665,17 +752,54 @@ export class LiveSource implements ArticleSource {
     const title = titleMatch ? stripHtml(titleMatch[1]!) : feed.id;
     const text = stripHtml(html);
 
-    return [{
+    const articles: NormalizedArticle[] = [{
       url: feed.url,
       domain: extractDomain(feed.url),
       title,
       text,
       published: new Date().toISOString(),
+      contentHash: sha256(text),
     }];
+
+    // Auto-följ manifest-PDF:er länkade från sidan (samma domän). Ett trasigt
+    // dokument fäller aldrig sid-artikeln — det loggas och hoppas över.
+    for (const pdfUrl of findManifestPdfLinks(html, feed.url)) {
+      try {
+        if (!(await this.checkRobots(pdfUrl))) continue;
+        const pdfResult = await this.fetchRawWithCache(pdfUrl, etagCache, {
+          Accept: "application/pdf",
+        });
+        if (!pdfResult || !looksLikePdf(pdfResult.contentType, pdfResult.bytes)) continue;
+        // Färskhetsspärr ENBART för auto-följda dokument: valsidor länkar ofta
+        // FÖRRA valens manifest (SD/KD länkar 2022/2024-dokument). G4 hade ändå
+        // stoppat publicering (±548 d), men att hoppa här sparar LLM-anropen
+        // och håller review-kön ren. Kuraterade feeds behåller full grind-väg.
+        articles.push(...await this.pdfToArticles({ ...feed, url: pdfUrl }, pdfResult.bytes, {
+          skipStale: true,
+        }));
+      } catch (e) {
+        console.error(`[fetch] följd PDF ${pdfUrl} failed: ${e instanceof Error ? e.message : e}`);
+      }
+    }
+
+    return articles;
   }
 
-  private async pdfToArticles(feed: SourceFeed, bytes: Uint8Array): Promise<NormalizedArticle[]> {
+  private async pdfToArticles(
+    feed: SourceFeed,
+    bytes: Uint8Array,
+    opts?: { skipStale?: boolean },
+  ): Promise<NormalizedArticle[]> {
     const pdf = await extractPdfText(bytes);
+
+    if (opts?.skipStale && pdf.published) {
+      const ageDays = Math.abs(this.now().getTime() - Date.parse(pdf.published)) / 86_400_000;
+      if (ageDays > DATE_WINDOW_DAYS) {
+        console.log(`[fetch] följd PDF ${feed.url} är ${Math.round(ageDays)} dygn gammal (> ${DATE_WINDOW_DAYS}) — hoppas över`);
+        return [];
+      }
+    }
+
     const domain = extractDomain(feed.url);
     const baseTitle = pdf.title ?? feed.id;
     const published = pdf.published ?? new Date().toISOString();
@@ -684,6 +808,7 @@ export class LiveSource implements ArticleSource {
     for (let start = 0; start < pdf.pages.length; start += PDF_PAGES_PER_CHUNK) {
       const chunkPages = pdf.pages.slice(start, start + PDF_PAGES_PER_CHUNK);
       const singleChunk = pdf.pages.length <= PDF_PAGES_PER_CHUNK;
+      const text = chunkPages.join("\n\n");
       articles.push({
         // #page=N är PDF:ens standard-djuplänk: klickbar källhänvisning till
         // rätt sida, och gör chunkarnas url:er distinkta för dedup/seen.
@@ -692,8 +817,10 @@ export class LiveSource implements ArticleSource {
         title: singleChunk
           ? baseTitle
           : `${baseTitle} (s. ${start + 1}–${start + chunkPages.length})`,
-        text: chunkPages.join("\n\n"),
+        text,
         published,
+        // Per chunk: en ny manifestversion omprocessar bara ändrade sidintervall.
+        contentHash: sha256(text),
       });
     }
     return articles;

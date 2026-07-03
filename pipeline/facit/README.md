@@ -1,6 +1,6 @@
 # Facit — sanningsmängd för page-källan (B)
 
-`manifest-facit.json` är en **valideringsmängd**: 28 skrivna löften som hittats
+`manifest-facit.json` är en **valideringsmängd**: 36 skrivna löften som hittats
 **manuellt** genom att läsa partiernas egna sidor/dokument och köra dem genom
 grindarna.
 
@@ -8,14 +8,21 @@ grindarna.
 |---|---|---|
 | `val2026.centerpartiet.se/.../Valmanifest-2026.pdf` (96 s.) | 7 | C |
 | `val2026.centerpartiet.se/` | 5 | C |
+| `socialdemokraterna.se/.../Valplattform.pdf` (4 s.) | 2 | S |
+| `vansterpartiet.se/.../Preliminar-Valplattform-...-2026.pdf` (4 s.) | 2 | V |
+| `liberalerna.se/.../liberalernas-valmanifest-2026-....pdf` (40 s.) | 2 | L |
+| `mp.se/.../politiskt-handlingsprogram-2026-2030.pdf` (106 s.) | 2 | MP |
 | `mp.se/.../daniel-helldens-almedalstal/` | 13 | MP |
 | `mp.se/.../miljopartiet-ny-strategi-for-fossilfri-matproduktion.../` | 3 | MP |
 
-PDF-posterna (`c-pdf-01`–`c-pdf-07`) är ett löfte per manifestkapitels
-"Det här vill Centerpartiet göra"-sida och validerar B:s **PDF-väg**
+PDF-posterna (`*-pdf-*`) är fångstmål som validerar B:s **PDF-väg**
 (textextraktion + dehyphenering + sidchunkning). De har fältet `pdf_page`
 i stället för kostnadsfält: de är fångstmål, inte publicerade löften —
 publiceringen sker när CI-körningen drar dem genom LLM-extraktion + grindar.
+
+**M/SD/KD saknar poster:** inget publicerat nationellt valmanifest per
+2026-07-03. Deras politiksidor ligger som page-feeds i `sources.yaml` och
+manifest-PDF:er auto-följs när de länkas — utöka facit då dokumenten släpps.
 
 ## Varför det finns
 
