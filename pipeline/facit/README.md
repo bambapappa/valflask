@@ -1,13 +1,21 @@
 # Facit — sanningsmängd för page-källan (B)
 
-`manifest-facit.json` är en **valideringsmängd**: 21 skrivna löften som hittats
-**manuellt** genom att läsa partiernas egna sidor och köra dem genom grindarna.
+`manifest-facit.json` är en **valideringsmängd**: 28 skrivna löften som hittats
+**manuellt** genom att läsa partiernas egna sidor/dokument och köra dem genom
+grindarna.
 
 | Källa | Antal | Parti |
 |---|---|---|
+| `val2026.centerpartiet.se/.../Valmanifest-2026.pdf` (96 s.) | 7 | C |
 | `val2026.centerpartiet.se/` | 5 | C |
 | `mp.se/.../daniel-helldens-almedalstal/` | 13 | MP |
 | `mp.se/.../miljopartiet-ny-strategi-for-fossilfri-matproduktion.../` | 3 | MP |
+
+PDF-posterna (`c-pdf-01`–`c-pdf-07`) är ett löfte per manifestkapitels
+"Det här vill Centerpartiet göra"-sida och validerar B:s **PDF-väg**
+(textextraktion + dehyphenering + sidchunkning). De har fältet `pdf_page`
+i stället för kostnadsfält: de är fångstmål, inte publicerade löften —
+publiceringen sker när CI-körningen drar dem genom LLM-extraktion + grindar.
 
 ## Varför det finns
 
@@ -28,7 +36,7 @@ för hand?**
 cd pipeline && node --import tsx/esm facit/validate-facit.mts
 ```
 
-Senast kört 2026-07-02: **21/21 hittade** — B fångar hela facit.
+Senast kört 2026-07-03: **28/28 hittade** — B fångar hela facit, inkl. PDF-vägen.
 
 Den hämtar varje käll-URL live via samma `fetchPage` som pipelinen och
 kontrollerar för varje facit-löfte om citatet finns ordagrant i den hämtade

@@ -175,6 +175,126 @@ export function stripHtml(html: string): string {
     .trim();
 }
 
+/* ──────────────────────── PDF-extraktion (skrivna manifest som PDF) ── */
+
+/**
+ * Antal PDF-sidor per artikel-chunk. Ett helt manifest (≈100 s.) som EN artikel
+ * skulle kapas till ≤5 löften av A1/G5 — chunkning ger LLM A upp till 5 löften
+ * per sidintervall i stället. Varje chunk får url `…pdf#page=N` (klickbart
+ * djuplänk-ankare) så dedup/seen behandlar dem som separata artiklar.
+ */
+export const PDF_PAGES_PER_CHUNK = 10;
+
+let pdfjsModule: typeof import("pdfjs-dist/legacy/build/pdf.mjs") | null = null;
+
+async function getPdfjs(): Promise<typeof import("pdfjs-dist/legacy/build/pdf.mjs")> {
+  if (!pdfjsModule) {
+    pdfjsModule = await import("pdfjs-dist/legacy/build/pdf.mjs");
+  }
+  return pdfjsModule;
+}
+
+export function looksLikePdf(contentType: string | null, bytes: Uint8Array): boolean {
+  if (contentType && contentType.toLowerCase().includes("application/pdf")) return true;
+  // Magisk signatur "%PDF-" — vissa CDN:er serverar PDF som octet-stream.
+  return bytes.length >= 5
+    && bytes[0] === 0x25 && bytes[1] === 0x50 && bytes[2] === 0x44
+    && bytes[3] === 0x46 && bytes[4] === 0x2d;
+}
+
+/**
+ * Slår ihop textrader från en PDF-sida till löpande text, med dehyphenering av
+ * radslutsavstavningar: "arbets-" + "marknaden" → "arbetsmarknaden". Utan detta
+ * faller G3 verbatim på varje citat som råkar korsa ett avstavat radbryt (G3
+ * kollapsar whitespace men syr aldrig ihop ord). Två specialfall:
+ *  - versal/siffra före strecket ("EU-" + "medel") är ett äkta bindestreck i
+ *    sammansättningen — raderna sys ihop men strecket behålls: "EU-medel";
+ *  - hängande bindestreck i uppräkningar ("vård- och omsorg") lämnas orörda:
+ *    fortsättningsraden börjar då med en konjunktion, aldrig en ordfortsättning.
+ */
+export function joinPdfLines(lines: string[]): string {
+  let text = "";
+  for (const raw of lines) {
+    const line = raw.replace(/­/gu, "").trim(); // mjuka bindestreck bort
+    if (line === "") continue;
+    const continuesWord = /^[a-zåäöé]/u.test(line) && !/^(och|eller|samt)\b/u.test(line);
+    if (continuesWord && /[a-zåäöé]-$/u.test(text)) {
+      text = text.slice(0, -1) + line; // avstavning: strecket bort
+    } else if (continuesWord && /[A-ZÅÄÖ0-9]-$/u.test(text)) {
+      text = text + line; // sammansättning med äkta bindestreck: strecket kvar
+    } else {
+      text = text === "" ? line : `${text}\n${line}`;
+    }
+  }
+  return text;
+}
+
+/** "D:20260604154527+02'00'" (PDF-datum) → ISO 8601, eller null. */
+export function parsePdfDate(raw: string): string | null {
+  const m = /^D:(\d{4})(\d{2})?(\d{2})?(\d{2})?(\d{2})?(\d{2})?(?:Z|([+-])(\d{2})'?(\d{2})?'?)?/u.exec(raw);
+  if (!m) return null;
+  const [, y, mo = "01", d = "01", h = "00", mi = "00", s = "00", sign, oh, om = "00"] = m;
+  const offset = sign ? `${sign}${oh}:${om}` : "Z";
+  const iso = `${y}-${mo}-${d}T${h}:${mi}:${s}${offset}`;
+  const parsed = Date.parse(iso);
+  return Number.isNaN(parsed) ? null : new Date(parsed).toISOString();
+}
+
+export interface PdfExtract {
+  title: string | null;
+  published: string | null;
+  /** Extraherad text per sida (1-indexerad i PDF:en, 0-indexerad här). */
+  pages: string[];
+}
+
+export async function extractPdfText(bytes: Uint8Array): Promise<PdfExtract> {
+  const pdfjs = await getPdfjs();
+  // Kopia: getDocument tar ägarskap över buffern (transfer).
+  const loadingTask = pdfjs.getDocument({
+    data: bytes.slice(),
+    disableFontFace: true,
+    // Textextraktion behöver inga fontfiler; utan denna varnar pdf.js om
+    // standardFontDataUrl för PDF:er som refererar de 14 standardfonterna.
+    useSystemFonts: true,
+  });
+  try {
+    const doc = await loadingTask.promise;
+
+    let title: string | null = null;
+    let published: string | null = null;
+    try {
+      const meta = await doc.getMetadata();
+      const info = meta.info as Record<string, unknown>;
+      if (typeof info.Title === "string" && info.Title.trim() !== "") title = info.Title.trim();
+      if (typeof info.CreationDate === "string") published = parsePdfDate(info.CreationDate);
+    } catch {
+      // metadata är valfri
+    }
+
+    const pages: string[] = [];
+    for (let p = 1; p <= doc.numPages; p++) {
+      const page = await doc.getPage(p);
+      const content = await page.getTextContent();
+      const lines: string[] = [];
+      let current = "";
+      for (const item of content.items) {
+        if (!("str" in item)) continue;
+        current += item.str;
+        if (item.hasEOL) {
+          lines.push(current);
+          current = "";
+        }
+      }
+      if (current !== "") lines.push(current);
+      pages.push(joinPdfLines(lines));
+    }
+
+    return { title, published, pages };
+  } finally {
+    await loadingTask.destroy();
+  }
+}
+
 /* ──────────────────────── RSS/Atom-parsning ── */
 
 interface ParsedFeedItem {
@@ -428,6 +548,17 @@ export class LiveSource implements ArticleSource {
     etagCache: Map<string, CacheEntry>,
     extraHeaders?: Record<string, string>,
   ): Promise<{ text: string; status: number } | null> {
+    const raw = await this.fetchRawWithCache(url, etagCache, extraHeaders);
+    if (!raw) return null;
+    return { text: new TextDecoder("utf-8").decode(raw.bytes), status: raw.status };
+  }
+
+  /** Som fetchWithCache men lämnar kroppen rå — page-källan avgör HTML/PDF själv. */
+  private async fetchRawWithCache(
+    url: string,
+    etagCache: Map<string, CacheEntry>,
+    extraHeaders?: Record<string, string>,
+  ): Promise<{ bytes: Uint8Array; contentType: string | null; status: number } | null> {
     const headers: Record<string, string> = {
       "User-Agent": this.userAgent,
       ...extraHeaders,
@@ -458,7 +589,11 @@ export class LiveSource implements ArticleSource {
     if (lm) entry.lastModified = lm;
     etagCache.set(url, entry);
 
-    return { text: await res.text(), status: res.status };
+    return {
+      bytes: new Uint8Array(await res.arrayBuffer()),
+      contentType: res.headers.get("content-type"),
+      status: res.status,
+    };
   }
 
   private async fetchRss(
@@ -498,11 +633,13 @@ export class LiveSource implements ArticleSource {
   }
 
   /**
-   * "page"-källa: hämtar en enskild HTML-sida (t.ex. ett partis valmanifest eller
-   * policysida), strippar den till text och returnerar EN artikel. Extract-steget
-   * kör LLM A på den som vanligt. Så fångas skrivna manifest — som inte finns som
-   * RSS — automatiskt och löpande, i stället för manuell skörd. (A1-prompten tar
-   * de ≤5 tydligaste löftena per sida; lista policy-undersidor för mer djup.)
+   * "page"-källa: hämtar ett enskilt dokument (t.ex. ett partis valmanifest eller
+   * policysida). HTML strippas till text och blir EN artikel. PDF (auto-detekterad
+   * på content-type eller %PDF-signatur — flera partier publicerar hela manifestet
+   * bara som PDF) textextraheras och chunkas per PDF_PAGES_PER_CHUNK sidor till en
+   * artikel per chunk med url `…#page=N`, eftersom A1/G5 tar max 5 löften per
+   * artikel. Extract-steget kör LLM A som vanligt. Så fångas skrivna manifest —
+   * som inte finns som RSS — automatiskt och löpande, i stället för manuell skörd.
    */
   private async fetchPage(
     feed: SourceFeed,
@@ -514,14 +651,19 @@ export class LiveSource implements ArticleSource {
       return [];
     }
 
-    const result = await this.fetchWithCache(feed.url, etagCache, {
-      Accept: "text/html,application/xhtml+xml",
+    const result = await this.fetchRawWithCache(feed.url, etagCache, {
+      Accept: "text/html,application/xhtml+xml,application/pdf",
     });
     if (!result) return [];
 
-    const titleMatch = result.text.match(/<title[^>]*>([^<]*)<\/title>/i);
+    if (looksLikePdf(result.contentType, result.bytes)) {
+      return this.pdfToArticles(feed, result.bytes);
+    }
+
+    const html = new TextDecoder("utf-8").decode(result.bytes);
+    const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
     const title = titleMatch ? stripHtml(titleMatch[1]!) : feed.id;
-    const text = stripHtml(result.text);
+    const text = stripHtml(html);
 
     return [{
       url: feed.url,
@@ -530,6 +672,31 @@ export class LiveSource implements ArticleSource {
       text,
       published: new Date().toISOString(),
     }];
+  }
+
+  private async pdfToArticles(feed: SourceFeed, bytes: Uint8Array): Promise<NormalizedArticle[]> {
+    const pdf = await extractPdfText(bytes);
+    const domain = extractDomain(feed.url);
+    const baseTitle = pdf.title ?? feed.id;
+    const published = pdf.published ?? new Date().toISOString();
+
+    const articles: NormalizedArticle[] = [];
+    for (let start = 0; start < pdf.pages.length; start += PDF_PAGES_PER_CHUNK) {
+      const chunkPages = pdf.pages.slice(start, start + PDF_PAGES_PER_CHUNK);
+      const singleChunk = pdf.pages.length <= PDF_PAGES_PER_CHUNK;
+      articles.push({
+        // #page=N är PDF:ens standard-djuplänk: klickbar källhänvisning till
+        // rätt sida, och gör chunkarnas url:er distinkta för dedup/seen.
+        url: singleChunk ? feed.url : `${feed.url}#page=${start + 1}`,
+        domain,
+        title: singleChunk
+          ? baseTitle
+          : `${baseTitle} (s. ${start + 1}–${start + chunkPages.length})`,
+        text: chunkPages.join("\n\n"),
+        published,
+      });
+    }
+    return articles;
   }
 
   private async fetchRiksdagen(
