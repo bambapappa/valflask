@@ -34,6 +34,15 @@ export interface NormalizedArticle {
   text: string;
   /** Källans publiceringstidpunkt, ISO 8601. */
   published: string;
+  /**
+   * SHA-256 av texten — sätts av page-källan (B). Går in i seen-nyckeln så att
+   * en OMSKRIVEN manifestsida/PDF processas om (löpande bevakning), medan
+   * oförändrat innehåll förblir sett. RSS/API-artiklar (stabil URL = stabil
+   * artikel) utelämnar fältet och dedupas som förut på enbart URL.
+   */
+  contentHash?: string;
+  /** Feed-typ ur sources.yaml — styr processprioritet i runPipeline. */
+  feedType?: "rss" | "riksdagen_api" | "page";
 }
 
 /** En kandidat ur LLM A:s svar (prompt A1). Speglar extraction.schema.json. */

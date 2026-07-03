@@ -1,9 +1,34 @@
 {
-  "purpose": "Manuellt återfunna skrivna löften (C via val2026.centerpartiet.se, MP via mp.se). Detta är facit/sanningsmängd för att validera page-källan (B). Kör B och jämför dess extraktion mot dessa citat + käll-URL:er. Hittar B ett löfte här = bra. Missar B ett löfte här = gräv i varför (LLM-extraktion, grind, eller sidan har ändrats).",
+  "purpose": "Manuellt återfunna skrivna löften ur partiernas officiella manifest/valplattformar/program. Detta är facit/sanningsmängd för att validera page-källan (B). Kör B och jämför dess extraktion mot dessa citat + käll-URL:er. Hittar B ett löfte här = bra. Missar B ett löfte här = gräv i varför (LLM-extraktion, grind, eller sidan har ändrats).",
   "created": "2026-07-02",
-  "note": "Citaten är verbatim som de stod på sidan när de återvanns. G3 (verbatim) kräver att texten finns ordagrant i den hämtade sidan. Om en sida skrivs om kan ett facit-löfte sluta matcha — det är förväntat och signalerar att löftet flyttat/ändrats, inte ett fel i B.",
-  "count": 21,
+  "note": "Citaten är verbatim som de stod i källan när de återvanns — verbatim mot PIPELINENS extraktion (för PDF: pdfjs-textlagret efter dehyphenering; pdf.js tappar mjuka bindestreck vid radslut, så t.ex. 'själv försörjning' kan förekomma som två ord — citat väljs så att de undviker sådana bryt). Om en källa skrivs om kan ett facit-löfte sluta matcha — det är förväntat och signalerar att löftet flyttat/ändrats, inte ett fel i B. Poster med id *-pdf-* är fångstmål för B:s PDF-väg (ännu ej publicerade löften — CI-körningen publicerar via LLM-extraktion + grindar), utan kostnadsfält, med pdf_page för återfinning. M/SD/KD saknar poster: de hade inget publicerat nationellt manifest 2026-07-03 — deras politiksidor bevakas av B (auto-följ av manifest-PDF-länkar) och facit utökas när dokumenten släpps.",
+  "count": 36,
   "sources": {
+    "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf": [
+      "s-pdf-01",
+      "s-pdf-02"
+    ],
+    "https://www.vansterpartiet.se/wp-content/uploads/2026/04/Preliminar-Valplattform-efter-beslut-pa-kongressen-2026.pdf": [
+      "v-pdf-01",
+      "v-pdf-02"
+    ],
+    "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf": [
+      "l-pdf-01",
+      "l-pdf-02"
+    ],
+    "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf": [
+      "mp-pdf-01",
+      "mp-pdf-02"
+    ],
+    "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf": [
+      "c-pdf-01",
+      "c-pdf-02",
+      "c-pdf-03",
+      "c-pdf-04",
+      "c-pdf-05",
+      "c-pdf-06",
+      "c-pdf-07"
+    ],
     "https://val2026.centerpartiet.se/": [
       "p-2026-0315",
       "p-2026-0316",
@@ -33,6 +58,186 @@
     ]
   },
   "entries": [
+    {
+      "id": "s-pdf-01",
+      "party": "s",
+      "category": "välfärd",
+      "source_url": "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf",
+      "source_domain": "socialdemokraterna.se",
+      "person": null,
+      "title": "Den orättvisa karensen ska bort",
+      "quote": "Den orättvisa karensen ska bort. Karensen straffar dig som jobbar hårt men inte kan jobba hemifrån.",
+      "pdf_page": 2,
+      "recovered_by": "all-party-manifests-2026-07-03"
+    },
+    {
+      "id": "s-pdf-02",
+      "party": "s",
+      "category": "försvar",
+      "source_url": "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf",
+      "source_domain": "socialdemokraterna.se",
+      "person": null,
+      "title": "Totalförsvaret ska byggas ut",
+      "quote": "Totalförsvaret ska byggas ut. Sveriges militära förmåga ska snabbt byggas upp. Vi vill se en omfattande upprustning och fler värnpliktiga.",
+      "pdf_page": 3,
+      "recovered_by": "all-party-manifests-2026-07-03"
+    },
+    {
+      "id": "v-pdf-01",
+      "party": "v",
+      "category": "välfärd",
+      "source_url": "https://www.vansterpartiet.se/wp-content/uploads/2026/04/Preliminar-Valplattform-efter-beslut-pa-kongressen-2026.pdf",
+      "source_domain": "vansterpartiet.se",
+      "person": null,
+      "title": "Höja pensionerna och genomföra en generell arbetstidsförkortning med bibehållen lön",
+      "quote": "Vänsterpartiet vill höja pensionerna, förbättra arbetsmiljön och genomföra en generell arbetstidsförkortning med bibehållen lön.",
+      "pdf_page": 3,
+      "recovered_by": "all-party-manifests-2026-07-03"
+    },
+    {
+      "id": "v-pdf-02",
+      "party": "v",
+      "category": "rättsväsende",
+      "source_url": "https://www.vansterpartiet.se/wp-content/uploads/2026/04/Preliminar-Valplattform-efter-beslut-pa-kongressen-2026.pdf",
+      "source_domain": "vansterpartiet.se",
+      "person": null,
+      "title": "Stärka polisen, socialtjänsten, elevhälsan och fritidsverksamheten",
+      "quote": "Vi vill stärka polisen, socialtjänsten, elevhälsan och fritidsverksamheten, satsa på avhopparstöd och bryta segregationen.",
+      "pdf_page": 2,
+      "recovered_by": "all-party-manifests-2026-07-03"
+    },
+    {
+      "id": "l-pdf-01",
+      "party": "l",
+      "category": "utbildning",
+      "source_url": "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf",
+      "source_domain": "liberalerna.se",
+      "person": null,
+      "title": "Maxtak på tjugo elever per klass med början i lågstadiet",
+      "quote": "Vi vill införa ett maxtak på tjugo elever per klass med början i lågstadiet.",
+      "pdf_page": 10,
+      "recovered_by": "all-party-manifests-2026-07-03"
+    },
+    {
+      "id": "l-pdf-02",
+      "party": "l",
+      "category": "skatter",
+      "source_url": "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf",
+      "source_domain": "liberalerna.se",
+      "person": null,
+      "title": "Kraftigt sänka den statliga inkomstskatten med målet att halvera den",
+      "quote": "Därför vill vi kraftigt sänka den statliga inkomstskatten på högre inkomster, med målet att halvera den.",
+      "pdf_page": 16,
+      "recovered_by": "all-party-manifests-2026-07-03"
+    },
+    {
+      "id": "mp-pdf-01",
+      "party": "mp",
+      "category": "klimat-miljö",
+      "source_url": "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf",
+      "source_domain": "mp.se",
+      "person": null,
+      "title": "Skärpa Sveriges långsiktiga klimatmål och införa en koldioxidbudget",
+      "quote": "Vi vill skärpa Sveriges långsiktiga klimatmål, bygga ut det klimatpolitiska ramverket med en koldioxidbudget samt sätta upp mål om att minska utsläppen från svensk konsumtion.",
+      "pdf_page": 6,
+      "recovered_by": "all-party-manifests-2026-07-03"
+    },
+    {
+      "id": "mp-pdf-02",
+      "party": "mp",
+      "category": "klimat-miljö",
+      "source_url": "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf",
+      "source_domain": "mp.se",
+      "person": null,
+      "title": "Påbörja avveckling av alla fossila subventioner under mandatperioden",
+      "quote": "Miljöpartiet vill påbörja avveckling av alla fossila subventioner under mandatperioden.",
+      "pdf_page": 7,
+      "recovered_by": "all-party-manifests-2026-07-03"
+    },
+    {
+      "id": "c-pdf-01",
+      "party": "c",
+      "category": "skatter",
+      "source_url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      "source_domain": "val2026.centerpartiet.se",
+      "person": null,
+      "title": "Sänk skatten för de som jobbar",
+      "quote": "Skatten ska sänkas särskilt för de med lägst inkomster så att det alltid och utan undantag lönar sig att gå från bidrag till jobb.",
+      "pdf_page": 13,
+      "recovered_by": "c-manifest-pdf-2026-07-03"
+    },
+    {
+      "id": "c-pdf-02",
+      "party": "c",
+      "category": "klimat-miljö",
+      "source_url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      "source_domain": "val2026.centerpartiet.se",
+      "person": null,
+      "title": "Fler elbilar snabbare: gör det billigare att ställa om",
+      "quote": "Snabbelektrifiera fordonsflottan och underlätta för vanliga hushåll att ha råd att byta bil och sänka sina kostnader och utsläpp genom en kraftfull elbilspremie, med bonus på 50 000 direkt vid köp",
+      "pdf_page": 25,
+      "recovered_by": "c-manifest-pdf-2026-07-03"
+    },
+    {
+      "id": "c-pdf-03",
+      "party": "c",
+      "category": "välfärd",
+      "source_url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      "source_domain": "val2026.centerpartiet.se",
+      "person": null,
+      "title": "Kapa vårdköer och ge alla en fast läkarkontakt",
+      "quote": "Ingen ska behöva vänta i månader eller år på vård. Bygg ut den nära vården och ge fler tillgång till rätt kompetens i tid.",
+      "pdf_page": 35,
+      "recovered_by": "c-manifest-pdf-2026-07-03"
+    },
+    {
+      "id": "c-pdf-04",
+      "party": "c",
+      "category": "infrastruktur",
+      "source_url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      "source_domain": "val2026.centerpartiet.se",
+      "person": null,
+      "title": "Investera 50 miljarder i landsbygderna under nästa mandatperiod",
+      "quote": "Investera 50 miljarder i landsbygderna under nästa mandatperiod Landsbygderna behöver en rejäl resursförstärkning för att stärka välfärden, bygga infrastruktur och säkra samhällsservicen i hela landet.",
+      "pdf_page": 51,
+      "recovered_by": "c-manifest-pdf-2026-07-03"
+    },
+    {
+      "id": "c-pdf-05",
+      "party": "c",
+      "category": "rättsväsende",
+      "source_url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      "source_domain": "val2026.centerpartiet.se",
+      "person": null,
+      "title": "Dubbla straffen för den som rekryterar barn till kriminalitet",
+      "quote": "Dubbla straffen för den som rekryterar barn till kriminalitet, men 13- och 14-åringar ska inte sitta i fängelse.",
+      "pdf_page": 61,
+      "recovered_by": "c-manifest-pdf-2026-07-03"
+    },
+    {
+      "id": "c-pdf-06",
+      "party": "c",
+      "category": "övrigt",
+      "source_url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      "source_domain": "val2026.centerpartiet.se",
+      "person": null,
+      "title": "Inför rätten till aktiv dödshjälp",
+      "quote": "Personer med en obotlig sjukdom och stort lidande bör få rätt till aktiv dödshjälp. Tillsätt en grundlig utredning om hur det ska utformas.",
+      "pdf_page": 73,
+      "recovered_by": "c-manifest-pdf-2026-07-03"
+    },
+    {
+      "id": "c-pdf-07",
+      "party": "c",
+      "category": "försvar",
+      "source_url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      "source_domain": "val2026.centerpartiet.se",
+      "person": null,
+      "title": "Stå upp för Ukraina och den fria världen",
+      "quote": "Stödet till Ukraina ska öka och ligga fast så länge det krävs. Ukraina måste vinna, för deras och vår säkerhet.",
+      "pdf_page": 85,
+      "recovered_by": "c-manifest-pdf-2026-07-03"
+    },
     {
       "id": "p-2026-0315",
       "party": "c",

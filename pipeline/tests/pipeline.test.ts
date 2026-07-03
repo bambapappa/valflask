@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 
 import type { LlmClient, LlmOptions } from "../src/llm.ts";
 import type { NormalizedArticle } from "../src/gates.ts";
-import { MemorySource } from "../src/fetch.ts";
+import { MemorySource, sha256 } from "../src/fetch.ts";
 import { mockArchive } from "../src/archive.ts";
 import { runPipeline, type PipelineContext } from "../src/index.ts";
 import type { PipelinePromise } from "../src/publish.ts";
@@ -364,6 +364,100 @@ describe("Process-budget: kapar nya artiklar, markerar bara bearbetade som sedda
       await runPipeline(makeContext(fixtures, tmp));
       const seen = JSON.parse(readFileSync(join(tmp, "seen.json"), "utf8")) as Record<string, string>;
       assert.equal(Object.keys(seen).length, 3);
+    } finally {
+      rmSync(tmp, { recursive: true });
+    }
+  });
+});
+
+describe("B: page-artiklar prioriteras och ändrat innehåll processas om", () => {
+  const noopLlm: LlmClient = { complete: async () => '{"promises":[]}' };
+
+  function pageArticle(text: string): NormalizedArticle {
+    return {
+      url: "https://www.zzz-partiet.se/valmanifest/",
+      domain: "zzz-partiet.se",
+      title: "Valmanifest",
+      text,
+      published: "2026-06-10T08:00:00Z",
+      contentHash: sha256(text),
+      feedType: "page",
+    };
+  }
+
+  test("page går före riksdagen inom maxNewArticles-budgeten", async () => {
+    // URL-mässigt sorterar riksdagen först — men manifestet (page) får aldrig
+    // svältas ut av flödesbrus, så prioriteten ska vinna över URL-ordningen.
+    const riksdagen: NormalizedArticle = {
+      url: "https://data.riksdagen.se/dokument/AAA",
+      domain: "data.riksdagen.se",
+      title: "Motion",
+      text: "x".repeat(50),
+      published: "2026-06-10T08:00:00Z",
+      feedType: "riksdagen_api",
+    };
+    const page = pageArticle("Vi lovar att bygga ut järnvägen i hela landet.");
+    const tmp = makeTmp();
+    try {
+      writeExistingPromises(tmp, []);
+      await runPipeline({
+        now: NOW,
+        runId: RUN_ID,
+        llm: noopLlm,
+        articleSource: new MemorySource([riksdagen, page]),
+        outputDir: tmp,
+        dataDir: tmp,
+        allowlist: ALLOWLIST,
+        mode: "review",
+        maxNewArticles: 1,
+        archiveFn: mockArchive,
+        models: { extract: "m", verify: "m", copy: "m" },
+      });
+      const urls = Object.values(
+        JSON.parse(readFileSync(join(tmp, "seen.json"), "utf8")) as Record<string, string>,
+      );
+      assert.deepEqual(urls, [page.url], "budgeten på 1 gick till page-artikeln");
+    } finally {
+      rmSync(tmp, { recursive: true });
+    }
+  });
+
+  test("oförändrad page hoppas över; omskriven processas om (löpande bevakning)", async () => {
+    let extractCalls = 0;
+    const countingLlm: LlmClient = {
+      complete: async () => {
+        extractCalls++;
+        return '{"promises":[]}';
+      },
+    };
+    const tmp = makeTmp();
+    try {
+      writeExistingPromises(tmp, []);
+      const base = {
+        now: NOW,
+        runId: RUN_ID,
+        llm: countingLlm,
+        outputDir: tmp,
+        dataDir: tmp,
+        allowlist: ALLOWLIST,
+        mode: "review" as const,
+        archiveFn: mockArchive,
+        models: { extract: "m", verify: "m", copy: "m" },
+      };
+      const v1 = pageArticle("Vi lovar att bygga ut järnvägen i hela landet.");
+
+      await runPipeline({ ...base, articleSource: new MemorySource([v1]) });
+      assert.equal(extractCalls, 1, "första körningen processar sidan");
+
+      await runPipeline({ ...base, articleSource: new MemorySource([v1]) });
+      assert.equal(extractCalls, 1, "oförändrat innehåll är sett — ingen omprocessning");
+
+      const v2 = pageArticle("Vi lovar att bygga ut järnvägen och dubbla underhållet.");
+      await runPipeline({ ...base, articleSource: new MemorySource([v2]) });
+      assert.equal(extractCalls, 2, "omskriven sida (ny contentHash) processas om");
+
+      const seen = JSON.parse(readFileSync(join(tmp, "seen.json"), "utf8")) as Record<string, string>;
+      assert.equal(Object.keys(seen).length, 2, "båda versionerna sedda under samma URL");
     } finally {
       rmSync(tmp, { recursive: true });
     }

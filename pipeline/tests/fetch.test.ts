@@ -15,6 +15,12 @@ import {
   loadEtagCache,
   saveEtagCache,
   LiveSource,
+  seenKey,
+  findManifestPdfLinks,
+  joinPdfLines,
+  parsePdfDate,
+  looksLikePdf,
+  PDF_PAGES_PER_CHUNK,
   type HttpFetchFn,
   type RobotsRule,
 } from "../src/fetch.ts";
@@ -411,7 +417,10 @@ describe("LiveSource med mock-HTTP", () => {
     assert.equal(callCount, 1, "En request för feeden");
   });
 
-  test("respekterar max_articles_per_run", async () => {
+  test("kapar INTE på fetch-nivå — budgeten ligger i runPipeline (maxNewArticles)", async () => {
+    // Den gamla globala slice(0, max) på fetch-nivå svalt feeds sent i listan
+    // (page-källorna = manifesten) innan dedup ens såg dem. LiveSource ska
+    // returnera ALLT; processbudgeten på NYA artiklar tillämpas i runPipeline.
     const rssXml = readFixture("party-rss.xml");
 
     const mockFetch: HttpFetchFn = async (url) => {
@@ -428,7 +437,7 @@ describe("LiveSource med mock-HTTP", () => {
     });
 
     const articles = await source.fetch();
-    assert.ok(articles.length <= 1, `Max 1 artikel: ${articles.length}`);
+    assert.ok(articles.length > 1, `Alla feedens artiklar returneras: ${articles.length}`);
   });
 
   test("skickar User-Agent och ETag-headers", async () => {
@@ -518,6 +527,223 @@ describe("LiveSource med mock-HTTP", () => {
     );
     assert.ok(articles[0]!.text.includes("korta köerna"), "ö avkodad");
     assert.ok(!articles[0]!.text.includes("&aring;"), "inga råa entiteter kvar");
+  });
+
+  test("stripHtml tar bort script/style/noscript-INNEHÅLL och kommentarer", () => {
+    const html =
+      "<html><head><style>.a{color:red}</style><script>var nonce='x9f2';</script></head>" +
+      "<body><!-- byggd 2026-07-03 --><p>Vi lovar fler poliser.</p>" +
+      "<noscript>Aktivera JS</noscript></body></html>";
+    const text = stripHtml(html);
+    assert.ok(text.includes("Vi lovar fler poliser."));
+    assert.ok(!text.includes("nonce"), "inline-skript borta (annars instabil contentHash + LLM-brus)");
+    assert.ok(!text.includes("color"), "style-innehåll borta");
+    assert.ok(!text.includes("Aktivera JS"), "noscript borta");
+    assert.ok(!text.includes("byggd 2026"), "HTML-kommentarer borta");
+  });
+
+  test("seenKey: page med nytt innehåll får ny nyckel, oförändrad samma", () => {
+    const v1 = { url: "https://x.se/manifest/", contentHash: sha256("text v1") };
+    const v2 = { url: "https://x.se/manifest/", contentHash: sha256("text v2") };
+    const rss = { url: "https://x.se/manifest/" };
+    assert.equal(seenKey(v1), seenKey({ ...v1 }), "samma innehåll ⇒ samma nyckel");
+    assert.notEqual(seenKey(v1), seenKey(v2), "ändrat innehåll ⇒ ny nyckel ⇒ omprocessas");
+    assert.equal(seenKey(rss), sha256(rss.url), "utan contentHash: som förut (RSS/API)");
+  });
+
+  test("page-källa hämtar PDF-manifest: text, dehyphenering, metadata", async () => {
+    // Centerpartiets valmanifest 2026 finns bara som PDF — page-källan måste
+    // auto-detektera och textextrahera den, annars faller hela dokumentet bort.
+    const pdfBytes = readFileSync(join(import.meta.dirname, "..", "fixtures", "pdf", "manifest-2p.pdf"));
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      return new Response(new Uint8Array(pdfBytes), {
+        status: 200,
+        headers: { "content-type": "application/pdf" },
+      });
+    };
+
+    const source = new LiveSource({
+      feeds: [{
+        id: "c-valmanifest-pdf",
+        type: "page",
+        url: "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 1, "2 sidor ≤ chunkstorleken ⇒ EN artikel");
+    const a = articles[0]!;
+    assert.equal(a.url, "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf", "en chunk ⇒ url utan #page-ankare");
+    assert.equal(a.domain, "val2026.centerpartiet.se");
+    assert.equal(a.title, "Valmanifest Testpartiet 2026", "Title ur PDF-metadata");
+    assert.equal(a.published, "2026-06-04T12:00:00.000Z", "published ur CreationDate");
+    assert.ok(
+      a.text.includes("anställa fler poliser i hela landet"),
+      `radslutsavstavning ihopsydd (po- + liser) och åäö avkodade: ${a.text}`,
+    );
+    assert.ok(a.text.includes("Sida två handlar om skatter"), "sida 2 med i texten");
+  });
+
+  test("PDF över chunkstorleken delas i #page-ankrade artiklar", async () => {
+    const pdfBytes = readFileSync(join(import.meta.dirname, "..", "fixtures", "pdf", "manifest-12p.pdf"));
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      // Utan content-type-header — %PDF-signaturen ska räcka för detektion.
+      return new Response(new Uint8Array(pdfBytes), { status: 200 });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "stort-manifest", type: "page", url: "https://sd.se/manifest.pdf" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 2, `12 sidor / ${PDF_PAGES_PER_CHUNK} per chunk = 2 artiklar`);
+    assert.equal(articles[0]!.url, "https://sd.se/manifest.pdf#page=1");
+    assert.equal(articles[1]!.url, "https://sd.se/manifest.pdf#page=11");
+    assert.equal(articles[0]!.title, "Stort manifest (s. 1–10)");
+    assert.equal(articles[1]!.title, "Stort manifest (s. 11–12)");
+    assert.ok(articles[0]!.text.includes("Löfte nummer 10"), "chunk 1 t.o.m. sida 10");
+    assert.ok(!articles[0]!.text.includes("Löfte nummer 11"), "sida 11 hör till chunk 2");
+    assert.ok(articles[1]!.text.includes("Löfte nummer 12"), "chunk 2 t.o.m. sista sidan");
+    assert.notEqual(sha256(articles[0]!.url), sha256(articles[1]!.url), "chunk-url:er dedupas separat");
+  });
+
+  test("findManifestPdfLinks: samma domän, .pdf + manifestnyckelord, relativa löses", () => {
+    const html =
+      '<a href="/download/18.abc/1771599906618/Valplattform.pdf">Ladda ner</a>' +
+      '<a href="https://www.testpartiet.se/wp-content/valmanifest-2026.pdf">Manifest</a>' +
+      '<a href="https://annandoman.se/valmanifest.pdf">Extern</a>' +
+      '<a href="/appresource/manifest.webmanifest">PWA</a>' +
+      '<a href="/rapporter/arsredovisning.pdf">Årsredovisning</a>';
+    const links = findManifestPdfLinks(html, "https://testpartiet.se/val-2026");
+    assert.deepEqual(links, [
+      "https://testpartiet.se/download/18.abc/1771599906618/Valplattform.pdf",
+      "https://www.testpartiet.se/wp-content/valmanifest-2026.pdf",
+    ], "relativ löst mot basen; extern domän, webmanifest och omatchad PDF exkluderade");
+  });
+
+  test("page-källa auto-följer manifest-PDF länkad från sidan", async () => {
+    // M/SD/KD har inte publicerat manifest ännu — när valsidan en dag länkar
+    // sin PDF ska B fånga den utan att någon registrerar en ny feed.
+    const pdfBytes = readFileSync(join(import.meta.dirname, "..", "fixtures", "pdf", "manifest-2p.pdf"));
+    const html =
+      "<html><head><title>Vår politik</title></head><body>" +
+      '<p>Nu finns hela valmanifestet att läsa.</p>' +
+      '<a href="/dokument/valmanifest-2026.pdf">Läs hela valmanifestet</a></body></html>';
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      if (url.endsWith("valmanifest-2026.pdf")) {
+        return new Response(new Uint8Array(pdfBytes), {
+          status: 200,
+          headers: { "content-type": "application/pdf" },
+        });
+      }
+      return new Response(html, { status: 200, headers: { "content-type": "text/html" } });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "parti-politik", type: "page", url: "https://testpartiet.se/politik/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+      now: () => new Date("2026-06-15T00:00:00Z"), // fixturens CreationDate är 2026-06-04
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 2, "sid-artikeln + den följda PDF:en");
+    assert.equal(articles[0]!.url, "https://testpartiet.se/politik/");
+    assert.equal(articles[1]!.url, "https://testpartiet.se/dokument/valmanifest-2026.pdf");
+    assert.ok(articles[1]!.text.includes("anställa fler poliser"), "PDF-texten extraherad");
+    assert.ok(articles[1]!.contentHash, "följd PDF ändringsbevakas via contentHash");
+  });
+
+  test("auto-följd PDF äldre än G4-fönstret hoppas över (förra valets manifest)", async () => {
+    // SD/KD:s politiksidor länkar 2022/2024-dokument. G4 hade stoppat publicering,
+    // men följ-steget ska inte ens spendera LLM-anrop eller review-poster på dem.
+    const pdfBytes = readFileSync(join(import.meta.dirname, "..", "fixtures", "pdf", "manifest-2p.pdf"));
+    const html =
+      '<html><head><title>Politik</title></head><body><p>Vår politik i sin helhet.</p>' +
+      '<a href="/dok/valmanifest.pdf">Valmanifest</a></body></html>';
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      if (url.endsWith(".pdf")) {
+        return new Response(new Uint8Array(pdfBytes), {
+          status: 200,
+          headers: { "content-type": "application/pdf" },
+        });
+      }
+      return new Response(html, { status: 200, headers: { "content-type": "text/html" } });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "parti-politik", type: "page", url: "https://testpartiet.se/politik/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+      now: () => new Date("2028-06-15T00:00:00Z"), // fixturens PDF (2026-06-04) är nu > 548 dygn
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 1, "bara sid-artikeln — den gamla PDF:en hoppas över");
+    assert.equal(articles[0]!.url, "https://testpartiet.se/politik/");
+  });
+
+  test("joinPdfLines: avstavning, hängande bindestreck och versal-sammansättning", () => {
+    assert.equal(
+      joinPdfLines(["korta vägen mellan arbets-", "marknaden och skolan"]),
+      "korta vägen mellan arbetsmarknaden och skolan",
+      "gemen avstavning sys ihop utan streck",
+    );
+    assert.equal(
+      joinPdfLines(["vi bygger ut vård-", "och omsorg"]),
+      "vi bygger ut vård-\noch omsorg",
+      "hängande bindestreck före konjunktion lämnas",
+    );
+    assert.equal(
+      joinPdfLines(["full tillgång till EU-", "medel och rösträtt"]),
+      "full tillgång till EU-medel och rösträtt",
+      "versal-sammansättning behåller strecket",
+    );
+    assert.equal(
+      joinPdfLines(["mjukt av­stavat ord", "", "nästa rad"]),
+      "mjukt avstavat ord\nnästa rad",
+      "soft hyphen INUTI rad bort, tomrader hoppas över",
+    );
+    assert.equal(
+      joinPdfLines(["en jobbtrappa till själv­", "försörjning och jobbkontrakt"]),
+      "en jobbtrappa till självförsörjning och jobbkontrakt",
+      "mjukt bindestreck SIST på raden = avstavning — sys ihop (S:s valplattform)",
+    );
+  });
+
+  test("parsePdfDate tolkar PDF-datum med och utan tidszon", () => {
+    assert.equal(parsePdfDate("D:20260604154527+02'00'"), "2026-06-04T13:45:27.000Z");
+    assert.equal(parsePdfDate("D:20260604120000Z"), "2026-06-04T12:00:00.000Z");
+    assert.equal(parsePdfDate("D:2026"), "2026-01-01T00:00:00.000Z", "utelämnade fält defaultar");
+    assert.equal(parsePdfDate("inte ett datum"), null);
+  });
+
+  test("looksLikePdf: content-type eller %PDF-signatur", () => {
+    const sig = new TextEncoder().encode("%PDF-1.7 …");
+    assert.ok(looksLikePdf("application/pdf", new Uint8Array()));
+    assert.ok(looksLikePdf("application/pdf; charset=binary", new Uint8Array()));
+    assert.ok(looksLikePdf(null, sig), "octet-stream med PDF-signatur");
+    assert.ok(!looksLikePdf("text/html", new TextEncoder().encode("<html>")));
   });
 
   test("hämtar riksdagen motioner via mock", async () => {

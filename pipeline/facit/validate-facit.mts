@@ -44,7 +44,15 @@ const source = new LiveSource({
 });
 
 const articles = await source.fetch();
-const textByUrl = new Map<string, string>(articles.map((a) => [a.url, normalizeForVerbatim(a.text)]));
+// PDF-feeds chunkas till flera artiklar med #page=N-ankare — slå ihop dem
+// under bas-URL:en så facit-citat kan sökas i hela dokumentet.
+const textByUrl = new Map<string, string>();
+for (const a of articles) {
+  const base = a.url.replace(/#.*$/u, "");
+  const prev = textByUrl.get(base);
+  const norm = normalizeForVerbatim(a.text);
+  textByUrl.set(base, prev ? `${prev} ${norm}` : norm);
+}
 
 let hits = 0;
 let misses = 0;
