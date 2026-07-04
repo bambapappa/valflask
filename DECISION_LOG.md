@@ -574,3 +574,13 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Förkastade alternativ:** förlänga token-TTL (går inte — GitHubs tak är 1 h); minska maxNewArticles så körningen hinner (angriper symptomet, gör backloggen långsammare); pusha data i delsteg under körningen (komplext, halvfärdiga körningar på main).
 
 **Påverkan:** `.github/workflows/pipeline.yml` (nytt steg `Mint fresh push token`, commit-steget använder den). Ingen pipelinekod ändrad.
+
+## 2026-07-04 — Per-enhetsbelopp får aldrig bli totalkostnad (rättning av p-2026-0337)
+
+**Bakgrund:** Körning 28686833837 auto-publicerade L-löftet p-2026-0337 ("jämställdhetsbonus på 30 000 kronor per barn") med totalkostnad **0,03 msek = 30 000 kr**. Extraktionen satte `amount_in_text_msek = 0.03` (beloppet står ju i texten) och kostnadssteget behandlade varje källtextbelopp som löftets totalkostnad (basis "parti", confidence 0,7 ⇒ auto-publish). R5 kapar bara orimligt HÖGA belopp — inget fångade ett orimligt lågt.
+
+**Beslut 1 — kodfix i cost.ts:** basis "parti" kräver nu att beloppet inte ser ut som per-enhetspris/tröskel: (a) `looksLikeUnitAmount(quote)` — "per barn/person/elev/…", "i månaden/veckan/timmen" osv. i citatet (medvetet EJ "per år": totalkostnader anges ofta så); (b) golv `PARTI_AMOUNT_FLOOR_MSEK = 50` — ett nationellt löfte under 50 msek är nästan alltid ett enhetspris eller tröskelvärde (300 000 kr på ISK, 1500 kr leasing). Faller något av villkoren går beloppet LLM-estimat-vägen, som per §8 ALLTID hamnar i review. 4 nya tester (156 gröna).
+
+**Beslut 2 — datarättning:** p-2026-0337 rättad i data (ägarbeslut i session): spann 500/1 000/2 000 msek/år, basis llm_estimat, confidence 0,9, method_note med uträkningen (~20–40 000 lika-delande föräldrapar/år × 30 000 kr + öronmärkt fjärde månad); quip omskriven (refererade gamla prislappen). Changelog-post `manual-cost-correction-2026-07-04` med omräknad data_hash (via publish.ts `computeDataHash`). T7 grönt.
+
+**Förkastade alternativ:** retracta löftet (löftet är äkta och verbatim — bara kostnaden var fel; rättning + audit-spår är ärligare än att ta bort); golv på 1 msek (för lågt — 30 msek-"totaler" är oftast också enhetsbelopp/deltrösklar, och review kostar bara en granskning); låta LLM:en avgöra om beloppet är per enhet (grindar ska vara deterministisk kod, §7).

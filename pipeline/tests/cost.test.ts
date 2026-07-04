@@ -30,6 +30,40 @@ describe("estimateCost", () => {
     assert.equal(c.msek_high, 1350);
   });
 
+  it("per-enhetsbelopp i citatet auto-publiceras ALDRIG som totalkostnad (p-2026-0337)", async () => {
+    // "30 000 kronor per barn" extraherades som 0.03 msek och publicerades som
+    // hela löftets prislapp. Sådana belopp ska till LLM-estimat ⇒ review (§8).
+    const c = await estimateCost({
+      ...cand(0.03),
+      quote:
+        "Därför vill vi införa en ny jämställdhetsbonus på 30 000 kronor per barn när du och din partner delar lika på föräldraledigheten.",
+    });
+    assert.equal(c.basis, "llm_estimat", "per-enhetspris får inte bli basis parti");
+    assert.ok(c.confidence < 0.6, "hamnar under auto-publiceringströskeln");
+  });
+
+  it("belopp under golvet (50 msek) utan enhetsfras går också till estimat", async () => {
+    const c = await estimateCost(cand(30));
+    assert.equal(c.basis, "llm_estimat", "30 msek är misstänkt litet för ett nationellt löfte");
+  });
+
+  it("'per år' är INTE en enhetsfras — äkta totalbelopp per år behåller basis parti", async () => {
+    const c = await estimateCost({
+      ...cand(12000),
+      quote: "Vi satsar 12 miljarder kronor per år på järnvägsunderhåll i hela landet.",
+    });
+    assert.equal(c.basis, "parti");
+    assert.equal(c.msek_base, 12000);
+  });
+
+  it("'i månaden' i citatet stoppar parti-basis även för stora belopp", async () => {
+    const c = await estimateCost({
+      ...cand(499),
+      quote: "Med vårt Sverigekort reser du för 499 kronor i månaden på all kollektivtrafik.",
+    });
+    assert.equal(c.basis, "llm_estimat");
+  });
+
   it("utan belopp och utan LLM → platshållare med låg confidence", async () => {
     const c = await estimateCost(cand(null));
     assert.equal(c.basis, "llm_estimat");
