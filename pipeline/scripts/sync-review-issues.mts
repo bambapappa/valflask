@@ -104,13 +104,13 @@ function issueBody(entry: ReviewCandidate, id: string): string {
     for (const r of reasons) lines.push(`- ${r}`);
     lines.push("");
   }
-  lines.push(`### Ditt beslut (kommentera)`);
-  lines.push("| Beslut | Kommando |");
-  lines.push("|---|---|");
-  lines.push("| ✅ Ja | `/godkänn` |");
-  lines.push("| ✏️ Ja, med ändrat belopp | `/godkänn <low> <base> <high>` (msek) |");
-  if (entry.duplicateOf) lines.push(`| 🔗 Ja, länka som dublett | \`/godkänn --group ${entry.duplicateOf}\` |`);
-  lines.push("| ❌ Nej | `/avvisa <skäl>` |");
+  lines.push(`### Ditt beslut`);
+  lines.push("| Beslut | Snabbast (etikett — funkar i bulk från listvyn) | Kommentar |");
+  lines.push("|---|---|---|");
+  lines.push("| ✅ Ja | sätt `beslut:godkänn` | `/godkänn` |");
+  lines.push("| ✏️ Ja, med ändrat belopp | — | `/godkänn <low> <base> <high>` (msek) |");
+  if (entry.duplicateOf) lines.push(`| 🔗 Ja, länka som dublett | — | \`/godkänn --group ${entry.duplicateOf}\` |`);
+  lines.push("| ❌ Nej | sätt `beslut:avvisa` | `/avvisa <skäl>` |");
   lines.push("");
   lines.push(`<sub>review-id \`${id}\` · beslutet exekveras av review-workflown och committas till main — full spårbarhet i git + detta issue.</sub>`);
   return lines.join("\n");

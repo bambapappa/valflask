@@ -1,0 +1,82 @@
+name: review-apply
+# Etikettbeslut ("knappen"/bulk): beslut:godkänn eller beslut:avvisa på
+# review-kö-issues exekveras här. Etiketter kan bulk-appliceras i issuelistans
+# vy — markera många issues → Label → beslut:godkänn — och kan bara sättas av
+# användare med triage-behörighet (= ägaren), så etiketten ÄR auktorisationen.
+#
+# Svepet är idempotent (tar ALLA etikettbeslut varje körning) — därför är
+# concurrency-koalesceringen ofarlig: slängda köade körningar förlorar inget,
+# det överlevande svepet tar allt. Datamutation sker FÖRE push (och görs om
+# från färsk main tills pushen lyckas); issue-kommentarer/stängningar sker
+# EFTER lyckad push, så ett beslut kan aldrig se bekräftat ut utan att datan
+# faktiskt landat.
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: review-apply
+  cancel-in-progress: false
+jobs:
+  sweep:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.label.name, 'beslut:')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+        with:
+          ref: main
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: true
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4.4.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Apply decisions and push (omgörs från färsk main tills push lyckas)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          NOTIFY_FILE: ${{ runner.temp }}/notify.json
+        run: |
+          git config user.name "drygast-bot"
+          git config user.email "bot@drygast.nu"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main && git reset --hard origin/main
+            (cd pipeline && node --import tsx/esm scripts/apply-labeled-decisions.mts apply)
+            git add data/
+            if git diff --cached --quiet; then
+              echo "Inga dataändringar (inga etikettbeslut att exekvera)."
+              exit 0
+            fi
+            git commit -m "data: review etikettbeslut (svep)"
+            if git push; then
+              echo "Push lyckades (försök $attempt)."
+              exit 0
+            fi
+            echo "Push-försök $attempt misslyckades (main gick vidare) — gör om från färsk main..."
+            sleep $((attempt * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
+      - name: Notify issues (efter lyckad push)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          NOTIFY_FILE: ${{ runner.temp }}/notify.json
+        run: |
+          if [ -s "$NOTIFY_FILE" ]; then
+            (cd pipeline && node --import tsx/esm scripts/apply-labeled-decisions.mts notify)
+          else
+            echo "Inga notifieringar planerade."
+          fi
