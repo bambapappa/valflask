@@ -4616,5 +4616,1130 @@
       "confidence": 0.6
     },
     "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fast namngiven läkare på vårdcentralen",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "alla ska ha en fast namngiven läkare på vårdcentralen.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf",
+    "articleTitle": "s-valmanifest"
+  },
+  {
+    "candidate": {
+      "title": "Satsa på fler lärare och mindre klasser",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "vi vill satsa på fler lärare och mindre klasser.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf",
+    "articleTitle": "s-valmanifest"
+  },
+  {
+    "candidate": {
+      "title": "Plånbokslöfte med höjt barnbidrag, billigare mediciner och avgiftsfri tandvård",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi ska ge tillbaka det du förlorat med ett plånbokslöfte: höjt barn- och studiebidrag, billigare mediciner, avgiftsfri tandvård för unga, hårdare press på banker och matkedjor och starkare skydd mot höga elpriser för villaägare.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf",
+    "articleTitle": "s-valmanifest",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 15000,
+      "msek_high": 40000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Sammansatt löfte med höjda bidrag (barn- och studiebidrag), subventioner (medicin, tandvård) och elprisskydd. Storleksordning från jämförbara reformer: barnbidragshöjning 2–10 mdkr, läkemedel 1–5 mdkr",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ta bort den orättvisa karensen",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Den orättvisan vill vi ta bort.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf",
+    "articleTitle": "s-valmanifest",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 4500,
+      "msek_high": 7000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på tidigare förslag om slopad karens, staten ersätter arbetsgivare för förlorad arbetsinkomst dag 1.",
+      "confidence": 0.5
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Omfattande upprustning och fler värnpliktiga",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill se en omfattande upprustning och fler värnpliktiga.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf",
+    "articleTitle": "s-valmanifest",
+    "duplicateOf": "p-2026-0021"
+  },
+  {
+    "candidate": {
+      "title": "Omedelbart förbjuda aktivklubbar",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Aktivklubbar ska omedelbart förbjudas.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Höjt barn- och studiebidrag, billigare mediciner och avgiftsfri tandvård för unga",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi ska ge tillbaka det du förlorat med ett plånbokslöfte: höjt barn- och studiebidrag, billigare mediciner, avgiftsfri tandvård för unga, hårdare press på banker och matkedjor och starkare skydd mot höga elpriser för villaägare.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "(denna körning)"
+  },
+  {
+    "candidate": {
+      "title": "Ta bort karensavdraget",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Det handlar om flera tusen kronor varje år för en polis, undersköterska eller lärare. Den orättvisan vill vi ta bort.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4000,
+      "msek_base": 5500,
+      "msek_high": 8000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på ca 4-5 miljoner sjukfall per år, genomsnittlig dagsersättning ca 1000 kr, samt viss ökad sjukfrånvaro vid slopat karensavdrag.",
+      "confidence": 0.6
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Förbjuda religiösa friskolor",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill förbjuda religiösa friskolor.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0015"
+  },
+  {
+    "candidate": {
+      "title": "Snabbt bygga upp Sveriges militära förmåga",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Sveriges militära förmåga ska snabbt byggas upp.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0020"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta ett omfattande marint skyddsområde i Arktis",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Morgan Johansson",
+        "role": "riksdagsledamot (S)"
+      },
+      "quote": "Sverige ska verka för inrättandet av ett omfattande marint skyddsområde i Arktis för att stärka skyddet av regionens marina miljö och långsiktiga stabilitet",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024203",
+    "articleTitle": "med anledning av skr. 2025/26:268 Sveriges strategi för ett fredligt, säkert och hållbart Arktis",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ökade anslag till Arktisforskning och diplomati. Baserat på nuvarande polarforskningsbudget (~50 msek/år) och antagande om 20-100% ökning för marint skydd.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Begränsa och på sikt förbjuda ny olje- och gasutvinning i Arktis",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Morgan Johansson",
+        "role": "riksdagsledamot (S)"
+      },
+      "quote": "Sverige ska verka för att ny olje- och gasutvinning i Arktis begränsas och på sikt förbjuds i enlighet med försiktighetsprincipen",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024203",
+    "articleTitle": "med anledning av skr. 2025/26:268 Sveriges strategi för ett fredligt, säkert och hållbart Arktis",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 2,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser internationellt påverkansarbete utan specificerad budget. Kostnaden antas vara liten och ryms inom befintliga anslag för diplomati och miljösamarbeten.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Klimatkrisen och Parisavtalet ska styra Sveriges Arktispolitik",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Riksdagen ställer sig bakom det som anförs i motionen om att klimatkrisen, Parisavtalet och skyddet för biologisk mångfald ska vara styrande för Sveriges Arktispolitik och tillkännager detta för regeringen.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024204",
+    "articleTitle": "med anledning av skr. 2025/26:268 Sveriges strategi för ett fredligt, säkert och hållbart Arktis",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 50,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande om ökade anslag till Arktisrelaterad klimatforskning, miljöövervakning och skydd av biologisk mångfald, baserat på storleksordningar för liknande riktade satsningar.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Folkrätten och mänskliga rättigheter ska ges styrande roll i Arktispolitiken",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "folkrätten, de mänskliga rättigheterna, urfolks rättigheter, demokrati och rättsstatens principer ska ges en tydligare och mer styrande roll i Sveriges Arktispolitik",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024204",
+    "articleTitle": "med anledning av skr. 2025/26:268 Sveriges strategi för ett fredligt, säkert och hållbart Arktis",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp; kostnad för förstärkt Arktispolitik (diplomati, urfolksstöd) antas ligga i tiotals miljoner kronor per år, med stor osäkerhet.",
+      "confidence": 0.2
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ekonomisk utveckling i Arktis ska följa Agenda 2030 och miljöprövning",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "ekonomisk utveckling, infrastruktur, sjöfart och nyttjande av naturresurser i Arktis ska ske inom ramen för Agenda 2030, stark miljöprövning, cirkulär ekonomi och reellt inflytande för urfolk och lokalsamhällen",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024204",
+    "articleTitle": "med anledning av skr. 2025/26:268 Sveriges strategi för ett fredligt, säkert och hållbart Arktis",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 80,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande om ökade förvaltningskostnader för miljöprövning, urfolksinflytande och Agenda 2030-arbete i Arktis, baserat på jämförbara myndighetsanslag.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Förbjud all fossil utvinning i Arktis",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet anser därför att Sverige ska verka för att all utvinning av fossila bränslen förbjuds i Arktis och i haven utanför Arktis.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024204",
+    "articleTitle": "med anledning av skr. 2025/26:268 Sveriges strategi för ett fredligt, säkert och hållbart Arktis",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 2,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet innebär endast diplomatiskt påverkansarbete. Kostnaden avser marginellt ökade resurser för utrikesförvaltningen, utan direkta statsfinansiella åtaganden.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Sverige ska verka för bred säkerhetssyn i Arktiska rådet",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Inför Sveriges kommande ordförandeskap i Arktiska rådet 2027–2029 bör regeringen därför verka för att rådet arbetar utifrån en bred syn på säkerhet, där klimat, miljö, biologisk mångfald, miljöövervakning, forskning, urfolks deltagande och hållbar utveckling ges hög prioritet.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024204",
+    "articleTitle": "med anledning av skr. 2025/26:268 Sveriges strategi för ett fredligt, säkert och hållbart Arktis",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande om merkostnad för bredare agenda under ordförandeskapet, baserat på tidigare ordförandeskapskostnader om ca 30 mkr totalt. Löftet saknar precisering, stor osäkerhet.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Införa särskild uppgift om ömsesidigt stöd mellan Försvarsmakten och UND",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Håkan Svenneling",
+        "role": "riksdagsledamot (V)"
+      },
+      "quote": "För att möjliggöra ett ändamålsenligt ömsesidigt stöd mellan Försvarsmakten och UND bör regeringen införa en särskild uppgift rörande detta i respektive myndighets instruktion.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024206",
+    "articleTitle": "med anledning av prop. 2025/26:290 Sveriges utrikes underrättelsetjänst",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Instruktionsändring är en förordningstext utan budgetpåverkan. Inga nya anslag behövs, arbetet ryms inom ordinarie förvaltning.",
+      "confidence": 0.65
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Införa ett underrättelseutskott i riksdagen enligt finsk modell",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Håkan Svenneling",
+        "role": "riksdagsledamot (V)"
+      },
+      "quote": "Sverige bör införa ett särskilt underrättelseutskott i riksdagen enligt finsk modell för att öka den parlamentariska insynen i underrättelsetjänsternas arbete.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024206",
+    "articleTitle": "med anledning av prop. 2025/26:290 Sveriges utrikes underrättelsetjänst",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande baserat på kostnaderna för befintliga riksdagsutskott (10–30 msek/år) samt tillägg för högre säkerhetskrav och specialistpersonal. Osäkerhet om exakt bemanning och resursbehov.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Utreda inrättandet av en Underrättelseombudsman",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Håkan Svenneling",
+        "role": "riksdagsledamot (V)"
+      },
+      "quote": "Regeringen bör utreda formerna för en Underrättelseombudsman.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024206",
+    "articleTitle": "med anledning av prop. 2025/26:290 Sveriges utrikes underrättelsetjänst",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 2,
+      "msek_base": 5,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för en statlig utredning, baserat på typisk kommittébudget för en liknande översyn.",
+      "confidence": 0.5
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Säkerställa tydlig ansvarsfördelning och resurser för underrättelsetjänster",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Jacob Risberg",
+        "role": "Riksdagsledamot"
+      },
+      "quote": "Riksdagen ställer sig bakom det som anförs i motionen om att regeringen bör säkerställa en tydlig ansvarsfördelning, fungerande samordning och tillräckliga resurser mellan Sveriges utrikes underrättelsetjänst, Försvarsmakten, Försvarets radioanstalt, Säkerhetspolisen och andra berörda myndigheter och tillkännager detta för regeringen.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024208",
+    "articleTitle": "med anledning av prop. 2025/26:290 Sveriges utrikes underrättelsetjänst",
+    "verifyReason": "Källtexten är en kommittémotion med ett yrkande till riksdagen, inte ett vallöfte eller ett åtagande från partiet till väljarna. Förslaget riktar sig till regeringen med 'bör säkerställa' och saknar konkret belopp."
+  },
+  {
+    "candidate": {
+      "title": "Säkerställa resurser för tillsyn över utrikes underrättelsetjänst",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Jacob Risberg",
+        "role": "Riksdagsledamot"
+      },
+      "quote": "Riksdagen ställer sig bakom det som anförs i motionen om att regeringen bör säkerställa att Statens inspektion för utrikesunderrättelseverksamhet och Integritetsskyddsmyndigheten har tillräckliga resurser för tillsyn över Sveriges utrikes underrättelsetjänst och tillkännager detta för regeringen.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024208",
+    "articleTitle": "med anledning av prop. 2025/26:290 Sveriges utrikes underrättelsetjänst",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 80,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning baserad på kostnader för liknande tillsynsmyndigheter. Löftet saknar belopp, varför spannet är brett. Låg siffra motsvarar marginell förstärkning, hög siffra en betydande utökning av pers",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Pröva insynsråd för demokratisk insyn i utrikes underrättelsetjänst",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Jacob Risberg",
+        "role": "Riksdagsledamot"
+      },
+      "quote": "Riksdagen ställer sig bakom det som anförs i motionen om att regeringen bör pröva formerna för ett insynsråd eller motsvarande ordning för demokratisk insyn i Sveriges utrikes underrättelsetjänst och tillkännager detta för regeringen.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024208",
+    "articleTitle": "med anledning av prop. 2025/26:290 Sveriges utrikes underrättelsetjänst",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1,
+      "msek_base": 3,
+      "msek_high": 15,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En statlig utredning kostar vanligen 1–15 Mkr. Antar att prövning av insynsråd ryms inom detta spann.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Säkerställa strikta skyddsåtgärder vid direktåtkomst för utländska underrättelsetjänster",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Jacob Risberg",
+        "role": "Riksdagsledamot"
+      },
+      "quote": "Riksdagen ställer sig bakom det som anförs i motionen om att regeringen bör säkerställa särskilt strikta skyddsåtgärder vid direktåtkomst för utländska underrättelse- eller säkerhetstjänster och tillkännager detta för regeringen.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024208",
+    "articleTitle": "med anledning av prop. 2025/26:290 Sveriges utrikes underrättelsetjänst",
+    "verifyReason": "Citatet är ett yrkande i en motion till riksdagen, inte ett vallöfte till väljarna. Det är en konkret lagstiftningsframförande där riksdagen rekommenderar regeringen att vidta åtgärder, inte ett kampanjlöfte. Inget belopp anges i det aktuella yrkandet."
+  },
+  {
+    "candidate": {
+      "title": "Slopad mängdrabatt och straffminst baserat på de tre allvarligaste brotten",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Den som blir fälld för flera brott ska inte kunna få någon mängdrabatt för att få kortare fängelsestraff. Straffet ska minst motsvara de tre allvarligaste brottens straffvärde.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/brottsoffren-i-fokus-i-reformen-for-nya-straffskalor",
+    "articleTitle": "Brottsoffren i fokus i reformen för nya straffskalor",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 600,
+      "msek_base": 1500,
+      "msek_high": 3000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Utgår från att slopad mängdrabatt enligt tidigare politiska beräkningar kostar ca 1,5 mdkr per år för Kriminalvården; osäkerhet kring tre-brottsregelns tilläggseffekt ger brett spann.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Tak på högst 20 elever per klass i lågstadiet",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi vill bland annat införa ett tak på högst 20 elever per klass med början i lågstadiet.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-friheten-borjar-i-klassrummet",
+    "articleTitle": "Liberalerna: friheten börjar i klassrummet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 750,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar 360k elever i lågstadiet, snitt 21,5 elever/klass idag => 1256 nya klasser, lärarkostnad 600 tkr/år, lokaler exkluderade.",
+      "confidence": 0.5
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Höjda lärarlöner och stärkt ställning för lärare",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi vill höja lärarlönerna, stärka lärarnas ställning och ge dem ett tydligare mandat i klassrummet.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-friheten-borjar-i-klassrummet",
+    "articleTitle": "Liberalerna: friheten börjar i klassrummet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattar antal lärare till ca 100 000. Löneökning från 2 000 till 10 000 kr/mån, brutto. Staten antas finansiera hela höjningen via riktade bidrag. Jämförbart med tidigare lärarlönelyft (3 mdkr/år f",
+      "confidence": 0.5
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Skattefritt ISK-sparande upp till 500 000 kronor",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi föreslår bland annat att sparande på investeringssparkonto (ISK) ska vara skattefritt upp till 500 000 kronor.",
+      "category": "skatter",
+      "amount_in_text_msek": 0.5,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-friheten-borjar-i-klassrummet",
+    "articleTitle": "Liberalerna: friheten börjar i klassrummet",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 4500,
+      "msek_high": 9000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar 3,5 milj ISK-sparare, snittskatt 1%, skattefri del upp till 500k/pers. Osäker kapitalfördelning ger spann 2-9 mdkr.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Bekämpa gängkriminalitet med skärpta straff och fler poliser",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Därför vill vi fortsätta bekämpa gängkriminaliteten med skärpta straff, fler lokala poliser och kraftfulla åtgärder mot den kriminella ekonomin.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-friheten-borjar-i-klassrummet",
+    "articleTitle": "Liberalerna: friheten börjar i klassrummet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på antaganden om utökning av polispersonal och kriminalvårdskostnader vid skärpta straff, med stora osäkerheter i omfattning.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Minska skärmanvändningen i skolan och stärka läsningen",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi vill fortsätta arbetet med att minska skärmanvändningen i skolan och stärka läsningen.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-friheten-borjar-i-klassrummet",
+    "articleTitle": "Liberalerna: friheten börjar i klassrummet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar riktade statsbidrag för fysiska läromedel, fortbildning och skolbibliotek. Stor osäkerhet pga vagt löfte, baserat på tidigare läslyftssatsningar i hundratals miljoner.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Liberalerna kräver första steg mot halverad statlig inkomstskatt från 1 januari nästa år",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Om Tidöpartierna får väljarnas förtroende i valet i höst kommer Liberalerna att kräva att ett första steg mot en halverad statlig inkomstskatt genomförs redan från den 1 januari nästa år.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-kraver-sankt-statlig-inkomstskatt",
+    "articleTitle": "Liberalerna kräver sänkt statlig inkomstskatt",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 6000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ett första steg mot halverad statlig skatt kan innebära sänkt skattesats (ex. 2–5 procentenheter) eller höjd brytpunkt. Uppskattning utifrån att full halvering kostar ca 30 mdkr.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Simona Mohamsson: Sverige ska vara EU:s smartaste land inom tio år",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "Partiledare för Liberalerna"
+      },
+      "quote": "Jag vill att Sverige ska vara EU:s smartaste land inom tio år genom satsningar på skola, forskning och genom att avskaffa straffskatten på utbildning,",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-kraver-sankt-statlig-inkomstskatt",
+    "articleTitle": "Liberalerna kräver sänkt statlig inkomstskatt",
+    "duplicateOf": "p-2026-0093"
+  },
+  {
+    "candidate": {
+      "title": "Återinföra jämställdhetsbonus på 30 000 kr per barn",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Återinföra en jämställdhetsbonus på 30 000 kronor per barn för föräldrar som delar lika på föräldraledigheten.",
+      "category": "välfärd",
+      "amount_in_text_msek": 0.03,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/livspusselfeminism-okad-frihet-i-vardagen",
+    "articleTitle": "Livspusselfeminism: ökad frihet i vardagen",
+    "duplicateOf": "p-2026-0337"
+  },
+  {
+    "candidate": {
+      "title": "Införa barnavdrag på 10 000 kr per barn och år",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Införa ett barnavdrag på 10 000 kronor per barn och år och sänka skatten på arbete.",
+      "category": "skatter",
+      "amount_in_text_msek": 0.01,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/livspusselfeminism-okad-frihet-i-vardagen",
+    "articleTitle": "Livspusselfeminism: ökad frihet i vardagen",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 15000,
+      "msek_high": 20000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar 2 miljoner barn 0-17 år. Icke-refunderbart avdrag, utnyttjandegrad 50-100%. Osäker åldersgräns och konstruktion.",
+      "confidence": 0.5
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ge gratis fritidskort i kollektivtrafiken för barn och unga",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Ge gratis fritidskort i kollektivtrafiken för barn och unga.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/livspusselfeminism-okad-frihet-i-vardagen",
+    "articleTitle": "Livspusselfeminism: ökad frihet i vardagen",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 800,
+      "msek_base": 1200,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning baserad på antal barn/unga, genomsnittligt antal fritidsresor och utebliven biljettintäkt efter befintlig subvention. Osäkerhet kring åldersgräns och regional täckning.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Skattefritt sparande på ISK upp till 500 000 kr",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Införa skattefritt sparande på investeringssparkonto (ISK) upp till 500 000 kronor.",
+      "category": "skatter",
+      "amount_in_text_msek": 0.5,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/livspusselfeminism-okad-frihet-i-vardagen",
+    "articleTitle": "Livspusselfeminism: ökad frihet i vardagen",
+    "duplicateOf": "(denna körning)"
+  },
+  {
+    "candidate": {
+      "title": "Införa småbarns-RUT med 70 % avdrag",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Införa ett nytt småbarns-RUT för familjer med barn under tolv år, med 70 procents avdrag på arbetskostnaden för exempelvis städning, barnpassning och annan avlastning i hemmet.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/livspusselfeminism-okad-frihet-i-vardagen",
+    "articleTitle": "Livspusselfeminism: ökad frihet i vardagen",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 800,
+      "msek_base": 2000,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning utifrån antal hushåll med barn under 12 år, antagande om 20-30% användning, genomsnittlig arbetskostnad 20 000 kr/år och 70% avdrag. Jämförs med tidigare familje-RUT-förslag.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Bygg klimatsmart kärnkraft",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "utbildningsminister"
+      },
+      "quote": "Vi ska bygga klimatsmart kärnkraft som producerar el året om.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/nyheter/simona-mohamssons-tal-i-almedalen-2026",
+    "articleTitle": "Simona Mohamssons tal i Almedalen 2026"
+  },
+  {
+    "candidate": {
+      "title": "Sänk statlig inkomstskatt vid årsskiftet",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "utbildningsminister"
+      },
+      "quote": "Den statliga inkomstskatten måste sänkas senast vid årsskiftet!",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/simona-mohamssons-tal-i-almedalen-2026",
+    "articleTitle": "Simona Mohamssons tal i Almedalen 2026",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 10000,
+      "msek_high": 40000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ospecificerad sänkning av statlig inkomstskatt. Antagande: antingen sänkt skattesats (20 %) eller höjd brytpunkt. Kostnadsspann från en mindre justering (ca 2 mdkr) till en halvering av intäkten (ca 4",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Öka skattefritt sparande",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "utbildningsminister"
+      },
+      "quote": "Och storleken på det skattefria sparandet öka.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/simona-mohamssons-tal-i-almedalen-2026",
+    "articleTitle": "Simona Mohamssons tal i Almedalen 2026",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 500,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar höjt skattefritt sparande, t.ex. nytt ISK-avdrag. Kostnaden beräknas som utebliven kapitalinkomstskatt vid olika sparnivåer och antaganden om antal sparare.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Inför spetsutbildningar och hjälpklasser i skolan",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "utbildningsminister"
+      },
+      "quote": "Mitt svar är spetsutbildning för eleven som nått långt i matematiken och hjälpklass för klasskamraten som behöver mer stöd av specialläraren.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/simona-mohamssons-tal-i-almedalen-2026",
+    "articleTitle": "Simona Mohamssons tal i Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning baserad på antaganden om antal spetsklasser (ca 100) och speciallärare (ca 500-1000), med lönekostnader. Stor osäkerhet om omfattning och implementering.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Inför euron för att stärka handeln",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "utbildningsminister"
+      },
+      "quote": "För att stärka handeln med Europa måste också euron införas.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/simona-mohamssons-tal-i-almedalen-2026",
+    "articleTitle": "Simona Mohamssons tal i Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 10000,
+      "msek_base": 18000,
+      "msek_high": 30000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Engångskostnad för övergång till euro, baserat på internationella erfarenheter om ca 0,3% av BNP, vilket för Sverige ger ett intervall på 10–30 mdkr.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Minskad politisk detaljstyrning och stärkt samspel mellan privat och offentlig finansiering i filmpolitiken",
+      "parties": [
+        "l",
+        "m",
+        "kd",
+        "sd"
+      ],
+      "person": null,
+      "quote": "Den politiska detaljstyrningen ska minska, och samspelet mellan privat och offentlig finansiering ska stärkas.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/en-ny-inriktning-for-den-nationella-filmpolitiken",
+    "articleTitle": "En ny inriktning för den nationella filmpolitiken",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Tolkar som stärkt filmproduktionsincitament eller statlig medfinansiering. Jämför med dagens produktionsrabatt (ca 100 mkr/år) och planerade utvidgningar. Löftet är vagt, stor osäkerhet.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   }
 ]
