@@ -1,9 +1,67 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
-interface CostShape {
+/**
+ * Stabilt id för en kö-post: hash av articleUrl + kandidattitel — samma nyckel
+ * som publish.ts dedupar kön på. Beräknas on-the-fly (lagras inte i filen) och
+ * används av GitHub-issueflödet: issue-titeln bär id:t, och /godkänn//avvisa
+ * slår upp posten oavsett hur index förskjutits sedan issuet skapades.
+ */
+export function reviewId(entry: Pick<ReviewCandidate, "articleUrl" | "candidate">): string {
+  const title = (entry.candidate as { title?: string } | null | undefined)?.title ?? "";
+  return createHash("sha256").update(`${entry.articleUrl ?? ""}::${title}`).digest("hex").slice(0, 12);
+}
+
+export function findIndexByReviewId(items: ReviewCandidate[], id: string): number {
+  return items.findIndex((e) => reviewId(e) === id);
+}
+
+export type ReviewCommand =
+  | { action: "approve"; amounts?: [number, number, number]; group?: string }
+  | { action: "reject"; reason: string };
+
+/**
+ * Tolkar en issue-kommentar från ägaren till ett granskningsbeslut.
+ *  /godkänn                       → ja (föreslagen kostnad tas som den är)
+ *  /godkänn 500 1000 2000         → ja med ändrade belopp (msek: low base high)
+ *  /godkänn --group p-2026-0123   → ja, länka som dublett (delad group_id)
+ *  /avvisa <skäl>                 → nej
+ * Engelska alias: /approve, /reject. Endast FÖRSTA raden tolkas; allt annat är
+ * fritext. Okänt kommando ⇒ null (workflown svarar med hjälptext).
+ */
+export function parseReviewCommand(body: string): ReviewCommand | null {
+  const line = (body ?? "").trim().split("\n", 1)[0]!.trim();
+  const approve = line.match(/^\/(?:godkänn|godkann|approve)\b(.*)$/iu);
+  if (approve) {
+    const rest = approve[1]!.trim();
+    const groupMatch = rest.match(/--group[= ]+(\S+)/u);
+    const numbers = rest
+      .replace(/--group[= ]+\S+/u, "")
+      .trim()
+      .split(/\s+/u)
+      .filter((s) => s !== "")
+      .map((s) => Number(s.replace(",", ".")));
+    const cmd: ReviewCommand = { action: "approve" };
+    if (groupMatch) cmd.group = groupMatch[1]!;
+    if (numbers.length === 3 && numbers.every((n) => Number.isFinite(n) && n >= 0)) {
+      cmd.amounts = [numbers[0]!, numbers[1]!, numbers[2]!];
+    } else if (numbers.length > 0) {
+      return null; // belopp angivna men inte tre giltiga tal — be om förtydligande
+    }
+    return cmd;
+  }
+  const reject = line.match(/^\/(?:avvisa|reject)\b(.*)$/iu);
+  if (reject) {
+    const reason = reject[1]!.trim();
+    return { action: "reject", reason: reason === "" ? "avvisad via review-issue" : reason };
+  }
+  return null;
+}
+
+export interface CostShape {
   type: string;
   period: string;
   msek_low: number;
@@ -15,7 +73,7 @@ interface CostShape {
   confidence: number;
 }
 
-interface ReviewCandidate {
+export interface ReviewCandidate {
   candidate: {
     title?: string;
     parties?: string[];
@@ -128,7 +186,10 @@ function nextId(promises: PromiseEntry[]): string {
   return `p-2026-${String(maxNum + 1).padStart(4, "0")}`;
 }
 
-function approve(rawArgs: string[], dataDir: string = DATA_DIR): void {
+export function approve(
+  rawArgs: string[],
+  dataDir: string = DATA_DIR,
+): { id: string; title: string; msekBase: number } {
   // Plocka ut --group <id> / --group=<id> (länkning av dublett) ur argumenten.
   let linkTo: string | undefined;
   const args: string[] = [];
@@ -246,9 +307,14 @@ function approve(rawArgs: string[], dataDir: string = DATA_DIR): void {
   const linkNote = group_id ? ` [länkad till group ${group_id}]` : "";
   console.log(`Godkänd: ${newId} "${title}" — ${cost.msek_base} msek (${cost.basis})${linkNote}`);
   console.log(`Commit-meddelande: data: review approve ${newId}`);
+  return { id: newId, title, msekBase: cost.msek_base };
 }
 
-function reject(indexStr: string, reason: string, dataDir: string = DATA_DIR): void {
+export function reject(
+  indexStr: string,
+  reason: string,
+  dataDir: string = DATA_DIR,
+): { title: string } {
   const index = parseInt(indexStr, 10);
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
 
@@ -262,6 +328,7 @@ function reject(indexStr: string, reason: string, dataDir: string = DATA_DIR): v
   const remaining = items.filter((_, i) => i !== index);
   saveJson(join(dataDir, "needs_review.json"), remaining);
   console.log(`Avvisad: "${title}" — ${reason}`);
+  return { title };
 }
 
 /**
@@ -332,12 +399,49 @@ function add(file: string | undefined, dataDir: string = DATA_DIR): void {
   );
 }
 
-const [, , command, ...args] = process.argv;
+/** Löser ett review-id till aktuellt index i kön, eller avslutar med fel. */
+function resolveIdOrExit(id: string | undefined): number {
+  if (!id) {
+    console.error("Ange ett review-id (12 hex-tecken ur issue-titeln).");
+    process.exit(1);
+  }
+  const items = loadJson<ReviewCandidate[]>(join(DATA_DIR, "needs_review.json"));
+  const index = findIndexByReviewId(items, id);
+  if (index < 0) {
+    console.error(`Ingen kö-post med review-id ${id} — redan hanterad?`);
+    process.exit(1);
+  }
+  return index;
+}
+
+// CLI körs ENDAST som direkt entrypoint (pnpm review …) — modulen importeras
+// också av sync-review-issues/handle-review-comment och får då inte exekvera.
+import { pathToFileURL } from "node:url";
+const isCli = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+
+const cliArgv: string[] = isCli ? process.argv.slice(2) : ["__noop__"];
+const [command, ...args] = cliArgv;
 
 switch (command) {
+  case "__noop__":
+    break;
   case "list":
     list();
     break;
+  case "approve-id": {
+    const index = resolveIdOrExit(args[0]);
+    approve([String(index), ...args.slice(1)]);
+    break;
+  }
+  case "reject-id": {
+    const index = resolveIdOrExit(args[0]);
+    if (!args[1]) {
+      console.error("Användning: pnpm review reject-id <review-id> <orsak>");
+      process.exit(1);
+    }
+    reject(String(index), args.slice(1).join(" "));
+    break;
+  }
   case "approve":
     if (!args[0]) {
       console.error("Användning: pnpm review approve <index> [low base high]");
