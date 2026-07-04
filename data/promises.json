@@ -10093,13 +10093,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0.03,
-      "msek_high": 0,
-      "basis": "parti",
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "method_note": "Rättad 2026-07-04: 30 000 kr är bonus PER BARN, inte totalkostnad. ~20–40 000 lika-delande föräldrapar/år × 30 000 kr ⇒ 0,6–1,2 mdkr/år + öronmärkt fjärde månad. Spann bekräftat av granskare.",
+      "confidence": 0.9
     },
     "financing_claimed": {
       "described": false,
@@ -10107,7 +10107,7 @@
       "msek": null
     },
     "comparisons": [],
-    "quip": "Löftet Ny jämställdhetsbonus på 30 000 kr per barn till en prislapp på 0.03 msek är ett överkomligt valfläsk.",
+    "quip": "Löftet Ny jämställdhetsbonus på 30 000 kr per barn låter billigt per styck — gånger alla föräldrapar landar notan kring en miljard om året.",
     "status": "aktiv",
     "history": [],
     "extraction": {

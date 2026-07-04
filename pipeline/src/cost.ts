@@ -46,6 +46,25 @@ const TYPES = ["utgift", "intäktsminskning", "besparing"];
 const PERIODS = ["per_ar", "engang"];
 
 /**
+ * Golv för att lita på ett källtextbelopp som TOTALKOSTNAD (basis "parti").
+ * Ett nationellt vallöfte under 50 msek är nästan alltid ett per-enhetspris
+ * eller tröskelvärde ("30 000 kr per barn", "300 000 kr på ISK") som råkat
+ * extraheras som belopp — inte löftets kostnad.
+ */
+export const PARTI_AMOUNT_FLOOR_MSEK = 50;
+
+/**
+ * Per-enhetsbelopp i citatet ("per barn", "1500 kr i månaden") är priser,
+ * inte totalkostnader — de gav p-2026-0337 prislappen 30 000 kr på ett
+ * miljardlöfte. OBS: "per år" triggar INTE — totalkostnader anges ofta så.
+ */
+export function looksLikeUnitAmount(quote: string): boolean {
+  return /\b(?:per|\/)\s*(?:barn|person|elev|anställd|capita|hushåll|familj|pensionär|student|patient|brukare|medlem|månad|vecka|dag|dygn|timme|mil)\b|\bi\s+(?:månaden|veckan|timmen)\b/iu.test(
+    quote,
+  );
+}
+
+/**
  * Kostnadssättning (§8). Har källtexten ett uttryckligt belopp härleds ett spann
  * deterministiskt (basis "parti", confidence 0.7). Saknas beloppet görs ett
  * LLM-estimat (basis "llm_estimat", markeras med ≈ på sajten) — om llm/model ges.
@@ -59,7 +78,12 @@ export async function estimateCost(
 ): Promise<CostEstimate> {
   const amount = candidate.amount_in_text_msek;
 
-  if (amount !== null && amount > 0) {
+  if (
+    amount !== null &&
+    amount > 0 &&
+    amount >= PARTI_AMOUNT_FLOOR_MSEK &&
+    !looksLikeUnitAmount(candidate.quote)
+  ) {
     return {
       type: "utgift",
       period: "per_ar",
@@ -72,6 +96,8 @@ export async function estimateCost(
       confidence: 0.7,
     };
   }
+  // Per-enhetsbelopp/tröskelvärde eller misstänkt litet belopp: totalen måste
+  // estimeras (basis "llm_estimat") — vilket per §8 alltid går till review.
 
   if (!llm || !model) {
     return placeholder("Inget belopp i källtext; ingen LLM-uppskattning tillgänglig.", 0.3);
