@@ -636,3 +636,11 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Notering om balans:** SD (11) och S (27) släpar — SD har inget publicerat manifest ännu (fångas automatiskt när det släpps) och S:s valplattform är bara 4 sidor. Skevheten speglar partiernas faktiska skrivna output (§17: ska inte konstgjort jämnas ut).
 
 **Förkastade alternativ:** exekvera även de 4 gränsfallen (två är systemfrågan engång-vs-per-år som förtjänar ett principbeslut, inte ett tyst massbeslut); logga avvisningarna i changelog (changelog har aldrig loggat avvisningar — kön är inte publicerad data).
+
+## 2026-07-05 — "Senast uppdaterad" frös vid seed-datumet (Layout läste fel löfte)
+
+**Beslut:** Ägaren upptäckte att "Senast uppdaterad" i sajthuvudet aldrig uppdaterades. Grundorsak: `Layout.astro` läste `promises[0].source.fetched_at` — men promises.json är id-sorterad, så det var ÄLDSTA seed-löftets hämtningsdatum (juni-importen), fruset för alltid. Samma värde matar stale-bannern (§15), som därmed kunde lysa "data kan vara inaktuell" permanent. Fix: `lastRun` = senaste changelog-postens timestamp — pipelinen appendar en post VARJE körning (även utan nya löften) och manuella rättelser loggas också, så det är den ärliga signalen för både "senast uppdaterad" och stale-detektion. `test-t3-stale.mts` åldrar nu även changeloggen (med backup/restore) så testet speglar den nya källan.
+
+**Förkastade alternativ:** max(fetched_at) över löftena (uppdateras bara när NYA löften publiceras — en frisk körning utan fynd skulle se död ut och trigga falsk stale-banner); byggtid som "uppdaterad" (ljuger — en ombyggnad utan ny data är ingen uppdatering).
+
+**Påverkan:** `site/src/layouts/Layout.astro`, `site/scripts/test-t3-stale.mts`. Verifierat: färskt bygge visar "Uppdaterad 2026-07-05" utan stale-banner; T1/T3/T9/T3-stale/intervall alla gröna.

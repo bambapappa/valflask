@@ -11,6 +11,8 @@ const DIST_DIR = resolve(SITE_DIR, "dist");
 
 const PROMISES_PATH = resolve(DATA_DIR, "promises.json");
 const BACKUP_PATH = resolve(DATA_DIR, "promises.json.bak");
+const CHANGELOG_PATH = resolve(DATA_DIR, "changelog.json");
+const CHANGELOG_BACKUP = resolve(DATA_DIR, "changelog.json.bak");
 
 let errors = 0;
 
@@ -62,6 +64,15 @@ for (const p of promises) {
 }
 writeFileSync(PROMISES_PATH, JSON.stringify(promises, null, 2) + "\n");
 
+// "Senast uppdaterad" läses ur changeloggens senaste post — åldra den också,
+// annars ser sajten färsk ut fast promises är gamla.
+copyFileSync(CHANGELOG_PATH, CHANGELOG_BACKUP);
+const changelog = JSON.parse(readFileSync(CHANGELOG_PATH, "utf8"));
+for (const entry of changelog) {
+  entry.timestamp = OLD_DATE;
+}
+writeFileSync(CHANGELOG_PATH, JSON.stringify(changelog, null, 2) + "\n");
+
 // Build
 console.log("\n--- Building with stale data ---");
 try {
@@ -70,6 +81,7 @@ try {
   fail("Build failed with stale data");
   // Restore
   renameSync(BACKUP_PATH, PROMISES_PATH);
+  renameSync(CHANGELOG_BACKUP, CHANGELOG_PATH);
   restoreDist();
   process.exit(1);
 }
@@ -92,6 +104,7 @@ if (existsSync(indexPath)) {
 
 // Restore
 renameSync(BACKUP_PATH, PROMISES_PATH);
+renameSync(CHANGELOG_BACKUP, CHANGELOG_PATH);
 restoreDist();
 
 console.log("");
