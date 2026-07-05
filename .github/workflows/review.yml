@@ -8,9 +8,10 @@ on:
 permissions:
   contents: read
   issues: write
-concurrency:
-  group: review-queue
-  cancel-in-progress: false
+# INGEN concurrency-grupp: GitHub håller bara EN köad körning per grupp och
+# slänger mellanliggande — snabba beslut i rad skulle tappas. Parallella
+# körningar är säkra: handlern görs om från färsk main tills pushen lyckas,
+# och en redan hanterad post svarar "redan hanterad" i stället för dubbelkörs.
 jobs:
   handle:
     if: >
@@ -39,32 +40,32 @@ jobs:
       - name: Install pipeline deps
         run: pnpm install --frozen-lockfile
         working-directory: pipeline
-      - name: Execute decision
+      - name: Execute decision and push
         id: decision
         # Kommentar/titel går som miljövariabler in i Node — ALDRIG interpolerade
-        # i shellkod (citat ur manifest + fritext är opålitlig data).
+        # i shellkod (citat ur manifest + fritext är opålitlig data). Vid push-
+        # race (parallellt beslut/pipelinekörning) görs HELA beslutet om från
+        # färsk main — aldrig rebase av JSON-datafiler.
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           COMMENT_BODY: ${{ github.event.comment.body }}
-        run: node --import tsx/esm scripts/handle-review-comment.mts
-        working-directory: pipeline
-      - name: Commit and push data
-        if: steps.decision.outputs.result == 'approved' || steps.decision.outputs.result == 'rejected'
         run: |
           git config user.name "drygast-bot"
           git config user.email "bot@drygast.nu"
-          git add data/
-          if git diff --cached --quiet; then
-            echo "Inga dataändringar."
-            exit 0
-          fi
-          git commit -m "data: review ${{ steps.decision.outputs.result }} via issue #${{ github.event.issue.number }}"
           for attempt in 1 2 3 4 5; do
-            if git pull --rebase origin main && git push; then
+            git fetch origin main && git reset --hard origin/main
+            (cd pipeline && node --import tsx/esm scripts/handle-review-comment.mts)
+            git add data/
+            if git diff --cached --quiet; then
+              echo "Inga dataändringar (fel-/hjälpsvar eller redan hanterad)."
+              exit 0
+            fi
+            git commit -m "data: review-beslut via issue #${{ github.event.issue.number }}"
+            if git push; then
               echo "Push lyckades (försök $attempt)."
               exit 0
             fi
-            echo "Push-försök $attempt misslyckades. Försöker igen..."
+            echo "Push-försök $attempt misslyckades (main gick vidare) — gör om från färsk main..."
             sleep $((attempt * 5))
           done
           echo "Push misslyckades efter 5 försök."

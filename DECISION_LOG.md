@@ -596,3 +596,23 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Förkastade alternativ:** ett samlingsissue med checkboxar (går inte att uttrycka "ja med ändrade belopp" per rad, och beslut drunknar i scroll); labels som beslut (ingen plats för belopp/skäl); redigera needs_review.json i GitHubs webbeditor (kringgår id-tilldelning/kostnadsfält och riskerar trasig JSON); reactions som beslut (ej spårbart vem, inga argument).
 
 **Påverkan:** `pipeline/src/review.ts` (reviewId, findIndexByReviewId, parseReviewCommand, export av approve/reject med returvärden, approve-id/reject-id, CLI-entrypoint-grind), nya `pipeline/scripts/{sync-review-issues,handle-review-comment}.mts`, nya `.github/workflows/{review,review-sync}.yml`, synk-steg i `pipeline.yml`, `pipeline/tests/review.test.ts` (8 tester). Typecheck rent, **164 pipelinetester gröna**.
+
+## 2026-07-04 — Etikettbeslut i review-flödet ("knappen") + bulk, och race-fix i kommentarflödet
+
+**Beslut 1 — beslut som etiketter.** Ägarens återkoppling efter första skarpa beslutet (#273): kommentar funkar men en knapp vore snabbare, och bulk behövs för 172 poster. GitHubs etiketter ÄR knappen: `beslut:godkänn` (godkänn med föreslagen kostnad) och `beslut:avvisa` sätts med två klick per issue — och kan **bulk-appliceras från issuelistans vy** (markera många → Label). Etiketter kräver triage-behörighet, så etikettens närvaro är auktorisationen. Ny `review-apply.yml` (issues:labeled + dispatch) sveper ALLA öppna kö-issues med beslutsetikett och exekverar via samma approve/reject som CLI/kommentarflödet. "Ja med ändrade belopp"/dublettlänkning kräver fortsatt kommentar — belopp ryms inte i en etikett.
+
+**Beslut 2 — tvåfas-exekvering (beslut får aldrig se bekräftade ut utan att datan landat).** Svepet muterar data/ och skriver planerade issue-notifieringar till fil UTANFÖR repot; workflown committar och pushar med gör-om-från-färsk-main-loop (aldrig rebase av JSON-datafiler); först EFTER lyckad push kommenteras/stängs issues. Svepet är idempotent ⇒ concurrency-koalescering (som slänger köade dubblettkörningar) är ofarlig — överlevande svep tar allt.
+
+**Beslut 3 — race-fix i review.yml.** Upptäckt vid bygget: concurrency-gruppen höll bara EN köad körning per grupp — snabba kommentarbeslut i rad hade TAPPAT mellanliggande beslut (GitHub avbryter tidigare pending). Gruppen borttagen; parallella körningar är säkra eftersom även kommentarhanteraren nu görs om från färsk main tills pushen lyckas, och en redan hanterad post svarar "redan hanterad" i stället för att dubbelköras.
+
+**Förkastade alternativ:** riktiga knappar (GitHub-issues saknar custom-knappar; närmaste är etiketter/reactions — reactions är inte spårbara till person i UI:t och kan sättas av vem som helst); en körning per etikett-event med direkta side-effects (bulk på 20 issues ⇒ 20 racande pushar och förlorade körningar i concurrency-kön); `git pull --rebase` vid push-race (rebase av hela JSON-filer konfliktar just när det behövs).
+
+**Påverkan:** ny `pipeline/scripts/apply-labeled-decisions.mts` (apply/notify-faser), ny `.github/workflows/review-apply.yml`, omskriven push-loop + borttagen concurrency i `review.yml`, etikettrad i issue-mallen (`sync-review-issues.mts`). Typecheck rent, 164 tester gröna, YAML validerad.
+
+## 2026-07-05 — Dubblettrevision: p-2026-0340 tillbakadragen
+
+**Beslut:** Regelrevision av samtliga 224 aktiva publicerade löften (enhetsbelopp, intervallsanity, R2, R5, G3-längd, kategorier, datum, dubblettcitat) på ägarens fråga. Utfall: 221 rena; p-2026-0321/0323 flaggades av enhetsfras-detektorn men är korrekta (partiets egna reformkostnader ur seedimporten, inte månadspriser feltolkade); **p-2026-0340 var ett äkta fel** — exakt samma L-citat om euron som p-2026-0152, publicerat olänkat (dublettvarningen i review-kön följdes inte vid godkännandet) och med 6× högre estimat (18 000 vs 3 000 msek base). Fläsket-totalen dubbelräknade därmed löftet. Tillbakadragen (borttagen ur promises.json enligt D-filter-prejudikatet, changelog-post `manual-retract-duplicate-2026-07-05`, omräknad data_hash, T7 grönt); p-2026-0152 med det äldre granskade estimatet står kvar.
+
+**Förkastade alternativ:** group-länka 0340↔0152 (kräver ändå att ett av de spretande estimaten väljs — då är borttagning av den yngre dubbletten ärligare); behålla båda med delat group_id och medelvärde (hittar på en siffra ingen granskat).
+
+**Lärdom:** godkännanden av poster med `duplicateOf`-förslag bör länkas eller avvisas — aldrig vanlig-godkännas. Issue-mallen visar redan `--group`-kommandot; om det upprepas kan approve varna hårdare.
