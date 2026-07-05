@@ -608,3 +608,11 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Förkastade alternativ:** riktiga knappar (GitHub-issues saknar custom-knappar; närmaste är etiketter/reactions — reactions är inte spårbara till person i UI:t och kan sättas av vem som helst); en körning per etikett-event med direkta side-effects (bulk på 20 issues ⇒ 20 racande pushar och förlorade körningar i concurrency-kön); `git pull --rebase` vid push-race (rebase av hela JSON-filer konfliktar just när det behövs).
 
 **Påverkan:** ny `pipeline/scripts/apply-labeled-decisions.mts` (apply/notify-faser), ny `.github/workflows/review-apply.yml`, omskriven push-loop + borttagen concurrency i `review.yml`, etikettrad i issue-mallen (`sync-review-issues.mts`). Typecheck rent, 164 tester gröna, YAML validerad.
+
+## 2026-07-05 — Dubblettrevision: p-2026-0340 tillbakadragen
+
+**Beslut:** Regelrevision av samtliga 224 aktiva publicerade löften (enhetsbelopp, intervallsanity, R2, R5, G3-längd, kategorier, datum, dubblettcitat) på ägarens fråga. Utfall: 221 rena; p-2026-0321/0323 flaggades av enhetsfras-detektorn men är korrekta (partiets egna reformkostnader ur seedimporten, inte månadspriser feltolkade); **p-2026-0340 var ett äkta fel** — exakt samma L-citat om euron som p-2026-0152, publicerat olänkat (dublettvarningen i review-kön följdes inte vid godkännandet) och med 6× högre estimat (18 000 vs 3 000 msek base). Fläsket-totalen dubbelräknade därmed löftet. Tillbakadragen (borttagen ur promises.json enligt D-filter-prejudikatet, changelog-post `manual-retract-duplicate-2026-07-05`, omräknad data_hash, T7 grönt); p-2026-0152 med det äldre granskade estimatet står kvar.
+
+**Förkastade alternativ:** group-länka 0340↔0152 (kräver ändå att ett av de spretande estimaten väljs — då är borttagning av den yngre dubbletten ärligare); behålla båda med delat group_id och medelvärde (hittar på en siffra ingen granskat).
+
+**Lärdom:** godkännanden av poster med `duplicateOf`-förslag bör länkas eller avvisas — aldrig vanlig-godkännas. Issue-mallen visar redan `--group`-kommandot; om det upprepas kan approve varna hårdare.
