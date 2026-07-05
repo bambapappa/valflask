@@ -64,3 +64,33 @@ export function findPossibleDuplicate(
   }
   return best;
 }
+
+/**
+ * Samma politik hos ett ANNAT parti (inget partiöverlapp): samma kategori +
+ * hög titellikhet. Fångar t.ex. att flera partier lovar 5 % av BNP till
+ * försvaret — sådana ska group-länkas (R3: räknas en gång i totalen/koalitioner,
+ * fullt i partijämförelsen). Högre tröskel än intra-parti eftersom partier
+ * formulerar samma politik olika och flaggan bara ger ett --group-förslag i
+ * review — men fortfarande hellre fånga än missa: människan avgör.
+ */
+export function findCrossPartyDuplicate(
+  candidate: DupKey,
+  existing: ExistingPromiseLite[],
+  // 0.35: L/C:s "5 procent av BNP"-par — flaggskeppsfallet — ligger på 0.375
+  // (partier ordval skiljer: "fem"/"5", "försvaret"/"försvarsanslagen").
+  threshold = 0.35,
+): ExistingPromiseLite | null {
+  const cparties = new Set(candidate.parties);
+  let best: ExistingPromiseLite | null = null;
+  let bestSim = threshold;
+  for (const e of existing) {
+    if (e.category !== candidate.category) continue;
+    if (e.parties.some((p) => cparties.has(p))) continue; // intra-parti hanteras ovan
+    const sim = titleSimilarity(candidate.title, e.title);
+    if (sim >= bestSim) {
+      best = e;
+      bestSim = sim;
+    }
+  }
+  return best;
+}

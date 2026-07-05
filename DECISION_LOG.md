@@ -644,3 +644,17 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Förkastade alternativ:** max(fetched_at) över löftena (uppdateras bara när NYA löften publiceras — en frisk körning utan fynd skulle se död ut och trigga falsk stale-banner); byggtid som "uppdaterad" (ljuger — en ombyggnad utan ny data är ingen uppdatering).
 
 **Påverkan:** `site/src/layouts/Layout.astro`, `site/scripts/test-t3-stale.mts`. Verifierat: färskt bygge visar "Uppdaterad 2026-07-05" utan stale-banner; T1/T3/T9/T3-stale/intervall alla gröna.
+
+## 2026-07-06 — Samma politik räknas en gång: R3 aktiverad i alla summor + tvärparti-dublettvakt
+
+**Bakgrund (ägarobservation):** L och C lovar båda 5 % av BNP till försvaret — olika citat, olika prislappar (200 resp. 190 mdkr/år), båda fullt räknade i totalen. Går bara att genomföra en gång: "om två gör 5 % vardera blir det mer än 5 % för landet". R3/group_id fanns redan och koalitionsvyn räknade grupper en gång — men 0 löften var länkade (auto-länkning krävde identiska citat; dublettvakten hoppade medvetet över andra partier) och huvudtotalen/partisummor/kategorier deduperade inte alls.
+
+**Beslut 1 — dedupeByGroup i alla summor.** `totalFlasket`, `totalBesparingar`, `totalFlasketInterval`, `categoryBreakdown` och `partyTotalMsek` räknar nu varje grupp EN gång (första posten i id-ordning representerar; spannet syns i gruppnoterna). Semantiken är tvådelad med flit: i jämförelsen MELLAN partier räknas varje partis löfte fullt (var och en skulle genomföra det — tvärparti-grupper påverkas inte av partifiltret), i totaler/koalitioner räknas politiken en gång. Interna dubbletter inom ett parti kollapsar även i partisumman.
+
+**Beslut 2 — 12 löften länkade i 5 grupper** (changelog `manual-group-linking-2026-07-06`): g-forsvar-fem-procent-bnp {L 0340, C 0384}, g-bistand-enprocentsmalet {C 0388, MP 0410}, g-slopad-karens {MP 0326, MP 0445, S 0461}, g-fast-lakarkontakt {S 0011, C 0357, L 0399}, g-sjalvforsorjning-80 {C 0368, C 0386 — intern C-dubblett från bulkgranskningen}. Effekt: mandatperiod-totalen 12 903 → 11 983 mdkr (−921 mdkr dubbelräkning, ~7 %).
+
+**Beslut 3 — tvärparti-dublettvakt i pipelinen.** Ny `findCrossPartyDuplicate` (samma kategori, INGET partiöverlapp, titellikhet ≥ 0,35 — kalibrerad mot L/C-fallets faktiska 0,375; 'fem'/'5' tokeniseras olika) körs efter intra-parti-kollen i runPipeline → review med duplicateOf, så issuet föreslår `--group`. När M/SD/KD släpper sina manifest (som garanterat också lovar 5 % och slopad karens) fångas överlappen i granskningen i stället för i totalen. /metod-kulan omskriven: "Samma politik räknas bara en gång" med 5 %-exemplet och parti-mot-parti-undantaget förklarat.
+
+**Förkastade alternativ:** räkna gruppens max/medel i stället för första posten (max överdriver, medel är en siffra ingen sagt — första-i-id-ordning är deterministisk och konsistent med koalitionsvyn sedan tidigare); harmonisera L/C:s 5 %-estimat till samma tal (olikheten är ärlig — olika BNP-antaganden — och gruppnoten redovisar spannet); auto-länka tvärparti-träffar utan människa (länkning är ett redaktionellt beslut, §7).
+
+**Påverkan:** `site/src/lib/aggregates.ts` (dedupeByGroup + 5 funktioner), `site/src/pages/metod.astro`, `pipeline/src/similarity.ts` (findCrossPartyDuplicate), `pipeline/src/index.ts` (dublettkedjan), `pipeline/tests/similarity.test.ts` (+4), data: 12 löften group-länkade + changelog. 168 pipelinetester gröna, hela sajtsviten grön, T7 grönt.

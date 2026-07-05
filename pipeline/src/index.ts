@@ -8,7 +8,7 @@ import { runGates, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
 import type { ArchiveFn } from "./archive.ts";
 import { estimateCost } from "./cost.ts";
-import { findPossibleDuplicate, type ExistingPromiseLite } from "./similarity.ts";
+import { findPossibleDuplicate, findCrossPartyDuplicate, type ExistingPromiseLite } from "./similarity.ts";
 import { generateQuip } from "./copy.ts";
 import { maybeGenerateWeekly, type ChronicleEntry } from "./chronicle.ts";
 import {
@@ -169,10 +169,11 @@ export async function runPipeline(
 
         // Dublettkoll: troligen samma löfte som ett redan publicerat — eller ett
         // tidigare i samma körning? → till review för manuell länkning (delad group_id).
-        const dup = findPossibleDuplicate(
-          { title: accepted.title, parties: accepted.parties, category: accepted.category },
-          dedupPool,
-        );
+        // Tvärparti-varianten fångar SAMMA POLITIK hos annat parti (5 % av BNP går
+        // bara att göra en gång) — även den till review med --group-förslag, så
+        // totalen/koalitioner inte dubbelräknar när M/SD/KD släpper sina manifest.
+        const dupKey = { title: accepted.title, parties: accepted.parties, category: accepted.category };
+        const dup = findPossibleDuplicate(dupKey, dedupPool) ?? findCrossPartyDuplicate(dupKey, dedupPool);
         if (dup) {
           reviewItems.push({
             candidate: accepted,

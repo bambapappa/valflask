@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   titleSimilarity,
   findPossibleDuplicate,
+  findCrossPartyDuplicate,
   type ExistingPromiseLite,
 } from "../src/similarity.ts";
 
@@ -52,6 +53,57 @@ describe("findPossibleDuplicate", () => {
   it("annan kategori → ingen dublett", () => {
     const d = findPossibleDuplicate(
       { title: "Höjd a-kassa till nittio procent av lönen", parties: ["s"], category: "skatter" },
+      existing,
+    );
+    assert.equal(d, null);
+  });
+});
+
+describe("findCrossPartyDuplicate — samma politik hos annat parti (R3)", () => {
+  const existing = [
+    {
+      id: "p-2026-0340",
+      title: "Höj försvarsanslagen till 5 procent av BNP",
+      parties: ["l"],
+      category: "försvar",
+      group_id: null,
+    },
+    {
+      id: "p-2026-0461",
+      title: "Ta bort karensavdraget",
+      parties: ["s"],
+      category: "välfärd",
+      group_id: null,
+    },
+  ];
+
+  it("annat partis 5%-BNP-löfte flaggas (L↔C-fallet)", () => {
+    const d = findCrossPartyDuplicate(
+      { title: "Upprustning av försvaret till fem procent av BNP", parties: ["c"], category: "försvar" },
+      existing,
+    );
+    assert.equal(d?.id, "p-2026-0340");
+  });
+
+  it("SAMMA parti flaggas INTE här (intra-parti hanteras av findPossibleDuplicate)", () => {
+    const d = findCrossPartyDuplicate(
+      { title: "Höj försvarsanslagen till 5 procent av BNP", parties: ["l"], category: "försvar" },
+      existing,
+    );
+    assert.equal(d, null);
+  });
+
+  it("annan kategori flaggas inte trots liknande titel", () => {
+    const d = findCrossPartyDuplicate(
+      { title: "Höj försvarsanslagen till 5 procent av BNP", parties: ["c"], category: "skatter" },
+      existing,
+    );
+    assert.equal(d, null);
+  });
+
+  it("olik politik under tröskeln flaggas inte (högre tröskel än intra-parti)", () => {
+    const d = findCrossPartyDuplicate(
+      { title: "Slopa skatten på pension", parties: ["mp"], category: "välfärd" },
       existing,
     );
     assert.equal(d, null);
