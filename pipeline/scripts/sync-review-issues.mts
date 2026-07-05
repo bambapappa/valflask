@@ -61,6 +61,22 @@ async function existingIssueIds(): Promise<Set<string>> {
   return ids;
 }
 
+/** Öppna review-issues med nummer + review-id (för vaktmästarstädningen). */
+async function openIssues(): Promise<Array<{ number: number; id: string }>> {
+  const out: Array<{ number: number; id: string }> = [];
+  for (let page = 1; page <= 20; page++) {
+    const batch = (await api(
+      `/repos/${repo}/issues?labels=${encodeURIComponent(LABEL)}&state=open&per_page=100&page=${page}`,
+    )) as Array<{ number: number; title: string }>;
+    for (const issue of batch) {
+      const m = issue.title.match(/^\[review ([0-9a-f]{12})\]/u);
+      if (m) out.push({ number: issue.number, id: m[1]! });
+    }
+    if (batch.length < 100) break;
+  }
+  return out;
+}
+
 function fmtMsek(n: number): string {
   return n >= 1000 ? `${(n / 1000).toLocaleString("sv-SE")} mdkr` : `${n.toLocaleString("sv-SE")} msek`;
 }
@@ -145,3 +161,30 @@ for (const entry of items) {
   if (sleepMs > 0) await new Promise((r) => setTimeout(r, sleepMs));
 }
 console.log(`Klart: ${created} nya issues, ${existing.size} fanns sedan tidigare.`);
+
+// ── Vaktmästaren: stäng öppna issues vars kö-post inte längre finns —
+// posten har hanterats utanför issue-flödet (review-CLI, bulk-revision).
+// Beslutet och skälet är spårat i git (needs_review-diffen + changelog);
+// issuet är bara ett fönster mot kön och ska inte stå öppet mot tomhet.
+const queueIds = new Set(items.map((e) => reviewId(e)));
+let closed = 0;
+for (const issue of await openIssues()) {
+  if (queueIds.has(issue.id)) continue;
+  if (closed >= cap) {
+    console.log(`Vaktmästaren nådde SYNC_CAP=${cap} — resten städas nästa synk.`);
+    break;
+  }
+  await api(`/repos/${repo}/issues/${issue.number}/comments`, {
+    method: "POST",
+    body: JSON.stringify({
+      body: "🧹 Posten har hanterats utanför issue-flödet (review-CLI/revision) — se git-historiken för needs_review.json för beslutet. Stänger.",
+    }),
+  });
+  await api(`/repos/${repo}/issues/${issue.number}`, {
+    method: "PATCH",
+    body: JSON.stringify({ state: "closed", state_reason: "completed" }),
+  });
+  closed++;
+  if (sleepMs > 0) await new Promise((r) => setTimeout(r, sleepMs));
+}
+if (closed > 0) console.log(`Vaktmästaren stängde ${closed} föräldralösa issues.`);

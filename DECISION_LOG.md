@@ -616,3 +616,13 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Förkastade alternativ:** group-länka 0340↔0152 (kräver ändå att ett av de spretande estimaten väljs — då är borttagning av den yngre dubbletten ärligare); behålla båda med delat group_id och medelvärde (hittar på en siffra ingen granskat).
 
 **Lärdom:** godkännanden av poster med `duplicateOf`-förslag bör länkas eller avvisas — aldrig vanlig-godkännas. Issue-mallen visar redan `--group`-kommandot; om det upprepas kan approve varna hårdare.
+
+## 2026-07-05 — Dubblettrevision av review-kön: 26 avvisade + vaktmästare i issue-synken
+
+**Beslut:** Systematisk dubblettsökning av kön (213 poster) mot publicerat (223) på ägarens order: exakt citatmatch, inneslutna citat (samma parti), köinterna dubbletter och fuzzy-titel (findPossibleDuplicate). Fynd: 13 exakta + 13 inneslutna + 1 köintern (samma post som en exakt) = 26 poster avvisade via review-CLI med skäl "dublett av p-XXXX (dubblettrevision 2026-07-05)"; kön 213 → 187. 6 fuzzy-kandidater (0,33–0,80) lämnade till ägaren — bl.a. jämställdhetsbonusen (kö-post ~0,80 mot rättade p-2026-0337) och C-polislöftena mot p-2026-0318. Bara ~hälften av de säkra dubbletterna var flaggade av publish-dedupen (fuzzy-tröskeln är medvetet försiktig och exakt citatmatch mot PUBLICERAT fanns inte som kontroll) — grundorsaken till att euro-dubbletten (p-2026-0340) slank igenom.
+
+**Vaktmästare i issue-synken:** poster som hanteras utanför issue-flödet (CLI/revision) lämnade föräldralösa öppna issues. `sync-review-issues.mts` stänger nu öppna review-issues vars review-id inte längre finns i kön (kommentar + close, kapad av SYNC_CAP) — körs automatiskt vid varje pipelinekörning, så dagens 26 städas utan att GitHub-kopplingen i sessionen behövs.
+
+**Motiv/lärdom:** Överlappet är väntat engångsbrus — seeden publicerade från samma sidor som B nu autofångar, och varje NY källa (manifest-PDF:erna) återfångar redan seedade löften. Rutin efter stor källtillväxt: kör dubblettsvepet. Kandidat till framtida grind: exakt citatmatch mot publicerat borde auto-flagga i publish (starkare än fuzzy-titeln).
+
+**Påverkan:** data/needs_review.json (−26), `pipeline/scripts/sync-review-issues.mts` (openIssues + vaktmästarfas). Typecheck rent, 164 tester gröna, T7 grönt.
