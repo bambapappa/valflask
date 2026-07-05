@@ -11,7 +11,17 @@ const parties = getParties();
 const changelog = getChangelog();
 const hash = dataHash(changelog);
 const fixture = isFixture(promises);
-const lastRun = promises.length > 0 ? promises[0].source.fetched_at : new Date().toISOString();
+// "Senast uppdaterad" = senaste changelog-posten: pipelinen appendar en post
+// VARJE körning (även utan nya löften) och manuella rättelser loggas också.
+// Tidigare lästes promises[0].source.fetched_at — men listan är id-sorterad, så
+// det var ÄLDSTA seed-löftets hämtningsdatum: datumet frös vid juni-importen
+// och stale-bannern kunde lysa permanent.
+const lastRun =
+  changelog.length > 0
+    ? changelog[changelog.length - 1].timestamp
+    : promises.length > 0
+      ? promises[0].source.fetched_at
+      : new Date().toISOString();
 
 // Stale-läge §15: data >36h äldre än byggtid ⇒ diskret gul banner
 const STALE_MS = 36 * 60 * 60 * 1000;
