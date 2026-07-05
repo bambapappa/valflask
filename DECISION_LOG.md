@@ -616,3 +616,23 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Förkastade alternativ:** group-länka 0340↔0152 (kräver ändå att ett av de spretande estimaten väljs — då är borttagning av den yngre dubbletten ärligare); behålla båda med delat group_id och medelvärde (hittar på en siffra ingen granskat).
 
 **Lärdom:** godkännanden av poster med `duplicateOf`-förslag bör länkas eller avvisas — aldrig vanlig-godkännas. Issue-mallen visar redan `--group`-kommandot; om det upprepas kan approve varna hårdare.
+
+## 2026-07-05 — Dubblettrevision av review-kön: 26 avvisade + vaktmästare i issue-synken
+
+**Beslut:** Systematisk dubblettsökning av kön (213 poster) mot publicerat (223) på ägarens order: exakt citatmatch, inneslutna citat (samma parti), köinterna dubbletter och fuzzy-titel (findPossibleDuplicate). Fynd: 13 exakta + 13 inneslutna + 1 köintern (samma post som en exakt) = 26 poster avvisade via review-CLI med skäl "dublett av p-XXXX (dubblettrevision 2026-07-05)"; kön 213 → 187. 6 fuzzy-kandidater (0,33–0,80) lämnade till ägaren — bl.a. jämställdhetsbonusen (kö-post ~0,80 mot rättade p-2026-0337) och C-polislöftena mot p-2026-0318. Bara ~hälften av de säkra dubbletterna var flaggade av publish-dedupen (fuzzy-tröskeln är medvetet försiktig och exakt citatmatch mot PUBLICERAT fanns inte som kontroll) — grundorsaken till att euro-dubbletten (p-2026-0340) slank igenom.
+
+**Vaktmästare i issue-synken:** poster som hanteras utanför issue-flödet (CLI/revision) lämnade föräldralösa öppna issues. `sync-review-issues.mts` stänger nu öppna review-issues vars review-id inte längre finns i kön (kommentar + close, kapad av SYNC_CAP) — körs automatiskt vid varje pipelinekörning, så dagens 26 städas utan att GitHub-kopplingen i sessionen behövs.
+
+**Motiv/lärdom:** Överlappet är väntat engångsbrus — seeden publicerade från samma sidor som B nu autofångar, och varje NY källa (manifest-PDF:erna) återfångar redan seedade löften. Rutin efter stor källtillväxt: kör dubblettsvepet. Kandidat till framtida grind: exakt citatmatch mot publicerat borde auto-flagga i publish (starkare än fuzzy-titeln).
+
+**Påverkan:** data/needs_review.json (−26), `pipeline/scripts/sync-review-issues.mts` (openIssues + vaktmästarfas). Typecheck rent, 164 tester gröna, T7 grönt.
+
+## 2026-07-05 — Bulkgranskning av review-kön exekverad (ägarbeslut): 128 publicerade, 55 avvisade
+
+**Beslut:** Ägaren beställde full granskning av kön (187 poster) med rekommendation per post, och beordrade därefter exekvering av hela listan. Granskningsgrund: G3-citatkvalitet, kostnadsbärande vallöfte eller ej, dubbletter (mot publicerat, internt i kön), paraplyformuleringar som dubbelräknar partiets specifika löften i totalen, samt estimatens storleksordning. Utfall: **128 godkända** (varav 2 med korrigerade belopp: L:s 5 %-BNP-försvar 350→200 mdkr/år — estimatet blandade total med MERkostnad; MP:s halverade matproduktionsavgift 20→9 mdkr/år — dubbelt för stor lönesumma), **55 avvisade** (16 G3-parafraser, 19 riksdagsmotioner/utrikespositioner — 'Riksdagen ställer sig bakom…' är inget vallöfte, 6 dubbletter mot publicerat, 5 köinterna dubbletter, 8 paraplyer, 1 skattehöjning felklassad som utgift), **4 kvar** för ägarens egen bedömning (intern dubbelflagg + barnbidrag/bostadsbidrag-överlapp mot p-2026-0325 + två engångskostnader som skulle publiceras som per-år). Fullständig rapport med skäl per post levererad till ägaren (rekommendationer.md).
+
+**Spårbarhet:** varje avvisning bär skäl + '(bulkgranskning 2026-07-05, rekommendationsrapport)'; changelog-post `manual-bulk-review-2026-07-05` listar alla 128 nya id:n med omräknad data_hash. Publicerade totalt: 223 → 351 (m:83 c:74 mp:70 l:43 s:27 kd:23 v:23 sd:11). Issue-vaktmästaren stänger de hanterade posternas issues vid nästa pipelinekörning.
+
+**Notering om balans:** SD (11) och S (27) släpar — SD har inget publicerat manifest ännu (fångas automatiskt när det släpps) och S:s valplattform är bara 4 sidor. Skevheten speglar partiernas faktiska skrivna output (§17: ska inte konstgjort jämnas ut).
+
+**Förkastade alternativ:** exekvera även de 4 gränsfallen (två är systemfrågan engång-vs-per-år som förtjänar ett principbeslut, inte ett tyst massbeslut); logga avvisningarna i changelog (changelog har aldrig loggat avvisningar — kön är inte publicerad data).
