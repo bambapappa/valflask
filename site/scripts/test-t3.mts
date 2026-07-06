@@ -199,7 +199,16 @@ if (existsSync(startPage)) {
   const match = content.match(/data-taxameter="(\d+(?:\.\d+)?)"/);
   if (match) {
     const val = parseFloat(match[1]);
-    const expectedFlasket = data.reduce((sum: number, p: any) => {
+    // Speglar aggregates.dedupeByGroup (R3): en grupp räknas EN gång,
+    // representerad av första posten i listordning.
+    const seenGroups = new Set<string>();
+    const deduped = data.filter((p: any) => {
+      if (!p.group_id) return true;
+      if (seenGroups.has(p.group_id)) return false;
+      seenGroups.add(p.group_id);
+      return true;
+    });
+    const expectedFlasket = deduped.reduce((sum: number, p: any) => {
       if (p.cost.type !== "utgift" && p.cost.type !== "intäktsminskning") return sum;
       const mult = p.cost.period === "per_ar" ? 4 : 1;
       return sum + p.cost.msek_base * mult;

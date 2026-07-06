@@ -29,12 +29,34 @@ export function isBesparing(p: PromisePost): boolean {
   return p.cost.type === "besparing";
 }
 
+/**
+ * R3: en grupp (samma politik hos flera partier, eller dubblerad post inom ett
+ * parti) räknas EN gång i summor — det går inte att höja försvaret till 5 % av
+ * BNP mer än en gång, oavsett hur många partier som lovar det. Gruppens första
+ * post i listordning (= lägst id) representerar den; spannet mellan partiernas
+ * olika prislappar redovisas i koalitionsvyns gruppnoter. Partijämförelser
+ * påverkas inte av TVÄRPARTI-grupper (varje parti har sin egen medlem), men
+ * interna dubbletter inom ett parti kollapsar även där.
+ */
+export function dedupeByGroup(promises: PromisePost[]): PromisePost[] {
+  const seen = new Set<string>();
+  const out: PromisePost[] = [];
+  for (const p of promises) {
+    if (p.group_id) {
+      if (seen.has(p.group_id)) continue;
+      seen.add(p.group_id);
+    }
+    out.push(p);
+  }
+  return out;
+}
+
 export function totalFlasket(promises: PromisePost[]): number {
-  return promises.filter((p) => isCostType(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+  return dedupeByGroup(promises).filter((p) => isCostType(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
 }
 
 export function totalBesparingar(promises: PromisePost[]): number {
-  return promises.filter((p) => isBesparing(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+  return dedupeByGroup(promises).filter((p) => isBesparing(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
 }
 
 /**
@@ -74,7 +96,7 @@ export function totalFlasketInterval(
   rho = 0.3,
   level = 0.8,
 ): FlasketInterval {
-  const cost = promises.filter((p) => isCostType(p));
+  const cost = dedupeByGroup(promises).filter((p) => isCostType(p));
   let base = 0;
   let sumVar = 0;
   let sumSd = 0;
@@ -109,7 +131,10 @@ export function financingGap(promises: PromisePost[]): number {
 }
 
 export function partyTotalMsek(promises: PromisePost[], partyCode: string): number {
-  return promises.filter((p) => isActive(p) && p.parties.includes(partyCode)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+  // dedupeByGroup EFTER partifiltret: tvärparti-grupper behåller partiets egen
+  // medlem (fullt belopp i partijämförelsen), interna dubbletter räknas en gång.
+  return dedupeByGroup(promises.filter((p) => isActive(p) && p.parties.includes(partyCode)))
+    .reduce((s, p) => s + promiseTotalMsek(p), 0);
 }
 
 export function getPromisesForParty(promises: PromisePost[], code: string): PromisePost[] {
@@ -132,7 +157,7 @@ export interface CategoryBreakdown {
 
 export function categoryBreakdown(promises: PromisePost[]): CategoryBreakdown[] {
   const map = new Map<string, { total: number; count: number }>();
-  for (const p of promises.filter(isActive)) {
+  for (const p of dedupeByGroup(promises.filter(isActive))) {
     const entry = map.get(p.category) ?? { total: 0, count: 0 };
     entry.total += promiseTotalMsek(p);
     entry.count += 1;
