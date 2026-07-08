@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
+import { computeDataHash, type ChangelogEntry } from "./publish.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -130,6 +131,25 @@ function saveJson(path: string, data: unknown): void {
   writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
 }
 
+/**
+ * Appenda en changelog-post så `data_hash` och "senast uppdaterad" följer med
+ * varje godkännande — annars släpar de efter promises.json tills nästa
+ * pipelinekörning (samma post-form som publish.ts skriver). Saknad changelog ⇒
+ * börja tom (robust i tester och första körning). Avvisningar loggas ALDRIG:
+ * kön är inte publicerad data och promises.json/hashen ändras inte.
+ */
+function appendChangelog(dataDir: string, entry: ChangelogEntry): void {
+  const path = join(dataDir, "changelog.json");
+  let log: ChangelogEntry[];
+  try {
+    log = loadJson<ChangelogEntry[]>(path);
+  } catch {
+    log = [];
+  }
+  log.push(entry);
+  saveJson(path, log);
+}
+
 function domainOf(url: string): string {
   try {
     return new URL(url).hostname.replace(/^www\./, "");
@@ -254,6 +274,7 @@ export function approve(
 
   // Dublettlänkning: dela group_id med målet (R3 räknar gruppen en gång).
   let group_id: string | null = null;
+  let groupTargetModified = false;
   if (linkTo) {
     const target = promises.find((p) => p.id === linkTo);
     if (!target) {
@@ -261,7 +282,10 @@ export function approve(
       process.exit(1);
     }
     group_id = target.group_id ?? `g-${linkTo}`;
-    if (!target.group_id) target.group_id = group_id;
+    if (!target.group_id) {
+      target.group_id = group_id;
+      groupTargetModified = true;
+    }
   }
 
   const newPromise: PromiseEntry = {
@@ -303,6 +327,17 @@ export function approve(
 
   saveJson(join(dataDir, "promises.json"), promises);
   saveJson(join(dataDir, "needs_review.json"), remaining);
+
+  // Håll data_hash + "senast uppdaterad" i synk vid varje godkännande (annars
+  // släpar de tills nästa pipelinekörning — se DECISION_LOG 2026-07-08).
+  appendChangelog(dataDir, {
+    run_id: `review-${newId}`,
+    added: [newId],
+    updated: groupTargetModified ? [linkTo!] : [],
+    retracted: [],
+    data_hash: computeDataHash(promises),
+    timestamp: new Date().toISOString(),
+  });
 
   const linkNote = group_id ? ` [länkad till group ${group_id}]` : "";
   console.log(`Godkänd: ${newId} "${title}" — ${cost.msek_base} msek (${cost.basis})${linkNote}`);
