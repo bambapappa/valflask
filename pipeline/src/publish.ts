@@ -139,7 +139,7 @@ function canonicalStringify(data: unknown, indent?: string): string {
   return "null";
 }
 
-export function computeDataHash(promises: PipelinePromise[]): string {
+export function computeDataHash(promises: readonly unknown[]): string {
   const canonical = canonicalStringify(promises);
   return createHash("sha256").update(canonical).digest("hex");
 }

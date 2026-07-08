@@ -670,3 +670,15 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Observation (ej åtgärdad här):** review-issue-godkännanden (`handle-review-comment.mts`) skriver ingen changelog-post och räknar inte om `data_hash` — efter #166/#189 låg changeloggens hash 2 löften efter promises.json tills denna rättelse läkte det. Självläker annars vid nästa pipelinekörning. Kandidat att åtgärda: låt review-approve appenda en changelog-post som pipelinen gör.
 
 **Påverkan:** `data/promises.json` (−p-2026-0091, 353 kvar), `data/changelog.json` (+rättelse-post). Ingen kodändring; monetära totaler oförändrade.
+
+## 2026-07-08 — Review-godkännanden synkar changelog + data_hash (rotorsaksfix)
+
+**Bugg:** `approve()` i `review.ts` skrev promises.json men appendade ALDRIG en changelog-post eller räknade om `data_hash`. Alla tre godkännandevägar (CLI, issue-kommentar via `handle-review-comment.mts`, etikett-bulk via `apply-labeled-decisions.mts`) går genom `approve()`, så varje godkännande lämnade changeloggens sista `data_hash` efter promises.json tills nästa pipelinekörning skrev en färsk post. Effekt: `summary.json` (läser changeloggens sista hash), sidfotens integritetshash och Layout-"senast uppdaterad" släpade; och de godkända löftena fick aldrig en `added`-post → saknades i veckokrönikans "nytt denna vecka". Inventering visade **8 löften** som aldrig loggats i `changelog.added` (p-0313/0314/0339/0468 från tidigare sessioner + dagens p-0469–0472) — latent sedan issue-flödet byggdes 2026-07-04.
+
+**Fix:** `approve()` appendar nu en changelog-post (`run_id: review-<id>`, `added:[nyaId]`, `updated:[länkat mål om group_id nyskapades]`, omräknad `data_hash`, tidsstämpel) precis som `publish.ts` — via delad `computeDataHash` (signatur vidgad till `readonly unknown[]`) och ny `appendChangelog`-helper (saknad changelog ⇒ börja tom, robust i test/första körning). Avvisningar loggas ALDRIG: kön är inte publicerad data och promises.json/hashen ändras inte av en avvisning.
+
+**Heal av befintligt släp:** backfill-post `backfill-review-approvals-2026-07-08` med dagens fyra issue-godkännanden (p-0469 återvinning, p-0470 marknadsskola, p-0471 bredband, p-0472 maffialag) + synkad hash. De fyra äldre (p-0313/0314/0339/0468) backfillas INTE — de tillhör tidigare veckor och att datera om dem till idag skulle felaktigt lägga dem i denna veckas krönika; deras `added`-lucka är kosmetisk och kvarstår medvetet.
+
+**Förkastade alternativ:** låta nästa pipelinekörning läka hashen (fungerar men lämnar ett fönster där sidfotens hash ljuger + tappar `added` för dagens fyra); logga även avvisningar (kön är inte publicerad data — changeloggen har aldrig loggat avvisningar); en tom "hash-refresh"-post utan `added` (läker hashen men tappar dagens fyra ur krönikan).
+
+**Verifierat:** typecheck rent, **169 pipelinetester gröna** (+1: `approve` appendar changelog med matchande hash), check-t7 OK. **Påverkan:** `pipeline/src/review.ts`, `pipeline/src/publish.ts` (signatur), `pipeline/tests/review.test.ts` (+1), `data/changelog.json` (backfill). Ingen kod i sajten; monetära totaler oförändrade.
