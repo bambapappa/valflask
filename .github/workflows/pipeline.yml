@@ -56,6 +56,14 @@ jobs:
           MODEL_COPY: ${{ vars.MODEL_COPY }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
           ALERT_EMAIL: ${{ vars.ALERT_EMAIL }}
+      # Arkiv-backfill (SPEC §6.2 "nytt försök tills satt"): fyll archive_url för
+      # publicerade löften som saknar det (seed/review-godkännanden sätter null).
+      # Bunden budget saves/run — snällt mot Wayback; nullen dräneras över dagar.
+      # Best-effort: får aldrig fälla datakörningen.
+      - name: Arkiv-backfill (Wayback)
+        continue-on-error: true
+        run: node --import tsx/esm scripts/archive-backfill.mts save 12
+        working-directory: pipeline
       # App-tokens lever 1 h. Pipelinesteget kan ta längre (första manifest-
       # körningen tog 71 min) — då är jobbstart-tokenen död vid push och datan
       # går förlorad (run 28673246764). Mynta därför en FÄRSK token efter

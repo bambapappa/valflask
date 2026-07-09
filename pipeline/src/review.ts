@@ -300,6 +300,8 @@ export function approve(
     source: {
       url: item.articleUrl,
       domain: domainOf(item.articleUrl),
+      // Fylls av arkiv-backfillsteget (scripts/archive-backfill.mts) vid nästa
+      // pipelinekörning — SPEC §6.2 "nytt försök nästa run tills satt".
       archive_url: null,
       fetched_at: new Date().toISOString(),
     },

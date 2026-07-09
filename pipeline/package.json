@@ -8,6 +8,7 @@
     "import:vallen": "node --import tsx/esm src/cli-import-vallen.ts",
     "review": "node --import tsx/esm src/review.ts",
     "check-t7": "node --import tsx/esm scripts/check-t7.mts",
+    "archive:backfill": "node --import tsx/esm scripts/archive-backfill.mts",
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
     "typecheck": "tsc --noEmit"
   },
