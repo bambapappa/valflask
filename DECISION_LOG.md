@@ -704,3 +704,11 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 - **Skattesänkning felklassad som `utgift` → `intäktsminskning`** (SPEC §8: "Skattesänkningar = intäktsminskning = kostnad i Fläsket"): p-0026, 0027, 0056, 0101, 0127, 0157, 0166, 0254, 0256 (9 st). Total oförändrad (båda typerna adderas i R4) — korrekt semantik/neutralitet.
 
 **Kvar (kräver ägarbeslut, ej i denna batch):** recosting av kärnkraftstrion (0082/0109/0153, ~−900 mdkr) och övriga överskattningar (0264/0216/0112/0333/0321/0137/0371/0376); icke-löften (0310/0307/0308/0311/0309/0174 — nolla vs stryka); 25 dublett-kluster (R3-länkning, representant-kostnadsval); p-0428 (pensionsavgiftshöjning summerad som utgift). Changelog-post `audit-fix-spec-corrections-2026-07-09` (updated: 11).
+
+## 2026-07-09 — Audit-åtgärd batch 2 (icke-löften tillbakadragna) + batch 3 (recosting) — ägarbeslut
+
+**Batch 2 — 5 icke-löften tillbakadragna** (D-filter, ej vallöften utan refererat tyckande/invändningar): p-0310 (M:s invändning MOT höjt barnbidrag), p-0307 (Busch MOT stora skattesänkningar), p-0308/0311 (SVT-artikelns positionering), p-0174 (V "total översyn av migrationspolitiken", vagt). 355→350 löften.
+
+**Batch 3 — 12 överskattningar recostade** (ägaren godkände förslagen): kärnkraft 0082/0109/0153 (100 mdr/år → 10 mdr/år årlig kapitalkostnad inom mandatet; R3-länkas i batch 4), elbil 0264 (50→7,5 mdr/år), bistånd 0112 (50 mdr/år → 0, bibehålla = ingen merkostnad), Sverigepriser 0216 (50→10), biogas 0333 (10→4), Sverigekort 0321 (18→8, netto ej brutto), garantipension 0137 (20→12 per notens egen uträkning), lagföring 0371 (4000→500, tidigare "cost-call misslyckades"), Ekokrim 0376 (800→100, kostnadsneutral omorg.), barnbidrag KD 0306 (5000→18900 i linje med p-0100). Alla fick sänkt confidence (≤0,5) + korrigeringsnot.
+
+**Effekt:** Fläsket 11 807 → **9 928 mdkr** (−1 879). Innebär att totalen var uppblåst ~2 130 mdkr (~18 %) av period-/skalfel före granskningen. Changelog `audit-fix-retract-recost-2026-07-09`.
