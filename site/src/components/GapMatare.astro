@@ -2,11 +2,14 @@
 interface Props {
   flasket: number;
   reformutrymme: number | "VERIFIERA";
+  reformutrymmeSource?: string | null;
 }
 
-const { flasket, reformutrymme } = Astro.props;
+const { flasket, reformutrymme, reformutrymmeSource } = Astro.props;
 const hasRef = reformutrymme !== "VERIFIERA" && typeof reformutrymme === "number";
 const ref4 = hasRef ? (reformutrymme as number) * 4 : 0;
+const perYearMdkr = hasRef ? Math.round((reformutrymme as number) / 1000) : 0;
+const sourceUrl = reformutrymmeSource ? reformutrymmeSource.split(/\s/)[0] : null;
 const gap = hasRef ? Math.max(0, flasket - ref4) : 0;
 const maxVal = hasRef ? Math.max(flasket, ref4) : flasket;
 const barWidth = 600;
@@ -51,6 +54,12 @@ const overcovered = hasRef && flasket < ref4;
     <div class="etikett gapmatare__gap">
       <span class="stampel">RYMS</span> Löftena ryms i det staten har råd att satsa
     </div>
+  )}
+  {hasRef && (
+    <p class="gapmatare__forklaring">
+      <span class="markering">Att satsa</span> = regeringens egen reformbudget för 2026 — knappt {perYearMdkr} miljarder per år, utöver försvar och Ukrainastöd — utslaget på mandatperiodens fyra år. Ett konkret, officiellt tal; Konjunkturinstitutets bedömning av utrymmet är ännu snävare.
+      {sourceUrl && <> <a href={sourceUrl} rel="nofollow">Källa<span aria-hidden="true"> ↗</span></a> ·</>} <a href="/metod#gap">Så räknar vi</a>
+    </p>
   )}
 </div>
 
@@ -102,5 +111,12 @@ const overcovered = hasRef && flasket < ref4;
   .gapmatare__gap {
     color: var(--svarta);
     margin-top: 0.25rem;
+  }
+  .gapmatare__forklaring {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    color: var(--dis);
+    margin-top: 0.5rem;
+    max-width: 60ch;
   }
 </style>
