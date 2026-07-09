@@ -42,6 +42,40 @@ function placeholder(method_note: string, confidence: number): CostEstimate {
   };
 }
 
+/**
+ * När kostnadssteget FALLERAR (LLM-anrop dött, ogiltig JSON, saknade tal) får vi
+ * INTE returnera ett trovärdigt schablonbelopp (2000/4000/6000) — det maskerar
+ * sig som ett riktigt estimat och kan bulk-godkännas (så fick p-2026-0371 base
+ * 4000 med noten "LLM-kostnadsanrop misslyckades"). Returnera base 0 + tydlig
+ * note + låg confidence → syns i review som "måste sättas", bidrar 0 om det ändå
+ * publiceras.
+ */
+function failedCost(method_note: string): CostEstimate {
+  return {
+    type: "utgift",
+    period: "per_ar",
+    msek_low: 0,
+    msek_base: 0,
+    msek_high: 0,
+    basis: "llm_estimat",
+    basis_url: null,
+    method_note: `${method_note} — belopp MÅSTE sättas manuellt.`,
+    confidence: 0.1,
+  };
+}
+
+/**
+ * Engångssignaler i löftet (gåva/inlösen/återköp/engångs, eller "under
+ * mandatperioden" = totalbelopp över 4 år). Kostnadssteget defaultar till per_ar
+ * (×4 i summan) vilket felaktigt fyrdubblade t.ex. Gripen-gåvan (0043) och
+ * landsbygdsinvesteringen (0336). Matchar signal → period tvingas till engang.
+ */
+export function looksLikeOneOff(text: string): boolean {
+  return /\b(?:engångs\w*|en\s+gång|inlösen|återköp|skänk\w*|gåv(?:a|or))\b|under\s+(?:nästa\s+)?mandatperiod/iu.test(
+    text,
+  );
+}
+
 const TYPES = ["utgift", "intäktsminskning", "besparing"];
 const PERIODS = ["per_ar", "engang"];
 
@@ -120,21 +154,21 @@ export async function estimateCost(
       model,
     });
   } catch {
-    return placeholder("LLM-kostnadsanrop misslyckades.", 0.3);
+    return failedCost("LLM-kostnadsanrop misslyckades");
   }
 
   let p: Record<string, unknown>;
   try {
     p = JSON.parse(extractJsonPayload(raw)) as Record<string, unknown>;
   } catch {
-    return placeholder("LLM-kostnadssvar ej tolkbart (ogiltig JSON).", 0.3);
+    return failedCost("LLM-kostnadssvar ej tolkbart (ogiltig JSON)");
   }
 
   const rawLow = finiteNum(p.msek_low);
   const rawBase = finiteNum(p.msek_base);
   const rawHigh = finiteNum(p.msek_high);
   if (rawLow === null || rawBase === null || rawHigh === null) {
-    return placeholder("LLM-kostnadssvar saknade giltiga tal.", 0.3);
+    return failedCost("LLM-kostnadssvar saknade giltiga tal");
   }
 
   let low = Math.max(0, rawLow);
@@ -147,17 +181,25 @@ export async function estimateCost(
   const type = TYPES.includes(String(p.type))
     ? (p.type as CostEstimate["type"])
     : "utgift";
-  const period = PERIODS.includes(String(p.period))
+  const llmPeriod = PERIODS.includes(String(p.period))
     ? (p.period as CostEstimate["period"])
     : "per_ar";
+  // Engångssignal i löftet vinner över LLM:ens per_ar-default (annars ×4-fel).
+  const oneOff =
+    llmPeriod === "per_ar" &&
+    looksLikeOneOff(`${candidate.quote} ${candidate.title}`);
+  const period: CostEstimate["period"] = oneOff ? "engang" : llmPeriod;
 
   const conf = finiteNum(p.confidence) ?? 0.4;
   const confidence = Math.max(0, Math.min(conf, 0.65)); // under verifierat (0.7)
 
-  const note =
+  const baseNote =
     typeof p.method_note === "string" && p.method_note.trim().length > 0
       ? p.method_note.slice(0, 200)
       : "LLM-estimat utan angivet belopp i källtext.";
+  const note = oneOff
+    ? `${baseNote} [period satt till engang: engångssignal i löftet]`.slice(0, 240)
+    : baseNote;
 
   return {
     type,
