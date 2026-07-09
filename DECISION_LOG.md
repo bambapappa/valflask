@@ -694,3 +694,13 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 **Förkastade alternativ:** peka `archive_url` mot `vallen-2026`-valvet (privat repo → 404 för allmänheten; bevislänken måste vara publik); arkivera synkront i `approve()` (lägger Wayback-latens/skörhet i review-flödet — retry-steget är rätt plats per §6.2); en separat schemalagd arkiv-workflow (onödig — pipelinen kör 3×/dygn och steget är bundet/best-effort).
 
 **Verifierat:** typecheck rent; diffen rör bara `archive_url` i promises.json (inga andra fält); PDF-`#page`-fragment bevarade (116 st); ny `data_hash` matchar promises.json. **Påverkan:** `pipeline/scripts/archive-backfill.mts` (ny), `pipeline/package.json`, `.github/workflows/pipeline.yml`, `pipeline/src/review.ts` (kommentar), `data/promises.json` (+335 archive_url), `data/changelog.json`.
+
+## 2026-07-09 — Innehållsgranskning (Claude-driven audit) + åtgärdsbatch 1 (SPEC-korrigeringar)
+
+**Granskningen:** systematisk audit i fyra dimensioner. Verbatim kördes mekaniskt inline (hämtning + ordagrann matchning av alla 340 webb/PDF-citat + reclass): **inga påhittade citat**; enda strukturella fyndet är att 19 KD-Almedalen- + 15 youtube-citat är sourcade till watch-sidor som inte bär transkriptet (bevis i vallen-2026-valvet). Estimat/dublett/felklass via lean multi-agent-svep (per kategori, små slices) + inline deterministisk verifiering. Full rapport: `scratchpad/AUDIT-2026-07-09.md`. 46 materiella fynd; störst effekt en handfull beloppsfel (~1 500 mdkr uppblåsning). Rotorsaker: period=per_ar-default 4×-inflaterar engångskapital; tomma mall-method_notes ger schablonbelopp; "LLM-kostnadsanrop misslyckades" auto-publicerades; nyhetsartiklar → refererat tyckande som löften.
+
+**Batch 1 — objektivt korrekta SPEC-korrigeringar (denna commit):**
+- **Periodfel** (engångsbelopp felkodat per_ar → ×4): p-2026-0336 (C "investera 50 mdr under mandatperioden": 200→50 mdkr, period=engang) och p-2026-0043 (M Gripen-engångsgåva: 120→20 mdkr, engang base 20000). Fläsket 12 057 → 11 807 mdkr (−250).
+- **Skattesänkning felklassad som `utgift` → `intäktsminskning`** (SPEC §8: "Skattesänkningar = intäktsminskning = kostnad i Fläsket"): p-0026, 0027, 0056, 0101, 0127, 0157, 0166, 0254, 0256 (9 st). Total oförändrad (båda typerna adderas i R4) — korrekt semantik/neutralitet.
+
+**Kvar (kräver ägarbeslut, ej i denna batch):** recosting av kärnkraftstrion (0082/0109/0153, ~−900 mdkr) och övriga överskattningar (0264/0216/0112/0333/0321/0137/0371/0376); icke-löften (0310/0307/0308/0311/0309/0174 — nolla vs stryka); 25 dublett-kluster (R3-länkning, representant-kostnadsval); p-0428 (pensionsavgiftshöjning summerad som utgift). Changelog-post `audit-fix-spec-corrections-2026-07-09` (updated: 11).
