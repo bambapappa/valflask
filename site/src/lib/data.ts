@@ -27,6 +27,7 @@ export interface PromisePost {
     domain: string;
     archive_url: string | null;
     fetched_at: string;
+    kind?: "webb" | "tal";
   };
   category: string;
   cost: {

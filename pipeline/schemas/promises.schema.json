@@ -8,10 +8,22 @@
     "type": "object",
     "additionalProperties": false,
     "required": [
-      "id", "title", "slug", "parties", "person", "quote",
-      "date_stated", "source", "category", "cost",
-      "financing_claimed", "comparisons", "quip", "status",
-      "history", "extraction"
+      "id",
+      "title",
+      "slug",
+      "parties",
+      "person",
+      "quote",
+      "date_stated",
+      "source",
+      "category",
+      "cost",
+      "financing_claimed",
+      "comparisons",
+      "quip",
+      "status",
+      "history",
+      "extraction"
     ],
     "properties": {
       "id": {
@@ -19,7 +31,10 @@
         "pattern": "^p-\\d{4}-\\d{4}$"
       },
       "group_id": {
-        "type": ["string", "null"],
+        "type": [
+          "string",
+          "null"
+        ],
         "pattern": "^g-[a-z0-9-]+$"
       },
       "title": {
@@ -37,21 +52,46 @@
         "maxItems": 8,
         "uniqueItems": true,
         "items": {
-          "enum": ["s", "m", "sd", "c", "v", "kd", "l", "mp"]
+          "enum": [
+            "s",
+            "m",
+            "sd",
+            "c",
+            "v",
+            "kd",
+            "l",
+            "mp"
+          ]
         }
       },
       "person": {
         "oneOf": [
-          { "type": "null" },
+          {
+            "type": "null"
+          },
           {
             "type": "object",
             "additionalProperties": false,
-            "required": ["name", "role"],
+            "required": [
+              "name",
+              "role"
+            ],
             "properties": {
-              "name": { "type": "string", "minLength": 2, "maxLength": 80 },
-              "role": { "type": "string", "minLength": 2, "maxLength": 80 },
+              "name": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 80
+              },
+              "role": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 80
+              },
               "riksdagen_id": {
-                "type": ["string", "null"],
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "pattern": "^[0-9]{1,20}$"
               }
             }
@@ -70,7 +110,12 @@
       "source": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["url", "domain", "archive_url", "fetched_at"],
+        "required": [
+          "url",
+          "domain",
+          "archive_url",
+          "fetched_at"
+        ],
         "properties": {
           "url": {
             "type": "string",
@@ -86,31 +131,63 @@
                 "type": "string",
                 "pattern": "^https://web\\.archive\\.org/"
               },
-              { "type": "null" }
+              {
+                "type": "null"
+              }
             ]
           },
           "fetched_at": {
             "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "webb",
+              "tal"
+            ]
           }
         }
       },
       "category": {
         "enum": [
-          "välfärd", "skatter", "försvar", "klimat-miljö",
-          "rättsväsende", "utbildning", "infrastruktur",
-          "migration", "övrigt"
+          "välfärd",
+          "skatter",
+          "försvar",
+          "klimat-miljö",
+          "rättsväsende",
+          "utbildning",
+          "infrastruktur",
+          "migration",
+          "övrigt"
         ]
       },
       "cost": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["type", "period", "msek_low", "msek_base", "msek_high", "basis", "basis_url", "method_note", "confidence"],
+        "required": [
+          "type",
+          "period",
+          "msek_low",
+          "msek_base",
+          "msek_high",
+          "basis",
+          "basis_url",
+          "method_note",
+          "confidence"
+        ],
         "properties": {
           "type": {
-            "enum": ["utgift", "intäktsminskning", "besparing"]
+            "enum": [
+              "utgift",
+              "intäktsminskning",
+              "besparing"
+            ]
           },
           "period": {
-            "enum": ["per_ar", "engang"]
+            "enum": [
+              "per_ar",
+              "engang"
+            ]
           },
           "msek_low": {
             "type": "number",
@@ -125,10 +202,19 @@
             "minimum": 0
           },
           "basis": {
-            "enum": ["rut", "myndighet", "parti", "media", "llm_estimat"]
+            "enum": [
+              "rut",
+              "myndighet",
+              "parti",
+              "media",
+              "llm_estimat"
+            ]
           },
           "basis_url": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "method_note": {
             "type": "string",
@@ -144,11 +230,26 @@
       "financing_claimed": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["described"],
+        "required": [
+          "described"
+        ],
         "properties": {
-          "described": { "type": "boolean" },
-          "summary": { "type": ["string", "null"] },
-          "msek": { "type": ["number", "null"], "minimum": 0 }
+          "described": {
+            "type": "boolean"
+          },
+          "summary": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "msek": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          }
         }
       },
       "comparisons": {
@@ -158,32 +259,65 @@
         }
       },
       "quip": {
-        "type": ["string", "null"]
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "status": {
-        "enum": ["aktiv", "uppdaterad", "tillbakadragen", "infriad"]
+        "enum": [
+          "aktiv",
+          "uppdaterad",
+          "tillbakadragen",
+          "infriad"
+        ]
       },
       "history": {
         "type": "array",
         "items": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["date", "change", "commit"],
+          "required": [
+            "date",
+            "change",
+            "commit"
+          ],
           "properties": {
-            "date": { "type": "string" },
-            "change": { "type": "string" },
-            "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" }
+            "date": {
+              "type": "string"
+            },
+            "change": {
+              "type": "string"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{7,40}$"
+            }
           }
         }
       },
       "extraction": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["model", "verified_by", "run_id"],
+        "required": [
+          "model",
+          "verified_by",
+          "run_id"
+        ],
         "properties": {
-          "model": { "type": "string" },
-          "verified_by": { "type": ["string", "null"] },
-          "run_id": { "type": "string", "minLength": 1 }
+          "model": {
+            "type": "string"
+          },
+          "verified_by": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "run_id": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
     }

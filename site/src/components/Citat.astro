@@ -7,15 +7,18 @@ interface Props {
   date: string;
   sourceUrl: string;
   archiveUrl: string | null;
+  kind?: "webb" | "tal";
 }
-const { quote, person, party, domain, date, sourceUrl, archiveUrl } = Astro.props;
+const { quote, person, party, domain, date, sourceUrl, archiveUrl, kind } = Astro.props;
+const isTal = kind === "tal";
 ---
 <blockquote>
   <p>{quote}</p>
 </blockquote>
 <div class="etikett citat-attribution">
   — {person || party}, {domain}, {date}
-  {' '}· <a href={sourceUrl}>källa<span aria-hidden="true"> ↗</span></a>
+  {isTal && <> · <span class="tal-markor" title="Löftet är sagt i tal och kontrolleras mot en sparad textversion (se /metod)">talat löfte</span></>}
+  {' '}· <a href={sourceUrl}>{isTal ? "se i talet" : "källa"}<span aria-hidden="true"> ↗</span></a>
   {archiveUrl && <> · <a href={archiveUrl}>arkiv<span aria-hidden="true"> ↗</span></a></>}
 </div>
 
@@ -23,5 +26,10 @@ const { quote, person, party, domain, date, sourceUrl, archiveUrl } = Astro.prop
   .citat-attribution {
     margin-top: -0.5rem;
     margin-bottom: var(--mellanrum);
+  }
+  .tal-markor {
+    font-variant: small-caps;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
   }
 </style>

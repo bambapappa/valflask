@@ -13,6 +13,7 @@ interface PromisePost {
   };
   status: string;
   parties: string[];
+  group_id: string | null;
   id: string;
   slug: string;
   title: string;
@@ -23,16 +24,32 @@ function promiseTotalMsek(p: PromisePost): number {
   return p.cost.msek_base * (p.cost.period === "per_ar" ? 4 : 1);
 }
 
+// R3: samma politik (delat group_id) räknas EN gång. MÅSTE spegla
+// src/lib/aggregates.ts — annars visar OG-bilderna en icke-deduperad
+// (uppblåst) total medan sajtsidorna visar den rätta.
+function dedupeByGroup(promises: PromisePost[]): PromisePost[] {
+  const seen = new Set<string>();
+  const out: PromisePost[] = [];
+  for (const p of promises) {
+    if (p.group_id) {
+      if (seen.has(p.group_id)) continue;
+      seen.add(p.group_id);
+    }
+    out.push(p);
+  }
+  return out;
+}
+
 function totalFlasket(promises: PromisePost[]): number {
-  return promises
+  return dedupeByGroup(promises)
     .filter((p) => p.cost.type === "utgift" || p.cost.type === "intäktsminskning")
     .reduce((sum, p) => sum + promiseTotalMsek(p), 0);
 }
 
 function partyTotalMsek(promises: PromisePost[], code: string): number {
-  return promises
-    .filter((p) => p.parties.includes(code) && p.status !== "tillbakadragen")
-    .reduce((sum, p) => sum + promiseTotalMsek(p), 0);
+  return dedupeByGroup(
+    promises.filter((p) => p.parties.includes(code) && p.status !== "tillbakadragen"),
+  ).reduce((sum, p) => sum + promiseTotalMsek(p), 0);
 }
 
 function formatMsekBare(msek: number): string {
