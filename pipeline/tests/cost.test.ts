@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { estimateCost } from "../src/cost.ts";
+import { estimateCost, looksLikeOneOff } from "../src/cost.ts";
 import type { LlmClient } from "../src/llm.ts";
 import type { ExtractionCandidate } from "../src/gates.ts";
 
@@ -107,9 +107,39 @@ describe("estimateCost", () => {
     assert.equal(c.msek_base, 20);
   });
 
-  it("ogiltig JSON från LLM → platshållare 0,3", async () => {
+  it("ogiltig JSON från LLM → failedCost (base 0, ej trovärdigt schablonbelopp)", async () => {
     const c = await estimateCost(cand(null), mockLlm("inget vettigt svar"), "m");
-    assert.equal(c.confidence, 0.3);
+    assert.equal(c.msek_base, 0, "får INTE returnera 4000 som kan bulk-godkännas");
+    assert.equal(c.confidence, 0.1);
     assert.equal(c.basis, "llm_estimat");
+    assert.match(c.method_note, /MÅSTE sättas/);
+  });
+
+  it("LLM-anrop som kastar → failedCost base 0 (p-2026-0371-buggen)", async () => {
+    const llm: LlmClient = { complete: async () => { throw new Error("nätfel"); } };
+    const c = await estimateCost(cand(null), llm, "m");
+    assert.equal(c.msek_base, 0);
+    assert.equal(c.confidence, 0.1);
+    assert.match(c.method_note, /misslyckades/);
+  });
+
+  it("engångssignal tvingar period=engang trots LLM per_ar (p-0043/p-0336-buggen)", async () => {
+    const llm = mockLlm(
+      '{"type":"utgift","period":"per_ar","msek_low":15000,"msek_base":20000,"msek_high":30000,"confidence":0.4,"method_note":"Gripen-gåva"}',
+    );
+    const c = await estimateCost(
+      { ...cand(null), quote: "16 JAS 39 Gripen C/D skänks till Ukraina" },
+      llm,
+      "m",
+    );
+    assert.equal(c.period, "engang");
+    assert.match(c.method_note, /engångssignal/);
+  });
+
+  it("looksLikeOneOff: gåva/inlösen/mandatperiod ja; löpande nej", () => {
+    assert.equal(looksLikeOneOff("16 Gripen skänks till Ukraina"), true);
+    assert.equal(looksLikeOneOff("investera 50 miljarder under nästa mandatperiod"), true);
+    assert.equal(looksLikeOneOff("inlösen av friskoleaktiebolag"), true);
+    assert.equal(looksLikeOneOff("höja barnbidraget varje månad"), false);
   });
 });
