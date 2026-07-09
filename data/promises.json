@@ -2466,14 +2466,14 @@
     },
     "category": "migration",
     "cost": {
-      "type": "utgift",
+      "type": "besparing",
       "period": "per_ar",
       "msek_low": 70,
       "msek_base": 100,
       "msek_high": 130,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Minderåriga ej tolkar + tolkefter 3 år. Besparing snarare än kostnad. Administrativt ~0,1 mdr.",
+      "method_note": "Estimat: Minderåriga ej tolkar + tolkefter 3 år. Besparing snarare än kostnad. Administrativt ~0,1 mdr. [granskning 2026-07-09: restriktion av tolktjänster = besparing, ej utgift (per notens egen bedömning)]",
       "confidence": 0.55
     },
     "financing_claimed": {
@@ -4329,14 +4329,14 @@
     },
     "category": "välfärd",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 2500,
       "msek_base": 5000,
       "msek_high": 7500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Stärkt ätstörningsvård (~1 mdr) + utöka RUT-avdrag (RUT kostar idag ca 6 mdr/år, utökning +50% = 3 mdr). Totalt ~5 mdr/år.",
+      "method_note": "Estimat: Stärkt ätstörningsvård (~1 mdr) + utöka RUT-avdrag (RUT kostar idag ca 6 mdr/år, utökning +50% = 3 mdr). Totalt ~5 mdr/år. [granskning 2026-07-09: blandad; dominerande del (RUT+skatt) är intäktsminskning per SPEC §8]",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -7293,13 +7293,13 @@
     "category": "klimat-miljö",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 250,
       "msek_base": 500,
       "msek_high": 750,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Administrativ reform av strandskyddsregler (miljöbalken 7 kap.). Kostnad = hantering inom länsstyrelser + kommuner + eventuell kompensation/ersättning vid upplåtelse. Uppskattat 1,5 mdr kr en-gång + 0",
+      "method_note": "Administrativ reform av strandskyddsregler (miljöbalken 7 kap.). Kostnad = hantering inom länsstyrelser + kommuner + eventuell kompensation/ [granskning 2026-07-09: engångs regelreform av strandskyddet, ej löpande ×4]",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -13818,12 +13818,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3500,
-      "msek_high": 8000,
+      "msek_low": 1000,
+      "msek_base": 2000,
+      "msek_high": 3500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Höjd pensionsavgift: antag 0,5-2 p.e. höjning av arbetsgivaravgiften för statligt anställda (200-260k, snittlön 38-45k/mån). Höjt bostadstillägg/garantipension: grovt antag 1-5 mdkr. Kostnaderna summe",
+      "method_note": "Höjd pensionsavgift: antag 0,5-2 p.e. höjning av arbetsgivaravgiften för statligt anställda (200-260k, snittlön 38-45k/mån). Höjt bostadstil [granskning 2026-07-09: endast pensions-/bostadstilläggshöjning som utgift; avgiftshöjningen är intäktssida]",
       "confidence": 0.4
     },
     "financing_claimed": {
