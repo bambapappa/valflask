@@ -788,3 +788,15 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Kvar (medvetet):** granskad LLM-quip (Option B/C i skissen) — den frivilliga "garneringen" — införs efter att granskarna gett tummen upp för siffrorna; den torra raden är baslinjen som alltid finns.
 
 **Påverkan:** `site/src/lib/aggregates.ts` (`defaultComparisonIds`, `dryLine`, fallback i `computeComparisons`), `site/src/pages/lofte/[...path].astro` (quip-fallback), `site/src/pages/metod.astro` (rad om torra raden), `site/scripts/test-drylinje.mts` (nytt, i `pnpm test`). 175 pipelinetester, hela sajtsviten (inkl. torra raden) gröna; 349/349 löftessidor har marginalrad i byggd dist.
+
+## 2026-07-10 — Torra raden: apolitisk vikt-liknelse (djur) i stället för policy-måttstockar
+
+**Bakgrund (ägarbeslut, ersätter samma dags nurses-version):** Sjuksköterskelöner, vårdplatser och skolluncher är SJÄLVA saker partier lovar att finansiera — att mäta ett vårdlöfte i "sjuksköterskelöner" ramar tyst in kostnaden i policytermer och är därför inte helt neutralt. Bytt till en apolitisk fysisk liknelse: "om varje krona vägde ett gram" → löftets vikt uttryckt i djur. Ett djur kan aldrig vara ett vallöfte.
+
+**Beslut:** `dryLine(promise)` (inte längre beroende av constants): 1 kr = 1 g → total vikt → antal djur. Djuret väljs per ÄMNESOMRÅDE (kategori), aldrig per parti — samma belopp+kategori ger ordagrant identisk rad oavsett parti (§17); kategorin varierar djuret enbart för omväxling ("så inte allt blir blåvalar"). 9 djur, alla ≥1 ton (golv satt efter att en 300-kg brunbjörn gav "1 066 667 brunbjörnar"): blåval/kaskelot/knölval/elefant/späckhuggare/noshörning/flodhäst/giraff/valross. 0-kostnadslöften: "Ingen mätbar kostnad i kassan." De gamla auto-jämförelserna (sjuksköterskor/Förbifart/månen) togs bort ur `computeComparisons` → Jämförelser-sektionen visar nu bara kurerade (tom → dold); vikt-raden är enda glasyren. /metod omskriven att förklara konceptet.
+
+**Neutralitet (testad):** identiskt belopp+kategori → identisk rad för S=SD=V; inga policy-måttstockar kvar (test spärrar sjukskötersk/vårdplats/skolmål/lärarlön); okänd kategori → övrigt-djur.
+
+**Förkastade alternativ:** magnitud-väljer-djur (håller siffror snygga men klustrar alla stora löften på blåval — motverkar ägarens omväxlingsönskan); djur per parti (partiskt); behålla sjuksköterskor (ägarens invändning); låta 300-kg-djur ge miljontal (spretigt).
+
+**Påverkan:** `site/src/lib/aggregates.ts` (`dryLine` v2 + `DJUR_PER_KATEGORI`; `defaultComparisonIds` borttagen; `computeComparisons` åter kurerad-bara), `site/src/pages/lofte/[...path].astro` (`dryLine(promise)`), `site/src/pages/metod.astro`, `site/scripts/test-drylinje.mts` (omskriven). Hela sajtsviten grön; 349/349 löftessidor har vikt-raden i byggd dist.

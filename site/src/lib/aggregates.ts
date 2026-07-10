@@ -274,39 +274,16 @@ export interface ComparisonResult {
   unverifiable: boolean;
 }
 
-/**
- * Deterministisk, magnitud-medveten jämförelseuppsättning — SAMMA regel för
- * varje löfte och varje parti (§17). Fyller `comparisons` när kurering saknas
- * (den är tom för i stort sett alla löften). Ingen LLM, inget partival:
- *  - sjuksköterskelöner: universell måttstock, alltid med;
- *  - Förbifart Stockholm: först när andelen blir meningsfull (≥1 %);
- *  - månen (myntstapel): först när stapeln når ≥1 % av vägen dit — annars brus.
- * Så får små löften vardagsmått och stora får den kosmiska svängen, men VILKEN
- * regel som avgör är identisk oavsett parti. Kosmetik/presentation, därför
- * härledd vid bygget och inte lagrad i den öppna datan.
- */
-export function defaultComparisonIds(totalKronor: number, constants: Constants): string[] {
-  const val = (id: string): number | null => {
-    const c = constants.items.find((it) => it.id === id);
-    return c && c.value !== "VERIFIERA" ? (c.value as number) : null;
-  };
-  const ids: string[] = [];
-  if (val("ssk_arskostnad") !== null) ids.push("ssk_arskostnad");
-  const forbifart = val("forbifart_sthlm");
-  if (forbifart !== null && totalKronor >= 0.01 * forbifart) ids.push("forbifart_sthlm");
-  const coin = val("enkrona_tjocklek_m");
-  const moon = val("avstand_manen_m");
-  if (coin !== null && moon !== null && totalKronor * coin >= 0.01 * moon) ids.push("avstand_manen_m");
-  return ids;
-}
-
 export function computeComparisons(
   promise: PromisePost,
   constants: Constants
 ): ComparisonResult[] {
   const totalKronor = promiseTotalMsek(promise) * 1_000_000;
-  const curated = promise.comparisons ?? [];
-  const ids = curated.length > 0 ? curated : defaultComparisonIds(totalKronor, constants);
+  // Endast KURERADE jämförelser (tom för nästan alla → sektionen döljs). De
+  // gamla auto-jämförelserna (sjuksköterskelöner m.fl.) togs bort: en måttstock
+  // som SJÄLV kan vara ett vallöfte är inte neutral (ägarbeslut 2026-07-10).
+  // Glasyren är i stället den apolitiska vikt-liknelsen i dryLine().
+  const ids = promise.comparisons ?? [];
   const results: ComparisonResult[] = [];
 
   const vardagliga: ComparisonResult[] = [];
@@ -509,22 +486,55 @@ export function buildSummary(
 }
 
 /**
- * Den "torra raden" (Option A, DECISION_LOG 2026-07-10): en deadpan,
- * deterministisk kommentar som fyller glasyren neutralt när ingen granskad
- * LLM-quip finns. Bara en verklig jämförelse + finansieringsstatus, i
- * stenografisk ton — aldrig ett skämt om sakfrågan, personen eller partiet,
- * och identisk mall för alla åtta. Humorn ligger i registret, inte i en vits.
+ * Neutralt djur per ämnesområde för vikt-liknelsen. Djuret varierar ENBART för
+ * omväxling (så inte allt blir blåvalar) och beror på kategorin — aldrig på
+ * partiet, så samma belopp ger identisk rad oavsett parti (§17). Ett djur är
+ * apolitiskt: till skillnad från sjuksköterskelöner/vårdplatser/skolluncher kan
+ * det aldrig självt vara ett vallöfte. Vikter är ungefärliga snittvikter för en
+ * vuxen individ (encyklopediska, i kg).
  */
-export function dryLine(promise: PromisePost, constants: Constants): string {
+interface Djur {
+  singular: string;
+  plural: string;
+  kg: number;
+}
+// Golv ~1 ton så inga absurda miljontal (en 300-kg brunbjörn gav "1 066 667").
+const DJUR_PER_KATEGORI: Record<string, Djur> = {
+  "välfärd": { singular: "blåval", plural: "blåvalar", kg: 150_000 },
+  "klimat-miljö": { singular: "kaskelot", plural: "kaskeloter", kg: 40_000 },
+  "skatter": { singular: "knölval", plural: "knölvalar", kg: 30_000 },
+  "försvar": { singular: "afrikansk elefant", plural: "afrikanska elefanter", kg: 6_000 },
+  "utbildning": { singular: "späckhuggare", plural: "späckhuggare", kg: 5_000 },
+  "rättsväsende": { singular: "noshörning", plural: "noshörningar", kg: 2_300 },
+  "infrastruktur": { singular: "flodhäst", plural: "flodhästar", kg: 1_500 },
+  "migration": { singular: "giraff", plural: "giraffer", kg: 1_200 },
+  "övrigt": { singular: "valross", plural: "valrossar", kg: 1_000 },
+};
+const DJUR_DEFAULT = DJUR_PER_KATEGORI["övrigt"];
+
+function formatDjurCount(n: number): string {
+  return n < 10
+    ? n.toFixed(1).replace(".", ",")
+    : Math.round(n).toLocaleString("sv-SE");
+}
+
+/**
+ * Den "torra raden": en deadpan, deterministisk och NEUTRAL glasyr som fyller
+ * quip-slotten när ingen granskad LLM-quip finns. Konceit: "om varje krona
+ * vägde ett gram" → löftets vikt uttryckt i ett apolitiskt djur. Skämtar aldrig
+ * om sakfrågan, personen eller partiet — bara om storleken, via en fysisk
+ * liknelse som inte kan vara del av något löfte. Identisk rad för samma belopp
+ * oavsett parti; djuret varierar bara med ämnesområdet för omväxlings skull.
+ */
+export function dryLine(promise: PromisePost): string {
   const fin = promise.financing_claimed.described ? "angiven" : "ej angiven";
-  const totalKronor = promiseTotalMsek(promise) * 1_000_000;
-  const comps = computeComparisons(promise, constants).filter((c) => !c.unverifiable);
-  // Symboliska/regulatoriska löften utan mätbar kassaeffekt (msek_base ≈ 0):
-  // "0,0 sjuksköterskelöner" vore fånigt — säg det rakt ut i stället.
-  if (totalKronor < 1_000_000 || comps.length === 0) {
-    return `Ingen mätbar kostnad i kassan. Finansiering: ${fin}.`;
-  }
-  return `Motsvarar ${formatComparison(comps[0])}. Finansiering: ${fin}.`;
+  const gram = promiseTotalMsek(promise) * 1_000_000; // msek → kr, 1 kr = 1 g
+  // Symboliska/regulatoriska löften utan mätbar kassaeffekt (< 1 ton):
+  if (gram < 1_000_000) return `Ingen mätbar kostnad i kassan. Finansiering: ${fin}.`;
+  const djur = DJUR_PER_KATEGORI[promise.category] ?? DJUR_DEFAULT;
+  const antal = gram / (djur.kg * 1000);
+  const namn = Math.abs(antal - 1) < 1e-9 ? djur.singular : djur.plural;
+  return `Om varje krona vägde ett gram skulle löftet väga ungefär ${formatDjurCount(antal)} ${namn}. Finansiering: ${fin}.`;
 }
 
 export function formatComparison(r: ComparisonResult): string {
