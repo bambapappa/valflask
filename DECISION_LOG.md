@@ -750,3 +750,21 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Beslut:** (1) `GapMatare.astro` visar nu en förklaring direkt under stapeln (i det verifierade läget): "Att satsa = regeringens egen reformbudget för 2026 — knappt 80 mdkr/år, utöver försvar och Ukrainastöd — utslaget på fyra år" + **Källa ↗** (regeringens budget-artikel, ur konstantens source_url) + **Så räknar vi** (/metod#gap). (2) /metod-stycket rättat så det korrekt beskriver måttet (regeringens reformbudget, ej KI) och förklarar valet (källsatt, kontrollerbart; KI:s bedömning är ännu snävare → mätaren är om något snäll mot löftena); `id="gap"` för djuplänk. Källa-URL:en extraheras ur constants (första token), så den följer med om konstanten uppdateras.
 
 **Verifierat:** bygge OK, T1/T3/T9 gröna, förklaring + länkar renderade på startsidan. **Påverkan:** `site/src/components/GapMatare.astro`, `site/src/pages/index.astro`, `site/src/pages/metod.astro`. Endast sajt/copy; ingen data.
+
+## 2026-07-10 — Lanseringsstädning: blockerarna inför journalistutskicket åtgärdade
+
+**Bakgrund:** Ägaren beställde en ärlig genomgång inför mjuklansering mot utvalda journalister/bloggare. Genomgången fann tre blockerare + en /metod-osanning; under åtgärdandet hittades ytterligare två skarpa fel. Allt åtgärdat:
+
+**1. C:s skattereform räknades tre gånger.** p-2026-0141/0142/0170 = samma "skattefri grundlön"-reform ur samma artikel à 105 mdkr/år, olänkade. Grupperade (`g-c-skattefri-grundlon`); C:s partitotal −840 mdkr (nu 2 527 mdkr).
+
+**2. Verbatim-revalidering av hela beståndet.** Nytt stående verktyg `pipeline/scripts/revalidate-quotes.mts` (`pnpm revalidate`): hämtar varje aktiv källas text via pipelinens page-väg (inkl. PDF + riksdagens .text-fallback) och G3-verifierar varje citat; video (YouTube/SVT Play) klassas EJ_TEXTKÄLLA. Utfall efter triage: **315/315 textverifierbara OK, 0 saknas, 0 onåbara, 34 video.** Triaget: (a) V-trions käll-URL bar ett stavfel ('vansterpariet') — rättad, citaten verifierade på riktiga sidan; (b) p-2026-0309 TILLBAKADRAGEN: citatet var en RSS-sammanfogning (rubrik + ingress) som inte återfinns i artikeln (arkivet onåbart härifrån, 403) — löftet får återfångas ur riktig källa; (c) 19 KD-citat med SVT Play-källa är talcitat, inte textkällor.
+
+**3. 128 bulk-löften hade beslutsdatum som date_stated.** Alla omdaterade till källdatum: manifest-PDF:ers CreationDate (C 2026-06-04, L 2026-06-02, S 2026-02-04, V 2026-04-19), MP:s handlingsprogram till uppladdningsmånadens första dag (2026-04-01 — dagsprecision saknas), stående sidor till första fångstdatum, artiklar via article:published_time, riksdagsdokument via dokumentstatus-API:t. 128/128 daterade. Changelog `manual-revalidation-fixes-2026-07-10`.
+
+**4. /metod ljög om granskningen (åt försiktiga hållet).** "Vi låter ingen sitta och gå igenom dem en och en" ersatt med sanningen: varje ≈-estimat går genom öppen mänsklig granskning (kö → bekräfta/justera/avvisa, publikt loggat) innan publicering.
+
+**5. Upptäckt under städningen — veckokrönikan 2026-28 låg live som rå JSON.** `generateWeekly` parsade LLM-svaret utan staket-avskalning och FALLBACK:ade till att publicera råsvaret som brödtext med rubriken "Veckans fläsk". Fix: `extractJsonPayload` + validering av headline/body_md + KASTA vid oparsbart (aldrig publicera råtext; nästa körning försöker igen). Data reparerad ur den inbäddade JSON:en (riktig rubrik: "Miljöpartiet öser miljarder…"). 3 nya tester. Detta var också grundorsaken till att T1 föll (krönikesidan byggdes mot trasig data).
+
+**Kvarstående kända icke-blockerare:** quips saknas på ~347 löften (tona ner "torr humor"-löftet eller backfilla); SD/S-obalansen bör förklaras synligt på partisidorna; 34 videokällade löften är verifierbara genom tittning, inte grep.
+
+**Påverkan:** data (grupp + retract + url-fix + 128 datum + krönika reparerad), `pipeline/scripts/revalidate-quotes.mts` (nytt, npm-script `revalidate`), `pipeline/src/copy.ts`, `site/src/pages/metod.astro`, `pipeline/tests/chronicle.test.ts` (+3). 175 pipelinetester gröna, hela sajtsviten grön (T1 åter grön), T7 grönt, revalidering 315/315.
