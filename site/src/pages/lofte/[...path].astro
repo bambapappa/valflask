@@ -8,7 +8,7 @@ import MetodLank from "../../components/MetodLank.astro";
 import KallRad from "../../components/KallRad.astro";
 import { getPromises, getParties, getPeople, getConstants } from "../../lib/data";
 import { formatMsek, formatBasisLabel, formatCostType, formatDateShort, getPartyByCode } from "../../lib/calc";
-import { promiseTotalMsek, computeComparisons, formatComparison } from "../../lib/aggregates";
+import { promiseTotalMsek, computeComparisons, formatComparison, dryLine } from "../../lib/aggregates";
 
 export function getStaticPaths() {
   const promises = getPromises();
@@ -153,7 +153,7 @@ const jsonLd = [
         </div>
       )}
 
-      <Marginalanteckning text={promise.quip} />
+      <Marginalanteckning text={promise.quip || dryLine(promise, constants)} />
 
       {promise.history.length > 0 && (
         <section class="sektion">

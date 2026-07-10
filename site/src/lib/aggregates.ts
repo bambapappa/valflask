@@ -274,12 +274,39 @@ export interface ComparisonResult {
   unverifiable: boolean;
 }
 
+/**
+ * Deterministisk, magnitud-medveten jämförelseuppsättning — SAMMA regel för
+ * varje löfte och varje parti (§17). Fyller `comparisons` när kurering saknas
+ * (den är tom för i stort sett alla löften). Ingen LLM, inget partival:
+ *  - sjuksköterskelöner: universell måttstock, alltid med;
+ *  - Förbifart Stockholm: först när andelen blir meningsfull (≥1 %);
+ *  - månen (myntstapel): först när stapeln når ≥1 % av vägen dit — annars brus.
+ * Så får små löften vardagsmått och stora får den kosmiska svängen, men VILKEN
+ * regel som avgör är identisk oavsett parti. Kosmetik/presentation, därför
+ * härledd vid bygget och inte lagrad i den öppna datan.
+ */
+export function defaultComparisonIds(totalKronor: number, constants: Constants): string[] {
+  const val = (id: string): number | null => {
+    const c = constants.items.find((it) => it.id === id);
+    return c && c.value !== "VERIFIERA" ? (c.value as number) : null;
+  };
+  const ids: string[] = [];
+  if (val("ssk_arskostnad") !== null) ids.push("ssk_arskostnad");
+  const forbifart = val("forbifart_sthlm");
+  if (forbifart !== null && totalKronor >= 0.01 * forbifart) ids.push("forbifart_sthlm");
+  const coin = val("enkrona_tjocklek_m");
+  const moon = val("avstand_manen_m");
+  if (coin !== null && moon !== null && totalKronor * coin >= 0.01 * moon) ids.push("avstand_manen_m");
+  return ids;
+}
+
 export function computeComparisons(
   promise: PromisePost,
   constants: Constants
 ): ComparisonResult[] {
   const totalKronor = promiseTotalMsek(promise) * 1_000_000;
-  const ids = promise.comparisons ?? [];
+  const curated = promise.comparisons ?? [];
+  const ids = curated.length > 0 ? curated : defaultComparisonIds(totalKronor, constants);
   const results: ComparisonResult[] = [];
 
   const vardagliga: ComparisonResult[] = [];
@@ -479,6 +506,25 @@ export function buildSummary(
       };
     }),
   };
+}
+
+/**
+ * Den "torra raden" (Option A, DECISION_LOG 2026-07-10): en deadpan,
+ * deterministisk kommentar som fyller glasyren neutralt när ingen granskad
+ * LLM-quip finns. Bara en verklig jämförelse + finansieringsstatus, i
+ * stenografisk ton — aldrig ett skämt om sakfrågan, personen eller partiet,
+ * och identisk mall för alla åtta. Humorn ligger i registret, inte i en vits.
+ */
+export function dryLine(promise: PromisePost, constants: Constants): string {
+  const fin = promise.financing_claimed.described ? "angiven" : "ej angiven";
+  const totalKronor = promiseTotalMsek(promise) * 1_000_000;
+  const comps = computeComparisons(promise, constants).filter((c) => !c.unverifiable);
+  // Symboliska/regulatoriska löften utan mätbar kassaeffekt (msek_base ≈ 0):
+  // "0,0 sjuksköterskelöner" vore fånigt — säg det rakt ut i stället.
+  if (totalKronor < 1_000_000 || comps.length === 0) {
+    return `Ingen mätbar kostnad i kassan. Finansiering: ${fin}.`;
+  }
+  return `Motsvarar ${formatComparison(comps[0])}. Finansiering: ${fin}.`;
 }
 
 export function formatComparison(r: ComparisonResult): string {

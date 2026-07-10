@@ -776,3 +776,15 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Förkastade alternativ:** hårdkoda en SD-not i partisidan (pekar ut ett parti = §17-brott); FAQ-svar på /om (granskare läser partisidan, inte FAQ:n); auto-härleda status ur sources.yaml (kommentarer är inte maskinläsbara, och statusen är redaktionell).
 
 **Påverkan:** data/parties.json (+manifest_2026 ×8), pipeline/schemas/parties.schema.json, site/src/lib/data.ts (Party), site/src/pages/parti/[kod].astro (+stil). 175 pipelinetester, T7, hela sajtsviten gröna; SD-sidan verifierad i byggd dist.
+
+## 2026-07-10 — "Torr humor" löst neutralt (Option A): deterministisk jämförelserad
+
+**Bakgrund:** 347/350 löften saknade quip ("torr humor i glasyren" fanns knappt på sajten) och `comparisons` var tom på alla — jämförelsemotorn (`computeComparisons`) fanns men fick aldrig indata. Efter kostnads-/dubblettmisstagen var risken med per-item LLM-skämt (ett skämt som läser som hån mot ETT partis hjärtefråga underminerar hela neutralitetsanspråket) för hög för lansering. Valde Option A ur skissen: humorn ligger i det deadpan, inte i en vits.
+
+**Beslut:** `defaultComparisonIds(totalKronor, constants)` — magnitud-medveten, SAMMA regel för alla partier: sjuksköterskelöner alltid (universell måttstock), Förbifart Stockholm när andelen ≥1 %, månen (myntstapel) när stapeln når ≥1 % av vägen dit (annars brus). `computeComparisons` faller tillbaka på den när `comparisons` är tom → jämförelser renderar nu för alla 349. `dryLine(promise, constants)` bygger en deadpan rad: "Motsvarar {verklig jämförelse}. Finansiering: {angiven|ej angiven}." — 0-kostnadslöften får "Ingen mätbar kostnad i kassan" i stället för "0,0 sjuksköterskor". Renderas i quip-slotten (`Marginalanteckning`) som fallback när granskad LLM-quip saknas. Derivat/presentation → härledd vid bygget, ej lagrad i öppna datan.
+
+**Neutralitetsgaranti (testad):** identiskt belopp ger IDENTISK rad oavsett parti (S=SD=V); ingen LLM, inget partival; regeln som avgör jämförelse är enbart beloppets storlek. Skämtar aldrig om sakfråga/person/parti. `||`-fallback (inte `??`) så att de 210 TOMMA STRÄNGARNA (utöver 136 null) också får raden.
+
+**Kvar (medvetet):** granskad LLM-quip (Option B/C i skissen) — den frivilliga "garneringen" — införs efter att granskarna gett tummen upp för siffrorna; den torra raden är baslinjen som alltid finns.
+
+**Påverkan:** `site/src/lib/aggregates.ts` (`defaultComparisonIds`, `dryLine`, fallback i `computeComparisons`), `site/src/pages/lofte/[...path].astro` (quip-fallback), `site/src/pages/metod.astro` (rad om torra raden), `site/scripts/test-drylinje.mts` (nytt, i `pnpm test`). 175 pipelinetester, hela sajtsviten (inkl. torra raden) gröna; 349/349 löftessidor har marginalrad i byggd dist.
