@@ -7,10 +7,28 @@
   "items": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["code", "name", "color", "color_text", "mandate_2022", "votes_2022", "block"],
+    "required": [
+      "code",
+      "name",
+      "color",
+      "color_text",
+      "mandate_2022",
+      "votes_2022",
+      "block",
+      "manifest_2026"
+    ],
     "properties": {
       "code": {
-        "enum": ["s", "m", "sd", "c", "v", "kd", "l", "mp"]
+        "enum": [
+          "s",
+          "m",
+          "sd",
+          "c",
+          "v",
+          "kd",
+          "l",
+          "mp"
+        ]
       },
       "name": {
         "type": "string",
@@ -34,10 +52,19 @@
       },
       "block": {
         "type": "string",
-        "enum": ["rödgrönt", "borgerligt", "okenämpad"]
+        "enum": [
+          "rödgrönt",
+          "borgerligt",
+          "okenämpad"
+        ]
       },
       "source_mandate": {
         "type": "string"
+      },
+      "manifest_2026": {
+        "type": "string",
+        "minLength": 10,
+        "description": "Faktarad om partiets valmanifest 2026 (status/datum) — visas på partisidan; förklarar bl.a. varför löftesantalet skiljer mellan partier."
       }
     }
   }

@@ -48,6 +48,7 @@ const jsonLd = [
 
     <div class="prosa-content prosa-content--centered">
       <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num">{formatMsekShort(total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {partyPromises.length} löften. Fläsk per röst: <strong class="num">{Math.round(perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
+      <p class="manifest-status">{party.manifest_2026}</p>
     </div>
 
     <MetodLank />
@@ -113,6 +114,12 @@ const jsonLd = [
 </Layout>
 
 <style>
+  .manifest-status {
+    font-size: 0.85rem;
+    color: var(--farg-text-svag, #666);
+    font-style: italic;
+  }
+
   .prosa-content--centered {
     margin: 1.5rem auto;
   }

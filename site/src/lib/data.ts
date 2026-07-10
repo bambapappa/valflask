@@ -66,6 +66,8 @@ export interface Party {
   votes_2022: number;
   block: string;
   source_mandate?: string;
+  /** Faktarad om valmanifestet 2026 — samma rad för alla partier (§17). */
+  manifest_2026: string;
 }
 
 export interface Person {
