@@ -768,3 +768,11 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Kvarstående kända icke-blockerare:** quips saknas på ~347 löften (tona ner "torr humor"-löftet eller backfilla); SD/S-obalansen bör förklaras synligt på partisidorna; 34 videokällade löften är verifierbara genom tittning, inte grep.
 
 **Påverkan:** data (grupp + retract + url-fix + 128 datum + krönika reparerad), `pipeline/scripts/revalidate-quotes.mts` (nytt, npm-script `revalidate`), `pipeline/src/copy.ts`, `site/src/pages/metod.astro`, `pipeline/tests/chronicle.test.ts` (+3). 175 pipelinetester gröna, hela sajtsviten grön (T1 åter grön), T7 grönt, revalidering 315/315.
+
+## 2026-07-10 — Manifeststatus-rad på varje partisida (SD-obalansen förklarad)
+
+**Beslut:** Sista icke-blockeraren inför utskicket: SD:s 11 löften mot M:s 83 ser ut som bias tills det förklaras. Nytt fält `manifest_2026` i data/parties.json (schema + Party-typ uppdaterade, fältet obligatoriskt) — EN faktarad per parti om valmanifestets status, renderad på partisidan direkt under intro-siffrorna. §17-neutralt: samma rad för alla åtta (C/L "publicerat + fångat i sin helhet", S/V "valplattform publicerad/beslutad + fångad", MP "manifest ej offentligt; handlingsprogrammet vägt", M/SD/KD "ännu ej publicerat — löftena kommer ur övrigt skrivet material och manifestet fångas automatiskt när det släpps"). SD pekas inte ut — raden finns överallt och blir dessutom självuppdaterande dokumentation: när ett manifest släpps och fångas uppdateras raden manuellt till "publicerat".
+
+**Förkastade alternativ:** hårdkoda en SD-not i partisidan (pekar ut ett parti = §17-brott); FAQ-svar på /om (granskare läser partisidan, inte FAQ:n); auto-härleda status ur sources.yaml (kommentarer är inte maskinläsbara, och statusen är redaktionell).
+
+**Påverkan:** data/parties.json (+manifest_2026 ×8), pipeline/schemas/parties.schema.json, site/src/lib/data.ts (Party), site/src/pages/parti/[kod].astro (+stil). 175 pipelinetester, T7, hela sajtsviten gröna; SD-sidan verifierad i byggd dist.
