@@ -279,6 +279,10 @@ export function computeComparisons(
   constants: Constants
 ): ComparisonResult[] {
   const totalKronor = promiseTotalMsek(promise) * 1_000_000;
+  // Endast KURERADE jämförelser (tom för nästan alla → sektionen döljs). De
+  // gamla auto-jämförelserna (sjuksköterskelöner m.fl.) togs bort: en måttstock
+  // som SJÄLV kan vara ett vallöfte är inte neutral (ägarbeslut 2026-07-10).
+  // Glasyren är i stället den apolitiska vikt-liknelsen i dryLine().
   const ids = promise.comparisons ?? [];
   const results: ComparisonResult[] = [];
 
@@ -479,6 +483,58 @@ export function buildSummary(
       };
     }),
   };
+}
+
+/**
+ * Neutralt djur per ämnesområde för vikt-liknelsen. Djuret varierar ENBART för
+ * omväxling (så inte allt blir blåvalar) och beror på kategorin — aldrig på
+ * partiet, så samma belopp ger identisk rad oavsett parti (§17). Ett djur är
+ * apolitiskt: till skillnad från sjuksköterskelöner/vårdplatser/skolluncher kan
+ * det aldrig självt vara ett vallöfte. Vikter är ungefärliga snittvikter för en
+ * vuxen individ (encyklopediska, i kg).
+ */
+interface Djur {
+  singular: string;
+  plural: string;
+  kg: number;
+}
+// Golv ~1 ton så inga absurda miljontal (en 300-kg brunbjörn gav "1 066 667").
+const DJUR_PER_KATEGORI: Record<string, Djur> = {
+  "välfärd": { singular: "blåval", plural: "blåvalar", kg: 150_000 },
+  "klimat-miljö": { singular: "kaskelot", plural: "kaskeloter", kg: 40_000 },
+  "skatter": { singular: "knölval", plural: "knölvalar", kg: 30_000 },
+  "försvar": { singular: "afrikansk elefant", plural: "afrikanska elefanter", kg: 6_000 },
+  "utbildning": { singular: "späckhuggare", plural: "späckhuggare", kg: 5_000 },
+  "rättsväsende": { singular: "noshörning", plural: "noshörningar", kg: 2_300 },
+  "infrastruktur": { singular: "flodhäst", plural: "flodhästar", kg: 1_500 },
+  "migration": { singular: "giraff", plural: "giraffer", kg: 1_200 },
+  "övrigt": { singular: "valross", plural: "valrossar", kg: 1_000 },
+};
+const DJUR_DEFAULT = DJUR_PER_KATEGORI["övrigt"];
+
+function formatDjurCount(n: number): string {
+  return n < 10
+    ? n.toFixed(1).replace(".", ",")
+    : Math.round(n).toLocaleString("sv-SE");
+}
+
+/**
+ * Den "torra raden": en deadpan, deterministisk och NEUTRAL glasyr som fyller
+ * quip-slotten när ingen granskad LLM-quip finns. Konceit: "om varje krona
+ * vägde ett gram" → löftets vikt uttryckt i ett apolitiskt djur. Skämtar aldrig
+ * om sakfrågan, personen eller partiet — bara om storleken, via en fysisk
+ * liknelse som inte kan vara del av något löfte. Identisk rad för samma belopp
+ * oavsett parti; djuret varierar bara med ämnesområdet för omväxlings skull.
+ */
+export function dryLine(promise: PromisePost): string {
+  const fin = promise.financing_claimed.described ? "angiven" : "ej angiven";
+  const gram = promiseTotalMsek(promise) * 1_000_000; // msek → kr, 1 kr = 1 g
+  // Symboliska/regulatoriska löften utan mätbar kassaeffekt (< 1 ton):
+  if (gram < 1_000_000) return `Ingen mätbar kostnad i kassan. Finansiering: ${fin}.`;
+  const djur = DJUR_PER_KATEGORI[promise.category] ?? DJUR_DEFAULT;
+  const antal = gram / (djur.kg * 1000);
+  const namn = Math.abs(antal - 1) < 1e-9 ? djur.singular : djur.plural;
+  return `Om varje krona vägde ett gram skulle löftet väga ungefär ${formatDjurCount(antal)} ${namn}. Finansiering: ${fin}.`;
 }
 
 export function formatComparison(r: ComparisonResult): string {

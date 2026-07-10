@@ -776,3 +776,27 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Förkastade alternativ:** hårdkoda en SD-not i partisidan (pekar ut ett parti = §17-brott); FAQ-svar på /om (granskare läser partisidan, inte FAQ:n); auto-härleda status ur sources.yaml (kommentarer är inte maskinläsbara, och statusen är redaktionell).
 
 **Påverkan:** data/parties.json (+manifest_2026 ×8), pipeline/schemas/parties.schema.json, site/src/lib/data.ts (Party), site/src/pages/parti/[kod].astro (+stil). 175 pipelinetester, T7, hela sajtsviten gröna; SD-sidan verifierad i byggd dist.
+
+## 2026-07-10 — "Torr humor" löst neutralt (Option A): deterministisk jämförelserad
+
+**Bakgrund:** 347/350 löften saknade quip ("torr humor i glasyren" fanns knappt på sajten) och `comparisons` var tom på alla — jämförelsemotorn (`computeComparisons`) fanns men fick aldrig indata. Efter kostnads-/dubblettmisstagen var risken med per-item LLM-skämt (ett skämt som läser som hån mot ETT partis hjärtefråga underminerar hela neutralitetsanspråket) för hög för lansering. Valde Option A ur skissen: humorn ligger i det deadpan, inte i en vits.
+
+**Beslut:** `defaultComparisonIds(totalKronor, constants)` — magnitud-medveten, SAMMA regel för alla partier: sjuksköterskelöner alltid (universell måttstock), Förbifart Stockholm när andelen ≥1 %, månen (myntstapel) när stapeln når ≥1 % av vägen dit (annars brus). `computeComparisons` faller tillbaka på den när `comparisons` är tom → jämförelser renderar nu för alla 349. `dryLine(promise, constants)` bygger en deadpan rad: "Motsvarar {verklig jämförelse}. Finansiering: {angiven|ej angiven}." — 0-kostnadslöften får "Ingen mätbar kostnad i kassan" i stället för "0,0 sjuksköterskor". Renderas i quip-slotten (`Marginalanteckning`) som fallback när granskad LLM-quip saknas. Derivat/presentation → härledd vid bygget, ej lagrad i öppna datan.
+
+**Neutralitetsgaranti (testad):** identiskt belopp ger IDENTISK rad oavsett parti (S=SD=V); ingen LLM, inget partival; regeln som avgör jämförelse är enbart beloppets storlek. Skämtar aldrig om sakfråga/person/parti. `||`-fallback (inte `??`) så att de 210 TOMMA STRÄNGARNA (utöver 136 null) också får raden.
+
+**Kvar (medvetet):** granskad LLM-quip (Option B/C i skissen) — den frivilliga "garneringen" — införs efter att granskarna gett tummen upp för siffrorna; den torra raden är baslinjen som alltid finns.
+
+**Påverkan:** `site/src/lib/aggregates.ts` (`defaultComparisonIds`, `dryLine`, fallback i `computeComparisons`), `site/src/pages/lofte/[...path].astro` (quip-fallback), `site/src/pages/metod.astro` (rad om torra raden), `site/scripts/test-drylinje.mts` (nytt, i `pnpm test`). 175 pipelinetester, hela sajtsviten (inkl. torra raden) gröna; 349/349 löftessidor har marginalrad i byggd dist.
+
+## 2026-07-10 — Torra raden: apolitisk vikt-liknelse (djur) i stället för policy-måttstockar
+
+**Bakgrund (ägarbeslut, ersätter samma dags nurses-version):** Sjuksköterskelöner, vårdplatser och skolluncher är SJÄLVA saker partier lovar att finansiera — att mäta ett vårdlöfte i "sjuksköterskelöner" ramar tyst in kostnaden i policytermer och är därför inte helt neutralt. Bytt till en apolitisk fysisk liknelse: "om varje krona vägde ett gram" → löftets vikt uttryckt i djur. Ett djur kan aldrig vara ett vallöfte.
+
+**Beslut:** `dryLine(promise)` (inte längre beroende av constants): 1 kr = 1 g → total vikt → antal djur. Djuret väljs per ÄMNESOMRÅDE (kategori), aldrig per parti — samma belopp+kategori ger ordagrant identisk rad oavsett parti (§17); kategorin varierar djuret enbart för omväxling ("så inte allt blir blåvalar"). 9 djur, alla ≥1 ton (golv satt efter att en 300-kg brunbjörn gav "1 066 667 brunbjörnar"): blåval/kaskelot/knölval/elefant/späckhuggare/noshörning/flodhäst/giraff/valross. 0-kostnadslöften: "Ingen mätbar kostnad i kassan." De gamla auto-jämförelserna (sjuksköterskor/Förbifart/månen) togs bort ur `computeComparisons` → Jämförelser-sektionen visar nu bara kurerade (tom → dold); vikt-raden är enda glasyren. /metod omskriven att förklara konceptet.
+
+**Neutralitet (testad):** identiskt belopp+kategori → identisk rad för S=SD=V; inga policy-måttstockar kvar (test spärrar sjukskötersk/vårdplats/skolmål/lärarlön); okänd kategori → övrigt-djur.
+
+**Förkastade alternativ:** magnitud-väljer-djur (håller siffror snygga men klustrar alla stora löften på blåval — motverkar ägarens omväxlingsönskan); djur per parti (partiskt); behålla sjuksköterskor (ägarens invändning); låta 300-kg-djur ge miljontal (spretigt).
+
+**Påverkan:** `site/src/lib/aggregates.ts` (`dryLine` v2 + `DJUR_PER_KATEGORI`; `defaultComparisonIds` borttagen; `computeComparisons` åter kurerad-bara), `site/src/pages/lofte/[...path].astro` (`dryLine(promise)`), `site/src/pages/metod.astro`, `site/scripts/test-drylinje.mts` (omskriven). Hela sajtsviten grön; 349/349 löftessidor har vikt-raden i byggd dist.
