@@ -58,8 +58,12 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <meta property="twitter:image" content={ogImageUrl} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:site_name" content="drygast.nu" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="sv_SE" />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href={canonicalUrl} />
   <link rel="preload" href="/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />

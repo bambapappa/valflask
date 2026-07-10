@@ -800,3 +800,13 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Förkastade alternativ:** magnitud-väljer-djur (håller siffror snygga men klustrar alla stora löften på blåval — motverkar ägarens omväxlingsönskan); djur per parti (partiskt); behålla sjuksköterskor (ägarens invändning); låta 300-kg-djur ge miljontal (spretigt).
 
 **Påverkan:** `site/src/lib/aggregates.ts` (`dryLine` v2 + `DJUR_PER_KATEGORI`; `defaultComparisonIds` borttagen; `computeComparisons` åter kurerad-bara), `site/src/pages/lofte/[...path].astro` (`dryLine(promise)`), `site/src/pages/metod.astro`, `site/scripts/test-drylinje.mts` (omskriven). Hela sajtsviten grön; 349/349 löftessidor har vikt-raden i byggd dist.
+
+## 2026-07-10 — Delning i sociala medier
+
+**Bakgrund:** OG/Twitter-metataggar fanns redan (länkförhandsvisning fungerar när en URL klistras in), men ingen synlig delningsknapp. Ägaren efterfrågade delning av en sida.
+
+**Beslut:** Ny komponent `site/src/components/Dela.astro` på löftes-, partis- och veckokrönikesidor. Progressiv förbättring utan tredjepartsspårning (§17): OS:ets delningsark via `navigator.share` (visas bara där API:t finns), "Kopiera länk" via clipboard, samt X/Facebook/Bluesky som vanliga share-intent-länkar (fungerar helt utan JS, ingen extern skriptladdning, inga spårningspixlar). Förifylld text är faktabaserad och neutral (löftets titel + belopp + "källspårat"), aldrig värderande. Astro buntar komponentens `<script>`/`<style>` externt → uppfyller `_headers`-CSP:n (`script-src 'self'`) och T3:s "noll inline-style". Layout kompletterad med `og:url`, `og:site_name`, `twitter:title/description` för stabilare förhandsvisningar.
+
+**Förkastade alternativ:** delningsknappar från plattformarnas SDK:er (laddar tredjepartsskript, spårar användaren — bryter §17 och CSP); en global knapp i sidhuvudet (mindre relevant än per-sida-URL:en som faktiskt delas).
+
+**Påverkan:** ny `Dela.astro`; `site/src/layouts/Layout.astro` (+4 metataggar); `site/src/pages/{lofte/[...path],parti/[kod],veckans-flask/[slug]}.astro`. Hela sajtsviten grön; delningsblocket verifierat i byggd dist på alla tre sidtyper, noll inline-script/style.

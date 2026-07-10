@@ -1,0 +1,111 @@
+---
+/**
+ * Dela — neutral delningsknapp för sociala medier. Progressiv förbättring:
+ *  - "Dela"-knappen använder OS:ets delningsark (navigator.share) på mobil,
+ *    döljs där API:t saknas (visas via JS).
+ *  - Kopiera länk (clipboard) med JS.
+ *  - X / Facebook / Bluesky är vanliga länkar (share-intents) — fungerar helt
+ *    utan JS, ingen extern skriptladdning, inga spårningspixlar (§17: ingen
+ *    tredjepartsspårning). Förifylld text är faktabaserad, aldrig värderande.
+ *
+ * `path` är sидрот-relativ (t.ex. "/lofte/p-2026-0340/slug"); komponenten
+ * bygger den absoluta URL:en mot sajtens origin.
+ */
+interface Props {
+  path: string;
+  title: string;
+  /** Förifylld delningstext (utan URL). Default = titeln. */
+  text?: string;
+}
+const { path, title, text } = Astro.props;
+const base = Astro.site?.origin ?? "https://drygast.nu";
+const url = `${base}${path}`;
+const shareText = text ?? title;
+const enc = encodeURIComponent;
+const xUrl = `https://twitter.com/intent/tweet?text=${enc(shareText)}&url=${enc(url)}`;
+const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`;
+const bskyUrl = `https://bsky.app/intent/compose?text=${enc(`${shareText} ${url}`)}`;
+---
+<div class="dela" data-dela data-url={url} data-title={title} data-text={shareText}>
+  <span class="dela__rubrik etikett">Dela</span>
+  <div class="dela__knappar">
+    <button type="button" class="dela__knapp dela__native" data-dela-native hidden aria-label="Dela via enheten">
+      Dela …
+    </button>
+    <button type="button" class="dela__knapp dela__kopiera" data-dela-copy aria-label="Kopiera länk">
+      Kopiera länk
+    </button>
+    <a class="dela__knapp" href={xUrl} target="_blank" rel="noopener noreferrer" aria-label="Dela på X">X</a>
+    <a class="dela__knapp" href={fbUrl} target="_blank" rel="noopener noreferrer" aria-label="Dela på Facebook">Facebook</a>
+    <a class="dela__knapp" href={bskyUrl} target="_blank" rel="noopener noreferrer" aria-label="Dela på Bluesky">Bluesky</a>
+  </div>
+</div>
+
+<script>
+  // En delegerad hanterare för alla Dela-block på sidan. Ingen extern kod.
+  document.querySelectorAll<HTMLElement>("[data-dela]").forEach((block) => {
+    const url = block.dataset.url ?? location.href;
+    const title = block.dataset.title ?? document.title;
+    const text = block.dataset.text ?? title;
+
+    const nativeBtn = block.querySelector<HTMLButtonElement>("[data-dela-native]");
+    if (nativeBtn && typeof navigator.share === "function") {
+      nativeBtn.hidden = false;
+      nativeBtn.addEventListener("click", async () => {
+        try {
+          await navigator.share({ title, text, url });
+        } catch {
+          /* användaren avbröt — ignorera */
+        }
+      });
+    }
+
+    const copyBtn = block.querySelector<HTMLButtonElement>("[data-dela-copy]");
+    copyBtn?.addEventListener("click", async () => {
+      const original = copyBtn.textContent;
+      try {
+        await navigator.clipboard.writeText(url);
+        copyBtn.textContent = "Kopierad!";
+      } catch {
+        copyBtn.textContent = url; // sista utväg: visa länken att markera
+      }
+      setTimeout(() => { copyBtn.textContent = original; }, 2000);
+    });
+  });
+</script>
+
+<style>
+  .dela {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    border-top: var(--linje-sektion);
+    margin-top: 1.5rem;
+    padding-top: 0.75rem;
+  }
+  .dela__rubrik {
+    margin-right: 0.25rem;
+  }
+  .dela__knappar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .dela__knapp {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--farg-linje, #ccc);
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1.2;
+  }
+  .dela__knapp:hover,
+  .dela__knapp:focus-visible {
+    background: var(--farg-yta-svag, #f0f0f0);
+  }
+</style>

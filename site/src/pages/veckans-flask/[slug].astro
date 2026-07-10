@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import MetodLank from "../../components/MetodLank.astro";
+import Dela from "../../components/Dela.astro";
 import { getChronicles, getPromises } from "../../lib/data";
 
 export function getStaticPaths() {
@@ -67,6 +68,8 @@ const jsonLd = [
       <article class="kronika" set:html={bodyHtml} />
 
       <MetodLank />
+
+      <Dela path={canonicalPath} title={`Veckans fläsk v${week} ${year} — drygast.nu`} text={`${chronicle.headline} — Veckans fläsk på drygast.nu`} />
     </div>
   </div>
 </Layout>
