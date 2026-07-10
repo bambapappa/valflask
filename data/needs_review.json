@@ -804,5 +804,943 @@
       "confidence": 0.5
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Lägre skatt på el och fortsatt låga skatter på drivmedel och livsmedel",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill ha en ansvarsfull budgetpolitik utan ineffektiva klimatpolitiska satsningar eller slösaktig biståndspolitik, genom lägre skatt på el och fortsatt låga skatter på drivmedel och livsmedel.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 8000,
+      "msek_high": 20000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar sänkt energiskatt på el med 5–15 öre/kWh (ca 2–6 mdr) samt utebliven återställning av tillfälliga drivmedelsskattesänkningar (upp till 15 mdr). Bred osäkerhet.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fler poliser, hårdare straff och ett starkare rättsväsende",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill bygga ett tryggare Sverige genom fler poliser, hårdare straff, ett starkare rättsväsende och en fortsatt jakt på gängen.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0120"
+  },
+  {
+    "candidate": {
+      "title": "Kortare vårdköer, trygg äldreomsorg och billigare tandvård",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Den sociala tryggheten måste också stärkas genom en välfärd som fungerar, med kortare vårdköer, trygg äldreomsorg, billigare tandvård, bättre skydd vid sjukdom och arbetslöshet samt en skola präglad av ordning och kunskap.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0125"
+  },
+  {
+    "candidate": {
+      "title": "Minska kostnaderna för bränsle, el och mat",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill minska kostnaderna för bränsle, el och mat, värna kontanterna, säga nej till euron och motverka onödigt statligt förmynderi.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 15000,
+      "msek_high": 40000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar sänkt bränsleskatt (1 kr/l), elskatt (10 öre/kWh) och matmoms (från 12→10%). Vag löfte, osäkerhet stor och intervall brett.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Skärpa kraven för medborgarskap och begränsa bidrag",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill skärpa kraven för medborgarskap, begränsa bidrag till den som inte bidrar, stärka svenska språkets ställning, motverka islamism och främja inhemsk produktion och självförsörjning.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0124"
+  },
+  {
+    "candidate": {
+      "title": "Högkostnadsskydd i tandvården för alla medborgare",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi fortsätter att göra tandvården billigare genom att det högkostnadsskydd som sedan årsskiftet gäller äldre ska omfatta alla medborgare.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=1",
+    "articleTitle": "sd-vadvivill (s. 1–10)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 10000,
+      "msek_high": 20000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för äldres högkostnadsskydd uppskattas till 3-4 mdkr/år. Uppskalning till hela befolkningen ger 5-20 mdkr beroende på utformning och tandvårdsbehov.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Allmän och skattefinansierad arbetslöshetskassa",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Steg tas mot en allmän och skattefinansierad arbetslöshetskassa.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=1",
+    "articleTitle": "sd-vadvivill (s. 1–10)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 15000,
+      "msek_high": 40000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar borttagen medlemsavgift (ca 5 mdkr) och ökad anslutning/ersättning. Bred osäkerhet beroende på ersättningsnivå och tak.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Permanent nedsatt moms på mat",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Den nedsatta momsen på mat ska bli permanent, primärt för sådant som är basvaror och som kan produceras i Sverige.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=1",
+    "articleTitle": "sd-vadvivill (s. 1–10)",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 15000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar sänkt moms på utvalda basvaror från 12% till 6%, baserat på andel av livsmedelsmoms (ca 35 mdkr) som utgörs av svenskproducerade basvaror. Bred osäkerhet pga vag definition.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa elskatten helt",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Elskatten tas successivt bort helt och övriga elavgifter ses över.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=1",
+    "articleTitle": "sd-vadvivill (s. 1–10)",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 20000,
+      "msek_base": 25000,
+      "msek_high": 35000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Elskatten (energiskatt på el) beräknas ge ca 25 mdkr årligen. Uppskattning baserat på historiska skatteintäkter och elförbrukning.",
+      "confidence": 0.65
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Öka antalet poliser genom ökade resurser",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi fortsätter att öka antalet poliser genom ökade resurser och mer attraktiv polisutbildning.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=1",
+    "articleTitle": "sd-vadvivill (s. 1–10)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar ökning med 500-5000 poliser à 1 mkr/år i genomsnittlig kostnad. Bred osäkerhet.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Inga skattepengar till islamism",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Inte en krona av våra skattepengar ska gå till att befrämja islamisering, medeltida värderingar eller terrorism.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=11",
+    "articleTitle": "sd-vadvivill (s. 11–12)",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 50,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning av statliga bidrag till organisationer som kan anses främja islamism. Stor osäkerhet om vilka verksamheter som avses.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa offentligt finansierad modersmålsundervisning och begränsa tolkhjälp",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Offentligt finansierad modersmålsundervisning avskaffas och rätten till offentligt finansierad tolkhjälp begränsas.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=11",
+    "articleTitle": "sd-vadvivill (s. 11–12)",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1400,
+      "msek_high": 2500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning baserad på statsbidrag för modersmålsundervisning (ca 1,2 mdkr) och statliga tolkkostnader (ca 0,2-0,5 mdkr). Osäkerhet kring omfattning av begränsning.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Kompensera svenska producenter för djurvälfärdskrav",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sveriges självförsörjning ska öka, och inhemska producenter ska kompenseras för långtgående krav på djurvälfärd.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=11",
+    "articleTitle": "sd-vadvivill (s. 11–12)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på tidigare utredningar om merkostnader för svensk djurvälfärd (2-3 mdkr/år). Statlig kompensation antas täcka en andel, från 200 msek till 2 000 msek per år.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Klassa förnedringsrån och gruppvåldtäkter som hatbrott",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Rasistiska dåd i form av exempelvis förnedringsrån och gruppvåldtäkter ska betraktas som hatbrott.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=11",
+    "articleTitle": "sd-vadvivill (s. 11–12)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Omklassificering kräver sannolikt utökade utredningsresurser, utbildning av personal och fler rättsprocesser för att bevisa hatmotiv. Jämförbart med ökade anslag till Polis och Åklagarmyndighet för ha",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Utvärdera ny grund för omhändertagande efter fem år",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet anser att den nya grunden för omhändertagande på grund av barnets anknytning till familjehemmet bör följas upp och utvärderas fem år efter ikraftträdandet.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024221",
+    "articleTitle": "med anledning av prop. 2025/26:294 För barns rättigheter och trygghet – en ny lag om omhändertagande för vård av barn och unga"
+  },
+  {
+    "candidate": {
+      "title": "Genomgripande reform av SiS med mindre och barnrättssäkra enheter",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill se en genomgripande reform av SiS – med sikte på att ersätta SiS med mindre, kvalificerade och barnrättssäkra enheter.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024221",
+    "articleTitle": "med anledning av prop. 2025/26:294 För barns rättigheter och trygghet – en ny lag om omhändertagande för vård av barn och unga",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande om ökade driftskostnader vid övergång till mindre, kvalificerade enheter, baserat på storleksordningen av dagens SiS-budget för unga.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ge SiS ett vårdande uppdrag",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "För att säkerställa det vill vi ge SiS ett vårdande uppdrag.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024221",
+    "articleTitle": "med anledning av prop. 2025/26:294 För barns rättigheter och trygghet – en ny lag om omhändertagande för vård av barn och unga",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 3000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar ökade kostnader för vårdinsatser inom SiS, uppskattat som 5-25% av SiS årliga budget (ca 12 mdkr). Osäker omfattning.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Behåll straffmyndighetsåldern vid 15 år och reformera Sis",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Ulrika Westerlund",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Miljöpartiet pekar ut en annan riktning: Behåll straffmyndighetsålder vid 15 år och reformera insatserna hos Sis.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024222",
+    "articleTitle": "med anledning av prop. 2025/26:293 Skärpta regler för unga lagöverträdare",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 400,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reform av Sis antas kräva ökade anslag. Jämför med tidigare satsningar (200 mkr 2021). Osäker omfattning ger brett intervall.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ge kraftigt stärkta resurser till vård, socialtjänst, psykiatri och skola",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Vi i Miljöpartiet vill ge kraftigt stärkta resurser till vård, socialtjänst, psykiatri och skola",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024222",
+    "articleTitle": "med anledning av prop. 2025/26:293 Skärpta regler för unga lagöverträdare",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 15000,
+      "msek_high": 30000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning av årligt resurstillskott till kommuner/regioner för vård, socialtjänst, psykiatri och skola. Jämförbara vallöften ligger ofta på 5-30 mdkr. Osäkerhet stor.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Behåll oförändrad ungdomsreduktion för unga myndiga och omyndiga",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet anser att ungdomsreduktionen för unga myndiga och omyndiga bör vara oförändrad jämfört med idag.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024222",
+    "articleTitle": "med anledning av prop. 2025/26:293 Skärpta regler för unga lagöverträdare",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 100,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar att slopad ungdomsreduktion skulle öka fängelsekostnader. Uppskattar antal unga intagna, genomsnittlig straffreduktion och dygnskostnad. Mycket osäkert.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Behåll straffmaximum för barn på 10 år",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Vi anser även att straffmaximum för barn bör ligga kvar på 10 år.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024222",
+    "articleTitle": "med anledning av prop. 2025/26:293 Skärpta regler för unga lagöverträdare",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 2,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagandet är att löftet avstyr en höjning av straffmaximum. Få barn får 10 års fängelse; besparingen motsvarar 1-3 extra fängelseår för någon enstaka individ per år. Mycket osäkert.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ny översyn av brottsbalken med proportionalitetsbedömning",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill i stället göra en översyn av brottsbalken, en sådan översyn bör också få i uppdrag att föreslå straffskärpningar där det bedöms som motiverat och effektivt.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024223",
+    "articleTitle": "med anledning av prop. 2025/26:297 Ett nytt straffrättsligt påföljdssystem",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för en statlig utredning med sekretariat och experter. Baserat på typiska utredningskostnader.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Tillföra Kriminalvården nödvändiga resurser",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill ge Kriminalvården de resurser som krävs för att hantera dagens situation och bygga ut kapaciteten där det behövs.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024223",
+    "articleTitle": "med anledning av prop. 2025/26:297 Ett nytt straffrättsligt påföljdssystem",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande baserat på tidigare budgetsatsningar på Kriminalvården om 1-3 mdkr/år, med högre osäkerhet för ambitiösare utbyggnad.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Stärka Kriminalvårdens behandling, utbildning och utslussning",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Vi vill också stärka Kriminalvårdens förutsättningar att arbeta med behandling, utbildning, utslussning och avhopparverksamhet så att färre återfaller i brott.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024223",
+    "articleTitle": "med anledning av prop. 2025/26:297 Ett nytt straffrättsligt påföljdssystem",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande om ökade resurser för behandling, utbildning och utslussning inom Kriminalvården. Baserat på tidigare satsningar på 200-500 mkr/år. Bredare intervall pga vaghet.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Utvärdera konsekvenserna av lagen om skärpta villkor för friskolesektorn inom två år",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Camilla Hansén",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Miljöpartiet föreslår att förslagens konsekvenser utvärderas inom en skälig tid, förslagsvis två år efter att lagen trätt i kraft, det vill säga under 2029.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024225",
+    "articleTitle": "med anledning av prop. 2025/26:292 Skärpta villkor för friskolesektorn"
+  },
+  {
+    "candidate": {
+      "title": "Utredning om förbud mot vinstutdelning i förskola och skola",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Camilla Hansén",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Miljöpartiet vill istället se en utredning som analyserar hur ett vinstförbud för enskilda huvudmän i förskola, skola, gymnasieskola, grundsärskola, gymnasiesärskola och fritidshem ska genomföras och som lägger skarpa lagförslag om det.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024225",
+    "articleTitle": "med anledning av prop. 2025/26:292 Skärpta villkor för friskolesektorn",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 10,
+      "msek_high": 25,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för statlig utredning inklusive sekretariat, experter och remissförfarande. Baserat på typiska kostnader för liknande utredningar.",
+      "confidence": 0.65
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Reformera skolpengsmodellen för att kompensera offentliga skolhuvudmän för utbudsansvaret",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Camilla Hansén",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Därför vill Miljöpartiet att en översyn av friskolesektorn kompletteras med förslag som ser till att skolor ersätts för det samhällsansvar de tar genom utbudsansvaret och de merkostnader som följer av det.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024225",
+    "articleTitle": "med anledning av prop. 2025/26:292 Skärpta villkor för friskolesektorn",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2700,
+      "msek_base": 4500,
+      "msek_high": 8000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar påslag 2-5% på skolpeng (~115 tkr/elev) för 1,2 milj kommunala elever i grund- o gymnasieskola. Ger 2,7-6,8 mdkr/år. Osäkerhet om nivå och omfattning.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Värna idéburna skolenheter vid införande av värdeöverföringsförbud",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Camilla Hansén",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Regeringen bör därför analysera konsekvenserna för idéburna huvudmän särskilt och överväga undantag eller en anpassad reglering som tar hänsyn till deras associationsform och verksamhetens särart.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024225",
+    "articleTitle": "med anledning av prop. 2025/26:292 Skärpta villkor för friskolesektorn",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden beror på om undantaget utformas som ett riktat statsbidrag eller en skattelättnad. Basantagandet är en mindre utredning och viss kompensation till ett fåtal skolor. Högt scenario inkluderar ",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Undanta idéburna skolenheter från krav på särredovisning",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Camilla Hansén",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Därför vill Miljöpartiet att idéburna huvudmän inte ska omfattas av samma krav om särredovisning, men deras redovisning behöver vara öppen och transparent så att vem som helst kan granska grunden för överföringar mellan skolenheter.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024225",
+    "articleTitle": "med anledning av prop. 2025/26:292 Skärpta villkor för friskolesektorn",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 2,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regelförenkling utan direkt budgetpåverkan; eventuella administrativa besparingar eller kostnader är försumbara.",
+      "confidence": 0.2
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Återinför uppehållstillstånd på grund av särskilt ömmande omständigheter för personer med särskild anknytning till Sverige",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Annika Hirvonen",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Riksdagen ställer sig bakom det som anförs i motionen om att snarast återinföra den grund för särskilt ömmande omständigheter för personer som har en särskild anknytning till Sverige och tillkännager detta för regeringen.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024226",
+    "articleTitle": "med anledning av prop. 2025/26:301 Skärpta villkor för anhöriginvandring",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 600,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning baserad på 2 000-5 000 ytterligare beviljade uppehållstillstånd per år med en statlig nettokostnad på ca 150 000-300 000 kr per person och år.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Permanenta utökade möjligheter för anhöriginvandrare att ansöka om uppehållstillstånd inifrån Sverige",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Annika Hirvonen",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Miljöpartiet vill därför att utökade möjligheter för vissa anhöriginvandrare att ansöka om uppehållstillstånd inifrån Sverige görs permanent.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024226",
+    "articleTitle": "med anledning av prop. 2025/26:301 Skärpta villkor för anhöriginvandring",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 100,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar att permanenta utökade möjligheter att ansöka inifrån ökar antalet anhöriginvandrare med 1000-5000 per år. Kostnad per person uppskattas till 100 000 kr/år i statliga transfereringar och handläg",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Justera studiestödslagen så att personer med vissa uppehållstillstånd kan få studiemedel",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Annika Hirvonen",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Det är anmärkningsvärt att regeringen inte åtminstone samtidigt justerar studiestödslagen i denna del så att även personer med uppehållstillstånd på grund av anknytning till personer med arbetstillstånd, EU-blåkort, ICT eller forskare ska kunna beviljas studiemedel.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024226",
+    "articleTitle": "med anledning av prop. 2025/26:301 Skärpta villkor för anhöriginvandring",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 15,
+      "msek_base": 30,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar 500–2000 personer med aktuella uppehållstillstånd studerar årligen med studiemedel, genomsnittligt bidrag 30 000 kr/år. Kostnad för bidragsdelen, lån antas kostnadsneutrala.",
+      "confidence": 0.5
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa försörjningskravet vid anhöriginvandring helt",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Annika Hirvonen",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Enligt Miljöpartiets mening bör försörjningskravet i anknytningsärenden avskaffas helt.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024226",
+    "articleTitle": "med anledning av prop. 2025/26:301 Skärpta villkor för anhöriginvandring",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1200,
+      "msek_high": 2500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar att avskaffat försörjningskrav ökar anhöriginvandringen och därmed statliga transfereringar (etablering, försörjningsstöd, bostadsbidrag). Osäkerhet kring ökningens storlek och de anhörigas syss",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Undanta barn från väntetid och beräkna väntetid från asylansökan",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Annika Hirvonen",
+        "role": "Riksdagsledamot (MP)"
+      },
+      "quote": "Om riksdagen inför någon form av väntetid så måste väntetiden räknas från den dag då ansökan om uppehållstillstånd görs av anknytningspersonen i Sverige, inte från ett beviljat beslut. Dessutom måste ärenden som rör barn undantas.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024226",
+    "articleTitle": "med anledning av prop. 2025/26:301 Skärpta villkor för anhöriginvandring",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar att ändrad startdag och barnundantag halverar effektiv väntetid för flertalet anknytningsärenden, vilket tidigarelägger kostnader för mottagande och etablering med i snitt 1–2 år för några tusen",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   }
 ]
