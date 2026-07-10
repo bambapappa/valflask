@@ -1,4 +1,4 @@
-import { getPromises, getParties, getPeople } from "../lib/data";
+import { getPromises, getParties, getPeople, getChronicles } from "../lib/data";
 
 export const prerender = true;
 
@@ -30,7 +30,10 @@ export async function GET() {
     urls.push({ loc: `${BASE}/lofte/${p.id}/${p.slug}`, changefreq: "weekly", priority: "0.8" });
   }
 
-  urls.push({ loc: `${BASE}/veckans-flask/2026-24`, changefreq: "weekly", priority: "0.6" });
+  // Alla faktiska veckokrönikor (var hårdkodad till en icke-existerande vecka).
+  for (const c of getChronicles()) {
+    urls.push({ loc: `${BASE}/veckans-flask/${c.slug}`, changefreq: "weekly", priority: "0.6" });
+  }
 
   const peopleWithPromises = people.filter((person) =>
     promises.some((p) => p.person?.name === person.name)

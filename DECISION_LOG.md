@@ -810,3 +810,15 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Förkastade alternativ:** delningsknappar från plattformarnas SDK:er (laddar tredjepartsskript, spårar användaren — bryter §17 och CSP); en global knapp i sidhuvudet (mindre relevant än per-sida-URL:en som faktiskt delas).
 
 **Påverkan:** ny `Dela.astro`; `site/src/layouts/Layout.astro` (+4 metataggar); `site/src/pages/{lofte/[...path],parti/[kod],veckans-flask/[slug]}.astro`. Hela sajtsviten grön; delningsblocket verifierat i byggd dist på alla tre sidtyper, noll inline-script/style.
+
+## 2026-07-10 — AI-/sökoptimering: sitemap-fix + rikare llms.txt
+
+**Bakgrund:** Inför utskick kontroll av AI-agent-/sökbarhet. robots.txt välkomnar redan uttryckligen GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended, CCBot; JSON-LD är rikt (Dataset, Article, FAQPage, WebSite+SearchAction, Organization, BreadcrumbList); llms.txt + sitemap finns. Två brister hittade och fixade:
+
+**1. Sitemap-bugg:** veckokrönikorna var hårdkodade till `veckans-flask/2026-24` — en vecka som inte finns (faktiska: 2026-27, 2026-28). AI-crawlers/sökmotorer kunde alltså inte upptäcka de riktiga krönikesidorna. Nu itererar sitemap över `getChronicles()`.
+
+**2. llms.txt utökad:** lade till "Vad detta är — och inte är" (så agenter INTE framställer sajten som partipolitiskt stöd — neutralitet §17), fler maskinläsbara endpoints (summary/promises/rättelser/sitemap), sidmönster (parti/{kod}, lofte/{id}/{slug}, topplistor, regeringar, jamfor), och en uttrycklig instruktion att hämta färska totaler ur summary.json i stället för att hårdkoda siffror (som rostnar). Alla länkar verifierade mot befintliga routes — inga 404.
+
+**Ej kod (ägaråtgärder, presenterade separat):** privacy-vänlig serverstatistik via Cloudflare-edge (sajten ligger bakom CF-proxy → vy/hetaste-sidor/referrer utan cookies eller klientskript, uppfyller §17/CSP); IndexNow (CF-toggle → Bing → Copilot/ChatGPT); Google Search Console + Bing Webmaster (→ Gemini/AI Overviews).
+
+**Påverkan:** `site/src/pages/sitemap.xml.ts`, `site/public/llms.txt`. Hela sajtsviten grön; byggd sitemap listar nu 2026-27 + 2026-28.

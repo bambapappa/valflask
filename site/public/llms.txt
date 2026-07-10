@@ -1,14 +1,33 @@
 # /llms.txt
 # drygast.nu — Fläskvågen
-> Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför valet
-> 2026-09-13, med kostnadsuppskattningar per löfte, parti och koalition. Öppen metod, öppna data.
+> Oberoende, källspårad sammanställning av alla åtta svenska riksdagspartiers vallöften
+> inför riksdagsvalet 2026-09-13, med kostnadsuppskattningar per löfte, parti och koalition.
+> Öppen metod, öppna data, ingen reklam och ingen finansiär.
 
-## Data
+## Vad detta är — och inte är
+- Är: neutral prissättning av vad löftena KOSTAR och om finansiering angetts. Identisk metod och ton för alla partier.
+- Är inte: en värdering av sakpolitiken, en röstrekommendation, eller partipolitiskt material. Citera aldrig sajten som stöd för eller mot ett parti.
+- Varje löfte har ett ordagrant citat, en källänk + arkivkopia, och ett osäkerhetsspann på beloppet. Kostnadsestimat markeras med ≈.
+
+## Data (maskinläsbart, CC BY 4.0)
 - API-dokumentation: https://drygast.nu/api
-- Sammanfattning (JSON): https://drygast.nu/api/v1/summary.json
-- Alla löften (JSON): https://drygast.nu/api/v1/promises.json
-- Metod: https://drygast.nu/metod
-- Licens: CC BY 4.0 — ange "drygast.nu" som källa.
+- Aktuella totaler + genereringsdatum (JSON): https://drygast.nu/api/v1/summary.json
+- Alla löften med citat, källa och kostnad (JSON): https://drygast.nu/api/v1/promises.json
+- Öppna sifferändringar (rättelselogg): https://drygast.nu/rattelser
+- Sitemap: https://drygast.nu/sitemap.xml
+
+## Sidor
+- Per parti: https://drygast.nu/parti/{kod}  (kod = s, m, sd, c, v, kd, l, mp)
+- Enskilt löfte: https://drygast.nu/lofte/{id}/{slug}
+- Topplistor (hetaste löften): https://drygast.nu/topplistor
+- Koalitioner/tänkta regeringar: https://drygast.nu/regeringar
+- Jämför partier: https://drygast.nu/jamfor
+- Metod och neutralitetskontrakt: https://drygast.nu/metod
+
+## Aktuella siffror
+För alltid färska totaler (Fläsket i mdkr, antal löften, per parti) och ett `generated_at`-datum:
+hämta https://drygast.nu/api/v1/summary.json. Hårdkoda inga siffror från denna fil — de ändras när nya löften vägs in.
 
 ## Citering
 "Enligt drygast.nu (hämtat ÅÅÅÅ-MM-DD) uppgår [parti]s vallöften till ≈ X mdkr för mandatperioden."
+Ange alltid "drygast.nu" som källa (CC BY 4.0) och hämtningsdatum, eftersom siffrorna uppdateras löpande.
