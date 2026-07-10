@@ -1,4 +1,4 @@
-import { test } from "node:test";
+import { test, describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
   isoWeek,
@@ -10,6 +10,7 @@ import {
 } from "../src/chronicle.ts";
 import type { PipelinePromise, ChangelogEntry } from "../src/publish.ts";
 import type { LlmClient } from "../src/llm.ts";
+import { generateWeekly } from "../src/copy.ts";
 
 test("isoWeek + weekSlug: kända datum", () => {
   assert.deepEqual(isoWeek(new Date("2026-06-29T12:00:00Z")), { year: 2026, week: 27 });
@@ -91,4 +92,25 @@ test("maybeGenerateWeekly: inget genereras om inga nya löften i veckan", async 
     llm: mockLlm({ headline: "x", body_md: "x" }), copyModel: "m", runId: "r",
   });
   assert.equal(generated, null);
+});
+
+describe("generateWeekly — staket-avskalning och vägran att publicera råtext", () => {
+  it("```json-staket skalas av (2026-28-buggen: rå JSON blev live brödtext)", async () => {
+    const llm: LlmClient = {
+      complete: async () => '```json\n{"headline":"Rubrik","body_md":"Text."}\n```',
+    };
+    const c = await generateWeekly("[]", "0 mdkr", llm, "m");
+    assert.equal(c.headline, "Rubrik");
+    assert.equal(c.body_md, "Text.");
+  });
+
+  it("oparsbart svar ⇒ kastar — publicerar ALDRIG råsvaret som krönika", async () => {
+    const llm: LlmClient = { complete: async () => "inget json alls" };
+    await assert.rejects(() => generateWeekly("[]", "0 mdkr", llm, "m"));
+  });
+
+  it("parsbar JSON utan headline/body_md ⇒ kastar", async () => {
+    const llm: LlmClient = { complete: async () => '{"headline":""}' };
+    await assert.rejects(() => generateWeekly("[]", "0 mdkr", llm, "m"));
+  });
 });

@@ -10,7 +10,8 @@
     "check-t7": "node --import tsx/esm scripts/check-t7.mts",
     "archive:backfill": "node --import tsx/esm scripts/archive-backfill.mts",
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "revalidate": "node --import tsx/esm scripts/revalidate-quotes.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1",

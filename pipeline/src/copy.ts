@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import type { LlmClient, LlmOptions } from "./llm.ts";
+import { extractJsonPayload } from "./extract.ts";
 
 const A3_SYSTEM = (() => {
   const raw = readFileSync(
@@ -57,9 +58,16 @@ export async function generateWeekly(
   };
 
   const raw = await llm.complete(prompt, opts);
-  try {
-    return JSON.parse(raw) as WeeklyChronicle;
-  } catch {
-    return { headline: "Veckans fläsk", body_md: raw };
+  // Modeller svarar ofta med ```json-staket — skala av innan parsning. Och vid
+  // oparsbart svar: KASTA, publicera aldrig råsvaret (veckan 2026-28 hamnade
+  // live som rå JSON med rubriken "Veckans fläsk"). maybeGenerateWeekly sväljer
+  // felet och försöker igen nästa körning.
+  const parsed = JSON.parse(extractJsonPayload(raw)) as Partial<WeeklyChronicle>;
+  if (
+    typeof parsed.headline !== "string" || parsed.headline.trim() === "" ||
+    typeof parsed.body_md !== "string" || parsed.body_md.trim() === ""
+  ) {
+    throw new Error("Veckokrönikans LLM-svar saknar headline/body_md");
   }
+  return { headline: parsed.headline, body_md: parsed.body_md };
 }
