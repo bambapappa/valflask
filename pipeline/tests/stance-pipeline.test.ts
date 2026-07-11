@@ -357,7 +357,7 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
       }
     }
 
-    async function runOnce(stancesEnabled: boolean): Promise<string> {
+    async function runOnce(stancesEnabled: boolean, stancesMode?: "auto" | "review"): Promise<string> {
       const tmp = mkdtempSync(join(tmpdir(), "fragevagen-"));
       try {
         writeFileSync(join(tmp, "promises.json"), "[]\n");
@@ -379,6 +379,7 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
           archiveFn: mockArchive,
           models: { extract: "a", verify: "b", copy: "c" },
           stancesEnabled,
+          stancesMode,
         });
 
         if (!existsSync(join(tmp, "stances_review.json")) && !stancesEnabled) return "";
@@ -392,8 +393,13 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
     const offResult = await runOnce(false);
     assert.equal(offResult, "", "utan flaggan ska inga ståndpunktsfiler skrivas");
 
-    // PÅ: beskedet publiceras i cellen och changelog bär stances_added.
-    const onResult = JSON.parse(await runOnce(true)) as StanceCell[];
+    // PÅ utan STANCES_MODE: säkra defaulten är review — inget publiceras.
+    const defaultResult = JSON.parse(await runOnce(true)) as StanceCell[];
+    const defaultCell = defaultResult.find((c) => c.subquestion_id === "sq-energi-karnkraft" && c.party === "m")!;
+    assert.equal(defaultCell.statements.length, 0, "default STANCES_MODE ska vara review");
+
+    // PÅ med uttryckligt STANCES_MODE=auto: beskedet publiceras i cellen.
+    const onResult = JSON.parse(await runOnce(true, "auto")) as StanceCell[];
     const cell = onResult.find((c) => c.subquestion_id === "sq-energi-karnkraft" && c.party === "m")!;
     assert.equal(cell.statements.length, 1);
     assert.equal(cell.current.position, "ja");

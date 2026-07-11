@@ -51,6 +51,9 @@ export interface PipelineContext {
    * ägaren verifierat delfrågor och källor (ägarbeslut 2026-07-11).
    */
   stancesEnabled?: boolean;
+  /** Frågevågens egen mode-ratt (STANCES_MODE). Default "review" — löftesflödets
+   *  PIPELINE_MODE styr ALDRIG ståndpunktspublicering. */
+  stancesMode?: "auto" | "review" | undefined;
 }
 
 export interface PipelineResult {
@@ -344,7 +347,7 @@ export async function runPipeline(
       existingReview: existingStanceReview,
       runId: ctx.runId,
       now: ctx.now,
-      mode: ctx.mode,
+      mode: ctx.stancesMode ?? "review",
     });
     writeFileSync(`${ctx.outputDir}/stances.json`, JSON.stringify(stanceResult.cells, null, 2) + "\n");
     writeFileSync(`${ctx.outputDir}/stances_review.json`, JSON.stringify(stanceResult.review, null, 2) + "\n");
