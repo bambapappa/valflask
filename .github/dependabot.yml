@@ -1,12 +1,23 @@
 # Dependabot-policy (§14: minimalt beroendeträd, inga byten utan DECISION_LOG-rad).
-# Säkerhetsuppdateringar förblir aktiva; major-versioner hålls tillbaka manuellt
-# under valrörelsen (en major-bump av t.ex. Astro är ett DECISION_LOG-beslut).
+# Se ops/RUNBOOK.md → "Beroende- och kodändringar i live-fasen" för hela strategin.
+#
+# Principer:
+#  - Säkerhetsuppdateringar förblir aktiva ALLTID (en `ignore` av version-update
+#    stoppar inte security-updates — därför kom Astro 6 igenom som säkerhetsfix
+#    trots major-spärren nedan).
+#  - Major-versioner hålls tillbaka under valrörelsen på ALLA ekosystem (även
+#    github-actions) — de tas medvetet i ett lugnt fönster, som DECISION_LOG-beslut.
+#  - Minor/patch grupperas till EN PR per ekosystem och vecka, så granskningen
+#    blir en batch i stället för en svärm av enskilda PR:er.
 version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/site"
     schedule:
       interval: "weekly"
+    groups:
+      site-minor-patch:
+        update-types: ["minor", "patch"]
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -14,6 +25,9 @@ updates:
     directory: "/pipeline"
     schedule:
       interval: "weekly"
+    groups:
+      pipeline-minor-patch:
+        update-types: ["minor", "patch"]
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -21,3 +35,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      actions-minor-patch:
+        update-types: ["minor", "patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

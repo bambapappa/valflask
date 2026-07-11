@@ -44,6 +44,52 @@ git bundle create "$BUNDLE_NAME" --all
 # Flytta till säker offline-lagring (ej i repo)
 ```
 
+### Beroende- och kodändringar i live-fasen
+
+Ju närmare mjukstart och valdag (2026-09-13), desto högre tröskel för allt som
+inte är säkerhet eller en trasig sida. Prioordning: **uppe · korrekt · neutral · källspårad**.
+
+**Riskklasser — vad tas, vad skjuts upp**
+
+| Klass | Exempel | I live-fasen |
+|---|---|---|
+| Ta direkt | Säkerhetsfix (Dependabot security / `npm audit`), trasig sida, datafel | Fixa nu, full verifiering |
+| Ta med verifiering | Patch/minor utan säkerhetsskäl | Batchas veckovis av Dependabot (en grupp-PR per ekosystem), kör verifieringstrappan |
+| Skjut upp | Major-bump (ramverk, build-actions), refaktor, "nice-to-have" | Vänta till lugnt fönster. **Undantag:** en major som *är* säkerhetsfixen (Astro 6 var det) tas, men med full trappa |
+| Frys | Allt icke-kritiskt under frysfönster | Se nedan |
+
+Dependabot är konfigurerad (`.github/dependabot.yml`) att hålla tillbaka
+semver-major på alla ekosystem och gruppera minor/patch — säkerhetsuppdateringar
+släpps ändå alltid igenom.
+
+**Frysfönster:** ±48 h runt mjukstart till journalister, samt sista ~5 dygnen före
+valdagen + valdagen. Endast säkerhet och trasig-sida-hotfix. Inga major-bumpar, inga
+refaktorer.
+
+**Verifieringstrappa (måste passera före merge till `main`):**
+1. Alltid: PR-CI grön — pipeline-tester (175) + typecheck + sajtbygge + T1 + T3.
+2. Rör bygge/rendering/deploy: hela lokala sviten (T1/T3/T9/T3-stale/interval/drylinje)
+   + generera OG + titta på `dist` via Cloudflare branch-preview (`*.pages.dev` per PR).
+3. Ramverks-/build-action-major: bygg i isolerad `git worktree`, byte-diffa ett urval
+   renderade sidor (start/parti/löfte/sitemap/api) gammalt-vs-nytt, och bekräfta att
+   `deploy-pages`-jobbet lyckas på `main` (deploy-jobb går inte att testa i PR).
+4. Neutralitetsgrind: `test-drylinje` + aggregat-dedup gröna → ingen partisk skillnad.
+
+**Rollback av kod (skild från datarollback):** snabbast först.
+1. Cloudflare Pages → Rollback (1 klick, se S1) — sub-minut.
+2. `git revert <sha>` på `main` → push → CI bygger om känt-gott träd (~5 min). Ren,
+   spårbar väg. **Rita aldrig om publicerad historik** (force-push bryter revisionsspåret).
+3. Beroendebump: reverta merge-commiten, pinna gamla versionen, låt Dependabot försöka igen.
+4. Data: separat spår — `ops/rollback-data.sh <datum>` + rättelselogg (se S2). Blanda aldrig ihop.
+
+Grundtrygghet: en misslyckad deploy = **ingen uppdatering, inte nedtid** — både Pages
+och GitHub Pages behåller förra bygget. Stale-bannern varnar om datan fryser.
+
+**Gör inte:** ingen major/refaktor i frysfönster (utom säkerhet) · ingen force-push på
+publicerade commits · handredigera aldrig lockfilen blint (regenerera + testa) · merga
+inget som inte kan verifieras lokalt utan färdig watch-&-rollback-plan · låt inte en
+beroendebump röra neutralitetslogik utan att neutralitetstesterna passerar.
+
 ---
 
 ## S1 — Trasig deploy / visuellt fel
