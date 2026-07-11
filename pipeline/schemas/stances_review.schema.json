@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drygast.nu/schemas/stances_review.schema.json",
+  "title": "Frågevågen — behöver granskning",
+  "description": "Ståndpunktskandidater som inte passerat grindarna eller som kräver mänskligt beslut (riktningsbyten gör det ALLTID, ägarbeslut 2026-07-11). Publiceras ALDRIG på sajten. Egen kö skild från needs_review.json (löften) — flödena har olika beslutsdata.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["candidate", "failures", "articleUrl", "articleTitle"],
+    "properties": {
+      "candidate": {},
+      "failures": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["gate", "reason"],
+          "properties": {
+            "gate": { "enum": ["G1", "G2", "G3", "G6", "G7", "G8", "VERIFY", "RIKTNINGSBYTE", "UTKAST", "MODE"] },
+            "reason": { "type": "string" }
+          }
+        }
+      },
+      "articleUrl": { "type": "string" },
+      "articleTitle": { "type": "string" },
+      "verifyReason": { "type": "string" },
+      "archiveUrl": { "type": ["string", "null"] },
+      "dateStated": { "type": "string" },
+      "extractModel": { "type": "string" },
+      "verifyModel": { "type": "string" },
+      "runId": { "type": "string" }
+    }
+  }
+}

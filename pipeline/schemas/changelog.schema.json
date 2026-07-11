@@ -7,26 +7,57 @@
   "items": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["run_id", "added", "updated", "retracted", "data_hash"],
+    "required": [
+      "run_id",
+      "added",
+      "updated",
+      "retracted",
+      "data_hash"
+    ],
     "properties": {
-      "run_id": { "type": "string" },
+      "run_id": {
+        "type": "string"
+      },
       "added": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
       "updated": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
       "retracted": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
       "data_hash": {
         "type": "string",
         "pattern": "^[0-9a-f]{64}$"
       },
-      "timestamp": { "type": "string" }
+      "timestamp": {
+        "type": "string"
+      },
+      "stances_added": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^st-\\d{4}-\\d{4}$"
+        },
+        "description": "Frågevågen: statement-id:n publicerade i körningen (valfritt, bakåtkompatibelt)."
+      },
+      "stances_changed": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Frågevågen: celler (delfråga × parti) vars position ändrades i körningen."
+      }
     }
   }
 }

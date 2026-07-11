@@ -67,6 +67,9 @@ export interface ChangelogEntry {
   retracted: string[];
   data_hash: string;
   timestamp: string;
+  /** Frågevågen (SPEC-FRAGEVAGEN §4.3): valfria, bakåtkompatibla fält. */
+  stances_added?: string[];
+  stances_changed?: string[];
 }
 
 export interface PublishInput {
@@ -88,6 +91,8 @@ export interface PublishInput {
   runId: string;
   now: Date;
   outputDir: string;
+  /** Frågevågen: körningens ståndpunktsresultat, in i samma changelog-post. */
+  stanceSummary?: { added: string[]; changed: string[] } | undefined;
 }
 
 export interface PublishResult {
@@ -227,6 +232,10 @@ export function publish(input: PublishInput): PublishResult {
     data_hash: dataHash,
     timestamp: now.toISOString(),
   };
+  if (input.stanceSummary && (input.stanceSummary.added.length > 0 || input.stanceSummary.changed.length > 0)) {
+    changelogEntry.stances_added = input.stanceSummary.added;
+    changelogEntry.stances_changed = input.stanceSummary.changed;
+  }
 
   mkdirSync(outputDir, { recursive: true });
 

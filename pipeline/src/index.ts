@@ -17,6 +17,16 @@ import {
   type NeedsReviewEntry,
   type ChangelogEntry,
 } from "./publish.ts";
+import {
+  extractStancesFromArticle,
+  publishStances,
+  runStanceGates,
+  verifyStance,
+  type ProcessedStance,
+  type StanceGateFailure,
+  type StanceReviewEntry,
+} from "./stance-pipeline.ts";
+import type { IssuesFile, StanceCell } from "./stances.ts";
 
 export interface PipelineContext {
   now: Date;
@@ -35,6 +45,12 @@ export interface PipelineContext {
     verify: string;
     copy: string;
   };
+  /**
+   * Frågevågen (SPEC-FRAGEVAGEN §5): ståndpunktspasset körs ENDAST när
+   * detta är true (env STANCES_ENABLED). Default av — hård grind tills
+   * ägaren verifierat delfrågor och källor (ägarbeslut 2026-07-11).
+   */
+  stancesEnabled?: boolean;
 }
 
 export interface PipelineResult {
@@ -111,6 +127,22 @@ export async function runPipeline(
     category: p.category,
     group_id: p.group_id,
   }));
+
+  // ── Frågevågen: ladda taxonomi + celler EN gång (passet delar artikelloopen,
+  // annars hade seen.json redan markerat artiklarna som behandlade).
+  let issuesFile: IssuesFile | null = null;
+  let stanceCells: StanceCell[] = [];
+  const processedStances: ProcessedStance[] = [];
+  const stanceGateReview: Array<{ candidate: unknown; failures: StanceGateFailure[]; article: NormalizedArticle }> = [];
+  if (ctx.stancesEnabled) {
+    try {
+      issuesFile = JSON.parse(readFileSync(`${ctx.dataDir}/issues.json`, "utf8")) as IssuesFile;
+      stanceCells = JSON.parse(readFileSync(`${ctx.dataDir}/stances.json`, "utf8")) as StanceCell[];
+    } catch (e) {
+      console.error(`[stances] kunde inte ladda issues/stances — passet hoppas över: ${e instanceof Error ? e.message : String(e)}`);
+      issuesFile = null;
+    }
+  }
 
   for (const article of toProcess) {
     try {
@@ -230,6 +262,39 @@ export async function runPipeline(
           verifyModel: ctx.models.verify,
         });
       }
+
+      // ── Frågevågen-passet (§5): samma artikel, egen grindkedja, egen kö.
+      if (issuesFile) {
+        const stanceCandidates = await extractStancesFromArticle(
+          article,
+          issuesFile,
+          ctx.llm,
+          ctx.models.extract,
+        );
+        const stanceReport = runStanceGates(article, stanceCandidates, {
+          allowlist: ctx.allowlist,
+          issuesFile,
+          now: ctx.now,
+        });
+        for (const r of stanceReport.review) {
+          stanceGateReview.push({ ...r, article });
+        }
+        for (const accepted of stanceReport.accepted) {
+          const sqText = issuesFile.issues
+            .flatMap((i) => i.subquestions)
+            .find((sq) => sq.id === accepted.subquestion_id)?.text ?? "";
+          const verify = await verifyStance(accepted, sqText, article, ctx.llm, ctx.models.verify);
+          const archiveResult = await ctx.archiveFn(article.url);
+          processedStances.push({
+            candidate: accepted,
+            article,
+            verify,
+            archiveUrl: archiveResult.archive_url,
+            extractModel: ctx.models.extract,
+            verifyModel: ctx.models.verify,
+          });
+        }
+      }
     } catch (e) {
       errors.push({
         url: article.url,
@@ -260,6 +325,35 @@ export async function runPipeline(
     if (!erroredUrls.has(a.url)) updatedSeen.set(seenKey(a), a.url);
   }
 
+  // ── Frågevågen: publicera ståndpunkter FÖRE publish() så att körningens
+  // changelog-post bär stances_added/stances_changed.
+  let stanceSummary: { added: string[]; changed: string[] } | undefined;
+  if (issuesFile) {
+    const existingStanceReview: StanceReviewEntry[] = (() => {
+      try {
+        return JSON.parse(readFileSync(`${ctx.outputDir}/stances_review.json`, "utf8")) as StanceReviewEntry[];
+      } catch {
+        return [];
+      }
+    })();
+    const stanceResult = publishStances({
+      processed: processedStances,
+      gateReview: stanceGateReview,
+      issuesFile,
+      cells: stanceCells,
+      existingReview: existingStanceReview,
+      runId: ctx.runId,
+      now: ctx.now,
+      mode: ctx.mode,
+    });
+    writeFileSync(`${ctx.outputDir}/stances.json`, JSON.stringify(stanceResult.cells, null, 2) + "\n");
+    writeFileSync(`${ctx.outputDir}/stances_review.json`, JSON.stringify(stanceResult.review, null, 2) + "\n");
+    stanceSummary = { added: stanceResult.stancesAdded, changed: stanceResult.stancesChanged };
+    console.error(
+      `[stances] publicerade=${stanceResult.stancesAdded.length} ändringar=${stanceResult.stancesChanged.length} review=${stanceResult.review.length - existingStanceReview.length} (nya)`,
+    );
+  }
+
   const publishResult = publish({
     processedCandidates,
     reviewItems,
@@ -267,6 +361,7 @@ export async function runPipeline(
     runId: ctx.runId,
     now: ctx.now,
     outputDir: ctx.outputDir,
+    stanceSummary,
   });
 
   const seenObj: Record<string, string> = {};

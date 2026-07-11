@@ -72,6 +72,10 @@ export function buildContextFromEnv(
   }
   const mode = modeRaw as "review" | "auto";
 
+  // Frågevågen: hård grind — passet är AV tills ägaren uttryckligen slår på
+  // det (efter dubbel-/trippelverifiering av delfrågor och källor).
+  const stancesEnabled = (getEnv(env, "STANCES_ENABLED") ?? "false").toLowerCase() === "true";
+
   const { config, dataDir } = opts;
   if (!config.feeds || config.feeds.length === 0) {
     throw new Error("sources.yaml: inga feeds konfigurerade.");
@@ -121,6 +125,7 @@ export function buildContextFromEnv(
     dataDir,
     allowlist: config.allowlist_domains,
     mode,
+    stancesEnabled,
     maxNewArticles: config.limits.max_articles_per_run,
     archiveFn: createArchiveFn(),
     models: { extract, verify, copy },
@@ -138,7 +143,7 @@ async function main(): Promise<void> {
   });
 
   console.log(
-    `Körning ${ctx.runId} | läge=${ctx.mode} | feeds=${config.feeds.length} | ` +
+    `Körning ${ctx.runId} | läge=${ctx.mode} | stances=${ctx.stancesEnabled ? "PÅ" : "av"} | feeds=${config.feeds.length} | ` +
       `extract=${ctx.models.extract} verify=${ctx.models.verify} copy=${ctx.models.copy}`,
   );
 
