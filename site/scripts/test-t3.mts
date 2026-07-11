@@ -40,6 +40,8 @@ const schemaFiles: Record<string, string> = {
   "seen.json": "seen.schema.json",
   "constellations.json": "constellations.schema.json",
   "chronicles.json": "chronicles.schema.json",
+  "issues.json": "issues.schema.json",
+  "stances.json": "stances.schema.json",
 };
 
 for (const [dataFile, schemaFile] of Object.entries(schemaFiles)) {

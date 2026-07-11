@@ -11,7 +11,8 @@
     "archive:backfill": "node --import tsx/esm scripts/archive-backfill.mts",
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
-    "revalidate": "node --import tsx/esm scripts/revalidate-quotes.mts"
+    "revalidate": "node --import tsx/esm scripts/revalidate-quotes.mts",
+    "stances:skeleton": "node --import tsx/esm scripts/stances-skeleton.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1",

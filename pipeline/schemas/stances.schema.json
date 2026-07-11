@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drygast.nu/schemas/stances.schema.json",
+  "title": "Frågevågen — besked",
+  "description": "Partiernas besked per delfråga (SPEC-FRAGEVAGEN.md §4.2). Skrivs ENDAST av pipelinen; statements är append-only (RS2). En post per (delfråga × parti), RS1-komplett.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["subquestion_id", "party", "current", "statements", "changes", "last_searched"],
+    "properties": {
+      "subquestion_id": { "type": "string", "pattern": "^sq-[a-z0-9-]+$" },
+      "party": { "enum": ["s", "m", "sd", "c", "v", "kd", "l", "mp"] },
+      "current": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["position", "statement_id"],
+        "properties": {
+          "position": { "enum": ["ja", "nej", "villkorat", "inget_tydligt_besked"] },
+          "statement_id": {
+            "type": ["string", "null"],
+            "pattern": "^st-\\d{4}-\\d{4}$",
+            "description": "null endast när position är inget_tydligt_besked och statements är tom."
+          }
+        }
+      },
+      "statements": {
+        "type": "array",
+        "description": "Append-only, kronologisk (RS2). Ett statement har alltid ett tydligt besked — nedgraderade kandidater publiceras inte.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "position",
+            "condition_note",
+            "quote",
+            "person",
+            "date_stated",
+            "source",
+            "source_status",
+            "source_checked_at",
+            "related_promise_ids",
+            "extraction"
+          ],
+          "properties": {
+            "id": { "type": "string", "pattern": "^st-\\d{4}-\\d{4}$" },
+            "position": { "enum": ["ja", "nej", "villkorat"] },
+            "condition_note": {
+              "type": ["string", "null"],
+              "description": "Obligatorisk en mening vid 'villkorat' (RS4), annars null."
+            },
+            "quote": { "type": "string", "minLength": 10, "description": "Ordagrant, G3-kanon, 5–40 ord." },
+            "person": {
+              "type": ["object", "null"],
+              "additionalProperties": false,
+              "required": ["name", "role"],
+              "properties": {
+                "name": { "type": "string", "minLength": 2 },
+                "role": { "type": "string", "minLength": 2 },
+                "riksdagen_id": { "type": ["string", "null"] }
+              }
+            },
+            "date_stated": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "source": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["url", "domain", "archive_url", "fetched_at"],
+              "properties": {
+                "url": { "type": "string", "pattern": "^https://" },
+                "domain": { "type": "string", "minLength": 3 },
+                "archive_url": { "type": ["string", "null"], "pattern": "^https://web\\.archive\\.org/" },
+                "fetched_at": { "type": "string", "minLength": 10 }
+              }
+            },
+            "source_status": {
+              "enum": ["ok", "andrad", "borttagen"],
+              "description": "Källröta-bevakningen §6.3; 'andrad'/'borttagen' renderas med synlig stämpel — arkivkopian gäller."
+            },
+            "source_checked_at": { "type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "related_promise_ids": {
+              "type": "array",
+              "items": { "type": "string", "pattern": "^p-\\d{4}-\\d{4}$" }
+            },
+            "extraction": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["model", "verified_by", "run_id"],
+              "properties": {
+                "model": { "type": "string" },
+                "verified_by": { "type": "string" },
+                "run_id": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "changes": {
+        "type": "array",
+        "description": "Beräknas i publish-steget (ren kod). Riktningsbyte definieras mekaniskt (RS5).",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["date", "from_statement", "to_statement", "kind", "commit"],
+          "properties": {
+            "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "from_statement": { "type": "string", "pattern": "^st-\\d{4}-\\d{4}$" },
+            "to_statement": { "type": "string", "pattern": "^st-\\d{4}-\\d{4}$" },
+            "kind": { "enum": ["riktningsbyte", "precisering", "villkorsandring"] },
+            "commit": { "type": ["string", "null"] }
+          }
+        }
+      },
+      "last_searched": {
+        "type": ["string", "null"],
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "description": "Sätts varje pipeline-körning för ALLA celler; grund för tomcellens 'senast sökt'-datum. null före första skarpa körningen."
+      }
+    }
+  }
+}

@@ -1,0 +1,418 @@
+{
+  "criteria_note": "Tröghetsregeln (SPEC-FRAGEVAGEN.md §3, ägarbeslut 2026-07-11): en fråga ingår om den förekommer på båda institutens publicerade listor över väljarnas viktigaste frågor — Novus 'Viktigaste politiska frågan' (topp 10, någon av de två senaste mätningarna räknas) och nationella SOM-undersökningen (topp 15). Underlag v1: Novus juni 2026 (fältperiod 28 maj–3 juni, n=1361) och januari 2026, samt SOM 2025 ('Svenska trender 1986–2025', publicerad mars 2026). Frågor tas aldrig bort före valdagen — de kan markeras dormant.",
+  "formulation_note": "Delfrågeformuleringar med formulation_status 'utkast' är ägargodkända till inriktningen men VERIFIERAS mot dagsaktuella källor och låses ('verifierad') före V3 (skarp drift).",
+  "issues": [
+    {
+      "id": "i-sjukvarden",
+      "title": "Sjukvården",
+      "slug": "sjukvarden",
+      "category": "välfärd",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 1,
+          "share_percent": 66
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": 2,
+          "share_percent": 29
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-sjukvard-huvudman",
+          "text": "Ska staten ta över huvudansvaret för sjukvården från regionerna?",
+          "formulation_status": "utkast",
+          "fairness_note": "Båda sidor accepterar ramningen: frågan gäller huvudmannaskapet, inte vårdens kvalitet. 'Ta över huvudansvaret' är det konkreta åtagande som skiljer positionerna."
+        },
+        {
+          "id": "sq-sjukvard-vinst",
+          "text": "Ska vinstuttag ur offentligt finansierad, privat driven vård begränsas i lag?",
+          "formulation_status": "utkast",
+          "fairness_note": "Neutralt formulerad lagstiftningsfråga; 'begränsas i lag' avgränsar mot både fri vinst och totalförbud utan att värdera något av dem."
+        }
+      ]
+    },
+    {
+      "id": "i-skolan",
+      "title": "Skolan och utbildningen",
+      "slug": "skolan-och-utbildningen",
+      "category": "utbildning",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 2,
+          "share_percent": 54
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": 3,
+          "share_percent": 23
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-skola-vinst",
+          "text": "Ska vinstutdelning från friskolekoncerner förbjudas eller begränsas i lag?",
+          "formulation_status": "utkast",
+          "fairness_note": "Skarpt avgränsad till vinstutdelning (inte friskolors existens); ja- och nej-sidan känner igen sin egen position i formuleringen."
+        },
+        {
+          "id": "sq-skola-huvudman",
+          "text": "Ska staten ta över huvudmannaskapet för skolan från kommunerna?",
+          "formulation_status": "utkast",
+          "fairness_note": "Samma huvudmannaskapsram som sjukvårdsfrågan; ingen värdering av kommunal eller statlig drift."
+        },
+        {
+          "id": "sq-skola-ko",
+          "text": "Ska dagens kösystem till fristående skolor avskaffas?",
+          "formulation_status": "utkast",
+          "fairness_note": "'Dagens kösystem' är en neutral beskrivning av rådande ordning; både försvarare och kritiker av kötid som urvalsgrund kan svara rakt."
+        }
+      ]
+    },
+    {
+      "id": "i-lag-och-ordning",
+      "title": "Lag och ordning",
+      "slug": "lag-och-ordning",
+      "category": "rättsväsende",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 3,
+          "share_percent": 49
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": 1,
+          "share_percent": 36
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-lag-straffalder",
+          "text": "Ska straffmyndighetsåldern sänkas?",
+          "formulation_status": "utkast",
+          "fairness_note": "Formulerad om verktyget, inte om brottslighetens orsaker — den ramstriden lämnas åt partierna själva i citaten."
+        },
+        {
+          "id": "sq-lag-visitationszoner",
+          "text": "Ska visitationszoner vara ett permanent verktyg för polisen?",
+          "formulation_status": "utkast",
+          "fairness_note": "'Permanent verktyg' är den konkreta skiljelinjen; varken 'trygghetsskapande' eller 'integritetskränkande' förekommer i frågan."
+        }
+      ]
+    },
+    {
+      "id": "i-invandring-integration",
+      "title": "Invandringen och integrationen",
+      "slug": "invandringen-och-integrationen",
+      "category": "migration",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 4,
+          "share_percent": 45
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": 4,
+          "share_percent": 23
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-migration-miniminiva",
+          "text": "Ska svensk asyllagstiftning ligga på EU-rättens miniminivå?",
+          "formulation_status": "utkast",
+          "fairness_note": "Regelfråga med tydligt ja/nej; både restriktiv och generös linje kan svara ja med stolthet på 'sin' fråga i detta block."
+        },
+        {
+          "id": "sq-migration-put",
+          "text": "Ska permanenta uppehållstillstånd åter vara huvudregel?",
+          "formulation_status": "utkast",
+          "fairness_note": "'Åter' är en faktisk beskrivning av rättsläget före 2021 års ändringar, inte en värdering."
+        },
+        {
+          "id": "sq-migration-atervandring",
+          "text": "Ska det statliga stödet till frivillig återvandring behållas?",
+          "formulation_status": "utkast",
+          "fairness_note": "'Frivillig' och 'statligt stöd' är regelverkets egna termer; frågan mäter inställning till ordningen, inte till människor."
+        }
+      ]
+    },
+    {
+      "id": "i-aldreomsorgen",
+      "title": "Äldreomsorgen",
+      "slug": "aldreomsorgen",
+      "category": "välfärd",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 5,
+          "share_percent": 42
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": null,
+          "share_percent": null,
+          "note": "Kategorin 'äldrefrågor' ingår bland de 15 största kategorierna i SOM:s tabell över viktigaste frågor/samhällsproblem 2025."
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-aldre-bemanning",
+          "text": "Ska en nationell bemanningsnorm för äldreomsorgen lagstadgas?",
+          "formulation_status": "utkast",
+          "fairness_note": "Konkret styrningsfråga; nej-sidan (kommunalt självstyre/flexibilitet) och ja-sidan (nationell garanti) ryms likvärdigt."
+        },
+        {
+          "id": "sq-aldre-sprakkrav",
+          "text": "Ska språkkrav i svenska för omsorgspersonal lagstadgas?",
+          "formulation_status": "utkast",
+          "fairness_note": "Avgränsad till lagstadgande; frågan värderar inte personalgrupper utan mäter inställning till reglering."
+        }
+      ]
+    },
+    {
+      "id": "i-klimat-miljo",
+      "title": "Klimatet och miljön",
+      "slug": "klimatet-och-miljon",
+      "category": "klimat-miljö",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 6,
+          "share_percent": 38,
+          "note": "Novus mäter klimatet (plats 6, 38 %) och miljön (plats 9, 34 %) separat; kategorierna slås ihop till en fråga i registret, i linje med sajtens kategori klimat-miljö. Miljöns uppgång (+5) var mätningens enda statistiskt säkerställda förändring."
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": 5,
+          "share_percent": 19,
+          "note": "SOM redovisar den kombinerade kategorin miljö/energi."
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-klimat-nettonoll",
+          "text": "Ska Sveriges mål om nettonollutsläpp till 2045 ligga fast?",
+          "formulation_status": "utkast",
+          "fairness_note": "'Ligga fast' mäter åtagandet till ett beslutat mål; både skärpning och uppluckring landar i nej-/villkorat-svar som citaten får precisera."
+        },
+        {
+          "id": "sq-klimat-reduktionsplikt",
+          "text": "Ska reduktionsplikten på drivmedel höjas under mandatperioden 2027–2030?",
+          "formulation_status": "utkast",
+          "fairness_note": "Konkret styrmedelsfråga med tydliga ja- och nej-läger; nivåord som 'ambitiös' eller 'dyr' förekommer inte."
+        }
+      ]
+    },
+    {
+      "id": "i-jobben",
+      "title": "Jobben och arbetsmarknaden",
+      "slug": "jobben-och-arbetsmarknaden",
+      "category": "övrigt",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 7,
+          "share_percent": 37
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": null,
+          "share_percent": null,
+          "note": "Kategorin 'arbetsmarknad' ingår bland de 15 största kategorierna i SOM:s tabell över viktigaste frågor/samhällsproblem 2025."
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-jobb-akassa",
+          "text": "Ska taket i a-kassan höjas?",
+          "formulation_status": "utkast",
+          "fairness_note": "Konkret nivåfråga utan värdering av arbetslinje eller trygghetslinje — de ramarna får partiernas citat stå för."
+        },
+        {
+          "id": "sq-jobb-lonegolv",
+          "text": "Ska lönekravet för arbetskraftsinvandring höjas ytterligare?",
+          "formulation_status": "utkast",
+          "fairness_note": "'Ytterligare' är en faktisk beskrivning av att krav redan höjts, inte en riktningsvärdering. VERIFIERA rättsläget före låsning."
+        }
+      ]
+    },
+    {
+      "id": "i-ekonomin",
+      "title": "Ekonomin",
+      "slug": "ekonomin",
+      "category": "skatter",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 8,
+          "share_percent": 36,
+          "note": "Novus kategori: 'Landets ekonomi'."
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": null,
+          "share_percent": null,
+          "note": "Kategorin 'ekonomi' ingår bland de 15 största kategorierna i SOM:s tabell över viktigaste frågor/samhällsproblem 2025."
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-ekonomi-matmoms",
+          "text": "Ska den sänkta matmomsen göras permanent?",
+          "formulation_status": "utkast",
+          "fairness_note": "Hushållsnära och binärt besvarbar; 'den sänkta' beskriver beslutad ordning. VERIFIERA sänkningens exakta utformning och giltighetstid före låsning."
+        },
+        {
+          "id": "sq-ekonomi-inkomstskatt",
+          "text": "Ska den statliga inkomstskatten sänkas under mandatperioden?",
+          "formulation_status": "utkast",
+          "fairness_note": "Avgränsad till en namngiven skatt med tydliga ja- och nej-läger; ingen värdering av fördelningseffekter i frågan."
+        }
+      ]
+    },
+    {
+      "id": "i-energipolitiken",
+      "title": "Energipolitiken",
+      "slug": "energipolitiken",
+      "category": "klimat-miljö",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 10,
+          "share_percent": 31,
+          "note": "Ny i topp 10 i juni 2026; Novus kopplar uppgången till elpriserna och omvärldsläget."
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": 5,
+          "share_percent": 19,
+          "note": "SOM redovisar den kombinerade kategorin miljö/energi."
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-energi-karnkraft",
+          "text": "Ska staten fortsätta finansiera utbyggnad av ny kärnkraft?",
+          "formulation_status": "utkast",
+          "fairness_note": "'Fortsätta finansiera' mäter åtagandet till beslutad ordning; både utbyggnads- och avvecklingslinjen kan svara rakt. VERIFIERA finansieringsprogrammets aktuella status före låsning."
+        },
+        {
+          "id": "sq-energi-vindveto",
+          "text": "Ska det kommunala vetot mot ny vindkraft behållas?",
+          "formulation_status": "utkast",
+          "fairness_note": "'Vetot' är den etablerade termen för rådande ordning; frågan värderar varken vindkraft eller självstyre."
+        }
+      ]
+    },
+    {
+      "id": "i-forsvaret",
+      "title": "Försvaret och säkerheten",
+      "slug": "forsvaret-och-sakerheten",
+      "category": "försvar",
+      "status": "aktiv",
+      "selection_sources": [
+        {
+          "institute": "Novus",
+          "survey": "Viktigaste politiska frågan, juni 2026 (dokumenterar januarimätningens placering)",
+          "url": "https://novus.se/valjarforstaelse-arkiv/2026-06-viktigaste-politiska-fragan/",
+          "date": "2026-06-08",
+          "rank": 8,
+          "share_percent": 35,
+          "note": "Kvalar in via tröghetsregeln: plats 8 i januari 2026 (35 %). I juni 2026 plats 11 (30 %) efter en statistiskt säkerställd nedgång (−5). Juni-rapporten är källa för båda placeringarna."
+        },
+        {
+          "institute": "SOM-institutet",
+          "survey": "Nationella SOM-undersökningen 2025 (Svenska trender 1986–2025)",
+          "url": "https://www.gu.se/sites/default/files/2026-03/Svenska%20trender%201986-2025.pdf",
+          "date": "2026-03",
+          "rank": null,
+          "share_percent": null,
+          "note": "Kategorin 'utrikes-/försvarspolitik' ingår bland de 15 största kategorierna i SOM:s tabell över viktigaste frågor/samhällsproblem 2025."
+        }
+      ],
+      "subquestions": [
+        {
+          "id": "sq-forsvar-varnplikt",
+          "text": "Ska antalet som utbildas med värnplikt utökas?",
+          "formulation_status": "utkast",
+          "fairness_note": "Konkret volymfråga ur den levande debatten; mäter inte 'försvarsvilja'."
+        },
+        {
+          "id": "sq-forsvar-karnvapen",
+          "text": "Ska kärnvapen tillåtas på svenskt territorium i fredstid?",
+          "formulation_status": "utkast",
+          "fairness_note": "Skarp ja/nej-fråga med uttalade läger; 'i fredstid' är den avgränsning debatten faktiskt handlar om. VERIFIERA rättsläge och debattläge före låsning."
+        }
+      ]
+    }
+  ]
+}
