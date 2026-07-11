@@ -822,3 +822,15 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Ej kod (ägaråtgärder, presenterade separat):** privacy-vänlig serverstatistik via Cloudflare-edge (sajten ligger bakom CF-proxy → vy/hetaste-sidor/referrer utan cookies eller klientskript, uppfyller §17/CSP); IndexNow (CF-toggle → Bing → Copilot/ChatGPT); Google Search Console + Bing Webmaster (→ Gemini/AI Overviews).
 
 **Påverkan:** `site/src/pages/sitemap.xml.ts`, `site/public/llms.txt`. Hela sajtsviten grön; byggd sitemap listar nu 2026-27 + 2026-28.
+
+## 2026-07-10 — IndexNow automatiserat (spridning till AI-agenter)
+
+**Beslut:** Automatisk IndexNow-ping vid varje deploy → Bing (matar Copilot och ChatGPT-sök), Yandex m.fl. får nya/ändrade sidor i indexet snabbt utan att vänta på crawl. Nyckelfil `site/public/547b2beea892cfb44a32d83e1901c410.txt` (IndexNow-nycklar är publika — domänägarskap bevisas genom att filen ligger live, ingen secret). `site/scripts/indexnow-submit.mts` bygger URL-listan ur senaste changelog-posten (added/updated/retracted → löftessidor) + aggregatsidor (/, topplistor, regeringar, jamfor, alla parti-sidor, senaste krönikan) och POSTar till api.indexnow.org; `--all` för backfill, `--dry-run` för test. Ny `indexnow`-jobb i build.yml `needs: deploy-pages` (kör EFTER att sajten + nyckelfilen är live), push-till-main-only, `continue-on-error` (får aldrig fälla deploy). Endast Node-inbyggda API:er (fetch/fs) → ingen install.
+
+**Motiv:** IndexNow är den enda proaktiva kanalen till AI-agenternas index (Google/Gemini nås via Search Console-sitemap som är ägaråtgärd; ChatGPT/Claude/Perplexity/CCBot crawlar redan via robots-tillåtelse). Targetad submission (bara ändrade sidor) i stället för hela sitemap varje gång — snällt mot IndexNow, effektivt.
+
+**Förkastade alternativ:** Cloudflare IndexNow-toggle (fungerar men binder till CF-dashboarden och submittar hela sitemap; ägaren bad om automatisering i repot); submitta alla 360 URL:er varje deploy (spammigt, onödigt); delnings-källtaggar (`?s=`) för referrer-attribution (ägaren avböjde).
+
+**Ägaråtgärder kvar (kräver konton):** Google Search Console + Bing Webmaster (skicka in sitemap.xml); Cloudflare-edge-analytics-dashboarden för besöks-/hetaste-/referrerstatistik (cookielöst, redan aktivt eftersom sajten ligger bakom CF-proxy).
+
+**Påverkan:** ny `site/scripts/indexnow-submit.mts`, `site/public/<KEY>.txt`, npm-script `indexnow`, `indexnow`-jobb i `.github/workflows/build.yml`. Hela sajtsviten grön; nyckelfilen verifierad i byggd dist; dry-run ger 21 targetade URL:er.
