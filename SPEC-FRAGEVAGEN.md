@@ -142,7 +142,25 @@ En post per (parti × delfråga). `current` pekar alltid på senaste publicerade
 
 ## 5. Pipeline — nya steg och grindar
 
-Samma körning, samma artiklar, samma `seen.json` — ett andra extraktionspass läggs till efter löftespasset. Ingen ny insamling behövs (`sources.yaml` oförändrad).
+Samma körning, samma artiklar, samma `seen.json` — ett andra extraktionspass läggs till efter löftespasset.
+
+### 5.0 Källprincip och riktad sidbevakning (tillägg 2026-07-11, ägarbeslut)
+
+**Vi frågar aldrig partierna** — inga enkäter, inga mejl, inga formulär (den vägen kan ett parti putsa sitt svar; publicerade uttalanden kan det inte). Ett besked existerar för Frågevågen endast om det är **publicerat i en allowlist-källa, ordagrant citerbart och Wayback-arkiverat**. Beviskedjan för varje statement: citat (verbatimgrind, G3-kanon) → käll-URL (allowlist, G2-kanon) → arkivlänk (snapshot tagen av pipelinen; utan arkivlänk gäller samma retry-regel som för löften) → datum. Skriver ett parti om sin sida i efterhand raderas ingenting — källröta-bevakningen (§6.3) stämplar statementet synligt och arkivkopian gäller.
+
+Nyhetsflödena räcker dock inte: partiers officiella ståndpunkter bor ofta på statiska **"Vår politik"-sidor** som aldrig dyker upp i RSS. Därför utökas `sources.yaml` med en ny feedtyp:
+
+```yaml
+feeds:
+  - id: s-politik-sidor
+    type: page_watch          # riktad sidbevakning (ingen RSS)
+    party: s
+    urls:
+      - "VERIFIERA — partiets politik-/ståndpunktssidor (A–Ö-sidor, valmanifest-sida)"
+  # ... motsvarande för samtliga åtta partier
+```
+
+`page_watch`-regler: samma allowlist, robots-respekt och villkorade anrop som ordinarie fetch; innehållet hashas (SHA-256 av normaliserad text) mot `seen.json` — endast **ändrade eller nya** sidor går vidare till extraktion; hämtas varje pipeline-körning; fulltext lagras aldrig i repo (SPEC §6.2). Sidlistorna är ägar-kuraterade i `sources.yaml` (PR, aldrig pipeline) och ska vara **symmetriska**: samma typ av sidor (politik A–Ö, valmanifest) för alla åtta partier — ett parti bevakas aldrig bredare än ett annat. Riksdagens öppna data (motioner, anföranden) täcker samma behov för riksdagsarbetet via befintliga feeds.
 
 1. **stance-extract (LLM A, temperatur 0, prompt A6):** artikeltext + den kompletta delfråge-taxonomin (id + text) skickas in; ut kommer kandidater `{subquestion_id, party, position, quote, condition_note, person, date}`. Samma anti-injektionskapsling som A1: källtext är data, aldrig order.
 2. **gates (ren kod — utökning av `gates.ts`, samma arkitektur som beslutad 2026-06-12):**
