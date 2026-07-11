@@ -1,9 +1,9 @@
-# DRYGAST.NU — Delspecifikation: "Ståndpunktsregistret"
+# DRYGAST.NU — Delspecifikation: "Frågevågen"
 
-**Version 0.1 · 2026-07-11 · Status: PLAN — utkast för ägargranskning (implementeras ej förrän §11-frågorna är beslutade)**
+**Version 0.2 · 2026-07-11 · Status: PLAN — namn beslutat (ägarbeslut 2026-07-11); implementeras ej förrän §11.1 är beslutad**
 **Relation till SPEC.md: detta dokument är ett DELTA. Allt som inte uttryckligen ändras här ärvs oförändrat från SPEC.md — arkitektur (§2), teknikval (§3), säkerhet (§14), drift (§15), juridik/etik/neutralitet (§17).**
 
-> Fläskvågen väger vad löftena kostar. Ståndpunktsregistret väger vad partierna **säger** i valets stora sakfrågor — och håller minnet. Varje besked fångas med ordagrant citat, källa och arkivkopia. Byter ett parti fot syns det gamla och det nya beskedet sida vid sida, med datum. Ingen kan gömma sig, ingen kan backa i tysthet.
+> Fläskvågen väger vad löftena kostar. Frågevågen för register över vad partierna **säger** i valets stora sakfrågor — och håller minnet. (Namnet bär vågmetaforen som varumärke; metoden väger ingenting: besked registreras, aldrig värderas.) Varje besked fångas med ordagrant citat, källa och arkivkopia. Byter ett parti fot syns det gamla och det nya beskedet sida vid sida, med datum. Ingen kan gömma sig, ingen kan backa i tysthet.
 
 ---
 
@@ -230,7 +230,7 @@ Förutsättning: §11.1 (frågelista + kriterium) beslutad av ägaren. V0–V2 k
 ## 11. Öppna frågor (ägarbeslut; * = blockerande före V0)
 
 1. **\* Frågelista v1 + urvalskriterium:** bekräfta kriteriet i §3 och fastställ vilka mätningar som utgör underlaget (`VERIFIERA` aktuella publiceringar).
-2. **Namn och URL:er:** arbetsnamn "Ståndpunktsregistret" med `/fragor` + `/svangningar`. Alternativ välkomna — namnet ska bära registermetaforen utan värdering.
+2. ~~Namn och URL:er~~ **BESLUTAT 2026-07-11: "Frågevågen"**, med `/fragor` + `/svangningar`. ("Åsiktsvågen" förkastades: att väga åsikter antyder värdering/skala, vilket §1.4 förbjuder — registret innehåller besked, inte åsikter.)
 3. **Topplista "flest ändrade besked":** ren datasortering (konsistent med /topplistor-filosofin) men sajtens mest tillspetsade yta. Rekommendation: AVVAKTA till registret har volym nog att inte låta enstaka preciseringar dominera; ta beslutet då.
 4. **Review-regel för riktningsbyten:** rekommendation PÅ permanent (§5.5) — bekräfta eller slå av.
 5. **Källröta-bevakningens frekvens:** rekommendation veckovis; daglig kostar mer trafik utan tydlig vinst.

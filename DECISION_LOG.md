@@ -841,3 +841,10 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Motiv:** Ståndpunkter har två neutralitetsrisker löften saknar — frågeurvalet och tolkningen — därför regleras båda hårdare än löftesflödet i stället för att ärvas rakt av. Maximal återanvändning av befintlig infrastruktur (fetch, grindkanon G2/G3, verify-arkitektur, review-flöde, sources.yaml) håller kostnad och attackyta nere.
 **Förkastade alternativ:** Valkompass-mekanik (ärvt absolut förbud, SPEC §1.4); åsiktsskalor/vänster-högeraxlar (tolkningsvärdering); fri LLM-klassificering utan sluten taxonomi (injektions- och driftrisk); redaktionellt frågeurval (neutralitetsbrott); separat insamlingskedja (dubblerad kostnad utan vinst).
 **Påverkan:** Endast `SPEC-STANDPUNKTER.md` + denna rad. Ingen kod, inga data- eller schemafiler ändrade.
+
+## 2026-07-11 — Namnbeslut: delfunktionen heter "Frågevågen" (ägarbeslut)
+
+**Beslut:** Ståndpunktsregistret (arbetsnamn) heter "Frågevågen". Spec-filen omdöpt till `SPEC-FRAGEVAGEN.md`; §11.2 stängd. URL:er oförändrade: `/fragor`, `/fraga/[slug]`, `/svangningar`.
+**Motiv:** Parallelliserar "Fläskvågen" (varumärkeskontinuitet) och pekar på det registret faktiskt innehåller: frågorna och partiernas besked. Vågmetaforen bärs som varumärke; metodtexten klargör att inget vägs eller värderas.
+**Förkastade alternativ:** "Åsiktsvågen" (ägarens andra kandidat) — att väga åsikter antyder värdering/skala, vilket icke-målen (§1.4) uttryckligen förbjuder, och registret innehåller besked, inte åsikter; namnet hade lovat något metodsidan måste dementera.
+**Påverkan:** `SPEC-FRAGEVAGEN.md` (fd. `SPEC-STANDPUNKTER.md`), denna rad. Ingen kod.
