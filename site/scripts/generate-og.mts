@@ -229,6 +229,28 @@ async function main() {
     console.log(`OG: parti-${party.code}.png`);
   }
 
+  // Frågevågen: en OG-bild per fråga — samma neutrala kostym, siffran är
+  // antal partier med tydligt besked (X/8), aldrig ett omdöme.
+  interface IssueEntry { slug: string; title: string; subquestions: Array<{ id: string }> }
+  interface StanceEntry { subquestion_id: string; party: string; statements: unknown[] }
+  const issuesFile = JSON.parse(readFileSync(resolve(DATA_DIR, "issues.json"), "utf8")) as { issues: IssueEntry[] };
+  const stances = JSON.parse(readFileSync(resolve(DATA_DIR, "stances.json"), "utf8")) as StanceEntry[];
+
+  for (const issue of issuesFile.issues) {
+    const sqIds = new Set(issue.subquestions.map((sq) => sq.id));
+    const partiesWithStance = new Set(
+      stances.filter((c) => sqIds.has(c.subquestion_id) && c.statements.length > 0).map((c) => c.party),
+    ).size;
+    const png = await generateOgImage({
+      topLabel: `DRYGAST.NU · FRÅGEVÅGEN · ${issue.slug}`,
+      bigNumber: `${partiesWithStance}/8`,
+      title: `VAR STÅR PARTIERNA OM ${issue.title.toUpperCase()}?`,
+      bottomLine: "Partier med tydligt besked · Ordagranna citat med arkivkopior · drygast.nu",
+    });
+    writeFileSync(resolve(ogDir, `fraga-${issue.slug}.png`), png);
+  }
+  console.log(`OG: ${issuesFile.issues.length} issue images`);
+
   for (const p of promises) {
     const total = promiseTotalMsek(p);
 
