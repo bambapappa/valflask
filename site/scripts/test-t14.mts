@@ -90,3 +90,30 @@ if (errors > 0) {
   process.exit(1);
 }
 console.log("\nT14: grönt");
+
+// ── T15 (SPEC-FRAGEVAGEN §10): API-ytan + svängregistrets RSS ur byggd dist.
+console.log("\n--- T15: API + RSS ---");
+{
+  const issuesApi = JSON.parse(readFileSync(resolve(DIST, "api/v1/issues.json"), "utf8"));
+  check("api/v1/issues.json: 10 frågor + kriterienot", issuesApi.issues?.length === 10 && typeof issuesApi.criteria_note === "string");
+
+  const expectedCells = issuesFile.issues.reduce((n, i) => n + i.subquestions.length, 0) * parties.length;
+  const stancesApi = JSON.parse(readFileSync(resolve(DIST, "api/v1/stances.json"), "utf8"));
+  check(`api/v1/stances.json: RS1-komplett (${expectedCells} celler) + data_hash`, stancesApi.stances?.length === expectedCells && /^[0-9a-f]{64}$/.test(stancesApi.data_hash ?? ""));
+
+  const integrity = JSON.parse(readFileSync(resolve(DIST, "api/v1/integrity.json"), "utf8"));
+  check(
+    "api/v1/integrity.json: per-fil-hashar för promises/stances/issues",
+    ["promises.json", "stances.json", "issues.json"].every((f) => /^[0-9a-f]{64}$/.test(integrity.files?.[f] ?? "")),
+  );
+  check("integrity: stances-hash = stances-API:ets egen hash", integrity.files?.["stances.json"] === stancesApi.data_hash);
+
+  const rss = readFileSync(resolve(DIST, "svangningar.rss.xml"), "utf8");
+  check("svangningar.rss.xml: RSS 2.0 med självlänk", rss.includes("<rss version=\"2.0\"") && rss.includes("svangningar.rss.xml"));
+}
+
+if (errors > 0) {
+  console.error(`\nT15: ${errors} fel`);
+  process.exit(1);
+}
+console.log("T15: grönt");

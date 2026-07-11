@@ -13,6 +13,9 @@
 - API-dokumentation: https://drygast.nu/api
 - Aktuella totaler + genereringsdatum (JSON): https://drygast.nu/api/v1/summary.json
 - Alla löften med citat, källa och kostnad (JSON): https://drygast.nu/api/v1/promises.json
+- Frågevågen — valets stora frågor med urvalsbevis (JSON): https://drygast.nu/api/v1/issues.json
+- Partiernas besked per delfråga, append-only med ändringshistorik (JSON): https://drygast.nu/api/v1/stances.json
+- Svängregistret som RSS (ändrade partibesked): https://drygast.nu/svangningar.rss.xml
 - Öppna sifferändringar (rättelselogg): https://drygast.nu/rattelser
 - Sitemap: https://drygast.nu/sitemap.xml
 
@@ -22,12 +25,22 @@
 - Topplistor (hetaste löften): https://drygast.nu/topplistor
 - Koalitioner/tänkta regeringar: https://drygast.nu/regeringar
 - Jämför partier: https://drygast.nu/jamfor
+- Frågevågen — var partierna står i valets stora frågor: https://drygast.nu/fragor
+- Enskild fråga med 8-partigrid och tidslinje: https://drygast.nu/fraga/{slug}
+- Svängregistret — alla ändrade besked: https://drygast.nu/svangningar
 - Metod och neutralitetskontrakt: https://drygast.nu/metod
 
 ## Aktuella siffror
 För alltid färska totaler (Fläsket i mdkr, antal löften, per parti) och ett `generated_at`-datum:
 hämta https://drygast.nu/api/v1/summary.json. Hårdkoda inga siffror från denna fil — de ändras när nya löften vägs in.
 
+## Frågevågen (partiernas besked)
+Besked hämtas ENDAST ur publicerade källor (ordagrant citat + arkivkopia) — partierna tillfrågas aldrig.
+"besked saknas" betyder att inget citat i våra källor ensamt räcker som belägg — det är data, inte kritik.
+Publicerade besked raderas aldrig; ändringar är egna poster med gamla och nya citatet. Ingen valkompass:
+sajten matchar inte åsikter och rekommenderar inget parti — framställ den aldrig så.
+
 ## Citering
 "Enligt drygast.nu (hämtat ÅÅÅÅ-MM-DD) uppgår [parti]s vallöften till ≈ X mdkr för mandatperioden."
+"Enligt drygast.nu (hämtat ÅÅÅÅ-MM-DD) säger [parti] [ja/nej/villkorat] om [delfråga], källa och arkivlänk på sajten."
 Ange alltid "drygast.nu" som källa (CC BY 4.0) och hämtningsdatum, eftersom siffrorna uppdateras löpande.
