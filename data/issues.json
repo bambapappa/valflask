@@ -1,6 +1,6 @@
 {
   "criteria_note": "Tröghetsregeln (SPEC-FRAGEVAGEN.md §3, ägarbeslut 2026-07-11): en fråga ingår om den förekommer på båda institutens publicerade listor över väljarnas viktigaste frågor — Novus 'Viktigaste politiska frågan' (topp 10, någon av de två senaste mätningarna räknas) och nationella SOM-undersökningen (topp 15). Underlag v1: Novus juni 2026 (fältperiod 28 maj–3 juni, n=1361) och januari 2026, samt SOM 2025 ('Svenska trender 1986–2025', publicerad mars 2026). Frågor tas aldrig bort före valdagen — de kan markeras dormant.",
-  "formulation_note": "Delfrågeformuleringar med formulation_status 'utkast' är ägargodkända till inriktningen men VERIFIERAS mot dagsaktuella källor och låses ('verifierad') före V3 (skarp drift). Rättvisetestet i fairness_note är en dokumenterad designbedömning av formuleringens egenskaper — ingen utanför projektet tillfrågas eller har godkänt något (partier tillfrågas aldrig, §5.0). Bedömningskriterier: konkret ja/nej-besvarbar, inga värdeladdade ord, inget svar framställs som det rätta.",
+  "formulation_note": "Samtliga delfrågor verifierade och låsta 2026-07-11 (steg 1 i ops/FRAGEVAGEN-LANSERING.md): ägaren godkände frågorna; formuleringarna källkontrollerades mot dagsaktuellt rättsläge och debattläge (riksdagsbeslut, lagar i kraft, publicerade förslag) och nio omformulerades/förankrades — se DECISION_LOG 2026-07-11. Rättvisetestet i fairness_note är en dokumenterad designbedömning av formuleringens egenskaper — ingen utanför projektet tillfrågas eller har godkänt något (partier tillfrågas aldrig, §5.0). Bedömningskriterier: konkret ja/nej-besvarbar, inga värdeladdade ord, inget svar framställs som det rätta.",
   "issues": [
     {
       "id": "i-sjukvarden",
@@ -30,13 +30,13 @@
         {
           "id": "sq-sjukvard-huvudman",
           "text": "Ska staten ta över huvudansvaret för sjukvården från regionerna?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "Avgränsad till huvudmannaskapet (vem som ska styra vården), inte vårdens kvalitet. 'Ta över huvudansvaret' är det konkreta åtagande som skiljer positionerna, och formuleringen gör varken ja eller nej till det ansvarsfulla svaret."
         },
         {
           "id": "sq-sjukvard-vinst",
           "text": "Ska vinstuttag ur offentligt finansierad, privat driven vård begränsas i lag?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "Neutralt formulerad lagstiftningsfråga; 'begränsas i lag' avgränsar mot både fri vinst och totalförbud utan att värdera något av dem."
         }
       ]
@@ -69,19 +69,19 @@
         {
           "id": "sq-skola-vinst",
           "text": "Ska vinstutdelning från friskolekoncerner förbjudas eller begränsas i lag?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "Skarpt avgränsad till vinstutdelning, inte friskolors existens; 'förbjudas eller begränsas' täcker båda lagstiftningslinjerna utan att värdera någon av dem."
         },
         {
           "id": "sq-skola-huvudman",
           "text": "Ska staten ta över huvudmannaskapet för skolan från kommunerna?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "Samma huvudmannaskapsram som sjukvårdsfrågan; ingen värdering av kommunal eller statlig drift."
         },
         {
           "id": "sq-skola-ko",
           "text": "Ska dagens kösystem till fristående skolor avskaffas?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "'Dagens kösystem' är en saklig beskrivning av rådande ordning, utan värdeord; frågan är rakt besvarbar med ja eller nej och antyder inte vilket svar som är det rimliga."
         }
       ]
@@ -113,15 +113,15 @@
       "subquestions": [
         {
           "id": "sq-lag-straffalder",
-          "text": "Ska straffmyndighetsåldern sänkas?",
-          "formulation_status": "utkast",
-          "fairness_note": "Formulerad om verktyget, inte om brottslighetens orsaker — den ramstriden lämnas åt partierna själva i citaten."
+          "text": "Ska straffmyndighetsåldern sänkas till 14 år för allvarliga brott?",
+          "formulation_status": "verifierad",
+          "fairness_note": "Förankrad i det konkreta förslaget (prop. 2025/26:293: sänkning till 14 år för allvarliga brott, tidsbegränsad fem år; omröstning väntas augusti 2026). Formulerad om verktyget, inte om brottslighetens orsaker. Omprövas efter riksdagens omröstning — antas förslaget blir frågan 'ska sänkningen behållas/permanentas?'."
         },
         {
           "id": "sq-lag-visitationszoner",
-          "text": "Ska visitationszoner vara ett permanent verktyg för polisen?",
-          "formulation_status": "utkast",
-          "fairness_note": "'Permanent verktyg' är den konkreta skiljelinjen; varken 'trygghetsskapande' eller 'integritetskränkande' förekommer i frågan."
+          "text": "Ska säkerhetszoner (visitationszoner) behållas som ett permanent verktyg för polisen?",
+          "formulation_status": "verifierad",
+          "fairness_note": "Använder lagens term (säkerhetszoner, införda april 2024) med vardagstermen inom parentes. Lagstiftningen ska utvärderas efter tre år, så permanentningen är ett levande vägval; varken 'trygghetsskapande' eller 'integritetskränkande' förekommer i frågan."
         }
       ]
     },
@@ -153,19 +153,19 @@
         {
           "id": "sq-migration-miniminiva",
           "text": "Ska svensk asyllagstiftning ligga på EU-rättens miniminivå?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "Regelfråga med tydligt ja/nej som använder regelverkets egen term (EU-rättens miniminivå); formuleringen gör varken ja eller nej till det anständiga svaret, och blockets tre delfrågor täcker restriktiv och generös riktning likvärdigt."
         },
         {
           "id": "sq-migration-put",
           "text": "Ska permanenta uppehållstillstånd åter vara huvudregel?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "'Åter' är en faktisk beskrivning av rättsläget före 2021 års ändringar, inte en värdering."
         },
         {
           "id": "sq-migration-atervandring",
           "text": "Ska det statliga stödet till frivillig återvandring behållas?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "'Frivillig' och 'statligt stöd' är regelverkets egna termer; frågan mäter inställning till ordningen, inte till människor."
         }
       ]
@@ -199,13 +199,13 @@
         {
           "id": "sq-aldre-bemanning",
           "text": "Ska en nationell bemanningsnorm för äldreomsorgen lagstadgas?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "Konkret styrningsfråga där båda svaren är likvärdigt försvarbara — ja som nationell garanti, nej som kommunalt självstyre; inget av svaren framställs som omsorgssvikt."
         },
         {
           "id": "sq-aldre-sprakkrav",
           "text": "Ska språkkrav i svenska för omsorgspersonal lagstadgas?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "Avgränsad till lagstadgande; frågan värderar inte personalgrupper utan mäter inställning till reglering."
         }
       ]
@@ -240,14 +240,14 @@
         {
           "id": "sq-klimat-nettonoll",
           "text": "Ska Sveriges mål om nettonollutsläpp till 2045 ligga fast?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "'Ligga fast' mäter åtagandet till ett beslutat mål; både skärpning och uppluckring landar i nej-/villkorat-svar som citaten får precisera."
         },
         {
           "id": "sq-klimat-reduktionsplikt",
-          "text": "Ska reduktionsplikten på drivmedel höjas under mandatperioden 2027–2030?",
-          "formulation_status": "utkast",
-          "fairness_note": "Konkret styrmedelsfråga med tydliga ja- och nej-läger; nivåord som 'ambitiös' eller 'dyr' förekommer inte."
+          "text": "Ska reduktionsplikten på drivmedel (i dag 10 procent) höjas under mandatperioden 2027–2030?",
+          "formulation_status": "verifierad",
+          "fairness_note": "Förankrad i beslutad ordning (10 procent för bensin och diesel sedan 1 juli 2025, låst t.o.m. 2030 om inte riksdagen beslutar annat). Konkret styrmedelsfråga; nivåord som 'ambitiös' eller 'dyr' förekommer inte."
         }
       ]
     },
@@ -279,15 +279,15 @@
       "subquestions": [
         {
           "id": "sq-jobb-akassa",
-          "text": "Ska taket i a-kassan höjas?",
-          "formulation_status": "utkast",
-          "fairness_note": "Konkret nivåfråga utan värdering av arbetslinje eller trygghetslinje — de ramarna får partiernas citat stå för."
+          "text": "Ska taket i a-kassan (i dag 34 000 kronor i månaden för 80 procents ersättning) höjas?",
+          "formulation_status": "verifierad",
+          "fairness_note": "Förankrad i beslutad ordning (nya inkomstbaserade a-kassan sedan 1 oktober 2025). Konkret nivåfråga utan värdering av arbetslinje eller trygghetslinje — de ramarna får partiernas citat stå för."
         },
         {
           "id": "sq-jobb-lonegolv",
-          "text": "Ska lönekravet för arbetskraftsinvandring höjas ytterligare?",
-          "formulation_status": "utkast",
-          "fairness_note": "'Ytterligare' är en faktisk beskrivning av att krav redan höjts, inte en riktningsvärdering. VERIFIERA rättsläget före låsning."
+          "text": "Ska lönekravet för arbetskraftsinvandring behållas på minst dagens nivå (90 procent av medianlönen)?",
+          "formulation_status": "verifierad",
+          "fairness_note": "Symmetrisk kring beslutad ordning (90 procent av medianlönen sedan 1 juni 2026, riksdagsbeslut mars 2026): ja täcker behålla eller skärpa, nej täcker sänka eller avskaffa — inget av svaren framställs som det ansvarsfulla. Ersätter tidigare 'höjas ytterligare?' som bara fångade ena riktningen."
         }
       ]
     },
@@ -320,14 +320,14 @@
       "subquestions": [
         {
           "id": "sq-ekonomi-matmoms",
-          "text": "Ska den sänkta matmomsen göras permanent?",
-          "formulation_status": "utkast",
-          "fairness_note": "Hushållsnära och binärt besvarbar; 'den sänkta' beskriver beslutad ordning. VERIFIERA sänkningens exakta utformning och giltighetstid före låsning."
+          "text": "Ska den tillfälligt sänkta matmomsen (6 procent till och med 31 december 2027) göras permanent?",
+          "formulation_status": "verifierad",
+          "fairness_note": "Förankrad i beslutad ordning (sänkt 12→6 procent 1 april 2026, tidsbegränsad t.o.m. 2027 — Skatteverket): frågan är ett äkta vägval före valdagen. Hushållsnära och binärt besvarbar; 'tillfälligt sänkta' är saklig beskrivning, inte värdering."
         },
         {
           "id": "sq-ekonomi-inkomstskatt",
           "text": "Ska den statliga inkomstskatten sänkas under mandatperioden?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "Avgränsad till en namngiven skatt med tydliga ja- och nej-läger; ingen värdering av fördelningseffekter i frågan."
         }
       ]
@@ -362,13 +362,13 @@
         {
           "id": "sq-energi-karnkraft",
           "text": "Ska staten fortsätta finansiera utbyggnad av ny kärnkraft?",
-          "formulation_status": "utkast",
-          "fairness_note": "'Fortsätta finansiera' mäter åtagandet till en beslutad ordning — frågan är rakt besvarbar oavsett om partiet vill bygga ut eller avveckla, utan att något av svaren pekas ut som det kloka. VERIFIERA finansieringsprogrammets aktuella status före låsning."
+          "formulation_status": "verifierad",
+          "fairness_note": "'Fortsätta finansiera' mäter åtagandet till en beslutad ordning (lagen om statligt stöd för investeringar i ny kärnkraft, 2025:587, i kraft sedan augusti 2025: statliga lån och differenskontrakt) — frågan är rakt besvarbar oavsett om partiet vill bygga ut eller avveckla, utan att något av svaren pekas ut som det kloka."
         },
         {
           "id": "sq-energi-vindveto",
           "text": "Ska det kommunala vetot mot ny vindkraft behållas?",
-          "formulation_status": "utkast",
+          "formulation_status": "verifierad",
           "fairness_note": "'Vetot' är den etablerade termen för rådande ordning; frågan värderar varken vindkraft eller självstyre."
         }
       ]
@@ -402,15 +402,15 @@
       "subquestions": [
         {
           "id": "sq-forsvar-varnplikt",
-          "text": "Ska antalet som utbildas med värnplikt utökas?",
-          "formulation_status": "utkast",
-          "fairness_note": "Konkret volymfråga ur den levande debatten; mäter inte 'försvarsvilja'."
+          "text": "Ska värnpliktsutbildningen utökas utöver redan beslutade nivåer (10 000 per år 2030, cirka 12 000 per år 2032–2035)?",
+          "formulation_status": "verifierad",
+          "fairness_note": "Förankrad i försvarsbeslutet 2025–2030: eftersom en upptrappning redan är beslutad skiljer bara 'utöver beslutade nivåer' positionerna — annars hade nästan alla svarat ja. Mäter inte 'försvarsvilja'."
         },
         {
           "id": "sq-forsvar-karnvapen",
-          "text": "Ska kärnvapen tillåtas på svenskt territorium i fredstid?",
-          "formulation_status": "utkast",
-          "fairness_note": "Skarp ja/nej-fråga med uttalade läger; 'i fredstid' är den avgränsning debatten faktiskt handlar om. VERIFIERA rättsläge och debattläge före låsning."
+          "text": "Ska Sverige i lag förbjuda kärnvapen på svenskt territorium?",
+          "formulation_status": "verifierad",
+          "fairness_note": "Omformulerad efter källkontroll: bred politisk enighet råder om att kärnvapen inte ska placeras i Sverige i fredstid, så den tidigare frågan ('tillåtas i fredstid?') hade inte skilt positionerna. Den verkliga skiljelinjen är om förbudet ska lagfästas — en konkret lagstiftningsfråga där varken ja eller nej framställs som det säkra svaret."
         }
       ]
     }

@@ -55,6 +55,7 @@ jobs:
           MODEL_VERIFY: ${{ vars.MODEL_VERIFY }}
           MODEL_COPY: ${{ vars.MODEL_COPY }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
+          STANCES_ENABLED: ${{ vars.STANCES_ENABLED }}
           ALERT_EMAIL: ${{ vars.ALERT_EMAIL }}
       # Arkiv-backfill (SPEC §6.2 "nytt försök tills satt"): fyll archive_url för
       # publicerade löften som saknar det (seed/review-godkännanden sätter null).

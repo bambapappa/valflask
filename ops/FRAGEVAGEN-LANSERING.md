@@ -6,28 +6,30 @@ stegen inte går att hoppa över: passet är avstängt utan `STANCES_ENABLED=tru
 och en delfråga med `formulation_status: "utkast"` kan aldrig publiceras — varken
 av pipelinen eller via review-CLI:t.
 
-## Läge just nu
+## Läge just nu (uppdaterat 2026-07-11 efter steg 1)
 
 - `STANCES_ENABLED`: **inte satt** (= av). Pipelinen kör exakt som före Frågevågen.
-- Samtliga 22 delfrågor: `formulation_status: "utkast"` — publicering omöjlig.
+  Variabeln är inkopplad i pipeline.yml — sätts i repo-Settings → Variables när steg 2 startar.
+- Samtliga 22 delfrågor: `formulation_status: "verifierad"` — STEG 1 KLART 2026-07-11
+  (ägargodkännande + källkontroll mot dagsaktuellt rättsläge; nio formuleringar
+  omformulerades/förankrades, se DECISION_LOG).
 - Sajtsidorna (/fragor, /fraga/*, /svangningar) renderar tomt läge sanningsenligt
   ("besked saknas") och kan mergas utan risk: de påstår ingenting.
+- BEVAKA: straffåldersfrågan omformuleras om prop. 2025/26:293 antas i augusti
+  (sänkas → behållas), se fairness_note.
 
-## Steg 1 — Verifiering nr 1: delfrågeformuleringarna (ägare + agent)
+## Steg 1 — Verifiering nr 1: delfrågeformuleringarna (ägare + agent) — KLART 2026-07-11
 
-För VARJE delfråga i `data/issues.json`:
-
-- [ ] Kontrollera mot dagsaktuella källor att frågan fortfarande är ett levande
-      vägval (inte redan avgjort/inaktuellt), att termerna är korrekta
-      (t.ex. exakt namn på regelverk) och att formuleringen klarar rättvisetestet
-      i `fairness_note`.
-- [ ] Justera formuleringen vid behov (PR mot `data/issues.json`).
-- [ ] Sätt `formulation_status: "verifierad"`.
-
-Särskilt flaggade (`VERIFIERA` i fairness_note): `sq-jobb-lonegolv` (rättsläget för
-lönekravet), `sq-ekonomi-matmoms` (sänkningens utformning/giltighetstid),
-`sq-energi-karnkraft` (finansieringsprogrammets status), `sq-forsvar-karnvapen`
-(rättsläge/debattläge).
+- [x] Ägaren godkände frågorna (2026-07-11).
+- [x] Samtliga 22 delfrågor källkontrollerade mot dagsaktuellt rättsläge/debattläge.
+      Nio omformulerades/förankrades: matmomsen (tillfällig t.o.m. 2027-12-31),
+      lönekravet (90 % sedan 2026-06-01 — symmetrisk "behållas på minst dagens nivå"),
+      a-kassetaket (34 000 kr sedan 2025-10-01), kärnkraftsfinansieringen (lag 2025:587),
+      reduktionsplikten (10 % sedan 2025-07-01), säkerhetszoner (lagens term),
+      straffåldern (prop. 2025/26:293: 14 år för allvarliga brott),
+      värnplikten ("utöver beslutade nivåer"), kärnvapen (lagstadgat förbud —
+      den verkliga skiljelinjen; enighet råder redan om fredstid).
+- [x] `formulation_status: "verifierad"` på samtliga.
 
 ## Steg 2 — Verifiering nr 2: torrkörning mot skarpa källor (agent, ägare läser)
 
