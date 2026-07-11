@@ -8,8 +8,11 @@ av pipelinen eller via review-CLI:t.
 
 ## Läge just nu (uppdaterat 2026-07-11 efter steg 1)
 
-- `STANCES_ENABLED`: **inte satt** (= av). Pipelinen kör exakt som före Frågevågen.
-  Variabeln är inkopplad i pipeline.yml — sätts i repo-Settings → Variables när steg 2 startar.
+- `STANCES_ENABLED`: **PÅ som default i pipeline.yml** (ägarbeslut 2026-07-11) —
+  torrkörningen (steg 2) startar automatiskt när branchen mergas. Avstängning:
+  sätt repovariabeln `STANCES_ENABLED=false`. `STANCES_MODE` är osatt = **review**
+  (egen ratt, delas INTE med löftesflödets PIPELINE_MODE): allt hamnar i
+  `data/stances_review.json`, inget publiceras, tills `STANCES_MODE=auto` sätts i steg 4.
 - Samtliga 22 delfrågor: `formulation_status: "verifierad"` — STEG 1 KLART 2026-07-11
   (ägargodkännande + källkontroll mot dagsaktuellt rättsläge; nio formuleringar
   omformulerades/förankrades, se DECISION_LOG).
@@ -33,9 +36,9 @@ av pipelinen eller via review-CLI:t.
 
 ## Steg 2 — Verifiering nr 2: torrkörning mot skarpa källor (agent, ägare läser)
 
-- [ ] Kör pipelinen lokalt/i Actions med `STANCES_ENABLED=true` och
-      `PIPELINE_MODE=review` — ALLT hamnar i `data/stances_review.json`, inget
-      publiceras.
+- [ ] Merga PR:en — torrkörningen startar av sig själv vid nästa schemalagda
+      körning (STANCES_MODE osatt = review: ALLT hamnar i `data/stances_review.json`,
+      inget publiceras; löftesflödets PIPELINE_MODE påverkas inte).
 - [ ] Granska kön med `pnpm stances:review`: träffar extraktionen rätt delfrågor?
       Är citaten ordagranna och beskeden rimliga? Är LLM B:s bedömningar strikta?
 - [ ] Justera promptar/grindar vid behov och kör om. Upprepa tills en hel veckas
@@ -52,13 +55,12 @@ av pipelinen eller via review-CLI:t.
 
 ## Steg 4 — Skarp drift
 
-- [ ] Sätt repovariabeln `STANCES_ENABLED=true` i GitHub Actions.
-- [ ] Behåll `PIPELINE_MODE=review` första skarpa veckan (samma rutin som
-      Fläskvågens lansering), därefter `auto`.
+- [ ] Sätt repovariabeln `STANCES_MODE=auto` i GitHub Actions (löftesflödets
+      PIPELINE_MODE rörs inte).
 - [ ] Efter växling till `auto`: riktningsbyten fortsätter ALLTID gå via review
       (permanent regel, §5.5) — bevaka kön dagligen under valrörelsen.
-- [ ] Aktivera källröta-workflown (V4) genom att slå på schemat i
-      `.github/workflows/rot-watch.yml` (körs annars aldrig).
+- [ ] Källröta-workflown (rot-watch.yml) följer samma default-PÅ och är en
+      ofarlig no-op tills publicerade besked finns — ingen åtgärd krävs.
 
 ## Snabbreferens
 

@@ -15,7 +15,7 @@ permissions:
 concurrency: { group: rot-watch, cancel-in-progress: false }
 jobs:
   check:
-    if: ${{ vars.STANCES_ENABLED == 'true' }}
+    if: ${{ vars.STANCES_ENABLED != 'false' }}  # samma default-PÅ som pipeline.yml; ofarlig no-op tills besked finns
     runs-on: ubuntu-latest
     steps:
       - name: Mint bot app token
