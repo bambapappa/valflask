@@ -800,3 +800,37 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Förkastade alternativ:** magnitud-väljer-djur (håller siffror snygga men klustrar alla stora löften på blåval — motverkar ägarens omväxlingsönskan); djur per parti (partiskt); behålla sjuksköterskor (ägarens invändning); låta 300-kg-djur ge miljontal (spretigt).
 
 **Påverkan:** `site/src/lib/aggregates.ts` (`dryLine` v2 + `DJUR_PER_KATEGORI`; `defaultComparisonIds` borttagen; `computeComparisons` åter kurerad-bara), `site/src/pages/lofte/[...path].astro` (`dryLine(promise)`), `site/src/pages/metod.astro`, `site/scripts/test-drylinje.mts` (omskriven). Hela sajtsviten grön; 349/349 löftessidor har vikt-raden i byggd dist.
+
+## 2026-07-10 — Delning i sociala medier
+
+**Bakgrund:** OG/Twitter-metataggar fanns redan (länkförhandsvisning fungerar när en URL klistras in), men ingen synlig delningsknapp. Ägaren efterfrågade delning av en sida.
+
+**Beslut:** Ny komponent `site/src/components/Dela.astro` på löftes-, partis- och veckokrönikesidor. Progressiv förbättring utan tredjepartsspårning (§17): OS:ets delningsark via `navigator.share` (visas bara där API:t finns), "Kopiera länk" via clipboard, samt X/Facebook/Bluesky som vanliga share-intent-länkar (fungerar helt utan JS, ingen extern skriptladdning, inga spårningspixlar). Förifylld text är faktabaserad och neutral (löftets titel + belopp + "källspårat"), aldrig värderande. Astro buntar komponentens `<script>`/`<style>` externt → uppfyller `_headers`-CSP:n (`script-src 'self'`) och T3:s "noll inline-style". Layout kompletterad med `og:url`, `og:site_name`, `twitter:title/description` för stabilare förhandsvisningar.
+
+**Förkastade alternativ:** delningsknappar från plattformarnas SDK:er (laddar tredjepartsskript, spårar användaren — bryter §17 och CSP); en global knapp i sidhuvudet (mindre relevant än per-sida-URL:en som faktiskt delas).
+
+**Påverkan:** ny `Dela.astro`; `site/src/layouts/Layout.astro` (+4 metataggar); `site/src/pages/{lofte/[...path],parti/[kod],veckans-flask/[slug]}.astro`. Hela sajtsviten grön; delningsblocket verifierat i byggd dist på alla tre sidtyper, noll inline-script/style.
+
+## 2026-07-10 — AI-/sökoptimering: sitemap-fix + rikare llms.txt
+
+**Bakgrund:** Inför utskick kontroll av AI-agent-/sökbarhet. robots.txt välkomnar redan uttryckligen GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended, CCBot; JSON-LD är rikt (Dataset, Article, FAQPage, WebSite+SearchAction, Organization, BreadcrumbList); llms.txt + sitemap finns. Två brister hittade och fixade:
+
+**1. Sitemap-bugg:** veckokrönikorna var hårdkodade till `veckans-flask/2026-24` — en vecka som inte finns (faktiska: 2026-27, 2026-28). AI-crawlers/sökmotorer kunde alltså inte upptäcka de riktiga krönikesidorna. Nu itererar sitemap över `getChronicles()`.
+
+**2. llms.txt utökad:** lade till "Vad detta är — och inte är" (så agenter INTE framställer sajten som partipolitiskt stöd — neutralitet §17), fler maskinläsbara endpoints (summary/promises/rättelser/sitemap), sidmönster (parti/{kod}, lofte/{id}/{slug}, topplistor, regeringar, jamfor), och en uttrycklig instruktion att hämta färska totaler ur summary.json i stället för att hårdkoda siffror (som rostnar). Alla länkar verifierade mot befintliga routes — inga 404.
+
+**Ej kod (ägaråtgärder, presenterade separat):** privacy-vänlig serverstatistik via Cloudflare-edge (sajten ligger bakom CF-proxy → vy/hetaste-sidor/referrer utan cookies eller klientskript, uppfyller §17/CSP); IndexNow (CF-toggle → Bing → Copilot/ChatGPT); Google Search Console + Bing Webmaster (→ Gemini/AI Overviews).
+
+**Påverkan:** `site/src/pages/sitemap.xml.ts`, `site/public/llms.txt`. Hela sajtsviten grön; byggd sitemap listar nu 2026-27 + 2026-28.
+
+## 2026-07-10 — IndexNow automatiserat (spridning till AI-agenter)
+
+**Beslut:** Automatisk IndexNow-ping vid varje deploy → Bing (matar Copilot och ChatGPT-sök), Yandex m.fl. får nya/ändrade sidor i indexet snabbt utan att vänta på crawl. Nyckelfil `site/public/547b2beea892cfb44a32d83e1901c410.txt` (IndexNow-nycklar är publika — domänägarskap bevisas genom att filen ligger live, ingen secret). `site/scripts/indexnow-submit.mts` bygger URL-listan ur senaste changelog-posten (added/updated/retracted → löftessidor) + aggregatsidor (/, topplistor, regeringar, jamfor, alla parti-sidor, senaste krönikan) och POSTar till api.indexnow.org; `--all` för backfill, `--dry-run` för test. Ny `indexnow`-jobb i build.yml `needs: deploy-pages` (kör EFTER att sajten + nyckelfilen är live), push-till-main-only, `continue-on-error` (får aldrig fälla deploy). Endast Node-inbyggda API:er (fetch/fs) → ingen install.
+
+**Motiv:** IndexNow är den enda proaktiva kanalen till AI-agenternas index (Google/Gemini nås via Search Console-sitemap som är ägaråtgärd; ChatGPT/Claude/Perplexity/CCBot crawlar redan via robots-tillåtelse). Targetad submission (bara ändrade sidor) i stället för hela sitemap varje gång — snällt mot IndexNow, effektivt.
+
+**Förkastade alternativ:** Cloudflare IndexNow-toggle (fungerar men binder till CF-dashboarden och submittar hela sitemap; ägaren bad om automatisering i repot); submitta alla 360 URL:er varje deploy (spammigt, onödigt); delnings-källtaggar (`?s=`) för referrer-attribution (ägaren avböjde).
+
+**Ägaråtgärder kvar (kräver konton):** Google Search Console + Bing Webmaster (skicka in sitemap.xml); Cloudflare-edge-analytics-dashboarden för besöks-/hetaste-/referrerstatistik (cookielöst, redan aktivt eftersom sajten ligger bakom CF-proxy).
+
+**Påverkan:** ny `site/scripts/indexnow-submit.mts`, `site/public/<KEY>.txt`, npm-script `indexnow`, `indexnow`-jobb i `.github/workflows/build.yml`. Hela sajtsviten grön; nyckelfilen verifierad i byggd dist; dry-run ger 21 targetade URL:er.

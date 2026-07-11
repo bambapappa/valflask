@@ -4,6 +4,7 @@ import Lopsedel from "../../components/Lopsedel.astro";
 import GapMatare from "../../components/GapMatare.astro";
 import MetodLank from "../../components/MetodLank.astro";
 import KallRad from "../../components/KallRad.astro";
+import Dela from "../../components/Dela.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
 import { formatMsek, formatMsekShort } from "../../lib/calc";
 import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseTotalMsek } from "../../lib/aggregates";
@@ -110,6 +111,8 @@ const jsonLd = [
     </section>
 
     <KallRad source={`${party.name}:s valprogram`} />
+
+    <Dela path={canonicalPath} title={pageTitle} text={`${party.name}s vallöften 2026 väger ${formatMsekShort(total)} mdkr. Källspårat på drygast.nu`} />
   </div>
 </Layout>
 

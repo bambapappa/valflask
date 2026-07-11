@@ -6,6 +6,7 @@ import Citat from "../../components/Citat.astro";
 import Marginalanteckning from "../../components/Marginalanteckning.astro";
 import MetodLank from "../../components/MetodLank.astro";
 import KallRad from "../../components/KallRad.astro";
+import Dela from "../../components/Dela.astro";
 import { getPromises, getParties, getPeople, getConstants } from "../../lib/data";
 import { formatMsek, formatBasisLabel, formatCostType, formatDateShort, getPartyByCode } from "../../lib/calc";
 import { promiseTotalMsek, computeComparisons, formatComparison, dryLine } from "../../lib/aggregates";
@@ -180,6 +181,8 @@ const jsonLd = [
       <div id="kallor">
         <KallRad source={formatBasisLabel(promise.cost.basis)} date={formatDateShort(promise.source.fetched_at)} />
       </div>
+
+      <Dela path={canonicalPath} title={pageTitle} text={`${promise.title} — ${total}. Källspårat vallöfte på drygast.nu`} />
     </div>
   </div>
 </Layout>
