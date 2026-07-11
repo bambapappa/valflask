@@ -848,3 +848,10 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Motiv:** Parallelliserar "Fläskvågen" (varumärkeskontinuitet) och pekar på det registret faktiskt innehåller: frågorna och partiernas besked. Vågmetaforen bärs som varumärke; metodtexten klargör att inget vägs eller värderas.
 **Förkastade alternativ:** "Åsiktsvågen" (ägarens andra kandidat) — att väga åsikter antyder värdering/skala, vilket icke-målen (§1.4) uttryckligen förbjuder, och registret innehåller besked, inte åsikter; namnet hade lovat något metodsidan måste dementera.
 **Påverkan:** `SPEC-FRAGEVAGEN.md` (fd. `SPEC-STANDPUNKTER.md`), denna rad. Ingen kod.
+
+## 2026-07-11 — Frågevågen §11.3–11.5 stängda (ägarbeslut)
+
+**Beslut:** (11.3) Topplistan "flest ändrade besked" AVVAKTAR — byggs ej i V0–V4, omprövas vid volym. (11.4) Review-regeln för riktningsbyten PÅ permanent: ja↔nej publiceras aldrig utan mänsklig granskning, även i auto-läge. (11.5) Källröta-bevakning veckovis.
+**Motiv:** Ägarens svar 2026-07-11. Riktningsbyten är sajtens mest laddade påståenden; regeln är identisk för alla partier och redovisas på /metod.
+**Förkastade alternativ:** Topplista från start (enstaka preciseringar hade dominerat en tunn datamängd); helautomatiska riktningsbyten (snabbare men fel sorts fel att göra obevakat); daglig källröta-koll (mer trafik utan tydlig vinst).
+**Påverkan:** `SPEC-FRAGEVAGEN.md` §11. Kvar öppen: endast §11.1 (frågelistan — bereds fråga för fråga med ägaren; mätunderlag: Novus juni 2026 + nationella SOM-undersökningen 2025).

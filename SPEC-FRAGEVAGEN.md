@@ -231,9 +231,9 @@ Förutsättning: §11.1 (frågelista + kriterium) beslutad av ägaren. V0–V2 k
 
 1. **\* Frågelista v1 + urvalskriterium:** bekräfta kriteriet i §3 och fastställ vilka mätningar som utgör underlaget (`VERIFIERA` aktuella publiceringar).
 2. ~~Namn och URL:er~~ **BESLUTAT 2026-07-11: "Frågevågen"**, med `/fragor` + `/svangningar`. ("Åsiktsvågen" förkastades: att väga åsikter antyder värdering/skala, vilket §1.4 förbjuder — registret innehåller besked, inte åsikter.)
-3. **Topplista "flest ändrade besked":** ren datasortering (konsistent med /topplistor-filosofin) men sajtens mest tillspetsade yta. Rekommendation: AVVAKTA till registret har volym nog att inte låta enstaka preciseringar dominera; ta beslutet då.
-4. **Review-regel för riktningsbyten:** rekommendation PÅ permanent (§5.5) — bekräfta eller slå av.
-5. **Källröta-bevakningens frekvens:** rekommendation veckovis; daglig kostar mer trafik utan tydlig vinst.
+3. ~~Topplista "flest ändrade besked"~~ **BESLUTAT 2026-07-11: AVVAKTA.** Byggs inte i V0–V4; omprövas när registret har volym nog att enstaka preciseringar inte dominerar sorteringen.
+4. ~~Review-regel för riktningsbyten~~ **BESLUTAT 2026-07-11: PÅ permanent** (§5.5) — riktningsbyten (ja↔nej) går alltid via mänsklig review, även i `PIPELINE_MODE=auto`.
+5. ~~Källröta-bevakningens frekvens~~ **BESLUTAT 2026-07-11: veckovis** (ägaren godtog rekommendationen i samband med §11.3–11.4).
 
 ---
 
