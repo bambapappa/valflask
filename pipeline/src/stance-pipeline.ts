@@ -300,6 +300,13 @@ export interface StancePublishInput {
   runId: string;
   now: Date;
   mode: "auto" | "review";
+  /**
+   * Sätts ENDAST av review-CLI:t: människan HAR granskat, så beslutsgrindarna
+   * VERIFY/RIKTNINGSBYTE/MODE hoppas över. Hårda grindar (G1–G8 via gateReview,
+   * UTKAST, dublettskydd) gäller fortfarande — mänskligt godkännande kan aldrig
+   * kringgå verbatimkedjan eller en olåst delfråga.
+   */
+  humanApproved?: boolean | undefined;
 }
 
 export interface StancePublishResult {
@@ -383,10 +390,11 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
 
     // VERIFY — LLM B måste bekräfta att beskedet följer ur citatet ensamt.
     if (
-      verify.verdict !== "publish" ||
+      !input.humanApproved &&
+      (verify.verdict !== "publish" ||
       !verify.quote_on_topic ||
       !verify.position_follows_from_quote_alone ||
-      !verify.party_correct
+      !verify.party_correct)
     ) {
       pushReview({ ...base, failures: [{ gate: "VERIFY", reason: verify.reason }], verifyReason: verify.reason });
       continue;
@@ -420,7 +428,7 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
     const kind = last && last.position !== candidate.position
       ? classifyChange(last.position, candidate.position)
       : null;
-    if (kind === "riktningsbyte") {
+    if (kind === "riktningsbyte" && !input.humanApproved) {
       pushReview({
         ...base,
         failures: [{ gate: "RIKTNINGSBYTE", reason: `${last!.position} → ${candidate.position}: riktningsbyten kräver alltid mänsklig granskning (§5.5)` }],
@@ -429,7 +437,7 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
     }
 
     // MODE — review-läget skickar allt till kön.
-    if (input.mode === "review") {
+    if (input.mode === "review" && !input.humanApproved) {
       pushReview({ ...base, failures: [{ gate: "MODE", reason: "PIPELINE_MODE=review: allt till granskning" }] });
       continue;
     }
