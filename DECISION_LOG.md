@@ -834,3 +834,25 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Ägaråtgärder kvar (kräver konton):** Google Search Console + Bing Webmaster (skicka in sitemap.xml); Cloudflare-edge-analytics-dashboarden för besöks-/hetaste-/referrerstatistik (cookielöst, redan aktivt eftersom sajten ligger bakom CF-proxy).
 
 **Påverkan:** ny `site/scripts/indexnow-submit.mts`, `site/public/<KEY>.txt`, npm-script `indexnow`, `indexnow`-jobb i `.github/workflows/build.yml`. Hela sajtsviten grön; nyckelfilen verifierad i byggd dist; dry-run ger 21 targetade URL:er.
+
+## 2026-07-11 — Beroendeuppdateringar: 9 Dependabot-PR lösta (inkl. Astro 5→6 säkerhet + Actions-majors)
+
+**Beslut:** Samtliga 9 öppna Dependabot-PR mergade och verifierade gröna på live main. Minor/patch: `@types/node` 22.20.1, `tsx` 4.23.0, `fast-xml-parser` 5.9.3 (pipeline). Major: `astro` 5.18.2→6.4.6 (site), samt GitHub Actions-majors `checkout` v7, `setup-node` v6, `upload-pages-artifact` v5, `deploy-pages` v5, `github-script` v9.
+
+**Motiv:** Astro-bumpen var en SÄKERHETSuppdatering — den kom igenom major-spärren i dependabot.yml eftersom `ignore` av version-updates inte tystar security-updates. Resten är hygien. Varje major verifierades separat: Astro 6 med hela lokala sviten (T1/T3/T9/T3-stale/interval/drylinje) + OG-bygge + live deploy; Actions-majorerna en och en med grönt build+deploy mellan varje; `upload-pages-artifact`+`deploy-pages` som matchat par (v5+v5) — den mismatchande mellankörningen (upload v5 + deploy v4) auto-annullerades av `pages`-concurrencyn och deployade aldrig.
+
+**Astro 6-påverkan (bedömd försumbar):** sajten använder Astros mest stabila yta — `getStaticPaths` + endpoints, `output: 'static'`, inga integrationer/content-collections/`astro:assets`/view-transitions. v6:s reella ändringar (Vite 7, Node ≥20; CI kör 22) rör inget vi anropar. Strukturellt verifierat via T1/T3; ingen byte-diff av renderad HTML gjord (bedömd onödig).
+
+**Förkastade alternativ:** Merga #2:s frånkopplade branch (saknade gemensam anfader med main → en squash hade revertat allt sedan 13 juni); handredigera lockfilen för #14 (regenererade + testade i stället); skjuta upp Astro-säkerhetsfixen (säkerhet tas alltid, även som major). #14 (fast-xml-parser) och #2 (github-script) kunde inte drivas via Dependabot (lockfil-regen som aldrig landade resp. saknad gemensam anfader; kommentarsverktyget saniterar dessutom `@dependabot`-mentions) → lösta via egen städ-PR #363, verifierad 175/175 pipelinetester + typecheck grön.
+
+**Påverkan:** `site/package.json` (+lockfil, astro 6), `pipeline/package.json` (+lockfil, fast-xml-parser 5.9.3), `.github/workflows/{build,release,drill}.yml` (action-SHA:er, alla fortsatt SHA-pinnade). PR #316/#315/#7/#6/#5/#4/#3 mergade direkt; #14 + #2 via städ-PR #363. Slutbygget på main grönt i alla fyra jobb inkl. `deploy-pages`.
+
+## 2026-07-11 — Live-fas-policy: Dependabot-gruppering, major-spärr på alla ekosystem, RUNBOOK-strategi
+
+**Beslut:** Dependabot omkonfigurerad (`.github/dependabot.yml`): minor/patch grupperas till EN PR per ekosystem (npm/site, npm/pipeline, github-actions); `semver-major` hålls tillbaka på ALLA ekosystem — tidigare bara de två npm-träden, nu även github-actions. RUNBOOK utökad med förebyggande sektion "Beroende- och kodändringar i live-fasen": riskklasser (ta nu / verifiera / skjut upp / frys), frysfönster (±48 h runt mjukstart till journalister + sista ~5 dygnen och valdagen), verifieringstrappa, samt kod-vs-data-rollback (Cloudflare 1-klick → `git revert` → dependency-pin → `rollback-data.sh`).
+
+**Motiv:** De 9 samtidiga PR:erna visade behovet av gruppering (batch i stället för svärm) och av att hålla kosmetiska Actions-majors borta under valrörelsen. Säkerhetsuppdateringar kringgår version-spärren och släpps ändå alltid igenom (precis så Astro 6 kom in), så spärren kostar ingen säkerhetstäckning. Frysfönster + verifieringstrappa gör ändringar i live-fasen förutsägbara och rullbara — grundtryggheten är att en misslyckad deploy = ingen uppdatering, inte nedtid (Pages behåller förra bygget).
+
+**Förkastade alternativ:** Tidsbaserad frysning i `dependabot.yml` (finns inte som funktion → uttryckt som process i RUNBOOK i stället); permanent `ignore` av alla majors (hade krävt manuell opt-in även efter valet utan att vara ett medvetet beslut per gång — nu: varje kommande major är en egen DECISION_LOG-rad); `dependency-name`-baserad ignore (kan tysta även security-updates — undveks medvetet).
+
+**Påverkan:** `.github/dependabot.yml`, `ops/RUNBOOK.md`. PR #364 mergad; main-bygget grönt. Effekt syns vid nästa Dependabot-körning: en grupp-PR per ekosystem, inga auto-öppnade majors.
