@@ -1,6 +1,6 @@
 {
   "criteria_note": "Tröghetsregeln (SPEC-FRAGEVAGEN.md §3, ägarbeslut 2026-07-11): en fråga ingår om den förekommer på båda institutens publicerade listor över väljarnas viktigaste frågor — Novus 'Viktigaste politiska frågan' (topp 10, någon av de två senaste mätningarna räknas) och nationella SOM-undersökningen (topp 15). Underlag v1: Novus juni 2026 (fältperiod 28 maj–3 juni, n=1361) och januari 2026, samt SOM 2025 ('Svenska trender 1986–2025', publicerad mars 2026). Frågor tas aldrig bort före valdagen — de kan markeras dormant.",
-  "formulation_note": "Delfrågeformuleringar med formulation_status 'utkast' är ägargodkända till inriktningen men VERIFIERAS mot dagsaktuella källor och låses ('verifierad') före V3 (skarp drift).",
+  "formulation_note": "Delfrågeformuleringar med formulation_status 'utkast' är ägargodkända till inriktningen men VERIFIERAS mot dagsaktuella källor och låses ('verifierad') före V3 (skarp drift). Rättvisetestet i fairness_note är en dokumenterad designbedömning av formuleringens egenskaper — ingen utanför projektet tillfrågas eller har godkänt något (partier tillfrågas aldrig, §5.0). Bedömningskriterier: konkret ja/nej-besvarbar, inga värdeladdade ord, inget svar framställs som det rätta.",
   "issues": [
     {
       "id": "i-sjukvarden",
@@ -31,7 +31,7 @@
           "id": "sq-sjukvard-huvudman",
           "text": "Ska staten ta över huvudansvaret för sjukvården från regionerna?",
           "formulation_status": "utkast",
-          "fairness_note": "Båda sidor accepterar ramningen: frågan gäller huvudmannaskapet, inte vårdens kvalitet. 'Ta över huvudansvaret' är det konkreta åtagande som skiljer positionerna."
+          "fairness_note": "Avgränsad till huvudmannaskapet (vem som ska styra vården), inte vårdens kvalitet. 'Ta över huvudansvaret' är det konkreta åtagande som skiljer positionerna, och formuleringen gör varken ja eller nej till det ansvarsfulla svaret."
         },
         {
           "id": "sq-sjukvard-vinst",
@@ -70,7 +70,7 @@
           "id": "sq-skola-vinst",
           "text": "Ska vinstutdelning från friskolekoncerner förbjudas eller begränsas i lag?",
           "formulation_status": "utkast",
-          "fairness_note": "Skarpt avgränsad till vinstutdelning (inte friskolors existens); ja- och nej-sidan känner igen sin egen position i formuleringen."
+          "fairness_note": "Skarpt avgränsad till vinstutdelning, inte friskolors existens; 'förbjudas eller begränsas' täcker båda lagstiftningslinjerna utan att värdera någon av dem."
         },
         {
           "id": "sq-skola-huvudman",
@@ -82,7 +82,7 @@
           "id": "sq-skola-ko",
           "text": "Ska dagens kösystem till fristående skolor avskaffas?",
           "formulation_status": "utkast",
-          "fairness_note": "'Dagens kösystem' är en neutral beskrivning av rådande ordning; både försvarare och kritiker av kötid som urvalsgrund kan svara rakt."
+          "fairness_note": "'Dagens kösystem' är en saklig beskrivning av rådande ordning, utan värdeord; frågan är rakt besvarbar med ja eller nej och antyder inte vilket svar som är det rimliga."
         }
       ]
     },
@@ -154,7 +154,7 @@
           "id": "sq-migration-miniminiva",
           "text": "Ska svensk asyllagstiftning ligga på EU-rättens miniminivå?",
           "formulation_status": "utkast",
-          "fairness_note": "Regelfråga med tydligt ja/nej; både restriktiv och generös linje kan svara ja med stolthet på 'sin' fråga i detta block."
+          "fairness_note": "Regelfråga med tydligt ja/nej som använder regelverkets egen term (EU-rättens miniminivå); formuleringen gör varken ja eller nej till det anständiga svaret, och blockets tre delfrågor täcker restriktiv och generös riktning likvärdigt."
         },
         {
           "id": "sq-migration-put",
@@ -200,7 +200,7 @@
           "id": "sq-aldre-bemanning",
           "text": "Ska en nationell bemanningsnorm för äldreomsorgen lagstadgas?",
           "formulation_status": "utkast",
-          "fairness_note": "Konkret styrningsfråga; nej-sidan (kommunalt självstyre/flexibilitet) och ja-sidan (nationell garanti) ryms likvärdigt."
+          "fairness_note": "Konkret styrningsfråga där båda svaren är likvärdigt försvarbara — ja som nationell garanti, nej som kommunalt självstyre; inget av svaren framställs som omsorgssvikt."
         },
         {
           "id": "sq-aldre-sprakkrav",
@@ -363,7 +363,7 @@
           "id": "sq-energi-karnkraft",
           "text": "Ska staten fortsätta finansiera utbyggnad av ny kärnkraft?",
           "formulation_status": "utkast",
-          "fairness_note": "'Fortsätta finansiera' mäter åtagandet till beslutad ordning; både utbyggnads- och avvecklingslinjen kan svara rakt. VERIFIERA finansieringsprogrammets aktuella status före låsning."
+          "fairness_note": "'Fortsätta finansiera' mäter åtagandet till en beslutad ordning — frågan är rakt besvarbar oavsett om partiet vill bygga ut eller avveckla, utan att något av svaren pekas ut som det kloka. VERIFIERA finansieringsprogrammets aktuella status före låsning."
         },
         {
           "id": "sq-energi-vindveto",
