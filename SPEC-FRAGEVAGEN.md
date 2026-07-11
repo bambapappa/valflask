@@ -1,6 +1,6 @@
 # DRYGAST.NU — Delspecifikation: "Frågevågen"
 
-**Version 0.2 · 2026-07-11 · Status: PLAN — namn beslutat (ägarbeslut 2026-07-11); implementeras ej förrän §11.1 är beslutad**
+**Version 1.0 · 2026-07-11 · Status: REDO FÖR IMPLEMENTATION — samtliga §11-ägarbeslut fattade 2026-07-11 (namn, kriterium, frågelista, topplista avvaktar, review-regel PÅ, källröta veckovis)**
 **Relation till SPEC.md: detta dokument är ett DELTA. Allt som inte uttryckligen ändras här ärvs oförändrat från SPEC.md — arkitektur (§2), teknikval (§3), säkerhet (§14), drift (§15), juridik/etik/neutralitet (§17).**
 
 > Fläskvågen väger vad löftena kostar. Frågevågen för register över vad partierna **säger** i valets stora sakfrågor — och håller minnet. (Namnet bär vågmetaforen som varumärke; metoden väger ingenting: besked registreras, aldrig värderas.) Varje besked fångas med ordagrant citat, källa och arkivkopia. Byter ett parti fot syns det gamla och det nya beskedet sida vid sida, med datum. Ingen kan gömma sig, ingen kan backa i tysthet.
@@ -57,7 +57,7 @@ Fläskvågens neutralitet vilar på att metoden är identisk för alla. Ståndpu
 
 ## 3. Frågeurvalet — öppen metodik
 
-- **Kriterium (förslag, ägarbeslut §11.1):** en sakfråga tas in i registret om den ligger bland de ~10 viktigaste väljarfrågorna i de senaste mätningarna från **minst två oberoende etablerade undersökningsinstitut** (t.ex. SCB:s partisympatiundersökning, Novus/SVT "viktigaste politiska frågan", Verian, Ipsos/DN — `VERIFIERA` aktuella mätningar och publiceringsdatum före V0). Källorna citeras per fråga i `issues.json`.
+- **Kriterium (BESLUTAT 2026-07-11, "tröghetsregeln"):** en sakfråga tas in i registret om den förekommer på **båda** institutens publicerade listor över väljarnas viktigaste frågor, i respektive instituts egen publiceringsgranularitet: **Novus "Viktigaste politiska frågan" (topp 10)** och **nationella SOM-undersökningen (topp 15)**. För Novus, som mäter flera gånger per år, räcker det att frågan legat i topp 10 i **någon av de två senaste mätningarna** (tröghet: en fråga som nyss var topp 10 och kan studsa tillbaka är rimligen "stor"; regeln ger också stabilitet mot att listan fladdrar under valrörelsen). Kriteriet är helt beräkningsbart ur publicerade rapporter — ett tak som "topp 15 hos Novus" förkastades eftersom Novus inte publicerar plats 11–15. Underlag v1: Novus juni 2026 (fältperiod 28 maj–3 juni, n = 1 361) + Novus januari 2026 + SOM 2025 ("Svenska trender 1986–2025", publicerad mars 2026). Källorna citeras per fråga i `issues.json`.
 - **Storlek:** 8–12 frågor, 1–4 delfrågor per fråga. Litet och skarpt slår stort och grunt — varje delfråga ska kunna besvaras med ja/nej/villkorat.
 - **Ändringar av listan:** frågor kan tillkomma under valrörelsen om kriteriet uppfylls (t.ex. en fråga exploderar i mätningarna). Frågor tas ALDRIG bort före valdagen — de kan markeras `dormant` (renderas fortfarande). Varje liständring = DECISION_LOG-rad + synlig notis på /metod.
 - **Kategorikoppling:** varje fråga mappas till Fläskvågens befintliga `category`-taxonomi (SPEC §5.1) så att löften och ståndpunkter kan korslänkas.
@@ -229,7 +229,7 @@ Förutsättning: §11.1 (frågelista + kriterium) beslutad av ägaren. V0–V2 k
 
 ## 11. Öppna frågor (ägarbeslut; * = blockerande före V0)
 
-1. **\* Frågelista v1 + urvalskriterium:** bekräfta kriteriet i §3 och fastställ vilka mätningar som utgör underlaget (`VERIFIERA` aktuella publiceringar).
+1. ~~Frågelista v1 + urvalskriterium~~ **BESLUTAT 2026-07-11.** Kriterium: tröghetsregeln (§3). Frågelista v1 (10 frågor, samtliga uppfyller kriteriet): **sjukvården · skolan och utbildningen · lag och ordning · invandring och integration · äldreomsorgen · klimatet och miljön · jobben och arbetsmarknaden · ekonomin · energipolitiken · försvaret och säkerheten** (försvaret in via tröghetsregeln: Novus plats 8 i januari 2026, plats 11 i juni; SOM topp 15). Delfrågeformuleringarna är utkast i `data/issues.json` och `VERIFIERA`:s mot dagsaktuella källor före V3 (skarp drift). **Inga fler §11-frågor är öppna — implementering får starta.**
 2. ~~Namn och URL:er~~ **BESLUTAT 2026-07-11: "Frågevågen"**, med `/fragor` + `/svangningar`. ("Åsiktsvågen" förkastades: att väga åsikter antyder värdering/skala, vilket §1.4 förbjuder — registret innehåller besked, inte åsikter.)
 3. ~~Topplista "flest ändrade besked"~~ **BESLUTAT 2026-07-11: AVVAKTA.** Byggs inte i V0–V4; omprövas när registret har volym nog att enstaka preciseringar inte dominerar sorteringen.
 4. ~~Review-regel för riktningsbyten~~ **BESLUTAT 2026-07-11: PÅ permanent** (§5.5) — riktningsbyten (ja↔nej) går alltid via mänsklig review, även i `PIPELINE_MODE=auto`.
