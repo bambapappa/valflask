@@ -67,6 +67,7 @@ av pipelinen eller via review-CLI:t.
 | Kommando | Gör |
 |---|---|
 | `pnpm stances:skeleton` | Kompletterar celler när frågelistan ändrats (RS1) |
+| `pnpm stances:backfill` | Engångsskörd av page-källorna → granskningskön (rör aldrig löftesflödet; publicerar aldrig). Körs via Actions: stances-backfill.yml |
 | `pnpm stances:review` | Listar granskningskön |
 | `pnpm stances:review approve <id>` | Publicerar godkänt besked (RS-validerat före skrivning) |
 | `pnpm stances:review reject <id> [skäl]` | Avvisar |

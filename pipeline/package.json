@@ -14,7 +14,8 @@
     "revalidate": "node --import tsx/esm scripts/revalidate-quotes.mts",
     "stances:skeleton": "node --import tsx/esm scripts/stances-skeleton.mts",
     "stances:review": "node --import tsx/esm scripts/stances-review.mts",
-    "stances:rot-check": "node --import tsx/esm scripts/source-rot-check.mts"
+    "stances:rot-check": "node --import tsx/esm scripts/source-rot-check.mts",
+    "stances:backfill": "node --import tsx/esm scripts/stances-backfill.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1",

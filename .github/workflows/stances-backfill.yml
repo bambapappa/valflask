@@ -1,0 +1,73 @@
+# Frågevågen — engångs-backfill av ståndpunkter ur partiernas politiksidor
+# och manifest (page-källorna i sources.yaml). Endast manuell start.
+#
+# Isolerat från löftesflödet: rör aldrig seen.json/promises.json/
+# needs_review.json och publicerar aldrig — allt hamnar i
+# data/stances_review.json för granskning (pnpm stances:review).
+name: stances-backfill
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry-run (rapportera enbart, committa inget)"
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency: { group: stances-backfill, cancel-in-progress: false }
+jobs:
+  backfill:
+    if: ${{ vars.STANCES_ENABLED != 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: true
+      - uses: pnpm/action-setup@v4  # samma pin-undantag som pipeline.yml (2026-06-15)
+        with:
+          version: 9
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Backfill ståndpunkter (endast granskningskön)
+        run: pnpm stances:backfill ${{ inputs.dry_run && '--dry-run' || '' }}
+        working-directory: pipeline
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          LLM_FALLBACK_BASE_URL: ${{ secrets.LLM_FALLBACK_BASE_URL }}
+          LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+          MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
+          MODEL_VERIFY: ${{ vars.MODEL_VERIFY }}
+          MODEL_COPY: ${{ vars.MODEL_COPY }}
+      - name: Commit data if changed
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config user.name "drygast-bot" && git config user.email "bot@drygast.nu"
+          git add data/stances.json data/stances_review.json
+          if git diff --cached --quiet; then
+            echo "Inga ändringar — inget att committa."
+            exit 0
+          fi
+          git commit -m "data: stances backfill (run ${{ github.run_id }})"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push; then
+              echo "Push lyckades (försök $attempt)."
+              exit 0
+            fi
+            echo "Push-försök $attempt misslyckades. Försöker igen..."
+            sleep $((attempt * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
