@@ -1,0 +1,279 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Citat from "../../components/Citat.astro";
+import Stampel from "../../components/Stampel.astro";
+import MetodLank from "../../components/MetodLank.astro";
+import KallRad from "../../components/KallRad.astro";
+import Dela from "../../components/Dela.astro";
+import { getParties, getPromises } from "../../lib/data";
+import { formatMsek } from "../../lib/calc";
+import { promiseTotalMsek } from "../../lib/aggregates";
+import {
+  getIssuesFile,
+  getStances,
+  cellFor,
+  emptyCellText,
+  issueSummarySentence,
+  POSITION_LABEL,
+  SOURCE_STATUS_LABEL,
+  statementById,
+  type StanceCell,
+} from "../../lib/stances";
+
+export function getStaticPaths() {
+  return getIssuesFile().issues.map((issue) => ({ params: { slug: issue.slug } }));
+}
+
+const { slug } = Astro.params;
+const issuesFile = getIssuesFile();
+const issue = issuesFile.issues.find((i) => i.slug === slug)!;
+const stances = getStances();
+const parties = getParties();
+const promises = getPromises();
+
+const summary = issueSummarySentence(issue, stances);
+const canonicalPath = `/fraga/${issue.slug}`;
+
+/** Korslänk till Fläskvågen: löften i frågans kategori. */
+const relatedPromises = promises.filter(
+  (p) => p.category === issue.category && p.status !== "tillbakadragen",
+);
+const relatedTotal = relatedPromises.reduce((s, p) => s + promiseTotalMsek(p), 0);
+
+function cell(sqId: string, party: string): StanceCell | undefined {
+  return cellFor(stances, sqId, party);
+}
+
+/** Celler med registrerade besked, för tidslinjen per parti. */
+const partiesWithStatements = parties.filter((p) =>
+  issue.subquestions.some((sq) => (cell(sq.id, p.code)?.statements.length ?? 0) > 0),
+);
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Frågevågen", "item": "https://drygast.nu/fragor" },
+      { "@type": "ListItem", "position": 3, "name": issue.title, "item": `https://drygast.nu${canonicalPath}` },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `Var står partierna om ${issue.title.toLowerCase()}?`,
+    inLanguage: "sv",
+    url: `https://drygast.nu${canonicalPath}`,
+  },
+];
+---
+<Layout
+  title={`Var står partierna om ${issue.title.toLowerCase()}? Besked, citat och svängar — drygast.nu`}
+  description={summary}
+  ogImage={`/og/fraga-${issue.slug}.png`}
+  jsonLd={jsonLd}
+  canonicalPath={canonicalPath}
+>
+  <div class="page-content">
+    <div class="arendehuvud num">
+      FRÅGA {issue.id.toUpperCase()} · KATEGORI {issue.category.toUpperCase()} · STATUS {issue.status.toUpperCase()} · DELFRÅGOR {issue.subquestions.length}
+    </div>
+
+    <div class="prosa-content prosa-content--centered">
+      <h1>{issue.title}</h1>
+      <p id="sammanfattning">{summary}</p>
+    </div>
+
+    <MetodLank />
+
+    {issue.subquestions.map((sq) => (
+      <section class="sektion" id={sq.id}>
+        <h2>{sq.text}</h2>
+        <div class="datavy datavy--scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Parti</th>
+                <th>Besked</th>
+                <th>Citat</th>
+                <th class="num">Datum</th>
+                <th>Källa</th>
+              </tr>
+            </thead>
+            <tbody>
+              {parties.map((party) => {
+                const c = cell(sq.id, party.code);
+                const st = c ? statementById(c, c.current.statement_id) : undefined;
+                return (
+                  <tr id={`${sq.id}-${party.code}`}>
+                    <td>{party.name}</td>
+                    <td class="besked num">
+                      {POSITION_LABEL[c?.current.position ?? "inget_tydligt_besked"]}
+                      {c && c.changes.length > 0 && <> <Stampel text={`ÄNDRAT ${c.changes.length}×`} /></>}
+                    </td>
+                    {st ? (
+                      <td class="citatcell">
+                        <em>”{st.quote}”</em>
+                        {st.position === "villkorat" && st.condition_note && (
+                          <div class="etikett etikett--sub">Villkor: {st.condition_note}</div>
+                        )}
+                        {SOURCE_STATUS_LABEL[st.source_status] && (
+                          <div class="etikett etikett--sub kallstatus">{SOURCE_STATUS_LABEL[st.source_status]}</div>
+                        )}
+                      </td>
+                    ) : (
+                      <td class="citatcell tomcell">{emptyCellText(c?.last_searched ?? null)}</td>
+                    )}
+                    <td class="num">{st?.date_stated ?? "—"}</td>
+                    <td>
+                      {st ? (
+                        <>
+                          <a href={st.source.url}>källa<span aria-hidden="true"> ↗</span></a>
+                          {st.source.archive_url && (
+                            <> · <a href={st.source.archive_url}>arkiv<span aria-hidden="true"> ↗</span></a></>
+                          )}
+                        </>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+
+    {partiesWithStatements.length > 0 && (
+      <section class="sektion sektion--lg">
+        <h2>Tidslinje — alla registrerade besked</h2>
+        {partiesWithStatements.map((party) => (
+          <div class="tidslinje" id={party.code}>
+            <h3>{party.name}</h3>
+            {issue.subquestions.map((sq) => {
+              const c = cell(sq.id, party.code);
+              if (!c || c.statements.length === 0) return null;
+              return (
+                <div class="tidslinje__delfraga">
+                  <div class="etikett">{sq.text}</div>
+                  {c.statements.map((st) => (
+                    <div class="tidslinje__post">
+                      <div class="etikett num">
+                        {st.date_stated} · {POSITION_LABEL[st.position]}
+                        {SOURCE_STATUS_LABEL[st.source_status] && <> · {SOURCE_STATUS_LABEL[st.source_status]}</>}
+                      </div>
+                      <Citat
+                        quote={st.quote}
+                        person={st.person ? `${st.person.name}, ${st.person.role}` : null}
+                        party={party.name}
+                        domain={st.source.domain}
+                        date={st.date_stated}
+                        sourceUrl={st.source.url}
+                        archiveUrl={st.source.archive_url}
+                      />
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </section>
+    )}
+
+    {relatedPromises.length > 0 && (
+      <section class="sektion" id="flaskvagen">
+        <h2>Frågan i Fläskvågen</h2>
+        <p class="prosa-content">
+          I kategorin <strong>{issue.category}</strong> har partierna hittills lämnat
+          <strong class="num"> {relatedPromises.length}</strong> prissatta vallöften till ett värde av
+          <strong class="num"> {formatMsek(relatedTotal)}</strong> för mandatperioden.
+          Se <a href={`/topplistor`}>topplistorna</a> eller respektive partisida för detaljer.
+        </p>
+      </section>
+    )}
+
+    <section class="sektion" id="kallor">
+      <h2>Därför är frågan med</h2>
+      <p class="prosa-content urvalsnot">
+        Frågelistan följer ett publicerat kriterium (<a href="/metod">metoden</a>): frågan ska ligga
+        bland väljarnas viktigaste hos två oberoende institut. Belägg för {issue.title.toLowerCase()}:
+      </p>
+      <ul class="kallista">
+        {issue.selection_sources.map((s) => (
+          <li class="etikett">
+            {s.institute}: {s.survey}
+            {s.rank !== null && <> · plats <span class="num">{s.rank}</span></>}
+            {s.share_percent !== null && <> · <span class="num">{s.share_percent} %</span></>}
+            {" "}· <a href={s.url}>källa<span aria-hidden="true"> ↗</span></a>
+            {s.note && <div class="etikett etikett--sub">{s.note}</div>}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <KallRad source="Partiernas publicerade uttalanden — ordagranna citat med arkivkopior" />
+
+    <Dela path={canonicalPath} title={`Var står partierna om ${issue.title.toLowerCase()}?`} text={`Partiernas besked om ${issue.title.toLowerCase()} — ordagranna citat, källor och varje sväng synlig. drygast.nu`} />
+  </div>
+</Layout>
+
+<style>
+  .arendehuvud {
+    border: 1px solid var(--svarta);
+    padding: 0.5rem 0.75rem;
+    margin-bottom: var(--mellanrum, 1rem);
+    font-size: 0.8125rem;
+  }
+  .prosa-content--centered {
+    margin: 1.5rem auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+  .besked {
+    white-space: nowrap;
+    font-weight: 700;
+  }
+  .citatcell {
+    max-width: 34ch;
+  }
+  .tomcell {
+    color: var(--dis);
+  }
+  .kallstatus {
+    border: 1px solid var(--svarta);
+    display: inline-block;
+    padding: 0 0.375rem;
+    margin-top: 0.25rem;
+  }
+  .tidslinje {
+    border-top: 1px solid var(--linje-svag);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+  .tidslinje__delfraga {
+    margin: 1rem 0;
+  }
+  .tidslinje__post {
+    margin: 0.75rem 0 0.75rem 1rem;
+  }
+  .kallista {
+    list-style: none;
+    padding: 0;
+  }
+  .kallista li {
+    border-top: 1px solid var(--linje-svag);
+    padding: 0.5rem 0;
+  }
+  .urvalsnot {
+    font-size: 0.9rem;
+    color: var(--grafit);
+  }
+</style>

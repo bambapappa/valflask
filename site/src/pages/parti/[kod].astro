@@ -8,6 +8,7 @@ import Dela from "../../components/Dela.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
 import { formatMsek, formatMsekShort } from "../../lib/calc";
 import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseTotalMsek } from "../../lib/aggregates";
+import { getIssuesFile, getStances, cellFor, emptyCellText, statementById, POSITION_LABEL } from "../../lib/stances";
 
 export function getStaticPaths() {
   const parties = getParties();
@@ -27,6 +28,15 @@ const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 const perRost = flasketPerRost(total, party.votes_2022);
 const categories = categoryBreakdown(partyPromises);
 const canonicalPath = `/parti/${kod}`;
+const issuesFile = getIssuesFile();
+const stances = getStances();
+const stanceRows = issuesFile.issues.flatMap((issue) =>
+  issue.subquestions.map((sq) => {
+    const cell = cellFor(stances, sq.id, kod!);
+    const st = cell ? statementById(cell, cell.current.statement_id) : undefined;
+    return { issue, sq, cell, st };
+  }),
+);
 const hasLlm = partyPromises.some((p) => p.cost.basis === 'llm_estimat');
 const pageTitle = hasLlm
   ? `Vad kostar ${party.name}s vallöften 2026? ≈ ${formatMsekShort(total)} mdkr — drygast.nu`
@@ -110,6 +120,33 @@ const jsonLd = [
       </div>
     </section>
 
+    <section class="sektion" id="besked">
+      <h2>Besked i de stora frågorna</h2>
+      <p class="prosa-content beskednot">Ur <a href="/fragor">Frågevågen</a> — partiets senaste besked per delfråga, med ordagrant citat, källa och arkivkopia på frågesidan. Samma bevakning för alla åtta partier.</p>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Fråga</th>
+              <th>Delfråga</th>
+              <th>Besked</th>
+              <th class="num">Datum</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stanceRows.map(({ issue, sq, cell, st }) => (
+              <tr>
+                <td><a href={`/fraga/${issue.slug}#${sq.id}-${kod}`}>{issue.title}</a></td>
+                <td>{sq.text}</td>
+                <td class="num beskedcell">{st ? POSITION_LABEL[cell!.current.position] : <span class="tomcell">{emptyCellText(cell?.last_searched ?? null)}</span>}</td>
+                <td class="num">{st?.date_stated ?? "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <KallRad source={`${party.name}:s valprogram`} />
 
     <Dela path={canonicalPath} title={pageTitle} text={`${party.name}s vallöften 2026 väger ${formatMsekShort(total)} mdkr. Källspårat på drygast.nu`} />
@@ -131,5 +168,16 @@ const jsonLd = [
   }
   .datavy--scroll {
     overflow-x: auto;
+  }
+  .beskednot {
+    font-size: 0.9rem;
+    color: var(--grafit);
+  }
+  .beskedcell {
+    font-weight: 700;
+  }
+  .tomcell {
+    font-weight: 400;
+    color: var(--dis);
   }
 </style>

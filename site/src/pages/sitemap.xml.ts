@@ -1,4 +1,5 @@
 import { getPromises, getParties, getPeople, getChronicles } from "../lib/data";
+import { getIssuesFile } from "../lib/stances";
 
 export const prerender = true;
 
@@ -21,6 +22,12 @@ export async function GET() {
   urls.push({ loc: `${BASE}/regeringar`, changefreq: "weekly", priority: "0.7" });
   urls.push({ loc: `${BASE}/topplistor`, changefreq: "weekly", priority: "0.7" });
   urls.push({ loc: `${BASE}/sok`, changefreq: "monthly", priority: "0.6" });
+  urls.push({ loc: `${BASE}/fragor`, changefreq: "daily", priority: "0.9" });
+  urls.push({ loc: `${BASE}/svangningar`, changefreq: "daily", priority: "0.8" });
+
+  for (const issue of getIssuesFile().issues) {
+    urls.push({ loc: `${BASE}/fraga/${issue.slug}`, changefreq: "daily", priority: "0.9" });
+  }
 
   for (const p of parties) {
     urls.push({ loc: `${BASE}/parti/${p.code}`, changefreq: "daily", priority: "0.9" });

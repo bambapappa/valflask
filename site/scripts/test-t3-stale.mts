@@ -49,63 +49,76 @@ function restoreDist() {
   if (existsSync(DIST_BACKUP)) renameSync(DIST_BACKUP, DIST_DIR);
 }
 
-// Modify fetched_at to >36h ago AND set at least one run_id to non-fixture
-// so that isFixture=false and stale banner can appear
-const OLD_DATE = new Date(Date.now() - (37 * 60 * 60 * 1000)).toISOString();
-const promises = JSON.parse(readFileSync(PROMISES_PATH, "utf8"));
-for (const p of promises) {
-  if (p.source && p.source.fetched_at) {
-    p.source.fetched_at = OLD_DATE;
-  }
+// Krashsäker återställning: skriptet muterar RIKTIGA datafiler, och en läcka
+// blir committad produktionsdata i CI (pipeline.yml kör git add data/ senare
+// i jobbet). Därför: (1) allt efter backup i try/finally, (2) process.on("exit")
+// som sista skyddsnät (fångar process.exit och ohanterade undantag — dock ej
+// SIGKILL; för det finns data-clean-vakten sist i testkedjan).
+let restored = false;
+function restoreData() {
+  if (restored) return;
+  if (existsSync(BACKUP_PATH)) renameSync(BACKUP_PATH, PROMISES_PATH);
+  if (existsSync(CHANGELOG_BACKUP)) renameSync(CHANGELOG_BACKUP, CHANGELOG_PATH);
+  restored = true;
 }
-// Make all promises non-fixture so isFixture returns false
-for (const p of promises) {
-  p.extraction.run_id = "pipeline-2026-06-01T00:00:00";
-}
-writeFileSync(PROMISES_PATH, JSON.stringify(promises, null, 2) + "\n");
+process.on("exit", () => {
+  restoreData();
+});
 
-// "Senast uppdaterad" läses ur changeloggens senaste post — åldra den också,
-// annars ser sajten färsk ut fast promises är gamla.
-copyFileSync(CHANGELOG_PATH, CHANGELOG_BACKUP);
-const changelog = JSON.parse(readFileSync(CHANGELOG_PATH, "utf8"));
-for (const entry of changelog) {
-  entry.timestamp = OLD_DATE;
-}
-writeFileSync(CHANGELOG_PATH, JSON.stringify(changelog, null, 2) + "\n");
-
-// Build
-console.log("\n--- Building with stale data ---");
 try {
-  execSync("pnpm build", { cwd: SITE_DIR, stdio: "inherit" });
-} catch (e) {
-  fail("Build failed with stale data");
-  // Restore
-  renameSync(BACKUP_PATH, PROMISES_PATH);
-  renameSync(CHANGELOG_BACKUP, CHANGELOG_PATH);
-  restoreDist();
-  process.exit(1);
-}
-
-// Check stale banner
-console.log("\n--- Checking stale banner ---");
-const indexPath = resolve(DIST_DIR, "index.html");
-if (existsSync(indexPath)) {
-  const content = readFileSync(indexPath, "utf8");
-  const hasStaleBanner = content.includes("Senast uppdaterad") && content.includes("data kan vara inaktuell");
-  check("stale banner present in index.html", hasStaleBanner);
-  // Ensure it does NOT show fixture text
-  const hasFixture = content.includes("EXEMPELDATA");
-  if (hasFixture) {
-    check("fixture banner NOT shown when stale (fixture=false)", !hasFixture);
+  // Modify fetched_at to >36h ago AND set at least one run_id to non-fixture
+  // so that isFixture=false and stale banner can appear
+  const OLD_DATE = new Date(Date.now() - (37 * 60 * 60 * 1000)).toISOString();
+  const promises = JSON.parse(readFileSync(PROMISES_PATH, "utf8"));
+  for (const p of promises) {
+    if (p.source && p.source.fetched_at) {
+      p.source.fetched_at = OLD_DATE;
+    }
   }
-} else {
-  fail("index.html not found in dist");
-}
+  // Make all promises non-fixture so isFixture returns false
+  for (const p of promises) {
+    p.extraction.run_id = "pipeline-2026-06-01T00:00:00";
+  }
+  writeFileSync(PROMISES_PATH, JSON.stringify(promises, null, 2) + "\n");
 
-// Restore
-renameSync(BACKUP_PATH, PROMISES_PATH);
-renameSync(CHANGELOG_BACKUP, CHANGELOG_PATH);
-restoreDist();
+  // "Senast uppdaterad" läses ur changeloggens senaste post — åldra den också,
+  // annars ser sajten färsk ut fast promises är gamla.
+  copyFileSync(CHANGELOG_PATH, CHANGELOG_BACKUP);
+  const changelog = JSON.parse(readFileSync(CHANGELOG_PATH, "utf8"));
+  for (const entry of changelog) {
+    entry.timestamp = OLD_DATE;
+  }
+  writeFileSync(CHANGELOG_PATH, JSON.stringify(changelog, null, 2) + "\n");
+
+  // Build
+  console.log("\n--- Building with stale data ---");
+  try {
+    execSync("pnpm build", { cwd: SITE_DIR, stdio: "inherit" });
+  } catch {
+    fail("Build failed with stale data");
+  }
+
+  if (errors === 0) {
+    // Check stale banner
+    console.log("\n--- Checking stale banner ---");
+    const indexPath = resolve(DIST_DIR, "index.html");
+    if (existsSync(indexPath)) {
+      const content = readFileSync(indexPath, "utf8");
+      const hasStaleBanner = content.includes("Senast uppdaterad") && content.includes("data kan vara inaktuell");
+      check("stale banner present in index.html", hasStaleBanner);
+      // Ensure it does NOT show fixture text
+      const hasFixture = content.includes("EXEMPELDATA");
+      if (hasFixture) {
+        check("fixture banner NOT shown when stale (fixture=false)", !hasFixture);
+      }
+    } else {
+      fail("index.html not found in dist");
+    }
+  }
+} finally {
+  restoreData();
+  restoreDist();
+}
 
 console.log("");
 console.log(errors === 0 ? "T3-stale: ALL CHECKS PASSED" : `T3-stale: ${errors} FAILURES`);

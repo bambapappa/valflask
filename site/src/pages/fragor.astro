@@ -1,0 +1,95 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MetodLank from "../components/MetodLank.astro";
+import { getIssuesFile, getStances, issueCounts } from "../lib/stances";
+
+const issuesFile = getIssuesFile();
+const stances = getStances();
+const rows = issuesFile.issues.map((issue) => ({
+  issue,
+  counts: issueCounts(issue, stances),
+}));
+const totalStated = rows.reduce((n, r) => n + r.counts.statedCells, 0);
+const totalChanges = rows.reduce((n, r) => n + r.counts.changes, 0);
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Frågevågen", "item": "https://drygast.nu/fragor" },
+    ],
+  },
+];
+---
+<Layout
+  title="Frågevågen — var står partierna i valets stora frågor? — drygast.nu"
+  description="Register över riksdagspartiernas besked i valets stora frågor. Ordagranna citat, källor, arkivkopior — och varje ändring synlig."
+  jsonLd={jsonLd}
+  canonicalPath="/fragor"
+>
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Frågevågen</h1>
+      <p>
+        Register över vad riksdagspartierna <strong>säger</strong> i valets stora frågor.
+        Varje besked bygger på ett ordagrant citat ur en publicerad källa, med arkivkopia
+        och datum. Gamla besked raderas aldrig — byter ett parti fot visas det gamla och
+        det nya beskedet sida vid sida. Hittills <strong class="num">{totalStated}</strong> registrerade
+        besked och <strong class="num">{totalChanges}</strong> ändringar (<a href="/svangningar">svängregistret</a>).
+      </p>
+      <p class="kriterienot">
+        Frågorna är inte handplockade: listan följer ett publicerat kriterium — frågan ska
+        ligga bland väljarnas viktigaste i de senaste mätningarna från två oberoende
+        undersökningsinstitut (Novus och SOM-institutet). Källbeläggen står på varje frågesida.
+      </p>
+    </div>
+
+    <MetodLank />
+
+    <section class="sektion">
+      <h2>De stora frågorna</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Fråga</th>
+              <th class="num">Delfrågor</th>
+              <th class="num">Besked</th>
+              <th class="num">Ändringar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(({ issue, counts }, i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td><a href={`/fraga/${issue.slug}`}>{issue.title}</a></td>
+                <td class="num">{issue.subquestions.length}</td>
+                <td class="num">{counts.statedCells}</td>
+                <td class="num">{counts.changes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .kriterienot {
+    font-size: 0.9rem;
+    color: var(--grafit);
+  }
+  .prosa-content--centered {
+    margin: 1.5rem auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+</style>

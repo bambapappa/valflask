@@ -65,6 +65,8 @@ export async function GET() {
 - Jämförelser: ${BASE}/api/v1/comparisons.json
 - Changelog: ${BASE}/api/v1/changelog.json
 - Integritet: ${BASE}/api/v1/integrity.json
+- Frågevågen, frågorna: ${BASE}/api/v1/issues.json
+- Frågevågen, partiernas besked: ${BASE}/api/v1/stances.json
 
 ## Metod
 

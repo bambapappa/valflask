@@ -34,6 +34,14 @@ const jsonLd = [
       },
       {
         "@type": "Question",
+        "name": "Hur väljer ni frågorna i Frågevågen — och hur avgör ni vad ett parti tycker?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Frågelistan följer ett publicerat kriterium: frågan ska ligga bland väljarnas viktigaste hos två oberoende undersökningsinstitut (Novus och SOM-institutet) — vi handplockar inget. Partiernas besked hämtas enbart ur publicerade källor: ordagrant citat, källänk och arkivkopia. Vi frågar aldrig partierna själva. Kan beskedet inte läsas ur citatet ensamt visar vi 'besked saknas'. Byter ett parti fot visas gamla och nya beskedet sida vid sida — inget raderas.",
+        },
+      },
+      {
+        "@type": "Question",
         "name": "Hur hanterar ni löften som sägs i tal eller på video?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -97,6 +105,14 @@ const jsonLd = [
       <h3>Löften från tal och video</h3>
       <p>De flesta löften kommer från text — partiernas webbplatser, riksdagens dokument, nyhetsartiklar — och då kräver vi att citatet står exakt så i texten. Men en del löften sägs i tal, till exempel i Almedalen, där det enda som finns är talarens egna ord i en film.</p>
       <p>Då jämför vi citatet mot en sparad textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken — eftersom en automatisk textversion av tal ofta blir slarvig med just det. Det är en medveten och liten uppmjukning som <strong>bara</strong> gäller tal; text behåller den strikta kontrollen. Vi märker alltid ut när ett löfte kommer från ett tal och länkar till filmen vid den tidpunkt orden sägs, så att vem som helst kan höra dem själv. Textversionen sparar vi som internt underlag — så att kontrollen finns kvar även om filmen senare tas bort.</p>
+
+      <h2 id="fragevagen">Frågevågen — så registrerar vi partiernas besked</h2>
+      <p><a href="/fragor">Frågevågen</a> för register över vad partierna <strong>säger</strong> i valets stora frågor. Metoden i fem punkter:</p>
+      <p><strong>1. Frågorna väljs av väljarna, inte av oss.</strong> En fråga tas in när den ligger bland de viktigaste i mätningar från två oberoende undersökningsinstitut — Novus ("Viktigaste politiska frågan", topp 10, någon av de två senaste mätningarna räknas) och den nationella SOM-undersökningen (topp 15). Källbeläggen står på varje frågesida. Frågor tas aldrig bort före valdagen.</p>
+      <p><strong>2. Vi frågar aldrig partierna.</strong> Ett besked finns för oss bara om det är publicerat: ordagrant citat ur en källa på vår öppna källista, med länk, arkivkopia och datum. Enkäter går att putsa i efterhand — publicerade ord går inte att putsa.</p>
+      <p><strong>3. Beskedet måste stå i citatet.</strong> Varje delfråga besvaras med ja, nej eller villkorat — och bara om citatet <em>ensamt</em> räcker som belägg. En dator föreslår, en annan oberoende dator måste hålla med; vid minsta tvekan visar vi "besked saknas" i stället för att gissa. Tystnad redovisas exakt likadant för alla åtta partier, och den kommenteras aldrig.</p>
+      <p><strong>4. Ingen backar i tysthet.</strong> Publicerade besked raderas aldrig. Byter ett parti position visas det gamla och det nya beskedet sida vid sida i <a href="/svangningar">svängregistret</a>, båda med citat, källa och arkivkopia. Ett byte mellan ja och nej publiceras aldrig utan mänsklig granskning — regeln är densamma för alla partier. Och varje vecka kontrollerar vi att källorna finns kvar: en borttagen eller omskriven källsida stämplas synligt, och arkivkopian gäller.</p>
+      <p><strong>5. Ingen valkompass, ingen skala.</strong> Vi matchar inte dina åsikter mot partiernas, sätter inga betyg och placerar ingen på en axel. Vi visar beskeden bredvid varandra — slutsatserna är dina.</p>
 
       <h2 id="gap">Hur mycket finns det egentligen att röra sig med?</h2>
       <p>Det finns en gräns för hur mycket nya pengar staten realistiskt kan lägga på reformer. Som mått använder vi ett konkret, officiellt tal: <strong>regeringens egen reformbudget i budgetpropositionen för 2026</strong> — knappt 80 miljarder kronor per år, utöver försvar och stöd till Ukraina. Vi ställer summan av alla löften mot det utrymmet över hela mandatperioden (fyra år, alltså cirka 320 miljarder) — och den blir nästan alltid övertrasserad. Det är liksom poängen.</p>

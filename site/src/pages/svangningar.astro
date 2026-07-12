@@ -1,0 +1,124 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Stampel from "../components/Stampel.astro";
+import MetodLank from "../components/MetodLank.astro";
+import { getParties } from "../lib/data";
+import { getIssuesFile, getStances, allChanges, POSITION_LABEL, KIND_LABEL } from "../lib/stances";
+
+const issuesFile = getIssuesFile();
+const stances = getStances();
+const parties = getParties();
+const changes = allChanges(issuesFile.issues, stances);
+
+function partyName(code: string): string {
+  return parties.find((p) => p.code === code)?.name ?? code;
+}
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Svängregistret", "item": "https://drygast.nu/svangningar" },
+    ],
+  },
+];
+---
+<Layout
+  title="Svängregistret — alla ändrade partibesked — drygast.nu"
+  description="Varje gång ett riksdagsparti ändrar sitt besked i en av valets stora frågor registreras det här — gamla och nya beskedet sida vid sida, med citat, källor och arkivkopior."
+  jsonLd={jsonLd}
+  canonicalPath="/svangningar"
+>
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Svängregistret</h1>
+      <p>
+        När ett parti ändrar sitt besked i en av <a href="/fragor">de stora frågorna</a> blir
+        ändringen en egen post här: det gamla och det nya beskedet sida vid sida, båda med
+        ordagrant citat, källa och arkivkopia. Ren datasortering, nyast först — inga urval,
+        inga omdömen. Riktningsbyten (ja ↔ nej) publiceras aldrig utan mänsklig granskning;
+        regeln är densamma för alla partier (<a href="/metod">metoden</a>).
+      </p>
+    </div>
+
+    <MetodLank />
+
+    <section class="sektion">
+      {changes.length === 0 ? (
+        <div class="tomt-register">
+          <div class="etikett num">REGISTRERADE ÄNDRINGAR: 0</div>
+          <p class="prosa-content">
+            Inga ändrade besked är ännu registrerade. Bevakningen pågår — den dag ett parti
+            byter position i en registrerad delfråga syns det här, med båda beskeden bevarade.
+          </p>
+        </div>
+      ) : (
+        changes.map((ch) => (
+          <article class="svang">
+            <div class="svang__huvud etikett num">
+              {ch.date} · {partyName(ch.party)} · <a href={`/fraga/${ch.issue.slug}#${ch.subquestion.id}`}>{ch.issue.title}</a>
+              {" "}<Stampel text={KIND_LABEL[ch.kind]} />
+            </div>
+            <p class="svang__delfraga">{ch.subquestion.text}</p>
+            <div class="svang__par">
+              <div class="svang__sida">
+                <div class="etikett num">DÅ · {ch.from.date_stated} · {POSITION_LABEL[ch.from.position]}</div>
+                <blockquote><em>”{ch.from.quote}”</em></blockquote>
+                <div class="etikett etikett--sub">
+                  <a href={ch.from.source.url}>källa<span aria-hidden="true"> ↗</span></a>
+                  {ch.from.source.archive_url && <> · <a href={ch.from.source.archive_url}>arkiv<span aria-hidden="true"> ↗</span></a></>}
+                </div>
+              </div>
+              <div class="svang__sida">
+                <div class="etikett num">NU · {ch.to.date_stated} · {POSITION_LABEL[ch.to.position]}</div>
+                <blockquote><em>”{ch.to.quote}”</em></blockquote>
+                <div class="etikett etikett--sub">
+                  <a href={ch.to.source.url}>källa<span aria-hidden="true"> ↗</span></a>
+                  {ch.to.source.archive_url && <> · <a href={ch.to.source.archive_url}>arkiv<span aria-hidden="true"> ↗</span></a></>}
+                </div>
+              </div>
+            </div>
+          </article>
+        ))
+      )}
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 1.5rem auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .tomt-register {
+    border: 1px solid var(--svarta);
+    padding: 1rem;
+  }
+  .svang {
+    border-top: 2px solid var(--svarta);
+    padding: 1rem 0;
+  }
+  .svang__delfraga {
+    font-weight: 700;
+    margin: 0.5rem 0;
+  }
+  .svang__par {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media (max-width: 720px) {
+    .svang__par {
+      grid-template-columns: 1fr;
+    }
+  }
+  .svang__sida blockquote {
+    border-left: 2px solid var(--svarta);
+    margin: 0.5rem 0;
+    padding-left: 0.75rem;
+  }
+</style>

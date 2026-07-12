@@ -1,0 +1,101 @@
+/**
+ * Frågevågen — källröta-bevakningen (SPEC-FRAGEVAGEN.md §6.3, ägarbeslut: veckovis).
+ *
+ * Re-hämtar käll-URL:erna för alla publicerade statements och stämplar:
+ *   - "borttagen": källan svarar 404/410 (eller domänen är död)
+ *   - "andrad":    källan svarar men citatet passerar inte längre verbatimgrinden
+ *   - "ok":        citatet står kvar ordagrant
+ *
+ * Ingenting raderas — arkivkopian gäller och en ändrad/borttagen källa blir en
+ * SYNLIG stämpel på sajten. Statusen kan gå tillbaka till "ok" om källan
+ * återuppstår (t.ex. tillfälligt CMS-fel), men statementet självt är orörbart.
+ * Nätverksfel/timeouts ändrar ALDRIG status (vi anklagar ingen för borttagning
+ * på grund av vårt eget nätstrul) — de lämnar bara source_checked_at orörd.
+ *
+ *   pnpm stances:rot-check            kontrollera + skriv data/stances.json
+ *   pnpm stances:rot-check --dry-run  rapportera enbart
+ */
+import { readFileSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { extractPdfText, looksLikePdf, stripHtml } from "../src/fetch.ts";
+import { normalizeForVerbatim } from "../src/gates.ts";
+import type { StanceCell } from "../src/stances.ts";
+
+const ROOT = resolve(import.meta.dirname, "../../");
+const STANCES_PATH = join(ROOT, "data", "stances.json");
+const USER_AGENT = "DrygastBot/1.0 (+https://drygast.nu/om)";
+const dryRun = process.argv.includes("--dry-run");
+
+const cells = JSON.parse(readFileSync(STANCES_PATH, "utf8")) as StanceCell[];
+const today = new Date().toISOString().slice(0, 10);
+
+type CheckResult = "ok" | "andrad" | "borttagen" | "obestamd";
+
+async function checkUrl(url: string, quote: string): Promise<CheckResult> {
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      headers: { "User-Agent": USER_AGENT, Accept: "text/html,application/xhtml+xml,application/pdf" },
+      redirect: "follow",
+      signal: AbortSignal.timeout(30_000),
+    });
+  } catch {
+    return "obestamd"; // nätverksfel — ingen anklagelse
+  }
+  if (res.status === 404 || res.status === 410) return "borttagen";
+  if (!res.ok) return "obestamd"; // 5xx/429 m.m. — försök igen nästa vecka
+
+  const bytes = new Uint8Array(await res.arrayBuffer());
+  let text: string;
+  if (looksLikePdf(res.headers.get("content-type"), bytes)) {
+    try {
+      text = (await extractPdfText(bytes)).text;
+    } catch {
+      return "obestamd";
+    }
+  } else {
+    text = stripHtml(new TextDecoder("utf-8").decode(bytes));
+  }
+  return normalizeForVerbatim(text).includes(normalizeForVerbatim(quote)) ? "ok" : "andrad";
+}
+
+let checked = 0;
+let changed = 0;
+const report: string[] = [];
+
+// Max en kontroll per URL per körning — flera statements kan dela källa.
+const byUrl = new Map<string, CheckResult>();
+
+for (const cell of cells) {
+  for (const st of cell.statements) {
+    checked++;
+    let result = byUrl.get(st.source.url);
+    if (result === undefined) {
+      result = await checkUrl(st.source.url, st.quote);
+      byUrl.set(st.source.url, result);
+      await new Promise((r) => setTimeout(r, 1200)); // snäll takt
+    } else if (result !== "obestamd" && result !== "ok") {
+      // Delad URL men annat citat: verbatimkontrollen är per citat — kör om.
+      result = await checkUrl(st.source.url, st.quote);
+    }
+    if (result === "obestamd") continue;
+    if (st.source_status !== result) {
+      changed++;
+      report.push(
+        `${cell.subquestion_id} × ${cell.party} · ${st.id}: ${st.source_status} → ${result} (${st.source.url})`,
+      );
+      st.source_status = result;
+    }
+    st.source_checked_at = today;
+  }
+}
+
+console.log(`Källröta-kontroll ${today}: ${checked} statements, ${byUrl.size} URL:er, ${changed} statusändringar.`);
+for (const line of report) console.log(`  ${line}`);
+
+if (!dryRun && checked > 0) {
+  writeFileSync(STANCES_PATH, JSON.stringify(cells, null, 2) + "\n");
+  console.log(changed > 0
+    ? `Skrev ${STANCES_PATH}. Committa med "data: källröta-kontroll ${today} (${changed} ändringar)".`
+    : `Skrev ${STANCES_PATH} (endast source_checked_at).`);
+}

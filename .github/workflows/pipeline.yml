@@ -55,6 +55,11 @@ jobs:
           MODEL_VERIFY: ${{ vars.MODEL_VERIFY }}
           MODEL_COPY: ${{ vars.MODEL_COPY }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
+          # Frågevågen PÅ som default (ägarbeslut 2026-07-11); stäng av genom att
+          # sätta repovariabeln STANCES_ENABLED=false. STANCES_MODE osatt = review
+          # (torrkörning, steg 2) — växlas till auto först i steg 4.
+          STANCES_ENABLED: ${{ vars.STANCES_ENABLED || 'true' }}
+          STANCES_MODE: ${{ vars.STANCES_MODE }}
           ALERT_EMAIL: ${{ vars.ALERT_EMAIL }}
       # Arkiv-backfill (SPEC §6.2 "nytt försök tills satt"): fyll archive_url för
       # publicerade löften som saknar det (seed/review-godkännanden sätter null).

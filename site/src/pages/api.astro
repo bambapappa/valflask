@@ -21,6 +21,8 @@ const jsonLd = [
       { "@type": "DataDownload", "name": "summary.json", "contentUrl": "https://drygast.nu/api/v1/summary.json", "encodingFormat": "application/json" },
       { "@type": "DataDownload", "name": "promises.json", "contentUrl": "https://drygast.nu/api/v1/promises.json", "encodingFormat": "application/json" },
       { "@type": "DataDownload", "name": "parties.json", "contentUrl": "https://drygast.nu/api/v1/parties.json", "encodingFormat": "application/json" },
+      { "@type": "DataDownload", "name": "issues.json", "contentUrl": "https://drygast.nu/api/v1/issues.json", "encodingFormat": "application/json" },
+      { "@type": "DataDownload", "name": "stances.json", "contentUrl": "https://drygast.nu/api/v1/stances.json", "encodingFormat": "application/json" },
     ],
   },
   {
@@ -70,8 +72,16 @@ const jsonLd = [
               <td>Pipeline-körningslogg: tillagda, uppdaterade, tillbakadragna löften</td>
             </tr>
             <tr>
+              <td><code>/api/v1/issues.json</code></td>
+              <td>Frågevågen: valets stora frågor med delfrågor och urvalsbevis (Novus + SOM)</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/stances.json</code></td>
+              <td>Frågevågen: partiernas besked per delfråga — append-only med citat, arkiv och ändringar</td>
+            </tr>
+            <tr>
               <td><code>/api/v1/integrity.json</code></td>
-              <td>Dataintegritet: sha256 av kanonisk promises.json</td>
+              <td>Dataintegritet: sha256 av kanonisk promises.json + per fil (stances, issues)</td>
             </tr>
           </tbody>
         </table>

@@ -9,9 +9,11 @@
     "test:t3": "node --experimental-strip-types scripts/test-t3.mts",
     "test:t9": "node --experimental-strip-types scripts/test-t9.mts",
     "test:interval": "node --experimental-strip-types scripts/test-interval.mts",
-    "test": "node --experimental-strip-types scripts/test-t1.mts && node --experimental-strip-types scripts/test-t3.mts && node --experimental-strip-types scripts/test-t9.mts && node --experimental-strip-types scripts/test-t3-stale.mts && node --experimental-strip-types scripts/test-interval.mts && node --experimental-strip-types scripts/test-drylinje.mts",
+    "test": "node --experimental-strip-types scripts/test-t1.mts && node --experimental-strip-types scripts/test-t3.mts && node --experimental-strip-types scripts/test-t9.mts && node --experimental-strip-types scripts/test-t3-stale.mts && node --experimental-strip-types scripts/test-interval.mts && node --experimental-strip-types scripts/test-drylinje.mts && node --experimental-strip-types scripts/test-t14.mts && node --experimental-strip-types scripts/test-data-clean.mts",
     "preview": "astro preview",
-    "indexnow": "node --experimental-strip-types scripts/indexnow-submit.mts"
+    "indexnow": "node --experimental-strip-types scripts/indexnow-submit.mts",
+    "test:t14": "node --experimental-strip-types scripts/test-t14.mts",
+    "test:data-clean": "node --experimental-strip-types scripts/test-data-clean.mts"
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
