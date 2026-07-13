@@ -645,5 +645,51 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sverigedemokraterna vill däremot främja nybyggnation av svensk kärnkraft genom statligt stöd, förenklade tillståndsprocesser och minskat regelkrångel.",
+      "person": null
+    },
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "archiveUrl": null,
+    "dateStated": "2026-07-13",
+    "extractModel": "deepseek/deepseek-v4-pro",
+    "verifyModel": "moonshotai/kimi-k2.7-code",
+    "runId": "run-2026-07-13-12-15",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-matmoms",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "genom lägre skatt på el och fortsatt låga skatter på drivmedel och livsmedel.",
+      "person": null
+    },
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "archiveUrl": null,
+    "dateStated": "2026-07-13",
+    "extractModel": "deepseek/deepseek-v4-pro",
+    "verifyModel": "moonshotai/kimi-k2.7-code",
+    "runId": "run-2026-07-13-12-15",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
