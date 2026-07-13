@@ -124,6 +124,74 @@
     "subquestion_id": "sq-sjukvard-vinst",
     "party": "c",
     "current": {
+      "position": "villkorat",
+      "statement_id": "st-2026-0003"
+    },
+    "statements": [
+      {
+        "id": "st-2026-0003",
+        "position": "villkorat",
+        "condition_note": "Det ska inte gå en krona till vinst om välfärdsföretag inte håller kvaliteten och uppfyller de krav som ställs.",
+        "quote": "Det ska inte gå en krona till vinst om välfärdsföretag inte håller kvaliteten och uppfyller de krav som ställs.",
+        "person": null,
+        "date_stated": "2026-06-04",
+        "source": {
+          "url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf#page=41",
+          "domain": "val2026.centerpartiet.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:20:47.385Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
+    "changes": [],
+    "last_searched": "2026-07-13"
+  },
+  {
+    "subquestion_id": "sq-sjukvard-vinst",
+    "party": "v",
+    "current": {
+      "position": "ja",
+      "statement_id": "st-2026-0020"
+    },
+    "statements": [
+      {
+        "id": "st-2026-0020",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Vänsterpartiet vill stoppa vinsterna i välfärden och sätta patienterna först.",
+        "person": null,
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.vansterpartiet.se/val2026/",
+          "domain": "vansterpartiet.se",
+          "archive_url": "https://web.archive.org/web/20260712173102/https://www.vansterpartiet.se/val2026/",
+          "fetched_at": "2026-07-13T18:30:53.476Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
+    "changes": [],
+    "last_searched": "2026-07-13"
+  },
+  {
+    "subquestion_id": "sq-sjukvard-vinst",
+    "party": "kd",
+    "current": {
       "position": "inget_tydligt_besked",
       "statement_id": null
     },
@@ -133,28 +201,6 @@
   },
   {
     "subquestion_id": "sq-sjukvard-vinst",
-    "party": "v",
-    "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
-    },
-    "statements": [],
-    "changes": [],
-    "last_searched": "2026-07-13"
-  },
-  {
-    "subquestion_id": "sq-sjukvard-vinst",
-    "party": "kd",
-    "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
-    },
-    "statements": [],
-    "changes": [],
-    "last_searched": "2026-07-13"
-  },
-  {
-    "subquestion_id": "sq-sjukvard-vinst",
     "party": "l",
     "current": {
       "position": "inget_tydligt_besked",
@@ -168,10 +214,33 @@
     "subquestion_id": "sq-sjukvard-vinst",
     "party": "mp",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0015"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0015",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Skattepengar avsedda för vård och omsorg ska gå till verksamheten, inte tas ut som vinst till aktieägare.",
+        "person": null,
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf#page=71",
+          "domain": "mp.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:25:47.949Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -179,10 +248,55 @@
     "subquestion_id": "sq-skola-vinst",
     "party": "s",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0019"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0018",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Vinstförbud i skola och förskola.",
+        "person": null,
+        "date_stated": "2026-02-04",
+        "source": {
+          "url": "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf",
+          "domain": "socialdemokraterna.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:27:35.197Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      },
+      {
+        "id": "st-2026-0019",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Dina skattepengar ska stanna i skolan. De ska gå till fler lärare, bättre utbildning och bra skolmat. Inte till bolag som skär ner för att plocka ut vinst.",
+        "person": null,
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.socialdemokraterna.se/val-2026",
+          "domain": "socialdemokraterna.se",
+          "archive_url": "https://web.archive.org/web/20260712172901/https://www.socialdemokraterna.se/val-2026",
+          "fetched_at": "2026-07-13T18:30:52.527Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -245,10 +359,33 @@
     "subquestion_id": "sq-skola-vinst",
     "party": "l",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0005"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0005",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Därför vill vi fasa ut vinstintresset ur skolan.",
+        "person": null,
+        "date_stated": "2026-06-02",
+        "source": {
+          "url": "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf#page=1",
+          "domain": "liberalerna.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:20:49.157Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -256,10 +393,58 @@
     "subquestion_id": "sq-skola-vinst",
     "party": "mp",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0013"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0010",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Vi ska stoppa vinsterna i den svenska skolan!",
+        "person": {
+          "name": "Daniel Helldén",
+          "role": "språkrör"
+        },
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+          "domain": "mp.se",
+          "archive_url": "https://web.archive.org/web/20260712171012/https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+          "fetched_at": "2026-07-13T18:24:05.520Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      },
+      {
+        "id": "st-2026-0013",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Marknadsskolan med vinstdrivande aktiebolag ska avvecklas ur hela skolväsendet.",
+        "person": null,
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf#page=61",
+          "domain": "mp.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:25:46.109Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -333,10 +518,55 @@
     "subquestion_id": "sq-skola-huvudman",
     "party": "l",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0007"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0006",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "För att stärka kunskapsskolan vill vi flytta ansvaret från kommunerna till staten",
+        "person": null,
+        "date_stated": "2026-06-02",
+        "source": {
+          "url": "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf#page=1",
+          "domain": "liberalerna.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:22:25.448Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      },
+      {
+        "id": "st-2026-0007",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Därför vill vi att staten tar över ansvaret för skolan från kommunerna.",
+        "person": null,
+        "date_stated": "2026-06-02",
+        "source": {
+          "url": "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf#page=11",
+          "domain": "liberalerna.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:22:26.271Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -388,10 +618,33 @@
     "subquestion_id": "sq-skola-ko",
     "party": "c",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0002"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0002",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Inför ett gemensamt obligatoriskt skolval med slopad kötid.",
+        "person": null,
+        "date_stated": "2026-06-04",
+        "source": {
+          "url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf#page=41",
+          "domain": "val2026.centerpartiet.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:17:47.786Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -432,10 +685,33 @@
     "subquestion_id": "sq-skola-ko",
     "party": "mp",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0014"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0014",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "vi vill göra om skolvalet och inrätta ett gemensamt antagningssystem för skolan. Ingen ska kunna paxa en plats redan på BB.",
+        "person": null,
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf#page=61",
+          "domain": "mp.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:25:47.035Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -520,10 +796,33 @@
     "subquestion_id": "sq-lag-straffalder",
     "party": "mp",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "nej",
+      "statement_id": "st-2026-0016"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0016",
+        "position": "nej",
+        "condition_note": null,
+        "quote": "Miljöpartiet står inte bakom förslag om att inrätta ungdomsfängelser eller sänka straffmyndighetsåldern från 15 år.",
+        "person": null,
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf#page=71",
+          "domain": "mp.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:27:33.419Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -784,10 +1083,33 @@
     "subquestion_id": "sq-migration-put",
     "party": "mp",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0012"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0012",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Permanenta uppehållstillstånd ska vara huvudregel",
+        "person": null,
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf#page=101",
+          "domain": "mp.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:24:07.994Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -1356,10 +1678,55 @@
     "subquestion_id": "sq-jobb-lonegolv",
     "party": "c",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "nej",
+      "statement_id": "st-2026-0004"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0001",
+        "position": "nej",
+        "condition_note": null,
+        "quote": "Det höga lönegolvet för arbetskraftsinvandrare är skadligt för svensk tillväxt då företag blir av med anställda som utvisas och får svårare att rekrytera nya medarbetare. Låt arbetsmarknadens parter själva besluta om lönegolv",
+        "person": null,
+        "date_stated": "2026-06-04",
+        "source": {
+          "url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf#page=11",
+          "domain": "val2026.centerpartiet.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:17:46.853Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      },
+      {
+        "id": "st-2026-0004",
+        "position": "nej",
+        "condition_note": null,
+        "quote": "Det höga lönegolvet för arbetskraftsinvandrare är skadligt för svensk tillväxt – låt arbetsmarknadens parter själva sätta lönenivån.",
+        "person": null,
+        "date_stated": "2026-06-04",
+        "source": {
+          "url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf#page=91",
+          "domain": "val2026.centerpartiet.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:20:48.235Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -1400,10 +1767,33 @@
     "subquestion_id": "sq-jobb-lonegolv",
     "party": "mp",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "nej",
+      "statement_id": "st-2026-0017"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0017",
+        "position": "nej",
+        "condition_note": null,
+        "quote": "Regeringens höjda lönekrav för arbetskraftsinvandring är skadlig och strider mot den svenska modellen.",
+        "person": null,
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf#page=91",
+          "domain": "mp.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:27:34.283Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -1565,10 +1955,33 @@
     "subquestion_id": "sq-ekonomi-inkomstskatt",
     "party": "l",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0008"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0008",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Därför vill vi kraftigt sänka den statliga inkomstskatten på högre inkomster, med målet att halvera den.",
+        "person": null,
+        "date_stated": "2026-06-02",
+        "source": {
+          "url": "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf#page=11",
+          "domain": "liberalerna.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:22:27.446Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -1609,10 +2022,33 @@
     "subquestion_id": "sq-energi-karnkraft",
     "party": "sd",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0021"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0021",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Sverigedemokraterna vill däremot främja nybyggnation av svensk kärnkraft genom statligt stöd, förenklade tillståndsprocesser och minskat regelkrångel.",
+        "person": null,
+        "date_stated": "2026-07-13",
+        "source": {
+          "url": "https://sd.se/vad-vi-vill/",
+          "domain": "sd.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:30:54.501Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "run-2026-07-13-12-15"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -1653,10 +2089,33 @@
     "subquestion_id": "sq-energi-karnkraft",
     "party": "l",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0009"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0009",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Staten ska därför ge garantier för kärnreaktorer och andra långsiktiga investeringar.",
+        "person": null,
+        "date_stated": "2026-06-02",
+        "source": {
+          "url": "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf#page=11",
+          "domain": "liberalerna.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-13T18:22:28.459Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   },
@@ -1928,10 +2387,33 @@
     "subquestion_id": "sq-forsvar-karnvapen",
     "party": "mp",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0011"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0011",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Vi ska lagstifta om ett förbud mot kärnvapen på svensk mark i både freds- och krigstid.",
+        "person": null,
+        "date_stated": "2026-07-12",
+        "source": {
+          "url": "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf#page=101",
+          "domain": "mp.se",
+          "archive_url": "https://web.archive.org/web/20260709052238/https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf",
+          "fetched_at": "2026-07-13T18:24:07.178Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-13"
   }
