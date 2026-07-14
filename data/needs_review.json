@@ -2051,5 +2051,164 @@
       "confidence": 0.6
     },
     "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Satsa på fler lärare och mindre klasser",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill satsa på fler lärare och mindre klasser.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Ta bort den orättvisa karensen",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Den orättvisa karensen ska bort.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 8000,
+      "msek_high": 15000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antaget att staten täcker arbetsgivares kostnad för slopat karensavdrag. Baserat på tidigare temporära karensavdrag (ca 7 mdkr per år). Osäkerhet kring exakt utformning och omfattning.",
+      "confidence": 0.6
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Plånbokslöfte: höjt barn- och studiebidrag, billigare mediciner, avgiftsfri tandvård, press på banker och matkedjor samt skydd mot höga elpriser",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi ska ge tillbaka det du förlorat med ett plånbokslöfte: höjt barn- och studiebidrag, billigare mediciner, avgiftsfri tandvård för unga, hårdare press på banker och matkedjor och starkare skydd mot höga elpriser för villaägare.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 6500,
+      "msek_base": 23000,
+      "msek_high": 70000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning baserad på antaganden om ökning av barn- och studiebidrag med 10-20%, sänkta läkemedelskostnader med 1-2 mdkr, tandvårdsförlängning till 25 år, och elprisskydd motsvarande tidigare stödåt",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Förbjuda religiösa friskolor",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill förbjuda religiösa friskolor.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0015"
+  },
+  {
+    "candidate": {
+      "title": "Snabbt bygga upp Sveriges militära förmåga",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Sveriges militära förmåga ska snabbt byggas upp.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0020"
+  },
+  {
+    "candidate": {
+      "title": "Införa ett nationellt register för domar i mål om bevistalan",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Ulrika Liljeberg",
+        "role": "Riksdagsledamot (C)"
+      },
+      "quote": "vi vill dock se ett nationellt register för domar i mål om bevistalan enligt lagen med särskilda bestämmelser om unga lagöverträdare",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024228",
+    "articleTitle": "med anledning av prop. 2025/26:293 Skärpta regler för unga lagöverträdare"
+  },
+  {
+    "candidate": {
+      "title": "Minska ungdomsreduktionen för 15–18-åringar och avskaffa den för över 18 år",
+      "parties": [
+        "c"
+      ],
+      "person": {
+        "name": "Ulrika Liljeberg",
+        "role": "Riksdagsledamot (C)"
+      },
+      "quote": "vi ställer oss därför bakom en minskning av ungdomsreduktionen för barn mellan 15 och 18 år och en avskaffning av ungdomsreduktionen för de över 18 år",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024228",
+    "articleTitle": "med anledning av prop. 2025/26:293 Skärpta regler för unga lagöverträdare"
   }
 ]

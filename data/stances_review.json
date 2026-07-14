@@ -117,5 +117,55 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Mer personal och språkkrav i äldreomsorgen.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "archiveUrl": null,
+    "dateStated": "2026-07-14",
+    "extractModel": "deepseek/deepseek-v4-pro",
+    "verifyModel": "moonshotai/kimi-k2.7-code",
+    "runId": "run-2026-07-14-16-24",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet stöder språkkrav i äldreomsorgen men säger inget om att kraven ska lagstiftas eller avse svenska, så ett entydigt 'ja' följer inte ur citatet ensamt."
+      }
+    ],
+    "verifyReason": "Citatet stöder språkkrav i äldreomsorgen men säger inget om att kraven ska lagstiftas eller avse svenska, så ett entydigt 'ja' följer inte ur citatet ensamt."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-straffalder",
+      "party": "c",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Centerpartiet har tidigare sagt nej till en sänkning av straffbarhetsåldern till 13 år till förmån för att ha kvar 15 år som gräns; vi vidhåller detta även när nu förslaget är att straffbarhetsåldern ska vara 14 år.",
+      "person": {
+        "name": "Ulrika Liljeberg",
+        "role": "riksdagsledamot (C)"
+      }
+    },
+    "articleUrl": "https://data.riksdagen.se/dokument/HD024228",
+    "articleTitle": "med anledning av prop. 2025/26:293 Skärpta regler för unga lagöverträdare",
+    "archiveUrl": "https://web.archive.org/web/20260714163421/https://data.riksdagen.se/dokument/HD024228",
+    "dateStated": "2026-07-14",
+    "extractModel": "deepseek/deepseek-v4-pro",
+    "verifyModel": "moonshotai/kimi-k2.7-code",
+    "runId": "run-2026-07-14-16-24",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
