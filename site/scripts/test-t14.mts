@@ -112,6 +112,26 @@ console.log("\n--- T15: API + RSS ---");
   check("svangningar.rss.xml: RSS 2.0 med självlänk", rss.includes("<rss version=\"2.0\"") && rss.includes("svangningar.rss.xml"));
 }
 
+// ── Titelbudget (Bing-varning 2026-07-14): inga <title> över 80 tecken i dist.
+console.log("\n--- Titelbudget ---");
+{
+  const { readdirSync, statSync } = await import("node:fs");
+  const { join } = await import("node:path");
+  function* htmlFiles(dir: string): Generator<string> {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = join(dir, e.name);
+      if (e.isDirectory()) yield* htmlFiles(p);
+      else if (e.name.endsWith(".html")) yield p;
+    }
+  }
+  const offenders: string[] = [];
+  for (const f of htmlFiles(DIST)) {
+    const m = readFileSync(f, "utf8").match(/<title>([^<]*)<\/title>/);
+    if (m && m[1]!.length > 80) offenders.push(`${f.replace(DIST, "")} (${m[1]!.length})`);
+  }
+  check("alla <title> ≤ 80 tecken", offenders.length === 0, offenders.slice(0, 5).join("; "));
+}
+
 if (errors > 0) {
   console.error(`\nT15: ${errors} fel`);
   process.exit(1);

@@ -8,6 +8,7 @@ import MetodLank from "../../components/MetodLank.astro";
 import KallRad from "../../components/KallRad.astro";
 import Dela from "../../components/Dela.astro";
 import { getPromises, getParties, getPeople, getConstants } from "../../lib/data";
+import { promisePageTitle } from "../../lib/seo";
 import { formatMsek, formatBasisLabel, formatCostType, formatDateShort, getPartyByCode } from "../../lib/calc";
 import { promiseTotalMsek, computeComparisons, formatComparison, dryLine } from "../../lib/aggregates";
 
@@ -30,9 +31,8 @@ const comparisons = computeComparisons(promise, constants);
 const canonicalPath = `/lofte/${promise.id}/${promise.slug}`;
 const totalBasis = promise.cost.basis;
 
-const pageTitle = totalBasis === 'llm_estimat'
-  ? `Vad kostar löftet "${promise.title}"? ≈ ${formatMsek(promiseTotalMsek(promise), totalBasis)} — drygast.nu`
-  : `Vad kostar löftet "${promise.title}"? ${formatMsek(promiseTotalMsek(promise), totalBasis)} — drygast.nu`;
+// formatMsek bär redan "≈ " vid llm_estimat (tidigare mall dubblerade tecknet).
+const pageTitle = promisePageTitle(promise.title, formatMsek(promiseTotalMsek(promise), totalBasis));
 
 const jsonLd = [
   {
