@@ -1293,10 +1293,33 @@
     "subquestion_id": "sq-aldre-sprakkrav",
     "party": "s",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0023"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0023",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Mer personal och språkkrav i äldreomsorgen. Det ska vara tryggt att bli gammal i Sverige. Du som behöver hjälp i din vardag ska mötas med värdighet, kvalitet och respekt. Av personal som har tid, kunskap och kan prata svenska.",
+        "person": null,
+        "date_stated": "2026-02-04",
+        "source": {
+          "url": "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf#page=3",
+          "domain": "socialdemokraterna.se",
+          "archive_url": "https://web.archive.org/web/20260712172927/https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf#page=3",
+          "fetched_at": "2026-07-15T15:15:02.936Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-15"
   },
@@ -1326,10 +1349,33 @@
     "subquestion_id": "sq-aldre-sprakkrav",
     "party": "c",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "ja",
+      "statement_id": "st-2026-0022"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0022",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Det ska ställas tydliga språkkrav på personalen och obligatorisk utbildning ska tillhandahållas för dem som behöver det.",
+        "person": null,
+        "date_stated": "2026-06-04",
+        "source": {
+          "url": "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf#page=42",
+          "domain": "val2026.centerpartiet.se",
+          "archive_url": "https://web.archive.org/web/20260703171331/https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf#page=42",
+          "fetched_at": "2026-07-15T15:14:57.686Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "stances-backfill-2026-07-12"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-15"
   },
