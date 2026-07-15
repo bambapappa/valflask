@@ -36,39 +36,11 @@ interface Manual {
   pdf?: boolean;
 }
 
-const MANUALS: Manual[] = [
-  {
-    candidate: {
-      subquestion_id: "sq-forsvar-varnplikt",
-      party: "s",
-      position: "ja",
-      condition_note: null,
-      quote: "Socialdemokraterna föreslår att målet för antalet värnpliktiga höjs till 12 000 till år 2030, vilket är 2 000 fler än nuvarande mål.",
-      person: null,
-    },
-    url: "https://www.socialdemokraterna.se/nyheter/nyheter/2025-10-30-s-vill-se-fler-varnpliktiga-och-beslut-om-territorialforband",
-    domain: "socialdemokraterna.se",
-    title: "S vill se fler värnpliktiga och beslut om territorialförband",
-    published: "2025-10-30T00:00:00Z",
-    reason: "skarpare källa: S:s nyhet 2025-10-30, '2 000 fler än nuvarande mål' klarar frågans ribba 'utöver beslutade nivåer'",
-  },
-  {
-    candidate: {
-      subquestion_id: "sq-ekonomi-matmoms",
-      party: "sd",
-      position: "ja",
-      condition_note: null,
-      quote: "Den nedsatta momsen på mat ska bli permanent, primärt för sådant som är basvaror och som kan produceras i Sverige.",
-      person: null,
-    },
-    url: "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf",
-    domain: "sd.se",
-    title: "Sverigedemokraternas valplattform 2026",
-    published: "2026-07-01T00:00:00Z",
-    reason: "skarpare källa: SD:s valplattform 2026 säger rakt ut att matmomsen 'ska bli permanent'",
-    pdf: true,
-  },
-];
+// Batchfil (JSON-array av Manual) anges som argument. Idempotent: redan
+// publicerade citat (dublett) hoppas tyst över, resten publiceras.
+const batchFile = process.argv[2];
+if (!batchFile) { console.error("Ange batchfil: add-stances-manual.mts <candidates.json>"); process.exit(1); }
+const MANUALS: Manual[] = JSON.parse(readFileSync(batchFile, "utf8"));
 
 const sources = parseYaml(readFileSync(join(DATA, "sources.yaml"), "utf8")) as { allowlist_domains: string[] };
 const allowlist = sources.allowlist_domains;
@@ -117,10 +89,8 @@ const result = publishStances({
   runId: "manual-stances-2026-07-15", now, mode: "auto", humanApproved: true,
 });
 
-if (result.stancesAdded.length !== MANUALS.length) {
-  console.error(`Förväntade ${MANUALS.length} publicerade, fick ${result.stancesAdded.length} (dublett?).`);
-  process.exit(1);
-}
+console.log(`Publicerade: ${result.stancesAdded.length}/${MANUALS.length} (resten dubletter av redan registrerade citat).`);
+if (result.stancesAdded.length === 0) { console.error("Inget nytt publicerades."); process.exit(1); }
 const rsErrors = validateStanceInvariants(issuesFile, result.cells);
 if (rsErrors.length > 0) {
   console.error(`RS-brott — INGET skrivs:\n  ${rsErrors.join("\n  ")}`);
