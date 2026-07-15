@@ -61,10 +61,13 @@ for (const m of MANUALS) {
     };
   } else {
     const html = await (await fetch(m.url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(30000) })).text();
-    article = {
-      url: m.url, domain: m.domain, title: m.title, published: m.published,
-      text: html.replace(/<[^>]+>/g, " ").replace(/&[a-z]+;|&#\d+;/gi, " ").replace(/\s+/g, " ").trim(),
-    };
+    const stripped = html
+      .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, " ")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&[a-z]+;|&#\d+;/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    article = { url: m.url, domain: m.domain, title: m.title, published: m.published, text: stripped };
   }
 
   const report = runStanceGates(article, [m.candidate], { allowlist, issuesFile, now });
