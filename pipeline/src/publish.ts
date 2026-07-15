@@ -3,6 +3,8 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import {
   passesAmountCapR5,
+  resolveQuotePage,
+  withPageAnchor,
   type ExtractionCandidate,
   type GateFailure,
   type NormalizedArticle,
@@ -182,6 +184,13 @@ export function publish(input: PublishInput): PublishResult {
     const id = nextId(allPromises);
     const date = pc.article.published.slice(0, 10);
 
+    // PDF-chunk: ankra källänken på citatets exakta sida (citatet är redan
+    // G3-verbatimgranskat). Samma ankare på arkivkopian.
+    const page = resolveQuotePage(pc.article, pc.candidate.quote);
+    const sourceUrl = page === null ? pc.article.url : withPageAnchor(pc.article.url, page);
+    const archiveUrl =
+      pc.archiveUrl && page !== null ? withPageAnchor(pc.archiveUrl, page) : pc.archiveUrl;
+
     const p: PipelinePromise = {
       id,
       group_id: pc.groupId ?? null,
@@ -192,9 +201,9 @@ export function publish(input: PublishInput): PublishResult {
       quote: pc.candidate.quote,
       date_stated: date,
       source: {
-        url: pc.article.url,
+        url: sourceUrl,
         domain: pc.article.domain,
-        archive_url: pc.archiveUrl,
+        archive_url: archiveUrl,
         fetched_at: pc.article.published,
       },
       category: pc.candidate.category,

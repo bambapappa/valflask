@@ -43,6 +43,12 @@ export interface NormalizedArticle {
   contentHash?: string;
   /** Feed-typ ur sources.yaml — styr processprioritet i runPipeline. */
   feedType?: "rss" | "riksdagen_api" | "page";
+  /**
+   * PDF-chunkar: texten sida för sida, så att ett verbatimgranskat citat kan
+   * slås upp till sin EXAKTA sida vid publicering (resolveQuotePage). Utan
+   * detta pekar käll-länken bara på chunkens första sida (#page=1/11/21…).
+   */
+  pdfPages?: { firstPage: number; texts: string[] };
 }
 
 /** En kandidat ur LLM A:s svar (prompt A1). Speglar extraction.schema.json. */
@@ -183,6 +189,28 @@ export function normalizeForVerbatim(input: string): string {
       .replace(/\s+/gu, " ")
       .trim()
   );
+}
+
+/**
+ * Slår upp vilken PDF-sida ett verbatimgranskat citat står på. Returnerar
+ * 1-indexerat sidnummer, eller null när artikeln inte är en PDF-chunk eller
+ * citatet spänner över ett sidbryt (då är chunk-ankaret bästa kända läge).
+ */
+export function resolveQuotePage(article: NormalizedArticle, quote: string): number | null {
+  if (!article.pdfPages) return null;
+  const needle = normalizeForVerbatim(quote);
+  if (needle.length === 0) return null;
+  for (let i = 0; i < article.pdfPages.texts.length; i++) {
+    if (normalizeForVerbatim(article.pdfPages.texts[i] ?? "").includes(needle)) {
+      return article.pdfPages.firstPage + i;
+    }
+  }
+  return null;
+}
+
+/** Byter/sätter #page-fragmentet — PDF-standardens enda djuplänksform. */
+export function withPageAnchor(url: string, page: number): string {
+  return `${url.replace(/#.*$/u, "")}#page=${page}`;
 }
 
 export function countWords(normalized: string): number {

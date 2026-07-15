@@ -821,6 +821,9 @@ export class LiveSource implements ArticleSource {
         published,
         // Per chunk: en ny manifestversion omprocessar bara ändrade sidintervall.
         contentHash: sha256(text),
+        // Per-sidtext följer med så publiceringen kan ankra källänken på
+        // citatets EXAKTA sida i stället för chunkens första (resolveQuotePage).
+        pdfPages: { firstPage: start + 1, texts: chunkPages },
       });
     }
     return articles;

@@ -4,6 +4,7 @@ import Stampel from "../components/Stampel.astro";
 import MetodLank from "../components/MetodLank.astro";
 import { getParties } from "../lib/data";
 import { getIssuesFile, getStances, allChanges, POSITION_LABEL, KIND_LABEL } from "../lib/stances";
+import { sourceLinkLabel, archiveLinkLabel } from "../lib/source-link";
 
 const issuesFile = getIssuesFile();
 const stances = getStances();
@@ -67,16 +68,16 @@ const jsonLd = [
                 <div class="etikett num">DÅ · {ch.from.date_stated} · {POSITION_LABEL[ch.from.position]}</div>
                 <blockquote><em>”{ch.from.quote}”</em></blockquote>
                 <div class="etikett etikett--sub">
-                  <a href={ch.from.source.url}>källa<span aria-hidden="true"> ↗</span></a>
-                  {ch.from.source.archive_url && <> · <a href={ch.from.source.archive_url}>arkiv<span aria-hidden="true"> ↗</span></a></>}
+                  <a href={ch.from.source.url}>{sourceLinkLabel(ch.from.source.url)}<span aria-hidden="true"> ↗</span></a>
+                  {ch.from.source.archive_url && <> · <a href={ch.from.source.archive_url}>{archiveLinkLabel(ch.from.source.archive_url)}<span aria-hidden="true"> ↗</span></a></>}
                 </div>
               </div>
               <div class="svang__sida">
                 <div class="etikett num">NU · {ch.to.date_stated} · {POSITION_LABEL[ch.to.position]}</div>
                 <blockquote><em>”{ch.to.quote}”</em></blockquote>
                 <div class="etikett etikett--sub">
-                  <a href={ch.to.source.url}>källa<span aria-hidden="true"> ↗</span></a>
-                  {ch.to.source.archive_url && <> · <a href={ch.to.source.archive_url}>arkiv<span aria-hidden="true"> ↗</span></a></>}
+                  <a href={ch.to.source.url}>{sourceLinkLabel(ch.to.source.url)}<span aria-hidden="true"> ↗</span></a>
+                  {ch.to.source.archive_url && <> · <a href={ch.to.source.archive_url}>{archiveLinkLabel(ch.to.source.archive_url)}<span aria-hidden="true"> ↗</span></a></>}
                 </div>
               </div>
             </div>

@@ -24,6 +24,7 @@
       },
       "articleUrl": { "type": "string" },
       "articleTitle": { "type": "string" },
+      "sourceUrl": { "type": "string", "description": "Käll-URL med citatets exakta #page-ankare (PDF-chunkar); articleUrl förblir köpostens identitet." },
       "verifyReason": { "type": "string" },
       "archiveUrl": { "type": ["string", "null"] },
       "dateStated": { "type": "string" },

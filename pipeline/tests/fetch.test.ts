@@ -617,6 +617,12 @@ describe("LiveSource med mock-HTTP", () => {
     assert.ok(!articles[0]!.text.includes("Löfte nummer 11"), "sida 11 hör till chunk 2");
     assert.ok(articles[1]!.text.includes("Löfte nummer 12"), "chunk 2 t.o.m. sista sidan");
     assert.notEqual(sha256(articles[0]!.url), sha256(articles[1]!.url), "chunk-url:er dedupas separat");
+    // pdfPages bär per-sidtext så publiceringen kan slå upp citatets exakta sida.
+    assert.equal(articles[0]!.pdfPages?.firstPage, 1);
+    assert.equal(articles[0]!.pdfPages?.texts.length, 10, "chunk 1 = 10 sidor");
+    assert.equal(articles[1]!.pdfPages?.firstPage, 11);
+    assert.equal(articles[1]!.pdfPages?.texts.length, 2, "chunk 2 = 2 sidor");
+    assert.ok(articles[1]!.pdfPages?.texts[1]!.includes("Löfte nummer 12"), "sida 12 är sista i chunk 2");
   });
 
   test("findManifestPdfLinks: samma domän, .pdf + manifestnyckelord, relativa löses", () => {

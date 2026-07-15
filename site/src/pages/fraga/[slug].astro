@@ -19,6 +19,7 @@ import {
   statementById,
   type StanceCell,
 } from "../../lib/stances";
+import { sourceLinkLabel, archiveLinkLabel } from "../../lib/source-link";
 
 export function getStaticPaths() {
   return getIssuesFile().issues.map((issue) => ({ params: { slug: issue.slug } }));
@@ -129,9 +130,9 @@ const jsonLd = [
                     <td>
                       {st ? (
                         <>
-                          <a href={st.source.url}>källa<span aria-hidden="true"> ↗</span></a>
+                          <a href={st.source.url}>{sourceLinkLabel(st.source.url)}<span aria-hidden="true"> ↗</span></a>
                           {st.source.archive_url && (
-                            <> · <a href={st.source.archive_url}>arkiv<span aria-hidden="true"> ↗</span></a></>
+                            <> · <a href={st.source.archive_url}>{archiveLinkLabel(st.source.archive_url)}<span aria-hidden="true"> ↗</span></a></>
                           )}
                         </>
                       ) : (
