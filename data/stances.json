@@ -151,7 +151,7 @@
         "source": {
           "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/sjukvard",
           "domain": "socialdemokraterna.se",
-          "archive_url": null,
+          "archive_url": "https://web.archive.org/web/20260417135603/https://www.socialdemokraterna.se/var-politik/a-till-o/sjukvard",
           "fetched_at": "2026-07-15T22:07:46.374Z"
         },
         "source_status": "ok",
@@ -395,10 +395,33 @@
     "subquestion_id": "sq-skola-vinst",
     "party": "c",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "villkorat",
+      "statement_id": "st-2026-0052"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0052",
+        "position": "villkorat",
+        "condition_note": "vinstförbud vid kvalitetsbrister",
+        "quote": "Vi vill därför reformera friskolesystemet i grunden med en skolpeng anpassad efter skolornas olika ansvar, införa vinstförbud vid kvalitetsbrister och se ett gemensamt skolval för alla.",
+        "person": null,
+        "date_stated": "2026-07-15",
+        "source": {
+          "url": "https://www.centerpartiet.se/var-politik/politik-a-o/utbildning",
+          "domain": "centerpartiet.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-15T22:46:04.815Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "manuell (skarpare källa)",
+          "verified_by": "mänsklig granskning",
+          "run_id": "manual-stances-2026-07-15"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-15"
   },
@@ -2523,7 +2546,7 @@
         "source": {
           "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/karnkraft",
           "domain": "socialdemokraterna.se",
-          "archive_url": null,
+          "archive_url": "https://web.archive.org/web/20260316235619/https://www.socialdemokraterna.se/var-politik/a-till-o/karnkraft/",
           "fetched_at": "2026-07-15T22:07:46.374Z"
         },
         "source_status": "ok",
@@ -2611,10 +2634,33 @@
     "subquestion_id": "sq-energi-karnkraft",
     "party": "c",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "nej",
+      "statement_id": "st-2026-0051"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0051",
+        "position": "nej",
+        "condition_note": null,
+        "quote": "Centerpartiet ser kärnkraft som en del av ett fossilfritt energisystem, under förutsättning att den byggs på marknadsmässiga villkor utan statliga subventioner.",
+        "person": null,
+        "date_stated": "2026-07-15",
+        "source": {
+          "url": "https://www.centerpartiet.se/var-politik/politik-a-o/energi",
+          "domain": "centerpartiet.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-15T22:46:04.815Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "manuell (skarpare källa)",
+          "verified_by": "mänsklig granskning",
+          "run_id": "manual-stances-2026-07-15"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-15"
   },
