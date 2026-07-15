@@ -752,10 +752,36 @@
     "subquestion_id": "sq-lag-straffalder",
     "party": "c",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "nej",
+      "statement_id": "st-2026-0024"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0024",
+        "position": "nej",
+        "condition_note": null,
+        "quote": "Centerpartiet har tidigare sagt nej till en sänkning av straffbarhetsåldern till 13 år till förmån för att ha kvar 15 år som gräns; vi vidhåller detta även när nu förslaget är att straffbarhetsåldern ska vara 14 år.",
+        "person": {
+          "name": "Ulrika Liljeberg",
+          "role": "riksdagsledamot (C)"
+        },
+        "date_stated": "2026-07-14",
+        "source": {
+          "url": "https://data.riksdagen.se/dokument/HD024228",
+          "domain": "data.riksdagen.se",
+          "archive_url": "https://web.archive.org/web/20260714163421/https://data.riksdagen.se/dokument/HD024228",
+          "fetched_at": "2026-07-15T17:00:57.832Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "deepseek/deepseek-v4-pro",
+          "verified_by": "moonshotai/kimi-k2.7-code",
+          "run_id": "run-2026-07-14-16-24"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-15"
   },
@@ -763,10 +789,33 @@
     "subquestion_id": "sq-lag-straffalder",
     "party": "v",
     "current": {
-      "position": "inget_tydligt_besked",
-      "statement_id": null
+      "position": "nej",
+      "statement_id": "st-2026-0025"
     },
-    "statements": [],
+    "statements": [
+      {
+        "id": "st-2026-0025",
+        "position": "nej",
+        "condition_note": null,
+        "quote": "Riksdagen bör avslå regeringens förslag i de delar det avser en sänkning av straffbarhetsåldern till 14 år.",
+        "person": null,
+        "date_stated": "2026-07-07",
+        "source": {
+          "url": "https://data.riksdagen.se/dokument/HD024211",
+          "domain": "data.riksdagen.se",
+          "archive_url": null,
+          "fetched_at": "2026-07-15T17:05:16.845Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": null,
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "manuell (renare källa)",
+          "verified_by": "mänsklig granskning",
+          "run_id": "manual-v-straffalder-2026-07-15"
+        }
+      }
+    ],
     "changes": [],
     "last_searched": "2026-07-15"
   },
