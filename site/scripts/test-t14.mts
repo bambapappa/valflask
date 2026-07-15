@@ -114,22 +114,42 @@ console.log("\n--- T15: API + RSS ---");
 
 // ── Titelbudget (Bing-varning 2026-07-14): inga <title> över 80 tecken i dist.
 console.log("\n--- Titelbudget ---");
-{
-  const { readdirSync, statSync } = await import("node:fs");
-  const { join } = await import("node:path");
-  function* htmlFiles(dir: string): Generator<string> {
-    for (const e of readdirSync(dir, { withFileTypes: true })) {
-      const p = join(dir, e.name);
-      if (e.isDirectory()) yield* htmlFiles(p);
-      else if (e.name.endsWith(".html")) yield p;
-    }
+const { readdirSync } = await import("node:fs");
+const { join } = await import("node:path");
+function* htmlFiles(dir: string): Generator<string> {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) yield* htmlFiles(p);
+    else if (e.name.endsWith(".html")) yield p;
   }
+}
+{
   const offenders: string[] = [];
   for (const f of htmlFiles(DIST)) {
     const m = readFileSync(f, "utf8").match(/<title>([^<]*)<\/title>/);
     if (m && m[1]!.length > 80) offenders.push(`${f.replace(DIST, "")} (${m[1]!.length})`);
   }
   check("alla <title> ≤ 80 tecken", offenders.length === 0, offenders.slice(0, 5).join("; "));
+}
+
+// ── PDF-djuplänkar (ägarbeslut 2026-07-15): en länk till …pdf#page=N måste
+// visa sidnumret i länktexten ("s. N"), annars vet mobilanvändaren (som alltid
+// hamnar på sida 1) inte vart hen ska bläddra för att verifiera citatet.
+console.log("\n--- PDF-djuplänkars sidnummer ---");
+{
+  const ANCHOR_RE = /<a\b[^>]*href="([^"]*\.pdf#page=(\d+))"[^>]*>(.*?)<\/a>/gis;
+  const offenders: string[] = [];
+  for (const f of htmlFiles(DIST)) {
+    const html = readFileSync(f, "utf8");
+    for (const m of html.matchAll(ANCHOR_RE)) {
+      const [, , page, inner] = m;
+      const text = inner!.replace(/<[^>]*>/g, "");
+      if (!text.includes(`s. ${page}`)) {
+        offenders.push(`${f.replace(DIST, "")} → #page=${page}: "${text.trim().slice(0, 40)}"`);
+      }
+    }
+  }
+  check("alla …pdf#page=N-länkar visar 's. N'", offenders.length === 0, offenders.slice(0, 5).join("; "));
 }
 
 if (errors > 0) {

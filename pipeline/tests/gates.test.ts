@@ -262,3 +262,46 @@ test("T6-kärnan: injicerade instruktioner i källtexten kan inte fabricera löf
   assert.ok(report.review[0]!.failures.some((f) => f.gate === "G3"));
   assert.ok(report.review[1]!.failures.some((f) => f.gate === "G4"));
 });
+
+/* ──────────────────────── PDF-djuplänkar: exakt sida (2026-07-15) ── */
+
+import { resolveQuotePage, withPageAnchor } from "../src/gates.ts";
+
+const PDF_ARTICLE: NormalizedArticle = {
+  url: "https://parti.se/manifest.pdf#page=11",
+  domain: "parti.se",
+  title: "Manifest (s. 11–20)",
+  text: "sida elva-text\n\nVi lovar sänkt matmoms till noll\n\nsida tretton-text",
+  published: "2026-06-01T00:00:00Z",
+  pdfPages: {
+    firstPage: 11,
+    texts: [
+      "sida elva-text",
+      "Vi lovar sänkt matmoms till noll",
+      "sida tretton-text",
+    ],
+  },
+};
+
+test("resolveQuotePage: citatet slås upp till sin exakta sida i chunken", () => {
+  assert.equal(resolveQuotePage(PDF_ARTICLE, "Vi lovar sänkt matmoms till noll"), 12);
+  assert.equal(resolveQuotePage(PDF_ARTICLE, "sida elva-text"), 11);
+  assert.equal(resolveQuotePage(PDF_ARTICLE, "sida tretton-text"), 13);
+});
+
+test("resolveQuotePage: verbatimkanon gäller (citattecken/whitespace normaliseras)", () => {
+  const art = { ...PDF_ARTICLE, pdfPages: { firstPage: 5, texts: ["Han sade: ”ja   till\nkärnkraft”"] } };
+  assert.equal(resolveQuotePage(art, 'ja till kärnkraft'), 5);
+});
+
+test("resolveQuotePage: null när citatet spänner sidbryt eller saknar pdfPages", () => {
+  assert.equal(resolveQuotePage(PDF_ARTICLE, "elva-text sida tretton-text"), null);
+  const { pdfPages: _drop, ...htmlArticle } = PDF_ARTICLE;
+  assert.equal(resolveQuotePage(htmlArticle, "sida elva-text"), null);
+});
+
+test("withPageAnchor: sätter/byter #page och rör inte bas-URL:en", () => {
+  assert.equal(withPageAnchor("https://x.se/a.pdf", 7), "https://x.se/a.pdf#page=7");
+  assert.equal(withPageAnchor("https://x.se/a.pdf#page=1", 7), "https://x.se/a.pdf#page=7");
+  assert.equal(withPageAnchor("https://web.archive.org/web/2026/https://x.se/a.pdf#page=1", 7), "https://web.archive.org/web/2026/https://x.se/a.pdf#page=7");
+});

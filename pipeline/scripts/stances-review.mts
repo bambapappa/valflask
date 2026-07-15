@@ -117,7 +117,9 @@ const result = publishStances({
     {
       candidate,
       article: {
-        url: entry.articleUrl,
+        // sourceUrl bär citatets exakta #page-ankare (PDF); articleUrl är
+        // chunk-ankaret och förblir köpostens identitet (stanceReviewId).
+        url: entry.sourceUrl ?? entry.articleUrl,
         domain: new URL(entry.articleUrl).hostname.replace(/^www\./, ""),
         title: entry.articleTitle,
         text: candidate.quote, // citatet är redan verbatimgranskat i grindkedjan

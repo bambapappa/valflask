@@ -20,6 +20,8 @@ import {
   canonicalDomain,
   countWords,
   normalizeForVerbatim,
+  resolveQuotePage,
+  withPageAnchor,
   DATE_WINDOW_DAYS,
   QUOTE_MAX_WORDS,
   QUOTE_MIN_WORDS,
@@ -73,6 +75,12 @@ export interface StanceReviewEntry {
   failures: StanceGateFailure[];
   articleUrl: string;
   articleTitle: string;
+  /**
+   * Käll-URL med citatets EXAKTA #page-ankare (PDF-chunkar). articleUrl bär
+   * chunk-ankaret och förblir kö-postens identitet; denna används i stället
+   * som statementets source.url när posten godkänns.
+   */
+  sourceUrl?: string;
   verifyReason?: string;
   archiveUrl?: string | null;
   dateStated?: string;
@@ -377,11 +385,19 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
 
   for (const p of input.processed) {
     const { candidate, article, verify } = p;
+    // PDF-chunk: ankra källänken på citatets exakta sida (G3 har redan
+    // verbatimgranskat citatet, så uppslagningen är mekanisk). Samma ankare
+    // sätts på arkivkopian — Wayback serverar PDF:en genom samma visare.
+    const page = resolveQuotePage(article, candidate.quote);
+    const sourceUrl = page === null ? article.url : withPageAnchor(article.url, page);
+    const archiveUrl =
+      p.archiveUrl && page !== null ? withPageAnchor(p.archiveUrl, page) : p.archiveUrl;
     const base = {
       candidate,
       articleUrl: article.url,
       articleTitle: article.title,
-      archiveUrl: p.archiveUrl,
+      sourceUrl,
+      archiveUrl,
       dateStated: article.published.slice(0, 10),
       extractModel: p.extractModel,
       verifyModel: p.verifyModel,
@@ -450,9 +466,9 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
       person: candidate.person,
       date_stated: article.published.slice(0, 10),
       source: {
-        url: article.url,
+        url: sourceUrl,
         domain: article.domain,
-        archive_url: p.archiveUrl,
+        archive_url: archiveUrl,
         fetched_at: input.now.toISOString(),
       },
       source_status: "ok",

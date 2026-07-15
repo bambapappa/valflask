@@ -258,6 +258,42 @@ describe("T13 — riktningsbyten kräver alltid människa; historik är orörbar
   });
 });
 
+/* ────────────────────────── PDF-djuplänk: exakt sida (2026-07-15) ── */
+
+describe("PDF-källor ankras på citatets exakta sida", () => {
+  function pdfArticle(): NormalizedArticle {
+    return makeArticle({
+      url: "https://parti.se/manifest.pdf#page=11",
+      domain: "parti.se",
+      title: "Manifest (s. 11–20)",
+      text: `inledning sida elva\n\n${QUOTE_JA}\n\nsida tretton`,
+      pdfPages: { firstPage: 11, texts: ["inledning sida elva", QUOTE_JA, "sida tretton"] },
+    });
+  }
+
+  test("statementets source.url får citatets sida, inte chunkens första", () => {
+    const proc: ProcessedStance = {
+      candidate: makeCandidate({ quote: QUOTE_JA }),
+      article: pdfArticle(),
+      verify: VERIFY_OK,
+      archiveUrl: "https://web.archive.org/web/2026/https://parti.se/manifest.pdf#page=11",
+      extractModel: "a",
+      verifyModel: "b",
+    };
+    const result = publishWith([proc], skeleton());
+    const cell = result.cells.find((c) => c.subquestion_id === "sq-energi-karnkraft" && c.party === "m")!;
+    const st = cell.statements[0]!;
+    assert.equal(st.source.url, "https://parti.se/manifest.pdf#page=12", "chunk #page=11 → citatets #page=12");
+    assert.equal(st.source.archive_url, "https://web.archive.org/web/2026/https://parti.se/manifest.pdf#page=12", "arkivankaret synkat");
+  });
+
+  test("HTML-källa (utan pdfPages) rörs inte", () => {
+    const result = publishWith([processed(makeCandidate(), VERIFY_OK)], skeleton());
+    const cell = result.cells.find((c) => c.subquestion_id === "sq-energi-karnkraft" && c.party === "m")!;
+    assert.equal(cell.statements[0]!.source.url, "https://www.svt.se/nyheter/inrikes/karnkraftsbesked");
+  });
+});
+
 /* ─────────────────────────────────────── hårda publiceringsgrindar ── */
 
 describe("hårda grindar (ägarbeslut 2026-07-11)", () => {
