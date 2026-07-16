@@ -19,6 +19,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { extractPdfText, looksLikePdf, stripHtml } from "../src/fetch.ts";
 import { normalizeForVerbatim } from "../src/gates.ts";
+import { archiveWithFallback } from "../src/archive.ts";
 import type { StanceCell } from "../src/stances.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
@@ -61,10 +62,36 @@ async function checkUrl(url: string, quote: string): Promise<CheckResult> {
 
 let checked = 0;
 let changed = 0;
+let archived = 0;
 const report: string[] = [];
 
 // Max en kontroll per URL per körning — flera statements kan dela källa.
 const byUrl = new Map<string, CheckResult>();
+// Arkiv-backfill: en arkiveringsförfrågan per bas-URL per körning.
+const archiveByBase = new Map<string, string | null>();
+
+const stripFrag = (u: string) => u.split("#")[0]!;
+
+/**
+ * Fyller archive_url för besked som saknar det (t.ex. sidor Wayback spärrade
+ * vid publicering). Kör ENDAST när källan fortfarande är "ok" — annars skulle
+ * vi arkivera ett ändrat innehåll. Fallback-kedjan (Wayback → archive.today)
+ * fungerar från GitHub Actions även där vår dev-proxy 429:ar, så luckor
+ * stängs av sig själv över tid. Misslyckas bägge lämnas archive_url orört.
+ */
+async function backfillArchive(st: StanceCell["statements"][number]): Promise<boolean> {
+  if (dryRun || st.source.archive_url) return false;
+  const base = stripFrag(st.source.url);
+  let snap = archiveByBase.get(base);
+  if (snap === undefined) {
+    snap = (await archiveWithFallback(base)).archive_url;
+    archiveByBase.set(base, snap);
+  }
+  if (!snap) return false;
+  const frag = st.source.url.includes("#") ? "#" + st.source.url.split("#")[1] : "";
+  st.source.archive_url = snap + frag;
+  return true;
+}
 
 for (const cell of cells) {
   for (const st of cell.statements) {
@@ -87,15 +114,22 @@ for (const cell of cells) {
       st.source_status = result;
     }
     st.source_checked_at = today;
+
+    // Arkiv-backfill för luckor — bara om källan fortfarande står ordagrant kvar.
+    if (result === "ok" && await backfillArchive(st)) {
+      archived++;
+      report.push(`ARKIV ${cell.subquestion_id} × ${cell.party} · ${st.id}: ${st.source.archive_url}`);
+    }
   }
 }
 
-console.log(`Källröta-kontroll ${today}: ${checked} statements, ${byUrl.size} URL:er, ${changed} statusändringar.`);
+console.log(`Källröta-kontroll ${today}: ${checked} statements, ${byUrl.size} URL:er, ${changed} statusändringar, ${archived} nya arkiv.`);
 for (const line of report) console.log(`  ${line}`);
 
 if (!dryRun && checked > 0) {
   writeFileSync(STANCES_PATH, JSON.stringify(cells, null, 2) + "\n");
-  console.log(changed > 0
-    ? `Skrev ${STANCES_PATH}. Committa med "data: källröta-kontroll ${today} (${changed} ändringar)".`
+  const parts = [changed > 0 ? `${changed} ändringar` : "", archived > 0 ? `${archived} arkiv` : ""].filter(Boolean).join(", ");
+  console.log(parts
+    ? `Skrev ${STANCES_PATH}. Committa med "data: källröta-kontroll ${today} (${parts})".`
     : `Skrev ${STANCES_PATH} (endast source_checked_at).`);
 }
