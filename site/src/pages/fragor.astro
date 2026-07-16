@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import MetodLank from "../components/MetodLank.astro";
+import TomcellsNot from "../components/TomcellsNot.astro";
 import { getIssuesFile, getStances, issueCounts } from "../lib/stances";
 
 const issuesFile = getIssuesFile();
@@ -47,6 +48,8 @@ const jsonLd = [
     </div>
 
     <MetodLank />
+
+    <TomcellsNot />
 
     <section class="sektion">
       <h2>De stora frågorna</h2>
