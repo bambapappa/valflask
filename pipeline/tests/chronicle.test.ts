@@ -6,6 +6,7 @@ import {
   promiseIdsAddedInWeek,
   upsertChronicle,
   maybeGenerateWeekly,
+  totalFlasket,
   type ChronicleEntry,
 } from "../src/chronicle.ts";
 import type { PipelinePromise, ChangelogEntry } from "../src/publish.ts";
@@ -53,6 +54,14 @@ function promise(id: string, base: number): PipelinePromise {
   };
 }
 
+test("totalFlasket: samma regler som startsidan — grupp-dedup och aktiva (2026-07-16: krönikan sade 12 978 mdkr, startsidan 8 184)", () => {
+  const a = promise("p-1", 1000);                                   // 4000 över mandatperioden
+  const b = { ...promise("p-2", 500), group_id: "g1" };             // 2000
+  const c = { ...promise("p-3", 700), group_id: "g1" };             // dublett av g1 — räknas EJ
+  const d = { ...promise("p-4", 300), status: "tillbakadragen" as never }; // inaktiv — räknas EJ
+  assert.equal(totalFlasket([a, b, c, d]), 4000 + 2000);
+});
+
 const mockLlm = (payload: object): LlmClient => ({
   complete: async () => JSON.stringify(payload),
 }) as unknown as LlmClient;
@@ -67,13 +76,14 @@ test("maybeGenerateWeekly: genererar krönika för veckan ur nya löften", async
   const { chronicles, generated } = await maybeGenerateWeekly({
     now: NOW, allPromises: promises, changelog, existing: [],
     llm: mockLlm({ headline: "Rubrik", body_md: "Brödtext [p-2026-0001]." }),
-    copyModel: "copy-model", runId: "run-x",
+    copyModel: "copy-model", runId: "run-x", reformBudgetMsek: 2000,
   });
   assert.ok(generated);
   assert.equal(generated!.slug, "2026-27");
   assert.equal(generated!.headline, "Rubrik");
   assert.deepEqual(generated!.promise_ids.sort(), ["p-2026-0001", "p-2026-0002"]);
   assert.equal(generated!.total_msek, (1000 + 2000) * 4); // ×4 mandatperiod
+  assert.equal(generated!.gap_msek, (1000 + 2000) * 4 - 2000, "gap = Fläsket − reformbudget (samma som startsidan)");
   assert.equal(chronicles.length, 1);
 });
 
@@ -81,7 +91,7 @@ test("maybeGenerateWeekly: hoppar om krönika redan finns för veckan", async ()
   const existing: ChronicleEntry[] = [{ year: 2026, week: 27, slug: "2026-27", headline: "Finns", body_md: "x", promise_ids: [], total_msek: 0, gap_msek: 0, generated_at: "", run_id: "r" }];
   const { generated } = await maybeGenerateWeekly({
     now: NOW, allPromises: promises, changelog, existing,
-    llm: mockLlm({ headline: "Ny", body_md: "x" }), copyModel: "m", runId: "r",
+    llm: mockLlm({ headline: "Ny", body_md: "x" }), copyModel: "m", runId: "r", reformBudgetMsek: 2000,
   });
   assert.equal(generated, null);
 });
@@ -89,7 +99,7 @@ test("maybeGenerateWeekly: hoppar om krönika redan finns för veckan", async ()
 test("maybeGenerateWeekly: inget genereras om inga nya löften i veckan", async () => {
   const { generated } = await maybeGenerateWeekly({
     now: NOW, allPromises: promises, changelog: [], existing: [],
-    llm: mockLlm({ headline: "x", body_md: "x" }), copyModel: "m", runId: "r",
+    llm: mockLlm({ headline: "x", body_md: "x" }), copyModel: "m", runId: "r", reformBudgetMsek: 2000,
   });
   assert.equal(generated, null);
 });
