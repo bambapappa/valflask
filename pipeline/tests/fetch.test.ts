@@ -24,7 +24,7 @@ import {
   type HttpFetchFn,
   type RobotsRule,
 } from "../src/fetch.ts";
-import { createArchiveFn, type ArchiveResult } from "../src/archive.ts";
+import { archiveViaWayback, type ArchiveResult } from "../src/archive.ts";
 
 /* ──────────────────────── Fixturer ── */
 
@@ -282,8 +282,7 @@ describe("Wayback archive med retry/backoff", () => {
       });
     };
 
-    const archiveFn = createArchiveFn(mockFetch, 1000);
-    const result = await archiveFn("https://example.com/article");
+    const result = await archiveViaWayback("https://example.com/article", mockFetch);
 
     assert.equal(attempts, 3, "Tre försök");
     assert.ok(result.retry === false || result.archive_url !== null);
@@ -293,8 +292,7 @@ describe("Wayback archive med retry/backoff", () => {
     const mockFetch: HttpFetchFn = async () =>
       new Response("Service Unavailable", { status: 503 });
 
-    const archiveFn = createArchiveFn(mockFetch, 100);
-    const result = await archiveFn("https://example.com/article");
+    const result = await archiveViaWayback("https://example.com/article", mockFetch);
 
     assert.equal(result.archive_url, null);
     assert.equal(result.retry, true);
@@ -308,15 +306,13 @@ describe("Wayback archive med retry/backoff", () => {
       });
 
     // Simulate redirect by mocking url property
-    const archiveFn = createArchiveFn(async (url: string, init?: RequestInit) => {
+    const result = await archiveViaWayback("https://example.com/article", async (url: string, init?: RequestInit) => {
       const res = await mockFetch(url, init);
       Object.defineProperty(res, "url", {
         value: "https://web.archive.org/web/20260612060000/https://example.com",
       });
       return res;
-    }, 100);
-
-    const result = await archiveFn("https://example.com/article");
+    });
     assert.ok(result.archive_url?.includes("web.archive.org"));
     assert.equal(result.retry, false);
   });

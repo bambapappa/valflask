@@ -21,6 +21,7 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { extractPdfText } from "../src/fetch.ts";
 import { normalizeForVerbatim, withPageAnchor } from "../src/gates.ts";
+import { archiveViaArchiveToday } from "../src/archive.ts";
 import { validateStanceInvariants, type IssuesFile, type StanceCell } from "../src/stances.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
@@ -200,11 +201,17 @@ for (const r of needArchive) {
         snap = await availability(base);
       }
     }
+    // Fallback: det Wayback vägrar (robots/rate) provar vi mot archive.today.
+    if (!snap) {
+      console.log(`  archive.today-fallback: ${base}`);
+      const today = await archiveViaArchiveToday(base);
+      if (today.archive_url) snap = today.archive_url;
+    }
     if (snap) snapshotByBase.set(base, snap);
     await sleep(3000);
   }
   if (!snap) {
-    console.log(`  – arkiv saknas fortfarande: ${r.label} (${base})`);
+    console.log(`  – arkiv saknas fortfarande (Wayback + archive.today): ${r.label} (${base})`);
     continue;
   }
   const page = chunkStart(r.source.url);
