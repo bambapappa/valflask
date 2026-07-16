@@ -1,0 +1,38 @@
+---
+/**
+ * Förklaring till tomma celler (ägarbeslut 2026-07-15). Med ojämn täckning
+ * ser en besökare mest "besked saknas" — utan kontext kan det missläsas som
+ * att ett parti gömmer sig, eller att färre besked = mer svävande parti. Det
+ * senare vore en oavsiktlig värdering (täckningen speglar hur lätt källorna
+ * var att hitta, inte partiernas transparens). Rutan är identisk överallt.
+ */
+---
+<aside class="tomcells-not">
+  <div class="etikett num">OM TOMMA RADER</div>
+  <p>
+    Vi publicerar ett besked bara när ett parti sagt det <strong>ordagrant</strong> i en
+    publicerad källa. <em>”Besked saknas”</em> betyder att vi ännu inte hittat ett sådant
+    uttalande i just den frågan — inte att partiet saknar åsikt, och inte att det gömmer sig.
+    Att ett parti har färre besked kan lika gärna bero på att dess källor varit svårare att
+    hitta. Datumet vid varje tom cell visar när vi senast letade; vi fortsätter fylla på och
+    <strong>gissar aldrig</strong> ett svar.
+  </p>
+</aside>
+
+<style>
+  .tomcells-not {
+    border: 1px solid var(--svarta);
+    border-left: 4px solid var(--svarta);
+    padding: 0.75rem 1rem;
+    margin: 1.5rem 0;
+    background: var(--papper);
+  }
+  .tomcells-not .etikett {
+    margin-bottom: 0.35rem;
+  }
+  .tomcells-not p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--grafit);
+  }
+</style>
