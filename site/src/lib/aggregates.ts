@@ -52,11 +52,13 @@ export function dedupeByGroup(promises: PromisePost[]): PromisePost[] {
 }
 
 export function totalFlasket(promises: PromisePost[]): number {
-  return dedupeByGroup(promises).filter((p) => isCostType(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+  // isActive-filtret speglas i pipelinens chronicle.totalFlasket — krönikan
+  // och startsidan får aldrig räkna olika (extern granskning 2026-07-16).
+  return dedupeByGroup(promises.filter(isActive)).filter((p) => isCostType(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
 }
 
 export function totalBesparingar(promises: PromisePost[]): number {
-  return dedupeByGroup(promises).filter((p) => isBesparing(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+  return dedupeByGroup(promises.filter(isActive)).filter((p) => isBesparing(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
 }
 
 /**

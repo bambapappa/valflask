@@ -1,5 +1,7 @@
 import { test, describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync, existsSync } from "node:fs";
+import { join, resolve } from "node:path";
 import {
   isoWeek,
   weekSlug,
@@ -60,6 +62,29 @@ test("totalFlasket: samma regler som startsidan — grupp-dedup och aktiva (2026
   const c = { ...promise("p-3", 700), group_id: "g1" };             // dublett av g1 — räknas EJ
   const d = { ...promise("p-4", 300), status: "tillbakadragen" as never }; // inaktiv — räknas EJ
   assert.equal(totalFlasket([a, b, c, d]), 4000 + 2000);
+});
+
+// ── Datainvariant (extern granskning 2026-07-16: krönikan sade gap = total =
+// 12 978 mdkr där startsidan sade 7 864): VARJE publicerad krönikpost måste
+// uppfylla gap = max(0, total − reformbudget). Skulle reformbudget-konstanten
+// någon gång omdefinieras måste historiska poster ses över — det är avsiktligt
+// att detta test då säger ifrån i stället för att tiga.
+test("chronicles.json (verklig data): gap_msek = total_msek − reformbudget för varje post", () => {
+  const DATA = resolve(import.meta.dirname, "../../data");
+  if (!existsSync(join(DATA, "chronicles.json"))) return; // färsk miljö utan data
+  const chronicles = JSON.parse(readFileSync(join(DATA, "chronicles.json"), "utf8")) as ChronicleEntry[];
+  const constants = JSON.parse(readFileSync(join(DATA, "constants.json"), "utf8")) as {
+    reformutrymme_msek_per_ar?: { value?: number };
+  };
+  const budget = (constants.reformutrymme_msek_per_ar?.value ?? 0) * 4;
+  assert.ok(budget > 0, "reformutrymme_msek_per_ar saknas i constants.json");
+  for (const e of chronicles) {
+    assert.equal(
+      e.gap_msek,
+      Math.max(0, e.total_msek - budget),
+      `${e.slug}: gap_msek (${e.gap_msek}) ≠ total_msek (${e.total_msek}) − reformbudget (${budget})`,
+    );
+  }
 });
 
 const mockLlm = (payload: object): LlmClient => ({
