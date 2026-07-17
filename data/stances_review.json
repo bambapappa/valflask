@@ -70,5 +70,30 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-akassa",
+      "party": "sd",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Vi kommer inte att acceptera försämringar av a-kassan. Det gäller bland annat förslag från andra partier om skärpta tidsgränser, snabbare nedtrappning av ersättningen eller slopad avdragsrätt för medlemsavgiften.",
+      "person": null
+    },
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "sourceUrl": "https://sd.se/vad-vi-vill/",
+    "archiveUrl": null,
+    "dateStated": "2026-07-17",
+    "extractModel": "deepseek/deepseek-v4-pro",
+    "verifyModel": "moonshotai/kimi-k2.7-code",
+    "runId": "run-2026-07-17-16-22",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet tar ställning mot försämringar av a-kassan men säger inget om taket ska höjas, så det utgör inget besked på denna delfråga."
+      }
+    ],
+    "verifyReason": "Citatet tar ställning mot försämringar av a-kassan men säger inget om taket ska höjas, så det utgör inget besked på denna delfråga."
   }
 ]
