@@ -139,6 +139,24 @@ export interface Chronicle {
   gap_msek: number;
   generated_at: string;
   run_id: string;
+  /** Synlig rättelsenot — tyst rättelse är förbjuden. */
+  correction_note?: string;
+}
+
+export interface Rattelse {
+  date: string;
+  affects: string;
+  what: string;
+  why: string;
+}
+
+/** Rättelselogg. Saknas filen (inga rättelser ännu) → tom lista. */
+export function getRattelser(): Rattelse[] {
+  try {
+    return loadData<Rattelse[]>("rattelser.json");
+  } catch {
+    return [];
+  }
 }
 
 /** Veckokrönikor. Saknas filen (innan första körningen) → tom lista. */

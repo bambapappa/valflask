@@ -21,6 +21,8 @@ export interface ChronicleEntry {
   gap_msek: number;
   generated_at: string;
   run_id: string;
+  /** Synlig rättelsenot (tyst rättelse är förbjuden); sätts manuellt vid rättelse. */
+  correction_note?: string;
 }
 
 /** ISO-8601 vecka (måndag–söndag, vecka 1 = veckan med årets första torsdag). */
@@ -41,6 +43,22 @@ const mult = (p: PipelinePromise): number => (p.cost.period === "per_ar" ? 4 : 1
 const promiseTotal = (p: PipelinePromise): number => p.cost.msek_base * mult(p);
 const isCostType = (p: PipelinePromise): boolean =>
   p.cost.type === "utgift" || p.cost.type === "intäktsminskning";
+const isActive = (p: PipelinePromise): boolean =>
+  (p as { status?: string }).status !== "tillbakadragen";
+
+/** R3 — samma regel som sajtens aggregates.ts: en grupp räknas EN gång. */
+function dedupeByGroup(promises: PipelinePromise[]): PipelinePromise[] {
+  const seen = new Set<string>();
+  const out: PipelinePromise[] = [];
+  for (const p of promises) {
+    if (p.group_id) {
+      if (seen.has(p.group_id)) continue;
+      seen.add(p.group_id);
+    }
+    out.push(p);
+  }
+  return out;
+}
 
 /** Löftes-id:n som LADES TILL under en given ISO-vecka (ur changelog-tidsstämplar). */
 export function promiseIdsAddedInWeek(
@@ -74,8 +92,14 @@ export function chronicleUnderlag(weekPromises: PipelinePromise[]): string {
   return JSON.stringify(rows);
 }
 
+/**
+ * Fläsket totalt — SAMMA definition som sajtens startsida (aggregates.ts):
+ * grupp-dedup (R3), endast aktiva löften, endast utgift/intäktsminskning.
+ * Krönikan och startsidan får aldrig visa olika totalsummor (extern
+ * granskning 2026-07-16: krönikan sade 12 978 mdkr, startsidan 8 184).
+ */
 export function totalFlasket(promises: PipelinePromise[]): number {
-  return promises.filter(isCostType).reduce((s, p) => s + promiseTotal(p), 0);
+  return dedupeByGroup(promises.filter(isActive)).filter(isCostType).reduce((s, p) => s + promiseTotal(p), 0);
 }
 
 /** Lägg till eller ersätt krönikan för dess vecka (idempotent per slug). */
@@ -102,9 +126,11 @@ export async function maybeGenerateWeekly(opts: {
   llm: LlmClient;
   copyModel: string;
   runId: string;
+  /** Regeringens reformbudget för hela mandatperioden (msek) — ur constants.json. */
+  reformBudgetMsek: number;
   force?: boolean;
 }): Promise<{ chronicles: ChronicleEntry[]; generated: ChronicleEntry | null }> {
-  const { now, allPromises, changelog, existing, llm, copyModel, runId, force } = opts;
+  const { now, allPromises, changelog, existing, llm, copyModel, runId, reformBudgetMsek, force } = opts;
   const { year, week } = isoWeek(now);
   const slug = weekSlug(year, week);
 
@@ -116,9 +142,13 @@ export async function maybeGenerateWeekly(opts: {
   const weekPromises = allPromises.filter((p) => weekIds.has(p.id));
   if (weekPromises.length === 0) return { chronicles: existing, generated: null };
 
+  // Gap = Fläsket minus reformbudgeten — SAMMA definition som startsidans
+  // hjältegrafik, så att sajten aldrig visar två olika gap-siffror.
   const total = totalFlasket(allPromises);
-  const gap = total; // besparingar/finansiering ~0 i praktiken; R4 ≈ Fläsket
-  const gapText = `${(gap / 1000).toFixed(0)} mdkr (Fläsket ${(total / 1000).toFixed(0)} mdkr)`;
+  const gap = Math.max(0, total - reformBudgetMsek);
+  const gapText =
+    `Fläsket totalt ${(total / 1000).toFixed(0)} mdkr; regeringens reformbudget ` +
+    `${(reformBudgetMsek / 1000).toFixed(0)} mdkr för mandatperioden; finansieringsgap ≈ ${(gap / 1000).toFixed(0)} mdkr`;
 
   let chron;
   try {

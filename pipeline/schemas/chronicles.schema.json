@@ -21,7 +21,8 @@
       "total_msek": { "type": "number", "minimum": 0 },
       "gap_msek": { "type": "number" },
       "generated_at": { "type": "string" },
-      "run_id": { "type": "string", "minLength": 1 }
+      "run_id": { "type": "string", "minLength": 1 },
+      "correction_note": { "type": "string", "minLength": 10, "description": "Synlig rättelsenot på krönikans sida (tyst rättelse är förbjuden). Sätts manuellt vid rättelse; listas även på /rattelser." }
     }
   }
 }

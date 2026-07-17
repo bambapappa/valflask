@@ -20,6 +20,7 @@ import { join, resolve } from "node:path";
 import { extractPdfText, looksLikePdf, stripHtml } from "../src/fetch.ts";
 import { normalizeForVerbatim } from "../src/gates.ts";
 import { archiveWithFallback } from "../src/archive.ts";
+import { snapshotBacksQuote } from "../src/archive-verify.ts";
 import type { StanceCell } from "../src/stances.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
@@ -50,7 +51,9 @@ async function checkUrl(url: string, quote: string): Promise<CheckResult> {
   let text: string;
   if (looksLikePdf(res.headers.get("content-type"), bytes)) {
     try {
-      text = (await extractPdfText(bytes)).text;
+      // OBS: PdfExtract har `pages`, inte `text` — .text gav undefined och
+      // hade kraschat körningen på första PDF-källan (26 av 52 statements).
+      text = (await extractPdfText(bytes)).pages.join("\n");
     } catch {
       return "obestamd";
     }
@@ -88,6 +91,9 @@ async function backfillArchive(st: StanceCell["statements"][number]): Promise<bo
     archiveByBase.set(base, snap);
   }
   if (!snap) return false;
+  // Arkivet accepteras ENDAST om citatet står ordagrant i snapshotten —
+  // availability/newest kan ge en kopia som är äldre än sidinnehållet.
+  if ((await snapshotBacksQuote(snap, st.quote)) !== true) return false;
   const frag = st.source.url.includes("#") ? "#" + st.source.url.split("#")[1] : "";
   st.source.archive_url = snap + frag;
   return true;

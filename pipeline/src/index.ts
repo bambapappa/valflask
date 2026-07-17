@@ -386,6 +386,12 @@ export async function runPipeline(
     const fullChangelog = JSON.parse(
       readFileSync(`${ctx.outputDir}/changelog.json`, "utf8"),
     ) as ChangelogEntry[];
+    // Reformbudgeten (per år, ur constants.json) × 4 = mandatperiodens utrymme —
+    // samma tal som startsidans "Att satsa", så krönikans gap matchar hjältegrafiken.
+    const constants = JSON.parse(readFileSync(`${ctx.outputDir}/constants.json`, "utf8")) as {
+      reformutrymme_msek_per_ar?: { value?: number };
+    };
+    const reformBudgetMsek = (constants.reformutrymme_msek_per_ar?.value ?? 0) * 4;
     const { chronicles, generated } = await maybeGenerateWeekly({
       now: ctx.now,
       allPromises: publishResult.promises,
@@ -394,6 +400,7 @@ export async function runPipeline(
       llm: ctx.llm,
       copyModel: ctx.models.copy,
       runId: ctx.runId,
+      reformBudgetMsek,
     });
     if (generated) {
       writeFileSync(`${ctx.outputDir}/chronicles.json`, JSON.stringify(chronicles, null, 2) + "\n");

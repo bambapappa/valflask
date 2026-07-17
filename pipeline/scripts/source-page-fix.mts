@@ -22,6 +22,7 @@ import { createHash } from "node:crypto";
 import { extractPdfText } from "../src/fetch.ts";
 import { normalizeForVerbatim, withPageAnchor } from "../src/gates.ts";
 import { archiveViaArchiveToday } from "../src/archive.ts";
+import { snapshotBacksQuote } from "../src/archive-verify.ts";
 import { validateStanceInvariants, type IssuesFile, type StanceCell } from "../src/stances.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
@@ -188,30 +189,40 @@ async function requestSave(url: string): Promise<string | null> {
 const needArchive = stanceRecords.filter((r) => !r.source.archive_url);
 console.log(`\nStance-poster utan arkiv: ${needArchive.length}`);
 let archivesSet = 0;
+
+/** Ett arkiv accepteras ENDAST om citatet står ordagrant i snapshotten —
+ * availability ger NÄRMASTE kopia, som kan vara äldre än sidinnehållet
+ * (extern granskning 2026-07-16: 4 av 25 HTML-arkiv backade inte sitt citat). */
+async function verified(snap: string | null, quote: string): Promise<string | null> {
+  if (!snap) return null;
+  return (await snapshotBacksQuote(snap, quote)) === true ? snap : null;
+}
+
 for (const r of needArchive) {
   const base = stripFrag(r.source.url);
-  let snap = snapshotByBase.get(base) ?? null;
-  if (!snap && !DRY_RUN) {
-    snap = await availability(base);
+  let snap: string | null = null;
+  if (!DRY_RUN) {
+    // Ordning: (1) redan känd kopia i datat, (2) befintlig hos Wayback,
+    // (3) färsk save, (4) archive.today — allt citat-verifierat per post.
+    snap = await verified(snapshotByBase.get(base) ?? null, r.quote);
+    if (!snap) snap = await verified(await availability(base), r.quote);
     if (!snap) {
       console.log(`  save: ${base}`);
-      snap = await requestSave(base);
+      snap = await verified(await requestSave(base), r.quote);
       if (!snap) {
         await sleep(30000); // indexering hinner ikapp
-        snap = await availability(base);
+        snap = await verified(await availability(base), r.quote);
       }
     }
-    // Fallback: det Wayback vägrar (robots/rate) provar vi mot archive.today.
     if (!snap) {
       console.log(`  archive.today-fallback: ${base}`);
-      const today = await archiveViaArchiveToday(base);
-      if (today.archive_url) snap = today.archive_url;
+      snap = await verified((await archiveViaArchiveToday(base)).archive_url, r.quote);
     }
     if (snap) snapshotByBase.set(base, snap);
     await sleep(3000);
   }
   if (!snap) {
-    console.log(`  – arkiv saknas fortfarande (Wayback + archive.today): ${r.label} (${base})`);
+    console.log(`  – citat-backat arkiv saknas fortfarande: ${r.label} (${base})`);
     continue;
   }
   const page = chunkStart(r.source.url);
