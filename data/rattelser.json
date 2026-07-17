@@ -1,0 +1,20 @@
+[
+ {
+  "date": "2026-07-17",
+  "affects": "/veckans-flask/2026-27 och /veckans-flask/2026-28",
+  "what": "Finansieringsgapet i båda veckokrönikorna angavs till samma belopp som totalsumman. Rättat till totalsumman minus regeringens reformbudget (320 miljarder för mandatperioden), beräknat med respektive veckas dåvarande underlag: v27 gap 12 739 miljarder, v28 total 12 057 och gap 11 737 miljarder.",
+  "why": "Formelfel i krönikegenereringen: gap sattes lika med totalsumman, och totalsumman räknade inte bort dubbletter där flera partier lovar samma politik. Genereringen räknar nu med exakt samma regler som vågmätaren på startsidan, och ett automatiskt test vaktar sambandet gap = total − reformbudget för varje publicerad krönika."
+ },
+ {
+  "date": "2026-07-17",
+  "affects": "/veckans-flask/2026-28",
+  "what": "Rubriken ”Miljöpartiet öser miljarder – bredband och skolavskaffande toppar veckan” rättad till ”… bredband och avskaffad marknadsskola toppar veckan”.",
+  "why": "Miljöpartiets löfte gäller att avskaffa marknadsskolan, inte skolan. Rubrikkomprimeringen ändrade innebörden. Krönikegeneratorn har fått en uttrycklig regel: ett löftes egna nyckelord får aldrig komprimeras så att innebörden ändras."
+ },
+ {
+  "date": "2026-07-17",
+  "affects": "Frågevågen: fyra besked (S sjukvård-vinst, S kärnkraft, C kärnkraft, KD värnplikt)",
+  "what": "Fyra arkivlänkar togs bort eftersom arkivkopiorna var äldre än sidinnehållet och inte innehöll citatet. Beskeden och källänkarna står kvar; nya arkivkopior sätts så snart en kopia som faktiskt innehåller citatet kan verifieras.",
+  "why": "Arkivtjänstens ”närmaste kopia” kan vara äldre än det citerade innehållet. Hela kedjan kräver nu att citatet står ordagrant i själva arkivkopian innan en arkivlänk publiceras — hellre en synlig lucka än en länk som ser ut som bevis men inte är det."
+ }
+]

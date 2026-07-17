@@ -21,6 +21,8 @@ export interface ChronicleEntry {
   gap_msek: number;
   generated_at: string;
   run_id: string;
+  /** Synlig rättelsenot (tyst rättelse är förbjuden); sätts manuellt vid rättelse. */
+  correction_note?: string;
 }
 
 /** ISO-8601 vecka (måndag–söndag, vecka 1 = veckan med årets första torsdag). */

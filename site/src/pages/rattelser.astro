@@ -1,5 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getRattelser } from "../lib/data";
+
+const rattelser = [...getRattelser()].sort((a, b) => (a.date < b.date ? 1 : -1));
 
 const jsonLd = [
   {
@@ -24,7 +27,17 @@ const jsonLd = [
       <p>Partier, journalister och allmänhet kan anmäla fel via kontaktuppgifterna på <a href="/press">press-sidan</a>. Varje anmälan kontrolleras mot källan innan vi publicerar en rättelse.</p>
 
       <h2>Registrerade rättelser</h2>
-      <p>Inga rättelser har registrerats ännu.</p>
+      {rattelser.length === 0 ? (
+        <p>Inga rättelser har registrerats ännu.</p>
+      ) : (
+        rattelser.map((r) => (
+          <article class="rattelse">
+            <div class="etikett num">{r.date} · {r.affects}</div>
+            <p><strong>Vad:</strong> {r.what}</p>
+            <p><strong>Varför:</strong> {r.why}</p>
+          </article>
+        ))
+      )}
     </div>
   </div>
 </Layout>
@@ -32,5 +45,14 @@ const jsonLd = [
 <style>
   .prosa-content--centered {
     margin: 0 auto;
+  }
+  .rattelse {
+    border-top: 1px solid var(--svarta);
+    padding: 0.75rem 0 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .rattelse p {
+    margin: 0.4rem 0;
+    font-size: 0.95rem;
   }
 </style>

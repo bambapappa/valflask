@@ -65,6 +65,13 @@ const jsonLd = [
       <div class="etikett etikett--week">Veckans fläsk · Vecka {week} {year}</div>
       <h1>{chronicle.headline}</h1>
 
+      {chronicle.correction_note && (
+        <aside class="rattelse-not">
+          <div class="etikett num">RÄTTAD</div>
+          <p>{chronicle.correction_note} <a href="/rattelser">Rättelseloggen</a>.</p>
+        </aside>
+      )}
+
       <article class="kronika" set:html={bodyHtml} />
 
       <MetodLank />
@@ -80,6 +87,17 @@ const jsonLd = [
   }
   .etikett--week {
     margin-bottom: 0.5rem;
+  }
+  .rattelse-not {
+    border: 1px solid var(--svarta);
+    border-left: 4px solid var(--svarta);
+    padding: 0.75rem 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .rattelse-not p {
+    margin: 0.35rem 0 0;
+    font-size: 0.9rem;
+    color: var(--grafit);
   }
   .kronika :global(p) {
     margin: 0 0 1rem;
