@@ -16356,5 +16356,49 @@
       "verified_by": "owner",
       "run_id": "review-2026-07-17T11"
     }
+  },
+  {
+    "id": "p-2026-0486",
+    "group_id": null,
+    "title": "Avskaffa elskatten helt",
+    "slug": "avskaffa-elskatten-helt",
+    "parties": [
+      "sd"
+    ],
+    "person": null,
+    "quote": "Elskatten tas successivt bort helt och övriga elavgifter ses över.",
+    "date_stated": "2026-07-17",
+    "source": {
+      "url": "https://www.sd.se/wp-content/uploads/2026/07/valplattform-2026.pdf#page=1",
+      "domain": "sd.se",
+      "archive_url": null,
+      "fetched_at": "2026-07-17T11:12:57.998Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 20000,
+      "msek_base": 25000,
+      "msek_high": 35000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Elskatten (energiskatt på el) beräknas ge ca 25 mdkr årligen. Uppskattning baserat på historiska skatteintäkter och elförbrukning.",
+      "confidence": 0.65
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-07-17T11"
+    }
   }
 ]
