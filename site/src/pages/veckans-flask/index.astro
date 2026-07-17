@@ -1,0 +1,77 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getChronicles } from "../../lib/data";
+import { formatMsek } from "../../lib/calc";
+
+// Nyast först (chronicles.json är redan sorterad så, men lita inte på det).
+const chronicles = [...getChronicles()].sort((a, b) => b.slug.localeCompare(a.slug));
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Veckans fläsk", "item": "https://drygast.nu/veckans-flask" },
+    ],
+  },
+];
+---
+<Layout
+  title="Veckans fläsk — alla veckokrönikor — drygast.nu"
+  description="Varje vecka väger vi in veckans nya vallöften: vad som lovades, vad det kostar och var totalen står. Alla krönikor i tidsordning."
+  jsonLd={jsonLd}
+  canonicalPath="/veckans-flask"
+>
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Veckans fläsk</h1>
+      <p>
+        Varje vecka med nya löften vägs in: vad som lovades, vad det kostar och var totalen
+        står. Krönikorna är ögonblicksbilder — beloppen speglar vågens läge den veckan, och
+        rättas något i efterhand syns det öppet på krönikan och i <a href="/rattelser">rättelseloggen</a>.
+      </p>
+    </div>
+
+    <section class="sektion">
+      {chronicles.length === 0 ? (
+        <p class="prosa-content">Första krönikan publiceras när veckans första löften vägts in.</p>
+      ) : (
+        chronicles.map((c) => (
+          <article class="kronikarad">
+            <div class="etikett num">
+              VECKA {c.week} {c.year}
+              {c.correction_note && <> · RÄTTAD</>}
+            </div>
+            <h2><a href={`/veckans-flask/${c.slug}`}>{c.headline}</a></h2>
+            <p class="etikett kronikarad__meta num">
+              {c.promise_ids.length} löften i veckan · fläsket då {formatMsek(c.total_msek)}
+            </p>
+          </article>
+        ))
+      )}
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 1.5rem auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .kronikarad {
+    border-top: 2px solid var(--svarta);
+    padding: 1rem 0;
+  }
+  .kronikarad h2 {
+    margin: 0.35rem 0;
+  }
+  .kronikarad h2 a {
+    text-decoration: none;
+  }
+  .kronikarad__meta {
+    color: var(--grafit);
+  }
+</style>
