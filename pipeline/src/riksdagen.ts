@@ -1,0 +1,161 @@
+/**
+ * Klient mot riksdagens öppna data (data.riksdagen.se).
+ * Deterministisk och testbar: all nätverksåtkomst går via injicerbar fetch.
+ */
+
+export type HttpFetch = (url: string) => Promise<{ status: number; text(): Promise<string> }>;
+
+const BASE = "https://data.riksdagen.se";
+
+/** Dokumenttyper vi skördar. bet (betänkanden) hämtas för voteringskoppling. */
+export type DokTyp = "mot" | "prop" | "ip" | "fr" | "bet";
+
+export interface RdDokument {
+  dok_id: string;
+  doktyp: string;
+  rm: string;
+  datum: string;
+  titel: string;
+  undertitel?: string;
+  organ?: string;
+  dokument_url_html?: string;
+  dokument_url_text?: string;
+  /** Intressenter (motionärer m.fl.) med parti. */
+  intressenter: Array<{ namn: string; partibet: string; intressent_id?: string; roll?: string }>;
+}
+
+export interface RdVoteringRad {
+  votering_id: string;
+  rm: string;
+  beteckning: string;
+  punkt: number;
+  namn: string;
+  intressent_id: string;
+  parti: string;
+  valkrets: string;
+  rost: "Ja" | "Nej" | "Avstår" | "Frånvarande";
+  avser: string;
+  datum?: string;
+}
+
+export interface RdPerson {
+  intressent_id: string;
+  tilltalsnamn: string;
+  efternamn: string;
+  parti: string;
+  valkrets: string;
+  status?: string;
+}
+
+function asArray<T>(x: T | T[] | undefined | null): T[] {
+  if (x === undefined || x === null) return [];
+  return Array.isArray(x) ? x : [x];
+}
+
+async function getJson(fetcher: HttpFetch, url: string): Promise<unknown> {
+  const res = await fetcher(url);
+  if (res.status !== 200) throw new Error(`riksdagen ${res.status}: ${url}`);
+  return JSON.parse(await res.text());
+}
+
+/** Tolkar en dokumentlista-sida till typade dokument. Exporterad för tester. */
+export function parseDokumentLista(payload: unknown): { dokument: RdDokument[]; nextUrl: string | null } {
+  const dl = (payload as { dokumentlista?: Record<string, unknown> }).dokumentlista;
+  if (!dl) throw new Error("svar utan dokumentlista");
+  const docs = asArray(dl["dokument"] as Record<string, unknown> | Array<Record<string, unknown>> | undefined).map(
+    (d): RdDokument => {
+      const intress = d["dokintressent"] as { intressent?: unknown } | undefined;
+      return {
+        dok_id: String(d["dok_id"] ?? d["id"] ?? ""),
+        doktyp: String(d["doktyp"] ?? ""),
+        rm: String(d["rm"] ?? ""),
+        datum: String(d["datum"] ?? "").slice(0, 10),
+        titel: String(d["titel"] ?? ""),
+        ...(d["undertitel"] ? { undertitel: String(d["undertitel"]) } : {}),
+        ...(d["organ"] ? { organ: String(d["organ"]) } : {}),
+        ...(d["dokument_url_html"] ? { dokument_url_html: String(d["dokument_url_html"]) } : {}),
+        ...(d["dokument_url_text"] ? { dokument_url_text: String(d["dokument_url_text"]) } : {}),
+        intressenter: asArray(intress?.intressent as Record<string, unknown> | Array<Record<string, unknown>> | undefined).map((i) => ({
+          namn: String(i["namn"] ?? ""),
+          partibet: String(i["partibet"] ?? "").toLowerCase(),
+          ...(i["intressent_id"] ? { intressent_id: String(i["intressent_id"]) } : {}),
+          ...(i["roll"] ? { roll: String(i["roll"]) } : {}),
+        })),
+      };
+    },
+  );
+  const next = dl["@nasta_sida"];
+  return { dokument: docs, nextUrl: typeof next === "string" && next.length > 0 ? next : null };
+}
+
+/** Hämtar samtliga dokument av en typ för ett riksmöte, med paginering. */
+export async function fetchDokument(
+  fetcher: HttpFetch,
+  doktyp: DokTyp,
+  rm: string,
+  opts: { maxPages?: number } = {},
+): Promise<RdDokument[]> {
+  const out: RdDokument[] = [];
+  let url: string | null =
+    `${BASE}/dokumentlista/?doktyp=${doktyp}&rm=${encodeURIComponent(rm)}&sz=200&sort=datum&sortorder=asc&utformat=json`;
+  let pages = 0;
+  const maxPages = opts.maxPages ?? Infinity;
+  while (url && pages < maxPages) {
+    const parsed = parseDokumentLista(await getJson(fetcher, url));
+    out.push(...parsed.dokument);
+    url = parsed.nextUrl ? parsed.nextUrl.replace(/^http:/, "https:") : null;
+    pages += 1;
+  }
+  return out;
+}
+
+/** Tolkar voteringlista-rader. Exporterad för tester. */
+export function parseVoteringLista(payload: unknown): RdVoteringRad[] {
+  const vl = (payload as { voteringlista?: Record<string, unknown> }).voteringlista;
+  if (!vl) throw new Error("svar utan voteringlista");
+  return asArray(vl["votering"] as Record<string, unknown> | Array<Record<string, unknown>> | undefined).map((v) => ({
+    votering_id: String(v["votering_id"] ?? ""),
+    rm: String(v["rm"] ?? ""),
+    beteckning: String(v["beteckning"] ?? ""),
+    punkt: Number(v["punkt"] ?? 0),
+    namn: String(v["namn"] ?? ""),
+    intressent_id: String(v["intressent_id"] ?? ""),
+    parti: String(v["parti"] ?? "").toLowerCase(),
+    valkrets: String(v["valkrets"] ?? ""),
+    rost: String(v["rost"] ?? "") as RdVoteringRad["rost"],
+    avser: String(v["avser"] ?? ""),
+    ...(v["systemdatum"] ? { datum: String(v["systemdatum"]).slice(0, 10) } : {}),
+  }));
+}
+
+/** Hämtar alla röster (per ledamot) för ett betänkande, eller hela riksmötet punktvis. */
+export async function fetchVoteringar(
+  fetcher: HttpFetch,
+  rm: string,
+  opts: { beteckning?: string; punkt?: number; sz?: number } = {},
+): Promise<RdVoteringRad[]> {
+  const params = new URLSearchParams({ rm, sz: String(opts.sz ?? 10000), utformat: "json", gruppering: "" });
+  if (opts.beteckning) params.set("bet", opts.beteckning);
+  if (opts.punkt !== undefined) params.set("punkt", String(opts.punkt));
+  return parseVoteringLista(await getJson(fetcher, `${BASE}/voteringlista/?${params}`));
+}
+
+/** Hämtar ledamotsregistret. */
+export async function fetchPersoner(fetcher: HttpFetch): Promise<RdPerson[]> {
+  const payload = (await getJson(fetcher, `${BASE}/personlista/?utformat=json`)) as {
+    personlista?: { person?: unknown };
+  };
+  return asArray(payload.personlista?.person as Record<string, unknown> | Array<Record<string, unknown>> | undefined).map((p) => ({
+    intressent_id: String(p["intressent_id"] ?? ""),
+    tilltalsnamn: String(p["tilltalsnamn"] ?? ""),
+    efternamn: String(p["efternamn"] ?? ""),
+    parti: String(p["parti"] ?? "").toLowerCase(),
+    valkrets: String(p["valkrets"] ?? ""),
+    ...(p["status"] ? { status: String(p["status"]) } : {}),
+  }));
+}
+
+/** Publik webbadress för ett dokument (den vi visar och arkiverar). */
+export function dokumentUrl(dokId: string): string {
+  return `https://data.riksdagen.se/dokument/${dokId}`;
+}
