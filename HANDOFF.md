@@ -55,24 +55,29 @@ gratis, handlingar räknas. **Privat tills lanseringsgrinden HV5 passerats**
   annorlunda är flytten trivial (skripten läser GITHUB_REPOSITORY).
 
 **Nätblockering i denna miljö:** egressproxyn nekar data.riksdagen.se
-(403, organisationspolicy) — ingen skörd kan köras härifrån. Ägaren
-behöver tillåta värden i miljöns nätverkspolicy (claude.ai →
-miljöinställningar) eller köra skördarna i en miljö/lokalt där den nås.
+och openrouter.ai (403, organisationspolicy) — inga skördar eller
+modellanrop kan köras från sessionscontainern. **Lösningen är byggd:**
+skördar och förslagskörningar går som workflows på GitHubs runners
+(fritt utnät) — `skord.yml` respektive `foreslag.yml`, båda startas
+för hand under Actions-fliken. OpenRouter-nyckeln finns som hemlighet i
+valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
+in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
+Settings → Secrets and variables → Actions.
 
 Återstår (i ordning):
 
-1. **Röstskörd 2022/23–2025/26** — `npm run roster -- --rm 2022/23
-   --rm 2023/24 --rm 2024/25 --rm 2025/26`; verifiera fyra filer i
-   `data/roster/` + `data/personer.json`, committa. BLOCKERAD av
-   nätpolicyn ovan.
-2. **Betänkandeskörd** — `npm run harvest -- --rm 2022/23 --rm 2023/24
-   --rm 2024/25 --rm 2025/26 --typ bet`. Samma blockering. Kör aldrig
-   parallellt med annan skörd.
-3. **Skarpa förslagskörningar** (HV2) när ägaren satt nycklarna
-   (`OPENROUTER_API_KEY`, `MODEL_KOPPLING`):
-   `npm run foreslag -- --promises <valflask>/data/promises.json --alla`.
-   Voteringar prövas bara om betänkandeindexet finns (punkt 2). Efter
-   körning: committa kön och trigga `koppling-sync`-workflown.
+1. **Kör `skord`-workflown** (Actions → skord → Run workflow, typ
+   "bada"): röstskörden 2022/23–2025/26 + betänkandeskörden,
+   sekventiellt, committas av workflown. Verifiera efteråt: fyra filer
+   i `data/roster/`, `data/personer.json`, `data/betankanden.json`.
+2. **Lägg nycklarna i detta repo** (hemlighet `OPENROUTER_API_KEY`,
+   variabel `MODEL_KOPPLING`; valfritt fallback-hemligheterna) — kan
+   inte kopieras från valflask, hemligheter är oläsbara.
+3. **Kör `foreslag`-workflown** (HV2, gärna först med dry_run):
+   rankar dokument + voteringar (kräver betänkandeindexet från punkt
+   1), prövar grindarna, committar kön race-säkert
+   (`scripts/ko-uppdatera.mts` — avgjorda poster återuppstår aldrig)
+   och synkar issues med etiketten `koppling-kö` automatiskt.
 4. **Propositioner och H3**: alla 939 propositioner saknar parti
    (regeringen är avsändare). Hur de mappas mot regeringspartierna är
    en öppen metodfråga — beslutslogga innan kod.

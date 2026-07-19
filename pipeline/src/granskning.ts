@@ -173,6 +173,26 @@ export function godkannForslag(
   };
 }
 
+/**
+ * Nya poster ur en förslagskörning: de som finns i körningens resultat men
+ * inte i dess startläge (per stabil nyckel mål::handling).
+ */
+export function nyaKoPoster(start: KoPost[], resultat: KoPost[]): KoPost[] {
+  const kanda = new Set(start.map((p) => kopplingId(p)));
+  return resultat.filter((p) => !kanda.has(kopplingId(p)));
+}
+
+/**
+ * Lägger en körnings NYA poster på en färsk kö — och bara dem. Poster som
+ * ägaren hann avgöra medan körningen pågick (borta ur färska kön men kvar i
+ * körningens resultat) återuppstår aldrig: de fanns i startläget och räknas
+ * därför inte som nya. Används av foreslag-workflowns pushloop vid race.
+ */
+export function laggTillNyaKoPoster(farsk: KoPost[], start: KoPost[], resultat: KoPost[]): KoPost[] {
+  const iFarsk = new Set(farsk.map((p) => kopplingId(p)));
+  return [...farsk, ...nyaKoPoster(start, resultat).filter((p) => !iFarsk.has(kopplingId(p)))];
+}
+
 export interface AvvisaResultat {
   ko: KoPost[];
   post: KoPost;
