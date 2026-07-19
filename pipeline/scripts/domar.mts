@@ -12,6 +12,7 @@ import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
 import type { RdVoteringRad } from "../src/riksdagen.ts";
 import { computeLedamotMeriter, computePartiDomar, targetId, type Koppling } from "../src/domar.ts";
+import { avkodaRoster, type Person, type RmRoster } from "../src/roster.ts";
 
 function parseArgs(argv: string[]) {
   let promisesPath: string | undefined;
@@ -44,12 +45,16 @@ function main() {
     targetParties[t] = parties;
   }
 
+  // Röster i kompakt b-0012-format: personregister + röststrängar per riksmöte.
   const rosterDir = resolve(rot, "data/roster");
   const roster = new Map<string, RdVoteringRad[]>();
-  if (existsSync(rosterDir)) {
+  const registerPath = resolve(rot, "data/personer.json");
+  if (existsSync(rosterDir) && existsSync(registerPath)) {
+    const register: Person[] = JSON.parse(readFileSync(registerPath, "utf8"));
     for (const fil of readdirSync(rosterDir)) {
       if (!fil.endsWith(".json")) continue;
-      roster.set(fil.replace(/\.json$/u, ""), JSON.parse(readFileSync(resolve(rosterDir, fil), "utf8")));
+      const rmRoster: RmRoster = JSON.parse(readFileSync(resolve(rosterDir, fil), "utf8"));
+      for (const [vid, rader] of avkodaRoster(rmRoster, register)) roster.set(vid, rader);
     }
   }
 

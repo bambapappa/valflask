@@ -1,51 +1,61 @@
 /**
- * HV3-komplettering: hämtar per-ledamotsrösterna för KOPPLADE voteringar
- * till data/roster/<votering_id>.json. Bara voteringar som förekommer i
- * godkända kopplingar (data/kopplingar.json) hämtas — ledamotsmeriter
- * beräknas aldrig på voteringar ingen koppling pekar på.
+ * Röstskörd (b-0012): hämtar ALLA voteringars per-ledamotsröster för givna
+ * riksmöten och lagrar dem kompakt — data/roster/<riksmöte>.json med en
+ * röststräng per votering (J/N/A/F, "-" = satt ej i kammaren) plus det
+ * gemensamma personregistret data/personer.json.
  *
- *   npm run roster            # hämtar det som saknas
- *   npm run roster -- --om    # hämtar om även befintliga filer
+ *   npm run roster -- --rm 2022/23 --rm 2023/24
+ *   npm run roster -- --rm 2025/26 --limit 5     # rökprov
+ *
+ * Körningen är idempotent: riksmötesfilen skrivs om i sin helhet ur samma
+ * öppna data, personregistret merge-uppdateras.
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
-import { fetchVoteringRader, type HttpFetch } from "../src/riksdagen.ts";
-import type { Handling } from "../src/handlingar.ts";
-import type { Koppling } from "../src/domar.ts";
+import { fetchVoteringRader, fetchVoteringsIdn } from "../src/riksdagen.ts";
+import { RmRosterBygge, mergePersoner, rmFilnamn, type Person } from "../src/roster.ts";
+import { politeFetch } from "./hamta.mts";
 
-const politeFetch: HttpFetch = async (url) => {
-  await new Promise((r) => setTimeout(r, 300));
-  return fetch(url);
-};
+function parseArgs(argv: string[]) {
+  const rms: string[] = [];
+  let limit: number | undefined;
+  for (let i = 0; i < argv.length; i += 1) {
+    if (argv[i] === "--rm") rms.push(argv[++i]!);
+    else if (argv[i] === "--limit") limit = Number(argv[++i]);
+  }
+  if (rms.length === 0) rms.push("2025/26");
+  return { rms, limit };
+}
 
 async function main() {
-  const om = process.argv.includes("--om");
+  const { rms, limit } = parseArgs(process.argv.slice(2));
   const rot = resolve(import.meta.dirname, "../..");
-  const kopplingar: Koppling[] = JSON.parse(readFileSync(resolve(rot, "data/kopplingar.json"), "utf8"));
-  const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
-  const hById = new Map(handlingar.map((h) => [h.id, h]));
+  const registerPath = resolve(rot, "data/personer.json");
+  const rosterDir = resolve(rot, "data/roster");
+  mkdirSync(rosterDir, { recursive: true });
 
-  const voteringIdn = new Set<string>();
-  for (const k of kopplingar) {
-    if (k.status !== "aktiv") continue;
-    const h = hById.get(k.handling_id);
-    if (h?.kind === "votering" && h.votering_id) voteringIdn.add(h.votering_id);
+  for (const rm of rms) {
+    console.log(`röster ${rm} …`);
+    const idn = await fetchVoteringsIdn(politeFetch, rm);
+    const take = limit ? idn.slice(0, limit) : idn;
+    console.log(`  ${idn.length} voteringspunkter${limit ? `, tar ${take.length}` : ""}`);
+    const bygge = new RmRosterBygge(rm);
+    let done = 0;
+    for (const vid of take) {
+      bygge.laggTillVotering(await fetchVoteringRader(politeFetch, vid));
+      done += 1;
+      if (done % 50 === 0) console.log(`  … ${done}/${take.length}`);
+    }
+    const { roster, personer } = bygge.bygg();
+    writeFileSync(resolve(rosterDir, rmFilnamn(rm)), JSON.stringify(roster, null, 2) + "\n");
+    const register: Person[] = existsSync(registerPath) ? JSON.parse(readFileSync(registerPath, "utf8")) : [];
+    const uppdaterat = mergePersoner(register, personer);
+    writeFileSync(registerPath, JSON.stringify(uppdaterat, null, 2) + "\n");
+    console.log(
+      `  klart: ${roster.voteringar.length} voteringar, ${roster.personer.length} röstande, register ${uppdaterat.length} personer`,
+    );
   }
-  console.log(`${voteringIdn.size} kopplade voteringar`);
-
-  const dir = resolve(rot, "data/roster");
-  mkdirSync(dir, { recursive: true });
-  let hamtade = 0;
-  for (const vid of [...voteringIdn].sort()) {
-    const fil = resolve(dir, `${vid}.json`);
-    if (!om && existsSync(fil)) continue;
-    const rader = await fetchVoteringRader(politeFetch, vid);
-    rader.sort((a, b) => a.intressent_id.localeCompare(b.intressent_id));
-    writeFileSync(fil, JSON.stringify(rader, null, 2) + "\n");
-    hamtade += 1;
-  }
-  console.log(`klart: ${hamtade} hämtade, ${voteringIdn.size - hamtade} fanns redan`);
 }
 
 main().catch((err) => {

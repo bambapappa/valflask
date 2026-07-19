@@ -124,5 +124,18 @@
       "låta modellen söka fritt bland alla handlingar"
     ],
     "decided_by": "ägaren 2026-07-19"
+  },
+  {
+    "date": "2026-07-19",
+    "id": "b-0012",
+    "status": "fastställd",
+    "decision": "Per-ledamotsröster lagras kompakt i git: ett personregister (data/personer.json) plus en röststräng per votering (J/N/A/F, '-' = satt ej i kammaren) i data/roster/<riksmöte>.json. Täckningen är alla voteringar — bakåt till 2002/03 när skörden körs dit, och löpande framåt. Partibyten fångas per votering via avvikelselista. Dokumentens fulltexter lagras aldrig i bulk — de hämtas vid behov för citatkontroll och länkas/arkiveras.",
+    "why": "En röst är informationsmässigt ett tecken. Kompakt lagring gör hela mandatperioden ~1–2 MB och allt bakåt till 2002/03 ~10 MB — git och GitHub Pages räcker hela vägen, utan externa databaser eller tjänster som ska hållas vid liv till 2030. Spårbarheten består: varje röststräng bär voterings-id, klickbart till riksdagens egen post, och skördaren är deterministisk så filen kan räknas om av vem som helst.",
+    "alternatives": [
+      "rå radnivå-JSON per votering (~280 MB per mandatperiod — förkastad)",
+      "extern databas med urval på Pages (bryter git-spårbarheten, driftberoende — förkastad)",
+      "köpt LFS-lagring (Pages kan inte servera LFS — förkastad)"
+    ],
+    "decided_by": "ägaren 2026-07-19"
   }
 ]
