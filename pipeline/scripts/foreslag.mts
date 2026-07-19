@@ -1,8 +1,11 @@
 /**
- * Förslagssteget (HV2) som CLI: rankar kandidatdokument per löfte, låter
- * språkmodellen föreslå kopplingar med exakt citat, prövar H1–H5 och
- * lägger passerande förslag i kön data/kopplingsforslag.json — där de
- * väntar på ägarens beslut (H6). Ingenting skrivs till kopplingar.json här.
+ * Förslagssteget (HV2) som CLI: rankar kandidater per löfte — dokument på
+ * egen titel, voteringar via betänkandets titel (kräver skördad
+ * data/betankanden.json) — låter språkmodellen föreslå kopplingar med
+ * exakt citat, prövar H1–H5 och lägger passerande förslag i kön
+ * data/kopplingsforslag.json — där de väntar på ägarens beslut (H6).
+ * Ingenting skrivs till kopplingar.json här. För voteringar är källtexten
+ * betänkandets, och beviset bär betänkandets dok_id (bevis.kalla_dok_id).
  *
  *   npm run foreslag -- --promises <sökväg till valflask data/promises.json> --lofte p-2026-0042
  *   npm run foreslag -- --promises …/promises.json --alla --max-kandidater 5
@@ -15,9 +18,10 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { fetchDokumentText, type HttpFetch } from "../src/riksdagen.ts";
+import type { Betankande } from "../src/betankanden.ts";
 import type { Handling } from "../src/handlingar.ts";
 import { OpenRouterClient } from "../src/llm.ts";
-import { rankaKandidater, skapaForslag, type Lofte } from "../src/foreslag.ts";
+import { rankaKandidater, rankaVoteringsKandidater, skapaForslag, type Lofte } from "../src/foreslag.ts";
 import { LAGE_A_FONSTER, type KopplingsForslag } from "../src/grindar.ts";
 
 interface KoPost extends KopplingsForslag {
@@ -53,6 +57,11 @@ async function main() {
   const { promisesPath, lofteId, maxKandidater, dryRun } = parseArgs(process.argv.slice(2));
   const rot = resolve(import.meta.dirname, "../..");
   const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
+  const betPath = resolve(rot, "data/betankanden.json");
+  const betankanden: Betankande[] = existsSync(betPath) ? JSON.parse(readFileSync(betPath, "utf8")) : [];
+  if (betankanden.length === 0) {
+    console.log("obs: data/betankanden.json saknas eller är tom — voteringar prövas inte (skörda med --typ bet)");
+  }
   const promises: Array<Lofte & { status?: string }> = JSON.parse(readFileSync(promisesPath, "utf8"));
   const loften = promises.filter((p) => (p.status ?? "aktiv") === "aktiv" && (!lofteId || p.id === lofteId));
   if (loften.length === 0) throw new Error(`inget aktivt löfte matchar ${lofteId ?? "--alla"}`);
@@ -81,16 +90,25 @@ async function main() {
   const runId = `foreslag-${new Date().toISOString().slice(0, 10)}`;
   let nya = 0;
   for (const lofte of loften) {
-    const kandidater = rankaKandidater(lofte, handlingar, maxKandidater);
-    console.log(`${lofte.id} "${lofte.title.slice(0, 60)}" — ${kandidater.length} kandidater`);
-    for (const { handling, poang } of kandidater) {
+    const dokKandidater = rankaKandidater(lofte, handlingar, maxKandidater);
+    const votKandidater = rankaVoteringsKandidater(lofte, handlingar, betankanden, maxKandidater);
+    const kandidater: Array<{ handling: Handling; poang: number; betankande?: Betankande }> = [
+      ...dokKandidater,
+      ...votKandidater,
+    ];
+    console.log(
+      `${lofte.id} "${lofte.title.slice(0, 60)}" — ${dokKandidater.length} dokument- och ${votKandidater.length} voteringskandidater`,
+    );
+    for (const { handling, poang, betankande } of kandidater) {
       if (sedd.has(`${lofte.id}::${handling.id}`)) continue;
       if (dryRun) {
-        console.log(`  [${poang}] ${handling.id} ${handling.kind} ${handling.datum} ${handling.titel.slice(0, 70)}`);
+        const via = betankande ? ` via bet ${betankande.rm}:${betankande.beteckning} "${betankande.titel.slice(0, 50)}"` : "";
+        console.log(`  [${poang}] ${handling.id} ${handling.kind} ${handling.datum} ${handling.titel.slice(0, 70)}${via}`);
         continue;
       }
-      const kalltext = await fetchDokumentText(politeFetch, handling.dok_id);
-      const { forslag, grindfel } = await skapaForslag(llm!, systemPrompt, model, lofte, handling, kalltext, LAGE_A_FONSTER);
+      // För en votering är källtexten betänkandets — samma text till modell och H2.
+      const kalltext = await fetchDokumentText(politeFetch, betankande?.dok_id ?? handling.dok_id);
+      const { forslag, grindfel } = await skapaForslag(llm!, systemPrompt, model, lofte, handling, kalltext, LAGE_A_FONSTER, betankande);
       sedd.add(`${lofte.id}::${handling.id}`);
       if (!forslag) {
         console.log(`  ${handling.id}: ingen koppling föreslagen`);

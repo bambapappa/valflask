@@ -28,7 +28,12 @@ export interface KopplingsForslag {
   stance_id?: string;
   handling_id: string;
   riktning: Riktning;
-  bevis: { citat: string; sida?: number | null };
+  /**
+   * kalla_dok_id anger vilket dokument citatet står i när det inte är
+   * handlingen själv — för voteringar betänkandet (t.ex. "HA01AU10").
+   * Utan fältet är källan handlingens eget dokument.
+   */
+  bevis: { citat: string; sida?: number | null; kalla_dok_id?: string };
   motionstyp?: "parti" | "kommitte" | "enskild";
   method_note: string;
   confidence: number;

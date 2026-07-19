@@ -137,5 +137,17 @@
       "köpt LFS-lagring (Pages kan inte servera LFS — förkastad)"
     ],
     "decided_by": "ägaren 2026-07-19"
+  },
+  {
+    "date": "2026-07-19",
+    "id": "b-0013",
+    "status": "fastställd",
+    "decision": "Voteringar kopplas via betänkandet: doktyp bet skördas till ett eget slimmat index (data/betankanden.json — aldrig in i handlingar.json), voteringskandidater rankas mot betänkandets titel med samma deterministiska ordöverlappsregel som dokument, källtexten för citatgrinden H2 är betänkandets text, och beviset bär betänkandets dok_id i bevis.kalla_dok_id.",
+    "why": "En voterings egen post saknar sakinnehåll — texten som beskriver vad kammaren tog ställning till är utskottsbetänkandet (spec §3 listar bet som källa; överlämningens punkt 3). Betänkanden är utskottsdokument utan partiaktör och hör därför inte hemma bland handlingarna. kalla_dok_id gör citatet kontrollerbart i ett steg — spårbarhet hela vägen till dokumentet citatet står i.",
+    "alternatives": [
+      "lagra betänkanden som handlingar i handlingar.json (fel aktörsmodell — förkastad)",
+      "koppla voteringar på enbart beteckning utan text (inget ordagrant bevis möjligt — förkastad)"
+    ],
+    "decided_by": "session 2026-07-19, teknisk följd av spec §3 och överlämningens punkt 3"
   }
 ]

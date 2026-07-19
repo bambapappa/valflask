@@ -8,6 +8,8 @@
  * alltid ger samma kandidatlista — modellen väljer inte vad den får se.
  */
 
+import type { Betankande } from "./betankanden.ts";
+import { indexeraBetankanden } from "./betankanden.ts";
 import type { Handling } from "./handlingar.ts";
 import type { LlmClient } from "./llm.ts";
 import { provaGrindarna, type GrindFel, type GrindKontext, type KopplingsForslag } from "./grindar.ts";
@@ -66,6 +68,46 @@ export function rankaKandidater(lofte: Lofte, handlingar: Handling[], max: numbe
     .slice(0, max);
 }
 
+/** En voteringskandidat: voteringen plus betänkandet vars text är källan. */
+export interface VoteringsKandidat {
+  handling: Handling;
+  betankande: Betankande;
+  poang: number;
+}
+
+/**
+ * Rankar voteringar mot ett löfte på ordöverlapp i BETÄNKANDETS titel —
+ * voteringens egen titel är bara beteckning och punkt. Samma deterministiska
+ * regel som för dokument: minst två gemensamma nyckelord. Voteringar utan
+ * betänkande i indexet utelämnas (tomt är ärligt); löftespartiet måste
+ * förekomma i röstfördelningen — annars skulle H3 ändå fälla.
+ */
+export function rankaVoteringsKandidater(
+  lofte: Lofte,
+  handlingar: Handling[],
+  betankanden: Betankande[],
+  max: number,
+): VoteringsKandidat[] {
+  const index = indexeraBetankanden(betankanden);
+  const mal = nyckelord(`${lofte.title} ${lofte.quote} ${lofte.category ?? ""}`);
+  const kandidater: VoteringsKandidat[] = [];
+  for (const h of handlingar) {
+    if (h.kind !== "votering") continue;
+    const bet = index.get(h.dok_id);
+    if (!bet) continue;
+    const partier = h.rostfordelning ? Object.keys(h.rostfordelning) : [];
+    if (lofte.parties.length > 0 && partier.length > 0 && !lofte.parties.some((p) => partier.includes(p))) {
+      continue;
+    }
+    let poang = 0;
+    for (const w of nyckelord(bet.titel)) if (mal.has(w)) poang += 1;
+    if (poang >= 2) kandidater.push({ handling: h, betankande: bet, poang });
+  }
+  return kandidater
+    .sort((a, b) => b.poang - a.poang || a.handling.id.localeCompare(b.handling.id))
+    .slice(0, max);
+}
+
 /** Motionstyp härledd ur handlingen: flera undertecknare → kommitté, annars
  * enskild. "parti" sätts aldrig av kod — det avgör människan i granskningen
  * (b-0007). */
@@ -103,12 +145,19 @@ export function parseForslagSvar(raw: string): ForslagSvar | null {
   return { riktning, citat, motivering, confidence: Number.isFinite(confidence) ? confidence : 0 };
 }
 
-export function byggPrompt(lofte: Lofte, handling: Handling, kalltext: string): string {
+export function byggPrompt(lofte: Lofte, handling: Handling, kalltext: string, betankande?: Betankande): string {
   return [
     `LÖFTE (${lofte.parties.join(", ").toUpperCase()}): ${lofte.title}`,
     `Exakt citat ur löfteskällan: "${lofte.quote}"`,
     "",
     `RIKSDAGSHANDLING (${handling.kind}, ${handling.datum}): ${handling.titel}`,
+    ...(betankande
+      ? [
+          `Voteringen gällde punkt ${handling.punkt ?? "?"} i betänkandet ` +
+            `${betankande.rm}:${betankande.beteckning} "${betankande.titel}". ` +
+            "DOKUMENTTEXT nedan är betänkandets text — citatet ska stå där.",
+        ]
+      : []),
     "",
     "DOKUMENTTEXT:",
     kalltext,
@@ -123,7 +172,8 @@ export interface ForslagResultat {
 /**
  * Kör förslagssteget för ETT (löfte, handling)-par: fråga modellen, tolka
  * svaret, pröva grindarna. Källtexten skickas till både modellen och H2 —
- * samma text, samma sanning.
+ * samma text, samma sanning. För en votering är källtexten betänkandets
+ * text: skicka med betänkandet, så bär beviset dess dok_id.
  */
 export async function skapaForslag(
   llm: LlmClient,
@@ -133,9 +183,10 @@ export async function skapaForslag(
   handling: Handling,
   kalltext: string,
   fonster: GrindKontext["fonster"],
+  betankande?: Betankande,
 ): Promise<ForslagResultat> {
   const svar = parseForslagSvar(
-    await llm.complete(byggPrompt(lofte, handling, kalltext), {
+    await llm.complete(byggPrompt(lofte, handling, kalltext, betankande), {
       systemPrompt,
       model,
       temperature: 0,
@@ -149,7 +200,7 @@ export async function skapaForslag(
     promise_id: lofte.id,
     handling_id: handling.id,
     riktning: svar.riktning,
-    bevis: { citat: svar.citat },
+    bevis: { citat: svar.citat, ...(betankande ? { kalla_dok_id: betankande.dok_id } : {}) },
     ...(motionstyp ? { motionstyp } : {}),
     method_note: svar.motivering,
     confidence: svar.confidence,

@@ -1,0 +1,41 @@
+name: koppling-sync
+# Manuell synk av kopplingskön → GitHub-issues i DETTA privata repo.
+# Körs när kön fyllts på (efter en foreslag-körning). Privat tills HV5:
+# inga issues i valflask före lanseringsgrinden — vid HV5 speglas flödet
+# dit (spec §8). valflask checkas ut bredvid enbart för löftestexterna
+# (publikt repo, läsning läcker ingenting åt andra hållet).
+on:
+  workflow_dispatch:
+    inputs:
+      cap:
+        description: "Max antal issues att skapa denna körning"
+        required: false
+        default: "60"
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: koppling-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        with:
+          repository: bambapappa/valflask
+          path: valflask-lofter
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: npm ci
+        working-directory: pipeline
+      - name: Sync koppling-kö till issues
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SYNC_CAP: ${{ inputs.cap }}
+          PROMISES_PATH: ${{ github.workspace }}/valflask-lofter/data/promises.json
+        run: node --import tsx/esm scripts/koppling-issues.mts
+        working-directory: pipeline

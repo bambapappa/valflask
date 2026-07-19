@@ -7,6 +7,7 @@
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
     "foreslag": "node --import tsx/esm scripts/foreslag.mts",
+    "granska": "node --import tsx/esm scripts/koppling-granska.mts",
     "roster": "node --import tsx/esm scripts/roster.mts",
     "domar": "node --import tsx/esm scripts/domar.mts"
   },
