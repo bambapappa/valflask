@@ -1,6 +1,12 @@
-# SPEC — Handlingsvågen (arbetsnamn)
+# SPEC — Handlingsvågen
 
-**Status: skiss. Privat tills lanseringsgrinden (HV5) passerats. Ägaren beslutar.**
+**Status: fastställd av ägaren 2026-07-19. Privat tills lanseringsgrinden (HV5) passerats.**
+
+Ägarens beslut 2026-07-19: namnet är **Handlingsvågen**, och vi bygger
+**max från start** — ledamotsnivå synlig från dag ett, Läge A omfattar
+alla löften och alla tio frågorna, och alla dokumenttyper
+(motioner, voteringar, propositioner, interpellationer, skriftliga
+frågor) skördas från början.
 
 ## 1. Idén i en mening
 
@@ -161,13 +167,14 @@ förbjuden; tomma celler ärliga.
   uttryckliga go. Först därefter flyttas/speglas koden och datat till
   valflask och går live på drygast.nu.
 
-## 9. Öppna frågor till ägaren
+## 9. Avgjorda vägval (ägaren 2026-07-19)
 
-1. **Namnet.** "Handlingsvågen" är arbetsnamn. Alternativ:
-   "Hållerkollen", "Ord & handling", "Meritlistan".
-2. **Ledamotsnivåns synlighet.** Visa enskilda ledamöter från start,
-   eller börja på partinivå och släppa ledamotsnivån senare?
-3. **Läge A:s omfång.** Alla 400+ löften, eller börja med de 10
-   frågorna i Frågevågen (som redan är formulerade för jämförelse)?
-4. **Interpellationer/skriftliga frågor** — ta med från start eller
-   bara motioner+voteringar i första versionen?
+1. **Namnet:** Handlingsvågen.
+2. **Ledamotsnivån:** synlig från start.
+3. **Läge A:s omfång:** allt — samtliga löften i Fläskvågen och
+   samtliga tio frågor i Frågevågen.
+4. **Dokumenttyper:** alla från start — motioner, voteringar,
+   propositioner, interpellationer och skriftliga frågor.
+
+Devisen: allt vi kan göra, det gör vi — men aldrig genom att sänka en
+grind.
