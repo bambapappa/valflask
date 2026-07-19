@@ -112,5 +112,17 @@
       "börja om id-serien per år (bryter stabila id:n — förkastad)"
     ],
     "decided_by": "session 2026-07-19, teknisk följd av b-0008"
+  },
+  {
+    "date": "2026-07-19",
+    "id": "b-0011",
+    "status": "föreslagen",
+    "decision": "Läge A:s datumfönster (grind H4) är valdag till valdag: 2022-09-11 – 2026-09-13. Kandidaturvalet inför förslagssteget är deterministiskt (ordöverlapp mot titel, minst två gemensamma nyckelord) — modellen väljer aldrig själv vilka dokument den får se.",
+    "why": "Mandatperioden före valet behöver en exakt gräns för att H4 ska vara deterministisk; valdagarna är den naturliga. Deterministiskt kandidaturval gör körningarna reproducerbara och granskningsbara.",
+    "alternatives": [
+      "riksmötets öppnande som gräns i stället för valdagen",
+      "låta modellen söka fritt bland alla handlingar"
+    ],
+    "decided_by": "väntar på ägaren"
   }
 ]

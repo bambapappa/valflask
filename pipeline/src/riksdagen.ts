@@ -203,6 +203,45 @@ export async function fetchPersoner(fetcher: HttpFetch): Promise<RdPerson[]> {
   }));
 }
 
+/**
+ * Gör dokument-HTML till läsbar text: skript/stil bort, taggar → blanksteg,
+ * vanliga entiteter avkodade. Whitespace jämnas ut. Exporterad för tester.
+ */
+export function htmlTillText(html: string): string {
+  const ENTITETER: Record<string, string> = {
+    amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ",
+    aring: "å", auml: "ä", ouml: "ö", Aring: "Å", Auml: "Ä", Ouml: "Ö",
+    eacute: "é", Eacute: "É", ndash: "–", mdash: "—", hellip: "…",
+    ldquo: "“", rdquo: "”", lsquo: "‘", rsquo: "’", sect: "§",
+  };
+  return html
+    .replace(/<(script|style)[\s\S]*?<\/\1>/giu, " ")
+    .replace(/<!--[\s\S]*?-->/gu, " ")
+    .replace(/<[^>]+>/gu, " ")
+    .replace(/&#x([0-9a-f]+);/giu, (_, h: string) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/gu, (_, d: string) => String.fromCodePoint(Number(d)))
+    .replace(/&([a-zA-Z]+);/gu, (m, e: string) => ENTITETER[e] ?? m)
+    .replace(/\s+/gu, " ")
+    .trim();
+}
+
+/**
+ * Hämtar ett dokuments fulltext (för ordagrann citatkontroll, grind H2).
+ * Riksdagens /dokument/<id>/text svarar numera med dokumentstatus-XML, så
+ * texten hämtas ur dokumentstatus/<id>.json vars dokument.html bär hela
+ * innehållet.
+ */
+export async function fetchDokumentText(fetcher: HttpFetch, dokId: string): Promise<string> {
+  const payload = (await getJson(fetcher, `${BASE}/dokumentstatus/${dokId}.json`)) as {
+    dokumentstatus?: { dokument?: { html?: unknown } };
+  };
+  const html = payload.dokumentstatus?.dokument?.html;
+  if (typeof html !== "string" || html.length === 0) {
+    throw new Error(`dokumentstatus ${dokId}: ingen dokumenttext`);
+  }
+  return htmlTillText(html);
+}
+
 /** Publik webbadress för ett dokument (den vi visar och arkiverar). */
 export function dokumentUrl(dokId: string): string {
   return `https://data.riksdagen.se/dokument/${dokId}`;
