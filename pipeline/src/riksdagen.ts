@@ -140,6 +140,54 @@ export async function fetchVoteringar(
   return parseVoteringLista(await getJson(fetcher, `${BASE}/voteringlista/?${params}`));
 }
 
+/**
+ * Hämtar id-listan över riksmötets voteringspunkter (gruppering=votering_id).
+ * Grupperat svar är litet (~600–800 rader per riksmöte) och trunkeras inte;
+ * längden kontrolleras ändå mot svarets @antal.
+ */
+export async function fetchVoteringsIdn(fetcher: HttpFetch, rm: string): Promise<string[]> {
+  const params = new URLSearchParams({ rm, sz: "20000", utformat: "json", gruppering: "votering_id" });
+  const payload = (await getJson(fetcher, `${BASE}/voteringlista/?${params}`)) as {
+    voteringlista?: Record<string, unknown>;
+  };
+  const vl = payload.voteringlista;
+  if (!vl) throw new Error("svar utan voteringlista");
+  const idn = asArray(vl["votering"] as Record<string, unknown> | Array<Record<string, unknown>> | undefined)
+    .map((v) => String(v["votering_id"] ?? ""))
+    .filter(Boolean);
+  const antal = Number(vl["@antal"] ?? idn.length);
+  if (idn.length !== antal) throw new Error(`voteringslista ${rm}: fick ${idn.length} id men @antal=${antal}`);
+  return idn;
+}
+
+/** Tolkar ett /votering/<id>/json-svar till per-ledamotsrader. Exporterad för tester. */
+export function parseVotering(payload: unknown): RdVoteringRad[] {
+  const dv = (payload as { votering?: { dokvotering?: { votering?: unknown } } }).votering?.dokvotering;
+  if (!dv) throw new Error("svar utan dokvotering");
+  return asArray(dv.votering as Record<string, unknown> | Array<Record<string, unknown>> | undefined).map((v) => ({
+    votering_id: String(v["votering_id"] ?? ""),
+    rm: String(v["rm"] ?? ""),
+    beteckning: String(v["beteckning"] ?? ""),
+    punkt: Number(v["punkt"] ?? 0),
+    namn: String(v["namn"] ?? ""),
+    intressent_id: String(v["intressent_id"] ?? ""),
+    parti: String(v["parti"] ?? "").toLowerCase(),
+    valkrets: String(v["valkrets"] ?? ""),
+    rost: String(v["rost"] ?? "") as RdVoteringRad["rost"],
+    avser: String(v["avser"] ?? ""),
+    ...(v["datum"] ?? v["systemdatum"] ? { datum: String(v["datum"] ?? v["systemdatum"]).slice(0, 10) } : {}),
+  }));
+}
+
+/**
+ * Hämtar samtliga per-ledamotsrader för EN votering via /votering/<id>/json.
+ * voteringlista/ med stor sz trunkeras tyst (ett riksmöte har ~200 000
+ * radnivåposter) — därför hämtas voteringar alltid en och en.
+ */
+export async function fetchVoteringRader(fetcher: HttpFetch, voteringId: string): Promise<RdVoteringRad[]> {
+  return parseVotering(await getJson(fetcher, `${BASE}/votering/${voteringId}/json`));
+}
+
 /** Hämtar ledamotsregistret. */
 export async function fetchPersoner(fetcher: HttpFetch): Promise<RdPerson[]> {
   const payload = (await getJson(fetcher, `${BASE}/personlista/?utformat=json`)) as {

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parseDokumentLista, parseVoteringLista } from "../src/riksdagen.ts";
+import { parseDokumentLista, parseVotering, parseVoteringLista } from "../src/riksdagen.ts";
 import {
   berikaPartier,
   klassaMotionstyp,
@@ -99,6 +99,43 @@ test("parseVoteringLista + normaliseraVoteringar: aggregat per parti, frånvaro 
   assert.deepEqual(h.rostfordelning!["m"], { ja: 0, nej: 1, avstar: 0, franvarande: 1 });
   assert.equal(h.utfall, "bifall");
   assert.equal(h.datum, "2026-03-12");
+});
+
+/** Fixtur formad exakt som riktiga /votering/<id>/json-svar (kontrollerad 2026-07-19). */
+const enVoteringPayload = {
+  votering: {
+    dokument: { dok_id: "HA01UU15", rm: "2022/23", beteckning: "UU15" },
+    dokvotering: {
+      votering: [
+        { dok_id: "HA01UU15", votering_id: "008484EA", punkt: "5", namn: "Kenneth G Forslund", intressent_id: "0257612529618", parti: "S", valkrets: "Västra Götalands läns västra", rost: "Ja", avser: "sakfrågan", votering: "huvud", rm: "2022/23", beteckning: "UU15", datum: "2023-05-10 00:00:00", systemdatum: "2023-05-10 16:08:12" },
+        { dok_id: "HA01UU15", votering_id: "008484EA", punkt: "5", namn: "M Molin", intressent_id: "026", parti: "M", valkrets: "AB", rost: "Nej", avser: "sakfrågan", votering: "huvud", rm: "2022/23", beteckning: "UU15", datum: "2023-05-10 00:00:00", systemdatum: "2023-05-10 16:08:12" },
+      ],
+    },
+  },
+};
+
+test("parseVotering: /votering/<id>-rader → radformat med gemener och taltyper", () => {
+  const rader = parseVotering(enVoteringPayload);
+  assert.equal(rader.length, 2);
+  assert.equal(rader[0]!.parti, "s");
+  assert.equal(rader[0]!.punkt, 5);
+  assert.equal(rader[0]!.datum, "2023-05-10");
+  assert.equal(rader[0]!.beteckning, "UU15");
+  const [h] = normaliseraVoteringar(rader);
+  assert.ok(h);
+  assert.equal(h.votering_id, "008484EA");
+  assert.deepEqual(h.rostfordelning!["s"], { ja: 1, nej: 0, avstar: 0, franvarande: 0 });
+});
+
+test("mergeHandlingar räknar vidare förbi 9999 utan id-krock", () => {
+  const rader = parseVoteringLista(votPayload);
+  const norm = normaliseraVoteringar(rader);
+  const existing = mergeHandlingar([] as Handling[], norm, 2026).map((h) => ({ ...h, id: "h-2026-9999" }));
+  const other = norm.map((h) => ({ ...h, punkt: 4 }));
+  const merged = mergeHandlingar(existing, other, 2026);
+  assert.deepEqual(merged.map((h) => h.id), ["h-2026-9999", "h-2026-10000"]);
+  const again = mergeHandlingar(merged, [...norm, ...other], 2026);
+  assert.equal(again.length, 2); // femsiffrigt id läses tillbaka — idempotent även efter 9999
 });
 
 test("mergeHandlingar skiljer voteringspunkter åt", () => {

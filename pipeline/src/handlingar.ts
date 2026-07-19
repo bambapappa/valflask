@@ -167,7 +167,7 @@ export function mergeHandlingar(existing: Handling[], incoming: Array<Omit<Handl
   const known = new Set(existing.map(key));
   let next =
     existing
-      .map((h) => Number(h.id.match(/^h-\d{4}-(\d{4})$/)?.[1] ?? 0))
+      .map((h) => Number(h.id.match(/^h-\d{4}-(\d{4,})$/)?.[1] ?? 0))
       .reduce((a, b) => Math.max(a, b), 0) + 1;
   const out = [...existing];
   for (const h of sorteraHandlingar(incoming)) {

@@ -5,8 +5,9 @@
  *   npm run harvest -- --rm 2025/26 --typ mot,ip,fr --limit 2
  *   npm run harvest -- --rm 2022/23 --rm 2023/24 --typ mot,prop,ip,fr,vot
  *
- * --limit N begränsar till N sidor per typ (rökprov). Utan --limit skördas
- * allt. --out styr målfilen (standard ../data/handlingar.json).
+ * --limit N begränsar till N sidor per dokumenttyp och N voteringar per
+ * riksmöte (rökprov). Utan --limit skördas allt. --out styr målfilen
+ * (standard ../data/handlingar.json).
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
@@ -14,7 +15,8 @@ import { dirname, resolve } from "node:path";
 import {
   fetchDokument,
   fetchPersoner,
-  fetchVoteringar,
+  fetchVoteringRader,
+  fetchVoteringsIdn,
   type DokTyp,
   type HttpFetch,
 } from "../src/riksdagen.ts";
@@ -22,7 +24,7 @@ import {
   berikaPartier,
   mergeHandlingar,
   normaliseraDokument,
-  normaliseraVoteringar,
+  normaliseraVotering,
   sorteraHandlingar,
   type Handling,
 } from "../src/handlingar.ts";
@@ -63,10 +65,16 @@ async function main() {
     for (const typ of typer) {
       if (typ === "vot") {
         console.log(`voteringar ${rm} …`);
-        const rader = await fetchVoteringar(politeFetch, rm, limit ? { sz: limit * 200 } : {});
-        const norm = normaliseraVoteringar(rader);
-        console.log(`  ${rader.length} röster → ${norm.length} voteringspunkter`);
-        incoming.push(...norm);
+        const idn = await fetchVoteringsIdn(politeFetch, rm);
+        const take = limit ? idn.slice(0, limit) : idn;
+        console.log(`  ${idn.length} voteringspunkter${limit ? `, tar ${take.length}` : ""}`);
+        let done = 0;
+        for (const vid of take) {
+          const h = normaliseraVotering(await fetchVoteringRader(politeFetch, vid));
+          if (h) incoming.push(h);
+          done += 1;
+          if (done % 50 === 0) console.log(`  … ${done}/${take.length}`);
+        }
       } else {
         console.log(`${typ} ${rm} …`);
         const dok = await fetchDokument(politeFetch, typ as DokTyp, rm, limit ? { maxPages: limit } : {});

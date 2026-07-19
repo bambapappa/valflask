@@ -100,5 +100,17 @@
       "riktning relativt Nej-röst"
     ],
     "decided_by": "väntar på ägaren"
+  },
+  {
+    "date": "2026-07-19",
+    "id": "b-0010",
+    "status": "fastställd",
+    "decision": "Voteringar skördas en och en via /votering/<id> (id-lista via grupperad voteringlista), aldrig via en enda stor voteringlista-fråga. Handlings-id får vara fyr- eller femsiffriga (h-ÅÅÅÅ-NNNN eller NNNNN).",
+    "why": "Teknisk följd av b-0008 (max från start): ett riksmöte har ~200 000 radnivåposter och voteringlista trunkerar tyst vid stora uttag — per-votering-hämtning ger garanterat kompletta röstfördelningar. Full skörd 2022/23–2025/26 ger ~23 600 handlingar, vilket spränger fyra siffror.",
+    "alternatives": [
+      "voteringlista med stor sz (trunkerar tyst — förkastad)",
+      "börja om id-serien per år (bryter stabila id:n — förkastad)"
+    ],
+    "decided_by": "session 2026-07-19, teknisk följd av b-0008"
   }
 ]

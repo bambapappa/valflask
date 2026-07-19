@@ -7,7 +7,7 @@
     "required": ["id", "kind", "dok_id", "datum", "parties", "titel", "url", "archive_url"],
     "additionalProperties": false,
     "properties": {
-      "id": { "type": "string", "pattern": "^h-\\d{4}-\\d{4}$" },
+      "id": { "type": "string", "pattern": "^h-\\d{4}-\\d{4,5}$" },
       "kind": { "enum": ["votering", "motion", "proposition", "interpellation", "skriftlig_fraga"] },
       "dok_id": { "type": "string", "minLength": 1 },
       "votering_id": { "type": ["string", "null"] },

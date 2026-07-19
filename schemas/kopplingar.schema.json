@@ -10,7 +10,7 @@
       "id": { "type": "string", "pattern": "^k-\\d{4}-\\d{4}$" },
       "promise_id": { "type": "string", "pattern": "^p-\\d{4}-\\d{4}$" },
       "stance_id": { "type": "string" },
-      "handling_id": { "type": "string", "pattern": "^h-\\d{4}-\\d{4}$" },
+      "handling_id": { "type": "string", "pattern": "^h-\\d{4}-\\d{4,5}$" },
       "riktning": { "enum": ["stodjer", "motverkar"] },
       "bevis": {
         "type": "object",
