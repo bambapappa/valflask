@@ -14,6 +14,8 @@ export interface RdDokument {
   dok_id: string;
   doktyp: string;
   rm: string;
+  /** Löpbeteckning inom riksmötet, t.ex. "AU10" — voteringars nyckel till betänkandet. */
+  beteckning?: string;
   datum: string;
   titel: string;
   undertitel?: string;
@@ -69,6 +71,7 @@ export function parseDokumentLista(payload: unknown): { dokument: RdDokument[]; 
         dok_id: String(d["dok_id"] ?? d["id"] ?? ""),
         doktyp: String(d["doktyp"] ?? ""),
         rm: String(d["rm"] ?? ""),
+        ...(d["beteckning"] ? { beteckning: String(d["beteckning"]) } : {}),
         datum: String(d["datum"] ?? "").slice(0, 10),
         titel: String(d["titel"] ?? ""),
         ...(d["undertitel"] ? { undertitel: String(d["undertitel"]) } : {}),

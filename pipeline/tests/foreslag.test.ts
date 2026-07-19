@@ -7,9 +7,11 @@ import {
   nyckelord,
   parseForslagSvar,
   rankaKandidater,
+  rankaVoteringsKandidater,
   skapaForslag,
   type Lofte,
 } from "../src/foreslag.ts";
+import type { Betankande } from "../src/betankanden.ts";
 import { LAGE_A_FONSTER } from "../src/grindar.ts";
 import type { Handling } from "../src/handlingar.ts";
 import type { LlmClient } from "../src/llm.ts";
@@ -111,4 +113,77 @@ test("skapaForslag: null från modellen ger inget förslag och inga fel", async 
 test("byggPrompt innehåller löfte, handling och källtext", () => {
   const p = byggPrompt(lofte, handling(), kalltext);
   assert.ok(p.includes("Höj taket i a-kassan") && p.includes("DOKUMENTTEXT"));
+});
+
+// --- Voteringar kopplas via betänkandet ---
+
+const betankande: Betankande = {
+  dok_id: "HA01AU10",
+  rm: "2022/23",
+  beteckning: "AU10",
+  datum: "2023-05-10",
+  titel: "Taket i arbetslöshetsförsäkringen",
+  organ: "AU",
+};
+
+function votering(over: Partial<Handling> = {}): Handling {
+  return handling({
+    id: "h-2026-0005",
+    kind: "votering",
+    dok_id: "202223:AU10",
+    votering_id: "008484EA",
+    punkt: 3,
+    datum: "2023-05-10",
+    titel: "Votering AU10 punkt 3 (2022/23)",
+    url: "https://data.riksdagen.se/votering/008484EA",
+    persons: [],
+    parties: ["s", "v", "m"],
+    utfall: "avslag",
+    rostfordelning: {
+      v: { ja: 20, nej: 0, avstar: 0, franvarande: 4 },
+      m: { ja: 0, nej: 60, avstar: 0, franvarande: 8 },
+    },
+    ...over,
+  });
+}
+
+test("rankaVoteringsKandidater: matchar via betänkandets titel, kräver betänkande i indexet", () => {
+  const utanBet = votering({ id: "h-2026-0006", dok_id: "202223:UU15" });
+  const kandidater = rankaVoteringsKandidater(lofte, [votering(), utanBet, handling()], [betankande], 5);
+  assert.deepEqual(kandidater.map((k) => k.handling.id), ["h-2026-0005"]);
+  assert.equal(kandidater[0]!.betankande.dok_id, "HA01AU10");
+  assert.ok(kandidater[0]!.poang >= 2);
+});
+
+test("rankaVoteringsKandidater: löftespartiet måste finnas i röstfördelningen", () => {
+  const utanLoftesParti = votering({
+    rostfordelning: { m: { ja: 0, nej: 60, avstar: 0, franvarande: 8 } },
+  });
+  assert.deepEqual(rankaVoteringsKandidater(lofte, [utanLoftesParti], [betankande], 5), []);
+});
+
+test("byggPrompt för votering pekar ut betänkandet och punkten", () => {
+  const p = byggPrompt(lofte, votering(), "text", betankande);
+  assert.ok(p.includes("punkt 3") && p.includes("2022/23:AU10") && p.includes("betänkandet"));
+});
+
+test("skapaForslag för votering: citat ur betänkandetexten, beviset bär betänkandets dok_id", async () => {
+  const betText =
+    "Utskottet föreslår att riksdagen avslår motionsyrkanden om att taket i " +
+    "arbetslöshetsförsäkringen bör höjas med hänvisning till pågående beredning.";
+  const svar =
+    '{"koppling":{"riktning":"stodjer","citat":"taket i arbetslöshetsförsäkringen bör höjas","motivering":"Punkten gäller samma takhöjning som löftet.","confidence":0.7}}';
+  const res = await skapaForslag(fakeLlm(svar), "system", "modell", lofte, votering(), betText, LAGE_A_FONSTER, betankande);
+  assert.deepEqual(res.grindfel, []);
+  assert.equal(res.forslag?.bevis.kalla_dok_id, "HA01AU10");
+  assert.equal(res.forslag?.motionstyp, undefined);
+});
+
+test("skapaForslag för votering: citat som bara finns i motionen fälls av H2 mot betänkandetexten", async () => {
+  const svar =
+    '{"koppling":{"riktning":"stodjer","citat":"' +
+    "taket i arbetslöshetsförsäkringen bör höjas kraftigt och omedelbart" +
+    '","motivering":"x","confidence":0.7}}';
+  const res = await skapaForslag(fakeLlm(svar), "system", "modell", lofte, votering(), "Utskottets korta text om annat.", LAGE_A_FONSTER, betankande);
+  assert.ok(res.grindfel.some((f) => f.grind === "H2"));
 });
