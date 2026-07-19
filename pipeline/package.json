@@ -6,7 +6,9 @@
     "harvest": "node --import tsx/esm scripts/harvest.mts",
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
-    "foreslag": "node --import tsx/esm scripts/foreslag.mts"
+    "foreslag": "node --import tsx/esm scripts/foreslag.mts",
+    "roster": "node --import tsx/esm scripts/roster.mts",
+    "domar": "node --import tsx/esm scripts/domar.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1"
