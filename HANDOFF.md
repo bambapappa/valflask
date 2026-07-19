@@ -1,9 +1,9 @@
 # Överlämning — Handlingsvågen
 
-Skriven 2026-07-19; uppdaterad senare samma dag efter full skörd, HV2 och
-b-0012. Läs `CLAUDE.md` först (bindande språkregler och kärnprinciper),
-sedan `SPEC-HANDLINGSVAGEN.md` (fastställd spec) och `NEUTRALITET.md`.
-Alla metodval står i `data/beslutslogg.json`.
+Skriven 2026-07-19; uppdaterad senare samma dag (tredje passet: betänkande-
+stöd b-0013 och granskningsflödet H6). Läs `CLAUDE.md` först (bindande
+språkregler och kärnprinciper), sedan `SPEC-HANDLINGSVAGEN.md` (fastställd
+spec) och `NEUTRALITET.md`. Alla metodval står i `data/beslutslogg.json`.
 
 ## Vad detta är
 
@@ -13,7 +13,7 @@ mot löftena (Fläskvågen) och ståndpunkterna (Frågevågen). Devisen: ord är
 gratis, handlingar räknas. **Privat tills lanseringsgrinden HV5 passerats**
 — ingenting härifrån får synas i valflask eller på drygast.nu före dess.
 
-## Läget just nu (43 tester, ren typkontroll under `pipeline/`)
+## Läget just nu (68 tester, ren typkontroll under `pipeline/`)
 
 - **HV0** — spec, neutralitetskontrakt, scheman, beslutslogg.
   b-0001–b-0012 är samtliga fastställda av ägaren (b-0009 och b-0011
@@ -38,19 +38,41 @@ gratis, handlingar räknas. **Privat tills lanseringsgrinden HV5 passerats**
   `data/roster/<riksmöte>.json` med röststrängar (J/N/A/F/-);
   partibyten per votering i avvikelselista; `src/roster.ts`
   kodar/avkodar förlustfritt åt domsmotorn.
+- **b-0013 — betänkandestöd, BYGGT.** Voteringar kopplas via
+  betänkandets text: `--typ bet` skördar till eget index
+  `data/betankanden.json` (nyckel = voteringens dok_id-form
+  `202223:AU10`), `rankaVoteringsKandidater` rankar mot betänkandets
+  titel, källtexten till modell och H2 är betänkandets, och beviset bär
+  `bevis.kalla_dok_id`. Skörden är INTE körd (se nätblockering nedan).
+- **H6-granskningsflödet — BYGGT.** Kön synkas till issues i DETTA
+  privata repo (etikett `koppling-kö`, titel `[koppling <12 hex>]`),
+  ägaren beslutar med `/godkänn`, `/godkänn --motionstyp parti`
+  (b-0007) eller `/avvisa <skäl>`; `koppling-review.yml` exekverar,
+  committar och stänger. Lokalt: `npm run granska -- list|godkann|avvisa`.
+  OBS: överlämningen sade "issue-flödet i valflask", men HV5-grinden
+  förbjuder allt synligt i valflask före lansering — därför ligger
+  flödet här och speglas till valflask vid HV5 (spec §8). Vill ägaren
+  annorlunda är flytten trivial (skripten läser GITHUB_REPOSITORY).
+
+**Nätblockering i denna miljö:** egressproxyn nekar data.riksdagen.se
+(403, organisationspolicy) — ingen skörd kan köras härifrån. Ägaren
+behöver tillåta värden i miljöns nätverkspolicy (claude.ai →
+miljöinställningar) eller köra skördarna i en miljö/lokalt där den nås.
 
 Återstår (i ordning):
 
-1. **Röstskörd 2022/23–2025/26** — `npm run roster -- --rm …` (pågick
-   vid senaste överlämningen; kontrollera att `data/roster/` har fyra
-   filer och committa).
-2. **Skarpa förslagskörningar** (HV2) när ägaren satt nycklarna:
+1. **Röstskörd 2022/23–2025/26** — `npm run roster -- --rm 2022/23
+   --rm 2023/24 --rm 2024/25 --rm 2025/26`; verifiera fyra filer i
+   `data/roster/` + `data/personer.json`, committa. BLOCKERAD av
+   nätpolicyn ovan.
+2. **Betänkandeskörd** — `npm run harvest -- --rm 2022/23 --rm 2023/24
+   --rm 2024/25 --rm 2025/26 --typ bet`. Samma blockering. Kör aldrig
+   parallellt med annan skörd.
+3. **Skarpa förslagskörningar** (HV2) när ägaren satt nycklarna
+   (`OPENROUTER_API_KEY`, `MODEL_KOPPLING`):
    `npm run foreslag -- --promises <valflask>/data/promises.json --alla`.
-   Granskningskön ska sedan kopplas till issue-flödet i **valflask**
-   (egen etikett, samma kommandon /godkänn /avvisa) — ej byggt ännu.
-3. **Betänkanden för voteringskopplingar**: voteringars källtext är
-   betänkandet; skörda `bet` (finns som DokTyp) och låt förslagssteget
-   para voteringar via betänkandetexten. Ej byggt.
+   Voteringar prövas bara om betänkandeindexet finns (punkt 2). Efter
+   körning: committa kön och trigga `koppling-sync`-workflown.
 4. **Propositioner och H3**: alla 939 propositioner saknar parti
    (regeringen är avsändare). Hur de mappas mot regeringspartierna är
    en öppen metodfråga — beslutslogga innan kod.
@@ -59,6 +81,7 @@ gratis, handlingar räknas. **Privat tills lanseringsgrinden HV5 passerats**
 6. **HV4 — sajtsektion** (byggs här, publiceras inte) + metodsida.
    Sajten ska skiva datat vid byggtid — aldrig skeppa 17 MB till läsaren.
 7. **HV5 — lanseringsgrinden**: checklista i spec §8. Ägarens go krävs.
+   Då speglas även granskningsflödet till valflask.
 
 ## Tekniska anteckningar (dyrköpta)
 
@@ -86,12 +109,16 @@ gratis, handlingar räknas. **Privat tills lanseringsgrinden HV5 passerats**
 
 ## Sessionspraktik
 
-- Denna session var låst till valflask; add_repo-godkännandet gick aldrig
-  fram — därav bundle-vägen. En session skapad **med handlingsvagen som
-  källa** har direkt skrivåtkomst.
-- Om repot på GitHub är tomt när du börjar: packa upp ägarens bundle
-  (`git clone handlingsvagen.bundle`) och pusha main först av allt.
+- Sessionen 2026-07-19 (tredje passet) hade handlingsvagen som källa med
+  skrivåtkomst — men nätpolicyn blockerade data.riksdagen.se (se ovan).
+- **Repot på GitHub saknar main.** Enda grenen är
+  `claude/handlingsvagen-bundle-content-ueyqqy` (= defaultgren).
+  Arbetet ligger på `claude/handlingsvagen-arbete-8ruw7z` med PR mot
+  bundlegrenen. Ägaren bör etablera `main` (merga PR:en och döpa om /
+  skapa main från den) — workflowsen följer defaultgrenen dynamiskt och
+  fungerar oavsett.
 - Commits avslutas med Co-Authored-By-raden och sessionslänken enligt
   harnessens regler; modell-id får aldrig hamna i repoartefakter.
 - Granskningsbeslut fattas alltid av ägaren (bambapappa) — föreslå,
-  vänta på besked i chatten, verkställ via issuekommentarer i valflask.
+  vänta på besked. H6-besluten verkställs via koppling-issues i DETTA
+  repo (före HV5), eller `npm run granska` lokalt.
