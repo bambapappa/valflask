@@ -45,9 +45,29 @@ function parseArgs(argv: string[]) {
   return { rms, typer, limit, out };
 }
 
+const sov = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * Artigt tempo (300 ms mellan anrop) + retry med exponentiell backoff på
+ * 429/5xx och nätfel — en enstaka 503 får inte fälla en timslång skörd.
+ */
 const politeFetch: HttpFetch = async (url) => {
-  await new Promise((r) => setTimeout(r, 300)); // artigt tempo mot öppna data
-  return fetch(url);
+  for (let forsok = 0; ; forsok += 1) {
+    await sov(300);
+    try {
+      const res = await fetch(url);
+      if ((res.status === 429 || res.status >= 500) && forsok < 4) {
+        console.log(`  retry ${forsok + 1}/4 efter HTTP ${res.status}`);
+        await sov(2_000 * 2 ** forsok);
+        continue;
+      }
+      return res;
+    } catch (e) {
+      if (forsok >= 4) throw e;
+      console.log(`  retry ${forsok + 1}/4 efter nätfel: ${e instanceof Error ? e.message : String(e)}`);
+      await sov(2_000 * 2 ** forsok);
+    }
+  }
 };
 
 async function main() {
@@ -60,7 +80,16 @@ async function main() {
   const partiAvId = new Map(personer.map((p) => [p.intressent_id, p.parti]));
   console.log(`  ${personer.length} personer`);
 
-  const incoming: Array<Omit<Handling, "id">> = [];
+  // Delsparning efter varje (riksmöte, typ)-block: ett avbrott kostar som
+  // mest ett block, och omkörning är idempotent via mergeHandlingar.
+  const year = new Date().getFullYear();
+  let merged = existing;
+  mkdirSync(dirname(out), { recursive: true });
+  const spara = (chunk: Array<Omit<Handling, "id">>) => {
+    merged = mergeHandlingar(merged, sorteraHandlingar(chunk), year);
+    writeFileSync(out, JSON.stringify(merged, null, 2) + "\n");
+  };
+
   for (const rm of rms) {
     for (const typ of typer) {
       if (typ === "vot") {
@@ -68,13 +97,15 @@ async function main() {
         const idn = await fetchVoteringsIdn(politeFetch, rm);
         const take = limit ? idn.slice(0, limit) : idn;
         console.log(`  ${idn.length} voteringspunkter${limit ? `, tar ${take.length}` : ""}`);
+        const chunk: Array<Omit<Handling, "id">> = [];
         let done = 0;
         for (const vid of take) {
           const h = normaliseraVotering(await fetchVoteringRader(politeFetch, vid));
-          if (h) incoming.push(h);
+          if (h) chunk.push(h);
           done += 1;
           if (done % 50 === 0) console.log(`  … ${done}/${take.length}`);
         }
+        spara(chunk);
       } else {
         console.log(`${typ} ${rm} …`);
         const dok = await fetchDokument(politeFetch, typ as DokTyp, rm, limit ? { maxPages: limit } : {});
@@ -82,15 +113,12 @@ async function main() {
           .map((d) => normaliseraDokument(berikaPartier(d, partiAvId)))
           .filter((h): h is NonNullable<typeof h> => h !== null);
         console.log(`  ${dok.length} dokument → ${norm.length} handlingar`);
-        incoming.push(...norm);
+        spara(norm);
       }
+      console.log(`  sparat: ${merged.length} handlingar totalt`);
     }
   }
 
-  const year = new Date().getFullYear();
-  const merged = mergeHandlingar(existing, sorteraHandlingar(incoming), year);
-  mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, JSON.stringify(merged, null, 2) + "\n");
   console.log(`klart: ${merged.length} handlingar (${merged.length - existing.length} nya) → ${out}`);
 }
 
