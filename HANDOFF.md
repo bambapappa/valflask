@@ -180,7 +180,11 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-*(inga anspråk)*
+- 2026-07-20 `…bundle-content-ueyqqy`: FULL förslagskörning (--alla,
+  1 328 par) startad på foreslag-workflown ~08:5x UTC. Trigga INTE
+  workflown igen förrän den är klar (concurrency-gruppen köar ändå).
+  Obs: körningen kan slå i 120-minuterstaket — omkörning är säker
+  (kön är idempotent) men betalar om null-svaren.
 
 ### Meddelanden mellan sessioner
 
