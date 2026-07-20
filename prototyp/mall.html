@@ -184,7 +184,7 @@ $("#tabH").onclick=()=>{tab="H";detail=null;render();};
 $("#tabK").onclick=()=>{tab="K";detail=null;render();};
 const st={ q:"", kinds:new Set(), parti:"", rm:"", lq:"",
   amne:{vy:"parti", parti:"s", utskott:"UbU"},
-  hh:{a:null,b:null,qa:"",qb:"",utskott:""} };
+  hh:{a:null,b:null,qa:"",qb:"",utskott:"",visaOlika:15} };
 
 function render(){
   $("#tabV").className=tab==="V"?"on":""; $("#tabU").className=tab==="U"?"on":"";
@@ -477,7 +477,9 @@ function samsyn(a,b,utskott){
     for(const [vid,str] of rm.v){ if(utskott&&votOrgan.get(vid)!==utskott) continue;
       const t1=str[pa],t2=str[pb];
       if(!"JNA".includes(t1)||!"JNA".includes(t2)) continue;
-      tot++; if(t1===t2) lika++; else if(olika.length<12) olika.push({vid,t1,t2}); } }
+      tot++; if(t1===t2) lika++; else olika.push({vid,t1,t2}); } }
+  olika.sort((a,b)=>{const ha=[...hById.values()].find(i=>H[i][6]===a.vid), hb=[...hById.values()].find(i=>H[i][6]===b.vid);
+    return String(hb!==undefined?H[hb][2]:"").localeCompare(String(ha!==undefined?H[ha][2]:""));});
   return {tot,lika,olika};
 }
 function valjare(sida,q,vald){
@@ -523,10 +525,13 @@ function vyMotVarandra(){
     </tbody></table>
     <p class="meta" style="margin-top:12px">Röstade i samma voteringar ${sam.tot} gånger — samma röst i
     <b>${sam.tot?Math.round(100*sam.lika/sam.tot):0}&nbsp;%</b> (${sam.lika} av ${sam.tot}).</p>
-    ${sam.olika.length?`<h3 style="font-size:15px">Röstade olika</h3>${sam.olika.map(o=>{
+    ${sam.olika.length?`<h3 style="font-size:15px">Röstade olika — ${sam.olika.length} voteringar${sam.olika.length>hh.visaOlika?`, visar de ${hh.visaOlika} senaste`:""}</h3>
+    ${sam.olika.slice(0,hh.visaOlika).map(o=>{
       const i=[...hById.values()].find(i=>H[i][6]===o.vid); const h=i!==undefined?H[i]:null;
       return `<div class="avvik"><span class="vote v${o.t1}">${o.t1}</span> mot <span class="vote v${o.t2}">${o.t2}</span> —
-      <button class="linkish" data-vot="${o.vid}">${esc(h?(D.betankanden[h[5]]||h[3]):o.vid)}</button> <span class="dt">${h?h[2]:""}</span></div>`;}).join("")}`:""}
+      <button class="linkish" data-vot="${o.vid}">${esc(h?(D.betankanden[h[5]]||h[3]):o.vid)}${h&&h[7]?` · punkt ${h[7]}`:""}</button>
+      <span class="dt">${h?h[2]:""}</span></div>`;}).join("")}
+    ${sam.olika.length>hh.visaOlika?`<p><button class="linkish" id="flerOlika">Visa ${Math.min(50,sam.olika.length-hh.visaOlika)} till</button></p>`:""}`:""}
     </div>`;
   }
   return `
@@ -630,7 +635,8 @@ function koppla(){
   main.querySelectorAll("[data-rensa]").forEach(b=>b.onclick=()=>{st.hh[b.dataset.rensa]=null;render();});
   main.querySelectorAll("[data-snabb]").forEach(b=>b.onclick=()=>{const i=+b.dataset.snabb;
     if(st.hh.a===null) st.hh.a=i; else if(st.hh.b===null&&i!==st.hh.a) st.hh.b=i; else st.hh.a=i;
-    render();});
+    st.hh.visaOlika=15; render();});
+  const fo=$("#flerOlika"); if(fo) fo.onclick=()=>{st.hh.visaOlika+=50;render();};
 }
 render();
 </script>
