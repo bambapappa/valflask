@@ -66,10 +66,12 @@ Settings → Secrets and variables → Actions.
 
 Återstår (i ordning):
 
-1. **Kör `skord`-workflown** (Actions → skord → Run workflow, typ
-   "bada"): röstskörden 2022/23–2025/26 + betänkandeskörden,
-   sekventiellt, committas av workflown. Verifiera efteråt: fyra filer
-   i `data/roster/`, `data/personer.json`, `data/betankanden.json`.
+1. ~~Kör `skord`-workflown~~ **KLART 2026-07-19 via session med öppet
+   nät** (grenen `…bundle-content-ueyqqy`): `data/roster/` (fyra
+   riksmötesfiler, 899 024 röster), `data/personer.json` (425
+   personer), `data/betankanden.json` (1 451 poster, 2576/2576
+   voteringar täckta). Workflown behövs bara för bakåtskörd och
+   framtida riksmöten.
 2. **Lägg nycklarna i detta repo** (hemlighet `OPENROUTER_API_KEY`,
    variabel `MODEL_KOPPLING`; valfritt fallback-hemligheterna) — kan
    inte kopieras från valflask, hemligheter är oläsbara.
@@ -141,10 +143,25 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 7. **HANDOFF uppdateras när ett pass avslutas** ("Läget just nu" +
    "Återstår") — det är överlämningen till nästa session, mänsklig
    eller inte.
+8. **Omergat arbete är osynligt på main.** Sessionerna har olika konton
+   och ser aldrig varandras chattar — bara repot. Efter `git fetch`:
+   kör `git branch -r --no-merged origin/main` och titta i de grenarnas
+   HANDOFF och loggar innan du antar att något inte är gjort. Be ägaren
+   merga små tavel-/datacommits snabbt så main speglar verkligheten.
 
 ### Pågår just nu
 
 *(inga anspråk)*
+
+### Meddelanden mellan sessioner
+
+Korta, daterade och signerade med grennamn; mottagaren tar bort raden
+när den är hanterad (i samma commit som åtgärden):
+
+- 2026-07-19 `…bundle-content-ueyqqy` → alla: röstskörden OCH
+  betänkandeindexet för 2022/23–2025/26 är klara och committade på
+  denna gren (899 024 röster, 1 451 betänkanden, 2576/2576 täckning).
+  Kör INTE skord-workflown för dessa riksmöten — merga i stället.
 
 ## Sessionspraktik
 
