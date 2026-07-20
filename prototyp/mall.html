@@ -1,0 +1,348 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handlingsvågen — prototyp</title>
+<style>
+:root{
+  --paper:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#8b897f;
+  --line:#e4e2da; --panel:#f4f3ee; --accent:#184f95; --accent-ink:#fff;
+  --ja:#2a78d6; --nej:#eb6834; --avstar:#82878f; --franv:#d4d7dc;
+  --chip:#ecebe4; --varsel:#8a6d1f; --varsel-bg:#f7f0da;
+}
+@media (prefers-color-scheme: dark){:root{
+  --paper:#1a1a19; --ink:#f2f1ea; --ink-2:#c3c2b7; --ink-3:#8f8e85;
+  --line:#3a3a36; --panel:#242422; --accent:#3987e5; --accent-ink:#0b0b0b;
+  --ja:#3987e5; --nej:#d95926; --avstar:#8f949c; --franv:#44484e;
+  --chip:#31312e; --varsel:#d9b95c; --varsel-bg:#33301f;
+}}
+:root[data-theme="dark"]{
+  --paper:#1a1a19; --ink:#f2f1ea; --ink-2:#c3c2b7; --ink-3:#8f8e85;
+  --line:#3a3a36; --panel:#242422; --accent:#3987e5; --accent-ink:#0b0b0b;
+  --ja:#3987e5; --nej:#d95926; --avstar:#8f949c; --franv:#44484e;
+  --chip:#31312e; --varsel:#d9b95c; --varsel-bg:#33301f;
+}
+:root[data-theme="light"]{
+  --paper:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#8b897f;
+  --line:#e4e2da; --panel:#f4f3ee; --accent:#184f95; --accent-ink:#fff;
+  --ja:#2a78d6; --nej:#eb6834; --avstar:#82878f; --franv:#d4d7dc;
+  --chip:#ecebe4; --varsel:#8a6d1f; --varsel-bg:#f7f0da;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.serif{font-family:Georgia,"Times New Roman",serif}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);
+  padding:0 20px}
+.hrow{max-width:1160px;margin:0 auto;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;padding:14px 0 0}
+h1{font-family:Georgia,serif;font-size:26px;margin:0;letter-spacing:.2px}
+.sub{color:var(--ink-3);font-size:12.5px;letter-spacing:.4px;text-transform:uppercase}
+nav{max-width:1160px;margin:0 auto;display:flex;gap:2px;padding-top:8px}
+nav button{appearance:none;border:0;background:none;color:var(--ink-2);font:inherit;font-size:14.5px;
+  padding:9px 16px;cursor:pointer;border-bottom:2.5px solid transparent}
+nav button:hover{color:var(--ink)}
+nav button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav button:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+main{max-width:1160px;margin:0 auto;padding:22px 20px 70px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+input[type=search],select{background:var(--panel);border:1px solid var(--line);color:var(--ink);
+  border-radius:6px;padding:8px 12px;font:inherit;font-size:14px}
+input[type=search]{min-width:300px;flex:1;max-width:460px}
+.tchips{display:flex;gap:6px;flex-wrap:wrap}
+.tchips button{border:1px solid var(--line);background:var(--panel);color:var(--ink-2);border-radius:99px;
+  padding:5.5px 13px;font:inherit;font-size:13px;cursor:pointer}
+.tchips button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.meta{color:var(--ink-3);font-size:13px;margin:4px 0 14px}
+table{border-collapse:collapse;width:100%}
+.hit{border-bottom:1px solid var(--line)}
+.hit td{padding:9px 10px 9px 0;vertical-align:baseline}
+.hit:hover{background:var(--panel)}
+.kbadge{display:inline-block;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-2);
+  background:var(--chip);border-radius:4px;padding:2.5px 8px;white-space:nowrap}
+.dt{color:var(--ink-3);font-size:12.5px;white-space:nowrap}
+.pchip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--ink-2);
+  border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin-left:4px;text-transform:uppercase;cursor:default}
+button.linkish{appearance:none;border:0;background:none;color:var(--accent);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+.panel h3{margin:0 0 4px;font-family:Georgia,serif;font-size:19px;text-wrap:balance}
+.panel .meta{margin:2px 0 12px}
+.bars{display:grid;grid-template-columns:44px 1fr 200px;gap:6px 12px;align-items:center;max-width:680px}
+.bar{display:flex;height:16px;border-radius:4px;overflow:hidden;background:var(--paper)}
+.bar span{height:100%;margin-right:2px}
+.bar span:last-child{margin-right:0}
+.seg-ja{background:var(--ja)} .seg-nej{background:var(--nej)}
+.seg-av{background:var(--avstar)} .seg-fr{background:var(--franv)}
+.bcount{font-size:12.5px;color:var(--ink-2);white-space:nowrap}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0 4px;font-size:12.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.vote{display:inline-block;min-width:24px;text-align:center;font-size:11.5px;font-weight:700;border-radius:4px;padding:1.5px 6px}
+.vJ{background:var(--ja);color:#fff}.vN{background:var(--nej);color:#fff}
+.vA{background:var(--avstar);color:#fff}.vF{background:var(--franv);color:var(--ink-2)}
+:root[data-theme="dark"] .vF, .dark .vF{color:var(--ink-2)}
+.status{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.5px;border-radius:4px;padding:2.5px 7px;white-space:nowrap}
+.st-tom{color:var(--ink-3);background:var(--chip)}
+.st-vantar{color:var(--varsel);background:var(--varsel-bg);border:1px dashed var(--varsel)}
+.grid th{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);text-align:left;
+  padding:6px 8px 6px 0;border-bottom:1.5px solid var(--line);position:sticky;top:96px;background:var(--paper)}
+.grid td{border-bottom:1px solid var(--line);padding:8px 8px 8px 0;vertical-align:baseline}
+.grid tr:hover{background:var(--panel)}
+.ltitle{cursor:pointer}
+.ltitle:hover{color:var(--accent)}
+.qq{font-family:Georgia,serif;font-size:16px;border-left:3px solid var(--accent);padding:2px 0 2px 14px;margin:10px 0;color:var(--ink)}
+.note{font-size:13px;color:var(--ink-2);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:18px 0 0}
+.back{margin-bottom:14px}
+.statrow{display:flex;gap:26px;flex-wrap:wrap;margin:10px 0 18px}
+.stat b{display:block;font-size:24px;font-family:Georgia,serif}
+.stat span{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.5px}
+.avvik{border-left:3px solid var(--nej);padding-left:12px;margin:8px 0}
+footer{border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px;padding:16px 20px 30px;max-width:1160px;margin:30px auto 0}
+.scrollbox{overflow-x:auto}
+@media (prefers-reduced-motion: no-preference){ .panel{animation:in .18s ease-out} @keyframes in{from{opacity:.4;transform:translateY(3px)}to{opacity:1}} }
+</style>
+
+<header>
+  <div class="hrow">
+    <h1>Handlingsvågen</h1>
+    <span class="sub">Prototyp · privat · data ur riksdagens öppna data 2026-07-20</span>
+  </div>
+  <nav>
+    <button id="tabV" class="on">Vågen — löfte mot handling</button>
+    <button id="tabU">Utforskaren — fritt i allt</button>
+  </nav>
+</header>
+<main id="main"></main>
+<footer>
+  Prototyp för ägarbeslut — publiceras inte. 23 629 handlingar, 2 576 voteringar med
+  899 024 röster, 1 451 betänkanden (riksmötena 2022/23–2025/26). Sök går på titlar och
+  betänkanderubriker — dokumentens fulltexter lagras inte i bulk (b-0012). Vågen visar bara
+  kopplingar som passerat grindarna H1–H5; publicering kräver ägarbeslut (H6). Tomma celler är ärliga.
+  Varje rad länkar till riksdagens egen källa.
+</footer>
+
+<script id="data" type="application/json">__PAYLOAD__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("data").textContent);
+const KINDS_SV = ["Motion","Proposition","Interpellation","Skriftlig fråga","Votering"];
+const PARTIER = ["s","m","sd","c","v","kd","l","mp"];
+const H = D.handlingar, P = D.personer, L = D.loften;
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = (s)=>String(s).replace(/[&<>"]/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// ---- index ----
+const votIndex = new Map(); // votering_id -> {r: rmIdx, v: votIdx}
+D.roster.forEach((r,ri)=>r.v.forEach((v,vi)=>votIndex.set(v[0],{r:ri,v:vi})));
+const hById = new Map(H.map((h,i)=>[h[0],i]));
+const ordning = H.map((_,i)=>i).sort((a,b)=>H[b][2].localeCompare(H[a][2])); // datum fallande
+const personDocs = new Map(); // personIdx -> [handlingIdx]
+H.forEach((h,i)=>{ if(!h[8]) return; for(const p of h[8].split(",")){ const k=+p;
+  if(!personDocs.has(k)) personDocs.set(k,[]); personDocs.get(k).push(i);} });
+function rmAv(datum){ const y=+datum.slice(0,4), m=+datum.slice(5,7);
+  return m>=9? `${y}/${String((y+1)%100).padStart(2,"0")}` : `${y-1}/${String(y%100).padStart(2,"0")}`;}
+
+// Röstdata för EN votering: [{pIdx, rost}], parti via register + avvikelselista
+function roster(vid){
+  const loc = votIndex.get(vid); if(!loc) return null;
+  const rm = D.roster[loc.r], [ ,str,avvik] = rm.v[loc.v];
+  const rader=[];
+  for(let i=0;i<str.length;i++){ const t=str[i]; if(t==="-") continue;
+    const pIdx=rm.p[i]; const parti=(avvik&&avvik[String(i)])||P[pIdx][2];
+    rader.push({pIdx,parti,rost:t}); }
+  return rader;
+}
+function aggregera(rader){ const per={};
+  for(const r of rader){ const a=(per[r.parti]??={J:0,N:0,A:0,F:0}); a[r.rost]++; }
+  return per; }
+
+// ---- vyer ----
+const main=$("#main");
+let tab="V", detail=null; // detail: {typ:"vot"|"person"|"lofte", ...}
+$("#tabV").onclick=()=>{tab="V";detail=null;render();};
+$("#tabU").onclick=()=>{tab="U";detail=null;render();};
+const st={ q:"", kinds:new Set(), parti:"", rm:"", lq:"" };
+
+function render(){
+  $("#tabV").className=tab==="V"?"on":""; $("#tabU").className=tab==="U"?"on":"";
+  if(detail?.typ==="vot") return renderVotering(detail.vid);
+  if(detail?.typ==="person") return renderPerson(detail.p);
+  if(detail?.typ==="lofte") return renderLofte(detail.id);
+  main.innerHTML = tab==="V" ? vyVagen() : vyUtforskaren();
+  koppla();
+}
+
+// ---------- VÅGEN ----------
+function statusFor(lofteId, parti, lofteParti){
+  const f = D.forslag.find(f=>f.promise_id===lofteId);
+  if(f){ const h=H[hById.get(f.handling_id)];
+    if(h && (h[4].split(" ").includes(parti))) return `<span class="status st-vantar">FÖRSLAG — VÄNTAR PÅ ÄGARBESLUT</span>`; }
+  return lofteParti ? `<span class="status st-tom">INGEN HANDLING ÄNNU</span>` : `<span class="status" style="color:var(--ink-3)">·</span>`;
+}
+function vyVagen(){
+  const q=st.lq.toLowerCase();
+  const rows=L.filter(l=>!q||l[1].toLowerCase().includes(q));
+  const kollade=rows.slice(0,120);
+  return `
+  <div class="tools"><input type="search" id="lq" placeholder="Sök bland ${L.length} löften …" value="${esc(st.lq)}"></div>
+  <p class="meta">${rows.length} löften${rows.length>120?" — visar 120":""} · status per parti räknas ur godkända kopplingar.
+  Just nu: <b>1 förslag</b> väntar på ägarbeslut (H6), inga godkända ännu — därför är nästan allt ärligt tomt.</p>
+  <div class="scrollbox"><table class="grid"><thead><tr><th style="min-width:330px">Löfte</th>
+  ${PARTIER.map(p=>`<th>${p.toUpperCase()}</th>`).join("")}</tr></thead><tbody>
+  ${kollade.map(l=>{ const lp=l[2].split(" ").filter(Boolean);
+    return `<tr><td class="ltitle" data-lofte="${l[0]}"><span class="serif">${esc(l[1])}</span>
+      <span class="dt"> ${l[3]?esc(l[3]):""}</span></td>
+    ${PARTIER.map(p=>`<td>${statusFor(l[0],p,lp.includes(p))}</td>`).join("")}</tr>`;}).join("")}
+  </tbody></table></div>
+  <p class="note">Rutnätet visar alla åtta partier per löfte (öppen fråga F1) — pricken markerar
+  partier som inte står bakom löftet. Statusorden är hela vokabulären; ingen färgskala värderar.</p>`;
+}
+function renderLofte(id){
+  const l=L.find(x=>x[0]===id); if(!l){detail=null;return render();}
+  const f=D.forslag.find(f=>f.promise_id===id);
+  let fhtml="";
+  if(f){ const h=H[hById.get(f.handling_id)];
+    fhtml=`<div class="panel"><h3>Förslag i granskningskön — väntar på ägarbeslut (H6)</h3>
+    <p class="meta">${KINDS_SV[h[1]]} · ${h[2]} · riktning: <b>${f.riktning==="stodjer"?"stödjer":"motverkar"}</b> · confidence ${f.confidence}</p>
+    <p><a href="https://data.riksdagen.se/dokument/${h[5]}" target="_blank" rel="noopener">${esc(h[3])}</a></p>
+    <div class="qq">”${esc(f.bevis.citat)}”</div>
+    <p class="meta">Citatet är kontrollerat ord för ord mot källtexten (grind H2). ${esc(f.method_note)}</p></div>`; }
+  return main.innerHTML=`
+  <p class="back"><button class="linkish" id="back">← Alla löften</button></p>
+  <h2 class="serif" style="font-size:24px;margin:0 0 2px">${esc(l[1])}</h2>
+  <p class="meta">${l[0]} · parti: ${l[2].toUpperCase()||"—"} · kategori: ${esc(l[3]||"—")}</p>
+  ${l[4]?`<div class="qq">”${esc(l[4])}”</div>`:""}
+  ${fhtml||`<p class="note">Inga kopplingar ännu — tomt är ärligt. Förslagssteget prövar kandidater
+  mot grindarna; det som passerar hamnar hos ägaren för beslut.</p>`}
+  `, $("#back").onclick=()=>{detail=null;render();}, undefined;
+}
+
+// ---------- UTFORSKAREN ----------
+function traff(h,tokens){ const t=h[3].toLowerCase();
+  const bt = h[1]===4 ? (D.betankanden[h[5]]||"").toLowerCase() : "";
+  return tokens.every(tok=>t.includes(tok)||bt.includes(tok)); }
+function vyUtforskaren(){
+  const tokens=st.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const ut=[];
+  for(const i of ordning){ const h=H[i];
+    if(st.kinds.size && !st.kinds.has(h[1])) continue;
+    if(st.parti && !h[4].split(" ").includes(st.parti)) continue;
+    if(st.rm && rmAv(h[2])!==st.rm) continue;
+    if(tokens.length && !traff(h,tokens)) continue;
+    ut.push(i); }
+  const visa=ut.slice(0,300);
+  return `
+  <div class="tools">
+    <input type="search" id="q" placeholder="Sök i alla ${H.length.toLocaleString("sv")} handlingar — t.ex. ”npf”, ”särskilt stöd”, ”a-kassa” …" value="${esc(st.q)}">
+    <select id="parti"><option value="">Alla partier</option>${PARTIER.map(p=>`<option ${st.parti===p?"selected":""} value="${p}">${p.toUpperCase()}</option>`).join("")}</select>
+    <select id="rm"><option value="">Alla riksmöten</option>${["2022/23","2023/24","2024/25","2025/26"].map(r=>`<option ${st.rm===r?"selected":""}>${r}</option>`).join("")}</select>
+  </div>
+  <div class="tools tchips">${KINDS_SV.map((k,i)=>`<button data-k="${i}" class="${st.kinds.has(i)?"on":""}">${k}${i===4?"":"er"}</button>`).join("")}</div>
+  <p class="meta">${ut.length.toLocaleString("sv")} träffar${ut.length>300?" — visar de 300 senaste":""} · sök går på titlar och betänkanderubriker · varje rad länkar till riksdagens källa</p>
+  <table><tbody>
+  ${visa.map(i=>{const h=H[i]; const isVot=h[1]===4;
+    const titel=isVot? `${esc(D.betankanden[h[5]]||h[3])} <span class="dt">· punkt ${h[7]}</span>` : esc(h[3]);
+    const url=isVot? `https://data.riksdagen.se/votering/${h[6]}` : `https://data.riksdagen.se/dokument/${h[5]}`;
+    return `<tr class="hit"><td style="width:118px"><span class="kbadge">${KINDS_SV[h[1]]}</span></td>
+    <td class="dt" style="width:92px">${h[2]}</td>
+    <td>${isVot?`<button class="linkish" data-vot="${h[6]}">${titel}</button>`:`<a href="${url}" target="_blank" rel="noopener">${titel}</a>`}
+      ${h[4]?h[4].split(" ").map(p=>`<span class="pchip">${p.toUpperCase()}</span>`).join(""):""}</td>
+    <td style="width:90px">${isVot?`<button class="linkish" data-vot="${h[6]}">rösterna</button>`:""}</td></tr>`;}).join("")}
+  </tbody></table>`;
+}
+
+function renderVotering(vid){
+  const hi=[...hById.entries()].find(([,i])=>H[i][6]===vid); // hitta handlingen
+  const h=hi?H[hi[1]]:null;
+  const rader=roster(vid); if(!rader){detail=null;return render();}
+  const agg=aggregera(rader);
+  const partier=Object.keys(agg).sort((a,b)=>PARTIER.indexOf(a)-PARTIER.indexOf(b));
+  const maxN=Math.max(...partier.map(p=>agg[p].J+agg[p].N+agg[p].A+agg[p].F));
+  const bt=h?D.betankanden[h[5]]:""; const pq=(st.pq||"").toLowerCase();
+  const visade=rader.filter(r=>!pq||P[r.pIdx][1].toLowerCase().includes(pq));
+  main.innerHTML=`
+  <p class="back"><button class="linkish" id="back">← Utforskaren</button></p>
+  <h2 class="serif" style="font-size:23px;margin:0">${esc(bt||"Votering")}</h2>
+  <p class="meta">${h?`${h[5]} · punkt ${h[7]} · ${h[2]} · `:""}
+    <a href="https://data.riksdagen.se/votering/${vid}" target="_blank" rel="noopener">riksdagens post</a></p>
+  <div class="panel"><h3>Röstfördelning per parti</h3>
+  <div class="legend"><span><i style="background:var(--ja)"></i>Ja</span><span><i style="background:var(--nej)"></i>Nej</span>
+  <span><i style="background:var(--avstar)"></i>Avstår</span><span><i style="background:var(--franv)"></i>Frånvarande — räknas aldrig (b-0004)</span></div>
+  <div class="bars">
+  ${partier.map(p=>{const a=agg[p],tot=a.J+a.N+a.A+a.F,w=x=>100*x/maxN;
+    return `<div class="mono" style="font-size:12px;font-weight:700">${p.toUpperCase()}</div>
+    <div class="bar" role="img" aria-label="${p.toUpperCase()}: ${a.J} ja, ${a.N} nej, ${a.A} avstår, ${a.F} frånvarande">
+      ${a.J?`<span class="seg-ja" style="width:${w(a.J)}%"></span>`:""}${a.N?`<span class="seg-nej" style="width:${w(a.N)}%"></span>`:""}
+      ${a.A?`<span class="seg-av" style="width:${w(a.A)}%"></span>`:""}${a.F?`<span class="seg-fr" style="width:${w(a.F)}%"></span>`:""}</div>
+    <div class="bcount mono">${a.J} ja · ${a.N} nej · ${a.A} avstår · ${a.F} frånv.</div>`;}).join("")}
+  </div></div>
+  <div class="tools"><input type="search" id="pq" placeholder="Sök ledamot …" value="${esc(st.pq||"")}"></div>
+  <p class="meta">${rader.length} ledamöter röstade${visade.length!==rader.length?` — visar ${visade.length}`:""}</p>
+  <table><tbody>${visade.map(r=>`<tr class="hit">
+    <td style="width:38px"><span class="vote v${r.rost}">${r.rost}</span></td>
+    <td><button class="linkish" data-person="${r.pIdx}">${esc(P[r.pIdx][1])}</button></td>
+    <td class="mono" style="width:44px;font-weight:700;font-size:12px">${r.parti.toUpperCase()}</td>
+    <td class="dt">${esc(P[r.pIdx][3])}</td></tr>`).join("")}</tbody></table>`;
+  $("#back").onclick=()=>{detail=null;st.pq="";render();};
+  $("#pq").oninput=(e)=>{st.pq=e.target.value;renderVotering(vid);
+    const el=$("#pq");el.focus();el.setSelectionRange(el.value.length,el.value.length);};
+  main.querySelectorAll("[data-person]").forEach(b=>b.onclick=()=>{detail={typ:"person",p:+b.dataset.person};st.pq="";render();});
+}
+
+function personRoster(pIdx){
+  const ut={J:0,N:0,A:0,F:0}, avvik=[];
+  for(const rm of D.roster){ const pos=rm.p.indexOf(pIdx); if(pos<0) continue;
+    // partikamraternas positioner i detta riksmöte
+    const parti=P[pIdx][2];
+    const kamrater=rm.p.map((g,i)=>P[g][2]===parti?i:-1).filter(i=>i>=0);
+    for(const [vid,str,av] of rm.v){ const t=str[pos]; if(!t||t==="-") continue;
+      ut[t]=(ut[t]||0)+1;
+      if(t==="J"||t==="N"){ let J=0,N=0,A=0;
+        for(const i of kamrater){ const c=str[i]; if(c==="J")J++;else if(c==="N")N++;else if(c==="A")A++; }
+        const linje = J>N&&J>A?"J":N>J&&N>A?"N":A>J&&A>N?"A":null;
+        if(linje&&linje!==t&&(linje==="J"||linje==="N")) avvik.push({vid,rost:t,linje}); } } }
+  return {ut,avvik};
+}
+function renderPerson(pIdx){
+  const p=P[pIdx]; const {ut,avvik}=personRoster(pIdx);
+  const docs=(personDocs.get(pIdx)||[]).slice().sort((a,b)=>H[b][2].localeCompare(H[a][2]));
+  main.innerHTML=`
+  <p class="back"><button class="linkish" id="back">← Tillbaka</button></p>
+  <h2 class="serif" style="font-size:24px;margin:0">${esc(p[1])}</h2>
+  <p class="meta">${p[2].toUpperCase()} · ${esc(p[3])} · <span class="mono">${p[0]}</span></p>
+  <div class="statrow">
+    <div class="stat"><b class="mono">${ut.J||0}</b><span>Ja-röster</span></div>
+    <div class="stat"><b class="mono">${ut.N||0}</b><span>Nej-röster</span></div>
+    <div class="stat"><b class="mono">${ut.A||0}</b><span>Avstår</span></div>
+    <div class="stat"><b class="mono">${ut.F||0}</b><span>Frånvarande — räknas aldrig</span></div>
+    <div class="stat"><b class="mono">${avvik.length}</b><span>Röster mot partilinjen</span></div>
+    <div class="stat"><b class="mono">${docs.length}</b><span>Egna dokument</span></div>
+  </div>
+  ${avvik.length?`<div class="panel"><h3>Avvek från partilinjen</h3>
+  <p class="meta">Partilinje = majoriteten av partiets Ja/Nej/Avstår i voteringen (öppna data, inte vår åsikt — spec §6.4).${avvik.length>25?` Visar 25 av ${avvik.length}.`:""}</p>
+  ${avvik.slice(0,25).map(a=>{const i=[...hById.values()].find(i=>H[i][6]===a.vid);const h=i!==undefined?H[i]:null;
+    return `<div class="avvik"><span class="vote v${a.rost}">${a.rost}</span> mot partilinjens ${a.linje==="J"?"ja":"nej"} —
+    <button class="linkish" data-vot="${a.vid}">${esc(h?(D.betankanden[h[5]]||h[3]):a.vid)}</button>
+    <span class="dt">${h?h[2]:""}</span></div>`;}).join("")}</div>`:""}
+  <div class="panel"><h3>Egna dokument</h3>
+  ${docs.length?docs.slice(0,40).map(i=>{const h=H[i];
+    return `<div style="padding:4px 0"><span class="kbadge">${KINDS_SV[h[1]]}</span>
+    <a href="https://data.riksdagen.se/dokument/${h[5]}" target="_blank" rel="noopener">${esc(h[3])}</a>
+    <span class="dt"> ${h[2]}</span></div>`;}).join("")+(docs.length>40?`<p class="meta">… och ${docs.length-40} till</p>`:"")
+    :`<p class="meta">Inga dokument med den här ledamoten som undertecknare i skörden.</p>`}</div>`;
+  $("#back").onclick=()=>{detail=null;render();};
+  main.querySelectorAll("[data-vot]").forEach(b=>b.onclick=()=>{detail={typ:"vot",vid:b.dataset.vot};render();});
+}
+
+function koppla(){
+  const lq=$("#lq"); if(lq) lq.oninput=(e)=>{st.lq=e.target.value;render();
+    const el=$("#lq");el.focus();el.setSelectionRange(el.value.length,el.value.length);};
+  const q=$("#q"); if(q) q.oninput=(e)=>{st.q=e.target.value;render();
+    const el=$("#q");el.focus();el.setSelectionRange(el.value.length,el.value.length);};
+  const parti=$("#parti"); if(parti) parti.onchange=(e)=>{st.parti=e.target.value;render();};
+  const rm=$("#rm"); if(rm) rm.onchange=(e)=>{st.rm=e.target.value;render();};
+  main.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=+b.dataset.k;
+    st.kinds.has(k)?st.kinds.delete(k):st.kinds.add(k);render();});
+  main.querySelectorAll("[data-vot]").forEach(b=>b.onclick=()=>{detail={typ:"vot",vid:b.dataset.vot};render();});
+  main.querySelectorAll("[data-lofte]").forEach(b=>b.onclick=()=>{detail={typ:"lofte",id:b.dataset.lofte};render();});
+}
+render();
+</script>
