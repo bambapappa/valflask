@@ -86,12 +86,18 @@ Settings → Secrets and variables → Actions.
   (`scripts/organ-backfill.mts`); voteringar härleds ur beteckningen.
   241 utan uppgift, tomt är ärligt.
 - **HV4-prototyp byggd och publicerad** (privat artefakt, källa i
-  `prototyp/`): Vågen (rutnät + Läge A/B-förklaring), Utforskaren
-  (fritt sök, röstmatriser, ledamotssidor), Ämnen (värmekartor:
-  parti över tid / fråga över tid på utskottsindelningen),
-  Mot varandra (head-to-head mellan ledamöter, generellt eller per
-  utskott, med samsynsprocent). Ägarens öppna frågor F1–F5 i
-  SKISS-HV4.md.
+  `prototyp/`), i nuvarande version med: Vågen (rutnät + Läge A/B-
+  förklaring + omskriven läsanvisning), Utforskaren (fritt sök,
+  röstmatriser, ledamotssidor, utfällbar ordlista för förstagångs-
+  väljare), Ämnen (värmekartor parti/fråga över tid + Ordmolnet),
+  Mot varandra (head-to-head med snabbval: partiledare i kammaren
+  eller mest aktiva profil; komplett "röstade olika"-lista med
+  punktnummer), Kartan (alla ledamöter placerade i 2D av sina egna
+  röstmönster — blocken framträder ur datat). F1–F5 i SKISS-HV4.md.
+  **Uppdatera samma artefakt:** bygg om enligt prototyp/README.md och
+  publicera med url-parametern
+  `https://claude.ai/code/artifact/006ea368-ed8b-4eca-97f5-a657c785045b`
+  (annars myntas en ny länk).
 
 Återstår (i ordning):
 
@@ -185,6 +191,12 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
   workflown igen förrän den är klar (concurrency-gruppen köar ändå).
   Obs: körningen kan slå i 120-minuterstaket — omkörning är säker
   (kön är idempotent) men betalar om null-svaren.
+  **ÖVERTAG (om fjärde passets session är slut):** kolla senaste
+  foreslag-körningen under Actions. Grön → resultatet ligger på main
+  ("data: förslagskörning via workflow") och issues är synkade;
+  rapportera antal förslag i data/kopplingsforslag.json + antal
+  koppling-kö-issues till ägaren och ta bort detta anspråk. Röd på
+  120-minuterstaket → trigga om (idempotent), vänta, rapportera.
 
 ### Meddelanden mellan sessioner
 
