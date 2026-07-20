@@ -149,5 +149,17 @@
       "koppla voteringar på enbart beteckning utan text (inget ordagrant bevis möjligt — förkastad)"
     ],
     "decided_by": "session 2026-07-19, teknisk följd av spec §3 och överlämningens punkt 3"
+  },
+  {
+    "date": "2026-07-20",
+    "id": "b-0014",
+    "status": "fastställd",
+    "decision": "Utskottet (organ) följer med i skörden och återfylls på befintliga handlingar — riksdagens egen ämnesindelning är sajtens ämnestaxonomi. Fritextsök och ordvisualisering byggs som byggtids-nyckelordsindex (härledd data, incheckat skärvat; fulltexter hämtas vid indexbygge och lagras aldrig). RAG/semantisk sökning avvisas för den publika sajten: den kräver drift, kostar per fråga och sätter en modell mellan läsaren och datan. Ämnesvyer (parti över tid, fråga över tid, jämförelser mellan ledamöter) räknas deterministiskt ur metadata och index.",
+    "why": "Utskottsindelningen är neutral, deterministisk och riksdagens egen — inget eget tyckande i klassningen. Ett inverterat index är reproducerbart och granskningsbart i git-historiken, i samma anda som allt annat. Läsarens sökresultat får aldrig bero på en modells tolkning.",
+    "alternatives": [
+      "egen ämnesklassning med språkmodell (icke-deterministisk — förkastad)",
+      "RAG med embeddings och frågetjänst (drift + modell i läsvägen — förkastad för sajten; möjlig internt som kandidatstöd)"
+    ],
+    "decided_by": "ägaren 2026-07-20"
   }
 ]
