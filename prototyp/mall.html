@@ -447,6 +447,25 @@ function valjare(sida,q,vald){
       ${traffar.map(([p,i])=>`<div><button class="linkish" data-valj="${sida}:${i}">${esc(p[1])}</button> <span class="mono" style="font-size:11px">${p[2].toUpperCase()}</span></div>`).join("")}`}
   </div>`;
 }
+// Snabbval: partiledaren om hen finns i röstregistret, annars partiets
+// mest aktiva profil (röster + dokument) — deterministiskt ur datat.
+const PARTILEDARE=["Magdalena Andersson","Jimmie Åkesson","Ulf Kristersson","Ebba Busch",
+  "Johan Pehrson","Muharrem Demirok","Nooshi Dadgostar","Amanda Lind","Daniel Helldén","Simona Mohamsson"];
+const snabbval=(()=>{
+  const aktivitet=new Map(); // pIdx -> röster+3*dokument
+  for(const rm of D.roster) for(const [,str] of rm.v)
+    for(let i=0;i<str.length;i++){ if("JNA".includes(str[i])) {const g=rm.p[i]; aktivitet.set(g,(aktivitet.get(g)??0)+1);} }
+  for(const [pIdx,docs] of personDocs) aktivitet.set(pIdx,(aktivitet.get(pIdx)??0)+3*docs.length);
+  const ut=[];
+  for(const parti of PARTIER){
+    const ledare=P.findIndex(p=>p[2]===parti&&PARTILEDARE.includes(p[1]));
+    if(ledare>=0){ ut.push({parti,pIdx:ledare,ledare:true}); continue; }
+    let bast=-1,max=-1;
+    P.forEach((p,i)=>{ if(p[2]===parti&&(aktivitet.get(i)??0)>max){max=aktivitet.get(i)??0;bast=i;} });
+    if(bast>=0) ut.push({parti,pIdx:bast,ledare:false});
+  }
+  return ut;
+})();
 function vyMotVarandra(){
   const hh=st.hh; const allaUtskott=[...new Set([...votOrgan.values()])].sort();
   let jmf="";
@@ -473,6 +492,13 @@ function vyMotVarandra(){
   <p class="intro">Välj två ledamöter och jämför deras avtryck: röster, avvikelser från egna partilinjen
   och egna dokument — generellt eller inom en enskild fråga. Allt är riksdagens öppna data;
   frånvaro visas men räknas aldrig (kvittningssystemet), och siffrorna är aktivitet, inte betyg.</p></div>
+  <div class="tools tchips" style="margin-bottom:8px">
+    <span class="dt" style="align-self:center">Snabbval:</span>
+    ${snabbval.map(sv=>`<button data-snabb="${sv.pIdx}" title="${sv.ledare?"partiledare":"partiets mest aktiva i kammaren"}">
+      ${sv.parti.toUpperCase()} · ${esc(P[sv.pIdx][1])}${sv.ledare?"":" ◦"}</button>`).join("")}
+  </div>
+  <p class="meta" style="margin-top:0">Klicka två namn — partiledare där de sitter i kammaren
+  (statsråd ersätts och röstar inte), annars partiets mest aktiva profil (◦), räknat ur öppna data.</p>
   <div class="duo">${valjare("a",hh.qa,hh.a)}${valjare("b",hh.qb,hh.b)}</div>
   <div class="tools" style="margin-top:12px"><select id="hutskott"><option value="">Alla frågor</option>
     ${allaUtskott.map(u=>`<option ${hh.utskott===u?"selected":""} value="${u}">${uNamn(u)}</option>`).join("")}</select></div>
@@ -498,6 +524,9 @@ function koppla(){
     const ny=main.querySelector(`[data-pv="${el.dataset.pv}"]`); if(ny){ny.focus();ny.setSelectionRange(ny.value.length,ny.value.length);} });
   main.querySelectorAll("[data-valj]").forEach(b=>b.onclick=()=>{const [sida,i]=b.dataset.valj.split(":"); st.hh[sida]=+i; st.hh[sida==="a"?"qa":"qb"]=""; render();});
   main.querySelectorAll("[data-rensa]").forEach(b=>b.onclick=()=>{st.hh[b.dataset.rensa]=null;render();});
+  main.querySelectorAll("[data-snabb]").forEach(b=>b.onclick=()=>{const i=+b.dataset.snabb;
+    if(st.hh.a===null) st.hh.a=i; else if(st.hh.b===null&&i!==st.hh.a) st.hh.b=i; else st.hh.a=i;
+    render();});
 }
 render();
 </script>
