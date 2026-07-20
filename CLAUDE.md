@@ -15,6 +15,14 @@ commit-texter, PR-texter, sajtcopy, prompter och dokumentation.
 - Skriv språk som alla förstår. Ingen teknisk jargong i texter som riktar
   sig till läsare, partier eller journalister.
 
+## Parallella sessioner
+
+Flera Claude-sessioner kan arbeta i repot samtidigt. Bindande:
+`main` är samlingspunkten och `HANDOFF.md` är anslagstavlan — läs
+versionen på `origin/main` innan nytt arbete, gör anspråk under
+"Pågår just nu" före start, skörda aldrig parallellt. Fullständiga
+regler i HANDOFF.md §"Samarbete mellan parallella sessioner".
+
 ## Kärnprinciper (beslutade av ägaren)
 
 - **Tomma celler är ärliga.** Hitta aldrig på svar för att fylla täckning.
