@@ -89,6 +89,9 @@ async function main() {
 
   const runId = `foreslag-${new Date().toISOString().slice(0, 10)}`;
   let nya = 0;
+  let parFel = 0;
+  let parKlara = 0;
+  const sparaKo = () => writeFileSync(koPath, JSON.stringify(ko, null, 2) + "\n");
   for (const lofte of loften) {
     const dokKandidater = rankaKandidater(lofte, handlingar, maxKandidater);
     const votKandidater = rankaVoteringsKandidater(lofte, handlingar, betankanden, maxKandidater);
@@ -106,27 +109,46 @@ async function main() {
         console.log(`  [${poang}] ${handling.id} ${handling.kind} ${handling.datum} ${handling.titel.slice(0, 70)}${via}`);
         continue;
       }
-      // För en votering är källtexten betänkandets — samma text till modell och H2.
-      const kalltext = await fetchDokumentText(politeFetch, betankande?.dok_id ?? handling.dok_id);
-      const { forslag, grindfel } = await skapaForslag(llm!, systemPrompt, model, lofte, handling, kalltext, LAGE_A_FONSTER, betankande);
-      sedd.add(`${lofte.id}::${handling.id}`);
-      if (!forslag) {
-        console.log(`  ${handling.id}: ingen koppling föreslagen`);
-        continue;
+      try {
+        // För en votering är källtexten betänkandets — samma text till modell och H2.
+        const kalltext = await fetchDokumentText(politeFetch, betankande?.dok_id ?? handling.dok_id);
+        const { forslag, grindfel } = await skapaForslag(llm!, systemPrompt, model, lofte, handling, kalltext, LAGE_A_FONSTER, betankande);
+        sedd.add(`${lofte.id}::${handling.id}`);
+        parKlara += 1;
+        if (!forslag) {
+          console.log(`  ${handling.id}: ingen koppling föreslagen`);
+          continue;
+        }
+        if (grindfel.length > 0) {
+          console.log(`  ${handling.id}: fälld av ${grindfel.map((f) => f.grind).join(",")} — ${grindfel[0]!.reason}`);
+          continue;
+        }
+        ko.push({ ...forslag, skapad: new Date().toISOString(), extraction: { model, verified_by: null, run_id: runId } });
+        nya += 1;
+        console.log(`  ${handling.id}: förslag i kö (${forslag.riktning}, conf ${forslag.confidence})`);
+      } catch (err) {
+        // Ett enskilt par får inte fälla hela körningen — paret markeras inte
+        // som sett och prövas igen vid nästa körning.
+        parFel += 1;
+        console.error(`  ${handling.id}: fel — ${err instanceof Error ? err.message : String(err)}`);
+        if (parFel >= 5 && parKlara === 0) {
+          sparaKo();
+          throw new Error(`avbryter: ${parFel} fel utan ett enda lyckat modellanrop — troligen felkonfiguration (modell-id eller nyckel)`);
+        }
       }
-      if (grindfel.length > 0) {
-        console.log(`  ${handling.id}: fälld av ${grindfel.map((f) => f.grind).join(",")} — ${grindfel[0]!.reason}`);
-        continue;
-      }
-      ko.push({ ...forslag, skapad: new Date().toISOString(), extraction: { model, verified_by: null, run_id: runId } });
-      nya += 1;
-      console.log(`  ${handling.id}: förslag i kö (${forslag.riktning}, conf ${forslag.confidence})`);
     }
+    // Kön skrivs efter varje löfte — en krasch eller timeout längre fram
+    // kastar aldrig bort förslag som redan passerat grindarna.
+    if (!dryRun) sparaKo();
   }
 
   if (!dryRun) {
-    writeFileSync(koPath, JSON.stringify(ko, null, 2) + "\n");
+    sparaKo();
     console.log(`klart: ${nya} nya förslag → ${koPath} (väntar på ägarbeslut H6)`);
+    if (parFel > 0) {
+      console.error(`obs: ${parFel} par föll på fel under körningen — en omkörning prövar dem igen`);
+      process.exitCode = 1;
+    }
   }
 }
 

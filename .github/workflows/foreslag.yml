@@ -5,10 +5,13 @@ name: foreslag
 # Valfria hemligheter: LLM_FALLBACK_BASE_URL, LLM_FALLBACK_API_KEY, och
 # variabeln MODEL_KOPPLING_FALLBACK. Löftena läses ur publika valflask.
 #
-# Körningen är idempotent (redan prövade par hoppas över). Pushloopen
-# lägger bara körningens NYA köposter på färsk defaultgren — ett
-# granskningsbeslut som hann fattas under körningen återuppstår aldrig
-# (scripts/ko-uppdatera.mts). Efter lyckad push synkas kön till issues.
+# Körningen är idempotent (par med förslag i kön hoppas över). Skriptet
+# skriver kön efter varje löfte och kraschar inte på enskilda par, och
+# körsteget är salvage-säkrat som i skord.yml: även om det faller committas
+# det som hann köas, och körningen blir röd sist. Pushloopen lägger bara
+# körningens NYA köposter på färsk defaultgren — ett granskningsbeslut som
+# hann fattas under körningen återuppstår aldrig (scripts/ko-uppdatera.mts).
+# Efter lyckad push synkas kön till issues.
 on:
   workflow_dispatch:
     inputs:
@@ -33,7 +36,9 @@ concurrency:
 jobs:
   foresla:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    # Full körning över alla löften tar timmar (throttle 2,5 s per modellanrop
+    # plus källtexthämtning per par) — 120 min räckte inte.
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
         with:
@@ -63,6 +68,8 @@ jobs:
       - name: Spara köns startläge
         run: cp data/kopplingsforslag.json /tmp/ko-start.json
       - name: Förslagskörning
+        id: kor
+        continue-on-error: true
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           LLM_FALLBACK_BASE_URL: ${{ secrets.LLM_FALLBACK_BASE_URL }}
@@ -111,3 +118,9 @@ jobs:
           PROMISES_PATH: ${{ github.workspace }}/valflask-lofter/data/promises.json
         run: node --import tsx/esm scripts/koppling-issues.mts
         working-directory: pipeline
+      - name: Fall röd om körsteget föll
+        if: steps.kor.outcome == 'failure'
+        run: |
+          echo "Förslagskörningen föll — det som hann köas är ändå committat."
+          echo "En omkörning prövar de par som föll igen."
+          exit 1
