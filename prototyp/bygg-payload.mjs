@@ -28,6 +28,7 @@ const H = handlingar.map((h) => [
     .map((p) => (p.riksdagen_id ? personIdx.get(p.riksdagen_id) : undefined))
     .filter((i) => i !== undefined)
     .join(","),
+  h.organ ?? "",
 ]);
 
 // Löften: [id, titel, partier, kategori]
