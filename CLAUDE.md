@@ -14,6 +14,11 @@ commit-texter, PR-texter, sajtcopy, prompter och dokumentation.
     kvar, men ny prosa och nya namn ska undvika ordet.
 - Skriv språk som alla förstår. Ingen teknisk jargong i texter som riktar
   sig till läsare, partier eller journalister.
+- **Skriv "mänskligt beslut", aldrig "ägarbeslut".** Gäller all text i
+  projektet. Interna grindkoder (H1–H6, G-serien, b-nummer) får aldrig
+  synas i text som möter läsare — de säger ingen utomstående något;
+  skriv i stället vad som faktiskt sker ("citatet kontrolleras ord för
+  ord", "en människa godkänner varje koppling").
 
 ## Parallella sessioner
 

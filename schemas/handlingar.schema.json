@@ -13,6 +13,7 @@
       "votering_id": { "type": ["string", "null"] },
       "punkt": { "type": ["integer", "null"] },
       "datum": { "type": "string", "format": "date" },
+      "organ": { "type": "string" },
       "parties": { "type": "array", "items": { "type": "string" } },
       "persons": {
         "type": "array",

@@ -2,7 +2,7 @@
  * Förslagssteget (HV2): språkmodellen läser ett löfte och ett
  * riksdagsdokument och får FÖRESLÅ en koppling med exakt citat.
  * Allt den föreslår prövas av grindarna H1–H5 (kod) och därefter av
- * ägaren (H6). Modellen sätter aldrig domar och skriver aldrig data.
+ * en människa (H6). Modellen sätter aldrig domar och skriver aldrig data.
  *
  * Kandidaturvalet är deterministiskt (ordöverlapp) så att samma data
  * alltid ger samma kandidatlista — modellen väljer inte vad den får se.

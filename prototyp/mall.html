@@ -1,0 +1,688 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handlingsvågen — prototyp</title>
+<style>
+:root{
+  --paper:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#8b897f;
+  --line:#e4e2da; --panel:#f4f3ee; --accent:#184f95; --accent-ink:#fff;
+  --ja:#2a78d6; --nej:#eb6834; --avstar:#82878f; --franv:#d4d7dc;
+  --chip:#ecebe4; --varsel:#8a6d1f; --varsel-bg:#f7f0da;
+}
+@media (prefers-color-scheme: dark){:root{
+  --paper:#1a1a19; --ink:#f2f1ea; --ink-2:#c3c2b7; --ink-3:#8f8e85;
+  --line:#3a3a36; --panel:#242422; --accent:#3987e5; --accent-ink:#0b0b0b;
+  --ja:#3987e5; --nej:#d95926; --avstar:#8f949c; --franv:#44484e;
+  --chip:#31312e; --varsel:#d9b95c; --varsel-bg:#33301f;
+}}
+:root[data-theme="dark"]{
+  --paper:#1a1a19; --ink:#f2f1ea; --ink-2:#c3c2b7; --ink-3:#8f8e85;
+  --line:#3a3a36; --panel:#242422; --accent:#3987e5; --accent-ink:#0b0b0b;
+  --ja:#3987e5; --nej:#d95926; --avstar:#8f949c; --franv:#44484e;
+  --chip:#31312e; --varsel:#d9b95c; --varsel-bg:#33301f;
+}
+:root[data-theme="light"]{
+  --paper:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#8b897f;
+  --line:#e4e2da; --panel:#f4f3ee; --accent:#184f95; --accent-ink:#fff;
+  --ja:#2a78d6; --nej:#eb6834; --avstar:#82878f; --franv:#d4d7dc;
+  --chip:#ecebe4; --varsel:#8a6d1f; --varsel-bg:#f7f0da;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.serif{font-family:Georgia,"Times New Roman",serif}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);
+  padding:0 20px}
+.hrow{max-width:1160px;margin:0 auto;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;padding:14px 0 0}
+h1{font-family:Georgia,serif;font-size:26px;margin:0;letter-spacing:.2px}
+.sub{color:var(--ink-3);font-size:12.5px;letter-spacing:.4px;text-transform:uppercase}
+nav{max-width:1160px;margin:0 auto;display:flex;gap:2px;padding-top:8px}
+nav button{appearance:none;border:0;background:none;color:var(--ink-2);font:inherit;font-size:14.5px;
+  padding:9px 16px;cursor:pointer;border-bottom:2.5px solid transparent}
+nav button:hover{color:var(--ink)}
+nav button.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav button:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+main{max-width:1160px;margin:0 auto;padding:22px 20px 70px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+input[type=search],select{background:var(--panel);border:1px solid var(--line);color:var(--ink);
+  border-radius:6px;padding:8px 12px;font:inherit;font-size:14px}
+input[type=search]{min-width:300px;flex:1;max-width:460px}
+.tchips{display:flex;gap:6px;flex-wrap:wrap}
+.tchips button{border:1px solid var(--line);background:var(--panel);color:var(--ink-2);border-radius:99px;
+  padding:5.5px 13px;font:inherit;font-size:13px;cursor:pointer}
+.tchips button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.meta{color:var(--ink-3);font-size:13px;margin:4px 0 14px}
+table{border-collapse:collapse;width:100%}
+.hit{border-bottom:1px solid var(--line)}
+.hit td{padding:9px 10px 9px 0;vertical-align:baseline}
+.hit:hover{background:var(--panel)}
+.kbadge{display:inline-block;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-2);
+  background:var(--chip);border-radius:4px;padding:2.5px 8px;white-space:nowrap}
+.dt{color:var(--ink-3);font-size:12.5px;white-space:nowrap}
+.pchip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--ink-2);
+  border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin-left:4px;text-transform:uppercase;cursor:default}
+button.linkish{appearance:none;border:0;background:none;color:var(--accent);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+.panel h3{margin:0 0 4px;font-family:Georgia,serif;font-size:19px;text-wrap:balance}
+.panel .meta{margin:2px 0 12px}
+.bars{display:grid;grid-template-columns:44px 1fr 200px;gap:6px 12px;align-items:center;max-width:680px}
+.bar{display:flex;height:16px;border-radius:4px;overflow:hidden;background:var(--paper)}
+.bar span{height:100%;margin-right:2px}
+.bar span:last-child{margin-right:0}
+.seg-ja{background:var(--ja)} .seg-nej{background:var(--nej)}
+.seg-av{background:var(--avstar)} .seg-fr{background:var(--franv)}
+.bcount{font-size:12.5px;color:var(--ink-2);white-space:nowrap}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0 4px;font-size:12.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.vote{display:inline-block;min-width:24px;text-align:center;font-size:11.5px;font-weight:700;border-radius:4px;padding:1.5px 6px}
+.vJ{background:var(--ja);color:#fff}.vN{background:var(--nej);color:#fff}
+.vA{background:var(--avstar);color:#fff}.vF{background:var(--franv);color:var(--ink-2)}
+:root[data-theme="dark"] .vF, .dark .vF{color:var(--ink-2)}
+.status{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.5px;border-radius:4px;padding:2.5px 7px;white-space:nowrap}
+.st-tom{color:var(--ink-3);background:var(--chip)}
+.st-vantar{color:var(--varsel);background:var(--varsel-bg);border:1px dashed var(--varsel)}
+.grid th{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);text-align:left;
+  padding:6px 8px 6px 0;border-bottom:1.5px solid var(--line);position:sticky;top:96px;background:var(--paper)}
+.grid td{border-bottom:1px solid var(--line);padding:8px 8px 8px 0;vertical-align:baseline}
+.grid tr:hover{background:var(--panel)}
+.ltitle{cursor:pointer}
+.ltitle:hover{color:var(--accent)}
+.qq{font-family:Georgia,serif;font-size:16px;border-left:3px solid var(--accent);padding:2px 0 2px 14px;margin:10px 0;color:var(--ink)}
+.note{font-size:13px;color:var(--ink-2);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:18px 0 0}
+.back{margin-bottom:14px}
+.statrow{display:flex;gap:26px;flex-wrap:wrap;margin:10px 0 18px}
+.stat b{display:block;font-size:24px;font-family:Georgia,serif}
+.stat span{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.5px}
+.avvik{border-left:3px solid var(--nej);padding-left:12px;margin:8px 0}
+footer{border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px;padding:16px 20px 30px;max-width:1160px;margin:30px auto 0}
+.scrollbox{overflow-x:auto}
+.hm{display:grid;gap:2px;align-items:center;font-size:11px}
+.hm .rl{font-size:11.5px;color:var(--ink-2);white-space:nowrap;padding-right:8px;text-align:right}
+.hm .cl{writing-mode:initial;color:var(--ink-3);font-size:10px;text-align:center;padding-top:4px}
+.hm .c{height:20px;border-radius:3px;background:var(--panel)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:760px){.duo{grid-template-columns:1fr}}
+.valperson{border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--panel)}
+.intro{font-size:14px;max-width:72ch;color:var(--ink-2)}
+.intro b{color:var(--ink)}
+details.ordlista{margin:0 0 16px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+details.ordlista summary{cursor:pointer;padding:10px 14px;font-size:13.5px;color:var(--accent);font-weight:600;list-style-position:inside}
+details.ordlista div{padding:2px 16px 12px;font-size:13.5px;color:var(--ink-2);max-width:78ch}
+details.ordlista dt{font-weight:700;color:var(--ink);margin-top:8px}
+details.ordlista dd{margin:1px 0 0}
+.karta{position:relative;height:580px;border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow:hidden}
+.pt{position:absolute;font-size:10px;font-weight:700;transform:translate(-50%,-50%);cursor:pointer;
+  color:var(--ink-2);letter-spacing:.3px;line-height:1;padding:2px}
+.pt:hover{color:var(--accent);z-index:5;font-size:12px}
+.moln{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;line-height:1.15;padding:6px 0}
+.moln button{appearance:none;border:0;background:none;color:var(--ink-2);font-family:Georgia,serif;
+  cursor:pointer;padding:0}
+.moln button:hover{color:var(--accent)}
+@media (prefers-reduced-motion: no-preference){ .panel{animation:in .18s ease-out} @keyframes in{from{opacity:.4;transform:translateY(3px)}to{opacity:1}} }
+</style>
+
+<header>
+  <div class="hrow">
+    <h1>Handlingsvågen</h1>
+    <span class="sub">Prototyp · privat · data ur riksdagens öppna data 2026-07-20</span>
+  </div>
+  <nav>
+    <button id="tabV" class="on">Vågen — löfte mot handling</button>
+    <button id="tabU">Utforskaren — fritt i allt</button>
+    <button id="tabA">Ämnen — vem pratar om vad</button>
+    <button id="tabH">Mot varandra</button>
+    <button id="tabK">Kartan</button>
+  </nav>
+</header>
+<main id="main"></main>
+<footer>
+  Prototyp — publiceras inte. 23 629 handlingar, 2 576 voteringar med
+  899 024 röster, 1 451 betänkanden (riksmötena 2022/23–2025/26). Sök går på titlar och
+  betänkanderubriker — dokumentens fulltexter lagras inte i bulk (b-0012). Vågen visar bara
+  kopplingar där citatet kontrollerats ord för ord; publicering kräver mänskligt beslut. Tomma celler är ärliga.
+  Varje rad länkar till riksdagens egen källa.
+</footer>
+
+<script id="data" type="application/json">__PAYLOAD__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("data").textContent);
+const KINDS_SV = ["Motion","Proposition","Interpellation","Skriftlig fråga","Votering"];
+const PARTIER = ["s","m","sd","c","v","kd","l","mp"];
+const H = D.handlingar, P = D.personer, L = D.loften;
+const $ = (s,el=document)=>el.querySelector(s);
+function ordlista(){ return `
+<details class="ordlista"><summary>Ny här? Så funkar riksdagens papper — ordlistan</summary><div><dl>
+<dt>Motion</dt><dd>Ett förslag till riksdagen från en eller flera ledamöter. De flesta lämnas under
+"allmänna motionstiden" varje höst — därför toppar de i oktober.</dd>
+<dt>Proposition</dt><dd>Ett förslag från regeringen, oftast ett färdigt lagförslag.</dd>
+<dt>Interpellation</dt><dd>En fråga från en ledamot till ett statsråd som debatteras muntligt i kammaren.</dd>
+<dt>Skriftlig fråga</dt><dd>En kortare fråga till ett statsråd som besvaras skriftligt.</dd>
+<dt>Utskott</dt><dd>Riksdagens arbetsgrupper, en per ämnesområde — Utbildningsutskottet, Justitieutskottet
+och så vidare. Alla förslag bereds i ett utskott innan kammaren röstar.</dd>
+<dt>Betänkande</dt><dd>Utskottets samlade förslag till beslut, uppdelat i numrerade punkter.
+Kammaren röstar om varje punkt för sig.</dd>
+<dt>Votering</dt><dd>Själva omröstningen i kammaren. Varje ledamot trycker Ja, Nej eller Avstår —
+det är de knapptryckningarna du ser här.</dd>
+<dt>Frånvarande &amp; kvittning</dt><dd>Att en ledamot inte röstade betyder oftast inte skolk: partierna
+"kvittar" planerad frånvaro mot varandra så att styrkeförhållandet består. Därför räknar vi aldrig
+frånvaro som ett ställningstagande.</dd>
+</dl></div></details>`; }
+const esc = (s)=>String(s).replace(/[&<>"]/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// ---- index ----
+const votIndex = new Map(); // votering_id -> {r: rmIdx, v: votIdx}
+D.roster.forEach((r,ri)=>r.v.forEach((v,vi)=>votIndex.set(v[0],{r:ri,v:vi})));
+const hById = new Map(H.map((h,i)=>[h[0],i]));
+const ordning = H.map((_,i)=>i).sort((a,b)=>H[b][2].localeCompare(H[a][2])); // datum fallande
+const personDocs = new Map(); // personIdx -> [handlingIdx]
+H.forEach((h,i)=>{ if(!h[8]) return; for(const p of h[8].split(",")){ const k=+p;
+  if(!personDocs.has(k)) personDocs.set(k,[]); personDocs.get(k).push(i);} });
+function rmAv(datum){ const y=+datum.slice(0,4), m=+datum.slice(5,7);
+  return m>=9? `${y}/${String((y+1)%100).padStart(2,"0")}` : `${y-1}/${String(y%100).padStart(2,"0")}`;}
+
+// Röstdata för EN votering: [{pIdx, rost}], parti via register + avvikelselista
+function roster(vid){
+  const loc = votIndex.get(vid); if(!loc) return null;
+  const rm = D.roster[loc.r], [ ,str,avvik] = rm.v[loc.v];
+  const rader=[];
+  for(let i=0;i<str.length;i++){ const t=str[i]; if(t==="-") continue;
+    const pIdx=rm.p[i]; const parti=(avvik&&avvik[String(i)])||P[pIdx][2];
+    rader.push({pIdx,parti,rost:t}); }
+  return rader;
+}
+function aggregera(rader){ const per={};
+  for(const r of rader){ const a=(per[r.parti]??={J:0,N:0,A:0,F:0}); a[r.rost]++; }
+  return per; }
+
+// ---- vyer ----
+const main=$("#main");
+let tab="V", detail=null; // detail: {typ:"vot"|"person"|"lofte", ...}
+$("#tabV").onclick=()=>{tab="V";detail=null;render();};
+$("#tabU").onclick=()=>{tab="U";detail=null;render();};
+$("#tabA").onclick=()=>{tab="A";detail=null;render();};
+$("#tabH").onclick=()=>{tab="H";detail=null;render();};
+$("#tabK").onclick=()=>{tab="K";detail=null;render();};
+const st={ q:"", kinds:new Set(), parti:"", rm:"", lq:"",
+  amne:{vy:"parti", parti:"s", utskott:"UbU"},
+  hh:{a:null,b:null,qa:"",qb:"",utskott:"",visaOlika:15} };
+
+function render(){
+  $("#tabV").className=tab==="V"?"on":""; $("#tabU").className=tab==="U"?"on":"";
+  $("#tabA").className=tab==="A"?"on":""; $("#tabH").className=tab==="H"?"on":"";
+  $("#tabK").className=tab==="K"?"on":"";
+  if(detail?.typ==="vot") return renderVotering(detail.vid);
+  if(detail?.typ==="person") return renderPerson(detail.p);
+  if(detail?.typ==="lofte") return renderLofte(detail.id);
+  main.innerHTML = tab==="V" ? vyVagen() : tab==="U" ? vyUtforskaren() : tab==="A" ? vyAmnen() : tab==="H" ? vyMotVarandra() : vyKartan();
+  koppla();
+}
+
+// ---------- VÅGEN ----------
+function statusFor(lofteId, parti, lofteParti){
+  const fs = D.forslag.filter(f=>f.promise_id===lofteId);
+  for(const f of fs){ const h=H[hById.get(f.handling_id)];
+    const hp=h?h[4].split(" "):[];
+    if(h && hp.includes(parti)) return `<span class="status st-vantar">FÖRSLAG — VÄNTAR PÅ GRANSKNING</span>`; }
+  return lofteParti ? `<span class="status st-tom">INGEN HANDLING ÄNNU</span>` : `<span class="status" style="color:var(--ink-3)">·</span>`;
+}
+function vyVagen(){
+  const q=st.lq.toLowerCase();
+  const rows=L.filter(l=>!q||l[1].toLowerCase().includes(q));
+  const kollade=rows.slice(0,120);
+  return `
+  <div class="panel"><h3>Läge A — Meritlistan: hur viktig var frågan innan den blev vallöfte?</h3>
+  <p class="intro">Löftena ges nu, inför valet 2026. Meritlistan tittar <b>bakåt</b>: vad har partiet
+  och ledamöterna redan gjort i samma sakfråga under mandatperioden 2022–2026 — motioner, voteringar,
+  frågor till statsråd? Ord är gratis; det här visar om frågan var viktig även när ingen röstfiskade.
+  <b>Läge B — Uppföljningen</b> startar efter valet: samma rutnät, men då mäter det om de nya löftena
+  blir handling 2026–2030. Regeringspartier mäts på propositioner och budget, opposition på motioner
+  och röster — olika verktyg, samma stränghet.</p></div>
+  <div class="tools"><input type="search" id="lq" placeholder="Sök bland ${L.length} löften …" value="${esc(st.lq)}"></div>
+  <p class="meta">${rows.length} löften${rows.length>120?" — visar 120":""} · status per parti räknas ur godkända kopplingar.
+  Just nu: <b>${D.forslag.length} förslag</b> väntar på mänskligt beslut, inga godkända ännu — därför är nästan allt ärligt tomt.</p>
+  <div class="scrollbox"><table class="grid"><thead><tr><th style="min-width:330px">Löfte</th>
+  ${PARTIER.map(p=>`<th>${p.toUpperCase()}</th>`).join("")}</tr></thead><tbody>
+  ${kollade.map(l=>{ const lp=l[2].split(" ").filter(Boolean);
+    return `<tr><td class="ltitle" data-lofte="${l[0]}"><span class="serif">${esc(l[1])}</span>
+      <span class="dt"> ${l[3]?esc(l[3]):""}</span></td>
+    ${PARTIER.map(p=>`<td>${statusFor(l[0],p,lp.includes(p))}</td>`).join("")}</tr>`;}).join("")}
+  </tbody></table></div>
+  <p class="note"><b>Så läser du rutnätet:</b> varje rad är ett vallöfte, varje kolumn ett parti.
+  <b>INGEN HANDLING ÄNNU</b> = vi har inte hittat något dokument eller någon omröstning i riksdagen
+  som bevisligen rör löftets sakfråga — rutan är ärligt tom, inte ett underbetyg.
+  <b>FÖRSLAG — VÄNTAR</b> = ett dokument har hittats och citatet är kontrollerat, men en människa
+  har inte granskat kopplingen än. En prick betyder bara att partiet inte gett det löftet.
+  När kopplingar godkänns fylls rutorna med AGERAT I LINJE, AGERAT EMOT eller BÅDE OCH —
+  alltid klickbart ner till exakta citat och riksdagens källa. Inga färger betygsätter:
+  att agera emot ett löfte kan vara precis vad du som väljare hoppas på.</p>`;
+}
+function renderLofte(id){
+  const l=L.find(x=>x[0]===id); if(!l){detail=null;return render();}
+  const flist=D.forslag.filter(f=>f.promise_id===id);
+  let fhtml="";
+  if(flist.length){ fhtml=`<div class="panel"><h3>${flist.length===1?"Ett förslag":flist.length+" förslag"} i granskningskön — väntar på mänskligt beslut</h3>
+    <p class="meta">Ingenting nedan räknas förrän en människa godkänt det.</p>`+
+    flist.map(f=>{ const h=H[hById.get(f.handling_id)];
+    return `<p style="margin:14px 0 0"><span class="kbadge">${KINDS_SV[h[1]]}</span>
+    <a href="https://data.riksdagen.se/dokument/${h[5]}" target="_blank" rel="noopener">${esc(h[3])}</a>
+    <span class="dt"> ${h[2]} · ${f.riktning==="stodjer"?"stödjer":"motverkar"} löftet</span></p>
+    <div class="qq">”${esc(f.bevis.citat)}”</div>
+    <p class="meta">Citatet är kontrollerat ord för ord mot källtexten. ${esc(f.method_note)}</p>`;}).join("")+`</div>`; }
+  return main.innerHTML=`
+  <p class="back"><button class="linkish" id="back">← Alla löften</button></p>
+  <h2 class="serif" style="font-size:24px;margin:0 0 2px">${esc(l[1])}</h2>
+  <p class="meta">${l[0]} · parti: ${l[2].toUpperCase()||"—"} · kategori: ${esc(l[3]||"—")}</p>
+  ${l[4]?`<div class="qq">”${esc(l[4])}”</div>`:""}
+  ${fhtml||`<p class="note">Ingen riksdagshandling är kopplad till löftet ännu — och en tom ruta
+  betyder just det, inget annat. En koppling visas bara när ett dokument bevisligen rör samma
+  sakfråga: citatet ur dokumentet kontrolleras ord för ord mot källan, och en människa
+  godkänner varje koppling innan den räknas.</p>`}
+  `, $("#back").onclick=()=>{detail=null;render();}, undefined;
+}
+
+// ---------- UTFORSKAREN ----------
+function traff(h,tokens){ const t=h[3].toLowerCase();
+  const bt = h[1]===4 ? (D.betankanden[h[5]]||"").toLowerCase() : "";
+  return tokens.every(tok=>t.includes(tok)||bt.includes(tok)); }
+function vyUtforskaren(){
+  const tokens=st.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const ut=[];
+  for(const i of ordning){ const h=H[i];
+    if(st.kinds.size && !st.kinds.has(h[1])) continue;
+    if(st.parti && !h[4].split(" ").includes(st.parti)) continue;
+    if(st.rm && rmAv(h[2])!==st.rm) continue;
+    if(tokens.length && !traff(h,tokens)) continue;
+    ut.push(i); }
+  const visa=ut.slice(0,300);
+  return `
+  <div class="panel"><h3>Utforskaren — allt riksdagen gjort, sökbart</h3>
+  <p class="intro">Här ligger <b>varenda motion, proposition, fråga och omröstning</b> från
+  mandatperioden 2022–2026, hämtade ur riksdagens öppna data. Sök på ett ord, filtrera på
+  dokumenttyp eller parti, och klicka dig hela vägen ner till hur varje ledamot röstade.
+  Ingenting är tolkat eller betygsatt — varje rad länkar till riksdagens egen källa.</p></div>
+  ${ordlista()}
+  <div class="tools">
+    <input type="search" id="q" placeholder="Sök i alla ${H.length.toLocaleString("sv")} handlingar — t.ex. ”npf”, ”särskilt stöd”, ”a-kassa” …" value="${esc(st.q)}">
+    <select id="parti"><option value="">Alla partier</option>${PARTIER.map(p=>`<option ${st.parti===p?"selected":""} value="${p}">${p.toUpperCase()}</option>`).join("")}</select>
+    <select id="rm"><option value="">Alla riksmöten</option>${["2022/23","2023/24","2024/25","2025/26"].map(r=>`<option ${st.rm===r?"selected":""}>${r}</option>`).join("")}</select>
+  </div>
+  <div class="tools tchips">${KINDS_SV.map((k,i)=>`<button data-k="${i}" class="${st.kinds.has(i)?"on":""}">${k}${i===4?"":"er"}</button>`).join("")}</div>
+  <p class="meta">${ut.length.toLocaleString("sv")} träffar${ut.length>300?" — visar de 300 senaste":""} · sök går på titlar och betänkanderubriker · varje rad länkar till riksdagens källa</p>
+  <table><tbody>
+  ${visa.map(i=>{const h=H[i]; const isVot=h[1]===4;
+    const titel=isVot? `${esc(D.betankanden[h[5]]||h[3])} <span class="dt">· punkt ${h[7]}</span>` : esc(h[3]);
+    const url=isVot? `https://data.riksdagen.se/votering/${h[6]}` : `https://data.riksdagen.se/dokument/${h[5]}`;
+    return `<tr class="hit"><td style="width:118px"><span class="kbadge">${KINDS_SV[h[1]]}</span></td>
+    <td class="dt" style="width:92px">${h[2]}</td>
+    <td>${isVot?`<button class="linkish" data-vot="${h[6]}">${titel}</button>`:`<a href="${url}" target="_blank" rel="noopener">${titel}</a>`}
+      ${h[4]?h[4].split(" ").map(p=>`<span class="pchip">${p.toUpperCase()}</span>`).join(""):""}</td>
+    <td style="width:90px">${isVot?`<button class="linkish" data-vot="${h[6]}">rösterna</button>`:""}</td></tr>`;}).join("")}
+  </tbody></table>`;
+}
+
+function renderVotering(vid){
+  const hi=[...hById.entries()].find(([,i])=>H[i][6]===vid); // hitta handlingen
+  const h=hi?H[hi[1]]:null;
+  const rader=roster(vid); if(!rader){detail=null;return render();}
+  const agg=aggregera(rader);
+  const partier=Object.keys(agg).sort((a,b)=>PARTIER.indexOf(a)-PARTIER.indexOf(b));
+  const maxN=Math.max(...partier.map(p=>agg[p].J+agg[p].N+agg[p].A+agg[p].F));
+  const bt=h?D.betankanden[h[5]]:""; const pq=(st.pq||"").toLowerCase();
+  const visade=rader.filter(r=>!pq||P[r.pIdx][1].toLowerCase().includes(pq));
+  main.innerHTML=`
+  <p class="back"><button class="linkish" id="back">← Utforskaren</button></p>
+  <h2 class="serif" style="font-size:23px;margin:0">${esc(bt||"Votering")}</h2>
+  <p class="meta">${h?`${h[5]} · punkt ${h[7]} · ${h[2]} · `:""}
+    <a href="https://data.riksdagen.se/votering/${vid}" target="_blank" rel="noopener">riksdagens post</a></p>
+  <p class="intro" style="margin:2px 0 10px">Så här röstade kammaren om den här punkten i
+  betänkandet — först parti för parti, sedan varje enskild ledamot. Ja betyder stöd för
+  utskottets förslag i punkten, Nej betyder emot.</p>
+  ${ordlista()}
+  <div class="panel"><h3>Röstfördelning per parti</h3>
+  <div class="legend"><span><i style="background:var(--ja)"></i>Ja</span><span><i style="background:var(--nej)"></i>Nej</span>
+  <span><i style="background:var(--avstar)"></i>Avstår</span><span><i style="background:var(--franv)"></i>Frånvarande — räknas aldrig (b-0004)</span></div>
+  <div class="bars">
+  ${partier.map(p=>{const a=agg[p],tot=a.J+a.N+a.A+a.F,w=x=>100*x/maxN;
+    return `<div class="mono" style="font-size:12px;font-weight:700">${p.toUpperCase()}</div>
+    <div class="bar" role="img" aria-label="${p.toUpperCase()}: ${a.J} ja, ${a.N} nej, ${a.A} avstår, ${a.F} frånvarande">
+      ${a.J?`<span class="seg-ja" style="width:${w(a.J)}%"></span>`:""}${a.N?`<span class="seg-nej" style="width:${w(a.N)}%"></span>`:""}
+      ${a.A?`<span class="seg-av" style="width:${w(a.A)}%"></span>`:""}${a.F?`<span class="seg-fr" style="width:${w(a.F)}%"></span>`:""}</div>
+    <div class="bcount mono">${a.J} ja · ${a.N} nej · ${a.A} avstår · ${a.F} frånv.</div>`;}).join("")}
+  </div></div>
+  <div class="tools"><input type="search" id="pq" placeholder="Sök ledamot …" value="${esc(st.pq||"")}"></div>
+  <p class="meta">${rader.length} ledamöter röstade${visade.length!==rader.length?` — visar ${visade.length}`:""}</p>
+  <table><tbody>${visade.map(r=>`<tr class="hit">
+    <td style="width:38px"><span class="vote v${r.rost}">${r.rost}</span></td>
+    <td><button class="linkish" data-person="${r.pIdx}">${esc(P[r.pIdx][1])}</button></td>
+    <td class="mono" style="width:44px;font-weight:700;font-size:12px">${r.parti.toUpperCase()}</td>
+    <td class="dt">${esc(P[r.pIdx][3])}</td></tr>`).join("")}</tbody></table>`;
+  $("#back").onclick=()=>{detail=null;st.pq="";render();};
+  $("#pq").oninput=(e)=>{st.pq=e.target.value;renderVotering(vid);
+    const el=$("#pq");el.focus();el.setSelectionRange(el.value.length,el.value.length);};
+  main.querySelectorAll("[data-person]").forEach(b=>b.onclick=()=>{detail={typ:"person",p:+b.dataset.person};st.pq="";render();});
+}
+
+function personRoster(pIdx){
+  const ut={J:0,N:0,A:0,F:0}, avvik=[];
+  for(const rm of D.roster){ const pos=rm.p.indexOf(pIdx); if(pos<0) continue;
+    // partikamraternas positioner i detta riksmöte
+    const parti=P[pIdx][2];
+    const kamrater=rm.p.map((g,i)=>P[g][2]===parti?i:-1).filter(i=>i>=0);
+    for(const [vid,str,av] of rm.v){ const t=str[pos]; if(!t||t==="-") continue;
+      ut[t]=(ut[t]||0)+1;
+      if(t==="J"||t==="N"){ let J=0,N=0,A=0;
+        for(const i of kamrater){ const c=str[i]; if(c==="J")J++;else if(c==="N")N++;else if(c==="A")A++; }
+        const linje = J>N&&J>A?"J":N>J&&N>A?"N":A>J&&A>N?"A":null;
+        if(linje&&linje!==t&&(linje==="J"||linje==="N")) avvik.push({vid,rost:t,linje}); } } }
+  return {ut,avvik};
+}
+function renderPerson(pIdx){
+  const p=P[pIdx]; const {ut,avvik}=personRoster(pIdx);
+  const docs=(personDocs.get(pIdx)||[]).slice().sort((a,b)=>H[b][2].localeCompare(H[a][2]));
+  main.innerHTML=`
+  <p class="back"><button class="linkish" id="back">← Tillbaka</button></p>
+  <h2 class="serif" style="font-size:24px;margin:0">${esc(p[1])}</h2>
+  <p class="meta">${p[2].toUpperCase()} · ${esc(p[3])} · <span class="mono">${p[0]}</span></p>
+  <p class="intro" style="margin:2px 0 12px">Ledamotens avtryck i riksdagen under mandatperioden:
+  alla knapptryckningar i voteringarna, gångerna hen röstat annorlunda än sitt eget parti,
+  och dokumenten hen själv skrivit under. Allt ur riksdagens öppna data — aktivitet, inte betyg.</p>
+  <div class="statrow">
+    <div class="stat"><b class="mono">${ut.J||0}</b><span>Ja-röster</span></div>
+    <div class="stat"><b class="mono">${ut.N||0}</b><span>Nej-röster</span></div>
+    <div class="stat"><b class="mono">${ut.A||0}</b><span>Avstår</span></div>
+    <div class="stat"><b class="mono">${ut.F||0}</b><span>Frånvarande — räknas aldrig</span></div>
+    <div class="stat"><b class="mono">${avvik.length}</b><span>Röster mot partilinjen</span></div>
+    <div class="stat"><b class="mono">${docs.length}</b><span>Egna dokument</span></div>
+  </div>
+  ${avvik.length?`<div class="panel"><h3>Avvek från partilinjen</h3>
+  <p class="meta">Partilinje = majoriteten av partiets Ja/Nej/Avstår i voteringen (öppna data, inte vår åsikt — spec §6.4).${avvik.length>25?` Visar 25 av ${avvik.length}.`:""}</p>
+  ${avvik.slice(0,25).map(a=>{const i=[...hById.values()].find(i=>H[i][6]===a.vid);const h=i!==undefined?H[i]:null;
+    return `<div class="avvik"><span class="vote v${a.rost}">${a.rost}</span> mot partilinjens ${a.linje==="J"?"ja":"nej"} —
+    <button class="linkish" data-vot="${a.vid}">${esc(h?(D.betankanden[h[5]]||h[3]):a.vid)}</button>
+    <span class="dt">${h?h[2]:""}</span></div>`;}).join("")}</div>`:""}
+  <div class="panel"><h3>Egna dokument</h3>
+  ${docs.length?docs.slice(0,40).map(i=>{const h=H[i];
+    return `<div style="padding:4px 0"><span class="kbadge">${KINDS_SV[h[1]]}</span>
+    <a href="https://data.riksdagen.se/dokument/${h[5]}" target="_blank" rel="noopener">${esc(h[3])}</a>
+    <span class="dt"> ${h[2]}</span></div>`;}).join("")+(docs.length>40?`<p class="meta">… och ${docs.length-40} till</p>`:"")
+    :`<p class="meta">Inga dokument med den här ledamoten som undertecknare i skörden.</p>`}</div>`;
+  $("#back").onclick=()=>{detail=null;render();};
+  main.querySelectorAll("[data-vot]").forEach(b=>b.onclick=()=>{detail={typ:"vot",vid:b.dataset.vot};render();});
+}
+
+// ---------- ÄMNEN ----------
+const UTSKOTT_NAMN={AU:"Arbetsmarknad",CU:"Civilutskottet (boende m.m.)",FiU:"Finans","FöU":"Försvar",JuU:"Justitie",KU:"Konstitution",KrU:"Kultur",MJU:"Miljö och jordbruk",MjU:"Miljö och jordbruk",NU:"Näringsliv",SkU:"Skatter",SfU:"Socialförsäkring",SoU:"Vård och omsorg",TU:"Trafik",UbU:"Utbildning",UU:"Utrikes","UFöU":"Utrikes + försvar",EUN:"EU-nämnden"};
+const uNamn=(k)=>UTSKOTT_NAMN[k]?`${UTSKOTT_NAMN[k]} (${k})`:k;
+const KVARTAL=(()=>{const ut=[];for(let y=2022;y<=2026;y++)for(let q=1;q<=4;q++){if(y===2022&&q<3)continue;if(y===2026&&q>3)break;ut.push(`${y}-K${q}`);}return ut;})();
+const kvartalAv=(d)=>`${d.slice(0,4)}-K${Math.floor((+d.slice(5,7)-1)/3)+1}`;
+const votOrgan=new Map(); H.forEach(h=>{if(h[1]===4&&h[6]&&h[9])votOrgan.set(h[6],h[9]);});
+
+function amnesData(filterParti, filterUtskott){
+  // Dokument (motioner, interpellationer, skriftliga frågor, propositioner) — partiernas egna ord.
+  const per=new Map(); // nyckel rad -> Map(kvartal->antal)
+  for(const h of H){ if(h[1]===4) continue; const u=h[9]; if(!u) continue;
+    const kv=kvartalAv(h[2]); if(!KVARTAL.includes(kv)) continue;
+    const partier=h[4]?h[4].split(" "):[];
+    if(filterParti){ if(!partier.includes(filterParti)) continue;
+      const m=per.get(u)??new Map(); m.set(kv,(m.get(kv)??0)+1); per.set(u,m);
+    } else if(filterUtskott){ if(u!==filterUtskott) continue;
+      const pl=partier.length?partier:["(regeringen)"];
+      for(const p of pl){ const m=per.get(p)??new Map(); m.set(kv,(m.get(kv)??0)+1); per.set(p,m);} }
+  }
+  return per;
+}
+function heatmap(per, radNamn){
+  const rader=[...per.entries()].map(([k,m])=>[k,m,[...m.values()].reduce((a,b)=>a+b,0)])
+    .sort((a,b)=>b[2]-a[2]).slice(0,14);
+  const max=Math.max(1,...rader.flatMap(([,m])=>[...m.values()]));
+  const cols=`160px repeat(${KVARTAL.length},1fr) 52px`;
+  let ut=`<div class="hm scrollbox" style="grid-template-columns:${cols};min-width:${160+KVARTAL.length*30}px">`;
+  ut+=`<div></div>${KVARTAL.map(k=>`<div class="cl">${k.endsWith("K1")?k.slice(0,4):k.slice(5)}</div>`).join("")}<div class="cl">Totalt</div>`;
+  for(const [rad,m,tot] of rader){
+    ut+=`<div class="rl">${esc(radNamn(rad))}</div>`;
+    for(const kv of KVARTAL){ const n=m.get(kv)??0; const pct=Math.round(100*n/max);
+      ut+=`<div class="c" style="background:color-mix(in oklab, var(--accent) ${pct}%, var(--panel))" title="${esc(radNamn(rad))} · ${kv}: ${n} handlingar" role="img" aria-label="${esc(radNamn(rad))} ${kv}: ${n}"></div>`; }
+    ut+=`<div class="rl mono" style="text-align:left;padding-left:6px">${tot}</div>`;
+  }
+  return ut+`</div>`;
+}
+function ordmoln(parti){
+  const frekvens=new Map();
+  for(const h of H){ if(h[1]===4) continue;
+    if(parti && !(h[4]&&h[4].split(" ").includes(parti))) continue;
+    for(const w of nyckelordJs(h[3])) frekvens.set(w,(frekvens.get(w)??0)+1); }
+  const topp=[...frekvens.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,90);
+  if(!topp.length) return "<p class='meta'>Inga dokument.</p>";
+  const max=topp[0][1];
+  // Deterministisk blandning så stora ord sprids i flödet i stället för att klumpas först.
+  const ordnade=topp.map((t,i)=>[t,(i*37)%topp.length]).sort((x,y)=>x[1]-y[1]).map(x=>x[0]);
+  return `<div class="moln">${ordnade.map(([w,n])=>{
+    const px=(13+29*Math.sqrt(n/max)).toFixed(1);
+    return `<button data-ord="${esc(w)}" style="font-size:${px}px" title="${n} dokumenttitlar">${esc(w)}</button>`;}).join("")}</div>`;
+}
+const STOPP_JS=new Set(["att","och","det","som","för","med","till","ska","skall","inte","den","de","har","kan","bör","från","om","en","ett","är","av","på","eller","samt","vår","våra","alla","mer","fler","detta","denna","sig","sina","vara","blir","genom","anledning","prop","2022","2023","2024","2025","2026","vissa","inom","ökad","ökat","bättre","stärkt","behov","frågor","sverige","svenska","svenskt"]);
+function nyckelordJs(text){ return new Set(text.toLowerCase().split(/[^a-zåäöéü0-9-]+/).filter(w=>w.length>=4&&!STOPP_JS.has(w))); }
+function vyAmnen(){
+  const a=st.amne; const perParti=a.vy==="parti";
+  if(a.vy==="moln"){
+    return `
+    <div class="panel"><h3>Ordmolnet — orden partierna sätter i sina rubriker</h3>
+    <p class="intro">Ordens storlek = hur många dokumenttitlar de förekommer i (motioner,
+    interpellationer, skriftliga frågor, propositioner). Klicka ett ord för att se dokumenten
+    i Utforskaren. Frekvens är fakta om språkbruk, inte betyg.</p></div>
+    <div class="tools tchips">
+      <button data-avy="parti">Ett parti över tid</button>
+      <button data-avy="utskott">En fråga över tid</button>
+      <button data-avy="moln" class="on">Ordmoln</button>
+      <select id="aparti"><option value="">Alla partier</option>${PARTIER.map(p=>`<option ${a.parti===p?"selected":""} value="${p}">${p.toUpperCase()}</option>`).join("")}</select>
+    </div>
+    ${ordmoln(a.parti)}`;
+  }
+  const per=amnesData(perParti?a.parti:"", perParti?"":a.utskott);
+  const allaUtskott=[...new Set(H.filter(h=>h[9]&&h[1]!==4).map(h=>h[9]))].sort();
+  return `
+  <div class="panel"><h3>Vem pratar om vad — riksdagens egen ämnesindelning</h3>
+  <p class="intro">Varje dokument hör till ett <b>utskott</b> — riksdagens egen indelning, inte vår.
+  Mörkare ruta = fler egna dokument (motioner, interpellationer, skriftliga frågor, propositioner)
+  det kvartalet. Antal dokument är fakta om aktivitet, inte betyg — och frågan
+  <b>"hur viktig var frågan historiskt?"</b> får här sitt visuella svar: följ en rad bakåt i tiden.</p></div>
+  <div class="tools tchips">
+    <button data-avy="parti" class="${a.vy==="parti"?"on":""}">Ett parti över tid</button>
+    <button data-avy="utskott" class="${a.vy==="utskott"?"on":""}">En fråga över tid</button>
+    <button data-avy="moln" class="${a.vy==="moln"?"on":""}">Ordmoln</button>
+    ${perParti?`<select id="aparti">${PARTIER.map(p=>`<option ${a.parti===p?"selected":""} value="${p}">${p.toUpperCase()}</option>`).join("")}</select>`
+      :`<select id="autskott">${allaUtskott.map(u=>`<option ${a.utskott===u?"selected":""} value="${u}">${uNamn(u)}</option>`).join("")}</select>`}
+  </div>
+  <p class="meta">${perParti?`${a.parti.toUpperCase()}: egna dokument per ämne och kvartal — vilken fråga, vilket kvartal`
+    :`${uNamn(a.utskott)}: vilka partier drev frågan, kvartal för kvartal (propositioner räknas som regeringen)`}</p>
+  ${heatmap(per, perParti?uNamn:( (p)=>p==="(regeringen)"?"Regeringen (prop.)":p.toUpperCase() ))}
+  <p class="note">Motionsflodens topp varje höst är allmänna motionstiden — ett mönster i systemet,
+  inte hos ett enskilt parti. Jämför partier mot varandra, inte mot noll.</p>`;
+}
+
+// ---------- MOT VARANDRA ----------
+function personStats(pIdx, utskott){
+  const ut={J:0,N:0,A:0,F:0}; let avvik=0;
+  for(const rm of D.roster){ const pos=rm.p.indexOf(pIdx); if(pos<0) continue;
+    const parti=P[pIdx][2];
+    const kamrater=rm.p.map((g,i)=>P[g][2]===parti?i:-1).filter(i=>i>=0);
+    for(const [vid,str] of rm.v){ if(utskott&&votOrgan.get(vid)!==utskott) continue;
+      const t=str[pos]; if(!t||t==="-") continue; ut[t]=(ut[t]||0)+1;
+      if(t==="J"||t==="N"){ let J=0,N=0,A=0;
+        for(const i of kamrater){const c=str[i];if(c==="J")J++;else if(c==="N")N++;else if(c==="A")A++;}
+        const linje=J>N&&J>A?"J":N>J&&N>A?"N":A>J&&A>N?"A":null;
+        if(linje&&linje!==t&&(linje==="J"||linje==="N")) avvik++; } } }
+  const docs=(personDocs.get(pIdx)||[]).filter(i=>!utskott||H[i][9]===utskott).length;
+  return {ut,avvik,docs};
+}
+function samsyn(a,b,utskott){
+  let tot=0,lika=0; const olika=[];
+  for(const rm of D.roster){ const pa=rm.p.indexOf(a), pb=rm.p.indexOf(b); if(pa<0||pb<0) continue;
+    for(const [vid,str] of rm.v){ if(utskott&&votOrgan.get(vid)!==utskott) continue;
+      const t1=str[pa],t2=str[pb];
+      if(!"JNA".includes(t1)||!"JNA".includes(t2)) continue;
+      tot++; if(t1===t2) lika++; else olika.push({vid,t1,t2}); } }
+  olika.sort((a,b)=>{const ha=[...hById.values()].find(i=>H[i][6]===a.vid), hb=[...hById.values()].find(i=>H[i][6]===b.vid);
+    return String(hb!==undefined?H[hb][2]:"").localeCompare(String(ha!==undefined?H[ha][2]:""));});
+  return {tot,lika,olika};
+}
+function valjare(sida,q,vald){
+  const traffar=q?P.map((p,i)=>[p,i]).filter(([p])=>p[1].toLowerCase().includes(q.toLowerCase())).slice(0,8):[];
+  return `<div class="valperson">
+    ${vald!==null?`<b>${esc(P[vald][1])}</b> <span class="mono" style="font-size:12px">${P[vald][2].toUpperCase()}</span> · <span class="dt">${esc(P[vald][3])}</span>
+      <button class="linkish" data-rensa="${sida}" style="margin-left:8px">byt</button>`
+    :`<input type="search" data-pv="${sida}" placeholder="Sök ledamot …" value="${esc(q)}">
+      ${traffar.map(([p,i])=>`<div><button class="linkish" data-valj="${sida}:${i}">${esc(p[1])}</button> <span class="mono" style="font-size:11px">${p[2].toUpperCase()}</span></div>`).join("")}`}
+  </div>`;
+}
+// Snabbval: partiledaren om hen finns i röstregistret, annars partiets
+// mest aktiva profil (röster + dokument) — deterministiskt ur datat.
+const PARTILEDARE=["Magdalena Andersson","Jimmie Åkesson","Ulf Kristersson","Ebba Busch",
+  "Johan Pehrson","Muharrem Demirok","Nooshi Dadgostar","Amanda Lind","Daniel Helldén","Simona Mohamsson"];
+const snabbval=(()=>{
+  const aktivitet=new Map(); // pIdx -> röster+3*dokument
+  for(const rm of D.roster) for(const [,str] of rm.v)
+    for(let i=0;i<str.length;i++){ if("JNA".includes(str[i])) {const g=rm.p[i]; aktivitet.set(g,(aktivitet.get(g)??0)+1);} }
+  for(const [pIdx,docs] of personDocs) aktivitet.set(pIdx,(aktivitet.get(pIdx)??0)+3*docs.length);
+  const ut=[];
+  for(const parti of PARTIER){
+    const ledare=P.findIndex(p=>p[2]===parti&&PARTILEDARE.includes(p[1]));
+    if(ledare>=0){ ut.push({parti,pIdx:ledare,ledare:true}); continue; }
+    let bast=-1,max=-1;
+    P.forEach((p,i)=>{ if(p[2]===parti&&(aktivitet.get(i)??0)>max){max=aktivitet.get(i)??0;bast=i;} });
+    if(bast>=0) ut.push({parti,pIdx:bast,ledare:false});
+  }
+  return ut;
+})();
+function vyMotVarandra(){
+  const hh=st.hh; const allaUtskott=[...new Set([...votOrgan.values()])].sort();
+  let jmf="";
+  if(hh.a!==null&&hh.b!==null){
+    const sa=personStats(hh.a,hh.utskott), sb=personStats(hh.b,hh.utskott);
+    const sam=samsyn(hh.a,hh.b,hh.utskott);
+    const rad=(namn,va,vb)=>`<tr class="hit"><td class="dt">${namn}</td><td class="mono" style="text-align:right">${va}</td><td class="mono" style="text-align:right">${vb}</td></tr>`;
+    jmf=`<div class="panel"><h3>${esc(P[hh.a][1])} mot ${esc(P[hh.b][1])}${hh.utskott?` — ${esc(uNamn(hh.utskott))}`:""}</h3>
+    <table style="max-width:560px"><thead><tr><th></th><th style="text-align:right;font-size:11px;color:var(--ink-3)">${esc(P[hh.a][1].split(" ")[0])}</th><th style="text-align:right;font-size:11px;color:var(--ink-3)">${esc(P[hh.b][1].split(" ")[0])}</th></tr></thead><tbody>
+    ${rad("Ja-röster",sa.ut.J||0,sb.ut.J||0)}${rad("Nej-röster",sa.ut.N||0,sb.ut.N||0)}
+    ${rad("Avstår",sa.ut.A||0,sb.ut.A||0)}${rad("Frånvarande (räknas aldrig)",sa.ut.F||0,sb.ut.F||0)}
+    ${rad("Röster mot egna partilinjen",sa.avvik,sb.avvik)}${rad("Egna dokument",sa.docs,sb.docs)}
+    </tbody></table>
+    <p class="meta" style="margin-top:12px">Röstade i samma voteringar ${sam.tot} gånger — samma röst i
+    <b>${sam.tot?Math.round(100*sam.lika/sam.tot):0}&nbsp;%</b> (${sam.lika} av ${sam.tot}).</p>
+    ${sam.olika.length?`<h3 style="font-size:15px">Röstade olika — ${sam.olika.length} voteringar${sam.olika.length>hh.visaOlika?`, visar de ${hh.visaOlika} senaste`:""}</h3>
+    ${sam.olika.slice(0,hh.visaOlika).map(o=>{
+      const i=[...hById.values()].find(i=>H[i][6]===o.vid); const h=i!==undefined?H[i]:null;
+      return `<div class="avvik"><span class="vote v${o.t1}">${o.t1}</span> mot <span class="vote v${o.t2}">${o.t2}</span> —
+      <button class="linkish" data-vot="${o.vid}">${esc(h?(D.betankanden[h[5]]||h[3]):o.vid)}${h&&h[7]?` · punkt ${h[7]}`:""}</button>
+      <span class="dt">${h?h[2]:""}</span></div>`;}).join("")}
+    ${sam.olika.length>hh.visaOlika?`<p><button class="linkish" id="flerOlika">Visa ${Math.min(50,sam.olika.length-hh.visaOlika)} till</button></p>`:""}`:""}
+    </div>`;
+  }
+  return `
+  <div class="panel"><h3>Mot varandra — två ledamöter, samma måttstock</h3>
+  <p class="intro">Välj två ledamöter och jämför deras avtryck: röster, avvikelser från egna partilinjen
+  och egna dokument — generellt eller inom en enskild fråga. Allt är riksdagens öppna data;
+  frånvaro visas men räknas aldrig (kvittningssystemet), och siffrorna är aktivitet, inte betyg.</p></div>
+  <div class="tools tchips" style="margin-bottom:8px">
+    <span class="dt" style="align-self:center">Snabbval:</span>
+    ${snabbval.map(sv=>`<button data-snabb="${sv.pIdx}" title="${sv.ledare?"partiledare":"partiets mest aktiva i kammaren"}">
+      ${sv.parti.toUpperCase()} · ${esc(P[sv.pIdx][1])}${sv.ledare?"":" ◦"}</button>`).join("")}
+  </div>
+  <p class="meta" style="margin-top:0">Klicka två namn — partiledare där de sitter i kammaren
+  (statsråd ersätts och röstar inte), annars partiets mest aktiva profil (◦), räknat ur öppna data.</p>
+  <div class="duo">${valjare("a",hh.qa,hh.a)}${valjare("b",hh.qb,hh.b)}</div>
+  <div class="tools" style="margin-top:12px"><select id="hutskott"><option value="">Alla frågor</option>
+    ${allaUtskott.map(u=>`<option ${hh.utskott===u?"selected":""} value="${u}">${uNamn(u)}</option>`).join("")}</select></div>
+  ${jmf||`<p class="meta">Välj en ledamot i varje ruta.</p>`}`;
+}
+
+// ---------- KARTAN ----------
+let kartaCache=null;
+function beraknaKarta(){
+  if(kartaCache) return kartaCache;
+  // Röstvektor per person: J=1, N=-1, Avstår/frånvaro/ej i kammaren=0.
+  const totV=D.roster.reduce((s,rm)=>s+rm.v.length,0);
+  const X=[], vilka=[];
+  P.forEach((p,pi)=>{
+    const v=new Int8Array(totV); let n=0, k=0;
+    for(const rm of D.roster){ const pos=rm.p.indexOf(pi);
+      for(const [,str] of rm.v){ if(pos>=0){ const t=str[pos];
+        if(t==="J"){v[k]=1;n++;} else if(t==="N"){v[k]=-1;n++;} } k++; } }
+    if(n>=100){ X.push(v); vilka.push(pi); } });
+  const m=X.length;
+  // Likhetsmatris (dot / sqrt(n_i n_j)), dubbelcentrerad, topp-2 egenvektorer via kraftiteration.
+  const G=new Float64Array(m*m), norm=X.map(v=>{let s=0;for(let k=0;k<totV;k++)s+=v[k]*v[k];return Math.sqrt(s)||1;});
+  for(let i=0;i<m;i++) for(let j=i;j<m;j++){ let d=0; const a=X[i],b=X[j];
+    for(let k=0;k<totV;k++) d+=a[k]*b[k];
+    const g=d/(norm[i]*norm[j]); G[i*m+j]=g; G[j*m+i]=g; }
+  const rad=new Float64Array(m); let tot=0;
+  for(let i=0;i<m;i++){ let s=0; for(let j=0;j<m;j++) s+=G[i*m+j]; rad[i]=s/m; tot+=s; } tot/=m*m;
+  for(let i=0;i<m;i++) for(let j=0;j<m;j++) G[i*m+j]-=rad[i]+rad[j]-tot;
+  const egen=(B)=>{ let v=new Float64Array(m); for(let i=0;i<m;i++) v[i]=1/(i+1);
+    let lam=0;
+    for(let it=0;it<40;it++){ const u=new Float64Array(m);
+      for(let i=0;i<m;i++){ let s=0; for(let j=0;j<m;j++) s+=B[i*m+j]*v[j]; u[i]=s; }
+      let nn=Math.hypot(...u)||1; lam=nn; for(let i=0;i<m;i++) v[i]=u[i]/nn; }
+    return {v,lam}; };
+  const e1=egen(G);
+  const B2=Float64Array.from(G);
+  for(let i=0;i<m;i++) for(let j=0;j<m;j++) B2[i*m+j]-=e1.lam*e1.v[i]*e1.v[j];
+  const e2=egen(B2);
+  // Deterministiska tecken: S-snittet till vänster, V-snittet nedåt.
+  const snitt=(e,parti)=>{let s=0,n=0; vilka.forEach((pi,i)=>{if(P[pi][2]===parti){s+=e.v[i];n++;}}); return n?s/n:0;};
+  const s1=snitt(e1,"s")>0?-1:1, s2=snitt(e2,"v")>0?-1:1;
+  kartaCache={vilka, x:e1.v.map(t=>t*s1*Math.sqrt(e1.lam)), y:e2.v.map(t=>t*s2*Math.sqrt(e2.lam))};
+  return kartaCache;
+}
+function vyKartan(){
+  const start=performance.now();
+  const {vilka,x,y}=beraknaKarta();
+  const minX=Math.min(...x),maxX=Math.max(...x),minY=Math.min(...y),maxY=Math.max(...y);
+  const px=(v)=>(4+92*(v-minX)/(maxX-minX||1)).toFixed(2);
+  const py=(v)=>(4+92*(v-minY)/(maxY-minY||1)).toFixed(2);
+  return `
+  <div class="panel"><h3>Kartan — ${vilka.length} ledamöter placerade av sina egna röster</h3>
+  <p class="intro">Varje bokstav är en ledamot. Avståndet mellan två ledamöter speglar hur olika
+  de röstat i kammarens ${D.roster.reduce((s,rm)=>s+rm.v.length,0).toLocaleString("sv")} voteringar
+  — närhet är räknad ur ${(899024).toLocaleString("sv")} faktiska röster, inte ritad av oss.
+  Axlarna är matematiska riktningar ur röstmönstren, inte politiska skalor vi valt.
+  Kluster som framträder är partigrupper och block; ledamöter som glider mot ett annat kluster
+  röstar oftare med det. Hovra för namn, klicka för ledamotssidan.
+  Ledamöter med färre än 100 Ja/Nej-röster visas inte.</p></div>
+  <div class="karta">${vilka.map((pi,i)=>`<span class="pt" data-person="${pi}"
+    style="left:${px(x[i])}%;top:${py(y[i])}%"
+    title="${esc(P[pi][1])} (${P[pi][2].toUpperCase()})">${P[pi][2].toUpperCase()}</span>`).join("")}</div>
+  <p class="meta">Beräknad i webbläsaren på ${(performance.now()-start).toFixed(0)} ms, deterministiskt —
+  samma data ger alltid samma karta.</p>`;
+}
+
+function koppla(){
+  const lq=$("#lq"); if(lq) lq.oninput=(e)=>{st.lq=e.target.value;render();
+    const el=$("#lq");el.focus();el.setSelectionRange(el.value.length,el.value.length);};
+  const q=$("#q"); if(q) q.oninput=(e)=>{st.q=e.target.value;render();
+    const el=$("#q");el.focus();el.setSelectionRange(el.value.length,el.value.length);};
+  const parti=$("#parti"); if(parti) parti.onchange=(e)=>{st.parti=e.target.value;render();};
+  const rm=$("#rm"); if(rm) rm.onchange=(e)=>{st.rm=e.target.value;render();};
+  main.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=+b.dataset.k;
+    st.kinds.has(k)?st.kinds.delete(k):st.kinds.add(k);render();});
+  main.querySelectorAll("[data-vot]").forEach(b=>b.onclick=()=>{detail={typ:"vot",vid:b.dataset.vot};render();});
+  main.querySelectorAll("[data-lofte]").forEach(b=>b.onclick=()=>{detail={typ:"lofte",id:b.dataset.lofte};render();});
+  main.querySelectorAll("[data-avy]").forEach(b=>b.onclick=()=>{st.amne.vy=b.dataset.avy;render();});
+  const ap=$("#aparti"); if(ap) ap.onchange=(e)=>{st.amne.parti=e.target.value;render();};
+  main.querySelectorAll("[data-ord]").forEach(b=>b.onclick=()=>{tab="U";st.q=b.dataset.ord;detail=null;render();});
+  main.querySelectorAll(".karta [data-person]").forEach(el=>el.onclick=()=>{detail={typ:"person",p:+el.dataset.person};render();});
+  const au=$("#autskott"); if(au) au.onchange=(e)=>{st.amne.utskott=e.target.value;render();};
+  const hu=$("#hutskott"); if(hu) hu.onchange=(e)=>{st.hh.utskott=e.target.value;render();};
+  main.querySelectorAll("[data-pv]").forEach(el=>el.oninput=(e)=>{ st.hh[el.dataset.pv==="a"?"qa":"qb"]=e.target.value; render();
+    const ny=main.querySelector(`[data-pv="${el.dataset.pv}"]`); if(ny){ny.focus();ny.setSelectionRange(ny.value.length,ny.value.length);} });
+  main.querySelectorAll("[data-valj]").forEach(b=>b.onclick=()=>{const [sida,i]=b.dataset.valj.split(":"); st.hh[sida]=+i; st.hh[sida==="a"?"qa":"qb"]=""; render();});
+  main.querySelectorAll("[data-rensa]").forEach(b=>b.onclick=()=>{st.hh[b.dataset.rensa]=null;render();});
+  main.querySelectorAll("[data-snabb]").forEach(b=>b.onclick=()=>{const i=+b.dataset.snabb;
+    if(st.hh.a===null) st.hh.a=i; else if(st.hh.b===null&&i!==st.hh.a) st.hh.b=i; else st.hh.a=i;
+    st.hh.visaOlika=15; render();});
+  const fo=$("#flerOlika"); if(fo) fo.onclick=()=>{st.hh.visaOlika+=50;render();};
+}
+render();
+</script>

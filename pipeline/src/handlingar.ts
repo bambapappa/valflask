@@ -25,6 +25,8 @@ export interface Handling {
   votering_id?: string | null;
   punkt?: number | null;
   datum: string;
+  /** Utskott (riksdagens organ-fält) — ämnestaxonomin, b-0014. */
+  organ?: string;
   parties: string[];
   persons: HandlingPerson[];
   titel: string;
@@ -87,6 +89,7 @@ export function normaliseraDokument(dok: RdDokument): Omit<Handling, "id"> | nul
     kind,
     dok_id: dok.dok_id,
     datum: dok.datum,
+    ...(dok.organ ? { organ: dok.organ } : {}),
     parties,
     persons,
     titel: dok.titel,
@@ -116,6 +119,7 @@ export function normaliseraVotering(rader: RdVoteringRad[]): Omit<Handling, "id"
   return {
     kind: "votering",
     dok_id: `${ref.rm.replace("/", "")}:${ref.beteckning}`,
+    ...(ref.beteckning.replace(/\d+$/u, "") ? { organ: ref.beteckning.replace(/\d+$/u, "") } : {}),
     votering_id: ref.votering_id,
     punkt: ref.punkt,
     datum: ref.datum ?? "",

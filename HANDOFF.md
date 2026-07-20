@@ -1,7 +1,7 @@
 # Överlämning — Handlingsvågen
 
-Skriven 2026-07-19; uppdaterad senare samma dag (tredje passet: betänkande-
-stöd b-0013 och granskningsflödet H6). Läs `CLAUDE.md` först (bindande
+Skriven 2026-07-19; senast uppdaterad 2026-07-20 (fjärde passet: skördar
+klara, b-0014, HV2-piloter bevisade, HV4-prototyp). Läs `CLAUDE.md` först (bindande
 språkregler och kärnprinciper), sedan `SPEC-HANDLINGSVAGEN.md` (fastställd
 spec) och `NEUTRALITET.md`. Alla metodval står i `data/beslutslogg.json`.
 
@@ -64,29 +64,64 @@ valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
 
+**Gjort 2026-07-20 (fjärde passet, grenen `…bundle-content-ueyqqy`):**
+
+- ~~Skördarna~~ **KLART**: `data/roster/` (899 024 röster),
+  `data/personer.json` (425), `data/betankanden.json` (1 451,
+  2576/2576 voteringar täckta). Workflown behövs bara för bakåtskörd
+  och framtida riksmöten.
+- ~~Nycklarna~~ **KLART & VERIFIERAT**: `OPENROUTER_API_KEY` +
+  `MODEL_KOPPLING` (`moonshotai/kimi-k2.7-code`) +
+  `MODEL_KOPPLING_FALLBACK` (`glm-5.2`, z.ai) på plats; vakten i
+  `foreslag.yml` passerar. OBS: hemligheten `LLM_FALLBACK_KEY` är en
+  felnamnad dubblett (workflown läser `LLM_FALLBACK_API_KEY`) — kan
+  raderas.
+- ~~foreslag-piloter~~ **BÅDA VÄGARNA BEVISADE**: nej-vägen
+  (p-2026-0041 Nato, 9 korrekta avslag — samma politikområde är inte
+  samma sakfråga) och ja-vägen (p-2026-0360 elevlagen → förslag genom
+  H1–H5 → kön → issue #5, citatet oberoende omkontrollerat).
+  **Issue #5 väntar på ägarens /godkänn.**
+- **b-0014 GENOMFÖRT till hälften**: utskott (organ) i datamodell,
+  schema och skörd + återfyllt på 23 388 handlingar
+  (`scripts/organ-backfill.mts`); voteringar härleds ur beteckningen.
+  241 utan uppgift, tomt är ärligt.
+- **HV4-prototyp byggd och publicerad** (privat artefakt, källa i
+  `prototyp/`), i nuvarande version med: Vågen (rutnät + Läge A/B-
+  förklaring + omskriven läsanvisning), Utforskaren (fritt sök,
+  röstmatriser, ledamotssidor, utfällbar ordlista för förstagångs-
+  väljare), Ämnen (värmekartor parti/fråga över tid + Ordmolnet),
+  Mot varandra (head-to-head med snabbval: partiledare i kammaren
+  eller mest aktiva profil; komplett "röstade olika"-lista med
+  punktnummer), Kartan (alla ledamöter placerade i 2D av sina egna
+  röstmönster — blocken framträder ur datat). F1–F5 i SKISS-HV4.md.
+  **Uppdatera samma artefakt:** bygg om enligt prototyp/README.md och
+  publicera med url-parametern
+  `https://claude.ai/code/artifact/006ea368-ed8b-4eca-97f5-a657c785045b`
+  (annars myntas en ny länk).
+
 Återstår (i ordning):
 
-1. ~~Kör `skord`-workflown~~ **KLART 2026-07-19 via session med öppet
-   nät** (grenen `…bundle-content-ueyqqy`): `data/roster/` (fyra
-   riksmötesfiler, 899 024 röster), `data/personer.json` (425
-   personer), `data/betankanden.json` (1 451 poster, 2576/2576
-   voteringar täckta). Workflown behövs bara för bakåtskörd och
-   framtida riksmöten.
-2. **Lägg nycklarna i detta repo** (hemlighet `OPENROUTER_API_KEY`,
-   variabel `MODEL_KOPPLING`; valfritt fallback-hemligheterna) — kan
-   inte kopieras från valflask, hemligheter är oläsbara.
-3. **Kör `foreslag`-workflown** (HV2, gärna först med dry_run):
-   rankar dokument + voteringar (kräver betänkandeindexet från punkt
-   1), prövar grindarna, committar kön race-säkert
-   (`scripts/ko-uppdatera.mts` — avgjorda poster återuppstår aldrig)
-   och synkar issues med etiketten `koppling-kö` automatiskt.
+1. **Ägarens /godkänn eller /avvisa i issue #5** — systemets första
+   H6-beslut; därefter `npm run domar` för första domen/meriten.
+2. **b-0014 andra halvan — nyckelordsindexet**: byggtidsindex över
+   dokumentens fulltexter (fritextsök + ordtrender per parti).
+   Fulltexterna hämtas vid indexbygget och lagras aldrig; indexet
+   checkas in skärvat. ~21 000 dokument ≈ ett par timmar i artigt
+   tempo — bygg som Actions-workflow eller från session med öppet nät.
+   EJ PÅBÖRJAT.
+3. **Full förslagskörning** (`foreslag`-workflown med --alla):
+   1 328 kandidatpar enligt dry-run 2026-07-20 (202 löften har
+   kandidater, 220 ärligt tomma). Räkna med låg men ren träffkvot —
+   precisionen är avsiktlig.
 4. **Propositioner och H3**: alla 939 propositioner saknar parti
-   (regeringen är avsändare). Hur de mappas mot regeringspartierna är
-   en öppen metodfråga — beslutslogga innan kod.
+   (regeringen är avsändare). Mappning mot regeringspartierna är en
+   öppen metodfråga — beslutslogga innan kod.
 5. **Bakåtskörd till 2002/03** när ägaren vill: samma skript, fler
    `--rm`. Räkna ~1 h per mandatperiod i artigt tempo.
-6. **HV4 — sajtsektion** (byggs här, publiceras inte) + metodsida.
-   Sajten ska skiva datat vid byggtid — aldrig skeppa 17 MB till läsaren.
+6. **HV4 — sajtsektion på riktigt** (Astro, byggs här, publiceras
+   inte) + metodsida. Prototypen i `prototyp/` är designunderlaget;
+   sajten ska skiva datat vid byggtid — aldrig skeppa 17 MB.
+   Väntar på ägarens F1–F5-beslut.
 7. **HV5 — lanseringsgrinden**: checklista i spec §8. Ägarens go krävs.
    Då speglas även granskningsflödet till valflask.
 
@@ -153,15 +188,31 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 *(inga anspråk)*
 
+Fullkörningen 2026-07-20 (körning 8, slut 19:51 UTC): **34 förslag i
+kön över 12 löften** (29 stödjer/5 motverkar, 5 via betänkanden),
+**34 koppling-kö-issues öppna** för mänskligt beslut. Körningen slutade
+röd — några par föll på fel och prövas igen vid nästa körning; allt som
+hann köas är committat (2c98ac4). FÖRBÄTTRING för omkörningar: kön minns
+bara par som gav förslag — nej-svaren prövas om varje gång. Persistera
+även nej-svar (t.ex. data/provade-par.json) innan nästa fullkörning,
+annars betalas ~1 300 modellanrop i onödan.
+
 ### Meddelanden mellan sessioner
+
+- 2026-07-20 `…bundle-content-ueyqqy` → alla: femte passet (efter detta)
+  lämnade INGA pushade spår i något repo — utgå från denna grens spets,
+  inte från antaganden om vad det hann. Påminnelse ur protokollet:
+  pusha små commits tidigt; opushat arbete finns inte.
 
 Korta, daterade och signerade med grennamn; mottagaren tar bort raden
 när den är hanterad (i samma commit som åtgärden):
 
-- 2026-07-19 `…bundle-content-ueyqqy` → alla: röstskörden OCH
-  betänkandeindexet för 2022/23–2025/26 är klara och committade på
-  denna gren (899 024 röster, 1 451 betänkanden, 2576/2576 täckning).
-  Kör INTE skord-workflown för dessa riksmöten — merga i stället.
+- 2026-07-20 `…bundle-content-ueyqqy` → alla: grenen ligger före main
+  med b-0014 (utskott i datamodellen + återfyllnad, organ-backfill)
+  och HV4-prototypen — merga innan arbete i pipeline/ eller data/.
+  Nästa lämpliga uppgift för en session med öppet nät eller via
+  Actions: b-0014:s nyckelordsindex (Återstår punkt 2). Kör aldrig
+  organ-backfill parallellt med annan skörd.
 
 ## Sessionspraktik
 
