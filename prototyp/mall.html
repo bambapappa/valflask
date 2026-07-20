@@ -137,10 +137,10 @@ details.ordlista dd{margin:1px 0 0}
 </header>
 <main id="main"></main>
 <footer>
-  Prototyp för ägarbeslut — publiceras inte. 23 629 handlingar, 2 576 voteringar med
+  Prototyp — publiceras inte. 23 629 handlingar, 2 576 voteringar med
   899 024 röster, 1 451 betänkanden (riksmötena 2022/23–2025/26). Sök går på titlar och
   betänkanderubriker — dokumentens fulltexter lagras inte i bulk (b-0012). Vågen visar bara
-  kopplingar som passerat grindarna H1–H5; publicering kräver ägarbeslut (H6). Tomma celler är ärliga.
+  kopplingar där citatet kontrollerats ord för ord; publicering kräver mänskligt beslut. Tomma celler är ärliga.
   Varje rad länkar till riksdagens egen källa.
 </footer>
 
@@ -221,9 +221,10 @@ function render(){
 
 // ---------- VÅGEN ----------
 function statusFor(lofteId, parti, lofteParti){
-  const f = D.forslag.find(f=>f.promise_id===lofteId);
-  if(f){ const h=H[hById.get(f.handling_id)];
-    if(h && (h[4].split(" ").includes(parti))) return `<span class="status st-vantar">FÖRSLAG — VÄNTAR PÅ ÄGARBESLUT</span>`; }
+  const fs = D.forslag.filter(f=>f.promise_id===lofteId);
+  for(const f of fs){ const h=H[hById.get(f.handling_id)];
+    const hp=h?h[4].split(" "):[];
+    if(h && hp.includes(parti)) return `<span class="status st-vantar">FÖRSLAG — VÄNTAR PÅ GRANSKNING</span>`; }
   return lofteParti ? `<span class="status st-tom">INGEN HANDLING ÄNNU</span>` : `<span class="status" style="color:var(--ink-3)">·</span>`;
 }
 function vyVagen(){
@@ -240,7 +241,7 @@ function vyVagen(){
   och röster — olika verktyg, samma stränghet.</p></div>
   <div class="tools"><input type="search" id="lq" placeholder="Sök bland ${L.length} löften …" value="${esc(st.lq)}"></div>
   <p class="meta">${rows.length} löften${rows.length>120?" — visar 120":""} · status per parti räknas ur godkända kopplingar.
-  Just nu: <b>1 förslag</b> väntar på ägarbeslut (H6), inga godkända ännu — därför är nästan allt ärligt tomt.</p>
+  Just nu: <b>${D.forslag.length} förslag</b> väntar på mänskligt beslut, inga godkända ännu — därför är nästan allt ärligt tomt.</p>
   <div class="scrollbox"><table class="grid"><thead><tr><th style="min-width:330px">Löfte</th>
   ${PARTIER.map(p=>`<th>${p.toUpperCase()}</th>`).join("")}</tr></thead><tbody>
   ${kollade.map(l=>{ const lp=l[2].split(" ").filter(Boolean);
@@ -259,14 +260,16 @@ function vyVagen(){
 }
 function renderLofte(id){
   const l=L.find(x=>x[0]===id); if(!l){detail=null;return render();}
-  const f=D.forslag.find(f=>f.promise_id===id);
+  const flist=D.forslag.filter(f=>f.promise_id===id);
   let fhtml="";
-  if(f){ const h=H[hById.get(f.handling_id)];
-    fhtml=`<div class="panel"><h3>Förslag i granskningskön — väntar på ägarbeslut (H6)</h3>
-    <p class="meta">${KINDS_SV[h[1]]} · ${h[2]} · riktning: <b>${f.riktning==="stodjer"?"stödjer":"motverkar"}</b> · confidence ${f.confidence}</p>
-    <p><a href="https://data.riksdagen.se/dokument/${h[5]}" target="_blank" rel="noopener">${esc(h[3])}</a></p>
+  if(flist.length){ fhtml=`<div class="panel"><h3>${flist.length===1?"Ett förslag":flist.length+" förslag"} i granskningskön — väntar på mänskligt beslut</h3>
+    <p class="meta">Ingenting nedan räknas förrän en människa godkänt det.</p>`+
+    flist.map(f=>{ const h=H[hById.get(f.handling_id)];
+    return `<p style="margin:14px 0 0"><span class="kbadge">${KINDS_SV[h[1]]}</span>
+    <a href="https://data.riksdagen.se/dokument/${h[5]}" target="_blank" rel="noopener">${esc(h[3])}</a>
+    <span class="dt"> ${h[2]} · ${f.riktning==="stodjer"?"stödjer":"motverkar"} löftet</span></p>
     <div class="qq">”${esc(f.bevis.citat)}”</div>
-    <p class="meta">Citatet är kontrollerat ord för ord mot källtexten (grind H2). ${esc(f.method_note)}</p></div>`; }
+    <p class="meta">Citatet är kontrollerat ord för ord mot källtexten. ${esc(f.method_note)}</p>`;}).join("")+`</div>`; }
   return main.innerHTML=`
   <p class="back"><button class="linkish" id="back">← Alla löften</button></p>
   <h2 class="serif" style="font-size:24px;margin:0 0 2px">${esc(l[1])}</h2>

@@ -186,17 +186,16 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-20 `…bundle-content-ueyqqy`: FULL förslagskörning (--alla,
-  1 328 par) startad på foreslag-workflown ~08:5x UTC. Trigga INTE
-  workflown igen förrän den är klar (concurrency-gruppen köar ändå).
-  Obs: körningen kan slå i 120-minuterstaket — omkörning är säker
-  (kön är idempotent) men betalar om null-svaren.
-  **ÖVERTAG (om fjärde passets session är slut):** kolla senaste
-  foreslag-körningen under Actions. Grön → resultatet ligger på main
-  ("data: förslagskörning via workflow") och issues är synkade;
-  rapportera antal förslag i data/kopplingsforslag.json + antal
-  koppling-kö-issues till ägaren och ta bort detta anspråk. Röd på
-  120-minuterstaket → trigga om (idempotent), vänta, rapportera.
+*(inga anspråk)*
+
+Fullkörningen 2026-07-20 (körning 8, slut 19:51 UTC): **34 förslag i
+kön över 12 löften** (29 stödjer/5 motverkar, 5 via betänkanden),
+**34 koppling-kö-issues öppna** för mänskligt beslut. Körningen slutade
+röd — några par föll på fel och prövas igen vid nästa körning; allt som
+hann köas är committat (2c98ac4). FÖRBÄTTRING för omkörningar: kön minns
+bara par som gav förslag — nej-svaren prövas om varje gång. Persistera
+även nej-svar (t.ex. data/provade-par.json) innan nästa fullkörning,
+annars betalas ~1 300 modellanrop i onödan.
 
 ### Meddelanden mellan sessioner
 

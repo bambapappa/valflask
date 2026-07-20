@@ -3,7 +3,7 @@
  *
  * En koppling (löfte/ståndpunkt ↔ riksdagshandling) publiceras aldrig om
  * inte samtliga grindar passeras. Språkmodellen får bara FÖRESLÅ; grindarna
- * här är kod, och H6 (ägarbeslut) fattas alltid av en människa i
+ * här är kod, och H6 (mänskligt beslut) fattas alltid av en människa i
  * granskningsflödet — den kan per definition inte passeras programmatiskt.
  *
  * Citatkontrollen (H2) återanvänder mönstret från valflask

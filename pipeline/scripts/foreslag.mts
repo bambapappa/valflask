@@ -3,7 +3,7 @@
  * egen titel, voteringar via betänkandets titel (kräver skördad
  * data/betankanden.json) — låter språkmodellen föreslå kopplingar med
  * exakt citat, prövar H1–H5 och lägger passerande förslag i kön
- * data/kopplingsforslag.json — där de väntar på ägarens beslut (H6).
+ * data/kopplingsforslag.json — där de väntar på mänskligt beslut (H6).
  * Ingenting skrivs till kopplingar.json här. För voteringar är källtexten
  * betänkandets, och beviset bär betänkandets dok_id (bevis.kalla_dok_id).
  *
@@ -144,7 +144,7 @@ async function main() {
 
   if (!dryRun) {
     sparaKo();
-    console.log(`klart: ${nya} nya förslag → ${koPath} (väntar på ägarbeslut H6)`);
+    console.log(`klart: ${nya} nya förslag → ${koPath} (väntar på mänskligt beslut)`);
     if (parFel > 0) {
       console.error(`obs: ${parFel} par föll på fel under körningen — en omkörning prövar dem igen`);
       process.exitCode = 1;

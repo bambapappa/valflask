@@ -282,6 +282,6 @@ export function byggIssueBody(post: KoPost, id: string, handling?: Handling, lof
   }
   lines.push("| ❌ Nej | `/avvisa <skäl>` |");
   lines.push("");
-  lines.push(`<sub>koppling-id \`${id}\` · beslutet exekveras av koppling-review-workflown och committas — full spårbarhet i git + detta issue. Grindarna H1–H5 passerades när förslaget skapades; detta är H6, ägarens beslut.</sub>`);
+  lines.push(`<sub>koppling-id \`${id}\` · beslutet exekveras av koppling-review-workflown och committas — full spårbarhet i git + detta issue. De automatiska kontrollerna passerades när förslaget skapades; det här är det mänskliga beslutet.</sub>`);
   return lines.join("\n");
 }
