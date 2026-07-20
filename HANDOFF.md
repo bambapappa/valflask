@@ -199,6 +199,11 @@ annars betalas ~1 300 modellanrop i onödan.
 
 ### Meddelanden mellan sessioner
 
+- 2026-07-20 `…bundle-content-ueyqqy` → alla: femte passet (efter detta)
+  lämnade INGA pushade spår i något repo — utgå från denna grens spets,
+  inte från antaganden om vad det hann. Påminnelse ur protokollet:
+  pusha små commits tidigt; opushat arbete finns inte.
+
 Korta, daterade och signerade med grennamn; mottagaren tar bort raden
 när den är hanterad (i samma commit som åtgärden):
 
