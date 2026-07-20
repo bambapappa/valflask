@@ -106,6 +106,11 @@ footer{border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px;padd
 .valperson{border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--panel)}
 .intro{font-size:14px;max-width:72ch;color:var(--ink-2)}
 .intro b{color:var(--ink)}
+details.ordlista{margin:0 0 16px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+details.ordlista summary{cursor:pointer;padding:10px 14px;font-size:13.5px;color:var(--accent);font-weight:600;list-style-position:inside}
+details.ordlista div{padding:2px 16px 12px;font-size:13.5px;color:var(--ink-2);max-width:78ch}
+details.ordlista dt{font-weight:700;color:var(--ink);margin-top:8px}
+details.ordlista dd{margin:1px 0 0}
 .karta{position:relative;height:580px;border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow:hidden}
 .pt{position:absolute;font-size:10px;font-weight:700;transform:translate(-50%,-50%);cursor:pointer;
   color:var(--ink-2);letter-spacing:.3px;line-height:1;padding:2px}
@@ -147,6 +152,23 @@ const KINDS_SV = ["Motion","Proposition","Interpellation","Skriftlig fråga","Vo
 const PARTIER = ["s","m","sd","c","v","kd","l","mp"];
 const H = D.handlingar, P = D.personer, L = D.loften;
 const $ = (s,el=document)=>el.querySelector(s);
+function ordlista(){ return `
+<details class="ordlista"><summary>Ny här? Så funkar riksdagens papper — ordlistan</summary><div><dl>
+<dt>Motion</dt><dd>Ett förslag till riksdagen från en eller flera ledamöter. De flesta lämnas under
+"allmänna motionstiden" varje höst — därför toppar de i oktober.</dd>
+<dt>Proposition</dt><dd>Ett förslag från regeringen, oftast ett färdigt lagförslag.</dd>
+<dt>Interpellation</dt><dd>En fråga från en ledamot till ett statsråd som debatteras muntligt i kammaren.</dd>
+<dt>Skriftlig fråga</dt><dd>En kortare fråga till ett statsråd som besvaras skriftligt.</dd>
+<dt>Utskott</dt><dd>Riksdagens arbetsgrupper, en per ämnesområde — Utbildningsutskottet, Justitieutskottet
+och så vidare. Alla förslag bereds i ett utskott innan kammaren röstar.</dd>
+<dt>Betänkande</dt><dd>Utskottets samlade förslag till beslut, uppdelat i numrerade punkter.
+Kammaren röstar om varje punkt för sig.</dd>
+<dt>Votering</dt><dd>Själva omröstningen i kammaren. Varje ledamot trycker Ja, Nej eller Avstår —
+det är de knapptryckningarna du ser här.</dd>
+<dt>Frånvarande &amp; kvittning</dt><dd>Att en ledamot inte röstade betyder oftast inte skolk: partierna
+"kvittar" planerad frånvaro mot varandra så att styrkeförhållandet består. Därför räknar vi aldrig
+frånvaro som ett ställningstagande.</dd>
+</dl></div></details>`; }
 const esc = (s)=>String(s).replace(/[&<>"]/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 // ---- index ----
@@ -226,8 +248,14 @@ function vyVagen(){
       <span class="dt"> ${l[3]?esc(l[3]):""}</span></td>
     ${PARTIER.map(p=>`<td>${statusFor(l[0],p,lp.includes(p))}</td>`).join("")}</tr>`;}).join("")}
   </tbody></table></div>
-  <p class="note">Rutnätet visar alla åtta partier per löfte (öppen fråga F1) — pricken markerar
-  partier som inte står bakom löftet. Statusorden är hela vokabulären; ingen färgskala värderar.</p>`;
+  <p class="note"><b>Så läser du rutnätet:</b> varje rad är ett vallöfte, varje kolumn ett parti.
+  <b>INGEN HANDLING ÄNNU</b> = vi har inte hittat något dokument eller någon omröstning i riksdagen
+  som bevisligen rör löftets sakfråga — rutan är ärligt tom, inte ett underbetyg.
+  <b>FÖRSLAG — VÄNTAR</b> = ett dokument har hittats och citatet är kontrollerat, men en människa
+  har inte granskat kopplingen än. En prick betyder bara att partiet inte gett det löftet.
+  När kopplingar godkänns fylls rutorna med AGERAT I LINJE, AGERAT EMOT eller BÅDE OCH —
+  alltid klickbart ner till exakta citat och riksdagens källa. Inga färger betygsätter:
+  att agera emot ett löfte kan vara precis vad du som väljare hoppas på.</p>`;
 }
 function renderLofte(id){
   const l=L.find(x=>x[0]===id); if(!l){detail=null;return render();}
@@ -244,8 +272,10 @@ function renderLofte(id){
   <h2 class="serif" style="font-size:24px;margin:0 0 2px">${esc(l[1])}</h2>
   <p class="meta">${l[0]} · parti: ${l[2].toUpperCase()||"—"} · kategori: ${esc(l[3]||"—")}</p>
   ${l[4]?`<div class="qq">”${esc(l[4])}”</div>`:""}
-  ${fhtml||`<p class="note">Inga kopplingar ännu — tomt är ärligt. Förslagssteget prövar kandidater
-  mot grindarna; det som passerar hamnar hos ägaren för beslut.</p>`}
+  ${fhtml||`<p class="note">Ingen riksdagshandling är kopplad till löftet ännu — och en tom ruta
+  betyder just det, inget annat. En koppling visas bara när ett dokument bevisligen rör samma
+  sakfråga: citatet ur dokumentet kontrolleras ord för ord mot källan, och en människa
+  godkänner varje koppling innan den räknas.</p>`}
   `, $("#back").onclick=()=>{detail=null;render();}, undefined;
 }
 
@@ -264,6 +294,12 @@ function vyUtforskaren(){
     ut.push(i); }
   const visa=ut.slice(0,300);
   return `
+  <div class="panel"><h3>Utforskaren — allt riksdagen gjort, sökbart</h3>
+  <p class="intro">Här ligger <b>varenda motion, proposition, fråga och omröstning</b> från
+  mandatperioden 2022–2026, hämtade ur riksdagens öppna data. Sök på ett ord, filtrera på
+  dokumenttyp eller parti, och klicka dig hela vägen ner till hur varje ledamot röstade.
+  Ingenting är tolkat eller betygsatt — varje rad länkar till riksdagens egen källa.</p></div>
+  ${ordlista()}
   <div class="tools">
     <input type="search" id="q" placeholder="Sök i alla ${H.length.toLocaleString("sv")} handlingar — t.ex. ”npf”, ”särskilt stöd”, ”a-kassa” …" value="${esc(st.q)}">
     <select id="parti"><option value="">Alla partier</option>${PARTIER.map(p=>`<option ${st.parti===p?"selected":""} value="${p}">${p.toUpperCase()}</option>`).join("")}</select>
@@ -297,6 +333,10 @@ function renderVotering(vid){
   <h2 class="serif" style="font-size:23px;margin:0">${esc(bt||"Votering")}</h2>
   <p class="meta">${h?`${h[5]} · punkt ${h[7]} · ${h[2]} · `:""}
     <a href="https://data.riksdagen.se/votering/${vid}" target="_blank" rel="noopener">riksdagens post</a></p>
+  <p class="intro" style="margin:2px 0 10px">Så här röstade kammaren om den här punkten i
+  betänkandet — först parti för parti, sedan varje enskild ledamot. Ja betyder stöd för
+  utskottets förslag i punkten, Nej betyder emot.</p>
+  ${ordlista()}
   <div class="panel"><h3>Röstfördelning per parti</h3>
   <div class="legend"><span><i style="background:var(--ja)"></i>Ja</span><span><i style="background:var(--nej)"></i>Nej</span>
   <span><i style="background:var(--avstar)"></i>Avstår</span><span><i style="background:var(--franv)"></i>Frånvarande — räknas aldrig (b-0004)</span></div>
@@ -342,6 +382,9 @@ function renderPerson(pIdx){
   <p class="back"><button class="linkish" id="back">← Tillbaka</button></p>
   <h2 class="serif" style="font-size:24px;margin:0">${esc(p[1])}</h2>
   <p class="meta">${p[2].toUpperCase()} · ${esc(p[3])} · <span class="mono">${p[0]}</span></p>
+  <p class="intro" style="margin:2px 0 12px">Ledamotens avtryck i riksdagen under mandatperioden:
+  alla knapptryckningar i voteringarna, gångerna hen röstat annorlunda än sitt eget parti,
+  och dokumenten hen själv skrivit under. Allt ur riksdagens öppna data — aktivitet, inte betyg.</p>
   <div class="statrow">
     <div class="stat"><b class="mono">${ut.J||0}</b><span>Ja-röster</span></div>
     <div class="stat"><b class="mono">${ut.N||0}</b><span>Nej-röster</span></div>
