@@ -8,7 +8,9 @@ import {
   godkannForslag,
   GranskningsFel,
   kopplingId,
+  laggTillNyaKoPoster,
   nastaKopplingsId,
+  nyaKoPoster,
   parseGranskningsKommando,
   type KopplingPost,
   type KoPost,
@@ -173,6 +175,24 @@ test("byggIssueBody utan löftestext och utan handling degraderar ärligt", () =
   const b = byggIssueBody(koPost({ handling_id: "h-9999-0001" }), "abc123def456");
   assert.ok(b.includes("p-2026-0042"));
   assert.ok(b.includes("SAKNAS i handlingar.json"));
+});
+
+test("nyaKoPoster: bara det körningen skapade räknas som nytt", () => {
+  const gammal = koPost();
+  const ny = koPost({ handling_id: "h-2026-0002" });
+  assert.deepEqual(nyaKoPoster([gammal], [gammal, ny]).map((p) => p.handling_id), ["h-2026-0002"]);
+  assert.deepEqual(nyaKoPoster([gammal], [gammal]), []);
+});
+
+test("laggTillNyaKoPoster: avgjorda poster återuppstår aldrig, nya läggs på, dubbletter skyddas", () => {
+  const avgjord = koPost(); // fanns vid körningens start, ägaren hann avgöra den
+  const ny = koPost({ handling_id: "h-2026-0002" });
+  const redanInne = koPost({ handling_id: "h-2026-0003" });
+  const farsk = [redanInne]; // avgjord borta ur färska kön; redanInne kvar
+  const start = [avgjord, redanInne];
+  const resultat = [avgjord, redanInne, ny, redanInne]; // körningen såg gammalt läge
+  const ut = laggTillNyaKoPoster(farsk, start, resultat);
+  assert.deepEqual(ut.map((p) => p.handling_id), ["h-2026-0003", "h-2026-0002"]);
 });
 
 test("kopplingar sorteras på id vid godkännande", () => {
