@@ -106,6 +106,14 @@ footer{border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px;padd
 .valperson{border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--panel)}
 .intro{font-size:14px;max-width:72ch;color:var(--ink-2)}
 .intro b{color:var(--ink)}
+.karta{position:relative;height:580px;border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow:hidden}
+.pt{position:absolute;font-size:10px;font-weight:700;transform:translate(-50%,-50%);cursor:pointer;
+  color:var(--ink-2);letter-spacing:.3px;line-height:1;padding:2px}
+.pt:hover{color:var(--accent);z-index:5;font-size:12px}
+.moln{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;line-height:1.15;padding:6px 0}
+.moln button{appearance:none;border:0;background:none;color:var(--ink-2);font-family:Georgia,serif;
+  cursor:pointer;padding:0}
+.moln button:hover{color:var(--accent)}
 @media (prefers-reduced-motion: no-preference){ .panel{animation:in .18s ease-out} @keyframes in{from{opacity:.4;transform:translateY(3px)}to{opacity:1}} }
 </style>
 
@@ -119,6 +127,7 @@ footer{border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px;padd
     <button id="tabU">Utforskaren — fritt i allt</button>
     <button id="tabA">Ämnen — vem pratar om vad</button>
     <button id="tabH">Mot varandra</button>
+    <button id="tabK">Kartan</button>
   </nav>
 </header>
 <main id="main"></main>
@@ -172,6 +181,7 @@ $("#tabV").onclick=()=>{tab="V";detail=null;render();};
 $("#tabU").onclick=()=>{tab="U";detail=null;render();};
 $("#tabA").onclick=()=>{tab="A";detail=null;render();};
 $("#tabH").onclick=()=>{tab="H";detail=null;render();};
+$("#tabK").onclick=()=>{tab="K";detail=null;render();};
 const st={ q:"", kinds:new Set(), parti:"", rm:"", lq:"",
   amne:{vy:"parti", parti:"s", utskott:"UbU"},
   hh:{a:null,b:null,qa:"",qb:"",utskott:""} };
@@ -179,10 +189,11 @@ const st={ q:"", kinds:new Set(), parti:"", rm:"", lq:"",
 function render(){
   $("#tabV").className=tab==="V"?"on":""; $("#tabU").className=tab==="U"?"on":"";
   $("#tabA").className=tab==="A"?"on":""; $("#tabH").className=tab==="H"?"on":"";
+  $("#tabK").className=tab==="K"?"on":"";
   if(detail?.typ==="vot") return renderVotering(detail.vid);
   if(detail?.typ==="person") return renderPerson(detail.p);
   if(detail?.typ==="lofte") return renderLofte(detail.id);
-  main.innerHTML = tab==="V" ? vyVagen() : tab==="U" ? vyUtforskaren() : tab==="A" ? vyAmnen() : vyMotVarandra();
+  main.innerHTML = tab==="V" ? vyVagen() : tab==="U" ? vyUtforskaren() : tab==="A" ? vyAmnen() : tab==="H" ? vyMotVarandra() : vyKartan();
   koppla();
 }
 
@@ -391,8 +402,38 @@ function heatmap(per, radNamn){
   }
   return ut+`</div>`;
 }
+function ordmoln(parti){
+  const frekvens=new Map();
+  for(const h of H){ if(h[1]===4) continue;
+    if(parti && !(h[4]&&h[4].split(" ").includes(parti))) continue;
+    for(const w of nyckelordJs(h[3])) frekvens.set(w,(frekvens.get(w)??0)+1); }
+  const topp=[...frekvens.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0])).slice(0,90);
+  if(!topp.length) return "<p class='meta'>Inga dokument.</p>";
+  const max=topp[0][1];
+  // Deterministisk blandning så stora ord sprids i flödet i stället för att klumpas först.
+  const ordnade=topp.map((t,i)=>[t,(i*37)%topp.length]).sort((x,y)=>x[1]-y[1]).map(x=>x[0]);
+  return `<div class="moln">${ordnade.map(([w,n])=>{
+    const px=(13+29*Math.sqrt(n/max)).toFixed(1);
+    return `<button data-ord="${esc(w)}" style="font-size:${px}px" title="${n} dokumenttitlar">${esc(w)}</button>`;}).join("")}</div>`;
+}
+const STOPP_JS=new Set(["att","och","det","som","för","med","till","ska","skall","inte","den","de","har","kan","bör","från","om","en","ett","är","av","på","eller","samt","vår","våra","alla","mer","fler","detta","denna","sig","sina","vara","blir","genom","anledning","prop","2022","2023","2024","2025","2026","vissa","inom","ökad","ökat","bättre","stärkt","behov","frågor","sverige","svenska","svenskt"]);
+function nyckelordJs(text){ return new Set(text.toLowerCase().split(/[^a-zåäöéü0-9-]+/).filter(w=>w.length>=4&&!STOPP_JS.has(w))); }
 function vyAmnen(){
   const a=st.amne; const perParti=a.vy==="parti";
+  if(a.vy==="moln"){
+    return `
+    <div class="panel"><h3>Ordmolnet — orden partierna sätter i sina rubriker</h3>
+    <p class="intro">Ordens storlek = hur många dokumenttitlar de förekommer i (motioner,
+    interpellationer, skriftliga frågor, propositioner). Klicka ett ord för att se dokumenten
+    i Utforskaren. Frekvens är fakta om språkbruk, inte betyg.</p></div>
+    <div class="tools tchips">
+      <button data-avy="parti">Ett parti över tid</button>
+      <button data-avy="utskott">En fråga över tid</button>
+      <button data-avy="moln" class="on">Ordmoln</button>
+      <select id="aparti"><option value="">Alla partier</option>${PARTIER.map(p=>`<option ${a.parti===p?"selected":""} value="${p}">${p.toUpperCase()}</option>`).join("")}</select>
+    </div>
+    ${ordmoln(a.parti)}`;
+  }
   const per=amnesData(perParti?a.parti:"", perParti?"":a.utskott);
   const allaUtskott=[...new Set(H.filter(h=>h[9]&&h[1]!==4).map(h=>h[9]))].sort();
   return `
@@ -402,8 +443,9 @@ function vyAmnen(){
   det kvartalet. Antal dokument är fakta om aktivitet, inte betyg — och frågan
   <b>"hur viktig var frågan historiskt?"</b> får här sitt visuella svar: följ en rad bakåt i tiden.</p></div>
   <div class="tools tchips">
-    <button data-avy="parti" class="${perParti?"on":""}">Ett parti över tid</button>
-    <button data-avy="utskott" class="${perParti?"":"on"}">En fråga över tid</button>
+    <button data-avy="parti" class="${a.vy==="parti"?"on":""}">Ett parti över tid</button>
+    <button data-avy="utskott" class="${a.vy==="utskott"?"on":""}">En fråga över tid</button>
+    <button data-avy="moln" class="${a.vy==="moln"?"on":""}">Ordmoln</button>
     ${perParti?`<select id="aparti">${PARTIER.map(p=>`<option ${a.parti===p?"selected":""} value="${p}">${p.toUpperCase()}</option>`).join("")}</select>`
       :`<select id="autskott">${allaUtskott.map(u=>`<option ${a.utskott===u?"selected":""} value="${u}">${uNamn(u)}</option>`).join("")}</select>`}
   </div>
@@ -505,6 +547,66 @@ function vyMotVarandra(){
   ${jmf||`<p class="meta">Välj en ledamot i varje ruta.</p>`}`;
 }
 
+// ---------- KARTAN ----------
+let kartaCache=null;
+function beraknaKarta(){
+  if(kartaCache) return kartaCache;
+  // Röstvektor per person: J=1, N=-1, Avstår/frånvaro/ej i kammaren=0.
+  const totV=D.roster.reduce((s,rm)=>s+rm.v.length,0);
+  const X=[], vilka=[];
+  P.forEach((p,pi)=>{
+    const v=new Int8Array(totV); let n=0, k=0;
+    for(const rm of D.roster){ const pos=rm.p.indexOf(pi);
+      for(const [,str] of rm.v){ if(pos>=0){ const t=str[pos];
+        if(t==="J"){v[k]=1;n++;} else if(t==="N"){v[k]=-1;n++;} } k++; } }
+    if(n>=100){ X.push(v); vilka.push(pi); } });
+  const m=X.length;
+  // Likhetsmatris (dot / sqrt(n_i n_j)), dubbelcentrerad, topp-2 egenvektorer via kraftiteration.
+  const G=new Float64Array(m*m), norm=X.map(v=>{let s=0;for(let k=0;k<totV;k++)s+=v[k]*v[k];return Math.sqrt(s)||1;});
+  for(let i=0;i<m;i++) for(let j=i;j<m;j++){ let d=0; const a=X[i],b=X[j];
+    for(let k=0;k<totV;k++) d+=a[k]*b[k];
+    const g=d/(norm[i]*norm[j]); G[i*m+j]=g; G[j*m+i]=g; }
+  const rad=new Float64Array(m); let tot=0;
+  for(let i=0;i<m;i++){ let s=0; for(let j=0;j<m;j++) s+=G[i*m+j]; rad[i]=s/m; tot+=s; } tot/=m*m;
+  for(let i=0;i<m;i++) for(let j=0;j<m;j++) G[i*m+j]-=rad[i]+rad[j]-tot;
+  const egen=(B)=>{ let v=new Float64Array(m); for(let i=0;i<m;i++) v[i]=1/(i+1);
+    let lam=0;
+    for(let it=0;it<40;it++){ const u=new Float64Array(m);
+      for(let i=0;i<m;i++){ let s=0; for(let j=0;j<m;j++) s+=B[i*m+j]*v[j]; u[i]=s; }
+      let nn=Math.hypot(...u)||1; lam=nn; for(let i=0;i<m;i++) v[i]=u[i]/nn; }
+    return {v,lam}; };
+  const e1=egen(G);
+  const B2=Float64Array.from(G);
+  for(let i=0;i<m;i++) for(let j=0;j<m;j++) B2[i*m+j]-=e1.lam*e1.v[i]*e1.v[j];
+  const e2=egen(B2);
+  // Deterministiska tecken: S-snittet till vänster, V-snittet nedåt.
+  const snitt=(e,parti)=>{let s=0,n=0; vilka.forEach((pi,i)=>{if(P[pi][2]===parti){s+=e.v[i];n++;}}); return n?s/n:0;};
+  const s1=snitt(e1,"s")>0?-1:1, s2=snitt(e2,"v")>0?-1:1;
+  kartaCache={vilka, x:e1.v.map(t=>t*s1*Math.sqrt(e1.lam)), y:e2.v.map(t=>t*s2*Math.sqrt(e2.lam))};
+  return kartaCache;
+}
+function vyKartan(){
+  const start=performance.now();
+  const {vilka,x,y}=beraknaKarta();
+  const minX=Math.min(...x),maxX=Math.max(...x),minY=Math.min(...y),maxY=Math.max(...y);
+  const px=(v)=>(4+92*(v-minX)/(maxX-minX||1)).toFixed(2);
+  const py=(v)=>(4+92*(v-minY)/(maxY-minY||1)).toFixed(2);
+  return `
+  <div class="panel"><h3>Kartan — ${vilka.length} ledamöter placerade av sina egna röster</h3>
+  <p class="intro">Varje bokstav är en ledamot. Avståndet mellan två ledamöter speglar hur olika
+  de röstat i kammarens ${D.roster.reduce((s,rm)=>s+rm.v.length,0).toLocaleString("sv")} voteringar
+  — närhet är räknad ur ${(899024).toLocaleString("sv")} faktiska röster, inte ritad av oss.
+  Axlarna är matematiska riktningar ur röstmönstren, inte politiska skalor vi valt.
+  Kluster som framträder är partigrupper och block; ledamöter som glider mot ett annat kluster
+  röstar oftare med det. Hovra för namn, klicka för ledamotssidan.
+  Ledamöter med färre än 100 Ja/Nej-röster visas inte.</p></div>
+  <div class="karta">${vilka.map((pi,i)=>`<span class="pt" data-person="${pi}"
+    style="left:${px(x[i])}%;top:${py(y[i])}%"
+    title="${esc(P[pi][1])} (${P[pi][2].toUpperCase()})">${P[pi][2].toUpperCase()}</span>`).join("")}</div>
+  <p class="meta">Beräknad i webbläsaren på ${(performance.now()-start).toFixed(0)} ms, deterministiskt —
+  samma data ger alltid samma karta.</p>`;
+}
+
 function koppla(){
   const lq=$("#lq"); if(lq) lq.oninput=(e)=>{st.lq=e.target.value;render();
     const el=$("#lq");el.focus();el.setSelectionRange(el.value.length,el.value.length);};
@@ -518,6 +620,8 @@ function koppla(){
   main.querySelectorAll("[data-lofte]").forEach(b=>b.onclick=()=>{detail={typ:"lofte",id:b.dataset.lofte};render();});
   main.querySelectorAll("[data-avy]").forEach(b=>b.onclick=()=>{st.amne.vy=b.dataset.avy;render();});
   const ap=$("#aparti"); if(ap) ap.onchange=(e)=>{st.amne.parti=e.target.value;render();};
+  main.querySelectorAll("[data-ord]").forEach(b=>b.onclick=()=>{tab="U";st.q=b.dataset.ord;detail=null;render();});
+  main.querySelectorAll(".karta [data-person]").forEach(el=>el.onclick=()=>{detail={typ:"person",p:+el.dataset.person};render();});
   const au=$("#autskott"); if(au) au.onchange=(e)=>{st.amne.utskott=e.target.value;render();};
   const hu=$("#hutskott"); if(hu) hu.onchange=(e)=>{st.hh.utskott=e.target.value;render();};
   main.querySelectorAll("[data-pv]").forEach(el=>el.oninput=(e)=>{ st.hh[el.dataset.pv==="a"?"qa":"qb"]=e.target.value; render();
