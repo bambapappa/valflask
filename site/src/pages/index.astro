@@ -5,6 +5,7 @@ import GapMatare from "../components/GapMatare.astro";
 import MetodLank from "../components/MetodLank.astro";
 import { getPromises, getParties, getConstants, getChangelog, getChronicles } from "../lib/data";
 import { totalFlasket, financingGap, formatMsek, formatMsekShort, countPromises, dataHash, formatDateShort } from "../lib/calc";
+import { maskeraText } from "../lib/mask";
 import { partyTotalMsek, promiseTotalMsek } from "../lib/aggregates";
 
 const promises = getPromises();
@@ -58,7 +59,7 @@ const jsonLd = [
     {latestChronicle && (
       <section class="sektion veckans-teaser">
         <div class="etikett">Veckans fläsk · Vecka {latestChronicle.week} {latestChronicle.year}</div>
-        <h2><a href={`/veckans-flask/${latestChronicle.slug}`}>{latestChronicle.headline}</a></h2>
+        <h2><a href={`/veckans-flask/${latestChronicle.slug}`} set:html={maskeraText(latestChronicle.headline)}></a></h2>
       </section>
     )}
 

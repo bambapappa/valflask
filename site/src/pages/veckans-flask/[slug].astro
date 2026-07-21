@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import MetodLank from "../../components/MetodLank.astro";
 import Dela from "../../components/Dela.astro";
 import { getChronicles, getPromises } from "../../lib/data";
+import { escapeHtml, maskeraBelopp, maskeraText } from "../../lib/mask";
 
 export function getStaticPaths() {
   const chronicles = getChronicles();
@@ -17,17 +18,14 @@ const canonicalPath = `/veckans-flask/${slug}`;
 // id → slug, för att göra [p-2026-XXXX] till länkar.
 const slugById = new Map(getPromises().map((p) => [p.id, p.slug]));
 
-function escapeHtml(s: string): string {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
 /** Enkel rendering: stycken + [p-2026-XXXX] → länk till löftet. Texten escapas
- *  först; bara kända löftes-id görs om till länkar (inga andra HTML-taggar). */
+ *  först, sedan maskas penningtalen (kostnadsgrinden), och till sist görs kända
+ *  löftes-id om till länkar (inga andra HTML-taggar). */
 function renderBody(md: string): string {
   return md
     .split(/\n{2,}/)
     .map((para) => {
-      const html = escapeHtml(para.trim()).replace(/\[(p-\d{4}-\d{4})\]/g, (m, id) => {
+      const html = maskeraBelopp(escapeHtml(para.trim())).replace(/\[(p-\d{4}-\d{4})\]/g, (m, id) => {
         const s = slugById.get(id);
         return s ? `<a href="/lofte/${id}/${s}">[${id}]</a>` : m;
       });
@@ -63,12 +61,12 @@ const jsonLd = [
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <div class="etikett etikett--week">Veckans fläsk · Vecka {week} {year}</div>
-      <h1>{chronicle.headline}</h1>
+      <h1 set:html={maskeraText(chronicle.headline)} />
 
       {chronicle.correction_note && (
         <aside class="rattelse-not">
           <div class="etikett num">RÄTTAD</div>
-          <p>{chronicle.correction_note} <a href="/rattelser">Rättelseloggen</a>.</p>
+          <p><span set:html={maskeraText(chronicle.correction_note)} /> <a href="/rattelser">Rättelseloggen</a>.</p>
         </aside>
       )}
 
