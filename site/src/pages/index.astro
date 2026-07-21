@@ -5,6 +5,7 @@ import GapMatare from "../components/GapMatare.astro";
 import MetodLank from "../components/MetodLank.astro";
 import { getPromises, getParties, getConstants, getChangelog, getChronicles } from "../lib/data";
 import { totalFlasket, financingGap, formatMsek, formatMsekShort, countPromises, dataHash, formatDateShort } from "../lib/calc";
+import { maskeraText } from "../lib/mask";
 import { partyTotalMsek, promiseTotalMsek } from "../lib/aggregates";
 
 const promises = getPromises();
@@ -48,7 +49,7 @@ const jsonLd = [
     <Lopsedel total={total} subtitle="Valfläsket hittills" count={count} date="2026" taxameterValue={flasket} />
 
     <div class="prosa-content prosa-content--centered">
-      <p>Riksdagspartiernas vallöften 2026 kostar hittills <strong class="num">{totalShort} mdkr</strong> för de fyra åren 2027–2030, fördelat på {count} löften från åtta partier.</p>
+      <p>Riksdagspartiernas vallöften 2026 kostar hittills <strong class="num belopp">{totalShort} mdkr</strong> för de fyra åren 2027–2030, fördelat på {count} löften från åtta partier.</p>
     </div>
 
     <MetodLank />
@@ -58,7 +59,7 @@ const jsonLd = [
     {latestChronicle && (
       <section class="sektion veckans-teaser">
         <div class="etikett">Veckans fläsk · Vecka {latestChronicle.week} {latestChronicle.year}</div>
-        <h2><a href={`/veckans-flask/${latestChronicle.slug}`}>{latestChronicle.headline}</a></h2>
+        <h2><a href={`/veckans-flask/${latestChronicle.slug}`} set:html={maskeraText(latestChronicle.headline)}></a></h2>
       </section>
     )}
 
@@ -79,7 +80,7 @@ const jsonLd = [
               <tr>
                 <td class="radnr">{i + 1}</td>
                 <td><a href={`/parti/${row.code}`}>{row.name}</a></td>
-                <td class="num">{formatMsek(row.total)}</td>
+                <td class="num belopp">{formatMsek(row.total)}</td>
                 <td class="num">{promises.filter((p) => p.parties.includes(row.code) && p.status !== 'tillbakadragen').length}</td>
               </tr>
             ))}
@@ -101,7 +102,7 @@ const jsonLd = [
                 <strong>{p.title}</strong>
               </a>
               <div class="etikett etikett--sub">
-                {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num">{formatMsek(promiseTotalMsek(p), p.cost.basis)}</span>
+                {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseTotalMsek(p), p.cost.basis)}</span>
               </div>
             </li>
           ))}

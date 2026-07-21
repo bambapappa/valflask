@@ -328,3 +328,79 @@ blockquote {
 .promise-list li a:hover {
   text-decoration: underline;
 }
+
+/* ── Kostnadsestimat bakom godkännandegrind (DECISION_LOG 2026-07-21, b-0016) ──
+   Belopp maskas som en hemligstämplad, överstruken siffra tills läsaren
+   kvitterat att de är uppskattningar. Talet ligger kvar i DOM (API, sök och
+   tester ser det) — det är bara dolt för ögat. Grundläget = maskat; flaggan
+   data-estimat="pa" sätts av estimat-init.js/estimat-grind.js. */
+html:not([data-estimat="pa"]) .belopp {
+  background: var(--svarta);
+  color: transparent !important;
+  cursor: pointer;
+  border-radius: 0;
+  padding: 0 0.12em;
+  -webkit-user-select: none;
+  user-select: none;
+}
+html:not([data-estimat="pa"]) .platta .belopp,
+html:not([data-estimat="pa"]) .lopsedel .belopp {
+  background: var(--gul);
+}
+html:not([data-estimat="pa"]) .belopp * {
+  color: transparent !important;
+}
+
+/* Knapp som låser upp beloppen (i löpsedeln); syns bara i maskat läge. */
+.grind-oppna {
+  display: none;
+}
+html:not([data-estimat="pa"]) .grind-oppna {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  background: var(--gul);
+  color: var(--svarta);
+  border: 2px solid var(--gul);
+  border-radius: 0;
+  padding: 0.4rem 0.8rem;
+  margin-top: 0.75rem;
+  cursor: pointer;
+}
+
+/* På/av-kontroll i footern. Texten byts beroende på läge. */
+.grind-toggle {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  color: var(--svarta);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.grind-toggle .grind-toggle__av {
+  display: none;
+}
+.grind-toggle .grind-toggle__pa {
+  display: inline;
+}
+html[data-estimat="pa"] .grind-toggle .grind-toggle__av {
+  display: inline;
+}
+html[data-estimat="pa"] .grind-toggle .grind-toggle__pa {
+  display: none;
+}
+
+@media print {
+  /* Flygbladet ska bära siffrorna — maska inte i tryck, och göm grinden. */
+  .belopp {
+    background: transparent !important;
+    color: inherit !important;
+  }
+  .grind, .grind-oppna, .grind-toggle { display: none !important; }
+}

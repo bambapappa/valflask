@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import { getChronicles } from "../../lib/data";
 import { formatMsek } from "../../lib/calc";
+import { maskeraText } from "../../lib/mask";
 
 // Nyast först (chronicles.json är redan sorterad så, men lita inte på det).
 const chronicles = [...getChronicles()].sort((a, b) => b.slug.localeCompare(a.slug));
@@ -43,9 +44,9 @@ const jsonLd = [
               VECKA {c.week} {c.year}
               {c.correction_note && <> · RÄTTAD</>}
             </div>
-            <h2><a href={`/veckans-flask/${c.slug}`}>{c.headline}</a></h2>
+            <h2><a href={`/veckans-flask/${c.slug}`} set:html={maskeraText(c.headline)}></a></h2>
             <p class="etikett kronikarad__meta num">
-              {c.promise_ids.length} löften i veckan · fläsket då {formatMsek(c.total_msek)}
+              {c.promise_ids.length} löften i veckan · fläsket då <span class="belopp">{formatMsek(c.total_msek)}</span>
             </p>
           </article>
         ))

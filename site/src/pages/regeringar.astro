@@ -76,19 +76,19 @@ const jsonLd = [
               <tfoot>
                 <tr>
                   <td colspan="2"><strong>Fläsket (delade löften räknas en gång)</strong></td>
-                  <td class="num" colspan="2"><strong class="num">{formatMsek(a.totalFlasket)}</strong></td>
+                  <td class="num" colspan="2"><strong class="num belopp">{formatMsek(a.totalFlasket)}</strong></td>
                 </tr>
                 <tr>
                   <td colspan="2">Sparande</td>
-                  <td class="num" colspan="2">{formatMsek(a.totalBesparingar)}</td>
+                  <td class="num belopp" colspan="2">{formatMsek(a.totalBesparingar)}</td>
                 </tr>
                 <tr>
                   <td colspan="2">Angiven finansiering</td>
-                  <td class="num" colspan="2">{formatMsek(a.totalFinancingClaimed)}</td>
+                  <td class="num belopp" colspan="2">{formatMsek(a.totalFinancingClaimed)}</td>
                 </tr>
                 <tr>
                   <td colspan="2"><strong>Saknar täckning</strong></td>
-                  <td class="num" colspan="2"><strong class="num">{gapLabel}</strong></td>
+                  <td class="num" colspan="2"><strong class="num belopp">{gapLabel}</strong></td>
                 </tr>
               </tfoot>
             </table>
@@ -97,7 +97,7 @@ const jsonLd = [
             <div class="fotnoter">
               <div class="etikett">DELADE LÖFTEN</div>
               {a.groupNotes.map((gn) => (
-                <p class="fotnot">Ett löfte som flera partier delar — prislappen varierar mellan {formatMsek(gn.minMsek)} och {formatMsek(gn.maxMsek)} ({gn.parties.join(", ")})</p>
+                <p class="fotnot">Ett löfte som flera partier delar — prislappen varierar mellan <span class="belopp">{formatMsek(gn.minMsek)}</span> och <span class="belopp">{formatMsek(gn.maxMsek)}</span> ({gn.parties.join(", ")})</p>
               ))}
             </div>
           )}
