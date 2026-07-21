@@ -116,5 +116,64 @@
       "confidence": 0.2
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Underlätta för studenter att jobba och få studiemedel",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi vill underlätta för studenter att jobba och få studiemedel",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/vi-vill-underlatta-for-studenter-att-jobba-och-fa-studiemedel",
+    "articleTitle": "Vi vill underlätta för studenter att jobba och få studiemedel",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar höjt fribelopp eller slopat avdrag på studiemedel vid arbetsinkomst. Kostnad beror på modell: enklare reformer (höjt fribelopp) kostar hundratals msek, generösare varianter (slopat avdrag) kan ö",
+      "confidence": 0.45
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Skapa ett modernare studiemedelssystem",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Lotta Edholm",
+        "role": "gymnasie-, högskole- och forskningsminister"
+      },
+      "quote": "Med utredningen vill regeringen skapa ett modernare studiemedelssystem som stärker studenters möjligheter att utbilda sig, arbeta och etablera sig på arbetsmarknaden",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/vi-vill-underlatta-for-studenter-att-jobba-och-fa-studiemedel",
+    "articleTitle": "Vi vill underlätta för studenter att jobba och få studiemedel",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 500,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande om reform som höjer bidragsdelen eller ger andra förbättringar. Uppskattas utifrån jämförelse med tidigare studiemedelsreformer, osäkert.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   }
 ]
