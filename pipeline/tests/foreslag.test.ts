@@ -68,8 +68,10 @@ test("rankaKandidater: ordöverlapp, voteringar och fel parti utelämnas", () =>
   assert.ok(kandidater[0]!.poang >= 2);
 });
 
-test("motionstypAvHandling: flera undertecknare → kommitté, en → enskild, aldrig parti", () => {
-  assert.equal(motionstypAvHandling(handling()), "kommitte");
+test("motionstypAvHandling: riksdagens klassning vinner, annars gissning ur antal namn", () => {
+  assert.equal(motionstypAvHandling(handling({ motionstyp: "parti" })), "parti"); // riksdagens facit
+  assert.equal(motionstypAvHandling(handling({ motionstyp: "enskild" })), "enskild"); // även om två namn
+  assert.equal(motionstypAvHandling(handling()), "kommitte"); // ingen klassning → gissa ur >1 namn
   assert.equal(motionstypAvHandling(handling({ persons: [{ name: "A", party: "v" }] })), "enskild");
   assert.equal(motionstypAvHandling(handling({ kind: "proposition" })), undefined);
 });

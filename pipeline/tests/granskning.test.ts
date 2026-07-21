@@ -153,9 +153,16 @@ test("byggIssueBody: motion visar motionstyp-raden och beslutstabellen", () => {
   });
   assert.ok(b.includes("Höj taket i a-kassan"));
   assert.ok(b.includes("/godkänn --motionstyp parti"));
-  assert.ok(b.includes("b-0007"));
+  assert.ok(b.includes("Motionstyp:"));
   assert.ok(b.includes("/avvisa <skäl>"));
   assert.ok(b.includes("koppling-id `abc123def456`"));
+});
+
+test("byggIssueBody: motion med riksdagsklassning visar den, utan visar avsaknad", () => {
+  const medTyp = byggIssueBody(koPost(), "abc123def456", { ...handling(), motionstyp: "enskild" });
+  assert.ok(medTyp.includes("riksdagens egen klassning: **enskild**"));
+  const utanTyp = byggIssueBody(koPost(), "abc123def456", handling());
+  assert.ok(utanTyp.includes("riksdagen har ingen klassning"));
 });
 
 test("byggIssueBody: votering förklarar riktningen och länkar betänkandet", () => {

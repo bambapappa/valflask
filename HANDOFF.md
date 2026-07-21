@@ -64,6 +64,19 @@ valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
 
+**Gjort 2026-07-20/21 (senare pass, grenen `…bundle-content-ueyqqy`):**
+
+- **Nej-svar beständiga** — `data/provade-par.json` minns varje prövat
+  par; omkörningar betalar bara för oprövat. `src/provade.ts` +
+  `provade-uppdatera.mts`.
+- **b-0015 — motionstyp ur riksdagens egen klassning** (subtyp), inte
+  gissning. Berikade 12 887 motioner; `motionstyp-backfill.mts`.
+  Gissningen var fel på alla 10 köade motionsförslag — nu rättade
+  (h-2026-2074→parti, nio→enskild). 8 öppna issues fick synlig
+  rättelsekommentar; de 4 redan godkända bar alla rätt typ.
+- **⚠️ 401-fyndet:** körning 8 föll på 1 234 × HTTP 401 — kontrollera
+  OpenRouter-nyckel/kredit före nästa fullkörning (se nedan).
+
 **Gjort 2026-07-20 (fjärde passet, grenen `…bundle-content-ueyqqy`):**
 
 - ~~Skördarna~~ **KLART**: `data/roster/` (899 024 röster),
@@ -101,8 +114,9 @@ Settings → Secrets and variables → Actions.
 
 Återstår (i ordning):
 
-1. **Ägarens /godkänn eller /avvisa i issue #5** — systemets första
-   H6-beslut; därefter `npm run domar` för första domen/meriten.
+1. **Ägarens granskning av kön** — issue #5 (elevlagen) godkänd, första
+   kopplingen finns. 33 koppling-kö-issues kvar att /godkänna eller
+   /avvisa; kör `npm run domar` när fler avgjorts för fler domar/meriter.
 2. **b-0014 andra halvan — nyckelordsindexet**: byggtidsindex över
    dokumentens fulltexter (fritextsök + ordtrender per parti).
    Fulltexterna hämtas vid indexbygget och lagras aldrig; indexet
@@ -188,14 +202,25 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 *(inga anspråk)*
 
-Fullkörningen 2026-07-20 (körning 8, slut 19:51 UTC): **34 förslag i
-kön över 12 löften** (29 stödjer/5 motverkar, 5 via betänkanden),
-**34 koppling-kö-issues öppna** för mänskligt beslut. Körningen slutade
-röd — några par föll på fel och prövas igen vid nästa körning; allt som
-hann köas är committat (2c98ac4). FÖRBÄTTRING för omkörningar: kön minns
-bara par som gav förslag — nej-svaren prövas om varje gång. Persistera
-även nej-svar (t.ex. data/provade-par.json) innan nästa fullkörning,
-annars betalas ~1 300 modellanrop i onödan.
+Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
+(29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
+godkänt sitt första (issue #5, elevlagen p-2026-0360) → 1 koppling i
+`data/kopplingar.json`, kön nu 33. Resten väntar på mänskligt beslut.
+
+**⚠️ INNAN NÄSTA FULLKÖRNING — kontrollera OpenRouter-nyckeln/krediten.**
+Körning 8 slutade röd för att **1 234 par föll på HTTP 401** efter ~91
+lyckade anrop: OpenRouter-nyckeln slutade accepteras (utgången/slut
+kredit) och z.ai-fallbacken räddade dem inte. Ingen kod-fix behövs —
+men en omkörning med samma trasiga nyckel bränner bara tid. Verifiera
+`OPENROUTER_API_KEY` + kredit (och att `MODEL_KOPPLING_FALLBACK=glm-5.2`
+faktiskt svarar på z.ai) först.
+
+**Nej-svar är nu beständiga (löst):** `data/provade-par.json` minns varje
+prövat par (förslag/nej/grindfall), seedad med körning 8:s 92 klara par.
+En omkörning betalar bara för det oprövade — de 1 234 401-felen prövas
+om (rätt, de fick aldrig svar), men de 56 genuina nej-svaren och 34
+förslagen frågas aldrig om igen. `scripts/provade-uppdatera.mts`
+persisterar filen race-säkert i workflowen.
 
 ### Meddelanden mellan sessioner
 

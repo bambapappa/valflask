@@ -3,7 +3,7 @@
  * egen titel, voteringar via betänkandets titel (kräver skördad
  * data/betankanden.json) — låter språkmodellen föreslå kopplingar med
  * exakt citat, prövar H1–H5 och lägger passerande förslag i kön
- * data/kopplingsforslag.json — där de väntar på mänskligt beslut (H6).
+ * data/kopplingsforslag.json — där de väntar på ägarens beslut (H6).
  * Ingenting skrivs till kopplingar.json här. För voteringar är källtexten
  * betänkandets, och beviset bär betänkandets dok_id (bevis.kalla_dok_id).
  *
@@ -23,6 +23,7 @@ import type { Handling } from "../src/handlingar.ts";
 import { OpenRouterClient } from "../src/llm.ts";
 import { rankaKandidater, rankaVoteringsKandidater, skapaForslag, type Lofte } from "../src/foreslag.ts";
 import { LAGE_A_FONSTER, type KopplingsForslag } from "../src/grindar.ts";
+import { laddaProvade, parNyckel, serialiseraProvade } from "../src/provade.ts";
 
 interface KoPost extends KopplingsForslag {
   skapad: string;
@@ -68,7 +69,14 @@ async function main() {
 
   const koPath = resolve(rot, "data/kopplingsforslag.json");
   const ko: KoPost[] = existsSync(koPath) ? JSON.parse(readFileSync(koPath, "utf8")) : [];
-  const sedd = new Set(ko.map((k) => `${k.promise_id ?? k.stance_id}::${k.handling_id}`));
+
+  // Beständigt minne över prövade par: kön (som bara minns förslag) plus
+  // provade-par.json (som även minns nej-svar). Ett prövat par frågas aldrig
+  // om igen — omkörningar betalar bara för det oprövade.
+  const provadePath = resolve(rot, "data/provade-par.json");
+  const provade = laddaProvade(existsSync(provadePath) ? JSON.parse(readFileSync(provadePath, "utf8")) : []);
+  for (const k of ko) provade.add(parNyckel(k.promise_id ?? k.stance_id ?? "", k.handling_id));
+  const sedd = provade; // samma mängd bär både skip-koll och beständigt minne
 
   let llm: OpenRouterClient | undefined;
   let model = "";
@@ -92,6 +100,7 @@ async function main() {
   let parFel = 0;
   let parKlara = 0;
   const sparaKo = () => writeFileSync(koPath, JSON.stringify(ko, null, 2) + "\n");
+  const sparaProvade = () => writeFileSync(provadePath, JSON.stringify(serialiseraProvade(provade), null, 2) + "\n");
   for (const lofte of loften) {
     const dokKandidater = rankaKandidater(lofte, handlingar, maxKandidater);
     const votKandidater = rankaVoteringsKandidater(lofte, handlingar, betankanden, maxKandidater);
@@ -103,7 +112,7 @@ async function main() {
       `${lofte.id} "${lofte.title.slice(0, 60)}" — ${dokKandidater.length} dokument- och ${votKandidater.length} voteringskandidater`,
     );
     for (const { handling, poang, betankande } of kandidater) {
-      if (sedd.has(`${lofte.id}::${handling.id}`)) continue;
+      if (sedd.has(parNyckel(lofte.id, handling.id))) continue;
       if (dryRun) {
         const via = betankande ? ` via bet ${betankande.rm}:${betankande.beteckning} "${betankande.titel.slice(0, 50)}"` : "";
         console.log(`  [${poang}] ${handling.id} ${handling.kind} ${handling.datum} ${handling.titel.slice(0, 70)}${via}`);
@@ -113,7 +122,9 @@ async function main() {
         // För en votering är källtexten betänkandets — samma text till modell och H2.
         const kalltext = await fetchDokumentText(politeFetch, betankande?.dok_id ?? handling.dok_id);
         const { forslag, grindfel } = await skapaForslag(llm!, systemPrompt, model, lofte, handling, kalltext, LAGE_A_FONSTER, betankande);
-        sedd.add(`${lofte.id}::${handling.id}`);
+        // Paret är prövat klart — registreras oavsett utfall (förslag, nej
+        // eller grindfel) så en omkörning aldrig frågar om det igen.
+        provade.add(parNyckel(lofte.id, handling.id));
         parKlara += 1;
         if (!forslag) {
           console.log(`  ${handling.id}: ingen koppling föreslagen`);
@@ -137,14 +148,16 @@ async function main() {
         }
       }
     }
-    // Kön skrivs efter varje löfte — en krasch eller timeout längre fram
-    // kastar aldrig bort förslag som redan passerat grindarna.
-    if (!dryRun) sparaKo();
+    // Kön OCH provade-minnet skrivs efter varje löfte — en krasch eller
+    // timeout längre fram kastar aldrig bort förslag som passerat grindarna,
+    // och nej-svaren som redan kostat modellanrop bevaras.
+    if (!dryRun) { sparaKo(); sparaProvade(); }
   }
 
   if (!dryRun) {
     sparaKo();
-    console.log(`klart: ${nya} nya förslag → ${koPath} (väntar på mänskligt beslut)`);
+    sparaProvade();
+    console.log(`klart: ${nya} nya förslag → ${koPath} (väntar på ägarbeslut H6)`);
     if (parFel > 0) {
       console.error(`obs: ${parFel} par föll på fel under körningen — en omkörning prövar dem igen`);
       process.exitCode = 1;

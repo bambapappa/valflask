@@ -108,11 +108,14 @@ export function rankaVoteringsKandidater(
     .slice(0, max);
 }
 
-/** Motionstyp härledd ur handlingen: flera undertecknare → kommitté, annars
- * enskild. "parti" sätts aldrig av kod — det avgör människan i granskningen
- * (b-0007). */
-export function motionstypAvHandling(h: Handling): "kommitte" | "enskild" | undefined {
+/**
+ * Motionstyp för ett förslag: riksdagens egen klassning (b-0015) i första
+ * hand — den är facit. Saknas den (utgången motion m.m.) faller vi tillbaka
+ * på en grov gissning ur antalet undertecknare. Granskaren kan alltid ändra.
+ */
+export function motionstypAvHandling(h: Handling): "parti" | "kommitte" | "enskild" | undefined {
   if (h.kind !== "motion") return undefined;
+  if (h.motionstyp) return h.motionstyp;
   return h.persons.length > 1 ? "kommitte" : "enskild";
 }
 

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { parseDokumentLista, parseVotering, parseVoteringLista } from "../src/riksdagen.ts";
 import {
   berikaPartier,
-  klassaMotionstyp,
+  motionstypAvSubtyp,
   normaliseraDokument,
   normaliseraVoteringar,
   mergeHandlingar,
@@ -73,10 +73,20 @@ test("berikaPartier slår upp '-' via ledamotsregistret", () => {
   assert.deepEqual(enriched.intressenter.map((i) => i.partibet), ["v", "v"]);
 });
 
-test("klassaMotionstyp: flera undertecknare eller 'm.fl.' → kommitté, annars enskild", () => {
+test("motionstypAvSubtyp mappar riksdagens klassning, okänt → undefined", () => {
+  assert.equal(motionstypAvSubtyp("Enskild motion"), "enskild");
+  assert.equal(motionstypAvSubtyp("Kommittémotion"), "kommitte");
+  assert.equal(motionstypAvSubtyp("Partimotion"), "parti");
+  assert.equal(motionstypAvSubtyp(""), undefined); // utgången motion m.m.
+  assert.equal(motionstypAvSubtyp(undefined), undefined);
+});
+
+test("normaliseraDokument sätter motionstyp ur subtyp, aldrig ur gissning", () => {
   const { dokument } = parseDokumentLista(dokPayload);
-  assert.equal(klassaMotionstyp(dokument[0]!), "kommitte");
-  assert.equal(klassaMotionstyp(dokument[1]!), "enskild");
+  // Fixturen saknar subtyp → motionstyp osatt (ingen gissning ur antal namn).
+  assert.equal(normaliseraDokument(dokument[0]!)!.motionstyp, undefined);
+  const medSubtyp = { ...dokument[1]!, subtyp: "Enskild motion" };
+  assert.equal(normaliseraDokument(medSubtyp)!.motionstyp, "enskild");
 });
 
 test("normaliseraDokument + mergeHandlingar: deterministiska id, idempotent", () => {

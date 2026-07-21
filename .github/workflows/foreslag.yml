@@ -93,12 +93,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cp data/kopplingsforslag.json /tmp/ko-resultat.json
+          cp data/provade-par.json /tmp/provade-resultat.json
           for attempt in 1 2 3 4 5; do
             git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
             (cd pipeline && node --import tsx/esm scripts/ko-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json)
-            git add data/kopplingsforslag.json
+            (cd pipeline && node --import tsx/esm scripts/provade-uppdatera.mts /tmp/provade-resultat.json)
+            git add data/kopplingsforslag.json data/provade-par.json
             if git diff --cached --quiet; then
-              echo "Inga nya förslag att committa."
+              echo "Inget nytt att committa."
               exit 0
             fi
             git commit -m "data: förslagskörning via workflow"
