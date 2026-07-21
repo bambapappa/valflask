@@ -64,6 +64,19 @@ valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
 
+**Gjort 2026-07-20/21 (senare pass, grenen `…bundle-content-ueyqqy`):**
+
+- **Nej-svar beständiga** — `data/provade-par.json` minns varje prövat
+  par; omkörningar betalar bara för oprövat. `src/provade.ts` +
+  `provade-uppdatera.mts`.
+- **b-0015 — motionstyp ur riksdagens egen klassning** (subtyp), inte
+  gissning. Berikade 12 887 motioner; `motionstyp-backfill.mts`.
+  Gissningen var fel på alla 10 köade motionsförslag — nu rättade
+  (h-2026-2074→parti, nio→enskild). 8 öppna issues fick synlig
+  rättelsekommentar; de 4 redan godkända bar alla rätt typ.
+- **⚠️ 401-fyndet:** körning 8 föll på 1 234 × HTTP 401 — kontrollera
+  OpenRouter-nyckel/kredit före nästa fullkörning (se nedan).
+
 **Gjort 2026-07-20 (fjärde passet, grenen `…bundle-content-ueyqqy`):**
 
 - ~~Skördarna~~ **KLART**: `data/roster/` (899 024 röster),
