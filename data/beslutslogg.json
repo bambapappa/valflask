@@ -173,5 +173,18 @@
       "låta modellen bedöma motionstyp (icke-deterministisk — förkastad)"
     ],
     "decided_by": "ägaren 2026-07-20"
+  },
+  {
+    "date": "2026-07-21",
+    "id": "b-0016",
+    "status": "fastställd",
+    "decision": "Kostnadsuppskattningar visas inte som standard på någon av sajterna (drygast.nu och Fläskvågen). Grundläget är antal — hur många löften, hur många handlingar, hur många i linje/emot och hur många tomma celler. Beloppen (särskilt datorskattningarna som märks ≈, men principen gäller varje uppskattad summa) slås på av läsaren med en toggle. Första gången toggeln slås på visas en ruta läsaren måste bekräfta: beloppen är uppskattningar att ta med en nypa salt, källnivån syns alltid och ≈ betyder datorgissning. Följd: löpsedelssiffran på startsidan (som bär ≈) leder inte längre med ett belopp i grundläget utan med ett antal; beloppet tänds när läsaren slår på estimat.",
+    "why": "En ensam avsändare kan stå för antalen — de är räknade fakta — men inte för en avdelning nationalekonomers säkerhet i att prissätta kedjeeffekter. Att sätta en peng på effekter är så svårt att partierna själva oftast avstår; det är själva problemet sajten pekar på — lätt att lova, svårt att förutse vad det kostar. Att leda med antal och göra beloppen till ett medvetet, varnat tillval är ärligare och håller neutralitetskontraktet: registret visas, läsaren väljer lins.",
+    "alternatives": [
+      "Visa beloppen som standard (Fläskvågens ursprungskoncept) — solo-avsändaren kan inte försvara estimaten som facit; förkastat som grundläge.",
+      "Dölja beloppen helt — förkastat; de bär en poäng när de tas med rätt varning.",
+      "Lagra läsarens val i en kaka — kräver kaksamtycke i onödan; localStorage för ett val läsaren själv gör är funktionellt och undantaget, så bekräftelserutan räcker som samtycke."
+    ],
+    "decided_by": "ägaren 2026-07-21"
   }
 ]

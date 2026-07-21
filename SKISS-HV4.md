@@ -124,3 +124,19 @@ vid HV5.
   (spec §9 säger ja — bekräfta att HV4 bygger båda källorna direkt)?
 - **F5:** Ledamotssidor för ledamöter som lämnat riksdagen (123
   motioner har sådana undertecknare) — egen sida eller notis?
+- **F6 (beslutad, ägaren 2026-07-21):** Dokumenttyp blir ett filter i
+  alla vyer, med en tydlig på/av för frågeinstrumenten (interpellationer
+  + skriftliga frågor). Bakgrund: frågeinstrumenten är 7 104 dokument
+  men bara ~266–317 kandidatpar efter förfiltret — en engångskostnad på
+  storleksordningen tio kronor att bearbeta, sedan gratis (statiskt, git).
+  Skevheten motiverar toggeln: S 29 % / M 24 % / KD 16 % / L 11 % står
+  för frågeinstrumenten, så en sammanvägning som räknar in dem lyfter
+  mekaniskt de partier som frågar mest. Toggel = neutralt svar (visa
+  registret, läsaren väljer lins). Att reda ut: partifältet på
+  frågeinstrument räknar ~2 partier per dokument (troligen frågeställare
+  + svarande statsråd) — måste separeras innan frågorna får väga.
+- **F7 (beslutad, ägaren 2026-07-21, b-0016):** Kostnadsuppskattningar
+  av som standard i alla vyer — grundläget är antal. En toggle tänder
+  beloppen; första gången visas en bekräftelseruta (ta dem med en nypa
+  salt). Valet minns i localStorage, inte i en kaka — ingen
+  kaksamtyckesruta behövs. Gäller likadant i Fläskvågen.
