@@ -1031,3 +1031,22 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 **Beslut:** Ägarfråga: gamla krönikor visar större belopp än dagens vågmätare — förklara eller voida? Beslut: FÖRKLARA, aldrig voida — "tyst rättelse är förbjuden" gäller även våra egna texter, och en synlig rättelse bevisar att systemet fungerar. Tre delar: (1) `correction_note` på krönikposter (schema + typ) renderas som synlig RÄTTAD-ruta överst på krönikans sida; v27+v28 fick noter som förklarar både formelfelet och varför tidiga krönikors belopp är högre (tvärparti-grupperingen infördes efter att de skrevs — hederlig tidsdrift, inte inkonsekvens). (2) `data/rattelser.json` (nytt, schema-satt, append-only): den publika rättelseloggen som /rattelser-sidan nu renderar — sidans "Inga rättelser har registrerats ännu" var hårdkodad och blev osann i samma stund vi rättade något. Tre poster: gap-formelfelet (v27+v28), skolavskaffande-rubriken, de fyra borttagna arkivlänkarna. (3) Varje post följer mallen Vad/Varför, inklusive vad som hindrar återfall.
 **Förkastade alternativ:** Voida gamla krönikor och generera en ny startkrönika (tyst radering av publicerat innehåll — motsatsen till sajtens löfte; dessutom var v27:s totalsumma korrekt för sin tid); förklara enbart i DECISION_LOG (utvecklarloggen är inte läsarens rättelsesida).
 **Påverkan:** `pipeline/schemas/{chronicles,rattelser}.schema.json`, `pipeline/src/chronicle.ts`, `data/{chronicles,rattelser}.json`, `site/src/lib/data.ts`, `site/src/pages/{rattelser,veckans-flask/[slug]}.astro`. Pipeline 229 tester gröna, sajtsvit grön; RÄTTAD-noterna och rättelseloggen verifierade i dist.
+
+## 2026-07-21 — Kostnadsestimat blir ett tillval; grundläget är antal (delas med drygast.nu, b-0016)
+
+**Beslut:** Kostnadsuppskattningar visas inte längre som standard. Grundläget på hela sajten är antal — hur många löften, hur många handlingar, hur många i linje/emot, hur många tomma celler. Beloppen (särskilt datorskattningarna som märks `≈`, men principen gäller varje uppskattad summa) tänds av läsaren med en toggle. Första gången toggeln slås på visas en bekräftelseruta som läsaren måste godkänna: beloppen är uppskattningar att ta med en nypa salt, källnivån (`basis`, §8) syns alltid och `≈` betyder datorgissning. Följd för startsidan: löpsedelssiffran, som bär `≈`, leder i grundläget med ett antal i stället för ett belopp; taxametern/beloppet tänds när läsaren slår på estimat. Läsarens val minns i `localStorage`, aldrig i en kaka.
+**Motiv:** En ensam avsändare kan stå för antalen — de är räknade fakta — men inte för en avdelning nationalekonomers säkerhet i att prissätta kedjeeffekter. Att sätta en peng på effekter är så svårt att partierna själva oftast avstår; det är själva problemet sajten pekar på — lätt att lova, svårt att förutse vad det kostar. Att leda med antal och göra beloppen till ett medvetet, varnat tillval är ärligare och håller neutralitetskontraktet: registret visas, läsaren väljer lins.
+**Förkastade alternativ:** Visa beloppen som standard (ursprungskonceptet) — solo-avsändaren kan inte försvara estimaten som facit; förkastat som grundläge. Dölja beloppen helt — förkastat; de bär en poäng när de tas med rätt varning. Lagra valet i en kaka — kräver kaksamtycke i onödan; `localStorage` för ett val läsaren själv gör är funktionellt och undantaget från samtyckeskravet, så bekräftelserutan räcker (och den handlar om innehållet, inte om lagringen). Ingen spårning finns på sajten (statisk, ingen backend), så ingen kaksamtyckesruta behövs alls.
+**Påverkan (kommande, ej byggd än):** startsidans löpsedelssiffra + taxameter, `GapMatare.astro`, `calc.ts` (`≈`-formateringen), belopp på parti-/löftessidor, en delad togglekomponent + bekräftelseruta, copy nedan. Metod-sidan (§8) länkas från rutan. Byggs efter att copyn är godkänd.
+
+Utkast till bekräftelseruta (copy, ej fastställd):
+
+> **Vill du slå på kostnadsestimat?**
+>
+> Då blir sajten roligare — men lova att ta siffrorna med en nypa salt.
+>
+> Jag är en ensam person, inte en avdelning nationalekonomer. Att sätta en peng på en kedja av effekter är svårt — så svårt att partierna själva oftast låter bli. Och det är ju hela poängen: det är lätt att lova, men svårt att förutse hur och vad det faktiskt kostar.
+>
+> Siffrorna är uppskattningar, inte facit. Källnivån syns alltid, och `≈` betyder att en dator har gissat. Vill du se hur vi räknar står allt öppet på Metod-sidan.
+>
+> [ Ja, visa estimat — jag tar dem med en nypa salt ]  ·  [ Nej, håll dig till antal ]
