@@ -19,6 +19,8 @@ export interface RdDokument {
   datum: string;
   titel: string;
   undertitel?: string;
+  /** Riksdagens egen motionsklassning: "Enskild motion"/"Kommittémotion"/"Partimotion". */
+  subtyp?: string;
   organ?: string;
   dokument_url_html?: string;
   dokument_url_text?: string;
@@ -75,6 +77,7 @@ export function parseDokumentLista(payload: unknown): { dokument: RdDokument[]; 
         datum: String(d["datum"] ?? "").slice(0, 10),
         titel: String(d["titel"] ?? ""),
         ...(d["undertitel"] ? { undertitel: String(d["undertitel"]) } : {}),
+        ...(d["subtyp"] ? { subtyp: String(d["subtyp"]) } : {}),
         ...(d["organ"] ? { organ: String(d["organ"]) } : {}),
         ...(d["dokument_url_html"] ? { dokument_url_html: String(d["dokument_url_html"]) } : {}),
         ...(d["dokument_url_text"] ? { dokument_url_text: String(d["dokument_url_text"]) } : {}),

@@ -14,6 +14,7 @@
       "punkt": { "type": ["integer", "null"] },
       "datum": { "type": "string", "format": "date" },
       "organ": { "type": "string" },
+      "motionstyp": { "enum": ["parti", "kommitte", "enskild"] },
       "parties": { "type": "array", "items": { "type": "string" } },
       "persons": {
         "type": "array",

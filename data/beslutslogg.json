@@ -161,5 +161,17 @@
       "RAG med embeddings och frågetjänst (drift + modell i läsvägen — förkastad för sajten; möjlig internt som kandidatstöd)"
     ],
     "decided_by": "ägaren 2026-07-20"
+  },
+  {
+    "date": "2026-07-20",
+    "id": "b-0015",
+    "status": "fastställd",
+    "decision": "Motionstyp tas ur riksdagens egen klassning (dokumentlistans subtyp: Enskild motion / Kommittémotion / Partimotion), inte ur en gissning. Klassningen berikas på handlingar.json och blir förslagsstegets föreslagna motionstyp — även 'parti'. Granskaren kan alltid ändra; motioner utan riksdagsklassning (t.ex. utgångna) lämnas osatta och avgörs för hand.",
+    "why": "Riksdagen klassar redan varje motion; att gissa ur antal undertecknare gav fel (t.ex. HC02742, två S-ledamöters enskilda motion, gissades som kommitté). Facit finns — då ska vi gå på det. Preciserar b-0007: 'parti' behöver inte längre sättas enbart av människa när riksdagen själv angett partimotion, men granskaren har sista ordet.",
+    "alternatives": [
+      "behålla gissningen ur antal undertecknare (fel-benägen — förkastad)",
+      "låta modellen bedöma motionstyp (icke-deterministisk — förkastad)"
+    ],
+    "decided_by": "ägaren 2026-07-20"
   }
 ]

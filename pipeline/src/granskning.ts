@@ -269,7 +269,10 @@ export function byggIssueBody(post: KoPost, id: string, handling?: Handling, lof
   lines.push(`**Motivering:** ${post.method_note}`);
   lines.push(`**Confidence:** ${post.confidence} · modell \`${post.extraction.model}\` · körning \`${post.extraction.run_id}\``);
   if (handling?.kind === "motion") {
-    lines.push(`**Motionstyp (förslag):** ${post.motionstyp ?? "saknas"} — "parti" sätts alltid av granskaren (b-0007).`);
+    const rd = handling.motionstyp
+      ? ` (riksdagens egen klassning: **${handling.motionstyp}**)`
+      : " (riksdagen har ingen klassning — t.ex. utgången motion; avgör själv)";
+    lines.push(`**Motionstyp:** ${post.motionstyp ?? "saknas"}${rd}. Ändra vid behov med \`/godkänn --motionstyp …\`.`);
   }
   lines.push("");
 

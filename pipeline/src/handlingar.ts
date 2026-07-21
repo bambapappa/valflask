@@ -27,6 +27,8 @@ export interface Handling {
   datum: string;
   /** Utskott (riksdagens organ-fält) — ämnestaxonomin, b-0014. */
   organ?: string;
+  /** Motionstyp ur riksdagens egen klassning (b-0015), när handlingen är en motion. */
+  motionstyp?: MotionsTyp;
   parties: string[];
   persons: HandlingPerson[];
   titel: string;
@@ -47,17 +49,22 @@ const DOKTYP_TILL_KIND: Record<string, HandlingKind> = {
 export type MotionsTyp = "parti" | "kommitte" | "enskild";
 
 /**
- * Grov klassning av motionstyp ur undertiteln ("av Namn (S)" = enskild,
- * "av Namn m.fl. (S)" = kommitté-/partimotion). Partimotioner undertecknas
- * av partiledaren/gruppledningen; det avgörs i granskningen — här sätts
- * bara kommitté kontra enskild, och parti kräver mänskligt beslut.
+ * Riksdagens egen motionsklassning (fältet subtyp) → vår motionstyp (b-0015).
+ * Riksdagen är facit; koden gissar inte. Okänt/tomt (t.ex. utgången motion)
+ * ger undefined — då lämnas motionstypen osatt och avgörs i granskningen.
  */
-export function klassaMotionstyp(dok: RdDokument): MotionsTyp {
-  const partier = new Set(dok.intressenter.map((i) => i.partibet).filter(Boolean));
-  if (dok.intressenter.length > 1 || partier.size > 1) return "kommitte";
-  const sub = dok.undertitel ?? "";
-  if (/m\.?\s?fl\.?/i.test(sub)) return "kommitte";
-  return "enskild";
+export function motionstypAvSubtyp(subtyp: string | undefined): MotionsTyp | undefined {
+  switch ((subtyp ?? "").trim().toLowerCase()) {
+    case "enskild motion":
+      return "enskild";
+    case "kommittémotion":
+    case "kommittemotion":
+      return "kommitte";
+    case "partimotion":
+      return "parti";
+    default:
+      return undefined;
+  }
 }
 
 /**
@@ -85,11 +92,13 @@ export function normaliseraDokument(dok: RdDokument): Omit<Handling, "id"> | nul
     .filter((i) => i.namn)
     .map((i) => ({ name: i.namn, party: i.partibet, riksdagen_id: i.intressent_id ?? null }));
   const parties = [...new Set(persons.map((p) => p.party).filter(Boolean))].sort();
+  const motionstyp = kind === "motion" ? motionstypAvSubtyp(dok.subtyp) : undefined;
   return {
     kind,
     dok_id: dok.dok_id,
     datum: dok.datum,
     ...(dok.organ ? { organ: dok.organ } : {}),
+    ...(motionstyp ? { motionstyp } : {}),
     parties,
     persons,
     titel: dok.titel,
