@@ -1034,19 +1034,19 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 
 ## 2026-07-21 — Kostnadsestimat blir ett tillval; grundläget är antal (delas med drygast.nu, b-0016)
 
-**Beslut:** Kostnadsuppskattningar visas inte längre som standard. Grundläget på hela sajten är antal — hur många löften, hur många handlingar, hur många i linje/emot, hur många tomma celler. Beloppen (särskilt datorskattningarna som märks `≈`, men principen gäller varje uppskattad summa) tänds av läsaren med en toggle. Första gången toggeln slås på visas en bekräftelseruta som läsaren måste godkänna: beloppen är uppskattningar att ta med en nypa salt, källnivån (`basis`, §8) syns alltid och `≈` betyder datorgissning. Följd för startsidan: löpsedelssiffran, som bär `≈`, leder i grundläget med ett antal i stället för ett belopp; taxametern/beloppet tänds när läsaren slår på estimat. Läsarens val minns i `localStorage`, aldrig i en kaka.
-**Motiv:** En ensam avsändare kan stå för antalen — de är räknade fakta — men inte för en avdelning nationalekonomers säkerhet i att prissätta kedjeeffekter. Att sätta en peng på effekter är så svårt att partierna själva oftast avstår; det är själva problemet sajten pekar på — lätt att lova, svårt att förutse vad det kostar. Att leda med antal och göra beloppen till ett medvetet, varnat tillval är ärligare och håller neutralitetskontraktet: registret visas, läsaren väljer lins.
+**Beslut:** Kostnadsuppskattningar visas inte längre som standard, och beloppen ligger bakom en **godkännandegrind** — läsaren måste aktivt kvittera att siffrorna är uppskattningar (inte facit) innan en enda krona visas. Grundläget på hela sajten är antal — hur många löften, hur många handlingar, hur många i linje/emot, hur många tomma celler. Beloppen (särskilt datorskattningarna som märks `≈`, men principen gäller varje uppskattad summa) tänds när läsaren passerat grinden. Rutan säger: beloppen är uppskattningar att ta med en nypa salt, källnivån (`basis`, §8) syns alltid och `≈` betyder datorgissning. Följd för startsidan: löpsedelssiffran, som bär `≈`, leder i grundläget med ett antal i stället för ett belopp; taxametern/beloppet tänds först efter kvitteringen. Läsarens val minns i `localStorage`, aldrig i en kaka.
+**Motiv:** En ensam avsändare kan stå för antalen — de är räknade fakta — men inte för en avdelning nationalekonomers säkerhet i att prissätta kedjeeffekter. Att sätta en peng på effekter är så svårt att partierna själva oftast avstår; det är själva problemet sajten pekar på — lätt att lova, svårt att förutse vad det kostar. Grinden är också en avsiktlig sköld mot metoddebatten ("varför räknade ni så, varför inte så här?"): den som fått se beloppen har redan kvitterat att de inte är exakta, så diskussionen kan börja i rätt ände. Detta krockar inte med rättelseprincipen — ett *verkligt* fel rättas fortfarande synligt via Rättelser; grinden avväpnar bara tyckandet om metodval, inte faktafel. Att leda med antal och göra beloppen till ett medvetet, kvitterat val är ärligare och håller neutralitetskontraktet: registret visas, läsaren väljer lins.
 **Förkastade alternativ:** Visa beloppen som standard (ursprungskonceptet) — solo-avsändaren kan inte försvara estimaten som facit; förkastat som grundläge. Dölja beloppen helt — förkastat; de bär en poäng när de tas med rätt varning. Lagra valet i en kaka — kräver kaksamtycke i onödan; `localStorage` för ett val läsaren själv gör är funktionellt och undantaget från samtyckeskravet, så bekräftelserutan räcker (och den handlar om innehållet, inte om lagringen). Ingen spårning finns på sajten (statisk, ingen backend), så ingen kaksamtyckesruta behövs alls.
 **Påverkan (kommande, ej byggd än):** startsidans löpsedelssiffra + taxameter, `GapMatare.astro`, `calc.ts` (`≈`-formateringen), belopp på parti-/löftessidor, en delad togglekomponent + bekräftelseruta, copy nedan. Metod-sidan (§8) länkas från rutan. Byggs efter att copyn är godkänd.
 
-Utkast till bekräftelseruta (copy, ej fastställd):
+Utkast till godkännanderuta (copy, ej fastställd):
 
-> **Vill du slå på kostnadsestimat?**
+> **Innan du ser beloppen — kvittera en sak**
 >
-> Då blir sajten roligare — men lova att ta siffrorna med en nypa salt.
+> För att se kostnadssiffrorna behöver du klicka i att du vet att de är uppskattningar, inte facit.
 >
 > Jag är en ensam person, inte en avdelning nationalekonomer. Att sätta en peng på en kedja av effekter är svårt — så svårt att partierna själva oftast låter bli. Och det är ju hela poängen: det är lätt att lova, men svårt att förutse hur och vad det faktiskt kostar.
 >
-> Siffrorna är uppskattningar, inte facit. Källnivån syns alltid, och `≈` betyder att en dator har gissat. Vill du se hur vi räknar står allt öppet på Metod-sidan.
+> Källnivån syns alltid, och `≈` betyder att en dator har gissat. Hur jag räknat står öppet på Metod-sidan. Hittar du ett verkligt fel rättar jag det synligt — men exakta blir siffrorna aldrig. Godkänner du det får du se dem.
 >
-> [ Ja, visa estimat — jag tar dem med en nypa salt ]  ·  [ Nej, håll dig till antal ]
+> [ Jag förstår — visa beloppen ]  ·  [ Nej tack, håll dig till antal ]
