@@ -3,6 +3,7 @@ import "../styles/tokens.css";
 import "../styles/base.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import KostnadsGrind from "../components/KostnadsGrind.astro";
 import { getPromises, getParties, getChangelog } from "../lib/data";
 import { dataHash, isFixture } from "../lib/calc";
 
@@ -49,6 +50,7 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script is:inline src="/estimat-init.js"></script>
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta property="og:image" content={ogImageUrl} />
@@ -86,6 +88,8 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <slot />
   </main>
   <SiteFooter hash={hash} />
+  <KostnadsGrind />
+  <script is:inline src="/estimat-grind.js"></script>
   {hasTaxameter && <script is:inline src="/taxameter.js"></script>}
 </body>
 </html>

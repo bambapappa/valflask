@@ -45,7 +45,7 @@ const jsonLd = [
             </div>
             <h2><a href={`/veckans-flask/${c.slug}`}>{c.headline}</a></h2>
             <p class="etikett kronikarad__meta num">
-              {c.promise_ids.length} löften i veckan · fläsket då {formatMsek(c.total_msek)}
+              {c.promise_ids.length} löften i veckan · fläsket då <span class="belopp">{formatMsek(c.total_msek)}</span>
             </p>
           </article>
         ))

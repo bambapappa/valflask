@@ -56,7 +56,7 @@ const jsonLd = [
           <li>
             <a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a>
             <div class="etikett etikett--sub">
-              {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num">{formatMsek(promiseTotalMsek(p))}</span>
+              {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseTotalMsek(p))}</span>
             </div>
           </li>
         ))}
@@ -79,7 +79,7 @@ const jsonLd = [
               <tr>
                 <td class="radnr">{i + 1}</td>
                 <td><a href={`/parti/${p.code}`}>{p.name}</a></td>
-                <td class="num">{formatMsek(p.total)}</td>
+                <td class="num belopp">{formatMsek(p.total)}</td>
               </tr>
             ))}
           </tbody>
@@ -130,7 +130,7 @@ const jsonLd = [
                 <td class="radnr">{i + 1}</td>
                 <td><a href={`/ledamot/${p.slug}`}>{p.name}</a></td>
                 <td>{parties.find((pp) => pp.code === p.party)?.name}</td>
-                <td class="num">{formatMsek(p.total)}</td>
+                <td class="num belopp">{formatMsek(p.total)}</td>
                 <td class="num">{p.count}</td>
               </tr>
             ))}
@@ -155,7 +155,7 @@ const jsonLd = [
               <tr>
                 <td class="radnr">{i + 1}</td>
                 <td>{cat}</td>
-                <td class="num">{formatMsek(total)}</td>
+                <td class="num belopp">{formatMsek(total)}</td>
               </tr>
             ))}
           </tbody>

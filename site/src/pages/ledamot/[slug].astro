@@ -40,7 +40,7 @@ const jsonLd = [
       <div class="etikett etikett--role">
         {party?.name} · {person.role}
       </div>
-      <p><strong>{person.name}</strong> ({party?.name}, {person.role}) har {personPromises.length} vallöften som tillsammans kostar <strong class="num">{(totalMsek / 1000).toFixed(1).replace('.', ',')} mdkr</strong> för de fyra åren 2027–2030.</p>
+      <p><strong>{person.name}</strong> ({party?.name}, {person.role}) har {personPromises.length} vallöften som tillsammans kostar <strong class="num belopp">{(totalMsek / 1000).toFixed(1).replace('.', ',')} mdkr</strong> för de fyra åren 2027–2030.</p>
 
       <section class="sektion">
         <h2>Löften</h2>
@@ -51,7 +51,7 @@ const jsonLd = [
                 <strong>{p.title}</strong>
               </a>
               <div class="etikett etikett--sub">
-                <span class="num">{(promiseTotalMsek(p) / 1000).toFixed(1).replace('.', ',')} mdkr</span>
+                <span class="num belopp">{(promiseTotalMsek(p) / 1000).toFixed(1).replace('.', ',')} mdkr</span>
                 {' '}· {p.category} · {formatDateShort(p.date_stated)}
               </div>
             </li>

@@ -42,12 +42,12 @@ const overcovered = hasRef && flasket < ref4;
     </div>
   )}
   <div class="gapmatare__legend">
-    <span class="num">Löftena: {flasketMdkr} mdkr</span>
-    <span class="num">{hasRef ? `Att satsa (4 år): ${ref4Mdkr} mdkr` : 'Att satsa: siffra saknas'}</span>
+    <span class="num">Löftena: <span class="belopp">{flasketMdkr} mdkr</span></span>
+    <span class="num">{hasRef ? (<>Att satsa (4 år): <span class="belopp">{ref4Mdkr} mdkr</span></>) : 'Att satsa: siffra saknas'}</span>
   </div>
   {hasRef && gap > 0 && (
     <div class="etikett gapmatare__gap">
-      <span class="markering">GAP ≈ {(gap / 1000).toFixed(0)} MDKR</span>
+      <span class="markering">GAP <span class="belopp">≈ {(gap / 1000).toFixed(0)} MDKR</span></span>
     </div>
   )}
   {overcovered && (

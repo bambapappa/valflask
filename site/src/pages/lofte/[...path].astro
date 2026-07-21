@@ -75,7 +75,7 @@ const jsonLd = [
       )}
 
       <p class="lofte-summary">
-        {partyNames} lovar {promise.title.toLowerCase()}. Kostnad: <strong class="num">{total}</strong> för de fyra åren 2027–2030.
+        {partyNames} lovar {promise.title.toLowerCase()}. Kostnad: <strong class="num belopp">{total}</strong> för de fyra åren 2027–2030.
       </p>
 
       <Citat
@@ -107,10 +107,10 @@ const jsonLd = [
               <tr>
                 <td>{formatCostType(promise.cost.type)}</td>
                 <td>{promise.cost.period === 'per_ar' ? 'per år' : 'engång'}</td>
-                <td class="num">{promise.cost.msek_low.toLocaleString('sv-SE')}</td>
-                <td class="num">{promise.cost.msek_base.toLocaleString('sv-SE')}</td>
-                <td class="num">{promise.cost.msek_high.toLocaleString('sv-SE')}</td>
-                <td class="num">{formatMsek(promiseTotalMsek(promise), promise.cost.basis)}</td>
+                <td class="num belopp">{promise.cost.msek_low.toLocaleString('sv-SE')}</td>
+                <td class="num belopp">{promise.cost.msek_base.toLocaleString('sv-SE')}</td>
+                <td class="num belopp">{promise.cost.msek_high.toLocaleString('sv-SE')}</td>
+                <td class="num belopp">{formatMsek(promiseTotalMsek(promise), promise.cost.basis)}</td>
               </tr>
             </tbody>
           </table>
@@ -150,7 +150,7 @@ const jsonLd = [
       {promise.financing_claimed.described && promise.financing_claimed.summary && (
         <div class="finansiering-meta">
           Finansiering: {promise.financing_claimed.summary}
-          {promise.financing_claimed.msek && ` (${formatMsek(promise.financing_claimed.msek)})`}
+          {promise.financing_claimed.msek && (<> (<span class="belopp">{formatMsek(promise.financing_claimed.msek)}</span>)</>)}
         </div>
       )}
 

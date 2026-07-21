@@ -10,10 +10,11 @@ const { total, subtitle, count, date, taxameterValue } = Astro.props;
 ---
 <div class="platta lopsedel">
   <h1 class="lopsedel__title">{subtitle || 'FLÄSKVÅGEN'}</h1>
-  <div class="num-stor" {...(taxameterValue != null ? { "data-taxameter": String(taxameterValue) } : {})}>{total}</div>
+  <div class="num-stor belopp" {...(taxameterValue != null ? { "data-taxameter": String(taxameterValue) } : {})}>{total}</div>
   <div class="lopsedel__meta">
     för de fyra åren 2027–2030{count ? ` · ${count} löften` : ''}{date ? ` · ${date}` : ''}
   </div>
+  <button type="button" class="grind-oppna" data-grind-oppna>Lås upp beloppen →</button>
 </div>
 
 <style>

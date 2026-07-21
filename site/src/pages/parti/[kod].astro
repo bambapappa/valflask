@@ -58,7 +58,7 @@ const jsonLd = [
     <Lopsedel total={formatMsek(total)} subtitle={party.name.toUpperCase()} count={partyPromises.length} date="2026" />
 
     <div class="prosa-content prosa-content--centered">
-      <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num">{formatMsekShort(total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {partyPromises.length} löften. Fläsk per röst: <strong class="num">{Math.round(perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
+      <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num belopp">{formatMsekShort(total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {partyPromises.length} löften. Fläsk per röst: <strong class="num belopp">{Math.round(perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
       <p class="manifest-status">{party.manifest_2026}</p>
     </div>
 
@@ -83,7 +83,7 @@ const jsonLd = [
               <tr>
                 <td class="radnr">{i + 1}</td>
                 <td>{cat.category}</td>
-                <td class="num">{formatMsek(cat.totalMsek)}</td>
+                <td class="num belopp">{formatMsek(cat.totalMsek)}</td>
                 <td class="num">{cat.count}</td>
               </tr>
             ))}
@@ -111,7 +111,7 @@ const jsonLd = [
                 <td class="radnr">{i + 1}</td>
                 <td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td>
                 <td>{p.category}</td>
-                <td class="num">{formatMsek(promiseTotalMsek(p), p.cost.basis)}</td>
+                <td class="num belopp">{formatMsek(promiseTotalMsek(p), p.cost.basis)}</td>
                 <td>{p.status}</td>
               </tr>
             ))}
