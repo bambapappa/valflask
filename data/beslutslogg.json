@@ -198,5 +198,18 @@
       "Hybrid med submodule (separat datarepo men gemensamt bygge) — samma privatgrindsrisk som A eftersom HV-sidorna ändå hamnar i live-bygget; förkastat nu."
     ],
     "decided_by": "ägaren 2026-07-21"
+  },
+  {
+    "date": "2026-07-21",
+    "id": "b-0018",
+    "status": "fastställd",
+    "decision": "HV4-skissens öppna frågor F1–F5 avgjorda. F1: rutnätet visar alla åtta partier per löfte (tomma celler är ärliga och ska synas; tomläget formges som 'ingen ren koppling ännu', aldrig som trasig cell). F2: statusarna skiljs på form (fylld vs. konturad), inte färgton — exakta kulörer tas i det delade tema-arbetet. F3: eget litet sökindex (noll beroenden, exakt matchning + prefix), inte MiniSearch eller pagefind. F4: både löften och Frågevågens ståndpunkter byggs in i rutnätet från start (spec §9), med samma grindar. F5: ledamöter som lämnat riksdagen får en notis med namn/länk till riksdagen, inte egen profilsida.",
+    "why": "F1 och F4 följer produktens kärna — jämförelsen och att tomrum är ärligt — och F4 är dessutom redan inbyggt i kopplingsmodellen (mål = promise_id ?? stance_id). F2 håller neutralitetskontraktet och tillgängligheten (färg aldrig ensam bärare). F3 matchar det faktiska sökbehovet (exakt+prefix på ett avgränsat fältset) och håller det lätt. F5 speglar att ansvarsutkrävning gäller dem väljaren kan påverka; en stump-profil utan röstrad vore svag data och spär på filantalet, vilket ligger i linje med topologi B (b-0017).",
+    "alternatives": [
+      "F1 löftesparti + jämförknapp (tätare men gömmer jämförelsen bakom ett klick) — förkastat.",
+      "F3 pagefind (Fläskvågens val, noll underhåll) eller MiniSearch (+8 KB, ett beroende) — förkastade till förmån för egen precision.",
+      "F5 egen sida per avhoppad ledamot (full spårbarhet men tunna stumpar, fler filer) — förkastat."
+    ],
+    "decided_by": "ägaren 2026-07-21"
   }
 ]
