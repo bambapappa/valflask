@@ -186,5 +186,17 @@
       "Lagra läsarens val i en kaka — kräver kaksamtycke i onödan; localStorage för ett val läsaren själv gör är funktionellt och undantaget, så bekräftelserutan räcker som samtycke."
     ],
     "decided_by": "ägaren 2026-07-21"
+  },
+  {
+    "date": "2026-07-21",
+    "id": "b-0017",
+    "status": "fastställd",
+    "decision": "Handlingsvågen hostas som egen GitHub Pages-sajt bakom Cloudflare, lagd på undervägen drygast.nu/handlingsvagen, inte inbyggd i Fläskvågens repo/bygge. Samma statiska teknikval som Fläskvågen (byggtidsskivad JSON, ingen backend, CSP script-src 'self', inga kakor). Temat delas som en enda källa (paketera tokens) så vågarna känns som en familj. Omvärderas efter lansering: inbyggnad i Fläskvågen (alternativ A) kan vägas in om två deploys blir tjatiga.",
+    "why": "Skyddar privatgrinden (HV5): inget av Handlingsvågen läcker in i live drygast.nu förrän Cloudflare själv pekas dit. Håller blast radius liten — ett HV-byggfel kan inte fälla live-Fläskvågen. Använder Cloudflare som redan står framför sajten för säkerhetsheadrarna. Behåller dagens uppdelning i två repon och två anslagstavlor.",
+    "alternatives": [
+      "A: bygga in HV i Fläskvågens Astro-sajt (en deploy, delat tema och sökindex automatiskt) — förkastat nu: HV-data och -sidor i live-repot hotar privatgrinden och ökar blast radius. Kan omvärderas efter HV5.",
+      "Hybrid med submodule (separat datarepo men gemensamt bygge) — samma privatgrindsrisk som A eftersom HV-sidorna ändå hamnar i live-bygget; förkastat nu."
+    ],
+    "decided_by": "ägaren 2026-07-21"
   }
 ]
