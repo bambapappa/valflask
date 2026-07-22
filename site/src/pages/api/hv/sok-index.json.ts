@@ -1,4 +1,4 @@
-import { buildSokIndex } from "../../../lib/rutnat.ts";
+import { buildSokIndex } from "../../../lib/sok.ts";
 
 export const prerender = true;
 

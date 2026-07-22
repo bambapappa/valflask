@@ -5,11 +5,24 @@
  * varje status har ett utskrivet ord (färg aldrig ensam bärare). Kör: npm test.
  */
 import assert from "node:assert";
-import { buildSummary, lofteIds, buildLofteDetalj } from "../src/lib/rutnat.ts";
+import { buildSummary, lofteIds, buildLofteDetalj, riksmoteAvDatum } from "../src/lib/rutnat.ts";
 import { getLoften } from "../src/lib/data.ts";
 
 const summary = buildSummary();
 const loftenIds = new Set(getLoften().map((l) => l.id));
+
+// Filterfasetter (SKISS §3): varje rad bär härledda fasetter, och unionen
+// samlas i summary.fasetter för filterbarens val.
+assert.strictEqual(riksmoteAvDatum("2025-10-22"), "2025/26", "riksmöte ur höstdatum");
+assert.strictEqual(riksmoteAvDatum("2023-03-01"), "2022/23", "riksmöte ur vårdatum");
+for (const rad of summary.loften) {
+  assert.ok(Array.isArray(rad.dokumenttyper) && rad.dokumenttyper.length > 0, `${rad.id} saknar dokumenttyp-fasett`);
+  assert.ok(Array.isArray(rad.riksmoten) && rad.riksmoten.length > 0, `${rad.id} saknar riksmöte-fasett`);
+  assert.ok(Array.isArray(rad.motionstyper), `${rad.id} saknar motionstyp-fasett`);
+}
+for (const f of ["dokumenttyper", "motionstyper", "riksmoten"] as const) {
+  assert.ok(Array.isArray(summary.fasetter[f]), `summary.fasetter.${f} saknas`);
+}
 
 // Åtta partier som kolumner (b-0018 F1).
 assert.strictEqual(summary.partier.length, 8, "rutnätet ska ha åtta partikolumner");

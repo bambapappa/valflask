@@ -89,11 +89,19 @@ export interface Handling {
   utfall?: string | null;
 }
 
+export interface Person {
+  intressent_id: string;
+  namn: string;
+  parti: string;
+  valkrets: string;
+}
+
 let _domar: Domar | undefined;
 let _loften: LofteIndex[] | undefined;
 let _parties: Party[] | undefined;
 let _kopplingar: Koppling[] | undefined;
 let _handlingar: Map<string, Handling> | undefined;
+let _personer: Person[] | undefined;
 
 export function getDomar(): Domar {
   return (_domar ??= las<Domar>("domar.json"));
@@ -113,6 +121,9 @@ export function getHandlingMap(): Map<string, Handling> {
     _handlingar = new Map(arr.map((h) => [h.id, h]));
   }
   return _handlingar;
+}
+export function getPersoner(): Person[] {
+  return (_personer ??= las<Person[]>("personer.json"));
 }
 
 /** Måltid för en koppling — löfte eller ståndpunkt (b-0018 F4). */

@@ -4,7 +4,9 @@
  * förhoppning. Kör: npm test (från site/).
  */
 import assert from "node:assert";
-import { buildSummary, lofteIds, buildLofteDetalj, buildSokIndex } from "../src/lib/rutnat.ts";
+import { buildSummary, lofteIds, buildLofteDetalj } from "../src/lib/rutnat.ts";
+import { buildSokIndex } from "../src/lib/sok.ts";
+import { partiKoder, buildPartiSida, ledamotIds, buildLedamotSida } from "../src/lib/vyer.ts";
 
 const KB = 1024;
 let fel = 0;
@@ -27,6 +29,14 @@ for (const id of lofteIds()) {
   if (b > störst) { störst = b; störstId = id; }
 }
 grind(`största löftesdetalj (${störstId})`, störst, 500 * KB);
+
+let störstParti = 0;
+for (const kod of partiKoder()) störstParti = Math.max(störstParti, storlek(buildPartiSida(kod)));
+grind("största partisida-modell", störstParti, 300 * KB);
+
+let störstLed = 0;
+for (const id of ledamotIds()) störstLed = Math.max(störstLed, storlek(buildLedamotSida(id)));
+grind("största ledamotssida-modell", störstLed, 100 * KB);
 
 assert.strictEqual(fel, 0, `${fel} budgetgrind(ar) föll`);
 console.log("budget: alla grindar gröna");

@@ -1,0 +1,34 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { partiKoder, buildPartiSida } from "../lib/vyer.ts";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const partier = partiKoder()
+  .map((kod) => buildPartiSida(kod))
+  .filter((p): p is NonNullable<typeof p> => p !== null);
+---
+<Layout title="Partier — Handlingsvågen" canonicalPath="/handlingsvagen/partier">
+  <h1>Partier</h1>
+  <p class="ingress">Åtta riksdagspartier. Klicka för partiets löften vägda mot dess egna handlingar.</p>
+  <ul class="parti-lista">
+    {partier.map((p) => (
+      <li>
+        <a href={`${base}parti/${p.code}`}>
+          <span class="pkod">{p.code.toUpperCase()}</span>
+          <span class="pnamn">{p.namn}</span>
+        </a>
+        <span class="ptal">{p.summa.vagda} av {p.summa.total_loften} löften vägda</span>
+      </li>
+    ))}
+  </ul>
+</Layout>
+
+<style>
+  .parti-lista { list-style: none; padding: 0; margin: 1.2rem 0; display: grid; gap: 0.6rem; }
+  .parti-lista li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 0.9rem; padding: 0.7rem 0.9rem; background: var(--yta); border: 1px solid var(--linje); border-radius: var(--radie); }
+  .parti-lista a { text-decoration: none; display: inline-flex; align-items: baseline; gap: 0.6rem; }
+  .pkod { font-weight: 800; color: var(--a-linje); min-width: 2.6rem; }
+  .pnamn { font-weight: 600; }
+  .parti-lista a:hover .pnamn { text-decoration: underline; }
+  .ptal { color: var(--text-svag); font-size: 0.9rem; margin-left: auto; }
+</style>

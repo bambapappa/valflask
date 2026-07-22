@@ -125,7 +125,10 @@
     if (partier.length) {
       partier.forEach(function (p) {
         var st = d.domar[p].status;
-        var pill = el("span", "status " + (STATUSKLASS[st] || "status--avstod"), p.toUpperCase() + ": " + (STATUSORD[st] || st));
+        var pill = document.createElement("a");
+        pill.className = "status " + (STATUSKLASS[st] || "status--avstod");
+        pill.href = apiBas + "parti/" + p;
+        pill.textContent = p.toUpperCase() + ": " + (STATUSORD[st] || st);
         domrad.appendChild(pill);
       });
       inner.appendChild(el("h3", null, "Partiernas utslag"));
@@ -172,63 +175,59 @@
     dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
   }
 
-  // Kategorifilter — döljer rader.
-  var katFilter = document.getElementById("kat-filter");
-  if (katFilter) {
-    katFilter.addEventListener("change", function () {
-      var val = katFilter.value;
-      var rader = rot.querySelectorAll("table.rutnat tbody tr");
-      Array.prototype.forEach.call(rader, function (tr) {
-        tr.style.display = !val || tr.getAttribute("data-kategori") === val ? "" : "none";
-      });
-    });
-  }
+  // Filter (SKISS §3): parti, kategori, status, dokumenttyp, motionstyp, riksmöte
+  // som URL-parametrar — varje filtrerat läge blir länkbart, delbart, arkiverbart.
+  var FALT = ["kategori", "parti", "status", "dokumenttyp", "motionstyp", "rm"];
+  var filterRot = document.getElementById("filter");
+  var valjare = filterRot ? filterRot.querySelectorAll("select[data-falt]") : [];
+  var rensaKnapp = document.getElementById("f-rensa");
+  var antalRuta = document.getElementById("f-antal");
+  var totalt = filterRot ? Number(filterRot.getAttribute("data-antal-lof")) || 0 : 0;
+  var rader = rot.querySelectorAll("table.rutnat tbody tr");
 
-  // Eget sökindex — laddas först när fältet fokuseras (F3).
-  var sokFalt = document.getElementById("sok-falt");
-  var traffar = document.getElementById("sok-traffar");
-  var index = null;
-  function laddaIndex() {
-    if (index) return Promise.resolve(index);
-    return fetch(apiBas + "api/hv/sok-index.json")
-      .then(function (r) { return r.json(); })
-      .then(function (poster) { index = poster; return index; })
-      .catch(function () { index = []; return index; });
+  function aktivaFilter() {
+    var f = {};
+    Array.prototype.forEach.call(valjare, function (s) { if (s.value) f[s.getAttribute("data-falt")] = s.value; });
+    return f;
   }
-  function normalisera(s) { return (s || "").toLowerCase().trim(); }
-  function sok(q) {
-    var nq = normalisera(q);
-    if (!nq || !index) { traffar.textContent = ""; return; }
-    var ord = nq.split(/\s+/);
-    var res = index.filter(function (p) {
-      var text = normalisera(p.text);
-      return ord.every(function (o) {
-        // exakt delordsmatch eller prefix på ett ord i texten
-        return text.indexOf(o) !== -1 || text.split(/\s+/).some(function (w) { return w.indexOf(o) === 0; });
-      });
-    }).slice(0, 12);
-    traffar.textContent = "";
-    res.forEach(function (p) {
-      var li = document.createElement("li");
-      var b = el("button", null, null);
-      b.setAttribute("type", "button");
-      b.appendChild(el("span", "taggen", p.typ === "kategori" ? "Kategori · " : "Löfte · "));
-      b.appendChild(document.createTextNode(p.text));
-      b.addEventListener("click", function () {
-        if (p.typ === "lofte") { öppnaLofte(p.id); }
-        else if (p.typ === "kategori" && katFilter) { katFilter.value = p.id; katFilter.dispatchEvent(new Event("change")); }
-        traffar.textContent = "";
-        sokFalt.value = "";
-      });
-      li.appendChild(b);
-      traffar.appendChild(li);
+  function radMatchar(tr, f) {
+    for (var falt in f) {
+      var attr = (tr.getAttribute("data-" + falt) || "").split(/\s+/);
+      if (attr.indexOf(f[falt]) === -1) return false;
+    }
+    return true;
+  }
+  function tillampa() {
+    var f = aktivaFilter();
+    var aktiv = Object.keys(f).length > 0;
+    var synliga = 0;
+    Array.prototype.forEach.call(rader, function (tr) {
+      var visa = radMatchar(tr, f);
+      tr.style.display = visa ? "" : "none";
+      if (visa) synliga += 1;
     });
+    var sp = new URLSearchParams(window.location.search);
+    FALT.forEach(function (k) { if (f[k]) sp.set(k, f[k]); else sp.delete(k); });
+    var q = sp.toString();
+    history.replaceState(null, "", q ? "?" + q : window.location.pathname);
+    if (rensaKnapp) rensaKnapp.hidden = !aktiv;
+    if (antalRuta) antalRuta.textContent = aktiv ? "Visar " + synliga + " av " + totalt + " vägda löften" : "";
   }
-  if (sokFalt) {
-    sokFalt.addEventListener("focus", laddaIndex, { once: true });
-    sokFalt.addEventListener("input", function () { laddaIndex().then(function () { sok(sokFalt.value); }); });
-    document.addEventListener("click", function (e) {
-      if (!e.target.closest(".sok")) traffar.textContent = "";
-    });
-  }
+  Array.prototype.forEach.call(valjare, function (s) { s.addEventListener("change", tillampa); });
+  if (rensaKnapp) rensaKnapp.addEventListener("click", function () {
+    Array.prototype.forEach.call(valjare, function (s) { s.value = ""; });
+    tillampa();
+  });
+
+  // Läs filtren ur URL:en vid start så ett länkat urval återställs exakt.
+  var sp0 = new URLSearchParams(window.location.search);
+  Array.prototype.forEach.call(valjare, function (s) {
+    var v = sp0.get(s.getAttribute("data-falt"));
+    if (v) s.value = v;
+  });
+  if (Array.prototype.some.call(valjare, function (s) { return !!s.value; })) tillampa();
+
+  // Djuplänk: ?lofte=<id> öppnar panelen (journalister kan länka exakt).
+  var lofteParam = sp0.get("lofte");
+  if (lofteParam) öppnaLofte(lofteParam);
 })();

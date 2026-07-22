@@ -1,0 +1,52 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getPersoner, getParties } from "../lib/data.ts";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const partiNamn = new Map(getParties().map((p) => [p.code, p.namn]));
+const ordning = getParties().map((p) => p.code);
+
+const personer = getPersoner();
+const perParti = new Map<string, typeof personer>();
+for (const p of personer) {
+  const lista = perParti.get(p.parti) ?? [];
+  lista.push(p);
+  perParti.set(p.parti, lista);
+}
+const grupper = [...perParti.entries()]
+  .sort((a, b) => {
+    const ai = ordning.indexOf(a[0]); const bi = ordning.indexOf(b[0]);
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+  })
+  .map(([kod, lista]) => [kod, lista.sort((a, b) => a.namn.localeCompare(b.namn, "sv"))] as const);
+---
+<Layout title="Ledamöter — Handlingsvågen" canonicalPath="/handlingsvagen/ledamoter">
+  <h1>Ledamöter</h1>
+  <p class="ingress">
+    De {personer.length} sittande ledamöterna. Varje sida visar ledamotens röster
+    i kopplade voteringar och egna handlingar, per löfte. Sök på namn i fältet ovan.
+  </p>
+  {grupper.map(([kod, lista]) => (
+    <section class="grupp">
+      <h2><a href={`${base}parti/${kod}`}>{partiNamn.get(kod) ?? kod.toUpperCase()}</a> <span class="rakn">({lista.length})</span></h2>
+      <ul class="namn-lista">
+        {lista.map((p) => (
+          <li><a href={`${base}ledamot/${p.intressent_id}`}>{p.namn}</a>{p.valkrets ? <span class="vk">{p.valkrets}</span> : null}</li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</Layout>
+
+<style>
+  .grupp { margin-top: 1.6rem; }
+  .grupp h2 { font-size: 1.15rem; margin: 0 0 0.5rem; border-bottom: 1px solid var(--linje); padding-bottom: 0.3rem; }
+  .grupp h2 a { color: inherit; text-decoration: none; }
+  .grupp h2 a:hover { text-decoration: underline; }
+  .rakn { color: var(--text-svag); font-weight: 400; font-size: 0.9rem; }
+  .namn-lista { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.2rem 1rem; }
+  .namn-lista li { display: flex; justify-content: space-between; gap: 0.5rem; padding: 0.25rem 0; border-bottom: 1px solid var(--linje); }
+  .namn-lista a { color: var(--fokus); text-decoration: none; }
+  .namn-lista a:hover { text-decoration: underline; }
+  .vk { color: var(--text-svag); font-size: 0.8rem; text-align: right; }
+</style>

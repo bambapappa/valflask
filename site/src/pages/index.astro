@@ -16,6 +16,26 @@ function cellVy(c: Cell | undefined): { klass: string; ord: string; aria: string
   if (c.n_avstod > 0) return { klass: "status--avstod", ord: "avstod", aria: "avstod" };
   return { klass: "status--tom", ord: "–", aria: "ingen ren koppling ännu" };
 }
+
+// Filtrens etiketter (SKISS §3). Statusnycklarna matchar URL-parametrarna.
+const KINDORD: Record<string, string> = {
+  votering: "voteringar", motion: "motioner", proposition: "propositioner",
+  interpellation: "interpellationer", skriftlig_fraga: "skriftliga frågor",
+};
+const MOTORD: Record<string, string> = { parti: "partimotion", kommitte: "kommittémotion", enskild: "enskild motion" };
+const STATUSVAL: Array<[string, string]> = [["i-linje", "i linje"], ["emot", "emot"], ["bade-och", "både och"], ["avstod", "avstod"]];
+
+/** Radens statusnycklar (för status-filtret) ur dess celler. */
+function statusTokens(celler: Record<string, Cell>): string[] {
+  const s = new Set<string>();
+  for (const c of Object.values(celler)) {
+    if (c.status === "agerat_i_linje") s.add("i-linje");
+    else if (c.status === "agerat_emot") s.add("emot");
+    else if (c.status === "bade_och") s.add("bade-och");
+    if (c.n_avstod > 0 && c.status === "ingen_handling_annu") s.add("avstod");
+  }
+  return [...s];
+}
 ---
 <Layout title="Handlingsvågen — löften vägda mot handling" canonicalPath="/handlingsvagen">
   <div data-api-base={base} id="rutnat-rot">
@@ -32,19 +52,47 @@ function cellVy(c: Cell | undefined): { klass: string; ord: string; aria: string
       <div><b>{summary.summa.utan_handling}</b><span>väntar ännu på en granskad koppling</span></div>
     </div>
 
-    <div class="verktyg">
-      <div class="sok">
-        <label class="hoppa" for="sok-falt">Sök löfte eller kategori</label>
-        <input id="sok-falt" type="search" placeholder="Sök löfte eller kategori…" autocomplete="off" aria-controls="sok-traffar" />
-        <ul id="sok-traffar" class="sok-traffar" role="listbox" aria-label="Sökträffar"></ul>
-      </div>
-      <label>
-        <span class="hoppa">Filtrera på kategori</span>
-        <select id="kat-filter" aria-label="Filtrera på kategori">
-          <option value="">Alla kategorier</option>
+    <div class="verktyg" id="filter" data-antal-lof={summary.loften.length}>
+      <label><span class="verktyg-etikett">Kategori</span>
+        <select id="f-kategori" data-falt="kategori" aria-label="Filtrera på kategori">
+          <option value="">alla</option>
           {summary.kategorier.map((k) => <option value={k}>{k}</option>)}
         </select>
       </label>
+      <label><span class="verktyg-etikett">Parti</span>
+        <select id="f-parti" data-falt="parti" aria-label="Filtrera på parti">
+          <option value="">alla</option>
+          {summary.partier.map((p) => <option value={p.code}>{p.namn}</option>)}
+        </select>
+      </label>
+      <label><span class="verktyg-etikett">Status</span>
+        <select id="f-status" data-falt="status" aria-label="Filtrera på status">
+          <option value="">alla</option>
+          {STATUSVAL.map(([v, t]) => <option value={v}>{t}</option>)}
+        </select>
+      </label>
+      <label><span class="verktyg-etikett">Dokumenttyp</span>
+        <select id="f-dokumenttyp" data-falt="dokumenttyp" aria-label="Filtrera på dokumenttyp">
+          <option value="">alla</option>
+          {summary.fasetter.dokumenttyper.map((d) => <option value={d}>{KINDORD[d] ?? d}</option>)}
+        </select>
+      </label>
+      {summary.fasetter.motionstyper.length > 0 && (
+        <label><span class="verktyg-etikett">Motionstyp</span>
+          <select id="f-motionstyp" data-falt="motionstyp" aria-label="Filtrera på motionstyp">
+            <option value="">alla</option>
+            {summary.fasetter.motionstyper.map((m) => <option value={m}>{MOTORD[m] ?? m}</option>)}
+          </select>
+        </label>
+      )}
+      <label><span class="verktyg-etikett">Riksmöte</span>
+        <select id="f-riksmote" data-falt="rm" aria-label="Filtrera på riksmöte">
+          <option value="">alla</option>
+          {summary.fasetter.riksmoten.map((r) => <option value={r}>{r}</option>)}
+        </select>
+      </label>
+      <button type="button" id="f-rensa" class="f-rensa" hidden>Rensa filter</button>
+      <p id="f-antal" class="f-antal" aria-live="polite"></p>
     </div>
 
     <section class="forklaring" aria-label="Så läses cellerna">
@@ -64,13 +112,20 @@ function cellVy(c: Cell | undefined): { klass: string; ord: string; aria: string
           <tr>
             <th class="lofte-huvud" scope="col">Löfte</th>
             {summary.partier.map((p) => (
-              <th class="parti" scope="col" title={p.namn}>{p.code.toUpperCase()}</th>
+              <th class="parti" scope="col" title={p.namn}><a href={`${base}parti/${p.code}`}>{p.code.toUpperCase()}</a></th>
             ))}
           </tr>
         </thead>
         <tbody>
           {summary.loften.map((l) => (
-            <tr data-kategori={l.kategori}>
+            <tr
+              data-kategori={l.kategori}
+              data-parti={Object.keys(l.celler).join(" ")}
+              data-status={statusTokens(l.celler).join(" ")}
+              data-dokumenttyp={l.dokumenttyper.join(" ")}
+              data-motionstyp={l.motionstyper.join(" ")}
+              data-rm={l.riksmoten.join(" ")}
+            >
               <td class="lofte-cell">
                 <button type="button" class="lofte-titel" data-lofte={l.id}>{l.titel}</button>
                 <div class="lofte-kat">
