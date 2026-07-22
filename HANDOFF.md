@@ -1,7 +1,8 @@
 # Överlämning — Handlingsvågen
 
-Skriven 2026-07-19; senast uppdaterad 2026-07-20 (fjärde passet: skördar
-klara, b-0014, HV2-piloter bevisade, HV4-prototyp). Läs `CLAUDE.md` först (bindande
+Skriven 2026-07-19; senast uppdaterad 2026-07-21 (kostnadsgrind i
+Fläskvågen, topologibeslut b-0017, HV4-frågorna F1–F5 avgjorda b-0018).
+Läs `CLAUDE.md` först (bindande
 språkregler och kärnprinciper), sedan `SPEC-HANDLINGSVAGEN.md` (fastställd
 spec) och `NEUTRALITET.md`. Alla metodval står i `data/beslutslogg.json`.
 
@@ -64,6 +65,33 @@ valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
 
+**Gjort 2026-07-21 (kostnadsgrind, topologi, HV4-frågorna — grenen `…bundle-content-ueyqqy`):**
+
+- **Kostnadsgrind i Fläskvågen (b-0016), valflask PR #424.**
+  Kostnadsestimat är maskade tills läsaren kvitterat en godkännanderuta;
+  grundläget är antal. Global `.belopp`-mask + `estimat-init.js`/
+  `estimat-grind.js` (CSP-rena `public/`-filer), guardad taxameter,
+  localStorage utan kaka. Krönikeprosa, rubriker och de strukturerade
+  jämförelserna maskas via `site/src/lib/mask.ts`. `astro build` grönt
+  (461 sidor), innehållstesterna gröna. OG-delningsbilderna maskar ännu
+  INTE beloppet — medvetet parkerat.
+- **Topologi (b-0017):** Handlingsvågen hostas som EGEN Pages-sajt bakom
+  Cloudflare på `drygast.nu/handlingsvagen`, inte inbyggd i Fläskvågen —
+  skyddar privatgrinden och håller blast radius liten. Temat delas som en
+  källa. Omvärderas efter HV5.
+- **HV4-frågorna F1–F5 avgjorda (b-0018), `SKISS-HV4.md` §5 uppdaterad:**
+  F1 alla åtta partier per löfte (tomt = "ingen ren koppling ännu"); F2
+  skilj status på form, inte färgton (hex i tema-arbetet); F3 eget litet
+  sökindex; F4 båda källorna (löften + Frågevågens ståndpunkter) från
+  start; F5 notis för avhoppade ledamöter, inte egen sida. **HV4-
+  sidbyggandet är nu obeblockerat.**
+- **Granskningsvy publicerad** (privat artefakt): statisk mobilsida som
+  listar väntande kopplingsförslag sorterade på confidence, med djuplänk
+  till rätt issue för `/godkänn`·`/avvisa`.
+- **PR #40 öppnad** (motionstyp-backfill b-0015 + beständigt par-minne):
+  merge-konflikt i `data/kopplingsforslag.json` löst genom att ta mains
+  kö (ägarens issue-godkännanden är facit). Väntar på granskning/merge.
+
 **Gjort 2026-07-20/21 (senare pass, grenen `…bundle-content-ueyqqy`):**
 
 - **Nej-svar beständiga** — `data/provade-par.json` minns varje prövat
@@ -114,8 +142,8 @@ Settings → Secrets and variables → Actions.
 
 Återstår (i ordning):
 
-1. **Ägarens granskning av kön** — issue #5 (elevlagen) godkänd, första
-   kopplingen finns. 33 koppling-kö-issues kvar att /godkänna eller
+1. **Ägarens granskning av kön** — pågår. Ägaren har granskat ned kön:
+   **18 koppling-kö-issues kvar på main** (2026-07-21) att /godkänna eller
    /avvisa; kör `npm run domar` när fler avgjorts för fler domar/meriter.
 2. **b-0014 andra halvan — nyckelordsindexet**: byggtidsindex över
    dokumentens fulltexter (fritextsök + ordtrender per parti).
@@ -132,10 +160,14 @@ Settings → Secrets and variables → Actions.
    öppen metodfråga — beslutslogga innan kod.
 5. **Bakåtskörd till 2002/03** när ägaren vill: samma skript, fler
    `--rm`. Räkna ~1 h per mandatperiod i artigt tempo.
-6. **HV4 — sajtsektion på riktigt** (Astro, byggs här, publiceras
-   inte) + metodsida. Prototypen i `prototyp/` är designunderlaget;
-   sajten ska skiva datat vid byggtid — aldrig skeppa 17 MB.
-   Väntar på ägarens F1–F5-beslut.
+6. **HV4 — sajtsektion på riktigt** (Astro) + metodsida. **F1–F5 är nu
+   avgjorda (b-0018) — inget principbeslut blockerar längre; kvar är
+   sidbyggandet.** Enligt b-0017 byggs HV som egen Pages-sajt bakom
+   Cloudflare på `drygast.nu/handlingsvagen` (inte inbyggd i Fläskvågen).
+   Prototypen i `prototyp/` är designunderlaget; sajten skivar datat vid
+   byggtid — aldrig skeppa 17 MB. Naturlig första bit: rutnätet (Vy 1) —
+   `api/hv/summary.json` för cellerna, detaljpanel med kopplingarnas
+   bevis, eget sökindex (F3).
 7. **HV5 — lanseringsgrinden**: checklista i spec §8. Ägarens go krävs.
    Då speglas även granskningsflödet till valflask.
 
@@ -205,7 +237,8 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
 godkänt sitt första (issue #5, elevlagen p-2026-0360) → 1 koppling i
-`data/kopplingar.json`, kön nu 33. Resten väntar på mänskligt beslut.
+`data/kopplingar.json`. Ägaren har sedan granskat vidare: **kön är 18 på
+main (2026-07-21)**. Resten väntar på mänskligt beslut.
 
 **⚠️ INNAN NÄSTA FULLKÖRNING — kontrollera OpenRouter-nyckeln/krediten.**
 Körning 8 slutade röd för att **1 234 par föll på HTTP 401** efter ~91

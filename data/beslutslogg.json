@@ -173,5 +173,43 @@
       "låta modellen bedöma motionstyp (icke-deterministisk — förkastad)"
     ],
     "decided_by": "ägaren 2026-07-20"
+  },
+  {
+    "date": "2026-07-21",
+    "id": "b-0016",
+    "status": "fastställd",
+    "decision": "Kostnadsuppskattningar visas inte som standard på någon av sajterna (drygast.nu och Fläskvågen). Grundläget är antal — hur många löften, hur många handlingar, hur många i linje/emot och hur många tomma celler. Beloppen (särskilt datorskattningarna som märks ≈, men principen gäller varje uppskattad summa) slås på av läsaren med en toggle. Första gången toggeln slås på visas en ruta läsaren måste bekräfta: beloppen är uppskattningar att ta med en nypa salt, källnivån syns alltid och ≈ betyder datorgissning. Följd: löpsedelssiffran på startsidan (som bär ≈) leder inte längre med ett belopp i grundläget utan med ett antal; beloppet tänds när läsaren slår på estimat.",
+    "why": "En ensam avsändare kan stå för antalen — de är räknade fakta — men inte för en avdelning nationalekonomers säkerhet i att prissätta kedjeeffekter. Att sätta en peng på effekter är så svårt att partierna själva oftast avstår; det är själva problemet sajten pekar på — lätt att lova, svårt att förutse vad det kostar. Grinden är också en avsiktlig sköld mot metoddebatten (varför räknade ni så, varför inte så här): den som fått se beloppen har redan kvitterat att de inte är exakta. Det krockar inte med rättelseprincipen — ett verkligt fel rättas fortfarande synligt; grinden avväpnar bara tyckandet om metodval, inte faktafel. Att leda med antal och göra beloppen till ett medvetet, kvitterat val är ärligare och håller neutralitetskontraktet: registret visas, läsaren väljer lins.",
+    "alternatives": [
+      "Visa beloppen som standard (Fläskvågens ursprungskoncept) — solo-avsändaren kan inte försvara estimaten som facit; förkastat som grundläge.",
+      "Dölja beloppen helt — förkastat; de bär en poäng när de tas med rätt varning.",
+      "Lagra läsarens val i en kaka — kräver kaksamtycke i onödan; localStorage för ett val läsaren själv gör är funktionellt och undantaget, så bekräftelserutan räcker som samtycke."
+    ],
+    "decided_by": "ägaren 2026-07-21"
+  },
+  {
+    "date": "2026-07-21",
+    "id": "b-0017",
+    "status": "fastställd",
+    "decision": "Handlingsvågen hostas som egen GitHub Pages-sajt bakom Cloudflare, lagd på undervägen drygast.nu/handlingsvagen, inte inbyggd i Fläskvågens repo/bygge. Samma statiska teknikval som Fläskvågen (byggtidsskivad JSON, ingen backend, CSP script-src 'self', inga kakor). Temat delas som en enda källa (paketera tokens) så vågarna känns som en familj. Omvärderas efter lansering: inbyggnad i Fläskvågen (alternativ A) kan vägas in om två deploys blir tjatiga.",
+    "why": "Skyddar privatgrinden (HV5): inget av Handlingsvågen läcker in i live drygast.nu förrän Cloudflare själv pekas dit. Håller blast radius liten — ett HV-byggfel kan inte fälla live-Fläskvågen. Använder Cloudflare som redan står framför sajten för säkerhetsheadrarna. Behåller dagens uppdelning i två repon och två anslagstavlor.",
+    "alternatives": [
+      "A: bygga in HV i Fläskvågens Astro-sajt (en deploy, delat tema och sökindex automatiskt) — förkastat nu: HV-data och -sidor i live-repot hotar privatgrinden och ökar blast radius. Kan omvärderas efter HV5.",
+      "Hybrid med submodule (separat datarepo men gemensamt bygge) — samma privatgrindsrisk som A eftersom HV-sidorna ändå hamnar i live-bygget; förkastat nu."
+    ],
+    "decided_by": "ägaren 2026-07-21"
+  },
+  {
+    "date": "2026-07-21",
+    "id": "b-0018",
+    "status": "fastställd",
+    "decision": "HV4-skissens öppna frågor F1–F5 avgjorda. F1: rutnätet visar alla åtta partier per löfte (tomma celler är ärliga och ska synas; tomläget formges som 'ingen ren koppling ännu', aldrig som trasig cell). F2: statusarna skiljs på form (fylld vs. konturad), inte färgton — exakta kulörer tas i det delade tema-arbetet. F3: eget litet sökindex (noll beroenden, exakt matchning + prefix), inte MiniSearch eller pagefind. F4: både löften och Frågevågens ståndpunkter byggs in i rutnätet från start (spec §9), med samma grindar. F5: ledamöter som lämnat riksdagen får en notis med namn/länk till riksdagen, inte egen profilsida.",
+    "why": "F1 och F4 följer produktens kärna — jämförelsen och att tomrum är ärligt — och F4 är dessutom redan inbyggt i kopplingsmodellen (mål = promise_id ?? stance_id). F2 håller neutralitetskontraktet och tillgängligheten (färg aldrig ensam bärare). F3 matchar det faktiska sökbehovet (exakt+prefix på ett avgränsat fältset) och håller det lätt. F5 speglar att ansvarsutkrävning gäller dem väljaren kan påverka; en stump-profil utan röstrad vore svag data och spär på filantalet, vilket ligger i linje med topologi B (b-0017).",
+    "alternatives": [
+      "F1 löftesparti + jämförknapp (tätare men gömmer jämförelsen bakom ett klick) — förkastat.",
+      "F3 pagefind (Fläskvågens val, noll underhåll) eller MiniSearch (+8 KB, ett beroende) — förkastade till förmån för egen precision.",
+      "F5 egen sida per avhoppad ledamot (full spårbarhet men tunna stumpar, fler filer) — förkastat."
+    ],
+    "decided_by": "ägaren 2026-07-21"
   }
 ]

@@ -115,12 +115,40 @@ vid HV5.
 
 ## 5. Öppna frågor — samlade för ägarbeslut
 
-- **F1:** Rutnätet — alla åtta partier per löfte, eller löftespartiet
-  med jämförknapp?
-- **F2:** Kulörer för statusarna (icke-värderande par) — tas med
-  theme-arbetet.
-- **F3:** Sökindex — eget eller MiniSearch (rekommendation: eget).
-- **F4:** Ska Frågevågens ståndpunkter in i rutnätet från start
-  (spec §9 säger ja — bekräfta att HV4 bygger båda källorna direkt)?
-- **F5:** Ledamotssidor för ledamöter som lämnat riksdagen (123
-  motioner har sådana undertecknare) — egen sida eller notis?
+- **F1 (beslutad, ägaren 2026-07-21):** Rutnätet visar **alla åtta
+  partier** per löfte — jämförelsen är produkten, och tomma celler är
+  ärliga och ska synas. Villkor: tomläget formges som "ingen ren
+  koppling ännu", aldrig som en trasig eller ofärdig cell.
+- **F2 (beslutad, ägaren 2026-07-21):** Statusarna (I LINJE / EMOT m.fl.)
+  skiljs åt på **form** (t.ex. fylld vs. konturad), inte på färgton — det
+  håller för färgblindhet och bryter aldrig mot "ingen grön/röd". De
+  exakta kulörerna tas i det delade tema-arbetet (en källa, så vågorna
+  känns som en familj).
+- **F3 (beslutad, ägaren 2026-07-21):** **Eget litet index** (noll
+  beroenden, byggt i bygget) — sökbehovet är exakt matchning + prefix på
+  titlar, ledamotsnamn, betänkanden och kategorier, inte fritext-relevans.
+- **F4 (beslutad, ägaren 2026-07-21):** **Båda källorna från start** —
+  löften och Frågevågens ståndpunkter byggs in i rutnätet direkt (spec
+  §9). Samma grindar som allt annat: bara ståndpunkter genom
+  citatkontroll och mänskligt beslut visas, övriga lämnas tomma.
+- **F5 (beslutad, ägaren 2026-07-21):** Ledamöter som lämnat riksdagen
+  får en **notis**, inte egen sida — namnet står kvar på motionen och kan
+  länka till riksdagens egen sida. Ledamotssektionen hålls till de 425
+  sittande (poängen är ansvarsutkrävning inför väljare; en stump-profil
+  utan röstrad läser som svag data, och det spär på filantalet i onödan).
+- **F6 (beslutad, ägaren 2026-07-21):** Dokumenttyp blir ett filter i
+  alla vyer, med en tydlig på/av för frågeinstrumenten (interpellationer
+  + skriftliga frågor). Bakgrund: frågeinstrumenten är 7 104 dokument
+  men bara ~266–317 kandidatpar efter förfiltret — en engångskostnad på
+  storleksordningen tio kronor att bearbeta, sedan gratis (statiskt, git).
+  Skevheten motiverar toggeln: S 29 % / M 24 % / KD 16 % / L 11 % står
+  för frågeinstrumenten, så en sammanvägning som räknar in dem lyfter
+  mekaniskt de partier som frågar mest. Toggel = neutralt svar (visa
+  registret, läsaren väljer lins). Att reda ut: partifältet på
+  frågeinstrument räknar ~2 partier per dokument (troligen frågeställare
+  + svarande statsråd) — måste separeras innan frågorna får väga.
+- **F7 (beslutad, ägaren 2026-07-21, b-0016):** Kostnadsuppskattningar
+  av som standard i alla vyer — grundläget är antal. En toggle tänder
+  beloppen; första gången visas en bekräftelseruta (ta dem med en nypa
+  salt). Valet minns i localStorage, inte i en kaka — ingen
+  kaksamtyckesruta behövs. Gäller likadant i Fläskvågen.
