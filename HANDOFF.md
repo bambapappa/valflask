@@ -337,7 +337,11 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-*(inga anspråk)*
+- 2026-07-22 `claude/handoff-next-steps-osvpyr` → **Topologibyte: subdomän
+  `handlingsvagen.drygast.nu` i stället för sökväg** (ägaren, ersätter b-0017:s
+  sökvägsdetalj → b-0021). Byter sajtens bas `/handlingsvagen` → `/`, uppdaterar
+  canonical + runbook. Rör bara `site/`, `MIGRERING.md`, `.github/workflows/`.
+  Fortsätter på öppen PR #44.
 
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
