@@ -175,5 +175,33 @@
       "confidence": 0.3
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Slopat fribelopp för studenter under sommaren",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Därför vill Moderaterna att fribeloppet för CSN ska avskaffas under sommaren.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/vallofte-slopat-fribelopp-for-studenter-under-sommaren/",
+    "articleTitle": "Vallöfte: Slopat fribelopp för studenter under sommaren",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande: Fribeloppet slopas juni-aug. Minskad återbetalning/ökat bidrag för sommararbetande studenter. Osäkerhet kring antal berörda och marginaleffekter. Baserat på storleksordning av tidigare CSN-",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   }
 ]
