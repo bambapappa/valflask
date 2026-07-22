@@ -32,7 +32,10 @@ main,
   color: var(--text-svag);
   font-size: 0.9rem;
 }
-.botten p { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.1rem; }
+.botten p { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.1rem 0.4rem; }
+.bottennav { max-width: 1100px; margin: 0 auto; padding: 0 1.1rem 1.2rem; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.bottennav a { color: var(--fokus); font-weight: 600; text-decoration: none; }
+.bottennav a:hover { text-decoration: underline; }
 
 h1 { font-size: 1.7rem; letter-spacing: -0.01em; margin: 0.2rem 0 0.4rem; }
 .ingress { color: var(--text-svag); max-width: 62ch; }
@@ -192,6 +195,20 @@ a.vy-titel { color: var(--fokus); }
 .vy-lofte { color: var(--text-svag); font-size: 0.85rem; }
 .vy-lofte a { color: var(--fokus); }
 .vy-lista .status, .vy-lista .markorer { margin-left: auto; }
+
+/* Synlig rättelsenot (delas av Rattelsenot.astro och rutnätets panel) */
+.rattelsenot {
+  border: 2px solid var(--a-emot);
+  border-radius: var(--radie);
+  background: var(--a-emot-mjuk);
+  padding: 0.7rem 0.9rem;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+}
+.rattelsenot ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+.rattelsenot .datum { color: var(--text-svag); }
+.rattelsenot .mer { margin: 0.4rem 0 0; font-size: 0.85rem; }
+.rattelsenot .mer a { color: var(--fokus); }
 
 @media (max-width: 640px) {
   h1 { font-size: 1.4rem; }

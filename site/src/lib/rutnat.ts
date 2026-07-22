@@ -15,10 +15,12 @@ import {
   getKopplingar,
   getHandlingMap,
   getArkivMap,
+  rattelserForLofte,
   malId,
   type DomStatus,
   type PartiDom,
   type Koppling,
+  type Rattelse,
 } from "./data.ts";
 
 export interface Cell {
@@ -193,6 +195,7 @@ export interface LofteDetalj {
   arkiv_url: string | null;
   domar: Record<string, { status: DomStatus; i_linje: string[]; emot: string[]; avstod: string[] }>;
   kopplingar: KopplingVy[];
+  rattelser: Rattelse[];
 }
 
 /** Datum ur ett run_id som "foreslag-2026-07-20", annars null. */
@@ -258,6 +261,7 @@ export function buildLofteDetalj(id: string): LofteDetalj | null {
     arkiv_url: lof.arkiv_url,
     domar,
     kopplingar: kopplingVyer,
+    rattelser: rattelserForLofte(id),
   };
 }
 

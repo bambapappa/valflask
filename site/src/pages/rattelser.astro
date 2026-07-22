@@ -1,0 +1,50 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getRattelser } from "../lib/data.ts";
+
+const rattelser = [...getRattelser()].sort((a, b) => (a.date < b.date ? 1 : -1));
+---
+<Layout title="Rättelser — Handlingsvågen" canonicalPath="/handlingsvagen/rattelser">
+  <div class="prosa">
+    <h1>Rättelser</h1>
+    <p class="ingress">
+      Fel rättas synligt på den här sidan, aldrig i tysthet. Varje korrigering
+      har ett publikt spår — det är en av registrets kärnprinciper.
+    </p>
+
+    <h2>Så går en rättelse till</h2>
+    <p>
+      Hittar vi ett fel — i ett citat, en koppling, en dom eller en länk —
+      rättar vi det och skriver ner vad som ändrades och varför. En rättelsenot
+      sätts på den berörda sidan, och ändringen listas här med datum. Eftersom
+      domarna räknas fram av skript ur öppna data uppdateras sidorna sedan
+      automatiskt med det rättade underlaget.
+    </p>
+    <p>
+      Partier, journalister och allmänhet kan anmäla fel. Varje anmälan
+      kontrolleras mot riksdagens källa — och mot arkivkopian när den finns —
+      innan en rättelse publiceras.
+    </p>
+
+    <h2>Registrerade rättelser</h2>
+    {rattelser.length === 0 ? (
+      <p class="tom-not">Inga rättelser har registrerats ännu.</p>
+    ) : (
+      rattelser.map((r) => (
+        <article class="rattelse">
+          <div class="rubrik">{r.date} · {r.affects}</div>
+          <p><strong>Vad:</strong> {r.what}</p>
+          <p><strong>Varför:</strong> {r.why}</p>
+        </article>
+      ))
+    )}
+  </div>
+</Layout>
+
+<style>
+  .prosa { max-width: 68ch; }
+  .prosa h2 { margin-top: 1.8rem; font-size: 1.2rem; }
+  .tom-not { color: var(--text-svag); font-style: italic; }
+  .rattelse { border-top: 1px solid var(--linje); padding-top: 0.8rem; margin-top: 1rem; }
+  .rattelse .rubrik { color: var(--text-svag); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; }
+</style>

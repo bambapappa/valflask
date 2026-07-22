@@ -1,0 +1,20 @@
+---
+// Synlig rättelsenot på berörd sida (kärnprincip: tyst rättelse förbjuden).
+// Visas bara när en rättelse rör sidan; annars renderas ingenting.
+// Stilen ligger globalt i rutnat.css (delas med rutnätets panel).
+import type { Rattelse } from "../lib/data.ts";
+interface Props { rattelser: Rattelse[]; }
+const { rattelser } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+---
+{rattelser.length > 0 && (
+  <aside class="rattelsenot" aria-label="Rättelse">
+    <strong>Rättad.</strong>
+    <ul>
+      {rattelser.map((r) => (
+        <li><span class="datum">{r.date}</span> {r.what}</li>
+      ))}
+    </ul>
+    <p class="mer"><a href={`${base}rattelser`}>Se alla rättelser</a></p>
+  </aside>
+)}

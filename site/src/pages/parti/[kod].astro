@@ -1,6 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Rattelsenot from "../../components/Rattelsenot.astro";
 import { buildPartiSida, partiKoder } from "../../lib/vyer.ts";
+import { rattelserForPath } from "../../lib/data.ts";
 import type { PartiLofteRad } from "../../lib/vyer.ts";
 
 export function getStaticPaths() {
@@ -37,6 +39,7 @@ function statusToken(l: PartiLofteRad): string {
 <Layout title={`${sida.namn} — Handlingsvågen`} canonicalPath={`/handlingsvagen/parti/${kod}`}>
   <p class="brodsmula"><a href={base}>Rutnätet</a> · <a href={`${base}partier`}>Partier</a></p>
   <h1>{sida.namn}</h1>
+  <Rattelsenot rattelser={rattelserForPath(`/handlingsvagen/parti/${kod}`)} />
   <p class="ingress">Partiets löften vägda mot dess egna handlingar i riksdagen. Tomt är ärligt — registret väger allt eftersom.</p>
 
   <div class="summa" role="group" aria-label="Sammanfattning">

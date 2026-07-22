@@ -1,6 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Rattelsenot from "../../components/Rattelsenot.astro";
 import { buildLedamotSida, ledamotIds } from "../../lib/vyer.ts";
+import { rattelserForPath } from "../../lib/data.ts";
 
 export function getStaticPaths() {
   return ledamotIds().map((id) => ({ params: { id } }));
@@ -25,6 +27,7 @@ const UTSLAGKLASS: Record<string, string> = { i_linje: "status--linje", emot: "s
     <a href={`${base}parti/${sida.parti}`}>{sida.parti.toUpperCase()}</a>
     {sida.valkrets ? ` · ${sida.valkrets}` : ""}
   </p>
+  <Rattelsenot rattelser={rattelserForPath(`/handlingsvagen/ledamot/${id}`)} />
 
   <div class="summa" role="group" aria-label="Sammanfattning">
     <div><b>{sida.summa.loften}</b><span>löften med merit</span></div>
