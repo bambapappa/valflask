@@ -1,8 +1,8 @@
 # Överlämning — Handlingsvågen
 
-Skriven 2026-07-19; senast uppdaterad 2026-07-22 (HV4 FÄRDIG: rutnätet
-Vy 1, partisidan Vy 2 och ledamotssidan Vy 3 byggda i `site/`, b-0019).
-Läs `CLAUDE.md` först (bindande
+Skriven 2026-07-19; senast uppdaterad 2026-07-22 (HV4 färdig + HV5-migreringen
+FÖRBEREDD utan go-live: symmetritest b-0020, arkivväg, rättelseväg,
+gated deploy, `MIGRERING.md`). Läs `CLAUDE.md` först (bindande
 språkregler och kärnprinciper), sedan `SPEC-HANDLINGSVAGEN.md` (fastställd
 spec) och `NEUTRALITET.md`. Alla metodval står i `data/beslutslogg.json`.
 
@@ -64,6 +64,29 @@ för hand under Actions-fliken. OpenRouter-nyckeln finns som hemlighet i
 valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
+
+**Gjort 2026-07-22 (HV5-migreringen FÖRBEREDD utan go-live, grenen `claude/handoff-next-steps-osvpyr`):**
+
+Allt som går att göra bakom privatgrinden är gjort; kvar är bara de steg som
+gör något publikt (kräver ägarens go). Runbook: `MIGRERING.md`.
+
+- **Symmetritest redovisat (b-0020):** `pipeline/tests/symmetri.test.ts` — samma
+  röst/riktning ger samma utslag för båda block; motorn har ingen blockberoende
+  gren. 80 pipeline-tester gröna. (HV5-checklistan ✔)
+- **Arkivväg byggd (ej körd):** `scripts/arkiv.mts` + `arkiv.yml` hämtar en
+  arkivögonblicksbild per vägt dokument och kontrollerar att citatet står ord
+  för ord i kopian (kärnprincipen); en kopia utan citat accepteras aldrig.
+  Delsparar till `data/arkiv.json` (+ schema), sajten slår in verifierade
+  länkar. Körs via Actions (fritt utnät) — 0/16 gjorda, den enda kvarvarande
+  hårda checklistepunkten.
+- **Rättelseväg på plats:** `data/rattelser.json` (+ schema), `rattelser.astro`,
+  `Rattelsenot.astro` (not på berörd sida — parti/ledamot/löftespanel),
+  footer-länk. Tom men redo. (HV5-checklistan ✔)
+- **Neutralitetssidan publicerbar:** `neutralitet.astro` (kontraktets tio
+  punkter, ren läsartext). (HV5-checklistan ✔)
+- **Gated deploy:** `hv-pages.yml` bygger/testar på begäran; ingen
+  push-utlösare, deploy körs bara vid `deploy=true`. Egen CF-projektnyckel
+  (b-0017). Sajten bär `noindex` tills grinden släpps.
 
 **Gjort 2026-07-22 (HV4 färdig — Vy 2 + Vy 3, grenen `claude/handoff-next-steps-osvpyr`):**
 
@@ -135,7 +158,8 @@ Settings → Secrets and variables → Actions.
   (461 sidor), innehållstesterna gröna. OG-delningsbilderna maskar ännu
   INTE beloppet — medvetet parkerat.
 - **Topologi (b-0017):** Handlingsvågen hostas som EGEN Pages-sajt bakom
-  Cloudflare på `drygast.nu/handlingsvagen`, inte inbyggd i Fläskvågen —
+  Cloudflare på `drygast.nu/handlingsvagen` (adressen ändrad till subdomänen
+  `handlingsvagen.drygast.nu` i b-0021), inte inbyggd i Fläskvågen —
   skyddar privatgrinden och håller blast radius liten. Temat delas som en
   källa. Omvärderas efter HV5.
 - **HV4-frågorna F1–F5 avgjorda (b-0018), `SKISS-HV4.md` §5 uppdaterad:**
@@ -240,12 +264,18 @@ Settings → Secrets and variables → Actions.
      dem; extra, inte spec-krav. Partibyten på ledamotssidan (per-votering ur
      roster-avvikelselistan) är en marginell datastump — avvikelse mot
      partilinjen är utskriven, partibyten ännu inte.
-7. **HV5 — lanseringsgrinden (NÄSTA STORA STEG).** Checklista i spec §8,
-   ägarens uttryckliga go krävs. Hårda blockerare i tur och ordning:
-   arkivkopior på de vägda handlingarna (0 av 16 har en ännu — kräver
-   arkivskörd via Actions), rättelsevägen inkopplad på HV-sajten, metodsida
-   + beslutslogg publicerade, symmetritestet redovisat i beslutsloggen.
-   Först därefter speglas/går live på drygast.nu och valflask.
+7. **HV5 — lanseringsgrinden. FÖRBEREDD — se `MIGRERING.md`.** Allt bakom
+   privatgrinden är gjort: symmetritest redovisat (b-0020), rättelseväg,
+   neutralitetssida, beslutslogg/metod publicerbara, arkivväg (skript +
+   workflow) och gated deploy-workflow. Kvar är bara ägarstegen som gör
+   något publikt, i ordning (MIGRERING.md): (1) kör `arkiv`-workflown tills
+   arkivkopiorna är verifierade (0/16 nu — enda hårda datapunkten); (2)
+   validera bygget (`hv-pages`, deploy=false); (3) Cloudflare-projekt +
+   hemligheter; (4) **ta bort `noindex`** i `site/src/layouts/Layout.astro`
+   (grinden släpps här); (5) deploy=true; (6) sätt custom-domänen
+   `handlingsvagen.drygast.nu` på HV-projektet (subdomän, b-0021 — ingen
+   Worker); (7) spegla granskningsflödet till valflask; (8) verifiera live.
+   Ägarens uttryckliga go krävs.
    Då speglas även granskningsflödet till valflask.
 
 ## Tekniska anteckningar (dyrköpta)

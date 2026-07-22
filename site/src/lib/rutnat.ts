@@ -14,10 +14,13 @@ import {
   getParties,
   getKopplingar,
   getHandlingMap,
+  getArkivMap,
+  rattelserForLofte,
   malId,
   type DomStatus,
   type PartiDom,
   type Koppling,
+  type Rattelse,
 } from "./data.ts";
 
 export interface Cell {
@@ -192,6 +195,7 @@ export interface LofteDetalj {
   arkiv_url: string | null;
   domar: Record<string, { status: DomStatus; i_linje: string[]; emot: string[]; avstod: string[] }>;
   kopplingar: KopplingVy[];
+  rattelser: Rattelse[];
 }
 
 /** Datum ur ett run_id som "foreslag-2026-07-20", annars null. */
@@ -210,6 +214,7 @@ export function buildLofteDetalj(id: string): LofteDetalj | null {
   const lof = getLoften().find((l) => l.id === id);
   if (!lof) return null;
   const handlingar = getHandlingMap();
+  const arkiv = getArkivMap();
   const kopplingar = getKopplingar().filter((k) => k.status === "aktiv" && malId(k) === id);
 
   const kopplingVyer: KopplingVy[] = kopplingar.map((k) => {
@@ -232,7 +237,7 @@ export function buildLofteDetalj(id: string): LofteDetalj | null {
         dok_id: h?.dok_id ?? "",
         parties: h?.parties ?? [],
         url: h?.url ?? "",
-        arkiv_url: h?.archive_url ?? null,
+        arkiv_url: h?.archive_url ?? arkiv.get(k.handling_id) ?? null,
       },
     };
   });
@@ -256,6 +261,7 @@ export function buildLofteDetalj(id: string): LofteDetalj | null {
     arkiv_url: lof.arkiv_url,
     domar,
     kopplingar: kopplingVyer,
+    rattelser: rattelserForLofte(id),
   };
 }
 

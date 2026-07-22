@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "rattelser",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["date", "affects", "what", "why"],
+    "properties": {
+      "date": { "type": "string" },
+      "affects": { "type": "string", "description": "Berörd sida/löfte: en sökväg (/handlingsvagen/parti/s), ett löftes-id (p-2026-0002), eller en kort beskrivning." },
+      "what": { "type": "string" },
+      "why": { "type": "string" },
+      "commit": { "type": "string" }
+    }
+  }
+}

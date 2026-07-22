@@ -96,6 +96,16 @@ export interface Person {
   valkrets: string;
 }
 
+export interface ArkivPost {
+  handling_id: string;
+  koppling_id: string;
+  kalla_url: string;
+  arkiv_url: string | null;
+  verifierad: boolean;
+  skal?: string;
+  datum: string;
+}
+
 let _domar: Domar | undefined;
 let _loften: LofteIndex[] | undefined;
 let _parties: Party[] | undefined;
@@ -124,6 +134,49 @@ export function getHandlingMap(): Map<string, Handling> {
 }
 export function getPersoner(): Person[] {
   return (_personer ??= las<Person[]>("personer.json"));
+}
+
+export interface Rattelse {
+  date: string;
+  affects: string;
+  what: string;
+  why: string;
+  commit?: string;
+}
+
+let _rattelser: Rattelse[] | undefined;
+export function getRattelser(): Rattelse[] {
+  if (!_rattelser) {
+    try {
+      _rattelser = las<Rattelse[]>("rattelser.json");
+    } catch {
+      _rattelser = [];
+    }
+  }
+  return _rattelser;
+}
+/** Rättelser som rör en viss sida (dess sökväg nämns i affects). */
+export function rattelserForPath(path: string): Rattelse[] {
+  return getRattelser().filter((r) => r.affects.includes(path));
+}
+/** Rättelser som rör ett visst löfte (dess id nämns i affects). */
+export function rattelserForLofte(id: string): Rattelse[] {
+  return getRattelser().filter((r) => r.affects.includes(id));
+}
+
+let _arkiv: Map<string, string> | undefined;
+/** handling_id → verifierad arkiv-URL (bara kopior som bär citatet ord för ord). */
+export function getArkivMap(): Map<string, string> {
+  if (!_arkiv) {
+    let poster: ArkivPost[] = [];
+    try {
+      poster = las<ArkivPost[]>("arkiv.json");
+    } catch {
+      poster = [];
+    }
+    _arkiv = new Map(poster.filter((a) => a.verifierad && a.arkiv_url).map((a) => [a.handling_id, a.arkiv_url as string]));
+  }
+  return _arkiv;
 }
 
 /** Måltid för en koppling — löfte eller ståndpunkt (b-0018 F4). */

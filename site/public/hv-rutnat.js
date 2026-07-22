@@ -119,6 +119,22 @@
     if (d.datum) meta.appendChild(document.createTextNode(" · sagt " + d.datum));
     inner.appendChild(meta);
 
+    // Rättelsenot — synlig rättelse (tyst rättelse är förbjuden).
+    if (d.rattelser && d.rattelser.length) {
+      var not = el("aside", "rattelsenot");
+      not.setAttribute("aria-label", "Rättelse");
+      not.appendChild(el("strong", null, "Rättad."));
+      var rul = el("ul", null);
+      d.rattelser.forEach(function (r) {
+        var li = el("li", null, null);
+        li.appendChild(el("span", "datum", r.date));
+        li.appendChild(document.createTextNode(" " + r.what));
+        rul.appendChild(li);
+      });
+      not.appendChild(rul);
+      inner.appendChild(not);
+    }
+
     // Partiernas utslag
     var domrad = el("div", "domrad");
     var partier = Object.keys(d.domar).sort();

@@ -1,7 +1,8 @@
 # Handlingsvågens sajt (HV4)
 
-Egen statisk Astro-sajt bakom Cloudflare på `drygast.nu/handlingsvagen`
-(b-0017) — inte inbyggd i Fläskvågen. Privat tills lanseringsgrinden HV5.
+Egen statisk Astro-sajt bakom Cloudflare på subdomänen
+`handlingsvagen.drygast.nu` (b-0017 + b-0021) — inte inbyggd i Fläskvågen.
+Privat tills lanseringsgrinden HV5.
 
 ## Bygg och testa
 
@@ -42,5 +43,6 @@ npm run build # → dist/ (skivade api/hv/*)
   utskrivet (b-0018 F2). Tomma celler är ärliga och syns (F1).
 - **Eget sökindex** (F3), inga beroenden, laddas först när fältet fokuseras.
 
-`base: '/handlingsvagen'` gör att alla länkar och hämtningar ligger under
-den stigen; `dist/` är platt och serveras under stigen av värden.
+Sajten serveras från roten på subdomänen `handlingsvagen.drygast.nu` (ingen
+basstig, b-0021 — Cloudflare-custom-domän, ingen Worker). `dist/` är platt och
+serveras direkt av värden.

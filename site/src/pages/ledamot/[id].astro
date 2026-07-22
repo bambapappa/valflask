@@ -1,6 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Rattelsenot from "../../components/Rattelsenot.astro";
 import { buildLedamotSida, ledamotIds } from "../../lib/vyer.ts";
+import { rattelserForPath } from "../../lib/data.ts";
 
 export function getStaticPaths() {
   return ledamotIds().map((id) => ({ params: { id } }));
@@ -8,7 +10,7 @@ export function getStaticPaths() {
 
 const { id } = Astro.params;
 const sida = buildLedamotSida(id!);
-if (!sida) return Astro.redirect("/handlingsvagen/ledamoter");
+if (!sida) return Astro.redirect("/ledamoter");
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
 const KIND: Record<string, string> = {
@@ -18,13 +20,14 @@ const KIND: Record<string, string> = {
 const UTSLAGORD: Record<string, string> = { i_linje: "i linje", emot: "emot", avstod: "avstod", franvarande: "frånvarande" };
 const UTSLAGKLASS: Record<string, string> = { i_linje: "status--linje", emot: "status--emot", avstod: "status--avstod", franvarande: "status--tom" };
 ---
-<Layout title={`${sida.namn} (${sida.parti.toUpperCase()}) — Handlingsvågen`} canonicalPath={`/handlingsvagen/ledamot/${id}`}>
+<Layout title={`${sida.namn} (${sida.parti.toUpperCase()}) — Handlingsvågen`} canonicalPath={`/ledamot/${id}`}>
   <p class="brodsmula"><a href={base}>Rutnätet</a> · <a href={`${base}ledamoter`}>Ledamöter</a></p>
   <h1>{sida.namn}</h1>
   <p class="under">
     <a href={`${base}parti/${sida.parti}`}>{sida.parti.toUpperCase()}</a>
     {sida.valkrets ? ` · ${sida.valkrets}` : ""}
   </p>
+  <Rattelsenot rattelser={rattelserForPath(`/ledamot/${id}`)} />
 
   <div class="summa" role="group" aria-label="Sammanfattning">
     <div><b>{sida.summa.loften}</b><span>löften med merit</span></div>

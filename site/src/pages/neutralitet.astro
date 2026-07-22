@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Neutralitetskontraktet publiceras i sin helhet (spec §7: reglerna
+// publicerade före lansering). Punkterna följer NEUTRALITET.md.
+const punkter: Array<[string, string]> = [
+  ["Samma regler för alla", "Ett regelverk, tillämpat lika på alla åtta riksdagspartier. Reglerna publiceras innan första domen visas."],
+  ["Skript dömer, inte åsikter", "Varje dom räknas fram av ett deterministiskt skript ur godkända kopplingar. Ingen språkmodell och ingen människa skriver en dom för hand. Modellen får bara föreslå kopplingar; kontrollen och en människa avgör om de håller."],
+  ["Ordagrant bevis eller ingenting", "En koppling mellan löfte och handling kräver ett exakt citat ur riksdagsdokumentet, kontrollerat tecken för tecken mot källtexten. Räcker inte citatet: ingen koppling. Tomma celler är ärliga."],
+  ["Spårbart hela vägen", "Varje dom är klickbar: dom → kopplingar → citat → riksdagsdokument med dokument- eller voterings-id, plus arkivkopia där citatet står i själva ögonblicksbilden."],
+  ["Olika verktyg, samma stränghet", "Regeringspartier mäts på det regeringar gör (propositioner, budget), opposition på det opposition kan göra (motioner, reservationer, röster). Ingen mäts på verktyg den inte förfogar över."],
+  ["Frånvaro är inte ett ställningstagande", "Riksdagens kvittningssystem gör frånvaro planerad. Bara ja, nej och avstår räknas."],
+  ["Neutralt språk", "Registret visar; läsaren dömer. Inga betyg, inga skamrubriker. Statusorden är fastställda och utökas bara synligt."],
+  ["Öppen logg över metodval", "Varje metodval — även de som förkastas — skrivs ner med datum, motiv och alternativ, och publiceras vid lansering."],
+  ["Tyst rättelse är förbjuden", "Fel rättas synligt med en rättelsenot och en post i rättelseloggen, precis som på drygast.nu."],
+  ["Symmetritest före lansering", "Metoden körs mot testfall från båda blocken; utfallet redovisas öppet innan något går live."],
+];
+---
+<Layout title="Neutralitetskontraktet — Handlingsvågen" canonicalPath="/neutralitet">
+  <div class="prosa">
+    <h1>Neutralitetskontraktet</h1>
+    <p class="ingress">
+      Handlingsvågen mäter makthavare — då måste måttbandet vara oantastligt.
+      Det här kontraktet gäller från första raden kod och publiceras i sin
+      helhet. Ändras det, loggas ändringen öppet.
+    </p>
+    <ol class="kontrakt">
+      {punkter.map(([rubrik, text]) => (
+        <li><b>{rubrik}.</b> {text}</li>
+      ))}
+    </ol>
+  </div>
+</Layout>
+
+<style>
+  .prosa { max-width: 68ch; }
+  .kontrakt { padding-left: 1.2rem; }
+  .kontrakt li { margin: 0.7rem 0; }
+</style>
