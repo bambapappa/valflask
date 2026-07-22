@@ -125,7 +125,10 @@
     if (partier.length) {
       partier.forEach(function (p) {
         var st = d.domar[p].status;
-        var pill = el("span", "status " + (STATUSKLASS[st] || "status--avstod"), p.toUpperCase() + ": " + (STATUSORD[st] || st));
+        var pill = document.createElement("a");
+        pill.className = "status " + (STATUSKLASS[st] || "status--avstod");
+        pill.href = apiBas + "parti/" + p;
+        pill.textContent = p.toUpperCase() + ": " + (STATUSORD[st] || st);
         domrad.appendChild(pill);
       });
       inner.appendChild(el("h3", null, "Partiernas utslag"));
@@ -184,51 +187,11 @@
     });
   }
 
-  // Eget sökindex — laddas först när fältet fokuseras (F3).
-  var sokFalt = document.getElementById("sok-falt");
-  var traffar = document.getElementById("sok-traffar");
-  var index = null;
-  function laddaIndex() {
-    if (index) return Promise.resolve(index);
-    return fetch(apiBas + "api/hv/sok-index.json")
-      .then(function (r) { return r.json(); })
-      .then(function (poster) { index = poster; return index; })
-      .catch(function () { index = []; return index; });
-  }
-  function normalisera(s) { return (s || "").toLowerCase().trim(); }
-  function sok(q) {
-    var nq = normalisera(q);
-    if (!nq || !index) { traffar.textContent = ""; return; }
-    var ord = nq.split(/\s+/);
-    var res = index.filter(function (p) {
-      var text = normalisera(p.text);
-      return ord.every(function (o) {
-        // exakt delordsmatch eller prefix på ett ord i texten
-        return text.indexOf(o) !== -1 || text.split(/\s+/).some(function (w) { return w.indexOf(o) === 0; });
-      });
-    }).slice(0, 12);
-    traffar.textContent = "";
-    res.forEach(function (p) {
-      var li = document.createElement("li");
-      var b = el("button", null, null);
-      b.setAttribute("type", "button");
-      b.appendChild(el("span", "taggen", p.typ === "kategori" ? "Kategori · " : "Löfte · "));
-      b.appendChild(document.createTextNode(p.text));
-      b.addEventListener("click", function () {
-        if (p.typ === "lofte") { öppnaLofte(p.id); }
-        else if (p.typ === "kategori" && katFilter) { katFilter.value = p.id; katFilter.dispatchEvent(new Event("change")); }
-        traffar.textContent = "";
-        sokFalt.value = "";
-      });
-      li.appendChild(b);
-      traffar.appendChild(li);
-    });
-  }
-  if (sokFalt) {
-    sokFalt.addEventListener("focus", laddaIndex, { once: true });
-    sokFalt.addEventListener("input", function () { laddaIndex().then(function () { sok(sokFalt.value); }); });
-    document.addEventListener("click", function (e) {
-      if (!e.target.closest(".sok")) traffar.textContent = "";
-    });
-  }
+  // Djuplänkar från den globala sökrutan: ?lofte=<id> öppnar panelen,
+  // ?kategori=<kat> förfiltrerar rutnätet. Så att journalister kan länka exakt.
+  var sp = new URLSearchParams(window.location.search);
+  var katParam = sp.get("kategori");
+  if (katParam && katFilter) { katFilter.value = katParam; katFilter.dispatchEvent(new Event("change")); }
+  var lofteParam = sp.get("lofte");
+  if (lofteParam) öppnaLofte(lofteParam);
 })();

@@ -33,13 +33,8 @@ function cellVy(c: Cell | undefined): { klass: string; ord: string; aria: string
     </div>
 
     <div class="verktyg">
-      <div class="sok">
-        <label class="hoppa" for="sok-falt">Sök löfte eller kategori</label>
-        <input id="sok-falt" type="search" placeholder="Sök löfte eller kategori…" autocomplete="off" aria-controls="sok-traffar" />
-        <ul id="sok-traffar" class="sok-traffar" role="listbox" aria-label="Sökträffar"></ul>
-      </div>
       <label>
-        <span class="hoppa">Filtrera på kategori</span>
+        <span class="verktyg-etikett">Filtrera på kategori</span>
         <select id="kat-filter" aria-label="Filtrera på kategori">
           <option value="">Alla kategorier</option>
           {summary.kategorier.map((k) => <option value={k}>{k}</option>)}
@@ -64,7 +59,7 @@ function cellVy(c: Cell | undefined): { klass: string; ord: string; aria: string
           <tr>
             <th class="lofte-huvud" scope="col">Löfte</th>
             {summary.partier.map((p) => (
-              <th class="parti" scope="col" title={p.namn}>{p.code.toUpperCase()}</th>
+              <th class="parti" scope="col" title={p.namn}><a href={`${base}parti/${p.code}`}>{p.code.toUpperCase()}</a></th>
             ))}
           </tr>
         </thead>

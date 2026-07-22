@@ -47,7 +47,7 @@ export interface Summary {
   summa: { total_lof: number; vagda: number; utan_handling: number };
 }
 
-const STATUSORD: Record<DomStatus | "avstod", string> = {
+export const STATUSORD: Record<DomStatus | "avstod", string> = {
   agerat_i_linje: "i linje",
   agerat_emot: "emot",
   bade_och: "både och",
@@ -220,22 +220,3 @@ export function buildLofteDetalj(id: string): LofteDetalj | null {
   };
 }
 
-export interface SokPost {
-  typ: "lofte" | "kategori";
-  id: string;
-  text: string;
-  kategori?: string;
-}
-
-/**
- * Eget litet sökindex (b-0018 F3): exakt matchning + prefix på löftestitlar och
- * kategorier — de rader rutnätet faktiskt kan visa. Inga beroenden, buntat i
- * bygget. Vidgas till ledamöter och betänkanden när Vy 2/3 finns.
- */
-export function buildSokIndex(): SokPost[] {
-  const summary = buildSummary();
-  const poster: SokPost[] = [];
-  for (const kat of summary.kategorier) poster.push({ typ: "kategori", id: kat, text: kat });
-  for (const l of summary.loften) poster.push({ typ: "lofte", id: l.id, text: l.titel, kategori: l.kategori });
-  return poster;
-}

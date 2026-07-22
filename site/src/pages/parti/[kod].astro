@@ -1,0 +1,80 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { buildPartiSida, partiKoder } from "../../lib/vyer.ts";
+import type { PartiLofteRad } from "../../lib/vyer.ts";
+
+export function getStaticPaths() {
+  return partiKoder().map((kod) => ({ params: { kod } }));
+}
+
+const { kod } = Astro.params;
+const sida = buildPartiSida(kod!);
+if (!sida) return Astro.redirect("/handlingsvagen/");
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+const KIND: Record<string, string> = {
+  votering: "votering", motion: "motion", proposition: "proposition",
+  interpellation: "interpellation", skriftlig_fraga: "skriftlig fråga",
+};
+const UTSLAGORD: Record<string, string> = { i_linje: "i linje", emot: "emot", avstod: "avstod", franvarande: "frånvarande" };
+const UTSLAGKLASS: Record<string, string> = { i_linje: "status--linje", emot: "status--emot", avstod: "status--avstod", franvarande: "status--tom" };
+
+function statusVy(l: PartiLofteRad): { klass: string; ord: string } {
+  if (l.status === "bade_och") return { klass: "status--bade", ord: "både och" };
+  if (l.status === "agerat_i_linje") return { klass: "status--linje", ord: "i linje" };
+  if (l.status === "agerat_emot") return { klass: "status--emot", ord: "emot" };
+  if (l.n_avstod > 0) return { klass: "status--avstod", ord: "avstod" };
+  return { klass: "status--tom", ord: "ingen ren koppling ännu" };
+}
+---
+<Layout title={`${sida.namn} — Handlingsvågen`} canonicalPath={`/handlingsvagen/parti/${kod}`}>
+  <p class="brodsmula"><a href={base}>Rutnätet</a> · <a href={`${base}partier`}>Partier</a></p>
+  <h1>{sida.namn}</h1>
+  <p class="ingress">Partiets löften vägda mot dess egna handlingar i riksdagen. Tomt är ärligt — registret väger allt eftersom.</p>
+
+  <div class="summa" role="group" aria-label="Sammanfattning">
+    <div><b>{sida.summa.total_loften}</b><span>löften totalt</span></div>
+    <div><b>{sida.summa.vagda}</b><span>vägda mot handling</span></div>
+    <div><b>{sida.summa.i_linje}</b><span>i linje</span></div>
+    <div><b>{sida.summa.emot}</b><span>emot</span></div>
+    <div><b>{sida.summa.ingen_handling}</b><span>utan handling ännu</span></div>
+  </div>
+
+  <h2>Partiets löften</h2>
+  <ul class="vy-lista">
+    {sida.loften.map((l) => {
+      const v = statusVy(l);
+      return (
+        <li>
+          <a class="vy-titel" href={`${base}?lofte=${l.id}`}>{l.titel}</a>
+          <span class="vy-kat">{l.kategori}</span>
+          <span class={`status ${v.klass}`}>{v.ord}</span>
+        </li>
+      );
+    })}
+  </ul>
+
+  <h2>Handlingar som gett utslag <span class="rakn">({sida.handlingar.length})</span></h2>
+  {sida.handlingar.length === 0 ? (
+    <p class="tom-not">Inga granskade kopplingar har ännu gett utslag för {sida.namn}.</p>
+  ) : (
+    <ul class="vy-lista">
+      {sida.handlingar.map((h) => (
+        <li>
+          <span class="vy-meta">{KIND[h.handling.kind] ?? h.handling.kind}{h.handling.datum ? ` · ${h.handling.datum}` : ""}{h.handling.organ ? ` · ${h.handling.organ}` : ""}</span>
+          {h.handling.url ? <a class="vy-titel" href={h.handling.url} rel="noopener" target="_blank">{h.handling.titel || h.handling.id}</a> : <span class="vy-titel">{h.handling.titel || h.handling.id}</span>}
+          <span class="vy-lofte">för löftet: <a href={`${base}?lofte=${h.lofte_id}`}>{h.lofte_titel}</a></span>
+          <span class={`status ${UTSLAGKLASS[h.utslag]}`}>{UTSLAGORD[h.utslag]}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+</Layout>
+
+<style>
+  .brodsmula { color: var(--text-svag); font-size: 0.9rem; margin: 0 0 0.3rem; }
+  .brodsmula a { color: var(--fokus); }
+  h2 { margin-top: 2rem; font-size: 1.25rem; }
+  .rakn { color: var(--text-svag); font-weight: 400; }
+  .tom-not { color: var(--text-svag); font-style: italic; }
+</style>

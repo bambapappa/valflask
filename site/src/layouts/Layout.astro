@@ -37,8 +37,15 @@ const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new UR
       <p class="devis">Ord är gratis, handlingar räknas.</p>
       <nav class="toppnav">
         <a href={base}>Rutnätet</a>
+        <a href={`${base}partier`}>Partier</a>
+        <a href={`${base}ledamoter`}>Ledamöter</a>
         <a href={`${base}metod`}>Så görs vägningen</a>
       </nav>
+      <div class="sok" data-api-base={base}>
+        <label class="hoppa" for="sok-falt">Sök löfte, parti eller ledamot</label>
+        <input id="sok-falt" type="search" placeholder="Sök löfte, parti eller ledamot…" autocomplete="off" aria-controls="sok-traffar" />
+        <ul id="sok-traffar" class="sok-traffar" role="listbox" aria-label="Sökträffar"></ul>
+      </div>
     </div>
   </header>
   <main id="huvud">
@@ -52,5 +59,6 @@ const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new UR
       ett parti utan en ren, kontrollerad koppling lämnas tomt.
     </p>
   </footer>
+  <script is:inline src={`${base}hv-sok.js`}></script>
 </body>
 </html>

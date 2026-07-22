@@ -166,7 +166,28 @@ dialog.panel::backdrop { background: rgba(0,0,0,0.45); }
 
 .laddar { color: var(--text-svag); padding: 1rem 0; }
 
+/* Sökrutan i sidhuvudet (global) */
+.topp .sok { margin-top: 0.7rem; max-width: 560px; }
+.verktyg-etikett { font-size: 0.85rem; color: var(--text-svag); margin-right: 0.5rem; }
+.verktyg label { display: inline-flex; align-items: center; }
+
+/* Delade listor på parti- och ledamotssidorna */
+.vy-lista { list-style: none; padding: 0; margin: 0.8rem 0; display: grid; gap: 0.5rem; }
+.vy-lista li {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.7rem;
+  padding: 0.6rem 0.8rem; background: var(--yta); border: 1px solid var(--linje); border-radius: var(--radie);
+}
+.vy-titel { font-weight: 600; color: var(--text); text-decoration: none; }
+a.vy-titel { color: var(--fokus); }
+.vy-titel:hover { text-decoration: underline; }
+.vy-kat { color: var(--text-svag); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.vy-meta { color: var(--text-svag); font-size: 0.82rem; width: 100%; }
+.vy-lofte { color: var(--text-svag); font-size: 0.85rem; }
+.vy-lofte a { color: var(--fokus); }
+.vy-lista .status, .vy-lista .markorer { margin-left: auto; }
+
 @media (max-width: 640px) {
   h1 { font-size: 1.4rem; }
   .topp-inner, main, .botten p { padding: 0.9rem 0.9rem; }
+  .vy-lista .status, .vy-lista .markorer { margin-left: 0; }
 }

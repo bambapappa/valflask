@@ -1,7 +1,7 @@
 # Överlämning — Handlingsvågen
 
-Skriven 2026-07-19; senast uppdaterad 2026-07-22 (HV4-sajtens första bit
-byggd: rutnätet Vy 1 med detaljpanel och sökindex, b-0019).
+Skriven 2026-07-19; senast uppdaterad 2026-07-22 (HV4 FÄRDIG: rutnätet
+Vy 1, partisidan Vy 2 och ledamotssidan Vy 3 byggda i `site/`, b-0019).
 Läs `CLAUDE.md` först (bindande
 språkregler och kärnprinciper), sedan `SPEC-HANDLINGSVAGEN.md` (fastställd
 spec) och `NEUTRALITET.md`. Alla metodval står i `data/beslutslogg.json`.
@@ -64,6 +64,31 @@ för hand under Actions-fliken. OpenRouter-nyckeln finns som hemlighet i
 valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
+
+**Gjort 2026-07-22 (HV4 färdig — Vy 2 + Vy 3, grenen `claude/handoff-next-steps-osvpyr`):**
+
+- **Partisidan (Vy 2)** `site/src/pages/parti/[kod].astro` (8 sidor): partiets
+  egna löften med status (ärligt tomt där ingen koppling finns), listan över
+  handlingar som gett utslag (nyast först), andelen utan handling som tal.
+- **Ledamotssidan (Vy 3)** `site/src/pages/ledamot/[id].astro` (alla 425
+  sittande, F5): meritlista per löfte ur `domar.json` — egna handlingar skilda
+  från röster i voteringar — frånvaro visad med kvittningsnot (fäller aldrig,
+  b-0004), och avvikelse från partilinjen markerad (spec §6.4; räknas
+  deterministiskt genom att jämföra ledamotens klassning mot partiets på samma
+  koppling, bara voteringar). Just nu 0 avvikelser: de tre kopplade
+  voteringarna var partienhetliga. Avhoppade får ingen sida — deras namn står
+  kvar på handlingen.
+- **Index och navigering:** `partier.astro` + `ledamoter.astro` (425 grupperade
+  på parti). Global sökruta i sidhuvudet på ALLA sidor (`hv-sok.js`), eget
+  index vidgat till partier + ledamöter (443 poster). Rutnätets partikolumner
+  och panelens partipiller länkar till partisidorna; djuplänk `?lofte=<id>`
+  öppnar rätt panel (så journalister kan länka exakt).
+- **Grindar:** `site/` budget- och strukturgrindar gröna (`npm test`, ny
+  `test-vyer.mts`), `astro build` grön (437 sidor), rökt i headless Chromium
+  (partisida via kolumnrubrik, sök→ledamot, parti-länk, djuplänk→panel,
+  425 i indexet, inga JS-fel).
+- **HV4 är därmed komplett** i spec-mening (§8: per löfte, per parti, per
+  ledamot; metodsida; API-utkast). Nästa grind är HV5 — se Återstår.
 
 **Gjort 2026-07-22 (HV4-sajtens första bit — grenen `claude/handoff-next-steps-osvpyr`):**
 
@@ -185,27 +210,27 @@ Settings → Secrets and variables → Actions.
    öppen metodfråga — beslutslogga innan kod.
 5. **Bakåtskörd till 2002/03** när ägaren vill: samma skript, fler
    `--rm`. Räkna ~1 h per mandatperiod i artigt tempo.
-6. **HV4 — sajtsektionen fortsätter.** Rutnätet (Vy 1) + metodsidan är
-   BYGGDA (b-0019, `site/` — egen Astro-sajt, bas `/handlingsvagen`). Kvar
-   av HV4:
-   - **Vy 2 partisidan** och **Vy 3 ledamotssidan** (425 sittande; röstrad
-     ur `data/roster/`, meriter ur `domar.json`, avvikelser mot partilinjen;
-     avhoppade får notis, F5). Sökindexet vidgas då till ledamöter och
-     betänkanden (nu bara löften + kategorier).
+6. **HV4 — KLART (b-0019).** Rutnätet (Vy 1), partisidan (Vy 2),
+   ledamotssidan (Vy 3), metodsidan och API-utkastet är byggda i `site/`
+   (egen Astro-sajt, bas `/handlingsvagen`). Kvar är bara förfiningar som
+   INTE blockerar HV5:
    - **Frågevågens ståndpunkter i rutnätet (F4):** kopplingsmodellen bär
      redan `stance_id` (mål = promise_id ?? stance_id), men det finns inga
-     ståndpunktskopplingar än och inget vendorat ståndpunktsindex — rutnätet
+     ståndpunktskopplingar än och inget vendorat ståndpunktsindex — sajten
      hoppar tyst över `stance_id`-mål tills dess.
-   - **Hela registret som rader:** rutnätet visar nu bara de vägda löftena
-     (6); de 416 utan handling redovisas ärligt som tal. En filtrerbar helvy
-     (alla 422) hör till Vy 2-arbetet.
-   - **Filter som URL-parametrar** (SKISS §3), **exakta temakulörer (F2)** i
-     det delade tema-arbetet, **dokumenttyp-toggel (F6)** och
-     **kostnadsgrind (F7)** när de vyerna finns.
-   - Prototypen i `prototyp/` är fortsatt designunderlag (Ämnen, Mot
-     varandra, Kartan). Sajten skivar alltid datat vid byggtid — aldrig
-     skeppa 17 MB.
-7. **HV5 — lanseringsgrinden**: checklista i spec §8. Ägarens go krävs.
+   - **Filter som URL-parametrar** utöver `?lofte`/`?kategori` (SKISS §3),
+     **exakta temakulörer (F2)** i det delade tema-arbetet, **dokumenttyp-
+     toggel (F6)** och **kostnadsgrind (F7)**.
+   - Prototypens övriga vyer (Ämnen, Mot varandra, Kartan) om ägaren vill
+     ha dem; de är extra, inte spec-krav.
+   - Partibyten på ledamotssidan (roster-avvikelselistan) är ännu inte
+     utskrivna — avvikelse mot partilinjen är det.
+7. **HV5 — lanseringsgrinden (NÄSTA STORA STEG).** Checklista i spec §8,
+   ägarens uttryckliga go krävs. Hårda blockerare i tur och ordning:
+   arkivkopior på de vägda handlingarna (0 av 16 har en ännu — kräver
+   arkivskörd via Actions), rättelsevägen inkopplad på HV-sajten, metodsida
+   + beslutslogg publicerade, symmetritestet redovisat i beslutsloggen.
+   Först därefter speglas/går live på drygast.nu och valflask.
    Då speglas även granskningsflödet till valflask.
 
 ## Tekniska anteckningar (dyrköpta)
@@ -269,11 +294,7 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-22 `claude/handoff-next-steps-osvpyr` → **HV4 färdigställs: partisidan
-  (Vy 2) och ledamotssidan (Vy 3)** i `site/`. Rör `site/` och läser bara
-  incheckad data (`domar.json`, `personer.json`, `loften-index.json`,
-  `kopplingar.json`, `handlingar.json`). Rör INTE skörd, `data/roster/` eller
-  domsmotorn.
+*(inga anspråk)*
 
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
