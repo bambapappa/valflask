@@ -203,5 +203,116 @@
       "confidence": 0.4
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fler lärare och mindre klasser i skolan",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill satsa på fler lärare och mindre klasser.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Plånbokslöfte med höjt barnbidrag och billigare mediciner",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi ska ge tillbaka det du förlorat med ett plånbokslöfte: höjt barn- och studiebidrag, billigare mediciner, avgiftsfri tandvård för unga, hårdare press på banker och matkedjor och starkare skydd mot höga elpriser för villaägare.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 8000,
+      "msek_base": 15000,
+      "msek_high": 40000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Grov uppskattning av höjt barnbidrag (ca 200 kr/mån för 2M barn), höjt studiebidrag, subventionerade mediciner, utökad tandvård, elprisstöd. Baserat på jämförbara reformkostnader, stor osäkerhet.",
+      "confidence": 0.3
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa karensen i sjukförsäkringen",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Den orättvisa karensen ska bort.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 2500,
+      "msek_high": 4000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattat från antal sjukfall (2-3 miljoner per år) och genomsnittlig sjuklönekostnad per dag (ca 1000 kr). Osäkerhet pga ändrat beteende.",
+      "confidence": 0.4
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Förbjuda religiösa friskolor",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill förbjuda religiösa friskolor.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0015"
+  },
+  {
+    "candidate": {
+      "title": "Omfattande upprustning av försvaret och fler värnpliktiga",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill se en omfattande upprustning och fler värnpliktiga.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0021"
   }
 ]
