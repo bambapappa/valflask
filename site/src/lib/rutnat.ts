@@ -14,6 +14,7 @@ import {
   getParties,
   getKopplingar,
   getHandlingMap,
+  getArkivMap,
   malId,
   type DomStatus,
   type PartiDom,
@@ -210,6 +211,7 @@ export function buildLofteDetalj(id: string): LofteDetalj | null {
   const lof = getLoften().find((l) => l.id === id);
   if (!lof) return null;
   const handlingar = getHandlingMap();
+  const arkiv = getArkivMap();
   const kopplingar = getKopplingar().filter((k) => k.status === "aktiv" && malId(k) === id);
 
   const kopplingVyer: KopplingVy[] = kopplingar.map((k) => {
@@ -232,7 +234,7 @@ export function buildLofteDetalj(id: string): LofteDetalj | null {
         dok_id: h?.dok_id ?? "",
         parties: h?.parties ?? [],
         url: h?.url ?? "",
-        arkiv_url: h?.archive_url ?? null,
+        arkiv_url: h?.archive_url ?? arkiv.get(k.handling_id) ?? null,
       },
     };
   });
