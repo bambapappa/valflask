@@ -232,7 +232,12 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-*(inga anspråk)*
+- 2026-07-22 `claude/handoff-next-steps-osvpyr` → **HV4-sajten, första biten
+  (Återstår punkt 6):** egen Astro-sajt under `site/` (bas `/handlingsvagen`,
+  b-0017), rutnätet Vy 1 med detaljpanel och eget sökindex. Rör `site/`,
+  `data/domar.json` (genereras deterministiskt), en slimmad `data/loften-index.json`
+  vendorad ur valflasks `promises.json`, samt `scripts/`. Rör INTE skörd
+  eller `data/handlingar.json`/`data/roster/`.
 
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
