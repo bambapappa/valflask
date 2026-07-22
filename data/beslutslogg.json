@@ -211,5 +211,18 @@
       "F5 egen sida per avhoppad ledamot (full spårbarhet men tunna stumpar, fler filer) — förkastat."
     ],
     "decided_by": "ägaren 2026-07-21"
+  },
+  {
+    "date": "2026-07-22",
+    "id": "b-0019",
+    "status": "genomförd",
+    "decision": "HV4-sajtens första bit byggd som egen statisk Astro-sajt (b-0017), bas /handlingsvagen: rutnätet Vy 1 (löfte × parti), detaljpanel med kopplingarnas bevis och eget sökindex (F3). Datat skivas vid byggtid till api/hv/* — råfilerna skeppas aldrig. Två följdval: (a) valflasks publika löftes- och partidata vendoras som en slimmad läskopia i detta repo (data/loften-index.json, data/parties.json) så sajten kan byggas fristående utan att nå in i valflask; källan förblir valflask och kopian skrivs om vid varje dataändring. (b) För att fylla rutnätets alla åtta partikolumner (b-0018 F1) räknas partidomar för hela partiuniversumet, inte bara löftets eget parti — varje cell fylls av partiets EGEN handling: dess röst i en kopplad votering, eller dess eget författarskap av en kopplad motion/proposition. Partier utan kopplad handling får en ärlig tom cell. domar.mts breddar bara sitt partival; domsmotorn (domar.ts) och dess 76 tester är orörda.",
+    "why": "F1 (ägaren) kräver alla åtta partier per löfte, och det enda ärliga sättet att fylla en icke-ägarcell är partiets egen registrerade handling, med samma riktningssemantik (b-0009, b-0004) som redan är testad — koden gissar inte. En rutnätsversion där bara ägarpartiet någonsin kan fyllas skulle läsa 'ingen ren koppling ännu' som permanent, vilket vore missvisande. Vendoring håller privatgrinden (sajten bygger inte mot valflask live) och en enda sanning (valflask äger löftena). De voteringskopplade löftena visar nu en blockspridning ur partiernas egna röster — 'fem i val'-testet.",
+    "alternatives": [
+      "Bara ägarpartiets kolumn ifylld (b-0018 F1 uttryckligen förkastad: gömmer jämförelsen och gör sju kolumner permanent tomma) — förkastat.",
+      "Räkna om domarna i sajtlagret för alla åtta men lämna data/domar.json ägarsmalt (två sanningar för samma dom) — förkastat.",
+      "Läsa valflasks promises.json live vid bygget i stället för att vendora (kopplar repona och riskerar privatgrinden) — förkastat."
+    ],
+    "decided_by": "sessionen claude/handoff-next-steps-osvpyr 2026-07-22 — tekniskt följdbeslut till b-0018 F1; det semantiska valet (b) att räkna in ett icke-ägarpartis röst i en delad, kopplad votering är öppet för ägarens omprövning (reversibelt: domar.mts faller tillbaka på målets egna partier)."
   }
 ]
