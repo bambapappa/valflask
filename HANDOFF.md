@@ -269,7 +269,11 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-*(inga anspråk)*
+- 2026-07-22 `claude/handoff-next-steps-osvpyr` → **HV4 färdigställs: partisidan
+  (Vy 2) och ledamotssidan (Vy 3)** i `site/`. Rör `site/` och läser bara
+  incheckad data (`domar.json`, `personer.json`, `loften-index.json`,
+  `kopplingar.json`, `handlingar.json`). Rör INTE skörd, `data/roster/` eller
+  domsmotorn.
 
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
