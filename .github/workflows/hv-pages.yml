@@ -1,12 +1,12 @@
 name: hv-pages
 # Bygg + (valfri) driftsättning av Handlingsvågens EGNA Pages-sajt bakom
-# Cloudflare på drygast.nu/handlingsvagen (b-0017). GATEAD FÖR HV5:
-# ingen push-utlösare — workflown körs bara för hand, och deploy-steget körs
-# BARA när ägaren uttryckligen sätter input deploy=true. En vanlig körning
-# bygger och testar sajten (validerar att den är driftsättningsbar) men rör
-# inget publikt. Sajten bär `noindex` tills privatgrinden HV5 släpps (se
-# MIGRERING.md); och även efter en deploy blir inget live förrän Cloudflare
-# pekas mot HV-projektet.
+# Cloudflare på subdomänen handlingsvagen.drygast.nu (b-0021, ersätter
+# b-0017:s sökväg). GATEAD FÖR HV5: ingen push-utlösare — workflown körs bara
+# för hand, och deploy-steget körs BARA när ägaren uttryckligen sätter input
+# deploy=true. En vanlig körning bygger och testar sajten (validerar att den är
+# driftsättningsbar) men rör inget publikt. Sajten bär `noindex` tills
+# privatgrinden HV5 släpps (se MIGRERING.md); och även efter en deploy blir
+# inget live förrän subdomänens custom-domän är satt på HV-projektet.
 on:
   workflow_dispatch:
     inputs:
@@ -61,8 +61,8 @@ jobs:
               npx --yes wrangler@3 pages project list || true
               exit 1
             }
-            echo "Deploy klar till CF-projektet '${CF_PROJECT}'. OBS: live på drygast.nu/handlingsvagen"
-            echo "kräver att Cloudflare-routningen pekas mot projektet — ett separat ägarsteg (MIGRERING.md)."
+            echo "Deploy klar till CF-projektet '${CF_PROJECT}'. OBS: live på handlingsvagen.drygast.nu"
+            echo "kräver att subdomänens custom-domän är satt på projektet — ett separat ägarsteg (MIGRERING.md)."
           else
             echo "SKIP: Cloudflare-deploy hoppad — secrets.CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID saknas."
             echo "Ägarsteg: lägg CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID som GitHub Secrets"

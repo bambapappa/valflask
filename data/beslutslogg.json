@@ -233,5 +233,17 @@
     "why": "Neutralitetskontraktet kräver att metoden bevisligen är blind för block. Domsmotorn har ingen parti- eller blockberoende gren — utslaget beror bara på den faktiska rösten eller författarskapet och kopplingens riktning — och symmetritestet gör detta till en grind som fälls om någon senare råkar införa en asymmetri.",
     "alternatives": [],
     "decided_by": "sessionen claude/handoff-next-steps-osvpyr 2026-07-22 — tekniskt följdbeslut till spec §7 och HV3-milstolpen (redovisning, inget nytt metodval)."
+  },
+  {
+    "date": "2026-07-22",
+    "id": "b-0021",
+    "status": "fastställd",
+    "decision": "Handlingsvågen läggs på en egen SUBDOMÄN, handlingsvagen.drygast.nu, i stället för på sökvägen drygast.nu/handlingsvagen (ersätter topologidetaljen i b-0017; resten av b-0017 står kvar — egen Pages-sajt bakom Cloudflare, delat tema, privatgrind). Sajten serveras från roten (ingen basstig). Cloudflare-uppsättningen blir en vanlig Pages-custom-domain på HV-projektet; ingen Worker och ingen routningsregel behövs.",
+    "why": "En sökväg på drygast.nu kan i Cloudflare bara pekas till ett andra Pages-projekt via en Worker som delar trafiken på path — ett extra rörligt element att bygga och underhålla. En subdomän ger samma separation (skyddar privatgrinden, håller blast radius liten — b-0017:s motiv gäller oförändrat) men driftsätts med bara en custom domain, utan kod. Enklare och robustare för en solo-drift.",
+    "alternatives": [
+      "Sökväg drygast.nu/handlingsvagen via Cloudflare Worker (b-0017:s ursprungliga val) — förkastat: kräver en Worker som strippar prefixet, mer att underhålla utan tydlig vinst.",
+      "Bygga in HV i Fläskvågens projekt (alternativ A i b-0017) — fortsatt förkastat: hotar privatgrinden och ökar blast radius."
+    ],
+    "decided_by": "ägaren 2026-07-22"
   }
 ]

@@ -6,8 +6,9 @@ går mellan *förberett* och *själva sammanslagningen*. Allt nedanför rubriken
 ditt go" är medvetet **inte** gjort: det är stegen som gör något publikt, och
 de kräver ditt uttryckliga go (spec §8, kärnprincipen om privatgrinden).
 
-Topologi (b-0017): Handlingsvågen driftsätts som en **egen** statisk Pages-sajt
-bakom Cloudflare på `drygast.nu/handlingsvagen` — den byggs aldrig in i
+Topologi (b-0017 + b-0021): Handlingsvågen driftsätts som en **egen** statisk
+Pages-sajt bakom Cloudflare på **subdomänen `handlingsvagen.drygast.nu`** (b-0021
+valde subdomän före sökväg — ingen Worker behövs). Den byggs aldrig in i
 Fläskvågens repo eller bygge. Granskningsflödet speglas till valflask först vid
 lansering.
 
@@ -54,27 +55,33 @@ Gör dessa i ordning. Fram till steg 4 är ingenting publikt.
    betänkandet — den vägen byggs när betänkandelänkarna behövs.
 2. **Validera bygget.** Kör `hv-pages` (Actions) med `deploy=false`. Grönt =
    sajten är driftsättningsbar.
-3. **Sätt upp Cloudflare-projektet.** Skapa ett Pages-projekt för Handlingsvågen
-   och lägg `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` som GitHub Secrets
-   (och `CLOUDFLARE_HV_PROJECT_NAME` som variabel om projektet inte heter
-   `handlingsvagen`).
+3. **Sätt upp Cloudflare-projektet + subdomänen.** Skapa ett Pages-projekt
+   (Workers & Pages → Create → Pages → Direct Upload) döpt `handlingsvagen`.
+   Lägg custom domain **`handlingsvagen.drygast.nu`** på projektet — Cloudflare
+   skapar CNAME i drygast.nu-zonen automatiskt (ingen Worker, ingen
+   routningsregel; b-0021). Lägg i **detta** repos GitHub Secrets:
+   `CLOUDFLARE_API_TOKEN` (scope: Account · Cloudflare Pages · Edit) och
+   `CLOUDFLARE_ACCOUNT_ID` (och variabeln `CLOUDFLARE_HV_PROJECT_NAME` om
+   projektet inte heter `handlingsvagen`).
 4. **Släpp privatgrinden.** Ta bort `<meta name="robots" content="noindex" />`
    i `site/src/layouts/Layout.astro`. **Detta är den punkt där sajten blir
    avsedd för publik indexering — gör det först när allt annat är klart och du
    gett go.**
 5. **Driftsätt.** Kör `hv-pages` med `deploy=true`. Filerna landar i
    CF-projektet.
-6. **Peka routningen.** Ställ Cloudflare så att `drygast.nu/handlingsvagen`
-   serverar HV-projektet. Först nu är sajten live.
+6. **Verifiera subdomänen.** `handlingsvagen.drygast.nu` ska nu servera
+   HV-projektet (custom-domänen från steg 3 — ingen Worker). Först nu är
+   sajten live.
 7. **Spegla granskningsflödet till valflask.** Koppling-issue-flödet
    (`koppling-sync.yml`, `koppling-review.yml`) ligger i detta repo och kan
    flyttas/speglas till valflask (skripten läser `GITHUB_REPOSITORY`). Behåll
    det här eller flytta — ditt val; inget behöver ligga i valflask före HV5.
 8. **Verifiera live.** Gå igenom rutnätet, en partisida, en ledamotssida,
-   detaljpanelen med arkivlänk, sök och filter på `drygast.nu/handlingsvagen`.
+   detaljpanelen med arkivlänk, sök och filter på `handlingsvagen.drygast.nu`.
 
 ## Vad den här förberedelsen medvetet INTE gjort
 
-Inget publikt: `noindex` sitter kvar, ingen deploy är körd, Cloudflare-routningen
-är orörd, och granskningsflödet är inte speglat till valflask. Arkivskörden är
-byggd men inte körd. Det är själva sammanslagningen — den väntar på ditt go.
+Inget publikt: `noindex` sitter kvar, ingen deploy är körd, Cloudflare-projektet
+och subdomänen är inte uppsatta, och granskningsflödet är inte speglat till
+valflask. Arkivskörden är byggd men inte körd. Det är själva sammanslagningen —
+den väntar på ditt go.

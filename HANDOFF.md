@@ -158,7 +158,8 @@ gör något publikt (kräver ägarens go). Runbook: `MIGRERING.md`.
   (461 sidor), innehållstesterna gröna. OG-delningsbilderna maskar ännu
   INTE beloppet — medvetet parkerat.
 - **Topologi (b-0017):** Handlingsvågen hostas som EGEN Pages-sajt bakom
-  Cloudflare på `drygast.nu/handlingsvagen`, inte inbyggd i Fläskvågen —
+  Cloudflare på `drygast.nu/handlingsvagen` (adressen ändrad till subdomänen
+  `handlingsvagen.drygast.nu` i b-0021), inte inbyggd i Fläskvågen —
   skyddar privatgrinden och håller blast radius liten. Temat delas som en
   källa. Omvärderas efter HV5.
 - **HV4-frågorna F1–F5 avgjorda (b-0018), `SKISS-HV4.md` §5 uppdaterad:**
@@ -271,9 +272,10 @@ gör något publikt (kräver ägarens go). Runbook: `MIGRERING.md`.
    arkivkopiorna är verifierade (0/16 nu — enda hårda datapunkten); (2)
    validera bygget (`hv-pages`, deploy=false); (3) Cloudflare-projekt +
    hemligheter; (4) **ta bort `noindex`** i `site/src/layouts/Layout.astro`
-   (grinden släpps här); (5) deploy=true; (6) peka Cloudflare-routningen till
-   `drygast.nu/handlingsvagen`; (7) spegla granskningsflödet till valflask;
-   (8) verifiera live. Ägarens uttryckliga go krävs.
+   (grinden släpps här); (5) deploy=true; (6) sätt custom-domänen
+   `handlingsvagen.drygast.nu` på HV-projektet (subdomän, b-0021 — ingen
+   Worker); (7) spegla granskningsflödet till valflask; (8) verifiera live.
+   Ägarens uttryckliga go krävs.
    Då speglas även granskningsflödet till valflask.
 
 ## Tekniska anteckningar (dyrköpta)
@@ -337,11 +339,7 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-22 `claude/handoff-next-steps-osvpyr` → **Topologibyte: subdomän
-  `handlingsvagen.drygast.nu` i stället för sökväg** (ägaren, ersätter b-0017:s
-  sökvägsdetalj → b-0021). Byter sajtens bas `/handlingsvagen` → `/`, uppdaterar
-  canonical + runbook. Rör bara `site/`, `MIGRERING.md`, `.github/workflows/`.
-  Fortsätter på öppen PR #44.
+*(inga anspråk)*
 
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har

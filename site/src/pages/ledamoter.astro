@@ -20,7 +20,7 @@ const grupper = [...perParti.entries()]
   })
   .map(([kod, lista]) => [kod, lista.sort((a, b) => a.namn.localeCompare(b.namn, "sv"))] as const);
 ---
-<Layout title="Ledamöter — Handlingsvågen" canonicalPath="/handlingsvagen/ledamoter">
+<Layout title="Ledamöter — Handlingsvågen" canonicalPath="/ledamoter">
   <h1>Ledamöter</h1>
   <p class="ingress">
     De {personer.length} sittande ledamöterna. Varje sida visar ledamotens röster
