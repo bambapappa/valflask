@@ -294,7 +294,10 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-*(inga anspråk)*
+- 2026-07-22 `claude/handoff-next-steps-osvpyr` → **HV4-filtren (SKISS §3):**
+  parti, kategori, status, dokumenttyp, riksmöte, motionstyp som
+  URL-parametrar på rutnätet (och lätta filter på parti-/ledamotssidorna).
+  Rör bara `site/`. Fortsätter på öppen PR #43.
 
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
