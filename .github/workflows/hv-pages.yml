@@ -1,0 +1,70 @@
+name: hv-pages
+# Bygg + (valfri) driftsättning av Handlingsvågens EGNA Pages-sajt bakom
+# Cloudflare på drygast.nu/handlingsvagen (b-0017). GATEAD FÖR HV5:
+# ingen push-utlösare — workflown körs bara för hand, och deploy-steget körs
+# BARA när ägaren uttryckligen sätter input deploy=true. En vanlig körning
+# bygger och testar sajten (validerar att den är driftsättningsbar) men rör
+# inget publikt. Sajten bär `noindex` tills privatgrinden HV5 släpps (se
+# MIGRERING.md); och även efter en deploy blir inget live förrän Cloudflare
+# pekas mot HV-projektet.
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: "Driftsätt till Cloudflare Pages? (kräver HV5-go — annars bara bygg + test)"
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: hv-pages
+  cancel-in-progress: false
+jobs:
+  bygg-och-testa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: npm ci
+        working-directory: pipeline
+      - name: Pipeline-tester + typkontroll
+        run: |
+          npm test
+          npm run typecheck
+        working-directory: pipeline
+      - name: Install site deps
+        run: npm ci
+        working-directory: site
+      - name: Sajtens grindar (budget + struktur)
+        run: npm test
+        working-directory: site
+      - name: Bygg sajten
+        run: npm run build
+        working-directory: site
+      # Driftsättning körs BARA på uttrycklig ägar-input (HV5-go). Icke-blockerande
+      # och graciöst hopp om Cloudflare-hemligheter saknas — samma mönster som
+      # Fläskvågens build.yml, men egen HV-projektnyckel (b-0017).
+      - name: Deploy till Cloudflare Pages (endast vid deploy=true)
+        if: ${{ inputs.deploy }}
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_PROJECT: ${{ vars.CLOUDFLARE_HV_PROJECT_NAME || 'handlingsvagen' }}
+        run: |
+          if [ -n "${CLOUDFLARE_API_TOKEN}" ] && [ -n "${CLOUDFLARE_ACCOUNT_ID}" ]; then
+            npx --yes wrangler@3 pages deploy site/dist --project-name "${CF_PROJECT}" --branch main || {
+              echo "::warning::Cloudflare-deploy misslyckades för projekt '${CF_PROJECT}'. Tillgängliga projekt:"
+              npx --yes wrangler@3 pages project list || true
+              exit 1
+            }
+            echo "Deploy klar till CF-projektet '${CF_PROJECT}'. OBS: live på drygast.nu/handlingsvagen"
+            echo "kräver att Cloudflare-routningen pekas mot projektet — ett separat ägarsteg (MIGRERING.md)."
+          else
+            echo "SKIP: Cloudflare-deploy hoppad — secrets.CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID saknas."
+            echo "Ägarsteg: lägg CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID som GitHub Secrets"
+            echo "(och ev. CLOUDFLARE_HV_PROJECT_NAME som variabel om projektet inte heter 'handlingsvagen')."
+          fi
