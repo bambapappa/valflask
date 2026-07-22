@@ -1,7 +1,7 @@
 # Överlämning — Handlingsvågen
 
-Skriven 2026-07-19; senast uppdaterad 2026-07-21 (kostnadsgrind i
-Fläskvågen, topologibeslut b-0017, HV4-frågorna F1–F5 avgjorda b-0018).
+Skriven 2026-07-19; senast uppdaterad 2026-07-22 (HV4-sajtens första bit
+byggd: rutnätet Vy 1 med detaljpanel och sökindex, b-0019).
 Läs `CLAUDE.md` först (bindande
 språkregler och kärnprinciper), sedan `SPEC-HANDLINGSVAGEN.md` (fastställd
 spec) och `NEUTRALITET.md`. Alla metodval står i `data/beslutslogg.json`.
@@ -14,7 +14,7 @@ mot löftena (Fläskvågen) och ståndpunkterna (Frågevågen). Devisen: ord är
 gratis, handlingar räknas. **Privat tills lanseringsgrinden HV5 passerats**
 — ingenting härifrån får synas i valflask eller på drygast.nu före dess.
 
-## Läget just nu (68 tester, ren typkontroll under `pipeline/`)
+## Läget just nu (76 tester + ren typkontroll under `pipeline/`; `site/`-svit och `astro build` gröna)
 
 - **HV0** — spec, neutralitetskontrakt, scheman, beslutslogg.
   b-0001–b-0012 är samtliga fastställda av ägaren (b-0009 och b-0011
@@ -64,6 +64,31 @@ för hand under Actions-fliken. OpenRouter-nyckeln finns som hemlighet i
 valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
+
+**Gjort 2026-07-22 (HV4-sajtens första bit — grenen `claude/handoff-next-steps-osvpyr`):**
+
+- **Rutnätet Vy 1 byggt på riktigt (b-0019), egen Astro-sajt under `site/`**
+  (bas `/handlingsvagen`, b-0017; privat, `noindex`). Löfte × parti, status på
+  form aldrig grön/röd (F2), tomma celler ärligt utskrivna (F1). Klick på
+  löfte/cell → detaljpanel med kopplingarnas bevis (exakt citat, riksdagslänk,
+  arkivlänk när den finns, riktning, metodnot, motionstyp, säkerhet, godkänd av
+  människa). Metodsida i språk alla förstår. Eget sökindex (F3), laddas vid
+  fokus; kategorifilter. CSP-rent: klientkod i `public/hv-rutnat.js`, ingen
+  inline-JS.
+- **Byggtidsskivning** `site/src/pages/api/hv/*`: `summary.json` (3,3 KB), per
+  löfte-detalj (störst 5 KB), `sok-index.json` (1,2 KB) — råfilerna (17 MB)
+  skeppas aldrig. Budget- och strukturgrindar gröna (`npm test` i `site/`),
+  `astro build` grön (10 filer), rökt i headless Chromium (panel, sök, filter,
+  inga JS-fel).
+- **Alla åtta partier fylls ur egna röster (b-0019 b):** partidomar räknas nu
+  för hela partiuniversumet, inte bara löftets eget parti — varje cell fylls av
+  partiets EGEN handling (röst i kopplad votering, eget författarskap).
+  `domar.mts` läser `data/parties.json`; `data/domar.json` regenererad (48
+  partidomar, 19 med utslag; 745 meriter oförändrade). Domsmotorn och dess 76
+  tester orörda. De två voteringskopplade löftena visar en blockspridning —
+  det semantiska valet är öppet för din omprövning, se meddelande nedan.
+- **Vendorat utdrag ur valflask (b-0019 a):** `data/loften-index.json` +
+  `data/parties.json` via `npm run vendor`. Läskopia; valflask äger löftena.
 
 **Gjort 2026-07-21 (kostnadsgrind, topologi, HV4-frågorna — grenen `…bundle-content-ueyqqy`):**
 
@@ -160,14 +185,26 @@ Settings → Secrets and variables → Actions.
    öppen metodfråga — beslutslogga innan kod.
 5. **Bakåtskörd till 2002/03** när ägaren vill: samma skript, fler
    `--rm`. Räkna ~1 h per mandatperiod i artigt tempo.
-6. **HV4 — sajtsektion på riktigt** (Astro) + metodsida. **F1–F5 är nu
-   avgjorda (b-0018) — inget principbeslut blockerar längre; kvar är
-   sidbyggandet.** Enligt b-0017 byggs HV som egen Pages-sajt bakom
-   Cloudflare på `drygast.nu/handlingsvagen` (inte inbyggd i Fläskvågen).
-   Prototypen i `prototyp/` är designunderlaget; sajten skivar datat vid
-   byggtid — aldrig skeppa 17 MB. Naturlig första bit: rutnätet (Vy 1) —
-   `api/hv/summary.json` för cellerna, detaljpanel med kopplingarnas
-   bevis, eget sökindex (F3).
+6. **HV4 — sajtsektionen fortsätter.** Rutnätet (Vy 1) + metodsidan är
+   BYGGDA (b-0019, `site/` — egen Astro-sajt, bas `/handlingsvagen`). Kvar
+   av HV4:
+   - **Vy 2 partisidan** och **Vy 3 ledamotssidan** (425 sittande; röstrad
+     ur `data/roster/`, meriter ur `domar.json`, avvikelser mot partilinjen;
+     avhoppade får notis, F5). Sökindexet vidgas då till ledamöter och
+     betänkanden (nu bara löften + kategorier).
+   - **Frågevågens ståndpunkter i rutnätet (F4):** kopplingsmodellen bär
+     redan `stance_id` (mål = promise_id ?? stance_id), men det finns inga
+     ståndpunktskopplingar än och inget vendorat ståndpunktsindex — rutnätet
+     hoppar tyst över `stance_id`-mål tills dess.
+   - **Hela registret som rader:** rutnätet visar nu bara de vägda löftena
+     (6); de 416 utan handling redovisas ärligt som tal. En filtrerbar helvy
+     (alla 422) hör till Vy 2-arbetet.
+   - **Filter som URL-parametrar** (SKISS §3), **exakta temakulörer (F2)** i
+     det delade tema-arbetet, **dokumenttyp-toggel (F6)** och
+     **kostnadsgrind (F7)** när de vyerna finns.
+   - Prototypen i `prototyp/` är fortsatt designunderlag (Ämnen, Mot
+     varandra, Kartan). Sajten skivar alltid datat vid byggtid — aldrig
+     skeppa 17 MB.
 7. **HV5 — lanseringsgrinden**: checklista i spec §8. Ägarens go krävs.
    Då speglas även granskningsflödet till valflask.
 
@@ -264,6 +301,17 @@ persisterar filen race-säkert i workflowen.
 
 Korta, daterade och signerade med grennamn; mottagaren tar bort raden
 när den är hanterad (i samma commit som åtgärden):
+
+- 2026-07-22 `claude/handoff-next-steps-osvpyr` → ägaren + alla: HV4-rutnätet
+  är byggt (`site/`). **Ett val att kvittera (b-0019 b):** för att fylla alla
+  åtta partikolumner räknas nu ett partis EGNA röst i en kopplad votering som
+  dess handling på löftets sakfråga — så en oppositionsröst mot ett kopplat
+  förslag blir "agerat emot" även på ett annat partis löfte. Det är öppna data
+  och samma testade riktningssemantik, men säg till om du hellre vill att bara
+  löftesägaren får utslag (då faller `domar.mts` tillbaka på målets egna
+  partier — reversibelt). **OBS interface:** `npm run domar` förutsätter nu att
+  `data/parties.json` finns (kör `npm run vendor` först). Kör aldrig
+  vendor/domar parallellt med en skörd — samma datafilsanspråk.
 
 - 2026-07-20 `…bundle-content-ueyqqy` → alla: grenen ligger före main
   med b-0014 (utskott i datamodellen + återfyllnad, organ-backfill)

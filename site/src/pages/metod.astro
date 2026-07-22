@@ -1,0 +1,81 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout title="Så görs vägningen — Handlingsvågen" canonicalPath="/handlingsvagen/metod">
+  <div class="prosa">
+    <h1>Så görs vägningen</h1>
+    <p class="ingress">
+      Handlingsvågen väger det partierna lovat mot det de faktiskt gjort i
+      riksdagen. Här står hur en koppling blir till, och var gränserna går.
+    </p>
+
+    <h2>En koppling blir till i tre steg</h2>
+    <ol>
+      <li>
+        <b>Förslag.</b> Ett program letar upp riksdagshandlingar — motioner,
+        propositioner, interpellationer, skriftliga frågor och voteringar — som
+        kan höra ihop med ett löfte.
+      </li>
+      <li>
+        <b>Kontroll ord för ord.</b> Varje förslag måste bära ett exakt citat ur
+        själva handlingen som visar sakfrågan. Räcker inte citatet läggs
+        förslaget åt sidan — kravet på exakt återgivning sänks aldrig.
+      </li>
+      <li>
+        <b>En människa godkänner.</b> Ingen koppling visas förrän en människa
+        läst citatet och sagt ja. Ingen språkmodell och ingen automatik får sista
+        ordet.
+      </li>
+    </ol>
+
+    <h2>Vad en cell betyder</h2>
+    <p>
+      Rutnätet har en rad per löfte och en kolumn per riksdagsparti. En cell
+      fylls bara där partiet självt agerat: hur partiet röstade i en kopplad
+      votering, eller att partiet självt skrivit en kopplad motion eller
+      proposition. <b>I linje</b> och <b>emot</b> beskriver riktningen mot
+      löftet, inte om det är bra eller dåligt — att agera emot ett löfte kan vara
+      precis vad en väljare hoppas på. Därför finns ingen grön-röd-skala; formen
+      på cellen och det utskrivna ordet bär allt.
+    </p>
+
+    <h2>Tomma celler är ärliga</h2>
+    <p>
+      Saknas en ren, kontrollerad koppling står cellen tom. Tomt är inte ett
+      betyg och inte ett misslyckande att dölja — det betyder bara att registret
+      ännu inte vägt just den rutan. Vi hittar aldrig på ett svar för att fylla
+      täckning.
+    </p>
+
+    <h2>Vad som aldrig fäller ett utslag</h2>
+    <ul>
+      <li>
+        <b>Frånvaro räknas aldrig.</b> Riksdagen har ett kvittningssystem — att
+        inte rösta kan vara överenskommet. Frånvaro visas på ledamotssidorna men
+        väger aldrig in i en dom.
+      </li>
+      <li>
+        <b>Enskilda motioner binder inte partiet.</b> En enskild ledamots motion
+        räknas på ledamotens egen meritlista, inte som partiets linje.
+      </li>
+      <li>
+        <b>Frågor och interpellationer</b> är enskilda ledamöters verktyg — de
+        syns på ledamotssidan, men skapar ingen partidom.
+      </li>
+    </ul>
+
+    <h2>När vi har fel</h2>
+    <p>
+      Hittar du ett verkligt fel rättar vi det synligt, med en rättelsenot på
+      berörd sida. Tyst rättelse förekommer inte. Varje koppling går att följa
+      hela vägen till riksdagens eget dokument och, när den finns, en arkivkopia.
+    </p>
+  </div>
+</Layout>
+
+<style>
+  .prosa { max-width: 68ch; }
+  .prosa h2 { margin-top: 1.8rem; font-size: 1.2rem; }
+  .prosa li { margin: 0.4rem 0; }
+  .prosa ol, .prosa ul { padding-left: 1.2rem; }
+</style>
