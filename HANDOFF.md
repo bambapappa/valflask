@@ -309,7 +309,11 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-*(inga anspråk)*
+- 2026-07-22 `claude/handoff-next-steps-osvpyr` → **HV5-migreringen förbereds
+  (utan go-live).** Symmetritest + redovisning, arkivskörd (skript + workflow,
+  ej körd), rättelseväg på sajten, gated deploy-workflow, neutralitetssida,
+  och `MIGRERING.md`-runbook. Rör `site/`, `pipeline/`, `data/rattelser.json`,
+  `.github/workflows/`. INGENTING görs publikt; privatgrinden HV5 hålls.
 
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
