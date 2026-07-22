@@ -4,7 +4,17 @@
  * ingen språkmodell redigerar domar.json (spec §4). Körs om vid varje
  * dataändring; en incheckad dom utan motsvarande kopplingar är ett testfel.
  *
- *   npm run domar -- --promises <sökväg till valflask data/promises.json>
+ *   npm run vendor -- --promises <...> --parties <...>   (kör först)
+ *   npm run domar  -- --promises <sökväg till valflask data/promises.json>
+ *
+ * Partidomar räknas för ALLA åtta riksdagspartier per mål med aktiv koppling
+ * (b-0018 F1, b-0019): rutnätet visar alla partier, och varje cell fylls av
+ * partiets EGEN handling — dess röst i en kopplad votering eller dess eget
+ * författarskap av en kopplad motion/proposition. Partier utan kopplad
+ * handling får status "ingen_handling_annu" (en ärlig tom cell). Motsvarande
+ * grindkoder styr aldrig ett partis röst: rösten är öppna data, riktningen är
+ * mänskligt beslutad. Partiuniversumet läses ur vendorade data/parties.json;
+ * saknas den faller skriptet tillbaka på målets egna partier (äldre beteende).
  */
 
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -32,17 +42,27 @@ function main() {
     readFileSync(promisesPath, "utf8"),
   );
 
-  // Domar räknas för varje mål (löfte/ståndpunkt) som har minst en aktiv
-  // koppling, mot målets egna partier. Mål utan kopplingar redovisas inte
-  // här — "ingen handling ännu" för övriga följer av frånvaron i filen.
+  // Rutnätet (b-0018 F1) visar alla åtta riksdagspartier per mål. Domar räknas
+  // därför för hela partiuniversumet på varje mål med minst en aktiv koppling;
+  // domsmotorn fyller bara en cell där partiet självt agerat (röst i kopplad
+  // votering, eget författarskap) — övriga blir "ingen_handling_annu", en ärlig
+  // tom cell. Mål utan kopplingar redovisas inte alls här ("ingen handling ännu"
+  // för dem följer av frånvaron i filen).
   const partierAvMal = new Map(promises.map((p) => [p.id, p.parties]));
+  const partiFil = resolve(rot, "data/parties.json");
+  const universum: string[] | null = existsSync(partiFil)
+    ? (JSON.parse(readFileSync(partiFil, "utf8")) as Array<{ code: string }>).map((p) => p.code)
+    : null;
+  if (!universum) {
+    console.warn("data/parties.json saknas — faller tillbaka på målens egna partier (kör npm run vendor för alla åtta).");
+  }
   const targetParties: Record<string, string[]> = {};
   for (const k of kopplingar) {
     if (k.status !== "aktiv") continue;
     const t = targetId(k);
-    const parties = partierAvMal.get(t);
-    if (!parties) throw new Error(`koppling ${k.id} pekar på okänt mål ${t}`);
-    targetParties[t] = parties;
+    const egnaPartier = partierAvMal.get(t);
+    if (!egnaPartier) throw new Error(`koppling ${k.id} pekar på okänt mål ${t}`);
+    targetParties[t] = universum ?? egnaPartier;
   }
 
   // Röster i kompakt b-0012-format: personregister + röststrängar per riksmöte.
