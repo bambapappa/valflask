@@ -26,6 +26,13 @@ function statusVy(l: PartiLofteRad): { klass: string; ord: string } {
   if (l.n_avstod > 0) return { klass: "status--avstod", ord: "avstod" };
   return { klass: "status--tom", ord: "ingen ren koppling ännu" };
 }
+function statusToken(l: PartiLofteRad): string {
+  if (l.status === "bade_och") return "bade-och";
+  if (l.status === "agerat_i_linje") return "i-linje";
+  if (l.status === "agerat_emot") return "emot";
+  if (l.n_avstod > 0) return "avstod";
+  return "ingen";
+}
 ---
 <Layout title={`${sida.namn} — Handlingsvågen`} canonicalPath={`/handlingsvagen/parti/${kod}`}>
   <p class="brodsmula"><a href={base}>Rutnätet</a> · <a href={`${base}partier`}>Partier</a></p>
@@ -40,12 +47,24 @@ function statusVy(l: PartiLofteRad): { klass: string; ord: string } {
     <div><b>{sida.summa.ingen_handling}</b><span>utan handling ännu</span></div>
   </div>
 
-  <h2>Partiets löften</h2>
-  <ul class="vy-lista">
+  <div class="vy-verktyg">
+    <h2>Partiets löften</h2>
+    <label class="vy-filter"><span class="verktyg-etikett">Status</span>
+      <select data-listfilter="parti-loften" data-nyckel="status" aria-label="Filtrera löften på status">
+        <option value="">alla</option>
+        <option value="i-linje">i linje</option>
+        <option value="emot">emot</option>
+        <option value="bade-och">både och</option>
+        <option value="avstod">avstod</option>
+        <option value="ingen">utan handling ännu</option>
+      </select>
+    </label>
+  </div>
+  <ul class="vy-lista" id="parti-loften">
     {sida.loften.map((l) => {
       const v = statusVy(l);
       return (
-        <li>
+        <li data-status={statusToken(l)}>
           <a class="vy-titel" href={`${base}?lofte=${l.id}`}>{l.titel}</a>
           <span class="vy-kat">{l.kategori}</span>
           <span class={`status ${v.klass}`}>{v.ord}</span>
@@ -53,6 +72,7 @@ function statusVy(l: PartiLofteRad): { klass: string; ord: string } {
       );
     })}
   </ul>
+  <script is:inline src={`${base}hv-listfilter.js`}></script>
 
   <h2>Handlingar som gett utslag <span class="rakn">({sida.handlingar.length})</span></h2>
   {sida.handlingar.length === 0 ? (
@@ -75,6 +95,10 @@ function statusVy(l: PartiLofteRad): { klass: string; ord: string } {
   .brodsmula { color: var(--text-svag); font-size: 0.9rem; margin: 0 0 0.3rem; }
   .brodsmula a { color: var(--fokus); }
   h2 { margin-top: 2rem; font-size: 1.25rem; }
+  .vy-verktyg { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+  .vy-verktyg h2 { margin: 0; }
+  .vy-filter { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .vy-filter select { padding: 0.4rem 0.6rem; border: 1px solid var(--linje); border-radius: var(--radie); background: var(--yta); color: var(--text); }
   .rakn { color: var(--text-svag); font-weight: 400; }
   .tom-not { color: var(--text-svag); font-style: italic; }
 </style>

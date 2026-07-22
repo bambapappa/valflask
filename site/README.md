@@ -29,6 +29,11 @@ npm run build # → dist/ (skivade api/hv/*)
   med kvittningsnot, avvikelse mot partilinjen. Index: `partier`, `ledamoter`.
 - **Global sök (F3)** i sidhuvudet på alla sidor (`public/hv-sok.js`), eget
   index över löften, kategorier, partier och ledamöter — laddas vid fokus.
+- **Filter (SKISS §3)** på rutnätet — parti, kategori, status, dokumenttyp,
+  motionstyp, riksmöte — som URL-parametrar (`?parti=s&status=emot`), så varje
+  urval är länkbart. Fasetterna ligger i `summary.json`; `public/hv-rutnat.js`
+  speglar filtren mot URL:en. Partisidan har ett statusfilter
+  (`public/hv-listfilter.js`).
 - **Byggtidsskivning** — `src/pages/api/hv/*` skiver den incheckade datan
   till små JSON-filer; råfilerna (17 MB) skeppas aldrig. `src/lib/rutnat.ts`
   bygger modellen ur `data/domar.json`, `data/kopplingar.json`,

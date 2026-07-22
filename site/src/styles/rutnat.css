@@ -168,8 +168,15 @@ dialog.panel::backdrop { background: rgba(0,0,0,0.45); }
 
 /* Sökrutan i sidhuvudet (global) */
 .topp .sok { margin-top: 0.7rem; max-width: 560px; }
-.verktyg-etikett { font-size: 0.85rem; color: var(--text-svag); margin-right: 0.5rem; }
-.verktyg label { display: inline-flex; align-items: center; }
+.verktyg-etikett { font-size: 0.8rem; color: var(--text-svag); }
+.verktyg label { display: inline-flex; align-items: center; gap: 0.35rem; }
+.f-rensa {
+  background: var(--yta-2); border: 1px solid var(--linje); color: var(--text);
+  border-radius: var(--radie); padding: 0.5rem 0.8rem; cursor: pointer; font-size: 0.9rem;
+}
+.f-rensa:hover { background: var(--yta); }
+.f-rensa[hidden] { display: none; }
+.f-antal { width: 100%; margin: 0.1rem 0 0; color: var(--text-svag); font-size: 0.88rem; }
 
 /* Delade listor på parti- och ledamotssidorna */
 .vy-lista { list-style: none; padding: 0; margin: 0.8rem 0; display: grid; gap: 0.5rem; }

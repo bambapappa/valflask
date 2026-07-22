@@ -87,8 +87,17 @@ Settings → Secrets and variables → Actions.
   `test-vyer.mts`), `astro build` grön (437 sidor), rökt i headless Chromium
   (partisida via kolumnrubrik, sök→ledamot, parti-länk, djuplänk→panel,
   425 i indexet, inga JS-fel).
+- **Filtren (SKISS §3):** rutnätet filtreras på parti, kategori, status,
+  dokumenttyp, motionstyp och riksmöte — som URL-parametrar
+  (`?parti=s&status=emot&rm=2025/26`), länkbart och delbart. Fasetter härleds
+  ur radernas kopplingar (`summary.json` bär dem); klientfiltret speglar
+  URL:en och har en "Rensa filter"-knapp med räknare. Partisidan har ett
+  statusfilter (`hv-listfilter.js`). Riksmöte härleds ur handlingens datum
+  (`riksmoteAvDatum`). Rökt i headless Chromium — filter, URL-spegling,
+  rensa och djuplänkar fungerar, inga JS-fel.
 - **HV4 är därmed komplett** i spec-mening (§8: per löfte, per parti, per
-  ledamot; metodsida; API-utkast). Nästa grind är HV5 — se Återstår.
+  ledamot; metodsida; API-utkast; sök; filter). Nästa grind är HV5 — se
+  Återstår.
 
 **Gjort 2026-07-22 (HV4-sajtens första bit — grenen `claude/handoff-next-steps-osvpyr`):**
 
@@ -211,20 +220,26 @@ Settings → Secrets and variables → Actions.
 5. **Bakåtskörd till 2002/03** när ägaren vill: samma skript, fler
    `--rm`. Räkna ~1 h per mandatperiod i artigt tempo.
 6. **HV4 — KLART (b-0019).** Rutnätet (Vy 1), partisidan (Vy 2),
-   ledamotssidan (Vy 3), metodsidan och API-utkastet är byggda i `site/`
-   (egen Astro-sajt, bas `/handlingsvagen`). Kvar är bara förfiningar som
-   INTE blockerar HV5:
+   ledamotssidan (Vy 3), metodsidan, API-utkastet, sök (F3) och **filtren
+   (SKISS §3)** är byggda i `site/` (egen Astro-sajt, bas `/handlingsvagen`).
+   Rutnätet filtreras på parti, kategori, status, dokumenttyp, motionstyp och
+   riksmöte som URL-parametrar (`?parti=s&status=emot` osv. — länkbart,
+   delbart, arkiverbart); partisidan har ett statusfilter. Kvar är bara
+   förfiningar som INTE blockerar HV5:
    - **Frågevågens ståndpunkter i rutnätet (F4):** kopplingsmodellen bär
      redan `stance_id` (mål = promise_id ?? stance_id), men det finns inga
-     ståndpunktskopplingar än och inget vendorat ståndpunktsindex — sajten
+     ståndpunktskopplingar än — det kräver att förslags-/grindsteget körs mot
+     Frågevågens ståndpunkter (egen data-uppgift, inte sidbygge). Sajten
      hoppar tyst över `stance_id`-mål tills dess.
-   - **Filter som URL-parametrar** utöver `?lofte`/`?kategori` (SKISS §3),
-     **exakta temakulörer (F2)** i det delade tema-arbetet, **dokumenttyp-
-     toggel (F6)** och **kostnadsgrind (F7)**.
-   - Prototypens övriga vyer (Ämnen, Mot varandra, Kartan) om ägaren vill
-     ha dem; de är extra, inte spec-krav.
-   - Partibyten på ledamotssidan (roster-avvikelselistan) är ännu inte
-     utskrivna — avvikelse mot partilinjen är det.
+   - **Exakta temakulörer (F2)** hör till det delade tema-arbetet med valflask
+     (en källa); HV använder neutrala platshållare tills dess.
+   - **Kostnadsgrind (F7)** är inte aktuell här: HV visar inga belopp —
+     grundläget är redan antal. Blir bara relevant om ägaren vill lägga in
+     löftenas kostnadsestimat på HV-sidorna (då gäller samma grind som b-0016).
+   - Prototypens övriga vyer (Ämnen, Mot varandra, Kartan) om ägaren vill ha
+     dem; extra, inte spec-krav. Partibyten på ledamotssidan (per-votering ur
+     roster-avvikelselistan) är en marginell datastump — avvikelse mot
+     partilinjen är utskriven, partibyten ännu inte.
 7. **HV5 — lanseringsgrinden (NÄSTA STORA STEG).** Checklista i spec §8,
    ägarens uttryckliga go krävs. Hårda blockerare i tur och ordning:
    arkivkopior på de vägda handlingarna (0 av 16 har en ännu — kräver
@@ -294,10 +309,7 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-22 `claude/handoff-next-steps-osvpyr` → **HV4-filtren (SKISS §3):**
-  parti, kategori, status, dokumenttyp, riksmöte, motionstyp som
-  URL-parametrar på rutnätet (och lätta filter på parti-/ledamotssidorna).
-  Rör bara `site/`. Fortsätter på öppen PR #43.
+*(inga anspråk)*
 
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har

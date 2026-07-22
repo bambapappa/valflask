@@ -175,23 +175,59 @@
     dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
   }
 
-  // Kategorifilter — döljer rader.
-  var katFilter = document.getElementById("kat-filter");
-  if (katFilter) {
-    katFilter.addEventListener("change", function () {
-      var val = katFilter.value;
-      var rader = rot.querySelectorAll("table.rutnat tbody tr");
-      Array.prototype.forEach.call(rader, function (tr) {
-        tr.style.display = !val || tr.getAttribute("data-kategori") === val ? "" : "none";
-      });
-    });
-  }
+  // Filter (SKISS §3): parti, kategori, status, dokumenttyp, motionstyp, riksmöte
+  // som URL-parametrar — varje filtrerat läge blir länkbart, delbart, arkiverbart.
+  var FALT = ["kategori", "parti", "status", "dokumenttyp", "motionstyp", "rm"];
+  var filterRot = document.getElementById("filter");
+  var valjare = filterRot ? filterRot.querySelectorAll("select[data-falt]") : [];
+  var rensaKnapp = document.getElementById("f-rensa");
+  var antalRuta = document.getElementById("f-antal");
+  var totalt = filterRot ? Number(filterRot.getAttribute("data-antal-lof")) || 0 : 0;
+  var rader = rot.querySelectorAll("table.rutnat tbody tr");
 
-  // Djuplänkar från den globala sökrutan: ?lofte=<id> öppnar panelen,
-  // ?kategori=<kat> förfiltrerar rutnätet. Så att journalister kan länka exakt.
-  var sp = new URLSearchParams(window.location.search);
-  var katParam = sp.get("kategori");
-  if (katParam && katFilter) { katFilter.value = katParam; katFilter.dispatchEvent(new Event("change")); }
-  var lofteParam = sp.get("lofte");
+  function aktivaFilter() {
+    var f = {};
+    Array.prototype.forEach.call(valjare, function (s) { if (s.value) f[s.getAttribute("data-falt")] = s.value; });
+    return f;
+  }
+  function radMatchar(tr, f) {
+    for (var falt in f) {
+      var attr = (tr.getAttribute("data-" + falt) || "").split(/\s+/);
+      if (attr.indexOf(f[falt]) === -1) return false;
+    }
+    return true;
+  }
+  function tillampa() {
+    var f = aktivaFilter();
+    var aktiv = Object.keys(f).length > 0;
+    var synliga = 0;
+    Array.prototype.forEach.call(rader, function (tr) {
+      var visa = radMatchar(tr, f);
+      tr.style.display = visa ? "" : "none";
+      if (visa) synliga += 1;
+    });
+    var sp = new URLSearchParams(window.location.search);
+    FALT.forEach(function (k) { if (f[k]) sp.set(k, f[k]); else sp.delete(k); });
+    var q = sp.toString();
+    history.replaceState(null, "", q ? "?" + q : window.location.pathname);
+    if (rensaKnapp) rensaKnapp.hidden = !aktiv;
+    if (antalRuta) antalRuta.textContent = aktiv ? "Visar " + synliga + " av " + totalt + " vägda löften" : "";
+  }
+  Array.prototype.forEach.call(valjare, function (s) { s.addEventListener("change", tillampa); });
+  if (rensaKnapp) rensaKnapp.addEventListener("click", function () {
+    Array.prototype.forEach.call(valjare, function (s) { s.value = ""; });
+    tillampa();
+  });
+
+  // Läs filtren ur URL:en vid start så ett länkat urval återställs exakt.
+  var sp0 = new URLSearchParams(window.location.search);
+  Array.prototype.forEach.call(valjare, function (s) {
+    var v = sp0.get(s.getAttribute("data-falt"));
+    if (v) s.value = v;
+  });
+  if (Array.prototype.some.call(valjare, function (s) { return !!s.value; })) tillampa();
+
+  // Djuplänk: ?lofte=<id> öppnar panelen (journalister kan länka exakt).
+  var lofteParam = sp0.get("lofte");
   if (lofteParam) öppnaLofte(lofteParam);
 })();

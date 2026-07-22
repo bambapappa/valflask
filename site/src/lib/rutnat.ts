@@ -34,6 +34,10 @@ export interface RutnatRad {
   parties: string[];
   n_kopplingar: number;
   celler: Record<string, Cell>;
+  /** Fasetter för filtren (SKISS §3), härledda ur radens kopplingar. */
+  dokumenttyper: string[];
+  motionstyper: string[];
+  riksmoten: string[];
 }
 
 export interface Summary {
@@ -43,8 +47,20 @@ export interface Summary {
   partier: Array<{ code: string; namn: string; block: string }>;
   statusord: Record<DomStatus | "avstod", string>;
   kategorier: string[];
+  /** Filtrens värdemängder (unionen över alla rader), för filterbarens val. */
+  fasetter: { dokumenttyper: string[]; motionstyper: string[]; riksmoten: string[] };
   loften: RutnatRad[];
   summa: { total_lof: number; vagda: number; utan_handling: number };
+}
+
+/** Riksmöte ur ett datum: riksdagsåret börjar i september (t.ex. 2025-10-22 → "2025/26"). */
+export function riksmoteAvDatum(datum: string): string | null {
+  const m = /^(\d{4})-(\d{2})/.exec(datum);
+  if (!m) return null;
+  const ar = Number(m[1]);
+  const manad = Number(m[2]);
+  const start = manad >= 9 ? ar : ar - 1;
+  return `${start}/${String((start + 1) % 100).padStart(2, "0")}`;
 }
 
 export const STATUSORD: Record<DomStatus | "avstod", string> = {
@@ -78,6 +94,7 @@ function harAktivitet(c: Cell): boolean {
 export function buildSummary(): Summary {
   const domar = getDomar();
   const loftenById = new Map(getLoften().map((l) => [l.id, l]));
+  const handlingar = getHandlingMap();
   const perMal = aktivaPerMal();
 
   const domarPerMal = new Map<string, PartiDom[]>();
@@ -94,6 +111,19 @@ export function buildSummary(): Summary {
       const c = cellAvDom(d);
       if (harAktivitet(c)) celler[d.party] = c;
     }
+    // Fasetter för filtren (SKISS §3): dokumenttyp, motionstyp, riksmöte ur radens kopplingar.
+    const dok = new Set<string>();
+    const mot = new Set<string>();
+    const rm = new Set<string>();
+    for (const k of kopplingar) {
+      const h = handlingar.get(k.handling_id);
+      if (!h) continue;
+      dok.add(h.kind);
+      const mtyp = k.motionstyp ?? h.motionstyp;
+      if (mtyp) mot.add(mtyp);
+      const r = riksmoteAvDatum(h.datum);
+      if (r) rm.add(r);
+    }
     loften.push({
       id: lof.id,
       titel: lof.titel,
@@ -101,11 +131,19 @@ export function buildSummary(): Summary {
       parties: lof.parties,
       n_kopplingar: kopplingar.length,
       celler,
+      dokumenttyper: [...dok].sort(),
+      motionstyper: [...mot].sort(),
+      riksmoten: [...rm].sort(),
     });
   }
   loften.sort((a, b) => a.kategori.localeCompare(b.kategori, "sv") || a.id.localeCompare(b.id));
 
   const kategorier = [...new Set(loften.map((l) => l.kategori))].sort((a, b) => a.localeCompare(b, "sv"));
+  const fasetter = {
+    dokumenttyper: [...new Set(loften.flatMap((l) => l.dokumenttyper))].sort(),
+    motionstyper: [...new Set(loften.flatMap((l) => l.motionstyper))].sort(),
+    riksmoten: [...new Set(loften.flatMap((l) => l.riksmoten))].sort().reverse(),
+  };
   const totalLof = getLoften().length;
 
   return {
@@ -115,6 +153,7 @@ export function buildSummary(): Summary {
     partier: getParties(),
     statusord: STATUSORD,
     kategorier,
+    fasetter,
     loften,
     summa: { total_lof: totalLof, vagda: loften.length, utan_handling: totalLof - loften.length },
   };
