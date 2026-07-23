@@ -9328,7 +9328,7 @@
   },
   {
     "id": "p-2026-0326",
-    "group_id": "g-slopad-karens",
+    "group_id": null,
     "title": "Sverige vinner på slopad karensdag och kortare arbetstid",
     "slug": "sverige-vinner-pa-slopad-karensdag-och-kortare-arbetstid",
     "parties": [
@@ -9355,7 +9355,7 @@
       "msek_high": 14400,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Slopad karensdag för alla anställda. Ca 5,4M sysselsatta, snitt 7 sjukdagar/år. Karensdagen kostar ca 1000 kr/dag. 5,4M × 3 karensdagar × 1000 = 16,2 mdr brutto, men endast en andel använder.",
+      "method_note": "Estimat: Slopad karensdag för alla anställda. Ca 5,4M sysselsatta, snitt 7 sjukdagar/år. Karensdagen kostar ca 1000 kr/dag. 5,4M × 3 karensdagar × 1000 = 16,2 mdr brutto, men endast en andel använder. Not: löftet buntar även kortare arbetstid (ej separat prissatt), och karensdags-delen överlappar i sak slopat karensavdrag (p-2026-0445) — beloppet är därför inte helt additivt mot det löftet.",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -9366,7 +9366,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Löftet lyft ur den gemensamma karensgruppen eftersom det är bredare (slopad karensdag + kortare arbetstid). Metodnot tillagd om att karensdags-delen i sak överlappar slopat karensavdrag (p-2026-0445). Se rättelseloggen.",
+        "commit": "e6e83c723e6947893734c3a3c5d3ebe9acb3793e"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -15360,7 +15366,7 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 4000,
-      "msek_base": 5500,
+      "msek_base": 5000,
       "msek_high": 8000,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -15375,7 +15381,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Kostnadsestimatet harmoniserat från 5 500 till 5 000 miljoner kronor per år — samma belopp som de övriga löftena om slopad karens (bl.a. MP:s p-2026-0445). Se rättelseloggen.",
+        "commit": "e6e83c723e6947893734c3a3c5d3ebe9acb3793e"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -19326,6 +19338,189 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-07-23T09"
+    }
+  },
+  {
+    "id": "p-2026-0549",
+    "group_id": null,
+    "title": "Skapa ett modernare studiemedelssystem",
+    "slug": "skapa-ett-modernare-studiemedelssystem",
+    "parties": [
+      "l"
+    ],
+    "person": {
+      "name": "Lotta Edholm",
+      "role": "gymnasie-, högskole- och forskningsminister"
+    },
+    "quote": "Med utredningen vill regeringen skapa ett modernare studiemedelssystem som stärker studenters möjligheter att utbilda sig, arbeta och etablera sig på arbetsmarknaden",
+    "date_stated": "2026-07-23",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/vi-vill-underlatta-for-studenter-att-jobba-och-fa-studiemedel",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-07-23T10:26:10.729Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är att tillsätta/driva en utredning om ett moderniserat studiemedelssystem. Att starta en utredning har försumbar direkt kostnad.",
+      "calculation": "Löftet är att starta en utredning om ett moderniserat studiemedelssystem — ett litet men verkligt löfte. Att tillsätta och driva en utredning har försumbar direkt statskostnad. Den eventuella reformen är odefinierad och prissätts inte i förväg. Sätts därför till 0.",
+      "confidence": 0.2
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-07-23T10"
+    }
+  },
+  {
+    "id": "p-2026-0550",
+    "group_id": null,
+    "title": "Stoppa marknadshyror",
+    "slug": "stoppa-marknadshyror",
+    "parties": [
+      "sd"
+    ],
+    "person": null,
+    "quote": "Sverigedemokraterna säger nej till marknadshyror i både nyproduktion och befintliga hyresrätter.",
+    "date_stated": "2026-07-23",
+    "source": {
+      "url": "https://sd.se/vad-vi-vill/",
+      "domain": "sd.se",
+      "archive_url": null,
+      "fetched_at": "2026-07-23T10:26:11.107Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering mot marknadshyror. Direkt statskostnad försumbar; dynamiska följder är samhällseffekter, inte en budgetpost.",
+      "calculation": "Att säga nej till marknadshyror bibehåller nuvarande hyressättning — ingen direkt statsutgift. Eventuella dynamiska effekter på bostadsutbudet är samhällsföljder, inte en statsbudgetpost, och lämnas okvantifierade. Sätts till 0, samma princip som förbudslöftena (Grupp 2).",
+      "confidence": 0.3
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-07-23T10"
+    }
+  },
+  {
+    "id": "p-2026-0551",
+    "group_id": null,
+    "title": "Bygg ny kärnkraft i Sverige",
+    "slug": "bygg-ny-karnkraft-i-sverige",
+    "parties": [
+      "sd"
+    ],
+    "person": null,
+    "quote": "Sverigedemokraterna vill däremot främja nybyggnation av svensk kärnkraft genom statligt stöd, förenklade tillståndsprocesser och minskat regelkrångel.",
+    "date_stated": "2026-07-23",
+    "source": {
+      "url": "https://sd.se/vad-vi-vill/",
+      "domain": "sd.se",
+      "archive_url": null,
+      "fetched_at": "2026-07-23T10:26:11.472Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 10000,
+      "msek_high": 18000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statligt stöd/garantier för nybyggd kärnkraft (tillståndsförenkling ~gratis). Harmoniserat med befintliga kärnkraftslöften.",
+      "calculation": "Statligt stöd/garantier för ny kärnkraft (tillståndsdelen försumbar). Harmoniserat med de befintliga kärnkraftslöftena p-2026-0082/0153/0109, som alla ligger 5 000/10 000/18 000 per år — en jätteinvestering (~100–150 mdr för 2 reaktorer) spridd över mandatperioden. Samma politik ⇒ samma räkning. (p-2026-0083 ligger högre, 20 mdr, men är en större åtgärd: statligt ägande + finansieringslösning.)",
+      "confidence": 0.25
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-07-23T10"
+    }
+  },
+  {
+    "id": "p-2026-0552",
+    "group_id": null,
+    "title": "Ge alla svenskar 90 procents rabatt på tandvård",
+    "slug": "ge-alla-svenskar-90-procents-rabatt-pa-tandvard",
+    "parties": [
+      "sd"
+    ],
+    "person": null,
+    "quote": "Sverigedemokraterna vill utöka det nyligen införda förstärkta högkostnadsskyddet för tandvård, där patienten endast betalar 10 procent av referenspriset för de flesta behandlingar, så att det omfattar alla vuxna.",
+    "date_stated": "2026-07-23",
+    "source": {
+      "url": "https://sd.se/vad-vi-vill/",
+      "domain": "sd.se",
+      "archive_url": null,
+      "fetched_at": "2026-07-23T10:26:11.818Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4000,
+      "msek_base": 7000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Utökat högkostnadsskydd (patient betalar 10 %) till alla vuxna — merkostnad utöver dagens subvention.",
+      "calculation": "Vuxentandvård ~14,7 mdr/år. Med 10 %-patientandel täcker staten ~90 % ≈ 13,2 mdr; minus nuvarande subvention ~6,5 mdr ⇒ merkostnad ~6,7 mdr. Spann 4–12 mdr speglar osäkerhet i vårdvolym och referenspris. Jämförbara högkostnadsskydd: p-2026-0489 (5 mdr), p-2026-0484 (10 mdr), p-2026-0440 (20 mdr).",
+      "confidence": 0.4
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-07-23T10"
     }
   }
 ]
