@@ -27,8 +27,13 @@ export function buildContextFromEnv(
     cacheDir?: string;
   },
 ): PipelineContext {
-  const apiKey = getEnv(env, "OPENROUTER_API_KEY");
-  if (!apiKey) throw new Error("Saknad miljövariabel: OPENROUTER_API_KEY");
+  // Primär endpoint kan pekas om till valfri OpenAI-kompatibel leverantör
+  // (t.ex. OpenCode Go, https://opencode.ai/zen/go/v1) via LLM_BASE_URL +
+  // LLM_API_KEY. OPENROUTER_API_KEY godtas som alias för nyckeln
+  // bakåtkompatibelt; utan LLM_BASE_URL används OpenRouter som förr.
+  const apiKey = getEnv(env, "LLM_API_KEY") ?? getEnv(env, "OPENROUTER_API_KEY");
+  if (!apiKey) throw new Error("Saknad miljövariabel: LLM_API_KEY (eller OPENROUTER_API_KEY)");
+  const baseUrl = getEnv(env, "LLM_BASE_URL");
 
   const fallbackBaseUrl = getEnv(env, "LLM_FALLBACK_BASE_URL");
   const fallbackApiKey = getEnv(env, "LLM_FALLBACK_API_KEY");
@@ -110,11 +115,12 @@ export function buildContextFromEnv(
     fallbackBaseUrl && fallbackApiKey
       ? new OpenRouterClient({
           apiKey,
+          ...(baseUrl ? { baseUrl } : {}),
           fallbackBaseUrl,
           fallbackApiKey,
           fallbackModelMap,
         })
-      : new OpenRouterClient({ apiKey });
+      : new OpenRouterClient({ apiKey, ...(baseUrl ? { baseUrl } : {}) });
 
   const articleSource = new LiveSource({
     feeds: config.feeds,

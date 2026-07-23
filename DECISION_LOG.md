@@ -1050,3 +1050,33 @@ Utkast till godkännanderuta (copy, ej fastställd):
 > Källnivån syns alltid, och `≈` betyder att en dator har gissat. Hur jag räknat står öppet på Metod-sidan. Hittar du ett verkligt fel rättar jag det synligt — men exakta blir siffrorna aldrig. Godkänner du det får du se dem.
 >
 > [ Jag förstår — visa beloppen ]  ·  [ Nej tack, håll dig till antal ]
+
+## 2026-07-23 — Primär LLM-endpoint görs konfigurerbar: OpenCode Go primär, OpenRouter fallback
+
+**Beslut:** `cli-run.ts` och `calculation-backfill.mts` läser nu en primär
+endpoint ur `LLM_BASE_URL` och en nyckel ur `LLM_API_KEY` (med
+`OPENROUTER_API_KEY` som bakåtkompatibelt alias). Utan `LLM_BASE_URL` används
+OpenRouter som förr. Detta vänder ordningen från "primär OpenRouter → fallback
+Go" (§354) till **primär OpenCode Go → fallback OpenRouter**: primärmodellerna
+(`MODEL_EXTRACT/VERIFY/COPY`) bär Go:s namn (`deepseek-v4-pro`, `kimi-k2.7`,
+`glm-5.1`) och `MODEL_*_FALLBACK` bär OpenRouter-slugarna; `fallbackModelMap`
+översätter Go-namn → slug precis som förr, fast åt andra hållet. De tre
+workflowsen (`pipeline`, `stances-backfill`, `calculation-backfill`) skickar
+`LLM_BASE_URL` + `LLM_API_KEY`, och läser `LLM_FALLBACK_BASE_URL` ur *variabler*
+(base-URL är inte en hemlighet) med secret som reserv.
+
+**Motiv:** OpenRouter saknar kredit (§354), så varje anrop brände först en död
+OpenRouter-401 innan trafiken föll över till Go. Att göra Go primär tar bort
+det slöseriet och speglar hur handlingsvägen nu kör (samma `LLM_BASE_URL`-
+mönster). §20 (verify ≠ extract, oberoende familj) hålls fortfarande av valda
+modeller (deepseek vs moonshot).
+
+**Förkastade alternativ:** Behålla OpenRouter som primär och bara fylla på
+kredit — löser inte att Go är den betalda vägen nu. Byta modellnamn utan
+kodstöd för `LLM_BASE_URL` — då ignoreras primärbytet och Go-namnen skickas
+till OpenRouter (4xx).
+
+**Påverkan:** `pipeline/src/cli-run.ts`, `pipeline/scripts/calculation-backfill.mts`,
+`.github/workflows/{pipeline,stances-backfill,calculation-backfill}.yml`.
+Kräver GitHub-inställningar: variabler `LLM_BASE_URL`, `LLM_FALLBACK_BASE_URL`,
+`MODEL_*`/`MODEL_*_FALLBACK`; hemligheter `LLM_API_KEY`, `LLM_FALLBACK_API_KEY`.
