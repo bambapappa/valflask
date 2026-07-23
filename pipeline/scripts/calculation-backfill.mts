@@ -117,16 +117,17 @@ function buildLlm(): { llm: LlmClient; model: string } {
     };
     return { llm, model: "stub-model" };
   }
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = process.env.LLM_API_KEY || process.env.OPENROUTER_API_KEY;
+  const baseUrl = process.env.LLM_BASE_URL;
   const model = process.env.MODEL_EXTRACT;
-  if (!apiKey) throw new Error("Saknar OPENROUTER_API_KEY (kör med --stub för lokal logiktest).");
+  if (!apiKey) throw new Error("Saknar LLM_API_KEY (eller OPENROUTER_API_KEY) (kör med --stub för lokal logiktest).");
   if (!model) throw new Error("Saknar MODEL_EXTRACT.");
   const fbUrl = process.env.LLM_FALLBACK_BASE_URL;
   const fbKey = process.env.LLM_FALLBACK_API_KEY;
   const llm =
     fbUrl && fbKey
-      ? new OpenRouterClient({ apiKey, fallbackBaseUrl: fbUrl, fallbackApiKey: fbKey })
-      : new OpenRouterClient({ apiKey });
+      ? new OpenRouterClient({ apiKey, ...(baseUrl ? { baseUrl } : {}), fallbackBaseUrl: fbUrl, fallbackApiKey: fbKey })
+      : new OpenRouterClient({ apiKey, ...(baseUrl ? { baseUrl } : {}) });
   return { llm, model };
 }
 
