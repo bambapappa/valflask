@@ -10,9 +10,11 @@
  *   npm run foreslag -- --promises <sökväg till valflask data/promises.json> --lofte p-2026-0042
  *   npm run foreslag -- --promises …/promises.json --alla --max-kandidater 5
  *
- * Miljö: OPENROUTER_API_KEY (krävs), MODEL_KOPPLING (krävs), samt valfritt
- * LLM_FALLBACK_BASE_URL, LLM_FALLBACK_API_KEY, MODEL_KOPPLING_FALLBACK.
- * --dry-run visar kandidatlistan utan modellanrop.
+ * Miljö: LLM_API_KEY (eller OPENROUTER_API_KEY som alias) + MODEL_KOPPLING
+ * krävs. Primär endpoint pekas om med LLM_BASE_URL (t.ex. OpenCode Go:
+ * https://opencode.ai/zen/go/v1); utan den används OpenRouter. Valfri
+ * reservendpoint: LLM_FALLBACK_BASE_URL, LLM_FALLBACK_API_KEY,
+ * MODEL_KOPPLING_FALLBACK. --dry-run visar kandidatlistan utan modellanrop.
  */
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -82,12 +84,18 @@ async function main() {
   let model = "";
   let systemPrompt = "";
   if (!dryRun) {
-    const apiKey = process.env["OPENROUTER_API_KEY"];
+    // Primär endpoint kan pekas om till valfri OpenAI-kompatibel leverantör
+    // (t.ex. OpenCode Go, base-URL https://opencode.ai/zen/go/v1) via
+    // LLM_BASE_URL + LLM_API_KEY. Utan LLM_BASE_URL används OpenRouter som
+    // förr; OPENROUTER_API_KEY godtas som alias för nyckeln bakåtkompatibelt.
+    const apiKey = process.env["LLM_API_KEY"] ?? process.env["OPENROUTER_API_KEY"];
+    const baseUrl = process.env["LLM_BASE_URL"];
     model = process.env["MODEL_KOPPLING"] ?? "";
-    if (!apiKey || !model) throw new Error("OPENROUTER_API_KEY och MODEL_KOPPLING krävs (eller kör --dry-run)");
+    if (!apiKey || !model) throw new Error("LLM_API_KEY (eller OPENROUTER_API_KEY) och MODEL_KOPPLING krävs (eller kör --dry-run)");
     const fallbackModel = process.env["MODEL_KOPPLING_FALLBACK"];
     llm = new OpenRouterClient({
       apiKey,
+      ...(baseUrl ? { baseUrl } : {}),
       ...(process.env["LLM_FALLBACK_BASE_URL"] ? { fallbackBaseUrl: process.env["LLM_FALLBACK_BASE_URL"] } : {}),
       ...(process.env["LLM_FALLBACK_API_KEY"] ? { fallbackApiKey: process.env["LLM_FALLBACK_API_KEY"] } : {}),
       ...(fallbackModel ? { fallbackModelMap: { [model]: fallbackModel } } : {}),
