@@ -209,6 +209,24 @@ async function main(): Promise<void> {
       retracted: [], data_hash: computeDataHash(promises), timestamp: new Date().toISOString(),
     });
     writeFileSync(join(DATA, "changelog.json"), JSON.stringify(changelog, null, 2) + "\n");
+
+    // EN samlad rättelse-post för hela kvalitetshöjningen — inte en per löfte.
+    // Den nära-grenen ändrar inga belopp (bara tillagd uträkning), så det är en
+    // förbättring av rutinen, inte enskilda felrättningar. Idempotent via sentinel.
+    const rPath = join(DATA, "rattelser.json");
+    const SENTINEL = "systematisk kvalitetshöjning";
+    const rattelser = JSON.parse(readFileSync(rPath, "utf8")) as Array<{ date: string; affects: string; what: string; why: string }>;
+    if (!rattelser.some((r) => r.affects.includes(SENTINEL))) {
+      rattelser.unshift({
+        date: new Date().toISOString().slice(0, 10),
+        affects: "Kostnadsuppskattningar som bygger på beräkning (systematisk kvalitetshöjning)",
+        what:
+          "Sättet vi uppskattar kostnader på har förbättrats. Nya uppskattningar jämförs nu med liknande, redan publicerade löften så att samma politik hamnar i samma storleksordning, och varje uppskattning får en stegvis, öppet redovisad uträkning. För äldre uppskattningar har uträkningen räknats om i efterhand och lagts till där den nya beräkningen bekräftar det tidigare beloppet. Där beräkningen pekade på ett annat belopp ändrades ingenting automatiskt — de löftena ses över för hand. Uträkningar som lagts till i efterhand är märkta som rekonstruerade.",
+        why:
+          "Tidigare sparades aldrig uträkningen bakom en uppskattning, och uppskattningar för snarlik politik kunde skilja sig åt utan skäl. Nu finns både spårbarhet och konsekvens. Denna post samlar hela kvalitetshöjningen i en enda rättelse i stället för en per löfte — det är en förbättring av rutinen, inte en enskild felrättning.",
+      });
+      writeFileSync(rPath, JSON.stringify(rattelser, null, 1) + "\n");
+    }
   }
   console.log(`\nSkrivet: ${near} uträkningar → promises.json; ${diverge} → calculation_review.json.`);
 }
