@@ -32,7 +32,11 @@ on:
         default: "1.5"
 permissions:
   contents: write
-concurrency: { group: calculation-backfill, cancel-in-progress: false }
+# Delar concurrency-grupp med pipeline.yml (group: pipeline) så en backfill och
+# en ordinarie pipeline-körning ALDRIG kör samtidigt — annars kan båda lägga
+# till i changelog.json samtidigt och pushen fastnar i en rebase-konflikt. Den
+# som startar först håller låset; den andra köar (cancel-in-progress: false).
+concurrency: { group: pipeline, cancel-in-progress: false }
 jobs:
   backfill:
     runs-on: ubuntu-latest
