@@ -136,6 +136,35 @@ describe("estimateCost", () => {
     assert.match(c.method_note, /engångssignal/);
   });
 
+  it("injicerar jämförbara löften i prompten (kostnadsankring)", async () => {
+    let captured = "";
+    const llm: LlmClient = {
+      complete: async (prompt: string) => {
+        captured = prompt;
+        return '{"type":"utgift","period":"per_ar","msek_low":1000,"msek_base":1500,"msek_high":2000,"confidence":0.5,"method_note":"i linje med p-2026-0462"}';
+      },
+    };
+    const c = await estimateCost(cand(null), llm, "m", [
+      { id: "p-2026-0462", title: "Slopad mängdrabatt", party: "l", msek_base: 1500, period: "per_ar", basis: "llm_estimat" },
+    ]);
+    assert.match(captured, /JÄMFÖRBARA LÖFTEN/);
+    assert.match(captured, /p-2026-0462/);
+    assert.match(captured, /1500 msek\/år/);
+    assert.equal(c.msek_base, 1500);
+  });
+
+  it("utan jämförbara löften läggs inget block till i prompten", async () => {
+    let captured = "";
+    const llm: LlmClient = {
+      complete: async (prompt: string) => {
+        captured = prompt;
+        return '{"type":"utgift","period":"per_ar","msek_low":100,"msek_base":200,"msek_high":300,"confidence":0.4,"method_note":"x"}';
+      },
+    };
+    await estimateCost(cand(null), llm, "m");
+    assert.doesNotMatch(captured, /JÄMFÖRBARA/);
+  });
+
   it("looksLikeOneOff: gåva/inlösen/mandatperiod ja; löpande nej", () => {
     assert.equal(looksLikeOneOff("16 Gripen skänks till Ukraina"), true);
     assert.equal(looksLikeOneOff("investera 50 miljarder under nästa mandatperiod"), true);

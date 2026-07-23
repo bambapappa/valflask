@@ -4,7 +4,9 @@ import {
   titleSimilarity,
   findPossibleDuplicate,
   findCrossPartyDuplicate,
+  findComparableCosts,
   type ExistingPromiseLite,
+  type ComparablePromiseLite,
 } from "../src/similarity.ts";
 
 describe("titleSimilarity", () => {
@@ -107,5 +109,70 @@ describe("findCrossPartyDuplicate — samma politik hos annat parti (R3)", () =>
       existing,
     );
     assert.equal(d, null);
+  });
+});
+
+describe("findComparableCosts — riktmärken för kostnadsankring", () => {
+  const lite = (o: Partial<ComparablePromiseLite> & Pick<ComparablePromiseLite, "id" | "title" | "category">): ComparablePromiseLite => ({
+    parties: ["m"],
+    group_id: null,
+    msek_base: 500,
+    period: "per_ar",
+    basis: "llm_estimat",
+    status: "aktiv",
+    ...o,
+  });
+  const existing: ComparablePromiseLite[] = [
+    lite({ id: "p-2026-0462", title: "Slopad mängdrabatt och straffminst för de tre allvarligaste brotten", parties: ["l"], category: "rättsväsende", msek_base: 1500 }),
+    lite({ id: "p-2026-0313", title: "Avskaffa mängdrabatten för brott", parties: ["m"], category: "rättsväsende", msek_base: 1500 }),
+    lite({ id: "p-2026-0099", title: "Fri tandvård för alla barn", parties: ["v"], category: "välfärd", msek_base: 800 }),
+  ];
+
+  it("ger jämförbara löften i samma kategori, oavsett parti", () => {
+    const cmp = findComparableCosts(
+      { title: "Ta bort mängdrabatten vid flerfaldig brottslighet", category: "rättsväsende" },
+      existing,
+    );
+    const ids = cmp.map((c) => c.id);
+    assert.ok(ids.includes("p-2026-0462"), "cross-parti-grannen tas med");
+    assert.ok(ids.includes("p-2026-0313"));
+    assert.ok(!ids.includes("p-2026-0099"), "annan kategori utesluts");
+    const l = cmp.find((c) => c.id === "p-2026-0462");
+    assert.equal(l?.party, "l", "bär första partiet");
+    assert.equal(l?.msek_base, 1500, "bär beloppet");
+  });
+
+  it("sorterar mest lika först", () => {
+    const cmp = findComparableCosts(
+      { title: "Avskaffa mängdrabatten för brott", category: "rättsväsende" },
+      existing,
+    );
+    assert.equal(cmp[0]?.id, "p-2026-0313", "exakt titelträff överst");
+  });
+
+  it("utesluter tillbakadragna men behåller nollställda (belopp 0)", () => {
+    const withZeroAndRetracted: ComparablePromiseLite[] = [
+      lite({ id: "p-2026-0089", title: "Stoppa storskalig industritrålning i Östersjön", parties: ["m"], category: "klimat-miljö", msek_base: 0 }),
+      lite({ id: "p-2026-0402", title: "Stoppa trålning nära kusterna", parties: ["l"], category: "klimat-miljö", msek_base: 300, status: "tillbakadragen" }),
+    ];
+    const cmp = findComparableCosts(
+      { title: "Stoppa industritrålning i havet", category: "klimat-miljö" },
+      withZeroAndRetracted,
+    );
+    const ids = cmp.map((c) => c.id);
+    assert.ok(ids.includes("p-2026-0089"), "nollställt löfte är ett giltigt riktmärke");
+    assert.ok(!ids.includes("p-2026-0402"), "tillbakadraget utesluts");
+  });
+
+  it("respekterar maxN", () => {
+    const many: ComparablePromiseLite[] = Array.from({ length: 8 }, (_, i) =>
+      lite({ id: `p-2026-10${i}`, title: "Skärpa straffen för grova brott rejält", category: "rättsväsende" }),
+    );
+    const cmp = findComparableCosts(
+      { title: "Skärpa straffen för grova brott", category: "rättsväsende" },
+      many,
+      { maxN: 3 },
+    );
+    assert.equal(cmp.length, 3);
   });
 });
