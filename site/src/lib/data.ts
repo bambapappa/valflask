@@ -39,6 +39,7 @@ export interface PromisePost {
     basis: string;
     basis_url: string | null;
     method_note: string;
+    calculation?: string;
     confidence: number;
   };
   financing_claimed: {

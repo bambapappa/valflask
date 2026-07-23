@@ -119,6 +119,12 @@ const jsonLd = [
           Grund: {formatBasisLabel(promise.cost.basis)}{promise.cost.basis_url ? ` · <a href="${promise.cost.basis_url}">källa ↗</a>` : ''}
           <br />
           {promise.cost.method_note}
+          {promise.cost.calculation && (
+            <details class="uträkning">
+              <summary>Så räknades beloppet ut</summary>
+              <p>{promise.cost.calculation}</p>
+            </details>
+          )}
         </div>
       </section>
 
@@ -208,6 +214,17 @@ const jsonLd = [
     font-size: var(--steg--1);
     color: var(--dis);
     margin-top: 0.5rem;
+  }
+  .uträkning {
+    margin-top: 0.5rem;
+  }
+  .uträkning summary {
+    cursor: pointer;
+    color: var(--text);
+  }
+  .uträkning p {
+    margin: 0.35rem 0 0;
+    white-space: pre-wrap;
   }
   .finansiering-meta {
     margin: var(--mellanrum) 0;

@@ -71,6 +71,7 @@ export interface CostShape {
   basis: string;
   basis_url: string | null;
   method_note: string;
+  calculation?: string;
   confidence: number;
 }
 
@@ -190,6 +191,7 @@ function list(dataDir: string = DATA_DIR): void {
         `    Kostnad: ${item.cost.msek_base} msek (${item.cost.msek_low}–${item.cost.msek_high}), ` +
           `${item.cost.basis}, conf ${item.cost.confidence}`,
       );
+      if (item.cost.calculation) console.log(`    Uträkning: ${item.cost.calculation}`);
     }
     if (reasons.length > 0) console.log(`    Anledning: ${reasons.join("; ")}`);
     console.log();
