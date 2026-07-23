@@ -7131,7 +7131,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Sänkt skatt på (a) jobb = jobbskatteavdrag/marginalskatt ca 20 mdr, (b) sparande = ISK/aktier ca 10 mdr, (c) företagande = expansionsfond/bolagsskatt/egenavgifter ca 30 mdr. Totalt estimerat ",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ISK-skattefrihet upp till 500k ≈ 4 500 msek/år (p-2026-0463). Sänkt skatt på anställning ≈ 15 000 msek/år (p-2026-0256). Summa ~19 500. Lägg till företagsskattesänkning (bolag, fåmansföretag) några tusen. Bas 20 000, intervall 10 000–30 000 för vaghet."
     },
     "financing_claimed": {
       "described": false,
@@ -7178,7 +7179,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Skattesänkning på sparande (ISK, aktiefonder, räntor). Svenskt finansiellt sparande beskattas idag med ca 30–40 mdr/år (varav ISK ca 20 mdr). En sänkning med ca 25–30% = 10 mdr/år. Överlappar",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antag: 4-8 miljoner sparare berörs. Genomsnittlig skattesänkning per person 500-2000 kr/år.\nLåg: 4M × 500 kr = 2 000 mkr.\nBas: 5M × 1 000 kr = 5 000 mkr.\nHög: 6M × 2 000 kr = 12 000 mkr.\nRimlig osäkerhet då löftet saknar detaljer."
     },
     "financing_claimed": {
       "described": false,
@@ -7932,7 +7934,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Löfte inom Jobb. ~5 mdr/år.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Omsorg: ~75 000–200 000 anställda i kommunal omsorg, löneökning/personalökning 1000–3000 kr/mån ger 0,9–7,2 mdkr/år. Företag: regelförenklingar och mindre lättnader bedöms till 0,5–2,5 mdkr/år (jfr p-2026-0030 på 2 mdkr/år för uttryckliga skattesänkningar). Totalt spann 1,4–9,7 mdkr, avrundat till 2–10 mdkr med bas 4 mdkr."
     },
     "financing_claimed": {
       "described": false,
@@ -8316,7 +8319,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Skattesänkning inom Ekonomi/Skatt. ~15 mdr/år.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Jämförbart löfte p-2026-0346: borttagen anställningsskatt för första 10 anställda i små växande företag ≈ 8 000 msek/år. Löftet här är vagt, kan vara samma åtgärd. Låg skattning 5 000 (vid smalare avgränsning), hög 15 000 (vid bredare tolkning inkl. ytterligare lättnader, i nivå med p-2026-0143)."
     },
     "financing_claimed": {
       "described": false,
@@ -8364,7 +8368,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Löfte inom Jobb. ~5 mdr/år.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~150 000 långtidsarbetslösa × 10–25 % får jobb med subvention × genomsnittlig lön 25 tkr/mån × 12 mån × 31,42 % avgift × 50–100 % nedsättning ≈ 500–3 000 msek/år."
     },
     "financing_claimed": {
       "described": false,
@@ -8412,7 +8417,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Löfte inom Energi. ~50 mdr/år. [granskning 2026-07-09: elbilsbonus ~7,5 mdr/år, ej 50]",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Tidigare bonus gav ca 4 mdkr/år vid ca 60 tkr/bil och ~35 % elbilsandel av 300 000 nya bilar. Med 'större bonus' antas snitt 50–70 tkr och elandel 50–70 %. ~300 000 × 0.6 × 60 000 ≈ 10 800 mkr, spann 4 500–15 750 mkr. Avrundat till 4–15 mdkr."
     },
     "financing_claimed": {
       "described": false,
@@ -8460,7 +8466,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Löfte inom Sjukvård. ~5 mdr/år. [granskning 2026-07-09: bottom-up ~300, ej generisk 5000]",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Jämför med p-2026-0365: 300 msek/år. Antar att löftet omfattar liknande åtgärder, men kan vara något bredare. Lågt: 150 msek (mindre ambitiöst), bas: 300 msek, högt: 500 msek (fler enheter eller högre stöd)."
     },
     "financing_claimed": {
       "described": false,
@@ -8604,7 +8611,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Löfte inom Ekonomi/Skatt. ~15 mdr/år.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Statlig inkomstskatt 2024: ca 68 mdkr. Sänkning 2 pe (till 18 %) ger intäktsminskning ~6,8 mdkr; 5 pe (till 15 %) ger ~17 mdkr. Höjd brytpunkt kan kosta mindre, ~4 mdkr. Intervall 4 000–25 000 msek baserat på bredd i åtgärd, bas 8 000 msek för en medelreform."
     },
     "financing_claimed": {
       "described": false,
@@ -8651,7 +8659,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat från Familj/Barn-kategori. ~5 mdr/år. [granskning 2026-07-09: barnbidrag 1250→2000: +750×2,1M×12 (i linje med p-0100)]",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Höjning: 750 kr/mån × 12 = 9 000 kr/år per barn. Antag 1,94 miljoner barn → 1,94M × 9 000 = 17 460 mkr/år. Avrundat till 17 500 mkr. Lågt: 1,8M barn → 16 200, högt: 2,1M barn → 18 900 (jfr p-2026-0100). Utvidgat intervall 14 000–21 000 för att inkludera administrativa skillnader."
     },
     "financing_claimed": {
       "described": false,
@@ -8742,7 +8751,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avskaffad mängdrabatt förlänger fängelsetider och ger en verklig återkommande kostnad för Kriminalvården. Beloppet är harmoniserat med Liberalernas motsvarande löfte (p-2026-0462), som utgår från tidigare politiska beräkningar om cirka 1,5 miljarder kronor per år för slopad mängdrabatt. Spannet speglar osäkerhet om domstolarnas praxis och beteendeeffekter (belopp satt av granskare).",
-      "confidence": 0.5
+      "confidence": 0.5,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antag att slopad mängdrabatt leder till förlängda fängelsestraff för ca 2 000–4 000 personer/år, med genomsnittlig förlängning 90–180 dagar. Med en dygnskostnad på ca 500–800 kr ger det ett kostnadsintervall direkt: 2 000×90×500 ≈ 90 Mkr, 4 000×180×800 ≈ 576 Mkr. Med bredare antaganden (inkl. häktes- och anstaltsplatser) avrundas intervallet till 300–1 000 Mkr/år."
     },
     "financing_claimed": {
       "described": false,
@@ -8792,7 +8802,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar få ärenden inledningsvis men utredningskostnader för IT-brott. Jämförs med liknande nykriminaliseringar.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Fåtal fall per år, uppskattat 5–20 ärenden. Kostnad per fall: utredning 0,2–0,5 mkr, rättegång 0,1–0,3 mkr, ev. fängelse ~1 mkr/år. Totalt per fall 0,5–3 mkr. Totalt 2–60 mkr/år."
     },
     "financing_claimed": {
       "described": false,
@@ -8839,7 +8850,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Elektrifiering transporter/industri + innovation. Estimat 20 mdr/år.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Jämförbara klimatpaket: 20 000 mkr/år (p-0342, p-0454). Löftet är ospecificerat men antyder flera åtgärder. Antagande: energiinvesteringar 5–15 mdkr, elfordons- och transportstöd 2–8 mdkr, industristöd/innovation 3–10 mdkr, övrigt 0–7 mdkr. Summerat spann 10–40 mdkr, avrundat 5 000–40 000 mkr/år. Basfall 15 000 mkr/år som medel."
     },
     "financing_claimed": {
       "described": false,
@@ -8886,7 +8898,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Korta köer, nära vård, ungas psykiska hälsa, skola. ~15 mdr/år.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antaganden: Köer: 2 000 mkr (motsvarar ca 2 000 fler vårdanställda). Nära vård: 1 500 mkr (förstärkt primärvårdsbidrag). Ungas psykiska hälsa: 1 000 mkr (500 fler kuratorer/psykologer i skola + BUP-förstärkning). Skola: 2 000 mkr (2 000 speciallärare/lärarassistenter). Summa 6 500 mkr, intervall 3 000–10 000 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -9074,7 +9087,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Systemskifte i tågpolitiken. Investeringar i järnvägsunderhåll, nya spår, kapacitet. Trafikverket järnvägsbudget ca 35 mdr/år. 'Systemskifte' = merkostnad estimerat 15 mdr/år.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Låg: 500 mkr (mindre punktinsats), bas: 3 mdkr (som MP:s trafikmiljard), hög: 15 mdkr (systemskifte som dubblar befintliga ramar). Osäkerhet pga. avsaknad av precisering."
     },
     "financing_claimed": {
       "described": false,
@@ -9309,7 +9323,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Höjt barnbidrag för alla + tillägg ensamstående. Barnbidrag gäller ca 2,1M barn. Om höjning 200 kr/mån × 2,1M × 12 = 5,04 mdr + ensamståendetillägg. Estimat 5-7 mdr/år.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Höjning barnbidrag: ~2 milj barn × 200 kr/mån × 12 = 4 800 mkr. Tillägg ensamstående: ~500 000 barn × 1 000 kr/mån × 12 = 6 000 mkr. Summa högt ~10 800, men troliga lägre nivåer. Lågt scenario: 100 kr höjning + 500 kr tillägg => (2 400 + 3 000) = 5 400. Osäkerhet: lägst ~2 000 (minimal höjning, få berörda), högst ~8 000 (avrundat). Bas ~4 000."
     },
     "financing_claimed": {
       "described": false,
@@ -9356,7 +9371,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Slopad karensdag för alla anställda. Ca 5,4M sysselsatta, snitt 7 sjukdagar/år. Karensdagen kostar ca 1000 kr/dag. 5,4M × 3 karensdagar × 1000 = 16,2 mdr brutto, men endast en andel använder. Not: löftet buntar även kortare arbetstid (ej separat prissatt), och karensdags-delen överlappar i sak slopat karensavdrag (p-2026-0445) — beloppet är därför inte helt additivt mot det löftet.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Slopad karensdag: ~5–10 mdkr/år (baserat på tidigare utredningar, t.ex. Försäkringskassans analyser). Kortare arbetstid: om statlig subvention för arbetstidsförkortning antas en mindre pilot, 0–5 mdkr/år. Totalt: 5–15 mdkr/år, utvidgat till 4–20 mdkr för att fånga osäkerhet."
     },
     "financing_claimed": {
       "described": false,
@@ -9409,7 +9425,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Sänka arbetstid från 40 till 35 tim/vecka = 12,5% mindre arbetstid. Om hela arbetskraften: 5,4M × 5 tim × 52 veckor × 250 kr/tim = 351 mdr teoretiskt. Men löntagare tar del av kostnaden via l",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antag 3,5 miljoner heltidsanställda som går från 40 till 35 h, löneborfall 12,5 %. Vid medellön 38 000 kr/mån kostnad per person ca 5 700 kr/mån (68 400 kr/år). Statlig kompensation 20–100 % → 4,8–34,2 mdkr/mån → 57–410 mdkr/år. Lågt scenario (enbart offentlig sektor eller riktad skattekredit) ~10 mdkr; högt scenario vid fullt genomslag ~300 mdkr."
     },
     "financing_claimed": {
       "described": false,
@@ -9729,7 +9746,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Administrering av regionala mål. ~0,2 mdr/år.",
-      "confidence": 0.55
+      "confidence": 0.55,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~20 regioner × 2–5 mkr för samordning = 40–100 mkr. Stöd till jordbruk för beredskapslager/produktion: 1–5 % av jordbrukets produktionsvärde (~10 mdkr) = 100–500 mkr. Summa 140–600 mkr, bas 300 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -9864,7 +9882,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Rättad 2026-07-04: 30 000 kr är bonus PER BARN, inte totalkostnad. ~20–40 000 lika-delande föräldrapar/år × 30 000 kr ⇒ 0,6–1,2 mdkr/år + öronmärkt fjärde månad. Spann bekräftat av granskare.",
-      "confidence": 0.9
+      "confidence": 0.9,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): 115 000 födslar × 5–30 % × 30 000 kr = 172,5–1 035 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -9955,7 +9974,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Tolkar som stärkt filmproduktionsincitament eller statlig medfinansiering. Jämför med dagens produktionsrabatt (ca 100 mkr/år) och planerade utvidgningar. Löftet är vagt, stor osäkerhet.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antagande: statlig medfinansieringspott som matchar privat kapital med 20–50%. Svensk filmproduktion omsätter privat uppskattningsvis 500–1000 msek/år. Ett offentligt tillskott på 50–300 msek bedöms rimligt. Bas 150 msek liknar p-2026-0426. Kan också vara skatteutgift (intäktsminskning) men här antas direkt anslag."
     },
     "financing_claimed": {
       "described": false,
@@ -9999,7 +10019,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Baseras på BNP-prognos ca 6 500 mdkr. 5 % = 325 mdkr. Nuvarande anslag ca 125 mdkr (ca 2 %). Differens ca 200 mdkr. Osäkerhet kring BNP-utveckling, framtida anslagsnivåer och definition av försvarsutg (belopp satt av granskare)",
-      "confidence": 0.9
+      "confidence": 0.9,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): BNP 2024 ca 6 200 mdkr → 5 % = 310 mdkr. Dagens anslag ~2 % ≈ 124 mdkr. Ökning = 310 – 124 = 186 mdkr = 186 000 msek, avrundat 190 000 msek. Osäkerhet: högre/lägre BNP, infasning. Låg 150 000 (BNP 5 000 mdkr, 2 % → 3 % ökning), hög 250 000 (BNP 6 500 mdkr, 5,5 %)."
     },
     "financing_claimed": {
       "described": false,
@@ -10043,7 +10064,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Lönesumma jordbruk & livsmedel 130–180 mdkr, halvering av avgift 15,7%-enh ger 20–30 mdkr/år. Osäkerhet om sektorsavgränsning. (belopp satt av granskare)",
-      "confidence": 0.9
+      "confidence": 0.9,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antagande: cirka 120 000 anställda inom primär jordbruksproduktion och livsmedelsförädling. Genomsnittlig månadslön: 33 000 kr → årlig lönesumma 120 000 × 33 000 × 12 ≈ 47,5 miljarder kr. Arbetsgivaravgiften (31,42 %) halveras, vilket sänker den med 15,71 procentenheter. Intäktsbortfall: 47,5 mdkr × 0,1571 ≈ 7,46 mdkr. Lågt spann räknar med färre anställda/lägre lön, högt spann med vidare definition av matproduktion (upp till 120 mdkr lönesumma)."
     },
     "financing_claimed": {
       "described": false,
@@ -10087,7 +10109,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Brett löfte utan belopp. Antaganden baseras på kostnader för subventioner, investeringsstöd och tekniksatsningar för fossilfri el/industri. Stort osäkerhetsintervall p.g.a. otydlig inriktning.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Jämför med p-2026-0315: 20 000 msek/år för att göra klimatomställningen enklare, billigare och snabbare. Löftet är lika brett och omfattar fossilfri el, grön industri och ny teknik, så bas = 20 000. Osäkerhet: låg 10 000, hög 40 000 msek/år."
     },
     "financing_claimed": {
       "described": false,
@@ -10219,7 +10242,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med tidigare nedsättning för unga under 26 år (halv avgift) som kostade ~16 mdkr/år. Helt avskaffad avgift för unga och lågavlönade kan kosta 10-50 mdkr beroende på avgränsning.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Unga 15-24 år: ~500 000 anställda, snittlön ~22 000 kr/mån → lönesumma ~132 mdkr. Avgift 31,42% → ~41,5 mdkr. Lågavlönade (exkl. unga) med lön <25 000 kr/mån: ~1 milj, snittlön ~23 000 kr → lönesumma ~276 mdkr, avgift ~86,7 mdkr. Totalt ~128 mdkr. Bred tolkning ger hög kostnad; smalare tolkning (t.ex. endast allmän löneavgift 11,62%) ger ~47 mdkr. Intervall satt utifrån politisk rimlighet och jämförbara löften."
     },
     "financing_claimed": {
       "described": false,
@@ -10263,7 +10287,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning baserad på antal småföretag med 1-10 anställda, genomsnittlig lönesumma per anställd och full arbetsgivaravgift (ca 31.42%). Osäkerhet kring definition av 'växande', urvalskriterier och b",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~100 000 småföretag med i snitt 5 anställda som omfattas, snittlön ~30 000 kr/mån, arbetsgivaravgift 31,42 % → 9 426 kr/mån per anställd. Totalt 100 000 × 5 × 9 426 × 12 ≈ 56,6 mdkr. Antag att 20–30 % av företagen är växande och nyanställer → 11,3–17,0 mdkr. Med bredare tolkning och osäkerhet sätts intervallet 10–25 mdkr, bas 15 mdkr."
     },
     "financing_claimed": {
       "described": false,
@@ -10307,7 +10332,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar höjning av grundavdrag för låga inkomster, baserat på tidigare reformer, stor osäkerhet.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): 1,5 milj. personer × (5–15) tkr/år = 7,5–22,5 mdkr. Bas 12 mdkr. Osäkerhet p.g.a. vagt löfte, spann 5–20 mdkr."
     },
     "financing_claimed": {
       "described": false,
@@ -10351,7 +10377,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande: tillägg 500-1000 kr/mån per barn för ensamstående föräldrar, ca 500 000 barn. Bruttokostnad, ej behovsprövat. Jämförbart med finskt tillägg (~700 kr/mån).",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antal barn med ensamförsörjare: ca 420 000. Tillägg per barn: 200–500 kr/mån = 2 400–6 000 kr/år. Totalkostnad: 420 000 × 2 400–6 000 = 1 008–2 520 msek. Avrundat till 1 000–5 000 msek med bas 2 500 msek för att fånga in nordiska modeller med högre belopp."
     },
     "financing_claimed": {
       "described": false,
@@ -10395,7 +10422,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande om sänkt lönegolv för arbetskraftsinvandrare minskar skatteintäkter med 0–300 msek/år, baserat på osäkert antal berörda och löneeffekt.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Baseras på jämförbara löften (p-2026-0479, p-2026-0451) som båda estimerats till 10 msek/år för administrativa kostnader. Antaget intervall 5–15 msek/år för att spegla osäkerhet i volym och genomförande."
     },
     "financing_claimed": {
       "described": false,
@@ -10439,7 +10467,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för ökad personal på Migrationsverket antas mellan 200-1500 mkr/år för att drastiskt korta tider. Startupvisum marginellt jämfört med kapacitetsökning. Osäker ambition.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Migrationsverket budget ~6 mdkr/år. För drastisk förkortning kan behövas 10-30% ökning => 0.6-1.8 mdkr. Låg: 200 Mkr (mindre satsning), bas: 600 Mkr, hög: 2000 Mkr. Inkluderar även mindre kostnad för startupvisum."
     },
     "financing_claimed": {
       "described": false,
@@ -10483,7 +10512,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnaden beror på antal nya elbilar per år (ca 100 000–300 000). 50 000 kr/bil = 5–15 mdkr. Om premien även gäller leasing ökar volymen. Osäkerhet kring avgränsningar och varaktighet.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Nybilsregistreringar ~300 000/år, BEV-andel ~33 % ger ~100 000 bilar. 100 000 × 50 000 kr = 5 000 mkr. Lågt scenario 40 000 bilar (2 000 mkr); högt scenario 160 000 bilar (8 000 mkr) om stöd omfattar fler fordon eller efterfrågan ökar."
     },
     "financing_claimed": {
       "described": false,
@@ -10527,7 +10557,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande om utökad målgrupp och högre tak; jämför med nuvarande anslag på ca 1,9 mdkr. Osäkerhet kring omfattning.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Nuvarande system: ~10 000 deltagare × snitt ~130 tkr → ~1,3 mdkr. Expansion kan öka antal till 20 000–60 000, med lägre genomsnittskostnad för korta kurser. Ökning: låg 500 mkr (något fler), bas 1 500 mkr (fördubbling), hög 5 000 mkr (tredubbling, viss neddragning per deltagare). Osäkerhet stor."
     },
     "financing_claimed": {
       "described": false,
@@ -10665,7 +10696,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar att 200 000–800 000 ha säljs och att staten förlorar årlig avkastning på 500–1 000 kr/ha. Motsvarar minskad utdelning från Sveaskog.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Sveaskog äger ~3,9 Mha produktiv skog. Löftet om 'tusentals fler' ägare kan innebära 2 000–10 000 nya ägare med 20–50 ha vardera → 40 000–500 000 ha. Årlig vinst per ha uppskattas till 500–1 000 kr (baserat på Sveaskogs rörelseresultat). Förlorad intäkt: 40 000 ha × 500 kr = 20 mkr (låg), 500 000 ha × 1 000 kr = 500 mkr (hög). Bas 200 mkr motsvarar 200 000 ha à 1 000 kr/ha."
     },
     "financing_claimed": {
       "described": false,
@@ -10709,7 +10741,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnaden uppskattas utifrån behovet av att kraftigt bygga ut elevhälsans personalstyrka (kuratorer, psykologer, specialpedagoger) för att garantera kontakt inom 24h. Spannet baseras på lönekostnader ",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~1,1 miljoner elever × 500–2 000 kr extra per elev och år ≈ 550–2 200 mkr. Alternativt: 1 extra heltid per 500 elever à 800 tkr ≈ 1 760 mkr. Spannet speglar olika antaganden om personalbehov."
     },
     "financing_claimed": {
       "described": false,
@@ -10797,7 +10830,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar 1000-10000 nya lärartjänster à 0,7 msek/st för lön+overhead. Bas 3000 tjänster. Spannet är brett pga avsaknad av specificerat antal.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antag 3 000–20 000 extra lärare/pedagoger. Årskostnad per tjänst ~700 000 kr inkl. arbetsgivaravgifter och overhead. Totalkostnad: 3 000 × 0,7 = 2 100 msek; 20 000 × 0,7 = 14 000 msek. Bas nära mitten av spannet. Jämförbart löfte p-2026-0014 kostar 12 000 msek/år, så vårt högsta värde 15 000 är i linje med en ambitiös men ospecificerad satsning."
     },
     "financing_claimed": {
       "described": false,
@@ -10929,7 +10963,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnadsintervall baserat på antaganden om nya utbildningsplatser. Lågt räknat för några hundra platser, högt för en kraftig utbyggnad inkl. ST-platser. Osäkerhet kring antal platser och kostnad per p",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Läkarprogram: 100×5,5×0,4 mnkr = 220 mnkr (låg), 500×5,5×0,4 = 1100 mnkr (hög). Ssk-program: 500×3×0,2 = 300 mnkr (låg), 2000×3×0,2 = 1200 mnkr (hög). ST: 100×5×1 = 500 mnkr (låg), 500×5×1 = 2500 mnkr (hög). Summa: 1020–4800 mnkr. Bas mittemellan ≈ 2300 mnkr."
     },
     "financing_claimed": {
       "described": false,
@@ -10973,7 +11008,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande om statligt bidrag till kommuner för höjda måltidsambitioner, baserat på ca 200 000 brukare och en kostnadsökning per brukare mellan 2 500 och 10 000 kr/år inklusive råvaror och personal.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~200 000 äldre i SÄBO/hemtjänst med mat × 5 000–20 000 kr/år i höjda måltidsersättningar/insatser = 1 000–4 000 mkr, bas 2 000 mkr. Smalare än breda äldresatsningar."
     },
     "financing_claimed": {
       "described": false,
@@ -11105,7 +11141,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande om antal mottagningar (100–500) och årlig subvention per mottagning (1–2 msek) för läkarledda mottagningar i landsbygd.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~100-200 nya eller utökade mottagningar × 1,5-3 mkr i årligt stöd (t.ex. uppstartsbidrag, hyresersättning, läkarlönestöd) = 150-600 mkr, med bas 300 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -11149,7 +11186,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar extra statsbidrag till 300-700 små glesbygdsskolor med tillägg 0,5-2 mkr/skola/år. Baserat på tidigare satsningar (t.ex. 50 mkr/år) men permanent och utökat.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~500 skolor × 40 elever × 15 000 kr/elev = 300 mkr. Lågt: 100 skolor × 30 elever × 10 000 kr = 30 mkr, men med fast grundbelopp per skola dras låg upp till 100 mkr. Högt: 800 skolor × 50 elever × 30 000 kr = 1 200 mkr, avrundat 1 500 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -11193,7 +11231,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Baserat på antagande om statlig utlåning 1–3 mdkr/år med räntesubvention och kreditförluster på ca 5–10%. Jämför med tidigare statliga bostadslåneprogram.",
-      "confidence": 0.5
+      "confidence": 0.5,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~1 000–5 000 lån × 1,5 mkr = 1,5–7,5 mdkr i nyutlåning/år. Antag statlig subvention/kreditförlust på 1–3 % av utestående lån, dvs 15–225 mkr/år. Baserat på tidigare bostadslånesystem och landsbygdsprogram. Högre intervall för att fånga osäkerhet."
     },
     "financing_claimed": {
       "described": false,
@@ -11237,7 +11276,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnadsuppskattning för statliga stöd, investeringar och subventioner som krävs för att höja självförsörjningsgraden från ca 50% till 80%, baserat på tidigare jordbruks- och beredskapsåtgärder.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Sveriges jordbruksproduktion ~60 mdkr/år. Ökning med 30 p.e. via statliga subventioner på 10–25 % av produktionsvärdet ⇒ 6–15 mdkr/år. Nuvarande totala jordbruksstöd ~7,5 mdkr/år. Löftet tolkas som ny, utökad satsning utöver befintliga EU-medel, mellan 0,5 och 15 mdkr/år."
     },
     "financing_claimed": {
       "described": false,
@@ -11281,7 +11321,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Dubblade straff för rekrytering av barn ger fler fängelseår, men brottstypen är smal med få dömda per år. Beloppet är harmoniserat med Centerpartiets näraliggande löfte p-2026-0373 (samma politik) och bygger på storleksordningen 20–200 extra fängelseår per år à cirka 1,2 miljoner kronor. Osäkerheten är stor (belopp satt av granskare).",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antag ~80 personer döms årligen för rekrytering av barn. Straffskärpning med i snitt 1 år extra fängelse. Kostnad per fängelseplats ~1 msek/år. 80 × 1 msek = 80 msek. Osäkerhet: 40–120 msek beroende på antal fällande domar och strafflängd."
     },
     "financing_claimed": {
       "described": false,
@@ -11331,7 +11372,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnaden beror på utformning (engångsbelopp, månadsstöd, antal mottagare). Jämförs med storleksordningen för ekonomiskt bistånd och stöd till våldsutsatta. Osäkerhet kring omfattning och beloppsnivå.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antal mottagare 5 000–25 000 × 20 000–30 000 kr = 100–750 mkr. +10 % admin = 110–825 mkr. Bas: 12 000 × 25 tkr × 1,1 ≈ 330 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -11463,7 +11505,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar 20–200 fler fängelseår per år a 1,2 mkr. Låg konfidens pga oklar omfattning och begränsning 13–14 år ej fängelse.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Baseras på p-2026-0369: ~80 msek/år. Antag ökade kostnader för polis, åklagare, domstolar och viss kriminalvård. 50–150 msek/år speglar osäkerhet kring antal fall, genomsnittlig straffskärpning och rättegångskostnader. Exkludering av fängelse för 13–14-åringar dämpar ökningen."
     },
     "financing_claimed": {
       "described": false,
@@ -11507,7 +11550,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande om ökning av befintligt statsbidrag till brottsofferjourerna (ca 50 mnkr årligen). Höjning uppskattad till mellan 10 % och 60 %, med basen 20 %. Utan specificerat belopp är intervallet osäke",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Nuvarande stöd till Brottsofferjouren och liknande verksamheter bedöms grovt till ca 25–35 mkr/år. Löftet om 'mer pengar' kan innebära allt från en mindre uppräkning på 10 mkr, en påtaglig förstärkning som nästan fördubblar anslaget (+30 mkr), upp till en kraftig satsning på +60 mkr. Inga specifika reformton anges."
     },
     "financing_claimed": {
       "described": false,
@@ -11551,7 +11595,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar ersättning för inlämning av uttjänta produkter (t.ex. elektronik). Osäker volym och ersättningsnivå; spann från blygsam till generös modell.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Ca 2 000 unga lämnar vården årligen × 50 000 kr i lämnapeng = 100 mkr. Intervall 50–200 mkr täcker färre/fler mottagare eller lägre/högre belopp."
     },
     "financing_claimed": {
       "described": false,
@@ -11595,7 +11640,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Baserat på Ekobrottsmyndighetens nuvarande anslag ca 800 msek, med osäkerhet för omorganisationens omfattning och eventu [granskning 2026-07-09: EBM→Ekokrim ~kostnadsneutral omorganisation]",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): EBM idag ~900 mkr. Ekokrim antas få liknande bas, tillkommande: 1) skärpta straff → fler/längre fängelsestraff, uppskattat ökat Kriminalvårdsbehov 100–500 mkr/år (några hundra extra intagna à ~1,2 mkr/år); 2) utökad utredningskapacitet 0–300 mkr/år. Nettoökning: 100–800 mkr/år."
     },
     "financing_claimed": {
       "described": false,
@@ -11639,7 +11685,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning baserad på antaganden om antal extra IVF-försök (5 000–15 000) à 40 000 kr per försök, med hänsyn till att inte alla utnyttjar alla extra försök.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Punktestimatet från jämförbart löfte p-2026-0049 är 400 msek/år. Lågt scenario antar oförändrat antal påbörjade behandlingar men fördubblat antal försök per par (≈300 msek). Högt scenario antar att gratis försök 4–6 lockar nya grupper och ökar antalet behandlingar med 50–100 % (≈600–750 msek). Osäkerhet råder kring regionernas förhandlade priser per försök."
     },
     "financing_claimed": {
       "described": false,
@@ -11727,7 +11774,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämförelse med årlig budget för en mindre specialdomstol. Inkluderar löner för domare och personal, lokaler, IT och administration.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Bas: jämförbar reform estimerad till 80 mkr/år. Låg: mindre domstol med färre ledamöter och begränsad administration, ~40 mkr. Hög: bredare prövningsrätt, fler domare och högre overhead, ~150 mkr. 40-150 mkr täcker spannet från enkel till ambitiös modell."
     },
     "financing_claimed": {
       "described": false,
@@ -11771,7 +11819,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Baserat på dagens statliga skadeståndsutgifter (ca 200 mkr/år). Antagen ökning med 50–300 % genom fler skadeståndsgrundade fall och höjda belopp.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): JK betalar ut ~80 mkr/år i skadestånd (2023). Antag ökning av ärenden med 25–100 % och höjning av ersättningsnivåer med 20–50 %. Låg: 80 × 1,25 × 1,2 ≈ 120 mkr → ökning 40 mkr (avrundas till 50). Hög: 80 × 2 × 1,5 = 240 mkr → ökning 160 mkr (avrundas till 200). Bas: 100 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -11859,7 +11908,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar att löftet innebär en förstärkning av befintliga anslag med 0–500 msek/år, eftersom nuvarande nivå redan är långsiktig men kan behöva höjas.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Jämförbart löfte för minoritetsspråk inom folkbildning: 150 msek/år. Detta löfte omfattar hela studieförbund och folkhögskolor, alltså bredare verksamhet. Antag att det kräver minst lika mycket, men troligen mer. Låg: 100 msek (mindre justering), bas: 300 msek (2x minoritetssatsningen), hög: 600 msek (4x, inkluderar förstärkning av folkhögskolor). Spannet speglar stor osäkerhet."
     },
     "financing_claimed": {
       "described": false,
@@ -11903,7 +11953,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "1% av Sveriges BNI (ca 6 287 mdkr 2023) ger ca 62 870 msek/år. Osäkerhet för framtida BNI och möjlig höjning över 1%.",
-      "confidence": 0.6
+      "confidence": 0.6,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): 1 % av BNI. BNI 2024 ≈ 6 700 mdkr → 1 % = 67 mdkr = 67 000 msek. Lågt scenario: BNI 6 000 mdkr → 60 000 msek. Högt scenario: BNI 9 000 mdkr → 90 000 msek. Intervallet fångar osäkerhet i BNI-utveckling och eventuell höjning över miniminivån."
     },
     "financing_claimed": {
       "described": false,
@@ -11947,7 +11998,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Skillnad mellan 5% av BNP (~310 mdkr) och nuvarande försvarsanslag (~119 mdkr) = ~191 mdkr/år. Osäkerhet om BNP-utveckling, redan planerad ökning till 2% och takten i upprustningen.",
-      "confidence": 0.6
+      "confidence": 0.6,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): 1. BNP ~6 200 mdkr (2026). 5 % = 310 mdkr.\n2. Nuvarande försvarsanslag ~110-130 mdkr (exkl. civilförsvar).\n3. Ökning: 310 - ~120 = ~190 mdkr/år.\n4. Jämför med p-2026-0340 (200 mdkr/år). Lågt spann: 160 mdkr (om BNP lägre eller civilförsvar inräknas annorlunda). Högt spann: 240 mdkr (om totalram inkl. stödkostnader)."
     },
     "financing_claimed": {
       "described": false,
@@ -12035,7 +12087,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande om ett nytt jordbruksavdrag för ca 50 000 företag, med genomsnittligt avdrag 50 000–150 000 kr/år. Inkluderar viss osäkerhet för ytterligare stöd och regelförenklingar.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antaganden: 1) Jordbruksavdrag: ~50 000 jordbruksföretag × 50–200 tkr i snittavdrag ≈ 2,5–10 mdkr. 2) Regelförenklingar & generationsskiften: lägre direkta kostnader men kräver utredningar och vissa subventioner ≈ 0,5–2 mdkr. 3) 'Säkra jordbrukspolitikens framtid' tolkas som bibehållna/ökade nationella stöd utöver EU-stöd. Totalt spann 2–12 mdkr/år. Bas 5 mdkr motsvarar ett medelstort paket."
     },
     "financing_claimed": {
       "described": false,
@@ -12079,7 +12132,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar årlig ersättning per apotek för beredskapslager och personal, 0,7–5 msek per apotek, 300 st. Osäkerhet kring exakt innehåll i upphandlingen.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): 300 apotek × 0,5–2 miljoner kr/år i ersättning för beredskapsåtgärder per apotek → 150–600 mkr/år. Bas = 1 mkr/apotek = 300 mkr/år."
     },
     "financing_claimed": {
       "described": false,
@@ -12123,7 +12177,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnaden är skillnaden mellan 1% av BNI och dagens biståndsnivå (~0,8% av BNI). Med BNI ~6 000 mdkr blir ökningen ~0,2% = 12 mdkr/år. Osäkerhet om BNI-tillväxt och exakt utgångsläge.",
-      "confidence": 0.6
+      "confidence": 0.6,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): BNI 2023 ca 6 200 mdkr. Antag nuvarande bistånd 0,7 % → 43,4 mdkr, 1 % → 62 mdkr, differens 18,6 mdkr. Om nuvarande nivå är 0,8 % → 1 % differens 0,2 % = 12,4 mdkr. Medelvärde ~15,5 mdkr. Spann 10–25 mdkr för att fånga osäkerhet kring BNI-prognos och gradvis infasning."
     },
     "financing_claimed": {
       "described": false,
@@ -12167,7 +12222,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande om 500–2000 individer/år med arbete som slipper utvisning. Besparing = utebliven utvisningskostnad (ca 100–250 kkr/person) plus ökade skatteintäkter, mot viss ökad välfärdskostnad.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antag 200–600 personer/år som utvisas trots arbete och skatt. Utvisningskostnad per person: 200 000–500 000 kr (förvar, resa, handläggning). Besparing: 200*0,2=40 mkr till 600*0,5=300 mkr. Bas 150 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -12211,7 +12267,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Grov uppskattning: 50 000 bidragsmottagare, 10 % får reducerat med 50 % i snitt, snittbidrag 100 000 kr/år. Betydande osäkerhet kring reglernas utformning och efterlevnad.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~150 000–200 000 utrikes födda bidragstagare × bidragskostnad per person ~30 000–50 000 kr/år → total kostnad ~5–10 mdkr. Antag att 1–5 % minskning pga sanktioner → 0,05–0,5 mdkr = 50–500 mkr. Basantagande 2 %."
     },
     "financing_claimed": {
       "described": false,
@@ -12343,7 +12400,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning baserad på antal lärare (ca 200 000) och en statlig lönesatsning på i snitt 2 000–5 000 kr/mån. Avlastning mentorer antas kosta ytterligare genom fler anställningar. Stort spann pga. okla",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~200 000 lärare × 1 500–5 000 kr/mån × 12 mån = 3,6–12 mdkr. Mentoravlastning: 0,5–5 mdkr. Totalt 4,1–17 mdkr, avrundat till 2 000–20 000 msek för att fånga osäkerhet."
     },
     "financing_claimed": {
       "described": false,
@@ -12475,7 +12533,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar statliga kreditgarantier för 2-4 kärnreaktorer, totalt garanterat 160-320 mdkr, förväntad förlust 2-5% i nuvärde. Osäkerhet om avgiftsuttag.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): 2 reaktorer × 80 mdkr garanterade lån × 2 % ränteskillnad = 3,2 mdkr/år. Justerat för 50 % sannolikhet: 1,6 mdkr/år. Lågt scenario: 0,1 mdkr (få investeringar). Högt scenario: 5 mdkr (fler reaktorer, högre subvention)."
     },
     "financing_claimed": {
       "described": false,
@@ -12519,7 +12578,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar 2 000–10 000 nya poliser à 1–1,2 msek/år. Baserat på tidigare satsningar (10 000 poliser kostade ca 10 mdkr). Osäkerhet kring antal och omfördelning.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~2 000–8 000 mkr/år. En synlig polis kostar ~1 mkr/år (lön, utrustning, overhead). 2 000–8 000 poliser motsvarar 2–8 mdkr. Bas 5 mdkr från jämförbart löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -12563,7 +12623,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med mindre ombudsmannamyndigheter (DO, JämO). Antar en enhet med 5–15 anställda, lokaler och rättshjälp. Låg: integrerad i befintlig myndighet. Hög: ny myndighet med bred verksamhet.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~5 anställda × 600 tkr = 3 mkr; overhead, lokaler, juridisk fond ~2–7 mkr; totalspann 5–10 mkr i baskalkyl. Med större inriktning eller fler ärenden kan kostnaden bli 3–30 mkr/år."
     },
     "financing_claimed": {
       "described": false,
@@ -12651,7 +12712,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med tidigare äldreomsorgssatsningar som Äldreomsorgslyftet (ca 2 mdkr/år) och generella statsbidragshöjningar. En storsatsning med höjda ambitioner kan innebära 5-20 mdkr/år i ökade statsbidrag",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antar ökade statsbidrag till kommuner för äldreomsorg. Bas: 5 000 msek/år motsvarar ca 4% av dagens kostnader (~130 mdkr). Låg: 2 000, hög: 10 000. Osäkerhet stor."
     },
     "financing_claimed": {
       "described": false,
@@ -12695,7 +12757,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar att offentliga FoU-anslag ökar från ca 0,9% till 1,0–1,2% av BNP (BNP ~6 200 mdkr). Osäkerhet om privat medfinansiering och ambitionsnivå.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): BNP cirka 6 200 mdkr. Nuvarande total FoU cirka 3,4% av BNP, offentlig FoU cirka 0,9% av BNP (andel 27%). För totalt 4% behövs offentlig nivå på 1,07% av BNP, en ökning med 0,16% av BNP ≈ 9 900 msek, avrundat 10 000 msek. Låg: mindre statlig andel (5 000 msek). Hög: staten driver hela ökningen (20 000 msek)."
     },
     "financing_claimed": {
       "described": false,
@@ -12739,7 +12802,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet hålls genom själva förbudet, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta den antagna kompensationen för indragna fiskerättigheter, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Inga direkta utgifter; förbud mot trålning nära kuster är en reglering. Eventuella administrativa kostnader försumbara. Jakt på skarv kräver endast ändrade jaktregler, inga kostnader."
     },
     "financing_claimed": {
       "described": false,
@@ -12789,7 +12853,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med årskostnad för Högsta domstolen ca 80-120 msek. Antar 10-15 domare med kansli och lokaler, varierande omfattning.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Baserat på jämförbart löfte: 80 msek/år. Låg: 50 msek/år (mindre domstol), hög: 150 msek/år (större)."
     },
     "financing_claimed": {
       "described": false,
@@ -12833,7 +12898,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med tidigare statliga satsningar på stärkta bibliotek (ca 250 mkr/år). Osäkerhet kring omfattning och varaktighet.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antagande: statligt stöd till kommunbibliotek för litteratur, personal och lokaler. Jämför med S-förslag 2018: 250 mkr/år. Låg: 100 mkr (mindre satsning), hög: 500 mkr (bredare lyft inkl. digitalt och bemanning)."
     },
     "financing_claimed": {
       "described": false,
@@ -12877,7 +12943,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnaden beror på styrmedel. Antagande: subventioner, skattereduktioner eller investeringsstöd för sol, biogas och vind. Jämförs med tidigare gårdsstöd och investeringsprogram för förnybar energi.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): ~50 000 jordbruksföretag, 2–10 % tar del av stöd per år, genomsnittligt stöd 50–200 tkr => 50–1 000 mkr. Justerat för osäkerhet: 50–500 mkr, bas 200 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -12921,7 +12988,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar att dagens fossilsubvention (ca 2,5 mdkr/år för jordbruksdiesel) ersätts med gröna avdrag/investeringar. Nettoeffekt mellan oförändrat och upp till 10 mdkr vid hög ambitonsnivå.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Jämförbart löfte p-2026-0459 estimeras till 1200 msek/år för bredare åtgärd. Detta löfte fokuserar på skattemässiga avskrivningar för gröna investeringar, vilket är en delmängd. Antag 33-100% av jämförbart löftes kostnad: 400-1200 msek/år, med 800 msek som bas."
     },
     "financing_claimed": {
       "described": false,
@@ -12965,7 +13033,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för att administrera ett handelssystem för icke-ETS-sektorer, inkl. register, övervakning, kontroll. Baserat på jämförbara system i mindre länder och svenska myndigheters nuvarande kostnader f",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antagande: årlig driftskostnad för systemet. Låg: 50 mkr (minimalt system), bas: 150 mkr (mellanstort), hög: 500 mkr (omfattande system med många sektorer). Jämförbart med EU ETS-administration i medlemsstater, men anpassat till nationell skala."
     },
     "financing_claimed": {
       "described": false,
@@ -13053,7 +13122,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med Klimatpolitiska rådet (~10 msek/år) och brittiska klimatkommittén (~50 msek/år). Inkluderar utredning, administration och löpande uppföljning av koldioxidbudget och konsumtionsmål.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Antar utökad analyskapacitet: 5–15 årsarbetskrafter à 1–1,5 mkr + utrednings- och modelleringskostnader. Låg: 5 mkr (minimal utökning), bas: 15 mkr (motsvarande rådet), hög: 50 mkr (omfattande ny modellering och statistikinsamling)."
     },
     "financing_claimed": {
       "described": false,
