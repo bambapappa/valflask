@@ -1629,12 +1629,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5000,
-      "msek_high": 7500,
+      "msek_low": 900,
+      "msek_base": 1800,
+      "msek_high": 3600,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Fler i fängelse = mer Kriminalvården. Kriminalvården budget ca 16 mdr idag. Skärpta straff kan öka antalet intagna 20-30%. Estimat 5 mdr/år i merkostnad.",
+      "method_note": "Löftet är allmänt hållet ('skärpa straffen') och saknar konkreta lagförslag, vilket gör en exakt siffra omöjlig. Beloppet är satt genom jämförelse med summan av de konkreta straffskärpningsförslag andra partier lagt (tillsammans cirka 1,7 miljarder kronor per år). Moderaternas egna specifika straffskärpningar — avskaffad mängdrabatt, skärpt utvisning vid brott, kriminalisering av deepfake — räknas som separata poster för att undvika dubbelräkning. Osäkerheten är stor och spannet speglar den (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -1645,7 +1645,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Kostnadsestimatet reviderat från 5 000 till 1 800 miljoner kronor per år: den tidigare siffran var en lös uppskattning, den nya är jämförd med summan av konkreta straffskärpningsförslag från övriga partier (Moderaternas egna räknas separat). Metodnoten förtydligad. Se rättelseloggen.",
+        "commit": "513a0cc03258efc429e7ce0ce8983132bd415782"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1766,7 +1772,7 @@
       "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Kriminalisering psykiskt våld, avskaffad patientavgift våldsutsatta, förlängda kontaktförbud. ~3 mdr/år.",
+      "method_note": "Löftet buntar ihop flera åtgärder. En är en konkret och säker statsutgift — avskaffad patientavgift för kvinnor som söker vård efter våldtäkt — men den är liten i sammanhanget. Merparten av beloppet avser osäkra följdkostnader i rättskedjan av att kriminalisera psykiskt och ekonomiskt våld, förlänga kontaktförbud och införa en ny brottsrubricering. Beloppet är oförändrat men vilar till största delen på grova antaganden, vilket spannet speglar (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -1777,7 +1783,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Metodnoten förtydligad så att det framgår vad som är en verklig, säker kostnad (avskaffad patientavgift) och vad som är osäkra straff- och kriminaliseringsföljder. Beloppet oförändrat. Se rättelseloggen.",
+        "commit": "513a0cc03258efc429e7ce0ce8983132bd415782"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3920,12 +3932,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 140,
-      "msek_base": 200,
-      "msek_high": 260,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Förvaltning av marina skyddade områden. ~0,2 mdr/år.",
+      "method_note": "Löftet hålls genom själva förbudet, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta den antagna förvaltningskostnaden för marina skyddade områden, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.55
     },
     "financing_claimed": {
@@ -3936,7 +3948,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 200 miljoner kronor per år till 0 kronor: löftet hålls av själva förbudet, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3964,12 +3982,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 150,
-      "msek_base": 300,
-      "msek_high": 450,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Stoppa industritrålning Östersjön. Kompensation till fiskare. ~0,3 mdr/år.",
+      "method_note": "Löftet hålls genom själva förbudet, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta den antagna kompensationen till fiskare vid ett stopp för industritrålning, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -3980,7 +3998,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 300 miljoner kronor per år till 0 kronor: löftet hålls av själva förbudet, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5917,12 +5941,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 140,
-      "msek_base": 200,
-      "msek_high": 260,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Tillståndsplikt hyresvärdar, administrativt system. ~0,2 mdr/år.",
+      "method_note": "Löftet hålls genom själva regleringen, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta det antagna administrativa systemet för en tillståndsplikt vid uthyrning, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.55
     },
     "financing_claimed": {
@@ -5933,7 +5957,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 200 miljoner kronor per år till 0 kronor: löftet hålls av själva regleringen, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8688,12 +8718,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1000,
+      "msek_low": 600,
+      "msek_base": 1500,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Avskaffad mängdrabatt ökar fängelsetider. Uppskattning baserad på antaganden om fler fängelseår (ca 500) och kostnad per plats (ca 1 mkr/år). Osäkerhet kring beteendeeffekter och domstolars praxis.",
+      "method_note": "Avskaffad mängdrabatt förlänger fängelsetider och ger en verklig återkommande kostnad för Kriminalvården. Beloppet är harmoniserat med Liberalernas motsvarande löfte (p-2026-0462), som utgår från tidigare politiska beräkningar om cirka 1,5 miljarder kronor per år för slopad mängdrabatt. Spannet speglar osäkerhet om domstolarnas praxis och beteendeeffekter (belopp satt av granskare).",
       "confidence": 0.5
     },
     "financing_claimed": {
@@ -8704,7 +8734,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Kostnadsestimatet reviderat från 500 till 1 500 miljoner kronor per år och harmoniserat med Liberalernas motsvarande löfte om slopad mängdrabatt (p-2026-0462), som vilar på tidigare politiska beräkningar. Se rättelseloggen.",
+        "commit": "513a0cc03258efc429e7ce0ce8983132bd415782"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -10549,12 +10585,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10,
-      "msek_base": 30,
-      "msek_high": 100,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Ökade tillsynskostnader för Kemikalieinspektionen och andra myndigheter. Antag 10-50 extra årsarbetskrafter à 1 mkr. Bred osäkerhet då detaljer om förbudets räckvidd saknas.",
+      "method_note": "Löftet hålls genom själva förbudet, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta de antagna ökade tillsynskostnaderna hos Kemikalieinspektionen vid ett PFAS-förbud, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -10565,7 +10601,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 30 miljoner kronor per år till 0 kronor: löftet hålls av själva förbudet, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11209,12 +11251,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1200,
+      "msek_low": 20,
+      "msek_base": 80,
+      "msek_high": 250,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar ökade fängelsekostnader för längre strafftider. Osäkerhet kring antal dömda, strafflängd och marginalkostnad per plats. Baserat på grova uppskattningar av Kriminalvårdens dygnskostnad.",
+      "method_note": "Dubblade straff för rekrytering av barn ger fler fängelseår, men brottstypen är smal med få dömda per år. Beloppet är harmoniserat med Centerpartiets näraliggande löfte p-2026-0373 (samma politik) och bygger på storleksordningen 20–200 extra fängelseår per år à cirka 1,2 miljoner kronor. Osäkerheten är stor (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -11225,7 +11267,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Kostnadsestimatet reviderat från 500 till 80 miljoner kronor per år och harmoniserat med det näraliggande löftet p-2026-0373 (samma politik); brottstypen är smal med få dömda. Se rättelseloggen.",
+        "commit": "513a0cc03258efc429e7ce0ce8983132bd415782"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12661,12 +12709,12 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 50,
-      "msek_base": 100,
-      "msek_high": 500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kompensation för indragna fiskerättigheter, liknande tidigare stöd för skrotning. Antal fartyg och ersättningsbelopp mycket osäkert.",
+      "method_note": "Löftet hålls genom själva förbudet, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta den antagna kompensationen för indragna fiskerättigheter, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -12677,7 +12725,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 100 miljoner kronor (engång) till 0 kronor: löftet hålls av själva förbudet, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13057,12 +13111,12 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 600,
-      "msek_high": 1500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Baseras på uteblivna exportintäkter från försvarsindustrin. Osäkerhet kring hur stor andel av nuvarande export som går till de definierade länderna, samt om nya kunder kan ersätta bortfallet.",
+      "method_note": "Löftet hålls genom själva förbudet, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta de uteblivna exportintäkterna för försvarsindustrin — vilket dessutom är ett bortfall för industrin, inte en kostnad för staten, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -13073,7 +13127,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 600 miljoner kronor per år till 0 kronor: löftet hålls av själva förbudet, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13365,12 +13425,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 150,
-      "msek_high": 500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Vag löfte; antar ökade förvaltnings- och tillsynskostnader för Havs- och vattenmyndigheten samt åtgärdsprogram, jämförbart med andra miljölagar.",
+      "method_note": "Löftet hålls genom själva lagen, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta de antagna förvaltnings- och tillsynskostnaderna för en havsmiljölag, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -13381,7 +13441,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 150 miljoner kronor per år till 0 kronor: löftet hålls av själva lagen, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13409,12 +13475,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 30,
-      "msek_base": 80,
-      "msek_high": 200,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om årliga statsbidrag för omställning och stöd till småskaligt kustnära fiske. Storleksordningen är osäker då löftet saknar siffror.",
+      "method_note": "Löftet hålls genom själva förbudet, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta de antagna statsbidragen för omställning till kustnära fiske, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -13425,7 +13491,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 80 miljoner kronor per år till 0 kronor: löftet hålls av själva förbudet, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13453,12 +13525,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10,
-      "msek_base": 30,
-      "msek_high": 100,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Utökad myndighetsadministration och tillsyn för Kemikalieinspektionen och berörda verk vid införande av gruppförbud. Baserat på kostnader för liknande regleringar.",
+      "method_note": "Löftet hålls genom själva förbudet, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta den antagna myndighetstillsynen och administrationen vid ett gruppförbud mot PFAS, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -13469,7 +13541,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 30 miljoner kronor per år till 0 kronor: löftet hålls av själva förbudet, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14861,12 +14939,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 2000,
-      "msek_high": 8000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antaganden: Vinststopp minskar bolagsskatteintäkter från välfärdsbolag med ~2 mdkr, plus ökade statsbidrag till kommuner för omställning. Osäkerheten är mycket stor; intervallet speglar utredningars s",
+      "method_note": "Löftet hålls genom själva lagändringen, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta de uteblivna bolagsskatteintäkterna från välfärdsbolag och de antagna omställningsbidragen till kommunerna, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -14877,7 +14955,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 2 miljarder kronor per år till 0 kronor: löftet hålls av själva lagändringen, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18591,7 +18675,7 @@
       "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnaden avser ökade utgifter för polis, åklagare, domstolar och kriminalvård vid kriminalisering av gängmedlemskap. Antaganden om antal utredda och dömda personer samt strafftider är osäkra.",
+      "method_note": "Att kriminalisera aktivt medlemskap i kriminella gäng skapar en helt ny brottskategori. Kostnaden avser fler utredningar, åtal och fängelseår, men volymen är genuint oklar eftersom det saknas erfarenhet av hur många som skulle utredas och dömas och hur en sådan lag skulle utformas för att hålla rättsligt. Beloppet är oförändrat och är en grov placeringssiffra med stor osäkerhet, vilket spannet speglar (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -18602,7 +18686,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Metodnoten förtydligad för att lyfta fram den stora osäkerheten om hur många som skulle utredas och dömas. Beloppet oförändrat. Se rättelseloggen.",
+        "commit": "513a0cc03258efc429e7ce0ce8983132bd415782"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18630,12 +18720,12 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 400,
-      "msek_high": 800,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattar utebliven bolagsskatt (20,6%) på vinster i skola/förskola. Vinster antas 0,5–4 mdkr/år => skattebortfall 100–800 msek.",
+      "method_note": "Löftet hålls genom själva lagändringen, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta den uteblivna bolagsskatten på vinster i skola och förskola, men de följderna har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -18646,7 +18736,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-22",
+        "change": "Kostnadsestimatet rättat från 400 miljoner kronor per år till 0 kronor: löftet hålls av själva lagändringen, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
+        "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
