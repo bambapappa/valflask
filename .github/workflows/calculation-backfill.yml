@@ -1,0 +1,98 @@
+# Bakåtfyllnad av cost.calculation för äldre LLM-estimat (full spårbarhet).
+#
+# Kör de gamla estimaten genom samma estimator igen och fäster den
+# rekonstruerade uträkningen DÄR det nya beloppet ligger nära det publicerade.
+# Avvikelser rör aldrig löftet — de hamnar i data/calculation_review.json för
+# mänskligt beslut. Default: dry-run (skriver inget, laddar upp rapport).
+#
+# Börja med sample=10, dry_run=true för att kalibrera divergensgraden.
+name: calculation-backfill
+on:
+  workflow_dispatch:
+    inputs:
+      sample:
+        description: "Antal slumpade löften (ignoreras om 'all' = true)"
+        type: string
+        default: "10"
+      all:
+        description: "Kör ALLA löften utan uträkning"
+        type: boolean
+        default: false
+      dry_run:
+        description: "Dry-run (rapportera enbart, committa inget)"
+        type: boolean
+        default: true
+      seed:
+        description: "Slumpfrö (för återupprepbart urval)"
+        type: string
+        default: "1"
+      factor:
+        description: "Faktortröskel för 'nära' (default 1.5)"
+        type: string
+        default: "1.5"
+permissions:
+  contents: write
+concurrency: { group: calculation-backfill, cancel-in-progress: false }
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: true
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Backfill uträkningar
+        working-directory: pipeline
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          LLM_FALLBACK_BASE_URL: ${{ secrets.LLM_FALLBACK_BASE_URL }}
+          LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+          MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
+        run: |
+          FLAGS="--seed=${{ inputs.seed }} --factor=${{ inputs.factor }}"
+          if [ "${{ inputs.all }}" = "true" ]; then FLAGS="$FLAGS --all"; else FLAGS="$FLAGS --sample=${{ inputs.sample }}"; fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then FLAGS="$FLAGS --dry-run"; fi
+          echo "Kör: pnpm calc:backfill -- $FLAGS"
+          pnpm calc:backfill --silent -- $FLAGS | tee ../calc-backfill-report.txt
+      - name: Ladda upp rapport
+        uses: actions/upload-artifact@v4
+        with:
+          name: calc-backfill-report
+          path: calc-backfill-report.txt
+      - name: Commit data if changed
+        if: ${{ inputs.dry_run == false }}
+        run: |
+          git config user.name "drygast-bot" && git config user.email "bot@drygast.nu"
+          git add data/promises.json data/calculation_review.json data/changelog.json
+          if git diff --cached --quiet; then
+            echo "Inga ändringar — inget att committa."
+            exit 0
+          fi
+          git commit -m "data: calculation backfill (run ${{ github.run_id }})"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push; then
+              echo "Push lyckades (försök $attempt)."
+              exit 0
+            fi
+            echo "Push-försök $attempt misslyckades. Försöker igen..."
+            sleep $((attempt * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
