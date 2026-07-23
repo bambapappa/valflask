@@ -3,6 +3,7 @@ import type { ExtractionCandidate } from "./gates.ts";
 import { R5_CAP_MSEK } from "./gates.ts";
 import type { LlmClient } from "./llm.ts";
 import { extractJsonPayload } from "./extract.ts";
+import type { ComparableCost } from "./similarity.ts";
 
 const A5_SYSTEM = (() => {
   const raw = readFileSync(
@@ -105,10 +106,24 @@ export function looksLikeUnitAmount(quote: string): boolean {
  * Confidence kapas under verifierat belopp; spannet tvingas low ≤ base ≤ high med
  * high ≥ 1,5 × low (R2) och kapas till R5-taket.
  */
+/**
+ * Bygger ett riktmärkesblock av jämförbara löften (samma politik hos andra
+ * partier m.m.) så LLM:en kan ankra sitt estimat i samma storleksordning.
+ */
+export function formatComparables(comparables: readonly ComparableCost[]): string {
+  if (comparables.length === 0) return "";
+  const rows = comparables.map(
+    (c) =>
+      `${c.id} [${c.party}] ${c.msek_base} msek/${c.period === "per_ar" ? "år" : "engång"} (${c.basis}): ${c.title}`,
+  );
+  return `\n<JÄMFÖRBARA LÖFTEN>\n${rows.join("\n")}\n</JÄMFÖRBARA LÖFTEN>`;
+}
+
 export async function estimateCost(
   candidate: ExtractionCandidate,
   llm?: LlmClient,
   model?: string,
+  comparables: readonly ComparableCost[] = [],
 ): Promise<CostEstimate> {
   const amount = candidate.amount_in_text_msek;
 
@@ -144,7 +159,8 @@ export async function estimateCost(
       quote: candidate.quote,
       category: candidate.category,
     }) +
-    `\n</LÖFTE>`;
+    `\n</LÖFTE>` +
+    formatComparables(comparables);
 
   let raw: string;
   try {

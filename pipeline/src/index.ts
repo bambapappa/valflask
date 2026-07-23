@@ -8,7 +8,7 @@ import { runGates, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
 import type { ArchiveFn } from "./archive.ts";
 import { estimateCost } from "./cost.ts";
-import { findPossibleDuplicate, findCrossPartyDuplicate, type ExistingPromiseLite } from "./similarity.ts";
+import { findPossibleDuplicate, findCrossPartyDuplicate, findComparableCosts, type ExistingPromiseLite, type ComparablePromiseLite } from "./similarity.ts";
 import { generateQuip } from "./copy.ts";
 import { maybeGenerateWeekly, type ChronicleEntry } from "./chronicle.ts";
 import {
@@ -130,6 +130,19 @@ export async function runPipeline(
     category: p.category,
     group_id: p.group_id,
   }));
+  // Riktmärken för kostnadsankring: befintliga löften med sitt belopp, så ett
+  // nytt LLM-estimat hamnar i samma storleksordning som liknande politik.
+  const comparablePool: ComparablePromiseLite[] = existingPromises.map((p) => ({
+    id: p.id,
+    title: p.title,
+    parties: p.parties,
+    category: p.category,
+    group_id: p.group_id,
+    msek_base: p.cost.msek_base,
+    period: p.cost.period,
+    basis: p.cost.basis,
+    status: p.status,
+  }));
 
   // ── Frågevågen: ladda taxonomi + celler EN gång (passet delar artikelloopen,
   // annars hade seen.json redan markerat artiklarna som behandlade).
@@ -227,10 +240,21 @@ export async function runPipeline(
           group_id: null,
         });
 
-        const cost = await estimateCost(accepted, ctx.llm, ctx.models.extract);
+        // Kostnadsankring: hämta jämförbara publicerade löften (samma politik hos
+        // andra partier m.m.) så estimatet hamnar i samma storleksordning, och så
+        // granskaren ser riktmärkena i review-raden.
+        const comparables = findComparableCosts(
+          { title: accepted.title, category: accepted.category },
+          comparablePool,
+        );
+        const cost = await estimateCost(accepted, ctx.llm, ctx.models.extract, comparables);
         // Hybrid (§8, ägarbeslut): LLM-estimat går ALLTID till review så människan
         // bekräftar/justerar beloppet; även låg confidence. Kostnaden bärs med.
         if (cost.basis === "llm_estimat" || cost.confidence < 0.6) {
+          const comparablesNote =
+            comparables.length > 0
+              ? ` — jämförbara: ${comparables.map((c) => `${c.id} (${c.msek_base})`).join(", ")}`
+              : "";
           reviewItems.push({
             candidate: accepted,
             failures: [],
@@ -238,9 +262,9 @@ export async function runPipeline(
             articleTitle: article.title,
             cost,
             costReason:
-              cost.basis === "llm_estimat"
+              (cost.basis === "llm_estimat"
                 ? `LLM-estimat (confidence ${cost.confidence}) — bekräfta/justera belopp`
-                : `Låg kostnadssäkerhet: ${cost.confidence}`,
+                : `Låg kostnadssäkerhet: ${cost.confidence}`) + comparablesNote,
           });
           continue;
         }
