@@ -17,15 +17,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 7500,
+      "msek_low": 4000,
+      "msek_base": 7000,
       "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattat utifrån totalkostnad för tandvård för vuxna 24–66 år ~14,7 mdr, nuvarande statlig subvention ~6,5 mdr, och 90 % rabatt skulle ge ~13,2 mdr i subvention. Ökning ~6,7 mdr, med beteendeeffekt ",
-      "confidence": 0.5
+      "method_note": "Utökat högkostnadsskydd (patient betalar 10 %) till alla vuxna — merkostnad utöver dagens subvention.",
+      "calculation": "Vuxentandvård ~14,7 mdr/år. Med 10 %-patientandel täcker staten ~90 % ≈ 13,2 mdr; minus nuvarande subvention ~6,5 mdr ⇒ merkostnad ~6,7 mdr. Spann 4–12 mdr speglar osäkerhet i vårdvolym och referenspris. Jämförbara högkostnadsskydd: p-2026-0489 (5 mdr), p-2026-0484 (10 mdr), p-2026-0440 (20 mdr).",
+      "confidence": 0.4
     },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (Claude, ny estimering med uträkning; confidence 0.4) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -44,16 +45,17 @@
     "articleTitle": "Vad vi vill | Sverigedemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 5000,
-      "msek_base": 20000,
-      "msek_high": 80000,
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 10000,
+      "msek_high": 20000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Stöd antas för 1-2 reaktorer (40-80 mdkr/st), staten tar 25-50% som engångsanslag/garanti. Mycket vagt löfte.",
-      "confidence": 0.2
+      "method_note": "Statligt stöd/garantier för nybyggd kärnkraft (tillståndsförenkling ~gratis). Anpassat till jämförbara kärnkraftsstöd.",
+      "calculation": "Vagt löfte: statligt stöd + snabbare tillstånd (tillståndsdelen försumbar). Kostnaden är stödet/garantierna. Jämförbara kärnkraftsstöd ~10 mdr/år (p-2026-0082, p-2026-0153, p-2026-0109), högre variant 20 mdr (p-2026-0083). Anpassat till klustret ~10 mdr/år. OBS: perioden (per år vs engång) är osäker — jämförbara anges per år; ett engångsanslag skulle ge en annan totalsiffra.",
+      "confidence": 0.25
     },
-    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (Claude, ny estimering med uträkning; confidence 0.25) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -74,14 +76,15 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 100,
-      "msek_high": 300,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uteblivna dynamiska effekter av fri hyressättning. Osäker nettoeffekt på statsbudgeten, möjligen uteblivna besparingar på bostadsbidrag. Antagande om små effekter.",
-      "confidence": 0.2
+      "method_note": "Reglering mot marknadshyror. Direkt statskostnad försumbar; dynamiska följder är samhällseffekter, inte en budgetpost.",
+      "calculation": "Att säga nej till marknadshyror bibehåller nuvarande hyressättning — ingen direkt statsutgift. Eventuella dynamiska effekter på bostadsutbudet är samhällsföljder, inte en statsbudgetpost, och lämnas okvantifierade. Sätts till 0, samma princip som förbudslöftena (Grupp 2).",
+      "confidence": 0.3
     },
-    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (Claude, ny estimering med uträkning; confidence 0.3) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -104,43 +107,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 150,
-      "msek_base": 500,
-      "msek_high": 2000,
+      "msek_low": 20,
+      "msek_base": 200,
+      "msek_high": 1000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om reform som höjer bidragsdelen eller ger andra förbättringar. Uppskattas utifrån jämförelse med tidigare studiemedelsreformer, osäkert.",
-      "confidence": 0.3
+      "method_note": "Löftet beskriver en utredning, inte en färdig reform. Endast utredningen är konkret utlovad.",
+      "calculation": "Citatet gäller en utredning om ett moderniserat studiemedelssystem, inte en definierad reform. En utredning kostar några mkr; en faktisk bidrags-/systemreform kan kosta hundratals mkr men är odefinierad. Base ~200 speglar en trolig måttlig reform; spann 20–1 000 fångar att endast utredningen är konkret utlovad. Överväg avvisning — vagt och överlappar p-2026-0547 (L, underlätta studenter att jobba).",
+      "confidence": 0.2
     },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Plånbokslöfte med höjt barnbidrag och billigare mediciner",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Vi ska ge tillbaka det du förlorat med ett plånbokslöfte: höjt barn- och studiebidrag, billigare mediciner, avgiftsfri tandvård för unga, hårdare press på banker och matkedjor och starkare skydd mot höga elpriser för villaägare.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
-    "articleTitle": "Val 2026\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 8000,
-      "msek_base": 15000,
-      "msek_high": 40000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Grov uppskattning av höjt barnbidrag (ca 200 kr/mån för 2M barn), höjt studiebidrag, subventionerade mediciner, utökad tandvård, elprisstöd. Baserat på jämförbara reformkostnader, stor osäkerhet.",
-      "confidence": 0.3
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (Claude, ny estimering med uträkning; confidence 0.2) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -160,14 +136,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 2500,
-      "msek_high": 4000,
+      "msek_low": 3000,
+      "msek_base": 5000,
+      "msek_high": 7000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattat från antal sjukfall (2-3 miljoner per år) och genomsnittlig sjuklönekostnad per dag (ca 1000 kr). Osäkerhet pga ändrat beteende.",
-      "confidence": 0.4
+      "method_note": "Slopad karens = sjukersättning från dag 1. Harmoniserat med MP:s p-2026-0445 (samma politik).",
+      "calculation": "Slopad karens ger sjukersättning från dag 1. ~2–3 miljoner sjukfall/år × ~700–1 000 kr/karensdag ≈ 1,5–3 mdr direkt, plus beteendeeffekter (fler korta sjukfall) ⇒ ~4–5 mdr. Samma politik som MP:s p-2026-0445 (slopa karensavdraget, 5 000 mkr/år) — harmoniserat dit. Överväg grupplänkning (R3, räknas en gång i totalen).",
+      "confidence": 0.35
     },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (Claude, ny estimering med uträkning; confidence 0.35) — bekräfta/justera belopp"
   }
 ]
