@@ -1,11 +1,18 @@
 # Bakåtfyllnad av cost.calculation för äldre LLM-estimat (full spårbarhet).
 #
-# Kör de gamla estimaten genom samma estimator igen och fäster den
-# rekonstruerade uträkningen DÄR det nya beloppet ligger nära det publicerade.
-# Avvikelser rör aldrig löftet — de hamnar i data/calculation_review.json för
-# mänskligt beslut. Default: dry-run (skriver inget, laddar upp rapport).
+# Två jobb, med flit åtskilda:
+#   backfill  — långt (LLM ~1,5–3 h). Kör estimaten, laddar upp datat som artifact.
+#               Pushar INGENTING (behöver ingen token som kan hinna löpa ut).
+#   commit    — kort. Mintar en FÄRSK bot-token, hämtar dataartifacten och pushar.
+#               Eftersom det är snabbt är tokenen alltid giltig (buggen i
+#               run 30028792947: en enda 1,5 h-token hann dö före push).
 #
-# Börja med sample=10, dry_run=true för att kalibrera divergensgraden.
+# Kör de gamla estimaten genom samma estimator igen och fäster den rekonstruerade
+# uträkningen DÄR det nya beloppet ligger nära det publicerade. Avvikelser rör
+# aldrig löftet — de hamnar i data/calculation_review.json för mänskligt beslut.
+#
+# Börja med sample=10, dry_run=true för att kalibrera. source_run_id = applicera
+# en TIDIGARE körnings artifact utan att räkna om (återhämtning).
 name: calculation-backfill
 on:
   workflow_dispatch:
@@ -30,27 +37,23 @@ on:
         description: "Faktortröskel för 'nära' (default 1.5)"
         type: string
         default: "1.5"
+      source_run_id:
+        description: "Applicera EN TIDIGARE körnings dataartifact i stället för att räkna om (ange run-id; hoppar backfill-jobbet)"
+        type: string
+        default: ""
 permissions:
   contents: write
-# Delar concurrency-grupp med pipeline.yml (group: pipeline) så en backfill och
-# en ordinarie pipeline-körning ALDRIG kör samtidigt — annars kan båda lägga
-# till i changelog.json samtidigt och pushen fastnar i en rebase-konflikt. Den
-# som startar först håller låset; den andra köar (cancel-in-progress: false).
+  actions: read   # commit-jobbet hämtar dataartifact (ev. från annan körning)
+# Delar concurrency-grupp med pipeline.yml så en backfill och en ordinarie
+# pipeline-körning ALDRIG kör samtidigt (annars kan båda skriva changelog.json →
+# rebase-konflikt). Den som startar först håller låset; den andra köar.
 concurrency: { group: pipeline, cancel-in-progress: false }
 jobs:
   backfill:
+    if: ${{ inputs.source_run_id == '' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Mint bot app token
-        id: app-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
-        with:
-          app-id: ${{ secrets.BOT_APP_ID }}
-          private-key: ${{ secrets.BOT_APP_KEY }}
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
-        with:
-          token: ${{ steps.app-token.outputs.token }}
-          persist-credentials: true
       - uses: pnpm/action-setup@v4
         with:
           version: 9
@@ -80,9 +83,6 @@ jobs:
         with:
           name: calc-backfill-report
           path: calc-backfill-report.txt
-      # Säkerhetsnät: ladda ALLTID upp de ändrade datafilerna som artifact vid en
-      # skarp körning, så att en misslyckad commit/push aldrig kostar hela LLM-
-      # körningen — resultatet går då att applicera för hand utan att köra om.
       - name: Ladda upp data (skarp körning)
         if: ${{ inputs.dry_run == false }}
         uses: actions/upload-artifact@v4
@@ -94,18 +94,44 @@ jobs:
             data/changelog.json
             data/rattelser.json
           if-no-files-found: ignore
-      - name: Commit data if changed
-        if: ${{ inputs.dry_run == false }}
+
+  commit:
+    needs: backfill
+    # Kör vid skarp körning (backfill lyckades) ELLER vid återhämtning (source_run_id).
+    if: ${{ always() && (inputs.source_run_id != '' || (inputs.dry_run == false && needs.backfill.result == 'success')) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint bot app token (färsk, strax före push)
+        id: token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        with:
+          token: ${{ steps.token.outputs.token }}
+          persist-credentials: true
+      - name: Hämta dataartifact
+        uses: actions/download-artifact@v4
+        with:
+          name: calc-backfill-data
+          path: artifact-data
+          run-id: ${{ inputs.source_run_id != '' && inputs.source_run_id || github.run_id }}
+          github-token: ${{ github.token }}
+      - name: Applicera och pusha
         run: |
           git config user.name "drygast-bot" && git config user.email "bot@drygast.nu"
-          # -A data/: stagea ALLT skriptet rört (inkl. rattelser.json) så inga
-          # osparade ändringar blockerar git pull --rebase (buggen i run 30011446295).
+          for f in promises.json calculation_review.json changelog.json rattelser.json; do
+            src="$(find artifact-data -name "$f" | head -1)"
+            [ -n "$src" ] && cp "$src" "data/$f" && echo "applicerade data/$f"
+          done
           git add -A data/
           if git diff --cached --quiet; then
             echo "Inga ändringar — inget att committa."
             exit 0
           fi
-          git commit -m "data: calculation backfill (run ${{ github.run_id }})"
+          SRC="${{ inputs.source_run_id != '' && inputs.source_run_id || github.run_id }}"
+          git commit -m "data: calculation backfill (artifact från run $SRC)"
           for attempt in 1 2 3 4 5; do
             if git pull --rebase origin main && git push; then
               echo "Push lyckades (försök $attempt)."
