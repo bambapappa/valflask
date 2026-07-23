@@ -3,12 +3,15 @@ name: foreslag
 #   hemlighet  LLM_API_KEY          (Settings → Secrets and variables → Actions)
 #                                   OPENROUTER_API_KEY godtas som alias.
 #   variabel   MODEL_KOPPLING       (samma ställe, fliken Variables) — modell-id
-#                                   hos primärleverantören (t.ex. Go: kimi-k2.7).
+#                                   hos primärleverantören (t.ex. Go:
+#                                   kimi-k2.7-code — modellkataloger rör sig,
+#                                   verifiera mot leverantörens egen lista).
 #   variabel   LLM_BASE_URL         primär endpoint, t.ex. OpenCode Go
 #                                   https://opencode.ai/zen/go/v1. Utan den
 #                                   används OpenRouter.
-# Valfria hemligheter: LLM_FALLBACK_BASE_URL, LLM_FALLBACK_API_KEY, och
-# variabeln MODEL_KOPPLING_FALLBACK. Löftena läses ur publika valflask.
+# Valfria: variabeln LLM_FALLBACK_BASE_URL (secret som reserv), hemligheten
+# LLM_FALLBACK_API_KEY (alias LLM_FALLBACK_KEY godtas), och variabeln
+# MODEL_KOPPLING_FALLBACK. Löftena läses ur publika valflask.
 #
 # Körningen är idempotent (par med förslag i kön hoppas över) och pushar
 # LÖFTE FÖR LÖFTE: varje klart löftes nya poster läggs på färsk defaultgren
@@ -88,8 +91,11 @@ jobs:
           LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          LLM_FALLBACK_BASE_URL: ${{ secrets.LLM_FALLBACK_BASE_URL }}
-          LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+          # Base-URL är inte hemlig — läs den ur variabler i första hand
+          # (secrets kvar som reserv). Nyckelnamnet har historiskt stavats
+          # LLM_FALLBACK_KEY i detta repo (HANDOFF-varning); godta båda.
+          LLM_FALLBACK_BASE_URL: ${{ vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL }}
+          LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY || secrets.LLM_FALLBACK_KEY }}
           MODEL_KOPPLING: ${{ vars.MODEL_KOPPLING }}
           MODEL_KOPPLING_FALLBACK: ${{ vars.MODEL_KOPPLING_FALLBACK }}
           LOFTE: ${{ inputs.lofte }}
@@ -98,7 +104,15 @@ jobs:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           PROMISES: ${{ github.workspace }}/valflask-lofter/data/promises.json
         run: |
+          # GitHub kör run:-steg som "bash -e" som standard. Med -e PÅ dödar
+          # ETT enda misslyckat modellanrop (icke-noll exitkod från
+          # foreslag.mts) HELA skriptet direkt — innan fexit=$? och
+          # dödspärren (åtta löften i rad) ens hinner köra. Loopen nedan är
+          # byggd för att hantera fel explicit via $?, så -e stängs av
+          # medvetet; -u och pipefail är kvar (typofel/pipe-fel ska ändå
+          # fälla skriptet).
           set -uo pipefail
+          set +e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
