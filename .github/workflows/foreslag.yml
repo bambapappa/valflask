@@ -7,11 +7,14 @@ name: foreslag
 #
 # Körningen är idempotent (par med förslag i kön hoppas över). Skriptet
 # skriver kön efter varje löfte och kraschar inte på enskilda par, och
-# körsteget är salvage-säkrat som i skord.yml: även om det faller committas
-# det som hann köas, och körningen blir röd sist. Pushloopen lägger bara
-# körningens NYA köposter på färsk defaultgren — ett granskningsbeslut som
-# hann fattas under körningen återuppstår aldrig (scripts/ko-uppdatera.mts).
-# Efter lyckad push synkas kön till issues.
+# salvage-committen är ett always()-steg: det som hann köas committas ÄVEN
+# om körsteget faller OCH om jobbet avbryts eller slår i timeout-taket (300
+# min) — då kön annars bara finns på runnerns tillfälliga disk och skulle gå
+# förlorad. Pushloopen lägger bara körningens NYA köposter på färsk
+# defaultgren — ett granskningsbeslut som hann fattas under körningen
+# återuppstår aldrig (scripts/ko-uppdatera.mts). När committen lyckats synkas
+# kön till issues; hoppas det steget över (kort avbrottsfönster) tar
+# koppling-sync.yml det i efterhand.
 on:
   workflow_dispatch:
     inputs:
@@ -86,7 +89,12 @@ jobs:
           node --import tsx/esm scripts/foreslag.mts "${args[@]}"
         working-directory: pipeline
       - name: Committa kön (bara körningens nya poster)
-        if: ${{ !inputs.dry_run }}
+        # always(): salvage-committen ska landa ÄVEN när jobbet avbryts eller
+        # slår i timeout-taket — inte bara på framgångsvägen. Utan det (implicit
+        # success()) kastas det körda bort vid cancel/timeout, eftersom kön bara
+        # finns på runnerns tillfälliga disk tills detta steg pushar den.
+        id: commit
+        if: ${{ always() && !inputs.dry_run }}
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
@@ -114,7 +122,11 @@ jobs:
           echo "Push misslyckades efter 5 försök."
           exit 1
       - name: Synka kön till issues
-        if: ${{ !inputs.dry_run }}
+        # Kör så snart committen faktiskt lyckades (även på cancel/timeout-
+        # salvagen), men ALDRIG om pushen föll — då finns inga nya poster i
+        # main att skapa issues för. Skulle detta steg hoppas över (t.ex. för
+        # kort avbrottsfönster) synkas kön i efterhand via koppling-sync.yml.
+        if: ${{ always() && !inputs.dry_run && steps.commit.outcome == 'success' }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PROMISES_PATH: ${{ github.workspace }}/valflask-lofter/data/promises.json
