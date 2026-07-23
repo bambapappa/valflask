@@ -22,6 +22,13 @@ export interface CostEstimate {
   basis: "rut" | "myndighet" | "parti" | "media" | "llm_estimat";
   basis_url: string | null;
   method_note: string;
+  /**
+   * Den fullständiga, stegvisa uträkningen bakom beloppet (antaganden × räkning).
+   * Sparas och visas både i granskning och publikt — så att ett LLM-estimat går
+   * att syna i efterhand. Valfritt: deterministiska belopp (basis "parti") och
+   * fallback-fall saknar uträkning.
+   */
+  calculation?: string;
   confidence: number;
 }
 
@@ -264,7 +271,12 @@ export async function estimateCost(
     ? `${baseNote} [period satt till engang: engångssignal i löftet]`.slice(0, 240)
     : baseNote;
 
-  return {
+  // Full uträkning (antaganden × räkning) — sparas för spårbarhet. Kapas mildare
+  // än method_note eftersom det är själva beviskedjan bakom beloppet.
+  const calcRaw = typeof p.calculation === "string" ? p.calculation.trim() : "";
+  const calculation = calcRaw.length > 0 ? calcRaw.slice(0, 800) : undefined;
+
+  const estimate: CostEstimate = {
     type,
     period,
     msek_low: Math.round(low),
@@ -275,4 +287,6 @@ export async function estimateCost(
     method_note: note,
     confidence,
   };
+  if (calculation) estimate.calculation = calculation;
+  return estimate;
 }

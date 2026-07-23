@@ -82,6 +82,22 @@ describe("estimateCost", () => {
     assert.equal(c.method_note, "jämförbar reform");
   });
 
+  it("fångar LLM:ens uträkning (calculation) för spårbarhet", async () => {
+    const llm = mockLlm(
+      '{"type":"utgift","period":"per_ar","msek_low":100,"msek_base":300,"msek_high":1200,"confidence":0.45,"method_note":"höjt fribelopp","calculation":"~350 000 studenter × 10–20 % berörda × 2–5 tkr ≈ 70–350 mkr"}',
+    );
+    const c = await estimateCost(cand(null), llm, "m");
+    assert.match(c.calculation ?? "", /350 000 studenter/);
+  });
+
+  it("saknad calculation → fältet utelämnas (inte tom sträng)", async () => {
+    const llm = mockLlm(
+      '{"type":"utgift","period":"per_ar","msek_low":100,"msek_base":300,"msek_high":900,"confidence":0.4,"method_note":"x"}',
+    );
+    const c = await estimateCost(cand(null), llm, "m");
+    assert.equal(c.calculation, undefined);
+  });
+
   it("tvingar high ≥ 1,5 × low (R2)", async () => {
     const llm = mockLlm(
       '{"type":"utgift","period":"per_ar","msek_low":100,"msek_base":110,"msek_high":120,"confidence":0.5,"method_note":"x"}',

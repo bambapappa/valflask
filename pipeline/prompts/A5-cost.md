@@ -18,6 +18,10 @@ Regler:
    sätt högre bara om spannet vilar på en rimlig, förklarbar kalkyl.
 6. "method_note": kort förklaring av antaganden, max 200 tecken. Hitta INTE på
    exakta källor eller myndighetssiffror — beskriv resonemanget, inte en falsk källa.
+6b. "calculation": den STEGVISA uträkningen bakom beloppet — antaganden och
+   räkning, t.ex. "~350 000 studenter × 10–20 % berörda × 2–5 tkr ≈ 70–350 mkr".
+   Max 800 tecken. Detta sparas och visas publikt, så var konkret och ärlig; hitta
+   inte på exakta myndighetssiffror utan visa antagandena öppet.
 7. Om ett block <JÄMFÖRBARA LÖFTEN> anges är det redan publicerade löften om
    liknande politik, med belopp i msek. Lägg ditt estimat i samma storleksordning
    som dem när politiken liknar. Avvik bara med starka skäl, och skriv då kort i
@@ -29,4 +33,4 @@ SCHEMA
 { "type": "utgift" | "intäktsminskning" | "besparing",
   "period": "per_ar" | "engang",
   "msek_low": number, "msek_base": number, "msek_high": number,
-  "confidence": number, "method_note": str }
+  "confidence": number, "method_note": str, "calculation": str }
