@@ -344,7 +344,11 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-*(inga anspråk)*
+- 2026-07-23 `claude/handlingsvagen-ko-beta-6oiq2r` → triggar en ny
+  fullkörning av `foreslag.yml` på `main` (PR #127 mergad: `bash -e`-
+  krasch och fallback-kopplingen fixade, `MODEL_KOPPLING=kimi-k2.7-code`
+  satt av ägaren). Rör inte `data/kopplingsforslag.json` eller
+  `data/provade-par.json` parallellt förrän klart.
 
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
