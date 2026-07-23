@@ -2,8 +2,9 @@ name: skord
 # Skörd på GitHubs runners (fritt utnät): röster (b-0012) och betänkanden
 # (b-0013). Startas för hand. Stegen körs SEKVENTIELLT — aldrig två skördar
 # parallellt (HANDOFF) — och skördarna delsparar per block, så delresultat
-# committas även om ett steg faller; omkörning är idempotent och fortsätter
-# där det slutade. Endast skördefilerna återställs i pushloopen
+# committas även om ett steg faller OCH om jobbet avbryts eller slår i
+# timeout-taket (always()-committen nedan); omkörning är idempotent och
+# fortsätter där det slutade. Endast skördefilerna återställs i pushloopen
 # (data/roster/, personer.json, betankanden.json, handlingar.json) — kön och
 # kopplingarna rörs aldrig här, så ett samtidigt granskningsbeslut kan inte
 # skrivas över.
@@ -62,6 +63,13 @@ jobs:
           node --import tsx/esm scripts/harvest.mts "${args[@]}"
         working-directory: pipeline
       - name: Committa skördefilerna
+        # always(): delresultatet ska committas ÄVEN vid cancel och timeout,
+        # inte bara på framgångsvägen — utan det (implicit success()) kastas de
+        # skördade blocken bort när jobbet avbryts eller slår i 300-min-taket,
+        # eftersom de bara finns på runnerns tillfälliga disk tills detta steg
+        # pushar dem. Skörden delsparar per block, så en omkörning fortsätter
+        # där det slutade.
+        if: ${{ always() }}
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
