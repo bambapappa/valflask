@@ -225,9 +225,14 @@ gör något publikt (kräver ägarens go). Runbook: `MIGRERING.md`.
 
 Återstår (i ordning):
 
-1. **Ägarens granskning av kön** — pågår. Ägaren har granskat ned kön:
-   **18 koppling-kö-issues kvar på main** (2026-07-21) att /godkänna eller
-   /avvisa; kör `npm run domar` när fler avgjorts för fler domar/meriter.
+1. **Ägarens granskning av kön — KLAR (2026-07-23).** Hela kön avbetad
+   tillsammans med ägaren: **14 godkända, 4 avvisade** (0 kvar). Avvisade:
+   #20 (kriminalitet i vården ≠ stoppa privatiseringar), #26 (granskande
+   interpellation, inte handling som bygger militär förmåga), #17
+   (arbetsmarknadspolitik "i hela landet" för bred passform), #15 (strandskydd
+   egen sakfråga). `npm run domar` omkört: **72 partidomar (19→ fler med
+   utslag), 1124 ledamotsmeriter** (upp från 48/745). Nästa förslagskörning
+   fyller kön på nytt (punkt 3).
 2. **b-0014 andra halvan — nyckelordsindexet**: byggtidsindex över
    dokumentens fulltexter (fritextsök + ordtrender per parti).
    Fulltexterna hämtas vid indexbygget och lagras aldrig; indexet
@@ -344,8 +349,9 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
 (29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
 godkänt sitt första (issue #5, elevlagen p-2026-0360) → 1 koppling i
-`data/kopplingar.json`. Ägaren har sedan granskat vidare: **kön är 18 på
-main (2026-07-21)**. Resten väntar på mänskligt beslut.
+`data/kopplingar.json`. Ägaren har sedan granskat vidare och **2026-07-23
+betat av hela kön: 14 godkända, 4 avvisade (0 kvar)**. `npm run domar`
+omkört därefter (72 partidomar, 1124 ledamotsmeriter).
 
 **⚠️ INNAN NÄSTA FULLKÖRNING — kontrollera OpenRouter-nyckeln/krediten.**
 Körning 8 slutade röd för att **1 234 par föll på HTTP 401** efter ~91
