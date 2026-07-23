@@ -1,6 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { estimateCost, looksLikeOneOff } from "../src/cost.ts";
+import { estimateCost, looksLikeOneOff, costDeviation } from "../src/cost.ts";
+import type { ComparableCost } from "../src/similarity.ts";
 import type { LlmClient } from "../src/llm.ts";
 import type { ExtractionCandidate } from "../src/gates.ts";
 
@@ -166,6 +167,73 @@ describe("estimateCost", () => {
   });
 
   it("looksLikeOneOff: gåva/inlösen/mandatperiod ja; löpande nej", () => {
+    assert.equal(looksLikeOneOff("16 Gripen skänks till Ukraina"), true);
+    assert.equal(looksLikeOneOff("investera 50 miljarder under nästa mandatperiod"), true);
+    assert.equal(looksLikeOneOff("inlösen av friskoleaktiebolag"), true);
+    assert.equal(looksLikeOneOff("höja barnbidraget varje månad"), false);
+  });
+});
+
+describe("costDeviation — avvikelseflagg mot jämförbara", () => {
+  const cmp = (bases: number[]): ComparableCost[] =>
+    bases.map((b, i) => ({
+      id: `p-2026-99${i}`,
+      title: "grannlöfte",
+      party: "m",
+      msek_base: b,
+      period: "per_ar",
+      basis: "llm_estimat",
+    }));
+
+  it("flaggar när beloppet är ≥ 3× över medianen", () => {
+    const d = costDeviation(5000, cmp([1500, 1500]));
+    assert.ok(d, "ska flaggas");
+    assert.equal(d?.median, 1500);
+    assert.match(d!.message, /3\.3×/);
+  });
+
+  it("flaggar när beloppet är ≥ 3× UNDER medianen", () => {
+    const d = costDeviation(500, cmp([1500, 1500]));
+    assert.ok(d);
+    assert.match(d!.message, /3\.0×/);
+  });
+
+  it("flaggar inte inom tröskeln", () => {
+    assert.equal(costDeviation(1500, cmp([1500, 1000])), null);
+    assert.equal(costDeviation(2000, cmp([1500, 1500])), null);
+  });
+
+  it("jämförbara på 0 men beloppet > 0 flaggas (nytt förbud satt högt)", () => {
+    const d = costDeviation(600, cmp([0, 0]));
+    assert.ok(d);
+    assert.equal(d?.factor, 0);
+    assert.match(d!.message, /ligger på 0/);
+  });
+
+  it("beloppet 0 men jämförbara > 0 flaggas", () => {
+    const d = costDeviation(0, cmp([1500, 1500]));
+    assert.ok(d);
+    assert.match(d!.message, /satt till 0/);
+  });
+
+  it("båda 0 → ingen flagg", () => {
+    assert.equal(costDeviation(0, cmp([0, 0])), null);
+  });
+
+  it("inga jämförbara → ingen flagg", () => {
+    assert.equal(costDeviation(9999, []), null);
+  });
+
+  it("median av udda antal", () => {
+    // [80, 300, 10000] → median 300; 80 avviker 3,75× under → flagg
+    const d = costDeviation(80, cmp([300, 80, 10000]));
+    assert.ok(d);
+    assert.equal(d?.median, 300);
+  });
+});
+
+describe("looksLikeOneOff (fristående)", () => {
+  it("gåva/inlösen/mandatperiod ja; löpande nej", () => {
     assert.equal(looksLikeOneOff("16 Gripen skänks till Ukraina"), true);
     assert.equal(looksLikeOneOff("investera 50 miljarder under nästa mandatperiod"), true);
     assert.equal(looksLikeOneOff("inlösen av friskoleaktiebolag"), true);

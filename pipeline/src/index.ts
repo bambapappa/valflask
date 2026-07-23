@@ -7,7 +7,7 @@ import { extractFromArticle } from "./extract.ts";
 import { runGates, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
 import type { ArchiveFn } from "./archive.ts";
-import { estimateCost } from "./cost.ts";
+import { estimateCost, costDeviation } from "./cost.ts";
 import { findPossibleDuplicate, findCrossPartyDuplicate, findComparableCosts, type ExistingPromiseLite, type ComparablePromiseLite } from "./similarity.ts";
 import { generateQuip } from "./copy.ts";
 import { maybeGenerateWeekly, type ChronicleEntry } from "./chronicle.ts";
@@ -255,6 +255,8 @@ export async function runPipeline(
             comparables.length > 0
               ? ` — jämförbara: ${comparables.map((c) => `${c.id} (${c.msek_base})`).join(", ")}`
               : "";
+          const deviation = costDeviation(cost.msek_base, comparables);
+          const deviationNote = deviation ? ` ⚠ AVVIKER: ${deviation.message}` : "";
           reviewItems.push({
             candidate: accepted,
             failures: [],
@@ -264,7 +266,7 @@ export async function runPipeline(
             costReason:
               (cost.basis === "llm_estimat"
                 ? `LLM-estimat (confidence ${cost.confidence}) — bekräfta/justera belopp`
-                : `Låg kostnadssäkerhet: ${cost.confidence}`) + comparablesNote,
+                : `Låg kostnadssäkerhet: ${cost.confidence}`) + comparablesNote + deviationNote,
           });
           continue;
         }

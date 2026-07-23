@@ -119,6 +119,53 @@ export function formatComparables(comparables: readonly ComparableCost[]): strin
   return `\n<JÄMFÖRBARA LÖFTEN>\n${rows.join("\n")}\n</JÄMFÖRBARA LÖFTEN>`;
 }
 
+export interface DeviationFlag {
+  /** Hur många gånger beloppet avviker från medianen; 0 när ratio är obestämd (0-fall). */
+  factor: number;
+  median: number;
+  message: string;
+}
+
+/** Median av jämförbara löftens basbelopp (inklusive nollställda). */
+function medianBase(comparables: readonly ComparableCost[]): number {
+  const bases = comparables.map((c) => c.msek_base).sort((a, b) => a - b);
+  const mid = Math.floor(bases.length / 2);
+  return bases.length % 2 === 0 ? (bases[mid - 1]! + bases[mid]!) / 2 : bases[mid]!;
+}
+
+/**
+ * Flaggar när ett estimat avviker kraftigt (default ≥ 3×) från medianen av
+ * jämförbara löften — så granskaren ser i review att "samma politik" prissatts
+ * olika (mängdrabatt 500 vs 1 500). Rent en signal till människan; ändrar aldrig
+ * beloppet automatiskt. Returnerar null när inget att flagga.
+ */
+export function costDeviation(
+  base: number,
+  comparables: readonly ComparableCost[],
+  factorThreshold = 3,
+): DeviationFlag | null {
+  if (comparables.length === 0) return null;
+  const median = medianBase(comparables);
+  if (median === 0 && base === 0) return null; // båda 0 — inget att flagga
+  if (median === 0 || base === 0) {
+    return {
+      factor: 0,
+      median,
+      message:
+        median === 0
+          ? `belopp ${base} men jämförbara ligger på 0`
+          : `satt till 0 men jämförbara ligger på ~${median}`,
+    };
+  }
+  const factor = base >= median ? base / median : median / base;
+  if (factor < factorThreshold) return null;
+  return {
+    factor,
+    median,
+    message: `${base} avviker ${factor.toFixed(1)}× från jämförbara (median ${median})`,
+  };
+}
+
 export async function estimateCost(
   candidate: ExtractionCandidate,
   llm?: LlmClient,
