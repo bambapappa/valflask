@@ -76,11 +76,27 @@ jobs:
         with:
           name: calc-backfill-report
           path: calc-backfill-report.txt
+      # Säkerhetsnät: ladda ALLTID upp de ändrade datafilerna som artifact vid en
+      # skarp körning, så att en misslyckad commit/push aldrig kostar hela LLM-
+      # körningen — resultatet går då att applicera för hand utan att köra om.
+      - name: Ladda upp data (skarp körning)
+        if: ${{ inputs.dry_run == false }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: calc-backfill-data
+          path: |
+            data/promises.json
+            data/calculation_review.json
+            data/changelog.json
+            data/rattelser.json
+          if-no-files-found: ignore
       - name: Commit data if changed
         if: ${{ inputs.dry_run == false }}
         run: |
           git config user.name "drygast-bot" && git config user.email "bot@drygast.nu"
-          git add data/promises.json data/calculation_review.json data/changelog.json
+          # -A data/: stagea ALLT skriptet rört (inkl. rattelser.json) så inga
+          # osparade ändringar blockerar git pull --rebase (buggen i run 30011446295).
+          git add -A data/
           if git diff --cached --quiet; then
             echo "Inga ändringar — inget att committa."
             exit 0
