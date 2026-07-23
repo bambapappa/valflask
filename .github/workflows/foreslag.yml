@@ -5,16 +5,17 @@ name: foreslag
 # Valfria hemligheter: LLM_FALLBACK_BASE_URL, LLM_FALLBACK_API_KEY, och
 # variabeln MODEL_KOPPLING_FALLBACK. Löftena läses ur publika valflask.
 #
-# Körningen är idempotent (par med förslag i kön hoppas över). Skriptet
-# skriver kön efter varje löfte och kraschar inte på enskilda par, och
-# salvage-committen är ett always()-steg: det som hann köas committas ÄVEN
-# om körsteget faller OCH om jobbet avbryts eller slår i timeout-taket (300
-# min) — då kön annars bara finns på runnerns tillfälliga disk och skulle gå
-# förlorad. Pushloopen lägger bara körningens NYA köposter på färsk
-# defaultgren — ett granskningsbeslut som hann fattas under körningen
-# återuppstår aldrig (scripts/ko-uppdatera.mts). När committen lyckats synkas
-# kön till issues; hoppas det steget över (kort avbrottsfönster) tar
-# koppling-sync.yml det i efterhand.
+# Körningen är idempotent (par med förslag i kön hoppas över) och pushar
+# LÖFTE FÖR LÖFTE: varje klart löftes nya poster läggs på färsk defaultgren
+# direkt, så det som gjorts ligger löpande på main och överlever även en hård
+# runner-krasch mitt i. Pushloopen lägger bara körningens NYA köposter (via
+# scripts/ko-uppdatera.mts) — ett granskningsbeslut som hann fattas under
+# körningen återuppstår aldrig. Slutar nyckeln svara bryter körningen efter
+# åtta löften i rad utan framsteg. Salvage-committen sist är ett always()-steg
+# som flushar det sista löftets delta ÄVEN om jobbet avbryts eller slår i
+# timeout-taket (300 min). När committen lyckats synkas kön till issues;
+# hoppas det steget över (kort avbrottsfönster) tar koppling-sync.yml det i
+# efterhand.
 on:
   workflow_dispatch:
     inputs:
@@ -70,7 +71,12 @@ jobs:
           fi
       - name: Spara köns startläge
         run: cp data/kopplingsforslag.json /tmp/ko-start.json
-      - name: Förslagskörning
+      - name: Förslagskörning (löfte för löfte, push efter varje)
+        # Kör ett löfte i taget och pushar dess resultat till defaultgrenen
+        # DIREKT — inte allt på slutet. Då ligger varje klart löfte på main
+        # löpande och är oförstörbart även om runnern kraschar mitt i (utöver
+        # cancel/timeout, som salvage-steget nedan täcker). Slutar nyckeln
+        # svara mitt i tappas inget som redan pushats.
         id: kor
         continue-on-error: true
         env:
@@ -82,17 +88,87 @@ jobs:
           LOFTE: ${{ inputs.lofte }}
           MAXK: ${{ inputs.max_kandidater }}
           DRY: ${{ inputs.dry_run }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PROMISES: ${{ github.workspace }}/valflask-lofter/data/promises.json
         run: |
-          args=(--promises ../valflask-lofter/data/promises.json --max-kandidater "$MAXK")
-          if [ -n "$LOFTE" ]; then args+=(--lofte "$LOFTE"); else args+=(--alla); fi
-          if [ "$DRY" = "true" ]; then args+=(--dry-run); fi
-          node --import tsx/esm scripts/foreslag.mts "${args[@]}"
-        working-directory: pipeline
-      - name: Committa kön (bara körningens nya poster)
-        # always(): salvage-committen ska landa ÄVEN när jobbet avbryts eller
-        # slår i timeout-taket — inte bara på framgångsvägen. Utan det (implicit
-        # success()) kastas det körda bort vid cancel/timeout, eftersom kön bara
-        # finns på runnerns tillfälliga disk tills detta steg pushar den.
+          set -uo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Torrkörning skriver ingenting och pushar inte — bara kandidatlistor.
+          if [ "$DRY" = "true" ]; then
+            args=(--promises "$PROMISES" --max-kandidater "$MAXK")
+            if [ -n "$LOFTE" ]; then args+=(--lofte "$LOFTE"); else args+=(--alla); fi
+            args+=(--dry-run)
+            (cd pipeline && node --import tsx/esm scripts/foreslag.mts "${args[@]}")
+            exit $?
+          fi
+
+          # Pushar körningens NYA kö-/provade-poster race-säkert mot färsk main
+          # (ko-uppdatera lägger bara på det som är nytt sedan startläget,
+          # provade-uppdatera unionar). Inget att committa räknas som lyckad
+          # push. Efter varje push flyttas startläget fram, så nästa löftes
+          # delta blir bara dess egna poster.
+          push_delta() {
+            cp data/kopplingsforslag.json /tmp/ko-resultat.json
+            cp data/provade-par.json /tmp/provade-resultat.json
+            for attempt in 1 2 3 4 5; do
+              git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+              (cd pipeline && node --import tsx/esm scripts/ko-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json)
+              (cd pipeline && node --import tsx/esm scripts/provade-uppdatera.mts /tmp/provade-resultat.json)
+              git add data/kopplingsforslag.json data/provade-par.json
+              if git diff --cached --quiet; then
+                cp data/kopplingsforslag.json /tmp/ko-start.json
+                return 0
+              fi
+              git commit -m "data: förslagskörning via workflow (löpande)"
+              if git push origin "HEAD:$DEFAULT_BRANCH"; then
+                echo "  push lyckades (försök $attempt)"
+                cp data/kopplingsforslag.json /tmp/ko-start.json
+                return 0
+              fi
+              echo "  push-försök $attempt misslyckades — gör om från färsk defaultgren..."
+              sleep $((attempt * 5))
+            done
+            echo "  push misslyckades efter 5 försök"
+            return 1
+          }
+
+          # Löftena att köra: ett givet id, annars alla aktiva ur promises.json.
+          if [ -n "$LOFTE" ]; then
+            loften="$LOFTE"
+          else
+            loften="$(jq -r '.[] | select((.status // "aktiv") == "aktiv") | .id' "$PROMISES")"
+          fi
+
+          rc=0
+          dodstreck=0
+          for id in $loften; do
+            (cd pipeline && node --import tsx/esm scripts/foreslag.mts \
+              --promises "$PROMISES" --lofte "$id" --max-kandidater "$MAXK")
+            fexit=$?
+            if [ -n "$(git status --porcelain -- data/kopplingsforslag.json data/provade-par.json)" ]; then
+              # Löftet gav nya kö-/provade-poster — pusha dem innan nästa löfte.
+              push_delta || rc=1
+              dodstreck=0
+            elif [ "$fexit" != "0" ]; then
+              # Föll utan att lämna ett enda avgjort par (t.ex. död nyckel).
+              rc=1
+              dodstreck=$((dodstreck + 1))
+              echo "$id: föll utan framsteg (streck $dodstreck)"
+              if [ "$dodstreck" -ge 8 ]; then
+                echo "Avbryter: 8 löften i rad föll utan ett enda lyckat modellanrop — trolig nyckel-/kreditkrasch. Det som hann köas är redan pushat löpande."
+                break
+              fi
+            fi
+          done
+          exit $rc
+      - name: Committa kön (slutlig salvage av sista löftet)
+        # Körsteget pushar löpande efter varje löfte; detta steg flushar bara
+        # det SISTA löftets delta som ännu inte hunnit pushas. always(): det
+        # ska landa ÄVEN när jobbet avbryts eller slår i timeout-taket — inte
+        # bara på framgångsvägen. På normal avslutning är deltat tomt (allt är
+        # redan pushat) och steget blir en no-op.
         id: commit
         if: ${{ always() && !inputs.dry_run }}
         env:
