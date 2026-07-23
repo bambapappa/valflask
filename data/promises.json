@@ -2568,12 +2568,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 75,
+      "msek_base": 150,
+      "msek_high": 300,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Bidragstak kan minska kostnader men kräver administration. Nettokostnad låg. ~0,5 mdr/år.",
+      "method_note": "Ett bidragstak är avsett att sänka utgifterna för försörjningsstöd, medan heltidskravet kräver administration. Nettoeffekten är oklar och sannolikt liten; beloppet är satt till en försiktig administrationskostnad i stället för den tidigare halvmiljarden i utgift, som pekade åt fel håll (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -2584,7 +2584,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Kostnadsestimatet ändrat från 500 till 150 miljoner kronor per år: bidragstaket sänker snarare utgifterna medan kravet kostar administration, så beloppet satt till en försiktig administrationskostnad i stället för en halvmiljard i utgift. Se rättelseloggen.",
+        "commit": "7bfa31de33daf7273edcdc9b0f14caff787db009"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3404,12 +3410,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 100,
+      "msek_base": 200,
+      "msek_high": 400,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: System för kvalificering + administration. ~0,5 mdr/år.",
+      "method_note": "Ett kvalificeringssystem till socialförsäkringen kräver att administration byggs och driftas — en verklig kostnad — samtidigt som kvalificeringen sannolikt sänker utbetalningarna. Beloppet är satt till en försiktig administrationskostnad; nettoeffekten är osäker (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -3420,7 +3426,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Kostnadsestimatet ändrat från 500 till 200 miljoner kronor per år: satt till en försiktig administrationskostnad för att bygga och drifta kvalificeringssystemet, då kvalificeringen samtidigt kan sänka utbetalningarna. Se rättelseloggen.",
+        "commit": "7bfa31de33daf7273edcdc9b0f14caff787db009"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3497,7 +3509,7 @@
       "msek_high": 1200,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Krav på vandel, fler utvisningar. ~0,8 mdr/år.",
+      "method_note": "Löftet är ett lagkrav vars direkta kostnad är försumbar; beloppet avser den verkliga följden — fler utvisningar, med kostnader för förvar, transport och domstol. Antalet som skulle utvisas är osäkert, så beloppet är en grov storleksordning snarare än en beräkning (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -3508,7 +3520,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Metodnoten förtydligad: beloppet avser den verkliga följden (fler utvisningar med förvar, transport och domstol) och osäkerheten i schablonen görs tydlig. Beloppet oförändrat. Se rättelseloggen.",
+        "commit": "7bfa31de33daf7273edcdc9b0f14caff787db009"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -17402,12 +17420,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100,
+      "msek_low": 400,
       "msek_base": 800,
-      "msek_high": 4000,
+      "msek_high": 1600,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om att tvingande regler ökar antalet permanenta uppehållstillstånd för subsidiärt skyddsbehövande och anhöriga, med ökade kostnader för mottagande och etablering. Stor osäkerhet om antal och",
+      "method_note": "Tvingande regler utvidgar vilka som får uppehållstillstånd, vilket ökar kostnaderna för mottagande och etablering — en verklig, återkommande utgift. Antalet är osäkert; spannet har stramats från ett tidigare orimligt brett intervall (100–4 000) till en mer meningsfull storleksordning (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -17418,7 +17436,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-23",
+        "change": "Spannet stramat från 100–4 000 (40×) till 400–1 600 miljoner kronor per år; basbeloppet 800 oförändrat. Kostnaden för mottagande och etablering är verklig men antalet osäkert. Se rättelseloggen.",
+        "commit": "7bfa31de33daf7273edcdc9b0f14caff787db009"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
