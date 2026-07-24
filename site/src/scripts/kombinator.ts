@@ -63,7 +63,7 @@ function isCostType(p: PromiseItem): boolean {
 }
 
 function isBesparing(p: PromiseItem): boolean {
-  return p.cost.type === "besparing";
+  return p.cost.type === "besparing" || p.cost.type === "intäktsökning";
 }
 
 function computeCoalition(promises: PromiseItem[], partyCodes: string[]): CoalitionResult {

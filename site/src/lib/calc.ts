@@ -108,6 +108,7 @@ export function formatCostType(type: string): string {
     utgift: "utgift",
     intäktsminskning: "minskad inkomst för staten (t.ex. skattesänkning)",
     besparing: "besparing",
+    intäktsökning: "ökad inkomst för staten (t.ex. ny eller höjd skatt)",
   };
   return labels[type] ?? type;
 }

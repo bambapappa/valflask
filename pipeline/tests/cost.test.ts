@@ -98,6 +98,14 @@ describe("estimateCost", () => {
     assert.equal(c.calculation, undefined);
   });
 
+  it("accepterar typen intäktsökning (t.ex. ny skatt som ger staten pengar)", async () => {
+    const llm = mockLlm(
+      '{"type":"intäktsökning","period":"per_ar","msek_low":3000,"msek_base":5000,"msek_high":10000,"confidence":0.4,"method_note":"förmögenhetsskatt"}',
+    );
+    const c = await estimateCost(cand(null), llm, "m");
+    assert.equal(c.type, "intäktsökning");
+  });
+
   it("tvingar high ≥ 1,5 × low (R2)", async () => {
     const llm = mockLlm(
       '{"type":"utgift","period":"per_ar","msek_low":100,"msek_base":110,"msek_high":120,"confidence":0.5,"method_note":"x"}',

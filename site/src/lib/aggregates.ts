@@ -26,7 +26,7 @@ export function isCostType(p: PromisePost): boolean {
 }
 
 export function isBesparing(p: PromisePost): boolean {
-  return p.cost.type === "besparing";
+  return p.cost.type === "besparing" || p.cost.type === "intäktsökning";
 }
 
 /**

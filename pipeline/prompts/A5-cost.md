@@ -12,7 +12,10 @@ Regler:
 1. Returnera ENDAST giltig JSON enligt schemat. Ingen markdown, inga ```-staket, inga kommentarer.
 2. low ≤ base ≤ high. high MÅSTE vara ≥ 1,5 × low (ärlig osäkerhet). Alla ≥ 0.
 3. "type": "utgift" (kostar staten pengar), "intäktsminskning" (sänkt skatt/avgift),
-   eller "besparing" (minskar statens utgifter).
+   "besparing" (minskar statens utgifter), eller "intäktsökning" (ny eller höjd
+   skatt/avgift som GER staten mer pengar — t.ex. en förmögenhetsskatt. Blanda
+   aldrig ihop med "intäktsminskning": den förra ger staten pengar, den senare
+   kostar staten pengar).
 4. "period": "per_ar" (återkommande) eller "engang".
 5. "confidence": 0–1. Sätt ≤ 0,5 om underlaget är tunt eller löftet är vagt;
    sätt högre bara om spannet vilar på en rimlig, förklarbar kalkyl.
@@ -30,7 +33,7 @@ Regler:
 8. Gå ALDRIG över 1 500 000 (1 500 mdkr) — orimligt för ett enskilt löfte.
 
 SCHEMA
-{ "type": "utgift" | "intäktsminskning" | "besparing",
+{ "type": "utgift" | "intäktsminskning" | "besparing" | "intäktsökning",
   "period": "per_ar" | "engang",
   "msek_low": number, "msek_base": number, "msek_high": number,
   "confidence": number, "method_note": str, "calculation": str }
