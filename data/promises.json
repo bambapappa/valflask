@@ -10987,12 +10987,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1200,
+      "msek_low": 1000,
+      "msek_base": 2500,
+      "msek_high": 6000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsuppskattning baserad på antaganden om lärarlöner, lokalkostnader och antal elever som kan behöva stödundervisning. Osäkerhet kring omfattning och frivillighetsgrad.",
+      "method_note": "Obligatorisk svenskundervisning för elever i behov, även efter skoltid/lov. ~110 000–220 000 elever (10–20 % av grundskolan) × 80–200 extra timmar/år à ~300–500 kr/h ger miljardbelopp. Bas 2 500, spann 1 000–6 000 miljoner kronor per år. Det tidigare estimatet (500) undersköt skalan.",
+      "calculation": "~1,1 miljoner grundskoleelever × 10–20 % i behov = 110 000–220 000 elever. Extraundervisning 80–200 timmar/år (2–5 h/vecka eller intensivlov) à lärarkostnad ~300–500 kr/h inkl. overhead. Lågt: 110 000 × 80 h × 300 kr = 2,6 mdkr; högt: 220 000 × 200 h × 500 kr = 22 mdkr. Med effektiviseringar, blandade insatser och viss befintlig finansiering snävas intervallet till 1 000–6 000 mkr/år, bas 2 500. Det tidigare estimatet (500) multiplicerade aldrig ut den faktiska timvolymen för ett obligatoriskt program i den skalan.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -11003,7 +11004,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor per år (spann 200-1 200) till 2 500 (spann 1 000-6 000) vid den manuella genomgången. Det gamla beloppet undersköt skalan; en per-elev-uträkning för ett obligatoriskt program (110 000-220 000 elever × 80-200 extra timmar/år) landar i miljardklass.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
