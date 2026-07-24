@@ -11050,13 +11050,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 2000,
+      "msek_low": 1000,
+      "msek_base": 2000,
+      "msek_high": 4000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar extra stöd för 2–5 % av ca 1,5 milj elever à 30–50 kkr/år. Stor osäkerhet kring omfattning och enhetskostnad.",
-      "confidence": 0.3
+      "method_note": "Elevlag om rätt till stöd utan diagnoskrav. Slopat diagnoskrav breddar tillgången till stöd; antar ~3–7 % extra elever à ~30–40 kkr/år. Bas 2 000, spann 1 000–4 000 miljoner kronor per år. Mittläge mellan det tidigare estimatet (1 000, 2–5 % extra) och en efterhandsberäkning (4 200, 5–15 % extra) som antog nära en tredubbling av stödet.",
+      "calculation": "~1,4 miljoner elever i grund- och gymnasieskola, i dag har ~5–6 % särskilt stöd. Att ta bort diagnoskravet breddar tillgången — antag ~3–7 % ytterligare elever (~42 000–100 000) à ~30–40 kkr/år ≈ 1 000–4 000 mkr/år, bas 2 000. Det tidigare estimatet (1 000) antog 2–5 % extra vilket är i underkant för slopat diagnoskrav; en efterhandsberäkning på 4 200 antog 5–15 % extra (nära en tredubbling) vilket är i överkant.",
+      "confidence": 0.35
     },
     "financing_claimed": {
       "described": false,
@@ -11066,7 +11067,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 1 000 miljoner kronor per år (spann 500-2 000) till 2 000 (spann 1 000-4 000) vid den manuella genomgången. Mittläge: slopat diagnoskrav breddar stödet (över det gamla beloppet) men en efterhandsberäkning på 4 200 (5-15 % extra elever) antog en för dramatisk expansion.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
