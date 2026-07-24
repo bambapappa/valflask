@@ -10916,12 +10916,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 12000,
-      "msek_high": 30000,
+      "msek_low": 2000,
+      "msek_base": 3000,
+      "msek_high": 5000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsberäkning baseras på merkostnader för utökad läkartillgång, administration och samordning i primärvården. Osäkerhet kring antal patienter per läkare och lönenivåer.",
+      "method_note": "Fast läkarkontakt för alla — merkostnad för utökad läkartillgång och samordning i primärvården. Harmoniserat med grannlöftena i gruppen g-fast-lakarkontakt (S:s p-2026-0011 på 3 000 och L:s p-2026-0399), som gäller samma policy. Bas 3 000, spann 2 000–5 000 miljoner kronor per år. Det tidigare estimatet (12 000) var en 4× outlier utan grannkontroll.",
+      "calculation": "Fast läkarkontakt för alla kräver utökad läkartillgång och samordning i primärvården. Samma policy prissätts av S (p-2026-0011, 3 000 mkr/år) och L (p-2026-0399), så basen läggs i linje med grannarna: 3 000 mkr/år, spann 2 000–5 000 (lågt: enklare modell; högt: fullskalig reform med högre ersättning). Det tidigare estimatet (12 000, spann upp till 30 000) var en 4× outlier mot de andra partiernas motsvarande löften.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -10932,7 +10933,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 12 000 miljoner kronor per år (spann 5 000-30 000) till 3 000 (spann 2 000-5 000) vid den manuella genomgången. Harmoniserat med grannlöftena i gruppen g-fast-lakarkontakt (S:s p-2026-0011 på 3 000, L:s p-2026-0399) för samma policy - det gamla beloppet var en 4× outlier utan grannkontroll.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
