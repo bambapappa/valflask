@@ -12460,12 +12460,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 5000,
-      "msek_high": 12000,
+      "msek_low": 1500,
+      "msek_base": 3000,
+      "msek_high": 6000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsberäkning utifrån antagande om minskad genomsnittlig gruppstorlek med 3 barn, ökat personalbehov med ca 20 000 anställda, lokalkostnader samt jämförelse med tidigare partsförslag.",
+      "method_note": "Maxtak för barngrupper i förskolan kräver fler pedagoger. Förskolan är personalintensiv (~1 vuxen per 5–6 barn), så en minskad gruppstorlek för ~500 000 barn kräver flera tusen nya anställda à ~550 tkr/år. Bas 3 000, spann 1 500–6 000 miljoner kronor per år.",
+      "calculation": "Förskolan har ~500 000 barn och ~110 000 anställda. Ett bindande maxtak som pressar ner gruppstorlekarna kräver fler pedagoger; personaltätheten är hög (~1 vuxen per 5–6 barn), så åtgärden är mer personalintensiv per barn än en minskning av klasstorlek i skolan. Antag ~3–11 % fler anställda (3 000–11 000) à ~550 tkr/år → ~1 500–6 000 mkr/år, bas 3 000. Det tidigare estimatet (5 000, spann upp till 12 000) antog +20 000 anställda vilket är i ambitiösaste laget; en efterhandsberäkning på 800 mkr lånade i stället skol-löftets siffra och underskattade förskolans personalintensitet.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12476,7 +12477,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 5 000 miljoner kronor per år (spann 2 000-12 000) till 3 000 (spann 1 500-6 000) vid den manuella genomgången. Det gamla beloppet antog +20 000 anställda vilket var i ambitiösaste laget; en efterhandsberäkning på 800 avvisades som för låg (den lånade skol-löftets siffra och missade förskolans personalintensitet).",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
