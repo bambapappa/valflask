@@ -346,7 +346,8 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 - 2026-07-24 `claude/handlingsvagen-ko-beta-6oiq2r` → betar av
   granskningskön (121 ärenden) tillsammans med ägaren: hög confidence
-  (≥0.90, 83 st) godkänns i klump, resten (38 st) en och en. Rör inte
+  (≥0.90, 83 st) godkända i klump (klart). Kvar: 38 st (confidence
+  <0.90) genomgås en och en. Rör inte
   `data/kopplingsforslag.json`/`data/kopplingar.json` parallellt.
 
 **Två Go-primär-fullkörningar 2026-07-23/24 (run 30044095324 +
