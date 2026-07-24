@@ -9020,13 +9020,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 15000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Vägar, järnväg, digital infrastruktur landsbygd. ~10 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Inriktningslöfte utan kvantifierbar kostnad: en bred önskelista om att stärka landsbygden (vård, skola, vägar, järnväg, digital infrastruktur, företag, gröna näringar) utan konkret åtgärd eller belopp. Sätts till 0; eventuella verkliga satsningar fångas av C:s mer specifika löften (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -9036,7 +9036,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 10 000 miljoner kronor per år (spann 5 000-15 000) till 0 vid den manuella genomgången. Löftet är ett brett inriktningslöfte (önskelista utan konkret åtgärd eller belopp); det gamla beloppet var en rund gissning och riskerade dessutom att dubbelräkna C:s mer specifika landsbygds- och infrastrukturlöften.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot val2026 live)",
