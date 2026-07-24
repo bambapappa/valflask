@@ -9306,12 +9306,13 @@
     "cost": {
       "type": "intäktsökning",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 300,
+      "msek_base": 800,
+      "msek_high": 1800,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Miljardärsskatt = INTÄKT, inte kostnad. Förmögenhetsskatt på högsta inkomsterna. Beror på utformning. Historisk förmögenhetsskatt gav ca 5-10 mdr/år. Med miljardärsnivå estimerat 5-15 mdr/år ",
+      "method_note": "Miljardärsskatt (intäkt). Bruttobas ~100–250 mdkr × 0,5–2 %, men kapitalflykt och skatteplanering urholkar basen kraftigt — realiserad intäkt uppskattad till 300–1 800 mkr/år, bas 800.",
+      "calculation": "Ca 45 miljardärer, överskjutande förmögenhet ~2–5 mdkr/st → teoretisk bas ~100–250 mdkr; skatt 0,5–2 % → brutto ~0,5–5 mdkr/år. Men en skatt riktad mot just de allra rikaste driver kapitalflykt och skatteplanering (samma dynamik som fällde den gamla svenska förmögenhetsskatten 2007) — den realiserade intäkten blir en bråkdel av bruttot. Antar 30–60 % realiseringsgrad → netto ~300–1 800 mkr/år, bas ~800.",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -9327,6 +9328,11 @@
         "date": "2026-07-24",
         "change": "Kostnadstyp rättad från intäktsminskning till intäktsökning - noten säger själv att det är en INTÄKT (förmögenhetsskatt), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
         "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      },
+      {
+        "date": "2026-07-24",
+        "change": "Intäkt satt från 0 till 800 miljoner kronor per år (spann 300-1 800) vid den manuella genomgången av avvikande estimat. Bruttobasen (~0,5-5 mdkr/år) sänks kraftigt för kapitalflykt och skatteplanering - den realiserade intäkten av en skatt riktad mot just de rikaste blir en bråkdel av bruttot.",
+        "commit": "0000000"
       }
     ],
     "extraction": {

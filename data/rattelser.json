@@ -1,6 +1,12 @@
 [
  {
   "date": "2026-07-24",
+  "affects": "Manuell genomgång av avvikande kostnadsuppskattningar (hand-granskade fall)",
+  "what": "De löften där den omräknade uträkningen pekade på ett annat belopp än det publicerade granskas för hand, ett i taget, och beloppet justeras där det finns skäl. Justerade hittills: p-2026-0324 (MP, miljardärsskatt) — intäkten satt från 0 till 800 miljoner kronor per år (spann 300–1 800); bruttobasen sänks kraftigt eftersom en skatt riktad mot just de allra rikaste driver kapitalflykt och skatteplanering, så den realiserade intäkten blir en bråkdel av bruttot.",
+  "why": "Detta är hand-granskningen som den samlade posten om systematisk kvalitetshöjning hänvisar till. Justeringarna samlas här i en post i stället för en per löfte — det är en fortsättning på kvalitetshöjningen, inte enskilda felrättelser. Varje löfte har dessutom en egen ändringsnot på sin sida."
+ },
+ {
+  "date": "2026-07-24",
   "affects": "Åtta löften med feltypad kostnad: p-2026-0324 (MP), p-2026-0144 (C), p-2026-0135 (V), p-2026-0073 (M), p-2026-0115 (KD), p-2026-0123 (SD), p-2026-0124 (SD) och p-2026-0529 (MP)",
   "what": "Kostnadstypen rättad på åtta löften där fältet inte matchade den egna kostnadsnoten. Ny fjärde kostnadstyp infördes: intäktsökning (t.ex. en ny eller höjd skatt som GER staten mer pengar) - tidigare fanns bara utgift, intäktsminskning och besparing, så ett löfte om en förmögenhetsskatt (p-2026-0324) hade typen intäktsminskning trots att noten själv sa 'Detta är en INTÄKT, inte kostnad'. Samma bugg hittades på p-2026-0144 (ökade skatteintäkter) och p-2026-0135 (skattehöjning på elproduktion) - alla tre rättade till intäktsökning. Fyra löften (p-2026-0073, p-2026-0115, p-2026-0123, p-2026-0124) beskrev i sina noter en besparing (minskade kostnader) men var typade intäktsminskning - rättade till besparing. Ett löfte (p-2026-0529) beskrev ökade statliga transfereringar (en utgift) men var typat intäktsminskning - rättat till utgift. Inget belopp ändrades: sju av åtta stod redan på 0 kronor, p-2026-0529 behöll sina 1 200 miljoner kronor per år.",
   "why": "Feltypningen upptäcktes vid granskningen av de avvikelser som den nya efterhandsberäkningen flaggade. Typen avgör hur ett löfte bokförs i sajtens totaler och vilken klarspråksetikett läsaren ser - en skattehöjning som visas som 'minskad inkomst för staten' är missvisande även om beloppet råkar vara 0 kronor i dag. Kostnadstypssystemet saknade helt enkelt en bucket för löften som ökar statens intäkter."
