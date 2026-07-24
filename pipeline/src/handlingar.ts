@@ -45,6 +45,38 @@ const DOKTYP_TILL_KIND: Record<string, HandlingKind> = {
   fr: "skriftlig_fraga",
 };
 
+/**
+ * En fråga eller interpellation listar både frågeställaren OCH den
+ * tillfrågade ministern bland sina intressenter, så handlingens
+ * partilista rymmer ministerns parti. Ministern är inte aktör:
+ * en oppositionsledamot som frågar ett statsråd har inte gjort
+ * statsrådets parti till avsändare. Ministrar bär alltid sin titel i
+ * namnet ("Statsrådet …", "Justitieminister …", "Statsminister …",
+ * "talman"); ledamöter har rena namn.
+ */
+const MINISTER_I_NAMN = /minister|statsråd|statsrad|\btalman\b/iu;
+
+/**
+ * Aktörspartierna bakom en handling — de partier som faktiskt STÅR för
+ * handlingen, till skillnad från `handling.parties` som för en fråga/
+ * interpellation även rymmer den tillfrågade ministern. För frågor och
+ * interpellationer räknas bara frågeställarna (icke-statsråd); för
+ * voteringar de partier som deltog i omröstningen; för motioner och
+ * propositioner samtliga undertecknare (partilistan som den är).
+ */
+export function aktorsPartier(
+  h: Pick<Handling, "kind" | "parties" | "persons" | "rostfordelning">,
+): string[] {
+  if (h.kind === "votering") {
+    return h.rostfordelning ? Object.keys(h.rostfordelning) : h.parties;
+  }
+  if (h.kind === "skriftlig_fraga" || h.kind === "interpellation") {
+    const fragestallare = h.persons.filter((p) => !MINISTER_I_NAMN.test(p.name));
+    return [...new Set(fragestallare.map((p) => p.party).filter(Boolean))].sort();
+  }
+  return h.parties;
+}
+
 /** Motionstyp enligt beslut b-0007: parti/kommitté uttrycker partilinje, enskild gör det inte. */
 export type MotionsTyp = "parti" | "kommitte" | "enskild";
 

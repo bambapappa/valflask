@@ -10,7 +10,7 @@
 
 import type { Betankande } from "./betankanden.ts";
 import { indexeraBetankanden } from "./betankanden.ts";
-import type { Handling } from "./handlingar.ts";
+import { aktorsPartier, type Handling } from "./handlingar.ts";
 import type { LlmClient } from "./llm.ts";
 import { provaGrindarna, type GrindFel, type GrindKontext, type KopplingsForslag } from "./grindar.ts";
 
@@ -56,7 +56,11 @@ export function rankaKandidater(lofte: Lofte, handlingar: Handling[], max: numbe
   const kandidater: Kandidat[] = [];
   for (const h of handlingar) {
     if (h.kind === "votering") continue;
-    if (lofte.parties.length > 0 && h.parties.length > 0 && !lofte.parties.some((p) => h.parties.includes(p))) {
+    // Aktörspartier, inte handling.parties: en fråga/interpellation bär
+    // den tillfrågade ministerns parti i sin lista, men ministern är inte
+    // aktör (samma spärr som H3).
+    const aktorer = aktorsPartier(h);
+    if (lofte.parties.length > 0 && aktorer.length > 0 && !lofte.parties.some((p) => aktorer.includes(p))) {
       continue; // fel aktör — H3 skulle ändå fälla
     }
     let poang = 0;

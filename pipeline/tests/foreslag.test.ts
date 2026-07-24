@@ -68,6 +68,33 @@ test("rankaKandidater: ordöverlapp, voteringar och fel parti utelämnas", () =>
   assert.ok(kandidater[0]!.poang >= 2);
 });
 
+test("rankaKandidater: fråga räknas på frågeställarens parti, inte tillfrågad minister", () => {
+  const mLofte: Lofte = { ...lofte, parties: ["m"] };
+  // M-ledamot ställer frågan (till ett S-statsråd) → M är aktör: kandidat med.
+  const fragaAvM = handling({
+    id: "h-2026-0005",
+    kind: "skriftlig_fraga",
+    parties: ["m", "s"],
+    persons: [
+      { name: "Johan Forssell", party: "m", riksdagen_id: "9" },
+      { name: "Statsrådet Ardalan Shekarabi", party: "s", riksdagen_id: "10" },
+    ],
+  });
+  // S-ledamot ställer frågan till en M-minister → M finns bara som tillfrågad
+  // minister, inte som aktör: utelämnas trots att handling.parties rymmer m.
+  const fragaTillM = handling({
+    id: "h-2026-0006",
+    kind: "skriftlig_fraga",
+    parties: ["s", "m"],
+    persons: [
+      { name: "Teresa Carvalho", party: "s", riksdagen_id: "11" },
+      { name: "Justitieminister Gunnar Strömmer", party: "m", riksdagen_id: "12" },
+    ],
+  });
+  const kandidater = rankaKandidater(mLofte, [fragaAvM, fragaTillM], 5);
+  assert.deepEqual(kandidater.map((k) => k.handling.id), ["h-2026-0005"]);
+});
+
 test("motionstypAvHandling: riksdagens klassning vinner, annars gissning ur antal namn", () => {
   assert.equal(motionstypAvHandling(handling({ motionstyp: "parti" })), "parti"); // riksdagens facit
   assert.equal(motionstypAvHandling(handling({ motionstyp: "enskild" })), "enskild"); // även om två namn
