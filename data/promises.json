@@ -11789,14 +11789,14 @@
     "category": "välfärd",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 120,
-      "msek_high": 400,
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Osäker kostnad baserad på utredning, administration, vårdprocesser och läkemedel. Jämförbart småskaliga vårdreformer. Brett spann pga frivillig modell och okänt antal fall.",
-      "confidence": 0.4
+      "method_note": "Det konkreta löftet är att tillsätta en grundlig utredning om hur rätten till aktiv dödshjälp ska utformas; utredningens direkta kostnad är försumbar och sätts till 0. Följderna av en eventuell reform går inte att kvantifiera på förhand. Samma grund som andra utredningslöften (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -11806,7 +11806,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 120 miljoner kronor per år (spann 50-400) till 0 vid den manuella genomgången av avvikande estimat. Det konkreta löftet är att tillsätta en utredning, vars direkta kostnad är försumbar; det gamla beloppet prissatte en tänkt framtida reform (och räknade dessutom per år). Samma grund som andra utredningslöften.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
