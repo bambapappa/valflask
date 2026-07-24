@@ -10712,7 +10712,8 @@
       "msek_high": 200,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Engångskostnad för utredning, lagstiftning och implementering av reformer för halverad handläggningstid. Antar begränsad extra löpande kostnad.",
+      "method_note": "Engångskostnad för utredning, lagstiftning och omställning för en reform av miljöbalken (halverad handläggningstid). Själva regelreformen har liten direkt kostnad; ett antaget nytt digitalt handläggarsystem har medvetet lämnats utanför då det är en spekulativ följd, inte en del av löftet.",
+      "calculation": "Reformen är i huvudsak en regeländring: utredning/SOU ~10–30 mkr plus omställningsarbete hos berörda myndigheter, sammantaget en engångskostnad i storleksordningen 10–200 mkr, bas 50. En efterhandsberäkning som lade till ett nytt digitalt handläggarsystem (100–500 mkr) och landade på 250 avvisades vid granskningen — ett sådant system är en spekulativ följd, inte något löftet utfäster. Samma hållning som för andra regelreformer (t.ex. strandskyddet).",
       "confidence": 0.5
     },
     "financing_claimed": {
@@ -10723,7 +10724,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Beloppet (50 miljoner kronor engång, spann 10-200) bekräftat vid den manuella granskningen. En efterhandsberäkning på 250 (som lade till ett antaget digitalt handläggarsystem) avvisades - systemet är en spekulativ följd, inte en del av löftet. Metodnoten förtydligad och en öppen uträkning tillagd.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
