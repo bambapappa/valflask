@@ -344,11 +344,27 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-24 `claude/handlingsvagen-ko-beta-6oiq2r` → betar av
-  granskningskön (121 ärenden) tillsammans med ägaren: hög confidence
-  (≥0.90, 83 st) godkända i klump (klart). Kvar: 38 st (confidence
-  <0.90) genomgås en och en. Rör inte
-  `data/kopplingsforslag.json`/`data/kopplingar.json` parallellt.
+*(inga anspråk)*
+
+**Granskningskön 2026-07-24: HELT AVBETAD (0 kvar).** Alla 121 ärenden
+avgjorda med ägaren. `data/kopplingar.json` har nu **121 godkända
+kopplingar** (81 motioner, 32 voteringar, 6 skriftliga frågor, 2
+interpellationer). `npm run domar` omkört: **456 partidomar, 7600
+ledamotsmeriter** (ökningen drivs av de 32 voteringskopplingarna — varje
+votering ger merit åt varje röstande ledamot i upp till åtta partier).
+
+Två saker upptäcktes och åtgärdades under genomgången:
+
+1. **Falsk partimatchning på frågor/interpellationer** (en fråga listar
+   både frågeställaren OCH den tillfrågade ministern, så ministerns
+   parti hamnade i handlingens partilista). 12 felkopplingar fångades;
+   7 hade hunnit godkännas i bulk-rundan och backades ur
+   `kopplingar.json` + `#150` backades efter omprövning (tvångsäktenskap
+   ≠ uppehållstillstånd). **Varaktig kodfix i PR #171** (`aktorsPartier()`
+   som både H3 och kandidatrankningen använder) — MERGA innan nästa
+   `foreslag`-körning, annars återkommer felet.
+2. Domarna var inte omräknade sedan bulk-godkännandena, så inga
+   felkopplingar nådde någon dom innan de backades.
 
 **Två Go-primär-fullkörningar 2026-07-23/24 (run 30044095324 +
 30076690510, uppsamling): KLARA, hela kön genomkörd båda gångerna.**
@@ -371,12 +387,10 @@ kvotförbrukning ska hållas nere. Åtgärda genom att fylla på
 OpenRouter-krediten om alla par ska in, annars räcker Go ensamt.
 
 Fullkörningen 2026-07-20 (körning 8, OpenRouter-primär, historisk):
-34 förslag i kön över 12 löften (29 stödjer/5 motverkar, 5 via
-betänkanden). Ägaren har därefter **2026-07-23 betat av hela den då
-gällande kön: 14 godkända, 4 avvisade (0 kvar)**. `npm run domar`
-omkört (72 partidomar, 1124 ledamotsmeriter) — **kommer att behöva
-köras om igen** när ägaren tagit ställning till de 43 nya förslagen
-från de här två körningarna.
+34 förslag i kön över 12 löften. Ägaren betade 2026-07-23 av den då
+gällande kön (14 godkända, 4 avvisade); domarna gav då 72 partidomar,
+1124 ledamotsmeriter. Nu ersatt av 2026-07-24 års fullständiga
+genomgång (se ovan).
 
 **Nej-svar är beständiga:** `data/provade-par.json` minns varje prövat
 par (förslag/nej/grindfall). En omkörning betalar bara för det
