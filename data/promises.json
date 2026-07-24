@@ -11542,13 +11542,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1500,
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 200,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadsanrop misslyckades. [granskning 2026-07-09: processreform (snabbare lagföring); tidigare cost-call misslyckades]",
-      "confidence": 0.3
+      "method_note": "Nationell utbyggnad av snabbare lagföring med tidsatta mål. ~100–200 nya årsarbetskrafter (polis, åklagare, administratörer) à ~800 tkr/år plus IT och utbildning ≈ 50–200 mkr/år, bas 100. Ersätter ett tidigare fallback-värde (500) från ett misslyckat kostnadsanrop.",
+      "calculation": "Att införa arbetssättet med snabbare lagföring i hela landet kräver mer resurser i rättskedjan: ~100–200 nya årsarbetskrafter (polis, åklagare, administratörer) à ~800 tkr/år inkl. overhead ≈ 80–160 mkr/år, plus IT-utveckling och utbildning. Lågt 50, bas 100, högt 200 mkr/år. Det tidigare beloppet (500) var ett fallback-värde efter ett misslyckat automatiskt kostnadsanrop, inte en uträkning.",
+      "confidence": 0.4
     },
     "financing_claimed": {
       "described": false,
@@ -11558,7 +11559,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor per år (spann 200-1 500) till 100 (spann 50-200) vid den manuella genomgången. Det gamla beloppet var ett fallback-värde efter ett misslyckat automatiskt kostnadsanrop; det nya vilar på en konkret bemanningsberäkning (~100-200 årsarbetskrafter i rättskedjan).",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
