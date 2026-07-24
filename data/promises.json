@@ -11228,12 +11228,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 460,
-      "msek_high": 900,
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 200,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande: 100 000–300 000 användare, preparatkostnad 2 000–4 000 kr/år, staten täcker kostnad efter patientavgift (högkostnadsskydd). Osäkerhet i användarantal och priser.",
+      "method_note": "Hormonpreparat vid klimakteriet i högkostnadsskyddet. Staten betalar bara den subventionerade delen ovanför patientens egenavgift, inte hela preparatkostnaden. ~80 000 användare × ~1 250 kr genomsnittlig statlig kostnad ≈ 100 mkr/år, spann 50–200. Det tidigare estimatet (460) räknade närmare full preparatkostnad × fler användare.",
+      "calculation": "~1,2 miljoner kvinnor 45–60 år, 5–10 % användare ≈ 80 000. Årlig preparatkostnad ~2 000 kr, men staten betalar bara delen ovanför patientens egenavgift inom högkostnadsskyddet — genomsnittligt ~1 250 kr per användare (mindre för dem som inte når högkostnadstaket, fullt för dem som redan gör det). 80 000 × 1 250 = 100 mkr/år, spann 50–200. Stigande HRT-användning kan pressa mot spannets övre del. Det tidigare estimatet (460) tillämpade närmare full preparatkostnad och fler användare utan att fånga högkostnadsskyddets marginalmekanik.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -11244,7 +11245,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 460 miljoner kronor per år (spann 200-900) till 100 (spann 50-200) vid den manuella genomgången. Det gamla beloppet räknade närmare full preparatkostnad × fler användare; det nya fångar att staten inom högkostnadsskyddet bara betalar den subventionerade delen ovanför patientens egenavgift (~1 250 kr/användare i snitt).",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
