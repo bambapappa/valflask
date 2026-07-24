@@ -9700,13 +9700,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Handlingsplan för fossilfri gödsel, minskat beroende import. ~0,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Löftet är att ta fram en handlingsplan; själva plan-/utredningskostnaden är försumbar och sätts till 0. Sakmålen den kan leda till (minskat importberoende m.m.) går inte att kvantifiera här. Samma grund som andra utrednings- och planlöften (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -9716,7 +9716,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor per år (spann 250-750) till 0 vid den manuella genomgången av avvikande estimat. Det gamla beloppet prissatte hela sakmålet, men löftet är bara att ta fram en handlingsplan - vars direkta kostnad är försumbar. Samma grund som andra utrednings-/planlöften.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
