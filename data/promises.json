@@ -13209,13 +13209,13 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 350,
-      "msek_high": 600,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Bortfall av fordonsskatt från nya bensin/dieselbilar vid utfasning. Antagande: 100 000 bilar/år, snittskatt 3 000 kr/år. Osäkerhet kring antal och skattenivå.",
-      "confidence": 0.4
+      "method_note": "Utfasning av bensin-/dieselbilar via skärpt fordonsskatt och slutdatum. Ett klimat-/regleringslöfte vars nettoeffekt på statsfinanserna är liten och osäker: den skärpta skatten drar in mer kortsiktigt men underlaget krymper på sikt (det är själva poängen), så effekterna tar ut varandra. Sätts till 0, samma grund som övriga utfasnings-/regleringslöften (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -13225,7 +13225,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 350 miljoner kronor per år (intäktsminskning, spann 200-600) till 0 vid den manuella genomgången. Löftet är en utfasning via skärpt fordonsskatt - en skatt byggd för att avskaffa sitt eget underlag, så kort- och långsiktiga fiskala effekter tar ut varandra. En efterhandsberäkning som bokförde 2 000 mkr i intäkt avvisades (den ignorerade att underlaget krymper). Samma grund som övriga utfasnings-/regleringslöften.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
