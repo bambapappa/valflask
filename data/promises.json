@@ -8038,13 +8038,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Ekonomi/Skatt. ~15 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Samma vinstförbuds-politik som hålls av en lagändring, vars direkta kostnad är försumbar och sätts till 0. Vinsten som 'återtas' är en spekulativ följd, inte löftets direkta kostnad. Konsekvent med S:s egna formuleringar p-2026-0475 och p-2026-0535 (båda 0) och den cross-party vinstförbudsgrupp som nollades 22/7 (p-2026-0470, 0452, 0394, 0535) (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -8054,7 +8054,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år (spann 7 500-22 500) till 0 vid den manuella genomgången. Samma vinstförbuds-politik som S:s egna p-2026-0475 och p-2026-0535 (båda redan 0) och den nollade cross-party-gruppen; löftet hålls av lagändringen och vinsten som återtas är en spekulativ följd, inte en direkt kostnad. En efterhandsberäkning på 3 500 avvisades av samma skäl.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
