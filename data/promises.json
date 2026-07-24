@@ -12884,7 +12884,8 @@
       "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar statlig finansiering av 4 500 extra ST-platser allmänmedicin, 5 års utb., 0,7 mkr/plats/år, ger 3 150 msek/år. Osäkerhet om kostnad/plats och antal platser/år.",
+      "method_note": "Statlig finansiering av 4 500 fler allmänläkare (ST-platser i allmänmedicin). En arbetande ST-läkare kostar full lön + arbetsgivaravgifter + handledning, ~0,7 mkr/plats/år netto → 4 500 × 0,7 ≈ 3 150 mkr/år, spann 2 250–4 500. Egen konkret grund (antal läkare), inte harmoniserad med gruppens fast-läkarkontakt-löften. En efterhandsberäkning på 1 125 (~250 tkr/plats) avvisades som för låg — den räcker inte till en läkarlön.",
+      "calculation": "Löftet är att utbilda 4 500 FLER allmänläkare, alltså netto nya tjänster. En ST-läkare i allmänmedicin är en anställd, arbetande läkare: lön ~55 tkr/mån ≈ 660 tkr/år plus arbetsgivaravgifter (~31 %) ≈ 865 tkr, plus handledning/overhead; netto ~0,7 mkr/plats/år är om något i underkant. 4 500 × 0,7 mkr ≈ 3 150 mkr/år, spann 2 250–4 500. En efterhandsberäkning på ~250 tkr/plats (1 125 mkr) avvisades — den summan räcker inte ens till lönen för en arbetande läkare. Till skillnad från gruppens övriga fast-läkarkontakt-löften har detta en egen konkret åtgärd (4 500 läkare) och prissätts på den.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12895,7 +12896,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Beloppet (3 150 miljoner kronor per år, spann 2 250-4 500) bekräftat vid den manuella granskningen. En efterhandsberäkning på 1 125 (~250 tkr/plats) avvisades som för låg - den räcker inte till lönen för en arbetande ST-läkare. Metodnoten förtydligad och en öppen uträkning tillagd.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
