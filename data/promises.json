@@ -12560,7 +12560,8 @@
       "msek_high": 40000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnaden beror på om staten enbart tar över huvudmannaskapet (administration, likvärdighet) eller även finansieringsansvaret. Spannet baseras på ökade statliga utgifter för skoladministration, utjämn",
+      "method_note": "Löftet gäller att staten tar över huvudmannaskapet för skolan. Kostnaden avser NETTO — reformens verkliga tillskott (utjämning/likvärdighet, central administration, omställning) — inte skolans hela driftkostnad (~190 mdkr) som redan betalas i dag via kommunerna. Bas 15 000, spann 5 000–40 000 miljoner kronor per år.",
+      "calculation": "Skolans hela driftkostnad är ~190 mdkr/år (grundskola ~140 + gymnasium ~50), men de pengarna spenderas redan i dag via kommunerna och kommunalskatten. Ett statligt huvudmannaskap flyttar vem som betalar — det är en omfördelning, inte 190 mdkr i ny utgift. Den verkliga nettokostnaden är utjämning (lyfta underfinansierade skolor mot en gemensam nivå), central administration och omställning, storleksordning 5–40 mdkr/år, bas 15. En efterhandsberäkning som bokförde hela bruttot (200 mdkr) avvisades vid granskningen som dubbelräkning.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12571,7 +12572,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Beloppet (15 000 miljoner kronor per år, spann 5 000-40 000) bekräftat vid den manuella granskningen av avvikande estimat. En efterhandsberäkning på 200 000 (hela skolans driftkostnad) avvisades - den dubbelräknar pengar som redan spenderas via kommunerna; ett huvudmannaskap flyttar bara vem som betalar. Metodnoten förtydligad och en öppen uträkning tillagd om netto-vs-brutto.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
