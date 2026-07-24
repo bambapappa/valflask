@@ -8140,12 +8140,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 10000,
-      "msek_high": 20000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Energi. ~50 mdr/år. [granskning 2026-07-09: Sverigepriser el, konservativ statlig nettokostnad]",
+      "method_note": "Sverigepriser på el är en marknads-/regleringsåtgärd (koppla loss svenska priser från exportmarknaden, prisområdesreform). Prissänkningen är en överföring från producenter till konsumenter, inte en post i statsbudgeten, så den direkta statliga kostnaden är försumbar och sätts till 0. En efterhandsberäkning på 40 000 avvisades — den prissatte hela konsumentnyttan som om staten betalade den (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -8156,7 +8156,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 10 000 miljoner kronor per år (spann 4 000-20 000) till 0 vid den manuella genomgången. Sverigepriser på el är en marknads-/regleringsåtgärd; prissänkningen är en överföring från producenter till konsumenter, inte en statlig utgift. En efterhandsberäkning på 40 000 (hela konsumentnyttan) avvisades.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
