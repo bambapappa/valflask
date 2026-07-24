@@ -12470,12 +12470,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 300,
-      "msek_base": 600,
-      "msek_high": 1200,
+      "msek_low": 1500,
+      "msek_base": 2700,
+      "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattar 800 fler klasser à 800 tkr/år baserat på 365k lågstadieelever, genomsnitt 20,5 idag. Osäkerhet kring fördelning och kostnader.",
+      "method_note": "Maxtak 20 elever per klass i grundskolan (med början i lågstadiet). Prissatt som full utbyggnad i hela grundskolan, i linje med hur förskole-maxtaket p-2026-0392 prissattes (slutmålets löpande kostnad, inte bara första fasen). ~3 800 fler klasser à ~700 tkr/år ≈ 2 700 mkr/år, spann 1 500–4 500. Det tidigare estimatet (600) prissatte bara lågstadiefasen.",
+      "calculation": "Grundskolan har ~1 100 000 elever. Nuvarande snittklass ~21,5 → ~51 200 klasser; ett maxtak på 20 ger ~55 000 klasser, alltså ~3 800 fler klasser. Kostnad per extra klass: en heltidstjänst (lärare) plus lokaloverhead ≈ 700 000 kr/år → 3 800 × 700 000 ≈ 2 700 mkr/år. Spann 1 500–4 500 för stegvis införande och varierande lokalbehov. Prissatt som full utbyggnad i hela grundskolan för konsekvens med förskole-maxtaket (p-2026-0392), som också prissattes på slutmålet; 'med början i lågstadiet' beskriver startpunkten, inte slutmålets kostnad. Det tidigare estimatet (600) räknade bara lågstadiefasen.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12486,7 +12487,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 600 miljoner kronor per år (spann 300-1 200) till 2 700 (spann 1 500-4 500) vid den manuella genomgången. Det gamla beloppet prissatte bara lågstadiefasen; det nya prissätter full utbyggnad i hela grundskolan (~3 800 fler klasser à ~700 tkr/år) för konsekvens med förskole-maxtaket p-2026-0392 som också prissattes på slutmålet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
