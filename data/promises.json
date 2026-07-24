@@ -12116,13 +12116,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på antal kommuner (290) och regioner (21) med en rimlig årlig ersättning per enhet för civil beredskap, i spannet 5–10 mkr per kommun och region.",
-      "confidence": 0.5
+      "method_note": "Beredskapspeng till 290 kommuner och 21 regioner för civilt försvar. Harmoniserat med det näraliggande p-2026-0412 (MP, mer medel till krisberedskap, 200 mkr/år); tidigare riktade beredskapstillskott brukar vara 100–200 mkr/år. Lagt en aning över grannen då C:s löfte är bredare (uppbyggnad av civilt försvar). Bas 250, spann 100–500 miljoner kronor per år.",
+      "calculation": "Riktade beredskapstillskott till kommuner/regioner har historiskt legat på 100–200 mkr/år (jämför p-2026-0412, MP, 200 mkr/år för i stort sett samma politik). C:s löfte är något bredare — uppbyggnad av civilt försvar (lager, ledning, övning) — så basen läggs strax över grannen: 250 mkr/år, spann 100–500. Det tidigare estimatet (2 000 mkr) antog 5–10 mkr per enhet utan grannkontroll och blev en 10× outlier mot det jämförbara löftet.",
+      "confidence": 0.4
     },
     "financing_claimed": {
       "described": false,
@@ -12132,7 +12133,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 2 000 miljoner kronor per år (spann 1 000-3 000) till 250 (spann 100-500) vid den manuella genomgången av avvikande estimat. Harmoniserat med det näraliggande p-2026-0412 (MP, mer medel till krisberedskap, 200 mkr/år) - det gamla beloppet var en 10× outlier utan grannkontroll.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
