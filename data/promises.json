@@ -8637,13 +8637,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5000,
-      "msek_high": 7500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Familj/Barn. ~5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Sammanfattande uppräkning av S:s plånbokslöfte (höjda löner och barnbidrag, billigare mediciner, bättre pensioner, slopat karensavdrag). Varje del är redan prissatt på ett eget löfte — barnbidrag/mediciner i p-2026-0002 och p-2026-0481, pension i p-2026-0003, karensavdraget i p-2026-0461 och p-2026-0488 — så denna sammanfattning sätts till 0 för att undvika dubbelräkning (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -8653,7 +8653,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 5 000 miljoner kronor per år (spann 2 500-7 500) till 0 vid den manuella genomgången. Löftet är en sammanfattande uppräkning vars komponenter redan är prissatta på egna S-löften (p-2026-0002/0481 barnbidrag+mediciner, p-2026-0003 pension, p-2026-0461/0488 karensavdrag); att prissätta sammanfattningen skulle dubbelräkna. En efterhandsberäkning på 23 000 (som summerade komponenterna) avvisades av samma skäl.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
