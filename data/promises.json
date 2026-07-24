@@ -7263,12 +7263,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 150,
+      "msek_base": 350,
+      "msek_high": 700,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Betald ledighet (via t.ex. föräldraförsäkring eller arbetsgivarregler) för skolaktiviteter. Ca 1M barn i grundskolan × 2–3 utvecklingssamtal/år × ca 2 timmar × 1–2 föräldrar. Ca 1M × 2,5 × 2h",
+      "method_note": "Betald ledighet för föräldrar vid skolaktiviteter. ~1,4M elever × 1–2 utvecklingssamtal/år × 0,5 dags ledighet × 20–40 % utnyttjande × ~1 200 kr/dag ≈ 150–700 mkr/år, bas 350. Det tidigare estimatet (2 000) antog i praktiken 100 % uttag.",
+      "calculation": "~1,4 miljoner elever i grundskolan × 1–2 utvecklingssamtal per år × 0,5 dags ledighet × 20–40 % utnyttjandegrad (alla föräldrar tar inte ut betald ledighet) × ~1 200 kr/dag = 168–672 mkr/år. Avrundat till spann 150–700 mkr, bas 350. Det tidigare estimatet (2 000 mkr) saknade utnyttjandegrad och antog i praktiken att varje förälder tog ut ledigheten fullt ut.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -7279,7 +7280,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 2 000 miljoner kronor per år (spann 1 000-3 000) till 350 (spann 150-700) vid den manuella genomgången. Det gamla beloppet saknade utnyttjandegrad och antog i praktiken 100 % uttag; det nya lägger till en realistisk utnyttjandegrad (20-40 %).",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
