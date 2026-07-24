@@ -8211,13 +8211,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Bostad. ~10 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Höjt bostadsbidrag. Hela bostadsbidraget kostar ~4,5 mdkr/år i dag; en höjning på 10–40 % ger ~450–1 800 mkr/år. Bas 1 000, spann 500–2 000 miljoner kronor per år.",
+      "calculation": "Totala bostadsbidragsutgifter är ~4,5 mdkr/år. Citatet anger inget belopp, så en höjning antas i intervallet 10–40 % → 450–1 800 mkr/år. Bas sätts till 1 000 mkr (måttlig höjning). Det tidigare estimatet (10 000 mkr) hade mer än dubblat hela bostadsbidragsbudgeten och saknade uträkning.",
+      "confidence": 0.35
     },
     "financing_claimed": {
       "described": false,
@@ -8227,7 +8228,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 10 000 miljoner kronor per år (spann 2 000-18 000) till 1 000 (spann 500-2 000) vid den manuella genomgången av avvikande estimat. Det gamla beloppet var en rund gissning som mer än dubblat hela bostadsbidragsbudgeten (~4,5 mdkr/år); det nya vilar på faktisk budget och en måttlig höjning.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
