@@ -12,7 +12,7 @@
  * slinka igenom. Skiftläge bevaras: ordagrant är ordagrant.
  */
 
-import type { Handling } from "./handlingar.ts";
+import { aktorsPartier, type Handling } from "./handlingar.ts";
 import type { Riktning } from "./domar.ts";
 
 export type GrindId = "H1" | "H2" | "H3" | "H4" | "H5";
@@ -125,12 +125,10 @@ function grindH3(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
   if (ctx.malPartier.length === 0) {
     return [{ grind: "H3", reason: "Löftet/ståndpunkten saknar parti — ingen aktör att pröva mot" }];
   }
-  // En votering omfattar alla partier i kammaren; aktörskravet är då att
-  // partiet alls förekommer i röstfördelningen.
-  const partier =
-    ctx.handling.kind === "votering" && ctx.handling.rostfordelning
-      ? Object.keys(ctx.handling.rostfordelning)
-      : ctx.handling.parties;
+  // Aktörspartierna: en votering omfattar de partier som röstade; en
+  // fråga/interpellation bara frågeställarna (den tillfrågade ministern
+  // är inte aktör); motioner/propositioner samtliga undertecknare.
+  const partier = aktorsPartier(ctx.handling);
   if (partier.length === 0) {
     return [{ grind: "H3", reason: "Handlingen saknar partiuppgift (tom är ärlig — berikning gav ingen träff)" }];
   }

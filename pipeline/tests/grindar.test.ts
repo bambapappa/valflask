@@ -106,6 +106,31 @@ test("H3 prövar votering mot röstfördelningens partier", () => {
   assert.ok(provaGrindarna(f, ctx({ handling: votering, malPartier: ["kd"] })).some((x) => x.grind === "H3"));
 });
 
+test("H3 räknar fråga på frågeställaren, inte den tillfrågade ministern", () => {
+  // Riksdagsdatan listar både frågeställaren (V) och den tillfrågade
+  // ministern (M), så handling.parties rymmer båda. Bara V är aktör.
+  const fraga: Handling = {
+    id: "h-2026-0003",
+    kind: "skriftlig_fraga",
+    dok_id: "HB02123",
+    datum: "2024-11-10",
+    parties: ["m", "v"],
+    persons: [
+      { name: "Lorena Delgado Varas", party: "v", riksdagen_id: "1" },
+      { name: "Justitieminister Gunnar Strömmer", party: "m", riksdagen_id: "2" },
+    ],
+    titel: "Fråga om taket i a-kassan",
+    url: "https://data.riksdagen.se/dokument/HB02123",
+    archive_url: null,
+  };
+  const f = forslag({ handling_id: "h-2026-0003" });
+  delete f.motionstyp;
+  // Frågeställaren är V → V-löfte passerar aktörskravet
+  assert.deepEqual(provaGrindarna(f, ctx({ handling: fraga, malPartier: ["v"] })), []);
+  // M finns bara som tillfrågad minister → M-löfte fälls av H3
+  assert.ok(provaGrindarna(f, ctx({ handling: fraga, malPartier: ["m"] })).some((x) => x.grind === "H3"));
+});
+
 test("H4 fäller datum utanför Läge A-fönstret", () => {
   const gammal = { ...motion, datum: "2021-01-15" };
   const fel = provaGrindarna(forslag(), ctx({ handling: gammal }));
