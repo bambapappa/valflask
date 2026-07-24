@@ -7399,13 +7399,13 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Administrativ reform av strandskyddsregler (miljöbalken 7 kap.). Kostnad = hantering inom länsstyrelser + kommuner + eventuell kompensation/ [granskning 2026-07-09: engångs regelreform av strandskyddet, ej löpande ×4]",
-      "confidence": 0.4
+      "method_note": "Avreglering av strandskyddsreglerna (miljöbalken 7 kap.); löftet hålls av själva lagändringen, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat prissatte spekulativa följder (länsstyrelsehantering, kompensation) som inte går att kvantifiera. Samma grund som förbuds- och regleringsgruppen (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -7415,7 +7415,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor (engång, spann 250-750) till 0 vid den manuella genomgången av avvikande estimat. Löftet hålls av själva avregleringen av strandskyddet; det gamla beloppet prissatte spekulativa följder. Samma grund som förbuds-/regleringsgruppen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
