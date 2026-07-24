@@ -360,9 +360,9 @@ Två saker upptäcktes och åtgärdades under genomgången:
    parti hamnade i handlingens partilista). 12 felkopplingar fångades;
    7 hade hunnit godkännas i bulk-rundan och backades ur
    `kopplingar.json` + `#150` backades efter omprövning (tvångsäktenskap
-   ≠ uppehållstillstånd). **Varaktig kodfix i PR #171** (`aktorsPartier()`
-   som både H3 och kandidatrankningen använder) — MERGA innan nästa
-   `foreslag`-körning, annars återkommer felet.
+   ≠ uppehållstillstånd). **Varaktig kodfix i PR #171 (MERGAD)** —
+   `aktorsPartier()` som både H3 och kandidatrankningen använder, så
+   felet kan inte återkomma i nästa `foreslag`-körning.
 2. Domarna var inte omräknade sedan bulk-godkännandena, så inga
    felkopplingar nådde någon dom innan de backades.
 
