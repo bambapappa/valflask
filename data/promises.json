@@ -11048,11 +11048,11 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 20,
-      "msek_high": 100,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande: utökad tillsyn för att hindra vinstuttag vid kvalitetsbrister. Myndighetsadministration, osäker storlek. 0–100 msek/år.",
+      "method_note": "Löftet hålls genom skärpta villkor/vinstuttagsförbud vid kvalitetsbrister, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta ökade tillsynskostnader hos tillsynsmyndigheten, men den följdkostnaden har bedömts för osäker för att anges som en trovärdig siffra (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -11063,7 +11063,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 20 miljoner kronor per år (spann 0–100) till 0 kronor. Löftet hålls genom skärpningen av villkoren; den direkta kostnaden är försumbar och de osäkra tillsynsföljderna lämnas okvantifierade i stället för att gissas.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12439,12 +12445,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 1000,
-      "msek_high": 2500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnad baserat på antagande om högre kostnad per elev vid kommunalt övertagande av friskolor; osäkerhet kring antal elever och kostnadsskillnad.",
+      "method_note": "Löftet hålls genom lagändringen (vinstförbud i skolan), vars direkta kostnad är försumbar och sätts till 0, i linje med gruppmedlemmen p-2026-0470 (MP) samt de likartade löftena p-2026-0535 (S) och p-2026-0452 (V) som nollades 22/7. Följdkostnaden av ett kommunalt övertagande av friskolor har bedömts för osäker för att anges som en trovärdig siffra (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12455,7 +12461,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 1 000 miljoner kronor per år (spann 400–2 500) till 0 kronor, för konsekvens med de likartade löftena p-2026-0470, p-2026-0535 och p-2026-0452 som redan nollats med samma motivering (lagändringens direkta kostnad är försumbar).",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
