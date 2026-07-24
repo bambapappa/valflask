@@ -3276,7 +3276,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "besparing",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -3294,7 +3294,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till besparing - noten beskriver redan en besparing (minskade migrationskostnader), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5186,7 +5192,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "besparing",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -5204,7 +5210,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till besparing - noten beskriver redan en besparing (minskade migrationskostnader), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5549,7 +5561,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "besparing",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -5567,7 +5579,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till besparing - noten beskriver redan en besparing (minskade kostnader), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5593,7 +5611,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "besparing",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -5611,7 +5629,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till besparing - noten beskriver redan en besparing (minskade bidragsutgifter), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6101,7 +6125,7 @@
     },
     "category": "klimat-miljö",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "intäktsökning",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -6119,7 +6143,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till intäktsökning - noten säger själv att det är en skattehöjning (ökad statsintäkt), inte en minskad. Beloppet (0 kr) oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6512,7 +6542,7 @@
     },
     "category": "välfärd",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "intäktsökning",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -6530,7 +6560,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till intäktsökning - noten säger själv att det är en INTÄKT (ökade skatteintäkter från fler i arbete), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -9268,7 +9304,7 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "intäktsökning",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -9286,7 +9322,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till intäktsökning - noten säger själv att det är en INTÄKT (förmögenhetsskatt), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -18563,7 +18605,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "utgift",
       "period": "per_ar",
       "msek_low": 500,
       "msek_base": 1200,
@@ -18581,7 +18623,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till utgift - noten beskriver ökade statliga transfereringar (en utgift), inte en minskad statsintäkt. Beloppet (1 200 miljoner kronor per år, spann 500-2 500) oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
