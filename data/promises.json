@@ -10252,13 +10252,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 10000,
-      "msek_high": 30000,
+      "msek_low": 1000,
+      "msek_base": 3000,
+      "msek_high": 6000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett löfte utan belopp. Jämförs med tidigare riktade primärvårdssatsningar (mdr-storlek) och kömiljarder. Lågt spann för symbolisk förstärkning, högt spann för substantiell utbyggnad och kökortning. ",
-      "confidence": 0.3
+      "method_note": "Utbyggd primärvård och kortade vårdköer. Historiska primärvårdssatsningar (nära vård) och kömiljarder ligger på ~2–6 mdkr/år; löftet omfattar både utbyggnad och kökortning. Bas 3 000, spann 1 000–6 000 miljoner kronor per år. Viss överlappsrisk med C:s p-2026-0357 (fast läkarkontakt).",
+      "calculation": "Tidigare riktade primärvårdssatsningar (nära vård-reformer) och kömiljarden har legat på ~2–6 mdkr/år. Löftet gör två saker — bygga ut primärvården och korta köerna — så basen läggs i mitten av det historiska spannet: 3 000 mkr/år, spann 1 000–6 000. Det tidigare estimatet (10 000, spann upp till 30 000) var i högsta laget; en efterhandsberäkning på 2 000 låg i stället på golvet trots att löftet omfattar båda delarna. Viss överlappsrisk med C:s löfte om fast läkarkontakt (p-2026-0357).",
+      "confidence": 0.35
     },
     "financing_claimed": {
       "described": false,
@@ -10268,7 +10269,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 10 000 miljoner kronor per år (spann 3 000-30 000) till 3 000 (spann 1 000-6 000) vid den manuella genomgången. Det gamla beloppet var i högsta laget och en efterhandsberäkning på 2 000 i lägsta; basen lagd i mitten av historiska primärvårdssatsningar (~2-6 mdkr/år) eftersom löftet omfattar både utbyggnad och kökortning.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
