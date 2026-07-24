@@ -11639,12 +11639,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1500,
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 400,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnaden för ett snabbspår beror på omfattning och ambitionsnivå. Jämförbart med tidigare satsningar på särskilda domstolar eller utredningsgrupper. Lågt scenario: ett fåtal specialiserade åklagare o",
+      "method_note": "Särskilt snabbspår för brott mot småföretagare. Bemanningsbaserat: ~5–15 specialiserade åklagare/domare/utredare per region (~7 regioner) à ~1,2 mkr/år plus overhead, IT och utbildning ≈ 50–400 mkr/år, bas 150. Det tidigare estimatet (500) var en lös uppskattning. I linje med det snarlika p-2026-0371 (snabbare lagföring, 100 mkr).",
+      "calculation": "Ett snabbspår är en specialiserad men avgränsad resurs i rättskedjan: ~5–15 specialiserade åklagare/domare/utredare per region × ~7 regioner = ~35–105 personer à ~1,2 mkr/år ≈ 42–126 mkr, plus overhead, IT-system och utbildning (20–100 %) → 50–400 mkr/år, bas 150. Det tidigare estimatet (500, spann upp till 1 500) saknade en bemanningsberäkning. Storleksordningen är i linje med det snarlika p-2026-0371 (snabbare lagföring, 100 mkr).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -11655,7 +11656,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor per år (spann 200-1 500) till 150 (spann 50-400) vid den manuella genomgången. Det gamla beloppet var en lös uppskattning; det nya vilar på en bemanningsberäkning (~35-105 specialiserade personer i rättskedjan), i linje med det snarlika p-2026-0371.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
