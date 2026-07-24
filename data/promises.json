@@ -6522,7 +6522,7 @@
   },
   {
     "id": "p-2026-0144",
-    "group_id": null,
+    "group_id": "g-c-skattereform-grundlon",
     "title": "45 miljarder kronor i ökade skatteintäkter varje år",
     "slug": "45-miljarder-kronor-i-okade-skatteintakter-varje-ar",
     "parties": [
@@ -6544,13 +6544,14 @@
     "cost": {
       "type": "intäktsökning",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 25000,
+      "msek_base": 45000,
+      "msek_high": 55000,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Källan anger: '45 miljarder kronor i ökade skatteintäkter varje år'. Detta är en INTÄKT från fler i arbete, inte kostnad. Skattesänkningar minskar per kr men fler i arbete kompenserar. C:s egen beräkn",
-      "confidence": 0.3
+      "method_note": "Centerns skattereform: avskaffat jobbskatteavdrag ersätts med en skattefri grundlön. Källan anger reformens nettoeffekt: +45 miljarder kronor per år i ökade skatteintäkter (C:s egen beräkning, bygger på att fler kommer i arbete). Hela reformen räknas en gång här — de närliggande formuleringarna p-2026-0172, p-2026-0252 och p-2026-0254 är samma reform (delad grupp) och bidrar därför 0.",
+      "calculation": "C:s egen siffra för reformens nettoeffekt är +45 mdkr/år i ökade skatteintäkter, enligt partiets utfästelse att en skattefri grundlön i kombination med avskaffat jobbskatteavdrag ökar sysselsättningen så att skattebasen växer. Nettot är omtvistat — en isolerad statisk beräkning av grundlönens kostnad kan i stället peka mot en nettokostnad — men löftet redovisas på partiets egen siffra. Spann 25 000–55 000 speglar osäkerheten kring hur mycket av den utlovade jobbeffekten som realiseras.",
+      "confidence": 0.4
     },
     "financing_claimed": {
       "described": false,
@@ -6565,6 +6566,11 @@
         "date": "2026-07-24",
         "change": "Kostnadstyp rättad från intäktsminskning till intäktsökning - noten säger själv att det är en INTÄKT (ökade skatteintäkter från fler i arbete), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
         "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      },
+      {
+        "date": "2026-07-24",
+        "change": "Löftet gjort till representant för Centerns skattereform (grupp g-c-skattereform-grundlon, tillsammans med p-2026-0172, p-2026-0252 och p-2026-0254). Reformens nettoeffekt satt till C:s egen siffra, +45 000 miljoner kronor per år i ökade skatteintäkter (spann 25 000-55 000). Reformen räknas en gång här; de andra tre formuleringarna bidrar 0 för att undvika dubbelräkning.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -7853,7 +7859,7 @@
   },
   {
     "id": "p-2026-0172",
-    "group_id": null,
+    "group_id": "g-c-skattereform-grundlon",
     "title": "Förslaget innebär att dagens jobbskatteavdrag och skattereduktion för förvärvsinkomster ersätts med ett samlat avdrag på 15 319 kronor i",
     "slug": "forslaget-innebar-att-dagens-jobbskatteavdrag-och-skattereduktion-for-forvarvsinkomster-ersatts-med-ett-samlat-avdrag-pa-15-319-kronor-i",
     "parties": [
@@ -7880,7 +7886,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Inriktningslöfte utan kvantifierbar kostnad.",
+      "method_note": "Del av Centerns skattereform (avskaffat jobbskatteavdrag ersätts med en skattefri grundlön). Reformens nettoeffekt redovisas samlat på gruppens representant p-2026-0144 (C:s egen siffra, +45 miljarder kronor per år) och räknas en gång — denna formulering bidrar därför 0.",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -7891,7 +7897,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kopplad till gruppen g-c-skattereform-grundlon (samma reform som p-2026-0144, p-2026-0252, p-2026-0254). Beloppet (0 kr) oförändrat; reformens nettoeffekt räknas en gång på representanten p-2026-0144.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8243,7 +8255,7 @@
   },
   {
     "id": "p-2026-0252",
-    "group_id": null,
+    "group_id": "g-c-skattereform-grundlon",
     "title": "Det är därför dags att avskaffa jobbskatteavdraget och istället går Centerpartiet i val att ersätta det med en skattefri grundlön",
     "slug": "det-ar-darfor-dags-att-avskaffa-jobbskatteavdraget-och-istallet-gar-centerpartiet-i-val-att-ersatta-det-med-en-skattefri-grundlon",
     "parties": [
@@ -8266,13 +8278,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Ekonomi/Skatt. ~15 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Del av Centerns skattereform (avskaffat jobbskatteavdrag ersätts med en skattefri grundlön). Reformens nettoeffekt redovisas samlat på gruppens representant p-2026-0144 (C:s egen siffra, +45 miljarder kronor per år) och räknas en gång — denna formulering bidrar därför 0.",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -8282,7 +8294,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år till 0 och löftet kopplat till gruppen g-c-skattereform-grundlon vid den manuella genomgången. Detta är samma reform som p-2026-0144/0172/0254 och prissattes tidigare fristående; reformens nettoeffekt räknas nu en gång på representanten p-2026-0144 (C:s egen siffra, +45 mdkr).",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -8291,7 +8309,7 @@
   },
   {
     "id": "p-2026-0254",
-    "group_id": null,
+    "group_id": "g-c-skattereform-grundlon",
     "title": "Vårt förslag sänker skatten med 1200 kr månaden för en person med normal ingångslön på 25.000 kr",
     "slug": "vart-forslag-sanker-skatten-med-1200-kr-manaden-for-en-person-med-normal-ingangslon-pa-25-000-kr",
     "parties": [
@@ -8314,13 +8332,13 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Skattesänkning inom Ekonomi/Skatt. ~15 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Del av Centerns skattereform (avskaffat jobbskatteavdrag ersätts med en skattefri grundlön). Detta är den illustrerade effekten per person (1 200 kr/mån); reformens nettoeffekt redovisas samlat på gruppens representant p-2026-0144 (C:s egen siffra, +45 miljarder kronor per år) och räknas en gång — denna formulering bidrar därför 0.",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -8330,7 +8348,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år till 0 och löftet kopplat till gruppen g-c-skattereform-grundlon vid den manuella genomgången. Detta är samma reform som p-2026-0144/0172/0252 (här illustrerad per person); reformens nettoeffekt räknas nu en gång på representanten p-2026-0144 (C:s egen siffra, +45 mdkr).",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
