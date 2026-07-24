@@ -344,33 +344,37 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-23 `claude/handlingsvagen-ko-beta-6oiq2r` → triggar en ny
-  fullkörning av `foreslag.yml` på `main` (PR #127 mergad: `bash -e`-
-  krasch och fallback-kopplingen fixade, `MODEL_KOPPLING=kimi-k2.7-code`
-  satt av ägaren). Rör inte `data/kopplingsforslag.json` eller
-  `data/provade-par.json` parallellt förrän klart.
+*(inga anspråk)*
 
-Fullkörningen 2026-07-20 (körning 8): **34 förslag i kön över 12 löften**
-(29 stödjer/5 motverkar, 5 via betänkanden), issues synkade. Ägaren har
-godkänt sitt första (issue #5, elevlagen p-2026-0360) → 1 koppling i
-`data/kopplingar.json`. Ägaren har sedan granskat vidare och **2026-07-23
-betat av hela kön: 14 godkända, 4 avvisade (0 kvar)**. `npm run domar`
-omkört därefter (72 partidomar, 1124 ledamotsmeriter).
+**Fullkörning 2026-07-23 (Go-primär, run 30044095324): KLAR, hela kön
+(192 löften) genomkörd.** 26 nya förslag i kön (78 → 104), 922 par
+prövade totalt. Bekräftat i sak: primärmodellen `kimi-k2.7-code` via
+OpenCode Go fungerar (PR #127:s `bash -e`-fix och fallback-koppling
+höll — inga tysta krascher, inga tappade poster, allt löpande pushat).
 
-**⚠️ INNAN NÄSTA FULLKÖRNING — kontrollera OpenRouter-nyckeln/krediten.**
-Körning 8 slutade röd för att **1 234 par föll på HTTP 401** efter ~91
-lyckade anrop: OpenRouter-nyckeln slutade accepteras (utgången/slut
-kredit) och z.ai-fallbacken räddade dem inte. Ingen kod-fix behövs —
-men en omkörning med samma trasiga nyckel bränner bara tid. Verifiera
-`OPENROUTER_API_KEY` + kredit (och att `MODEL_KOPPLING_FALLBACK=glm-5.2`
-faktiskt svarar på z.ai) först.
+Jobbet slutar ändå rött (`exit 1`) — inte modellfel, utan **OpenRouter-
+fallbacken saknar kredit** (samma gamla brist som körning 8, aldrig
+åtgärdad): när Go enstaka gånger nekar ett par faller koden över till
+OpenRouter, som svarar `HTTP 402 Insufficient credits`. Det paret
+förblir oprövat (inte skrivet till `data/provade-par.json`) och tas
+upp av nästa körning. Ingen datakrasch, ingen dödspärr utlöst (högsta
+observerade streck: 2 av 8) — bara ett antal enskilda par som väntar
+på omkörning. Åtgärda genom att antingen fylla på OpenRouter-krediten
+eller acceptera att Go ensam bär hela lasten (fallbacken blir då bara
+overhead på de par där Go redan lyckas ändå).
 
-**Nej-svar är nu beständiga (löst):** `data/provade-par.json` minns varje
-prövat par (förslag/nej/grindfall), seedad med körning 8:s 92 klara par.
-En omkörning betalar bara för det oprövade — de 1 234 401-felen prövas
-om (rätt, de fick aldrig svar), men de 56 genuina nej-svaren och 34
-förslagen frågas aldrig om igen. `scripts/provade-uppdatera.mts`
-persisterar filen race-säkert i workflowen.
+Fullkörningen 2026-07-20 (körning 8, OpenRouter-primär, historisk):
+34 förslag i kön över 12 löften (29 stödjer/5 motverkar, 5 via
+betänkanden). Ägaren har därefter **2026-07-23 betat av hela den då
+gällande kön: 14 godkända, 4 avvisade (0 kvar)**. `npm run domar`
+omkört (72 partidomar, 1124 ledamotsmeriter) — **kommer att behöva
+köras om igen** när ägaren tagit ställning till de 26 nya förslagen
+från denna körning.
+
+**Nej-svar är beständiga:** `data/provade-par.json` minns varje prövat
+par (förslag/nej/grindfall). En omkörning betalar bara för det
+oprövade — `scripts/provade-uppdatera.mts` persisterar filen
+race-säkert i workflowen.
 
 ### Meddelanden mellan sessioner
 
