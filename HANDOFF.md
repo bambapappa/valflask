@@ -346,30 +346,33 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 *(inga anspråk)*
 
-**Fullkörning 2026-07-23 (Go-primär, run 30044095324): KLAR, hela kön
-(192 löften) genomkörd.** 26 nya förslag i kön (78 → 104), 922 par
-prövade totalt. Bekräftat i sak: primärmodellen `kimi-k2.7-code` via
-OpenCode Go fungerar (PR #127:s `bash -e`-fix och fallback-koppling
-höll — inga tysta krascher, inga tappade poster, allt löpande pushat).
+**Två Go-primär-fullkörningar 2026-07-23/24 (run 30044095324 +
+30076690510, uppsamling): KLARA, hela kön genomkörd båda gångerna.**
+Kön har vuxit **78 → 104 → 121 förslag** (43 nya totalt). Bekräftat i
+sak: primärmodellen `kimi-k2.7-code` via OpenCode Go fungerar stabilt
+(PR #127:s `bash -e`-fix och fallback-koppling höll i båda körningarna
+— inga tysta krascher, inga tappade poster, allt löpande pushat).
 
-Jobbet slutar ändå rött (`exit 1`) — inte modellfel, utan **OpenRouter-
-fallbacken saknar kredit** (samma gamla brist som körning 8, aldrig
-åtgärdad): när Go enstaka gånger nekar ett par faller koden över till
-OpenRouter, som svarar `HTTP 402 Insufficient credits`. Det paret
-förblir oprövat (inte skrivet till `data/provade-par.json`) och tas
-upp av nästa körning. Ingen datakrasch, ingen dödspärr utlöst (högsta
-observerade streck: 2 av 8) — bara ett antal enskilda par som väntar
-på omkörning. Åtgärda genom att antingen fylla på OpenRouter-krediten
-eller acceptera att Go ensam bär hela lasten (fallbacken blir då bara
-overhead på de par där Go redan lyckas ändå).
+Båda jobben slutar ändå röda (`exit 1`) — inte modellfel, utan
+**OpenRouter-fallbacken saknar kredit** (samma gamla brist som körning
+8, aldrig åtgärdad): när Go enstaka gånger nekar ett par faller koden
+över till OpenRouter, som svarar `HTTP 402 Insufficient credits`. Det
+paret förblir oprövat (inte skrivet till `data/provade-par.json`) och
+tas upp av nästa körning — vilket är precis vad som hände (körning två
+fångade in en del av körning ett:s missade par). Ingen datakrasch,
+ingen dödspärr utlöst i någondera. **Fortsatt omkörning kan i princip
+fånga fler par, men avvaktar nu** — inte kört en tredje gång eftersom
+avkastningen sjunker (Go bär redan det mesta av lasten) och sessionens
+kvotförbrukning ska hållas nere. Åtgärda genom att fylla på
+OpenRouter-krediten om alla par ska in, annars räcker Go ensamt.
 
 Fullkörningen 2026-07-20 (körning 8, OpenRouter-primär, historisk):
 34 förslag i kön över 12 löften (29 stödjer/5 motverkar, 5 via
 betänkanden). Ägaren har därefter **2026-07-23 betat av hela den då
 gällande kön: 14 godkända, 4 avvisade (0 kvar)**. `npm run domar`
 omkört (72 partidomar, 1124 ledamotsmeriter) — **kommer att behöva
-köras om igen** när ägaren tagit ställning till de 26 nya förslagen
-från denna körning.
+köras om igen** när ägaren tagit ställning till de 43 nya förslagen
+från de här två körningarna.
 
 **Nej-svar är beständiga:** `data/provade-par.json` minns varje prövat
 par (förslag/nej/grindfall). En omkörning betalar bara för det
