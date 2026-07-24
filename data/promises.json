@@ -7606,12 +7606,13 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 4500,
+      "msek_low": 400,
+      "msek_base": 800,
+      "msek_high": 1500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Barn 1-5 år i förskola: ca 500 000 barn. Genomsnittlig förskoleavgift per barn: ca 1500 kr/mån = 18000 kr/år. En sänkning med t.ex. 25% = 4500 kr/barn/år. Kostnad = 500000 × 4500 = 2,25 mdr kr/år. Ink",
+      "method_note": "Sänkta avgifter för förskola och fritids. Faktiska snittavgifter är låga efter maxtaxa och syskonrabatt, så ~900 000 barn × ~1 000 kr/mån × 10–20 % sänkning ≈ 400–1 500 mkr/år, bas 800. Det tidigare estimatet (3 000) antog en hög snittavgift (1 500 kr/mån) och en stor sänkning, motsvarande ~halva alla avgiftsintäkter.",
+      "calculation": "~900 000 barn i förskola och fritids. Faktiska avgifter är låga efter maxtaxa (tak ~1 645 kr/mån första barnet, inkomstavtrappat) och syskonrabatt — snitt ~1 000 kr/mån. En sänkning på 10–20 % × 12 mån ≈ 1 080–2 160 mkr brutto, men justerat för maxtaxa och syskonrabatt landar det på ~400–1 500 mkr/år, bas 800. Reduktionens storlek anges inte i citatet, därav spannet. Det tidigare estimatet (3 000) antog snittavgift 1 500 kr/mån och 25 % sänkning på bara förskola, vilket motsvarar ungefär halva alla avgiftsintäkter och överskattar.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -7622,7 +7623,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 3 000 miljoner kronor per år (spann 1 500-4 500) till 800 (spann 400-1 500) vid den manuella genomgången. Det gamla beloppet antog en hög snittavgift och stor sänkning; det nya justerar för maxtaxa och syskonrabatt (som gör faktiska avgifter mycket lägre) och räknar in både förskola och fritids.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
