@@ -98,6 +98,14 @@ describe("estimateCost", () => {
     assert.equal(c.calculation, undefined);
   });
 
+  it("accepterar typen intäktsökning (t.ex. ny skatt som ger staten pengar)", async () => {
+    const llm = mockLlm(
+      '{"type":"intäktsökning","period":"per_ar","msek_low":3000,"msek_base":5000,"msek_high":10000,"confidence":0.4,"method_note":"förmögenhetsskatt"}',
+    );
+    const c = await estimateCost(cand(null), llm, "m");
+    assert.equal(c.type, "intäktsökning");
+  });
+
   it("tvingar high ≥ 1,5 × low (R2)", async () => {
     const llm = mockLlm(
       '{"type":"utgift","period":"per_ar","msek_low":100,"msek_base":110,"msek_high":120,"confidence":0.5,"method_note":"x"}',
@@ -180,6 +188,27 @@ describe("estimateCost", () => {
     };
     await estimateCost(cand(null), llm, "m");
     assert.doesNotMatch(captured, /JÄMFÖRBARA/);
+  });
+
+  it("A5-systemprompten bär avgränsningsreglerna (förbud, utredning, netto, beteende, sammanfattning)", async () => {
+    let sys = "";
+    const llm: LlmClient = {
+      complete: async (_prompt: string, opts?: { systemPrompt?: string }) => {
+        sys = opts?.systemPrompt ?? "";
+        return '{"type":"utgift","period":"per_ar","msek_low":100,"msek_base":200,"msek_high":300,"confidence":0.4,"method_note":"x"}';
+      },
+    };
+    await estimateCost(cand(null), llm, "m");
+    // Regel 9: förbud/reglering prissätts efter direkt kostnad, inte följder
+    assert.match(sys, /FÖRBUD, LAGAR OCH REGLERINGAR/);
+    // Regel 10: utrednings-/planlöften
+    assert.match(sys, /UTREDNINGS- OCH PLANLÖFTEN/);
+    // Regel 11: netto, inte brutto
+    assert.match(sys, /NETTO, INTE BRUTTO/);
+    // Regel 12: beteende och utnyttjande
+    assert.match(sys, /BETEENDE OCH UTNYTTJANDE/);
+    // Regel 13: breda sammanfattningslöften
+    assert.match(sys, /BREDA SAMMANFATTNINGS/);
   });
 
   it("looksLikeOneOff: gåva/inlösen/mandatperiod ja; löpande nej", () => {

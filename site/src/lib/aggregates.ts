@@ -26,7 +26,7 @@ export function isCostType(p: PromisePost): boolean {
 }
 
 export function isBesparing(p: PromisePost): boolean {
-  return p.cost.type === "besparing";
+  return p.cost.type === "besparing" || p.cost.type === "intäktsökning";
 }
 
 /**
@@ -283,7 +283,7 @@ export function computeComparisons(
   const totalKronor = promiseTotalMsek(promise) * 1_000_000;
   // Endast KURERADE jämförelser (tom för nästan alla → sektionen döljs). De
   // gamla auto-jämförelserna (sjuksköterskelöner m.fl.) togs bort: en måttstock
-  // som SJÄLV kan vara ett vallöfte är inte neutral (ägarbeslut 2026-07-10).
+  // som SJÄLV kan vara ett vallöfte är inte neutral (mänskligt beslut 2026-07-10).
   // Glasyren är i stället den apolitiska vikt-liknelsen i dryLine().
   const ids = promise.comparisons ?? [];
   const results: ComparisonResult[] = [];

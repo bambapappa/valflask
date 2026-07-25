@@ -14,7 +14,7 @@ const A5_SYSTEM = (() => {
 })();
 
 export interface CostEstimate {
-  type: "utgift" | "intäktsminskning" | "besparing";
+  type: "utgift" | "intäktsminskning" | "besparing" | "intäktsökning";
   period: "per_ar" | "engang";
   msek_low: number;
   msek_base: number;
@@ -84,7 +84,7 @@ export function looksLikeOneOff(text: string): boolean {
   );
 }
 
-const TYPES = ["utgift", "intäktsminskning", "besparing"];
+const TYPES = ["utgift", "intäktsminskning", "besparing", "intäktsökning"];
 const PERIODS = ["per_ar", "engang"];
 
 /**

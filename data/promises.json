@@ -3276,7 +3276,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "besparing",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -3294,7 +3294,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till besparing - noten beskriver redan en besparing (minskade migrationskostnader), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5186,7 +5192,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "besparing",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -5204,7 +5210,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till besparing - noten beskriver redan en besparing (minskade migrationskostnader), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5549,7 +5561,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "besparing",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -5567,7 +5579,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till besparing - noten beskriver redan en besparing (minskade kostnader), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5593,7 +5611,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "besparing",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -5611,7 +5629,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till besparing - noten beskriver redan en besparing (minskade bidragsutgifter), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6101,7 +6125,7 @@
     },
     "category": "klimat-miljö",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "intäktsökning",
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
@@ -6119,7 +6143,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till intäktsökning - noten säger själv att det är en skattehöjning (ökad statsintäkt), inte en minskad. Beloppet (0 kr) oförändrat.",
+        "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6492,7 +6522,7 @@
   },
   {
     "id": "p-2026-0144",
-    "group_id": null,
+    "group_id": "g-c-skattereform-grundlon",
     "title": "45 miljarder kronor i ökade skatteintäkter varje år",
     "slug": "45-miljarder-kronor-i-okade-skatteintakter-varje-ar",
     "parties": [
@@ -6512,15 +6542,16 @@
     },
     "category": "välfärd",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "intäktsökning",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 25000,
+      "msek_base": 45000,
+      "msek_high": 55000,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Källan anger: '45 miljarder kronor i ökade skatteintäkter varje år'. Detta är en INTÄKT från fler i arbete, inte kostnad. Skattesänkningar minskar per kr men fler i arbete kompenserar. C:s egen beräkn",
-      "confidence": 0.3
+      "method_note": "Centerns skattereform: avskaffat jobbskatteavdrag ersätts med en skattefri grundlön. Källan anger reformens nettoeffekt: +45 miljarder kronor per år i ökade skatteintäkter (C:s egen beräkning, bygger på att fler kommer i arbete). Hela reformen räknas en gång här — de närliggande formuleringarna p-2026-0172, p-2026-0252 och p-2026-0254 är samma reform (delad grupp) och bidrar därför 0.",
+      "calculation": "C:s egen siffra för reformens nettoeffekt är +45 mdkr/år i ökade skatteintäkter, enligt partiets utfästelse att en skattefri grundlön i kombination med avskaffat jobbskatteavdrag ökar sysselsättningen så att skattebasen växer. Nettot är omtvistat — en isolerad statisk beräkning av grundlönens kostnad kan i stället peka mot en nettokostnad — men löftet redovisas på partiets egen siffra. Spann 25 000–55 000 speglar osäkerheten kring hur mycket av den utlovade jobbeffekten som realiseras.",
+      "confidence": 0.4
     },
     "financing_claimed": {
       "described": false,
@@ -6530,7 +6561,18 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till intäktsökning - noten säger själv att det är en INTÄKT (ökade skatteintäkter från fler i arbete), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      },
+      {
+        "date": "2026-07-24",
+        "change": "Löftet gjort till representant för Centerns skattereform (grupp g-c-skattereform-grundlon, tillsammans med p-2026-0172, p-2026-0252 och p-2026-0254). Reformens nettoeffekt satt till C:s egen siffra, +45 000 miljoner kronor per år i ökade skatteintäkter (spann 25 000-55 000). Reformen räknas en gång här; de andra tre formuleringarna bidrar 0 för att undvika dubbelräkning.",
+        "commit": "4d26da23ce3cb52e7651bc7b029afe799f5aa9c2"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7221,12 +7263,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 150,
+      "msek_base": 350,
+      "msek_high": 700,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Betald ledighet (via t.ex. föräldraförsäkring eller arbetsgivarregler) för skolaktiviteter. Ca 1M barn i grundskolan × 2–3 utvecklingssamtal/år × ca 2 timmar × 1–2 föräldrar. Ca 1M × 2,5 × 2h",
+      "method_note": "Betald ledighet för föräldrar vid skolaktiviteter. ~1,4M elever × 1–2 utvecklingssamtal/år × 0,5 dags ledighet × 20–40 % utnyttjande × ~1 200 kr/dag ≈ 150–700 mkr/år, bas 350. Det tidigare estimatet (2 000) antog i praktiken 100 % uttag.",
+      "calculation": "~1,4 miljoner elever i grundskolan × 1–2 utvecklingssamtal per år × 0,5 dags ledighet × 20–40 % utnyttjandegrad (alla föräldrar tar inte ut betald ledighet) × ~1 200 kr/dag = 168–672 mkr/år. Avrundat till spann 150–700 mkr, bas 350. Det tidigare estimatet (2 000 mkr) saknade utnyttjandegrad och antog i praktiken att varje förälder tog ut ledigheten fullt ut.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -7237,7 +7280,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 2 000 miljoner kronor per år (spann 1 000-3 000) till 350 (spann 150-700) vid den manuella genomgången. Det gamla beloppet saknade utnyttjandegrad och antog i praktiken 100 % uttag; det nya lägger till en realistisk utnyttjandegrad (20-40 %).",
+        "commit": "e5528d4ba3a39ced777583a834b0317398118412"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7363,13 +7412,13 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Administrativ reform av strandskyddsregler (miljöbalken 7 kap.). Kostnad = hantering inom länsstyrelser + kommuner + eventuell kompensation/ [granskning 2026-07-09: engångs regelreform av strandskyddet, ej löpande ×4]",
-      "confidence": 0.4
+      "method_note": "Avreglering av strandskyddsreglerna (miljöbalken 7 kap.); löftet hålls av själva lagändringen, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat prissatte spekulativa följder (länsstyrelsehantering, kompensation) som inte går att kvantifiera. Samma grund som förbuds- och regleringsgruppen (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -7379,7 +7428,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor (engång, spann 250-750) till 0 vid den manuella genomgången av avvikande estimat. Löftet hålls av själva avregleringen av strandskyddet; det gamla beloppet prissatte spekulativa följder. Samma grund som förbuds-/regleringsgruppen.",
+        "commit": "716085546cb8e2a34f5fa09b5f2845f839b1563c"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7551,12 +7606,13 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 4500,
+      "msek_low": 400,
+      "msek_base": 800,
+      "msek_high": 1500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Barn 1-5 år i förskola: ca 500 000 barn. Genomsnittlig förskoleavgift per barn: ca 1500 kr/mån = 18000 kr/år. En sänkning med t.ex. 25% = 4500 kr/barn/år. Kostnad = 500000 × 4500 = 2,25 mdr kr/år. Ink",
+      "method_note": "Sänkta avgifter för förskola och fritids. Faktiska snittavgifter är låga efter maxtaxa och syskonrabatt, så ~900 000 barn × ~1 000 kr/mån × 10–20 % sänkning ≈ 400–1 500 mkr/år, bas 800. Det tidigare estimatet (3 000) antog en hög snittavgift (1 500 kr/mån) och en stor sänkning, motsvarande ~halva alla avgiftsintäkter.",
+      "calculation": "~900 000 barn i förskola och fritids. Faktiska avgifter är låga efter maxtaxa (tak ~1 645 kr/mån första barnet, inkomstavtrappat) och syskonrabatt — snitt ~1 000 kr/mån. En sänkning på 10–20 % × 12 mån ≈ 1 080–2 160 mkr brutto, men justerat för maxtaxa och syskonrabatt landar det på ~400–1 500 mkr/år, bas 800. Reduktionens storlek anges inte i citatet, därav spannet. Det tidigare estimatet (3 000) antog snittavgift 1 500 kr/mån och 25 % sänkning på bara förskola, vilket motsvarar ungefär halva alla avgiftsintäkter och överskattar.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -7567,7 +7623,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 3 000 miljoner kronor per år (spann 1 500-4 500) till 800 (spann 400-1 500) vid den manuella genomgången. Det gamla beloppet antog en hög snittavgift och stor sänkning; det nya justerar för maxtaxa och syskonrabatt (som gör faktiska avgifter mycket lägre) och räknar in både förskola och fritids.",
+        "commit": "57503ab2c01fc70fcffdbaffa7a8837fe6e6b7fe"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7811,7 +7873,7 @@
   },
   {
     "id": "p-2026-0172",
-    "group_id": null,
+    "group_id": "g-c-skattereform-grundlon",
     "title": "Förslaget innebär att dagens jobbskatteavdrag och skattereduktion för förvärvsinkomster ersätts med ett samlat avdrag på 15 319 kronor i",
     "slug": "forslaget-innebar-att-dagens-jobbskatteavdrag-och-skattereduktion-for-forvarvsinkomster-ersatts-med-ett-samlat-avdrag-pa-15-319-kronor-i",
     "parties": [
@@ -7838,7 +7900,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Inriktningslöfte utan kvantifierbar kostnad.",
+      "method_note": "Del av Centerns skattereform (avskaffat jobbskatteavdrag ersätts med en skattefri grundlön). Reformens nettoeffekt redovisas samlat på gruppens representant p-2026-0144 (C:s egen siffra, +45 miljarder kronor per år) och räknas en gång — denna formulering bidrar därför 0.",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -7849,7 +7911,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kopplad till gruppen g-c-skattereform-grundlon (samma reform som p-2026-0144, p-2026-0252, p-2026-0254). Beloppet (0 kr) oförändrat; reformens nettoeffekt räknas en gång på representanten p-2026-0144.",
+        "commit": "4d26da23ce3cb52e7651bc7b029afe799f5aa9c2"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7977,13 +8045,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Ekonomi/Skatt. ~15 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Samma vinstförbuds-politik som hålls av en lagändring, vars direkta kostnad är försumbar och sätts till 0. Vinsten som 'återtas' är en spekulativ följd, inte löftets direkta kostnad. Konsekvent med S:s egna formuleringar p-2026-0475 och p-2026-0535 (båda 0) och den cross-party vinstförbudsgrupp som nollades 22/7 (p-2026-0470, 0452, 0394, 0535) (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -7993,7 +8061,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år (spann 7 500-22 500) till 0 vid den manuella genomgången. Samma vinstförbuds-politik som S:s egna p-2026-0475 och p-2026-0535 (båda redan 0) och den nollade cross-party-gruppen; löftet hålls av lagändringen och vinsten som återtas är en spekulativ följd, inte en direkt kostnad. En efterhandsberäkning på 3 500 avvisades av samma skäl.",
+        "commit": "06b97f8a3c2e3dff4e82fd3f6fa719587ae67ad8"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -8073,12 +8147,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 10000,
-      "msek_high": 20000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Energi. ~50 mdr/år. [granskning 2026-07-09: Sverigepriser el, konservativ statlig nettokostnad]",
+      "method_note": "Sverigepriser på el är en marknads-/regleringsåtgärd (koppla loss svenska priser från exportmarknaden, prisområdesreform). Prissänkningen är en överföring från producenter till konsumenter, inte en post i statsbudgeten, så den direkta statliga kostnaden är försumbar och sätts till 0. En efterhandsberäkning på 40 000 avvisades — den prissatte hela konsumentnyttan som om staten betalade den (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -8089,7 +8163,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 10 000 miljoner kronor per år (spann 4 000-20 000) till 0 vid den manuella genomgången. Sverigepriser på el är en marknads-/regleringsåtgärd; prissänkningen är en överföring från producenter till konsumenter, inte en statlig utgift. En efterhandsberäkning på 40 000 (hela konsumentnyttan) avvisades.",
+        "commit": "3e3aa74511b15f46310cf96adc4b829f899beb03"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -8169,13 +8249,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Bostad. ~10 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Höjt bostadsbidrag. Hela bostadsbidraget kostar ~4,5 mdkr/år i dag; en höjning på 10–40 % ger ~450–1 800 mkr/år. Bas 1 000, spann 500–2 000 miljoner kronor per år.",
+      "calculation": "Totala bostadsbidragsutgifter är ~4,5 mdkr/år. Citatet anger inget belopp, så en höjning antas i intervallet 10–40 % → 450–1 800 mkr/år. Bas sätts till 1 000 mkr (måttlig höjning). Det tidigare estimatet (10 000 mkr) hade mer än dubblat hela bostadsbidragsbudgeten och saknade uträkning.",
+      "confidence": 0.35
     },
     "financing_claimed": {
       "described": false,
@@ -8185,7 +8266,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 10 000 miljoner kronor per år (spann 2 000-18 000) till 1 000 (spann 500-2 000) vid den manuella genomgången av avvikande estimat. Det gamla beloppet var en rund gissning som mer än dubblat hela bostadsbidragsbudgeten (~4,5 mdkr/år); det nya vilar på faktisk budget och en måttlig höjning.",
+        "commit": "6cfcf4357f87c68117fbd3a57d28106e5dc244dd"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -8194,7 +8281,7 @@
   },
   {
     "id": "p-2026-0252",
-    "group_id": null,
+    "group_id": "g-c-skattereform-grundlon",
     "title": "Det är därför dags att avskaffa jobbskatteavdraget och istället går Centerpartiet i val att ersätta det med en skattefri grundlön",
     "slug": "det-ar-darfor-dags-att-avskaffa-jobbskatteavdraget-och-istallet-gar-centerpartiet-i-val-att-ersatta-det-med-en-skattefri-grundlon",
     "parties": [
@@ -8217,13 +8304,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Ekonomi/Skatt. ~15 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Del av Centerns skattereform (avskaffat jobbskatteavdrag ersätts med en skattefri grundlön). Reformens nettoeffekt redovisas samlat på gruppens representant p-2026-0144 (C:s egen siffra, +45 miljarder kronor per år) och räknas en gång — denna formulering bidrar därför 0.",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -8233,7 +8320,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år till 0 och löftet kopplat till gruppen g-c-skattereform-grundlon vid den manuella genomgången. Detta är samma reform som p-2026-0144/0172/0254 och prissattes tidigare fristående; reformens nettoeffekt räknas nu en gång på representanten p-2026-0144 (C:s egen siffra, +45 mdkr).",
+        "commit": "4d26da23ce3cb52e7651bc7b029afe799f5aa9c2"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -8242,7 +8335,7 @@
   },
   {
     "id": "p-2026-0254",
-    "group_id": null,
+    "group_id": "g-c-skattereform-grundlon",
     "title": "Vårt förslag sänker skatten med 1200 kr månaden för en person med normal ingångslön på 25.000 kr",
     "slug": "vart-forslag-sanker-skatten-med-1200-kr-manaden-for-en-person-med-normal-ingangslon-pa-25-000-kr",
     "parties": [
@@ -8265,13 +8358,13 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Skattesänkning inom Ekonomi/Skatt. ~15 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Del av Centerns skattereform (avskaffat jobbskatteavdrag ersätts med en skattefri grundlön). Detta är den illustrerade effekten per person (1 200 kr/mån); reformens nettoeffekt redovisas samlat på gruppens representant p-2026-0144 (C:s egen siffra, +45 miljarder kronor per år) och räknas en gång — denna formulering bidrar därför 0.",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -8281,7 +8374,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år till 0 och löftet kopplat till gruppen g-c-skattereform-grundlon vid den manuella genomgången. Detta är samma reform som p-2026-0144/0172/0252 (här illustrerad per person); reformens nettoeffekt räknas nu en gång på representanten p-2026-0144 (C:s egen siffra, +45 mdkr).",
+        "commit": "4d26da23ce3cb52e7651bc7b029afe799f5aa9c2"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -8557,13 +8656,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5000,
-      "msek_high": 7500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Familj/Barn. ~5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Sammanfattande uppräkning av S:s plånbokslöfte (höjda löner och barnbidrag, billigare mediciner, bättre pensioner, slopat karensavdrag). Varje del är redan prissatt på ett eget löfte — barnbidrag/mediciner i p-2026-0002 och p-2026-0481, pension i p-2026-0003, karensavdraget i p-2026-0461 och p-2026-0488 — så denna sammanfattning sätts till 0 för att undvika dubbelräkning (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -8573,7 +8672,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 5 000 miljoner kronor per år (spann 2 500-7 500) till 0 vid den manuella genomgången. Löftet är en sammanfattande uppräkning vars komponenter redan är prissatta på egna S-löften (p-2026-0002/0481 barnbidrag+mediciner, p-2026-0003 pension, p-2026-0461/0488 karensavdrag); att prissätta sammanfattningen skulle dubbelräkna. En efterhandsberäkning på 23 000 (som summerade komponenterna) avvisades av samma skäl.",
+        "commit": "1b5605e88df013781a27762bd8560bc83e1c2103"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -8940,13 +9045,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 15000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Vägar, järnväg, digital infrastruktur landsbygd. ~10 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Inriktningslöfte utan kvantifierbar kostnad: en bred önskelista om att stärka landsbygden (vård, skola, vägar, järnväg, digital infrastruktur, företag, gröna näringar) utan konkret åtgärd eller belopp. Sätts till 0; eventuella verkliga satsningar fångas av C:s mer specifika löften (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -8956,7 +9061,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 10 000 miljoner kronor per år (spann 5 000-15 000) till 0 vid den manuella genomgången. Löftet är ett brett inriktningslöfte (önskelista utan konkret åtgärd eller belopp); det gamla beloppet var en rund gissning och riskerade dessutom att dubbelräkna C:s mer specifika landsbygds- och infrastrukturlöften.",
+        "commit": "698289770b5d1962345d25386ef5bc526c89d86c"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot val2026 live)",
@@ -8987,13 +9098,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5000,
-      "msek_high": 7500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Fler poliser, rättskedja. ~5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Vag sammanfattning av C:s rättspolitik (fler synliga poliser, fungerande rättskedja, strypt kriminell ekonomi, skyddade brottsoffer, barn räddade från kriminalitet). De konkreta delarna är redan egna C-löften — rättskedja i p-2026-0371/0372, kriminell ekonomi i p-2026-0376/0370, brottsoffer i p-2026-0374/0380, barn i p-2026-0369/0373 — så sammanfattningen sätts till 0 för att undvika dubbelräkning; 'fler synliga poliser' är en vag riktning utan siffra (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -9003,7 +9114,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 5 000 miljoner kronor per år (spann 2 500-7 500) till 0 vid den manuella genomgången. En vag sammanfattning vars konkreta delar redan är egna C-löften (rättskedja p-2026-0371/0372, kriminell ekonomi p-2026-0376/0370, brottsoffer p-2026-0374/0380, barn p-2026-0369/0373); att prissätta sammanfattningen skulle dubbelräkna, och 'fler synliga poliser' är för vagt för att prissätta. En efterhandsberäkning på 8 000 avvisades av samma skäl.",
+        "commit": "c3a7d0c3ca29c936fd85f66e7f427631bd3baa6c"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot val2026 live)",
@@ -9034,13 +9151,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Stärkt totalförsvar + Ukraina. ~15 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Vag sammanfattning av C:s försvars- och säkerhetspolitik (starkare allianser, stötta Ukraina, stärka totalförsvaret, motståndskraft). De tunga delarna är redan konkret prissatta som egna C-löften — stödet till Ukraina i p-2026-0383 (minst 1 % av BNI) och upprustningen i p-2026-0384 (försvaret till 5 % av BNP) — så sammanfattningen sätts till 0 för att undvika dubbelräkning (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -9050,7 +9167,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år (spann 7 500-22 500) till 0 vid den manuella genomgången. En vag sammanfattning vars tunga delar redan är konkret prissatta på egna C-löften (Ukraina i p-2026-0383, totalförsvar i p-2026-0384); att prissätta sammanfattningen skulle dubbelräkna. En efterhandsberäkning på 25 000 avvisades av samma skäl.",
+        "commit": "e6f7467be80ceb7075279c675116c6eaa4f67ac2"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot val2026 live)",
@@ -9268,14 +9391,15 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "intäktsökning",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 300,
+      "msek_base": 800,
+      "msek_high": 1800,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Miljardärsskatt = INTÄKT, inte kostnad. Förmögenhetsskatt på högsta inkomsterna. Beror på utformning. Historisk förmögenhetsskatt gav ca 5-10 mdr/år. Med miljardärsnivå estimerat 5-15 mdr/år ",
+      "method_note": "Miljardärsskatt (intäkt). Bruttobas ~100–250 mdkr × 0,5–2 %, men kapitalflykt och skatteplanering urholkar basen kraftigt — realiserad intäkt uppskattad till 300–1 800 mkr/år, bas 800.",
+      "calculation": "Ca 45 miljardärer, överskjutande förmögenhet ~2–5 mdkr/st → teoretisk bas ~100–250 mdkr; skatt 0,5–2 % → brutto ~0,5–5 mdkr/år. Men en skatt riktad mot just de allra rikaste driver kapitalflykt och skatteplanering (samma dynamik som fällde den gamla svenska förmögenhetsskatten 2007) — den realiserade intäkten blir en bråkdel av bruttot. Antar 30–60 % realiseringsgrad → netto ~300–1 800 mkr/år, bas ~800.",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -9286,7 +9410,18 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till intäktsökning - noten säger själv att det är en INTÄKT (förmögenhetsskatt), inte en minskad statsintäkt. Beloppet (0 kr) oförändrat.",
+        "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      },
+      {
+        "date": "2026-07-24",
+        "change": "Intäkt satt från 0 till 800 miljoner kronor per år (spann 300-1 800) vid den manuella genomgången av avvikande estimat. Bruttobasen (~0,5-5 mdkr/år) sänks kraftigt för kapitalflykt och skatteplanering - den realiserade intäkten av en skatt riktad mot just de rikaste blir en bråkdel av bruttot.",
+        "commit": "210c2773a7bda047941a05bf2eb71af1a238747b"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -9652,13 +9787,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Handlingsplan för fossilfri gödsel, minskat beroende import. ~0,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Löftet är att ta fram en handlingsplan; själva plan-/utredningskostnaden är försumbar och sätts till 0. Sakmålen den kan leda till (minskat importberoende m.m.) går inte att kvantifiera här. Samma grund som andra utrednings- och planlöften (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -9668,7 +9803,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor per år (spann 250-750) till 0 vid den manuella genomgången av avvikande estimat. Det gamla beloppet prissatte hela sakmålet, men löftet är bara att ta fram en handlingsplan - vars direkta kostnad är försumbar. Samma grund som andra utrednings-/planlöften.",
+        "commit": "1ad262224f2ef39b95a429b487fdc6ba073c4437"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -10148,13 +10289,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 10000,
-      "msek_high": 30000,
+      "msek_low": 1000,
+      "msek_base": 3000,
+      "msek_high": 6000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett löfte utan belopp. Jämförs med tidigare riktade primärvårdssatsningar (mdr-storlek) och kömiljarder. Lågt spann för symbolisk förstärkning, högt spann för substantiell utbyggnad och kökortning. ",
-      "confidence": 0.3
+      "method_note": "Utbyggd primärvård och kortade vårdköer. Historiska primärvårdssatsningar (nära vård) och kömiljarder ligger på ~2–6 mdkr/år; löftet omfattar både utbyggnad och kökortning. Bas 3 000, spann 1 000–6 000 miljoner kronor per år. Viss överlappsrisk med C:s p-2026-0357 (fast läkarkontakt).",
+      "calculation": "Tidigare riktade primärvårdssatsningar (nära vård-reformer) och kömiljarden har legat på ~2–6 mdkr/år. Löftet gör två saker — bygga ut primärvården och korta köerna — så basen läggs i mitten av det historiska spannet: 3 000 mkr/år, spann 1 000–6 000. Det tidigare estimatet (10 000, spann upp till 30 000) var i högsta laget; en efterhandsberäkning på 2 000 låg i stället på golvet trots att löftet omfattar båda delarna. Viss överlappsrisk med C:s löfte om fast läkarkontakt (p-2026-0357).",
+      "confidence": 0.35
     },
     "financing_claimed": {
       "described": false,
@@ -10164,7 +10306,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 10 000 miljoner kronor per år (spann 3 000-30 000) till 3 000 (spann 1 000-6 000) vid den manuella genomgången. Det gamla beloppet var i högsta laget och en efterhandsberäkning på 2 000 i lägsta; basen lagd i mitten av historiska primärvårdssatsningar (~2-6 mdkr/år) eftersom löftet omfattar både utbyggnad och kökortning.",
+        "commit": "7a19386a4fb0f23b26153bcc6949740f2fea1c06"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -10192,13 +10340,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 12000,
-      "msek_high": 30000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är brett och saknar konkreta belopp. Uppskattningen baseras på kostnader för mindre klasser (lärarlöner), ökat stöd (specialpedagoger, elevhälsa) och uppvärdering av yrkesutbildning. Spannet är",
-      "confidence": 0.4
+      "method_note": "Brett inriktningslöfte (önskelista: bättre studiero, mindre klasser, rätt stöd, uppvärdering av yrkesutbildning, fler behöriga lärare) utan konkreta belopp. De prissättbara delarna är redan egna C-löften — fler lärare i p-2026-0358 och rätt stöd i p-2026-0360 — så denna sammanfattning sätts till 0 för att undvika dubbelräkning; de kvarvarande delarna (mindre klasser, yrkesutbildning) är vaga önskningar utan konkret åtagande (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -10208,7 +10356,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 12 000 miljoner kronor per år (spann 5 000-30 000) till 0 vid den manuella genomgången. Ett brett inriktningslöfte vars prissättbara delar redan är egna C-löften (fler lärare p-2026-0358, rätt stöd p-2026-0360); att prissätta sammanfattningen skulle dubbelräkna, och resten (mindre klasser, yrkesutbildning) är vaga önskningar utan konkret åtagande.",
+        "commit": "eb82470ce2efd60023b425e3543090e39b867ec1"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -10601,7 +10755,8 @@
       "msek_high": 200,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Engångskostnad för utredning, lagstiftning och implementering av reformer för halverad handläggningstid. Antar begränsad extra löpande kostnad.",
+      "method_note": "Engångskostnad för utredning, lagstiftning och omställning för en reform av miljöbalken (halverad handläggningstid). Själva regelreformen har liten direkt kostnad; ett antaget nytt digitalt handläggarsystem har medvetet lämnats utanför då det är en spekulativ följd, inte en del av löftet.",
+      "calculation": "Reformen är i huvudsak en regeländring: utredning/SOU ~10–30 mkr plus omställningsarbete hos berörda myndigheter, sammantaget en engångskostnad i storleksordningen 10–200 mkr, bas 50. En efterhandsberäkning som lade till ett nytt digitalt handläggarsystem (100–500 mkr) och landade på 250 avvisades vid granskningen — ett sådant system är en spekulativ följd, inte något löftet utfäster. Samma hållning som för andra regelreformer (t.ex. strandskyddet).",
       "confidence": 0.5
     },
     "financing_claimed": {
@@ -10612,7 +10767,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Beloppet (50 miljoner kronor engång, spann 10-200) bekräftat vid den manuella granskningen. En efterhandsberäkning på 250 (som lade till ett antaget digitalt handläggarsystem) avvisades - systemet är en spekulativ följd, inte en del av löftet. Metodnoten förtydligad och en öppen uträkning tillagd.",
+        "commit": "0b71a5a12eb1487bc3453dba7b05a3e164a30e2c"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -10780,12 +10941,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 12000,
-      "msek_high": 30000,
+      "msek_low": 2000,
+      "msek_base": 3000,
+      "msek_high": 5000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsberäkning baseras på merkostnader för utökad läkartillgång, administration och samordning i primärvården. Osäkerhet kring antal patienter per läkare och lönenivåer.",
+      "method_note": "Fast läkarkontakt för alla — merkostnad för utökad läkartillgång och samordning i primärvården. Harmoniserat med grannlöftena i gruppen g-fast-lakarkontakt (S:s p-2026-0011 på 3 000 och L:s p-2026-0399), som gäller samma policy. Bas 3 000, spann 2 000–5 000 miljoner kronor per år. Det tidigare estimatet (12 000) var en 4× outlier utan grannkontroll.",
+      "calculation": "Fast läkarkontakt för alla kräver utökad läkartillgång och samordning i primärvården. Samma policy prissätts av S (p-2026-0011, 3 000 mkr/år) och L (p-2026-0399), så basen läggs i linje med grannarna: 3 000 mkr/år, spann 2 000–5 000 (lågt: enklare modell; högt: fullskalig reform med högre ersättning). Det tidigare estimatet (12 000, spann upp till 30 000) var en 4× outlier mot de andra partiernas motsvarande löften.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -10796,7 +10958,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 12 000 miljoner kronor per år (spann 5 000-30 000) till 3 000 (spann 2 000-5 000) vid den manuella genomgången. Harmoniserat med grannlöftena i gruppen g-fast-lakarkontakt (S:s p-2026-0011 på 3 000, L:s p-2026-0399) för samma policy - det gamla beloppet var en 4× outlier utan grannkontroll.",
+        "commit": "9aa15f98f60eadb063c9b7ffd8bf249546182cf8"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -10869,12 +11037,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1200,
+      "msek_low": 1000,
+      "msek_base": 2500,
+      "msek_high": 6000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsuppskattning baserad på antaganden om lärarlöner, lokalkostnader och antal elever som kan behöva stödundervisning. Osäkerhet kring omfattning och frivillighetsgrad.",
+      "method_note": "Obligatorisk svenskundervisning för elever i behov, även efter skoltid/lov. ~110 000–220 000 elever (10–20 % av grundskolan) × 80–200 extra timmar/år à ~300–500 kr/h ger miljardbelopp. Bas 2 500, spann 1 000–6 000 miljoner kronor per år. Det tidigare estimatet (500) undersköt skalan.",
+      "calculation": "~1,1 miljoner grundskoleelever × 10–20 % i behov = 110 000–220 000 elever. Extraundervisning 80–200 timmar/år (2–5 h/vecka eller intensivlov) à lärarkostnad ~300–500 kr/h inkl. overhead. Lågt: 110 000 × 80 h × 300 kr = 2,6 mdkr; högt: 220 000 × 200 h × 500 kr = 22 mdkr. Med effektiviseringar, blandade insatser och viss befintlig finansiering snävas intervallet till 1 000–6 000 mkr/år, bas 2 500. Det tidigare estimatet (500) multiplicerade aldrig ut den faktiska timvolymen för ett obligatoriskt program i den skalan.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -10885,7 +11054,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor per år (spann 200-1 200) till 2 500 (spann 1 000-6 000) vid den manuella genomgången. Det gamla beloppet undersköt skalan; en per-elev-uträkning för ett obligatoriskt program (110 000-220 000 elever × 80-200 extra timmar/år) landar i miljardklass.",
+        "commit": "cf37b9c82ee9c9db44773f5ead9060546ebdd722"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -10913,13 +11088,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 2000,
+      "msek_low": 1000,
+      "msek_base": 2000,
+      "msek_high": 4000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar extra stöd för 2–5 % av ca 1,5 milj elever à 30–50 kkr/år. Stor osäkerhet kring omfattning och enhetskostnad.",
-      "confidence": 0.3
+      "method_note": "Elevlag om rätt till stöd utan diagnoskrav. Slopat diagnoskrav breddar tillgången till stöd; antar ~3–7 % extra elever à ~30–40 kkr/år. Bas 2 000, spann 1 000–4 000 miljoner kronor per år. Mittläge mellan det tidigare estimatet (1 000, 2–5 % extra) och en efterhandsberäkning (4 200, 5–15 % extra) som antog nära en tredubbling av stödet.",
+      "calculation": "~1,4 miljoner elever i grund- och gymnasieskola, i dag har ~5–6 % särskilt stöd. Att ta bort diagnoskravet breddar tillgången — antag ~3–7 % ytterligare elever (~42 000–100 000) à ~30–40 kkr/år ≈ 1 000–4 000 mkr/år, bas 2 000. Det tidigare estimatet (1 000) antog 2–5 % extra vilket är i underkant för slopat diagnoskrav; en efterhandsberäkning på 4 200 antog 5–15 % extra (nära en tredubbling) vilket är i överkant.",
+      "confidence": 0.35
     },
     "financing_claimed": {
       "described": false,
@@ -10929,7 +11105,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 1 000 miljoner kronor per år (spann 500-2 000) till 2 000 (spann 1 000-4 000) vid den manuella genomgången. Mittläge: slopat diagnoskrav breddar stödet (över det gamla beloppet) men en efterhandsberäkning på 4 200 (5-15 % extra elever) antog en för dramatisk expansion.",
+        "commit": "1fee43103885ed7b5b06ba21b2256bf9c3df9569"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11048,11 +11230,11 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 20,
-      "msek_high": 100,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande: utökad tillsyn för att hindra vinstuttag vid kvalitetsbrister. Myndighetsadministration, osäker storlek. 0–100 msek/år.",
+      "method_note": "Löftet hålls genom skärpta villkor/vinstuttagsförbud vid kvalitetsbrister, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta ökade tillsynskostnader hos tillsynsmyndigheten, men den följdkostnaden har bedömts för osäker för att anges som en trovärdig siffra (belopp satt av granskare).",
       "confidence": 0.3
     },
     "financing_claimed": {
@@ -11063,7 +11245,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 20 miljoner kronor per år (spann 0–100) till 0 kronor. Löftet hålls genom skärpningen av villkoren; den direkta kostnaden är försumbar och de osäkra tillsynsföljderna lämnas okvantifierade i stället för att gissas.",
+        "commit": "8a51bf505ee0fa7e8f05f123dd6e4a8faecc0955"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11091,12 +11279,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 460,
-      "msek_high": 900,
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 200,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande: 100 000–300 000 användare, preparatkostnad 2 000–4 000 kr/år, staten täcker kostnad efter patientavgift (högkostnadsskydd). Osäkerhet i användarantal och priser.",
+      "method_note": "Hormonpreparat vid klimakteriet i högkostnadsskyddet. Staten betalar bara den subventionerade delen ovanför patientens egenavgift, inte hela preparatkostnaden. ~80 000 användare × ~1 250 kr genomsnittlig statlig kostnad ≈ 100 mkr/år, spann 50–200. Det tidigare estimatet (460) räknade närmare full preparatkostnad × fler användare.",
+      "calculation": "~1,2 miljoner kvinnor 45–60 år, 5–10 % användare ≈ 80 000. Årlig preparatkostnad ~2 000 kr, men staten betalar bara delen ovanför patientens egenavgift inom högkostnadsskyddet — genomsnittligt ~1 250 kr per användare (mindre för dem som inte når högkostnadstaket, fullt för dem som redan gör det). 80 000 × 1 250 = 100 mkr/år, spann 50–200. Stigande HRT-användning kan pressa mot spannets övre del. Det tidigare estimatet (460) tillämpade närmare full preparatkostnad och fler användare utan att fånga högkostnadsskyddets marginalmekanik.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -11107,7 +11296,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 460 miljoner kronor per år (spann 200-900) till 100 (spann 50-200) vid den manuella genomgången. Det gamla beloppet räknade närmare full preparatkostnad × fler användare; det nya fångar att staten inom högkostnadsskyddet bara betalar den subventionerade delen ovanför patientens egenavgift (~1 250 kr/användare i snitt).",
+        "commit": "33890a5100faab05ce4b461e38ce1cd1f0dc9db0"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11411,13 +11606,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1500,
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 200,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadsanrop misslyckades. [granskning 2026-07-09: processreform (snabbare lagföring); tidigare cost-call misslyckades]",
-      "confidence": 0.3
+      "method_note": "Nationell utbyggnad av snabbare lagföring med tidsatta mål. ~100–200 nya årsarbetskrafter (polis, åklagare, administratörer) à ~800 tkr/år plus IT och utbildning ≈ 50–200 mkr/år, bas 100. Ersätter ett tidigare fallback-värde (500) från ett misslyckat kostnadsanrop.",
+      "calculation": "Att införa arbetssättet med snabbare lagföring i hela landet kräver mer resurser i rättskedjan: ~100–200 nya årsarbetskrafter (polis, åklagare, administratörer) à ~800 tkr/år inkl. overhead ≈ 80–160 mkr/år, plus IT-utveckling och utbildning. Lågt 50, bas 100, högt 200 mkr/år. Det tidigare beloppet (500) var ett fallback-värde efter ett misslyckat automatiskt kostnadsanrop, inte en uträkning.",
+      "confidence": 0.4
     },
     "financing_claimed": {
       "described": false,
@@ -11427,7 +11623,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor per år (spann 200-1 500) till 100 (spann 50-200) vid den manuella genomgången. Det gamla beloppet var ett fallback-värde efter ett misslyckat automatiskt kostnadsanrop; det nya vilar på en konkret bemanningsberäkning (~100-200 årsarbetskrafter i rättskedjan).",
+        "commit": "1efc192cce1773dcb3d2024323306e2efa824c66"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11455,12 +11657,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1500,
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 400,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnaden för ett snabbspår beror på omfattning och ambitionsnivå. Jämförbart med tidigare satsningar på särskilda domstolar eller utredningsgrupper. Lågt scenario: ett fåtal specialiserade åklagare o",
+      "method_note": "Särskilt snabbspår för brott mot småföretagare. Bemanningsbaserat: ~5–15 specialiserade åklagare/domare/utredare per region (~7 regioner) à ~1,2 mkr/år plus overhead, IT och utbildning ≈ 50–400 mkr/år, bas 150. Det tidigare estimatet (500) var en lös uppskattning. I linje med det snarlika p-2026-0371 (snabbare lagföring, 100 mkr).",
+      "calculation": "Ett snabbspår är en specialiserad men avgränsad resurs i rättskedjan: ~5–15 specialiserade åklagare/domare/utredare per region × ~7 regioner = ~35–105 personer à ~1,2 mkr/år ≈ 42–126 mkr, plus overhead, IT-system och utbildning (20–100 %) → 50–400 mkr/år, bas 150. Det tidigare estimatet (500, spann upp till 1 500) saknade en bemanningsberäkning. Storleksordningen är i linje med det snarlika p-2026-0371 (snabbare lagföring, 100 mkr).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -11471,7 +11674,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 500 miljoner kronor per år (spann 200-1 500) till 150 (spann 50-400) vid den manuella genomgången. Det gamla beloppet var en lös uppskattning; det nya vilar på en bemanningsberäkning (~35-105 specialiserade personer i rättskedjan), i linje med det snarlika p-2026-0371.",
+        "commit": "bd335b476f995dc6f3bc5ed5a5525527862df61d"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11723,14 +11932,14 @@
     "category": "välfärd",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 120,
-      "msek_high": 400,
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Osäker kostnad baserad på utredning, administration, vårdprocesser och läkemedel. Jämförbart småskaliga vårdreformer. Brett spann pga frivillig modell och okänt antal fall.",
-      "confidence": 0.4
+      "method_note": "Det konkreta löftet är att tillsätta en grundlig utredning om hur rätten till aktiv dödshjälp ska utformas; utredningens direkta kostnad är försumbar och sätts till 0. Följderna av en eventuell reform går inte att kvantifiera på förhand. Samma grund som andra utredningslöften (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -11740,7 +11949,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 120 miljoner kronor per år (spann 50-400) till 0 vid den manuella genomgången av avvikande estimat. Det konkreta löftet är att tillsätta en utredning, vars direkta kostnad är försumbar; det gamla beloppet prissatte en tänkt framtida reform (och räknade dessutom per år). Samma grund som andra utredningslöften.",
+        "commit": "de9598ac081549bf0e59a64649d942308cdf494d"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11858,12 +12073,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 2000,
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 700,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Jämförbart med Idrottslyftet (~500 msek/år). En bredare satsning på anläggningar och ytor i utsatta områden bör vara större, uppskattat till 500-2000 msek årligen.",
+      "method_note": "Nationell satsning på idrottsanläggningar och aktivitetsytor. Enligt C:s manifest handlar det om att rusta upp befintliga anläggningar och bygga nytt där behovet är störst (renoveringslett, inte ett arenaprogram). C:s hela civilsamhälles-storsatsning är 1 miljard/år för föreningsliv, idrott OCH folkbildning — anläggningsdelen är en skiva av det. Bas 400, spann 200–700 miljoner kronor per år.",
+      "calculation": "Centerpartiets manifest beskriver satsningen som att 'rusta upp det som finns och bygga nytt där behovet är störst' — alltså renoveringslett med selektiv nybyggnation, inte ett nationellt arenabyggnadsprogram. C:s samlade civilsamhälles-storsatsning uppges till 1 miljard/år men den täcker föreningsliv, idrott och folkbildning tillsammans; idrottsanläggningar och aktivitetsytor är bara en del. Uppskattat till ~400 mkr/år, spann 200–700. Det tidigare estimatet (1 000) prissatte anläggningsdelen till nästan hela C:s civilsamhälles-envelope och överskattade; en efterhandsberäkning på 300 (småbidrag) var i underkant för 'bygga nytt där behovet är störst'.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -11874,7 +12090,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 1 000 miljoner kronor per år (spann 500-2 000) till 400 (spann 200-700) vid den manuella genomgången, efter kontroll av C:s manifest. Satsningen är renoveringslett ('rusta upp det som finns och bygga nytt där behovet är störst') och C:s hela civilsamhälles-storsatsning på 1 miljard täcker föreningsliv, idrott och folkbildning tillsammans - anläggningsdelen är bara en skiva. Det gamla beloppet prissatte den till nästan hela envelopen.",
+        "commit": "d2d09c6194fb65e49e12d338460bbd164b6c28ed"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12037,13 +12259,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på antal kommuner (290) och regioner (21) med en rimlig årlig ersättning per enhet för civil beredskap, i spannet 5–10 mkr per kommun och region.",
-      "confidence": 0.5
+      "method_note": "Beredskapspeng till 290 kommuner och 21 regioner för civilt försvar. Harmoniserat med det näraliggande p-2026-0412 (MP, mer medel till krisberedskap, 200 mkr/år); tidigare riktade beredskapstillskott brukar vara 100–200 mkr/år. Lagt en aning över grannen då C:s löfte är bredare (uppbyggnad av civilt försvar). Bas 250, spann 100–500 miljoner kronor per år.",
+      "calculation": "Riktade beredskapstillskott till kommuner/regioner har historiskt legat på 100–200 mkr/år (jämför p-2026-0412, MP, 200 mkr/år för i stort sett samma politik). C:s löfte är något bredare — uppbyggnad av civilt försvar (lager, ledning, övning) — så basen läggs strax över grannen: 250 mkr/år, spann 100–500. Det tidigare estimatet (2 000 mkr) antog 5–10 mkr per enhet utan grannkontroll och blev en 10× outlier mot det jämförbara löftet.",
+      "confidence": 0.4
     },
     "financing_claimed": {
       "described": false,
@@ -12053,7 +12276,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 2 000 miljoner kronor per år (spann 1 000-3 000) till 250 (spann 100-500) vid den manuella genomgången av avvikande estimat. Harmoniserat med det näraliggande p-2026-0412 (MP, mer medel till krisberedskap, 200 mkr/år) - det gamla beloppet var en 10× outlier utan grannkontroll.",
+        "commit": "8a37f94f655127c37a9964e0e64b6daee07e299f"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12306,12 +12535,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 300,
-      "msek_base": 600,
-      "msek_high": 1200,
+      "msek_low": 1500,
+      "msek_base": 2700,
+      "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattar 800 fler klasser à 800 tkr/år baserat på 365k lågstadieelever, genomsnitt 20,5 idag. Osäkerhet kring fördelning och kostnader.",
+      "method_note": "Maxtak 20 elever per klass i grundskolan (med början i lågstadiet). Prissatt som full utbyggnad i hela grundskolan, i linje med hur förskole-maxtaket p-2026-0392 prissattes (slutmålets löpande kostnad, inte bara första fasen). ~3 800 fler klasser à ~700 tkr/år ≈ 2 700 mkr/år, spann 1 500–4 500. Det tidigare estimatet (600) prissatte bara lågstadiefasen.",
+      "calculation": "Grundskolan har ~1 100 000 elever. Nuvarande snittklass ~21,5 → ~51 200 klasser; ett maxtak på 20 ger ~55 000 klasser, alltså ~3 800 fler klasser. Kostnad per extra klass: en heltidstjänst (lärare) plus lokaloverhead ≈ 700 000 kr/år → 3 800 × 700 000 ≈ 2 700 mkr/år. Spann 1 500–4 500 för stegvis införande och varierande lokalbehov. Prissatt som full utbyggnad i hela grundskolan för konsekvens med förskole-maxtaket (p-2026-0392), som också prissattes på slutmålet; 'med början i lågstadiet' beskriver startpunkten, inte slutmålets kostnad. Det tidigare estimatet (600) räknade bara lågstadiefasen.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12322,7 +12552,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 600 miljoner kronor per år (spann 300-1 200) till 2 700 (spann 1 500-4 500) vid den manuella genomgången. Det gamla beloppet prissatte bara lågstadiefasen; det nya prissätter full utbyggnad i hela grundskolan (~3 800 fler klasser à ~700 tkr/år) för konsekvens med förskole-maxtaket p-2026-0392 som också prissattes på slutmålet.",
+        "commit": "a77262e770a8b5a03773c0c13d3282628d8955a9"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12350,12 +12586,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 5000,
-      "msek_high": 12000,
+      "msek_low": 1500,
+      "msek_base": 3000,
+      "msek_high": 6000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsberäkning utifrån antagande om minskad genomsnittlig gruppstorlek med 3 barn, ökat personalbehov med ca 20 000 anställda, lokalkostnader samt jämförelse med tidigare partsförslag.",
+      "method_note": "Maxtak för barngrupper i förskolan kräver fler pedagoger. Förskolan är personalintensiv (~1 vuxen per 5–6 barn), så en minskad gruppstorlek för ~500 000 barn kräver flera tusen nya anställda à ~550 tkr/år. Bas 3 000, spann 1 500–6 000 miljoner kronor per år.",
+      "calculation": "Förskolan har ~500 000 barn och ~110 000 anställda. Ett bindande maxtak som pressar ner gruppstorlekarna kräver fler pedagoger; personaltätheten är hög (~1 vuxen per 5–6 barn), så åtgärden är mer personalintensiv per barn än en minskning av klasstorlek i skolan. Antag ~3–11 % fler anställda (3 000–11 000) à ~550 tkr/år → ~1 500–6 000 mkr/år, bas 3 000. Det tidigare estimatet (5 000, spann upp till 12 000) antog +20 000 anställda vilket är i ambitiösaste laget; en efterhandsberäkning på 800 mkr lånade i stället skol-löftets siffra och underskattade förskolans personalintensitet.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12366,7 +12603,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 5 000 miljoner kronor per år (spann 2 000-12 000) till 3 000 (spann 1 500-6 000) vid den manuella genomgången. Det gamla beloppet antog +20 000 anställda vilket var i ambitiösaste laget; en efterhandsberäkning på 800 avvisades som för låg (den lånade skol-löftets siffra och missade förskolans personalintensitet).",
+        "commit": "08773e409ec5a947d1e1259155e9ecfc197aa87f"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12439,12 +12682,12 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 1000,
-      "msek_high": 2500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnad baserat på antagande om högre kostnad per elev vid kommunalt övertagande av friskolor; osäkerhet kring antal elever och kostnadsskillnad.",
+      "method_note": "Löftet hålls genom lagändringen (vinstförbud i skolan), vars direkta kostnad är försumbar och sätts till 0, i linje med gruppmedlemmen p-2026-0470 (MP) samt de likartade löftena p-2026-0535 (S) och p-2026-0452 (V) som nollades 22/7. Följdkostnaden av ett kommunalt övertagande av friskolor har bedömts för osäker för att anges som en trovärdig siffra (belopp satt av granskare).",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12455,7 +12698,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 1 000 miljoner kronor per år (spann 400–2 500) till 0 kronor, för konsekvens med de likartade löftena p-2026-0470, p-2026-0535 och p-2026-0452 som redan nollats med samma motivering (lagändringens direkta kostnad är försumbar).",
+        "commit": "8a51bf505ee0fa7e8f05f123dd6e4a8faecc0955"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12488,7 +12737,8 @@
       "msek_high": 40000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnaden beror på om staten enbart tar över huvudmannaskapet (administration, likvärdighet) eller även finansieringsansvaret. Spannet baseras på ökade statliga utgifter för skoladministration, utjämn",
+      "method_note": "Löftet gäller att staten tar över huvudmannaskapet för skolan. Kostnaden avser NETTO — reformens verkliga tillskott (utjämning/likvärdighet, central administration, omställning) — inte skolans hela driftkostnad (~190 mdkr) som redan betalas i dag via kommunerna. Bas 15 000, spann 5 000–40 000 miljoner kronor per år.",
+      "calculation": "Skolans hela driftkostnad är ~190 mdkr/år (grundskola ~140 + gymnasium ~50), men de pengarna spenderas redan i dag via kommunerna och kommunalskatten. Ett statligt huvudmannaskap flyttar vem som betalar — det är en omfördelning, inte 190 mdkr i ny utgift. Den verkliga nettokostnaden är utjämning (lyfta underfinansierade skolor mot en gemensam nivå), central administration och omställning, storleksordning 5–40 mdkr/år, bas 15. En efterhandsberäkning som bokförde hela bruttot (200 mdkr) avvisades vid granskningen som dubbelräkning.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12499,7 +12749,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Beloppet (15 000 miljoner kronor per år, spann 5 000-40 000) bekräftat vid den manuella granskningen av avvikande estimat. En efterhandsberäkning på 200 000 (hela skolans driftkostnad) avvisades - den dubbelräknar pengar som redan spenderas via kommunerna; ett huvudmannaskap flyttar bara vem som betalar. Metodnoten förtydligad och en öppen uträkning tillagd om netto-vs-brutto.",
+        "commit": "8ef8c7a3b9695f98e6e85f1390728658d2d39f56"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12667,7 +12923,8 @@
       "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar statlig finansiering av 4 500 extra ST-platser allmänmedicin, 5 års utb., 0,7 mkr/plats/år, ger 3 150 msek/år. Osäkerhet om kostnad/plats och antal platser/år.",
+      "method_note": "Statlig finansiering av 4 500 fler allmänläkare (ST-platser i allmänmedicin). En arbetande ST-läkare kostar full lön + arbetsgivaravgifter + handledning, ~0,7 mkr/plats/år netto → 4 500 × 0,7 ≈ 3 150 mkr/år, spann 2 250–4 500. Egen konkret grund (antal läkare), inte harmoniserad med gruppens fast-läkarkontakt-löften. En efterhandsberäkning på 1 125 (~250 tkr/plats) avvisades som för låg — den räcker inte till en läkarlön.",
+      "calculation": "Löftet är att utbilda 4 500 FLER allmänläkare, alltså netto nya tjänster. En ST-läkare i allmänmedicin är en anställd, arbetande läkare: lön ~55 tkr/mån ≈ 660 tkr/år plus arbetsgivaravgifter (~31 %) ≈ 865 tkr, plus handledning/overhead; netto ~0,7 mkr/plats/år är om något i underkant. 4 500 × 0,7 mkr ≈ 3 150 mkr/år, spann 2 250–4 500. En efterhandsberäkning på ~250 tkr/plats (1 125 mkr) avvisades — den summan räcker inte ens till lönen för en arbetande läkare. Till skillnad från gruppens övriga fast-läkarkontakt-löften har detta en egen konkret åtgärd (4 500 läkare) och prissätts på den.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12678,7 +12935,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Beloppet (3 150 miljoner kronor per år, spann 2 250-4 500) bekräftat vid den manuella granskningen. En efterhandsberäkning på 1 125 (~250 tkr/plats) avvisades som för låg - den räcker inte till lönen för en arbetande ST-läkare. Metodnoten förtydligad och en öppen uträkning tillagd.",
+        "commit": "20a8fbc17b55bdd6c263c3d9c17a950a4aac83b4"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13072,13 +13335,13 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 350,
-      "msek_high": 600,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Bortfall av fordonsskatt från nya bensin/dieselbilar vid utfasning. Antagande: 100 000 bilar/år, snittskatt 3 000 kr/år. Osäkerhet kring antal och skattenivå.",
-      "confidence": 0.4
+      "method_note": "Utfasning av bensin-/dieselbilar via skärpt fordonsskatt och slutdatum. Ett klimat-/regleringslöfte vars nettoeffekt på statsfinanserna är liten och osäker: den skärpta skatten drar in mer kortsiktigt men underlaget krymper på sikt (det är själva poängen), så effekterna tar ut varandra. Sätts till 0, samma grund som övriga utfasnings-/regleringslöften (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -13088,7 +13351,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 350 miljoner kronor per år (intäktsminskning, spann 200-600) till 0 vid den manuella genomgången. Löftet är en utfasning via skärpt fordonsskatt - en skatt byggd för att avskaffa sitt eget underlag, så kort- och långsiktiga fiskala effekter tar ut varandra. En efterhandsberäkning som bokförde 2 000 mkr i intäkt avvisades (den ignorerade att underlaget krymper). Samma grund som övriga utfasnings-/regleringslöften.",
+        "commit": "53b06f6599f361fd7f7e1699748f20f5a110787e"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -16363,8 +16632,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Tillbakadraget som dubblett av p-2026-0002 (samma plånbokslöfte): ordagrant identiskt citat och samma käll-URL, samma parti. p-2026-0002 (25 000 miljoner kronor per år) representerar löftet; denna post räknades tidigare en gång till och dubbelräknade S:s fläsk.",
+        "commit": "bd8379c56f30f29cfd53ca73024a7e8b7d11a18b"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -16671,8 +16946,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Tillbakadraget som S-intern dubblett av p-2026-0461 (samma karenspolitik, samma käll-URL). p-2026-0461 representerar redan S:s löfte om slopat karensavdrag i den delade gruppen g-slopad-karens (5 000 miljoner kronor per år); denna post räknades tidigare en gång till och dubbelräknade karensavdraget.",
+        "commit": "bd8379c56f30f29cfd53ca73024a7e8b7d11a18b"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18551,7 +18832,7 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "utgift",
       "period": "per_ar",
       "msek_low": 500,
       "msek_base": 1200,
@@ -18569,7 +18850,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadstyp rättad från intäktsminskning till utgift - noten beskriver ökade statliga transfereringar (en utgift), inte en minskad statsintäkt. Beloppet (1 200 miljoner kronor per år, spann 500-2 500) oförändrat.",
+        "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",

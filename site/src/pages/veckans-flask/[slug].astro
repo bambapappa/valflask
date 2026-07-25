@@ -2,7 +2,8 @@
 import Layout from "../../layouts/Layout.astro";
 import MetodLank from "../../components/MetodLank.astro";
 import Dela from "../../components/Dela.astro";
-import { getChronicles, getPromises } from "../../lib/data";
+import { getChronicles, getPromises, getConstants } from "../../lib/data";
+import { totalFlasket, formatMsek } from "../../lib/calc";
 import { escapeHtml, maskeraBelopp, maskeraText } from "../../lib/mask";
 
 export function getStaticPaths() {
@@ -35,6 +36,21 @@ function renderBody(md: string): string {
 }
 
 const bodyHtml = renderBody(chronicle.body_md);
+
+/**
+ * Då och nu. En krönika är en ögonblicksbild: siffrorna är de som gällde
+ * veckan den skrevs. Sedan dess tillkommer löften och estimat ses över, så
+ * krönikans total glider ifrån dagens. I stället för att skriva om historien
+ * visar vi båda talen bredvid varandra — läsaren ser vad som stod då och vad
+ * som gäller nu, utan att någon siffra behöver döljas eller räknas om.
+ * Rutan visas bara när talen faktiskt skiljer sig.
+ */
+const promisesNu = getPromises();
+const reformutrymmePerAr = getConstants().reformutrymme_msek_per_ar.value;
+const reformBudget = typeof reformutrymmePerAr === "number" ? reformutrymmePerAr * 4 : null;
+const flasketNu = totalFlasket(promisesNu);
+const gapNu = reformBudget !== null ? Math.max(0, flasketNu - reformBudget) : null;
+const visaDaOchNu = flasketNu !== chronicle.total_msek;
 
 const jsonLd = [
   {
@@ -72,6 +88,40 @@ const jsonLd = [
 
       <article class="kronika" set:html={bodyHtml} />
 
+      {visaDaOchNu && (
+        <aside class="da-och-nu">
+          <div class="etikett num">DÅ OCH NU</div>
+          <p>
+            Krönikan är en ögonblicksbild av vecka {week}. Siffrorna nedan är de som
+            gällde när den skrevs — de räknas aldrig om i efterhand.
+          </p>
+          <table class="da-och-nu__tabell">
+            <thead>
+              <tr><th scope="col">&nbsp;</th><th scope="col" class="num">I krönikan</th><th scope="col" class="num">I dag</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Fläsket totalt</th>
+                <td class="num belopp" set:html={maskeraText(formatMsek(chronicle.total_msek))} />
+                <td class="num belopp" set:html={maskeraText(formatMsek(flasketNu))} />
+              </tr>
+              {gapNu !== null && (
+                <tr>
+                  <th scope="row">Finansieringsgap</th>
+                  <td class="num belopp" set:html={maskeraText(formatMsek(chronicle.gap_msek))} />
+                  <td class="num belopp" set:html={maskeraText(formatMsek(gapNu))} />
+                </tr>
+              )}
+            </tbody>
+          </table>
+          <p class="da-och-nu__varfor">
+            Talen skiljer sig när nya löften tillkommit, när samma politik från
+            flera partier räknats ihop till ett löfte, eller när ett kostnadsestimat
+            setts över. Vad som ändrats står i <a href="/rattelser">rättelseloggen</a>.
+          </p>
+        </aside>
+      )}
+
       <MetodLank />
 
       <Dela path={canonicalPath} title={`Veckans fläsk v${week} ${year} — drygast.nu`} text={`${chronicle.headline} — Veckans fläsk på drygast.nu`} />
@@ -99,5 +149,40 @@ const jsonLd = [
   }
   .kronika :global(p) {
     margin: 0 0 1rem;
+  }
+  .da-och-nu {
+    border: 1px solid var(--grafit);
+    padding: 0.75rem 1rem 1rem;
+    margin: 1.5rem 0;
+  }
+  .da-och-nu p {
+    margin: 0.35rem 0 0;
+    font-size: 0.9rem;
+    color: var(--grafit);
+  }
+  .da-och-nu__tabell {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.75rem;
+  }
+  .da-och-nu__tabell th,
+  .da-och-nu__tabell td {
+    text-align: left;
+    padding: 0.35rem 0.5rem 0.35rem 0;
+    border-bottom: 1px solid var(--dimma, #ddd);
+    font-size: 0.95rem;
+  }
+  .da-och-nu__tabell .num {
+    text-align: right;
+    padding-right: 0;
+  }
+  .da-och-nu__tabell thead th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--grafit);
+  }
+  .da-och-nu__varfor {
+    margin-top: 0.75rem;
   }
 </style>

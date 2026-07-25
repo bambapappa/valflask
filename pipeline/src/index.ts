@@ -8,7 +8,7 @@ import { runGates, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
 import type { ArchiveFn } from "./archive.ts";
 import { estimateCost, costDeviation } from "./cost.ts";
-import { findPossibleDuplicate, findCrossPartyDuplicate, findComparableCosts, type ExistingPromiseLite, type ComparablePromiseLite } from "./similarity.ts";
+import { findPossibleDuplicate, findCrossPartyDuplicate, findComparableCosts, looksLikeUmbrella, findSamePartyInCategory, type ExistingPromiseLite, type ComparablePromiseLite } from "./similarity.ts";
 import { generateQuip } from "./copy.ts";
 import { maybeGenerateWeekly, type ChronicleEntry } from "./chronicle.ts";
 import {
@@ -257,6 +257,23 @@ export async function runPipeline(
               : "";
           const deviation = costDeviation(cost.msek_base, comparables);
           const deviationNote = deviation ? ` ⚠ AVVIKER: ${deviation.message}` : "";
+          // Bred uppräkning ("stärk X, Y och Z") är den vanligaste källan till
+          // dubbelräkning: delarna är ofta redan prissatta på partiets egna
+          // löften. Vi listar dem så granskaren kan kontrollera överlapp — och
+          // sätter aldrig beloppet automatiskt.
+          const umbrellaNote =
+            looksLikeUmbrella(accepted.title, accepted.quote) && cost.msek_base > 0
+              ? (() => {
+                  const own = findSamePartyInCategory(accepted, comparablePool);
+                  const list = own.map((c) => `${c.id} (${c.msek_base})`).join(", ");
+                  return (
+                    ` ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden` +
+                    ` — kontrollera överlapp mot partiets egna löften` +
+                    (list ? ` i samma kategori: ${list}` : "") +
+                    `. Är delarna redan prissatta ska detta löfte sättas till 0.`
+                  );
+                })()
+              : "";
           reviewItems.push({
             candidate: accepted,
             failures: [],
@@ -266,7 +283,7 @@ export async function runPipeline(
             costReason:
               (cost.basis === "llm_estimat"
                 ? `LLM-estimat (confidence ${cost.confidence}) — bekräfta/justera belopp`
-                : `Låg kostnadssäkerhet: ${cost.confidence}`) + comparablesNote + deviationNote,
+                : `Låg kostnadssäkerhet: ${cost.confidence}`) + comparablesNote + deviationNote + umbrellaNote,
           });
           continue;
         }

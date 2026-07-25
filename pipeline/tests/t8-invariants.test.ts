@@ -40,7 +40,7 @@ function isCostType(p: TestPromise): boolean {
 }
 
 function isBesparing(p: TestPromise): boolean {
-  return p.cost.type === "besparing";
+  return p.cost.type === "besparing" || p.cost.type === "intäktsökning";
 }
 
 function totalFlasket(promises: TestPromise[]): number {
@@ -262,6 +262,15 @@ describe("T8: Invariant tests", () => {
     assert.equal(besparingar, 12000, "besparingar = 3000 × 4");
     assert.equal(financing, 2000, "financing_claimed = 2000");
     assert.equal(gap, 46000, "gap = 60000 - 12000 - 2000");
+  });
+
+  it("R4: intäktsökning (t.ex. ny skatt) räknas som besparing i gapet", () => {
+    const promises: TestPromise[] = [
+      mkPromise("p1", { msek_base: 10000, parties: ["a"] }),
+      mkPromise("p2", { msek_base: 3000, parties: ["a"], cost: { type: "intäktsökning", period: "per_ar", msek_low: 2000, msek_high: 4000, basis: "rut" } }),
+    ];
+    assert.equal(totalBesparingar(promises), 12000, "intäktsökning ska räknas i besparingspotten");
+    assert.equal(financingGap(promises), 40000 - 12000, "gap = flasket - besparingar (intäktsökning inräknad)");
   });
 
   it("R4: negative gap = 'övertäckt'", () => {

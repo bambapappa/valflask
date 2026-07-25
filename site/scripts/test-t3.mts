@@ -202,15 +202,20 @@ if (existsSync(startPage)) {
   const match = content.match(/data-taxameter="(\d+(?:\.\d+)?)"/);
   if (match) {
     const val = parseFloat(match[1]);
-    // Speglar aggregates.dedupeByGroup (R3): en grupp räknas EN gång,
-    // representerad av första posten i listordning.
+    // Speglar aggregates.totalFlasket: tillbakadragna löften filtreras bort
+    // FÖRST, därefter grupp-dedup (en grupp räknas en gång, representerad av
+    // första kvarvarande posten i listordning). Ordningen spelar roll — görs
+    // dedupen före aktiv-filtret kan ett tillbakadraget löfte representera
+    // sin grupp, och totalen avviker från sajtens.
     const seenGroups = new Set<string>();
-    const deduped = data.filter((p: any) => {
-      if (!p.group_id) return true;
-      if (seenGroups.has(p.group_id)) return false;
-      seenGroups.add(p.group_id);
-      return true;
-    });
+    const deduped = data
+      .filter((p: any) => p.status !== "tillbakadragen")
+      .filter((p: any) => {
+        if (!p.group_id) return true;
+        if (seenGroups.has(p.group_id)) return false;
+        seenGroups.add(p.group_id);
+        return true;
+      });
     const expectedFlasket = deduped.reduce((sum: number, p: any) => {
       if (p.cost.type !== "utgift" && p.cost.type !== "intäktsminskning") return sum;
       const mult = p.cost.period === "per_ar" ? 4 : 1;
