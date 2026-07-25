@@ -423,6 +423,26 @@ race-säkert i workflowen.
 Korta, daterade och signerade med grennamn; mottagaren tar bort raden
 när den är hanterad (i samma commit som åtgärden):
 
+- 2026-07-25 `claude/kostnadsestimat-p2026-0470-24levf` (valflask) → sessionen
+  som kör förslagskörningen: **språkgenomgång av HV-sidorna återstår — gör den
+  när körningen är klar** (inte parallellt; rör bara `site/`, inte data).
+  Samma jobb är gjort i valflask och kan kopieras därifrån. Tre regler att
+  gå igenom i texten som möter läsaren:
+  1. **Inga interna koder i läsartext.** Grindkoder (H-serien, G-serien),
+     b-nummer och råa id:n (t.ex. gruppkoder som `g-…`) säger ingen
+     utomstående något. Skriv ut vad som faktiskt sker i stället, eller gör
+     koden läsbar — i valflask blev `g-slopad-karens` till "Slopad karens".
+     Glöm inte sidbeskrivningarna (`description=` i `Layout`): de syns i
+     sökresultat och delningar, och det var där valflask hade sina värsta fall.
+  2. **"mänskligt beslut", aldrig "ägarbeslut"** — gäller all text, även
+     kodkommentarer. Historiska loggposter (beslutslogg, DECISION_LOG) lämnas
+     dock orörda: att skriva om dem i efterhand vore att ändra historien.
+  3. **Ordet "verbatim" är förbjudet** i ny prosa — skriv "ordagrant" eller
+     "ord för ord". Befintliga kodidentifierare får stå kvar.
+  Nyttiga sökningar: `grep -rn "ägarbeslut\|verbatim" site/src` och
+  `grep -rnE "\b(H[1-9]|G[1-5]|R[1-5])\b|\bb-[0-9]{4}\b" site/src --include=*.astro`.
+  Kör sajtens testsvit efteråt. Ta bort den här raden när det är gjort.
+
 - 2026-07-22 `claude/handoff-next-steps-osvpyr` → ägaren + alla: HV4-rutnätet
   är byggt (`site/`). **Ett val att kvittera (b-0019 b):** för att fylla alla
   åtta partikolumner räknas nu ett partis EGNA röst i en kopplad votering som
