@@ -347,24 +347,36 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 *(inga anspråk)*
 
 **Granskningskön 2026-07-24: HELT AVBETAD (0 kvar).** Alla 121 ärenden
-avgjorda med ägaren. `data/kopplingar.json` har nu **121 godkända
-kopplingar** (81 motioner, 32 voteringar, 6 skriftliga frågor, 2
-interpellationer). `npm run domar` omkört: **456 partidomar, 7600
-ledamotsmeriter** (ökningen drivs av de 32 voteringskopplingarna — varje
-votering ger merit åt varje röstande ledamot i upp till åtta partier).
+avgjorda med ägaren, plus en dubbelkoll av bulk-godkännandena efteråt.
+`data/kopplingar.json` har efter alla reverseringar **118 godkända
+kopplingar**. `npm run domar` omkört: **440 partidomar, 6901
+ledamotsmeriter** (drivs av voteringskopplingarna — varje votering ger
+merit åt varje röstande ledamot i upp till åtta partier).
 
-Två saker upptäcktes och åtgärdades under genomgången:
+Tre saker upptäcktes och åtgärdades:
 
 1. **Falsk partimatchning på frågor/interpellationer** (en fråga listar
    både frågeställaren OCH den tillfrågade ministern, så ministerns
    parti hamnade i handlingens partilista). 12 felkopplingar fångades;
-   7 hade hunnit godkännas i bulk-rundan och backades ur
-   `kopplingar.json` + `#150` backades efter omprövning (tvångsäktenskap
-   ≠ uppehållstillstånd). **Varaktig kodfix i PR #171 (MERGAD)** —
-   `aktorsPartier()` som både H3 och kandidatrankningen använder, så
-   felet kan inte återkomma i nästa `foreslag`-körning.
-2. Domarna var inte omräknade sedan bulk-godkännandena, så inga
-   felkopplingar nådde någon dom innan de backades.
+   7 backades ur `kopplingar.json` + `#150` efter omprövning
+   (tvångsäktenskap ≠ uppehållstillstånd). **Varaktig kodfix i PR #171
+   (MERGAD)** — `aktorsPartier()` som både H3 och kandidatrankningen
+   använder, så felet kan inte återkomma.
+2. **Dubbelkoll av bulk-godkännandena** hittade 3 fler fel som backades
+   (#85 SD motverkar-feltolkning, #119 MP budgetröst-förvirring, #132
+   vag paroll + citat=titel). Tre gränsfall (#156/157/158, SD-motioner
+   med title-only-citat) behölls efter substanskoll — de matchar
+   namngivna löftesdelar (stärkt äganderätt, mindre regler för företag)
+   och är partilinjemotioner.
+3. Domarna var aldrig omräknade förrän efter alla reverseringar, så
+   ingen felkoppling nådde någon publicerad dom.
+
+**Öppen rekommendation (ej beslutad): byt `MODEL_KOPPLING` från
+`kimi-k2.7-code` (kodtränad) till `deepseek-v4-pro`** (generell
+resonemangsmodell, redan bevisad i valflask som MODEL_EXTRACT) — troligen
+bättre på svensk politik-semantik. Överväg också en skärpt
+`prompts/koppling.md` (avvisa vaga paroller, kräv sakligt citat inte
+rubrik, förklara röstmekaniken) för att sänka felandelen i förslagskön.
 
 **Två Go-primär-fullkörningar 2026-07-23/24 (run 30044095324 +
 30076690510, uppsamling): KLARA, hela kön genomkörd båda gångerna.**
