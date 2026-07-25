@@ -156,6 +156,72 @@ export function comparableScore(a: string, b: string): number {
 }
 
 /**
+ * Delar en löftestext i "åtaganden": segment avgränsade av komma eller "och",
+ * där bara segment med ≥ 2 ord räknas (så "X och Y" i en normal mening inte
+ * blåser upp antalet). Ett konkret löfte har ETT åtagande; en bred uppräkning
+ * har flera.
+ */
+function commitmentSegments(s: string): number {
+  return s
+    .split(/,|\s+och\s+/i)
+    .map((x) => x.trim())
+    .filter((x) => x.split(/\s+/).length >= 2).length;
+}
+
+/**
+ * Känner igen BREDA UPPRÄKNINGSLÖFTEN — "fler synliga poliser, fler lösta brott
+ * och en rättskedja som fungerar" — till skillnad från ett konkret åtagande.
+ *
+ * Sådana löften är den vanligaste källan till dubbelräkning: partiet lovar
+ * samma saker konkret på egna löften, och en prissatt sammanfattning räknar dem
+ * en gång till. Titellikhet fångar dem INTE (sammanfattningen och dess delar
+ * delar nästan inga ord — uppmätt 0,00–0,13 i likhet), så vi känner i stället
+ * igen själva uppräkningsformen.
+ *
+ * Titeln väger tyngst (den är härledd och renare); citatet får väga in först
+ * när titeln redan visar tecken på uppräkning, annars fastnar konkreta löften
+ * med kommatecken i sitt citat. Flaggan är informativ — den sätter aldrig ett
+ * belopp, den ber granskaren kontrollera överlapp.
+ *
+ * Kalibrerad mot publicerade data: flaggar ~10 % av löftena och fångar samtliga
+ * fem sammanfattningar som nollades i genomgången 2026-07-24.
+ */
+export function looksLikeUmbrella(title: string, quote: string): boolean {
+  const t = commitmentSegments(title);
+  return t >= 3 || (t >= 2 && commitmentSegments(quote) >= 5);
+}
+
+/**
+ * Partiets EGNA redan publicerade löften i samma kategori — underlag för
+ * granskaren att bedöma överlapp när ett brett uppräkningslöfte dyker upp.
+ * Listar, påstår inget: en människa avgör om politiken är dubbelräknad.
+ */
+export function findSamePartyInCategory(
+  candidate: { parties: string[]; category: string },
+  existing: ComparablePromiseLite[],
+  maxN = 5,
+): ComparableCost[] {
+  const cparties = new Set(candidate.parties);
+  return existing
+    .filter(
+      (e) =>
+        e.category === candidate.category &&
+        e.status !== "tillbakadragen" &&
+        e.parties.some((p) => cparties.has(p)),
+    )
+    .sort((a, b) => b.msek_base - a.msek_base) // störst belopp först — mest att dubbelräkna
+    .slice(0, maxN)
+    .map((e) => ({
+      id: e.id,
+      title: e.title,
+      party: e.parties[0] ?? "",
+      msek_base: e.msek_base,
+      period: e.period,
+      basis: e.basis,
+    }));
+}
+
+/**
  * Grannarna, inte kopiorna: redan publicerade löften om LIKNANDE politik (samma
  * kategori + likhetspoäng ≥ minSim), oavsett parti, med sitt belopp. Används för
  * att ankra ett nytt LLM-estimat så att samma politik hos olika partier hamnar i
