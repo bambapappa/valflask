@@ -5,8 +5,8 @@ commit-texter, PR-texter, sajtcopy, prompter och dokumentation.
 
 ## Vad drygast.nu är
 
-En granskningssajt inför valet 2026 som samlar partiernas vallöften,
-prissätter dem och redovisar hela kedjan öppet. Två delar:
+En granskningssajt inför valet 2026 som granskar partierna öppet och
+spårbart. Tjänsten består av tre vågor:
 
 - **Fläskvågen** — vad partiernas löften kostar. Varje löfte har ett
   ordagrant citat med källa och arkivkopia, ett kostnadsestimat med spann
@@ -14,10 +14,17 @@ prissätter dem och redovisar hela kedjan öppet. Två delar:
   regeringens reformbudget (finansieringsgapet).
 - **Frågevågen** — var partierna står i tio sakfrågor, cell för cell,
   belagt med exakta citat. Saknas rent citat lämnas cellen tom.
+- **Handlingsvågen** — håller de vad de lovar? Väger partiernas och
+  ledamöternas faktiska riksdagshandlingar mot löftena och ståndpunkterna.
+  Utvecklas i systerrepot `bambapappa/handlingsvagen` och driftsätts på
+  `handlingsvagen.drygast.nu`. **Privat tills ägaren släpper den** — den
+  byggs medvetet inte in i det här repot, just för att skydda den grinden.
+  Sammanslagning kan omvärderas efter lansering.
 
-Data lever i `data/promises.json` (löften), `data/changelog.json`
-(körlogg med `data_hash`), `data/rattelser.json` (offentlig rättelselogg)
-och `data/needs_review.json` (granskningskö). Pipelinen i `pipeline/`
+Det här repot (`valflask`) rymmer Fläskvågen och Frågevågen. Data lever i
+`data/promises.json` (löften), `data/changelog.json` (körlogg med
+`data_hash`), `data/rattelser.json` (offentlig rättelselogg) och
+`data/needs_review.json` (granskningskö). Pipelinen i `pipeline/`
 extraherar, grindar (G1–G5), verifierar och uppskattar kostnad; sajten i
 `site/` byggs med Astro. Inget LLM-estimat publiceras utan att en
 människa godkänt det.
@@ -36,8 +43,21 @@ att håna ett parti eller en person.
     kvar, men ny prosa och nya namn ska undvika ordet.
 - Skriv språk som alla förstår. Ingen teknisk jargong i texter som riktar
   sig till läsare, partier eller journalister.
+- **Skriv "mänskligt beslut", aldrig "ägarbeslut".** Gäller all text i
+  projektet. Interna grindkoder (G-serien, R-regler, b-nummer) får aldrig
+  synas i text som möter läsare — de säger ingen utomstående något;
+  skriv i stället vad som faktiskt sker ("citatet kontrolleras ord för
+  ord", "en människa godkänner varje belopp").
 
-## Kärnprinciper (beslutade av ägaren)
+## Parallella sessioner
+
+Flera Claude-sessioner kan arbeta i repot samtidigt. Bindande:
+`main` är samlingspunkten och `HANDOFF.md` är anslagstavlan — läs
+versionen på `origin/main` innan nytt arbete, gör anspråk under
+"Pågår just nu" före start, skörda aldrig parallellt. Fullständiga
+regler i HANDOFF.md §9 "Samarbete mellan parallella sessioner".
+
+## Kärnprinciper (fastställda genom mänskligt beslut)
 
 - **Tomma celler är ärliga.** Hitta aldrig på svar för att fylla täckning.
   Ett parti utan rent, exakt citat genom grindarna lämnas tomt.
@@ -53,8 +73,8 @@ att håna ett parti eller en person.
 ## Vad ett kostnadsestimat ska prissätta
 
 Beloppet avser **statens verkliga nya nettokostnad för själva åtgärden** —
-inte politikens samhällsföljder. Reglerna nedan är beslutade tillsammans
-med ägaren och finns även kodade i `pipeline/prompts/A5-cost.md`:
+inte politikens samhällsföljder. Reglerna nedan är fastställda genom
+mänskligt beslut och finns även kodade i `pipeline/prompts/A5-cost.md`:
 
 - **Lagar, förbud, avregleringar och marknadsåtgärder → 0.** Löftet hålls
   av lagändringen, vars direkta kostnad är försumbar. En prissänkning för
