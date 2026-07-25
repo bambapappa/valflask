@@ -9145,13 +9145,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Stärkt totalförsvar + Ukraina. ~15 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Vag sammanfattning av C:s försvars- och säkerhetspolitik (starkare allianser, stötta Ukraina, stärka totalförsvaret, motståndskraft). De tunga delarna är redan konkret prissatta som egna C-löften — stödet till Ukraina i p-2026-0383 (minst 1 % av BNI) och upprustningen i p-2026-0384 (försvaret till 5 % av BNP) — så sammanfattningen sätts till 0 för att undvika dubbelräkning (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -9161,7 +9161,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år (spann 7 500-22 500) till 0 vid den manuella genomgången. En vag sammanfattning vars tunga delar redan är konkret prissatta på egna C-löften (Ukraina i p-2026-0383, totalförsvar i p-2026-0384); att prissätta sammanfattningen skulle dubbelräkna. En efterhandsberäkning på 25 000 avvisades av samma skäl.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot val2026 live)",
