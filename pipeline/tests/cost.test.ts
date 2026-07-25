@@ -190,6 +190,27 @@ describe("estimateCost", () => {
     assert.doesNotMatch(captured, /JÄMFÖRBARA/);
   });
 
+  it("A5-systemprompten bär avgränsningsreglerna (förbud, utredning, netto, beteende, sammanfattning)", async () => {
+    let sys = "";
+    const llm: LlmClient = {
+      complete: async (_prompt: string, opts?: { systemPrompt?: string }) => {
+        sys = opts?.systemPrompt ?? "";
+        return '{"type":"utgift","period":"per_ar","msek_low":100,"msek_base":200,"msek_high":300,"confidence":0.4,"method_note":"x"}';
+      },
+    };
+    await estimateCost(cand(null), llm, "m");
+    // Regel 9: förbud/reglering prissätts efter direkt kostnad, inte följder
+    assert.match(sys, /FÖRBUD, LAGAR OCH REGLERINGAR/);
+    // Regel 10: utrednings-/planlöften
+    assert.match(sys, /UTREDNINGS- OCH PLANLÖFTEN/);
+    // Regel 11: netto, inte brutto
+    assert.match(sys, /NETTO, INTE BRUTTO/);
+    // Regel 12: beteende och utnyttjande
+    assert.match(sys, /BETEENDE OCH UTNYTTJANDE/);
+    // Regel 13: breda sammanfattningslöften
+    assert.match(sys, /BREDA SAMMANFATTNINGS/);
+  });
+
   it("looksLikeOneOff: gåva/inlösen/mandatperiod ja; löpande nej", () => {
     assert.equal(looksLikeOneOff("16 Gripen skänks till Ukraina"), true);
     assert.equal(looksLikeOneOff("investera 50 miljarder under nästa mandatperiod"), true);
