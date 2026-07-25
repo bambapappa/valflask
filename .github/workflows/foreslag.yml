@@ -4,7 +4,7 @@ name: foreslag
 #                                   OPENROUTER_API_KEY godtas som alias.
 #   variabel   MODEL_KOPPLING       (samma ställe, fliken Variables) — modell-id
 #                                   hos primärleverantören (t.ex. Go:
-#                                   kimi-k2.7-code — modellkataloger rör sig,
+#                                   deepseek-v4-pro — modellkataloger rör sig,
 #                                   verifiera mot leverantörens egen lista).
 #   variabel   LLM_BASE_URL         primär endpoint, t.ex. OpenCode Go
 #                                   https://opencode.ai/zen/go/v1. Utan den
@@ -18,8 +18,10 @@ name: foreslag
 # direkt, så det som gjorts ligger löpande på main och överlever även en hård
 # runner-krasch mitt i. Pushloopen lägger bara körningens NYA köposter (via
 # scripts/ko-uppdatera.mts) — ett granskningsbeslut som hann fattas under
-# körningen återuppstår aldrig. Slutar nyckeln svara bryter körningen efter
-# åtta löften i rad utan framsteg. Salvage-committen sist är ett always()-steg
+# körningen återuppstår aldrig. Slutar nyckeln svara, tar krediten slut
+# eller slår leverantören i kvottaket bryter körningen efter tre löften i
+# rad utan framsteg — klienten tar då endpointen ur spel, så ett dött läge
+# kostar sekunder i stället för minuter. Salvage-committen sist är ett always()-steg
 # som flushar det sista löftets delta ÄVEN om jobbet avbryts eller slår i
 # timeout-taket (300 min). När committen lyckats synkas kön till issues;
 # hoppas det steget över (kort avbrottsfönster) tar koppling-sync.yml det i
@@ -107,7 +109,7 @@ jobs:
           # GitHub kör run:-steg som "bash -e" som standard. Med -e PÅ dödar
           # ETT enda misslyckat modellanrop (icke-noll exitkod från
           # foreslag.mts) HELA skriptet direkt — innan fexit=$? och
-          # dödspärren (åtta löften i rad) ens hinner köra. Loopen nedan är
+          # dödspärren (tre löften i rad) ens hinner köra. Loopen nedan är
           # byggd för att hantera fel explicit via $?, så -e stängs av
           # medvetet; -u och pipefail är kvar (typofel/pipe-fel ska ändå
           # fälla skriptet).
@@ -177,8 +179,13 @@ jobs:
               rc=1
               dodstreck=$((dodstreck + 1))
               echo "$id: föll utan framsteg (streck $dodstreck)"
-              if [ "$dodstreck" -ge 8 ]; then
-                echo "Avbryter: 8 löften i rad föll utan ett enda lyckat modellanrop — trolig nyckel-/kreditkrasch. Det som hann köas är redan pushat löpande."
+              # Tre i rad räcker: klienten tar numera en kvotspärrad eller
+              # kreditlös endpoint UR SPEL, så ett dött läge kostar sekunder
+              # per löfte i stället för minuter. Åtta var rimligt när varje
+              # par betalade om hela omförsöksstegen — körning 30159619034
+              # brände 2,5 h på just det innan pärren löste ut.
+              if [ "$dodstreck" -ge 3 ]; then
+                echo "Avbryter: 3 löften i rad föll utan ett enda lyckat modellanrop — trolig nyckel-/kredit-/kvotkrasch. Det som hann köas är redan pushat löpande."
                 break
               fi
             fi
