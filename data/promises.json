@@ -10328,13 +10328,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 12000,
-      "msek_high": 30000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är brett och saknar konkreta belopp. Uppskattningen baseras på kostnader för mindre klasser (lärarlöner), ökat stöd (specialpedagoger, elevhälsa) och uppvärdering av yrkesutbildning. Spannet är",
-      "confidence": 0.4
+      "method_note": "Brett inriktningslöfte (önskelista: bättre studiero, mindre klasser, rätt stöd, uppvärdering av yrkesutbildning, fler behöriga lärare) utan konkreta belopp. De prissättbara delarna är redan egna C-löften — fler lärare i p-2026-0358 och rätt stöd i p-2026-0360 — så denna sammanfattning sätts till 0 för att undvika dubbelräkning; de kvarvarande delarna (mindre klasser, yrkesutbildning) är vaga önskningar utan konkret åtagande (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -10344,7 +10344,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 12 000 miljoner kronor per år (spann 5 000-30 000) till 0 vid den manuella genomgången. Ett brett inriktningslöfte vars prissättbara delar redan är egna C-löften (fler lärare p-2026-0358, rätt stöd p-2026-0360); att prissätta sammanfattningen skulle dubbelräkna, och resten (mindre klasser, yrkesutbildning) är vaga önskningar utan konkret åtagande.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
