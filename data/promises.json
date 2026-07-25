@@ -12055,12 +12055,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 2000,
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 700,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Jämförbart med Idrottslyftet (~500 msek/år). En bredare satsning på anläggningar och ytor i utsatta områden bör vara större, uppskattat till 500-2000 msek årligen.",
+      "method_note": "Nationell satsning på idrottsanläggningar och aktivitetsytor. Enligt C:s manifest handlar det om att rusta upp befintliga anläggningar och bygga nytt där behovet är störst (renoveringslett, inte ett arenaprogram). C:s hela civilsamhälles-storsatsning är 1 miljard/år för föreningsliv, idrott OCH folkbildning — anläggningsdelen är en skiva av det. Bas 400, spann 200–700 miljoner kronor per år.",
+      "calculation": "Centerpartiets manifest beskriver satsningen som att 'rusta upp det som finns och bygga nytt där behovet är störst' — alltså renoveringslett med selektiv nybyggnation, inte ett nationellt arenabyggnadsprogram. C:s samlade civilsamhälles-storsatsning uppges till 1 miljard/år men den täcker föreningsliv, idrott och folkbildning tillsammans; idrottsanläggningar och aktivitetsytor är bara en del. Uppskattat till ~400 mkr/år, spann 200–700. Det tidigare estimatet (1 000) prissatte anläggningsdelen till nästan hela C:s civilsamhälles-envelope och överskattade; en efterhandsberäkning på 300 (småbidrag) var i underkant för 'bygga nytt där behovet är störst'.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -12071,7 +12072,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 1 000 miljoner kronor per år (spann 500-2 000) till 400 (spann 200-700) vid den manuella genomgången, efter kontroll av C:s manifest. Satsningen är renoveringslett ('rusta upp det som finns och bygga nytt där behovet är störst') och C:s hela civilsamhälles-storsatsning på 1 miljard täcker föreningsliv, idrott och folkbildning tillsammans - anläggningsdelen är bara en skiva. Det gamla beloppet prissatte den till nästan hela envelopen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
