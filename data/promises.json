@@ -9098,13 +9098,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5000,
-      "msek_high": 7500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Fler poliser, rättskedja. ~5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Vag sammanfattning av C:s rättspolitik (fler synliga poliser, fungerande rättskedja, strypt kriminell ekonomi, skyddade brottsoffer, barn räddade från kriminalitet). De konkreta delarna är redan egna C-löften — rättskedja i p-2026-0371/0372, kriminell ekonomi i p-2026-0376/0370, brottsoffer i p-2026-0374/0380, barn i p-2026-0369/0373 — så sammanfattningen sätts till 0 för att undvika dubbelräkning; 'fler synliga poliser' är en vag riktning utan siffra (belopp satt av granskare).",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -9114,7 +9114,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-24",
+        "change": "Kostnadsestimat ändrat från 5 000 miljoner kronor per år (spann 2 500-7 500) till 0 vid den manuella genomgången. En vag sammanfattning vars konkreta delar redan är egna C-löften (rättskedja p-2026-0371/0372, kriminell ekonomi p-2026-0376/0370, brottsoffer p-2026-0374/0380, barn p-2026-0369/0373); att prissätta sammanfattningen skulle dubbelräkna, och 'fler synliga poliser' är för vagt för att prissätta. En efterhandsberäkning på 8 000 avvisades av samma skäl.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot val2026 live)",
