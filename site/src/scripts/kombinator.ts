@@ -128,6 +128,16 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+/**
+ * Gör en intern gruppkod läsbar: "g-slopad-karens" → "Slopad karens".
+ * Interna koder ska aldrig möta läsaren — men vilken politik gruppen gäller
+ * är värd information, så koden skrivs ut i klartext i stället för att döljas.
+ */
+function groupLabel(groupId: string): string {
+  const words = groupId.replace(/^g-/, "").replace(/-/g, " ").trim();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
 async function init() {
   const container = document.getElementById("kombinator");
   const resultDiv = document.getElementById("kombinator-resultat");
@@ -184,7 +194,7 @@ async function init() {
     });
 
     html += '</tbody><tfoot>';
-    html += `<tr><td colspan="2"><strong>Fläsket (R3-dedup)</strong></td><td class="num" colspan="3"><strong class="num">${formatMsek(coalition.totalFlasket)}</strong></td></tr>`;
+    html += `<tr><td colspan="2"><strong>Fläsket</strong> <span class="fotnot">(löften som flera partier delar räknas en gång)</span></td><td class="num" colspan="3"><strong class="num">${formatMsek(coalition.totalFlasket)}</strong></td></tr>`;
     html += `<tr><td colspan="2">Besparingar</td><td class="num" colspan="3">${formatMsek(coalition.totalBesparingar)}</td></tr>`;
     html += `<tr><td colspan="2">Finansiering angiven</td><td class="num" colspan="3">${formatMsek(coalition.totalFinancingClaimed)}</td></tr>`;
 
@@ -196,9 +206,9 @@ async function init() {
     html += '</tfoot></table>';
 
     if (coalition.groupNotes.length > 0) {
-      html += '<div class="etikett" style="margin-top:0.75rem">R3-DEDUP-FOTNOTER</div>';
+      html += '<div class="etikett" style="margin-top:0.75rem">LÖFTEN SOM FLERA PARTIER DELAR</div>';
       for (const gn of coalition.groupNotes) {
-        html += `<p class="resultat__fotnot">${escapeHtml(gn.group_id)}: ${formatMsek(gn.minMsek)}–${formatMsek(gn.maxMsek)} (${gn.parties.join(", ")})</p>`;
+        html += `<p class="resultat__fotnot">${escapeHtml(groupLabel(gn.group_id))}: partierna har olika prislapp, mellan ${formatMsek(gn.minMsek)} och ${formatMsek(gn.maxMsek)} (${gn.parties.join(", ")}). Räknas en gång.</p>`;
       }
     }
 
