@@ -28,7 +28,7 @@ versionen på `origin/main` innan nytt arbete, gör anspråk under
 "Pågår just nu" före start, skörda aldrig parallellt. Fullständiga
 regler i HANDOFF.md §"Samarbete mellan parallella sessioner".
 
-## Kärnprinciper (beslutade av ägaren)
+## Kärnprinciper (fastställda genom mänskligt beslut)
 
 - **Tomma celler är ärliga.** Hitta aldrig på svar för att fylla täckning.
   Ett parti utan rent, exakt citat genom grindarna lämnas tomt.
