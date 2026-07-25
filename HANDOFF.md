@@ -344,11 +344,28 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-25 `claude/handlingsvagen-ko-beta-6oiq2r` → full förslagskörning
-  över alla aktiva löften med `deepseek-v4-pro` + skärpt prompt (första
-  fullkörningen efter #171/#172). Rör inte
-  `data/kopplingsforslag.json`/`data/provade-par.json` parallellt förrän
-  klart.
+*(inga anspråk)*
+
+**⚠️ Fullkörning 2026-07-25 (run 30159619034) AVBRUTEN AV KREDITSLUT —
+82 löften återstår.** Första fullkörningen med `deepseek-v4-pro` + den
+skärpta prompten. Resultat: **21 nya förslag i kön**, provade par
+1069 → 1215. Allt är pushat löpande; ingenting förlorat.
+
+Förloppet: modellanropen fungerade rent i drygt en timme (13:23–14:38).
+Från 14:45 föll **varje** par på `HTTP 402 Insufficient credits` från
+OpenRouter — dvs. primärvägen (OpenCode Go) började neka, anropet gick
+till reservvägen, och den saknar kredit sedan tidigare. Dödspärren löste
+ut som avsett efter åtta löften i rad utan framsteg (17:12), vid löfte
+nr 346 av 428.
+
+**Innan nästa fullkörning:** kontrollera OpenCode Go-kvoten (den tog
+sannolikt slut ~14:38 — loggen visar bara reservvägens fel, så Go-sidans
+kod syns inte) och/eller fyll på OpenRouter-krediten. Med båda vägarna
+tomma blir en omkörning bara väntan: varje dömt par kostade ~6 minuter i
+omförsök, vilket brände ~2,5 h av körningen.
+
+Kvar att köra: löftena efter `p-2026-0469` i `promises.json` (82 st).
+En omkörning tar bara det oprövade — `provade-par.json` minns resten.
 
 **Granskningskön 2026-07-24: HELT AVBETAD (0 kvar).** Alla 121 ärenden
 avgjorda med ägaren, plus en dubbelkoll av bulk-godkännandena efteråt.
