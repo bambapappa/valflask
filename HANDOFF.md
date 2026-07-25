@@ -344,7 +344,11 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-*(inga anspråk)*
+- 2026-07-25 `claude/handlingsvagen-ko-beta-6oiq2r` → full förslagskörning
+  över alla aktiva löften med `deepseek-v4-pro` + skärpt prompt (första
+  fullkörningen efter #171/#172). Rör inte
+  `data/kopplingsforslag.json`/`data/provade-par.json` parallellt förrän
+  klart.
 
 **Granskningskön 2026-07-24: HELT AVBETAD (0 kvar).** Alla 121 ärenden
 avgjorda med ägaren, plus en dubbelkoll av bulk-godkännandena efteråt.
