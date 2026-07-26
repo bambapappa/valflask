@@ -37,6 +37,10 @@ on:
         description: "Faktortröskel för 'nära' (default 1.5)"
         type: string
         default: "1.5"
+      rounds:
+        description: "Antal varv — löften som föll bort på misslyckade API-anrop får en ny chans (default 3)"
+        type: string
+        default: "3"
       source_run_id:
         description: "Applicera EN TIDIGARE körnings dataartifact i stället för att räkna om (ange run-id; hoppar backfill-jobbet)"
         type: string
@@ -75,7 +79,7 @@ jobs:
           LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
           MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
         run: |
-          FLAGS="--seed=${{ inputs.seed }} --factor=${{ inputs.factor }}"
+          FLAGS="--seed=${{ inputs.seed }} --factor=${{ inputs.factor }} --rounds=${{ inputs.rounds }}"
           if [ "${{ inputs.all }}" = "true" ]; then FLAGS="$FLAGS --all"; else FLAGS="$FLAGS --sample=${{ inputs.sample }}"; fi
           if [ "${{ inputs.dry_run }}" = "true" ]; then FLAGS="$FLAGS --dry-run"; fi
           echo "Kör: pnpm calc:backfill -- $FLAGS"
