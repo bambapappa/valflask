@@ -6,6 +6,10 @@
 import assert from "node:assert";
 import { buildSummary, lofteIds, buildLofteDetalj } from "../src/lib/rutnat.ts";
 import { buildSokIndex } from "../src/lib/sok.ts";
+import {
+  byggHandlingSkarva, byggOrdSkarva, byggPartiTrender, byggVagda,
+  handlingSkarvor, indexFinns, ordSkarvor,
+} from "../src/lib/amne.ts";
 import { partiKoder, buildPartiSida, ledamotIds, buildLedamotSida } from "../src/lib/vyer.ts";
 
 const KB = 1024;
@@ -37,6 +41,32 @@ grind("största partisida-modell", störstParti, 300 * KB);
 let störstLed = 0;
 for (const id of ledamotIds()) störstLed = Math.max(störstLed, storlek(buildLedamotSida(id)));
 grind("största ledamotssida-modell", störstLed, 100 * KB);
+
+// Ämnessöket (b-0014). 23 600 handlingar får aldrig plats i en nyttolast —
+// därför skärvat och hämtat på begäran. Grindarna mäter den STÖRSTA skärvan,
+// för det är den en läsare faktiskt kan råka hämta.
+if (indexFinns()) {
+  let störstOrd = 0;
+  let störstOrdNamn = "";
+  for (const nyckel of ordSkarvor()) {
+    const b = storlek(byggOrdSkarva(nyckel));
+    if (b > störstOrd) { störstOrd = b; störstOrdNamn = nyckel; }
+  }
+  grind(`största ordskärva (${störstOrdNamn})`, störstOrd, 500 * KB);
+
+  let störstHandling = 0;
+  let störstHandlingNamn = "";
+  for (const nyckel of handlingSkarvor()) {
+    const b = storlek(byggHandlingSkarva(nyckel));
+    if (b > störstHandling) { störstHandling = b; störstHandlingNamn = nyckel; }
+  }
+  grind(`största handlingsskärva (${störstHandlingNamn})`, störstHandling, 400 * KB);
+
+  grind("vagda.json", storlek(byggVagda()), 100 * KB);
+  grind("ordtrender (i sidan)", storlek(byggPartiTrender()), 60 * KB);
+} else {
+  console.log("— ämnesindexet inte byggt: hoppar över dess budgetgrindar");
+}
 
 assert.strictEqual(fel, 0, `${fel} budgetgrind(ar) föll`);
 console.log("budget: alla grindar gröna");

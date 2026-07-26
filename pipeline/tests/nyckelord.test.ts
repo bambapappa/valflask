@@ -10,9 +10,11 @@ import {
   taOrd,
   termPoang,
   utvinnTermer,
+  visningsForm,
   type DokumentTermer,
   type Skarva,
 } from "../src/nyckelord.ts";
+import { stamma } from "../src/stam.ts";
 
 test("taOrd: gemener, korta ord bort, svenska tecken behålls", () => {
   const ord = taOrd("Höjt TAK i a-kassan, år 2026!");
@@ -105,4 +107,19 @@ test("inverteraIndex: term → handlingar, sorterat", () => {
   const inv = inverteraIndex(index);
   assert.deepEqual(inv.get("försvar"), ["h-1", "h-2"]);
   assert.deepEqual(inv.get("kultur"), ["h-1"]);
+});
+
+test("utvinnTermer: bär en läsbar visningsform per stam", () => {
+  // Stammen matchar, visningsformen läses: sajten ska visa "vårdplatser",
+  // inte stammen "vårdplats".
+  const { t, y } = utvinnTermer("vårdplatser vårdplatser sjukhus", 5);
+  const i = t.indexOf(stamma("vårdplatser"));
+  assert.ok(i >= 0, "stammen skulle finnas");
+  assert.equal(y?.[i], "vårdplatser", "vanligaste formen visas");
+  assert.notEqual(y?.[i], t[i], "visningsformen skiljer sig från stammen");
+});
+
+test("visningsForm: vanligast vinner, annars kortast", () => {
+  assert.equal(visningsForm(new Map([["skolor", 3], ["skolorna", 9]])), "skolorna");
+  assert.equal(visningsForm(new Map([["skolor", 2], ["skolorna", 2]])), "skolor");
 });

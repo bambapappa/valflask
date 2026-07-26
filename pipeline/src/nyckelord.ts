@@ -70,8 +70,15 @@ const FORMELORD = new Set([
 
 /** Ett dokuments utvunna termer, som de lagras i indexet. */
 export interface DokumentTermer {
-  /** Termer, mest utmärkande först (redan filtrerade och avkortade). */
+  /** Ordstammar, mest utmärkande först (filtrerade och avkortade). */
   t: string[];
+  /**
+   * Visningsform per stam, i samma ordning som `t`. Stammar är till för
+   * att matcha, inte att läsa — "vårdplat" och "bost" säger en läsare
+   * ingenting. Här ligger den vanligaste böjningsform ordet faktiskt hade
+   * i dokumentet, så sajten kan visa "vårdplatser" i stället för stammen.
+   */
+  y?: string[];
   /** Totalt antal räknade ord i dokumentet — grov längdsignal. */
   n: number;
 }
@@ -107,13 +114,39 @@ export function taOrd(text: string): string[] {
  */
 export function raknaTermer(text: string): Map<string, number> {
   const räkning = new Map<string, number>();
+  for (const [stam, former] of raknaTermerMedFormer(text)) {
+    let summa = 0;
+    for (const n of former.values()) summa += n;
+    räkning.set(stam, summa);
+  }
+  return räkning;
+}
+
+/**
+ * Som `raknaTermer`, men behåller vilka böjningsformer varje stam kom
+ * ifrån och hur ofta — underlaget för en läsbar visningsform.
+ */
+export function raknaTermerMedFormer(text: string): Map<string, Map<string, number>> {
+  const räkning = new Map<string, Map<string, number>>();
   for (const ord of taOrd(text)) {
     if (STOPPORD.has(ord) || FORMELORD.has(ord)) continue;
     if (/^[0-9-]+$/u.test(ord)) continue; // rena tal/bindestreck säger inget
     const stam = stamma(ord);
-    räkning.set(stam, (räkning.get(stam) ?? 0) + 1);
+    const former = räkning.get(stam) ?? new Map<string, number>();
+    former.set(ord, (former.get(ord) ?? 0) + 1);
+    räkning.set(stam, former);
   }
   return räkning;
+}
+
+/**
+ * Den form av ett ord som ska visas för en läsare: den vanligaste i
+ * dokumentet, och vid lika antal den kortaste (närmast grundformen).
+ */
+export function visningsForm(former: Map<string, number>): string {
+  return [...former.entries()].sort(
+    (a, b) => b[1] - a[1] || a[0].length - b[0].length || a[0].localeCompare(b[0], "sv"),
+  )[0]![0];
 }
 
 /**
@@ -122,12 +155,20 @@ export function raknaTermer(text: string): Map<string, number> {
  * samma lista, oavsett hur räkningen råkade byggas.
  */
 export function utvinnTermer(text: string, max = 40): DokumentTermer {
-  const räkning = raknaTermer(text);
-  const t = [...räkning.entries()]
-    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "sv"))
-    .slice(0, max)
-    .map(([term]) => term);
-  return { t, n: taOrd(text).length };
+  const medFormer = raknaTermerMedFormer(text);
+  const valda = [...medFormer.entries()]
+    .map(([stam, former]) => {
+      let summa = 0;
+      for (const n of former.values()) summa += n;
+      return { stam, summa, former };
+    })
+    .sort((a, b) => b.summa - a.summa || a.stam.localeCompare(b.stam, "sv"))
+    .slice(0, max);
+  return {
+    t: valda.map((v) => v.stam),
+    y: valda.map((v) => visningsForm(v.former)),
+    n: taOrd(text).length,
+  };
 }
 
 /**
