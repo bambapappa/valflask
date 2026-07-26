@@ -375,7 +375,11 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-*(inga anspråk)*
+- 2026-07-25 `claude/handlingsvagen-ko-beta-6oiq2r` → bygger b-0014:s
+  nyckelordsindex (Återstår punkt 2): extraktion + indexbygge som
+  workflow, och inkoppling i kandidaturvalet. Rör inte
+  `pipeline/src/foreslag.ts`, `data/nyckelord*` eller `skord`-vägen
+  parallellt. Indexbygget kostar ingen modellkvot.
 
 **⚠️ Fullkörning 2026-07-25 (run 30159619034) AVBRUTEN AV KREDITSLUT —
 82 löften återstår.** Första fullkörningen med `deepseek-v4-pro` + den
