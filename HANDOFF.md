@@ -358,11 +358,20 @@ till reservvägen, och den saknar kredit sedan tidigare. Dödspärren löste
 ut som avsett efter åtta löften i rad utan framsteg (17:12), vid löfte
 nr 346 av 428.
 
-**Innan nästa fullkörning:** kontrollera OpenCode Go-kvoten (den tog
-sannolikt slut ~14:38 — loggen visar bara reservvägens fel, så Go-sidans
-kod syns inte) och/eller fyll på OpenRouter-krediten. Med båda vägarna
-tomma blir en omkörning bara väntan: varje dömt par kostade ~6 minuter i
-omförsök, vilket brände ~2,5 h av körningen.
+**Felhanteringen är härdad efter detta (PR #195, mergad).** Orsaken till
+de långsamma misslyckandena hittad: klienten kapade `Retry-After` vid 90 s
+och sov så för VARJE omförsök, så en kvotspärrad leverantör kostade ~6 min
+per par — om och om igen. Nu (a) kapas omförsökssömnen vid 20 s, (b) tas en
+endpoint som svarat 401/402/403 eller slagit i 429 UR SPEL (permanent
+respektive till dess `Retry-After` lossnar) och hoppas över direkt, och
+(c) bär felet ett svar PER endpoint, så primärvägens kod inte längre
+maskeras av reservvägens. Dödspärren sänkt 8 → 3 löften. Ny `llm.test.ts`
+(6 fall); 88 tester gröna.
+
+**Innan nästa fullkörning:** kontrollera OpenCode Go-kvoten och/eller fyll
+på OpenRouter-krediten — härdningen gör misslyckanden billiga, den skaffar
+ingen kapacitet. Med båda vägarna tomma dör en omkörning nu inom minuten
+med tydlig felkod per endpoint i stället för att mala i timmar.
 
 Kvar att köra: löftena efter `p-2026-0469` i `promises.json` (82 st).
 En omkörning tar bara det oprövade — `provade-par.json` minns resten.
