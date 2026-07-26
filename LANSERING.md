@@ -114,30 +114,63 @@ vidare. Kör schemavalideringen efteråt — den fäller om något halkat.
 De ska uppdateras **efter** att bytet är gjort, så de beskriver det som
 gäller och inte det som var tänkt.
 
-## Cloudflare-arbetet
+## Hur sajten faktiskt är driftsatt — läs detta först
 
-Ordningen spelar roll — DNS först, adresser sist.
+Det är lätt att tro att Cloudflare serverar drygast.nu. Det gör den inte.
 
-1. **Lägg till zonen `utlovat.se`** i Cloudflare och peka domänens
+| | serveras av | konfigureras i |
+| --- | --- | --- |
+| `drygast.nu` | **GitHub Pages** | `valflask` → Settings → Pages → Custom domain |
+| Cloudflare Pages-projektet | ingen (saknar custom-domän) | icke-blockerande spegel i `build.yml` |
+| Netlify | ingen | spegel i `mirror.yml` |
+| DNS för `drygast.nu` | Cloudflare | DNS-poster som pekar mot GitHub Pages |
+
+`build.yml` kör `actions/deploy-pages` som **kanoniskt** bygge. Cloudflare-
+och Netlify-stegen är märkta `continue-on-error` just för att de är
+speglar och aldrig får fälla det riktiga bygget.
+
+Cloudflare gör alltså bara DNS åt huvudsajten idag. Namnbytet på
+`utlovat.se` rör därför **inte** Cloudflare Pages.
+
+**Handlingsvågen är undantaget.** Repot är privat, och GitHub Pages från
+privata repon kräver betalplan. Därför ska `handlingsvagen.utlovat.se`
+ligga på **Cloudflare Pages Direct Upload**. Den blandade uppsättningen —
+huvudsajt på GitHub Pages, Handlingsvågen på Cloudflare Pages — är
+avsiktlig.
+
+## Domänbytet, steg för steg
+
+1. **Lägg till `utlovat.se` som zon i Cloudflare** och peka domänens
    namnservrar dit hos registraren. Vänta tills zonen är aktiv.
-   Motsvarande för `.nu` och `.com`.
-2. **Skapa Pages-projektet för Handlingsvågen** om det inte finns
-   (`Direct Upload`, namnet `handlingsvagen`). Se `MIGRERING.md` steg 3.
-3. **Sätt custom domains:**
-   - `utlovat.se` + `www.utlovat.se` på projektet `drygast`
-   - `handlingsvagen.utlovat.se` på projektet `handlingsvagen`
-4. **Omdirigera det gamla.** `drygast.nu` (och `www`) → `utlovat.se` med
-   **301**, sökväg för sökväg — inte allt till förstasidan. En läsare som
-   följer en länk till ett visst löfte ska landa på det löftet, annars
-   tappar varje delad länk sitt innehåll. Cloudflare Bulk Redirects eller
-   en Redirect Rule med `concat("https://utlovat.se", http.request.uri.path)`.
-   Samma för `utlovat.nu` och `utlovat.com` → `utlovat.se`.
-5. **Behåll `drygast.nu`-registreringen** i minst två år efter bytet.
-   Omdirigeringar är värdelösa den dag domänen går ut, och en utgången
-   domän som andra länkat till är precis vad någon annan vill ha.
-6. **Kontrollera att `_headers` följer med** — CSP och HSTS ska gälla på
-   den nya adressen från första minuten. HSTS på gamla domänen får inte
-   heller brytas.
+2. **Kopiera DNS-posterna** från `drygast.nu`-zonen rakt av till den nya.
+   Samma poster, ny zon — inget behöver slås upp, de befintliga är rätt.
+3. **Verifiera domänen hos GitHub** (Settings → Pages → verified domains).
+   Skyddar mot att någon annan gör anspråk på den.
+4. **Byt custom domain** i `valflask` → Settings → Pages, från
+   `drygast.nu` till `utlovat.se`. Vänta på HTTPS-certifikatet — det kan
+   ta upp till en timme.
+5. **Slå på omdirigeringen** på `drygast.nu`-zonen: ta bort GitHub
+   Pages-posterna och lägg en Redirect Rule, 301, **sökväg för sökväg**:
+   `concat("https://utlovat.se", http.request.uri.path)`. Inte allt till
+   förstasidan — en delad länk till ett visst löfte ska landa på det
+   löftet.
+6. **Samma för `utlovat.nu` och `utlovat.com`** → `utlovat.se`.
+7. **Handlingsvågen:** skapa Pages-projektet (Direct Upload, namnet
+   `handlingsvagen`) och sätt custom domain `handlingsvagen.utlovat.se`.
+   Se `MIGRERING.md` steg 3.
+
+**Fällan i steg 4:** GitHub Pages tillåter bara EN custom domän per repo.
+I samma sekund `utlovat.se` sätts slutar `drygast.nu` serveras därifrån.
+Förbered därför regeln i steg 5 i förväg, sparad men avstängd, och slå på
+den direkt när certifikatet är klart. Annars ligger gamla adressen död en
+stund.
+
+**Behåll `drygast.nu`-registreringen** i minst två år. En omdirigering är
+värdelös den dag domänen går ut, och en utgången domän som andra länkat
+till är precis vad någon annan vill ha.
+
+**Kontrollera att `site/public/_headers` följer med** — CSP och HSTS ska
+gälla på nya adressen från första minuten.
 
 ## Sekvensen vid själva bytet
 
