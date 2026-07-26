@@ -103,9 +103,9 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
 
 {finns && (
   <script>
-    // Buntas av Astro, så den kan använda SAMMA stammare som indexbygget.
+    // Buntas av Astro, så den kan använda SAMMA stamning som indexbygget.
     // Duplicerad stamningslogik skulle tyst börja gå isär med indexet.
-    import { stamma } from "../../../pipeline/src/stam.ts";
+    import { sokStammar } from "../../../pipeline/src/nyckelord.ts";
 
     const rot = document.querySelector<HTMLElement>(".amnesok");
     const falt = document.querySelector<HTMLInputElement>("#amne-falt");
@@ -144,47 +144,72 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
         votering: "votering",
       };
 
-      function ordStammar(text: string): string[] {
-        return [...new Set(
-          text.toLowerCase().split(/[^a-zåäöéü0-9-]+/u).filter((w) => w.length >= 3).map(stamma),
+      /**
+       * Sökorden, vart och ett med de stammar det ska slås upp på. Bestämd
+       * form och grundform hamnar inte alltid på samma stam ("skolan" och
+       * "skola"), så ett ord kan ge flera stammar. De slås ihop till EN
+       * träfflista för ordet — läsaren ska inte behöva gissa vilken form
+       * registret vill ha.
+       */
+      function sokord(text: string): { ord: string; stammar: string[] }[] {
+        const ord = [...new Set(
+          text.toLowerCase().split(/[^a-zåäöéü0-9-]+/u).filter((w) => w.length >= 3),
         )];
+        return ord.map((o) => ({ ord: o, stammar: sokStammar(o) }));
       }
 
       async function sok(fraga: string) {
         const min = ++korning;
-        const stammar = ordStammar(fraga);
+        const orden = sokord(fraga);
         traffar.replaceChildren();
         mer.textContent = "";
-        if (stammar.length === 0) {
+        if (orden.length === 0) {
           status.textContent = "";
           return;
         }
         status.textContent = "Söker…";
+        const flera = orden.length > 1 ? "alla orden" : "ordet";
 
-        // Ett ord i taget: hämta ordskärvan och skär snittet, så flera ord
-        // smalnar av träffen i stället för att bredda den.
+        // Ett ord i taget: slå ihop ordets egna former, och skär sedan
+        // snittet mellan orden — flera ord smalnar av träffen i stället
+        // för att bredda den.
         let ids: string[] | null = null;
         let helaAntalet = 0;
         let kapat = false;
-        for (const stam of stammar) {
-          const nyckel = stam.slice(0, 2) || "_";
-          const skarva = finnsSkarva.has(nyckel)
-            ? await hamta<Record<string, { n: number; i: string[] }>>(
-                `${bas}api/hv/amne/${encodeURIComponent(nyckel)}.json`,
-              )
-            : null;
-          const post = skarva?.[stam];
-          const lista = post?.i ?? [];
-          if (post && post.n > lista.length) kapat = true;
-          helaAntalet = ids === null ? (post?.n ?? 0) : Math.min(helaAntalet, post?.n ?? 0);
-          ids = ids === null ? lista : ids.filter((id) => lista.includes(id));
+        // Sant när ett ords träffar kommer från flera stammar: då vet vi
+        // bara ett undre tak för hela antalet, aldrig det exakta.
+        let underTak = false;
+        for (const { stammar } of orden) {
+          const union = new Set<string>();
+          let antal = 0;
+          let traffadeStammar = 0;
+          for (const stam of stammar) {
+            const nyckel = stam.slice(0, 2) || "_";
+            const skarva = finnsSkarva.has(nyckel)
+              ? await hamta<Record<string, { n: number; i: string[] }>>(
+                  `${bas}api/hv/amne/${encodeURIComponent(nyckel)}.json`,
+                )
+              : null;
+            const post = skarva?.[stam];
+            if (!post) continue;
+            traffadeStammar += 1;
+            if (post.n > post.i.length) kapat = true;
+            // Unionen är minst den största delmängden, högst summan — vi
+            // har bara antalen, så vi håller oss till det vi vet.
+            antal = Math.max(antal, post.n);
+            for (const id of post.i) union.add(id);
+          }
+          if (traffadeStammar > 1) underTak = true;
+          const lista = [...union].sort().reverse();
+          helaAntalet = ids === null ? antal : Math.min(helaAntalet, antal);
+          ids = ids === null ? lista : ids.filter((id) => union.has(id));
           if (ids.length === 0) break;
         }
         if (min !== korning) return; // en nyare sökning har hunnit före
 
         const alla = ids ?? [];
         if (alla.length === 0) {
-          status.textContent = `Inga handlingar innehåller ${stammar.length > 1 ? "alla orden" : "ordet"}.`;
+          status.textContent = `Inga handlingar innehåller ${flera}.`;
           return;
         }
 
@@ -200,7 +225,12 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
         vagda ??= (await hamta<Record<string, { riktning: string; lofte: string }>>(`${bas}api/hv/vagda.json`)) ?? {};
         if (min !== korning) return;
 
-        const rubrik = `${(kapat ? helaAntalet : alla.length).toLocaleString("sv-SE")} handlingar innehåller ${stammar.length > 1 ? "alla orden" : "ordet"}.`;
+        // Utan kapning är listan komplett och antalet exakt. Med kapning
+        // redovisas det antal vi kan stå för — "minst" när flera former av
+        // samma ord slagits ihop och unionen inte går att räkna exakt.
+        const rubrik = kapat
+          ? `${underTak ? "Minst " : ""}${helaAntalet.toLocaleString("sv-SE")} handlingar innehåller ${flera}.`
+          : `${alla.length.toLocaleString("sv-SE")} handlingar innehåller ${flera}.`;
         status.textContent = kapat
           ? `${rubrik} Registret levererar de ${alla.length.toLocaleString("sv-SE")} senaste.`
           : rubrik;

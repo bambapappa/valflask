@@ -250,3 +250,41 @@ export function inverteraIndex(
   for (const lista of inv.values()) lista.sort();
   return inv;
 }
+
+/**
+ * Stammar att söka på för ett inskrivet ord — sökningens sida av
+ * stamningen.
+ *
+ * Snowballs svenska algoritm har två luckor som slår igenom just när en
+ * läsare skriver in ett ord: bestämd ändelse på a-ord stryks inte
+ * ("skolan" blir "skolan", medan "skolor" blir "skol"), och den
+ * övertolkar ibland grundformen ("försvar" blir "försv", medan
+ * "försvaret" blir "försvar"). Följden är att den form läsaren råkar
+ * skriva avgör om träffen kommer — vilket vore godtyckligt.
+ *
+ * Därför prövas ordet i några närliggande former och alla deras stammar
+ * söks. Det breddar bara INOM samma ord; flera sökord skär fortfarande
+ * snittet. Att en variant inte finns i indexet kostar ingenting — den
+ * ger noll träffar.
+ *
+ * Detta rör bara sökningen. Indexet lagrar en stam per ord som förr.
+ */
+export function sokStammar(ord: string): string[] {
+  const former = new Set<string>([ord]);
+  // Bestämd form av a-ord: skolan → skola, flickan → flicka
+  if (ord.endsWith("an")) former.add(ord.slice(0, -1));
+  // Bestämd form neutrum: försvaret → försvar, stödet → stöd
+  if (ord.endsWith("et")) former.add(ord.slice(0, -2));
+  // Bestämd form utrum: bilen → bil
+  if (ord.endsWith("en")) former.add(ord.slice(0, -2));
+  // ... och åt andra hållet, för grundformen kan vara den övertolkade:
+  // försvar → försvaret, skola → skolan
+  former.add(`${ord}et`);
+  if (ord.endsWith("a")) former.add(`${ord}n`);
+
+  const stammar = new Set<string>();
+  for (const form of former) {
+    if (form.length >= 3) stammar.add(stamma(form));
+  }
+  return [...stammar].sort();
+}

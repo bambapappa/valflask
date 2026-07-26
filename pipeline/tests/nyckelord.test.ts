@@ -11,6 +11,7 @@ import {
   termPoang,
   utvinnTermer,
   visningsForm,
+  sokStammar,
   type DokumentTermer,
   type Skarva,
 } from "../src/nyckelord.ts";
@@ -122,4 +123,33 @@ test("utvinnTermer: bär en läsbar visningsform per stam", () => {
 test("visningsForm: vanligast vinner, annars kortast", () => {
   assert.equal(visningsForm(new Map([["skolor", 3], ["skolorna", 9]])), "skolorna");
   assert.equal(visningsForm(new Map([["skolor", 2], ["skolorna", 2]])), "skolor");
+});
+
+test("sokStammar: bestämd form av a-ord hittar grundformens stam", () => {
+  // Snowball lämnar "skolan" orört men ger "skol" för "skola"/"skolor".
+  // Läsaren ska hitta samma sak oavsett vilken form hen skriver.
+  assert.ok(sokStammar("skolan").includes(stamma("skola")), "skolan → skol");
+  assert.ok(sokStammar("skola").includes(stamma("skola")));
+  // Och det som indexerats från "skolan" ska nås när man skriver "skola".
+  assert.ok(sokStammar("skola").includes(stamma("skolan")), "skola → skolan");
+});
+
+test("sokStammar: övertolkad grundform möter sin bestämda form", () => {
+  // "försvar" ger "försv" men "försvaret" ger "försvar" — båda ska nås.
+  const fran = sokStammar("försvar");
+  assert.ok(fran.includes(stamma("försvar")), "egen stam med");
+  assert.ok(fran.includes(stamma("försvaret")), "även den bestämda formens stam");
+  assert.ok(sokStammar("försvaret").includes(stamma("försvar")));
+});
+
+test("sokStammar: vanliga ord får med sin egen stam", () => {
+  for (const ord of ["kärnkraft", "vårdplatser", "tandvård", "klimat"]) {
+    assert.ok(sokStammar(ord).includes(stamma(ord)), `${ord} saknar sin egen stam`);
+  }
+});
+
+test("sokStammar: är deterministisk och utan dubbletter", () => {
+  const a = sokStammar("skolan");
+  assert.deepEqual(a, sokStammar("skolan"));
+  assert.equal(new Set(a).size, a.length);
 });
