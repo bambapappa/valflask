@@ -58,6 +58,15 @@ const SEED = Number(arg("seed") ?? "1");
 const FACTOR = Number(arg("factor") ?? "1.5");
 /** Antal varv: löften som föll bort får en ny chans (transient API-bortfall). */
 const ROUNDS = Math.max(1, Number(arg("rounds") ?? "3"));
+/**
+ * Tidsbudget i minuter. Körning 30191490153 slog i GitHubs 6-timmarstak och
+ * DÖDADES — uppladdningsstegen hann aldrig köra, så flera timmars LLM-arbete
+ * gick förlorat. Skriptet slutar nu ta nya löften när budgeten är slut och
+ * skriver ut det som hunnits. Eftersom det är idempotent betar upprepade
+ * körningar av resten. Default 240 min ger gott om marginal till taket.
+ */
+const MAX_MINUTES = Math.max(1, Number(arg("max-minutes") ?? "240"));
+const DEADLINE = Date.now() + MAX_MINUTES * 60_000;
 
 /** Deterministisk PRNG (mulberry32) så slumpurvalet går att återskapa via --seed. */
 function rng(seed: number): () => number {
@@ -169,7 +178,7 @@ async function main(): Promise<void> {
    * orsaken ("LLM-kostnadsanrop misslyckades", "ogiltig JSON", …) och skrivs
    * nu ut, så nästa bortfall går att diagnostisera direkt ur loggen.
    */
-  async function process(p: PromiseEntry): Promise<boolean> {
+  async function handleOne(p: PromiseEntry): Promise<boolean> {
     const comparables = findComparableCosts(
       { title: p.title, category: p.category },
       pool,
@@ -219,25 +228,64 @@ async function main(): Promise<void> {
     return true;
   }
 
+  // Checkpointing: skriv löpande så inget arbete går förlorat om körningen
+  // dödas (6-timmarstaket, nätfel, OOM). save() är en no-op i dry-run.
+  if (!DRY) save = buildSave(promises, divergences, { near: () => near });
+
+  // Runnern skickar SIGTERM innan den dödar jobbet — sista chansen att spara.
+  let saving = false;
+  const saveAndExit = (sig: string) => {
+    if (saving) return;
+    saving = true;
+    console.log(`\n${sig} mottagen — sparar ${near} uträkningar och ${diverge} avvikelser innan avslut.`);
+    try { save(); } catch (e) { console.error("Kunde inte spara vid avbrott:", e); }
+    process.exit(0);
+  };
+  process.on("SIGTERM", () => saveAndExit("SIGTERM"));
+  process.on("SIGINT", () => saveAndExit("SIGINT"));
+
   let pending = selected;
+  let outOfTime = false;
+  let notAttempted = 0;
+  let sinceSave = 0;
   // Bortfallet är tidsklustrat (API otillgängligt i perioder), inte knutet till
   // enskilda löften — därför är ett nytt varv över just de som föll bort värt
   // mycket mer än att ge upp. Varvet avbryts när det inte längre räddar något.
-  for (let round = 1; round <= ROUNDS && pending.length > 0; round++) {
+  for (let round = 1; round <= ROUNDS && pending.length > 0 && !outOfTime; round++) {
     if (round > 1) {
       console.log(`\n— Omtag ${round - 1}: ${pending.length} löften som föll bort, ny chans —\n`);
       skipReasons.clear();
     }
     const failed: PromiseEntry[] = [];
-    for (const p of pending) if (!(await process(p))) failed.push(p);
-    if (failed.length === pending.length && round > 1) {
+    for (const [i, p] of pending.entries()) {
+      if (Date.now() > DEADLINE) {
+        // Sluta ta NYA löften — men låt körningen skriva ut det som hunnits,
+        // annars kastas allt arbete bort när runnern dödas vid takgränsen.
+        notAttempted = pending.length - i;
+        console.log(
+          `\nTidsbudget slut (${MAX_MINUTES} min). ${notAttempted} löften ej försökta — ` +
+            `sparar det som hunnits och avslutar snyggt. Kör igen för resten (idempotent).`,
+        );
+        outOfTime = true;
+        break;
+      }
+      if (!(await handleOne(p))) failed.push(p);
+      // Checkpoint var 10:e löfte: billigt mot ~28 s per LLM-anrop, och gör att
+      // ett hårt avbrott aldrig kostar mer än en handfull löften.
+      if (!DRY && ++sinceSave >= 10) {
+        sinceSave = 0;
+        save();
+        console.log(`   [checkpoint sparad — ${near} uträkningar, ${diverge} avvikelser]`);
+      }
+    }
+    if (!outOfTime && failed.length === pending.length && round > 1) {
       console.log(`\nOmtaget räddade inget — avbryter (API troligen fortsatt otillgängligt).`);
       pending = failed;
       break;
     }
     pending = failed;
   }
-  skip = pending.length;
+  skip = pending.length + notAttempted;
 
   console.log(`\nSummering: ${near} nära (uträkning fästs), ${diverge} avviker (till granskning), ${skip} hoppade.`);
   if (skipReasons.size > 0) {
@@ -249,17 +297,47 @@ async function main(): Promise<void> {
 
   if (DRY) { console.log("\n[DRY-RUN] Inget skrivet."); return; }
 
-  writeFileSync(join(DATA, "promises.json"), JSON.stringify(promises, null, 2) + "\n");
-  writeFileSync(join(DATA, "calculation_review.json"), JSON.stringify(divergences, null, 2) + "\n");
+  save();
+  console.log(`\nSkrivet: ${near} uträkningar → promises.json; ${diverge} → calculation_review.json.`);
+}
 
-  if (near > 0) {
-    const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as unknown[];
-    changelog.push({
-      run_id: `calc-backfill-${new Date().toISOString().slice(0, 10)}`,
-      added: [], updated: selected.filter((p) => p.cost.calculation && p.cost.calculation.startsWith("Rekonstruerad")).map((p) => p.id),
+/**
+ * Skriver ALLT arbete som gjorts hittills till disk. Anropas löpande under
+ * körningen (checkpoint) och vid avbrottssignal — inte bara på slutet.
+ *
+ * Bakgrund: körning 30191490153 slog i GitHubs 6-timmarstak och dödades. Allt
+ * skrevs först efter loopen, så flera timmars LLM-arbete försvann. Nu ligger
+ * resultatet alltid på disk, och eftersom skriptet hoppar löften som redan har
+ * en uträkning betar nästa körning bara av resten.
+ *
+ * Sätts av main() innan loopen startar.
+ */
+let save: () => void = () => {};
+
+function buildSave(
+  promises: PromiseEntry[],
+  divergences: Array<Record<string, unknown>>,
+  counts: { near: () => number },
+): () => void {
+  return () => {
+    writeFileSync(join(DATA, "promises.json"), JSON.stringify(promises, null, 2) + "\n");
+    writeFileSync(join(DATA, "calculation_review.json"), JSON.stringify(divergences, null, 2) + "\n");
+    if (counts.near() === 0) return;
+
+    // Changelog: ersätt körningens egen post i stället för att lägga en ny vid
+    // varje checkpoint, annars växer loggen med hundratals poster.
+    const runId = `calc-backfill-${new Date().toISOString().slice(0, 10)}`;
+    const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as Array<{ run_id?: string }>;
+    const rest = changelog.filter((e) => e.run_id !== runId);
+    rest.push({
+      run_id: runId,
+      added: [],
+      updated: promises
+        .filter((p) => p.cost.calculation?.startsWith("Rekonstruerad"))
+        .map((p) => p.id),
       retracted: [], data_hash: computeDataHash(promises), timestamp: new Date().toISOString(),
-    });
-    writeFileSync(join(DATA, "changelog.json"), JSON.stringify(changelog, null, 2) + "\n");
+    } as never);
+    writeFileSync(join(DATA, "changelog.json"), JSON.stringify(rest, null, 2) + "\n");
 
     // EN samlad rättelse-post för hela kvalitetshöjningen — inte en per löfte.
     // Den nära-grenen ändrar inga belopp (bara tillagd uträkning), så det är en
@@ -278,8 +356,7 @@ async function main(): Promise<void> {
       });
       writeFileSync(rPath, JSON.stringify(rattelser, null, 1) + "\n");
     }
-  }
-  console.log(`\nSkrivet: ${near} uträkningar → promises.json; ${diverge} → calculation_review.json.`);
+  };
 }
 
 const isCli = process.argv[1]?.endsWith("calculation-backfill.mts");
