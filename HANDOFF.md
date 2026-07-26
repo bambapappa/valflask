@@ -236,9 +236,40 @@ gör något publikt (kräver ägarens go). Runbook: `MIGRERING.md`.
 2. **b-0014 andra halvan — nyckelordsindexet**: byggtidsindex över
    dokumentens fulltexter (fritextsök + ordtrender per parti).
    Fulltexterna hämtas vid indexbygget och lagras aldrig; indexet
-   checkas in skärvat. ~21 000 dokument ≈ ett par timmar i artigt
+   checkas in skärvat. ~23 600 dokument ≈ ett par timmar i artigt
    tempo — bygg som Actions-workflow eller från session med öppet nät.
-   EJ PÅBÖRJAT.
+   EJ PÅBÖRJAT. **Indexet har TVÅ användningar — bygg det för båda:**
+
+   a. **Sajten: fritextsök över handlingar** (ägarens fråga 2026-07-25).
+      Läsaren ska kunna söka ett ämne fritt och få alla motioner,
+      propositioner, frågor och voteringar som rör det. Viktigt för
+      hederligheten: indexet SÖKER, det dömer aldrig. "För/mot" visas
+      bara där det finns en godkänd koppling (som bär riktning) eller en
+      faktisk votering (som bär röstfördelning) — aldrig härlett ur att
+      ett ord förekommer i en text. Storleksgrind: `sok-index.json` har
+      tak 400 KB (`site/scripts/test-budget.mts`) och rymmer i dag 443
+      poster; 23 600 handlingar får aldrig plats i samma nyttolast —
+      därför skärvat index som hämtas på begäran, i linje med b-0014
+      ("incheckat skärvat") och budgetgrindens regel att sajten aldrig
+      skeppar råfilerna.
+
+   b. **Kandidaturvalet: väg in dokumenttexten, inte bara titeln.**
+      `rankaKandidater` matchar löftets ord mot handlingens TITEL. En
+      handling vars titel betonar en sak men vars innehåll gäller en
+      annan prövas därför mot fel löften — och mot rätt löfte aldrig,
+      eftersom noll titelöverlapp aldrig blir kandidat. **Konkret fall
+      (issue #174, avvisad):** motionen "Snabbare uppbyggnad av
+      krigssjukvård till stöd för Ukraina" yrkar sakligt på svensk
+      försvarsförmåga, men prövades bara mot Ukrainastöds-löftet
+      (titelorden "stöd" + "Ukraina") och kan aldrig nå löftet om ett
+      starkt svenskt försvar (`p-2026-0040`, noll titelöverlapp). Med
+      nyckelordsindexet kan rankningen väga dokumentets egna ord —
+      fortfarande deterministiskt, fortfarande utan modell i urvalet
+      (b-0011). Detta är den "kandidatstöd"-användning b-0014 självt
+      pekar ut som möjlig internt.
+
+   Kostar noll modellkvot: nyckelorden härleds deterministiskt
+   (tokenisering + stoppord + ordvikt), inga språkmodellanrop.
 3. **Full förslagskörning** (`foreslag`-workflown med --alla):
    1 328 kandidatpar enligt dry-run 2026-07-20 (202 löften har
    kandidater, 220 ärligt tomma). Räkna med låg men ren träffkvot —
