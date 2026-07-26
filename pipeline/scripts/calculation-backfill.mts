@@ -56,6 +56,8 @@ const STUB = arg("stub") !== undefined;
 const SAMPLE = Number(arg("sample") ?? (ALL ? "0" : "10"));
 const SEED = Number(arg("seed") ?? "1");
 const FACTOR = Number(arg("factor") ?? "1.5");
+/** Antal varv: löften som föll bort får en ny chans (transient API-bortfall). */
+const ROUNDS = Math.max(1, Number(arg("rounds") ?? "3"));
 
 /** Deterministisk PRNG (mulberry32) så slumpurvalet går att återskapa via --seed. */
 function rng(seed: number): () => number {
@@ -153,8 +155,21 @@ async function main(): Promise<void> {
   const { llm, model } = buildLlm();
   let near = 0, diverge = 0, skip = 0;
   const divergences: Array<Record<string, unknown>> = [];
+  const skipReasons = new Map<string, number>();
 
-  for (const p of selected) {
+  /**
+   * Ett löfte: returnerar true om det behandlades (uträkning fäst eller lagd
+   * till granskning), false om det hoppades.
+   *
+   * Skip-orsaken YTAS. I körning 30028792947 föll 243 av 357 löften bort och
+   * loggades alla som "modellen gav ingen uträkning" — men det var API:et som
+   * var otillgängligt i början och slutet av körningen (misslyckade anrop tog
+   * ~5 s mot ~28 s för riktiga svar). estimateCost sväljer anropsfel och
+   * returnerar ett tomt estimat, så felet syntes aldrig. method_note bär
+   * orsaken ("LLM-kostnadsanrop misslyckades", "ogiltig JSON", …) och skrivs
+   * nu ut, så nästa bortfall går att diagnostisera direkt ur loggen.
+   */
+  async function process(p: PromiseEntry): Promise<boolean> {
     const comparables = findComparableCosts(
       { title: p.title, category: p.category },
       pool,
@@ -168,11 +183,19 @@ async function main(): Promise<void> {
         llm, model, comparables,
       );
     } catch (e) {
-      console.log(`SKIP ${p.id} — estimatfel: ${e instanceof Error ? e.message : e}`);
-      skip++; continue;
+      const why = `estimatfel: ${e instanceof Error ? e.message : e}`;
+      console.log(`SKIP ${p.id} — ${why}`);
+      skipReasons.set(why, (skipReasons.get(why) ?? 0) + 1);
+      return false;
     }
 
-    if (!est.calculation) { console.log(`SKIP ${p.id} — modellen gav ingen uträkning`); skip++; continue; }
+    if (!est.calculation) {
+      // method_note skiljer misslyckat anrop från ett svar utan uträkning.
+      const why = est.method_note || "modellen gav ingen uträkning";
+      console.log(`SKIP ${p.id} — ingen uträkning (${why})`);
+      skipReasons.set(why, (skipReasons.get(why) ?? 0) + 1);
+      return false;
+    }
 
     const t = triage(p.cost, est.msek_base);
     const tag = t.near ? "NÄRA   " : "AVVIKER";
@@ -193,9 +216,36 @@ async function main(): Promise<void> {
         factor: t.factor, calculation: est.calculation,
       });
     }
+    return true;
   }
 
+  let pending = selected;
+  // Bortfallet är tidsklustrat (API otillgängligt i perioder), inte knutet till
+  // enskilda löften — därför är ett nytt varv över just de som föll bort värt
+  // mycket mer än att ge upp. Varvet avbryts när det inte längre räddar något.
+  for (let round = 1; round <= ROUNDS && pending.length > 0; round++) {
+    if (round > 1) {
+      console.log(`\n— Omtag ${round - 1}: ${pending.length} löften som föll bort, ny chans —\n`);
+      skipReasons.clear();
+    }
+    const failed: PromiseEntry[] = [];
+    for (const p of pending) if (!(await process(p))) failed.push(p);
+    if (failed.length === pending.length && round > 1) {
+      console.log(`\nOmtaget räddade inget — avbryter (API troligen fortsatt otillgängligt).`);
+      pending = failed;
+      break;
+    }
+    pending = failed;
+  }
+  skip = pending.length;
+
   console.log(`\nSummering: ${near} nära (uträkning fästs), ${diverge} avviker (till granskning), ${skip} hoppade.`);
+  if (skipReasons.size > 0) {
+    console.log("Skip-orsaker (sista varvet):");
+    for (const [why, n] of [...skipReasons.entries()].sort((a, b) => b[1] - a[1])) {
+      console.log(`  ${String(n).padStart(4)}  ${why.slice(0, 120)}`);
+    }
+  }
 
   if (DRY) { console.log("\n[DRY-RUN] Inget skrivet."); return; }
 
