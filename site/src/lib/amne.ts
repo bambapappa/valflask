@@ -19,7 +19,8 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { aktorsPartier } from "../../../pipeline/src/handlingar.ts";
 import { type DokumentTermer, type Skarva } from "../../../pipeline/src/nyckelord.ts";
-import { getHandlingMap, getKopplingar, getParties } from "./data.ts";
+import { stamma } from "../../../pipeline/src/stam.ts";
+import { getHandlingMap, getKopplingar, getParties, getPersoner } from "./data.ts";
 
 function indexKatalog(): string {
   return resolve(process.cwd(), "../data/nyckelord");
@@ -70,7 +71,7 @@ export function ordSkarvor(): string[] {
  * igenom — och listan skulle ensam spränga skärvan. Antalet redovisas
  * alltid i sin helhet, så läsaren ser att urvalet är ett urval.
  */
-export const MAX_PER_ORD = 400;
+export const MAX_PER_ORD = 300;
 
 /** En ordstams förekomster: hela antalet, och de senaste handlingarna. */
 export interface OrdPost {
@@ -233,6 +234,22 @@ export function byggPartiTrender(maxOrd = 18, minAntal = 15): PartiTrend[] {
     }
   }
 
+  // Ledamöternas FÖRNAMN hålls utanför trenderna. Ett dokuments egna
+  // undertecknare rensas redan vid utvinningen, men politiker nämns också i
+  // VARANDRAS texter — Socialdemokraterna skriver om Jimmie Åkesson, och
+  // "jimmie" blev därmed ett av S:s mest utmärkande ord. Att peka ut en
+  // motståndares förnamn som ett partis ämne säger ingenting om politiken.
+  //
+  // Bara förnamn, och bara här. Efternamn krockar med sakord ("Strand",
+  // "Berg", "Lind") och får inte tystas globalt. Och namnen rensas inte ur
+  // indexet: att SÖKA på en politiker är en rimlig sak att vilja göra —
+  // det är att presentera namnet som ett ämne som är fel.
+  const fornamn = new Set<string>();
+  for (const p of getPersoner()) {
+    const forsta = p.namn.trim().split(/\s+/u)[0]?.toLowerCase();
+    if (forsta && forsta.length >= 4) fornamn.add(stamma(forsta));
+  }
+
   const antalDok = index.size;
   const trender: PartiTrend[] = [];
   for (const [kod, namn] of partinamn) {
@@ -246,6 +263,7 @@ export function byggPartiTrender(maxOrd = 18, minAntal = 15): PartiTrend[] {
     const ovrigaTotalt = antalDok - partiTotalt;
     for (const [stam, antal] of karta) {
       if (antal < minAntal) continue;
+      if (fornamn.has(stam)) continue;
       // Partiets andel delat med de övrigas andel av samma ord.
       const iOvriga = (globalDf.get(stam) ?? antal) - antal;
       const andel = antal / partiTotalt;
