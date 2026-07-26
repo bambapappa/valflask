@@ -375,11 +375,26 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-25 `claude/handlingsvagen-ko-beta-6oiq2r` → bygger b-0014:s
-  nyckelordsindex (Återstår punkt 2): extraktion + indexbygge som
-  workflow, och inkoppling i kandidaturvalet. Rör inte
+- 2026-07-26 `claude/handlingsvagen-ko-beta-6oiq2r` → b-0014:s
+  nyckelordsindex. **Kod och sajtsida klara och mergade** (PR #196
+  ordstamsreducering, #197 fritextsök + ordtrender, #198 bestämd form i
+  sökningen, #199 namnfilter + symmetriska sökformer).
+  **Omindexering pågår: run 30202635850, startad 12:43 på `2dc7e5c`
+  med `om: true`, väntas klar ~15:45.** Rör inte
   `pipeline/src/foreslag.ts`, `data/nyckelord*` eller `skord`-vägen
   parallellt. Indexbygget kostar ingen modellkvot.
+
+  **Varför indexet byggs om:** första körningen (30193073880) startade
+  minuter innan visningsformen mergades, så dess 21 052 poster saknar
+  `y` och bär ledamotsnamn som termer. Två grindar i
+  `site/scripts/test-amne.mts` är RÖDA till ombygget landat — det är
+  avsiktligt, sajten ska inte gå att driftsätta med en ordvisualisering
+  som visar efternamn i stället för ämnen.
+
+  **Näst på tur när indexet är klart:** fullkörning av `foreslag` med
+  det indexbaserade kandidaturvalet (82 löften återstår efter
+  `p-2026-0469`). Kör den INTE parallellt med indexbygget — båda
+  skriver till main, och kandidaturvalet ska läsa det färdiga indexet.
 
 **⚠️ Fullkörning 2026-07-25 (run 30159619034) AVBRUTEN AV KREDITSLUT —
 82 löften återstår.** Första fullkörningen med `deepseek-v4-pro` + den
