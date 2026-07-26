@@ -18,7 +18,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { aktorsPartier } from "../../../pipeline/src/handlingar.ts";
-import { ordvikt, type DokumentTermer, type Skarva } from "../../../pipeline/src/nyckelord.ts";
+import { type DokumentTermer, type Skarva } from "../../../pipeline/src/nyckelord.ts";
 import { getHandlingMap, getKopplingar, getParties } from "./data.ts";
 
 function indexKatalog(): string {
@@ -165,7 +165,10 @@ export interface PartiOrd {
   ord: string;
   /** antal handlingar från partiet där ordet står */
   antal: number;
-  /** hur utmärkande ordet är för partiet jämfört med alla andra */
+  /**
+   * Övervikt: hur många gånger oftare partiet använder ordet än de övriga
+   * partierna tillsammans. 3 betyder tre gånger så ofta.
+   */
   vikt: number;
 }
 
@@ -179,15 +182,25 @@ export interface PartiTrend {
 
 /**
  * Ordtrender per parti (b-0014): vilka ord ett parti använder MER än de
- * andra. Räknas deterministiskt ur indexet — andelen av partiets egna
- * handlingar där ordet står, vägd mot hur ovanligt ordet är i hela
- * materialet. Ingen modell, ingen tolkning: det är partiernas egna ord,
- * räknade.
+ * andra. Ingen modell, ingen tolkning — partiernas egna ord, räknade.
  *
- * Ord som bara står i någon enstaka handling utelämnas — de säger mer om
- * slumpen än om partiet.
+ * Måttet är en ren jämförelse: andelen av partiets egna handlingar där
+ * ordet står, delat med andelen av DE ÖVRIGA partiernas handlingar där det
+ * står. Tre betyder att partiet använder ordet tre gånger så ofta som de
+ * andra tillsammans.
+ *
+ * Att jämföra mot de övriga och inte mot hela materialet är avgörande för
+ * att partierna ska gå att jämföra med varandra. S står för en tredjedel av
+ * allt material, så S:s egna handlingar drar upp "snittet" och gör att S
+ * knappt kan avvika från det — mot hela materialet toppade S på 2,8 gånger
+ * medan KD nådde 18,7, vilket sade mer om partiernas storlek än om deras
+ * politik. Mot övriga försvinner den snedvridningen.
+ *
+ * Ord som står i färre än `minAntal` av partiets handlingar utelämnas — de
+ * säger mer om slumpen än om partiet. Nämnaren får ett påslag på ett så att
+ * ett ord ingen annan använt ger ett stort men ändligt tal.
  */
-export function byggPartiTrender(maxOrd = 18, minAntal = 5): PartiTrend[] {
+export function byggPartiTrender(maxOrd = 18, minAntal = 15): PartiTrend[] {
   const index = getTermIndex();
   const handlingar = getHandlingMap();
   const partinamn = new Map(getParties().map((p) => [p.code, p.namn]));
@@ -230,11 +243,14 @@ export function byggPartiTrender(maxOrd = 18, minAntal = 5): PartiTrend[] {
       continue;
     }
     const ord: PartiOrd[] = [];
+    const ovrigaTotalt = antalDok - partiTotalt;
     for (const [stam, antal] of karta) {
       if (antal < minAntal) continue;
-      // Andel av partiets handlingar × hur ovanligt ordet är i materialet.
+      // Partiets andel delat med de övrigas andel av samma ord.
+      const iOvriga = (globalDf.get(stam) ?? antal) - antal;
       const andel = antal / partiTotalt;
-      const vikt = andel * ordvikt(globalDf.get(stam) ?? 1, antalDok);
+      const andelOvriga = (iOvriga + 1) / (ovrigaTotalt + 1);
+      const vikt = andel / andelOvriga;
       const former = formRakning.get(stam);
       const visning = former
         ? [...former.entries()].sort(
