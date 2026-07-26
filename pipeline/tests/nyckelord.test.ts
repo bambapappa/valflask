@@ -5,6 +5,7 @@ import {
   inverteraIndex,
   ordvikt,
   raknaTermer,
+  betankandeNyckel,
   skarvaFor,
   slaIhopSkarvor,
   taOrd,
@@ -236,4 +237,47 @@ test("utvinnTermer: namnfiltret tar ordet, inte ordfamiljen", () => {
   assert.ok(med.t.includes(stamma("stranden")), "böjt sakord står kvar");
   assert.ok(med.t.includes(stamma("strandzonen")), "sammansatt sakord står kvar");
   assert.ok(med.t.includes(stamma("berget")), "andra sakord är orörda");
+});
+
+test("utvinnTermer: ord utan sakinnehåll blir inte termer", () => {
+  // Fulltexterna gjorde alla partier lika: de vanligaste termerna i hela
+  // materialet var "anledning", "avser", "viktig", "använda". Ett
+  // ämnesregister ska svara på vad partierna sagt om skolan — inte visa
+  // att alla tycker att saker är viktiga.
+  const text = `
+    Med anledning av att det är viktigt att använda dagens möjligheter
+    avser vi att bidra. Sammantaget avstyrker utskottet förslaget.
+    Skolan och tandvården behöver fler platser.
+  `;
+  const { t } = utvinnTermer(text, 20);
+  for (const tom of ["anledning", "viktigt", "använda", "avser", "sammantaget", "avstyrker"]) {
+    assert.ok(!t.includes(stamma(tom)), `${tom} skulle rensats`);
+  }
+  assert.ok(t.includes(stamma("skolan")), "sakordet skolan ska finnas kvar");
+  assert.ok(t.includes(stamma("tandvården")), "sakordet tandvården ska finnas kvar");
+});
+
+test("utvinnTermer: substantivet vikt överlever adjektivet viktig", () => {
+  // Stammen är gemensam, så filtret måste sålla på ordformen. Annars tystas
+  // ett sakord för att ett omdömesord råkar dela stam med det.
+  const { t } = utvinnTermer("Vikten av tandvård är viktig. Vikten mäts i kilo.", 20);
+  assert.ok(t.includes(stamma("vikten")), "substantivet vikt ska finnas kvar");
+});
+
+test("utvinnTermer: partinamn blir inte söktermer", () => {
+  // Ett parti nämner sig självt i sina egna dokument och nästan ingen annan
+  // gör det, så namnet blev partiets mest "utmärkande ord". Att söka fram
+  // ett visst partis handlingar är ett filter på parti, inte ett sökord.
+  const text = "Vänsterpartiet och Miljöpartiet vill se fler vårdplatser i vården.";
+  const { t } = utvinnTermer(text, 20);
+  assert.ok(!t.includes(stamma("vänsterpartiet")));
+  assert.ok(!t.includes(stamma("miljöpartiet")));
+  assert.ok(t.includes(stamma("vårdplatser")), "sakordet ska finnas kvar");
+});
+
+test("skarvaFor: betänkanden hamnar i egen skärva", () => {
+  assert.equal(skarvaFor("202223:SkU2"), "bet");
+  assert.equal(skarvaFor("202526:JuU22"), "bet");
+  assert.equal(skarvaFor("h-2026-12469"), "12");
+  assert.equal(betankandeNyckel("2022/23", "SkU2"), "202223:SkU2");
 });

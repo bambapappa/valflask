@@ -10,8 +10,11 @@
  *
  * Återupptagbart: redan indexerade handlingar hoppas över, och varje
  * skärva sparas löpande. En avbruten körning fortsätter där den slutade.
- * Voteringar har ingen egen dokumenttext (deras text står i betänkandet)
- * och hoppas över här.
+ *
+ * Voteringar har ingen egen dokumenttext — deras sak står i betänkandet som
+ * röstningen gällde. Betänkandena indexeras därför i en egen skärva under
+ * samma nyckel som voteringens dok_id ("202223:SkU2"), så en sökning på ett
+ * ämne också kan svara på hur partierna RÖSTADE i frågan.
  *
  *   npm run nyckelord -- [--limit N] [--max-termer 40] [--om]
  *
@@ -27,7 +30,14 @@ import { resolve, join } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
 import { fetchDokumentText } from "../src/riksdagen.ts";
 import { politeFetch } from "./hamta.mts";
-import { namnOrd, skarvaFor, utvinnTermer, type DokumentTermer, type Skarva } from "../src/nyckelord.ts";
+import {
+  betankandeNyckel,
+  namnOrd,
+  skarvaFor,
+  utvinnTermer,
+  type DokumentTermer,
+  type Skarva,
+} from "../src/nyckelord.ts";
 
 const ROT = resolve(import.meta.dirname, "../..");
 const INDEXKATALOG = join(ROT, "data/nyckelord");
@@ -83,8 +93,17 @@ async function main() {
     return !!s && id in s.handlingar;
   };
 
-  // Voteringar har ingen egen dokumenttext — deras innehåll står i
-  // betänkandet, som skördas för sig.
+  // Voteringar har ingen egen dokumenttext — deras sak står i betänkandet
+  // som röstningen gällde. Betänkandena indexeras därför för sig, under
+  // samma nyckel som voteringens dok_id, så en sökning på ett ämne också
+  // kan svara på hur partierna RÖSTADE i frågan.
+  const betankanden: { dok_id: string; rm: string; beteckning: string }[] = JSON.parse(
+    readFileSync(join(ROT, "data/betankanden.json"), "utf8"),
+  );
+  const betAttGora = betankanden.filter(
+    (b) => om || !redanIndexerad(betankandeNyckel(b.rm, b.beteckning)),
+  );
+
   const attGora = handlingar.filter(
     (h) => h.kind !== "votering" && (om || !redanIndexerad(h.id)),
   );
@@ -94,7 +113,12 @@ async function main() {
       handlingar.filter((h) => h.kind !== "votering").length
     } | kvar att indexera: ${attGora.length}`,
   );
-  if (attGora.length === 0) {
+  console.log(
+    `betänkanden: ${betankanden.length} (textkälla för ${
+      handlingar.filter((h) => h.kind === "votering").length
+    } voteringar) | kvar att indexera: ${betAttGora.length}`,
+  );
+  if (attGora.length === 0 && betAttGora.length === 0) {
     console.log("Indexet är komplett — inget att göra.");
     return;
   }
@@ -130,7 +154,35 @@ async function main() {
     }
   }
 
+  // Betänkandena: samma utvinning, egen skärva. Ingen undertecknarlista att
+  // filtrera — ett betänkande är utskottets text, inte en ledamots.
+  let betKlara = 0;
+  let betFel = 0;
+  for (const b of betAttGora) {
+    if (klara + fel + betKlara + betFel >= limit) break;
+    try {
+      const text = await fetchDokumentText(politeFetch, b.dok_id);
+      const nyckel = betankandeNyckel(b.rm, b.beteckning);
+      const namn = skarvaFor(nyckel);
+      const skärva = skärvor.get(namn) ?? { version: 1 as const, handlingar: {} };
+      skärva.handlingar[nyckel] = utvinnTermer(text, maxTermer);
+      skärvor.set(namn, skärva);
+      orörda.add(namn);
+      betKlara += 1;
+      if (betKlara % 50 === 0) {
+        for (const n of orörda) skrivSkarva(n, skärvor.get(n)!);
+        orörda.clear();
+        console.log(`  ${betKlara} betänkanden indexerade (${betFel} fel) — delsparat`);
+      }
+    } catch (e) {
+      betFel += 1;
+      const msg = e instanceof Error ? e.message : String(e);
+      console.error(`  betänkande ${b.rm}:${b.beteckning} (${b.dok_id}): ${msg}`);
+    }
+  }
+
   for (const n of orörda) skrivSkarva(n, skärvor.get(n)!);
+  console.log(`betänkanden: ${betKlara} indexerade, ${betFel} fel`);
 
   const totalt = [...skärvor.values()].reduce(
     (s, skärva) => s + Object.keys(skärva.handlingar).length,

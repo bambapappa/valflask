@@ -68,6 +68,76 @@ const FORMELORD = new Set([
   "åtgärder", "åtgärd", "behov", "möjlighet", "möjligheter", "syfte", "syftet",
 ]);
 
+/**
+ * Ord utan sakinnehåll — det som blir kvar när formelfraserna rensats men
+ * prosan fortfarande inte säger vad texten HANDLAR om.
+ *
+ * Fulltexterna avslöjade behovet: de vanligaste termerna i hela materialet
+ * var "anledning" (22 %), "avser" (22 %), "viktig" (19 %), "använda" (18 %).
+ * Ett ämnesregister ska kunna svara på vad partierna sagt om skolan,
+ * försvaret eller npf — inte visa att alla partier tycker att saker är
+ * viktiga.
+ *
+ * Listan bär ORDFORMER, inte stammar, av samma skäl som stopporden: stammar
+ * krockar över ordgränser. "viktig/viktigt/viktiga" delar stam med
+ * substantivet "vikt", och att sålla på stammen skulle tysta båda. Därför
+ * står böjningsformerna utskrivna, valda ur de former som faktiskt
+ * förekommer i materialet.
+ *
+ * Gränsen går vid om någon skulle SÖKA på ordet. "arbetare" och "bidrag"
+ * bär sakinnehåll och står kvar; verben "arbeta" och "bidra" gör det inte.
+ */
+const TOMORD = new Set([
+  // "med anledning av prop. …" — följdmotionernas standardinledning
+  "anledning", "anledningen", "anledningar", "anledningarna",
+  "bakgrund", "bakgrunden", "motivering", "motiveringen",
+  // interpellationernas och frågornas formel: "vad avser statsrådet …"
+  "avser", "avses", "avse", "anser", "anses", "anse",
+  // utskottsspråk (procedur, inte politik)
+  "avstyrker", "avstyrkt", "avstyrkte", "avstyrktes", "tillstyrker",
+  "avvisar", "avvisa", "avvisas", "avvisade", "avvisades", "avvisat",
+  "sammantaget", "anslagsförslag", "anslagsfördelning", "riksdagsbeslut",
+  "anförande", "anföranden", "anförandet",
+  // allmänna omdömen och modalord
+  "viktig", "viktigt", "viktiga", "viktigare", "viktigaste",
+  "bättre", "bäst", "bästa", "borde", "bör", "krävs", "kräver",
+  "betydande", "betydelse", "betydelsen", "betydligt", "betyder",
+  "avgörande", "avgöra", "avgörs", "avgöras",
+  "allvarlig", "allvarligt", "allvarliga", "allvarligare", "allvarligaste",
+  "behövs", "behöva", "behövas", "behovet", "behoven",
+  "förutsättningar", "förutsättningarna", "förutsättning", "förutsättningen",
+  // allmänna verb utan riktning i sak
+  "använda", "används", "användas", "använder", "använts",
+  "innebär", "innebära", "bidra", "bidrar", "skapa", "skapar", "skapas",
+  "agera", "agerar", "agerat", "agerande", "överväga", "överväger",
+  "arbeta", "arbetar", "arbetat", "arbetade", "arbetas",
+  // allmänna mängd-, tids- och pekord
+  "allt", "alltmer", "annan", "annans", "båda", "bara", "dock", "fram",
+  "idag", "dagens", "dags", "dagar", "dagen", "dagligen", "fall",
+  "antalet", "antal", "delar", "dels", "dela", "delas", "delat",
+  "sätt", "sätta", "sätter", "exempel", "härav", "därtill", "således",
+]);
+
+/**
+ * Partinamnen. Ett parti nämner sig självt i sina egna dokument och nästan
+ * ingen annan gör det, så namnet blir partiets mest "utmärkande ord" —
+ * "vänsterpartiet" låg 10 000 gånger över de övrigas användning. Det säger
+ * bara vem som skrivit dokumentet, vilket registret redan vet.
+ *
+ * Att söka fram ett visst partis handlingar är ett FILTER på parti, inte en
+ * sökning på ett ord.
+ */
+const PARTINAMN = new Set([
+  "socialdemokraterna", "socialdemokratiska", "socialdemokrat",
+  "socialdemokrater", "moderaterna", "moderata", "moderat", "moderater",
+  "sverigedemokraterna", "sverigedemokratiska", "sverigedemokrat",
+  "sverigedemokrater", "centerpartiet", "centerpartiets", "centerpartist",
+  "centerpartister", "vänsterpartiet", "vänsterpartiets", "vänsterpartist",
+  "vänsterpartister", "kristdemokraterna", "kristdemokratiska",
+  "kristdemokrat", "kristdemokrater", "liberalerna", "liberala", "liberal",
+  "miljöpartiet", "miljöpartiets", "miljöpartist", "miljöpartister",
+]);
+
 /** Ett dokuments utvunna termer, som de lagras i indexet. */
 export interface DokumentTermer {
   /** Ordstammar, mest utmärkande först (filtrerade och avkortade). */
@@ -133,6 +203,7 @@ export function raknaTermerMedFormer(
   const räkning = new Map<string, Map<string, number>>();
   for (const ord of taOrd(text)) {
     if (STOPPORD.has(ord) || FORMELORD.has(ord)) continue;
+    if (TOMORD.has(ord) || PARTINAMN.has(ord)) continue;
     if (namnord?.has(ord)) continue;
     if (/^[0-9-]+$/u.test(ord)) continue; // rena tal/bindestreck säger inget
     const stam = stamma(ord);
@@ -209,9 +280,22 @@ export function utvinnTermer(
  * få nog att inte dränka git-trädet. Okända id-former hamnar i "ovrigt".
  */
 export function skarvaFor(handlingId: string): string {
+  // Betänkandena ligger i en egen skärva. De är inte handlingar utan
+  // textkällan bakom voteringarna: en votering har ingen egen text, dess
+  // sak står i betänkandet som röstningen gällde. Nyckeln är densamma som
+  // voteringens dok_id ("202223:SkU2"), så de möts utan mellanled.
+  if (BETANKANDENYCKEL.test(handlingId)) return "bet";
   const m = handlingId.match(/^h-\d{4}-(\d+)$/u);
   if (!m) return "ovrigt";
   return String(Math.floor(Number(m[1]) / 1000)).padStart(2, "0");
+}
+
+/** Nyckelform för ett betänkande: riksmöte utan snedstreck, kolon, beteckning. */
+export const BETANKANDENYCKEL = /^\d{6}:[A-ZÅÄÖ][A-Za-zÅÄÖåäö]*\d+$/u;
+
+/** Betänkandets nyckel ur riksmöte och beteckning ("2022/23" + "SkU2"). */
+export function betankandeNyckel(rm: string, beteckning: string): string {
+  return `${rm.replace("/", "")}:${beteckning}`;
 }
 
 /**
