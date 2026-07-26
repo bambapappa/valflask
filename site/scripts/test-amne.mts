@@ -7,6 +7,7 @@
  */
 import assert from "node:assert";
 import { sokStammar } from "../../pipeline/src/nyckelord.ts";
+import { getPersoner } from "../src/lib/data.ts";
 import {
   byggHandlingSkarva,
   byggOrdSkarva,
@@ -75,17 +76,52 @@ if (!indexFinns()) {
   for (const nyckel of handlingSkarvor()) kort += Object.keys(byggHandlingSkarva(nyckel)).length;
   grind("handlingsskärvor täcker indexet", kort > 0, `${kort} handlingar`);
 
+  // Indexet ska självt bära visningsformen. Faller den bort visar sidan
+  // stammar ("bost", "vårdplat") — och eftersom modellen tyst faller
+  // tillbaka på stammen måste grinden titta i indexet, inte på utfallet.
+  let medForm = 0;
+  for (const { y } of getTermIndex().values()) if (y && y.length > 0) medForm += 1;
+  grind(
+    "indexet bär visningsform per term",
+    medForm === getTermIndex().size,
+    `${medForm} av ${getTermIndex().size} handlingar`,
+  );
+
   // Ordtrenderna ska bära en LÄSBAR form, inte stammen.
   const trender = byggPartiTrender();
   const medOrd = trender.filter((t) => t.ord.length > 0);
   grind("ordtrender per parti", medOrd.length > 0, `${medOrd.length} partier med ord`);
-  grind(
-    "trendorden har visningsform",
-    medOrd.every((t) => t.ord.every((o) => typeof o.ord === "string" && o.ord.length > 0)),
-  );
+  // Ingen grind på "ordet är en icke-tom sträng" här: modellen faller tyst
+  // tillbaka på stammen, så en sådan grind blir grön även när formen saknas.
+  // Egenskapen prövas i indexgrinden ovan i stället — vid källan.
   grind(
     "trendorden är sorterade på vikt",
     medOrd.every((t) => t.ord.every((o, i) => i === 0 || t.ord[i - 1]!.vikt >= o.vikt)),
+  );
+
+  // Ordtrenderna ska visa POLITIK, inte personer. Ett dokuments
+  // undertecknare står i varje dokument den ledamoten skrivit under och i
+  // nästan inga andra — alltså precis det mönster ordvikten belönar högst.
+  // Slinker namnen igenom blir partiets "utmärkande ord" dess egna
+  // ledamöters efternamn, vilket inte säger en läsare någonting.
+  const namnord = new Set<string>();
+  for (const p of getPersoner()) {
+    for (const del of p.namn.toLowerCase().split(/[^a-zåäöéü-]+/u)) {
+      if (del.length >= 4) namnord.add(del);
+    }
+  }
+  const namnITrend: string[] = [];
+  for (const t of trender) {
+    for (const o of t.ord) {
+      if (namnord.has(o.ord.toLowerCase()) || namnord.has(o.stam)) {
+        namnITrend.push(`${t.kod}:${o.ord}`);
+      }
+    }
+  }
+  grind(
+    "ordtrenderna bär inga ledamotsnamn",
+    namnITrend.length === 0,
+    namnITrend.slice(0, 8).join(" "),
   );
 
   // Formen läsaren råkar skriva får inte avgöra träffen. "skolan" och

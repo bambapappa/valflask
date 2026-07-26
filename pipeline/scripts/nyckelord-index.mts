@@ -27,7 +27,7 @@ import { resolve, join } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
 import { fetchDokumentText } from "../src/riksdagen.ts";
 import { politeFetch } from "./hamta.mts";
-import { skarvaFor, utvinnTermer, type DokumentTermer, type Skarva } from "../src/nyckelord.ts";
+import { namnOrd, skarvaFor, utvinnTermer, type DokumentTermer, type Skarva } from "../src/nyckelord.ts";
 
 const ROT = resolve(import.meta.dirname, "../..");
 const INDEXKATALOG = join(ROT, "data/nyckelord");
@@ -107,7 +107,9 @@ async function main() {
     if (klara + fel >= limit) break;
     try {
       const text = await fetchDokumentText(politeFetch, h.dok_id);
-      const termer = utvinnTermer(text, maxTermer);
+      // Dokumentets egna undertecknare hålls utanför termerna — annars blir
+      // partiets mest utmärkande ord dess ledamöters efternamn.
+      const termer = utvinnTermer(text, maxTermer, namnOrd(h.persons));
       const namn = skarvaFor(h.id);
       const skärva = skärvor.get(namn) ?? { version: 1 as const, handlingar: {} };
       skärva.handlingar[h.id] = termer;
