@@ -16,7 +16,7 @@
  * så ett löfte i en böjningsform aldrig möter ett dokument i en annan.
  * Löftets ord stammas på samma sätt vid jämförelsen.
  */
-import { stamma } from "./stam.ts";
+import { stamma, VOKALER } from "./stam.ts";
 
 /**
  * Allmänna svenska stoppord. Korta ord (< 4 tecken) faller redan på
@@ -126,10 +126,14 @@ export function raknaTermer(text: string): Map<string, number> {
  * Som `raknaTermer`, men behåller vilka böjningsformer varje stam kom
  * ifrån och hur ofta — underlaget för en läsbar visningsform.
  */
-export function raknaTermerMedFormer(text: string): Map<string, Map<string, number>> {
+export function raknaTermerMedFormer(
+  text: string,
+  namnord?: ReadonlySet<string>,
+): Map<string, Map<string, number>> {
   const räkning = new Map<string, Map<string, number>>();
   for (const ord of taOrd(text)) {
     if (STOPPORD.has(ord) || FORMELORD.has(ord)) continue;
+    if (namnord?.has(ord)) continue;
     if (/^[0-9-]+$/u.test(ord)) continue; // rena tal/bindestreck säger inget
     const stam = stamma(ord);
     const former = räkning.get(stam) ?? new Map<string, number>();
@@ -150,12 +154,40 @@ export function visningsForm(former: Map<string, number>): string {
 }
 
 /**
+ * Namnorden i ett dokuments egen undertecknarlista, som ska hållas utanför
+ * termerna.
+ *
+ * En motion avslutas med sina undertecknare, en interpellation namnger sitt
+ * statsråd. De namnen står i varje dokument personen skrivit under, och i
+ * nästan inga andra — alltså precis det mönster ordvikten belönar högst.
+ * Utan filtret blir ett partis mest utmärkande "ämnesord" dess egna
+ * ledamöters efternamn, vilket säger en läsare ingenting om politiken.
+ *
+ * Filtret är avsiktligt smalt: bara namnen i DETTA dokument rensas, inte en
+ * global namnlista. Ett ord som "strand" eller "berg" bär sakinnehåll och
+ * ska finnas kvar överallt utom i de enstaka dokument där någon som heter så
+ * råkar ha skrivit under.
+ */
+export function namnOrd(personer: readonly { name: string }[]): Set<string> {
+  const ut = new Set<string>();
+  for (const p of personer) for (const ord of taOrd(p.name)) ut.add(ord);
+  return ut;
+}
+
+/**
  * Dokumentets mest utmärkande termer. Sorteringen är deterministisk:
  * frekvens fallande, därefter bokstavsordning — samma text ger alltid
  * samma lista, oavsett hur räkningen råkade byggas.
+ *
+ * `namnord` är dokumentets egna undertecknare (se `namnOrd`) och hålls
+ * utanför termerna.
  */
-export function utvinnTermer(text: string, max = 40): DokumentTermer {
-  const medFormer = raknaTermerMedFormer(text);
+export function utvinnTermer(
+  text: string,
+  max = 40,
+  namnord?: ReadonlySet<string>,
+): DokumentTermer {
+  const medFormer = raknaTermerMedFormer(text, namnord);
   const valda = [...medFormer.entries()]
     .map(([stam, former]) => {
       let summa = 0;
@@ -270,17 +302,29 @@ export function inverteraIndex(
  * Detta rör bara sökningen. Indexet lagrar en stam per ord som förr.
  */
 export function sokStammar(ord: string): string[] {
-  const former = new Set<string>([ord]);
-  // Bestämd form av a-ord: skolan → skola, flickan → flicka
-  if (ord.endsWith("an")) former.add(ord.slice(0, -1));
-  // Bestämd form neutrum: försvaret → försvar, stödet → stöd
-  if (ord.endsWith("et")) former.add(ord.slice(0, -2));
-  // Bestämd form utrum: bilen → bil
-  if (ord.endsWith("en")) former.add(ord.slice(0, -2));
-  // ... och åt andra hållet, för grundformen kan vara den övertolkade:
-  // försvar → försvaret, skola → skolan
-  former.add(`${ord}et`);
-  if (ord.endsWith("a")) former.add(`${ord}n`);
+  const bestamd = (w: string) => /(?:an|en|et)$/u.test(w);
+
+  // Steg 1: grundformerna. Ordet som det skrevs, plus det ordet blir när en
+  // bestämd ändelse avlägsnas.
+  const baser = new Set<string>([ord]);
+  if (ord.endsWith("an")) baser.add(ord.slice(0, -1)); // skolan → skola
+  if (ord.endsWith("et")) baser.add(ord.slice(0, -2)); // försvaret → försvar
+  if (ord.endsWith("en")) baser.add(ord.slice(0, -2)); // bilen → bil
+
+  // Steg 2: samma regler framåt från varje grundform. Att gå åt BÅDA hållen
+  // från samma grundformer är vad som gör sökningen symmetrisk — "vård" och
+  // "vården" landar på samma mängd oavsett vilken läsaren skrev.
+  //
+  // Ändelser staplas aldrig: "kommunen" + "et" blir "kommunenet", vars stam
+  // är "kommunen" — en påhittad stam som råkar krocka med indexet och gör
+  // sökningen osymmetrisk igen. Och "et" bara efter konsonant; "skolaet" är
+  // inget svenskt ord.
+  const former = new Set<string>(baser);
+  for (const bas of baser) {
+    if (bestamd(bas)) continue;
+    if (bas.endsWith("a")) former.add(`${bas}n`);
+    else if (!VOKALER.has(bas.slice(-1))) former.add(`${bas}et`);
+  }
 
   const stammar = new Set<string>();
   for (const form of former) {

@@ -9,6 +9,7 @@ import {
   slaIhopSkarvor,
   taOrd,
   termPoang,
+  namnOrd,
   utvinnTermer,
   visningsForm,
   sokStammar,
@@ -152,4 +153,87 @@ test("sokStammar: är deterministisk och utan dubbletter", () => {
   const a = sokStammar("skolan");
   assert.deepEqual(a, sokStammar("skolan"));
   assert.equal(new Set(a).size, a.length);
+});
+
+test("sokStammar: bestämd och obestämd form ger samma stammar", () => {
+  // Kärnegenskapen: den form läsaren råkar skriva får inte avgöra träffen.
+  const par: [string, string][] = [
+    ["skola", "skolan"],
+    ["försvar", "försvaret"],
+    ["vård", "vården"],
+    ["kommun", "kommunen"],
+    ["bil", "bilen"],
+    ["stöd", "stödet"],
+    ["region", "regionen"],
+  ];
+  for (const [grund, bestamd] of par) {
+    assert.deepEqual(
+      sokStammar(grund),
+      sokStammar(bestamd),
+      `${grund} och ${bestamd} ska ge samma stammar`,
+    );
+  }
+});
+
+test("sokStammar: staplar aldrig bestämda ändelser", () => {
+  // "kommunen" + "et" blir "kommunenet", vars stam är "kommunen" — en
+  // påhittad stam som krockade med indexet och gjorde sökningen osymmetrisk.
+  for (const ord of ["kommunen", "skolan", "försvaret", "vården"]) {
+    for (const stam of sokStammar(ord)) {
+      assert.ok(
+        !/(?:anen|enen|enet|etet|anet)/u.test(stam),
+        `${ord} gav den staplade stammen ${stam}`,
+      );
+    }
+  }
+});
+
+test("namnOrd: plockar ut namndelarna, gemena och ≥ 4 tecken", () => {
+  const ord = namnOrd([{ name: "Magnus Jacobsson" }, { name: "Kjell-Arne Ottosson" }]);
+  assert.ok(ord.has("magnus"));
+  assert.ok(ord.has("jacobsson"));
+  assert.ok(ord.has("ottosson"));
+  // "Kjell-Arne" delas på bindestreck av ordindelningen; korta delar faller
+  // på längdregeln som alla andra ord.
+  assert.ok(!ord.has("Magnus"), "namnorden ska vara gemena");
+});
+
+test("utvinnTermer: dokumentets undertecknare blir inte termer", () => {
+  // Undertecknarlistan står i varje dokument ledamoten skrivit under och i
+  // nästan inga andra — utan filtret blir efternamnet partiets mest
+  // utmärkande "ämnesord".
+  const text = `
+    Riksdagen bör besluta om fler vårdplatser i den nära vården.
+    Vårdplatser behövs i hela landet. Vårdplatser räddar liv.
+    Magnus Jacobsson (KD) Kjell-Arne Ottosson (KD)
+  `;
+  const utan = utvinnTermer(text, 10);
+  assert.ok(utan.t.includes(stamma("vårdplatser")));
+  assert.ok(utan.t.includes(stamma("jacobsson")), "utan filter slinker namnet in");
+
+  const med = utvinnTermer(text, 10, namnOrd([
+    { name: "Magnus Jacobsson" },
+    { name: "Kjell-Arne Ottosson" },
+  ]));
+  assert.ok(med.t.includes(stamma("vårdplatser")), "sakordet ska finnas kvar");
+  for (const namn of ["magnus", "jacobsson", "ottosson"]) {
+    assert.ok(!med.t.includes(stamma(namn)), `${namn} skulle filtrerats bort`);
+  }
+});
+
+test("utvinnTermer: namnfiltret tar ordet, inte ordfamiljen", () => {
+  // Namn som också är sakord ("Strand", "Berg") får inte tysta sakinnehållet.
+  // Filtret matchar den exakta ordformen, så undertecknarradens "Strand"
+  // faller medan "stranden" och "strandskyddet" står kvar — och bara i det
+  // dokument där personen skrivit under, aldrig globalt.
+  const text =
+    "Strandskyddet vid stranden och berget måste värnas i hela strandzonen. Anna Strand";
+  const utan = utvinnTermer(text, 10);
+  assert.ok(utan.t.includes(stamma("anna")), "utan filter slinker förnamnet in");
+
+  const med = utvinnTermer(text, 10, namnOrd([{ name: "Anna Strand" }]));
+  assert.ok(!med.t.includes(stamma("anna")), "namnordet skulle filtrerats");
+  assert.ok(med.t.includes(stamma("stranden")), "böjt sakord står kvar");
+  assert.ok(med.t.includes(stamma("strandzonen")), "sammansatt sakord står kvar");
+  assert.ok(med.t.includes(stamma("berget")), "andra sakord är orörda");
 });

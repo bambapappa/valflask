@@ -25,7 +25,7 @@
  * Referens: https://snowballstem.org/algorithms/swedish/stemmer.html
  */
 
-const VOKALER = new Set(["a", "e", "i", "o", "u", "y", "ä", "å", "ö"]);
+export const VOKALER = new Set(["a", "e", "i", "o", "u", "y", "ä", "å", "ö"]);
 
 /** Konsonanter som ett böjnings-s får följa. */
 const S_ANDELSE = new Set([
