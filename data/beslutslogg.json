@@ -245,5 +245,14 @@
       "Bygga in HV i Fläskvågens projekt (alternativ A i b-0017) — fortsatt förkastat: hotar privatgrinden och ökar blast radius."
     ],
     "decided_by": "ägaren 2026-07-22"
+  },
+  {
+    "date": "2026-07-26",
+    "id": "b-0022",
+    "status": "fastställd",
+    "decision": "Ämnesregistrets termutvinning och ordtrender: (1) ord utan sakinnehåll rensas vid utvinningen — gränsen är om någon skulle SÖKA på ordet, så verben \"arbeta\"/\"bidra\" ryker medan substantiven \"arbetare\"/\"bidrag\" står kvar; listan bär ordformer, inte stammar. (2) Partinamn är aldrig söktermer — att få fram ett partis handlingar är ett filter på parti. (3) Ett dokuments egna undertecknare hålls utanför dess termer. (4) Betänkandena indexeras i egen skärva under samma nyckel som voteringens dok_id (202223:SkU2), så voteringar får ämnesord via betänkandet de gällde. (5) Ordtrenden mäter ÖVERVIKT mot de övriga partierna (partiets andel delat med övrigas andel), inte andel gånger global ovanlighet.",
+    "why": "Det byggda indexet avslöjade att den ursprungliga metoden inte mätte det den lovade. De vanligaste termerna i hela materialet var \"anledning\" (22 %), \"avser\" (22 %), \"viktig\" (19 %) — alla partier fick därför samma allmänord. Undertecknarlistan gjorde ledamöters efternamn till partiernas mest utmärkande \"ämnesord\" (kd: magnus, jacobsson, ottosson). Partinamnet låg 10 269 gånger över de övrigas användning och sade bara vem som skrivit dokumentet. Och måttet mot hela materialet snedvreds av partistorlek: S står för en tredjedel av allt material, så S:s egna handlingar drog upp snittet och S toppade på 2,8 gånger medan KD nådde 18,7 — ett tal som mätte storlek, inte politik. Mot övriga toppar S på 56 och M på 97, och partierna går att jämföra. Voteringarna saknade ämnesord helt eftersom de inte har egen dokumenttext; utan betänkandena kan registret inte svara på hur partierna röstat i en fråga, vilket är en av de viktigaste frågorna en läsare har.",
+    "alternatives": "Behålla måttet och utöka stoppordslistan i efterhand (behandlar symtomet, och andelen dominerar ändå). Sålla på ordstam i stället för ordform (tystar sakord som delar stam med omdömesord — \"vikt\" med \"viktig\"). Global namnlista i stället för dokumentets egna undertecknare (tystar sakord som \"strand\" och \"berg\" överallt). Låta voteringar sakna ämnesord (då kan registret inte svara på röstfrågor).",
+    "decided_by": "mänskligt beslut 2026-07-26"
   }
 ]

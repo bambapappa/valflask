@@ -375,26 +375,70 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-26 `claude/handlingsvagen-ko-beta-6oiq2r` → b-0014:s
-  nyckelordsindex. **Kod och sajtsida klara och mergade** (PR #196
-  ordstamsreducering, #197 fritextsök + ordtrender, #198 bestämd form i
-  sökningen, #199 namnfilter + symmetriska sökformer).
-  **Omindexering pågår: run 30202635850, startad 12:43 på `2dc7e5c`
-  med `om: true`, väntas klar ~15:45.** Rör inte
-  `pipeline/src/foreslag.ts`, `data/nyckelord*` eller `skord`-vägen
-  parallellt. Indexbygget kostar ingen modellkvot.
+- 2026-07-26 `claude/handlingsvagen-ko-beta-6oiq2r` → b-0014:s ämnesregister
+  (nyckelordsindex + fritextsök). Rör inte `pipeline/src/nyckelord.ts`,
+  `pipeline/src/stam.ts`, `data/nyckelord*`, `site/src/pages/amnen.astro`
+  eller `site/src/lib/amne.ts` parallellt.
 
-  **Varför indexet byggs om:** första körningen (30193073880) startade
-  minuter innan visningsformen mergades, så dess 21 052 poster saknar
-  `y` och bär ledamotsnamn som termer. Två grindar i
-  `site/scripts/test-amne.mts` är RÖDA till ombygget landat — det är
-  avsiktligt, sajten ska inte gå att driftsätta med en ordvisualisering
-  som visar efternamn i stället för ämnen.
+#### Klart och mergat
 
-  **Näst på tur när indexet är klart:** fullkörning av `foreslag` med
-  det indexbaserade kandidaturvalet (82 löften återstår efter
-  `p-2026-0469`). Kör den INTE parallellt med indexbygget — båda
-  skriver till main, och kandidaturvalet ska läsa det färdiga indexet.
+| PR | vad |
+| --- | --- |
+| #196 | svensk ordstamsreducering (`stam.ts`), Snowball i kod — 0 avvikelser mot referensen på 16 017 unika ord |
+| #197 | fritextsök över handlingarna + ordtrender per parti, skärvade nyttolaster |
+| #198 | bestämd form i sökningen (`sokStammar`) — "skolan" och "skola" ger samma träffar |
+| #199 | undertecknarnas namn ut ur termerna; sökformerna symmetriska genom konstruktion |
+| #200 | anslagstavlan |
+| #201 | innehållslösa ord + partinamn ur termerna, betänkandena indexeras, ordtrenden mäter övervikt mot övriga (b-0022) |
+
+Indexet på main är byggt (run 30202635850, 21 052 av 21 053 handlingar,
+828 628 termer) men bär fortfarande allmänorden och partinamnen — det
+byggdes före #201.
+
+#### Näst på tur, i ordning
+
+1. **Bygg om indexet** när #201 är mergad: kör `nyckelord.yml` med
+   `om: true`. Nu även 1 451 betänkanden utöver de 21 053 handlingarna,
+   ~3 h, **ingen modellkvot** (termerna räknas fram i kod). Workflowen
+   pinnar sin checkout till defaultgrenen, så #201 MÅSTE vara mergad
+   först — annars kör den gamla koden.
+2. **Bygg själva söket.** Det som finns nu är fritextsök med träfflista.
+   Det som efterfrågats (mänskligt beslut 2026-07-26) är att en läsare
+   ska kunna söka ett ämne och få svar på:
+   - allt som rör ämnet,
+   - vad ett visst parti eller en kombination av partier sagt i ämnet
+     (**filter på parti, flerval**),
+   - hur ett parti röstat i frågor som rör ämnet,
+   - vilka som röstat för respektive emot i alla omröstningar i ämnet.
+
+   Röstdelen är möjlig först efter steg 1: voteringar har ingen egen
+   dokumenttext, deras sak står i betänkandet. Alla 2 576 voteringar
+   möter ett av de 1 451 betänkandena (kontrollerat), och betänkandena
+   indexeras under samma nyckel som voteringens `dok_id` (`202223:SkU2`).
+   Röstfördelningen per parti finns redan i `data/handlingar.json`.
+
+   Rankningen av ord är uttryckligen SEKUNDÄR mot det här.
+3. **Fullkörning av `foreslag`** med det indexbaserade kandidaturvalet —
+   82 löften återstår efter `p-2026-0469`. Kör INTE parallellt med
+   indexbygget: båda skriver till main, och kandidaturvalet ska läsa det
+   färdiga indexet.
+
+#### Fällor som redan kostat tid
+
+- **Grindar som mäter utfallet av en tyst reserv mäter ingenting.**
+  "trendorden har visningsform" var grön på 21 052 dokument helt utan
+  visningsform, eftersom modellen faller tillbaka på stammen. Grindarna
+  mäter numera vid källan (i indexet), inte i utfallet.
+- **Provdata döljer metodfel.** Ett provindex byggt på titlar gav
+  vettiga trendord; fulltexterna gav "viktig, behövs, idag" för alla
+  partier. Stäm alltid av mot riktig data innan en metod bedöms.
+- **Workflowen `nyckelord.yml` checkar alltid ut defaultgrenen**
+  (`ref: default_branch`), oavsett vilken gren den startas på.
+- **Stop-hooken flaggar mergecommits felaktigt.** Efter varje merge
+  ligger grenen på en commit av `bambapappa` eller `github-actions[bot]`
+  som hooken vill att man skriver om. Gör aldrig det — det vore att
+  skriva om publicerad historik. Pusha grenen i stället så
+  `origin/<gren>` möter HEAD.
 
 **⚠️ Fullkörning 2026-07-25 (run 30159619034) AVBRUTEN AV KREDITSLUT —
 82 löften återstår.** Första fullkörningen med `deepseek-v4-pro` + den
