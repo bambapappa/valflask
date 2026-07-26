@@ -11,6 +11,7 @@
 import type { Betankande } from "./betankanden.ts";
 import { indexeraBetankanden } from "./betankanden.ts";
 import { aktorsPartier, type Handling } from "./handlingar.ts";
+import { termPoang, type DokumentTermer } from "./nyckelord.ts";
 import type { LlmClient } from "./llm.ts";
 import { provaGrindarna, type GrindFel, type GrindKontext, type KopplingsForslag } from "./grindar.ts";
 
@@ -47,11 +48,36 @@ export interface Kandidat {
 }
 
 /**
- * Rankar dokumenthandlingar mot ett löfte på ordöverlapp i titeln.
- * Voteringar utelämnas här — de kopplas via betänkandetexten i ett
- * senare steg. Minst två gemensamma nyckelord krävs.
+ * Nyckelordsindexet (b-0014): handling-id → dokumentets utvunna termer,
+ * plus ordvikterna. Skickas in när det finns; utan det rankas bara på
+ * titeln som förr.
  */
-export function rankaKandidater(lofte: Lofte, handlingar: Handling[], max: number): Kandidat[] {
+export interface TermIndex {
+  termer: Map<string, DokumentTermer>;
+  df: Map<string, number>;
+  antalDok: number;
+}
+
+/**
+ * Rankar dokumenthandlingar mot ett löfte. Voteringar utelämnas här — de
+ * kopplas via betänkandetexten i ett senare steg.
+ *
+ * Utan index: ordöverlapp i TITELN, minst två gemensamma nyckelord.
+ *
+ * Med index (b-0014): dokumentets egna termer väger också in, viktade så
+ * att ovanliga gemensamma ord räknas tyngre än vanliga. Titeln ensam är
+ * en smal signal — en handling vars rubrik betonar en sak men vars
+ * innehåll gäller en annan nådde tidigare aldrig rätt löfte (issue #174:
+ * en motion om svensk krigssjukvård prövades bara mot Ukrainastöds-löftet
+ * för att rubriken nämnde Ukraina). Urvalet förblir deterministiskt:
+ * ingen modell är inblandad, samma data ger samma lista (b-0011).
+ */
+export function rankaKandidater(
+  lofte: Lofte,
+  handlingar: Handling[],
+  max: number,
+  index?: TermIndex,
+): Kandidat[] {
   const mal = nyckelord(`${lofte.title} ${lofte.quote} ${lofte.category ?? ""}`);
   const kandidater: Kandidat[] = [];
   for (const h of handlingar) {
@@ -63,14 +89,46 @@ export function rankaKandidater(lofte: Lofte, handlingar: Handling[], max: numbe
     if (lofte.parties.length > 0 && aktorer.length > 0 && !lofte.parties.some((p) => aktorer.includes(p))) {
       continue; // fel aktör — H3 skulle ändå fälla
     }
-    let poang = 0;
-    for (const w of nyckelord(h.titel)) if (mal.has(w)) poang += 1;
-    if (poang >= 2) kandidater.push({ handling: h, poang });
+    let titelTraffar = 0;
+    for (const w of nyckelord(h.titel)) if (mal.has(w)) titelTraffar += 1;
+
+    const dok = index?.termer.get(h.id);
+    const textPoang = dok ? termPoang(mal, dok, index!.df, index!.antalDok) : 0;
+
+    // Titelträffar väger som förr (ett poäng styck) och dokumentets
+    // termer läggs till ovanpå. Tröskeln möts av två titelträffar SOM
+    // FÖRR, eller — när indexet finns — av tillräckligt tung
+    // textöverlappning. Utan index är beteendet oförändrat.
+    const poang = titelTraffar + textPoang;
+    if (titelTraffar >= 2 || (dok && textPoang >= TEXT_TROSKEL)) {
+      kandidater.push({ handling: h, poang });
+    }
   }
   return kandidater
     .sort((a, b) => b.poang - a.poang || a.handling.id.localeCompare(b.handling.id))
     .slice(0, max);
 }
+
+/**
+ * Hur tung textöverlappningen måste vara för att ett dokument ska bli
+ * kandidat på egen hand (utan två titelträffar).
+ *
+ * Kalibrerat mot den verkliga korpusen (~23 600 handlingar), där
+ * ordvikten `ln(antalDok / antalDokMedTermen)` ger ungefär:
+ *
+ *   term i 1 dokument     ≈ 10,1     term i 1 000 dokument ≈ 3,2
+ *   term i 100 dokument   ≈  5,5     term i 5 000 dokument ≈ 1,6
+ *
+ * Tröskeln 12 kräver därmed ETT AV: två utpräglat ovanliga gemensamma
+ * termer, eller fyra måttligt vanliga. En enstaka sällsynt term räcker
+ * inte. Det speglar avsiktligt titelregelns krav på minst två
+ * gemensamma ord — samma tanke, tillämpad på dokumentets text.
+ *
+ * Lägre tröskel fångar fler äkta kopplingar men kostar modellkvot på
+ * fler par; högre missar fall som #174. Kandidatlistan kapas ändå av
+ * `max` per löfte, så tröskeln styr bredden, inte taket.
+ */
+export const TEXT_TROSKEL = 12;
 
 /** En voteringskandidat: voteringen plus betänkandet vars text är källan. */
 export interface VoteringsKandidat {

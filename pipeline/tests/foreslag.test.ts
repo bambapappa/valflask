@@ -14,6 +14,7 @@ import {
 import type { Betankande } from "../src/betankanden.ts";
 import { LAGE_A_FONSTER } from "../src/grindar.ts";
 import type { Handling } from "../src/handlingar.ts";
+import { dokumentfrekvenser } from "../src/nyckelord.ts";
 import type { LlmClient } from "../src/llm.ts";
 
 const lofte: Lofte = {
@@ -93,6 +94,53 @@ test("rankaKandidater: fråga räknas på frågeställarens parti, inte tillfrå
   });
   const kandidater = rankaKandidater(mLofte, [fragaAvM, fragaTillM], 5);
   assert.deepEqual(kandidater.map((k) => k.handling.id), ["h-2026-0005"]);
+});
+
+test("rankaKandidater med nyckelordsindex: dokumentets text når löftet titeln missar", () => {
+  // Fallet ur issue #174: motionens RUBRIK nämner Ukraina, men innehållet
+  // gäller svensk försvarsförmåga. Mot ett försvarslöfte finns noll
+  // titelöverlapp — utan index blir den aldrig kandidat.
+  const forsvarsLofte: Lofte = {
+    id: "p-2026-0040",
+    title: "Sverige ska ha ett starkt försvar som avskräcker angripare",
+    quote: "Sverige ska ha ett starkt försvar med förmåga att avskräcka potentiella angripare.",
+    parties: ["m"],
+  };
+  const krigssjukvard = handling({
+    id: "h-2026-18641",
+    titel: "Snabbare uppbyggnad av krigssjukvård till stöd för Ukraina",
+    parties: ["m"],
+    persons: [{ name: "Magnus Resare", party: "m", riksdagen_id: "1" }],
+  });
+
+  // Utan index: ingen kandidat (rubriken delar inga ord med löftet).
+  assert.deepEqual(rankaKandidater(forsvarsLofte, [krigssjukvard], 5), []);
+
+  // Med index: dokumentets egna termer väger in. Korpusen görs realistiskt
+  // stor — ordvikten bygger på hur SÄLLSYNT en term är, så en leksakskorpus
+  // på en handfull dokument ger missvisande låga vikter.
+  const termer = new Map<string, { t: string[]; n: number }>([
+    ["h-2026-18641", { t: ["försvar", "avskräcka", "angripare", "förmåga"], n: 800 }],
+  ]);
+  for (let i = 0; i < 200; i += 1) {
+    termer.set(`h-2026-9${String(i).padStart(3, "0")}`, { t: ["kultur"], n: 500 });
+  }
+  const index = {
+    termer,
+    df: dokumentfrekvenser(termer),
+    antalDok: termer.size,
+  };
+  const medIndex = rankaKandidater(forsvarsLofte, [krigssjukvard], 5, index);
+  assert.deepEqual(medIndex.map((k) => k.handling.id), ["h-2026-18641"]);
+});
+
+test("rankaKandidater: index ändrar inte utfallet när titeln redan räcker", () => {
+  const bra = handling();
+  const termer = new Map([["h-2026-0001", { t: ["taket"], n: 100 }]]);
+  const index = { termer, df: dokumentfrekvenser(termer), antalDok: 1 };
+  const utan = rankaKandidater(lofte, [bra], 5).map((k) => k.handling.id);
+  const med = rankaKandidater(lofte, [bra], 5, index).map((k) => k.handling.id);
+  assert.deepEqual(med, utan);
 });
 
 test("motionstypAvHandling: riksdagens klassning vinner, annars gissning ur antal namn", () => {
