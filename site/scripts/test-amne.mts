@@ -6,6 +6,7 @@
  * Kör: npm test (från site/).
  */
 import assert from "node:assert";
+import { sokStammar } from "../../pipeline/src/nyckelord.ts";
 import {
   byggHandlingSkarva,
   byggOrdSkarva,
@@ -17,6 +18,7 @@ import {
   MAX_PER_ORD,
   ordSkarva,
   ordSkarvor,
+  getTermIndex,
 } from "../src/lib/amne.ts";
 
 let fel = 0;
@@ -85,6 +87,40 @@ if (!indexFinns()) {
     "trendorden är sorterade på vikt",
     medOrd.every((t) => t.ord.every((o, i) => i === 0 || t.ord[i - 1]!.vikt >= o.vikt)),
   );
+
+  // Formen läsaren råkar skriva får inte avgöra träffen. "skolan" och
+  // "skola" ska ge samma handlingar — det är hela poängen med att söka på
+  // ordets alla former i stället för bara stammen.
+  const inverterat = new Map<string, Set<string>>();
+  for (const [id, { t }] of getTermIndex()) {
+    for (const stam of new Set(t)) {
+      const lista = inverterat.get(stam) ?? new Set<string>();
+      lista.add(id);
+      inverterat.set(stam, lista);
+    }
+  }
+  function traffar(ord: string): Set<string> {
+    const ut = new Set<string>();
+    for (const stam of sokStammar(ord)) for (const id of inverterat.get(stam) ?? []) ut.add(id);
+    return ut;
+  }
+  const PAR: [string, string][] = [
+    ["skola", "skolan"],
+    ["försvar", "försvaret"],
+    ["vård", "vården"],
+    ["kommun", "kommunen"],
+  ];
+  let allaLika = true;
+  const avvikelser: string[] = [];
+  for (const [grund, bestamd] of PAR) {
+    const a = traffar(grund);
+    const b = traffar(bestamd);
+    if (a.size !== b.size || [...a].some((id) => !b.has(id))) {
+      allaLika = false;
+      avvikelser.push(`${grund}=${a.size} ≠ ${bestamd}=${b.size}`);
+    }
+  }
+  grind("bestämd och obestämd form ger samma träffar", allaLika, avvikelser.join(", "));
 }
 
 console.log(fel === 0 ? "ämnessök: alla grindar gröna" : `ämnessök: ${fel} grindar föll`);
