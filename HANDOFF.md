@@ -395,6 +395,28 @@ Indexet på main är byggt (run 30202635850, 21 052 av 21 053 handlingar,
 828 628 termer) men bär fortfarande allmänorden och partinamnen — det
 byggdes före #201.
 
+#### Namnbytet till utlovat.se — planen ligger i LANSERING.md
+
+Fastställt genom mänskligt beslut 2026-07-26: när Handlingsvågen är
+färdig och går live byter hela sajten namn från `drygast.nu` till
+**`utlovat.se`**. Planen hålls i **detta privata repo** (`LANSERING.md`) —
+`valflask` är publikt, och ett namnbyte som syns i historiken innan det
+är gjort är en förvarning, inte ett namnbyte.
+
+Namnbytet är SIST. Först kalkylerna i valflask, sedan Handlingsvågen
+färdig, sedan bytet som ett eget moment.
+
+**En sak är dock brådskande:** registrera `utlovat.se`, `.nu` och `.com`
+nu. Alla tre var lediga 2026-07-26 och tillgänglighet består inte.
+
+Två fällor som `LANSERING.md` går igenom och som inte syns vid en snabb
+titt: 14 scheman under `valflask/pipeline/schemas/` bär `$id`-rader med
+`https://drygast.nu/...` — ett `$id` är en identitet, inte en länk — och
+det publika API:t under `site/src/pages/api/v1/` har åtta ändpunkter som
+går sönder för den som redan hämtar dem. Och drygast.nu är inte "live i
+en liten krets" tekniskt sett: `robots.txt` tillåter allt och pekar ut en
+sitemap, så adresserna finns i sökmotorerna.
+
 #### Näst på tur, i ordning
 
 1. **Bygg om indexet** när #201 är mergad: kör `nyckelord.yml` med
