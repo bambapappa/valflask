@@ -351,41 +351,96 @@ från datat som gällde när krönikan skrevs (ögonblicksbild), aldrig dagens s
   räknades beloppet ut") och i `pnpm review list`; tappas om granskaren skriver
   om beloppet. (PR #434)
 - **Backfill** (`pipeline/scripts/calculation-backfill.mts`, `pnpm calc:backfill`):
-  flaggor `--sample=N`/`--all`, `--dry-run`, `--seed`, `--factor`, `--stub`.
+  flaggor `--sample=N`/`--all`, `--dry-run`, `--seed`, `--factor`, `--stub`,
+  `--rounds=N`, `--max-minutes=N`.
   Triage: nytt belopp nära det publicerade → fäst (rekonstruerad) uträkning,
   behåll belopp; avviker → till `data/calculation_review.json`. Körs via workflow
   `calculation-backfill.yml` (manuell start, dry-run default, rapport som
   artifact). (PR #436, #438)
+- **Avgränsningsregler i A5-prompten** (`pipeline/prompts/A5-cost.md`, regel
+  9–13): kodar de mönster som orsakade nästan alla rättelser i genomgången —
+  förbud/regleringar prissätts efter sin direkta kostnad, utredningslöften
+  prissätter utredningen, netto före brutto, utnyttjandegrad och beteende vägs
+  in, och breda uppräkningar behandlas som inriktningslöften. Ett enhetstest
+  vaktar att reglerna ligger kvar i systemprompten. (PR #452)
+- **Uppräkningsflagga** (`similarity.ts` → `looksLikeUmbrella`,
+  `findSamePartyInCategory`): känner igen breda sammanfattningslöften ("fler
+  poliser, fler lösta brott och en fungerande rättskedja") som annars prissätts
+  trots att delarna redan ligger på partiets egna löften. Titellikhet fångar dem
+  INTE — likheten mellan en sammanfattning och dess egna delar är 0,00–0,13, så
+  det är uppräkningsformen som känns igen. Flaggar ~10 % av löftena, sätter
+  aldrig belopp, listar bara partiets egna löften i kategorin för granskaren.
+  (PR #452)
+- **Fjärde kostnadstypen `intäktsökning`**: systemet saknade en hink för löften
+  som GER staten pengar (ny/höjd skatt). Räknas som besparing i aggregeringen
+  men har egen, ärlig etikett. Blanda aldrig ihop med `intäktsminskning`.
+- **Backfillen tappar inte arbete vid avbrott** (PR #454): checkpoint var 10:e
+  löfte, SIGTERM/SIGINT-hantering, tidsbudget `--max-minutes` (default 240),
+  `timeout-minutes: 330` på jobbet, uppladdning med `always()` och ett
+  commit-jobb som accepterar avbrutet backfill-jobb. Bakgrund: körning
+  30191490153 slog i GitHubs hårda 6-timmarstak och dödades — allt skrevs först
+  efter loopen, så flera timmars LLM-arbete gick förlorat.
 
 ---
 
 ## 7. Läget just nu / pågående arbete
 
-**Pågår just nu — VÄNTAR PÅ CI:** En skarp fullkörning av uträknings-backfillen
-ligger i GitHub Actions (`calculation-backfill.yml`, run-id 30011446295, startad
-2026-07-23 ~13:29 UTC, `all=true, dry_run=false, factor=1.5`). Modellen
-(deepseek/deepseek-v4-pro) är seg (~36 s/anrop → ~3–4 h). När den är klar
-committar den **direkt till main**: ~180 löften får ett `cost.calculation` utan
-att beloppet ändras (märkt "Rekonstruerad i efterhand …"), ~180 hamnar i
-`data/calculation_review.json` (avvikande, orörda löften) för mänsklig genomgång,
-och EN samlad rättelsepost skrivs i `data/rattelser.json` (sentinel "systematisk
-kvalitetshöjning", idempotent). **Nästa steg:** gå igenom
-`calculation_review.json` tillsammans med ägaren; de justeringarna ryms under den
-enda samlade rättelseposten (INGEN rättelse per löfte) — uppdatera bara
-`promises.json` + changelog, inte `rattelser.json`.
+*Uppdaterad 2026-07-26.*
 
-> Kontrollpunkt vid övertagande: när denna HANDOFF skrevs hade backfillen ännu
-> inte landat i main (endast 4 av 361 llm_estimat hade `calculation`, och
-> `data/calculation_review.json` fanns inte). Kolla `git log` och filens existens
-> för att se om körningen är klar.
+**Pågår just nu:** en skarp fullkörning av uträknings-backfillen i GitHub
+Actions (`calculation-backfill.yml`, **run-id 30203965114**, startad 2026-07-26
+~13:20 UTC, `all=true, dry_run=false, rounds=2, factor=1.5`). 267 löften saknar
+`cost.calculation`. Körningen committar **direkt till main** via sitt
+commit-jobb.
 
-**Redan gjort denna omgång (allt mergat):** p-2026-0470 rättat till 0 kr; Grupp
-1–2 (12 förbuds-/vinstlöften) nollställda; Grupp 3 (5 straffskärpningar) och
-Grupp 4 (4 krav/regleringar) översedda — med rättelsepost + historik.
-Review-kön tömd (6 avvisade dubletter/grindfel, 7 behandlade). Karensgruppen
-`g-slopad-karens` städad (dublett tillbakadragen, belopp harmoniserade,
-p-2026-0326 utlyft med överlappsnot). Alla dessa syns i `data/rattelser.json`
-(9 poster).
+> **Kontrollpunkt vid övertagande.** Kör detta för att se var det står:
+> ```
+> node -e "const a=require('./data/promises.json');const l=a.filter(p=>p.status!=='tillbakadragen'&&p.cost.basis==='llm_estimat');console.log('utan uträkning:',l.filter(p=>!p.cost.calculation).length)"
+> ```
+> När denna HANDOFF skrevs: **92 av 359 hade uträkning, 267 saknade**, och
+> `data/calculation_review.json` var tom (alla tidigare avvikelser avgjorda).
+> Sjunker siffran har körningen landat.
+
+**Räkna med att det behövs flera körningar.** Modellen (deepseek/deepseek-v4-pro)
+har legat på 28–80+ s per löfte, så alla 267 ryms sannolikt inte i ett pass.
+Det är ofarligt: skriptet checkpointar var 10:e löfte och är idempotent, så varje
+körning sparar det den hinner och nästa tar vid. Starta bara om workflowen med
+samma inställningar tills siffran ovan är 0.
+
+**Nästa steg efter körningen:** gå igenom nya poster i
+`data/calculation_review.json` tillsammans med ägaren, ett löfte i taget. Dessa
+justeringar ryms under den redan skrivna samlade rättelseposten — **skriv INGEN
+rättelse per löfte**; uppdatera bara `promises.json` (belopp + `history`) och
+`changelog.json`.
+
+**Gjort i omgången 2026-07-24…26 (allt mergat i main):**
+
+- **44 flaggade avvikelser avgjorda en och en** (PR #447): 15 belopp justerade,
+  12 nollade, 3 bekräftade med tillagd uträkning, 11 avfärdade som falsklarm.
+  `calculation_review.json` är tom.
+- **Strukturella fynd:** Centerns skattereform (p-0144/0172/0252/0254) beskrev
+  samma reform på fyra sätt och prissattes var för sig → nu en grupp som räknas
+  en gång på partiets egen nettosiffra. Två S-dubbletter tillbakadragna
+  (p-0481, p-0488) — ordagrant identiska citat och samma käll-URL som
+  originalen; tog bort ~33 000 mkr felaktig dubbelräkning.
+- **Fjärde kostnadstypen `intäktsökning`** införd, åtta feltypade löften rättade.
+- **Förebyggande** (PR #452): fem avgränsningsregler i A5-prompten och flaggan
+  för breda uppräkningslöften — se §6.
+- **Krönikorna** (PR #447): varje krönikesida visar en "Då och nu"-ruta med
+  veckans total och gap bredvid dagens. Krönikor skrivs aldrig om; rutan
+  förklarar tidsdriften automatiskt även för framtida krönikor. Vecka 29 fick en
+  rättelsenot (dess text nämner de två tillbakadragna dubbletterna).
+- **Sajtspråk:** interna koder bort ur läsartexten ("R3-dedup" ur två
+  sidbeskrivningar och kombinatorn; rå gruppkod skrivs nu läsbart).
+- **Backfillens robusthet** (PR #453, #454): skip-orsaker ytas, omtagsvarv, och
+  arbete går inte längre förlorat vid avbrott — se §6.
+- **T3-testet fixat:** räknade fram förväntad fläsk-total utan att filtrera bort
+  tillbakadragna löften, till skillnad från `aggregates.totalFlasket`.
+
+Tidigare omgång (2026-07-22…23): p-2026-0470 rättat till 0 kr; Grupp 1–2 (12
+förbuds-/vinstlöften) nollställda; Grupp 3 (5 straffskärpningar) och Grupp 4 (4
+krav/regleringar) översedda; review-kön tömd; karensgruppen städad.
+`data/rattelser.json` har nu **15 poster**.
 
 **Frågevågen:** grunden byggd och isolerad från löftesflödet. 10 frågor, 176
 ståndpunktsceller (8 partier × delfrågor), just nu mest "inget tydligt besked" i
@@ -409,13 +464,23 @@ STANCES_MODE osatt = review/torrkörning tills steg 4.
   test (`chronicle.test.ts`) vaktar sambandet. Historisk bugg: gap sattes = total.
 - **Krönikor är ögonblicksbilder:** rätta med genereringsveckans tal, inte
   dagens. Skillnad mot dagens startsida är hederlig tidsdrift (t.ex. att
-  tvärparti-grupperingen infördes efteråt), inte inkonsekvens.
+  tvärparti-grupperingen infördes efteråt), inte inkonsekvens. Sedan 2026-07-25
+  förklarar krönikesidans "Då och nu"-ruta driften automatiskt — lägg alltså
+  INTE en rättelsenot bara för att siffrorna glidit isär. En not behövs bara när
+  krönikans egen TEXT pekar på något som ändrats (t.ex. ett tillbakadraget
+  löfte), annars är det översignalering.
 - **Backfillen committar direkt till main** (bot bypassar PR-krav) — den kan
   landa mitt i annat arbete. Rebasa alltid mot färsk `origin/main`.
 - **Språkreglerna** gäller commits, PR-texter, issues och all prosa: aldrig
-  "verbatim", aldrig "ägarbeslut", enkelt språk (§0). OBS: en del BEFINTLIG kod
-  och äldre DECISION_LOG-text använder fortfarande "ägarbeslut" — det får stå,
-  men skriv inte nytt så.
+  "verbatim", aldrig "ägarbeslut", enkelt språk (§0). `site/` är genomgånget
+  2026-07-25 (inga interna koder i läsartext, inget "ägarbeslut"). Kvar med
+  "ägarbeslut" är HISTORISKA loggposter i `DECISION_LOG.md` och
+  `ops/FRAGEVAGEN-LANSERING.md` — de lämnas medvetet orörda, att skriva om dem
+  i efterhand vore att ändra historien. Skriv inte nytt så.
+- **Interna koder får aldrig möta läsaren:** grindkoder (G-serien), R-regler,
+  b-nummer och råa id:n (gruppkoder som `g-…`). Lätt att missa: `description=`
+  i `Layout` syns i sökresultat och delningar — det var där de värsta fallen
+  satt. Skriv ut vad som faktiskt sker, eller gör koden läsbar.
 - **Arkivlänkar:** en Wayback-kopia accepteras bara om citatet står ordagrant i
   själva snapshotten (`snapshotBacksQuote`). Hellre en synlig lucka än en länk
   som ser ut som bevis men inte är det.
