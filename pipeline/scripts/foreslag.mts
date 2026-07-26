@@ -17,13 +17,14 @@
  * MODEL_KOPPLING_FALLBACK. --dry-run visar kandidatlistan utan modellanrop.
  */
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fetchDokumentText, type HttpFetch } from "../src/riksdagen.ts";
 import type { Betankande } from "../src/betankanden.ts";
 import type { Handling } from "../src/handlingar.ts";
 import { OpenRouterClient } from "../src/llm.ts";
-import { rankaKandidater, rankaVoteringsKandidater, skapaForslag, type Lofte } from "../src/foreslag.ts";
+import { rankaKandidater, rankaVoteringsKandidater, skapaForslag, type Lofte, type TermIndex } from "../src/foreslag.ts";
+import { dokumentfrekvenser, slaIhopSkarvor, type Skarva } from "../src/nyckelord.ts";
 import { LAGE_A_FONSTER, type KopplingsForslag } from "../src/grindar.ts";
 import { laddaProvade, parNyckel, serialiseraProvade } from "../src/provade.ts";
 
@@ -60,6 +61,22 @@ async function main() {
   const { promisesPath, lofteId, maxKandidater, dryRun } = parseArgs(process.argv.slice(2));
   const rot = resolve(import.meta.dirname, "../..");
   const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
+  // Nyckelordsindexet (b-0014) om det är byggt: låter kandidaturvalet väga
+  // in dokumentens egna termer, inte bara titeln. Saknas det rankas det som
+  // förr — indexet är en förbättring, inte ett krav.
+  const indexKatalog = resolve(rot, "data/nyckelord");
+  let termIndex: TermIndex | undefined;
+  if (existsSync(indexKatalog)) {
+    const skarvor = readdirSync(indexKatalog)
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => JSON.parse(readFileSync(resolve(indexKatalog, f), "utf8")) as Skarva);
+    const termer = slaIhopSkarvor(skarvor);
+    if (termer.size > 0) {
+      termIndex = { termer, df: dokumentfrekvenser(termer), antalDok: termer.size };
+      console.log(`nyckelordsindex: ${termer.size} handlingar i ${skarvor.length} skärvor`);
+    }
+  }
+
   const betPath = resolve(rot, "data/betankanden.json");
   const betankanden: Betankande[] = existsSync(betPath) ? JSON.parse(readFileSync(betPath, "utf8")) : [];
   if (betankanden.length === 0) {
@@ -110,7 +127,7 @@ async function main() {
   const sparaKo = () => writeFileSync(koPath, JSON.stringify(ko, null, 2) + "\n");
   const sparaProvade = () => writeFileSync(provadePath, JSON.stringify(serialiseraProvade(provade), null, 2) + "\n");
   for (const lofte of loften) {
-    const dokKandidater = rankaKandidater(lofte, handlingar, maxKandidater);
+    const dokKandidater = rankaKandidater(lofte, handlingar, maxKandidater, termIndex);
     const votKandidater = rankaVoteringsKandidater(lofte, handlingar, betankanden, maxKandidater);
     const kandidater: Array<{ handling: Handling; poang: number; betankande?: Betankande }> = [
       ...dokKandidater,
