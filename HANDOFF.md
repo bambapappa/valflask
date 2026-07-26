@@ -418,6 +418,42 @@ byggdes före #201.
    Röstfördelningen per parti finns redan i `data/handlingar.json`.
 
    Rankningen av ord är uttryckligen SEKUNDÄR mot det här.
+#### Så bör partifiltret byggas (mätt, inte gissat)
+
+Partifiltret måste gälla ALLA träffar, inte bara de 60 som visas — ett
+filter som tyst bara filtrerar den synliga sidan ljuger om antalet.
+
+Den naiva vägen är att hämta handlingsskärvorna för alla träffar och
+filtrera på deras `p`-fält. **Gör inte det:** en handlingsskärva är
+~156 KB och de 23 väger 3,6 MB tillsammans. En sökning skulle dra ned
+hundratals kilobyte bara för att kunna gråa ut partier.
+
+Lägg i stället partikoderna i ORDSKÄRVAN, bredvid postningslistan.
+`OrdPost` är i dag `{ n, i: string[] }`; med en parallell lista över
+aktörspartier per id kan klienten filtrera innan den kapar till 60, utan
+en enda extra hämtning. Partikoderna är åtta stycken, så en kort kod
+eller en bitmask per post räcker — några byte per handling mot 156 KB per
+skärva. `aktorsPartier()` i `pipeline/src/handlingar.ts` ger rätt partier
+(den skiljer frågeställare från svarande statsråd).
+
+Budgetgrinden i `site/scripts/test-budget.mts` mäter ordskärvorna — höj
+inte taket utan att först se efter att ökningen är den väntade.
+
+#### Så bör röstfrågorna byggas
+
+Voteringar har ingen egen text; efter omindexeringen bär betänkandet
+deras ämnesord under nyckeln `202223:SkU2` i skärvan `bet`. En votering i
+`data/handlingar.json` har samma sträng i `dok_id`, så uppslaget är
+direkt. Röstfördelningen per parti ligger redan på voteringen
+(`rostfordelning`), och `aktorsPartier()` returnerar de partier som
+faktiskt röstade.
+
+Det betyder att "hur röstade partierna i frågor om ämnet X" kan besvaras
+helt ur data som finns — ingen modell, ingen tolkning. Håll isär de två
+sakerna sidan visar: ordförekomst säger bara att ämnet BERÖRS, medan
+röstsiffrorna säger vad partierna faktiskt gjorde. Att ett ord står i en
+text får aldrig presenteras som en ståndpunkt.
+
 3. **Fullkörning av `foreslag`** med det indexbaserade kandidaturvalet —
    82 löften återstår efter `p-2026-0469`. Kör INTE parallellt med
    indexbygget: båda skriver till main, och kandidaturvalet ska läsa det
