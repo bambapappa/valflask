@@ -12,6 +12,7 @@ import type { Betankande } from "./betankanden.ts";
 import { indexeraBetankanden } from "./betankanden.ts";
 import { aktorsPartier, type Handling } from "./handlingar.ts";
 import { termPoang, type DokumentTermer } from "./nyckelord.ts";
+import { stamma } from "./stam.ts";
 import type { LlmClient } from "./llm.ts";
 import { provaGrindarna, type GrindFel, type GrindKontext, type KopplingsForslag } from "./grindar.ts";
 
@@ -32,13 +33,20 @@ const STOPPORD = new Set([
   "mer", "fler", "detta", "denna", "sig", "sina", "vara", "blir", "genom",
 ]);
 
-/** Ord (gemener, ≥4 tecken, ej stoppord) ur en text — deterministiskt. */
+/**
+ * Ordstammar (gemener, ≥ 4 tecken, ej stoppord) ur en text —
+ * deterministiskt. Stammarna gör att böjningsformer möts: ett löfte som
+ * säger "höja" träffar ett dokument som säger "höjas". Samma reduktion
+ * används när dokumentens termer utvinns till nyckelordsindexet, så att
+ * de två sidorna är jämförbara.
+ */
 export function nyckelord(text: string): Set<string> {
   return new Set(
     text
       .toLowerCase()
       .split(/[^a-zåäöéü0-9-]+/u)
-      .filter((w) => w.length >= 4 && !STOPPORD.has(w)),
+      .filter((w) => w.length >= 4 && !STOPPORD.has(w))
+      .map(stamma),
   );
 }
 

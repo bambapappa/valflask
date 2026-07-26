@@ -11,15 +11,12 @@
  * git-historiken. Fulltexterna hämtas vid indexbygget och lagras ALDRIG
  * (b-0014); det som checkas in är de utvunna termerna.
  *
- * KÄND BEGRÄNSNING — ingen ordstamsreducering. Svensk böjning gör att
- * "bygga" och "byggas", "höja" och "höjas" räknas som skilda termer, så
- * ett löfte som säger den ena formen möter inte ett dokument som säger
- * den andra. Det sänker träffsäkerheten men aldrig hederligheten: en
- * missad kandidat blir en tom cell, aldrig en felaktig koppling. Att
- * införa stamreducering (Snowball för svenska) är en avvägning mellan
- * bättre täckning och risken att skilda ord slås ihop — ett eget beslut,
- * inte något som ska smygas in här.
+ * Termerna lagras som ORDSTAMMAR (se stam.ts). Svensk böjning gör annars
+ * att "bygga" och "byggas", "höja" och "höjas" räknas som skilda termer,
+ * så ett löfte i en böjningsform aldrig möter ett dokument i en annan.
+ * Löftets ord stammas på samma sätt vid jämförelsen.
  */
+import { stamma } from "./stam.ts";
 
 /**
  * Allmänna svenska stoppord. Korta ord (< 4 tecken) faller redan på
@@ -97,13 +94,24 @@ export function taOrd(text: string): string[] {
     .filter((w) => w.length >= 4);
 }
 
-/** Räknar hur ofta varje term förekommer, efter stoppords- och formelrensning. */
+/**
+ * Räknar hur ofta varje TERMSTAM förekommer, efter stoppords- och
+ * formelrensning.
+ *
+ * Stopporden filtreras på det oböjda ordet, inte på stammen. Det är
+ * medvetet: stammar krockar ibland över ordgränser ("varor" och "vara"
+ * ger båda "var"), och att sålla på stammen skulle då tysta ett
+ * innehållsord för att ett funktionsord råkar dela stam. Böjda
+ * funktionsord som slinker igenom dämpas ändå av ordvikten — de står i
+ * nästan varje dokument och väger därför nära noll.
+ */
 export function raknaTermer(text: string): Map<string, number> {
   const räkning = new Map<string, number>();
   for (const ord of taOrd(text)) {
     if (STOPPORD.has(ord) || FORMELORD.has(ord)) continue;
     if (/^[0-9-]+$/u.test(ord)) continue; // rena tal/bindestreck säger inget
-    räkning.set(ord, (räkning.get(ord) ?? 0) + 1);
+    const stam = stamma(ord);
+    räkning.set(stam, (räkning.get(stam) ?? 0) + 1);
   }
   return räkning;
 }

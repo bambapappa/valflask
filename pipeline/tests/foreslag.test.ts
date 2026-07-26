@@ -52,11 +52,21 @@ test("htmlTillText: taggar bort, entiteter avkodade, whitespace utjämnat", () =
   assert.equal(htmlTillText(html), "Taket & golvet bör höjas – nu – säger vi.");
 });
 
-test("nyckelord: gemener, stoppord bort, korta ord bort", () => {
+test("nyckelord: ordstammar, stoppord bort, korta ord bort", () => {
   const ord = nyckelord("Vi vill höja taket i arbetslöshetsförsäkringen");
-  assert.ok(ord.has("taket") && ord.has("höja") && ord.has("arbetslöshetsförsäkringen"));
+  // Orden lagras som stammar, så böjningsformer möts.
+  assert.ok(ord.has("tak") && ord.has("höj") && ord.has("arbetslöshetsförsäkring"));
   assert.ok(!ord.has("vi")); // för kort
   assert.ok(!nyckelord("att och det som").size); // bara stoppord
+});
+
+test("nyckelord: böjningsformer möts efter stamning", () => {
+  // Poängen med stamningen: löftet säger en form, dokumentet en annan.
+  const lofteOrd = nyckelord("Vi vill höja taket");
+  const dokumentOrd = nyckelord("taket bör höjas");
+  for (const w of ["höj", "tak"]) {
+    assert.ok(lofteOrd.has(w) && dokumentOrd.has(w), `${w} skulle finnas i båda`);
+  }
 });
 
 test("rankaKandidater: ordöverlapp, voteringar och fel parti utelämnas", () => {
@@ -120,7 +130,8 @@ test("rankaKandidater med nyckelordsindex: dokumentets text når löftet titeln 
   // stor — ordvikten bygger på hur SÄLLSYNT en term är, så en leksakskorpus
   // på en handfull dokument ger missvisande låga vikter.
   const termer = new Map<string, { t: string[]; n: number }>([
-    ["h-2026-18641", { t: ["försvar", "avskräcka", "angripare", "förmåga"], n: 800 }],
+    // Stammar, precis som indexeraren lagrar dem (försv/avskräck/angrip/förmåg).
+    ["h-2026-18641", { t: ["försv", "avskräck", "angrip", "förmåg"], n: 800 }],
   ]);
   for (let i = 0; i < 200; i += 1) {
     termer.set(`h-2026-9${String(i).padStart(3, "0")}`, { t: ["kultur"], n: 500 });
@@ -136,7 +147,7 @@ test("rankaKandidater med nyckelordsindex: dokumentets text når löftet titeln 
 
 test("rankaKandidater: index ändrar inte utfallet när titeln redan räcker", () => {
   const bra = handling();
-  const termer = new Map([["h-2026-0001", { t: ["taket"], n: 100 }]]);
+  const termer = new Map([["h-2026-0001", { t: ["tak"], n: 100 }]]);
   const index = { termer, df: dokumentfrekvenser(termer), antalDok: 1 };
   const utan = rankaKandidater(lofte, [bra], 5).map((k) => k.handling.id);
   const med = rankaKandidater(lofte, [bra], 5, index).map((k) => k.handling.id);

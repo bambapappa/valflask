@@ -27,9 +27,11 @@ test("raknaTermer: riksdagens formelspråk rensas bort", () => {
     "Riksdagen ställer sig bakom det som anförs i motionen och tillkännager detta för regeringen.";
   assert.equal(raknaTermer(formel).size, 0, "en ren formelmening ska inte ge några termer");
 
+  // Termerna lagras som stammar.
   const sak = raknaTermer(formel + " Taket i arbetslöshetsförsäkringen bör höjas.");
-  assert.ok(sak.has("arbetslöshetsförsäkringen"));
-  assert.ok(sak.has("taket"));
+  assert.ok(sak.has("arbetslöshetsförsäkring"));
+  assert.ok(sak.has("tak"));
+  assert.ok(sak.has("höj"), "höjas ska ge samma stam som höja");
   assert.ok(!sak.has("riksdagen"), "formelord ska inte överleva rensningen");
 });
 
@@ -40,7 +42,8 @@ test("raknaTermer: rena tal räknas inte som termer", () => {
 test("utvinnTermer: frekvens styr, sorteringen är deterministisk", () => {
   const text = "vårdplatser vårdplatser vårdplatser köerna köerna sjukhus";
   const { t, n } = utvinnTermer(text, 2);
-  assert.deepEqual(t, ["vårdplatser", "köerna"]);
+  assert.deepEqual(t, ["vårdplats", "köern"]); // stammar
+
   assert.equal(n, 6);
   // Samma text ska ge exakt samma lista, varje gång.
   assert.deepEqual(utvinnTermer(text, 2).t, t);
@@ -48,7 +51,7 @@ test("utvinnTermer: frekvens styr, sorteringen är deterministisk", () => {
 
 test("utvinnTermer: lika frekvens bryts i bokstavsordning", () => {
   const { t } = utvinnTermer("bravo alfa", 2);
-  assert.deepEqual(t, ["alfa", "bravo"]);
+  assert.deepEqual(t, ["alf", "bravo"]); // stammar, i bokstavsordning
 });
 
 test("skarvaFor: tusental ger stabila skärvnamn", () => {
