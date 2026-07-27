@@ -385,39 +385,69 @@ från datat som gällde när krönikan skrevs (ögonblicksbild), aldrig dagens s
 
 ## 7. Läget just nu / pågående arbete
 
-*Uppdaterad 2026-07-26.*
+*Uppdaterad 2026-07-27.*
 
-**Pågår just nu:** en skarp fullkörning av uträknings-backfillen i GitHub
-Actions (`calculation-backfill.yml`, **run-id 30203965114**, startad 2026-07-26
-~13:20 UTC, `all=true, dry_run=false, rounds=2, factor=1.5`). 267 löften saknar
-`cost.calculation`. Körningen committar **direkt till main** via sitt
-commit-jobb.
+### Nästa uppgift: granska de 111 posterna i `calculation_review.json`
 
-> **Kontrollpunkt vid övertagande.** Kör detta för att se var det står:
-> ```
-> node -e "const a=require('./data/promises.json');const l=a.filter(p=>p.status!=='tillbakadragen'&&p.cost.basis==='llm_estimat');console.log('utan uträkning:',l.filter(p=>!p.cost.calculation).length)"
-> ```
-> När denna HANDOFF skrevs: **92 av 359 hade uträkning, 267 saknade**, och
-> `data/calculation_review.json` var tom (alla tidigare avvikelser avgjorda).
-> Sjunker siffran har körningen landat.
+Uträknings-backfillen är **klar** (tre körningar 26–27/7). Kvar är den
+mänskliga genomgången, tillsammans med ägaren, ett löfte i taget — samma
+arbetssätt som förra rundans 44.
 
-**Räkna med att det behövs flera körningar.** Modellen (deepseek/deepseek-v4-pro)
-har legat på 28–80+ s per löfte, så alla 267 ryms sannolikt inte i ett pass.
-Det är ofarligt: skriptet checkpointar var 10:e löfte och är idempotent, så varje
-körning sparar det den hinner och nästa tar vid. Starta bara om workflowen med
-samma inställningar tills siffran ovan är 0.
+**Kön fördelar sig så här** (kolla om siffrorna stämmer innan du börjar):
 
-**Nästa steg efter körningen:** gå igenom nya poster i
-`data/calculation_review.json` tillsammans med ägaren, ett löfte i taget. Dessa
-justeringar ryms under den redan skrivna samlade rättelseposten — **skriv INGEN
-rättelse per löfte**; uppdatera bara `promises.json` (belopp + `history`) och
-`changelog.json`.
+| Mönster | Antal |
+|---|---|
+| publicerat >0 → nytt **0** | 66 |
+| nytt lägre (ej 0) | 33 |
+| nytt högre | 5 |
+| publicerat 0 → nytt >0 | 7 |
 
-**Gjort i omgången 2026-07-24…26 (allt mergat i main):**
+De 66 nollkandidaterna dominerar och väger tyngst — bara de tio största
+motsvarar ~265 000 mkr. Det är breda uppräkningslöften och regleringar
+(p-2026-0129 V 80 000 → 0, p-2026-0002 S 25 000 → 0, p-2026-0121 SD 20 000 → 0),
+alltså A5-promptens nya avgränsningsregler tillämpade på gamla estimat. Många är
+sannolikt korrekta, men var och en kräver ett beslut. Börja där.
+
+**Regler för genomgången:**
+- Justeringarna ryms under den redan skrivna samlade rättelseposten — **skriv
+  INGEN rättelse per löfte**. Uppdatera bara `promises.json` (belopp +
+  `history`-post) och `changelog.json`, inte `rattelser.json`.
+- Två commits: först dataändringen med `"commit": "0000000"`, sedan backfill av
+  riktig hash + omräknad `data_hash` (§3.5).
+
+### Kör INTE fler backfill-körningar
+
+Detta är dyrköpt och lätt att göra fel: av de **114 löften som saknar
+`cost.calculation` är 111 avvikare** — de *har* körts, och fick medvetet ingen
+uträkning eftersom deras belopp inte ska ändras automatiskt. En fjärde körning
+räknar bara om samma 111 till samma slutsats och kostar fyra timmar. Avkastningen
+föll från 76 → 67 → **10** nya uträkningar per körning av precis det skälet. Bara
+3 löften är kvar av andra skäl (ej hunna/API-fel); de tas av nästa ordinarie
+körning.
+
+**Fallgrop:** `data/calculation_review.json` är **inte kumulativ** — den skrivs
+om vid varje körning med just den körningens avvikelser. Att kön "minskade" från
+122 till 111 betyder alltså inte att poster försvunnit, utan att färre löften
+hanterades i sista körningen. Ett avvikande löfte kommer tillbaka i kön varje
+gång det körs, eftersom det aldrig får någon `calculation`.
+
+**Resultat av backfillen:** 92 → **245 av 359** llm-estimat har nu en öppen,
+rekonstruerad uträkning. Kontrollera nuläget med:
+```
+node -e "const a=require('./data/promises.json');const l=a.filter(p=>p.status!=='tillbakadragen'&&p.cost.basis==='llm_estimat');console.log('med:',l.filter(p=>p.cost.calculation).length,'utan:',l.filter(p=>!p.cost.calculation).length)"
+```
+
+**Gjort i omgången 2026-07-24…27 (allt mergat i main):**
+
+- **Backfillen genomförd** i tre körningar (30203965114, 30214357813,
+  30222848368): 92 → 245 löften med öppen uträkning, 111 avvikare till
+  granskning. Vägen dit kostade tre misslyckanden som nu är åtgärdade — se
+  §6 och punkten "Kör INTE fler backfill-körningar" ovan.
 
 - **44 flaggade avvikelser avgjorda en och en** (PR #447): 15 belopp justerade,
   12 nollade, 3 bekräftade med tillagd uträkning, 11 avfärdade som falsklarm.
-  `calculation_review.json` är tom.
+  Den kön tömdes helt — de 111 poster som ligger där nu är NYA, från
+  backfill-körningarna efteråt.
 - **Strukturella fynd:** Centerns skattereform (p-0144/0172/0252/0254) beskrev
   samma reform på fyra sätt och prissattes var för sig → nu en grupp som räknas
   en gång på partiets egen nettosiffra. Två S-dubbletter tillbakadragna
