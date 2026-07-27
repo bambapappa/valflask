@@ -696,14 +696,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 10000,
-      "msek_high": 20000,
+      "msek_low": 1500,
+      "msek_base": 2700,
+      "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Att sänka elevgrupper från snitt 20 till 15 i grundskolan. Ca 700 000 grundskoleklasser × extra lärare. Forskning visar kostnad 8-15 mdr/år.",
+      "method_note": "Prissatt på samma grund som övriga löften om mindre klasser: ett tak på tjugo elever kräver omkring 3 800 fler klasser och lika många lärare.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Bas: 10 000 miljoner kronor per år från jämförbart löfte om mindre klasser och mer lärartid hos Liberalerna. Låg: 4 000 miljoner kronor (viss klassreduktion men lägre lärartillskott). Hög: 20 000 miljoner kronor (ambitiösare klassreduktion och fler lärare än i basen). Uppskattningen är en skalad interpolation mellan kända referenspunkter."
+      "calculation": "Fler lärare och mindre klasser är samma åtgärd: en klass till kräver en lärare till. Grundskolan har omkring 1 100 000 elever och en genomsnittlig klass på 21,5 elever, alltså omkring 51 200 klasser. Ett tak på tjugo elever ger omkring 55 000 klasser — 3 800 fler än i dag. Varje ny klass kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år, vilket ger 2 700 miljoner kronor per år vid full utbyggnad i hela grundskolan. Spannet 1 500–4 500 speglar stegvis införande och att lokalbehovet varierar. Nivån är hämtad från det enda löftet om mindre klasser som anger ett tak; övriga partier anger ingen nivå och prissätts på samma grund, så att samma politik kostar lika."
     },
     "financing_claimed": {
       "described": false,
@@ -723,6 +723,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 12 000 till 10 000 miljoner kronor per år, enligt löftets egen uträkning. Kvarstående fråga: löftet delar politik med Liberalernas löften om mindre klasser, som nu ligger på 2 700 miljoner kronor per år räknat på deras eget maxtak. Samma politik bör kosta lika, men Socialdemokraterna har inte angett något tak, så beloppen är ännu inte harmoniserade.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 10 000 till 2 700 miljoner kronor per år. Det tidigare beloppet vilade på en uträkning som räknade med 700 000 grundskoleklasser — det finns omkring 51 000 — och på en skalad interpolation från ett annat partis dåvarande belopp, som i sin tur byggde på ett antagande som inte fanns i något löfte. Löftet prissätts nu på gruppens gemensamma uträkning, så att samma politik kostar lika. Löftet anger själv ingen nivå, men bär kostnaden eftersom partiet inte har något konkret klasslöfte som gör det.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -7793,14 +7798,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 2700,
-      "msek_high": 4500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Prissatt på partiets egen utfästelse om ett maxtak på tjugo elever per klass, som är samma politik.",
+      "method_note": "Riktningslöfte utan angiven nivå. Kostnaden bärs av partiets konkreta löfte om ett maxtak på tjugo elever per klass.",
       "confidence": 0.3,
-      "calculation": "Löftet anger ingen nivå på hur mycket mindre klasserna ska bli. Partiet har däremot lovat ett maxtak på tjugo elever per klass, vilket är samma politik uttryckt konkret, och det löftet är räknat: grundskolan har omkring 1 100 000 elever och en snittklass på 21,5, alltså omkring 51 200 klasser. Ett tak på tjugo ger omkring 55 000 klasser, alltså 3 800 fler, som var och en kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år. Det ger 2 700 miljoner kronor per år. Den tidigare uträkningen antog i stället en klassminskning på tjugo procent — en siffra som inte finns i något av partiets löften."
+      "calculation": "Löftet anger ingen nivå: varken hur mycket mindre klasserna ska bli eller hur många fler lärare det handlar om. Partiet har däremot lovat ett maxtak på tjugo elever per klass, och det löftet är prissatt. Att sätta ett belopp här också skulle räkna samma politik två gånger. Noll betyder alltså inte att mindre klasser är gratis — kostnaden står på partiets konkreta löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -7815,6 +7820,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 10 000 till 2 700 miljoner kronor per år. Löftet är samma politik som partiets löfte om ett maxtak på tjugo elever per klass och räknas nu på samma grund. Den tidigare uträkningen byggde på en antagen klassminskning om tjugo procent, en siffra som inte står i något av partiets löften; taket på tjugo är däremot partiets eget.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 2 700 till 0 miljoner kronor per år. Löftet anger ingen nivå och är ett riktningslöfte; partiets eget konkreta löfte om ett maxtak på tjugo elever per klass bär kostnaden. Tidigare i dag harmoniserades beloppet i stället till 2 700, vilket dubbelräknade partiets klasspolitik.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -13518,8 +13528,8 @@
       "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Maxtak 20 elever per klass i grundskolan (med början i lågstadiet). Prissatt som full utbyggnad i hela grundskolan, i linje med hur förskole-maxtaket p-2026-0392 prissattes (slutmålets löpande kostnad, inte bara första fasen). ~3 800 fler klasser à ~700 tkr/år ≈ 2 700 mkr/år, spann 1 500–4 500. Det tidigare estimatet (600) prissatte bara lågstadiefasen.",
-      "calculation": "Grundskolan har ~1 100 000 elever. Nuvarande snittklass ~21,5 → ~51 200 klasser; ett maxtak på 20 ger ~55 000 klasser, alltså ~3 800 fler klasser. Kostnad per extra klass: en heltidstjänst (lärare) plus lokaloverhead ≈ 700 000 kr per år → 3 800 × 700 000 ≈ 2 700 miljoner kronor per år. Spann 1 500–4 500 för stegvis införande och varierande lokalbehov. Prissatt som full utbyggnad i hela grundskolan för konsekvens med förskole-maxtaket (partiets eget löfte om maxtak i förskolan), som också prissattes på slutmålet; 'med början i lågstadiet' beskriver startpunkten, inte slutmålets kostnad. Den tidigare uppskattningen (600) räknade bara lågstadiefasen.",
+      "method_note": "Maxtak tjugo elever per klass i grundskolan. Prissatt som full utbyggnad: omkring 3 800 fler klasser à 700 000 kronor per år.",
+      "calculation": "Fler lärare och mindre klasser är samma åtgärd: en klass till kräver en lärare till. Grundskolan har omkring 1 100 000 elever och en genomsnittlig klass på 21,5 elever, alltså omkring 51 200 klasser. Ett tak på tjugo elever ger omkring 55 000 klasser — 3 800 fler än i dag. Varje ny klass kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år, vilket ger 2 700 miljoner kronor per år vid full utbyggnad i hela grundskolan. Spannet 1 500–4 500 speglar stegvis införande och att lokalbehovet varierar. Nivån är hämtad från det enda löftet om mindre klasser som anger ett tak; övriga partier anger ingen nivå och prissätts på samma grund, så att samma politik kostar lika.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -13540,6 +13550,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen ersatt med gruppens gemensamma text, så att alla löften om mindre klasser visar samma räkning. Beloppet är oförändrat på 2 700 miljoner kronor per år — det är detta löfte som är gruppens grund, eftersom det är det enda som anger ett tak.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
