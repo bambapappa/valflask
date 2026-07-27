@@ -121,13 +121,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1600,
-      "msek_base": 8000,
-      "msek_high": 14400,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Förbättrad pension för människor med lång arbetslivserfarenhet. Ca 1,5 miljoner pensionärer med låga pensioner efter långt arbetsliv. Om förbättringen ger i snitt 400 kr/mån × 1,5M × 12 = 7,2",
-      "confidence": 0.3
+      "method_note": "Riktningslöfte utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets konkreta pensionslöften.",
+      "confidence": 0.3,
+      "calculation": "Löftet säger att pensionen ska bli bättre, men inte för vem, med hur mycket eller på vilket sätt. Det tidigare beloppet byggde på en gissad höjning på 400 kronor i månaden — en siffra som inte står någonstans i löftet. Utan angiven nivå prissätts löftet inte. Noll betyder inte att politiken är gratis: en konkret pensionshöjning prissätts när partiet anger den."
     },
     "financing_claimed": {
       "described": false,
@@ -137,7 +138,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 8 000 till 0 miljoner kronor per år. Löftet anger ingen nivå, och det tidigare beloppet vilade på en antagen höjning som inte finns i citatet. Riktningslöften prissätts inte; kostnaden ligger på partiets konkreta pensionslöften.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -471,13 +478,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Lönehöjningar och fler anställda i vården. Om 10 000 nya vårdjobb × 500 000 kr = 5 mdr + lönehöjningar befintliga ~5 mdr = 10 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Riktningslöfte utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets konkreta vårdlöften.",
+      "confidence": 0.3,
+      "calculation": "Löftet säger att vårdpersonalen ska få en satsning, men inte hur många fler som ska anställas eller hur mycket lönerna ska höjas. Det tidigare beloppet byggde på antagandet om 10 000 nya vårdjobb, ett antal som inte står i löftet. Utan angiven nivå prissätts löftet inte. Kostnaden ligger på partiets konkreta vårdlöften."
     },
     "financing_claimed": {
       "described": false,
@@ -487,7 +495,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 10 000 till 0 miljoner kronor per år. Löftet anger varken antal tjänster eller lönenivå; det tidigare beloppet byggde på antagna 10 000 nya vårdjobb som inte nämns i citatet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -947,13 +961,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 15000,
-      "msek_base": 30000,
-      "msek_high": 45000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Försvarsbudgeten är ca 120 mdr. 'Snabbt byggas upp' = merkostnad. NATO-mål är 2% BNP (~800 mdr). Ytterligare 20-30 mdr/år behövs.",
-      "confidence": 0.4
+      "method_note": "Riktningslöfte utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets konkreta försvarslöften.",
+      "confidence": 0.4,
+      "calculation": "Löftet säger att den militära förmågan ska byggas upp snabbt, men anger ingen nivå, inget årtal och ingen andel av BNP. Det tidigare beloppet byggde på en antagen upptrappning som inte står i löftet. Partiets konkreta försvarslöften prissätts var för sig — att också prissätta den här formuleringen skulle räkna samma pengar två gånger."
     },
     "financing_claimed": {
       "described": false,
@@ -963,7 +978,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 30 000 till 0 miljoner kronor per år. Löftet anger ingen nivå och ingen tidpunkt; det tidigare beloppet vilade på en antagen upptrappning mot ett mål som inte nämns i citatet. Partiets konkreta försvarslöften bär kostnaden.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1090,13 +1111,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Utökad bevakning av våldsbejakande ideologier ( Säpo, polisiära resurser). 0,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Riktningslöfte utan utpekad åtgärd. Prissätts inte här.",
+      "confidence": 0.4,
+      "calculation": "Löftet uttrycker en ambition att bekämpa våldsbejakande ideologier, utan att peka ut någon åtgärd, någon myndighet eller någon resursnivå. Utan konkret åtagande finns ingen ny statlig utgift att räkna på."
     },
     "financing_claimed": {
       "described": false,
@@ -1106,7 +1128,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 500 till 0 miljoner kronor per år. Löftet pekar inte ut någon åtgärd eller resursnivå; det tidigare beloppet var en schablon för utökad bevakning som inte har stöd i citatet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1403,13 +1431,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 2000,
-      "msek_high": 3600,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Förenklingar för företagare. Administrativ besparing men kostar att implementera. Nettokostnad låg, estimerat 2 mdr.",
-      "confidence": 0.3
+      "method_note": "Riktningslöfte utan utpekad åtgärd. Prissätts inte här; kostnaden ligger på partiets konkreta företagarlöften.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger en riktning — enklare och billigare för företagare — utan att säga vilka regler som ska tas bort eller vilka avgifter som ska sänkas. Partiets konkreta förenklings- och skattelöften prissätts var för sig, så ett belopp här skulle räkna samma politik två gånger."
     },
     "financing_claimed": {
       "described": false,
@@ -1419,7 +1448,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 2 000 till 0 miljoner kronor per år. Löftet pekar inte ut någon regel eller avgift; kostnaden ligger på partiets konkreta förenklings- och skattelöften.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1587,13 +1622,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Särskilda insatser mot organiserad brottslighet. ~2 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.4,
+      "calculation": "Löftet räknar upp tre mål — hårdare tag mot grovt våld, stopp för den kriminella ekonomin och färre barn som rekryteras — utan att ange någon åtgärd eller nivå. Partiets konkreta löften om polis, straff och förebyggande arbete prissätts var för sig; att också prissätta sammanfattningen skulle räkna samma politik två gånger."
     },
     "financing_claimed": {
       "described": false,
@@ -1603,7 +1639,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 2 000 till 0 miljoner kronor per år. Löftet är en sammanfattning av tre mål utan angiven nivå; de konkreta åtagandena ligger på partiets egna löften om polis, straff och förebyggande arbete.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1864,13 +1906,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Uppräkning mot NATO 2% BNP-mål. Sverige ca 1,8% idag, behöver ytterligare 0,2% ≈ 15 mdr.",
-      "confidence": 0.4
+      "method_note": "Riktningslöfte utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets konkreta försvarslöften.",
+      "confidence": 0.4,
+      "calculation": "Löftet beskriver ett starkt försvar inom Nato utan att ange någon nivå eller något årtal. Det tidigare beloppet byggde på en antagen höjning till två procent av BNP, en siffra som inte står i löftet. Partiets konkreta försvarslöften prissätts var för sig."
     },
     "financing_claimed": {
       "described": false,
@@ -1880,7 +1923,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 15 000 till 0 miljoner kronor per år. Löftet anger ingen nivå; det tidigare beloppet vilade på ett antaget BNP-mål som inte nämns i citatet. Partiets konkreta försvarslöften bär kostnaden.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2140,13 +2189,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5000,
-      "msek_high": 7500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Lagstadgad vårdgaranti BUP kräver stora resurstillskott. Nuvarande köer månadslånga. ~5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Löftet hålls av en lagändring; statens direkta kostnad är försumbar. Kostnaden för att korta köerna uppstår hos regionerna, som driver och betalar barn- och ungdomspsykiatrin.",
+      "confidence": 0.4,
+      "calculation": "Löftet hålls av en lagändring, och statens egen kostnad för att utreda och lagstifta är försumbar. Vården som garantin gäller drivs och betalas av regionerna, så de pengar som krävs för att korta köerna hamnar där och inte i statsbudgeten. Beloppet avser själva åtgärden — inte de kostnader den för med sig hos regionerna, som kan bli betydande."
     },
     "financing_claimed": {
       "described": false,
@@ -2156,7 +2206,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 5 000 till 0 miljoner kronor per år. En lagstadgad vårdgaranti hålls av lagändringen, vars direkta statliga kostnad är försumbar. Noterat i uträkningen att kostnaden för att korta köerna uppstår hos regionerna, som driver barn- och ungdomspsykiatrin.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4554,8 +4610,14 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Tillbakadraget: citatet innehåller inget åtagande om framtiden. Företrädaren beskriver politik som redan är genomförd (\"vi har gett polisen verktyg\"), och en beskrivning av gjord politik är inget vallöfte. Posten fångades felaktigt som löfte vid inläsningen och räknades tidigare med 2 000 miljoner kronor per år i partiets summa.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4835,13 +4897,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
-      "msek_high": 9000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Nationellt ansvar för sjukvård = mer statlig styrning/finansiering. ~5 mdr/år i omstrukturering.",
-      "confidence": 0.3
+      "method_note": "Att staten tar över regionernas ansvar är omfördelning, inte ny kostnad. Löftet anger ingen nivå på tillskott utöver det.",
+      "confidence": 0.3,
+      "calculation": "Att staten tar över ansvaret för sjukvården flyttar en utgift som redan betalas — av regionerna. En omfördelning mellan staten och regionerna är ingen ny kostnad för det offentliga, och löftet anger ingen nivå på pengar utöver själva övertagandet. Beloppet avser åtgärden, inte hur mycket sjukvården kostar i dag."
     },
     "financing_claimed": {
       "described": false,
@@ -4851,7 +4914,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 5 000 till 0 miljoner kronor per år. Ett statligt övertagande av sjukvården flyttar en utgift som regionerna redan betalar — det är omfördelning, inte ny statlig nettokostnad. Löftet anger ingen nivå på tillskott utöver övertagandet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5888,13 +5957,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Återuppbyggnad totalförsvar. ~15 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Riktningslöfte utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets konkreta försvars- och beredskapslöften.",
+      "confidence": 0.4,
+      "calculation": "Löftet säger att totalförsvaret ska byggas upp, utan att ange nivå eller årtal. Partiets konkreta försvars- och beredskapslöften prissätts var för sig, så ett belopp här skulle räkna samma pengar två gånger. Samma bedömning har gjorts för motsvarande breda försvarslöften hos andra partier."
     },
     "financing_claimed": {
       "described": false,
@@ -5904,7 +5974,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 15 000 till 0 miljoner kronor per år. Löftet anger ingen nivå och inget årtal; kostnaden ligger på partiets konkreta försvars- och beredskapslöften. Samma bedömning som för motsvarande breda försvarslöften hos övriga partier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6368,13 +6444,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
-      "msek_high": 9000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Bibehålla akutsjukvård i glesbygd. Kräver subventioner. ~5 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Löftet anger varken sjukhus, volym eller stödform. Akutsjukvården drivs och betalas av regionerna, så kostnaden uppstår där.",
+      "confidence": 0.3,
+      "calculation": "Löftet lovar akutsjukvård i hela landet men anger varken vilka sjukhus som avses, vilka volymer eller vilken form av stöd som ska ges. Akutsjukvården drivs och betalas dessutom av regionerna, så de pengar som krävs hamnar där och inte i statsbudgeten. Beloppet avser själva åtgärden — inte de kostnader den för med sig hos regionerna, som kan bli betydande."
     },
     "financing_claimed": {
       "described": false,
@@ -6384,7 +6461,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 5 000 till 0 miljoner kronor per år. Löftet anger varken sjukhus, volym eller stödform. Noterat i uträkningen att akutsjukvården drivs och betalas av regionerna, så kostnaden uppstår där och inte i statsbudgeten.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6950,13 +7033,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 15000,
-      "msek_high": 27000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: 'Sverige smartast i Europa' innebär en samling satsningar. Fas 1 bedömde 'EU:s smartaste land inom tio år' till 10 mdr/år. Detta tal konkretiserar löftet med flera delsatsningar (straffskatt ",
-      "confidence": 0.3
+      "method_note": "Riktningslöfte utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets konkreta löften om skola och forskning.",
+      "confidence": 0.3,
+      "calculation": "Löftet är en ambition — att Sverige ska vara smartast i Europa — utan att ange vilka satsningar som ingår eller vad de kostar. Partiets konkreta löften om skola, utbildning och forskning prissätts var för sig, så ett belopp här skulle räkna samma politik två gånger."
     },
     "financing_claimed": {
       "described": false,
@@ -6966,7 +7050,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 15 000 till 0 miljoner kronor per år. Löftet anger ingen nivå och inga delsatsningar; kostnaden ligger på partiets konkreta löften om skola, utbildning och forskning.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
