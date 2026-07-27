@@ -1112,3 +1112,60 @@ totalen vår uppskattning och ska bära markeringen för datorgissning.
 14), `pipeline/tests/cost.test.ts` (vaktar att regeln ligger kvar i
 systemprompten), `data/promises.json` (p-2026-0173 rättat från 0 till 1 575
 miljoner kronor per år).
+
+---
+
+## 2026-07-27 — Ett löfte som utvidgar beslutad lag prissätts som skillnaden
+
+**Beslut:** Lovar ett parti att bygga ut en reform som redan är beslutad
+lag, är löftets pris skillnaden mellan den fullt utbyggda reformen och det
+som redan gäller — inte hela reformen. Finns en officiell kostnadsberäkning
+för båda lägena är det den som används, och `calculation` skriver ut båda
+talen och subtraktionen så att läsaren ser vad som redan är betalt.
+
+**Motiv:** Sverigedemokraternas löfte är ordagrant att det högkostnadsskydd
+som gäller äldre "ska omfatta alla medborgare". Regeringens proposition om
+ett förstärkt högkostnadsskydd för tandvård prissätter etappen som gäller
+dem som fyllt 67 till drygt 3,8 miljarder kronor per år och en fullt utbyggd
+reform för alla från 20 år till 7,7–9,9 miljarder, huvudscenario 8,4. Att
+lägga hela 8,4 på löftet vore att ta betalt två gånger för de äldre, som
+redan har skyddet. Detta är samma princip som netto före brutto, tillämpad
+på tiden i stället för på betalaren.
+
+**Förkastade alternativ:** Prissätta hela den utbyggda reformen — enkelt att
+räkna, men fel: en väljare som röstar på löftet köper utvidgningen, inte det
+som riksdagen redan beslutat. Prissätta löftet till noll för att en reform
+"redan pågår" — nej, utvidgningen till alla vuxna är en verklig och stor ny
+utgift.
+
+**Påverkan:** `data/promises.json` (p-2026-0484, p-2026-0552, p-2026-0489,
+p-2026-0440), `HANDOFF.md` (metoden skriven i sessionsplanen, återkommer i
+kommande omräkningssessioner).
+
+---
+
+## 2026-07-27 — Nästan avgiftsfri vuxentandvård är ett delat löfte
+
+**Beslut:** Sverigedemokraternas två löften, Vänsterpartiets och
+Miljöpartiets ligger i samma grupp och räknas en gång. Gruppen företräds av
+Miljöpartiets belopp, som är högst. Beslutet river det tidigare beslutet
+samma dag att hålla Miljöpartiets löfte utanför gruppen.
+
+**Motiv:** Alla tre partierna lovar i praktiken samma sak: att vuxentandvård
+blir nästan avgiftsfri. Etiketterna skiljer sig — tio procents patientavgift,
+ett tak på 1 450 kronor per år, tandvård finansierad som annan sjukvård — men
+regeringens proposition visar att avståndet är litet: omkring 75 procent av
+patienterna i första etappen hamnar ändå på 1 400 kronor eller mindre per år,
+alltså under Vänsterpartiets tak. Politiken går bara att genomföra en gång,
+och då ska den räknas en gång. Att Miljöpartiets reform ändå är den mest
+långtgående syns genom att gruppen bär deras belopp.
+
+**Förkastade alternativ:** Hålla Miljöpartiets löfte utanför gruppen, som
+tidigare — då räknas nästan avgiftsfri tandvård två gånger i rikssumman och i
+en tänkt regering. Ge alla fyra samma belopp — då försvinner att sjukvårdens
+principer går längre än tio procents patientavgift, som lämnar patienten kvar
+på omkring 26 procent av sin räkning.
+
+**Påverkan:** `data/promises.json` (gruppen `g-hogkostnadsskydd-tandvard` har
+nu fyra medlemmar), `data/rattelser.json`, `HANDOFF.md`. Rikssumman föll med
+92 000 miljoner kronor för mandatperioden.

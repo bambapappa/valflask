@@ -398,26 +398,27 @@ bakåtfyllnaden, vilket står utskrivet i varje sådan text.
 
 **Ordningen för omräkningen (mänskligt beslut 2026-07-27):**
 
-1. **Tandvården först.** Se nedan — underlaget är bevisat inkonsekvent.
+1. ~~**Tandvården först.**~~ **Klar 2026-07-27** — se avsnittet längre ned.
 2. **Därefter övriga ämnen i fallande storleksordning**, alltså det
    ämnesområde som väger tyngst i mandattotalen först, och inom ämnet de
-   största beloppen först.
+   största beloppen först. **Näst på tur: skatterna, de elva tyngsta
+   (session 2).**
 
-Två löften är redan uttryckligen märkta för omräkning i sin egen uträkning:
-p-2026-0390 (sanktioner mot bidrag, vilar på en antagen procentsats utan
-erfarenhet bakom) och de tre tandvårdslöftena i gruppen nedan.
+Ett löfte är fortfarande uttryckligen märkt för omräkning i sin egen
+uträkning: p-2026-0390 (sanktioner mot bidrag, vilar på en antagen
+procentsats utan erfarenhet bakom). Det ligger i session 10.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json` 2026-07-27. En **räkneenhet** är ett ensamt
-löfte eller en hel grupp — gruppen räknas en gång och företräds av sitt
-högsta belopp. 424 aktiva löften blir 378 räkneenheter, varav 242 bär ett
-belopp över noll. Pengarna är kraftigt snedfördelade: hälften av
-mandattotalen ligger i åtta enheter, 80 procent i 35 och 95 procent i 82.
+Mätt på `data/promises.json`, uppdaterad efter session 1. En **räkneenhet**
+är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
+av sitt högsta belopp. 424 aktiva löften blir 377 räkneenheter, varav 241 bär
+ett belopp över noll. Pengarna är kraftigt snedfördelade: hälften av
+mandattotalen ligger i åtta enheter, 80 procent i 34 och 95 procent i 82.
 
 | # | Session | Enheter | Tankenivå |
 |---|---|---|---|
-| 1 | **Tandvården.** Fastställ vuxentandvårdens storlek först, räkna sedan om gruppen och pröva om MP:s löfte hör hemma i den | 4 löften (2 enheter) | **max** |
+| 1 | ~~**Tandvården**~~ **KLAR 2026-07-27.** 4 löften på 2 enheter blev 1 grupp; ämnet gick från 120 000 till 28 000 mkr. Se avsnittet nedan | klar | **max** |
 | 2 | **Skatter, de elva tyngsta** — knappt 2 300 av ämnets 2 817 mdkr. Störst: MP 600, C:s grundlönsgrupp 420, M 415 | 11 | **max** |
 | 3 | Skatter, resten | 45 | hög |
 | 4 | **Försvar, hela ämnet** — 1 437 mdkr, varav 760 i en enda grupp | 19 | **max** |
@@ -429,7 +430,7 @@ mandattotalen ligger i åtta enheter, 80 procent i 35 och 95 procent i 82.
 | 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
 
 Ämnesordningen är mandattotalen: skatter 2 817 mdkr, försvar 1 437,
-välfärd 632, utbildning 414, klimat-miljö 268, övrigt 120, rättsväsende 71,
+välfärd 540, utbildning 414, klimat-miljö 268, övrigt 120, rättsväsende 71,
 infrastruktur 63, migration 45. Löften som ger staten pengar ligger kvar i
 sitt eget ämne och räknas om i samma session som resten av ämnet.
 
@@ -455,6 +456,14 @@ max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
 
+*Utfall session 1:* två enheter (fyra löften) på en session, men den gick
+nästan helt åt till att leta rätt på underlaget — och den sökningen betalade
+sig: regeringens proposition prissatte reformen åt oss. **Leta efter en
+myndighetssiffra innan du bygger en egen uträkning.** Ligger löftet nära en
+proposition, en utredning eller en budgetpost finns beloppet ofta redan
+räknat, och då blir sessionen både snabbare och säkrare. Enheter per session
+säger därför mindre än hur väl ämnet är dokumenterat.
+
 **Innan du lämnar en session:**
 
 - varje ändrat löfte har en egen `history`-post,
@@ -477,35 +486,58 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- **Session 1 — tandvården** (gren
-  `claude/promises-calculations-review-b22gul`, startad 2026-07-27).
-  Fastställer vuxentandvårdens storlek och räknar om p-2026-0552,
-  p-2026-0484, p-2026-0489 och p-2026-0440. Rör inga andra löften.
+- (ingen pågående session)
 
-#### Tandvården: underlaget motsäger sig självt
+#### Tandvården är omräknad — session 1, klar 2026-07-27
 
-Fyra löften rör samma sak, och deras uträkningar vilar på **tre olika bilder
-av hur stor tandvården är**:
+De fyra löftena vilade på tre oförenliga bilder av vuxentandvårdens storlek
+(14,7, 25 respektive 45 mdkr per år). Rätt storlek: **24,7 miljarder kronor
+2024** för vuxentandvården inom det statliga tandvårdsstödet, enligt
+Tandvårds- och läkemedelsförmånsverket. Statens egna tandvårdsutgifter var
+7,62 mdkr 2024, och anslaget för 2026 är 12,8 mdkr.
 
-| Löfte | Parti | Belopp | Antar att vuxentandvården kostar |
-|---|---|---|---|
-| p-2026-0552 | SD | 10 000 | 14,7 mdkr |
-| p-2026-0484 | SD | 10 000 | 25 mdkr |
-| p-2026-0489 | V | 10 000 | 25 mdkr |
-| p-2026-0440 | MP | 20 000 | 45 mdkr totalt, varav 12 offentligt |
+**Viktigast: gissningen behövdes aldrig.** Regeringens proposition om ett
+förstärkt högkostnadsskydd för tandvård prissätter exakt det partierna lovar.
 
-Minst en siffra är fel, och beloppen är byggda rakt ovanpå dem. **Fastställ
-tandvårdens storlek först** — allt annat i ämnet hänger på den.
+| Vad propositionen räknar med | Per år |
+|---|---|
+| Etappen som gäller dem som fyllt 67 sedan januari 2026 | drygt 3,8 mdkr |
+| Fullt utbyggd reform, alla från 20 år | 7,7–9,9 mdkr, huvudscenario 8,4 |
+| **Kvar att lova bort: utvidgningen till alla vuxna** | **≈ 4,6 mdkr** |
 
-De tre första är grupplänkade (`g-hogkostnadsskydd-tandvard`) och räknas en
-gång. SD:s två är samma löfte i två citat; det ena skriver ut mekanismen
-(tio procents patientavgift), det andra inte.
+Löftena är utvidgningen — inte hela reformen. **Den metoden går igen: dra
+bort det som redan är beslutad lag innan du prissätter ett löfte.**
 
-**MP står med flit UTANFÖR gruppen**, men det beslutet är osäkert och ska
-prövas om vid omräkningen. Motivet: att finansiera tandvården enligt samma
-principer som annan sjukvård är en större reform än ett kostnadstak. Men
-SD:s löfte landar i praktiken också nära nittio procents offentlig
-finansiering, så skillnaden kan vara mindre än etiketterna antyder.
+| Löfte | Parti | Före | Efter | Grund |
+|---|---|---|---|---|
+| p-2026-0552 | SD | 10 000 | 4 600 | myndighet |
+| p-2026-0484 | SD | 10 000 | 4 600 | myndighet |
+| p-2026-0489 | V | 10 000 | 4 600 | egen uppskattning |
+| p-2026-0440 | MP | 20 000 | 7 000 | egen uppskattning |
+
+**MP:s löfte ligger nu i gruppen** (mänskligt beslut 2026-07-27) — det
+tidigare beslutet att hålla det utanför är alltså omprövat och rivet. Alla
+tre partierna lovar i praktiken nästan avgiftsfri vuxentandvård, och
+propositionen visar att mekanismerna ligger närmare varandra än etiketterna:
+omkring 75 procent av patienterna i första etappen hamnar ändå på 1 400
+kronor eller mindre per år, alltså under V:s föreslagna tak på 1 450.
+Gruppen räknas en gång och företräds av MP:s belopp, som är högst eftersom
+sjukvårdens principer går längre än tio procents patientavgift — den lämnar
+patienten kvar på omkring 26 procent av sin räkning, eftersom undersökningar
+och förebyggande vård står utanför.
+
+Steget från tio procents patientavgift till sjukvårdens principer, omkring
+2 mdkr, är **vår egen uppskattning** och står utskriven som sådan i MP:s
+uträkning. Allt annat är propositionens egna siffror.
+
+De fyra löftena väger nu **28 000 i stället för 120 000 mkr** för
+mandatperioden. Rikssumman gick från 5 867 996 till **5 775 996 mkr**.
+
+**Kvar att avgöra:** SD:s två löften är samma löfte i två citat, och regeln
+säger att ett parti som upprepar sig är en dubblett som dras tillbaka.
+Gruppen kollapsar dem redan i summan, så det påverkar inga belopp — bara hur
+de visas. Lämnade orörda med flit: ett tidigare mänskligt beslut lade dem i
+gruppen i stället för att dra tillbaka det ena.
 
 #### Två harmoniseringar är gjorda och behöver inte tas om
 
@@ -579,14 +611,16 @@ beslut.
 C:s tre löften om anställningskostnader (38 000 -> 15 000 mkr/år) och SD/V
 högkostnadsskydd i tandvården. MP:s tandvårdslöfte lämnades UTANFÖR gruppen
 med flit: att finansiera tandvården som annan sjukvård är en större reform än
-ett kostnadstak.
+ett kostnadstak. *(Det sista är omprövat senare samma dag i session 1 — MP
+ligger nu i gruppen. Se "Tandvården är omräknad" ovan.)*
 
 **Publika uträkningar städade:** inga råa löftesnummer kvar (40 omskrivna),
 inga hänvisningar till interna prissättningsregler (6), fackuttryck utskrivna
 i 196 texter. Två fel rättade på vägen: ett basantagande angivet i miljarder
 i stället för miljoner, och en räkning som blandade tre enhetsförkortningar.
 
-**Totalen** gick från 7 016 120 till **5 867 996 mkr** under omgången.
+**Totalen** gick från 7 016 120 till **5 867 996 mkr** under omgången, och
+vidare till **5 775 996 mkr** när tandvården räknades om i session 1.
 
 ### Öppna frågor som ingen avgjort
 
