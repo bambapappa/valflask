@@ -387,33 +387,69 @@ från datat som gällde när krönikan skrevs (ögonblicksbild), aldrig dagens s
 
 *Uppdaterad 2026-07-27.*
 
-### Nästa uppgift: granska de 111 posterna i `calculation_review.json`
+### Granskningskön är TOM — nästa uppgift är språket i uträkningarna
 
-Uträknings-backfillen är **klar** (tre körningar 26–27/7). Kvar är den
-mänskliga genomgången, tillsammans med ägaren, ett löfte i taget — samma
-arbetssätt som förra rundans 44.
+Alla avvikelser från bakåtfyllnaden är avgjorda genom mänskligt beslut.
+`data/calculation_review.json` är `[]`. Rör den inte utan att först läsa
+"Kör INTE fler backfill-körningar" nedan.
 
-**Kön fördelar sig så här** (kolla om siffrorna stämmer innan du börjar):
+**Nästa uppgift, i tur och ordning:**
 
-| Mönster | Antal |
-|---|---|
-| publicerat >0 → nytt **0** | 66 |
-| nytt lägre (ej 0) | 33 |
-| nytt högre | 5 |
-| publicerat 0 → nytt >0 | 7 |
+1. **Interna nummer och fackspråk i publika uträkningar.** 42 av de 346
+   publicerade uträkningarna innehåller råa löftesnummer ("jfr p-2026-0100")
+   och 67 innehåller fackuttryck som "msek", "SOU", "base/low/high". De
+   texterna visas på löftessidorna och bryter mot språkreglerna i §0. De
+   flesta kommer från bakåtfyllnaden, som skrev för en granskare och inte för
+   en läsare. Arbetet är ren textredigering — ingen LLM behövs, inga
+   körkostnader. Sök med:
+   ```
+   node -e "const P=require('./data/promises.json');console.log(P.filter(p=>p.cost.calculation&&/p-2026-\d{4}/.test(p.cost.calculation)).map(p=>p.id).join(' '))"
+   ```
+2. **11 aktiva löften med datorgissat belopp saknar uträkning helt.** De
+   återkommer i kön varje gång bakåtfyllnaden körs, just för att de saknar
+   texten. Skriv uträkningen för hand i stället för att köra om.
 
-De 66 nollkandidaterna dominerar och väger tyngst — bara de tio största
-motsvarar ~265 000 mkr. Det är breda uppräkningslöften och regleringar
-(p-2026-0129 V 80 000 → 0, p-2026-0002 S 25 000 → 0, p-2026-0121 SD 20 000 → 0),
-alltså A5-promptens nya avgränsningsregler tillämpade på gamla estimat. Många är
-sannolikt korrekta, men var och en kräver ett beslut. Börja där.
+### Gjort 2026-07-27 (kön betad från 58 till 0)
 
-**Regler för genomgången:**
-- Justeringarna ryms under den redan skrivna samlade rättelseposten — **skriv
-  INGEN rättelse per löfte**. Uppdatera bara `promises.json` (belopp +
-  `history`-post) och `changelog.json`, inte `rattelser.json`.
-- Två commits: först dataändringen med `"commit": "0000000"`, sedan backfill av
-  riktig hash + omräknad `data_hash` (§3.5).
+- **Tolv breda löften nollade och två felfångade citat tillbakadragna.**
+  p-2026-0099 (L) och p-2026-0061 (M) beskrev båda politik i DÅTID ("vi har
+  gett polisen verktyg", "har en jobbpremie införts") — de innehåller inget
+  åtagande om framtiden och är alltså inte vallöften. Leta efter fler av den
+  sorten: extraktionen skiljer inte på löfte och skryt.
+- **Trettiotvå belopp nedjusterade**, de flesta från schabloner till
+  uträkningar som vilar på antal gånger kostnad per enhet.
+- **Elva löften bytte period från per år till engångskostnad.** Deras
+  uträkningar beskrev redan en engångsinsats (nya läroplaner, ett nytt
+  betygssystem, en utredning) medan beloppet räknades fyra gånger i
+  mandattotalen. **Fallgrop att leta vidare efter:** perioden sattes vid
+  extraktionen, uträkningen skrevs långt senare, och de kan säga emot varandra.
+- **Ny kärnprincip: partiets egen siffra gäller.** Se `DECISION_LOG.md`
+  2026-07-27. Kodad i `CLAUDE.md`, som regel 14 i `pipeline/prompts/A5-cost.md`
+  och vaktad av ett enhetstest i `pipeline/tests/cost.test.ts`. Bakgrund: V:s
+  bebispeng låg på 0 kronor trots att partiledaren angav 15 000 kronor per
+  förstagångsförälder i samma mening.
+- **Genomgång av alla 28 löften med en siffra i citatet.** Två visade ett
+  belopp som den publicerade uträkningen inte gav: höjt barnbidrag stod på
+  18 900 där uträkningen räknade fram 17 500, och försvar till 5 % av BNP
+  stod på 200 000 där uträkningen räknade fram 190 000 — och det andra
+  partiet i samma delade löfte låg redan på 190 000. **Leta efter fler
+  sådana:** belopp och publicerad uträkning kan glida isär utan att något
+  test fångar det.
+- **Två beslut lämnades med flit orörda** trots att bakåtfyllnaden ville
+  ändra dem: p-2026-0039 (straffskärpningar, ville sänka 3 000 → 35) och
+  p-2026-0470 (marknadsskolan, ville höja 0 → 5). Båda prövades av en
+  människa tidigare. Ett maskinförslag får inte tyst riva upp ett fattat
+  beslut.
+
+Summan för mandatperioden gick från 7 016 120 till **6 333 472 miljoner
+kronor** under omgången — knappt 700 miljarder ner, nästan allt från breda
+löften som prissatts trots att deras konkreta delar redan låg på partiernas
+egna löften.
+
+**Öppen fråga som ingen avgjort:** SD:s och M:s löften om fler poliser står
+nu på samma belopp (1 500 miljoner kronor per år) men är INTE grupplänkade,
+så de räknas var för sig i koalitionssummorna. Samma sak kan gälla fler
+harmoniserade par. Ett mänskligt beslut behövs om de ska dela `group_id`.
 
 ### Kör INTE fler backfill-körningar
 
@@ -561,7 +597,7 @@ Kört mot `origin/main` (commit `b13f889`, efter PR #438):
 - **`pnpm check-t7`: ALLT OK** — 404 löften har `archive_url`, 24 saknar
   (retry-flagga hanteras av pipeline), ingen fulltext i data, 177 seen-URL:er,
   0 review-poster. ✅
-- **Data:** 428 löften (s 44, m 79, sd 28, c 88, v 31, kd 23, l 47, mp 91 —
+- **Data (2026-07-23, se §7 för dagens siffror):** 428 löften (s 44, m 79, sd 28, c 88, v 31, kd 23, l 47, mp 91 —
   summan > 428 pga tvärparti-grupper), 361 llm_estimat varav **4** med
   `calculation` (backfillen ännu ej landad), 176 stances, 10 frågor, 4 krönikor,
   233 changelog-poster, 9 rättelseposter, needs_review tom.
