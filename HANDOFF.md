@@ -375,10 +375,10 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 
 ### Pågår just nu
 
-- 2026-07-26 `claude/handlingsvagen-ko-beta-6oiq2r` → b-0014:s ämnesregister
-  (nyckelordsindex + fritextsök). Rör inte `pipeline/src/nyckelord.ts`,
-  `pipeline/src/stam.ts`, `data/nyckelord*`, `site/src/pages/amnen.astro`
-  eller `site/src/lib/amne.ts` parallellt.
+- 2026-07-27 `claude/handlingsvagen-ko-beta-6oiq2r` → ämnessökets
+  partifilter och röstfrågor (b-0023). Rör inte `site/src/lib/amne.ts`,
+  `site/src/lib/delat.ts`, `site/src/pages/amnen.astro` eller
+  `site/src/pages/api/hv/` parallellt.
 
 #### Klart och mergat
 
@@ -391,9 +391,13 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
 | #200 | anslagstavlan |
 | #201 | innehållslösa ord + partinamn ur termerna, betänkandena indexeras, ordtrenden mäter övervikt mot övriga (b-0022) |
 
-Indexet på main är byggt (run 30202635850, 21 052 av 21 053 handlingar,
-828 628 termer) men bär fortfarande allmänorden och partinamnen — det
-byggdes före #201.
+| #202–#203 | ombyggt index, innehållslösa ord och namn ute, betänkandena med |
+| #204 | LANSERING: hur sajten faktiskt är driftsatt |
+
+Indexet på main är ombyggt och rent: **21 052 handlingar** (alla med
+visningsform) och **1 443 av 1 451 betänkanden**. Ordtrenderna visar
+politik — MP: parisavtalet, kvotflyktingar, klimatanpassning; KD:
+jerusalem, religionsfrihet; C: solceller, jordbruksmark, biogas.
 
 #### Namnbytet till utlovat.se — planen ligger i LANSERING.md
 
@@ -419,67 +423,43 @@ sitemap, så adresserna finns i sökmotorerna.
 
 #### Näst på tur, i ordning
 
-1. **Bygg om indexet** när #201 är mergad: kör `nyckelord.yml` med
-   `om: true`. Nu även 1 451 betänkanden utöver de 21 053 handlingarna,
-   ~3 h, **ingen modellkvot** (termerna räknas fram i kod). Workflowen
-   pinnar sin checkout till defaultgrenen, så #201 MÅSTE vara mergad
-   först — annars kör den gamla koden.
-2. **Bygg själva söket.** Det som finns nu är fritextsök med träfflista.
-   Det som efterfrågats (mänskligt beslut 2026-07-26) är att en läsare
-   ska kunna söka ett ämne och få svar på:
-   - allt som rör ämnet,
-   - vad ett visst parti eller en kombination av partier sagt i ämnet
-     (**filter på parti, flerval**),
-   - hur ett parti röstat i frågor som rör ämnet,
-   - vilka som röstat för respektive emot i alla omröstningar i ämnet.
+1. **Trigga arkivkopiorna.** `arkiv.yml` under Actions-fliken. 0/16 av de
+   vägda dokumenten har verifierad arkivkopia, och det är den sista hårda
+   punkten på HV5-checklistan. En kopia godtas bara om citatet står ord
+   för ord i själva ögonblicksbilden — bär den inte citatet lämnas
+   arkivlänken tom, aldrig påklistrad.
+2. **Fullkörning av `foreslag`** med det indexbaserade kandidaturvalet —
+   82 löften återstår efter `p-2026-0469`. Kör INTE parallellt med ett
+   indexbygge: båda skriver till main.
+3. **Sedan namnbytet** enligt `LANSERING.md`, som ett eget moment.
 
-   Röstdelen är möjlig först efter steg 1: voteringar har ingen egen
-   dokumenttext, deras sak står i betänkandet. Alla 2 576 voteringar
-   möter ett av de 1 451 betänkandena (kontrollerat), och betänkandena
-   indexeras under samma nyckel som voteringens `dok_id` (`202223:SkU2`).
-   Röstfördelningen per parti finns redan i `data/handlingar.json`.
+#### Söket — KLART (b-0023)
 
-   Rankningen av ord är uttryckligen SEKUNDÄR mot det här.
-#### Så bör partifiltret byggas (mätt, inte gissat)
+Både partifiltret och röstfrågorna är byggda och mätta. Det som gäller
+nu, för den som bygger vidare:
 
-Partifiltret måste gälla ALLA träffar, inte bara de 60 som visas — ett
-filter som tyst bara filtrerar den synliga sidan ljuger om antalet.
-
-Den naiva vägen är att hämta handlingsskärvorna för alla träffar och
-filtrera på deras `p`-fält. **Gör inte det:** en handlingsskärva är
-~156 KB och de 23 väger 3,6 MB tillsammans. En sökning skulle dra ned
-hundratals kilobyte bara för att kunna gråa ut partier.
-
-Lägg i stället partikoderna i ORDSKÄRVAN, bredvid postningslistan.
-`OrdPost` är i dag `{ n, i: string[] }`; med en parallell lista över
-aktörspartier per id kan klienten filtrera innan den kapar till 60, utan
-en enda extra hämtning. Partikoderna är åtta stycken, så en kort kod
-eller en bitmask per post räcker — några byte per handling mot 156 KB per
-skärva. `aktorsPartier()` i `pipeline/src/handlingar.ts` ger rätt partier
-(den skiljer frågeställare från svarande statsråd).
-
-Budgetgrinden i `site/scripts/test-budget.mts` mäter ordskärvorna — höj
-inte taket utan att först se efter att ökningen är den väntade.
-
-#### Så bör röstfrågorna byggas
-
-Voteringar har ingen egen text; efter omindexeringen bär betänkandet
-deras ämnesord under nyckeln `202223:SkU2` i skärvan `bet`. En votering i
-`data/handlingar.json` har samma sträng i `dok_id`, så uppslaget är
-direkt. Röstfördelningen per parti ligger redan på voteringen
-(`rostfordelning`), och `aktorsPartier()` returnerar de partier som
-faktiskt röstade.
-
-Det betyder att "hur röstade partierna i frågor om ämnet X" kan besvaras
-helt ur data som finns — ingen modell, ingen tolkning. Håll isär de två
-sakerna sidan visar: ordförekomst säger bara att ämnet BERÖRS, medan
-röstsiffrorna säger vad partierna faktiskt gjorde. Att ett ord står i en
-text får aldrig presenteras som en ståndpunkt.
-
-3. **Fullkörning av `foreslag`** med det indexbaserade kandidaturvalet —
-   82 löften återstår efter `p-2026-0469`. Kör INTE parallellt med
-   indexbygget: båda skriver till main, och kandidaturvalet ska läsa det
-   färdiga indexet.
+- **Partifiltret gäller hela träffmängden.** Partierna ligger som en
+  bitmask i ORDSKÄRVAN bredvid postningslistan (`OrdPost.p`, två
+  hexsiffror per id i `i`), just för att klienten ska kunna gallra före
+  den kapar till 60. Att hämta handlingsskärvorna för att filtrera vore
+  3,6 MB per bred sökning — gör inte det.
+- **Betänkandena har en egen postningslista** (`b`/`bn`) med eget tak.
+  I en gemensam lista kapas de bort av handlingarna, som är femton
+  gånger fler: id:n sorteras som text och `h-2026-…` ligger alltid före
+  `202526:…`. Röstfrågorna hade då tyst slutat svara.
+- **Id:n skickas förkortade** till sitt löpnummer, med förled och
+  nollfyllnadsbredd angivna en gång per skärva (`pre`, `bredd`). Det är
+  den vinsten som gjorde att partikoderna och betänkandena fick plats:
+  största ordskärvan 582 → 321 KB mot taket 500 KB. **Nollfyllningen är
+  inte kosmetik** — `h-2026-0868` och `h-2026-868` är olika handlingar.
+  Grinden "de förkortade id:na skrivs tillbaka till verkliga handlingar"
+  finns just för att den skillnaden en gång slank igenom.
+- **Röstfrågorna** går via betänkandet: `/api/hv/votering/<riksmöte>.json`
+  har betänkandenyckeln (`202223:SkU2`) som voteringens `dok_id` pekar på,
+  med riksdagens egna röstsiffror per parti. Sammanställningen står för
+  sig själv på sidan. Ordförekomst betyder att ämnet BERÖRS; en röst är
+  vad ett parti faktiskt gjorde — de två blandas aldrig ihop, och sidan
+  skriver ut att ett ja gäller utskottets förslag i just den punkten.
 
 #### Fällor som redan kostat tid
 

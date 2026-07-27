@@ -7,8 +7,8 @@ import assert from "node:assert";
 import { buildSummary, lofteIds, buildLofteDetalj } from "../src/lib/rutnat.ts";
 import { buildSokIndex } from "../src/lib/sok.ts";
 import {
-  byggHandlingSkarva, byggOrdSkarva, byggPartiTrender, byggVagda,
-  handlingSkarvor, indexFinns, ordSkarvor,
+  byggHandlingSkarva, byggOrdSkarva, byggPartiTrender, byggVagda, byggVoteringSkarva,
+  handlingSkarvor, indexFinns, ordSkarvor, voteringSkarvor,
 } from "../src/lib/amne.ts";
 import { partiKoder, buildPartiSida, ledamotIds, buildLedamotSida } from "../src/lib/vyer.ts";
 
@@ -61,6 +61,14 @@ if (indexFinns()) {
     if (b > störstHandling) { störstHandling = b; störstHandlingNamn = nyckel; }
   }
   grind(`största handlingsskärva (${störstHandlingNamn})`, störstHandling, 400 * KB);
+
+  let störstRost = 0;
+  let störstRostNamn = "";
+  for (const nyckel of voteringSkarvor()) {
+    const b = storlek(byggVoteringSkarva(nyckel));
+    if (b > störstRost) { störstRost = b; störstRostNamn = nyckel; }
+  }
+  grind(`största röstskärva (${störstRostNamn})`, störstRost, 400 * KB);
 
   grind("vagda.json", storlek(byggVagda()), 100 * KB);
   grind("ordtrender (i sidan)", storlek(byggPartiTrender()), 60 * KB);

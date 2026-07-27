@@ -6,19 +6,26 @@
  * Kör: npm test (från site/).
  */
 import assert from "node:assert";
-import { sokStammar } from "../../pipeline/src/nyckelord.ts";
-import { getPersoner } from "../src/lib/data.ts";
+import { aktorsPartier } from "../../pipeline/src/handlingar.ts";
+import { BETANKANDENYCKEL, sokStammar } from "../../pipeline/src/nyckelord.ts";
+import { getHandlingMap, getPersoner } from "../src/lib/data.ts";
+import { maskPartier, PARTIBITAR, partiStandpunkt } from "../src/lib/delat.ts";
 import {
   byggHandlingSkarva,
   byggOrdSkarva,
   byggPartiTrender,
   byggVagda,
+  byggVoteringSkarva,
   handlingSkarva,
   handlingSkarvor,
   indexFinns,
+  langtId,
+  MAX_BET_PER_ORD,
   MAX_PER_ORD,
   ordSkarva,
   ordSkarvor,
+  voteringSkarva,
+  voteringSkarvor,
   getTermIndex,
 } from "../src/lib/amne.ts";
 
@@ -54,22 +61,84 @@ if (!indexFinns()) {
 
   // Varje ordskärva innehåller BARA stammar som hör till dess nyckel, och
   // postningslistorna är kapade — annars spränger ett vanligt ord nyttolasten.
+  const handlingar = getHandlingMap();
   let allaHorHemma = true;
   let allaKapade = true;
   let allaSorterade = true;
+  let allaMasker = true;
+  const felaktigMask: string[] = [];
+  let betIsär = true;
+  const okandaId: string[] = [];
   for (const nyckel of nycklar) {
-    const skarva = byggOrdSkarva(nyckel);
-    for (const [stam, post] of Object.entries(skarva)) {
+    const { pre, bredd, o } = byggOrdSkarva(nyckel);
+    for (const [stam, post] of Object.entries(o)) {
       if (ordSkarva(stam) !== nyckel) allaHorHemma = false;
-      if (post.i.length > MAX_PER_ORD) allaKapade = false;
-      if (post.n < post.i.length) allaKapade = false;
-      const kopia = [...post.i].sort().reverse();
-      if (kopia.join() !== post.i.join()) allaSorterade = false;
+      if (post.i.length > MAX_PER_ORD || post.b.length > MAX_BET_PER_ORD) allaKapade = false;
+      if (post.n < post.i.length || post.bn < post.b.length) allaKapade = false;
+      const ids = post.i.map((v) => langtId(v, { pre, bredd }));
+      const kopia = [...ids].sort().reverse();
+      if (kopia.join() !== ids.join()) allaSorterade = false;
+
+      // Id:na skickas förkortade till sitt löpnummer. Går de inte att
+      // skriva tillbaka EXAKT pekar träffen ut en annan handling —
+      // id:na är nollfyllda, så `868` och `0868` är inte samma dokument.
+      for (const id of ids) if (!handlingar.has(id)) okandaId.push(`${stam}/${id}`);
+
+      // Partikoderna är det partifiltret vilar på. Går de ur takt med
+      // listan filtrerar sidan på FEL handlingars partier — och en
+      // träfflista som säger "från Vänsterpartiet" om något annat parti
+      // vore precis ett sådant tyst fel projektet förbjuder.
+      if (post.p.length !== ids.length * 2) allaMasker = false;
+      ids.forEach((id, k) => {
+        const h = handlingar.get(id);
+        if (!h) return;
+        const ur = maskPartier(Number.parseInt(post.p.slice(k * 2, k * 2 + 2), 16) || 0);
+        const ratt = aktorsPartier(h).filter((p) => PARTIBITAR.includes(p)).sort();
+        if (ur.join() !== ratt.join()) felaktigMask.push(`${stam}/${id}`);
+      });
+
+      // Betänkandena har en egen lista just för att de inte ska kapas bort.
+      if (post.i.some((v) => BETANKANDENYCKEL.test(String(v)))) betIsär = false;
+      if (post.b.some((v) => !BETANKANDENYCKEL.test(v))) betIsär = false;
     }
   }
   grind("varje stam ligger i rätt skärva", allaHorHemma);
-  grind(`postningslistor kapade vid ${MAX_PER_ORD}, hela antalet bevarat`, allaKapade);
+  grind(
+    `postningslistor kapade vid ${MAX_PER_ORD}/${MAX_BET_PER_ORD}, hela antalet bevarat`,
+    allaKapade,
+  );
   grind("postningslistor i fallande id-ordning (nyast först)", allaSorterade);
+  grind(
+    "de förkortade id:na skrivs tillbaka till verkliga handlingar",
+    okandaId.length === 0,
+    okandaId.slice(0, 5).join(" "),
+  );
+  grind("partikoderna följer postningslistan led för led", allaMasker);
+  grind(
+    "partikoderna stämmer med handlingarnas aktörspartier",
+    felaktigMask.length === 0,
+    felaktigMask.slice(0, 5).join(" "),
+  );
+  grind("betänkanden och handlingar ligger i var sin lista", betIsär);
+
+  // Betänkandena får aldrig kapas bort av handlingarna. Låg de i samma
+  // lista skulle de försvinna för varje någorlunda vanligt ord — id:n
+  // sorteras som text, och "h-2026-…" ligger alltid före "202526:…".
+  // Röstfrågorna skulle då tyst sluta svara.
+  let betBevarade = 0;
+  let stammarMedBet = 0;
+  for (const nyckel of nycklar) {
+    for (const post of Object.values(byggOrdSkarva(nyckel).o)) {
+      if (post.bn === 0) continue;
+      stammarMedBet += 1;
+      if (post.b.length > 0) betBevarade += 1;
+    }
+  }
+  grind(
+    "stammar med betänkanden bär också betänkanden i skärvan",
+    stammarMedBet > 0 && betBevarade === stammarMedBet,
+    `${betBevarade} av ${stammarMedBet}`,
+  );
 
   // Handlingsskärvorna ska täcka exakt de handlingar indexet känner till.
   let kort = 0;
@@ -157,7 +226,82 @@ if (!indexFinns()) {
     }
   }
   grind("bestämd och obestämd form ger samma träffar", allaLika, avvikelser.join(", "));
+
+  // Röstfrågorna: voteringarna hittas via betänkandet, och betänkandets
+  // nyckel ÄR voteringens dok_id. Går den kopplingen sönder svarar sidan
+  // tomt på "hur röstade partierna" — eller, värre, med fel omröstning.
+  const rost = new Map<string, ReturnType<typeof byggVoteringSkarva>[string]>();
+  let ratSkarva = true;
+  for (const s of voteringSkarvor()) {
+    for (const [nyckel, kort] of Object.entries(byggVoteringSkarva(s))) {
+      if (voteringSkarva(nyckel) !== s) ratSkarva = false;
+      rost.set(nyckel, kort);
+    }
+  }
+  grind("varje betänkande ligger i sitt riksmötes röstskärva", ratSkarva);
+
+  const voteringar = [...handlingar.values()].filter(
+    (h) => h.kind === "votering" && h.rostfordelning,
+  );
+  let iSkarvor = 0;
+  for (const kort of rost.values()) iSkarvor += kort.v.length;
+  grind(
+    "röstskärvorna bär alla voteringar med röstfördelning",
+    iSkarvor === voteringar.length,
+    `${iSkarvor} av ${voteringar.length}`,
+  );
+
+  // Siffrorna ska vara riksdagens, oförändrade hela vägen ut.
+  const felRost: string[] = [];
+  for (const h of voteringar) {
+    const kort = rost.get(h.dok_id);
+    const v = kort?.v.find((x) => x.p === (h.punkt ?? 0) && x.url === h.url);
+    if (!v) {
+      felRost.push(`${h.dok_id}:${h.punkt}`);
+      continue;
+    }
+    for (const [parti, f] of Object.entries(h.rostfordelning!)) {
+      const r = v.r[parti];
+      if (!r || r[0] !== f.ja || r[1] !== f.nej || r[2] !== f.avstar || r[3] !== f.franvarande) {
+        felRost.push(`${h.dok_id}:${h.punkt}/${parti}`);
+      }
+    }
+  }
+  grind(
+    "röstsiffrorna är oförändrade från registret",
+    felRost.length === 0,
+    felRost.slice(0, 5).join(" "),
+  );
+
+  // En sökning ska faktiskt nå fram till omröstningar. Träffar ordet
+  // betänkanden men inget av dem bär en votering svarar sidan tomt —
+  // och då är röstfrågan byggd men obesvarad.
+  const provord = ["skola", "försvar", "vård", "kärnkraft"];
+  const utanRoster: string[] = [];
+  for (const ord of provord) {
+    let bet = new Set<string>();
+    for (const stam of sokStammar(ord)) {
+      const post = byggOrdSkarva(ordSkarva(stam)).o[stam];
+      for (const b of post?.b ?? []) bet.add(b);
+    }
+    const medVotering = [...bet].filter((b) => (rost.get(b)?.v.length ?? 0) > 0);
+    if (medVotering.length === 0) utanRoster.push(ord);
+  }
+  grind(
+    "vanliga sökord når fram till omröstningar",
+    utanRoster.length === 0,
+    utanRoster.join(", "),
+  );
 }
+
+// Ståndpunkten härleds ur rösterna och avgör vad tabellen säger. Ett parti
+// som röstat åt två håll ska synas som delat, och den som inte var där har
+// inte avstått — att avstå är en handling, att utebli är det inte.
+grind("majoritetsrösten blir partiets ståndpunkt", partiStandpunkt([94, 0, 0, 13]).val === "ja");
+grind("ingen lagd röst är frånvaro, inte avstående", partiStandpunkt([0, 0, 0, 14]).val === "franvarande");
+grind("avstående är en egen ståndpunkt", partiStandpunkt([0, 0, 19, 5]).val === "avstar");
+grind("delad röst redovisas som delad", partiStandpunkt([50, 10, 0, 2]).delad === true);
+grind("enig röst redovisas inte som delad", partiStandpunkt([50, 0, 0, 2]).delad === false);
 
 console.log(fel === 0 ? "ämnessök: alla grindar gröna" : `ämnessök: ${fel} grindar föll`);
 if (fel > 0) process.exit(1);

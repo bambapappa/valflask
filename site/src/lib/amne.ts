@@ -18,9 +18,20 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { aktorsPartier } from "../../../pipeline/src/handlingar.ts";
-import { type DokumentTermer, type Skarva } from "../../../pipeline/src/nyckelord.ts";
+import {
+  BETANKANDENYCKEL,
+  type DokumentTermer,
+  type Skarva,
+} from "../../../pipeline/src/nyckelord.ts";
 import { stamma } from "../../../pipeline/src/stam.ts";
-import { getHandlingMap, getKopplingar, getParties, getPersoner } from "./data.ts";
+import { partiMask, type Roster } from "./delat.ts";
+import {
+  getBetankanden,
+  getHandlingMap,
+  getKopplingar,
+  getParties,
+  getPersoner,
+} from "./data.ts";
 
 function indexKatalog(): string {
   return resolve(process.cwd(), "../data/nyckelord");
@@ -73,31 +84,140 @@ export function ordSkarvor(): string[] {
  */
 export const MAX_PER_ORD = 300;
 
-/** En ordstams förekomster: hela antalet, och de senaste handlingarna. */
+/**
+ * Hur många betänkanden en ordstam bär med sig. Betänkandena är få (drygt
+ * 1 400 totalt) och driver röstsammanställningen, så de har ett eget tak —
+ * annars trängs de undan av handlingarna, som är femton gånger fler.
+ */
+export const MAX_BET_PER_ORD = 250;
+
+/**
+ * En ordstams förekomster: hela antalet, och de senaste dokumenten.
+ *
+ * Handlingar och betänkanden hålls isär och kapas var för sig. Slogs de
+ * ihop i en lista skulle kapningen ta bort betänkandena först — id:n
+ * sorteras fallande som text, och `h-2026-…` ligger alltid före
+ * `202526:…`. Röstfrågorna skulle då tyst sluta svara på vanliga ord.
+ */
 export interface OrdPost {
   /** totalt antal handlingar med ordet */ n: number;
-  /** handling-id, de senaste först */ i: string[];
+  /**
+   * Handlingarna, de senaste först. Ett tal betyder skärvans id-förled plus
+   * talet (`12469` med förledet `h-2026-` är `h-2026-12469`); en sträng är
+   * ett id som helhet. Förkortningen är ingen finess: id:n är den tyngsta
+   * posten i skärvan, och `"h-2026-12469"` blir `12469`.
+   */
+  i: (number | string)[];
+  /**
+   * Handlingarnas aktörspartier, ett tvåsiffrigt hexatal per id i `i` och i
+   * samma ordning. Ligger här — inte i handlingsskärvan — för att sidan ska
+   * kunna filtrera på parti FÖRE den kapar träfflistan. Hämtades partierna
+   * ur handlingsskärvorna skulle ett filter bara kunna gallra det som redan
+   * visas, och då ljuger antalet.
+   */
+  p: string;
+  /** totalt antal betänkanden med ordet */ bn: number;
+  /** betänkandenycklar, de senaste först */ b: string[];
+}
+
+/** Handlingens partier som två hexsiffror — parallellt med `OrdPost.i`. */
+function hexMask(koder: readonly string[]): string {
+  return partiMask(koder).toString(16).padStart(2, "0");
+}
+
+/** En ordskärvas nyttolast: id-förledet en gång, och stammarnas förekomster. */
+export interface OrdSkarva {
+  /** gemensamt förled för de förkortade handlings-id:na */ pre: string;
+  /** löpnumrets minsta bredd — id:n är nollfyllda (`h-2026-0868`) */ bredd: number;
+  /** ordstam → förekomster */ o: Record<string, OrdPost>;
+}
+
+const FORLED = /^(h-\d{4}-)(\d+)$/u;
+
+let _forled: { pre: string; bredd: number } | undefined;
+
+/**
+ * Förledet och löpnumrets bredd, om alla indexerade handlingar delar dem.
+ *
+ * Id:na är nollfyllda — `h-2026-0868` är inte `h-2026-868` — så talet ensamt
+ * räcker inte för att skriva tillbaka id:t. Därför prövas hela vägen fram
+ * och tillbaka för VARJE id här: går ett enda inte att återskapa exakt
+ * lämnas förledet tomt och skärvan bär hela id-strängar i stället. Större
+ * nyttolast, men aldrig fel — ett id som återskapas fel pekar ut en ANNAN
+ * handling, och en sökträff som leder till fel dokument är värre än en
+ * tung hämtning.
+ */
+function handlingsForled(): { pre: string; bredd: number } {
+  if (_forled) return _forled;
+  const forled = new Set<string>();
+  let bredd = Number.POSITIVE_INFINITY;
+  const ider: string[] = [];
+  for (const id of getTermIndex().keys()) {
+    const m = id.match(FORLED);
+    if (!m) continue; // betänkanden ligger i sin egen lista
+    forled.add(m[1]!);
+    bredd = Math.min(bredd, m[2]!.length);
+    ider.push(id);
+  }
+  const kandidat = { pre: forled.size === 1 ? [...forled][0]! : "", bredd: bredd || 0 };
+  const gar = kandidat.pre !== "" && ider.every((id) => langtId(kortaId(id, kandidat), kandidat) === id);
+  _forled = gar ? kandidat : { pre: "", bredd: 0 };
+  return _forled;
+}
+
+/** Id:t förkortat till sitt löpnummer, när förledet stämmer. */
+export function kortaId(id: string, forled: { pre: string; bredd: number }): number | string {
+  if (!forled.pre || !id.startsWith(forled.pre)) return id;
+  const rest = id.slice(forled.pre.length);
+  return /^\d+$/u.test(rest) ? Number(rest) : id;
+}
+
+/** Löpnumret tillbaka till ett helt id — nollfyllningen måste följa med. */
+export function langtId(kort: number | string, forled: { pre: string; bredd: number }): string {
+  return typeof kort === "number"
+    ? `${forled.pre}${String(kort).padStart(forled.bredd, "0")}`
+    : kort;
 }
 
 /** Inverterat index för EN ordskärva: ordstam → förekomster. */
-export function byggOrdSkarva(nyckel: string): Record<string, OrdPost> {
-  const ut = new Map<string, string[]>();
+export function byggOrdSkarva(nyckel: string): OrdSkarva {
+  const handlingar = getHandlingMap();
+  const forled = handlingsForled();
+  const ut = new Map<string, { h: string[]; b: string[] }>();
   for (const [id, { t }] of getTermIndex()) {
+    const betankande = BETANKANDENYCKEL.test(id);
     for (const stam of new Set(t)) {
       if (ordSkarva(stam) !== nyckel) continue;
-      const lista = ut.get(stam) ?? [];
-      lista.push(id);
-      ut.set(stam, lista);
+      const post = ut.get(stam) ?? { h: [], b: [] };
+      (betankande ? post.b : post.h).push(id);
+      ut.set(stam, post);
     }
   }
   const sorterat: Record<string, OrdPost> = {};
   for (const stam of [...ut.keys()].sort()) {
     // Id:n delas ut i skördeordning (stigande datum), så de sista är de
     // färskaste. Sorteras fallande och kapas — nyast är mest intressant.
-    const alla = ut.get(stam)!.sort().reverse();
-    sorterat[stam] = { n: alla.length, i: alla.slice(0, MAX_PER_ORD) };
+    const post = ut.get(stam)!;
+    const alla = post.h.sort().reverse();
+    const visade = alla.slice(0, MAX_PER_ORD);
+    const bet = post.b.sort().reverse();
+    sorterat[stam] = {
+      n: alla.length,
+      i: visade.map((id) => kortaId(id, forled)),
+      p: visade
+        .map((id) => {
+          const h = handlingar.get(id);
+          // Saknas handlingen i registret vet vi inga partier — masken blir
+          // tom, och ett partifilter släpper inte igenom den. Att gissa
+          // partier för att träffen ska överleva filtret vore att hitta på.
+          return h ? hexMask(aktorsPartier(h)) : "00";
+        })
+        .join(""),
+      bn: bet.length,
+      b: bet.slice(0, MAX_BET_PER_ORD),
+    };
   }
-  return sorterat;
+  return { ...forled, o: sorterat };
 }
 
 /** Handlingens visningsdata i sökträffen — kort, för nyttolasten är stor. */
@@ -138,6 +258,84 @@ export function byggHandlingSkarva(nyckel: string): Record<string, HandlingKort>
       ...(h.organ ? { o: h.organ } : {}),
       u: h.url,
     };
+  }
+  return ut;
+}
+
+/** En voteringspunkt: när, hur det gick, och hur partierna röstade. */
+export interface VoteringKort {
+  /** punkt i betänkandet */ p: number;
+  /** datum */ d: string;
+  /** kammarens utfall: bifall eller avslag */ u: string;
+  /** riksdagens webbadress */ url: string;
+  /** parti → [ja, nej, avstår, frånvarande] */ r: Record<string, Roster>;
+}
+
+/** Ett betänkande med de voteringar kammaren höll om det. */
+export interface BetankandeKort {
+  /** titel */ t: string;
+  /** utskott */ o: string;
+  /** datum */ d: string;
+  /** voteringspunkter, i punktordning */ v: VoteringKort[];
+}
+
+/** Röstskärvans nyckel: riksmötet ur betänkandenyckeln (`202223:SkU2`). */
+export function voteringSkarva(nyckel: string): string {
+  return nyckel.split(":")[0] || "ovrigt";
+}
+
+export function voteringSkarvor(): string[] {
+  return [...new Set(Object.keys(byggAllaBetankanden()).map(voteringSkarva))].sort();
+}
+
+let _betKort: Record<string, BetankandeKort> | undefined;
+
+/**
+ * Betänkandena med sina voteringar, samlade en gång per bygge.
+ *
+ * Kopplingen är exakt, inte gissad: voteringens `dok_id` ÄR betänkandets
+ * nyckel (`202223:SkU2`). Ett betänkande utan votering tas inte med — det
+ * finns inget röstresultat att visa, och att lista det tomt vore att
+ * antyda att kammaren röstat.
+ */
+function byggAllaBetankanden(): Record<string, BetankandeKort> {
+  if (_betKort) return _betKort;
+  const meta = new Map<string, ReturnType<typeof getBetankanden>[number]>(
+    getBetankanden().map((b) => [`${b.rm.replace("/", "")}:${b.beteckning}`, b]),
+  );
+  const perBetankande = new Map<string, VoteringKort[]>();
+  for (const h of getHandlingMap().values()) {
+    if (h.kind !== "votering" || !h.rostfordelning || !h.dok_id) continue;
+    const r: Record<string, Roster> = {};
+    for (const [parti, f] of Object.entries(h.rostfordelning)) {
+      r[parti] = [f.ja, f.nej, f.avstar, f.franvarande];
+    }
+    const lista = perBetankande.get(h.dok_id) ?? [];
+    lista.push({ p: h.punkt ?? 0, d: h.datum, u: h.utfall ?? "", url: h.url, r });
+    perBetankande.set(h.dok_id, lista);
+  }
+  const ut: Record<string, BetankandeKort> = {};
+  for (const nyckel of [...perBetankande.keys()].sort()) {
+    const b = meta.get(nyckel);
+    const v = perBetankande.get(nyckel)!.sort((a, x) => a.p - x.p);
+    ut[nyckel] = {
+      // Är betänkandet inte skördat känner vi ändå voteringarna. Nyckeln
+      // står som titel i stället för att hittas på.
+      t: b?.titel ?? nyckel,
+      o: b?.organ ?? "",
+      d: b?.datum ?? v[0]?.d ?? "",
+      v,
+    };
+  }
+  _betKort = ut;
+  return ut;
+}
+
+/** Röstskärva för ETT riksmöte: betänkandenyckel → betänkande med voteringar. */
+export function byggVoteringSkarva(skarva: string): Record<string, BetankandeKort> {
+  const ut: Record<string, BetankandeKort> = {};
+  for (const [nyckel, kort] of Object.entries(byggAllaBetankanden())) {
+    if (voteringSkarva(nyckel) === skarva) ut[nyckel] = kort;
   }
   return ut;
 }
