@@ -388,32 +388,41 @@ från datat som gällde när krönikan skrevs (ögonblicksbild), aldrig dagens s
 
 *Uppdaterad 2026-07-27.*
 
-### Nästa uppgift: 48 kandidater där belopp och uträkning inte stämmer
+### Nästa uppgift: räkna om beloppen på säkrare grund
 
-Ett löfte kan visa ett belopp som dess EGEN publicerade uträkning inte ger —
-läsaren ser räkningen och summan säga emot varandra på samma sida. Det
-vanligaste mönstret är att beloppet står på det uträkningen kallar sitt HÖGA
-alternativ i stället för på basbeloppet.
+Genomgången av löften där beloppet inte stämde med den publicerade
+uträkningen är **klar** — 60 rättade, resten kontrollerade och friade. Men
+det arbetet flyttade beloppen till en *redovisad* grund, inte till en
+säkrare. De flesta uträkningar är rekonstruerade i efterhand av
+bakåtfyllnaden, vilket står utskrivet i varje sådan text.
 
-21 sådana är rättade (2026-07-27). Sökningen nedan ger 51 rader, varav tre
-redan är kontrollerade och friade — alltså 48 kvar att gå igenom:
+Nästa steg är att räkna om dem på riktigt underlag. Ett löfte är redan
+uttryckligen märkt för det i sin egen uträkning: p-2026-0390 (sanktioner mot
+bidrag), vars belopp vilar på en antagen procentsats utan erfarenhet bakom.
 
-```
-node -e "const P=require('./data/promises.json');for(const p of P){if(p.status==='tillbakadragen'||!p.cost.calculation)continue;const m=[...p.cost.calculation.matchAll(/[Bb]as(?:beloppet|antagandet|antagande|en)?(?:\s*(?:är|sätts till|läggs (?:vid|till)|lagd vid|:))?\s*([\d][\d\s]{0,9}\d|\d)\s*(miljarder|miljoner)?/g)];if(!m.length)continue;const b=p.cost.msek_base;const c=m.map(x=>{const v=Number(x[1].replace(/\s/g,''));return x[2]==='miljarder'?v*1000:v});if(!c.some(v=>b===0?v===0:Math.abs(v-b)/b<0.08))console.log(p.id,b,c.join('/'))}"
-```
+**Två harmoniseringar väntar på ett mänskligt beslut:**
 
-**Sökningen är grov och kräver läsning, inte automatik.** Den skiljer inte ett
-basbelopp från ett antal personer: "bas ~10 000" i p-2026-0479 var antalet
-arbetstillstånd, och "bas 15" i p-2026-0395 stod för 15 miljarder. Av de tio
-största träffarna var två falsklarm. Kontrollerade och friade hittills:
-p-2026-0066, p-2026-0395, p-2026-0479.
+- **Mindre klasser** (`g-mindre-klasser`): Liberalernas två löften ligger på
+  2 700 miljoner kronor per år, räknat på partiets eget maxtak om tjugo
+  elever per klass. Socialdemokraternas löfte i samma grupp ligger på 10 000
+  enligt sin egen uträkning. Samma politik ska kosta lika, men S har inte
+  angett något tak, så beloppen är ännu inte harmoniserade. Gruppen räknas på
+  det högsta beloppet, alltså på S:s 10 000.
+- **Tandvård:** SD och V ligger på 10 000 var och är grupplänkade. MP ligger
+  på 20 000 utanför gruppen, med flit — att finansiera tandvården som annan
+  sjukvård är en större reform än ett kostnadstak. Kontrollera att den
+  skillnaden fortfarande är motiverad om något av löftena ändras.
 
-För varje verklig avvikelse måste man avgöra VILKEN sida som har fel — står
-fel siffra i texten, eller är beloppet fel? Avvikelserna går åt båda hållen
-(av de 21 rättade sänktes 12 och höjdes 9), så det är slarv i inmatningen,
-inte en systematisk skevhet.
+**Sökningen efter belopp som inte stämmer med sin uträkning har BÅDE
+falsklarm och falska negativ.** Den läser fragment: "Bas 2 500 kr per
+förlossning" tolkas som basbeloppet 2 500 fast det är ett styckpris, och
+"bas 1,5 miljarder" blir talet 1. Den missar samtidigt uträkningar som anger
+sitt resultat utan ordet bas — ett löfte om mindre klasser bar samma fel men
+fastnade aldrig i nätet, eftersom texten skrev "≈ 12 miljarder kronor per
+år". Kön är genomgången manuellt, men sökningen garanterar inte att den är
+tom.
 
-### Gjort 2026-07-27 (kön betad från 58 till 0, plus tre systemfynd)
+### Gjort 2026-07-27 (kön betad från 58 till 0, 60 belopp rättade, tre systemfynd)
 
 **Kön är tom.** `data/calculation_review.json` är `[]`. Rör den inte utan att
 först läsa "Kör INTE fler backfill-körningar" nedan.
@@ -469,7 +478,7 @@ inga hänvisningar till interna prissättningsregler (6), fackuttryck utskrivna
 i 196 texter. Två fel rättade på vägen: ett basantagande angivet i miljarder
 i stället för miljoner, och en räkning som blandade tre enhetsförkortningar.
 
-**Totalen** gick från 7 016 120 till **6 048 592 mkr** under omgången.
+**Totalen** gick från 7 016 120 till **5 925 196 mkr** under omgången.
 
 ### Öppna frågor som ingen avgjort
 
