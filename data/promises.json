@@ -948,13 +948,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Språkutbildning, aktivitetsplikt för nyanlända. Estimat 2 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Uppräkning av tre plikter. Prissätts inte här; delarna ligger på partiets egna löften om aktivitetsplikt och jobbtrappa.",
+      "confidence": 0.4,
+      "calculation": "Löftet räknar upp tre plikter — aktivitetsplikt, språkplikt och jobbtrappa — utan att ange nivå för någon av dem. Två av de tre finns redan som egna löften hos partiet och är prissatta där: aktivitetsplikten och jobbtrappan. Att sätta ett belopp här skulle räkna samma politik två gånger. Noll betyder alltså inte att plikterna är gratis, utan att kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -964,7 +965,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 2 000 till 0 miljoner kronor per år. Löftet räknar upp tre plikter utan angiven nivå, och två av dem — aktivitetsplikten och jobbtrappan — ligger redan som egna löften hos partiet med egna belopp. Det tidigare beloppet dubbelräknade dem.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1776,7 +1783,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är allmänt hållet ('skärpa straffen') och saknar konkreta lagförslag, vilket gör en exakt siffra omöjlig. Beloppet är satt genom jämförelse med summan av de konkreta straffskärpningsförslag andra partier lagt (tillsammans cirka 1,7 miljarder kronor per år). Moderaternas egna specifika straffskärpningar — avskaffad mängdrabatt, skärpt utvisning vid brott, kriminalisering av deepfake — räknas som separata poster för att undvika dubbelräkning. Osäkerheten är stor och spannet speglar den (belopp satt av granskare).",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Löftet är allmänt hållet — \"skärpa straffen\" — utan konkreta lagförslag, så någon exakt siffra går inte att räkna fram. Beloppet är i stället satt genom jämförelse: de konkreta straffskärpningar andra partier lagt kostar tillsammans omkring 1 700 miljoner kronor per år. Partiets egna specifika straffskärpningar — avskaffad mängdrabatt, skärpt utvisning vid brott, kriminalisering av bilder skapade med artificiell intelligens — räknas som egna löften och ingår inte här, så att samma politik inte räknas två gånger. Osäkerheten är stor och spannet speglar den."
     },
     "financing_claimed": {
       "described": false,
@@ -1791,6 +1799,11 @@
         "date": "2026-07-23",
         "change": "Kostnadsestimatet reviderat från 5 000 till 1 800 miljoner kronor per år: den tidigare siffran var en lös uppskattning, den nya är jämförd med summan av konkreta straffskärpningsförslag från övriga partier (Moderaternas egna räknas separat). Metodnoten förtydligad. Se rättelseloggen.",
         "commit": "513a0cc03258efc429e7ce0ce8983132bd415782"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Resonemanget fanns redan i noten sedan granskningen 23 juli men syntes inte på löftessidan. Beloppet är oförändrat.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -1922,7 +1935,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet buntar ihop flera åtgärder. En är en konkret och säker statsutgift — avskaffad patientavgift för kvinnor som söker vård efter våldtäkt — men den är liten i sammanhanget. Merparten av beloppet avser osäkra följdkostnader i rättskedjan av att kriminalisera psykiskt och ekonomiskt våld, förlänga kontaktförbud och införa en ny brottsrubricering. Beloppet är oförändrat men vilar till största delen på grova antaganden, vilket spannet speglar (belopp satt av granskare).",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Löftet buntar ihop flera åtgärder. En är en konkret och säker statlig utgift — avskaffad patientavgift för kvinnor som söker vård efter våldtäkt — men den är liten i sammanhanget: omkring 2 000 besök per år à 300 kronor, alltså under en miljon kronor. Merparten av beloppet avser i stället svårbedömda följdkostnader i rättskedjan: att kriminalisera psykiskt och ekonomiskt våld, förlänga kontaktförbudens maxtid och införa en ny brottsrubricering med livstids fängelse i straffskalan ger fler utredningar, fler rättegångar och fler fängelseår. Beloppet vilar till största delen på grova antaganden, vilket det breda spannet speglar."
     },
     "financing_claimed": {
       "described": false,
@@ -1937,6 +1951,11 @@
         "date": "2026-07-23",
         "change": "Metodnoten förtydligad så att det framgår vad som är en verklig, säker kostnad (avskaffad patientavgift) och vad som är osäkra straff- och kriminaliseringsföljder. Beloppet oförändrat. Se rättelseloggen.",
         "commit": "513a0cc03258efc429e7ce0ce8983132bd415782"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Resonemanget fanns redan i noten sedan granskningen 23 juli men syntes inte på löftessidan. Beloppet är oförändrat.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -2644,7 +2663,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Sverigekontrakt — administrativt system. ~0,5 mdr/år.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Ett Sverigekontrakt kräver att ett system byggs och drivs: kontrakt ska tas fram, undertecknas, följas upp och kopplas till beslut om ekonomiskt stöd, kvalificering till välfärden och medborgarskap. Kostnaden ligger i handläggning hos flera myndigheter och kommuner samt i it-stöd. Beloppet är osäkert och ligger högt jämfört med andra handläggningssystem vi prissatt, som ligger på tiotals till hundratals miljoner kronor per år; det speglar att kontraktet ska omfatta alla nyanlända och kopplas till flera olika beslut."
     },
     "financing_claimed": {
       "described": false,
@@ -2654,7 +2674,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Beloppet är oförändrat, men uträkningen skriver ut att det ligger högt jämfört med andra handläggningssystem vi prissatt.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2778,7 +2804,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Ett bidragstak är avsett att sänka utgifterna för försörjningsstöd, medan heltidskravet kräver administration. Nettoeffekten är oklar och sannolikt liten; beloppet är satt till en försiktig administrationskostnad i stället för den tidigare halvmiljarden i utgift, som pekade åt fel håll (belopp satt av granskare).",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Löftet drar åt två håll. Ett bidragstak är avsett att sänka utgifterna för försörjningsstöd, medan kravet på heltidsaktiviteter kräver administration som kostar. Nettoeffekten för staten är oklar och sannolikt liten — försörjningsstödet betalas dessutom av kommunerna, så det som sparas hamnar hos dem. Beloppet är därför satt till en försiktig administrationskostnad i stället för till en utgift på en halv miljard, som pekade åt fel håll."
     },
     "financing_claimed": {
       "described": false,
@@ -2793,6 +2820,11 @@
         "date": "2026-07-23",
         "change": "Kostnadsestimatet ändrat från 500 till 150 miljoner kronor per år: bidragstaket sänker snarare utgifterna medan kravet kostar administration, så beloppet satt till en försiktig administrationskostnad i stället för en halvmiljard i utgift. Se rättelseloggen.",
         "commit": "7bfa31de33daf7273edcdc9b0f14caff787db009"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Resonemanget fanns redan i noten sedan granskningen 23 juli men syntes inte på löftessidan. Beloppet är oförändrat.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -3710,7 +3742,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Ett kvalificeringssystem till socialförsäkringen kräver att administration byggs och driftas — en verklig kostnad — samtidigt som kvalificeringen sannolikt sänker utbetalningarna. Beloppet är satt till en försiktig administrationskostnad; nettoeffekten är osäker (belopp satt av granskare).",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Ett kvalificeringssystem till socialförsäkringen kräver att administration byggs upp och drivs — en verklig kostnad — samtidigt som kvalificeringen sannolikt sänker utbetalningarna. De två effekterna drar åt olika håll och nettot är osäkert. Beloppet är satt till en försiktig administrationskostnad, alltså bara den del som säkert kostar staten pengar. Vad kraven på språk, samhällskunskap och egen försörjning kan spara räknas inte in."
     },
     "financing_claimed": {
       "described": false,
@@ -3725,6 +3758,11 @@
         "date": "2026-07-23",
         "change": "Kostnadsestimatet ändrat från 500 till 200 miljoner kronor per år: satt till en försiktig administrationskostnad för att bygga och drifta kvalificeringssystemet, då kvalificeringen samtidigt kan sänka utbetalningarna. Se rättelseloggen.",
         "commit": "7bfa31de33daf7273edcdc9b0f14caff787db009"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Resonemanget fanns redan i noten sedan granskningen 23 juli men syntes inte på löftessidan. Beloppet är oförändrat.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -14341,7 +14379,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning utifrån ca 600 tkr statlig kostnad per kvotflykting första året (mottagning, etablering). Ökning från nuvarande ~900 till 5000 innebär ca 2,5 mdkr/år. Osäkerhet kring faktiska marginalkos",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Partiet anger själv nivån: 5 000 kvotflyktingar per år. I dag tar Sverige emot omkring 900, så löftet innebär ungefär 4 100 fler personer per år. Statens kostnad för mottagning och etablering det första året uppskattas till omkring 600 000 kronor per person, vilket ger 4 100 × 600 000 ≈ 2 500 miljoner kronor per år. Antalet är partiets egen siffra; kostnaden per person är vår uppskattning, och den marginella kostnaden kan bli lägre när mottagningen redan är uppbyggd."
     },
     "financing_claimed": {
       "described": false,
@@ -14351,7 +14390,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Beloppet är oförändrat. Antalet 5 000 är partiets egen siffra — bara kostnaden per person är uppskattad.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17104,7 +17149,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar 10–50 fällande domar/år à 2–5 mkr i utredning, rättegång och anstaltskostnad. Stor osäkerhet om lagens utformning och genomslag.",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "En maffialag riktad mot gängtoppar antas ge 10–50 fällande domar per år. Varje sådant fall kostar 2–5 miljoner kronor i utredning, rättegång och anstaltstid, vilket ger 20–250 miljoner kronor per år med 300 miljoner som ett försiktigt basbelopp när även uppbyggnad av utredningsresurser räknas in. Osäkerheten är stor: den beror helt på hur lagen utformas och hur många fall som faktiskt går att driva."
     },
     "financing_claimed": {
       "described": false,
@@ -17114,7 +17160,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Beloppet är oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -19223,7 +19275,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Omklassificering kräver sannolikt utökade utredningsresurser, utbildning av personal och fler rättsprocesser för att bevisa hatmotiv. Jämförbart med ökade anslag till Polis och Åklagarmyndighet för ha",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Att klassa vissa brott som hatbrott ändrar inte antalet brott, utan vad som måste bevisas: ett hatmotiv. Det kräver utökade utredningsresurser hos polis och åklagare, utbildning av personal och längre rättsprocesser. Nivån läggs i storleksordningen hundratals miljoner kronor per år, jämförbar med tidigare förstärkningar av polisens och åklagarnas arbete mot hatbrott. Omklassningen i sig kostar inget — det är utredningsarbetet som gör det."
     },
     "financing_claimed": {
       "described": false,
@@ -19233,7 +19286,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Beloppet är oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -19411,7 +19470,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Reform av Sis antas kräva ökade anslag. Jämför med tidigare satsningar (200 mkr 2021). Osäker omfattning ger brett intervall.",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Löftet har två delar. Att behålla straffmyndighetsåldern vid 15 år kostar ingenting — det är dagens ordning. Kostnaden ligger i att reformera insatserna på de särskilda ungdomshemmen: bättre bemanning, innehåll och uppföljning. Tidigare riktade satsningar på verksamheten har legat på omkring 200 miljoner kronor per år, och basbeloppet läggs strax över det eftersom löftet talar om en reform och inte ett tillskott. Omfattningen är oklar, vilket det breda spannet speglar."
     },
     "financing_claimed": {
       "described": false,
@@ -19421,7 +19481,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Beloppet är oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20189,7 +20255,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Att kriminalisera aktivt medlemskap i kriminella gäng skapar en helt ny brottskategori. Kostnaden avser fler utredningar, åtal och fängelseår, men volymen är genuint oklar eftersom det saknas erfarenhet av hur många som skulle utredas och dömas och hur en sådan lag skulle utformas för att hålla rättsligt. Beloppet är oförändrat och är en grov placeringssiffra med stor osäkerhet, vilket spannet speglar (belopp satt av granskare).",
-      "confidence": 0.4
+      "confidence": 0.4,
+      "calculation": "Att kriminalisera aktivt medlemskap i kriminella gäng skapar en helt ny brottskategori. Kostnaden avser fler utredningar, fler åtal och fler fängelseår. Volymen är genuint oklar: det saknas erfarenhet av hur många som skulle utredas och dömas, och av hur en sådan lag måste utformas för att hålla rättsligt. Beloppet är en grov placeringssiffra med stor osäkerhet, vilket det breda spannet speglar."
     },
     "financing_claimed": {
       "described": false,
@@ -20204,6 +20271,11 @@
         "date": "2026-07-23",
         "change": "Metodnoten förtydligad för att lyfta fram den stora osäkerheten om hur många som skulle utredas och dömas. Beloppet oförändrat. Se rättelseloggen.",
         "commit": "513a0cc03258efc429e7ce0ce8983132bd415782"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades. Resonemanget fanns redan i noten sedan granskningen 23 juli men syntes inte på löftessidan. Beloppet är oförändrat.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
