@@ -44,7 +44,7 @@ const cmd = parseReviewCommand(body);
 if (!cmd) {
   output(
     "error",
-    "Oklart kommando. Använd `/godkänn`, `/godkänn <low> <base> <high>` (tre tal i msek), `/godkänn --group p-2026-XXXX` eller `/avvisa <skäl>`.",
+    "Oklart kommando. Använd `/godkänn`, `/godkänn <low> <base> <high>` (tre tal i msek), `/godkänn --group p-2026-XXXX` eller `/avvisa <skäl>`. Skriver du ett eget belopp: lägg till en rad som börjar `Uträkning:` med resonemanget bakom det, så visas det på löftessidan.",
   );
   process.exit(0);
 }
@@ -84,12 +84,18 @@ if (cmd.group) {
 const cliArgs: string[] = [String(index)];
 if (cmd.amounts) cliArgs.push(...cmd.amounts.map(String));
 if (cmd.group) cliArgs.push("--group", cmd.group);
+// Texten efter kommandoraden blir uträkningen bakom beloppet och visas publikt.
+if (cmd.calculation) cliArgs.push("--calc", cmd.calculation);
 
 try {
   const res = approve(cliArgs, DATA_DIR);
+  const saknarUtrakning =
+    cmd.amounts && !cmd.calculation
+      ? " Beloppet är satt för hand utan uträkning — lägg till en rad som börjar `Uträkning:` nästa gång, så syns resonemanget på löftessidan."
+      : "";
   output(
     "approved",
-    `Publicerad som **${res.id}** — "${res.title}", ${res.msekBase} msek${cmd.group ? ` (länkad till ${cmd.group})` : ""}. Livesajten uppdateras vid nästa bygge.`,
+    `Publicerad som **${res.id}** — "${res.title}", ${res.msekBase} msek${cmd.group ? ` (länkad till ${cmd.group})` : ""}. Livesajten uppdateras vid nästa bygge.${saknarUtrakning}`,
   );
 } catch (e) {
   output("error", `Kunde inte godkänna: ${e instanceof Error ? e.message : e}`);

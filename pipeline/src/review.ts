@@ -5,6 +5,9 @@ import { computeDataHash, type ChangelogEntry } from "./publish.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
+/** Schemats tak för cost.calculation — texten visas publikt på löftessidan. */
+const MAX_CALCULATION = 800;
+
 /**
  * Stabilt id för en kö-post: hash av articleUrl + kandidattitel — samma nyckel
  * som publish.ts dedupar kön på. Beräknas on-the-fly (lagras inte i filen) och
@@ -21,7 +24,7 @@ export function findIndexByReviewId(items: ReviewCandidate[], id: string): numbe
 }
 
 export type ReviewCommand =
-  | { action: "approve"; amounts?: [number, number, number]; group?: string }
+  | { action: "approve"; amounts?: [number, number, number]; group?: string; calculation?: string }
   | { action: "reject"; reason: string };
 
 /**
@@ -30,11 +33,19 @@ export type ReviewCommand =
  *  /godkänn 500 1000 2000         → ja med ändrade belopp (msek: low base high)
  *  /godkänn --group p-2026-0123   → ja, länka som dublett (delad group_id)
  *  /avvisa <skäl>                 → nej
- * Engelska alias: /approve, /reject. Endast FÖRSTA raden tolkas; allt annat är
- * fritext. Okänt kommando ⇒ null (workflown svarar med hjälptext).
+ * Engelska alias: /approve, /reject. Endast FÖRSTA raden tolkas som kommando.
+ * En rad som börjar "Uträkning:" blir uträkningen bakom beloppet och visas
+ * publikt på löftessidan; övrig text är fritext och används inte. Okänt
+ * kommando ⇒ null (workflown svarar med hjälptext).
  */
 export function parseReviewCommand(body: string): ReviewCommand | null {
-  const line = (body ?? "").trim().split("\n", 1)[0]!.trim();
+  const text = (body ?? "").trim();
+  const line = text.split("\n", 1)[0]!.trim();
+  // Uträkningen bakom ett eget belopp anges med en rad som börjar "Uträkning:".
+  // Den visas PUBLIKT på löftessidan, så den måste vara uttryckligen märkt —
+  // annars hade vilken kommentar som helst under kommandot hamnat på sajten.
+  const calcMatch = text.slice(line.length).match(/^\s*Uträkning:\s*([\s\S]+)$/imu);
+  const calculationText = (calcMatch?.[1] ?? "").trim().replace(/\s+/gu, " ").slice(0, MAX_CALCULATION);
   const approve = line.match(/^\/(?:godkänn|godkann|approve)\b(.*)$/iu);
   if (approve) {
     const rest = approve[1]!.trim();
@@ -52,6 +63,7 @@ export function parseReviewCommand(body: string): ReviewCommand | null {
     } else if (numbers.length > 0) {
       return null; // belopp angivna men inte tre giltiga tal — be om förtydligande
     }
+    if (calculationText !== "") cmd.calculation = calculationText;
     return cmd;
   }
   const reject = line.match(/^\/(?:avvisa|reject)\b(.*)$/iu);
@@ -212,8 +224,10 @@ export function approve(
   rawArgs: string[],
   dataDir: string = DATA_DIR,
 ): { id: string; title: string; msekBase: number } {
-  // Plocka ut --group <id> / --group=<id> (länkning av dublett) ur argumenten.
+  // Plocka ut --group <id> / --group=<id> (länkning av dublett) och
+  // --calc <text> (uträkningen bakom ett belopp satt för hand) ur argumenten.
   let linkTo: string | undefined;
+  let calculationFlag: string | undefined;
   const args: string[] = [];
   for (let i = 0; i < rawArgs.length; i++) {
     const a = rawArgs[i]!;
@@ -224,6 +238,15 @@ export function approve(
     }
     if (a.startsWith("--group=")) {
       linkTo = a.slice("--group=".length);
+      continue;
+    }
+    if (a === "--calc") {
+      calculationFlag = rawArgs[i + 1]?.slice(0, MAX_CALCULATION);
+      i++;
+      continue;
+    }
+    if (a.startsWith("--calc=")) {
+      calculationFlag = a.slice("--calc=".length).slice(0, MAX_CALCULATION);
       continue;
     }
     args.push(a);
@@ -250,6 +273,10 @@ export function approve(
       console.error("Ogiltiga belopp. Användning: approve <index> <low> <base> <high> (msek)");
       process.exit(1);
     }
+    // Den gamla uträkningen räknade fram det gamla beloppet och får inte följa
+    // med ett nytt — då visar löftessidan en räkning som inte ger summan intill.
+    // Granskaren anger en ny med --calc; utan den står löftet utan uträkning.
+    const calculation = calculationFlag ?? undefined;
     cost = {
       type: cost?.type ?? "utgift",
       period: cost?.period ?? "per_ar",
@@ -259,8 +286,18 @@ export function approve(
       basis: cost?.basis ?? "media",
       basis_url: cost?.basis_url ?? null,
       method_note: ((cost?.method_note ?? "") + " (belopp satt av granskare)").trim(),
+      ...(calculation ? { calculation } : {}),
       confidence: 0.9,
     };
+    if (!calculation) {
+      console.warn(
+        "Varning: beloppet är satt för hand utan uträkning. Löftessidan visar då ingen\n" +
+          "         förklaring, och löftet kommer tillbaka i granskningskön. Ange en med\n" +
+          '         --calc "…" så syns resonemanget publikt.',
+      );
+    }
+  } else if (calculationFlag) {
+    cost = cost ? { ...cost, calculation: calculationFlag } : cost;
   }
 
   if (!cost) {
@@ -483,7 +520,9 @@ switch (command) {
   }
   case "approve":
     if (!args[0]) {
-      console.error("Användning: pnpm review approve <index> [low base high]");
+      console.error(
+        'Användning: pnpm review approve <index> [low base high] [--calc "uträkningen"]',
+      );
       process.exit(1);
     }
     approve(args);
