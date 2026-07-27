@@ -1169,3 +1169,54 @@ på omkring 26 procent av sin räkning.
 **Påverkan:** `data/promises.json` (gruppen `g-hogkostnadsskydd-tandvard` har
 nu fyra medlemmar), `data/rattelser.json`, `HANDOFF.md`. Rikssumman föll med
 92 000 miljoner kronor för mandatperioden.
+
+---
+
+## 2026-07-27 — Följdeffekter räknas aldrig som intäkt, bara som partiets påstående
+
+**Beslut:** Säger ett parti att en reform betalar sig själv genom att fler
+kommer i arbete, att skattebasen växer eller att kostnader längre fram uteblir,
+räknas det inte som en intäkt eller besparing. Påståendet redovisas i stället i
+`financing_claimed`, där det syns som partiets egen finansiering, och löftet
+prissätts på sin direkta kostnad. Det gäller även när partiet självt satt
+siffran.
+
+**Motiv:** Metodsidan säger redan rakt ut att sådana följdeffekter inte räknas
+för något parti, eftersom inget parti räknar dem på samma sätt. Ändå låg
+Centerpartiets påstående om 45 miljarder kronor per år i ökade skatteintäkter
+som en egen post av typen intäktsökning, vilket gav partiet ett avdrag på
+180 000 miljoner kronor för mandatperioden. Ett påstående om framtida
+sysselsättning är inte en åtgärd som kan prissättas, och att räkna det åt ett
+parti men inte åt andra bryter mot att alla granskas lika.
+
+**Förkastade alternativ:** Räkna partiets nettosiffra som den står — då avgörs
+notan av hur optimistiskt ett parti räknar på sin egen politik, inte av vad
+politiken kostar. Stryka påståendet helt — nej, det är partiets svar på hur
+reformen finansieras och läsaren ska se det.
+
+**Påverkan:** `data/promises.json` (p-2026-0144 nollad, `financing_claimed`
+satt på grundlöftena), `data/rattelser.json`.
+
+---
+
+## 2026-07-27 — En lagändring prissätts som statens egen kostnad, inte marknadens
+
+**Beslut:** Ändrar ett löfte spelreglerna för alla arbetsgivare eller hela
+marknaden — kortare normalarbetstid, nya villkor, nya krav — prissätts bara det
+staten själv betalar, i praktiken kostnaden för statens egna anställda och
+verksamheter. Kostnaden för privata och kommunala arbetsgivare, och effekten på
+ekonomin i stort, skrivs ut i uträkningen men läggs inte i beloppet.
+
+**Motiv:** Miljöpartiets löfte om kortare normalarbetstid låg på 150 000
+miljoner kronor per år, byggt på ett antagande om att staten kompenserar
+20–100 procent av alla löntagares uteblivna lön. Löftet säger inget om någon
+sådan kompensation — det är en ändring i arbetstidslagen. Att lägga hela
+samhällets kostnad i statens nota är samma fel som att prissätta ett förbud
+efter vad marknaden förlorar, vilket redan är förbjudet i kärnprinciperna.
+
+**Förkastade alternativ:** Nolla löftet helt som "lagändring, försumbar
+kostnad" — nej, staten är arbetsgivare åt omkring 281 000 personer och den
+kostnaden är verklig och direkt. Behålla ett antagande om statlig kompensation
+— nej, den finns inte i löftet och kan inte beläggas.
+
+**Påverkan:** `data/promises.json` (p-2026-0327), `HANDOFF.md`.

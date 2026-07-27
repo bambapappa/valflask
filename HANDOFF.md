@@ -410,18 +410,20 @@ procentsats utan erfarenhet bakom). Det ligger i session 10.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json`, uppdaterad efter session 1. En **räkneenhet**
+Mätt på `data/promises.json`, uppdaterad efter session 2. En **räkneenhet**
 är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
-av sitt högsta belopp. 424 aktiva löften blir 377 räkneenheter, varav 241 bär
+av sitt högsta belopp. 424 aktiva löften blir 374 räkneenheter, varav 237 bär
 ett belopp över noll. Pengarna är kraftigt snedfördelade: hälften av
-mandattotalen ligger i åtta enheter, 80 procent i 34 och 95 procent i 82.
+mandattotalen ligger i elva enheter, 80 procent i 40 och 95 procent i 89.
+Snedfördelningen har jämnats ut något — de tyngsta enheterna var också de
+mest felräknade.
 
 | # | Session | Enheter | Tankenivå |
 |---|---|---|---|
 | 1 | ~~**Tandvården**~~ **KLAR 2026-07-27.** 4 löften på 2 enheter blev 1 grupp; ämnet gick från 120 000 till 28 000 mkr. Se avsnittet nedan | klar | **max** |
-| 2 | **Skatter, de elva tyngsta** — knappt 2 300 av ämnets 2 817 mdkr. Störst: MP 600, C:s grundlönsgrupp 420, M 415 | 11 | **max** |
-| 3 | Skatter, resten | 45 | hög |
-| 4 | **Försvar, hela ämnet** — 1 437 mdkr, varav 760 i en enda grupp | 19 | **max** |
+| 2 | ~~**Skatter, de elva tyngsta**~~ **KLAR 2026-07-27.** 17 löften, ämnet gick från 2 817 till 1 381 mdkr. Se avsnittet nedan | klar | **max** |
+| 3 | Skatter, resten | 43 | hög |
+| 4 | **Försvar, hela ämnet** — 1 437 mdkr, varav 760 i en enda grupp. **Nu det tyngsta ämnet som är kvar — ta det före rad 3** | 19 | **max** |
 | 5 | **Välfärd, de tyngsta** (tandvården är redan gjord i session 1) | 12 | **max** |
 | 6 | Välfärd, resten | 73 | hög |
 | 7 | Utbildning, hela ämnet, tyngsta först | 61 | hög |
@@ -429,9 +431,10 @@ mandattotalen ligger i åtta enheter, 80 procent i 34 och 95 procent i 82.
 | 9 | Övrigt (25) och infrastruktur (11) | 36 | hög |
 | 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
 
-Ämnesordningen är mandattotalen: skatter 2 817 mdkr, försvar 1 437,
-välfärd 540, utbildning 414, klimat-miljö 268, övrigt 120, rättsväsende 71,
-infrastruktur 63, migration 45. Löften som ger staten pengar ligger kvar i
+Ämnesordningen är mandattotalen, efter session 2: **försvar 1 437 mdkr,
+skatter 1 381**, välfärd 540, utbildning 414, klimat-miljö 268, övrigt 120,
+rättsväsende 71, infrastruktur 63, migration 45. Försvaret har alltså gått om
+skatterna och bör tas härnäst. Löften som ger staten pengar ligger kvar i
 sitt eget ämne och räknas om i samma session som resten av ämnet.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
@@ -455,6 +458,11 @@ Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
 max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
+
+*Utfall session 2:* elva enheter (sjutton löften) på en session, alltså i
+linje med gissningen för en max-session. Tre av de fyra stora fynden hittades
+inte i beloppet utan **i citatet**: vad partiet faktiskt lovar, och om det
+redan är beslutat. Läs citatet före uträkningen.
 
 *Utfall session 1:* två enheter (fyra löften) på en session, men den gick
 nästan helt åt till att leta rätt på underlaget — och den sökningen betalade
@@ -487,6 +495,51 @@ avgjord.
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
 - (ingen pågående session)
+
+#### Skatternas tyngsta är omräknade — session 2, klar 2026-07-27
+
+Sjutton löften i elva räkneenheter. Ämnet gick från 2 817 till 1 381 mdkr och
+rikssumman från 5 775 996 till **4 339 276 mkr**. Fyra fynd bar hela
+förändringen:
+
+**1. C:s skattereform låg i två grupper och räknades två gånger.** Den ena
+prissatte kostnaden till 105 000 mkr/år, den andra bar partiets påstående om
+45 000 mkr/år i *ökade* intäkter — vilket gav partiet ett avdrag på 180 000
+mkr för perioden byggt på en påstådd sysselsättningseffekt. Grupperna är nu en
+enda med sju medlemmar. Beloppet vilar på partiets egen siffra per person
+(1 200 kr/mån), gånger vår uppskattning av antalet med arbetsinkomst, netto
+efter avskaffat jobbskatteavdrag: 78 000 mkr/år. Påståendet om ökade intäkter
+ligger nu i `financing_claimed` — **följdeffekter räknas inte för något
+parti**, vilket metodsidan säger rakt ut.
+
+**2. MP:s kortare arbetsvecka: 150 000 → 30 000 mkr/år.** Den gamla
+uträkningen antog att staten kompenserar 20–100 procent av allas löneborfall.
+Löftet säger inget om det: kortare normalarbetstid är en ändring i
+arbetstidslagen. Statens egen kostnad är den för dess omkring 281 000
+anställda (medellön 46 300 kr/mån enligt SCB) — 12,5 procent kortare vecka
+kräver omkring 14 procent fler för samma verksamhet. Kostnaden för privata och
+kommunala arbetsgivare, och effekten på ekonomin i stort, är följder och
+hör inte hemma i statens nota. **Det här är sessionens mest omtvistliga beslut
+— pröva det först om något ska prövas om.**
+
+**3. M:s löfte om skattesänkningarna i budgeten för 2026 nollat**
+(414 720 mkr). Riksdagen har redan beslutat budgeten, så den är gällande rätt
+och ingen ny kostnad för 2027–2030. **Leta efter fler av samma sort** — det är
+samma fel som de två citat i dåtid som drogs tillbaka tidigare.
+
+**4. L:s två löften om statlig inkomstskatt: 40 000 → 4 500 mkr/år**, och
+grupplänkade. Det gamla beloppet låg *över* vad partiet självt uppger att hela
+halveringen kostar (30 mdkr/år), trots att löftet gäller ett första steg om en
+eller två procentenheter.
+
+Dessutom: M:s och KD:s löften om sänkt skatt på arbete grupplänkade och satta
+på det senast tagna stegets pris (det tionde jobbskatteavdraget, 17,36
+mdkr/år). Elskatten, bolagsskatten och anställningsskatten har oförändrade
+eller nära oförändrade belopp men utbytta underlag.
+
+**Kvar att avgöra:** C:s löfte om anställningsskatt för unga (p-2026-0345)
+ligger utanför partiets grupp om anställningskostnader i småföretag. De är
+olika avgränsningar av samma idé, och om de ska räknas en gång är inte prövat.
 
 #### Tandvården är omräknad — session 1, klar 2026-07-27
 
