@@ -67,13 +67,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 25000,
-      "msek_high": 45000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Samlingslöfte med flera delar. Estimat: höjt barnbidrag (~5 mdr), höjt studiebidrag (~2 mdr), billigare mediciner (~3 mdr), avgiftsfri tandvård unga 19-23 (~8 mdr), elprisskydd villaägare (~7 mdr). To",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -83,7 +84,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -208,13 +215,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 15000,
-      "msek_high": 27000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Investeringar i välfärdsjobb + utbildningssatsningar. Om 100 000 nya jobb i välfärd × 400 000 kr/år = 40 mdr, men partiellt finansierat av minskad arbetslöshet. Nettokostnad estimerat 15 mdr/",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -224,7 +232,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -349,13 +363,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
-      "msek_high": 9000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Utökad yrkesutbildning, omställningsprogram, förbättrad A-kassa. Beror på omfattning. Estimat 5 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -365,7 +380,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -396,13 +417,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
-      "msek_high": 9000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Investeringar i infrastruktur, service och näringsliv på landsbygd. Typiskt 3-8 mdr/år beroende på omfattning.",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -412,7 +434,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1419,13 +1447,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 1500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Miljöbalksreform. Administrativ kostnad för översyn. ~1 mdr.",
-      "confidence": 0.4
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.4,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -1435,7 +1464,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2054,13 +2089,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 4500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Regionerna blir ersättningsskyldiga. Kostnad fördelas på regioner/stat. ~3 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.4,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -2070,7 +2106,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3079,13 +3121,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 350,
-      "msek_base": 500,
-      "msek_high": 650,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Förväntansdokument + disciplinära åtgärder. ~0,5 mdr/år.",
-      "confidence": 0.55
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.55,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -3095,7 +3138,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3211,13 +3260,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 150,
-      "msek_base": 300,
-      "msek_high": 450,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Reformera modersmålsundervisning. ~0,3 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.4,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -3227,7 +3277,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4410,13 +4466,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5000,
-      "msek_high": 7500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Stärkt ätstörningsvård (~1 mdr) + utöka RUT-avdrag (RUT kostar idag ca 6 mdr/år, utökning +50% = 3 mdr). Totalt ~5 mdr/år. [granskning 2026-07-09: blandad; dominerande del (RUT+skatt) är intäktsminskning per SPEC §8]",
-      "confidence": 0.4
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.4,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -4426,7 +4483,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4602,13 +4665,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 600,
-      "msek_base": 3000,
-      "msek_high": 5400,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Subventioner/stöd för familjer att köpa bostad. Estimat 3 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -4618,7 +4682,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4794,13 +4864,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 1500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Språkkrav kan kräva omskolning, rekrytering. ~1 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.4,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -4810,7 +4881,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5035,13 +5112,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Snabbare beslut, digitalisering. ~0,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.4,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -5051,7 +5129,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5132,13 +5216,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 200,
-      "msek_high": 300,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Reglering av techjättar, barnskydd online. ~0,2 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.4,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -5148,7 +5233,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5466,13 +5557,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 15000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Fler poliser (~5 mdr) + skärpta straff → mer Kriminalvård (~5 mdr). Totalt ~10 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.4,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -5482,7 +5574,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5510,13 +5608,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 20000,
-      "msek_high": 36000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Lägre skatter utan specifik nivå. Estimat 20 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -5526,7 +5625,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5701,13 +5806,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Kortare vårdköer, trygg äldreomsorg, billigare tandvård. ~10 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -5717,7 +5823,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5884,13 +5996,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 16000,
-      "msek_base": 80000,
-      "msek_high": 144000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Stort löftepaket. Höjda pensioner (~15 mdr), höjda löner kvinnodominerade (~10 mdr), billigare bostäder (~15 mdr), avgiftsfri tandvård (~5 mdr), frysta hyror (intäktsbortfall ~5 mdr), lägre p",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -5900,7 +6013,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6307,13 +6426,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 6000,
-      "msek_base": 30000,
-      "msek_high": 54000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Avprivatisera välfärd (ta tillbaka i offentlig drift) + anställa fler. Mycket stort. Estimat 30 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -6323,7 +6443,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6351,13 +6477,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Utjämna skattegap mellan kommuner (behovsstyrning). ~10 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -6367,7 +6494,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -13638,13 +13771,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 2,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Symbolisk lagstiftning; kostnad för utredning och riksdagsbehandling jämförbar med mindre statliga utredningar.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -13654,7 +13788,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14059,13 +14199,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 1,
-      "msek_base": 3,
-      "msek_high": 5,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Grundlagsändring medför administrativa kostnader för utredning, proposition och riksdagsbeslut. Uppskattning bygger på jämförbara små reformer.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -14075,7 +14216,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14776,13 +14923,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 2000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om ökade statsbidrag till kommuner/regioner för vård, skola och omsorg i glesbygd, jämförbart med tidigare landsbygdssatsningar.",
-      "confidence": 0.4
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.4,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -14792,7 +14940,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15453,13 +15607,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 10000,
-      "msek_high": 25000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsspann främst för statligt investeringsstöd/satsning på bostadsbyggande. Hyresfrysning antas marginell budgetpåverkan. Stor osäkerhet om omfattning.",
-      "confidence": 0.25
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.25,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -15469,7 +15624,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15497,13 +15658,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10000,
-      "msek_base": 20000,
-      "msek_high": 35000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på jämförbara satsningar på infrastruktur och energisubventioner. Antagande om ökade anslag till järnväg och kollektivtrafik samt subventioner för elkostnader.",
-      "confidence": 0.4
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.4,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -15513,7 +15675,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15541,13 +15709,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 5000,
-      "msek_high": 15000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Bred formulering utan belopp; uppskattad utifrån tänkbara förstärkningar av flera samhällssektorer, jämförbart med tidigare budgetförstärkningar i miljardklassen.",
-      "confidence": 0.3
+      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -15557,7 +15726,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15586,12 +15761,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 20,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar att ett förbud innebär övergång till alternativa placeringar för ett litet antal barn per år, med osäker nettokostnad. Kan variera från ingen till viss ökad kostnad.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -15601,7 +15777,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15629,13 +15811,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10,
-      "msek_base": 30,
-      "msek_high": 60,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om ökade anslag till DO och domstolar vid fler diskrimineringsärenden, jämförbart med tidigare utvidgningar av diskrimineringslagen.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -15645,7 +15828,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15948,13 +16137,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar riktade statsbidrag för fysiska läromedel, fortbildning och skolbibliotek. Stor osäkerhet pga vagt löfte, baserat på tidigare läslyftssatsningar i hundratals miljoner.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -15964,7 +16154,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -16546,12 +16742,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 2,
-      "msek_high": 10,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Införande av kommunalt veto bedöms medföra ytterst små direkta statsfinansiella kostnader, främst för eventuell utredning och lagstiftning.",
-      "confidence": 0.2
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.2,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -16561,7 +16758,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -16784,12 +16987,13 @@
       "type": "besparing",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 2,
-      "msek_high": 5,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagandet är att löftet avstyr en höjning av straffmaximum. Få barn får 10 års fängelse; besparingen motsvarar 1-3 extra fängelseår för någon enstaka individ per år. Mycket osäkert.",
-      "confidence": 0.3
+      "method_note": "Löftet innebär att dagens regel behålls eller att en föreslagen ändring avvisas. Ingen ny statlig kostnad uppstår.",
+      "confidence": 0.3,
+      "calculation": "Löftet innebär att dagens regel behålls eller att ett förslag om ändring avvisas. Att låta en regel stå kvar kostar staten ingenting nytt. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -16799,7 +17003,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet innebär att dagens regel behålls eller att ett förslag avvisas, vilket inte ger staten någon ny kostnad — det tidigare beloppet prissatte följderna i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17247,13 +17457,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 25,
-      "msek_base": 60,
-      "msek_high": 120,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnaden är utebliven besparing från försörjningskrav vid fortsatt tillstånd. Regeringen bedömde ca 60 mkr/år i full effekt. Osäkerhet om antal personer och biståndsnivåer.",
-      "confidence": 0.5
+      "method_note": "Löftet innebär att dagens regel behålls eller att en föreslagen ändring avvisas. Ingen ny statlig kostnad uppstår.",
+      "confidence": 0.5,
+      "calculation": "Löftet innebär att dagens regel behålls eller att ett förslag om ändring avvisas. Att låta en regel stå kvar kostar staten ingenting nytt. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -17263,7 +17474,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet innebär att dagens regel behålls eller att ett förslag avvisas, vilket inte ger staten någon ny kostnad — det tidigare beloppet prissatte följderna i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17486,13 +17703,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 2000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uteblivna besparingar från minskad anhöriginvandring. Antaganden: 5 000–10 000 personer/år, statlig kostnad 50 000–100 000 kr/person/år. Permanent bortfall av två årskullar ger årlig besparing.",
-      "confidence": 0.4
+      "method_note": "Löftet innebär att dagens regel behålls eller att en föreslagen ändring avvisas. Ingen ny statlig kostnad uppstår.",
+      "confidence": 0.4,
+      "calculation": "Löftet innebär att dagens regel behålls eller att ett förslag om ändring avvisas. Att låta en regel stå kvar kostar staten ingenting nytt. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -17502,7 +17720,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet innebär att dagens regel behålls eller att ett förslag avvisas, vilket inte ger staten någon ny kostnad — det tidigare beloppet prissatte följderna i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17580,13 +17804,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10,
-      "msek_base": 30,
-      "msek_high": 100,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnad för central digital valplattform och administration, baserat på jämförelse med lokala system uppskalade nationellt.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -17596,7 +17821,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17967,13 +18198,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5,
-      "msek_base": 20,
-      "msek_high": 100,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnad för utbildningsinsatser och informationsmaterial inom befintliga föräldrastödsprogram. Osäkerhet kring omfattning.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -17983,7 +18215,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18061,13 +18299,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 150,
-      "msek_high": 500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnaden beror på antal berörda barn och medföljande makar. Osäkerhet kring volym, mottagandekostnader och eventuella rättsprocesser. Baserat på jämförelser med tidigare anhöriginvandringskostnader.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -18077,7 +18316,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18201,13 +18446,14 @@
     "cost": {
       "type": "besparing",
       "period": "per_ar",
-      "msek_low": 20,
-      "msek_base": 50,
-      "msek_high": 200,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning av statliga bidrag till organisationer som kan anses främja islamism. Stor osäkerhet om vilka verksamheter som avses.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -18217,7 +18463,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18423,13 +18675,14 @@
     "cost": {
       "type": "besparing",
       "period": "per_ar",
-      "msek_low": 20,
-      "msek_base": 100,
-      "msek_high": 500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar att slopad ungdomsreduktion skulle öka fängelsekostnader. Uppskattar antal unga intagna, genomsnittlig straffreduktion och dygnskostnad. Mycket osäkert.",
-      "confidence": 0.3
+      "method_note": "Löftet innebär att dagens regel behålls eller att en föreslagen ändring avvisas. Ingen ny statlig kostnad uppstår.",
+      "confidence": 0.3,
+      "calculation": "Löftet innebär att dagens regel behålls eller att ett förslag om ändring avvisas. Att låta en regel stå kvar kostar staten ingenting nytt. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -18439,7 +18692,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet innebär att dagens regel behålls eller att ett förslag avvisas, vilket inte ger staten någon ny kostnad — det tidigare beloppet prissatte följderna i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18883,13 +19142,14 @@
     "cost": {
       "type": "besparing",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1500,
-      "msek_high": 3000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om minskade asylmottagningskostnader vid ytterligare minskning av asylinvandringen med några tusen personer per år, baserat på genomsnittliga kostnader per asylsökande.",
-      "confidence": 0.4
+      "method_note": "Inriktning utan angiven åtgärd. Det tidigare beloppet var en följdeffekt, inte kostnaden för en åtgärd.",
+      "confidence": 0.4,
+      "calculation": "Löftet uttrycker en inriktning för politiken utan att ange någon åtgärd med egen statsfinansiell kostnad. Att invandringen blir lägre kan påverka andra budgetposter, men det är en följd av politiken — inte en åtgärd staten betalar för. Beloppet avser åtgärden."
     },
     "financing_claimed": {
       "described": false,
@@ -18899,7 +19159,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet anger en inriktning utan någon åtgärd med egen statsfinansiell kostnad — det tidigare beloppet var en följdeffekt av politiken, inte kostnaden för det som lovas. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -19031,13 +19297,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10,
-      "msek_base": 100,
-      "msek_high": 500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar att permanenta utökade möjligheter att ansöka inifrån ökar antalet anhöriginvandrare med 1000-5000 per år. Kostnad per person uppskattas till 100 000 kr/år i statliga transfereringar och handläg",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -19047,7 +19314,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -19455,13 +19728,14 @@
     "cost": {
       "type": "besparing",
       "period": "per_ar",
-      "msek_low": 25,
-      "msek_base": 80,
-      "msek_high": 160,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande: 50–200 berörda 15–17-åringar i familjehem placerade enbart pga anknytning, genomsnittlig årskostnad 600 tkr. Osäkerhet kring faktiskt antal och beteendeeffekter.",
-      "confidence": 0.4
+      "method_note": "Löftet hålls av en regeländring. Statens direkta kostnad för ändringen är försumbar; beloppet avser åtgärden, inte dess följder.",
+      "confidence": 0.4,
+      "calculation": "Löftet hålls av en regel- eller lagändring. Statens direkta kostnad för att ändra regeln ryms i ordinarie beredningsarbete och är försumbar. Beloppet avser åtgärden, inte vad den kan leda till i samhället."
     },
     "financing_claimed": {
       "described": false,
@@ -19471,7 +19745,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet hålls av en regel- eller lagändring, vars direkta kostnad för staten är försumbar — det tidigare beloppet prissatte följderna i samhället i stället för åtgärden. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
