@@ -701,9 +701,9 @@
       "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Prissatt på samma grund som övriga löften om mindre klasser: ett tak på tjugo elever kräver omkring 3 800 fler klasser och lika många lärare.",
+      "method_note": "Partiet anger ingen nivå. Beloppet förutsätter samma förutsättningar som det enda löftet om mindre klasser som gör det: ett tak på tjugo elever per klass.",
       "confidence": 0.3,
-      "calculation": "Fler lärare och mindre klasser är samma åtgärd: en klass till kräver en lärare till. Grundskolan har omkring 1 100 000 elever och en genomsnittlig klass på 21,5 elever, alltså omkring 51 200 klasser. Ett tak på tjugo elever ger omkring 55 000 klasser — 3 800 fler än i dag. Varje ny klass kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år, vilket ger 2 700 miljoner kronor per år vid full utbyggnad i hela grundskolan. Spannet 1 500–4 500 speglar stegvis införande och att lokalbehovet varierar. Nivån är hämtad från det enda löftet om mindre klasser som anger ett tak; övriga partier anger ingen nivå och prissätts på samma grund, så att samma politik kostar lika."
+      "calculation": "Fler lärare och mindre klasser är samma åtgärd: en klass till kräver en lärare till. Grundskolan har omkring 1 100 000 elever och en genomsnittlig klass på 21,5 elever, alltså omkring 51 200 klasser. Ett tak på tjugo elever ger omkring 55 000 klasser — 3 800 fler än i dag. Varje ny klass kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år, vilket ger 2 700 miljoner kronor per år vid full utbyggnad i hela grundskolan. Spannet 1 500–4 500 speglar stegvis införande och att lokalbehovet varierar. Bara ett av löftena anger en nivå — taket på tjugo elever. Övriga partier har inte sagt hur mycket mindre klasserna ska bli, så deras löften prissätts under antagandet att de avser samma sak. Antagandet är vårt, inte partiernas."
     },
     "financing_claimed": {
       "described": false,
@@ -728,6 +728,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 10 000 till 2 700 miljoner kronor per år. Det tidigare beloppet vilade på en uträkning som räknade med 700 000 grundskoleklasser — det finns omkring 51 000 — och på en skalad interpolation från ett annat partis dåvarande belopp, som i sin tur byggde på ett antagande som inte fanns i något löfte. Löftet prissätts nu på gruppens gemensamma uträkning, så att samma politik kostar lika. Löftet anger själv ingen nivå, men bär kostnaden eftersom partiet inte har något konkret klasslöfte som gör det.",
         "commit": "a9d7f30a8216dcd945ebc31d9986606ac52257ee"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen förtydligad: den skriver nu ut att nivån — taket på tjugo elever per klass — är hämtad från ett annat partis löfte och att antagandet är vårt, inte partiets. Beloppet är oförändrat på 2 700 miljoner kronor per år.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -13529,7 +13534,7 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Maxtak tjugo elever per klass i grundskolan. Prissatt som full utbyggnad: omkring 3 800 fler klasser à 700 000 kronor per år.",
-      "calculation": "Fler lärare och mindre klasser är samma åtgärd: en klass till kräver en lärare till. Grundskolan har omkring 1 100 000 elever och en genomsnittlig klass på 21,5 elever, alltså omkring 51 200 klasser. Ett tak på tjugo elever ger omkring 55 000 klasser — 3 800 fler än i dag. Varje ny klass kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år, vilket ger 2 700 miljoner kronor per år vid full utbyggnad i hela grundskolan. Spannet 1 500–4 500 speglar stegvis införande och att lokalbehovet varierar. Nivån är hämtad från det enda löftet om mindre klasser som anger ett tak; övriga partier anger ingen nivå och prissätts på samma grund, så att samma politik kostar lika.",
+      "calculation": "Fler lärare och mindre klasser är samma åtgärd: en klass till kräver en lärare till. Grundskolan har omkring 1 100 000 elever och en genomsnittlig klass på 21,5 elever, alltså omkring 51 200 klasser. Ett tak på tjugo elever ger omkring 55 000 klasser — 3 800 fler än i dag. Varje ny klass kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år, vilket ger 2 700 miljoner kronor per år vid full utbyggnad i hela grundskolan. Spannet 1 500–4 500 speglar stegvis införande och att lokalbehovet varierar. Bara ett av löftena anger en nivå — taket på tjugo elever. Övriga partier har inte sagt hur mycket mindre klasserna ska bli, så deras löften prissätts under antagandet att de avser samma sak. Antagandet är vårt, inte partiernas.",
       "confidence": 0.4
     },
     "financing_claimed": {
