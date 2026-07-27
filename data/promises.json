@@ -2064,14 +2064,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10000,
-      "msek_base": 20000,
+      "msek_low": 5000,
+      "msek_base": 15000,
       "msek_high": 30000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: 'Ambitionen att uppnå NATOs mål' = 2% BNP = ca 800 mdr totalt. Nu ca 780. Fortsatt upprustning. Estimat 20 mdr/år merkostnad.",
+      "method_note": "Skillnaden mellan dagens försvarsanslag och Natos utgiftsmål 2030. Beror på vilken bana anslagen följer.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~2 % av BNP 2030 ≈ 140 miljarder kronor. Nuvarande försvarsanslag (militärt) ~120 miljarder kronor 2024, på väg upp. Beroende på bana blir gapet 0–30 miljarder kronor per år. Bas 15 miljarder kronor per år i linje med snarlikt allmänt försvarslöfte. Låg 5 miljarder kronor per år om endast mindre justeringar krävs, hög 30 miljarder kronor per år om full uppräkning behövs från en lägre utgångspunkt."
+      "calculation": "Natos mål motsvarar omkring 140 miljarder kronor år 2030. Dagens militära försvarsanslag ligger på omkring 120 miljarder och är på väg upp. Gapet blir därmed 0–30 miljarder kronor per år beroende på vilken bana anslagen följer fram till 2030. Basbeloppet 15 miljarder ligger i linje med hur motsvarande försvarslöften prissatts. Det låga alternativet, 5 miljarder, gäller om bara mindre justeringar krävs; det höga, 30 miljarder, om hela uppräkningen måste göras från en lägre utgångspunkt."
     },
     "financing_claimed": {
       "described": false,
@@ -2081,7 +2081,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 20 000 till 15 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 15 000, inte de 20 000 som visades.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6486,14 +6492,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 15000,
+      "msek_low": 12500,
+      "msek_base": 18000,
       "msek_high": 27000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: 'Höja barnbidraget rejält' (mer än 200 kr/mån → minst 5 mdr) + bygga ut öppna förskolan (~2 mdr) + stoppa sänkt föräldrapenning (behåller nuvarande kostnad ~8 mdr). Estimat 15 mdr/år.",
+      "method_note": "Höjt barnbidrag och utbyggd öppen förskola. Att stoppa en sänkning av föräldrapenningen är att behålla dagens nivå och kostar inget nytt.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Barnbidrag: ~2 milj barn × höjning 500–1000 kr/mån × 12 mån = 12–24 miljarder kronor. Bas 750 kr (till 2000 kr) = 18 miljarder kronor. Öppen förskola: utökning av statsbidrag till kommuner, uppsk. 0,5–3 miljarder kronor. Totalt 12,5–27 miljarder kronor, bas 19 miljarder kronor."
+      "calculation": "Löftet innehåller tre delar, men bara två av dem är nya utgifter. Höjt barnbidrag: omkring 2 miljoner barn × 500–1 000 kronor mer i månaden × 12 månader ger 12–24 miljarder kronor, med 750 kronor i månaden som basantagande, alltså 18 miljarder. Utbyggd öppen förskola: 0,5–3 miljarder kronor i statsbidrag till kommunerna. Den tredje delen — att stoppa en sänkning av föräldrapenningen — innebär att dagens nivå behålls och kostar därför ingenting nytt; den prissätts inte."
     },
     "financing_claimed": {
       "described": false,
@@ -6503,7 +6509,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 15 000 till 18 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 19 000, men den summan innehöll delar som inte är nya utgifter. Beloppet räknar nu höjt barnbidrag och utbyggd öppen förskola; att stoppa en sänkning av föräldrapenningen är att behålla dagens nivå och kostar inget nytt.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7068,13 +7080,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 12750,
-      "msek_base": 15000,
-      "msek_high": 17250,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Källan anger: 'slopad arbetsgivaravgift för de första tio anställda i småföretag'. Arbetsgivaravgift 31,42%. Ca 250 000 småföretag med <10 anställda, snitt 5 anställda × 35 000 kr/mån × 31,42% × 12 = ",
-      "confidence": 0.85
+      "method_note": "Uppräkning av fem åtgärder. Prissätts inte här; delarna ligger på partiets egna löften, bland dem den slopade arbetsgivaravgiften.",
+      "confidence": 0.85,
+      "calculation": "Löftet räknar upp fem åtgärder — sänkta anställningskostnader, slopad arbetsgivaravgift för de tio första anställda, förstärkta lärlingsutbildningar, fler studentmedarbetare och nya vägar in för långtidsarbetslösa — utan att ange nivå för någon av dem. Den tyngsta delen, den slopade arbetsgivaravgiften, är redan prissatt som ett eget löfte hos partiet. Ett belopp här skulle räkna samma politik två gånger. Noll betyder inte att åtgärderna är gratis: kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -7084,7 +7097,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 15 000 till 0 miljoner kronor per år. Löftet är en uppräkning av fem åtgärder utan angiven nivå, och dess tyngsta del — slopad arbetsgivaravgift för småföretag — är redan prissatt som ett eget löfte hos partiet. Det tidigare beloppet dubbelräknade den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7842,14 +7861,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 15000,
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Skattesänkning på sparande (ISK, aktiefonder, räntor). Svenskt finansiellt sparande beskattas idag med ca 30–40 mdr/år (varav ISK ca 20 mdr). En sänkning med ca 25–30% = 10 mdr/år. Överlappar",
+      "method_note": "Sänkt skatt på sparande. Nivån är inte angiven, så spannet är brett.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antag: 4-8 miljoner sparare berörs. Genomsnittlig skattesänkning per person 500-2000 kr per år.\nLåg: 4M × 500 kr = 2 000 miljoner kronor.\nBas: 5M × 1 000 kr = 5 000 miljoner kronor.\nHög: 6M × 2 000 kr = 12 000 miljoner kronor.\nRimlig osäkerhet då löftet saknar detaljer."
+      "calculation": "Sänkt skatt på sparande antas beröra 4–8 miljoner sparare, med en genomsnittlig sänkning på 500–2 000 kronor per person och år. Det låga alternativet räknar 4 miljoner sparare à 500 kronor, alltså 2 000 miljoner kronor. Basbeloppet räknar 5 miljoner à 1 000 kronor, alltså 5 000 miljoner. Det höga räknar 6 miljoner à 2 000 kronor, alltså 12 000 miljoner. Löftet saknar detaljer, vilket spannet speglar."
     },
     "financing_claimed": {
       "described": false,
@@ -7859,7 +7878,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 10 000 till 5 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 5 000 som basbelopp, men löftet visade 10 000. Spannet följer nu också uträkningen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -9076,7 +9101,7 @@
   },
   {
     "id": "p-2026-0256",
-    "group_id": null,
+    "group_id": "g-c-anstallningskostnad-smaforetag",
     "title": "Vi vill kraftigt sänka skatten på att anställa, särskilt för små och växande företag",
     "slug": "vi-vill-kraftigt-sanka-skatten-pa-att-anstalla-sarskilt-for-sma-och-vaxande-foretag",
     "parties": [
@@ -9099,14 +9124,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 7500,
+      "msek_low": 10000,
       "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_high": 25000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Skattesänkning inom Ekonomi/Skatt. ~15 mdr/år.",
+      "method_note": "Sänkt skatt på att anställa i små och växande företag. Samma politik som partiets konkreta löfte om slopad arbetsgivaravgift, och räknas en gång.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Jämförbart löfte partiets eget löfte om borttagen anställningsskatt för de tio första anställda: borttagen anställningsskatt för första 10 anställda i små växande företag ≈ 8 000 miljoner kronor per år. Löftet här är vagt, kan vara samma åtgärd. Låg skattning 5 000 (vid smalare avgränsning), hög 15 000 (vid bredare tolkning inkl. ytterligare lättnader, i nivå med partiets eget löfte om slopad arbetsgivaravgift)."
+      "calculation": "Löftet är samma politik som partiets konkreta utfästelse om att ta bort arbetsgivaravgiften för växande småföretag med upp till tio anställda, fast vagare formulerad. Det prissätts därför på samma grund: omkring 100 000 småföretag med i snitt fem anställda, varav 20–30 procent antas växa och omfattas, ger 11,3–17,0 miljarder kronor per år. Spannet sätts till 10 000–25 000 miljoner kronor med 15 000 som basbelopp. De två löftena räknas en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -9121,6 +9146,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med partiets konkreta löfte om slopad arbetsgivaravgift för växande småföretag. Samma parti och samma politik uttryckt i två citat vid olika tillfällen är ett löfte som ska räknas en gång; båda vilar nu på samma uträkning. Basbeloppet är oförändrat på 15 000 miljoner kronor per år.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -9408,16 +9438,16 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 7500,
-      "msek_base": 15000,
-      "msek_high": 22500,
+      "msek_low": 4000,
+      "msek_base": 8000,
+      "msek_high": 25000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Ekonomi/Skatt. ~15 mdr/år.",
+      "method_note": "Sänkt marginalskatt så att ingen betalar över 50 procent. Nivån beror på om skattesatsen sänks eller brytpunkten höjs.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Statlig inkomstskatt 2024: ca 68 miljarder kronor. Sänkning 2 pe (till 18 %) ger intäktsminskning ~6,8 miljarder kronor; 5 pe (till 15 %) ger ~17 miljarder kronor. Höjd brytpunkt kan kosta mindre, ~4 miljarder kronor. Intervall 4 000–25 000 miljoner kronor baserat på bredd i åtgärd, bas 8 000 miljoner kronor för en medelreform."
+      "calculation": "Den statliga inkomstskatten gav omkring 68 miljarder kronor 2024. Att sänka skattesatsen med två procentenheter kostar omkring 6,8 miljarder kronor per år, och med fem procentenheter omkring 17 miljarder. Väljs i stället en höjd brytpunkt blir kostnaden lägre, omkring 4 miljarder. Spannet 4 000–25 000 miljoner kronor speglar hur brett åtgärden kan utformas, med 8 000 miljoner som basbelopp för en medelstor reform."
     },
     "financing_claimed": {
       "described": false,
@@ -9427,7 +9457,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 15 000 till 8 000 miljoner kronor per år, och kostnadstypen från utgift till intäktsminskning. Den publicerade uträkningen räknade fram 8 000, inte de 15 000 som visades. En sänkt marginalskatt kostar staten uteblivna intäkter — det är ingen utgift.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -11161,7 +11197,7 @@
   },
   {
     "id": "p-2026-0346",
-    "group_id": null,
+    "group_id": "g-c-anstallningskostnad-smaforetag",
     "title": "Ta bort anställningsskatten för de tio första anställda i växande småföretag",
     "slug": "ta-bort-anstallningsskatten-for-de-tio-forsta-anstallda-i-vaxande-smaforetag",
     "parties": [
@@ -11180,14 +11216,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 8000,
-      "msek_high": 20000,
+      "msek_low": 10000,
+      "msek_base": 15000,
+      "msek_high": 25000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på antal småföretag med 1-10 anställda, genomsnittlig lönesumma per anställd och full arbetsgivaravgift (ca 31.42%). Osäkerhet kring definition av 'växande', urvalskriterier och b",
+      "method_note": "Slopad arbetsgivaravgift för växande småföretag med upp till tio anställda. Delat löfte med partiets vagare formulerade utfästelse om samma sak.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~100 000 småföretag med i snitt 5 anställda som omfattas, snittlön ~30 000 kr/mån, arbetsgivaravgift 31,42 % → 9 426 kr/mån per anställd. Totalt 100 000 × 5 × 9 426 × 12 ≈ 56,6 miljarder kronor. Antag att 20–30 % av företagen är växande och nyanställer → 11,3–17,0 miljarder kronor. Med bredare tolkning och osäkerhet sätts intervallet 10–25 miljarder kronor, bas 15 miljarder kronor."
+      "calculation": "Omkring 100 000 småföretag med i snitt fem anställda antas omfattas. Med en snittlön på 30 000 kronor i månaden är arbetsgivaravgiften 9 426 kronor per anställd och månad, vilket för hela gruppen blir omkring 56,6 miljarder kronor per år. Men avgiften tas bara bort för växande företag, uppskattningsvis 20–30 procent av dem, vilket ger 11,3–17,0 miljarder kronor. Med osäkerhet om avgränsningen sätts spannet till 10 000–25 000 miljoner kronor med 15 000 som basbelopp."
     },
     "financing_claimed": {
       "described": false,
@@ -11197,7 +11233,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 8 000 till 15 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 15 000, inte de 8 000 som visades. Löftet är dessutom grupplänkat med partiets vagare utfästelse om att sänka skatten på att anställa — samma parti och samma politik ska räknas en gång.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11225,14 +11267,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 5000,
-      "msek_high": 12000,
+      "msek_low": 5000,
+      "msek_base": 12000,
+      "msek_high": 20000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar höjning av grundavdrag för låga inkomster, baserat på tidigare reformer, stor osäkerhet.",
+      "method_note": "Sänkt inkomstskatt riktad mot låga inkomster. Nivån är inte angiven.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. 1,5 milj. personer × (5–15) tusen kronor per år = 7,5–22,5 miljarder kronor. Bas 12 miljarder kronor. Osäkerhet på grund av vagt löfte, spann 5–20 miljarder kronor."
+      "calculation": "Omkring 1,5 miljoner personer med låga inkomster antas beröras. En sänkning på 5 000–15 000 kronor per person och år ger 7 500–22 500 miljoner kronor. Basbeloppet sätts till 12 000 miljoner. Löftet anger ingen nivå, vilket det breda spannet 5 000–20 000 miljoner speglar."
     },
     "financing_claimed": {
       "described": false,
@@ -11242,7 +11284,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 5 000 till 12 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 12 000, inte de 5 000 som visades.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15342,14 +15390,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1500,
-      "msek_high": 5000,
+      "msek_low": 800,
+      "msek_base": 3000,
+      "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Jämför tidigare investeringsstöd för hyresbostäder (ca 3 mdkr/år). Löftet saknar belopp, varför spannet breddas och konfidensen sätts lågt.",
+      "method_note": "Investeringsstöd till hyresrätter, studentbostäder och äldrebostäder: antal lägenheter gånger stöd per lägenhet.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Låg: 2 000 lgh × 400 000 kronor = 800 miljoner kronor per år. Bas: 7 500 lgh × 400 000 kronor = 3 000 miljoner kronor per år. Hög: 15 000 lgh × 800 000 kronor = 12 000 miljoner kronor per år. Volym och stödnivå osäkra."
+      "calculation": "Stödet räknas som antal lägenheter gånger stöd per lägenhet. Det låga alternativet, 2 000 lägenheter à 400 000 kronor, ger 800 miljoner kronor per år. Basbeloppet, 7 500 lägenheter à 400 000 kronor, ger 3 000 miljoner. Det höga, 15 000 lägenheter à 800 000 kronor, ger 12 000 miljoner. Både volym och stödnivå är osäkra eftersom löftet inte anger någon av dem."
     },
     "financing_claimed": {
       "described": false,
@@ -15359,7 +15407,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 500 till 3 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 3 000, inte de 1 500 som visades, och spannet följer nu också uträkningen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15715,13 +15769,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 100,
-      "msek_base": 500,
-      "msek_high": 2500,
+      "msek_base": 300,
+      "msek_high": 1000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på antaganden om antal stödmottagare (10 000-50 000 per år) och stödbelopp (10 000-50 000 kr). Mycket osäkert.",
+      "method_note": "Flyttstöd till äldre: antal flyttar gånger stöd per flytt.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antag 5 000–20 000 flyttar per år × 20 000–50 000 kr → 100–1 000 miljoner kronor. Bas: 10 000 × 30 000 = 300 miljoner kronor."
+      "calculation": "Stödet antas omfatta 5 000–20 000 flyttar per år med 20 000–50 000 kronor per flytt, vilket ger 100–1 000 miljoner kronor per år. Basbeloppet räknar 10 000 flyttar à 30 000 kronor, alltså 300 miljoner kronor."
     },
     "financing_claimed": {
       "described": false,
@@ -15731,7 +15785,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 500 till 300 miljoner kronor per år. Den publicerade uträkningen räknade fram 300, och spannet följer nu också uträkningen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17170,14 +17230,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 10000,
-      "msek_base": 30000,
-      "msek_high": 60000,
+      "msek_low": 3000,
+      "msek_base": 10000,
+      "msek_high": 25000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsuppskattning baserad på tidigare utredningar om full fiberutbyggnad och mobiltäckning i glesbygd, med antagande om statlig medfinansiering på 50-70% av total investering. Osäkerhet kring ambit",
+      "method_note": "Statligt stöd för att ansluta de hushåll och företag som saknar tillräcklig uppkoppling, plus mobiltäckning.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antag ~100 000–250 000 hushåll/företag som saknar tillräcklig uppkoppling. Statligt stöd i snitt 30 000–100 000 kr/anslutning för fiber, plus ~1–5 miljarder kronor för mobiltäckning. Summa 3–25 miljarder kronor, med bas 10 miljarder kronor."
+      "calculation": "Omkring 100 000–250 000 hushåll och företag antas sakna tillräcklig uppkoppling. Ett statligt stöd på 30 000–100 000 kronor per anslutning för fiber ger 3–25 miljarder kronor, och till det kommer 1–5 miljarder för mobiltäckning. Basbeloppet sätts till 10 miljarder kronor som engångskostnad för utbyggnaden."
     },
     "financing_claimed": {
       "described": false,
@@ -17187,7 +17247,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 30 000 till 10 000 miljoner kronor. Den publicerade uträkningen räknade fram 10 000, inte de 30 000 som visades.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17785,7 +17851,7 @@
   },
   {
     "id": "p-2026-0484",
-    "group_id": null,
+    "group_id": "g-hogkostnadsskydd-tandvard",
     "title": "Högkostnadsskydd i tandvården för alla medborgare",
     "slug": "hogkostnadsskydd-i-tandvarden-for-alla-medborgare",
     "parties": [
@@ -17804,14 +17870,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
+      "msek_low": 8000,
       "msek_base": 10000,
-      "msek_high": 20000,
+      "msek_high": 15000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnad för äldres högkostnadsskydd uppskattas till 3-4 mdkr/år. Uppskalning till hela befolkningen ger 5-20 mdkr beroende på utformning och tandvårdsbehov.",
+      "method_note": "Högkostnadsskyddet i tandvården utvidgas från äldre till alla. Delat löfte med ett annat parti som lovar samma sak.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Utgår från Vänsterpartiets löfte om ett högkostnadsskydd i tandvården (V) som prissatt ett liknande universellt högkostnadsskydd till 5 000 miljoner kronor per år. Antagande: nuvarande äldreskydd (≥65 år) kostar ~1,5–2 miljarder kronor för ~2,2 miljoner personer. En utvidgning till samtliga vuxna (~7,5 miljoner) ger en totalkostnad på ~5–7 miljarder kronor per år. Nettokostnaden (minus redan budgeterade medel för äldre) blir ~3–5 miljarder kronor per år. Osäkerhet kring taknivå och utnyttjandegrad motiverar intervallet 3–8 miljarder kronor per år."
+      "calculation": "Vuxentandvården kostar omkring 25 miljarder kronor per år. Dagens skydd omfattar de omkring 2,2 miljoner som är 65 år eller äldre och kostar 1,5–2 miljarder. Utvidgas det till samtliga vuxna, omkring 7,5 miljoner personer, blir totalkostnaden 8–15 miljarder kronor per år, med 10 miljarder som basbelopp. Ett annat parti lovar samma högkostnadsskydd och prissätts på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -17826,6 +17892,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med Vänsterpartiets löfte om samma högkostnadsskydd i tandvården, och prissatt på samma grund: samma politik hos olika partier är två löften som ska kosta lika och räknas en gång i rikssumman. Basbeloppet är oförändrat på 10 000 miljoner kronor per år; spannet är justerat så att båda löftena vilar på samma uträkning.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -18027,7 +18098,7 @@
   },
   {
     "id": "p-2026-0489",
-    "group_id": null,
+    "group_id": "g-hogkostnadsskydd-tandvard",
     "title": "Införa ett högkostnadsskydd för tandvården med ett maxtak på 1450 kr per år",
     "slug": "infora-ett-hogkostnadsskydd-for-tandvarden-med-ett-maxtak-pa-1450-kr-per-ar",
     "parties": [
@@ -18049,14 +18120,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 5000,
-      "msek_high": 10000,
+      "msek_low": 8000,
+      "msek_base": 10000,
+      "msek_high": 15000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Jämför med befintligt högkostnadsskydd för sjukvård; antagande om stor andel vuxna med tandvårdskostnader över taket och genomsnittlig överskjutande kostnad. Osäkerhet kring omfattning och taknivå.",
+      "method_note": "Högkostnadsskydd i tandvården med maxtak 1 450 kronor. Delat löfte med ett annat parti som lovar samma sak.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Totala tandvårdskostnader för vuxna ~25 miljarder kronor per år. Andel som överstiger 1450 kr antas variera; statens subvention motsvarar ~32–60% av totalkostnaden. Låg scenario: 25 miljarder kronor × 0,32 = 8 miljarder kronor; bas: 10 miljarder kronor (40%); hög: 15 miljarder kronor (60%). Jämförbart med SD:s förslag på 10 miljarder kronor per år."
+      "calculation": "Vuxentandvården kostar omkring 25 miljarder kronor per år. Med ett tak på 1 450 kronor betalar staten den del som ligger däröver, uppskattningsvis 32–60 procent av totalkostnaden. Det låga alternativet, 32 procent, ger 8 miljarder kronor per år; basbeloppet, 40 procent, ger 10 miljarder; det höga, 60 procent, ger 15 miljarder. Ett annat parti lovar samma högkostnadsskydd och prissätts på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -18066,7 +18137,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 5 000 till 10 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 10 000, inte de 5 000 som visades. Löftet är dessutom grupplänkat med Sverigedemokraternas löfte om samma högkostnadsskydd: samma politik hos olika partier är två löften som ska kosta lika och räknas en gång i rikssumman.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
