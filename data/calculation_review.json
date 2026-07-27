@@ -16,7 +16,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Löftet räknar upp flera politikområden men saknar specifika nivåer eller utformning. Regel 13 föreskriver bas 0 för breda uppräkningar utan konkret åtagande. Jämförbart löfte om billigare medicin (p-2026-0217) har också estimat 0."
+    "calculation": "Löftet räknar upp flera politikområden (höjt barnbidrag, billigare mediciner, avgiftsfri tandvård m.m.) utan att ange nivåer eller specifika mekanismer. Kan inte prissättas; kostnader fångas på partiets specifika löften."
   },
   {
     "id": "p-2026-0003",
@@ -35,7 +35,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen specifik reform angiven; löftet är en allmän målsättning. Därför 0 kr."
+    "calculation": "Ingen specifik åtgärd specificeras; löftet är en allmän målsättning. Därmed ingen ny statlig nettokostnad att beräkna. 0 mkr."
   },
   {
     "id": "p-2026-0005",
@@ -54,7 +54,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen beräkning möjlig; löftet anger inga kvantifierbara åtgärder, volymer eller enhetskostnader."
+    "calculation": "Ingen beräkning; löftet saknar specificerade åtgärder eller belopp."
   },
   {
     "id": "p-2026-0006",
@@ -68,12 +68,12 @@
       "high": 4500
     },
     "reestimated": {
-      "base": 5000,
-      "low": 2000,
-      "high": 15000
+      "base": 8000,
+      "low": 3000,
+      "high": 25000
     },
-    "factor": 1.6666666666666667,
-    "calculation": "50 000–150 000 unga × 20 000–50 000 kr = 1–7,5 mdkr. Bredare tolkning (fler unga, större lättnad) ger upp till 15 mdkr. Osäkerheten är stor då detaljer saknas."
+    "factor": 2.6666666666666665,
+    "calculation": "Antag 150 000–500 000 berörda (unga + personer som går från bidrag till arbete). Skattelättnad/stöd per person 20 000–50 000 kr/år. Låg: 150 000 × 20 000 = 3 000 msek. Bas: 250 000 × 32 000 = 8 000 msek. Hög: 500 000 × 50 000 = 25 000 msek."
   },
   {
     "id": "p-2026-0007",
@@ -87,12 +87,12 @@
       "high": 1500
     },
     "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 30
+      "base": 15,
+      "low": 1,
+      "high": 50
     },
-    "factor": null,
-    "calculation": "Antag: 0-10 pers. direkt arbete i 3-12 månader för utredning och it-anpassning, ~0-5 mkr; informationskampanj ~0-5 mkr; totalt upp till ~30 mkr. Kan rymmas inom ordinarie förvaltningsanslag, därför bas 0."
+    "factor": 66.66666666666667,
+    "calculation": "Utrednings- och föreskriftsarbete: ~5–10 handläggarår à 0,7 msek = 3,5–7 msek. It-anpassningar (t.ex. nya moduler i ärendehanteringssystem): 5–20 msek. Utbildning av personal: 2–5 msek. Totalt engång: 10–30 msek. I high-scenariot tillkommer större systemintegration och fler anställda för implementering. Löftet specificerar inga nya programkostnader, varför endast regelverkskostnaden prissätts."
   },
   {
     "id": "p-2026-0008",
@@ -111,7 +111,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen beräkning – löftet är en bred uppräkning av flera politikområden utan specifika belopp. Regel 13 anger base 0 för sådana önskelöften."
+    "calculation": "Ingen uträkning, då löftet endast är en bred uppräkning av politikområden."
   },
   {
     "id": "p-2026-0009",
@@ -130,7 +130,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Löftet är en övergripande målsättning, ej en konkret reform. Kostnadsberäkning ej möjlig."
+    "calculation": "Ingen beräkning; base 0 per regel 13."
   },
   {
     "id": "p-2026-0010",
@@ -149,7 +149,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen specifik åtgärd, därför 0."
+    "calculation": "Inga specifika åtgärder, antaganden eller volymer anges. Kostnaden är helt beroende av framtida konkreta förslag och kan därför inte uppskattas."
   },
   {
     "id": "p-2026-0012",
@@ -163,12 +163,12 @@
       "high": 9000
     },
     "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 0
+      "base": 500,
+      "low": 200,
+      "high": 1500
     },
-    "factor": null,
-    "calculation": "Löftet saknar varje form av kvantifierbart innehåll och kan därför inte beräknas. Base sätts till 0 i enlighet med instruktionen för vaga sammanfattningslöften."
+    "factor": 10,
+    "calculation": "Antar statligt tillskott till regioner för barn- och ungdomspsykiatri. Använder jämförelsetal: p-2026-0435 (150 mkr/år för vaccin) som nedre riktmärke; p-2026-0046 (5000 mkr/år) som övre för en mer specifik reform. Då detta löfte är vagt sätts intervallet brett: 200 mkr (minimalt stimulansbidrag) till 1500 mkr (större permanent förstärkning). Bas 500 mkr motsvarar en medelstor riktad satsning. Inga detaljer om antal barn el. personal."
   },
   {
     "id": "p-2026-0018",
@@ -182,12 +182,12 @@
       "high": 2250
     },
     "reestimated": {
-      "base": 200,
-      "low": 50,
-      "high": 600
+      "base": 400,
+      "low": 200,
+      "high": 800
     },
-    "factor": 7.5,
-    "calculation": "Antar 30–300 nya årsarbetskrafter hos berörda myndigheter (Skatteverket, Polisen, Arbetsmiljöverket, Åklagarmyndigheten) med en årlig kostnad om ca 1,0–1,5 mkr per person inkl. overhead. Myndighetskostnader: 30 × 1,0 = 30 mkr; 300 × 1,5 = 450 mkr. Därtill IT-system, utbildning m.m. 20–150 mkr. Totalt 50–600 mkr."
+    "factor": 3.75,
+    "calculation": "Antagande: 3–5 berörda myndigheter (Skatteverket, Arbetsmiljöverket, Polisen m.fl.) får 40–160 mkr vardera för utökad kontroll och tillsyn. Totalt 150–800 mkr. Bas 400 mkr motsvarar en måttlig nivå mellan de angivna jämförelselöftena."
   },
   {
     "id": "p-2026-0019",
@@ -201,12 +201,12 @@
       "high": 3000
     },
     "reestimated": {
-      "base": 500,
-      "low": 100,
-      "high": 1500
+      "base": 0,
+      "low": 0,
+      "high": 5
     },
-    "factor": 4,
-    "calculation": "Antar 50 000–100 000 berörda. Aktivitets-/språkplikt: 10–30 tkr/pers i utökad handledning/kurser (0,5–3 mdkr). Jobbtrappa: lönebidrag för 20 000 pers à 40 tkr (0,8 mdkr). Totalt spann 0,1–2 mdkr, bas 0,5 mdkr då mycket kan vara befintliga insatser."
+    "factor": null,
+    "calculation": "Antagande: en utredning och visst administrativt införande av nya krav bedöms till 0–5 mkr i engångskostnad. Inga årliga kostnader antas här."
   },
   {
     "id": "p-2026-0020",
@@ -225,7 +225,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Inga specifika åtgärder specificeras i löftet, därmed ingen direkt statlig kostnad att beräkna. Bas = 0."
+    "calculation": "Ingen kalkyl, bred inriktning."
   },
   {
     "id": "p-2026-0023",
@@ -244,7 +244,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ej kvantifierbart; inga specifika åtgärder angivna."
+    "calculation": "Ingen beräkning, då löftet är ett brett inriktningslöfte som prissätts till 0 enligt regel 13."
   },
   {
     "id": "p-2026-0030",
@@ -263,7 +263,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen kvantifierbar åtgärd. Löftet är en ambition om att förenkla och sänka kostnader för företagare, men saknar konkret politik (t.ex. specifik skattesänkning eller avskaffad avgift). Därför base = 0."
+    "calculation": "Eftersom löftet saknar konkret åtgärd, införs ingen ny direkt kostnad för staten. Eventuella framtida skattesänkningar eller förenklingar är ospecificerade och kan därför inte kvantifieras här."
   },
   {
     "id": "p-2026-0031",
@@ -277,12 +277,12 @@
       "high": 1500
     },
     "reestimated": {
-      "base": 15,
-      "low": 5,
-      "high": 50
+      "base": 0,
+      "low": 0,
+      "high": 5
     },
-    "factor": 66.66666666666667,
-    "calculation": "SOU (statlig utredning): 10–20 mkr. Beredning i Regeringskansliet och riksdag: 5–10 mkr. Implementering hos myndigheter (t.ex. Naturvårdsverket): 5–20 mkr. Totalt 20–50 mkr. Kalkylen kan bli lägre vid internt arbete, därav lågt estimat 5 mkr."
+    "factor": null,
+    "calculation": "Reform av miljöbalken är primärt en regelförändring utan nya statliga åtaganden. Antaget utrednings-/implementeringskostnad: 0–5 mkr i engångsanslag."
   },
   {
     "id": "p-2026-0033",
@@ -297,11 +297,11 @@
     },
     "reestimated": {
       "base": 1500,
-      "low": 800,
+      "low": 500,
       "high": 3000
     },
     "factor": 5.333333333333333,
-    "calculation": "~1500 nya poliser à ~1 mkr/år inkl. utrustning och OH = 1500 mkr. Intervall 800–3000 mkr motsvarar 800–3000 poliser eller högre/lägre styckkostnad."
+    "calculation": "SD-löfte: 1500 msek/år som jämförelse. Detta löfte kan vara mindre ambitiöst eller mer expansivt; intervall 500–3000 msek/år, med bas 1500."
   },
   {
     "id": "p-2026-0034",
@@ -320,7 +320,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen beräkning. Löftet är en allmän målsättning, inga specifika reformer eller budgetposter anges."
+    "calculation": "Inriktningslöfte utan specificerade åtaganden (regel 13). Eventuella framtida reformer prissätts separat. Baseras på 0 msek."
   },
   {
     "id": "p-2026-0035",
@@ -334,12 +334,12 @@
       "high": 2250
     },
     "reestimated": {
-      "base": 30,
-      "low": 5,
-      "high": 150
+      "base": 600,
+      "low": 100,
+      "high": 1200
     },
-    "factor": 50,
-    "calculation": "~5-10 mkr/år för tillsyn och administration, ~10-20 mkr/år för utbildningsinsatser. Om staten delfinansierar kommuners anställningar tillkommer kostnader, uppskattat till 0-100 mkr/år i osäkerhetsintervallet."
+    "factor": 2.5,
+    "calculation": "~500–1 500 vakter × 0,6–0,8 mkr/år = 300–1 200 mkr. Central adm./tillsyn 20–200 mkr. Totalt ~100–1 200 mkr. Basestimat 600 mkr motsvarar ~1 000 vakter."
   },
   {
     "id": "p-2026-0036",
@@ -355,10 +355,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 0
+      "high": 10
     },
     "factor": null,
-    "calculation": "Åtgärden kräver en proposition och riksdagsbeslut. Kostnaden för detta ryms inom ordinarie förvaltningsanslag och antas vara 0."
+    "calculation": "Lagstiftning via proposition: arbetstid i Regeringskansliet och remissinstanser. Kostnad uppskattas till 0–10 mkr (oftast inom ordinarie anslag). Base sätts till 0 då det inte finns något nytt anslag."
   },
   {
     "id": "p-2026-0037",
@@ -372,12 +372,12 @@
       "high": 750
     },
     "reestimated": {
-      "base": 2,
+      "base": 5,
       "low": 1,
-      "high": 5
+      "high": 20
     },
-    "factor": 250,
-    "calculation": "Uppskattar att inrättandet av en särskild fond kräver 0.5–2 årsarbetskrafter för juridisk och IT-utveckling samt projektledning. Med en genomsnittskostnad på 1–2 mkr per årsarbetskraft ger det ~1–4 mkr, avrundat till 1–5 mkr."
+    "factor": 100,
+    "calculation": "Antar att inrättandet kan ske via enkel promemoria (1-3 mkr) eller SOU (5-10 mkr) plus system (tot. upp till 20 mkr). Årliga utbetalningar ur fonden är ej ny kostnad, då de finansieras av förverkade medel."
   },
   {
     "id": "p-2026-0039",
@@ -391,12 +391,12 @@
       "high": 4500
     },
     "reestimated": {
-      "base": 60,
+      "base": 35,
       "low": 20,
-      "high": 180
+      "high": 60
     },
-    "factor": 50,
-    "calculation": "Rättsväsende: ~20 mkr/år per ny brottskategori (jfr deepfakes) → för 2-3 nya brott samt straffskärpning ~40-100 mkr/år. Patientavgift: ~10 000 kvinnor/år × ~500 kr i avgift ≈ 5 mkr/år. Totalt ~45-105 mkr/år, avrundat till bas 60 mkr."
+    "factor": 85.71428571428571,
+    "calculation": "Baseras på llm-estimatet för deepfakes (20 mkr/år). Åtgärden omfattar flera nya brottsrubriceringar och skärpta straff, vilket ökar kostnaderna för polis, åklagare, domstolar och anstalter. Uppskattas till 1,5–3 gånger referenslöftet (30–60 mkr/år). Patientavgift: ca 2 000 besök/år * 300 kr ≈ 0,6 mkr/år. Totalt spann 20–60 mkr, bas 35 mkr."
   },
   {
     "id": "p-2026-0040",
@@ -415,7 +415,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Bas 0 – ingen ny kvantifierbar åtgärd. Jämförbara breda löften (p-2026-0160, p-2026-0164) har 0."
+    "calculation": "Ingen specifik åtgärd eller finansiering anges. Löftet uttrycker en ambition, inte en ny utgiftspost, och tillför därmed ingen direkt statsfinansiell kostnad utöver redan beslutade ramar."
   },
   {
     "id": "p-2026-0044",
@@ -429,12 +429,12 @@
       "high": 1500
     },
     "reestimated": {
-      "base": 80,
-      "low": 40,
-      "high": 150
+      "base": 100,
+      "low": 30,
+      "high": 300
     },
-    "factor": 12.5,
-    "calculation": "Antar ~25-60 årsarbetskrafter (utredare, IT, kundtjänst) à 1-1,2 mkr/år = 25-72 mkr. IT-plattform drift/utveckling 20-50 mkr/år. Informationskampanjer mm 5-15 mkr/år. Summa 50-137 mkr/år; avrundas till 40-150 mkr för intervall."
+    "factor": 10,
+    "calculation": "Antaganden: Engångsutveckling av IT-system ~80–200 mnkr; årlig drift och bemanning ~20–50 mnkr. Amorteras utvecklingen på 3–5 år uppgår årskostnaden till ~50–100 mnkr. Med högre ambition (t.ex. dygnetrunt-jour, omfattande regionanpassningar) kan kostnaden bli upp till ~300 mnkr/år. Baserat på jämförelser med liknande nationella e-tjänster."
   },
   {
     "id": "p-2026-0045",
@@ -448,12 +448,12 @@
       "high": 4500
     },
     "reestimated": {
-      "base": 10,
+      "base": 0,
       "low": 0,
-      "high": 50
+      "high": 30
     },
-    "factor": 300,
-    "calculation": "Lagändring: statens kostnad begränsas till administration/tillsyn. Antag 5–10 tjänster för ärendehantering, à ~1,5 mkr/st inkl. overhead => 7,5–15 mkr/år. Lågt scenario: befintlig myndighet hanterar utan tillskott (0). Högt scenario: ny eller utökad enhet med upp till 20–30 tjänster (<50 mkr/år)."
+    "factor": null,
+    "calculation": "Lagändringsarbete och systemjusteringar hos t.ex. IVO: 0–30 mkr engång. Inga indikationer på att staten tar över vårdkostnader eller inför nya transfereringar."
   },
   {
     "id": "p-2026-0046",
@@ -467,12 +467,12 @@
       "high": 7500
     },
     "reestimated": {
-      "base": 1000,
-      "low": 500,
-      "high": 2000
+      "base": 0,
+      "low": 0,
+      "high": 5
     },
-    "factor": 5,
-    "calculation": "Antag ~50 000 patienter med långa väntetider per år. Extra kostnad per patient: 10 000–40 000 kr (utökad kapacitet, fler behandlare, ev. köp av extern vård). 50 000 × 10 000 = 500 mkr (low); 50 000 × 20 000 = 1 000 mkr (base); 50 000 × 40 000 = 2 000 mkr (high). Jämför med bredare psykiatrisatsning (p-2026-0012, 5 000 mkr/år); detta löfte är smalare och därför lägre."
+    "factor": null,
+    "calculation": "Lagstiftningsprocess (utredning, proposition) ≈ 2–5 mkr. Vårdkostnader som kan följa av garantin kvantifieras ej (regel 9)."
   },
   {
     "id": "p-2026-0047",
@@ -488,10 +488,10 @@
     "reestimated": {
       "base": 500,
       "low": 200,
-      "high": 1000
+      "high": 1500
     },
     "factor": 4,
-    "calculation": "Höjd åldersgräns: ~400 000 18–21-åringar, varav ~8 000–12 000 med svår psykisk ohälsa. Merkostnad BUP jmf vuxenpsykiatri: 20–40 tkr/patient/år → 160–480 mkr. Fast vårdkontakt: ~40 000–50 000 svårt sjuka 0–21 år, extra koordinatorkostnad 10–20 tkr/patient/år → 400–800 mkr. Samlat med överlapp och lägre utnyttjandegrad: 200–800 mkr/år."
+    "calculation": "~400 000 unga 18–21 år. Antag 1–3 % med svår psykisk sjukdom som får utökad vård (4 000–12 000). Extra kostnad per patient ~20 000–80 000 kr/år för längre BUP-uppföljning och vårdkontakt. Total extra nettokostnad 80–960 mkr. Spannet breddas till 200–1 500 mkr p.g.a. osäkerhet om regionernas nuvarande kostnader, utnyttjandegrad och organisatoriska kostnader."
   },
   {
     "id": "p-2026-0052",
@@ -505,12 +505,12 @@
       "high": 750
     },
     "reestimated": {
-      "base": 200,
-      "low": 0,
-      "high": 600
+      "base": 150,
+      "low": 50,
+      "high": 500
     },
-    "factor": 2.5,
-    "calculation": "Antag nya pengar: kvinnoforskningsanslag ~50-200 mkr/år (jfr. Fortes totalbudget ~600 mkr). Vård för våldsutsatta: statsbidrag till regioner ~100-400 mkr/år. Totalt 150-600 mkr/år. Lägsta möjliga 0 om enbart omfördelning."
+    "factor": 3.3333333333333335,
+    "calculation": "Bas: 150 mkr/år (som ett 10-årigt program à 1,5 mdkr). Låg: 50 mkr/år för en mindre öronmärkning. Hög: 500 mkr/år för ett brett program inkl. stärkt vård för våldsutsatta, men den delen antas fångas av andra löften."
   },
   {
     "id": "p-2026-0053",
@@ -529,7 +529,7 @@
       "high": 30
     },
     "factor": 13.333333333333334,
-    "calculation": "Antar en eller två utredningar/arbetsgrupper med experter. Typisk SOU: ~10–20 mkr. Här bedöms spann: låg 5 mkr (intern översyn), bas 15 mkr (en normal utredning), hög 30 mkr (omfattande arbete med flera delar och remissförfarande)."
+    "calculation": "Antagande: 1–2 års utredningsarbete, 5–10 personer (projektled, experter, admin) samt remissförfarande. Löner ~0,8–1,2 mkr/årsanställd, overhead + konsulter ca 20–30 %. Totalt ca 5–30 mkr. Jfr typiska SOU-kostnader."
   },
   {
     "id": "p-2026-0054",
@@ -543,12 +543,12 @@
       "high": 750
     },
     "reestimated": {
-      "base": 20,
-      "low": 5,
-      "high": 50
+      "base": 0,
+      "low": 0,
+      "high": 10
     },
-    "factor": 25,
-    "calculation": "Antagande: utredning 5–10 mkr, systemutveckling 10–30 mkr, implementering och utbildning 5–10 mkr. Totalt 20 mkr i bas, spann 5–50 mkr."
+    "factor": null,
+    "calculation": "Antar att eventuell extra administration ryms inom befintliga ramar eller kräver engångsinsats på 0–10 mkr för anpassning av system/rutiner."
   },
   {
     "id": "p-2026-0057",
@@ -564,10 +564,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 0
+      "high": 5
     },
     "factor": null,
-    "calculation": "Åtgärden är en regeländring; staten varken betalar eller sparar pengar direkt. 0 mkr."
+    "calculation": "Statens roll begränsas till lagstiftning och ev. mindre tillsyn. Löpande besparingar tillfaller kommunerna, inte staten. Uppskattad statlig kostnad ≈ 0 mkr/år, med ett försiktigt intervall upp till 5 mkr för oförutsedd administration/uppföljning."
   },
   {
     "id": "p-2026-0059",
@@ -581,12 +581,12 @@
       "high": 1500
     },
     "reestimated": {
-      "base": 300,
-      "low": 100,
+      "base": 100,
+      "low": 30,
       "high": 500
     },
-    "factor": 3.3333333333333335,
-    "calculation": "Antagande: AF:s förmedlingskostnad ~3 mdkr/år (löner, IT). Reform 10-20% ökning → 300-600 mkr. Lågt: delvis omprioritering 100 mkr. Högt: fullskalig satsning 500 mkr. Bas 300 mkr/år."
+    "factor": 10,
+    "calculation": "Extra handläggare/coacher: 20–200 årsverken à 0,7–1,0 mkr = 14–200 mkr/år. IT-system för matchning och kartläggning: 10–100 mkr/år. Metodstöd och utbildning: 5–50 mkr/år. Summa ca 30–350 mkr/år, utökat till 30–500 mkr för ökad osäkerhet. Bas lagd vid 100 mkr/år."
   },
   {
     "id": "p-2026-0061",
@@ -600,12 +600,12 @@
       "high": 4500
     },
     "reestimated": {
-      "base": 1000,
-      "low": 200,
-      "high": 5000
+      "base": 10000,
+      "low": 3000,
+      "high": 30000
     },
-    "factor": 3,
-    "calculation": "Antagande: 50 000–200 000 personer/år går fr bidrag till jobb. Premie 5 000–25 000 kr/person/år (t.ex. skattereduktion). 50 k × 5 k = 250 mkr, 200 k × 25 k = 5 000 mkr. Bas: 100 k × 10 k = 1 000 mkr."
+    "factor": 3.3333333333333335,
+    "calculation": "Antag 150 000–400 000 mottagare per år. En genomsnittlig premie på 20 000–75 000 kr/år (antingen som tidsbegränsat tillägg eller varaktig skattelättnad) ger ett spann på 3–30 mdkr. Basen 10 mdkr motsvarar t.ex. 200 000 personer × 50 000 kr."
   },
   {
     "id": "p-2026-0062",
@@ -619,12 +619,12 @@
       "high": 3000
     },
     "reestimated": {
-      "base": 250,
-      "low": 80,
-      "high": 600
+      "base": 600,
+      "low": 300,
+      "high": 1000
     },
-    "factor": 8,
-    "calculation": "Bred osäkerhet: en enklare justering av befintliga kriterier kan kosta ~80 mkr, medan en fullständig reform med omfattande fortbildning av ~200 000 lärare (à 1–5 tkr), nya bedömningsstöd och IT-anpassning kan nå 600 mkr. Bas uppskattas till 250 mkr som ett mellanscenario."
+    "factor": 3.3333333333333335,
+    "calculation": "Antag 150 000 lärare berörs. Statsbidrag till huvudmän för fortbildning: 80 000–120 000 lärare × 3 000–7 000 kr = 240–840 mnkr. Utvecklingskostnad Skolverket 30–80 mnkr. Material/IT 15–30 mnkr. Summa engångskostnad ~285–950 mnkr."
   },
   {
     "id": "p-2026-0063",
@@ -638,12 +638,12 @@
       "high": 2250
     },
     "reestimated": {
-      "base": 100,
-      "low": 30,
-      "high": 250
+      "base": 30,
+      "low": 10,
+      "high": 100
     },
-    "factor": 15,
-    "calculation": "Framtagande (Skolverket, utredare, remiss): 20–50 mkr. Implementeringsstöd (information, digitala verktyg, fortbildning): 50–200 mkr. Totalt 70–250 mkr, med bas 100 mkr."
+    "factor": 50,
+    "calculation": "Antar framtagning av nya läroplaner för grundskola, gymnasium etc. Jämför med Lgr22 (revidering, ~40 mkr). För helt nya läroplaner kan arbetet vara större: 10-30 mkr för Skolverkets arbete, men också remisser, tryckning, information. Base 30 mkr. High 100 mkr inkluderar möjligt utökat implementeringsstöd till kommuner. Low 10 mkr om det görs inom befintliga ramar."
   },
   {
     "id": "p-2026-0065",
@@ -659,10 +659,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 0
+      "high": 5
     },
     "factor": null,
-    "calculation": "Antagande: Förordningsarbete, remiss, tryck. Uppskattas till högst ett par hundra tkr, men avrundas till 0 msek. Inga nya anslag krävs."
+    "calculation": "~0 mkr. Högre intervall upp till 5 mkr för ev. mindre administrativa kostnader."
   },
   {
     "id": "p-2026-0067",
@@ -676,12 +676,12 @@
       "high": 1500
     },
     "reestimated": {
-      "base": 0,
+      "base": 5,
       "low": 0,
-      "high": 30
+      "high": 50
     },
-    "factor": null,
-    "calculation": "Bas: 0 mkr. Höjda antagningsgränser = reglering (kostar inget). Eventuell utredning/utvecklingsuppdrag för nytt innehåll ~10–30 mkr engång. Högre osäkerhet ger 0–30 mkr."
+    "factor": 200,
+    "calculation": "Antar en statlig utredning ~5–15 mkr, samt visst omställningsstöd till lärosäten 0–35 mkr. Sammanlagd engångskostnad uppskattas till 0–50 mkr, med bas 5 mkr."
   },
   {
     "id": "p-2026-0068",
@@ -700,7 +700,7 @@
       "high": 5
     },
     "factor": null,
-    "calculation": "Regleringsförändringar medför sällan direkta statliga utgifter. Skolverket kan behöva uppdatera allmänna råd (~1-3 mkr) och en mindre utredningsinsats (~0-2 mkr). Därför spann 0–5 mkr med bas 0."
+    "calculation": "Antag att Skolverket tar fram vägledningsmaterial: 1-3 årsarbetskrafter à ~1,2 mkr ≈ 1,2-3,6 mkr. Eventuell mindre utredning inom Regeringskansliet: 1-2 mkr. Högt scenario totalt ≈ 5 mkr. Kostnader för skolorna att upprätta dokument är inte statliga. Bas=0."
   },
   {
     "id": "p-2026-0070",
@@ -714,12 +714,12 @@
       "high": 750
     },
     "reestimated": {
-      "base": 0,
+      "base": 3,
       "low": 0,
-      "high": 50
+      "high": 10
     },
-    "factor": null,
-    "calculation": "Bas: 0 mkr (reglering). Osäkerhetsintervall: 0–50 mkr engång, baserat på att liknande läroplansförändringar kan kräva utrednings- och implementeringsinsatser motsvarande en mindre SOU eller fortbildningskampanj (10–50 mkr)."
+    "factor": 166.66666666666666,
+    "calculation": "Antagande: Nytt kursplanearbete motsvarar en mindre utredning (5–10 mkr) plus implementeringskostnader (0–5 mkr). Låg: 0 mkr om arbetet ryms inom befintliga anslag. Bas: ca 3 mkr för visst utvecklingsarbete. Hög: 10 mkr om omfattande informationsinsatser och vägledningsmaterial."
   },
   {
     "id": "p-2026-0071",
@@ -735,10 +735,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 100
+      "high": 30
     },
     "factor": null,
-    "calculation": "Bas 0 mkr/år. Högt scenario 100 mkr/år ifall reformen kräver statliga IT-investeringar eller ökade lärarlöner, men minskat antal elever kan ge motsvarande besparing. Intervallet speglar stor osäkerhet."
+    "calculation": "Antar 0–30 mkr engång för utredning (SOU ~5–10 mkr) och ev. statlig medfinansiering av teknisk lösning för fjärrundervisning (~0–20 mkr). Ingen löpande utgift om reformen ryms inom befintliga ramar."
   },
   {
     "id": "p-2026-0072",
@@ -752,12 +752,12 @@
       "high": 1500
     },
     "reestimated": {
-      "base": 50,
-      "low": 5,
+      "base": 200,
+      "low": 50,
       "high": 500
     },
-    "factor": 20,
-    "calculation": "Antar ~200 000 anställda i förskola/skola. 1-5% med språkbrister => 2 000-10 000 pers. Utbildningskostnad 20-100 tkr/pers => 40-1 000 mkr. Statlig subvention kan vara 0-100%. Låg: enbart test- och programutveckling ~5 mkr. Base: 5 000 pers * 50 tkr * 20% statsandel = 50 mkr. Hög: fullt finansierat bred program ~500 mkr."
+    "factor": 5,
+    "calculation": "Ca 200 000–250 000 anställda i förskola/skola. Antag 5–10 % med bristfälliga språkkunskaper (10 000–25 000 pers). Omställningsprogram med språkutbildning/studiestöd antas omfatta 2 000–5 000 pers/år à 50 000–150 000 kr → 100–750 mkr/år. Base 200 mkr, low 50 mkr (liten skala), high 500 mkr (fullt utbyggt program)."
   },
   {
     "id": "p-2026-0076",
@@ -776,7 +776,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen direkt statsfinansiell kostnad för lagändringen. Eventuella administrationskostnader antas rymmas inom ordinarie anslag eller täckas av avgifter."
+    "calculation": "Åtgärden innebär lagändringar för kvalificering till socialförsäkring och medborgarskap. Inga nya statliga utgifter krävs utöver befintliga anslag. Eventuell testavgift kan täcka kostnader. 0 msek."
   },
   {
     "id": "p-2026-0080",
@@ -790,12 +790,12 @@
       "high": 2250
     },
     "reestimated": {
-      "base": 200,
-      "low": 100,
+      "base": 100,
+      "low": 10,
       "high": 500
     },
-    "factor": 7.5,
-    "calculation": "Inre kontroller: 50–150 FTE × 1.5 mkr = 75–225 mkr. IT-system: 10–50 mkr. Biståndsomprövning: 20–80 FTE × 1 mkr = 20–80 mkr. Summa 105–355 mkr, avrundat till 100–500 mkr med bas 200 mkr. Högt intervall fångar fullskalig satsning, lågt intervall en mindre utökning."
+    "factor": 15,
+    "calculation": "Antag 50–200 nya årsarbetskrafter (polis, Migrationsverket, socialtjänst) à ~0,8 mkr/år = 40–160 mkr/år. IT-investering för bruten sekretess: engångskostnad 50–200 mkr, årskostnad ~10–40 mkr. Totalt beräknas bas till 100 mkr/år. Lågt scenario (minimala kontroller, enbart smärre regeländringar) 10 mkr/år; högt scenario (storskalig satsning) 500 mkr/år."
   },
   {
     "id": "p-2026-0081",
@@ -809,31 +809,12 @@
       "high": 260
     },
     "reestimated": {
-      "base": 30,
-      "low": 10,
-      "high": 80
+      "base": 15,
+      "low": 5,
+      "high": 50
     },
-    "factor": 6.666666666666667,
-    "calculation": "Antag 20–50 extra årsarbetskrafter à 0.8 mkr/st = 16–40 mkr/år, plus IT-investeringar på 20 mkr utslaget på 5 år (4 mkr/år). Bas 30 mkr, låg 10 mkr (få handläggare, bara effektivisering), hög 80 mkr (större satsning)."
-  },
-  {
-    "id": "p-2026-0090",
-    "parties": [
-      "m"
-    ],
-    "title": "Satsa på åtgärder för ökad elektrifiering",
-    "published": {
-      "low": 1000,
-      "base": 2000,
-      "high": 3000
-    },
-    "reestimated": {
-      "base": 800,
-      "low": 400,
-      "high": 1500
-    },
-    "factor": 2.5,
-    "calculation": "Klimatpremie: ~2000–5000 lätta lastbilar × ~50 kkr/st = 100–250 mkr. Klimatklivet: bedömt tillskott för laddinfrastruktur 500–1500 mkr (jfr befintlig Klimatklivsram ~2,8 mdkr varifrån en ökning för detta ändamål är rimlig). Summa 600–1750 mkr, bas 800 mkr."
+    "factor": 13.333333333333334,
+    "calculation": "Antagande: 10–30 extra handläggare à 0,8–1,2 mkr/år (lön, lokaler, overhead) = 8–36 mkr/år. IT-investeringar för snabbare processer ~5–20 mkr/år. Totalt uppskattad bruttokostnad 15–50 mkr/år. Lågt scenario: enbart mindre effektiviseringar inom befintlig ram, ~5 mkr/år. Jämförbart löfte p-2026-0479 uppskattas till 10 mkr/år."
   },
   {
     "id": "p-2026-0094",
@@ -847,12 +828,12 @@
       "high": 65
     },
     "reestimated": {
-      "base": 2,
-      "low": 1,
-      "high": 5
+      "base": 7,
+      "low": 2,
+      "high": 20
     },
-    "factor": 25,
-    "calculation": "~1–3 personår × ~800 kkr/personår (inkl. overhead och verktyg) = 0,8–2,4 msek. Tillkommande workshops/användartester kan öka kostnaden. Låg 0,5 msek för enklare rapport, hög 5 msek för mer omfattande databearbetning och interaktiv publicering."
+    "factor": 7.142857142857143,
+    "calculation": "Antagande: 2–4 utredare/statistiker i 6–12 månader à ~800 tkr/år = 0,8–3,2 mkr i lönekostnad. Med overhead, IT och publicering landar basen på ~2–7 mkr. Högt scenario där externa konsulter eller bredare utvecklingsarbete krävs: upp till ~20 mkr."
   },
   {
     "id": "p-2026-0098",
@@ -871,7 +852,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Uttalandet saknar konkreta åtaganden. Kostnad uppstår först vid specifika reformer."
+    "calculation": "Löftet innehåller en uppräkning av flera politikområden (skattesänkning, skola, ätstörningsvård, kriminalvård, RUT) utan specificerade belopp. Kan inte prissättas samlat; eventuella kostnader prissätts på respektive specifika löfte."
   },
   {
     "id": "p-2026-0099",
@@ -890,7 +871,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Löftet hänvisar till vad partiet hävdar sig redan ha gjort. Utan specificering av nya budgetposter går kostnaden inte att uppskatta, varför den sätts till 0."
+    "calculation": "Base=0: Inget nytt specifikt åtagande; eventuell framtida resursförstärkning specificeras ej."
   },
   {
     "id": "p-2026-0102",
@@ -909,178 +890,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen konkret åtgärd specificerad."
-  },
-  {
-    "id": "p-2026-0105",
-    "parties": [
-      "kd"
-    ],
-    "title": "Det är därför vi kristdemokrater så envist talar om ett samlat nationellt ansvar för sjukvården",
-    "published": {
-      "low": 1000,
-      "base": 5000,
-      "high": 9000
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 0
-    },
-    "factor": null,
-    "calculation": "Ingen konkret reform specificeras, varför ingen kostnad kan beräknas."
-  },
-  {
-    "id": "p-2026-0106",
-    "parties": [
-      "kd"
-    ],
-    "title": "Därför kräver vi språkkrav i hemtjänsten och rätten för en äldre kvinna att kunna välja en kvinna som vårdare för att duscha och klä på sig",
-    "published": {
-      "low": 500,
-      "base": 1000,
-      "high": 1500
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 5
-    },
-    "factor": null,
-    "calculation": "Antagande: Endast administrativ kostnad för Socialstyrelsen att utarbeta vägledning (~0–5 mkr). Inga statliga transfereringar ingår."
-  },
-  {
-    "id": "p-2026-0108",
-    "parties": [
-      "kd"
-    ],
-    "title": "alla unga ska veta att det varje dag finns en elevhälsa som man kan vända sig till",
-    "published": {
-      "low": 1000,
-      "base": 2000,
-      "high": 3000
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 0
-    },
-    "factor": null,
-    "calculation": "Löftet anger en målsättning om ökad kännedom om elevhälsan, men specificerar inga nya resurser, lagändringar eller kampanjer. Att informera om en befintlig verksamhet är en uppgift som kan integreras i myndigheters och skolors löpande arbete. Därmed ingen identifierbar ny statlig utgift."
-  },
-  {
-    "id": "p-2026-0109",
-    "parties": [
-      "kd"
-    ],
-    "title": "Nu behöver vi mer av den stabila baskraft som kärnkraft utgör tillsammans med vattenkraft",
-    "published": {
-      "low": 5000,
-      "base": 10000,
-      "high": 18000
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 0
-    },
-    "factor": null,
-    "calculation": "Löftet anger ett behov men specificerar inga åtgärder. Kostnaden för själva uttalandet är försumbar. Jämförbara konkreta kärnkraftslöften uppskattas till ~10 000 mkr/år, men detta löfte saknar tillräcklig konkretion för att medföra någon kostnad."
-  },
-  {
-    "id": "p-2026-0110",
-    "parties": [
-      "kd"
-    ],
-    "title": "Det behövs en omfattande översyn av hur stat och myndigheter fungerar",
-    "published": {
-      "low": 250,
-      "base": 500,
-      "high": 750
-    },
-    "reestimated": {
-      "base": 15,
-      "low": 5,
-      "high": 30
-    },
-    "factor": 33.333333333333336,
-    "calculation": "Baserad på typisk kostnad för en statlig offentlig utredning (SOU). En omfattande översyn av statsförvaltningen antas kräva bred expertis och längre utredningstid, vilket motiverar ett spann på 5–30 mkr. Base satt till 15 mkr som ett mellanskikt."
-  },
-  {
-    "id": "p-2026-0111",
-    "parties": [
-      "kd"
-    ],
-    "title": "Sverige måste kunna ta beslut snabbare och enklare",
-    "published": {
-      "low": 250,
-      "base": 500,
-      "high": 750
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 0
-    },
-    "factor": null,
-    "calculation": "Åtgärden innebär inga specificerade investeringar eller bidrag. Direkta kostnader för att uppnå snabbare/enklare beslut (t.ex. processöversyn) antas rymmas inom myndigheters befintliga anslag eller vara en försumbar engångskostnad."
-  },
-  {
-    "id": "p-2026-0113",
-    "parties": [
-      "kd"
-    ],
-    "title": "Därför tar KD kampen mot techjättarnas skadliga algoritmer",
-    "published": {
-      "low": 100,
-      "base": 200,
-      "high": 300
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 0
-    },
-    "factor": null,
-    "calculation": "Inget konkret åtagande med prislapp anges. Löftet är en övergripande målsättning. Kostnaden för att 'ta kampen' består av opinionsbildning och eventuella myndighetsinstruktioner inom befintliga ramar, varför ny nettokostnad bedöms som 0."
-  },
-  {
-    "id": "p-2026-0120",
-    "parties": [
-      "sd"
-    ],
-    "title": "Vi vill bygga ett tryggare Sverige genom fler poliser, hårdare straff, ett starkare rättsväsende och en fortsatt jakt på gängen",
-    "published": {
-      "low": 5000,
-      "base": 10000,
-      "high": 15000
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 0
-    },
-    "factor": null,
-    "calculation": "Orienteringslöfte (regel 13). Löftet listar flera politikområden utan specificerade belopp eller åtgärder. Kostnaden för eventuella reformer fångas i separata löften; detta löfte i sig medför ingen ny statlig nettokostnad."
-  },
-  {
-    "id": "p-2026-0121",
-    "parties": [
-      "sd"
-    ],
-    "title": "Vi vill bygga ett friare Sverige genom mindre krångel, lägre skatter, stärkt äganderätt och bättre villkor för hushåll, företag och",
-    "published": {
-      "low": 4000,
-      "base": 20000,
-      "high": 36000
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 0
-    },
-    "factor": null,
-    "calculation": "Ingen kvantifierbar åtgärd specificeras. Löftet är en övergripande ambition om lägre skatter och mindre krångel."
+    "calculation": "Löftet är en allmän målsättning, ingen konkret policy. Därför görs ingen kvantifiering."
   },
   {
     "id": "p-2026-0125",
@@ -1099,7 +909,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Löftet räknar upp flera politikområden (vårdköer, äldreomsorg, tandvård, socialförsäkring, skola) utan specifika reformer. Ingen direkt statlig kostnad kan härledas. Bas = 0 mkr."
+    "calculation": "Ingen specifik åtgärd prissätts; se regel 13 för breda inriktningslöften."
   },
   {
     "id": "p-2026-0126",
@@ -1118,7 +928,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen specifik åtgärd; inga antaganden om kostnad möjliga. Jämför med p-2026-0319 som gavs 0 msek."
+    "calculation": "Inga specifika åtgärder eller summor anges. Behandlas som inriktningslöfte enligt regel 13 för att undvika dubbelräkning. Jämförbart löfte p-2026-0319 bedömdes till 0."
   },
   {
     "id": "p-2026-0129",
@@ -1137,7 +947,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen kvantifierbar enskild åtgärd anges."
+    "calculation": "Enligt regel 13: breda sammanfattningslöften utan konkret belopp är inriktningslöften och ges base 0."
   },
   {
     "id": "p-2026-0136",
@@ -1151,12 +961,12 @@
       "high": 9000
     },
     "reestimated": {
-      "base": 300,
+      "base": 0,
       "low": 0,
-      "high": 1000
+      "high": 0
     },
-    "factor": 16.666666666666668,
-    "calculation": "Vid bidragsalternativet: antag 5–10 hotade akutmottagningar × 30–100 mkr i extra nettokostnad per mottagning och år = 150–1000 mkr. Bas 300 mkr motsvarar ca 6 mottagningar à 50 mkr. Vid enbart lagstiftning ~0 mkr."
+    "factor": null,
+    "calculation": "Ingen konkret åtgärd specificerad; därför ingen uträkning."
   },
   {
     "id": "p-2026-0138",
@@ -1172,10 +982,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 0
+      "high": 10
     },
     "factor": null,
-    "calculation": "Ingen kvantifiering möjlig – löftet är en allmän inriktning."
+    "calculation": "Base 0 enligt regel 13. High sätts till 10 mkr som maximal kostnad för en mindre utredning eller administrativ omställning om löftet ändå skulle leda till någon konkret åtgärd, men utan specificerade belopp antas ingen nettokostnad."
   },
   {
     "id": "p-2026-0139",
@@ -1194,7 +1004,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen specifik reform angiven; endast en viljeyttring. Kostnaden för enskilda reformer prissätts separat."
+    "calculation": "Inriktningslöfte; ingen beräkning. Bas=0."
   },
   {
     "id": "p-2026-0147",
@@ -1208,12 +1018,12 @@
       "high": 3000
     },
     "reestimated": {
-      "base": 5,
-      "low": 1,
-      "high": 15
+      "base": 8,
+      "low": 2,
+      "high": 25
     },
-    "factor": 400,
-    "calculation": "~1-3 årsarbetskrafter à 1-2 mkr/st + utvärderingsmedel ~2-5 mkr/år => ~3-11 mkr/år. Avrundat intervall 1-15 mkr/år."
+    "factor": 250,
+    "calculation": "~3-4 tjänster på nationell nivå (inkl. overhead) ~4 Mkr/år, forskningsutvärdering ~3 Mkr/år, övrigt (resor, möten, info) ~1 Mkr/år → bas 8 Mkr/år. Lågt scenario: en samordnare + begränsad utvärdering ~2 Mkr/år. Högt: fler kommuner, mer omfattande utvärdering och stöd ~25 Mkr/år."
   },
   {
     "id": "p-2026-0148",
@@ -1232,7 +1042,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Löftet är ett inriktningsmål utan specificerat program. Kostnaden sätts till 0, i linje med regel 13 för breda önskelöften."
+    "calculation": "0: inget konkret åtagande, därmed ingen statlig kostnad."
   },
   {
     "id": "p-2026-0155",
@@ -1251,7 +1061,26 @@
       "high": 3000
     },
     "factor": 5.333333333333333,
-    "calculation": "Referenslöfte (spetsutbildning) = 1 500 mkr/år. För forskning antas samma storleksordning: låg 500 (mindre satsning), bas 1 500 (jämförbart), hög 3 000 (större satsning). Osäkerheten är stor pga vagt löfte."
+    "calculation": "Baseras på jämförbart löfte för spetsutbildningar (~1500 msek/år). Forskning kan vara lika dyrt eller mer. Låg: en mindre satsning på 1-2 excellenscenter (~500 msek). Bas: flera center eller större program (~1500 msek). Hög: omfattande satsning med många centra och ökade basanslag (~3000 msek)."
+  },
+  {
+    "id": "p-2026-0161",
+    "parties": [
+      "m"
+    ],
+    "title": "Och när de rödgröna nu vill höja bidragen för de som inte jobbar, så inför vi ett bidragstak så att det alltid lönar sig bättre att jobba",
+    "published": {
+      "low": 0,
+      "base": 0,
+      "high": 0
+    },
+    "reestimated": {
+      "base": 150,
+      "low": 50,
+      "high": 500
+    },
+    "factor": null,
+    "calculation": "Berörda hushåll: 30 000–100 000 (av ca 200 000 med försörjningsstöd). Genomsnittlig minskning: 200–1 000 kr/mån per hushåll. 30 000 × 200 × 12 = 72 mkr; 100 000 × 1 000 × 12 = 1 200 mkr. Besparingen antas ligga i intervallet 50–500 mkr/år baserat på försiktigare implementering och undantag."
   },
   {
     "id": "p-2026-0163",
@@ -1265,12 +1094,12 @@
       "high": 0
     },
     "reestimated": {
-      "base": 5500,
-      "low": 2000,
-      "high": 12000
+      "base": 5000,
+      "low": 1000,
+      "high": 16000
     },
     "factor": null,
-    "calculation": "Bas: ~450 000 barn 1–5 år i förskola × 12 000 kr i snittreduktion ≈ 5,4 mdkr (jfr tidigare M-förslag 5,5 mdkr). Låg: färre barn, lägre maxbelopp eller sämre utnyttjande → 2 mdkr. Hög: fler åldersgrupper (t.ex. upp till 12 år) eller högre maxbelopp → 12 mdkr."
+    "calculation": "Antaganden: ~1,5–2 miljoner föräldrar med barn under 18 år. Avdrag: 5 000–20 000 kr/år. Marginell skatteeffekt: 20–40 %. Utnyttjandegrad: 70–100 %. Låg: 1,5M × 5 000 × 0,2 × 0,7 ≈ 1 050 msek. Hög: 2M × 20 000 × 0,4 × 1,0 = 16 000 msek. Bas: ~5 000 msek (medelstort avdrag)."
   },
   {
     "id": "p-2026-0173",
@@ -1285,30 +1114,11 @@
     },
     "reestimated": {
       "base": 1575,
-      "low": 1000,
+      "low": 800,
       "high": 2500
     },
     "factor": null,
-    "calculation": "Ca 105 000 förstagångsföräldrar/år (båda föräldrarna per förstfött barn) × 15 000 kr = 1 575 mkr. Spann: 70 000–170 000 mottagare ger ~1 050–2 550 mkr/år. V:s egen siffra 1 575 mkr används som bas."
-  },
-  {
-    "id": "p-2026-0216",
-    "parties": [
-      "v"
-    ],
-    "title": "vi kommer se till att införa Sverigepriser för att få ner elpriserna till vanliga svenska nivåer",
-    "published": {
-      "low": 0,
-      "base": 0,
-      "high": 0
-    },
-    "reestimated": {
-      "base": 5000,
-      "low": 0,
-      "high": 30000
-    },
-    "factor": null,
-    "calculation": "Total elförbrukning ~140 TWh/år, varav hushåll ~40 TWh. Antaget målpris ~50 öre/kWh, marknadspris ~80–100 öre/kWh => subvention 20–40 öre/kWh. För hushåll: 40 TWh × 0,20–0,40 kr/kWh = 8–16 mdkr/år. Inkluderas näringsliv kan det bli 20–30 mdkr/år. Reglering utan statsstöd ger 0."
+    "calculation": "~100 000 förstagångsföräldrar/år × 15 000 kr = 1 500 msek. Partiets estimat: 1 575 msek. Låg: 50 000 barn × 15 000 = 750 msek ≈ 800 msek. Hög: 120 000 mottagare × 15 000 = 1 800 msek, plus osäkerhet → 2 500 msek."
   },
   {
     "id": "p-2026-0254",
@@ -1327,7 +1137,7 @@
       "high": 12000
     },
     "factor": null,
-    "calculation": "Exempel: 14 400 kr/år vid 25 000 kr/mån. Antal med liknande lön ~300 000–800 000 => 4,3–11,5 mdkr. Justerat för utfasning, beteende och träffsäkerhet: 2–12 mdkr. Bas 5 mdkr från jämförbar reform (p-2026-0347)."
+    "calculation": "Antaganden: 500 000–1 500 000 personer berörs, genomsnittlig skattesänkning 4 000–10 000 kr/år beroende på inkomstnivå och utfasning. Totalt: 2–15 mdkr. Bas 5 mdkr speglar en måttfull bredd liknande jämförbart löfte."
   },
   {
     "id": "p-2026-0332",
@@ -1341,31 +1151,12 @@
       "high": 0
     },
     "reestimated": {
-      "base": 10,
+      "base": 15,
       "low": 5,
       "high": 30
     },
     "factor": null,
-    "calculation": "En typisk SOU kostar 5–20 mkr. En handlingsplan för lantbrukets näringsförsörjning antas kosta i samma storleksordning: 5–30 mkr. Ingen framtida politik prissätts här."
-  },
-  {
-    "id": "p-2026-0354",
-    "parties": [
-      "c"
-    ],
-    "title": "Inför ett förbud mot PFAS med första prioritet mot konsumentnära produkter",
-    "published": {
-      "low": 0,
-      "base": 0,
-      "high": 0
-    },
-    "reestimated": {
-      "base": 2,
-      "low": 0,
-      "high": 10
-    },
-    "factor": null,
-    "calculation": "Antar att Kemikalieinspektionen eller motsvarande behöver ett fåtal extra tjänster för tillsyn och vägledning. 0–5 årsarbetskrafter à ~1–2 mkr/st ger 0–10 mkr/år. Basfall 2 mkr för enstaka tjänst."
+    "calculation": "Typisk kostnad för en statlig utredning eller handlingsplan (SOU) uppskattas till 5–30 mkr. Base sätts till 15 mkr."
   },
   {
     "id": "p-2026-0378",
@@ -1384,7 +1175,7 @@
       "high": 30
     },
     "factor": null,
-    "calculation": "En statlig utredning (SOU) kostar i regel mellan 5 och 30 miljoner kronor. Basanslaget baseras på ett medelvärde på cirka 15 Mkr."
+    "calculation": "En SOU-utredning kostar vanligen mellan 5 och 30 miljoner kronor, beroende på omfattning och tid. Base skattas till 15 mkr."
   },
   {
     "id": "p-2026-0413",
@@ -1403,26 +1194,7 @@
       "high": 5
     },
     "factor": null,
-    "calculation": "Framtagande av lagförslag: 0–5 mkr i engångskostnad (motsvarar en mindre SOU-utredning). Inga löpande statliga utgifter utöver befintligt försvar och rättsväsende."
-  },
-  {
-    "id": "p-2026-0414",
-    "parties": [
-      "mp"
-    ],
-    "title": "Öka antalet kvotflyktingar till 5 000 per år",
-    "published": {
-      "low": 1500,
-      "base": 2500,
-      "high": 4000
-    },
-    "reestimated": {
-      "base": 1400,
-      "low": 800,
-      "high": 2000
-    },
-    "factor": 1.7857142857142858,
-    "calculation": "~4 100 fler kvotflyktingar/år × 200 000–500 000 kr = 820–2 050 mnkr/år. Basantagande: 350 000 kr/person → ~1 400 mnkr."
+    "calculation": "Förbudslag kräver eventuellt en utredning (SOU ~5-15 mkr) men vanligen räcker ordinarie lagstiftningsarbete. Base 0, intervall upp till 5 mkr för att fånga osäkerhet."
   },
   {
     "id": "p-2026-0422",
@@ -1438,10 +1210,29 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 5
+      "high": 10
     },
     "factor": null,
-    "calculation": "Själva lagstiftningsarbetet ryms inom ordinarie anslag. Om en statlig utredning tillsätts kan den kosta ~5 mkr (typisk SOU). Därav intervall 0–5 mkr engångskostnad."
+    "calculation": "Kostnad för en statlig utredning om grundlagsskydd uppskattas till 5–10 mkr. Om frågan hanteras inom ordinarie lagstiftningsarbete tillkommer ingen extra kostnad (0 mkr). Därför sätts intervallet 0–10 mkr."
+  },
+  {
+    "id": "p-2026-0428",
+    "parties": [
+      "mp"
+    ],
+    "title": "Höja pensionsavgift och bostadstillägg/garantipension",
+    "published": {
+      "low": 1000,
+      "base": 2000,
+      "high": 3500
+    },
+    "reestimated": {
+      "base": 4000,
+      "low": 1000,
+      "high": 12000
+    },
+    "factor": 2,
+    "calculation": "Antag garantipension: 600 000 pers × 200-800 kr/mån × 12 = 1,4-5,8 mdkr. Bostadstillägg: 300 000 pers × 200-500 kr/mån × 12 = 0,7-1,8 mdkr. Enbart en reform: 0,7-5,8 mdkr; båda: ca 2-7 mdkr. Bas 4 mdkr, hög 12 mdkr för att inkludera historisk höjning likt V:s löfte."
   },
   {
     "id": "p-2026-0435",
@@ -1455,12 +1246,12 @@
       "high": 400
     },
     "reestimated": {
-      "base": 450,
-      "low": 300,
-      "high": 700
+      "base": 500,
+      "low": 250,
+      "high": 900
     },
-    "factor": 3,
-    "calculation": "TBE: ~2,1 milj barn, antag 40 % utnyttjande à 3 doser först år + boosters, vaccin à 250 kr + admin = ~350 mkr/år i genomsnitt. HPV 13–26 år: ~1,5 milj individer, ~25 % ovaccinerade à 2–3 doser = ~200 mkr totalt, utslaget 5 år ~40 mkr/år. Totalt ~400 mkr/år, intervall 300–700 mkr."
+    "factor": 3.3333333333333335,
+    "calculation": "HPV: fånga upp ovaccinerade 13–26 år. Ca 250 000 individer × 3 doser à 500 kr + admin = ~375 mkr engång, årligt ~100–150 mkr efter infasning. TBE barn: ca 1 miljon årliga doser (2 milj barn, måttlig anslutning) à 400 kr vaccin + 300 kr admin = 700 kr/dos, men flerdosbehov förstärkt -> ~350 mkr/år. Sammantaget ~500 mkr/år. Jfr MP 500 mkr/år."
   },
   {
     "id": "p-2026-0438",
@@ -1479,26 +1270,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen konkret åtgärd => ingen direkt statsfinansiell kostnad. Löftet är en målbild snarare än ett prissatt åtagande."
-  },
-  {
-    "id": "p-2026-0441",
-    "parties": [
-      "mp"
-    ],
-    "title": "Införa flyttstöd för äldre i otillräckliga bostäder",
-    "published": {
-      "low": 100,
-      "base": 500,
-      "high": 2500
-    },
-    "reestimated": {
-      "base": 75,
-      "low": 25,
-      "high": 300
-    },
-    "factor": 6.666666666666667,
-    "calculation": "Antagande: ~100 000 äldre i olämplig bostad, varav 5–20 % flyttar med stöd per år = 5 000–20 000 personer. Kostnad per flytt: 5 000–15 000 kr (flyttfirma, enklare hjälp). Årlig totalkostnad: 25–300 mkr. Bas 75 mkr motsvarar 10 000 flyttar à 7 500 kr."
+    "calculation": "0 msek per år enligt instruktionens regel 13 för breda önskelöften."
   },
   {
     "id": "p-2026-0443",
@@ -1512,12 +1284,12 @@
       "high": 8000
     },
     "reestimated": {
-      "base": 1500,
-      "low": 500,
-      "high": 3000
+      "base": 800,
+      "low": 300,
+      "high": 2000
     },
-    "factor": 2.533333333333333,
-    "calculation": "Steg 1: Antag ett spann på 1 000–4 000 nya heltidstjänster för att nå tillgänglighet i alla skolor och korta BUP-köer. Steg 2: Genomsnittlig årskostnad per tjänst (lön, arbetsgivaravgifter, lokaler, administration) uppskattas till ~0,7 mnkr. Steg 3: Multiplicera antal tjänster med styckkostnad: 1 000 × 0,7 = 700 mnkr, 4 000 × 0,7 = 2 800 mnkr. Steg 4: Avrunda till ett intervall om 500–3 000 mnkr med bas 1 500 mnkr för att spegla osäkerheten om tjänsternas fördelning och ambitionsnivå."
+    "factor": 4.75,
+    "calculation": "~6 000 skolor × 0,5–2 extra tjänster (sköterska/kurator/psykolog/spec.ped) à 600 kkr → 1,8–7,2 mdkr totalkostnad. Staten antas stå för en del: ~200–1500 mkr i nya generella/riktade bidrag. BUP-delen uppskattas till 0–1000 mkr extra statsbidrag. Summa intervall 200–2500 mkr/år, avrundat till 300–2000 mkr."
   },
   {
     "id": "p-2026-0444",
@@ -1531,12 +1303,12 @@
       "high": 1500
     },
     "reestimated": {
-      "base": 50,
-      "low": 10,
-      "high": 200
+      "base": 15,
+      "low": 5,
+      "high": 30
     },
-    "factor": 10,
-    "calculation": "Räkneexempel: ~300 000 vård- och omsorgsanställda. Antas att 1–10 % nås av en ny statlig insats (kurser, vikarietäckning etc.) med 1 000–10 000 kr/person/år => 3–300 mkr/år. Bas: 5 % × 3 000 kr ≈ 50 mkr/år. Låg: 10, hög: 200 mkr/år."
+    "factor": 33.333333333333336,
+    "calculation": "Typisk SOU: 5–30 mkr i engångskostnad, beroende på omfattning, extern expertis, remissförfarande etc. Antar en medelstor utredning med visst externt stöd, base 15 mkr."
   },
   {
     "id": "p-2026-0450",
@@ -1555,26 +1327,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen konkret beräkning möjlig då underlag saknas."
-  },
-  {
-    "id": "p-2026-0451",
-    "parties": [
-      "mp"
-    ],
-    "title": "Lön enligt kollektivavtal ska räcka för arbetskraftsinvandrare",
-    "published": {
-      "low": 0,
-      "base": 10,
-      "high": 50
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 10
-    },
-    "factor": null,
-    "calculation": "Engångskostnad för att ändra förordning, uppdatera Migrationsverkets it-system och vägledningar samt informationsinsatser. Antagande: 0–3 årsarbetskrafter à 2–3 mkr, totalt 0–10 mkr."
+    "calculation": "Ingen kvantifierbar åtgärd angiven. Baseras på regelverket för inriktningslöften."
   },
   {
     "id": "p-2026-0453",
@@ -1593,7 +1346,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen kvantifiering görs eftersom löftet inte innehåller några åtaganden som direkt kan prissättas. Base = 0 enligt regelverket."
+    "calculation": "Inga kvantifierbara antaganden görs då löftet är en bred uppräkning utan konkret nivå. Kostnad = 0."
   },
   {
     "id": "p-2026-0454",
@@ -1612,7 +1365,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen konkret åtgärd specificeras; löftet är en uppräkning av ambitioner. Enligt regel 13 behandlas breda önskelöften som inriktningslöften med bas 0 – kostnadsdrivande delar prissätts på partiets specifika löften."
+    "calculation": "Löftet listar flera politikområden (tåg, kollektivtrafik, elnät, elkostnader) utan specificerade reformer eller budgetposter. Eventuella kostnader kan inte uppskattas utan detaljerade förslag; eventuella framtida åtgärder prissätts separat."
   },
   {
     "id": "p-2026-0455",
@@ -1631,7 +1384,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Löftet är en uppräkning av flera politikområden (polis, socialtjänst, elevhälsa, fritidsverksamhet, avhopparstöd, segregation) utan konkret åtgärd eller belopp. Enligt regel 13 behandlas det som inriktningslöfte med bas 0."
+    "calculation": "Ingen beräkning – löftet är en översiktlig målsättning. Kostnader för specifika satsningar (polis, socialtjänst etc.) redovisas separat när de formuleras som konkreta reformer."
   },
   {
     "id": "p-2026-0456",
@@ -1647,10 +1400,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 1
+      "high": 0
     },
     "factor": null,
-    "calculation": "Antagande: Enklare utredning och lagstiftningsarbete 0–0,5 mkr i engångskostnad. Själva förbudet innebär inga nya löpande statliga utgifter – eventuella alternativa placeringar är indirekta effekter och omfördelningar, ej direkt kostnad för åtgärden."
+    "calculation": "Direkt kostnad: 0 mkr. Förbudet i sig kräver inga nya statliga utgifter utöver sedvanlig lagstiftningsprocess."
   },
   {
     "id": "p-2026-0457",
@@ -1666,10 +1419,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 20
+      "high": 5
     },
     "factor": null,
-    "calculation": "Bas: 0 mkr (lagstiftningsarbete ryms i ordinarie verksamhet). Högt: upp till 20 mkr för en tänkbar kompletterande informationskampanj, men detta är inte en del av löftet. Spannet 0–20 mkr speglar att direkta statsfinansiella kostnader vid rena lagändringar i normalfallet är försumbara."
+    "calculation": "Själva lagstiftningsprocessen medför inga betydande nya statliga utgifter. En eventuell föregående utredning (SOU) kan kosta ~5 mkr, men det är inte givet i det vaga löftet. Därför sätts basbeloppet till 0, med ett osäkerhetsintervall upp till 5 mkr."
   },
   {
     "id": "p-2026-0464",
@@ -1688,7 +1441,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Löftet specificerar inga kvantifierbara insatser. Sätts till 0 enligt regel 13 (breda önskelöften utan konkret åtagande)."
+    "calculation": "Ingen ny kvantifierbar statlig utgift → 0."
   },
   {
     "id": "p-2026-0465",
@@ -1702,31 +1455,12 @@
       "high": 20000
     },
     "reestimated": {
-      "base": 6000,
-      "low": 4000,
-      "high": 8000
+      "base": 5900,
+      "low": 4800,
+      "high": 7800
     },
-    "factor": 2.5,
-    "calculation": "~2 milj. barn × 10 000 kr = 20 mdkr/år i avdrag. Utnyttjandegrad ~90 % (ej alla föräldrar har tillräcklig inkomst) → 18 mdkr. Genomsnittlig marginalskatt ~33 % → 18 × 0,33 ≈ 6 mdkr/år. Spannet fångar variation i barnantal (1,8–2,2 milj.), marginalskatt (30–35 %) och utnyttjandegrad (80–95 %)."
-  },
-  {
-    "id": "p-2026-0466",
-    "parties": [
-      "l"
-    ],
-    "title": "Ge gratis fritidskort i kollektivtrafiken för barn och unga",
-    "published": {
-      "low": 800,
-      "base": 1200,
-      "high": 1500
-    },
-    "reestimated": {
-      "base": 2500,
-      "low": 1000,
-      "high": 5000
-    },
-    "factor": 2.0833333333333335,
-    "calculation": "~1,7 milj barn/unga 7–19 år. Antagen nyttjandegrad 40-60 % (~0,7-1,0 milj res). Genomsnittlig intäktsförlust per res ~2 000-5 000 kr/år. Spann: 0,7 milj * 2 000 ≈ 1 400 mkr till 1,0 milj * 5 000 ≈ 5 000 mkr. Jfr Sverigekort 8 000 mkr/år för alla till billigt pris."
+    "factor": 2.542372881355932,
+    "calculation": "~2 000 000 barn × 10 000 kr = 20 000 mkr avdragsunderlag. Bas: 20 000 mkr × 0,33 (snitt marginalskatt) × 0,90 (utnyttjande) ≈ 5 900 mkr. Låg: 1,9M × 10k × 0,30 × 0,85 ≈ 4 800 mkr. Hög: 2,1M × 10k × 0,38 × 0,98 ≈ 7 800 mkr. Varierar med skatteuttag och föräldrars inkomster."
   },
   {
     "id": "p-2026-0470",
@@ -1742,10 +1476,10 @@
     "reestimated": {
       "base": 5,
       "low": 0,
-      "high": 30
+      "high": 25
     },
     "factor": null,
-    "calculation": "Bas: 5 mkr för mindre utredning/implementering. Låg: 0 mkr (försumbar kostnad). Hög: 30 mkr inkl. risk för övergångsadm./rättsprocesser. Utgår från förbud utan statlig kompensation; huvudkostnad bärs av kommuner/huvudmän."
+    "calculation": "Engångskostnad för statlig utredning och implementering av förbudet uppskattas till 5–25 mkr. Förbudet i sig medför inga löpande statliga utgifter."
   },
   {
     "id": "p-2026-0472",
@@ -1764,7 +1498,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen direkt budgetpåverkan av att införa en ny lag (0 mkr)."
+    "calculation": "Att ta fram och anta en ny lag ryms inom ordinarie anslag för utredning och riksdag. Inga nettokostnader uppstår av själva lagstiftningsakten, därav 0 mkr."
   },
   {
     "id": "p-2026-0477",
@@ -1780,10 +1514,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 5
+      "high": 0
     },
     "factor": null,
-    "calculation": "Lagändringens direkta genomförande kostar i stort sett inget (i storleksordningen 0-5 mkr för anpassning av IT-system och handläggning). Inga nya transfereringar."
+    "calculation": "Åtgärden är en reglering; inga nya statliga utgifter eller intäkter uppstår direkt. Bas=0."
   },
   {
     "id": "p-2026-0482",
@@ -1802,7 +1536,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Ingen åtgärd → 0 kr i statlig nettokostnad."
+    "calculation": "Ingen förändring jämfört med dagens lagstiftning – inga nya kostnader uppstår."
   },
   {
     "id": "p-2026-0483",
@@ -1816,12 +1550,12 @@
       "high": 40000
     },
     "reestimated": {
-      "base": 10,
-      "low": 3,
-      "high": 30
+      "base": 3000,
+      "low": 1000,
+      "high": 10000
     },
-    "factor": 1500,
-    "calculation": "Antagande om utredning: ~1–2 års arbete, kommittéer, expertkonsulter. Jämförbart med typisk SOU på 5–20 mkr. Spann: 3–30 mkr för att täcka enklare utredning till mer omfattande. Base 10 mkr."
+    "factor": 5,
+    "calculation": "Antaganden: 1) Sänkta avgifter: staten subventionerar a-kassan, kostnad 1–3 mdkr/år (jfr sänkning 2014). 2) Utökad universalitet: höjt grundbelopp eller slopade kvalifikationskrav kan kosta 5–10 mdkr/år. Sammantaget intervall 1–10 mdkr. Jämför med dagens avgiftsintäkter (~6 mdkr) och tidigare reformer."
   },
   {
     "id": "p-2026-0485",
@@ -1840,7 +1574,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Moms på livsmedel är 12 % enligt gällande rätt och har varit permanent sedan 1996. Inget nytt åtagande specificeras, därför 0 msek."
+    "calculation": "Status quo: nedsatt moms på mat är redan permanent. Ingen förändring i intäkter jämfört med nuvarande regler. Kostnad: 0 kr."
   },
   {
     "id": "p-2026-0492",
@@ -1854,12 +1588,12 @@
       "high": 120
     },
     "reestimated": {
-      "base": 300,
-      "low": 100,
-      "high": 600
+      "base": 0,
+      "low": 0,
+      "high": 0
     },
-    "factor": 5,
-    "calculation": "~80 000 ansökningar/år × 10–20% avslag med försörjningskrav ≈ 8 000–16 000 personer. Med en genomsnittlig statsfinansiell nettokostnad på 30–50 kkr/person/år (socialtjänst, bidrag m.m.) ger det 240–800 mkr/år. Baserat på att denna åtgärd är en delmängd av helt avskaffat försörjningskrav enligt p-2026-0529."
+    "factor": null,
+    "calculation": "Åtgärden innebär ingen ny direkt statlig utgift jämfört med gällande rätt. 0 msek."
   },
   {
     "id": "p-2026-0497",
@@ -1878,7 +1612,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Inga nya resurser krävs för omröstningen – den sker inom ordinarie budget för riksdagsarbete. Därför 0 mkr."
+    "calculation": "Åtgärden kostar staten 0 kronor: endast ett avslag på ett förslag, inga nya anslag eller personalresurser krävs utöver riksdagens ordinarie arbete. Jämförbara löften som prissatts avser liberaliseringar med ökade utgifter, vilket inte är fallet här."
   },
   {
     "id": "p-2026-0498",
@@ -1892,12 +1626,12 @@
       "high": 2000
     },
     "reestimated": {
-      "base": 120,
-      "low": 50,
-      "high": 250
+      "base": 100,
+      "low": 20,
+      "high": 300
     },
-    "factor": 4.166666666666667,
-    "calculation": "Antag 200–800 ytterligare uppehållstillstånd/år för unga vuxna. Statlig årskostnad per person för etablering, utbildning, försörjning: ~200–300 tkr. Totalt ~40–240 msek/år. Bas 120 msek motsvarar ~400 personer à 300 tkr. Intervallet speglar osäkerhet i reformens omfattning och kostnadsprofil."
+    "factor": 5,
+    "calculation": "Antal nya uppehållstillstånd per år: 200–2000 personer. Nettokostnad per person och år (statlig utgift minus skatteintäkter och ersatta asylkostnader): 50 000–150 000 kr. Totalt: 10–300 msek/år, med bas 100 msek (motsvarande 1000 personer × 100 000 kr)."
   },
   {
     "id": "p-2026-0499",
@@ -1913,10 +1647,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 5
+      "high": 0
     },
     "factor": null,
-    "calculation": "Regleringen medför 0 kr i statlig utgift. Om en central plattform utvecklas: ett mindre IT-projekt (några månaders utveckling) → ≤5 mkr. Inga årliga kostnader då driften kan ligga på kommunerna eller befintliga myndighetsanslag."
+    "calculation": "Lagstiftning: utredning och proposition ryms inom ordinarie anslag och innebär ingen ny nettobelastning för staten. Eventuella framtida systemkostnader specificeras inte i löftet och prissätts därför inte som direkt åtgärdskostnad."
   },
   {
     "id": "p-2026-0500",
@@ -1930,12 +1664,12 @@
       "high": 10000
     },
     "reestimated": {
-      "base": 1500,
-      "low": 500,
-      "high": 4500
+      "base": 1000,
+      "low": 200,
+      "high": 3000
     },
-    "factor": 3.3333333333333335,
-    "calculation": "~250 000 elever (ca 15-20 % av 1,4 miljoner) i aktuella områden får ett ökat tillskott på i snitt 5 000-15 000 kr/elev → 1 250-3 750 msek/år. Jämförelse: p-2026-0366 endast glesbygd (500 msek). Bredare målgrupp motiverar högre intervall; 1 500 msek baseras på en måttfull höjning för en bred grupp."
+    "factor": 5,
+    "calculation": "Antag ~150 000–300 000 elever i berörda skolor (glesbygd + utsatta områden). Tillägg 2 000–10 000 kr/år. 150 000 × 2 000 = 300 msek, 300 000 × 10 000 = 3 000 msek. Centerns smalare löfte: 500 msek. Base 1 000 msek motsvarar ~200 000 elever × 5 000 kr."
   },
   {
     "id": "p-2026-0501",
@@ -1951,10 +1685,10 @@
     "reestimated": {
       "base": 80,
       "low": 20,
-      "high": 200
+      "high": 150
     },
     "factor": 3.75,
-    "calculation": "Antag 15 000–20 000 barn i familjehem/placeringar med umgängesbehov. 15–40 % av dessa får förstärkt stöd (t.ex. utökad umgängeshandledning) till en genomsnittlig extrakostnad om 10 000–25 000 kr per barn. 15 000 × 0.15 × 10 000 = 22,5 mkr; 20 000 × 0.4 × 25 000 = 200 mkr. Base 80 mkr."
+    "calculation": "~100 kommuner som får 0,5–1,5 mkr vardera ger 50–150 mkr/år. Lågt scenario: 20 mkr/år för mindre stödinsatser. Basestimat 80 mkr/år."
   },
   {
     "id": "p-2026-0507",
@@ -1970,10 +1704,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 10
+      "high": 0
     },
     "factor": null,
-    "calculation": "Inga specifika åtgärder anges → bas 0. Hög: mindre nationellt projekt med metodmaterial (2 mkr), digital plattform (1 mkr), kampanj (3 mkr) och regionala utbildningsinsatser (4 mkr), totalt ~10 mkr."
+    "calculation": "0 mkr."
   },
   {
     "id": "p-2026-0508",
@@ -1987,12 +1721,12 @@
       "high": 500
     },
     "reestimated": {
-      "base": 0,
+      "base": 2,
       "low": 0,
       "high": 10
     },
-    "factor": null,
-    "calculation": "Internt beredningsarbete ~0-3 mkr. Extern utredning (SOU) kostar ofta 5-15 mkr, här avsätts 10 mkr som övre gräns. Inga löpande utgifter utlovas."
+    "factor": 100,
+    "calculation": "Antar att Socialstyrelsen tar fram vägledning och utbildning ~2–5 mkr engångsvis. Eventuella domstolskostnader för fler överklaganden: osäkert men uppskattas 0–5 mkr. Totalt intervall 0–10 mkr, bas 2 mkr."
   },
   {
     "id": "p-2026-0509",
@@ -2006,12 +1740,12 @@
       "high": 500
     },
     "reestimated": {
-      "base": 1,
+      "base": 0,
       "low": 0,
-      "high": 5
+      "high": 2
     },
-    "factor": 150,
-    "calculation": "Antal nya ansökningar per år uppskattas till 20–100 st. Genomsnittlig handläggningskostnad ca 10–50 tkr per ärende → 0,2–5 mkr. Bas 1 mkr."
+    "factor": null,
+    "calculation": "Antagande: <5 ärenden/år (Migrationsverket redovisar nära noll gifta barn i familjeåterföreningsärenden). Handläggning ~10 tkr/st => ~0,05 mkr. Högt räknat 20 ärenden => 0,2 mkr. Avrundat intervall 0–2 mkr/år inkl. osäkerhet."
   },
   {
     "id": "p-2026-0512",
@@ -2030,7 +1764,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Inga kvantifierbara antaganden görs eftersom löftet saknar specificerad åtgärd. Direkt administrativ kostnad ≈ 0 mkr."
+    "calculation": "Eftersom löftet helt saknar specificerade belopp, program eller avgränsningar behandlas det som ett okvantifierbart inriktningslöfte. Basen sätts till 0; intervallet spänner 0–0 då inga underlag finns för en kostnads- eller besparingskalkyl."
   },
   {
     "id": "p-2026-0513",
@@ -2044,12 +1778,12 @@
       "high": 5000
     },
     "reestimated": {
-      "base": 8000,
+      "base": 6000,
       "low": 2000,
       "high": 15000
     },
-    "factor": 5.333333333333333,
-    "calculation": "Antag 2000–10000 fler poliser × 0,8–1,2 mkr/år i marginalkostnad + utbildningssatsning (t.ex. betald polisutbildning) och ökade resurser. Totalt 2–15 mdkr/år."
+    "factor": 4,
+    "calculation": "Antag 1 500–10 000 nya poliser × ~1,2 mkr/st (lön, overhead, utbildning) ≈ 1,8–12 mdkr. Därutöver ökade resurser (utrustning, lokaler) 0,2–3 mdkr. Totalt spann 2–15 mdkr/år. Osäkerheten motiverar brett intervall och låg konfidens."
   },
   {
     "id": "p-2026-0514",
@@ -2063,12 +1797,12 @@
       "high": 800
     },
     "reestimated": {
-      "base": 2,
+      "base": 0,
       "low": 0,
-      "high": 10
+      "high": 0
     },
-    "factor": 150,
-    "calculation": "Lagändring kan kräva en mindre departementsutredning/arbetsgrupp och proposition. Antar engångskostnad 0–10 mkr, med bas ~2 mkr för enklare beredning."
+    "factor": null,
+    "calculation": "Lagändringen görs via proposition och bereds inom Regeringskansliet, inga nya anslag krävs. Kostnad 0."
   },
   {
     "id": "p-2026-0517",
@@ -2082,12 +1816,12 @@
       "high": 500
     },
     "reestimated": {
-      "base": 2,
+      "base": 0,
       "low": 0,
-      "high": 5
+      "high": 0
     },
-    "factor": 50,
-    "calculation": "Inga nya utgifter då lagen inte ändras. Jämförbart löfte om straffmaximum för barn skattades till 2 mkr/år. Samma storleksordning används här: 0–5 mkr/år."
+    "factor": null,
+    "calculation": "Ingen förändring i lagstiftning, inga nya anslag. Budgetkonsekvens = 0 kr/år."
   },
   {
     "id": "p-2026-0518",
@@ -2106,45 +1840,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Status quo (0 kr). Reformdelen saknar kvantifierade åtgärder; bedöms ej medföra omedelbara nettoutgifter."
-  },
-  {
-    "id": "p-2026-0522",
-    "parties": [
-      "mp"
-    ],
-    "title": "Tillföra Kriminalvården nödvändiga resurser",
-    "published": {
-      "low": 500,
-      "base": 2000,
-      "high": 5000
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 0
-    },
-    "factor": null,
-    "calculation": "Inget specifikt belopp anges. Löftet klassas som inriktningslöfte (regel 13) => 0 mkr."
-  },
-  {
-    "id": "p-2026-0526",
-    "parties": [
-      "mp"
-    ],
-    "title": "Reformera skolpengsmodellen för att kompensera offentliga skolhuvudmän för utbudsansvaret",
-    "published": {
-      "low": 2700,
-      "base": 4500,
-      "high": 8000
-    },
-    "reestimated": {
-      "base": 15,
-      "low": 5,
-      "high": 30
-    },
-    "factor": 300,
-    "calculation": "Antagande: en statlig utredning (SOU-liknande) med 3-5 utredare i 1-2 år (personalkostnad ~4-10 mkr), extern expertis och dialog (~3-8 mkr) samt övriga kostnader (~2-5 mkr). Totalt bedömt intervall 9-23 mkr, utökat till 5-30 mkr för att fånga osäkerhet."
+    "calculation": "Inga kvantitativa antaganden — löftet är ett ställningstagande."
   },
   {
     "id": "p-2026-0527",
@@ -2163,26 +1859,7 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Åtgärden innebär förändrade regler för asyl och arbetskraftsinvandring. Sådana förändringar medför normalt inga nya anslag, utan ryms inom förvaltningsmyndigheternas löpande arbete. Därmed uppstår ingen ny direkt statlig utgift."
-  },
-  {
-    "id": "p-2026-0528",
-    "parties": [
-      "mp"
-    ],
-    "title": "Undanta barn från väntetid och beräkna väntetid från asylansökan",
-    "published": {
-      "low": 50,
-      "base": 200,
-      "high": 500
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 1
-    },
-    "factor": null,
-    "calculation": "Lagändring med minimala administrativa kostnader. 0–1 mkr engång. Jämförbara löften prissätter indirekta migrationskostnader; dessa är ej direkt kostnad för regeln och utelämnas här."
+    "calculation": "Inga nya anslag specificeras. Lagstiftningsarbete sker inom ordinarie budget. Jämförbara löften har kostnadsberäknats till 0 mkr/år."
   },
   {
     "id": "p-2026-0529",
@@ -2198,10 +1875,10 @@
     "reestimated": {
       "base": 400,
       "low": 100,
-      "high": 1200
+      "high": 1000
     },
     "factor": 3,
-    "calculation": "Jämförbara löften: slopat försörjningskrav för delgrupper ≈ 50–60 msek/år. Ett helt slopat krav berör uppskattningsvis 5 000–15 000 fler anhöriga per år. Antagen statlig nettokostnad (försörjning, introprogram) 50 000–150 000 kr/person/år ger 250–2 250 msek. Med referens till p-2026-0497 (1000 msek) och en mer konservativ bedömning sätts basen till 400 msek med ett brett spann."
+    "calculation": "Antag: 2 000–8 000 fler anhöriga per år (jfr offentliga scenarier). Genomsnittlig nettokostnad per person i statliga transfereringar 80 000–150 000 kr/år. Det ger 160–1 200 msek. Bas 400 msek med hänsyn till osäkerhet och jämförbara löften: p-2026-0492 (60 msek, smalare grupp) och p-2026-0497 (1 000 msek, väntetid)."
   },
   {
     "id": "p-2026-0530",
@@ -2217,29 +1894,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 5
+      "high": 2
     },
     "factor": null,
-    "calculation": "Lagstiftningsarbete ~0,5 mkr engång; eventuell marginell ökning av handläggning hos Migrationsverket ~0–5 mkr/år. Antagandet bygger på att den direkta effekten av att byta ansökningsort är liten."
-  },
-  {
-    "id": "p-2026-0533",
-    "parties": [
-      "sd"
-    ],
-    "title": "Inför svenskfientlighet i lagen om hets mot folkgrupp",
-    "published": {
-      "low": 1,
-      "base": 5,
-      "high": 10
-    },
-    "reestimated": {
-      "base": 0,
-      "low": 0,
-      "high": 1
-    },
-    "factor": null,
-    "calculation": "Att stifta en lag kostar i princip inget utöver redan budgeterade resurser för riksdag och regeringskansli. Därför sätts 0."
+    "calculation": "0 mkr – löftet avser endast var ansökan lämnas in, inte rätten till tillstånd. Myndighetskostnad täcks av avgifter. Följdeffekter kvantifieras ej enligt regel 9."
   },
   {
     "id": "p-2026-0534",
@@ -2255,10 +1913,10 @@
     "reestimated": {
       "base": 0,
       "low": 0,
-      "high": 5
+      "high": 0
     },
     "factor": null,
-    "calculation": "Antar att lagstiftningsarbetet ryms inom ordinarie anslag. Inga nya myndighetskostnader direkt av förbudet. Därför 0 mkr. Höjd på 5 msek som övre gräns för oförutsedda administrativa kostnader."
+    "calculation": "Åtgärden är enbart en lagstiftning; inga nya anslag krävs. Liknande straffrättsliga reformer medför ingen särskild budgetkostnad för själva lagändringen. Därför sätts kostnaden till 0."
   },
   {
     "id": "p-2026-0539",
@@ -2277,44 +1935,177 @@
       "high": 0
     },
     "factor": null,
-    "calculation": "Lagändringar medför normalt inga särskilda direkta statliga kostnader utöver ordinarie myndighetsarbete. Inga nya anslag krävs för själva regeländringen. Följdeffekter prissätts inte enligt regel 9."
+    "calculation": "Åtgärden kräver enbart framtagande av en lagrådsremiss/proposition, vilket sker inom Regeringskansliets löpande arbete. Inga nya anslag krävs. Eventuella förändrade kommunala kostnader är en följd, inte en direkt statlig utgift."
   },
   {
-    "id": "p-2026-0161",
+    "id": "p-2026-0105",
     "parties": [
-      "m"
+      "kd"
     ],
-    "title": "Och när de rödgröna nu vill höja bidragen för de som inte jobbar, så inför vi ett bidragstak så att det alltid lönar sig bättre att jobba",
+    "title": "Det är därför vi kristdemokrater så envist talar om ett samlat nationellt ansvar för sjukvården",
     "published": {
-      "low": 0,
-      "base": 0,
-      "high": 0
+      "low": 1000,
+      "base": 5000,
+      "high": 9000
     },
     "reestimated": {
-      "base": 150,
+      "base": 0,
       "low": 0,
-      "high": 500
+      "high": 0
     },
     "factor": null,
-    "calculation": "~200 000 hushåll med försörjningsstöd. Antag 5–20 % berörs av tak, genomsnittlig sänkning 3 000–8 000 kr/år → 30–320 msek/år. Bas 150 msek från snarlik reform."
+    "calculation": "0 (inriktningslöfte utan konkretiserad kostnad)"
   },
   {
-    "id": "p-2026-0428",
+    "id": "p-2026-0106",
     "parties": [
-      "mp"
+      "kd"
     ],
-    "title": "Höja pensionsavgift och bostadstillägg/garantipension",
+    "title": "Därför kräver vi språkkrav i hemtjänsten och rätten för en äldre kvinna att kunna välja en kvinna som vårdare för att duscha och klä på sig",
+    "published": {
+      "low": 500,
+      "base": 1000,
+      "high": 1500
+    },
+    "reestimated": {
+      "base": 0,
+      "low": 0,
+      "high": 0
+    },
+    "factor": null,
+    "calculation": "Ingen direkt statsfinansiell kostnad; eventuell lagstiftningsprocess ryms inom ordinarie anslag. Sätter 0 msek."
+  },
+  {
+    "id": "p-2026-0108",
+    "parties": [
+      "kd"
+    ],
+    "title": "alla unga ska veta att det varje dag finns en elevhälsa som man kan vända sig till",
     "published": {
       "low": 1000,
       "base": 2000,
-      "high": 3500
+      "high": 3000
     },
     "reestimated": {
-      "base": 4000,
-      "low": 2000,
-      "high": 12000
+      "base": 5,
+      "low": 2,
+      "high": 20
     },
-    "factor": 2,
-    "calculation": "Antagande: 400 000 pensionärer med lägst inkomst berörs. Höjning: 500–2000 kr/mån (6 000–24 000 kr/år). 400 000 × 6 000–24 000 = 2,4–9,6 mdkr/år. Spann breddas mot jämförbart löfte (12 mdkr) för att fånga osäkerhet kring antal och nivå."
+    "factor": 400,
+    "calculation": "~1 100 000 elever. Antag 2–20 mkr/år för kampanjmaterial, digital annonsering och lärarstöd. Lågt scenario: främst digitalt och interna kanaler. Högt: bredare medieköp och tryckt material."
+  },
+  {
+    "id": "p-2026-0109",
+    "parties": [
+      "kd"
+    ],
+    "title": "Nu behöver vi mer av den stabila baskraft som kärnkraft utgör tillsammans med vattenkraft",
+    "published": {
+      "low": 5000,
+      "base": 10000,
+      "high": 18000
+    },
+    "reestimated": {
+      "base": 0,
+      "low": 0,
+      "high": 0
+    },
+    "factor": null,
+    "calculation": "Ingen konkret åtgärd specificeras, därmed ingen ny statlig kostnad. Jämförbara löften med specificerade åtgärder kostar stort, men detta löfte är enbart en viljeyttring."
+  },
+  {
+    "id": "p-2026-0110",
+    "parties": [
+      "kd"
+    ],
+    "title": "Det behövs en omfattande översyn av hur stat och myndigheter fungerar",
+    "published": {
+      "low": 250,
+      "base": 500,
+      "high": 750
+    },
+    "reestimated": {
+      "base": 15,
+      "low": 5,
+      "high": 30
+    },
+    "factor": 33.333333333333336,
+    "calculation": "~Typisk SOU-kostnad: 5–30 mkr (engångsanslag för kommitté, sekretariat, remisser m.m.). Bredden på översynen antyder en större utredning → basskattning 15 mkr, intervall 5–30 mkr."
+  },
+  {
+    "id": "p-2026-0111",
+    "parties": [
+      "kd"
+    ],
+    "title": "Sverige måste kunna ta beslut snabbare och enklare",
+    "published": {
+      "low": 250,
+      "base": 500,
+      "high": 750
+    },
+    "reestimated": {
+      "base": 0,
+      "low": 0,
+      "high": 0
+    },
+    "factor": null,
+    "calculation": "Inget konkret förslag preciseras. Inga numerära mål, utredningsdirektiv eller budgetposter nämns. Därför sätts kostnaden till 0, i linje med jämförbart vagt löfte (p-2026-0317)."
+  },
+  {
+    "id": "p-2026-0113",
+    "parties": [
+      "kd"
+    ],
+    "title": "Därför tar KD kampen mot techjättarnas skadliga algoritmer",
+    "published": {
+      "low": 100,
+      "base": 200,
+      "high": 300
+    },
+    "reestimated": {
+      "base": 0,
+      "low": 0,
+      "high": 20
+    },
+    "factor": null,
+    "calculation": "Löftet tolkas som en avsiktsförklaring snarare än ett finansiellt åtagande. Därför sätts basen till 0. Högsta osäkerhetsintervall motsvarar en mindre engångsinsats."
+  },
+  {
+    "id": "p-2026-0120",
+    "parties": [
+      "sd"
+    ],
+    "title": "Vi vill bygga ett tryggare Sverige genom fler poliser, hårdare straff, ett starkare rättsväsende och en fortsatt jakt på gängen",
+    "published": {
+      "low": 5000,
+      "base": 10000,
+      "high": 15000
+    },
+    "reestimated": {
+      "base": 0,
+      "low": 0,
+      "high": 0
+    },
+    "factor": null,
+    "calculation": "Ingen specifik kostnad; löftet listar flera politikområden men saknar konkret reform eller finansieringsnivå. Endast den politiska deklarationen beaktas, inte underliggande reformer."
+  },
+  {
+    "id": "p-2026-0121",
+    "parties": [
+      "sd"
+    ],
+    "title": "Vi vill bygga ett friare Sverige genom mindre krångel, lägre skatter, stärkt äganderätt och bättre villkor för hushåll, företag och",
+    "published": {
+      "low": 4000,
+      "base": 20000,
+      "high": 36000
+    },
+    "reestimated": {
+      "base": 0,
+      "low": 0,
+      "high": 0
+    },
+    "factor": null,
+    "calculation": "Ingen beräkning: löftet är en vision som specificeras i partiets andra löften."
   }
 ]
