@@ -18123,7 +18123,7 @@
       "basis_url": null,
       "method_note": "Högkostnadsskyddet i tandvården utvidgas från äldre till alla. Delat löfte med ett annat parti som lovar samma sak.",
       "confidence": 0.4,
-      "calculation": "Vuxentandvården kostar omkring 25 miljarder kronor per år. Dagens skydd omfattar de omkring 2,2 miljoner som är 65 år eller äldre och kostar 1,5–2 miljarder. Utvidgas det till samtliga vuxna, omkring 7,5 miljoner personer, blir totalkostnaden 8–15 miljarder kronor per år, med 10 miljarder som basbelopp. Ett annat parti lovar samma högkostnadsskydd och prissätts på samma grund."
+      "calculation": "Vuxentandvården kostar omkring 25 miljarder kronor per år. Dagens skydd omfattar de omkring 2,2 miljoner som är 65 år eller äldre och kostar 1,5–2 miljarder. Utvidgas det till samtliga vuxna, omkring 7,5 miljoner personer, blir totalkostnaden 8–15 miljarder kronor per år, med 10 miljarder som basbelopp. Ett annat parti lovar samma högkostnadsskydd och prissätts på samma grund. Underlaget är osäkert: partiernas löften om samma sak vilar på olika bild av hur stor vuxentandvården är, 14,7 respektive 25 miljarder kronor. Beloppet är markerat för omräkning."
     },
     "financing_claimed": {
       "described": false,
@@ -18143,6 +18143,11 @@
         "date": "2026-07-27",
         "change": "Grupplänkat med Vänsterpartiets löfte om samma högkostnadsskydd i tandvården, och prissatt på samma grund: samma politik hos olika partier är två löften som ska kosta lika och räknas en gång i rikssumman. Basbeloppet är oförändrat på 10 000 miljoner kronor per år; spannet är justerat så att båda löftena vilar på samma uträkning.",
         "commit": "30f1cd3b55f1089d16541c041934e103f0fe6200"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen kompletterad med att underlaget är osäkert: löften om samma sak vilar på olika bild av hur stor vuxentandvården är. Beloppet är oförändrat men markerat för omräkning. Gruppen utökad med ytterligare ett löfte om samma politik.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -18379,7 +18384,7 @@
       "basis_url": null,
       "method_note": "Högkostnadsskydd i tandvården med maxtak 1 450 kronor. Delat löfte med ett annat parti som lovar samma sak.",
       "confidence": 0.4,
-      "calculation": "Vuxentandvården kostar omkring 25 miljarder kronor per år. Med ett tak på 1 450 kronor betalar staten den del som ligger däröver, uppskattningsvis 32–60 procent av totalkostnaden. Det låga alternativet, 32 procent, ger 8 miljarder kronor per år; basbeloppet, 40 procent, ger 10 miljarder; det höga, 60 procent, ger 15 miljarder. Ett annat parti lovar samma högkostnadsskydd och prissätts på samma grund."
+      "calculation": "Vuxentandvården kostar omkring 25 miljarder kronor per år. Med ett tak på 1 450 kronor betalar staten den del som ligger däröver, uppskattningsvis 32–60 procent av totalkostnaden. Det låga alternativet, 32 procent, ger 8 miljarder kronor per år; basbeloppet, 40 procent, ger 10 miljarder; det höga, 60 procent, ger 15 miljarder. Ett annat parti lovar samma högkostnadsskydd och prissätts på samma grund. Underlaget är osäkert: partiernas löften om samma sak vilar på olika bild av hur stor vuxentandvården är, 14,7 respektive 25 miljarder kronor. Beloppet är markerat för omräkning."
     },
     "financing_claimed": {
       "described": false,
@@ -18394,6 +18399,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 5 000 till 10 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 10 000, inte de 5 000 som visades. Löftet är dessutom grupplänkat med Sverigedemokraternas löfte om samma högkostnadsskydd: samma politik hos olika partier är två löften som ska kosta lika och räknas en gång i rikssumman.",
         "commit": "30f1cd3b55f1089d16541c041934e103f0fe6200"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen kompletterad med att underlaget är osäkert: löften om samma sak vilar på olika bild av hur stor vuxentandvården är. Beloppet är oförändrat men markerat för omräkning. Gruppen utökad med ytterligare ett löfte om samma politik.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -21538,7 +21548,7 @@
   },
   {
     "id": "p-2026-0552",
-    "group_id": null,
+    "group_id": "g-hogkostnadsskydd-tandvard",
     "title": "Ge alla svenskar 90 procents rabatt på tandvård",
     "slug": "ge-alla-svenskar-90-procents-rabatt-pa-tandvard",
     "parties": [
@@ -21557,13 +21567,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 7000,
-      "msek_high": 12000,
+      "msek_low": 8000,
+      "msek_base": 10000,
+      "msek_high": 15000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Utökat högkostnadsskydd (patient betalar 10 %) till alla vuxna — merkostnad utöver dagens subvention.",
-      "calculation": "Vuxentandvård ~14,7 miljarder kronor per år. Med 10 %-patientandel täcker staten ~90 % ≈ 13,2 miljarder kronor; minus nuvarande subvention ~6,5 miljarder kronor ⇒ merkostnad ~6,7 miljarder kronor. Spann 4–12 miljarder kronor speglar osäkerhet i vårdvolym och referenspris. Jämförbara löften om högkostnadsskydd i tandvården ligger på 5 miljarder kronor (Vänsterpartiet), 10 miljarder (partiets eget bredare löfte) och 20 miljarder (Miljöpartiet).",
+      "method_note": "Samma politik som partiets andra löfte om att utvidga högkostnadsskyddet till alla vuxna, och prissatt på samma grund.",
+      "calculation": "Löftet är samma politik som partiets andra utfästelse om att utvidga högkostnadsskyddet till alla vuxna, fast med mekanismen utskriven: patienten betalar tio procent av referenspriset. De två räknas därför en gång och på samma grund. Dagens skydd omfattar de omkring 2,2 miljoner som är 65 år eller äldre. Utvidgat till samtliga vuxna, omkring 7,5 miljoner personer, blir kostnaden 8–15 miljarder kronor per år med 10 miljarder som basbelopp. Underlaget är osäkert: partiernas löften om samma sak vilar på olika bild av hur stor vuxentandvården är, 14,7 respektive 25 miljarder kronor. Beloppet är markerat för omräkning.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -21579,6 +21589,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 7 000 till 10 000 miljoner kronor per år och löftet grupplänkat med partiets andra löfte om samma sak samt med Vänsterpartiets. De två SD-löftena beskriver samma utvidgning av högkostnadsskyddet till alla vuxna men stod på 7 000 respektive 10 000, räknade på olika bild av hur stor vuxentandvården är. Samma parti och samma politik ska räknas en gång och kosta lika.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
