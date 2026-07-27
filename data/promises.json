@@ -276,13 +276,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1500,
+      "msek_low": 1000,
       "msek_base": 3000,
-      "msek_high": 4500,
+      "msek_high": 8000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Jobbkontrakt för unga (ca 100 000 unga arbetslösa). Om 50 000 får subventionerad anställning × 60 000 kr subvention = 3 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Subventionerade anställningar för unga: antal deltagare gånger subvention per plats.",
+      "confidence": 0.4,
+      "calculation": "Det finns omkring 100 000 unga arbetslösa. Antas hälften av dem, 50 000, få en subventionerad anställning genom jobbkontraktet till en subvention av 60 000 kronor per plats och år blir kostnaden 3 000 miljoner kronor per år. Det låga alternativet räknar med en tredjedel så många platser (1 000 miljoner) och det höga med att jobbtrappan även omfattar vuxna som går från bidrag till arbete (8 000 miljoner). Citatet talar om unga, så basbeloppet håller sig till den gruppen."
     },
     "financing_claimed": {
       "described": false,
@@ -292,7 +293,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet står kvar på 3 000 miljoner kronor per år, nu med en öppen uträkning. Bakåtfyllnaden ville höja till 8 000 genom att vidga målgruppen till 500 000 personer, men citatet talar om jobbkontrakt för unga. Den vidare tolkningen ligger i stället kvar som spannets tak.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2959,8 +2966,14 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Tillbakadraget: citatet innehåller inget åtagande om framtiden. Företrädaren beskriver en jobbpremie som redan är införd (\"Från den 1 mars 2026 har en jobbpremie införts\"), och en beskrivning av genomförd politik är inget vallöfte. Posten fångades felaktigt som löfte vid inläsningen och räknades tidigare med 3 000 miljoner kronor per år i partiets summa. Samma bedömning som för p-2026-0099.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7839,8 +7852,9 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Inriktningslöfte utan kvantifierbar kostnad.",
-      "confidence": 0.3
+      "method_note": "Ett bidragstak minskar utbetalningar av försörjningsstöd, som betalas av kommunerna — ingen besparing i statsbudgeten.",
+      "confidence": 0.3,
+      "calculation": "Ett bidragstak minskar utbetalningarna till de hushåll som berörs. Men försörjningsstödet beslutas och betalas av kommunerna, inte av staten, så pengarna som sparas är kommunernas. För statsbudgeten är åtgärden en regeländring vars direkta kostnad är försumbar. Beloppet avser åtgärden — noll betyder alltså inte att taket saknar verkan, utan att verkan hamnar utanför statens budget."
     },
     "financing_claimed": {
       "described": false,
@@ -7850,7 +7864,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet står kvar på 0, nu med en öppen uträkning. Bakåtfyllnaden ville sätta 150 miljoner kronor per år, men gjorde det som en utgift trots att ett bidragstak minskar utbetalningar — beloppet hade ökat partiets summa i stället för att minska den. Besparingen hamnar dessutom hos kommunerna, som betalar försörjningsstödet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7933,15 +7953,16 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 1050,
+      "msek_base": 5000,
+      "msek_high": 16000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Inriktningslöfte utan kvantifierbar kostnad.",
-      "confidence": 0.3
+      "method_note": "Nytt föräldraavdrag. Partiet har inte angett avdragets storlek, så nivån är uppskattad och spannet därför brett.",
+      "confidence": 0.3,
+      "calculation": "Ett namngivet nytt avdrag för föräldrar. Det finns 1,5–2 miljoner föräldrar med barn under 18 år. Partiet har inte sagt hur stort avdraget ska vara, så nivån antas ligga mellan 5 000 och 20 000 kronor per år, med en skatteeffekt på 20–40 procent och ett utnyttjande på 70–100 procent. Det låga alternativet blir 1,5 miljoner × 5 000 × 0,2 × 0,7 ≈ 1 050 miljoner kronor och det höga 2 miljoner × 20 000 × 0,4 ≈ 16 000 miljoner. Basbeloppet 5 000 miljoner motsvarar ett medelstort avdrag. Det breda spannet speglar att storleken inte är känd."
     },
     "financing_claimed": {
       "described": false,
@@ -7951,7 +7972,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 0 till 5 000 miljoner kronor per år, och kostnadstypen från utgift till intäktsminskning. Ett namngivet nytt avdrag är ett konkret åtagande, inte ett inriktningslöfte, och ett avdrag kostar staten uteblivna skatteintäkter — det är ingen utgift. Partiet har inte angett avdragets storlek, vilket syns i det breda spannet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8849,8 +8876,9 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Del av Centerns skattereform (avskaffat jobbskatteavdrag ersätts med en skattefri grundlön). Detta är den illustrerade effekten per person (1 200 kr/mån); reformens nettoeffekt redovisas samlat på gruppens representant p-2026-0144 (C:s egen siffra, +45 miljarder kronor per år) och räknas en gång — denna formulering bidrar därför 0.",
-      "confidence": 0.3
+      "method_note": "Ingår i partiets skattereform, som prissätts en gång på partiets egen nettosiffra. Citatets 1 200 kronor är effekten för en enskild person, inte reformens kostnad.",
+      "confidence": 0.3,
+      "calculation": "Citatets siffra — 1 200 kronor i månaden för någon med 25 000 kronor i ingångslön — visar vad reformen ger en enskild person, inte vad den kostar staten. Löftet är en av flera beskrivningar av samma skattereform, och reformen prissätts en gång på partiets egen nettosiffra genom det löfte som representerar den. Att räkna beloppet här också skulle räkna reformen två gånger."
     },
     "financing_claimed": {
       "described": false,
@@ -8865,6 +8893,11 @@
         "date": "2026-07-24",
         "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år till 0 och löftet kopplat till gruppen g-c-skattereform-grundlon vid den manuella genomgången. Detta är samma reform som p-2026-0144/0172/0252 (här illustrerad per person); reformens nettoeffekt räknas nu en gång på representanten p-2026-0144 (C:s egen siffra, +45 mdkr).",
         "commit": "4d26da23ce3cb52e7651bc7b029afe799f5aa9c2"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet står kvar på 0, nu med en öppen uträkning. Bakåtfyllnaden ville sätta 5 000 miljoner kronor per år utifrån citatets 1 200 kronor i månaden, men den siffran är effekten för en person — inte reformens kostnad. Reformen prissätts en gång genom det löfte som representerar gruppen.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -16765,8 +16798,9 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet hålls genom själva lagändringen, vars direkta kostnad är försumbar och sätts till 0. Ett tidigare estimat försökte prissätta följderna av att lösa in eller ombilda vinstdrivande skolaktiebolag, men de har bedömts för svåra och osäkra att överblicka för att kunna anges som en trovärdig siffra. Beloppet avser alltså den direkta kostnaden för åtgärden, inte dess samhällsföljder (belopp satt av granskare).",
-      "confidence": 0.9
+      "method_note": "Löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte följderna för skolmarknaden.",
+      "confidence": 0.9,
+      "calculation": "Löftet hålls av en lagändring: vinstdrivande aktiebolag tillåts inte längre driva skola. Statens direkta kostnad för att ändra lagen är försumbar. Att lösa in eller avveckla befintliga bolag är en följd för ägarna, inte en statlig utgift, och prissätts inte här. Beloppet avser åtgärden, inte vad omställningen betyder för skolmarknaden."
     },
     "financing_claimed": {
       "described": false,
@@ -16781,6 +16815,11 @@
         "date": "2026-07-22",
         "change": "Kostnadsestimatet rättat från 20 miljarder kronor (spann 5–60 miljarder, engång) till 0 kronor: löftet hålls av själva lagändringen, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
         "commit": "8be42c9508d793812890f1e1bd3f9d3158ee4e9d"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet står kvar på 0, nu med en öppen uträkning. Bakåtfyllnaden ville lägga på 5 miljoner kronor för en utredning, men löftet är avvecklingen i sig — den hålls av lagändringen. Beslutet att sätta beloppet till 0 fattades 22 juli och står fast.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -18890,11 +18929,12 @@
       "period": "per_ar",
       "msek_low": 500,
       "msek_base": 1500,
-      "msek_high": 5000,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar ökning med 500-5000 poliser à 1 mkr/år i genomsnittlig kostnad. Bred osäkerhet.",
-      "confidence": 0.3
+      "method_note": "Harmoniserat med andra partiers löften om fler poliser, som prissätts på samma grund.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger inget antal nya poliser, så beloppet läggs på samma nivå som andra partiers löften om att öka antalet poliser — samma politik ska kosta lika mycket oavsett vem som lovar den. Den nivån är 1 500 miljoner kronor per år, vilket motsvarar drygt tusen poliser till en kostnad av omkring 1,2 miljoner kronor per polis och år inklusive utbildning och utrustning. Spannet 500–3 000 miljoner speglar att \"fortsätter att öka\" kan betyda allt från några hundra till flera tusen poliser."
     },
     "financing_claimed": {
       "described": false,
@@ -18904,7 +18944,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet står kvar på 1 500 miljoner kronor per år, nu med en öppen uträkning. Bakåtfyllnaden ville höja till 6 000 utifrån ett antagande om 5 000 nya poliser, ett antal som inte finns i citatet. Beloppet ligger i stället på samma nivå som andra partiers löften om fler poliser, så att samma politik kostar lika.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
