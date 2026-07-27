@@ -2215,14 +2215,6 @@
     "timestamp": "2026-07-15T05:39:42.712Z"
   },
   {
-    "run_id": "run-2026-07-15-11-00",
-    "added": [],
-    "updated": [],
-    "retracted": [],
-    "data_hash": "95a1e4d0c189cfa2f625b0683946ff9fa82e2b121c60343c4c2b58f961887ef1",
-    "timestamp": "2026-07-15T11:00:24.379Z"
-  },
-  {
     "run_id": "source-page-fix-2026-07-15",
     "added": [],
     "updated": [
@@ -2327,6 +2319,14 @@
     "retracted": [],
     "data_hash": "99745288dbad93c652e5a9b793cb69f4afd0bfc32359acbd95824b3bb09285d0",
     "timestamp": "2026-07-15T06:03:40.473Z"
+  },
+  {
+    "run_id": "run-2026-07-15-11-00",
+    "added": [],
+    "updated": [],
+    "retracted": [],
+    "data_hash": "95a1e4d0c189cfa2f625b0683946ff9fa82e2b121c60343c4c2b58f961887ef1",
+    "timestamp": "2026-07-15T11:00:24.379Z"
   },
   {
     "run_id": "run-2026-07-15-16-41",
@@ -3323,6 +3323,16 @@
     "timestamp": "2026-07-21T16:38:00.209Z"
   },
   {
+    "run_id": "manual-cost-correction-p2026-0470-2026-07-22",
+    "added": [],
+    "updated": [
+      "p-2026-0470"
+    ],
+    "retracted": [],
+    "data_hash": "322463bfa5e9e22372750112f4675e422aa12c086a9330ca18e248070dcd4a8a",
+    "timestamp": "2026-07-22T00:00:00.000Z"
+  },
+  {
     "run_id": "run-2026-07-22-06-02",
     "added": [],
     "updated": [],
@@ -3345,16 +3355,6 @@
     "retracted": [],
     "data_hash": "f5d34ff6e34039d10d18e5342c1319388ab1f6de954a05ca90cd92e087cbc5be",
     "timestamp": "2026-07-22T16:39:22.990Z"
-  },
-  {
-    "run_id": "manual-cost-correction-p2026-0470-2026-07-22",
-    "added": [],
-    "updated": [
-      "p-2026-0470"
-    ],
-    "retracted": [],
-    "data_hash": "322463bfa5e9e22372750112f4675e422aa12c086a9330ca18e248070dcd4a8a",
-    "timestamp": "2026-07-22T00:00:00.000Z"
   },
   {
     "run_id": "run-2026-07-23-06-08",
@@ -3383,33 +3383,6 @@
     "retracted": [],
     "data_hash": "383680791b1ff43695ccc492ba1fb293f589a1f9024b8a3e86bdb3f613655391",
     "timestamp": "2026-07-23T06:10:00.000Z"
-  },
-  {
-    "run_id": "manual-cost-review-straffskarpningar-2026-07-23",
-    "added": [],
-    "updated": [
-      "p-2026-0036",
-      "p-2026-0039",
-      "p-2026-0313",
-      "p-2026-0369",
-      "p-2026-0534"
-    ],
-    "retracted": [],
-    "data_hash": "60719a6550d274f9ee97e0c2cfcd42cd3bd4d737bc3203acffcefa35df57f87d",
-    "timestamp": "2026-07-23T12:00:00.000Z"
-  },
-  {
-    "run_id": "manual-cost-review-krav-regleringar-2026-07-23",
-    "added": [],
-    "updated": [
-      "p-2026-0057",
-      "p-2026-0076",
-      "p-2026-0078",
-      "p-2026-0506"
-    ],
-    "retracted": [],
-    "data_hash": "a0441616952c1eaf51acc534a8cf6ce7decc5a66677d760a1ce13f84ba5801fd",
-    "timestamp": "2026-07-23T13:00:00.000Z"
   },
   {
     "run_id": "review-p-2026-0546",
@@ -3488,6 +3461,33 @@
     "retracted": [],
     "data_hash": "117abea4d105db1b7ab811c879863460e1f2e85e6e72a31ede898c015ec2f352",
     "timestamp": "2026-07-23T11:17:53.073Z"
+  },
+  {
+    "run_id": "manual-cost-review-straffskarpningar-2026-07-23",
+    "added": [],
+    "updated": [
+      "p-2026-0036",
+      "p-2026-0039",
+      "p-2026-0313",
+      "p-2026-0369",
+      "p-2026-0534"
+    ],
+    "retracted": [],
+    "data_hash": "60719a6550d274f9ee97e0c2cfcd42cd3bd4d737bc3203acffcefa35df57f87d",
+    "timestamp": "2026-07-23T12:00:00.000Z"
+  },
+  {
+    "run_id": "manual-cost-review-krav-regleringar-2026-07-23",
+    "added": [],
+    "updated": [
+      "p-2026-0057",
+      "p-2026-0076",
+      "p-2026-0078",
+      "p-2026-0506"
+    ],
+    "retracted": [],
+    "data_hash": "a0441616952c1eaf51acc534a8cf6ce7decc5a66677d760a1ce13f84ba5801fd",
+    "timestamp": "2026-07-23T13:00:00.000Z"
   },
   {
     "run_id": "manual-karens-cleanup-2026-07-23",
@@ -3621,38 +3621,6 @@
     "timestamp": "2026-07-24T11:07:50.667Z"
   },
   {
-    "run_id": "run-2026-07-24-16-51",
-    "added": [],
-    "updated": [],
-    "retracted": [],
-    "data_hash": "dfd4502ac38fe9a77bed6cfb9c5d6f4c364056c1ae78c349c555c5c8ea34a221",
-    "timestamp": "2026-07-24T16:51:41.576Z"
-  },
-  {
-    "run_id": "run-2026-07-25-05-49",
-    "added": [],
-    "updated": [],
-    "retracted": [],
-    "data_hash": "dfd4502ac38fe9a77bed6cfb9c5d6f4c364056c1ae78c349c555c5c8ea34a221",
-    "timestamp": "2026-07-25T05:49:14.931Z"
-  },
-  {
-    "run_id": "run-2026-07-25-10-40",
-    "added": [],
-    "updated": [],
-    "retracted": [],
-    "data_hash": "dfd4502ac38fe9a77bed6cfb9c5d6f4c364056c1ae78c349c555c5c8ea34a221",
-    "timestamp": "2026-07-25T10:40:49.678Z"
-  },
-  {
-    "run_id": "run-2026-07-25-16-10",
-    "added": [],
-    "updated": [],
-    "retracted": [],
-    "data_hash": "dfd4502ac38fe9a77bed6cfb9c5d6f4c364056c1ae78c349c555c5c8ea34a221",
-    "timestamp": "2026-07-25T16:10:37.465Z"
-  },
-  {
     "run_id": "calc-review-2026-07-24-group-b",
     "added": [],
     "updated": [
@@ -3782,6 +3750,14 @@
     "retracted": [],
     "data_hash": "548c300a7282810c1c363ca7e1eafbc0b173d3ef53e3ae9396c3b9124d0a83e9",
     "timestamp": "2026-07-24T16:48:29.140Z"
+  },
+  {
+    "run_id": "run-2026-07-24-16-51",
+    "added": [],
+    "updated": [],
+    "retracted": [],
+    "data_hash": "dfd4502ac38fe9a77bed6cfb9c5d6f4c364056c1ae78c349c555c5c8ea34a221",
+    "timestamp": "2026-07-24T16:51:41.576Z"
   },
   {
     "run_id": "calc-review-2026-07-24-c-0408",
@@ -3955,6 +3931,14 @@
     "timestamp": "2026-07-24T21:39:10.376Z"
   },
   {
+    "run_id": "run-2026-07-25-05-49",
+    "added": [],
+    "updated": [],
+    "retracted": [],
+    "data_hash": "dfd4502ac38fe9a77bed6cfb9c5d6f4c364056c1ae78c349c555c5c8ea34a221",
+    "timestamp": "2026-07-25T05:49:14.931Z"
+  },
+  {
     "run_id": "calc-review-2026-07-24-c-0381",
     "added": [],
     "updated": [
@@ -3993,6 +3977,22 @@
     "retracted": [],
     "data_hash": "7bba776bb50688cebe317cd357a1b4224b990dfe54639667efd4cb1f0032761c",
     "timestamp": "2026-07-25T07:31:29.144Z"
+  },
+  {
+    "run_id": "run-2026-07-25-10-40",
+    "added": [],
+    "updated": [],
+    "retracted": [],
+    "data_hash": "dfd4502ac38fe9a77bed6cfb9c5d6f4c364056c1ae78c349c555c5c8ea34a221",
+    "timestamp": "2026-07-25T10:40:49.678Z"
+  },
+  {
+    "run_id": "run-2026-07-25-16-10",
+    "added": [],
+    "updated": [],
+    "retracted": [],
+    "data_hash": "dfd4502ac38fe9a77bed6cfb9c5d6f4c364056c1ae78c349c555c5c8ea34a221",
+    "timestamp": "2026-07-25T16:10:37.465Z"
   },
   {
     "run_id": "run-2026-07-26-06-12",
@@ -4624,6 +4624,14 @@
     "data_hash": "e624bd510e568909676bbb76c2e8381954d8ba4b9e5b91830d5bee7f9d0f1f02"
   },
   {
+    "run_id": "run-2026-07-27-12-34",
+    "added": [],
+    "updated": [],
+    "retracted": [],
+    "data_hash": "71aff60080e7f4244905d5af174e258125e48d4e4bec3336e4828ff3e289a293",
+    "timestamp": "2026-07-27T12:34:51.807Z"
+  },
+  {
     "run_id": "manuell-granskning-2026-07-27-partiets-siffra",
     "added": [],
     "retracted": [],
@@ -4953,6 +4961,14 @@
       "p-2026-0161"
     ],
     "data_hash": "42a808329e1208db60907a8631197175692e15a2310be15755bb42d28150c7d1"
+  },
+  {
+    "run_id": "run-2026-07-27-17-05",
+    "added": [],
+    "updated": [],
+    "retracted": [],
+    "data_hash": "71aff60080e7f4244905d5af174e258125e48d4e4bec3336e4828ff3e289a293",
+    "timestamp": "2026-07-27T17:05:12.684Z"
   },
   {
     "run_id": "manuell-granskning-2026-07-27-grupprepresentant",
