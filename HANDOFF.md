@@ -477,7 +477,10 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- (ingen pågående session)
+- **Session 1 — tandvården** (gren
+  `claude/promises-calculations-review-b22gul`, startad 2026-07-27).
+  Fastställer vuxentandvårdens storlek och räknar om p-2026-0552,
+  p-2026-0484, p-2026-0489 och p-2026-0440. Rör inga andra löften.
 
 #### Tandvården: underlaget motsäger sig självt
 
