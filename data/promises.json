@@ -8424,13 +8424,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 800,
+      "msek_base": 1575,
+      "msek_high": 2500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Inriktningslöfte utan kvantifierbar kostnad.",
-      "confidence": 0.3
+      "method_note": "Bygger på partiets egen siffra: 15 000 kronor per förstagångsförälder. Antalet mottagare är den enda uppskattningen.",
+      "confidence": 0.3,
+      "calculation": "Partiet anger själv beloppet: 15 000 kronor till varje förstagångsförälder. Det finns omkring 100 000 förstagångsföräldrar per år, vilket ger 1 500 miljoner kronor — nära partiets eget angivna belopp på 1 575 miljoner, som används här. Det låga alternativet räknar med 50 000 mottagare (800 miljoner) och det höga med 120 000 mottagare plus osäkerhet om avgränsningen (2 500 miljoner). Nivån per person är alltså partiets, inte vår: bara antalet mottagare är uppskattat."
     },
     "financing_claimed": {
       "described": false,
@@ -8440,7 +8441,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 0 till 1 575 miljoner kronor per år. Löftet var felaktigt bedömt som ett inriktningslöfte utan kvantifierbar kostnad, trots att partiet själv anger både beloppet per person (15 000 kronor) och reformens kostnad. Anger partiet en siffra är det den som gäller.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -10269,14 +10276,15 @@
     "category": "klimat-miljö",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är att ta fram en handlingsplan; själva plan-/utredningskostnaden är försumbar och sätts till 0. Sakmålen den kan leda till (minskat importberoende m.m.) går inte att kvantifiera här. Samma grund som andra utrednings- och planlöften (belopp satt av granskare).",
-      "confidence": 0.3
+      "method_note": "Löftet är att ta fram en handlingsplan; det är framtagningen som prissätts, inte de mål den ska leda till.",
+      "confidence": 0.3,
+      "calculation": "Löftet är att ta fram en handlingsplan. En statlig utredning eller ett planarbete av den här storleken kostar 5–30 miljoner kronor som engångskostnad, med 15 miljoner som basbelopp. De mål planen ska leda till — minskat importberoende och fossilfri gödsel — prissätts inte här; de är ännu inte lovade som konkreta åtgärder."
     },
     "financing_claimed": {
       "described": false,
@@ -10291,6 +10299,11 @@
         "date": "2026-07-24",
         "change": "Kostnadsestimat ändrat från 500 miljoner kronor per år (spann 250-750) till 0 vid den manuella genomgången av avvikande estimat. Det gamla beloppet prissatte hela sakmålet, men löftet är bara att ta fram en handlingsplan - vars direkta kostnad är försumbar. Samma grund som andra utrednings-/planlöften.",
         "commit": "1ad262224f2ef39b95a429b487fdc6ba073c4437"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 0 till 15 miljoner kronor som engångskostnad. Ett löfte om att ta fram en handlingsplan prissätter framtagningen, som kostar något — inte noll. Ett litet löfte är ändå ett löfte.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -12419,13 +12432,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Det konkreta löftet är att tillsätta en grundlig utredning om hur rätten till aktiv dödshjälp ska utformas; utredningens direkta kostnad är försumbar och sätts till 0. Följderna av en eventuell reform går inte att kvantifiera på förhand. Samma grund som andra utredningslöften (belopp satt av granskare).",
-      "confidence": 0.3
+      "method_note": "Löftet är att tillsätta en grundlig utredning; det är utredningen som prissätts.",
+      "confidence": 0.3,
+      "calculation": "Det konkreta löftet är att tillsätta en grundlig utredning om hur en rätt till aktiv dödshjälp skulle utformas. En statlig utredning kostar vanligen 5–30 miljoner kronor beroende på omfattning och längd, med 15 miljoner som basbelopp. Vad en eventuell framtida lagstiftning skulle kosta prissätts inte här — den är inte lovad."
     },
     "financing_claimed": {
       "described": false,
@@ -12440,6 +12454,11 @@
         "date": "2026-07-24",
         "change": "Kostnadsestimat ändrat från 120 miljoner kronor per år (spann 50-400) till 0 vid den manuella genomgången av avvikande estimat. Det konkreta löftet är att tillsätta en utredning, vars direkta kostnad är försumbar; det gamla beloppet prissatte en tänkt framtida reform (och räknade dessutom per år). Samma grund som andra utredningslöften.",
         "commit": "de9598ac081549bf0e59a64649d942308cdf494d"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 0 till 15 miljoner kronor som engångskostnad. Ett löfte om att tillsätta en utredning prissätter utredningen, som kostar något — inte noll. Ett litet löfte är ändå ett löfte.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -14763,13 +14782,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3500,
+      "msek_low": 2000,
+      "msek_base": 4000,
+      "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Höjd pensionsavgift: antag 0,5-2 p.e. höjning av arbetsgivaravgiften för statligt anställda (200-260k, snittlön 38-45k/mån). Höjt bostadstil [granskning 2026-07-09: endast pensions-/bostadstilläggshöjning som utgift; avgiftshöjningen är intäktssida]",
-      "confidence": 0.4
+      "method_note": "Höjd garantipension och höjt bostadstillägg, räknade var för sig på antal mottagare gånger höjning per månad.",
+      "confidence": 0.4,
+      "calculation": "Löftet har två delar. Höjd garantipension för omkring 600 000 personer med 200–800 kronor i månaden ger 1,4–5,8 miljarder kronor per år. Höjt bostadstillägg för omkring 300 000 personer med 200–500 kronor i månaden ger 0,7–1,8 miljarder. Genomförs bara den ena delen landar kostnaden på 0,7–5,8 miljarder; genomförs båda på 2–7 miljarder. Basbeloppet sätts till 4 miljarder. Det höga alternativet, 12 miljarder, rymmer en höjning i samma storlek som andra partier lovat."
     },
     "financing_claimed": {
       "described": false,
@@ -14779,7 +14799,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 2 000 till 4 000 miljoner kronor per år. Det tidigare beloppet räknade bara den ena av löftets två delar; det nya räknar höjd garantipension och höjt bostadstillägg var för sig.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15077,13 +15103,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 150,
-      "msek_high": 400,
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 900,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar TBE-vaccin till barn (2M, 50% täckning, 300 kr/dos, flera doser) och HPV till 18-26 år (lågt årligt tillskott efter catch-up). Osäker täckning och doskostnad.",
-      "confidence": 0.3
+      "method_note": "Kostnadsfritt HPV-vaccin upp till 26 år och TBE-vaccin till barn, räknat på antal doser gånger pris per dos.",
+      "confidence": 0.3,
+      "calculation": "Två vaccin. För HPV handlar det om att fånga upp ovaccinerade mellan 13 och 26 år: omkring 250 000 personer × 3 doser à 500 kronor inklusive administration ≈ 375 miljoner kronor som en engångspuckel, därefter 100–150 miljoner per år. För TBE till barn räknas ungefär 1 miljon doser per år — 2 miljoner barn med måttlig anslutning och flera doser var — à 400 kronor för vaccinet plus 300 kronor för administration, alltså omkring 350 miljoner per år. Sammantaget omkring 500 miljoner kronor per år, vilket också är partiets egen siffra."
     },
     "financing_claimed": {
       "described": false,
@@ -15093,7 +15120,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 150 till 500 miljoner kronor per år. Det tidigare beloppet räknade bara ett litet årligt tillskott för HPV efter infasningen och missade TBE-doserna till barn. Det nya beloppet stämmer med partiets egen siffra.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",

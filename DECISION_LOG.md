@@ -1080,3 +1080,35 @@ till OpenRouter (4xx).
 `.github/workflows/{pipeline,stances-backfill,calculation-backfill}.yml`.
 Kräver GitHub-inställningar: variabler `LLM_BASE_URL`, `LLM_FALLBACK_BASE_URL`,
 `MODEL_*`/`MODEL_*_FALLBACK`; hemligheter `LLM_API_KEY`, `LLM_FALLBACK_API_KEY`.
+
+---
+
+## 2026-07-27 — Partiets egen siffra gäller före modellens uppskattning
+
+**Beslut:** Anger ett parti själv en siffra i löftet är det den siffran som
+prissättningen vilar på — hela reformens kostnad, ett belopp per person
+("15 000 kronor till varje förstagångsförälder"), en nivå per månad eller en
+andel. Den får aldrig bytas mot en egen nivå. Är siffran ett styckepris byggs
+uträkningen på den och bara antalet mottagare uppskattas, och `calculation`
+skriver ut vilken del som är partiets och vilken som är vår. Ett löfte som bär
+en egen siffra är därmed aldrig ett inriktningslöfte som nollas: det ska
+prissättas. Undantagen är sådant partiet självt säger inte ingår, och delar av
+en reform som redan prissatts på ett annat löfte (dubbelräkning).
+
+**Motiv:** Vänsterpartiets bebispeng (p-2026-0173) låg på 0 kronor, bedömd som
+ett inriktningslöfte utan kvantifierbar kostnad — trots att partiledaren i
+samma mening anger både 15 000 kronor per förstagångsförälder och reformens
+kostnad. Att lägga en egen uppskattning bredvid en siffra partiet självt satt
+ut är både sämre underbyggt och svårare att försvara mot partiet. Den siffra
+partiet gått ut med är dessutom det de kan hållas till.
+
+**Förkastade alternativ:** Behandla partiets siffra som ett riktmärke bland
+andra jämförelser — det var i praktiken vad som skedde, och det gav en nolla
+där partiet redovisat en prislapp. Sätta kostnadsunderlaget till "parti" så
+fort en siffra nämns — nej, när totalen räknas fram ur ett styckepris är
+totalen vår uppskattning och ska bära markeringen för datorgissning.
+
+**Påverkan:** `CLAUDE.md` (kärnprincip), `pipeline/prompts/A5-cost.md` (regel
+14), `pipeline/tests/cost.test.ts` (vaktar att regeln ligger kvar i
+systemprompten), `data/promises.json` (p-2026-0173 rättat från 0 till 1 575
+miljoner kronor per år).

@@ -61,6 +61,17 @@ Avgränsningsregler — de avgör VAD som ska prissättas:
     politikområden ("vi ska stärka X, Y och Z") utan ett konkret enskilt åtagande
     eller belopp? Behandla det som ett inriktningslöfte (base 0) — de kostsamma
     delarna prissätts på partiets specifika löften och ska inte dubbelräknas här.
+14. PARTIETS EGEN SIFFRA GÄLLER. Anger partiet själv en siffra i löftet — hela
+    reformens kostnad, ett belopp per person ("15 000 kronor till varje
+    förstagångsförälder"), en nivå per månad eller en andel — så är det DEN
+    siffran du räknar med. Byt aldrig ut den mot en egen nivå. Är siffran ett
+    styckepris bygger du uträkningen på den och uppskattar bara antalet
+    mottagare; skriv då i calculation vilken del som är partiets och vilken som
+    är din uppskattning. Ett löfte som bär en egen siffra är per definition inte
+    ett inriktningslöfte enligt regel 13 — det ska prissättas, inte nollas.
+    Undantag: räkna bort det partiet självt säger inte ingår, och lägg inte ihop
+    siffran med en annan del av samma reform som redan prissatts på ett annat
+    löfte (dubbelräkning).
 
 SCHEMA
 { "type": "utgift" | "intäktsminskning" | "besparing" | "intäktsökning",

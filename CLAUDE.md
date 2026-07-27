@@ -95,6 +95,13 @@ mänskligt beslut och finns även kodade i `pipeline/prompts/A5-cost.md`:
 - **Breda uppräkningslöften → 0.** En önskelista över flera politikområden
   utan konkret åtagande prissätts inte — delarna ligger redan på partiets
   specifika löften och får inte dubbelräknas.
+- **Partiets egen siffra gäller.** Anger partiet själv ett belopp i löftet
+  — hela reformens kostnad, en nivå per person eller per månad, en andel —
+  är det den siffran som räknas. Byt aldrig ut den mot en egen. Är siffran
+  ett styckepris byggs uträkningen på den och bara antalet mottagare
+  uppskattas; skriv då ut vilken del som är partiets och vilken som är vår.
+  Ett löfte som bär en egen siffra är aldrig ett inriktningslöfte — det ska
+  prissättas, inte nollas.
 - **Samma politik ska kosta lika.** Prissätts samma åtgärd hos flera
   partier ska beloppen harmoniseras och vila på samma grund. Samma politik
   hos olika partier är ett delat löfte (`group_id`, räknas en gång, R3);
