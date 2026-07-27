@@ -26,6 +26,31 @@ describe("parseReviewCommand — issue-kommentar till beslut", () => {
     });
   });
 
+  it("en rad som börjar 'Uträkning:' blir uträkningen bakom beloppet", () => {
+    assert.deepEqual(
+      parseReviewCommand("/godkänn 500 1000 2000\nUträkning: 50 000 personer × 20 000 kr = 1 000 mkr"),
+      {
+        action: "approve",
+        amounts: [500, 1000, 2000],
+        calculation: "50 000 personer × 20 000 kr = 1 000 mkr",
+      },
+    );
+  });
+
+  it("omärkt fritext under kommandot publiceras ALDRIG som uträkning", () => {
+    // Skyddet mot att en kommentar av misstag hamnar på den publika löftessidan.
+    assert.deepEqual(parseReviewCommand("/godkänn 500 1000 2000\ntack, ser bra ut!"), {
+      action: "approve",
+      amounts: [500, 1000, 2000],
+    });
+  });
+
+  it("uträkningen kapas till schemats gräns på 800 tecken", () => {
+    const cmd = parseReviewCommand("/godkänn\nUträkning: " + "x".repeat(1200));
+    assert.equal(cmd?.action, "approve");
+    assert.equal((cmd as { calculation?: string }).calculation?.length, 800);
+  });
+
   it("/godkänn med --group (dublettlänkning)", () => {
     assert.deepEqual(parseReviewCommand("/godkänn --group p-2026-0318"), {
       action: "approve",

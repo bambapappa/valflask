@@ -46,14 +46,33 @@ const isCostType = (p: PipelinePromise): boolean =>
 const isActive = (p: PipelinePromise): boolean =>
   (p as { status?: string }).status !== "tillbakadragen";
 
-/** R3 — samma regel som sajtens aggregates.ts: en grupp räknas EN gång. */
+/**
+ * R3 — samma regel som sajtens aggregates.ts: en grupp räknas EN gång, och
+ * representeras av den medlem som bär det högsta beloppet för mandatperioden.
+ * Krönikan och startsidan får aldrig räkna olika, så den här funktionen måste
+ * följa aggregates.dedupeByGroup exakt.
+ */
 function dedupeByGroup(promises: PipelinePromise[]): PipelinePromise[] {
-  const seen = new Set<string>();
+  const rep = new Map<string, PipelinePromise>();
+  for (const p of promises) {
+    if (!p.group_id) continue;
+    const cur = rep.get(p.group_id);
+    if (
+      cur === undefined ||
+      promiseTotal(p) > promiseTotal(cur) ||
+      (promiseTotal(p) === promiseTotal(cur) && p.id < cur.id)
+    ) {
+      rep.set(p.group_id, p);
+    }
+  }
+  const used = new Set<string>();
   const out: PipelinePromise[] = [];
   for (const p of promises) {
     if (p.group_id) {
-      if (seen.has(p.group_id)) continue;
-      seen.add(p.group_id);
+      if (used.has(p.group_id)) continue;
+      used.add(p.group_id);
+      out.push(rep.get(p.group_id)!);
+      continue;
     }
     out.push(p);
   }

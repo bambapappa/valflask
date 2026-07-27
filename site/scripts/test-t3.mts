@@ -204,18 +204,23 @@ if (existsSync(startPage)) {
     const val = parseFloat(match[1]);
     // Speglar aggregates.totalFlasket: tillbakadragna löften filtreras bort
     // FÖRST, därefter grupp-dedup (en grupp räknas en gång, representerad av
-    // första kvarvarande posten i listordning). Ordningen spelar roll — görs
-    // dedupen före aktiv-filtret kan ett tillbakadraget löfte representera
-    // sin grupp, och totalen avviker från sajtens.
-    const seenGroups = new Set<string>();
-    const deduped = data
-      .filter((p: any) => p.status !== "tillbakadragen")
-      .filter((p: any) => {
-        if (!p.group_id) return true;
-        if (seenGroups.has(p.group_id)) return false;
-        seenGroups.add(p.group_id);
-        return true;
-      });
+    // den medlem som bär HÖGST belopp för mandatperioden, lika belopp bryts på
+    // id). Ordningen spelar roll — görs dedupen före aktiv-filtret kan ett
+    // tillbakadraget löfte representera sin grupp, och totalen avviker från
+    // sajtens. Representanten valdes tidigare på lägst id, vilket lät ett
+    // nollat riktningslöfte dra ned gruppens verkliga belopp till noll.
+    const aktiva = data.filter((p: any) => p.status !== "tillbakadragen");
+    const total = (p: any) => p.cost.msek_base * (p.cost.period === "per_ar" ? 4 : 1);
+    const rep = new Map<string, any>();
+    for (const p of aktiva) {
+      if (!p.group_id) continue;
+      const cur = rep.get(p.group_id);
+      if (cur === undefined || total(p) > total(cur) || (total(p) === total(cur) && p.id < cur.id)) {
+        rep.set(p.group_id, p);
+      }
+    }
+    // Behåll exakt en post per grupp: representanten.
+    const deduped = aktiva.filter((p: any) => !p.group_id || rep.get(p.group_id).id === p.id);
     const expectedFlasket = deduped.reduce((sum: number, p: any) => {
       if (p.cost.type !== "utgift" && p.cost.type !== "intäktsminskning") return sum;
       const mult = p.cost.period === "per_ar" ? 4 : 1;

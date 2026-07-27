@@ -209,6 +209,8 @@ describe("estimateCost", () => {
     assert.match(sys, /BETEENDE OCH UTNYTTJANDE/);
     // Regel 13: breda sammanfattningslöften
     assert.match(sys, /BREDA SAMMANFATTNINGS/);
+    // Regel 14: partiets egen siffra gäller före modellens
+    assert.match(sys, /PARTIETS EGEN SIFFRA GÄLLER/);
   });
 
   it("looksLikeOneOff: gåva/inlösen/mandatperiod ja; löpande nej", () => {

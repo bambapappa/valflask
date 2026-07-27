@@ -32,19 +32,43 @@ export function isBesparing(p: PromisePost): boolean {
 /**
  * R3: en grupp (samma politik hos flera partier, eller dubblerad post inom ett
  * parti) räknas EN gång i summor — det går inte att höja försvaret till 5 % av
- * BNP mer än en gång, oavsett hur många partier som lovar det. Gruppens första
- * post i listordning (= lägst id) representerar den; spannet mellan partiernas
- * olika prislappar redovisas i koalitionsvyns gruppnoter. Partijämförelser
- * påverkas inte av TVÄRPARTI-grupper (varje parti har sin egen medlem), men
- * interna dubbletter inom ett parti kollapsar även där.
+ * BNP mer än en gång, oavsett hur många partier som lovar det. Gruppen
+ * representeras av den medlem som bär det HÖGSTA beloppet för mandatperioden;
+ * spannet mellan partiernas olika prislappar redovisas i koalitionsvyns
+ * gruppnoter. Partijämförelser påverkas inte av TVÄRPARTI-grupper (varje parti
+ * har sin egen medlem), men interna dubbletter inom ett parti kollapsar även
+ * där.
+ *
+ * Representanten valdes tidigare som gruppens första post i listordning, alltså
+ * lägst id — men id:t avgörs av i vilken ordning löftena råkade skördas och
+ * säger ingenting om vilket löfte som prissätter politiken. När ett brett
+ * riktningslöfte nollades och råkade ha lägst id föll gruppens verkliga belopp
+ * ur summan: tre sådana nollningar dolde 283 200 miljoner kronor för
+ * mandatperioden innan felet upptäcktes (2026-07-27). Ordningen inom gruppen är
+ * bevarad i övrigt, och lika belopp bryts på id så att resultatet är
+ * deterministiskt.
  */
 export function dedupeByGroup(promises: PromisePost[]): PromisePost[] {
-  const seen = new Set<string>();
+  const rep = new Map<string, PromisePost>();
+  for (const p of promises) {
+    if (!p.group_id) continue;
+    const cur = rep.get(p.group_id);
+    if (
+      cur === undefined ||
+      promiseTotalMsek(p) > promiseTotalMsek(cur) ||
+      (promiseTotalMsek(p) === promiseTotalMsek(cur) && p.id < cur.id)
+    ) {
+      rep.set(p.group_id, p);
+    }
+  }
+  const used = new Set<string>();
   const out: PromisePost[] = [];
   for (const p of promises) {
     if (p.group_id) {
-      if (seen.has(p.group_id)) continue;
-      seen.add(p.group_id);
+      if (used.has(p.group_id)) continue;
+      used.add(p.group_id);
+      out.push(rep.get(p.group_id)!);
+      continue;
     }
     out.push(p);
   }

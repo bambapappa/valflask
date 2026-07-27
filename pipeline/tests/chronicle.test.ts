@@ -58,10 +58,31 @@ function promise(id: string, base: number): PipelinePromise {
 
 test("totalFlasket: samma regler som startsidan — grupp-dedup och aktiva (2026-07-16: krönikan sade 12 978 mdkr, startsidan 8 184)", () => {
   const a = promise("p-1", 1000);                                   // 4000 över mandatperioden
-  const b = { ...promise("p-2", 500), group_id: "g1" };             // 2000
-  const c = { ...promise("p-3", 700), group_id: "g1" };             // dublett av g1 — räknas EJ
+  const b = { ...promise("p-2", 500), group_id: "g1" };             // lägst id, men lägre belopp
+  const c = { ...promise("p-3", 700), group_id: "g1" };             // representerar g1: 2800
   const d = { ...promise("p-4", 300), status: "tillbakadragen" as never }; // inaktiv — räknas EJ
-  assert.equal(totalFlasket([a, b, c, d]), 4000 + 2000);
+  assert.equal(totalFlasket([a, b, c, d]), 4000 + 2800);
+});
+
+test("gruppen representeras av det HÖGSTA beloppet, inte av lägst id (2026-07-27: tre nollade riktningslöften dolde 283 200 mkr)", () => {
+  // Ett brett riktningslöfte som nollats får inte dra ned gruppens konkreta
+  // löfte till noll bara för att det råkar ha lägst id.
+  const nollat = { ...promise("p-1", 0), group_id: "g1" };
+  const konkret = { ...promise("p-2", 50000), group_id: "g1" };
+  assert.equal(totalFlasket([nollat, konkret]), 200000);
+  // Ordningen i indata får inte spela roll.
+  assert.equal(totalFlasket([konkret, nollat]), 200000);
+});
+
+test("engångsbelopp kan representera en grupp före ett större årsbelopp bara om totalen är högre", () => {
+  // Jämförelsen görs på mandatperiodens total, inte på msek_base: per_ar × 4.
+  const arligt = { ...promise("p-1", 300), group_id: "g1" };        // 1200 totalt
+  const engang = {
+    ...promise("p-2", 1000),
+    group_id: "g1",
+    cost: { ...promise("p-2", 1000).cost, period: "engang" },
+  } as PipelinePromise;                                             // 1000 totalt
+  assert.equal(totalFlasket([arligt, engang]), 1200);
 });
 
 // ── Datainvariant (extern granskning 2026-07-16: krönikan sade gap = total =

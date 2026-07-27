@@ -210,7 +210,8 @@ Ren, deterministisk kod (klocka och allowlist injiceras). Underkänd kandidat g�
 - **R3 (viktigast):** **samma politik hos olika partier grupplänkas
   (`group_id`) och räknas EN gång** i totaler och koalitioner — man kan inte höja
   försvaret till 5 % av BNP mer än en gång oavsett hur många partier som lovar
-  det. Gruppens första post (lägst id) representerar den; spannet mellan
+  det. Gruppen representeras av medlemmen med HÖGST belopp för mandatperioden
+  (lika belopp bryts på id); spannet mellan
   partiernas prislappar visas i koalitionsvyns gruppnoter. **Partijämförelser
   påverkas inte** av tvärparti-grupper (varje parti behåller sin egen medlem med
   fullt belopp) — men interna dubbletter inom ett parti kollapsar även där.
@@ -387,33 +388,136 @@ från datat som gällde när krönikan skrevs (ögonblicksbild), aldrig dagens s
 
 *Uppdaterad 2026-07-27.*
 
-### Nästa uppgift: granska de 111 posterna i `calculation_review.json`
+### Nästa uppgift: räkna om beloppen på säkrare grund
 
-Uträknings-backfillen är **klar** (tre körningar 26–27/7). Kvar är den
-mänskliga genomgången, tillsammans med ägaren, ett löfte i taget — samma
-arbetssätt som förra rundans 44.
+Genomgången av löften där beloppet inte stämde med den publicerade
+uträkningen är **klar** — 63 rättade, resten kontrollerade och friade. Men
+det arbetet flyttade beloppen till en *redovisad* grund, inte till en
+säkrare. De flesta uträkningar är rekonstruerade i efterhand av
+bakåtfyllnaden, vilket står utskrivet i varje sådan text.
 
-**Kön fördelar sig så här** (kolla om siffrorna stämmer innan du börjar):
+**Ordningen för omräkningen (mänskligt beslut 2026-07-27):**
 
-| Mönster | Antal |
-|---|---|
-| publicerat >0 → nytt **0** | 66 |
-| nytt lägre (ej 0) | 33 |
-| nytt högre | 5 |
-| publicerat 0 → nytt >0 | 7 |
+1. **Tandvården först.** Se nedan — underlaget är bevisat inkonsekvent.
+2. **Därefter övriga ämnen i fallande storleksordning**, alltså det
+   ämnesområde som väger tyngst i mandattotalen först, och inom ämnet de
+   största beloppen först.
 
-De 66 nollkandidaterna dominerar och väger tyngst — bara de tio största
-motsvarar ~265 000 mkr. Det är breda uppräkningslöften och regleringar
-(p-2026-0129 V 80 000 → 0, p-2026-0002 S 25 000 → 0, p-2026-0121 SD 20 000 → 0),
-alltså A5-promptens nya avgränsningsregler tillämpade på gamla estimat. Många är
-sannolikt korrekta, men var och en kräver ett beslut. Börja där.
+Två löften är redan uttryckligen märkta för omräkning i sin egen uträkning:
+p-2026-0390 (sanktioner mot bidrag, vilar på en antagen procentsats utan
+erfarenhet bakom) och de tre tandvårdslöftena i gruppen nedan.
 
-**Regler för genomgången:**
-- Justeringarna ryms under den redan skrivna samlade rättelseposten — **skriv
-  INGEN rättelse per löfte**. Uppdatera bara `promises.json` (belopp +
-  `history`-post) och `changelog.json`, inte `rattelser.json`.
-- Två commits: först dataändringen med `"commit": "0000000"`, sedan backfill av
-  riktig hash + omräknad `data_hash` (§3.5).
+#### Tandvården: underlaget motsäger sig självt
+
+Fyra löften rör samma sak, och deras uträkningar vilar på **tre olika bilder
+av hur stor tandvården är**:
+
+| Löfte | Parti | Belopp | Antar att vuxentandvården kostar |
+|---|---|---|---|
+| p-2026-0552 | SD | 10 000 | 14,7 mdkr |
+| p-2026-0484 | SD | 10 000 | 25 mdkr |
+| p-2026-0489 | V | 10 000 | 25 mdkr |
+| p-2026-0440 | MP | 20 000 | 45 mdkr totalt, varav 12 offentligt |
+
+Minst en siffra är fel, och beloppen är byggda rakt ovanpå dem. **Fastställ
+tandvårdens storlek först** — allt annat i ämnet hänger på den.
+
+De tre första är grupplänkade (`g-hogkostnadsskydd-tandvard`) och räknas en
+gång. SD:s två är samma löfte i två citat; det ena skriver ut mekanismen
+(tio procents patientavgift), det andra inte.
+
+**MP står med flit UTANFÖR gruppen**, men det beslutet är osäkert och ska
+prövas om vid omräkningen. Motivet: att finansiera tandvården enligt samma
+principer som annan sjukvård är en större reform än ett kostnadstak. Men
+SD:s löfte landar i praktiken också nära nittio procents offentlig
+finansiering, så skillnaden kan vara mindre än etiketterna antyder.
+
+#### Två harmoniseringar är gjorda och behöver inte tas om
+
+- **Mindre klasser** (`g-mindre-klasser`): alla tre löftena vilar nu på
+  samma uträkning, hämtad från det enda löftet som anger en nivå
+  (Liberalernas maxtak om tjugo elever). S:s löfte prissätts på ett lånat
+  antagande, och uträkningen skriver ut att antagandet är vårt och inte
+  partiets. L:s vagare löfte är nollat eftersom partiets eget konkreta löfte
+  bär kostnaden.
+- **Regeln som följde av det:** ett löfte utan angiven nivå nollas när
+  partiets EGET konkreta löfte bär kostnaden. Finns inget sådant löfte bär
+  riktningslöftet kostnaden själv, prissatt på samma grund som ett annat
+  partis motsvarande löfte — annars blir partiets politik oprissatt överallt.
+
+#### Sökningen efter avvikelser duger inte som facit
+
+Den har **både falsklarm och falska negativ**. Den läser fragment: "Bas
+2 500 kr per förlossning" tolkas som basbeloppet 2 500 fast det är ett
+styckpris, och "bas 1,5 miljarder" blir talet 1. Den missar samtidigt
+uträkningar som anger sitt resultat utan ordet bas — ett löfte om mindre
+klasser bar samma fel men fastnade aldrig i nätet, eftersom texten skrev
+"≈ 12 miljarder kronor per år". Kön är genomgången manuellt, men sökningen
+garanterar inte att den är tom.
+
+### Gjort 2026-07-27 (kön betad från 58 till 0, 63 belopp rättade, tre systemfynd)
+
+**Kön är tom.** `data/calculation_review.json` är `[]`. Rör den inte utan att
+först läsa "Kör INTE fler backfill-körningar" nedan.
+
+**Alla aktiva löften med datorgissat belopp har en öppen uträkning.** De elva
+som saknade en var de en människa prövat och satt belopp på — se
+review-fixen nedan.
+
+**Tre fynd som gick längre än kön:**
+
+1. **Grupprepresentanten valdes på lägst id.** När ett brett riktningslöfte
+   nollades och råkade ha lägst id i sin grupp föll gruppens verkliga belopp
+   ur summan: tre nollningar dolde 283 200 mkr innan felet upptäcktes.
+   Representanten väljs nu på högsta belopp för mandatperioden, i tre
+   kopior som måste räkna lika (`site/src/lib/aggregates.ts`,
+   `pipeline/src/chronicle.ts`, `site/scripts/test-t3.mts`). Tre tester
+   vaktar det. **Lärdom: nollar du ett grupplänkat löfte — kontrollera
+   gruppen.**
+2. **Granskarens belopp tappade uträkningen.** `review.ts` byggde om hela
+   `cost`-objektet och `calculation` fanns inte i listan. Nu kan uträkningen
+   anges i samma beslut: `--calc "…"` på kommandoraden, eller en rad som
+   börjar `Uträkning:` i en issue-kommentar. Märkningen är medvetet
+   uttrycklig — ett första utkast tolkade all text under kommandoraden som
+   uträkning, och då hade ett "tack, ser bra ut" hamnat på löftessidan.
+3. **Ny kärnprincip: partiets egen siffra gäller.** Se `DECISION_LOG.md`
+   2026-07-27. Kodad i `CLAUDE.md`, som regel 14 i `pipeline/prompts/A5-cost.md`
+   och vaktad av ett enhetstest. Bakgrund: V:s bebispeng låg på 0 trots att
+   partiledaren angav 15 000 kronor per förstagångsförälder i samma mening.
+
+**Beslut i kön:** tolv breda löften nollade, 32 belopp nedjusterade, elva
+löften bytte period från per år till engångskostnad (deras uträkningar
+beskrev redan en engångsinsats medan beloppet räknades fyra gånger), fem
+belopp höjda eller prissatta för första gången, två löften tillbakadragna.
+
+**Två citat i DÅTID drogs tillbaka** — p-2026-0099 ("vi har gett polisen
+verktyg") och p-2026-0061 ("har en jobbpremie införts"). De beskriver
+genomförd politik och innehåller inget åtagande om framtiden. **Leta efter
+fler: extraktionen skiljer inte på löfte och skryt.**
+
+**Två beslut lämnades med flit orörda** trots maskinförslag: p-2026-0039
+(straffskärpningar) och p-2026-0470 (marknadsskolan). Båda prövades av en
+människa tidigare, och ett maskinförslag får inte tyst riva upp ett fattat
+beslut.
+
+**Fyra grupplänkningar gjorda:** SD/M fler poliser, M:s två bidragstakscitat,
+C:s tre löften om anställningskostnader (38 000 -> 15 000 mkr/år) och SD/V
+högkostnadsskydd i tandvården. MP:s tandvårdslöfte lämnades UTANFÖR gruppen
+med flit: att finansiera tandvården som annan sjukvård är en större reform än
+ett kostnadstak.
+
+**Publika uträkningar städade:** inga råa löftesnummer kvar (40 omskrivna),
+inga hänvisningar till interna prissättningsregler (6), fackuttryck utskrivna
+i 196 texter. Två fel rättade på vägen: ett basantagande angivet i miljarder
+i stället för miljoner, och en räkning som blandade tre enhetsförkortningar.
+
+**Totalen** gick från 7 016 120 till **5 867 996 mkr** under omgången.
+
+### Öppna frågor som ingen avgjort
+
+- Fler löften som beskriver genomförd politik i dåtid (se ovan).
+- Fler par där samma politik ligger på två löften utan grupplänk. C:s
+  trippel hittades bara för att en beloppsavvikelse pekade dit.
 
 ### Kör INTE fler backfill-körningar
 
@@ -561,7 +665,7 @@ Kört mot `origin/main` (commit `b13f889`, efter PR #438):
 - **`pnpm check-t7`: ALLT OK** — 404 löften har `archive_url`, 24 saknar
   (retry-flagga hanteras av pipeline), ingen fulltext i data, 177 seen-URL:er,
   0 review-poster. ✅
-- **Data:** 428 löften (s 44, m 79, sd 28, c 88, v 31, kd 23, l 47, mp 91 —
+- **Data (2026-07-23, se §7 för dagens siffror):** 428 löften (s 44, m 79, sd 28, c 88, v 31, kd 23, l 47, mp 91 —
   summan > 428 pga tvärparti-grupper), 361 llm_estimat varav **4** med
   `calculation` (backfillen ännu ej landad), 176 stances, 10 frågor, 4 krönikor,
   233 changelog-poster, 9 rättelseposter, needs_review tom.
