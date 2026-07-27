@@ -2993,8 +2993,9 @@
       "msek_high": 9000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Att reglera lärares undervisningsskyldighet kräver fler lärare. ~5 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Reglerad undervisningsskyldighet kräver fler lärare för samma lektioner. Beloppet vilar på antaganden om lärarantal och kostnad per tjänst, redovisade i uträkningen.",
+      "confidence": 0.3,
+      "calculation": "En reglering av hur många undervisningstimmar en lärare får åläggas betyder att samma lektioner måste täckas av fler lärare. Antaganden: cirka 100 000 lärare i grund- och gymnasieskolan. Sänks undervisningsbördan med i storleksordningen fem procent behövs ungefär 5 000 fler lärartjänster. En årskostnad per lärare inklusive arbetsgivaravgifter på 0,8–1,0 miljoner kronor ger 4 000–5 000 miljoner kronor per år. Kostnaden landar formellt hos kommuner och andra huvudmän, men när staten lägger en ny skyldighet på dem ska staten kompensera för den — därför räknas den som statlig. Det låga talet speglar en mildare reglering och att den träder i kraft först hösten 2027, det höga en kraftigare sänkning av undervisningstiden."
     },
     "financing_claimed": {
       "described": false,
@@ -3004,7 +3005,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen bakom beloppet är nu offentlig och visar antagandena om lärarantal och kostnad per tjänst. Beloppet är oförändrat. Den omräknade uträkningen ville sätta det till 0 kronor som \"bara en reglering\" — men ett tak för undervisningstid kräver fler lärare, och staten kompenserar kommunerna för nya skyldigheter, så kostnaden är verklig.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5022,7 +5029,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Mer kärnkraftsbaskraft. Samma som #137. ~100 mdr/år (överlappar med #137). [granskning 2026-07-09: ny kärnkraft: årlig kapitalkostnad inom mandatet, ej 100 mdr/år]",
-      "confidence": 0.3
+      "confidence": 0.3,
+      "calculation": "Ny kärnkraft byggs inte av staten ensam, men löftet förutsätter statligt stöd i någon form. Antaganden: en ny reaktor kostar i storleksordningen 80–150 miljarder kronor och byggs över mer än en mandatperiod. Statens del — ägarkapital, kreditgarantier som faller ut, risktäckning — antas motsvara några tiotals miljarder totalt, vilket utslaget på perioden ger ungefär 10 000 miljoner kronor per år. Samma belopp används för alla partier som lovar ny kärnkraft, eftersom samma politik ska kosta lika. Löftet är ett delat löfte tillsammans med Moderaterna, Liberalerna och Sverigedemokraterna och räknas därför en gång i den samlade summan."
     },
     "financing_claimed": {
       "described": false,
@@ -5032,7 +5040,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen bakom beloppet är nu offentlig. Beloppet är oförändrat och följer de andra partiernas löften om ny kärnkraft. Den omräknade uträkningen ville sätta det till 0 kronor som en ren viljeyttring — men då hade Kristdemokraterna blivit billigast av fyra partier för samma politik.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -15467,13 +15481,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
-      "msek_high": 20000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Vagt löfte utan belopp. Antar en skatteväxling där höjd koldioxidskatt delvis finansierar sänkt skatt på låga inkomster, netto mindre skatteintäkt på 1–20 mdkr/år.",
-      "confidence": 0.3
+      "method_note": "Löftet anger varken vilka skatter som ändras eller åt vilket håll nettot går. Prissätts inte; Miljöpartiets konkreta skatteförslag ligger på sina egna löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger varken vilka skatter som ska ändras eller åt vilket håll nettot går — en skattereform för sänkta utsläpp och ökad jämlikhet kan lika gärna ge staten mer pengar som mindre. Att ändå sätta en siffra vore att sätta vår gissning på partiets tomma rad. Beloppet är därför 0 kronor. Det betyder inte att en skattereform saknar ekonomisk betydelse, utan att just det här löftet inte innehåller något som går att prissätta. Miljöpartiets konkreta skatteförslag prissätts på sina egna löften."
     },
     "financing_claimed": {
       "described": false,
@@ -15483,7 +15498,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat från 5 000 miljoner kronor per år i minskade skatteintäkter till 0 kronor. Löftet säger varken vilka skatter som ändras eller åt vilket håll nettot går, så den tidigare siffran var vår gissning snarare än partiets åtagande. Uträkningen är nu offentlig. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20232,7 +20253,7 @@
   },
   {
     "id": "p-2026-0551",
-    "group_id": null,
+    "group_id": "g-ny-karnkraft-baskraft",
     "title": "Bygg ny kärnkraft i Sverige",
     "slug": "bygg-ny-karnkraft-i-sverige",
     "parties": [
@@ -20256,7 +20277,7 @@
       "msek_high": 18000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Statligt stöd/garantier för nybyggd kärnkraft (tillståndsförenkling ~gratis). Harmoniserat med befintliga kärnkraftslöften.",
+      "method_note": "Statligt stöd till nybyggd kärnkraft; förenklade tillstånd kostar i sig ingenting. Beloppet är detsamma som för övriga partiers löften om ny kärnkraft.",
       "calculation": "Statligt stöd/garantier för ny kärnkraft (tillståndsdelen försumbar). Harmoniserat med de befintliga kärnkraftslöftena p-2026-0082/0153/0109, som alla ligger 5 000/10 000/18 000 per år — en jätteinvestering (~100–150 mdr för 2 reaktorer) spridd över mandatperioden. Samma politik ⇒ samma räkning. (p-2026-0083 ligger högre, 20 mdr, men är en större åtgärd: statligt ägande + finansieringslösning.)",
       "confidence": 0.25
     },
@@ -20268,7 +20289,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Löftet är nu kopplat till samma delade löfte som Moderaternas, Kristdemokraternas och Liberalernas löften om ny kärnkraft. Beloppet var redan harmoniserat men räknades tidigare separat i den samlade summan; nu räknas politiken en gång. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
