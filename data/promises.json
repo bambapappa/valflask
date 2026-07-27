@@ -4795,13 +4795,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 16065,
-      "msek_base": 18900,
-      "msek_high": 21735,
+      "msek_low": 14000,
+      "msek_base": 17500,
+      "msek_high": 21000,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Källan anger: barnbidrag höjs till '2000 kronor under nästa mandatperiod'. Nuvarande barnbidrag 1250 kr/mån. Höjning = 750 kr/mån × 2 100 000 barn × 12 mån = 18,9 mdr/år. (Antar 2000 kr/barn/mån)",
-      "confidence": 0.85
+      "method_note": "Partiets egen nivå: höjning från 1 250 till 2 000 kronor i månaden. Endast antalet barn är uppskattat.",
+      "confidence": 0.85,
+      "calculation": "Partiet anger själv nivån: barnbidraget höjs från 1 250 till 2 000 kronor i månaden. Höjningen är alltså 750 kronor i månaden, eller 9 000 kronor per barn och år. Det enda vi uppskattar är antalet barn: omkring 1,94 miljoner, vilket ger 1,94 miljoner × 9 000 ≈ 17 500 miljoner kronor per år. Med 1,8 miljoner barn blir det 16 200 miljoner och med 2,1 miljoner barn 18 900 miljoner. Spannet vidgas till 14 000–21 000 miljoner för skillnader i vem som räknas som bidragsberättigad och för administration."
     },
     "financing_claimed": {
       "described": false,
@@ -4811,7 +4812,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 18 900 till 17 500 miljoner kronor per år och försett med en öppen uträkning, som saknades. Löftet delar grupp med partiets andra löfte om samma höjning och ska räknas på samma grund. Höjningen om 750 kronor i månaden är partiets egen siffra.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8355,9 +8362,9 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Inriktningslöfte utan kvantifierbar kostnad.",
+      "method_note": "De 45 miljarderna är intäkter partiet räknar med att reformerna ger, inte en kostnad för staten.",
       "confidence": 0.3,
-      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Inga konkreta åtgärder → 0 msek."
+      "calculation": "Partiet anger själv en siffra — 45 miljarder kronor i ökade skatteintäkter — men det är vad partiet räknar med att få in om målet om 150 000 nya jobb nås, inte vad ett löfte kostar. Ett antagande om framtida skatteintäkter är en följd partiet hoppas på, inte en åtgärd som ska prissättas. Citatet innehåller inget eget åtagande om vad som ska göras; de reformer som ska ge jobben prissätts på partiets egna löften om dem."
     },
     "financing_claimed": {
       "described": false,
@@ -8367,7 +8374,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen omskriven. Beloppet är oförändrat på 0. Citatets 45 miljarder är intäkter partiet räknar med att reformerna ger, inte en kostnad — och löftet innehåller ingen egen åtgärd att prissätta.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8403,8 +8416,9 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Del av Centerns skattereform (avskaffat jobbskatteavdrag ersätts med en skattefri grundlön). Reformens nettoeffekt redovisas samlat på gruppens representant p-2026-0144 (C:s egen siffra, +45 miljarder kronor per år) och räknas en gång — denna formulering bidrar därför 0.",
-      "confidence": 0.3
+      "method_note": "Ingår i partiets skattereform, som prissätts en gång på partiets egen nettosiffra genom det löfte som representerar den.",
+      "confidence": 0.3,
+      "calculation": "Partiet anger själv nivån: ett samlat avdrag på 15 319 kronor i månaden ersätter dagens jobbskatteavdrag och skattereduktion. Men den siffran beskriver reformens utformning, inte vad den kostar staten netto — det gamla avdraget försvinner samtidigt som det nya införs. Reformen prissätts en gång, på partiets egen nettosiffra, genom det löfte som representerar den. Att räkna beloppet här också skulle räkna samma reform två gånger."
     },
     "financing_claimed": {
       "described": false,
@@ -8419,6 +8433,11 @@
         "date": "2026-07-24",
         "change": "Kopplad till gruppen g-c-skattereform-grundlon (samma reform som p-2026-0144, p-2026-0252, p-2026-0254). Beloppet (0 kr) oförändrat; reformens nettoeffekt räknas en gång på representanten p-2026-0144.",
         "commit": "4d26da23ce3cb52e7651bc7b029afe799f5aa9c2"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades helt. Beloppet är oförändrat på 0. Löftet är en av flera beskrivningar av samma skattereform, som prissätts en gång genom det löfte som representerar gruppen.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -9278,14 +9297,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 16065,
-      "msek_base": 18900,
-      "msek_high": 21735,
+      "msek_low": 14000,
+      "msek_base": 17500,
+      "msek_high": 21000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat från Familj/Barn-kategori. ~5 mdr/år. [granskning 2026-07-09: barnbidrag 1250→2000: +750×2,1M×12 (i linje med p-0100)]",
+      "method_note": "Partiets egen nivå: höjning från 1 250 till 2 000 kronor i månaden. Endast antalet barn är uppskattat.",
       "confidence": 0.4,
-      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Höjning: 750 kr/mån × 12 = 9 000 kr/år per barn. Antag 1,94 miljoner barn → 1,94M × 9 000 = 17 460 mkr/år. Avrundat till 17 500 mkr. Lågt: 1,8M barn → 16 200, högt: 2,1M barn → 18 900 (jfr p-2026-0100). Utvidgat intervall 14 000–21 000 för att inkludera administrativa skillnader."
+      "calculation": "Partiet anger själv nivån: barnbidraget höjs från 1 250 till 2 000 kronor i månaden. Höjningen är alltså 750 kronor i månaden, eller 9 000 kronor per barn och år. Det enda vi uppskattar är antalet barn: omkring 1,94 miljoner, vilket ger 1,94 miljoner × 9 000 ≈ 17 500 miljoner kronor per år. Med 1,8 miljoner barn blir det 16 200 miljoner och med 2,1 miljoner barn 18 900 miljoner. Spannet vidgas till 14 000–21 000 miljoner för skillnader i vem som räknas som bidragsberättigad och för administration."
     },
     "financing_claimed": {
       "described": false,
@@ -9295,7 +9314,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 18 900 till 17 500 miljoner kronor per år. Den publicerade uträkningen räknade fram 17 500 men beloppet stod på 18 900 — uträkningens höga alternativ. Nu räknar löftet det uträkningen visar. Höjningen om 750 kronor i månaden är partiets egen siffra; bara antalet barn är uppskattat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -10684,13 +10709,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 150000,
-      "msek_base": 200000,
-      "msek_high": 260000,
+      "msek_base": 190000,
+      "msek_high": 250000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Baseras på BNP-prognos ca 6 500 mdkr. 5 % = 325 mdkr. Nuvarande anslag ca 125 mdkr (ca 2 %). Differens ca 200 mdkr. Osäkerhet kring BNP-utveckling, framtida anslagsnivåer och definition av försvarsutg (belopp satt av granskare)",
+      "method_note": "Partiets egen nivå: försvarsanslaget ska nå 5 procent av BNP. Endast BNP-nivå och nuvarande anslag är uppskattade.",
       "confidence": 0.9,
-      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): BNP 2024 ca 6 200 mdkr → 5 % = 310 mdkr. Dagens anslag ~2 % ≈ 124 mdkr. Ökning = 310 – 124 = 186 mdkr = 186 000 msek, avrundat 190 000 msek. Osäkerhet: högre/lägre BNP, infasning. Låg 150 000 (BNP 5 000 mdkr, 2 % → 3 % ökning), hög 250 000 (BNP 6 500 mdkr, 5,5 %)."
+      "calculation": "Partiet anger själv målet: försvarsanslaget ska nå 5 procent av BNP. Med en BNP på omkring 6 200 miljarder kronor blir 5 procent 310 miljarder. Dagens anslag ligger på omkring 2 procent, alltså ungefär 120 miljarder. Skillnaden — det löftet kostar — blir omkring 190 miljarder kronor per år när det är fullt infört. Det låga alternativet, 150 miljarder, gäller vid lägre BNP eller om civilförsvaret räknas in i dagens nivå; det höga, 250 miljarder, vid högre BNP och en högre slutnivå. Målnivån är partiets egen; BNP och dagens anslag är våra uppskattningar."
     },
     "financing_claimed": {
       "described": false,
@@ -10700,7 +10725,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 200 000 till 190 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 190 000 men beloppet stod på 200 000, och det andra partiet i samma delade löfte låg redan på 190 000. Nu räknar båda lika, och löftet räknar det uträkningen visar.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12757,9 +12788,9 @@
       "msek_high": 250000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Skillnad mellan 5% av BNP (~310 mdkr) och nuvarande försvarsanslag (~119 mdkr) = ~191 mdkr/år. Osäkerhet om BNP-utveckling, redan planerad ökning till 2% och takten i upprustningen.",
+      "method_note": "Partiets egen nivå: upprustningen ska fullföljas till 5 procent av BNP. Endast BNP-nivå och nuvarande anslag är uppskattade.",
       "confidence": 0.6,
-      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): 1. BNP ~6 200 mdkr (2026). 5 % = 310 mdkr.\n2. Nuvarande försvarsanslag ~110-130 mdkr (exkl. civilförsvar).\n3. Ökning: 310 - ~120 = ~190 mdkr/år.\n4. Jämför med p-2026-0340 (200 mdkr/år). Lågt spann: 160 mdkr (om BNP lägre eller civilförsvar inräknas annorlunda). Högt spann: 240 mdkr (om totalram inkl. stödkostnader)."
+      "calculation": "Partiet anger själv målet: upprustningen ska fullföljas upp till 5 procent av BNP. Med en BNP på omkring 6 200 miljarder kronor blir 5 procent 310 miljarder. Dagens försvarsanslag ligger på omkring 120 miljarder, alltså kostar löftet omkring 190 miljarder kronor per år fullt infört. Det låga alternativet, 150 miljarder, gäller vid lägre BNP eller om civilförsvaret räknas in annorlunda; det höga, 250 miljarder, vid en högre totalram. Ett annat parti har lovat samma nivå, och löftena räknas på samma grund. Målnivån är partiets egen; BNP och dagens anslag är våra uppskattningar."
     },
     "financing_claimed": {
       "described": false,
@@ -12769,7 +12800,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen omskriven till vanlig svenska: den hänvisade tidigare till ett annat löfte med dess interna nummer, vilket inte säger läsaren något. Beloppet är oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -16473,8 +16510,9 @@
       "msek_high": 9000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar 3,5 milj ISK-sparare, snittskatt 1%, skattefri del upp till 500k/pers. Osäker kapitalfördelning ger spann 2-9 mdkr.",
-      "confidence": 0.4
+      "method_note": "Partiets egen nivå: skattefritt sparande upp till 500 000 kronor. Sparandets fördelning är uppskattad.",
+      "confidence": 0.4,
+      "calculation": "Partiet anger själv gränsen: sparande på investeringssparkonto blir skattefritt upp till 500 000 kronor. Staten förlorar den schablonskatt som i dag betalas på kapitalet under gränsen. Antas det finnas omkring 3–4 miljoner sparare med i genomsnitt 200 000–400 000 kronor på kontot ligger merparten av kapitalet under gränsen och undantas helt, medan de största kontona bara får sina första 500 000 kronor befriade. Med en schablonskatt på någon procent av kapitalet ger det ett bortfall på 2 000–9 000 miljoner kronor per år, med 4 500 miljoner som basbelopp. Gränsen är partiets; fördelningen av sparandet är vår uppskattning."
     },
     "financing_claimed": {
       "described": false,
@@ -16484,7 +16522,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen tillagd; den saknades helt. Beloppet är oförändrat på 4 500 miljoner kronor per år. Gränsen på 500 000 kronor är partiets egen siffra — det som uppskattas är hur sparandet fördelar sig under och över den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
