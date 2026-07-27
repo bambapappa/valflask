@@ -407,6 +407,78 @@ Två löften är redan uttryckligen märkta för omräkning i sin egen uträknin
 p-2026-0390 (sanktioner mot bidrag, vilar på en antagen procentsats utan
 erfarenhet bakom) och de tre tandvårdslöftena i gruppen nedan.
 
+#### Sessionsplan: en rad är en session
+
+Mätt på `data/promises.json` 2026-07-27. En **räkneenhet** är ett ensamt
+löfte eller en hel grupp — gruppen räknas en gång och företräds av sitt
+högsta belopp. 424 aktiva löften blir 378 räkneenheter, varav 242 bär ett
+belopp över noll. Pengarna är kraftigt snedfördelade: hälften av
+mandattotalen ligger i åtta enheter, 80 procent i 35 och 95 procent i 82.
+
+| # | Session | Enheter | Tankenivå |
+|---|---|---|---|
+| 1 | **Tandvården.** Fastställ vuxentandvårdens storlek först, räkna sedan om gruppen och pröva om MP:s löfte hör hemma i den | 4 löften (2 enheter) | **max** |
+| 2 | **Skatter, de elva tyngsta** — knappt 2 300 av ämnets 2 817 mdkr. Störst: MP 600, C:s grundlönsgrupp 420, M 415 | 11 | **max** |
+| 3 | Skatter, resten | 45 | hög |
+| 4 | **Försvar, hela ämnet** — 1 437 mdkr, varav 760 i en enda grupp | 19 | **max** |
+| 5 | **Välfärd, de tyngsta** (tandvården är redan gjord i session 1) | 12 | **max** |
+| 6 | Välfärd, resten | 73 | hög |
+| 7 | Utbildning, hela ämnet, tyngsta först | 61 | hög |
+| 8 | Klimat-miljö, hela ämnet | 38 | hög |
+| 9 | Övrigt (25) och infrastruktur (11) | 36 | hög |
+| 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
+
+Ämnesordningen är mandattotalen: skatter 2 817 mdkr, försvar 1 437,
+välfärd 632, utbildning 414, klimat-miljö 268, övrigt 120, rättsväsende 71,
+infrastruktur 63, migration 45. Löften som ger staten pengar ligger kvar i
+sitt eget ämne och räknas om i samma session som resten av ämnet.
+
+**Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
+löften vilar på, eller när en enskild enhet väger över hundra miljarder för
+mandatperioden — där kostar ett fel mer än hela ämnen längre ned i listan.
+Hög i övrigt: varje löfte är då litet och avgränsat, och arbetet är att
+tillämpa ett regelverk som redan står skrivet. **Lägre än hög duger inte
+för det här arbetet** — netto mot brutto, utnyttjandegrad, beteendeeffekter
+och nollningsreglerna är precis där ett billigare tankepass gör
+systematiska fel som ser rimliga ut i efterhand.
+
+**När sessionen byts.** En rad i tabellen är en session. Den avslutas med
+öppnad PR och uppdaterad HANDOFF, och då byts session. Tar kontexten slut
+före ämnet: avsluta där du står och skriv in i tabellen var nästa session
+tar vid. **Bryt aldrig mitt i en grupp och aldrig mitt i en
+harmonisering** — hela gruppen ska räknas om i samma session, annars vilar
+medlemmarna på olika grund. Raderna 6, 7 och 10 är stora nog att troligen
+behöva delas.
+
+Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
+max-session och fyrtio till sextio i en hög-session. **Skriv in det
+verkliga utfallet** när sessionen är klar, så vilar planen på mätt
+erfarenhet i stället för på ett antagande.
+
+**Innan du lämnar en session:**
+
+- varje ändrat löfte har en egen `history`-post,
+- två-commit-mönstret följt och `data_hash` matchar `computeDataHash`,
+- *en* samlad post i `data/rattelser.json` för sessionen, inte en per löfte,
+- `pnpm test` och `tsc --noEmit` gröna i `pipeline/`,
+- nollade du ett grupplänkat löfte — kontrollera gruppens representant,
+- tabellraden ovan ifylld med utfall, och anspråket nedan struket.
+
+**Att pröva i session 2:** C:s grundlönsreform ligger i två grupper.
+`g-c-skattefri-grundlon` bär kostnaden (105 000 mkr per år, 420 mdkr för
+perioden) medan `g-c-skattereform-grundlon` bär finansieringen (45 000 mkr
+per år i ökade skatteintäkter när jobbskatteavdraget avskaffas) och dess
+tre övriga medlemmar står på noll. Summorna håller isär utgifter och ökade
+intäkter, så inget dubbelräknas i dag — men det är samma reform i två
+grupper, och frågan om kostnaden ska visas brutto eller netto är inte
+avgjord.
+
+#### Pågår just nu
+
+Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
+
+- (ingen pågående session)
+
 #### Tandvården: underlaget motsäger sig självt
 
 Fyra löften rör samma sak, och deras uträkningar vilar på **tre olika bilder
