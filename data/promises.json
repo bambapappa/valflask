@@ -322,14 +322,15 @@
     "category": "skatter",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 1500,
+      "period": "engang",
+      "msek_low": 1,
+      "msek_base": 15,
+      "msek_high": 50,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Administrativ kostnad för aktivitetsplikt, utökad handläggning Arbetsförmedlingen. Ca 1 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Prissätter regelverksarbetet: föreskrifter, it-anpassning och utbildning. Aktivitetsplikten utförs av kommunerna och Arbetsförmedlingen inom befintlig verksamhet.",
+      "confidence": 0.4,
+      "calculation": "Löftet prissätts som det arbete staten själv måste göra för att införa plikten: 5–10 handläggarår för utrednings- och föreskriftsarbete à 0,7 miljoner kronor blir 3,5–7 miljoner, anpassning av ärendehanteringssystemen 5–20 miljoner och utbildning av personal 2–5 miljoner. Totalt 10–30 miljoner kronor som en engångskostnad. Själva aktiviteterna utförs och betalas av kommunerna och Arbetsförmedlingen inom befintlig verksamhet — det är ingen ny kostnad för staten. Löftet anger inga nya program utöver plikten i sig."
     },
     "financing_claimed": {
       "described": false,
@@ -339,7 +340,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 000 till 15 miljoner kronor, och perioden från per år till engångskostnad. Det tidigare beloppet prissatte aktiviteterna, men de utförs och betalas av kommunerna och Arbetsförmedlingen — staten står bara för regelverksarbetet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -580,13 +587,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
-      "msek_high": 9000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: BUP-utbyggnad, fler psykologer/psykiatriker. Nuvarande BUP-köer very lång. Estimat 5 mdr/år.",
-      "confidence": 0.3
+      "method_note": "Riktningslöfte utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets konkreta psykiatrilöften.",
+      "confidence": 0.3,
+      "calculation": "Löftet säger att psykiatrin ska stärkas men anger varken hur många fler som ska få vård, hur mycket pengar som avses eller vilken åtgärd som ska vidtas. Utan angiven nivå finns ingen uträkning att göra — ett belopp här skulle vara en gissning. Psykiatrin drivs dessutom av regionerna. Kostnaden ligger på partiets konkreta vårdlöften."
     },
     "financing_claimed": {
       "described": false,
@@ -596,7 +604,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 5 000 till 0 miljoner kronor per år. Bakåtfyllnaden föreslog 500, men det beloppet vilade också på en gissning: löftet anger ingen nivå och ingen åtgärd. Samma bedömning som för övriga riktningslöften i genomgången.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -867,13 +881,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 750,
-      "msek_base": 1500,
-      "msek_high": 2250,
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 800,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Utökad arbetslivskriminalitetsbekämpning, fler inspektörer. Estimat 1,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Utökad kontroll och tillsyn hos de myndigheter som bekämpar arbetslivskriminalitet.",
+      "confidence": 0.4,
+      "calculation": "Arbetet delas mellan 3–5 myndigheter — Skatteverket, Arbetsmiljöverket, Polisen med flera. Antas var och en få 40–160 miljoner kronor per år för utökad kontroll och tillsyn blir summan 150–800 miljoner. Basbeloppet 400 miljoner motsvarar en måttlig nivå."
     },
     "financing_claimed": {
       "described": false,
@@ -883,7 +898,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 500 till 400 miljoner kronor per år. Det tidigare beloppet saknade uträkning; det nya bygger på vad utökad kontroll kostar hos de myndigheter som faktiskt utför arbetet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1578,13 +1599,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 8000,
-      "msek_high": 12000,
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: 25 000 poliser idag, mål fler. Om 5000 fler poliser × 700 000 kr totalkostnad = 3,5 mdr + utrustning/infrastruktur. Estimat 8 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Harmoniserat med andra partiers löften om fler poliser, som prissätts på samma grund.",
+      "confidence": 0.4,
+      "calculation": "Löftet anger ingen siffra, så beloppet läggs på samma nivå som andra partiers löften om att förstärka polisen — samma politik ska kosta lika mycket oavsett vem som lovar den. Den nivån är 1 500 miljoner kronor per år. Spannet 500–3 000 miljoner speglar att löftet kan vara både mindre och mer ambitiöst än de jämförbara."
     },
     "financing_claimed": {
       "described": false,
@@ -1594,7 +1616,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 8 000 till 1 500 miljoner kronor per år. Det tidigare beloppet låg långt över vad samma politik prissatts till hos andra partier; nu vilar löftena på samma grund.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1673,13 +1701,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 750,
-      "msek_base": 1500,
-      "msek_high": 2250,
+      "msek_low": 100,
+      "msek_base": 600,
+      "msek_high": 1200,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Etablera ny yrkeskategori + utökade kommunala verktyg. ~1,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Kostnad för den nya yrkeskategorin säkerhetsvakter plus central administration och tillsyn.",
+      "confidence": 0.4,
+      "calculation": "Den nya yrkeskategorin antas omfatta 500–1 500 säkerhetsvakter till en kostnad av 0,6–0,8 miljoner kronor per tjänst och år, alltså 300–1 200 miljoner. Central administration och tillsyn läggs till med 20–200 miljoner. Basbeloppet 600 miljoner motsvarar ungefär 1 000 vakter."
     },
     "financing_claimed": {
       "described": false,
@@ -1689,7 +1718,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 500 till 600 miljoner kronor per år, nu grundat på antal tjänster gånger kostnad per tjänst i stället för en schablon.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1766,14 +1801,15 @@
     "category": "rättsväsende",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "period": "engang",
+      "msek_low": 1,
+      "msek_base": 5,
+      "msek_high": 20,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Fond finansierad av förverkade brottsvinster. Självfinansierande delvis. ~0,5 mdr/år administrativt.",
-      "confidence": 0.4
+      "method_note": "Fonden inrättas genom ett regelverk; utbetalningarna finansieras av de förverkade medlen och är ingen ny kostnad.",
+      "confidence": 0.4,
+      "calculation": "Att inrätta fonden kräver ett regelverk — en promemoria för 1–3 miljoner kronor eller en statlig utredning för 5–10 miljoner — plus system för att hantera medlen, sammanlagt upp till 20 miljoner som engångskostnad. Utbetalningarna ur fonden är ingen ny statlig kostnad: de finansieras av pengar som förverkats från brottslingar."
     },
     "financing_claimed": {
       "described": false,
@@ -1783,7 +1819,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 500 till 5 miljoner kronor, och perioden från per år till engångskostnad. Utbetalningarna ur fonden räknades tidigare som en statlig utgift, men de finansieras av de förverkade medlen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2094,13 +2136,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 1500,
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 300,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Nationell vårdförmedling, IT-system + administration. ~1 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Utveckling och drift av en nationell vårdförmedling, jämfört med andra nationella e-tjänster.",
+      "confidence": 0.4,
+      "calculation": "Att bygga it-stödet kostar uppskattningsvis 80–200 miljoner kronor som engångsinvestering, och löpande drift och bemanning 20–50 miljoner per år. Fördelas utvecklingen över 3–5 år landar årskostnaden på 50–100 miljoner. Med högre ambition — jour dygnet runt och omfattande anpassningar till varje region — kan den nå 300 miljoner per år. Nivån är jämförd med andra nationella e-tjänster."
     },
     "financing_claimed": {
       "described": false,
@@ -2110,7 +2153,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 000 till 100 miljoner kronor per år. Löftet gäller en förmedlingstjänst, inte vården i sig; det tidigare beloppet prissatte vårdvolymer som redan betalas av regionerna.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2240,13 +2289,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Utökad åldersgräns BUP 18→21 = fler patienter. + fast vårdkontakt. ~2 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Marginell nettokostnad för de unga som får utökad vård när åldersgränsen höjs.",
+      "confidence": 0.4,
+      "calculation": "Det finns ungefär 400 000 unga i åldern 18–21 år. Antas 1–3 procent ha så svår psykisk sjukdom att de får utökad vård rör det 4 000–12 000 personer, till en extra kostnad av 20 000–80 000 kronor per person och år för längre uppföljning och en fast vårdkontakt. Det ger 80–960 miljoner kronor. Spannet vidgas till 200–1 500 miljoner eftersom det är osäkert hur mycket regionerna redan lägger på gruppen och hur många som faktiskt tar del av vården."
     },
     "financing_claimed": {
       "described": false,
@@ -2256,7 +2306,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 2 000 till 500 miljoner kronor per år. Det nya beloppet räknar bara den marginella kostnaden för de unga som tillkommer när åldersgränsen höjs, i stället för en schablon för hela verksamheten.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2462,13 +2518,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Forskning om kvinnors sjukdomar + vård sexuellt våldsutsatta. ~0,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Öronmärkta forskningsmedel för kvinnors sjukdomar och hälsa.",
+      "confidence": 0.4,
+      "calculation": "Basbeloppet 150 miljoner kronor per år motsvarar ett tioårigt forskningsprogram på sammanlagt 1,5 miljarder. Ett lägre alternativ, en mindre öronmärkning, ligger på 50 miljoner per år. Ett brett program skulle kunna nå 500 miljoner, men då ingår stärkt vård för våldsutsatta — en del som redan prissätts på partiets andra löften."
     },
     "financing_claimed": {
       "described": false,
@@ -2478,7 +2535,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 500 till 150 miljoner kronor per år, nu uttryckt som ett forskningsprogram med angiven storlek i stället för en schablon.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2505,14 +2568,15 @@
     "category": "välfärd",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 140,
-      "msek_base": 200,
-      "msek_high": 260,
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Nationella riktlinjer endometrios + menstruell hälsa. ~0,2 mdr/år.",
-      "confidence": 0.55
+      "method_note": "Löftet hålls av en översyn och nationella riktlinjer; det är utredningsarbetet som prissätts.",
+      "confidence": 0.55,
+      "calculation": "Löftet hålls av en översyn och framtagna riktlinjer. Ett till två års utredningsarbete med 5–10 personer — projektledning, experter och administration — kostar 0,8–1,2 miljoner kronor per årsanställd, plus 20–30 procent för lokaler, konsulter och remissarbete. Det ger 5–30 miljoner kronor som engångskostnad, i nivå med vad statliga utredningar brukar kosta. Den vård riktlinjerna kan leda till prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -2522,7 +2586,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 200 till 15 miljoner kronor, och perioden från per år till engångskostnad. Löftet är att se över rutiner och ta fram riktlinjer — det är utredningen som prissätts, inte den vård den kan leda till.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2779,13 +2849,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 1500,
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Omorganisation Arbetsförmedlingen. ~1 mdr/år (engångs högre).",
-      "confidence": 0.4
+      "method_note": "Förstärkt matchning och kartläggning inom Arbetsförmedlingen: personal, it-stöd och metodstöd.",
+      "confidence": 0.4,
+      "calculation": "Fler handläggare och coacher, 20–200 årsverken à 0,7–1,0 miljoner kronor, ger 14–200 miljoner per år. It-stöd för matchning och kartläggning läggs till med 10–100 miljoner och metodstöd och utbildning med 5–50 miljoner. Summan blir 30–350 miljoner per år, vidgad till 30–500 miljoner för osäkerheten. Basbeloppet läggs vid 100 miljoner."
     },
     "financing_claimed": {
       "described": false,
@@ -2795,7 +2866,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 000 till 100 miljoner kronor per år. Löftet gäller arbetssätt och matchning inom myndigheten, inte nya ersättningar; det nya beloppet räknar personal och system.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2910,14 +2987,15 @@
     "category": "utbildning",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "period": "engang",
+      "msek_low": 300,
+      "msek_base": 600,
+      "msek_high": 1000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Nytt betygssystem, implementation 2028. Utbildning av lärare, material, IT. ~2 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Engångskostnad för att införa nytt betygssystem: fortbildning av lärare, framtagning och material.",
+      "confidence": 0.4,
+      "calculation": "Ungefär 150 000 lärare berörs. Statsbidrag till skolhuvudmännen för fortbildning av 80 000–120 000 lärare à 3 000–7 000 kronor ger 240–840 miljoner kronor. Skolverkets arbete med att ta fram systemet läggs till med 30–80 miljoner och material och it-stöd med 15–30 miljoner. Summan blir 285–950 miljoner kronor som en engångskostnad vid införandet."
     },
     "financing_claimed": {
       "described": false,
@@ -2927,7 +3005,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 2 000 till 600 miljoner kronor, och perioden från per år till engångskostnad. Att införa ett betygssystem är en engångsinsats — det tidigare beloppet räknades fyra gånger i mandatperiodens summa.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2954,14 +3038,15 @@
     "category": "utbildning",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 750,
-      "msek_base": 1500,
-      "msek_high": 2250,
+      "period": "engang",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 100,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Nya läroplaner 2028. Material, lärarfortbildning. ~1,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Engångskostnad för att ta fram nya läroplaner, i nivå med tidigare läroplansarbeten.",
+      "confidence": 0.4,
+      "calculation": "Nya läroplaner ska tas fram för grundskola och gymnasium. Den senaste revideringen kostade omkring 40 miljoner kronor. Helt nya läroplaner är ett större arbete: 10–30 miljoner för Skolverkets eget arbete, plus remisser, tryckning och information. Basbeloppet sätts till 30 miljoner som engångskostnad. Det höga alternativet, 100 miljoner, rymmer utökat stöd till kommunerna vid införandet; det låga, 10 miljoner, gäller om arbetet ryms inom befintliga anslag."
     },
     "financing_claimed": {
       "described": false,
@@ -2971,7 +3056,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 500 till 30 miljoner kronor, och perioden från per år till engångskostnad. Att ta fram läroplaner är ett avgränsat arbete och prissätts som ett sådant.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3139,14 +3230,15 @@
     "category": "utbildning",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 1500,
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 50,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Reformera lärarutbildningen. ~1 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Engångskostnad för utredning och visst omställningsstöd till lärosätena.",
+      "confidence": 0.4,
+      "calculation": "Att reformera lärarutbildningen börjar med en statlig utredning på 5–15 miljoner kronor. Till det kan komma omställningsstöd till lärosätena på 0–35 miljoner. Sammanlagt 0–50 miljoner som engångskostnad, med 5 miljoner som basbelopp. Nytt innehåll och höjda antagningsgränser kostar inte i sig — utbildningsplatserna finns redan och betalas oavsett."
     },
     "financing_claimed": {
       "described": false,
@@ -3156,7 +3248,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 000 till 5 miljoner kronor, och perioden från per år till engångskostnad. Utbildningsplatserna finns redan; det som tillkommer är utredning och omställning.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3278,14 +3376,15 @@
     "category": "utbildning",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 3,
+      "msek_high": 10,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Ersätta svenska som andraspråk. ~0,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Engångskostnad för nytt kursplanearbete; undervisningen bedrivs redan och byter bara form.",
+      "confidence": 0.4,
+      "calculation": "Att ersätta ett ämne med ett annat kräver nytt kursplanearbete, i storlek som en mindre utredning på 5–10 miljoner kronor, plus införandekostnader på 0–5 miljoner. Basbeloppet 3 miljoner motsvarar visst utvecklingsarbete; 0 om det ryms inom befintliga anslag och 10 miljoner om det krävs omfattande information och vägledningsmaterial. Undervisningen i sig bedrivs redan i dag och byter bara form."
     },
     "financing_claimed": {
       "described": false,
@@ -3295,7 +3394,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 500 till 3 miljoner kronor, och perioden från per år till engångskostnad. Undervisningen finns redan och betalas oavsett; det som tillkommer är kursplanearbetet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3374,13 +3479,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 1500,
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Språk- och lämplighetstest förskola/skola + omställningsprogram. ~1 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Omställningsprogram för personal med bristande språkkunskaper; testerna i sig kostar försumbart.",
+      "confidence": 0.4,
+      "calculation": "Det arbetar 200 000–250 000 personer i förskola och skola. Antas 5–10 procent ha bristfälliga språkkunskaper rör det 10 000–25 000 personer. Ett omställningsprogram som varje år omfattar 2 000–5 000 av dem till en kostnad av 50 000–150 000 kronor per person ger 100–750 miljoner kronor per år. Basbeloppet sätts till 200 miljoner, det låga till 50 miljoner för en liten skala och det höga till 500 miljoner för ett fullt utbyggt program. Själva testerna kostar försumbart."
     },
     "financing_claimed": {
       "described": false,
@@ -3390,7 +3496,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 000 till 200 miljoner kronor per år. Kostnaden ligger i omställningsprogrammet, inte i testerna; det nya beloppet räknar antal deltagare gånger kostnad per deltagare.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3748,13 +3860,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 750,
-      "msek_base": 1500,
-      "msek_high": 2250,
+      "msek_low": 10,
+      "msek_base": 100,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Fler inre utlänningskontroller, bruten sekretess, återvändande. ~1,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Fler årsarbetskrafter för inre kontroller plus it-stöd för informationsutbyte mellan myndigheter.",
+      "confidence": 0.4,
+      "calculation": "Fler inre utlänningskontroller antas kräva 50–200 nya årsarbetskrafter hos polis, Migrationsverket och socialtjänst à 0,8 miljoner kronor, alltså 40–160 miljoner per år. It-stöd för informationsutbyte mellan myndigheter kostar 50–200 miljoner att bygga och 10–40 miljoner per år att driva. Basbeloppet blir 100 miljoner per år; det låga 10 miljoner om det stannar vid regeländringar och det höga 500 miljoner vid en storskalig satsning."
     },
     "financing_claimed": {
       "described": false,
@@ -3764,7 +3877,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 500 till 100 miljoner kronor per år, nu grundat på antal årsarbetskrafter och it-stöd i stället för en schablon.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3792,13 +3911,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 140,
-      "msek_base": 200,
-      "msek_high": 260,
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 50,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Snabbare handläggning kräver mer Migrationsverksresurser. ~0,2 mdr/år.",
-      "confidence": 0.55
+      "method_note": "Fler handläggare och snabbare system hos Migrationsverket; själva invandringen är ingen statlig utgift.",
+      "confidence": 0.55,
+      "calculation": "Snabbare handläggning antas kräva 10–30 extra handläggare à 0,8–1,2 miljoner kronor per år inklusive lokaler och omkostnader, alltså 8–36 miljoner. It-investeringar för snabbare processer läggs till med 5–20 miljoner per år. Totalt 15–50 miljoner per år, eller omkring 5 miljoner om det stannar vid mindre effektiviseringar inom befintlig ram. Nivån stämmer med hur andra löften om snabbare myndighetshandläggning prissatts."
     },
     "financing_claimed": {
       "described": false,
@@ -3808,7 +3928,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 200 till 15 miljoner kronor per år. Löftet gäller handläggningstider, inte ersättningar; det nya beloppet räknar handläggare och system.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4351,14 +4477,15 @@
     "category": "utbildning",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 35,
-      "msek_base": 50,
-      "msek_high": 65,
+      "period": "engang",
+      "msek_low": 2,
+      "msek_base": 7,
+      "msek_high": 20,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Ta fram kunskapsindex. ~0,05 mdr/år.",
-      "confidence": 0.55
+      "method_note": "Engångskostnad för att ta fram ett kunskapsindex av befintlig statistik.",
+      "confidence": 0.55,
+      "calculation": "Indexet byggs av statistik som redan samlas in. Två till fyra utredare eller statistiker under 6–12 månader à omkring 800 000 kronor per år ger 0,8–3,2 miljoner kronor i lönekostnad. Med lokaler, it och publicering landar basbeloppet på 7 miljoner som engångskostnad. Krävs externa konsulter eller ett bredare utvecklingsarbete kan det nå 20 miljoner."
     },
     "financing_claimed": {
       "described": false,
@@ -4368,7 +4495,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 50 till 7 miljoner kronor, och perioden från per år till engångskostnad. Indexet byggs av statistik som redan samlas in; det är framtagningen som prissätts.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5056,13 +5189,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Elevhälsa i varje skola varje dag. ~2 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Riktningslöfte utan angiven nivå. Elevhälsans bemanning prissätts på de löften som faktiskt utlovar fler tjänster.",
+      "confidence": 0.4,
+      "calculation": "Löftet säger att alla unga ska veta att elevhälsan finns, men anger varken hur många fler som ska anställas eller vilken insats som avses. Ska elevhälsan byggas ut ligger den kostnaden på de löften som utlovar fler tjänster, och elevhälsan drivs dessutom av skolhuvudmännen. Utan angiven nivå prissätts löftet inte."
     },
     "financing_claimed": {
       "described": false,
@@ -5072,7 +5206,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 2 000 till 0 miljoner kronor per år. Bakåtfyllnaden föreslog 5 miljoner för en informationskampanj, men löftet handlar om att elevhälsan ska finnas tillgänglig — och den kostnaden ligger på de löften som utlovar fler tjänster. Samma bedömning som för övriga riktningslöften i genomgången.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5163,14 +5303,15 @@
     "category": "övrigt",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Översyn av stat/myndigheter. ~0,5 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Löftet hålls av en översyn; det är utredningen som prissätts, inte de förändringar den kan leda till.",
+      "confidence": 0.4,
+      "calculation": "Löftet hålls av en översyn. En statlig utredning med kommitté, sekretariat och remissförfarande kostar 5–30 miljoner kronor som engångsanslag. Översynens bredd talar för en större utredning, så basbeloppet sätts till 15 miljoner. De förändringar av myndigheterna som översynen kan leda till prissätts inte här — de är ännu inte lovade."
     },
     "financing_claimed": {
       "described": false,
@@ -5180,7 +5321,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 500 till 15 miljoner kronor, och perioden från per år till engångskostnad. Ett löfte om en översyn prissätter utredningen, inte den politik den kan leda till.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -6986,13 +7133,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 2,
+      "msek_base": 8,
+      "msek_high": 25,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Frikommuner får undantag från lagar. Kan kosta staten intäkter. ~2 mdr/år.",
-      "confidence": 0.4
+      "method_note": "Nationell samordning och forskningsutvärdering av försöket; friheterna i sig kostar inget.",
+      "confidence": 0.4,
+      "calculation": "Försöket kräver nationell samordning: tre till fyra tjänster inklusive omkostnader för omkring 4 miljoner kronor per år, forskningsutvärdering för 3 miljoner och resor, möten och information för 1 miljon — sammanlagt 8 miljoner per år. Ett mindre upplägg med en samordnare och begränsad utvärdering kostar 2 miljoner; ett större, med fler kommuner och mer omfattande stöd, 25 miljoner. Själva friheterna kostar inget: de består i att kommunerna får undantag från regler."
     },
     "financing_claimed": {
       "described": false,
@@ -7002,7 +7150,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 2 000 till 8 miljoner kronor per år. Ett frikommunförsök består i undantag från regler, vilket inte kostar; det som kostar är samordning och utvärdering.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7380,13 +7534,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 8000,
-      "msek_high": 12000,
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: 'Mer världsledande forskning' = ökade forskningsanslag till universitet. Svenskt forskningsanslag idag ca 70 mdr/år (inkl. externa). En ökning på 10–15% = 7–10 mdr/år. Sverige ligger under OE",
-      "confidence": 0.4
+      "method_note": "Nivån lagd som jämförbara löften om spetssatsningar i högre utbildning och forskning.",
+      "confidence": 0.4,
+      "calculation": "Löftet anger ingen nivå, så beloppet läggs där jämförbara löften om spetssatsningar i högre utbildning ligger: 1 500 miljoner kronor per år. Det låga alternativet, 500 miljoner, motsvarar ett eller två excellenscentrum; det höga, 3 000 miljoner, en bred satsning med många centrum och höjda basanslag till lärosätena."
     },
     "financing_claimed": {
       "described": false,
@@ -7396,7 +7551,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 8 000 till 1 500 miljoner kronor per år. Det tidigare beloppet saknade grund; nivån ligger nu där jämförbara satsningar på högre utbildning och forskning prissätts.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -15281,13 +15442,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 3800,
-      "msek_high": 8000,
+      "msek_low": 300,
+      "msek_base": 800,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på antagande om 1 extra heltidstjänst per skola (ca 6 300 skolor) till en genomsnittlig årskostnad på 600 000 kr, vilket ger ca 3,8 mdkr. Osäkerhet kring faktiskt behov och befint",
-      "confidence": 0.4
+      "method_note": "Statens andel av en utbyggd elevhälsa; verksamheten drivs och betalas till största delen av skolhuvudmännen.",
+      "confidence": 0.4,
+      "calculation": "Landets omkring 6 000 skolor antas behöva 0,5–2 extra tjänster var — skolsköterska, kurator, psykolog eller specialpedagog — à 600 000 kronor, vilket ger 1,8–7,2 miljarder kronor i total kostnad. Men skolan drivs och betalas av huvudmännen, så bara statens del räknas: 200–1 500 miljoner kronor i nya riktade eller generella bidrag, plus 0–1 000 miljoner för kortare köer till barn- och ungdomspsykiatrin. Summan avrundas till 300–2 000 miljoner kronor per år med 800 som basbelopp."
     },
     "financing_claimed": {
       "described": false,
@@ -15297,7 +15459,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 3 800 till 800 miljoner kronor per år. Det tidigare beloppet räknade hela verksamhetens kostnad; det nya räknar bara statens andel, eftersom skolan drivs och betalas av huvudmännen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15324,14 +15492,15 @@
     "category": "välfärd",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1500,
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Jämför med Äldreomsorgslyftet och kompetensutvecklingssatsningar. Antagande om statsbidrag till regioner för kontinuerlig kompetensutveckling.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av en nationell strategi; det är framtagningen som prissätts.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av en framtagen strategi. En statlig utredning av medelstorlek med visst externt stöd kostar 5–30 miljoner kronor som engångskostnad, beroende på omfattning, expertis och remissförfarande. Basbeloppet sätts till 15 miljoner. Den kompetensutveckling strategin kan leda till prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -15341,7 +15510,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 500 till 15 miljoner kronor, och perioden från per år till engångskostnad. Ett löfte om att ta fram en strategi prissätter framtagningen, inte den politik den kan leda till.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -16322,13 +16497,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 10000,
-      "msek_base": 15000,
-      "msek_high": 20000,
+      "msek_low": 4800,
+      "msek_base": 5900,
+      "msek_high": 7800,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar 2 miljoner barn 0-17 år. Icke-refunderbart avdrag, utnyttjandegrad 50-100%. Osäker åldersgräns och konstruktion.",
-      "confidence": 0.5
+      "method_note": "Uteblivna skatteintäkter när ett barnavdrag på 10 000 kronor per barn och år införs.",
+      "confidence": 0.5,
+      "calculation": "Det finns omkring 2 miljoner barn i Sverige. Ett avdrag på 10 000 kronor per barn ger 20 000 miljoner kronor i avdragsunderlag. Staten förlorar den skatt som annars betalats på beloppet: 20 000 miljoner × 0,33 i genomsnittlig marginalskatt × 0,90 för att alla inte utnyttjar avdraget fullt ut ≈ 5 900 miljoner kronor per år. Det låga alternativet räknar med 1,9 miljoner barn, 30 procents skatt och 85 procents utnyttjande (4 800 miljoner), det höga med 2,1 miljoner barn, 38 procents skatt och nästan fullt utnyttjande (7 800 miljoner). Utfallet varierar med föräldrarnas inkomster."
     },
     "financing_claimed": {
       "described": false,
@@ -16338,7 +16514,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 15 000 till 5 900 miljoner kronor per år. Det tidigare beloppet räknade avdraget som en utgift krona för krona; det nya räknar den skatt staten faktiskt förlorar, med hänsyn till marginalskatt och utnyttjandegrad.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17171,13 +17353,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 40000,
+      "msek_low": 1000,
+      "msek_base": 3000,
+      "msek_high": 10000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar borttagen medlemsavgift (ca 5 mdkr) och ökad anslutning/ersättning. Bred osäkerhet beroende på ersättningsnivå och tak.",
-      "confidence": 0.4
+      "method_note": "Statlig subvention av a-kassan när den görs allmän och skattefinansierad.",
+      "confidence": 0.4,
+      "calculation": "Löftet innehåller två delar. Att staten tar över avgifterna kostar 1–3 miljarder kronor per år, jämfört med den avgiftssänkning som gjordes 2014. Att göra kassan allmän — höjt grundbelopp eller slopade kvalifikationskrav — kan kosta 5–10 miljarder. Sammantaget 1–10 miljarder per år, med 3 miljarder som basbelopp. Dagens avgiftsintäkter ligger på omkring 6 miljarder, vilket sätter en ram för hur stor övertagandedelen kan bli."
     },
     "financing_claimed": {
       "described": false,
@@ -17187,7 +17370,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 15 000 till 3 000 miljoner kronor per år. Löftet talar om steg mot en allmän kassa, inte om ett fullt genomförande; det nya beloppet delar upp kostnaden i avgiftsövertagande och utökad omfattning.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17898,13 +18087,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 2000,
+      "msek_low": 20,
+      "msek_base": 100,
+      "msek_high": 300,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om 1 000–5 000 ytterligare uppehållstillstånd per år, kostnad 200 000–400 000 kr/person för mottagande, boende, bidrag.",
-      "confidence": 0.3
+      "method_note": "Marginell nettokostnad per person som får uppehållstillstånd, efter avräknade skatteintäkter och asylkostnader.",
+      "confidence": 0.3,
+      "calculation": "Utökade möjligheter till uppehållstillstånd för unga vuxna antas beröra 200–2 000 personer per år. Nettokostnaden per person och år — statliga utgifter minus skatteintäkter och minus de asylkostnader som faller bort — uppskattas till 50 000–150 000 kronor. Det ger 10–300 miljoner kronor per år, med 100 miljoner som basbelopp, motsvarande 1 000 personer à 100 000 kronor."
     },
     "financing_claimed": {
       "described": false,
@@ -17914,7 +18104,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 500 till 100 miljoner kronor per år, nu räknat som nettokostnad per person efter avräknade skatteintäkter och bortfallna asylkostnader.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17999,13 +18195,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 5000,
-      "msek_high": 10000,
+      "msek_low": 300,
+      "msek_base": 1000,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnad för viktad skolpeng. Bas antas motsvara en mindre omfördelning inom befintlig ram men vid högre ambitionsgrad främst nya medel. Osäkerhet pga oklart antal elever som omfattas och odefinierad f",
-      "confidence": 0.4
+      "method_note": "Extra resurs per elev i glesbygdsskolor och skolor i socioekonomiskt utsatta områden.",
+      "confidence": 0.4,
+      "calculation": "Berörda skolor i glesbygd och socioekonomiskt utsatta områden antas ha 150 000–300 000 elever. Ett tillägg på 2 000–10 000 kronor per elev och år ger mellan 300 miljoner (150 000 elever à 2 000 kronor) och 3 000 miljoner kronor (300 000 elever à 10 000 kronor). Basbeloppet 1 000 miljoner motsvarar ungefär 200 000 elever à 5 000 kronor."
     },
     "financing_claimed": {
       "described": false,
@@ -18015,7 +18212,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 5 000 till 1 000 miljoner kronor per år, nu räknat som antal berörda elever gånger tillägg per elev i stället för en schablon.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18046,13 +18249,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 300,
-      "msek_high": 600,
+      "msek_low": 20,
+      "msek_base": 80,
+      "msek_high": 150,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om riktat statsbidrag till kommuner för utökade umgängesstödjande insatser, baserat på grov uppskattning av antal kommuner och kostnad per kommun.",
-      "confidence": 0.4
+      "method_note": "Statligt stöd till kommunernas socialtjänst för kontakten mellan placerade barn och deras föräldrar.",
+      "confidence": 0.4,
+      "calculation": "Stödet antas gå till omkring 100 kommuner med 0,5–1,5 miljoner kronor vardera, alltså 50–150 miljoner kronor per år. Ett lägre alternativ med mindre stödinsatser ligger på 20 miljoner. Basbeloppet sätts till 80 miljoner per år."
     },
     "financing_claimed": {
       "described": false,
@@ -18062,7 +18266,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 300 till 80 miljoner kronor per år, nu räknat som stöd per kommun i stället för en schablon.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18392,14 +18602,15 @@
     "category": "välfärd",
     "cost": {
       "type": "besparing",
-      "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 200,
-      "msek_high": 500,
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 2,
+      "msek_high": 10,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande: färre tvångsplaceringar av 15-17-åringar minskar antalet heldygnsplatser. Kostnad per plats ~1,5-2,5 msek/år. Osäkerhet kring hur många som berörs och om besparingar realiseras fullt ut.",
-      "confidence": 0.3
+      "method_note": "Löftet hålls av ändrade regler; det som kostar är vägledning och utbildning till socialtjänsten.",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls av ändrade regler för när ett placerat barn ska flytta hem. Det som kostar staten är att Socialstyrelsen tar fram vägledning och utbildning, 2–5 miljoner kronor som engångsinsats. Fler överklaganden kan ge domstolskostnader på 0–5 miljoner. Totalt 0–10 miljoner med 2 miljoner som basbelopp. Placeringarna i sig betalas av kommunerna och blir varken fler eller färre av löftet."
     },
     "financing_claimed": {
       "described": false,
@@ -18409,7 +18620,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 200 till 2 miljoner kronor, och perioden från per år till engångskostnad. Löftet hålls av ändrade regler; placeringarna betalas av kommunerna och blir inte fler av löftet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -19385,13 +19602,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1200,
-      "msek_high": 2500,
+      "msek_low": 160,
+      "msek_base": 400,
+      "msek_high": 1200,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar att avskaffat försörjningskrav ökar anhöriginvandringen och därmed statliga transfereringar (etablering, försörjningsstöd, bostadsbidrag). Osäkerhet kring ökningens storlek och de anhörigas syss",
-      "confidence": 0.4
+      "method_note": "Nettokostnad i statliga transfereringar för de anhöriga som tillkommer när försörjningskravet avskaffas.",
+      "confidence": 0.4,
+      "calculation": "Att avskaffa försörjningskravet antas ge 2 000–8 000 fler anhöriginvandrare per år. Nettokostnaden per person i statliga transfereringar uppskattas till 80 000–150 000 kronor per år, vilket ger 160–1 200 miljoner kronor. Basbeloppet sätts till 400 miljoner med hänsyn till osäkerheten och till hur närliggande löften om anhöriginvandring prissatts."
     },
     "financing_claimed": {
       "described": false,
@@ -19406,6 +19624,11 @@
         "date": "2026-07-24",
         "change": "Kostnadstyp rättad från intäktsminskning till utgift - noten beskriver ökade statliga transfereringar (en utgift), inte en minskad statsintäkt. Beloppet (1 200 miljoner kronor per år, spann 500-2 500) oförändrat.",
         "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 1 200 till 400 miljoner kronor per år. Det tidigare beloppet låg vid spannets tak; basbeloppet läggs nu mitt i spannet, i linje med hur närliggande löften prissatts.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
