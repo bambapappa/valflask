@@ -391,38 +391,71 @@ från datat som gällde när krönikan skrevs (ögonblicksbild), aldrig dagens s
 ### Nästa uppgift: räkna om beloppen på säkrare grund
 
 Genomgången av löften där beloppet inte stämde med den publicerade
-uträkningen är **klar** — 60 rättade, resten kontrollerade och friade. Men
+uträkningen är **klar** — 63 rättade, resten kontrollerade och friade. Men
 det arbetet flyttade beloppen till en *redovisad* grund, inte till en
 säkrare. De flesta uträkningar är rekonstruerade i efterhand av
 bakåtfyllnaden, vilket står utskrivet i varje sådan text.
 
-Nästa steg är att räkna om dem på riktigt underlag. Ett löfte är redan
-uttryckligen märkt för det i sin egen uträkning: p-2026-0390 (sanktioner mot
-bidrag), vars belopp vilar på en antagen procentsats utan erfarenhet bakom.
+**Ordningen för omräkningen (mänskligt beslut 2026-07-27):**
 
-**Två harmoniseringar väntar på ett mänskligt beslut:**
+1. **Tandvården först.** Se nedan — underlaget är bevisat inkonsekvent.
+2. **Därefter övriga ämnen i fallande storleksordning**, alltså det
+   ämnesområde som väger tyngst i mandattotalen först, och inom ämnet de
+   största beloppen först.
 
-- **Mindre klasser** (`g-mindre-klasser`): Liberalernas två löften ligger på
-  2 700 miljoner kronor per år, räknat på partiets eget maxtak om tjugo
-  elever per klass. Socialdemokraternas löfte i samma grupp ligger på 10 000
-  enligt sin egen uträkning. Samma politik ska kosta lika, men S har inte
-  angett något tak, så beloppen är ännu inte harmoniserade. Gruppen räknas på
-  det högsta beloppet, alltså på S:s 10 000.
-- **Tandvård:** SD och V ligger på 10 000 var och är grupplänkade. MP ligger
-  på 20 000 utanför gruppen, med flit — att finansiera tandvården som annan
-  sjukvård är en större reform än ett kostnadstak. Kontrollera att den
-  skillnaden fortfarande är motiverad om något av löftena ändras.
+Två löften är redan uttryckligen märkta för omräkning i sin egen uträkning:
+p-2026-0390 (sanktioner mot bidrag, vilar på en antagen procentsats utan
+erfarenhet bakom) och de tre tandvårdslöftena i gruppen nedan.
 
-**Sökningen efter belopp som inte stämmer med sin uträkning har BÅDE
-falsklarm och falska negativ.** Den läser fragment: "Bas 2 500 kr per
-förlossning" tolkas som basbeloppet 2 500 fast det är ett styckpris, och
-"bas 1,5 miljarder" blir talet 1. Den missar samtidigt uträkningar som anger
-sitt resultat utan ordet bas — ett löfte om mindre klasser bar samma fel men
-fastnade aldrig i nätet, eftersom texten skrev "≈ 12 miljarder kronor per
-år". Kön är genomgången manuellt, men sökningen garanterar inte att den är
-tom.
+#### Tandvården: underlaget motsäger sig självt
 
-### Gjort 2026-07-27 (kön betad från 58 till 0, 60 belopp rättade, tre systemfynd)
+Fyra löften rör samma sak, och deras uträkningar vilar på **tre olika bilder
+av hur stor tandvården är**:
+
+| Löfte | Parti | Belopp | Antar att vuxentandvården kostar |
+|---|---|---|---|
+| p-2026-0552 | SD | 10 000 | 14,7 mdkr |
+| p-2026-0484 | SD | 10 000 | 25 mdkr |
+| p-2026-0489 | V | 10 000 | 25 mdkr |
+| p-2026-0440 | MP | 20 000 | 45 mdkr totalt, varav 12 offentligt |
+
+Minst en siffra är fel, och beloppen är byggda rakt ovanpå dem. **Fastställ
+tandvårdens storlek först** — allt annat i ämnet hänger på den.
+
+De tre första är grupplänkade (`g-hogkostnadsskydd-tandvard`) och räknas en
+gång. SD:s två är samma löfte i två citat; det ena skriver ut mekanismen
+(tio procents patientavgift), det andra inte.
+
+**MP står med flit UTANFÖR gruppen**, men det beslutet är osäkert och ska
+prövas om vid omräkningen. Motivet: att finansiera tandvården enligt samma
+principer som annan sjukvård är en större reform än ett kostnadstak. Men
+SD:s löfte landar i praktiken också nära nittio procents offentlig
+finansiering, så skillnaden kan vara mindre än etiketterna antyder.
+
+#### Två harmoniseringar är gjorda och behöver inte tas om
+
+- **Mindre klasser** (`g-mindre-klasser`): alla tre löftena vilar nu på
+  samma uträkning, hämtad från det enda löftet som anger en nivå
+  (Liberalernas maxtak om tjugo elever). S:s löfte prissätts på ett lånat
+  antagande, och uträkningen skriver ut att antagandet är vårt och inte
+  partiets. L:s vagare löfte är nollat eftersom partiets eget konkreta löfte
+  bär kostnaden.
+- **Regeln som följde av det:** ett löfte utan angiven nivå nollas när
+  partiets EGET konkreta löfte bär kostnaden. Finns inget sådant löfte bär
+  riktningslöftet kostnaden själv, prissatt på samma grund som ett annat
+  partis motsvarande löfte — annars blir partiets politik oprissatt överallt.
+
+#### Sökningen efter avvikelser duger inte som facit
+
+Den har **både falsklarm och falska negativ**. Den läser fragment: "Bas
+2 500 kr per förlossning" tolkas som basbeloppet 2 500 fast det är ett
+styckpris, och "bas 1,5 miljarder" blir talet 1. Den missar samtidigt
+uträkningar som anger sitt resultat utan ordet bas — ett löfte om mindre
+klasser bar samma fel men fastnade aldrig i nätet, eftersom texten skrev
+"≈ 12 miljarder kronor per år". Kön är genomgången manuellt, men sökningen
+garanterar inte att den är tom.
+
+### Gjort 2026-07-27 (kön betad från 58 till 0, 63 belopp rättade, tre systemfynd)
 
 **Kön är tom.** `data/calculation_review.json` är `[]`. Rör den inte utan att
 först läsa "Kör INTE fler backfill-körningar" nedan.
@@ -478,7 +511,7 @@ inga hänvisningar till interna prissättningsregler (6), fackuttryck utskrivna
 i 196 texter. Två fel rättade på vägen: ett basantagande angivet i miljarder
 i stället för miljoner, och en räkning som blandade tre enhetsförkortningar.
 
-**Totalen** gick från 7 016 120 till **5 925 196 mkr** under omgången.
+**Totalen** gick från 7 016 120 till **5 867 996 mkr** under omgången.
 
 ### Öppna frågor som ingen avgjort
 
