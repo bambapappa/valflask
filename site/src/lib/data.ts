@@ -78,6 +78,8 @@ export interface Handling {
   kind: "votering" | "motion" | "proposition" | "interpellation" | "skriftlig_fraga";
   dok_id: string;
   votering_id?: string | null;
+  /** voteringens punkt i betänkandet */
+  punkt?: number | null;
   datum: string;
   organ?: string;
   motionstyp?: "parti" | "kommitte" | "enskild";
@@ -87,6 +89,11 @@ export interface Handling {
   url: string;
   archive_url: string | null;
   utfall?: string | null;
+  /** parti → antal ja, nej, avstående och frånvarande i voteringen */
+  rostfordelning?: Record<
+    string,
+    { ja: number; nej: number; avstar: number; franvarande: number }
+  > | null;
 }
 
 export interface Person {
@@ -134,6 +141,28 @@ export function getHandlingMap(): Map<string, Handling> {
 }
 export function getPersoner(): Person[] {
   return (_personer ??= las<Person[]>("personer.json"));
+}
+
+/** Ett utskottsbetänkande — den text kammaren röstar om. */
+export interface Betankande {
+  dok_id: string;
+  rm: string;
+  beteckning: string;
+  datum: string;
+  titel: string;
+  organ: string;
+}
+
+let _betankanden: Betankande[] | undefined;
+export function getBetankanden(): Betankande[] {
+  if (!_betankanden) {
+    try {
+      _betankanden = las<Betankande[]>("betankanden.json");
+    } catch {
+      _betankanden = []; // inte skördade än — tomt är ärligt
+    }
+  }
+  return _betankanden;
 }
 
 export interface Rattelse {
