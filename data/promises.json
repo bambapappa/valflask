@@ -3785,9 +3785,9 @@
       "msek_high": 18000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Ny kärnkraft är enorm investering. 2 reaktorer ~100-150 mdr. Spritt över mandatperioder. Statligt ägande innebä [granskning 2026-07-09: ny kärnkraft: årlig kapitalkostnad inom mandatet, ej 100 mdr/år]",
+      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
       "confidence": 0.3,
-      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Jämförbart löfte: 10 000 mkr/år. Antag: 1–2 reaktorer 50–100 mdr kr / 10 år = 5–10 mdr/år. Plus nät mm 0–5 mdr/år. Bas 10 000, spann 5 000–20 000 mkr/år."
+      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Moderaterna delar löftet med Kristdemokraterna, Liberalerna och Sverigedemokraterna."
     },
     "financing_claimed": {
       "described": false,
@@ -3797,7 +3797,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen bakom beloppet vilar nu på samma öppet redovisade grund som övriga partiers löften om ny kärnkraft: statens andel av en satsning på två reaktorer, utslagen per år. Beloppet är oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -3806,7 +3812,7 @@
   },
   {
     "id": "p-2026-0083",
-    "group_id": null,
+    "group_id": "g-ny-karnkraft-baskraft",
     "title": "Att staten minskar risken för ny kärnkraft genom uppdaterade regelverk, en finansieringslösning och statligt ägande",
     "slug": "att-staten-minskar-risken-for-ny-karnkraft-genom-uppdaterade-regelverk-en-finansieringslosning-och-statligt-agande",
     "parties": [
@@ -3825,14 +3831,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 20000,
-      "msek_high": 36000,
+      "msek_low": 5000,
+      "msek_base": 10000,
+      "msek_high": 18000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Statligt ägande + finansieringslösning kärnkraft. Statens risktagande estimerat 20 mdr/år.",
+      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
       "confidence": 0.3,
-      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Ny kärnkraft: 1-4 reaktorer à ~40-80 mdkr = 80-320 mdkr total investering. Staten tar 10-100% via ägande/garantier, utslaget över 20-40 år: 2-16 mdkr/år. Lågt: mindre ägande + garantier (~2 mdkr/år). Bas: ca 50% ägande (~6 mdkr/år). Högt: fullt ägande (~18 mdkr/år)."
+      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Löftet beskriver den statliga insatsen för samma reaktorer som Moderaternas andra kärnkraftslöfte, och ingår därför i samma delade löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -3842,7 +3848,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadsestimatet ändrat från 20 000 till 10 000 miljoner kronor per år och löftet kopplat till samma delade löfte som partiets andra kärnkraftslöfte. Löftet beskriver hur staten ska bära risken för de reaktorer som redan prissätts på p-2026-0082 — Moderaterna räknades därmed två gånger för samma satsning. Löftets egen uträkning landade dessutom på omkring 6 000 miljoner kronor per år, inte 20 000. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5028,9 +5040,9 @@
       "msek_high": 18000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Mer kärnkraftsbaskraft. Samma som #137. ~100 mdr/år (överlappar med #137). [granskning 2026-07-09: ny kärnkraft: årlig kapitalkostnad inom mandatet, ej 100 mdr/år]",
+      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
       "confidence": 0.3,
-      "calculation": "Ny kärnkraft byggs inte av staten ensam, men löftet förutsätter statligt stöd i någon form. Antaganden: en ny reaktor kostar i storleksordningen 80–150 miljarder kronor och byggs över mer än en mandatperiod. Statens del — ägarkapital, kreditgarantier som faller ut, risktäckning — antas motsvara några tiotals miljarder totalt, vilket utslaget på perioden ger ungefär 10 000 miljoner kronor per år. Samma belopp används för alla partier som lovar ny kärnkraft, eftersom samma politik ska kosta lika. Löftet är ett delat löfte tillsammans med Moderaterna, Liberalerna och Sverigedemokraterna och räknas därför en gång i den samlade summan."
+      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Kristdemokraterna delar löftet med Moderaterna, Liberalerna och Sverigedemokraterna."
     },
     "financing_claimed": {
       "described": false,
@@ -5045,6 +5057,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen bakom beloppet är nu offentlig. Beloppet är oförändrat och följer de andra partiernas löften om ny kärnkraft. Den omräknade uträkningen ville sätta det till 0 kronor som en ren viljeyttring — men då hade Kristdemokraterna blivit billigast av fyra partier för samma politik.",
         "commit": "04fa82424d249c6f943957708c6adf8fc497f677"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen bakom beloppet vilar nu på samma öppet redovisade grund som övriga partiers löften om ny kärnkraft: statens andel av en satsning på två reaktorer, utslagen per år. Beloppet är oförändrat.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -7176,9 +7193,9 @@
       "msek_high": 18000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Ny kärnkraft är en jätteinvestering. En reaktor estimerat 80–150 mdr. 'Året om'-baskraft antyder minst 2–3 nya  [granskning 2026-07-09: ny kärnkraft: årlig kapitalkostnad inom mandatet, ej 100 mdr/år]",
+      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
       "confidence": 0.3,
-      "calculation": "Rekonstruerad i efterhand (originalresonemanget sparades inte): Jämförelselöften: 10 mdkr/år (p-2026-0109, p-2026-0551, p-2026-0082) och 20 mdkr/år (p-2026-0083). Antar ett basscenario på 10 mdkr/år. Låg: 5 mdkr/år (begränsad insats). Hög: 20 mdkr/år (omfattande satsning). Multipliceras ej med mängd utan är en årsvis kostnad baserat på tidigare bedömningar."
+      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Liberalerna delar löftet med Moderaterna, Kristdemokraterna och Sverigedemokraterna."
     },
     "financing_claimed": {
       "described": false,
@@ -7188,7 +7205,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen bakom beloppet vilar nu på samma öppet redovisade grund som övriga partiers löften om ny kärnkraft: statens andel av en satsning på två reaktorer, utslagen per år. Beloppet är oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -20277,8 +20300,8 @@
       "msek_high": 18000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Statligt stöd till nybyggd kärnkraft; förenklade tillstånd kostar i sig ingenting. Beloppet är detsamma som för övriga partiers löften om ny kärnkraft.",
-      "calculation": "Statligt stöd/garantier för ny kärnkraft (tillståndsdelen försumbar). Harmoniserat med de befintliga kärnkraftslöftena p-2026-0082/0153/0109, som alla ligger 5 000/10 000/18 000 per år — en jätteinvestering (~100–150 mdr för 2 reaktorer) spridd över mandatperioden. Samma politik ⇒ samma räkning. (p-2026-0083 ligger högre, 20 mdr, men är en större åtgärd: statligt ägande + finansieringslösning.)",
+      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
+      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Sverigedemokraterna delar löftet med Moderaterna, Kristdemokraterna och Liberalerna.",
       "confidence": 0.25
     },
     "financing_claimed": {
@@ -20294,6 +20317,11 @@
         "date": "2026-07-27",
         "change": "Löftet är nu kopplat till samma delade löfte som Moderaternas, Kristdemokraternas och Liberalernas löften om ny kärnkraft. Beloppet var redan harmoniserat men räknades tidigare separat i den samlade summan; nu räknas politiken en gång. Se rättelseloggen.",
         "commit": "04fa82424d249c6f943957708c6adf8fc497f677"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Uträkningen bakom beloppet vilar nu på samma öppet redovisade grund som övriga partiers löften om ny kärnkraft: statens andel av en satsning på två reaktorer, utslagen per år. Beloppet är oförändrat.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
