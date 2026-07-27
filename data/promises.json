@@ -696,9 +696,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2400,
-      "msek_base": 12000,
-      "msek_high": 21600,
+      "msek_low": 4000,
+      "msek_base": 10000,
+      "msek_high": 20000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Att sänka elevgrupper från snitt 20 till 15 i grundskolan. Ca 700 000 grundskoleklasser × extra lärare. Forskning visar kostnad 8-15 mdr/år.",
@@ -718,6 +718,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 12 000 till 10 000 miljoner kronor per år, enligt löftets egen uträkning. Kvarstående fråga: löftet delar politik med Liberalernas löften om mindre klasser, som nu ligger på 2 700 miljoner kronor per år räknat på deras eget maxtak. Samma politik bör kosta lika, men Socialdemokraterna har inte angett något tak, så beloppen är ännu inte harmoniserade.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -846,9 +851,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 2000,
-      "msek_high": 3600,
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 800,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Övervakning, punktmarkering ungdomar, riskfamiljsprogram. Estimat 2 mdr/år.",
@@ -863,7 +868,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2500,9 +2511,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 250,
-      "msek_base": 500,
-      "msek_high": 750,
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Eftervårdsprogram i likhet med mödrahälsovård. ~0,5 mdr/år.",
@@ -2517,7 +2528,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2893,9 +2910,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 750,
+      "msek_base": 1500,
+      "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Skatteavdrag för utbildningskostnader. Om 500 000 yrkesverksamma × genomsnitt 4000 kr = 2 mdr/år.",
@@ -2915,6 +2932,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -3882,9 +3904,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 800,
-      "msek_high": 1200,
+      "msek_low": 800,
+      "msek_base": 1200,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är ett lagkrav vars direkta kostnad är försumbar; beloppet avser den verkliga följden — fler utvisningar, med kostnader för förvar, transport och domstol. Antalet som skulle utvisas är osäkert, så beloppet är en grov storleksordning snarare än en beräkning (belopp satt av granskare).",
@@ -3904,6 +3926,11 @@
         "date": "2026-07-23",
         "change": "Metodnoten förtydligad: beloppet avser den verkliga följden (fler utvisningar med förvar, transport och domstol) och osäkerheten i schablonen görs tydlig. Beloppet oförändrat. Se rättelseloggen.",
         "commit": "7bfa31de33daf7273edcdc9b0f14caff787db009"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -3933,9 +3960,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 2000,
-      "msek_high": 3600,
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Folkräkning + mottagningscenter. Stor logistisk insats. ~2 mdr/år.",
@@ -3950,7 +3977,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4460,9 +4493,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
+      "msek_low": 400,
+      "msek_base": 1000,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Klimatpremie + klimatklivet för laddinfrastruktur. ~2 mdr/år.",
@@ -4477,7 +4510,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7754,14 +7793,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 1500,
+      "msek_base": 2700,
+      "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Mindre klasser och mer lärartid per elev. Grundskolan ca 900 000 elever i ca 30 000 klasser. Att sänka snittklassen från ca 22 till ca 18 = ca 20% fler klasser/lärare. Grundskolans totala kos",
+      "method_note": "Prissatt på partiets egen utfästelse om ett maxtak på tjugo elever per klass, som är samma politik.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antagande: minskning av klassstorlek med ca 20 % kräver ~20 % fler lärare. ~100 000 lärare i grundskola/gymnasium × 20 % = 20 000 nya tjänster × 600 000 kronor per år (lön, avgifter, OH) ≈ 12 miljarder kronor per år. Högre vid större minskning eller inkludering av förskola/fritidshem."
+      "calculation": "Löftet anger ingen nivå på hur mycket mindre klasserna ska bli. Partiet har däremot lovat ett maxtak på tjugo elever per klass, vilket är samma politik uttryckt konkret, och det löftet är räknat: grundskolan har omkring 1 100 000 elever och en snittklass på 21,5, alltså omkring 51 200 klasser. Ett tak på tjugo ger omkring 55 000 klasser, alltså 3 800 fler, som var och en kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år. Det ger 2 700 miljoner kronor per år. Den tidigare uträkningen antog i stället en klassminskning på tjugo procent — en siffra som inte finns i något av partiets löften."
     },
     "financing_claimed": {
       "described": false,
@@ -7771,7 +7810,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 10 000 till 2 700 miljoner kronor per år. Löftet är samma politik som partiets löfte om ett maxtak på tjugo elever per klass och räknas nu på samma grund. Den tidigare uträkningen byggde på en antagen klassminskning om tjugo procent, en siffra som inte står i något av partiets löften; taket på tjugo är däremot partiets eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8693,9 +8738,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
-      "msek_high": 9000,
+      "msek_low": 2000,
+      "msek_base": 4000,
+      "msek_high": 10000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Löfte inom Jobb. ~5 mdr/år.",
@@ -8715,6 +8760,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -10203,14 +10253,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5000,
-      "msek_high": 7500,
+      "msek_low": 2000,
+      "msek_base": 4000,
+      "msek_high": 6000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Höjt barnbidrag för alla + tillägg ensamstående. Barnbidrag gäller ca 2,1M barn. Om höjning 200 kr/mån × 2,1M × 12 = 5,04 mdr + ensamståendetillägg. Estimat 5-7 mdr/år.",
+      "method_note": "Höjt barnbidrag och höjt bostadsbidrag: antal mottagare gånger höjning per månad.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Höjning barnbidrag: ~2 milj barn × 200 kr/mån × 12 = 4 800 miljoner kronor. Tillägg ensamstående: ~500 000 barn × 1 000 kr/mån × 12 = 6 000 miljoner kronor. Summa högt ~10 800, men troliga lägre nivåer. Lågt scenario: 100 kr höjning + 500 kr tillägg => (2 400 + 3 000) = 5 400. Osäkerhet: lägst ~2 000 (minimal höjning, få berörda), högst ~8 000 (avrundat). Bas ~4 000."
+      "calculation": "Löftet höjer både barnbidrag och bostadsbidrag. Barnbidrag: omkring 2 miljoner barnfamiljer med en höjning på 100–300 kronor per barn och månad ger 1,2–3,6 miljarder kronor per år, med 200 kronor som basantagande, alltså omkring 2,4 miljarder. Bostadsbidrag: omkring 200 000 hushåll med en höjning på 500–1 500 kronor i månaden ger 1,2–3,6 miljarder, med 1 000 kronor som basantagande, alltså omkring 2,4 miljarder. Sammantaget 2 000–6 000 miljoner kronor per år med 4 000 som basbelopp."
     },
     "financing_claimed": {
       "described": false,
@@ -10220,7 +10270,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet harmoniserat till 4 000 miljoner kronor per år. Partiets två löften om höjt barnbidrag och familjestöd beskriver samma politik och räknas nu på samma uträkning; det ena visade tidigare ett belopp som dess egen räkning inte gav.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -10639,8 +10695,8 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 140,
-      "msek_base": 200,
-      "msek_high": 260,
+      "msek_base": 300,
+      "msek_high": 600,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Estimat: Administrering av regionala mål. ~0,2 mdr/år.",
@@ -10655,7 +10711,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -10867,8 +10929,8 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 50,
-      "msek_base": 200,
-      "msek_high": 500,
+      "msek_base": 150,
+      "msek_high": 300,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Tolkar som stärkt filmproduktionsincitament eller statlig medfinansiering. Jämför med dagens produktionsrabatt (ca 100 mkr/år) och planerade utvidgningar. Löftet är vagt, stor osäkerhet.",
@@ -10888,6 +10950,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -11318,9 +11385,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 4000,
-      "msek_high": 6000,
+      "msek_low": 1000,
+      "msek_base": 2500,
+      "msek_high": 5000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande: tillägg 500-1000 kr/mån per barn för ensamstående föräldrar, ca 500 000 barn. Bruttokostnad, ej behovsprövat. Jämförbart med finskt tillägg (~700 kr/mån).",
@@ -11335,7 +11402,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11361,16 +11434,16 @@
     },
     "category": "migration",
     "cost": {
-      "type": "intäktsminskning",
+      "type": "besparing",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 100,
+      "msek_low": 40,
+      "msek_base": 150,
       "msek_high": 300,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om sänkt lönegolv för arbetskraftsinvandrare minskar skatteintäkter med 0–300 msek/år, baserat på osäkert antal berörda och löneeffekt.",
+      "method_note": "Utebliven utvisningskostnad för personer som arbetar och betalar skatt.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Baseras på jämförbara löften (partiets eget löfte om lönegolvet för arbetskraftsinvandring, Miljöpartiets löfte om kollektivavtalsenlig lön) som båda uppskattats till 10 miljoner kronor per år för administrativa kostnader. Antaget intervall 5–15 miljoner kronor per år för att spegla osäkerhet i volym och genomförande."
+      "calculation": "Att låta bli att utvisa någon som arbetar och betalar skatt sparar utvisningens kostnad. Omkring 200–600 personer per år antas beröras, och varje utvisning kostar 200 000–500 000 kronor i förvar, resa och handläggning. Det ger en besparing på 40–300 miljoner kronor per år, med 150 miljoner som basbelopp. Att personerna stannar kvar i arbete ger dessutom fortsatta skatteintäkter, men den effekten räknas inte in här."
     },
     "financing_claimed": {
       "described": false,
@@ -11385,6 +11458,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet harmoniserat till 150 miljoner kronor per år och kostnadstypen ändrad till besparing. Partiets två löften om att stoppa utvisningar av arbetande beskrev samma politik men med motsatt tecken — det ena som en utebliven intäkt, det andra som en besparing. Att låta bli att utvisa någon sparar utvisningens kostnad; det kostar inte staten pengar.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -11651,9 +11729,9 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 350,
-      "msek_high": 800,
+      "msek_low": 20,
+      "msek_base": 200,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar att 200 000–800 000 ha säljs och att staten förlorar årlig avkastning på 500–1 000 kr/ha. Motsvarar minskad utdelning från Sveaskog.",
@@ -11668,7 +11746,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -11995,9 +12079,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 2000,
+      "msek_low": 1000,
+      "msek_base": 2000,
+      "msek_high": 4000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande om statligt bidrag till kommuner för höjda måltidsambitioner, baserat på ca 200 000 brukare och en kostnadsökning per brukare mellan 2 500 och 10 000 kr/år inklusive råvaror och personal.",
@@ -12012,7 +12096,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12275,16 +12365,16 @@
     },
     "category": "klimat-miljö",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 50000,
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsuppskattning för statliga stöd, investeringar och subventioner som krävs för att höja självförsörjningsgraden från ca 50% till 80%, baserat på tidigare jordbruks- och beredskapsåtgärder.",
+      "method_note": "Målet om 80 procents självförsörjning nås främst genom ett jordbruksavdrag, alltså uteblivna skatteintäkter.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Sveriges jordbruksproduktion ~60 miljarder kronor per år. Ökning med 30 p.e. via statliga subventioner på 10–25 % av produktionsvärdet ⇒ 6–15 miljarder kronor per år. Nuvarande totala jordbruksstöd ~7,5 miljarder kronor per år. Löftet tolkas som ny, utökad satsning utöver befintliga EU-medel, mellan 0,5 och 15 miljarder kronor per år."
+      "calculation": "Målet nås genom ett jordbruksavdrag som höjer lönsamheten för bönderna, plus regelförenklingar och lättare generationsskiften. Avdraget är den tunga posten: omkring 50 000 jordbruksföretag med 50 000–200 000 kronor i genomsnittligt avdrag ger 2,5–10 miljarder kronor per år i uteblivna skatteintäkter. Regelförenklingar och generationsskiften kostar mindre, uppskattningsvis 0,5–2 miljarder. Sammantaget 2 000–12 000 miljoner kronor per år med 5 000 som basbelopp. Beloppet avser statens kostnad för åtgärderna, inte värdet av den ökade produktionen."
     },
     "financing_claimed": {
       "described": false,
@@ -12294,7 +12384,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet harmoniserat till 5 000 miljoner kronor per år och kostnadstypen ändrad till intäktsminskning. Partiets två löften om 80 procents självförsörjning stod på 15 000 respektive 3 000 miljoner kronor med olika kostnadstyper, trots att de beskriver samma mål och samma åtgärder. Det tunga instrumentet är ett jordbruksavdrag, som kostar staten uteblivna skatteintäkter — det är ingen utgift.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12869,9 +12965,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 300,
-      "msek_high": 800,
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 200,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Baserat på dagens statliga skadeståndsutgifter (ca 200 mkr/år). Antagen ökning med 50–300 % genom fler skadeståndsgrundade fall och höjda belopp.",
@@ -12886,7 +12982,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12965,9 +13067,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 200,
-      "msek_high": 500,
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 600,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar att löftet innebär en förstärkning av befintliga anslag med 0–500 msek/år, eftersom nuvarande nivå redan är långsiktig men kan behöva höjas.",
@@ -12982,7 +13084,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13162,14 +13270,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 3000,
-      "msek_high": 7500,
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om ett nytt jordbruksavdrag för ca 50 000 företag, med genomsnittligt avdrag 50 000–150 000 kr/år. Inkluderar viss osäkerhet för ytterligare stöd och regelförenklingar.",
+      "method_note": "Målet om 80 procents självförsörjning nås främst genom ett jordbruksavdrag, alltså uteblivna skatteintäkter.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antaganden: 1) Jordbruksavdrag: ~50 000 jordbruksföretag × 50–200 000 kronor i snittavdrag ≈ 2,5–10 miljarder kronor. 2) Regelförenklingar & generationsskiften: lägre direkta kostnader men kräver utredningar och vissa subventioner ≈ 0,5–2 miljarder kronor. 3) 'Säkra jordbrukspolitikens framtid' tolkas som bibehållna/ökade nationella stöd utöver EU-stöd. Totalt spann 2–12 miljarder kronor per år. Bas 5 miljarder kronor motsvarar ett medelstort paket."
+      "calculation": "Målet nås genom ett jordbruksavdrag som höjer lönsamheten för bönderna, plus regelförenklingar och lättare generationsskiften. Avdraget är den tunga posten: omkring 50 000 jordbruksföretag med 50 000–200 000 kronor i genomsnittligt avdrag ger 2,5–10 miljarder kronor per år i uteblivna skatteintäkter. Regelförenklingar och generationsskiften kostar mindre, uppskattningsvis 0,5–2 miljarder. Sammantaget 2 000–12 000 miljoner kronor per år med 5 000 som basbelopp. Beloppet avser statens kostnad för åtgärderna, inte värdet av den ökade produktionen."
     },
     "financing_claimed": {
       "described": false,
@@ -13179,7 +13287,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet harmoniserat till 5 000 miljoner kronor per år och kostnadstypen ändrad till intäktsminskning. Partiets två löften om 80 procents självförsörjning stod på 15 000 respektive 3 000 miljoner kronor med olika kostnadstyper, trots att de beskriver samma mål och samma åtgärder. Det tunga instrumentet är ett jordbruksavdrag, som kostar staten uteblivna skatteintäkter — det är ingen utgift.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13297,14 +13411,14 @@
     "cost": {
       "type": "besparing",
       "period": "per_ar",
-      "msek_low": 20,
-      "msek_base": 100,
-      "msek_high": 500,
+      "msek_low": 40,
+      "msek_base": 150,
+      "msek_high": 300,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om 500–2000 individer/år med arbete som slipper utvisning. Besparing = utebliven utvisningskostnad (ca 100–250 kkr/person) plus ökade skatteintäkter, mot viss ökad välfärdskostnad.",
+      "method_note": "Utebliven utvisningskostnad för personer som arbetar och betalar skatt.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antag 200–600 personer per år som utvisas trots arbete och skatt. Utvisningskostnad per person: 200 000–500 000 kr (förvar, resa, handläggning). Besparing: 200*0,2=40 miljoner kronor till 600*0,5=300 miljoner kronor. Bas 150 miljoner kronor."
+      "calculation": "Att låta bli att utvisa någon som arbetar och betalar skatt sparar utvisningens kostnad. Omkring 200–600 personer per år antas beröras, och varje utvisning kostar 200 000–500 000 kronor i förvar, resa och handläggning. Det ger en besparing på 40–300 miljoner kronor per år, med 150 miljoner som basbelopp. Att personerna stannar kvar i arbete ger dessutom fortsatta skatteintäkter, men den effekten räknas inte in här."
     },
     "financing_claimed": {
       "described": false,
@@ -13314,7 +13428,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet harmoniserat till 150 miljoner kronor per år och kostnadstypen ändrad till besparing. Partiets två löften om att stoppa utvisningar av arbetande beskrev samma politik men med motsatt tecken — det ena som en utebliven intäkt, det andra som en besparing. Att låta bli att utvisa någon sparar utvisningens kostnad; det kostar inte staten pengar.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13342,14 +13462,14 @@
     "cost": {
       "type": "besparing",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 500,
-      "msek_high": 2000,
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Grov uppskattning: 50 000 bidragsmottagare, 10 % får reducerat med 50 % i snitt, snittbidrag 100 000 kr/år. Betydande osäkerhet kring reglernas utformning och efterlevnad.",
+      "method_note": "Minskade bidragsutbetalningar vid uteblivet deltagande. Grovt uppskattat — bör räknas om.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~150 000–200 000 utrikes födda bidragstagare × bidragskostnad per person ~30 000–50 000 kr per år → total kostnad ~5–10 miljarder kronor. Antag att 1–5 % minskning pga sanktioner → 0,05–0,5 miljarder kronor = 50–500 miljoner kronor. Basantagande 2 %."
+      "calculation": "Omkring 150 000–200 000 utrikes födda bidragstagare kostar 30 000–50 000 kronor var per år, alltså 5–10 miljarder kronor sammanlagt. Antas sanktionerna minska utbetalningarna med två procent blir besparingen omkring 150 miljoner kronor per år, med 50–500 miljoner som spann beroende på hur många som berörs och hur hårt sanktionerna tillämpas. Uträkningen vilar på en antagen procentsats snarare än på erfarenhet av liknande sanktioner, och beloppet bör räknas om på säkrare grund."
     },
     "financing_claimed": {
       "described": false,
@@ -13359,7 +13479,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 500 till 150 miljoner kronor per år. Uträkningen angav ingen summa i kronor, bara ett antagande om två procents minskning av utbetalningarna, vilket ger omkring 150 miljoner. Beloppet är markerat för omräkning på säkrare grund.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13828,8 +13954,8 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 2000,
-      "msek_base": 8000,
-      "msek_high": 20000,
+      "msek_base": 5000,
+      "msek_high": 10000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med tidigare äldreomsorgssatsningar som Äldreomsorgslyftet (ca 2 mdkr/år) och generella statsbidragshöjningar. En storsatsning med höjda ambitioner kan innebära 5-20 mdkr/år i ökade statsbidrag",
@@ -13844,7 +13970,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14154,9 +14286,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 20,
-      "msek_base": 80,
-      "msek_high": 300,
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för att administrera ett handelssystem för icke-ETS-sektorer, inkl. register, övervakning, kontroll. Baserat på jämförbara system i mindre länder och svenska myndigheters nuvarande kostnader f",
@@ -14171,7 +14303,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14250,9 +14388,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10,
-      "msek_base": 30,
-      "msek_high": 100,
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 50,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med Klimatpolitiska rådet (~10 msek/år) och brittiska klimatkommittén (~50 msek/år). Inkluderar utredning, administration och löpande uppföljning av koldioxidbudget och konsumtionsmål.",
@@ -14267,7 +14405,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14391,8 +14535,8 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 200,
+      "msek_low": 100,
+      "msek_base": 250,
       "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -14408,7 +14552,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14539,8 +14689,8 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 300,
-      "msek_base": 800,
-      "msek_high": 2000,
+      "msek_base": 1000,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Beräknat utifrån jämförbara klimatinvesteringsstöd (t.ex. Klimatklivet) men med smalare inriktning mot baskraft. Antaget årligt anslag.",
@@ -14555,7 +14705,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14583,9 +14739,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1500,
-      "msek_high": 3000,
+      "msek_low": 200,
+      "msek_base": 800,
+      "msek_high": 2250,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande om stöd till 50 000–150 000 hushåll med i snitt 20 000–40 000 kr per hushåll, baserat på tidigare energirenoveringsstöd.",
@@ -14605,6 +14761,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -14979,8 +15140,8 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 250,
+      "msek_low": 50,
+      "msek_base": 200,
       "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -14996,7 +15157,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15210,9 +15377,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 30,
-      "msek_base": 80,
-      "msek_high": 200,
+      "msek_low": 20,
+      "msek_base": 60,
+      "msek_high": 150,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med mindre tillsynsmyndigheter som Skolinspektionen (ca 400 msek) men LSS-inspektion troligen mindre; uppskattar 50-100 anställda, lokaler, drift.",
@@ -15227,7 +15394,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15300,9 +15473,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1200,
+      "msek_low": 100,
+      "msek_base": 200,
+      "msek_high": 400,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning baserad på antal kvinnor 15-26 år (~600k), antagande om subvention av p-piller (~1500 kr/år) och långtidsverkande medel (~3000 kr/år), plus HPV-vaccinkostnad (~1500 kr/dos). Osäkerhet kri",
@@ -15317,7 +15490,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15345,9 +15524,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 800,
-      "msek_high": 1500,
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 800,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning baserat på antal barn med icke-arbetande föräldrar i förskola och fritids, uteblivna avgifter samt kostnad för ökat deltagande genom uppsökande verksamhet. Osäkerhet kring exakt antal och",
@@ -15362,7 +15541,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15679,8 +15864,8 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 500,
-      "msek_base": 1500,
-      "msek_high": 3000,
+      "msek_base": 1000,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Baserat på tidigare stadsmiljöavtal (2015–2022) med total ram ca 12 mdkr, motsvarande ca 1,5 mdkr/år. Osäkerhet kring omfattning och varaktighet.",
@@ -15695,7 +15880,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15820,8 +16011,8 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 500,
-      "msek_base": 1500,
-      "msek_high": 3000,
+      "msek_base": 800,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Baserat på tidigare riktade statsbidrag till förlossningsvård, vanligen 0,5–3 miljarder kr/år. Spannet fångar allt från mindre förstärkning till kraftig upprustning.",
@@ -15836,7 +16027,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -16011,9 +16208,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 155,
-      "msek_base": 350,
-      "msek_high": 650,
+      "msek_low": 300,
+      "msek_base": 650,
+      "msek_high": 1200,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Bygger på uppskattad totalkostnad för skyddade boenden (300–1000 mkr) där staten tar hälften, plus flyttpeng till 500–3000 kvinnor à 10 000–50 000 kr.",
@@ -16028,7 +16225,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -16644,9 +16847,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 1200,
-      "msek_high": 5000,
+      "msek_low": 1500,
+      "msek_base": 2500,
+      "msek_high": 4000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Växling: intäkter från slopade fossila subventioner (skattebefrielser) antas 2–4 mdkr/år. Nya avdrag och biopremie uppskattas till 2–5 mdkr. Nettokostnad vid imperfekt matchning ger brett intervall.",
@@ -16666,6 +16869,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -17040,9 +17248,9 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 800,
-      "msek_base": 2000,
-      "msek_high": 5000,
+      "msek_low": 700,
+      "msek_base": 1500,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning utifrån antal hushåll med barn under 12 år, antagande om 20-30% användning, genomsnittlig arbetskostnad 20 000 kr/år och 70% avdrag. Jämförs med tidigare familje-RUT-förslag.",
@@ -17057,7 +17265,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17085,14 +17299,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
-      "msek_high": 10000,
+      "msek_low": 2000,
+      "msek_base": 4000,
+      "msek_high": 6000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar höjning av barnbidrag (1,9 milj barn) med 100-500 kr/mån och bostadsbidrag för barnfamiljer (ca 200 000 hushåll) med 200-2000 kr/mån. Bred osäkerhet pga vagt löfte. (belopp satt av granskare)",
+      "method_note": "Höjt barnbidrag och höjt bostadsbidrag: antal mottagare gånger höjning per månad.",
       "confidence": 0.9,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~2 miljoner barnfamiljer. Barnbidrag: höjning 100-300 kr/barn/mån → 1,2-3,6 miljarder kronor per år (bas 200 kr → ~2,4 miljarder kronor). Bostadsbidrag: ~200 000 hushåll, höjning 500-1500 kr/mån → 1,2-3,6 miljarder kronor per år (bas 1000 kr → ~2,4 miljarder kronor). Totalt intervall 2,4-7,2 miljarder kronor, avrundat till 2-6 miljarder kronor med bas 4 miljarder kronor."
+      "calculation": "Löftet höjer både barnbidrag och bostadsbidrag. Barnbidrag: omkring 2 miljoner barnfamiljer med en höjning på 100–300 kronor per barn och månad ger 1,2–3,6 miljarder kronor per år, med 200 kronor som basantagande, alltså omkring 2,4 miljarder. Bostadsbidrag: omkring 200 000 hushåll med en höjning på 500–1 500 kronor i månaden ger 1,2–3,6 miljarder, med 1 000 kronor som basantagande, alltså omkring 2,4 miljarder. Sammantaget 2 000–6 000 miljoner kronor per år med 4 000 som basbelopp."
     },
     "financing_claimed": {
       "described": false,
@@ -17102,7 +17316,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet harmoniserat till 4 000 miljoner kronor per år. Partiets två löften om höjt barnbidrag och familjestöd beskriver samma politik och räknas nu på samma uträkning; det ena visade tidigare ett belopp som dess egen räkning inte gav.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17673,9 +17893,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 50,
+      "msek_low": 3,
+      "msek_base": 10,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnaden beror på om undantaget utformas som ett riktat statsbidrag eller en skattelättnad. Basantagandet är en mindre utredning och viss kompensation till ett fåtal skolor. Högt scenario inkluderar ",
@@ -17690,7 +17910,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18022,14 +18248,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 5000,
-      "msek_high": 12000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar utökad läkarbemanning i primärvården för personlig husläkare. Jämför med SOU 2019:42 (fast läkarkontakt, 3-4 mdkr). Bredare reform kan kosta 2-12 mdkr/år beroende på omfattning.",
+      "method_note": "Uppräkning av flera löften. Prissätts inte här; delarna ligger på partiets egna löften.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~10,5 milj. inv x 100–1000 kr/capita i ökade statliga primärvårdsanslag = 1,05–10,5 miljarder kronor. Bas: 4000 miljoner kronor motsvarar ~400 kr/capita. Inkluderar merkostnad för fler fasta läkare och ev. högre vårdkonsumtion, men drar av för redan befintliga kostnader regionerna bär."
+      "calculation": "Citatet räknar upp flera av partiets löften — \"alltifrån sänkt skatt för den som utbildar sig till en personlig husläkare\" — utan att ange nivå för något av dem. Båda de nämnda delarna finns redan som egna löften hos partiet och är prissatta där. Ett belopp här skulle räkna samma politik två gånger. Noll betyder inte att politiken är gratis: kostnaden ligger på de enskilda löftena."
     },
     "financing_claimed": {
       "described": false,
@@ -18039,7 +18265,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat från 5 000 till 0 miljoner kronor per år. Citatet är en uppräkning av flera av partiets egna löften, som var och en är prissatta separat; det tidigare beloppet dubbelräknade dem.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18175,13 +18407,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 25,
+      "msek_base": 15,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för statlig utredning inklusive sekretariat, experter och remissförfarande. Baserat på typiska kostnader för liknande utredningar.",
       "confidence": 0.65,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. En statlig utredning (statlig utredning) har en typisk totalkostnad på 5–30 miljoner kronor. Basantagandet 15 miljoner kronor bygger på en medelstor utredning med kansli, extern expertis och viss remisshantering. Låg och hög speglar variation i omfattning och tid."
+      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. En statlig utredning har en typisk totalkostnad på 5–30 miljoner kronor. Basantagandet 15 miljoner kronor bygger på en medelstor utredning med kansli, extern expertis och viss remisshantering. Låg och hög speglar variation i omfattning och tid."
     },
     "financing_claimed": {
       "described": false,
@@ -18191,7 +18423,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18324,8 +18562,8 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 3,
-      "msek_base": 8,
+      "msek_low": 5,
+      "msek_base": 7,
       "msek_high": 15,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -18346,6 +18584,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -18426,9 +18669,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 15,
-      "msek_base": 30,
-      "msek_high": 60,
+      "msek_low": 37,
+      "msek_base": 50,
+      "msek_high": 187,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar 500–2000 personer med aktuella uppehållstillstånd studerar årligen med studiemedel, genomsnittligt bidrag 30 000 kr/år. Kostnad för bidragsdelen, lån antas kostnadsneutrala.",
@@ -18443,7 +18686,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18824,7 +19073,7 @@
   },
   {
     "id": "p-2026-0503",
-    "group_id": null,
+    "group_id": "g-sarskilt-ommande-omstandigheter",
     "title": "Återinför möjligheten till uppehållstillstånd på grund av särskilt ömmande omständigheter",
     "slug": "aterinfor-mojligheten-till-uppehallstillstand-pa-grund-av-sarskilt-ommande-omstandigheter",
     "parties": [
@@ -18846,14 +19095,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 500,
-      "msek_high": 1500,
+      "msek_low": 400,
+      "msek_base": 1000,
+      "msek_high": 2500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om 2 000–5 000 fler tillstånd årligen à 200 000–500 000 kr i statliga kostnader per person. Osäkerhet om faktiskt inflöde och genomsnittskostnad.",
+      "method_note": "Återinförd grund för uppehållstillstånd vid särskilt ömmande omständigheter. Delat löfte med ett annat parti som lovar samma sak.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~2 000–4 000 fler bifall per år × 350–700 000 kronor i statlig nettokostnad/person = 700–2 800 miljoner kronor per år. Bas: 3 000 bifall à 470 000 kronor ≈ 1 400 miljoner kronor."
+      "calculation": "Att återinföra grunden särskilt ömmande omständigheter antas ge 1 500–4 000 fler beviljade uppehållstillstånd per år. Den statliga nettokostnaden per person — etablering, undervisning i svenska och sociala insatser, minus skatteintäkter och minus de asylkostnader som faller bort — uppskattas till 200 000–700 000 kronor per år. Det ger 400–2 500 miljoner kronor per år, med 1 000 miljoner som basbelopp. Antalet beviljade är den stora osäkerheten. Ett annat parti lovar samma sak och prissätts på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -18863,7 +19112,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet harmoniserat till 1 000 miljoner kronor per år och löftet grupplänkat med det andra partiets löfte om samma sak. De två uträkningarna gav 1 400 respektive 500 miljoner för identisk politik, och den ena hänvisade till den andra som jämförelse — vilket gjorde dem självmotsägande. Samma politik hos olika partier är två löften som ska kosta lika och räknas en gång i rikssumman.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18895,8 +19150,8 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 200,
-      "msek_base": 600,
-      "msek_high": 1800,
+      "msek_base": 500,
+      "msek_high": 800,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning baserad på antagande om ett ökat antal familjeåterföreningar (ca 2 000–8 000 per år) och genomsnittlig statlig utgift per anhöriginvandrare för mottagande, etablering och bidrag. Stor osä",
@@ -18916,6 +19171,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -18996,9 +19256,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 800,
-      "msek_high": 1600,
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 1000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Tvingande regler utvidgar vilka som får uppehållstillstånd, vilket ökar kostnaderna för mottagande och etablering — en verklig, återkommande utgift. Antalet är osäkert; spannet har stramats från ett tidigare orimligt brett intervall (100–4 000) till en mer meningsfull storleksordning (belopp satt av granskare).",
@@ -19018,6 +19278,11 @@
         "date": "2026-07-23",
         "change": "Spannet stramat från 100–4 000 (40×) till 400–1 600 miljoner kronor per år; basbeloppet 800 oförändrat. Kostnaden för mottagande och etablering är verklig men antalet osäkert. Se rättelseloggen.",
         "commit": "7bfa31de33daf7273edcdc9b0f14caff787db009"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -19799,9 +20064,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 2000,
-      "msek_high": 5000,
+      "msek_low": 300,
+      "msek_base": 800,
+      "msek_high": 1500,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande baserat på tidigare budgetsatsningar på Kriminalvården om 1-3 mdkr/år, med högre osäkerhet för ambitiösare utbyggnad.",
@@ -19816,7 +20081,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -19851,7 +20122,7 @@
       "basis_url": null,
       "method_note": "Kostnad för en statlig utredning med sekretariat och experter. Baserat på typiska utredningskostnader.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. En statlig utredning (statlig utredning) kostar vanligen 5–30 miljoner kronor beroende på omfattning och tid. En juridisk översyn av brottsbalken antas vara en medelstor utredning med en kostnad på cirka 15 miljoner kronor."
+      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. En statlig utredning kostar vanligen 5–30 miljoner kronor beroende på omfattning och tid. En juridisk översyn av brottsbalken antas vara en medelstor utredning med en kostnad på cirka 15 miljoner kronor."
     },
     "financing_claimed": {
       "described": false,
@@ -19870,7 +20141,7 @@
   },
   {
     "id": "p-2026-0524",
-    "group_id": null,
+    "group_id": "g-sarskilt-ommande-omstandigheter",
     "title": "Återinför uppehållstillstånd på grund av särskilt ömmande omständigheter för personer med särskild anknytning till Sverige",
     "slug": "aterinfor-uppehallstillstand-pa-grund-av-sarskilt-ommande-omstandigheter-for-personer-med-sarskild-anknytning-till-sverige",
     "parties": [
@@ -19892,14 +20163,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 300,
-      "msek_base": 600,
-      "msek_high": 1500,
+      "msek_low": 400,
+      "msek_base": 1000,
+      "msek_high": 2500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på 2 000-5 000 ytterligare beviljade uppehållstillstånd per år med en statlig nettokostnad på ca 150 000-300 000 kr per person och år.",
+      "method_note": "Återinförd grund för uppehållstillstånd vid särskilt ömmande omständigheter. Delat löfte med ett annat parti som lovar samma sak.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antal: 1 500–3 000 personer per år beviljade. Genomsnittlig nettokostnad 200–300 000 kronor per år (migration, bidrag, minus skatter) → 300–900 miljoner kronor per år. Bas 500 miljoner kronor jämförbart med Centerpartiets löfte om uppehållstillstånd vid särskilt ömmande skäl."
+      "calculation": "Att återinföra grunden särskilt ömmande omständigheter antas ge 1 500–4 000 fler beviljade uppehållstillstånd per år. Den statliga nettokostnaden per person — etablering, undervisning i svenska och sociala insatser, minus skatteintäkter och minus de asylkostnader som faller bort — uppskattas till 200 000–700 000 kronor per år. Det ger 400–2 500 miljoner kronor per år, med 1 000 miljoner som basbelopp. Antalet beviljade är den stora osäkerheten. Ett annat parti lovar samma sak och prissätts på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -19914,6 +20185,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet harmoniserat till 1 000 miljoner kronor per år och löftet grupplänkat med det andra partiets löfte om samma sak. De två uträkningarna gav 1 400 respektive 500 miljoner för identisk politik, och den ena hänvisade till den andra som jämförelse — vilket gjorde dem självmotsägande. Samma politik hos olika partier är två löften som ska kosta lika och räknas en gång i rikssumman.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -20263,14 +20539,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5,
-      "msek_base": 20,
-      "msek_high": 100,
+      "msek_low": 1,
+      "msek_base": 10,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för statlig administration av veto-mekanism, granskning och ev. stöd till kommuner. Jämför med mindre myndigheter. Löftet saknar detaljer.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antar: 1) Statlig utredning (statlig utredning) ~10–20 miljoner kronor engång. 2) Enklare digitalt system för namninsamling/validering ~5–10 miljoner kronor. 3) Löpande hantering ryms inom ordinarie anslag (marginell). Bas: 10 miljoner kronor (utredning + visst systemstöd). Låg: 1 miljoner kronor (minimal utredning, inget nytt system). Hög: 30 miljoner kronor (omfattande utredning + pilot + plattform)."
+      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antar: 1) Statlig utredning ~10–20 miljoner kronor engång. 2) Enklare digitalt system för namninsamling/validering ~5–10 miljoner kronor. 3) Löpande hantering ryms inom ordinarie anslag (marginell). Bas: 10 miljoner kronor (utredning + visst systemstöd). Låg: 1 miljoner kronor (minimal utredning, inget nytt system). Hög: 30 miljoner kronor (omfattande utredning + pilot + plattform)."
     },
     "financing_claimed": {
       "described": false,
@@ -20280,7 +20556,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20513,9 +20795,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 200,
-      "msek_high": 600,
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Utgår från ett nationellt stimulansbidrag för familjecentraler och föräldrastödsprogram. Lågt spann motsvarar mindre pilotprojekt, högt spann en bred utbyggnad. Baserat på jämförbara satsningar inom s",
@@ -20530,7 +20812,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20993,9 +21281,9 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 150,
-      "msek_high": 400,
+      "msek_low": 75,
+      "msek_base": 100,
+      "msek_high": 150,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antagande: Fribeloppet slopas juni-aug. Minskad återbetalning/ökat bidrag för sommararbetande studenter. Osäkerhet kring antal berörda och marginaleffekter. Baserat på storleksordning av tidigare CSN-",
@@ -21015,6 +21303,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
