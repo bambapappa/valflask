@@ -77,8 +77,11 @@ function parseSwedishNumber(raw: string): number | null {
  */
 const NUM_SRC = `\\d{1,3}(?:[${SPACES}]\\d{3})+(?:,\\d+)?|\\d+(?:,\\d+)?`;
 
-/** "5–10 miljarder kronor": bara det andra talet bär enheten. */
-const RANGE = /\d\s*[–—-]\s*\d/;
+/**
+ * "5–10 miljarder kronor": bara det andra talet bär enheten. Ett ord får stå
+ * mellan talen — "0–ca 5 miljoner kronor" är också ett spann.
+ */
+const RANGE = /\d\s*[–—-]\s*(?:[a-zà-öø-ÿ]+\s+)?\d/;
 
 /**
  * Belopp i msek ur en text. Talet MÅSTE bära en penningenhet — annars fastnar
@@ -105,9 +108,13 @@ const CONCLUSION = /\b(bas|basen|basbelopp|basbeloppet|basfall|basfallet|basanta
 
 /** Uttryck där ett tal namnges som basbelopp utan att bära egen enhet. */
 const BARE_BASE_PATTERNS = [
-  new RegExp(`\\bbas(?:belopp|fall|nivå|antagande)?t?\\s*(?:är|blir|sätts till|läggs på|sätts)?\\s*(${NUM_SRC})(?!\\s*(?:%|procent))`, "i"),
+  new RegExp(`\\bbas(?:belopp|fall|nivå|antagande)?(?:et|en|t)?\\s*(?::|är|blir|sätts till|läggs på|sätts)?\\s*(${NUM_SRC})(?!\\s*(?:%|procent))`, "i"),
   new RegExp(`(${NUM_SRC})\\s+som\\s+bas`, "i"),
   new RegExp(`\\bmed\\s+(${NUM_SRC})\\s+som\\s+basbelopp`, "i"),
+  // "sammanlagt 8 miljoner per år" — summeringen bär enhet men inte ordet
+  // "kronor", så den fastnade inte i beloppsläsaren och meningens ENDA
+  // "miljoner kronor"-tal lästes som slutsats i stället.
+  new RegExp(`\\b(?:sammanlagt|sammantaget|totalt|summan blir)\\s+(${NUM_SRC})\\s*(miljoner|miljarder)`, "i"),
 ];
 
 function splitSentences(text: string): string[] {
@@ -116,9 +123,7 @@ function splitSentences(text: string): string[] {
 
 /** Är meningen dominerad av miljarder? Då ska nakna tal skalas därefter. */
 function sentenceScale(sentence: string): number {
-  return /miljarder kronor|mdkr/i.test(sentence) && !/miljoner kronor|mkr/i.test(sentence)
-    ? 1000
-    : 1;
+  return /miljarder\b|mdkr/i.test(sentence) && !/miljoner\b|mkr/i.test(sentence) ? 1000 : 1;
 }
 
 /**
@@ -127,16 +132,20 @@ function sentenceScale(sentence: string): number {
  */
 const REJECTED = /\b(avvisad|avvisades|förkastad|förkastades|tidigare uppskattning|tidigare belopp|tidigare beloppet|det tidigare|efterhandsberäkning|låg dessutom|stod på)\b/i;
 
-/** Talet är ett styckpris, inte ett totalbelopp: "2 500 kr/förlossning". */
-function isUnitPrice(sentence: string, numberText: string): boolean {
-  const escaped = numberText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return new RegExp(`${escaped}\\s*(kr|kronor)\\s*(/|per\\b)`, "i").test(sentence);
+/**
+ * Talet är en operand i en uträkning ("1 000 studenter à 50 000 kronor = …"),
+ * inte uträkningens svar. Kollas på texten DIREKT EFTER träffen — samma tal
+ * kan stå tidigare i meningen som operand utan att basbeloppet är det.
+ */
+function isOperand(tail: string): boolean {
+  return /^[^.=\u00d7*]{0,15}?[\u00d7*=]/.test(tail) || /^[^.]{0,15}?\s\u00e0\s/.test(tail);
 }
 
-/**
- * Vad uträkningen själv säger att basbeloppet är, i msek. Null när texten inte
- * drar någon slutsats — då finns inget att jämföra med och löftet flaggas inte.
- */
+/** Talet är ett styckpris, inte ett totalbelopp: "2 500 kr/förlossning". */
+function isUnitPrice(tail: string): boolean {
+  return /^\s*(kr|kronor)\s*(\/|per\b)/i.test(tail);
+}
+
 export function statedBaseMsek(calculation: string): number | null {
   const sentences = splitSentences(calculation)
     .filter((s) => CONCLUSION.test(s))
@@ -155,17 +164,38 @@ export function statedBaseMsek(calculation: string): number | null {
       if (n === null) continue;
       // "Bas 2 500 kr/förlossning" är ett styckpris, inte ett basbelopp i
       // miljoner. Det var den gamla sökningens mest kända falsklarm.
-      if (isUnitPrice(sentence, raw)) continue;
-      // Bär talet egen enhet fångas det redan av parseAmountsMsek — undvik
-      // att skala det två gånger.
-      const withUnit = new RegExp(
-        `${raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*(miljarder kronor|miljoner kronor|mdkr|mkr)`,
-        "i",
-      );
-      if (withUnit.test(sentence)) {
+      const tail = sentence.slice((m.index ?? 0) + m[0].length);
+      if (isUnitPrice(tail)) continue;
+      // "Bas: 1 000 studenter à 50 000 kronor = 50 miljoner kronor" — talet
+      // efter "Bas:" är då en OPERAND i uträkningen, inte svaret. Svaret står
+      // efter likhetstecknet, så använd meningens sista penningbelopp.
+      if (isOperand(tail)) {
         const amounts = parseAmountsMsek(sentence);
         const last = amounts[amounts.length - 1];
         if (last !== undefined) return last;
+        continue;
+      }
+      // Bär talet egen enhet fångas det redan av parseAmountsMsek — undvik
+      // att skala det två gånger.
+      // Bär basbeloppet en egen enhet ska DEN användas. Att i stället ta sista
+      // beloppet i meningen läste "låg 500, bas 1 500, hög 5 000" som att
+      // basbeloppet vore 5 000 — sökningen larmade på sina egna rätträknade
+      // löften.
+      const withUnit = sentence.match(
+        new RegExp(
+          `${raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*(miljarder kronor|miljoner kronor|mdkr|mkr)`,
+          "i",
+        ),
+      );
+      // Bär mönstret själv en enhet (grupp 2) gäller den. Annars den enhet som
+      // står intill talet. Att i stället gissa ur meningen blev fel i en
+      // mening som innehöll både miljoner och miljarder.
+      const patternUnit = m[2]?.toLowerCase();
+      if (patternUnit === "miljarder") return n * 1000;
+      if (patternUnit === "miljoner") return n;
+      const ownUnit = withUnit?.[1]?.toLowerCase();
+      if (ownUnit !== undefined) {
+        return ownUnit.startsWith("miljarder") || ownUnit === "mdkr" ? n * 1000 : n;
       }
       return n * sentenceScale(sentence);
     }
