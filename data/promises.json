@@ -2534,9 +2534,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 340,
-      "msek_base": 400,
-      "msek_high": 460,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "parti",
       "basis_url": null,
       "method_note": "Källan anger: 'dubblering av antalet subventionerade IVF-försök, från tre till sex'. Nuvarande kostnad för 3 försök ca 0,2 mdr/år. Dubbelt = ca 0,4 mdr/år.",
@@ -2549,8 +2549,14 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Tillbakadraget: citatet innehåller inget åtagande om framtiden. Det beskriver att regeringen avsätter pengar i vårbudgeten 2026 för en fördubbling av antalet subventionerade behandlingsförsök — ett beslut som redan är fattat, inte ett löfte för nästa mandatperiod. Samma grund som de tidigare tillbakadragna citaten som beskriver genomförd politik. Partiets åtagande om framtiden ligger kvar på dess löfte om att se över riktlinjerna och öka antalet försök.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -10488,14 +10494,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 6000,
-      "msek_high": 12000,
+      "msek_low": 4000,
+      "msek_base": 8100,
+      "msek_high": 14000,
       "basis": "llm_estimat",
       "basis_url": "https://www.forsakringskassan.se/nyhetsarkiv/nyheter-press/2026-03-24-farre-barn-i-sverige---barnbidragen-minskar",
-      "method_note": "Höjt barnbidrag plus ett tillägg till hushåll med svag ekonomi. Ingen nivå anges, så barnbidragsdelen vilar på den senaste faktiska höjningen av barnbidraget.",
+      "method_note": "Höjt barnbidrag plus ett tillägg för ensamstående föräldrar, prissatta var för sig. Tillägget vilar på samma grund som Centerpartiets löfte om samma sak.",
       "confidence": 0.45,
-      "calculation": "Löftet höjer barnbidraget och ett stöd riktat till hushåll med svag ekonomi. Barnbidraget: ingen nivå anges, så vi räknar med samma steg som den senaste faktiska höjningen — 200 kronor i månaden (2018). Försäkringskassan betalade ut 2,65 miljarder kronor i barnbidrag i december 2025, vilket efter avdrag för flerbarnstillägg motsvarar omkring 1,9 miljoner barn. 1,9 miljoner × 200 kronor × 12 månader ≈ 4 600 miljoner kronor per år. Den tidigare uträkningen räknade fel här: den angav 1,2–3,6 miljarder kronor för 100–300 kronor i månaden till 2 miljoner mottagare, men multiplikationen ger dubbla det. Tillägget till ensamstående och barnfamiljer: omkring 150 000 hushåll med 800 kronor i månaden ≈ 1 400 miljoner kronor per år, vår egen uppskattning. Sammantaget 6 000 miljoner kronor per år."
+      "calculation": "Löftet höjer barnbidraget och inför ett tillägg för ensamstående föräldrar. Barnbidraget: ingen nivå anges, så vi räknar med samma steg som den senaste faktiska höjningen — 200 kronor i månaden, 2018. Försäkringskassan betalade ut 2,65 miljarder kronor i december 2025, vilket efter avdrag för flerbarnstillägg motsvarar omkring 1,9 miljoner barn: 1,9 miljoner × 200 kronor × 12 månader ≈ 4 600 miljoner kronor per år. Tillägget prissätts på samma grund som Centerpartiets löfte om samma sak: Finlands ensamförsörjartillägg, 73,30 euro i månaden per barn, till de omkring 350 000 barn som bor med en ensamstående förälder ≈ 3 500 miljoner kronor per år. Den nivån är hämtad från Finland och är vårt antagande, inte partiets. Sammantaget 8 100 miljoner per år."
     },
     "financing_claimed": {
       "described": false,
@@ -10515,6 +10521,11 @@
         "date": "2026-07-28",
         "change": "Beloppet omräknat från 4 000 till 6 000 miljoner kronor per år. Uträkningen räknade fel: den angav att 2 miljoner mottagare gånger 100–300 kronor i månaden ger 1,2–3,6 miljarder kronor per år, men multiplikationen ger dubbla det. Barnbidragsdelen vilar nu på Försäkringskassans utbetalningsstatistik och på den senaste faktiska höjningen av barnbidraget — samma grund som övriga partiers barnbidragslöften.",
         "commit": "89f3c3cc6f4cd1fe5c37095210baf4eb00a2ee30"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 6 000 till 8 100 miljoner kronor per år. Tilläggsdelen vilar inte längre på en egen schablon om 150 000 hushåll och 800 kronor i månaden, utan på samma grund som Centerpartiets löfte om ett tillägg till samma grupp: Finlands faktiska ensamförsörjartillägg och antalet barn som bor med en ensamstående förälder. Samma politik ska kosta lika hos båda partierna.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
       }
     ],
     "extraction": {
@@ -11657,14 +11668,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2500,
-      "msek_high": 5000,
+      "msek_low": 1800,
+      "msek_base": 3500,
+      "msek_high": 5400,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antagande: tillägg 500-1000 kr/mån per barn för ensamstående föräldrar, ca 500 000 barn. Bruttokostnad, ej behovsprövat. Jämförbart med finskt tillägg (~700 kr/mån).",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antal barn med ensamförsörjare: ca 420 000. Tillägg per barn: 200–500 kr/mån = 2 400–6 000 kr per år. Totalkostnad: 420 000 × 2 400–6 000 = 1 008–2 520 miljoner kronor. Avrundat till 1 000–5 000 miljoner kronor med bas 2 500 miljoner kronor för att fånga in nordiska modeller med högre belopp."
+      "basis_url": "https://www.kela.fi/web/lattlast/barnfamiljer",
+      "method_note": "Tillägg till barnbidraget för hushåll med en försörjare, prissatt på det nordiska tillägg som löftet självt hänvisar till. Bara antalet barn är vår uppskattning.",
+      "confidence": 0.5,
+      "calculation": "Löftet pekar självt ut förebilden: tillägget ska vara \"exempelvis som i våra nordiska grannländer\". Finlands ensamförsörjartillägg till barnbidraget är 73,30 euro i månaden per barn, alltså omkring 835 kronor. Enligt Statistiska centralbyrån bor omkring 400 000 barn i åldern 0–17 år med en ensamstående förälder; barnbidrag betalas till och med 16 års ålder, så omkring 350 000 barn berörs. 350 000 × 835 kronor × 12 månader ≈ 3 500 miljoner kronor per år. Låg: 1 800, ett tillägg ungefär hälften så stort. Hög: 5 400, om fler hushåll räknas in eller nivån läggs närmare Norges, som är högre. Nivån är hämtad från det land löftet hänvisar till; antalet mottagare är vår uppskattning."
     },
     "financing_claimed": {
       "described": false,
@@ -11679,6 +11690,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 2 500 till 3 500 miljoner kronor per år. Den tidigare uträkningen byggde på ett eget antagande om 200–500 kronor i månaden och satte dessutom basbeloppet i toppen av sitt eget räknade spann. Löftet pekar självt ut de nordiska grannländerna som förebild, så beloppet vilar nu på Finlands faktiska ensamförsörjartillägg och på Statistiska centralbyråns uppgift om hur många barn som bor med en ensamstående förälder. Samma grund används nu för Miljöpartiets löfte om ett tillägg till samma grupp.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
       }
     ],
     "extraction": {
@@ -12306,14 +12322,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 1200,
-      "msek_high": 4000,
+      "msek_low": 1020,
+      "msek_base": 2300,
+      "msek_high": 4800,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnadsintervall baserat på antaganden om nya utbildningsplatser. Lågt räknat för några hundra platser, högt för en kraftig utbyggnad inkl. ST-platser. Osäkerhet kring antal platser och kostnad per p",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Läkarprogram: 100×5,5×0,4 miljoner kronor = 220 miljoner kronor (låg), 500×5,5×0,4 = 1100 miljoner kronor (hög). Ssk-program: 500×3×0,2 = 300 miljoner kronor (låg), 2000×3×0,2 = 1200 miljoner kronor (hög). ST: 100×5×1 = 500 miljoner kronor (låg), 500×5×1 = 2500 miljoner kronor (hög). Summa: 1020–4800 miljoner kronor. Bas mittemellan ≈ 2300 miljoner kronor."
+      "method_note": "Fler platser på specialisttjänstgöring och på grundutbildningen till läkare och sjuksköterska. Löftet anger inget antal platser, så antalet är vår uppskattning.",
+      "confidence": 0.35,
+      "calculation": "Löftet vill bygga ut både specialisttjänstgöringen och grundutbildningen till läkare och sjuksköterska, utan att ange hur många platser. Läkarprogrammet: 100–500 nya platser × 5,5 år × 0,4 miljoner kronor per plats och år ger 220–1 100 miljoner kronor. Sjuksköterskeprogrammet: 500–2 000 platser × 3 år × 0,2 miljoner ger 300–1 200 miljoner. Specialisttjänstgöring: 100–500 platser × 5 år × 1 miljon ger 500–2 500 miljoner. Sammantaget 1 020–4 800 miljoner kronor per år, med 2 300 som basbelopp mitt emellan. Det tidigare beloppet, 1 200, låg under uträkningens eget basbelopp."
     },
     "financing_claimed": {
       "described": false,
@@ -12323,7 +12339,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 1 200 till 2 300 miljoner kronor per år, så att det stämmer med uträkningen i samma fält: den summerade delarna till 1 020–4 800 miljoner kronor och angav 2 300 som basbelopp, medan beloppsfältet stod på 1 200.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -12351,14 +12373,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 4000,
+      "msek_low": 300,
+      "msek_base": 800,
+      "msek_high": 2000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antagande om statligt bidrag till kommuner för höjda måltidsambitioner, baserat på ca 200 000 brukare och en kostnadsökning per brukare mellan 2 500 och 10 000 kr/år inklusive råvaror och personal.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~200 000 äldre i SÄBO/hemtjänst med mat × 5 000–20 000 kr per år i höjda måltidsersättningar/insatser = 1 000–4 000 miljoner kronor, bas 2 000 miljoner kronor. Smalare än breda äldresatsningar."
+      "basis_url": "https://www.socialstyrelsen.se/om-socialstyrelsen/pressrum/press/miljarder-i-statsbidrag-lyft--for-aldreomsorgen/",
+      "method_note": "Riktat statsbidrag för bättre måltider i äldreomsorgen. Maten betalas redan av kommunerna och av den äldre själv — bara kvalitetslyftet är ny kostnad för staten.",
+      "confidence": 0.35,
+      "calculation": "Löftet vill säkerställa god och näringsrik kost i äldreomsorgen men anger ingen nivå. Maten lagas och betalas redan i dag, av kommunerna och av den äldre genom matavgiften, så det som är nytt är kvalitetslyftet — inte hela måltidskostnaden. Utan angiven nivå prissätts löftet som ett riktat statsbidrag av vanlig storlek: kommuner och regioner delade på närmare nio miljarder kronor i riktade äldreomsorgsbidrag 2023, fördelat på sex bidrag. Ett bidrag för maten blir smalare än de breda satsningarna, så basbeloppet läggs på 800 miljoner kronor per år. Låg: 300. Hög: 2 000, om staten tar en större del av måltidskostnaden."
     },
     "financing_claimed": {
       "described": false,
@@ -12373,6 +12395,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 2 000 till 800 miljoner kronor per år. Den tidigare uträkningen räknade 200 000 äldre gånger 5 000–20 000 kronor per år, alltså som om staten skulle betala en stor del av hela måltidskostnaden. Maten betalas redan av kommunerna och av den äldre själv, så bara kvalitetshöjningen är ny kostnad. Beloppet vilar nu på storleken hos statens befintliga riktade bidrag till äldreomsorgen.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
       }
     ],
     "extraction": {
@@ -12722,7 +12749,7 @@
   },
   {
     "id": "p-2026-0370",
-    "group_id": null,
+    "group_id": "g-c-lamnaprogram",
     "title": "Inför ett nationellt lämnaprogram med en lämnapeng",
     "slug": "infor-ett-nationellt-lamnaprogram-med-en-lamnapeng",
     "parties": [
@@ -12763,6 +12790,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 500 till 330 miljoner kronor per år. Den publicerade uträkningen räknade fram 330, inte de 500 som visades, och spannet är justerat till uträkningens 110–825.",
         "commit": "2fbd60f9093f8a539a1090ded9fb135b7f939570"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Löftet grupplänkat med partiets andra löfte om samma lämnaprogram med lämnapeng: samma åtgärd i två formuleringar räknas en gång. Beloppet är oförändrat, och det är den här uträkningen som båda löftena nu vilar på.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
       }
     ],
     "extraction": {
@@ -12976,7 +13008,7 @@
   },
   {
     "id": "p-2026-0375",
-    "group_id": null,
+    "group_id": "g-c-lamnaprogram",
     "title": "Nationellt lämnaprogram med lämnapeng",
     "slug": "nationellt-lamnaprogram-med-lamnapeng",
     "parties": [
@@ -12995,14 +13027,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 500,
-      "msek_high": 1500,
+      "msek_low": 110,
+      "msek_base": 330,
+      "msek_high": 825,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar ersättning för inlämning av uttjänta produkter (t.ex. elektronik). Osäker volym och ersättningsnivå; spann från blygsam till generös modell.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Ca 2 000 unga lämnar vården årligen × 50 000 kr i lämnapeng = 100 miljoner kronor. Intervall 50–200 miljoner kronor täcker färre/fler mottagare eller lägre/högre belopp."
+      "method_note": "Samma åtgärd som partiets andra löfte om ett lämnaprogram med lämnapeng, prissatt på samma grund. Delat löfte — åtgärden kan bara införas en gång.",
+      "confidence": 0.4,
+      "calculation": "Samma åtgärd som partiet lovar i sitt andra löfte om ett lämnaprogram, och prissatt på samma grund. Antalet mottagare antas ligga på 5 000–25 000 personer per år och lämnapengen på 20 000–30 000 kronor per person, vilket ger 100–750 miljoner kronor. Med tio procent för administration blir spannet 110–825 miljoner kronor per år. Basbeloppet, 330 miljoner, motsvarar 12 000 mottagare à 25 000 kronor plus administration. Den tidigare uträkningen räknade i stället på 2 000 unga som lämnar en placering — en annan grupp än den lämnaprogrammet vänder sig till — och landade själv på 100 miljoner medan beloppsfältet stod på 500."
     },
     "financing_claimed": {
       "described": false,
@@ -13012,7 +13044,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 500 till 330 miljoner kronor per år och löftet grupplänkat med partiets andra löfte om ett lämnaprogram med lämnapeng: samma åtgärd i två formuleringar kan bara införas en gång. Den tidigare uträkningen räknade dessutom på fel grupp — unga som lämnar en placering i stället för personer som lämnar en våldsam relation — och landade själv på 100 miljoner medan beloppsfältet stod på 500.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15788,13 +15826,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 100,
-      "msek_base": 200,
-      "msek_high": 400,
+      "msek_base": 150,
+      "msek_high": 300,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på antal kvinnor 15-26 år (~600k), antagande om subvention av p-piller (~1500 kr/år) och långtidsverkande medel (~3000 kr/år), plus HPV-vaccinkostnad (~1500 kr/dos). Osäkerhet kri",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. HPV: ~500 000 ovaccinerade 13–26 år, 10 % tar dos per år, 2–3 doser à 500–700 kr -> 50–80 miljoner kronor. Preventivmedel: ~600 000 kvinnor 15–26 år, 50 % använder, medelkostnad 800 kr per år -> 240 miljoner kronor brutto, egenavgift ~100 miljoner kronor. + kondomer/män ~20 miljoner kronor. Totalt 170–200 miljoner kronor. Bas 200, låg 100, hög 400."
+      "method_note": "Kostnadsfria preventivmedel, netto efter dagens egenavgift. Vaccinet mot livmoderhalscancer ligger prissatt på partiets andra löfte och räknas inte här också.",
+      "confidence": 0.45,
+      "calculation": "Löftet gör två saker. Kostnadsfritt vaccin mot livmoderhalscancer upp till 26 år ligger redan prissatt på partiets andra löfte, som lovar samma vaccin tillsammans med kostnadsfritt vaccin mot fästingburen hjärninflammation — annars räknas samma vaccin två gånger. Kvar här är kostnadsfria preventivmedel: omkring 600 000 kvinnor i åldern 15–26 år, av vilka ungefär hälften använder preventivmedel, till en genomsnittlig kostnad av 800 kronor per år ger omkring 240 miljoner kronor brutto. Staten betalar bara delen ovanför dagens egenavgift, vilket drar ned kostnaden till omkring 130 miljoner, och preventivmedel för män lägger till omkring 20 miljoner. Sammantaget omkring 150 miljoner kronor per år."
     },
     "financing_claimed": {
       "described": false,
@@ -15809,6 +15847,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 200 till 150 miljoner kronor per år. Löftets del om kostnadsfritt vaccin mot livmoderhalscancer upp till 26 år ligger redan prissatt på partiets andra löfte om samma vaccin, så den räknas inte här också. Kvar är preventivmedlen, prissatta netto efter dagens egenavgift.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
       }
     ],
     "extraction": {
@@ -16637,13 +16680,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 1500,
-      "msek_base": 2500,
-      "msek_high": 4000,
+      "msek_base": 3000,
+      "msek_high": 5000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar slopat steg till 70 % och 65 % – endast 80 % hela perioden. Kostnadsökning från högre dagstak och snittdagar. Osäkerhet från beteendeeffekter och exakt utformning.",
-      "confidence": 0.5,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~150 000 långtidsarbetslösa med a-kassa × minskning ~50 000–80 000 kr per år (brutto) ≈ 7,5–12 miljarder kronor minskad ersättning. Statens andel av mellanskillnaden (efter skatt, finansieringsmodell) uppskattas till 1,5–5 miljarder kronor per år, med 3 miljarder kronor som bas."
+      "method_note": "Borttagen brantare nedtrappning i arbetslöshetsersättningen. Staten betalar hela den utbetalda ersättningen, men bara en del av de arbetslösa hinner så långt in i perioden.",
+      "confidence": 0.4,
+      "calculation": "Den nya, brantare nedtrappningen av arbetslöshetsersättningen togs i bruk 2025. Att ta bort den betyder att ersättningen ligger kvar på en högre nivå längre in i arbetslösheten. Omkring 150 000 personer med arbetslöshetsersättning berörs, och skillnaden för den enskilde ligger på 50 000–80 000 kronor per år före skatt, alltså 7,5–12 miljarder kronor i sammanlagt högre ersättning. Staten står för hela den utbetalda ersättningen, men bara en del av de arbetslösa hinner så långt in i perioden att den brantare trappan slår igenom. Statens kostnad uppskattas därför till 1 500–5 000 miljoner kronor per år, med 3 000 som basbelopp."
     },
     "financing_claimed": {
       "described": false,
@@ -16653,7 +16696,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 2 500 till 3 000 miljoner kronor per år, så att det stämmer med uträkningen i samma fält: den angav 3 000 som basbelopp och spannet 1 500–5 000, medan beloppsfältet stod på 2 500 och taket på 4 000.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17642,13 +17691,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 3000,
-      "msek_base": 6000,
-      "msek_high": 12000,
+      "msek_base": 5600,
+      "msek_high": 9000,
       "basis": "llm_estimat",
       "basis_url": "https://www.forsakringskassan.se/nyhetsarkiv/nyheter-press/2026-03-24-farre-barn-i-sverige---barnbidragen-minskar",
-      "method_note": "Höjt barnbidrag plus ett tillägg till hushåll med svag ekonomi. Ingen nivå anges, så barnbidragsdelen vilar på den senaste faktiska höjningen av barnbidraget.",
+      "method_note": "Höjt barnbidrag plus höjt bostadsbidrag, prissatta var för sig. Bostadsbidraget vilar på samma grund som Vänsterpartiets löfte om samma sak.",
       "confidence": 0.45,
-      "calculation": "Löftet höjer barnbidraget och ett stöd riktat till hushåll med svag ekonomi. Barnbidraget: ingen nivå anges, så vi räknar med samma steg som den senaste faktiska höjningen — 200 kronor i månaden (2018). Försäkringskassan betalade ut 2,65 miljarder kronor i barnbidrag i december 2025, vilket efter avdrag för flerbarnstillägg motsvarar omkring 1,9 miljoner barn. 1,9 miljoner × 200 kronor × 12 månader ≈ 4 600 miljoner kronor per år. Den tidigare uträkningen räknade fel här: den angav 1,2–3,6 miljarder kronor för 100–300 kronor i månaden till 2 miljoner mottagare, men multiplikationen ger dubbla det. Tillägget till ensamstående och barnfamiljer: omkring 150 000 hushåll med 800 kronor i månaden ≈ 1 400 miljoner kronor per år, vår egen uppskattning. Sammantaget 6 000 miljoner kronor per år."
+      "calculation": "Löftet höjer barnbidraget och bostadsbidraget för barnfamiljer. Barnbidraget: ingen nivå anges, så vi räknar med samma steg som den senaste faktiska höjningen — 200 kronor i månaden, 2018. Försäkringskassan betalade ut 2,65 miljarder kronor i december 2025, vilket efter avdrag för flerbarnstillägg motsvarar omkring 1,9 miljoner barn: 1,9 miljoner × 200 kronor × 12 månader ≈ 4 600 miljoner kronor per år. Bostadsbidraget: staten betalar ut omkring 4,5 miljarder kronor per år, och en höjning utan angiven nivå prissätts som en måttlig uppräkning, omkring 1 000 miljoner kronor per år — samma grund som Vänsterpartiets löfte om att höja bostadsbidraget. Sammantaget 5 600 miljoner kronor per år."
     },
     "financing_claimed": {
       "described": false,
@@ -17668,6 +17717,11 @@
         "date": "2026-07-28",
         "change": "Beloppet omräknat från 4 000 till 6 000 miljoner kronor per år. Uträkningen räknade fel: den angav att 2 miljoner mottagare gånger 100–300 kronor i månaden ger 1,2–3,6 miljarder kronor per år, men multiplikationen ger dubbla det. Barnbidragsdelen vilar nu på Försäkringskassans utbetalningsstatistik och på den senaste faktiska höjningen av barnbidraget — samma grund som övriga partiers barnbidragslöften.",
         "commit": "89f3c3cc6f4cd1fe5c37095210baf4eb00a2ee30"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 6 000 till 5 600 miljoner kronor per år. Löftets andra del är höjt bostadsbidrag, inte det tillägg till ensamstående som gruppens andra löfte innehåller, och de två delarna prissätts nu var för sig i stället för med en gemensam schablon. Bostadsbidragsdelen vilar på samma grund som Vänsterpartiets löfte om samma sak.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
       }
     ],
     "extraction": {
@@ -19017,14 +19071,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 600,
-      "msek_high": 1000,
+      "msek_low": 600,
+      "msek_base": 1000,
+      "msek_high": 1500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar 400 000 personer 20–23 år, snittkostnad 1 500 kr/år. Osäkerhet kring tandvårdsbehov och priser.",
-      "confidence": 0.6,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antagande: 5 årskullar (19–23) minus den redan avgiftsfria gruppen (≤19) ger ca 4–5 årskullar nytt avgiftsfritt, totalt ~450 000–600 000 personer. Med en årlig tandvårdskostnad på 1 500–3 000 kr per person blir totalkostnaden 675–1 800 miljoner kronor per år. I basfallet 2 000 kr och 500 000 personer ≈ 1 000 miljoner kronor. Avrundat till 600–1 500 miljoner kronor."
+      "method_note": "Avgiftsfri tandvård till och med 23 års ålder: de årskullar som tillkommer över dagens gräns. Staten kompenserar regionerna för den nya uppgiften.",
+      "confidence": 0.45,
+      "calculation": "Löftet återinför avgiftsfri tandvård till och med det år man fyller 23. Det som tillkommer är årskullarna över dagens gräns, omkring fyra till fem årskullar eller 450 000–600 000 personer. Med en årlig tandvårdskostnad på 1 500–3 000 kronor per person blir kostnaden 675–1 800 miljoner kronor per år. Basfallet räknar 500 000 personer à 2 000 kronor, alltså omkring 1 000 miljoner kronor per år. Tandvården för unga sköts av regionerna, men en ändrad åldersgräns i lagen ger dem en ny uppgift som staten ska kompensera för, så kostnaden hamnar i statens budget."
     },
     "financing_claimed": {
       "described": false,
@@ -19034,7 +19088,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 600 till 1 000 miljoner kronor per år, så att det stämmer med uträkningen i samma fält: den räknade fram omkring 1 000 miljoner kronor i basfallet och spannet 600–1 500, medan beloppsfältet stod på 600 och taket på 1 000. Uträkningen skriver nu också ut varför kostnaden hamnar hos staten fast tandvården sköts av regionerna.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20306,7 +20366,7 @@
   },
   {
     "id": "p-2026-0519",
-    "group_id": null,
+    "group_id": "g-mp-sis-reform",
     "title": "Ge SiS ett vårdande uppdrag",
     "slug": "ge-sis-ett-vardande-uppdrag",
     "parties": [
@@ -20325,14 +20385,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1500,
-      "msek_high": 3000,
+      "msek_low": 300,
+      "msek_base": 500,
+      "msek_high": 1500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar ökade kostnader för vårdinsatser inom SiS, uppskattat som 5-25% av SiS årliga budget (ca 12 mdkr). Osäker omfattning.",
+      "method_note": "Vårdande uppdrag för de statliga ungdomshemmen: högre dygnskostnad per plats. Delat löfte med partiets löfte om att ersätta samma verksamhet med mindre enheter.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Bas: ~700 platser * 2000 kr/dygn ökning * 365 dagar ≈ 511 miljoner kronor. Låg: mindre satsning. Hög: full omställning inkl. lokaler och kraftigt utökad bemanning."
+      "calculation": "Löftet vill ge de statliga ungdomshemmen ett vårdande uppdrag i stället för ett förvarande. Statens institutionsstyrelse driver omkring 700 platser på ungdomshem. En höjd dygnskostnad på omkring 2 000 kronor per plats för mer personal och behandling ger 700 × 2 000 kronor × 365 dagar ≈ 500 miljoner kronor per år. Låg: 300, en mindre omställning. Hög: 1 500, om lokaler byggs om och bemanningen utökas kraftigt. Det tidigare beloppet, 1 500, låg tre gånger över uträkningens eget basbelopp."
     },
     "financing_claimed": {
       "described": false,
@@ -20342,7 +20402,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 1 500 till 500 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som räknade fram omkring 500 miljoner kronor. Löftet är dessutom grupplänkat med partiets löfte om att ersätta de statliga ungdomshemmen med mindre enheter: samma reform i två formuleringar räknas en gång.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20351,7 +20417,7 @@
   },
   {
     "id": "p-2026-0520",
-    "group_id": null,
+    "group_id": "g-mp-sis-reform",
     "title": "Genomgripande reform av SiS med mindre och barnrättssäkra enheter",
     "slug": "genomgripande-reform-av-sis-med-mindre-och-barnrattssakra-enheter",
     "parties": [
@@ -20371,13 +20437,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 500,
-      "msek_base": 2000,
-      "msek_high": 5000,
+      "msek_base": 900,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om ökade driftskostnader vid övergång till mindre, kvalificerade enheter, baserat på storleksordningen av dagens SiS-budget för unga.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~750 platser i SiS ungdomshem × 3,5 miljoner kronor per år i dag. Med 20–50 % högre kostnad per plats för mindre, mer kvalificerade enheter tillkommer 0,7–1,75 miljoner kronor per plats och år → 525–1 312 miljoner kronor. Spannet breddas till 300–2 000 miljoner kronor på grund av osäkerhet om modell, fastighetskostnader och ev. volymförändring."
+      "method_note": "Ersätta de statliga ungdomshemmen med mindre, mer kvalificerade enheter: merkostnaden per plats. Delat löfte med partiets löfte om ett vårdande uppdrag för samma verksamhet.",
+      "confidence": 0.4,
+      "calculation": "Löftet vill ersätta de statliga ungdomshemmen med mindre och mer kvalificerade enheter. Statens institutionsstyrelse driver omkring 750 platser på ungdomshem till en kostnad av omkring 3,5 miljoner kronor per plats och år. Mindre och mer kvalificerade enheter antas kosta 20–50 procent mer per plats, alltså 0,7–1,75 miljoner kronor extra per plats: 750 platser ger 525–1 310 miljoner kronor per år. Basbeloppet läggs på 900 miljoner kronor, mitt i det spannet. Hög: 2 000, om lokaler byggs om eller antalet platser ändras. Det tidigare beloppet, 2 000, låg över hela uträkningens eget spann."
     },
     "financing_claimed": {
       "described": false,
@@ -20387,7 +20453,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 2 000 till 900 miljoner kronor per år. Uträkningen i samma fält räknade fram 525–1 310 miljoner kronor per år, men beloppsfältet stod på 2 000 — alltså över hela det räknade spannet. Löftet är dessutom grupplänkat med partiets löfte om att ge de statliga ungdomshemmen ett vårdande uppdrag: samma reform i två formuleringar räknas en gång.",
+        "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",

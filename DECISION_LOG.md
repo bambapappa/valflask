@@ -1285,3 +1285,34 @@ nej, det är precis det som gav den sneda behandlingen.
 **Påverkan:** `data/promises.json` (17 löften i välfärden och ett i
 utbildningen), `CLAUDE.md`, regel 15 i `pipeline/prompts/A5-cost.md`, vaktad
 av ett enhetstest i `pipeline/tests/cost.test.ts`, `HANDOFF.md`.
+
+---
+
+## 2026-07-28 — Ett paket grupplänkas inte med ett ensamt löfte, det harmoniseras
+
+**Beslut:** När ett partis löfte är ett paket av flera åtgärder och ett annat
+partis löfte bara innehåller en av dem, grupplänkas de INTE. I stället
+harmoniseras nivån för den gemensamma åtgärden, och båda uträkningarna skriver
+ut att det andra partiet lovar samma sak. Grupplänkning används när löftena
+täcker samma sak, inte när det ena rymmer det andra plus mer.
+
+**Motiv:** Centerpartiet lovar ett tillägg till barnbidraget för hushåll med en
+försörjare. Miljöpartiet lovar samma tillägg, men i ett paket som också höjer
+barnbidraget. Gruppmekanismen slår på hela löften: hade de grupplänkats hade
+gruppen företrätts av det högsta beloppet, och Centerpartiets fristående löfte
+hade försvunnit ur summan tillsammans med en barnbidragshöjning partiet inte
+lovar. Det är fel åt andra hållet än dubbelräkning, och det döljer att de två
+partierna lovar olika mycket. Att harmonisera nivån löser den del av problemet
+som går att lösa — samma politik kostar lika — och lämnar kvar ett litet, känt
+överlapp som står utskrivet i stället för ett stort, dolt bortfall.
+
+**Förkastade alternativ:** Grupplänka ändå — nej, det raderar det smalare
+löftet ur summan och tillskriver partiet en åtgärd det inte lovat. Bryta upp
+paketet i två löften — nej, ett löfte är ett citat, och att dela ett citat i
+delar som partiet inte sagt var för sig bryter mot att citatet är enheten.
+Lämna nivåerna oharmoniserade — nej, då kostar samma politik olika hos olika
+partier, vilket är precis den snedhet session 5 rättade.
+
+**Påverkan:** `data/promises.json` (Centerpartiets och Miljöpartiets tillägg
+till ensamstående föräldrar), `HANDOFF.md`. Gränsen gäller alla framtida
+grupplänkningar.
