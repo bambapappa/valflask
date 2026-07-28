@@ -410,7 +410,7 @@ procentsats utan erfarenhet bakom). Det ligger i session 10.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json`, uppdaterad efter session 8. En **räkneenhet**
+Mätt på `data/promises.json`, uppdaterad efter session 9. En **räkneenhet**
 är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
 av sitt högsta belopp. 420 aktiva löften blir 358 räkneenheter, varav 213 bär
 ett belopp över noll. Pengarna är fortfarande snedfördelade, men mindre än
@@ -429,16 +429,15 @@ Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 | 6 | ~~Välfärd, resten~~ **KLAR 2026-07-28.** 12 omräknade, 1 tillbakadraget, resten kontrollerade; ämnet 360 → 363 mdkr. **Välfärden är därmed helt genomgången.** Se avsnittet nedan | klar | hög |
 | 7 | ~~Utbildning, hela ämnet~~ **KLAR 2026-07-28.** 9 omräknade, resten kontrollerade; ämnet 359 → 191 mdkr. Se avsnittet nedan | klar | hög |
 | 8 | ~~Klimat-miljö, hela ämnet~~ **KLAR 2026-07-28.** 16 omräknade; ämnet 268 → 122 mdkr. Se avsnittet nedan | klar | hög |
-| 9 | Övrigt (25) och infrastruktur (11) | 36 | hög |
+| 9 | ~~Övrigt och infrastruktur~~ **KLAR 2026-07-28.** 6 omräknade; ämnena 183 → 186 mdkr. Se avsnittet nedan | klar | hög |
 | 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
 
-Ämnesordningen är mandattotalen, efter session 8: skatter 1 115 mdkr (klart),
-försvar 460 (klart), välfärd 363 (klart), utbildning 191 (klart), klimat-miljö
-122 (klart), **övrigt 120**, rättsväsende 71, infrastruktur 63, migration 47.
-Fem ämnen är alltså helt genomgångna, och de tunga ämnena är därmed avklarade.
-Kvar är raderna 9 och 10, som tillsammans väger 300 mdkr — mindre än vad
-klimatämnet ensamt vägde innan det räknades om. Löften som ger staten pengar
-ligger kvar i sitt eget ämne och räknas om i samma session som resten av ämnet.
+Ämnesordningen är mandattotalen, efter session 9: skatter 1 115 mdkr (klart),
+försvar 460 (klart), välfärd 363 (klart), utbildning 191 (klart), övrigt 123
+(klart), klimat-miljö 122 (klart), rättsväsende 71, infrastruktur 63 (klart),
+migration 47. **Bara rad 10 återstår** — rättsväsende och migration, 81 enheter
+och tillsammans 118 mdkr. Löften som ger staten pengar ligger kvar i sitt eget
+ämne och räknas om i samma session som resten av ämnet.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
 löften vilar på, eller när en enskild enhet väger över hundra miljarder för
@@ -464,6 +463,13 @@ Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
 max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
+
+*Utfall session 9:* 36 enheter genomgångna, varav 6 löften ändrades. Ämnena
+var i gott skick — de flesta beloppen stämde med sina uträkningar. Sessionens
+lärdom sitter i stället i **hur** ett fel hittades: biståndslöftena hade två fel
+som drog åt olika håll och nästan tog ut varandra, så slutsumman såg rimlig ut.
+**Granska basåret och tidsperioden var för sig, inte bara slutsumman** — en
+rimlig slutsumma är inget kvitto på att ingången är rätt.
 
 *Utfall session 8:* 38 enheter genomgångna, varav 16 löften ändrades. Ämnet
 mer än halverades, och nästan allt låg i **en enda grupp om sex löften** — den
@@ -538,10 +544,38 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- **Session 9 — övrigt och infrastruktur.** Gren
-  `claude/session-5-valfarden-sbny1t` (samma grennamn, nytt spår efter att
-  session 8 slagits ihop). Rör de 36 räkneenheterna i ämnena övrigt och
-  infrastruktur. Ingen annan session bör röra dem förrän raden är struken.
+- (ingen pågående session)
+
+#### Övrigt och infrastruktur är omräknade — session 9, klar 2026-07-28
+
+Alla 36 enheter genomgångna, sex löften omräknade. Ämnena gick 183 → **186
+mdkr** och rikssumman till **2 539 196 mkr**. Ämnena var i gott skick; det som
+är värt att bära vidare är hur det enda stora felet såg ut.
+
+**Två fel som tog ut varandra.** Löftena om att återställa enprocentsmålet för
+biståndet stod på 12 000 respektive 11 500 mkr/år, och beloppet såg rimligt ut.
+Båda ingångsvärdena var ändå fel, åt olika håll:
+
+| | Uträkningen antog | Verkligheten |
+|---|---|---|
+| Dagens nivå | 0,7–0,8 % av BNI | 53 mdkr fast belopp ≈ **0,67 %** 2028 |
+| Skillnad till målet | ~12 mdkr/år | ~**26** mdkr/år |
+| Tidsperiod | slutnivån varje år | **gradvis upptrappning** utan årtal |
+
+Det första felet halverade beloppet, det andra fördubblade det. Slutsumman blev
+nästan rätt av en slump. **Granska basåret och tidsperioden var för sig — en
+rimlig slutsumma är inget kvitto på att ingången stämmer.** Båda löftena står nu
+på 13 000 mkr/år med båda stegen utskrivna.
+
+**Sverigekortet fick den uträkning det saknade.** Miljöpartiets rikstäckande
+kollektivtrafikkort stod på 8 000 mkr/år utan någon redovisad grund. Beloppet är
+oförändrat men vilar nu på partiets egna priser (499 respektive 249 kronor i
+månaden) mot vad ett periodkort kostar i dag, med antalet resenärer utskrivet
+som vår uppskattning.
+
+**Tre kulturbelopp rättade** till vad uträkningen i samma fält angav:
+kulturgaranti för barn och unga 800 → 400, filmfinansiering 150 → 250,
+folkbildning 100 → 200. Två av tre gick uppåt.
 
 #### Klimat- och miljöämnet är omräknat — session 8, klar 2026-07-28
 
