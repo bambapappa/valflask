@@ -211,6 +211,8 @@ describe("estimateCost", () => {
     assert.match(sys, /BREDA SAMMANFATTNINGS/);
     // Regel 14: partiets egen siffra gäller före modellens
     assert.match(sys, /PARTIETS EGEN SIFFRA GÄLLER/);
+    // Regel 15: utpekad åtgärd utan nivå ankras i vad åtgärden senast kostade
+    assert.match(sys, /UTPEKAD ÅTGÄRD UTAN NIVÅ/);
   });
 
   it("looksLikeOneOff: gåva/inlösen/mandatperiod ja; löpande nej", () => {

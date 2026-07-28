@@ -57,6 +57,16 @@ versionen på `origin/main` innan nytt arbete, gör anspråk under
 "Pågår just nu" före start, skörda aldrig parallellt. Fullständiga
 regler i HANDOFF.md §9 "Samarbete mellan parallella sessioner".
 
+## Att avsluta ett större spår
+
+**Öppna PR:en utan att fråga om lov.** Ett färdigt större spår — en session
+i omräkningsplanen eller ett motsvarande avslutat arbete — avslutas med
+uppdaterad `HANDOFF.md`, pushad gren och **öppnad PR mot `main`**. Det är
+ett stående mänskligt beslut (2026-07-28): vänta inte på klartecken för
+själva PR:en, och avsluta inte ett spår utan att öppna den. Behörigheten
+gäller att öppna PR:en — att slå ihop den med `main` är fortfarande en
+människas beslut.
+
 ## Kärnprinciper (fastställda genom mänskligt beslut)
 
 - **Tomma celler är ärliga.** Hitta aldrig på svar för att fylla täckning.
@@ -102,6 +112,16 @@ mänskligt beslut och finns även kodade i `pipeline/prompts/A5-cost.md`:
   uppskattas; skriv då ut vilken del som är partiets och vilken som är vår.
   Ett löfte som bär en egen siffra är aldrig ett inriktningslöfte — det ska
   prissättas, inte nollas.
+- **Utpekad åtgärd utan nivå prissätts som åtgärden senast kostade.** Pekar
+  löftet ut en bestämd åtgärd men säger inte hur mycket ("höja barnbidraget",
+  "en historisk höjning av garantipensionen") ankras beloppet i vad samma
+  åtgärd senast faktiskt kostade — den senast genomförda höjningen av samma
+  förmån, det befintliga statsbidragets storlek. Skriv ut vilken höjning
+  ankaret är. Ett värdeord ("rejält", "historisk", "kraftigt") är ingen nivå
+  och får aldrig översättas till en siffra, och ett annat partis angivna nivå
+  får aldrig lånas in som basbelopp utan att lånet står utskrivet.
+  Osäkerheten hör hemma i spannet, inte i basbeloppet. Nollningsregeln gäller
+  bara löften som varken pekar ut en åtgärd eller anger en nivå.
 - **Samma politik ska kosta lika.** Prissätts samma åtgärd hos flera
   partier ska beloppen harmoniseras och vila på samma grund. Samma politik
   hos olika partier är ett delat löfte (`group_id`, räknas en gång, R3);
