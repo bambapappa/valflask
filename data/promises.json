@@ -1312,7 +1312,7 @@
   },
   {
     "id": "p-2026-0026",
-    "group_id": null,
+    "group_id": "g-sankt-skatt-pa-arbete",
     "title": "Fortsätta sänka skatten för vanliga familjer",
     "slug": "fortsatta-sanka-skatten-for-vanliga-familjer",
     "parties": [
@@ -1331,14 +1331,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 30000,
+      "msek_low": 8000,
+      "msek_base": 17000,
+      "msek_high": 35000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Sänkt inkomstskatt för förvärvsarbetande. Nivån är inte angiven, så spannet är brett.",
-      "confidence": 0.3,
-      "calculation": "Omkring 5 miljoner förvärvsarbetande antas beröras. Partiet anger ingen nivå, så tre scenarier används: 1 000 kronor per år i snitt ger 5 000 miljoner kronor, 3 000 kronor ger 15 000 miljoner och 6 000 kronor ger 30 000 miljoner. Basbeloppet 15 000 miljoner motsvarar ungefär ett halverat jobbskatteavdrag eller en liknande lättnad."
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/statens-budget-2026-rambeslutet_hd01fiu1/",
+      "method_note": "Ytterligare ett steg i skatten på arbetsinkomster, utan angiven nivå. Delat löfte med partiets och ett annat partis löften om samma sak.",
+      "confidence": 0.55,
+      "calculation": "Löftet anger ingen nivå, så det prissätts som ett steg av samma storlek som det senast tagna: det tionde jobbskatteavdraget, i budgeten för 2026, kostade 17,36 miljarder kronor per år. Basbeloppet är därför 17 miljarder kronor per år. Partiets eget löfte om sänkt skatt för alla som arbetar och ett annat partis löfte om sänkt skatt för vanligt folk är samma politik, och de tre räknas en gång och på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -1353,6 +1353,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 30 000 till 15 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 15 000 som basbelopp och 30 000 som sitt höga alternativ, men löftet visade det höga alternativet som belopp. Nu räknar löftet det uträkningen visar.",
         "commit": "2fbd60f9093f8a539a1090ded9fb135b7f939570"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med partiets eget löfte om sänkt skatt för alla som arbetar och med ett annat partis löfte om samma sak: samma skattesänkning kan bara genomföras en gång. Beloppet omräknat från 15 000 till 17 000 miljoner kronor per år, på det senast tagna stegets pris.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -1414,7 +1419,7 @@
   },
   {
     "id": "p-2026-0028",
-    "group_id": null,
+    "group_id": "g-marginalskatt-under-50",
     "title": "Förändra den statliga inkomstskatten så att fler i vanliga yrken får behålla minst 50 procent av sin intjänade lön",
     "slug": "forandra-den-statliga-inkomstskatten-sa-att-fler-i-vanliga-yrken-far-behalla-minst-50-procent-av-sin-intjanade-lon",
     "parties": [
@@ -1431,16 +1436,16 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 10000,
       "msek_base": 20000,
       "msek_high": 35000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Höjd brytpunkt för statlig inkomstskatt. En höjning gynnar alla som betalar skatten, inte bara dem närmast gränsen.",
+      "method_note": "Ingen marginalskatt över femtio procent. Prissatt som en höjd brytpunkt för statlig inkomstskatt. Delat löfte med ett annat parti.",
       "confidence": 0.5,
-      "calculation": "Den statliga inkomstskatten är 20 procent på inkomst över brytpunkten 660 400 kronor, och drygt en miljon personer betalar den. Hela skatten drar in i storleksordningen 54–60 miljarder kronor per år. Att fler i vanliga yrken ska få behålla minst hälften av lönen betyder att brytpunkten höjs, och en höjning gynnar alla som betalar skatten — inte bara de närmast gränsen. Höjs brytpunkten med omkring 10 000 kronor i månaden faller 20 procent av 120 000 kronor bort för var och en av dem: cirka 20 miljarder kronor per år. Spannet speglar hur stort steget tas."
+      "calculation": "Den statliga inkomstskatten är 20 procent på inkomst över brytpunkten 660 400 kronor, och drygt en miljon personer betalar den. Hela skatten drar in i storleksordningen 54–60 miljarder kronor per år. Att ingen ska betala mer än hälften i marginalskatt betyder att brytpunkten höjs eller skattesatsen sänks, och båda gynnar alla som betalar skatten — inte bara de närmast gränsen. Höjs brytpunkten med omkring 10 000 kronor i månaden faller 20 procent av 120 000 kronor bort för var och en av dem: cirka 20 miljarder kronor per år. Ett annat parti lovar samma sak, och löftena räknas en gång och på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -1455,6 +1460,11 @@
         "date": "2026-07-27",
         "change": "Omräknat från 25 000 till 20 000 miljoner kronor per år och satt på ett grundat underlag. Den tidigare uträkningen utgick från en snittskatt per person som inte gick att belägga; nu vilar beloppet på skattens storlek, 54–60 miljarder kronor per år, och på att en höjd brytpunkt sänker skatten för alla som betalar den.",
         "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med ett annat partis löfte om samma sak: att ingen ska betala mer än hälften i marginalskatt. Samma ändring av den statliga inkomstskatten kan bara genomföras en gång, och löftena vilar nu på samma uträkning med 20 000 miljoner kronor per år. Kostnadstypen är också rättad till sänkt skatt: en höjd brytpunkt är uteblivna skatteintäkter, inte en utgift, och gruppens två löften ska ha samma typ.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -7568,7 +7578,7 @@
   },
   {
     "id": "p-2026-0150",
-    "group_id": null,
+    "group_id": "g-l-statlig-inkomstskatt",
     "title": "Det måste bli hälften kvar av varje löneökning",
     "slug": "det-maste-bli-halften-kvar-av-varje-loneokning",
     "parties": [
@@ -7590,14 +7600,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5500,
-      "msek_high": 8000,
+      "msek_low": 3000,
+      "msek_base": 4500,
+      "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Sänkt statlig inkomstskatt för dem som tjänar över brytpunkten. Nivån är inte angiven.",
-      "confidence": 0.3,
-      "calculation": "Att hälften ska vara kvar av en löneökning gäller dem som betalar statlig inkomstskatt, omkring 1,3–1,7 miljoner personer. Den inkomst som ligger över brytpunkten är i snitt 120 000–180 000 kronor per person, vilket ger ett skatteunderlag på 160–300 miljarder kronor. En sänkning med två procentenheter kostar då 3,2–6 miljarder kronor. Med hänsyn till grundavdrag och samspelet med jobbskatteavdraget blir spannet 2,5–8 miljarder. Basbeloppet 5,5 miljarder motsvarar 1,5 miljoner personer × 150 000 kronor × 0,02, uppjusterat för dem med högre inkomster."
+      "method_note": "Hälften kvar av löneökningen, alltså sänkt statlig inkomstskatt. Samma politik som partiets övriga löften om den skatten.",
+      "confidence": 0.55,
+      "calculation": "Att hälften ska vara kvar av en löneökning gäller dem som betalar statlig inkomstskatt — drygt en miljon personer, med 20 procent på inkomst över brytpunkten. Det är samma politik som partiets övriga löften om att sänka den skatten, och de räknas därför en gång och på samma grund: partiet uppger själv att en halvering kostar 30 miljarder kronor per år, alltså 3 miljarder per procentenhet, och löftet gäller ett första steg om en eller två procentenheter."
     },
     "financing_claimed": {
       "described": false,
@@ -7612,6 +7622,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 15 000 till 5 500 miljoner kronor per år, och kostnadstypen från utgift till intäktsminskning. Den publicerade uträkningen räknade fram 5 500, inte de 15 000 som visades. En skattesänkning kostar staten uteblivna intäkter — det är ingen utgift.",
         "commit": "2fbd60f9093f8a539a1090ded9fb135b7f939570"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med partiets övriga löften om sänkt statlig inkomstskatt — det är samma politik, uttryckt som att hälften ska vara kvar av löneökningen. Beloppet omräknat från 5 500 till 4 500 miljoner kronor per år, samma grund som de övriga.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -7622,7 +7637,7 @@
   },
   {
     "id": "p-2026-0151",
-    "group_id": null,
+    "group_id": "g-l-skattefritt-sparande",
     "title": "Och storleken på det skattefria sparandet öka",
     "slug": "och-storleken-pa-det-skattefria-sparandet-oka",
     "parties": [
@@ -7642,16 +7657,16 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
+      "msek_low": 2000,
+      "msek_base": 4500,
       "msek_high": 9000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Öka skattefritt sparande (t.ex. höjt grundavdrag/ökat ISK-utrymme). Svenskt hushållssparande ca 2 000 mdr. Skattefri sparandelåda utökning kan kosta estimerat 5 mdr/år i förlorade kapitalbesk",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Schablonskatten ligger på omkring 0,375 procent av kapitalet. Höjs den skattefria gränsen med 150 000 kronor för 2 miljoner sparare blir bortfallet 150 000 × 0,00375 × 2 miljoner ≈ 1 125 miljoner kronor, avrundat till 1 500 miljoner. En större höjning, till exempel 500 000 kronor, eller fler sparare ger 3 000–5 000 miljoner. Osäkerhet om nivå, ränta och antal sparare motiverar det breda spannet 100–10 000 miljoner kronor."
+      "method_note": "Skattefritt sparande upp till partiets egen gräns på 500 000 kronor. Partiets tre löften om samma sak räknas en gång.",
+      "confidence": 0.5,
+      "calculation": "Partiet anger själv gränsen i sitt konkreta löfte: sparande på investeringssparkonto blir skattefritt upp till 500 000 kronor. Staten förlorar den schablonskatt som i dag betalas på kapitalet under gränsen. Med omkring 3–4 miljoner sparare och i genomsnitt 200 000–400 000 kronor på kontot ligger merparten av kapitalet under gränsen, vilket ger ett bortfall kring 4,5 miljarder kronor per år. Partiets tre löften om skattefritt sparande är samma politik och räknas en gång och på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -7661,7 +7676,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med partiets övriga löften om skattefritt sparande: tre formuleringar av samma politik, som nu räknas en gång och vilar på partiets egen gräns om 500 000 kronor. Kostnadstypen är också rättad till sänkt skatt — ett skattefritt sparande är uteblivna skatteintäkter, inte en utgift.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7691,15 +7712,15 @@
     "category": "skatter",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 600,
+      "period": "engang",
+      "msek_low": 500,
       "msek_base": 3000,
-      "msek_high": 5400,
+      "msek_high": 5000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Engångskostnad för övergång till euro (omprägling, IT-system, mynt/sedlar) estimerat 5–15 mdr totalt över 3–5 år. Årlig merkostnad estimerat 1–3 mdr/år. Räknar 3 mdr/år (amortering engångskos",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antar 100–500 berörda statliga enheter med anpassningskostnad 1–10 miljoner kronor/st → 100–5000 miljoner kronor. Informationskampanj ~100–300 miljoner kronor. Total engångskostnad ~0,5–5 miljarder kronor kr. Jämför: sedelbyte 2015–2017 kostade Riksbanken ~2,5 miljarder kronor, statens direkta andel mindre."
+      "method_note": "Införande av euron. Engångskostnad för statens egen omställning.",
+      "confidence": 0.35,
+      "calculation": "Att införa euron kostar staten en omställning: system, sedlar och mynt, information och anpassning hos myndigheterna. Med 100–500 berörda statliga enheter och 1–10 miljoner kronor styck blir det 100–5 000 miljoner kronor, plus en informationsinsats på 100–300 miljoner. Det är en engångskostnad, inte en årlig: basbeloppet är 3 000 miljoner kronor en gång. Jämförelse: sedel- och myntbytet 2015–2017 kostade i samma storleksordning."
     },
     "financing_claimed": {
       "described": false,
@@ -7709,7 +7730,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Ändrat från 3 000 miljoner kronor per år till 3 000 miljoner som engångskostnad. Uträkningen beskrev redan en engångskostnad för omställningen, men beloppet räknades fyra gånger, en för varje år i mandatperioden.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7998,7 +8025,7 @@
   },
   {
     "id": "p-2026-0158",
-    "group_id": null,
+    "group_id": "g-l-skattefritt-sparande",
     "title": "På fredagen står det i versaler: Semester",
     "slug": "pa-fredagen-star-det-i-versaler-semester",
     "parties": [
@@ -8018,16 +8045,16 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 2000,
-      "msek_base": 5000,
-      "msek_high": 12000,
+      "msek_base": 4500,
+      "msek_high": 9000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Sänkt skatt på sparande. Nivån är inte angiven, så spannet är brett.",
-      "confidence": 0.4,
-      "calculation": "Sänkt skatt på sparande antas beröra 4–8 miljoner sparare, med en genomsnittlig sänkning på 500–2 000 kronor per person och år. Det låga alternativet räknar 4 miljoner sparare à 500 kronor, alltså 2 000 miljoner kronor. Basbeloppet räknar 5 miljoner à 1 000 kronor, alltså 5 000 miljoner. Det höga räknar 6 miljoner à 2 000 kronor, alltså 12 000 miljoner. Löftet saknar detaljer, vilket spannet speglar."
+      "method_note": "Skattefritt sparande upp till partiets egen gräns på 500 000 kronor. Partiets tre löften om samma sak räknas en gång.",
+      "confidence": 0.5,
+      "calculation": "Partiet anger själv gränsen i sitt konkreta löfte: sparande på investeringssparkonto blir skattefritt upp till 500 000 kronor. Staten förlorar den schablonskatt som i dag betalas på kapitalet under gränsen. Med omkring 3–4 miljoner sparare och i genomsnitt 200 000–400 000 kronor på kontot ligger merparten av kapitalet under gränsen, vilket ger ett bortfall kring 4,5 miljarder kronor per år. Partiets tre löften om skattefritt sparande är samma politik och räknas en gång och på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -8042,6 +8069,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 10 000 till 5 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 5 000 som basbelopp, men löftet visade 10 000. Spannet följer nu också uträkningen.",
         "commit": "30f1cd3b55f1089d16541c041934e103f0fe6200"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med partiets övriga löften om skattefritt sparande: tre formuleringar av samma politik, som nu räknas en gång och vilar på partiets egen gräns om 500 000 kronor. Kostnadstypen är också rättad till sänkt skatt — ett skattefritt sparande är uteblivna skatteintäkter, inte en utgift.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -8407,8 +8439,14 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Tillbakadraget: citatet innehåller inget åtagande om framtiden. Det beskriver vad som hände när matmomsen halverades, alltså en effekt av redan genomförd politik, och en beskrivning av gjord politik är inget vallöfte. Samma grund som de två citat i dåtid som drogs tillbaka 2026-07-27.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8509,8 +8547,14 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Tillbakadraget: citatet innehåller inget åtagande om framtiden. Det är en iakttagelse om hur pensionsspararnas konton har utvecklats, inte ett löfte om en åtgärd. Samma grund som de två citat i dåtid som drogs tillbaka 2026-07-27.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8557,8 +8601,14 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Tillbakadraget: citatet innehåller inget åtagande om framtiden. Partiet räknar upp skattesänkningar som redan är genomförda — på arbete, pension, drivmedel, el och sparande — och en beskrivning av gjord politik är inget vallöfte. Samma grund som de två citat i dåtid som drogs tillbaka 2026-07-27.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8864,14 +8914,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 4000,
-      "msek_high": 10000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Jobb. ~5 mdr/år.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Omsorg: ~75 000–200 000 anställda i kommunal omsorg, löneökning/personalökning 1000–3000 kr/mån ger 0,9–7,2 miljarder kronor per år. Företag: regelförenklingar och mindre lättnader bedöms till 0,5–2,5 miljarder kronor per år (jämför Moderaternas löfte om enklare och billigare företagande på 2 miljarder kronor per år för uttryckliga skattesänkningar). Totalt spann 1,4–9,7 miljarder kronor, avrundat till 2–10 miljarder kronor med bas 4 miljarder kronor."
+      "method_note": "Uppräkning över två olika områden utan konkret åtagande.",
+      "confidence": 0.55,
+      "calculation": "Citatet räknar upp två olika saker — enklare regler för företagare och bättre villkor i omsorgen — utan att ange vad som ska göras eller hur mycket. En sådan uppräkning prissätts inte: partiets konkreta löften på båda områdena prissätts var för sig."
     },
     "financing_claimed": {
       "described": false,
@@ -8891,6 +8941,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Nollat, från 4 000 miljoner kronor per år. Den tidigare uträkningen antog både en löneökning i omsorgen och regelförenklingar för företag, trots att citatet varken anger nivå eller åtgärd. Det är en uppräkning, inte ett konkret åtagande.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -9370,14 +9425,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 5000,
-      "msek_high": 9000,
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Jobb. ~5 mdr/år.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~150 000 långtidsarbetslösa × 10–25 % får jobb med subvention × genomsnittlig lön 25 000 kronor/mån × 12 mån × 31,42 % avgift × 50–100 % nedsättning ≈ 500–3 000 miljoner kronor per år."
+      "method_note": "Nedsatt arbetsgivaravgift för den som anställer långtidsarbetslösa.",
+      "confidence": 0.4,
+      "calculation": "Det finns omkring 150 000 långtidsarbetslösa. Antas 10–25 procent av dem få jobb med en nedsatt arbetsgivaravgift, vid en lön kring 25 000 kronor i månaden och en nedsättning på halva till hela avgiften, blir kostnaden 500–3 000 miljoner kronor per år. Basbeloppet är 2 000 miljoner kronor per år."
     },
     "financing_claimed": {
       "described": false,
@@ -9387,7 +9442,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Basbeloppet rättat från 5 000 till 2 000 miljoner kronor per år. Uträkningen angav själv spannet 500–3 000 miljoner, men beloppsfältet låg över hela det spannet. Det är samma sorts fel som genomgången av belopp mot uträkning letade efter.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -9603,7 +9664,7 @@
   },
   {
     "id": "p-2026-0289",
-    "group_id": null,
+    "group_id": "g-marginalskatt-under-50",
     "title": "Så att vi ska inte ha marginalskatter som överstiger 50 %",
     "slug": "sa-att-vi-ska-inte-ha-marginalskatter-som-overstiger-50",
     "parties": [
@@ -9626,14 +9687,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 8000,
-      "msek_high": 25000,
+      "msek_low": 10000,
+      "msek_base": 20000,
+      "msek_high": 35000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Sänkt marginalskatt så att ingen betalar över 50 procent. Nivån beror på om skattesatsen sänks eller brytpunkten höjs.",
-      "confidence": 0.4,
-      "calculation": "Den statliga inkomstskatten gav omkring 68 miljarder kronor 2024. Att sänka skattesatsen med två procentenheter kostar omkring 6,8 miljarder kronor per år, och med fem procentenheter omkring 17 miljarder. Väljs i stället en höjd brytpunkt blir kostnaden lägre, omkring 4 miljarder. Spannet 4 000–25 000 miljoner kronor speglar hur brett åtgärden kan utformas, med 8 000 miljoner som basbelopp för en medelstor reform."
+      "method_note": "Ingen marginalskatt över femtio procent. Prissatt som en höjd brytpunkt för statlig inkomstskatt. Delat löfte med ett annat parti.",
+      "confidence": 0.5,
+      "calculation": "Den statliga inkomstskatten är 20 procent på inkomst över brytpunkten 660 400 kronor, och drygt en miljon personer betalar den. Hela skatten drar in i storleksordningen 54–60 miljarder kronor per år. Att ingen ska betala mer än hälften i marginalskatt betyder att brytpunkten höjs eller skattesatsen sänks, och båda gynnar alla som betalar skatten — inte bara de närmast gränsen. Höjs brytpunkten med omkring 10 000 kronor i månaden faller 20 procent av 120 000 kronor bort för var och en av dem: cirka 20 miljarder kronor per år. Ett annat parti lovar samma sak, och löftena räknas en gång och på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -9648,6 +9709,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 15 000 till 8 000 miljoner kronor per år, och kostnadstypen från utgift till intäktsminskning. Den publicerade uträkningen räknade fram 8 000, inte de 15 000 som visades. En sänkt marginalskatt kostar staten uteblivna intäkter — det är ingen utgift.",
         "commit": "30f1cd3b55f1089d16541c041934e103f0fe6200"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med ett annat partis löfte om samma sak: att ingen ska betala mer än hälften i marginalskatt. Samma ändring av den statliga inkomstskatten kan bara genomföras en gång, och löftena vilar nu på samma uträkning med 20 000 miljoner kronor per år. Den tidigare uträkningen utgick dessutom från att den statliga inkomstskatten ger 68 miljarder kronor per år; den ligger på 54–60.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -10443,14 +10509,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1600,
-      "msek_base": 8000,
-      "msek_high": 14400,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Slopad karensdag för alla anställda. Ca 5,4M sysselsatta, snitt 7 sjukdagar/år. Karensdagen kostar ca 1000 kr/dag. 5,4M × 3 karensdagar × 1000 = 16,2 mdr brutto, men endast en andel använder. Not: löftet buntar även kortare arbetstid (ej separat prissatt), och karensdags-delen överlappar i sak slopat karensavdrag (p-2026-0445) — beloppet är därför inte helt additivt mot det löftet.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Slopad karensdag: ~5–10 miljarder kronor per år (baserat på tidigare utredningar, t.ex. Försäkringskassans analyser). Kortare arbetstid: om statlig subvention för arbetstidsförkortning antas en mindre pilot, 0–5 miljarder kronor per år. Totalt: 5–15 miljarder kronor per år, utvidgat till 4–20 miljarder kronor för att fånga osäkerhet."
+      "method_note": "Sammanfattar två av partiets egna löften, som prissätts var för sig.",
+      "confidence": 0.6,
+      "calculation": "Citatet nämner två åtgärder som partiet lovar var för sig: slopad karensdag och kortare arbetstid. Båda prissätts på de löftena. Att lägga ett belopp här också vore att räkna samma politik två gånger."
     },
     "financing_claimed": {
       "described": false,
@@ -10465,6 +10531,11 @@
         "date": "2026-07-23",
         "change": "Löftet lyft ur den gemensamma karensgruppen eftersom det är bredare (slopad karensdag + kortare arbetstid). Metodnot tillagd om att karensdags-delen i sak överlappar slopat karensavdrag (p-2026-0445). Se rättelseloggen.",
         "commit": "e6e83c723e6947893734c3a3c5d3ebe9acb3793e"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Nollat, från 8 000 miljoner kronor per år. Citatet sammanfattar två åtgärder som partiet lovar i egna löften — slopad karensdag och kortare arbetstid — och båda är redan prissatta där.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -11487,14 +11558,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 12000,
-      "msek_high": 20000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Sänkt inkomstskatt riktad mot låga inkomster. Nivån är inte angiven.",
-      "confidence": 0.3,
-      "calculation": "Omkring 1,5 miljoner personer med låga inkomster antas beröras. En sänkning på 5 000–15 000 kronor per person och år ger 7 500–22 500 miljoner kronor. Basbeloppet sätts till 12 000 miljoner. Löftet anger ingen nivå, vilket det breda spannet 5 000–20 000 miljoner speglar."
+      "method_note": "Inriktning utan nivå. Partiets eget konkreta löfte om skattefri grundlön bär kostnaden.",
+      "confidence": 0.6,
+      "calculation": "Löftet anger ingen nivå. Partiets egen skattereform — en skattefri grundlön som ersätter jobbskatteavdraget — är just en sänkt inkomstskatt som väger tyngst för låga inkomster, och den prissätts för sig. Att lägga ett belopp här också vore att räkna samma skattesänkning två gånger."
     },
     "financing_claimed": {
       "described": false,
@@ -11509,6 +11580,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 5 000 till 12 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 12 000, inte de 5 000 som visades.",
         "commit": "30f1cd3b55f1089d16541c041934e103f0fe6200"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Nollat, från 12 000 miljoner kronor per år. Löftet anger ingen nivå, och partiets eget konkreta löfte om en skattefri grundlön bär redan kostnaden för en sänkt inkomstskatt som väger tyngst för låga inkomster.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -15950,16 +16026,16 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsökning",
       "period": "per_ar",
-      "msek_low": 200,
+      "msek_low": 50,
       "msek_base": 500,
-      "msek_high": 1500,
+      "msek_high": 600,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antagande om ny gruvskatt på vinster som inbringar 1-3 mdkr årligen, varav 20-50% fördelas till lokalsamhällen som statsbidrag. Ger en statlig kostnad på 200-1500 msek/år.",
+      "method_note": "Ny gruvskatt med återbäring till lokalsamhället. Ger staten pengar, inte tvärtom.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Gruvsektorns produktionsvärde uppskattas till ~40 miljarder kronor per år. Med en skattesats på 1–3 % fås 0,4–1,2 miljarder kronor brutto. Efter återbäring på 20–50 % kvarstår 0,1–0,6 miljarder kronor till staten. Intervall: 50–600 miljoner kronor (base 200)."
+      "calculation": "Gruvsektorns produktionsvärde ligger kring 40 miljarder kronor per år. En skattesats på 1–3 procent ger 400–1 200 miljoner kronor brutto. Löftet säger att lokalsamhället ska få del av vinsterna, så en återbäring på 20–50 procent räknas bort: kvar till staten blir 50–600 miljoner kronor per år, med 500 som basbelopp."
     },
     "financing_claimed": {
       "described": false,
@@ -15969,7 +16045,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Kostnadstypen rättad från utgift till ökade skatteintäkter. En ny gruvskatt ger staten pengar; att den låg som en utgift innebar att beloppet räknades åt fel håll. Beloppet är oförändrat 500 miljoner kronor per år.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17222,7 +17304,7 @@
   },
   {
     "id": "p-2026-0463",
-    "group_id": null,
+    "group_id": "g-l-skattefritt-sparande",
     "title": "Skattefritt ISK-sparande upp till 500 000 kronor",
     "slug": "skattefritt-isk-sparande-upp-till-500-000-kronor",
     "parties": [
@@ -17246,9 +17328,9 @@
       "msek_high": 9000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Partiets egen nivå: skattefritt sparande upp till 500 000 kronor. Sparandets fördelning är uppskattad.",
-      "confidence": 0.4,
-      "calculation": "Partiet anger själv gränsen: sparande på investeringssparkonto blir skattefritt upp till 500 000 kronor. Staten förlorar den schablonskatt som i dag betalas på kapitalet under gränsen. Antas det finnas omkring 3–4 miljoner sparare med i genomsnitt 200 000–400 000 kronor på kontot ligger merparten av kapitalet under gränsen och undantas helt, medan de största kontona bara får sina första 500 000 kronor befriade. Med en schablonskatt på någon procent av kapitalet ger det ett bortfall på 2 000–9 000 miljoner kronor per år, med 4 500 miljoner som basbelopp. Gränsen är partiets; fördelningen av sparandet är vår uppskattning."
+      "method_note": "Skattefritt sparande upp till partiets egen gräns på 500 000 kronor. Partiets tre löften om samma sak räknas en gång.",
+      "confidence": 0.5,
+      "calculation": "Partiet anger själv gränsen i sitt konkreta löfte: sparande på investeringssparkonto blir skattefritt upp till 500 000 kronor. Staten förlorar den schablonskatt som i dag betalas på kapitalet under gränsen. Med omkring 3–4 miljoner sparare och i genomsnitt 200 000–400 000 kronor på kontot ligger merparten av kapitalet under gränsen, vilket ger ett bortfall kring 4,5 miljarder kronor per år. Partiets tre löften om skattefritt sparande är samma politik och räknas en gång och på samma grund."
     },
     "financing_claimed": {
       "described": false,
@@ -17263,6 +17345,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen tillagd; den saknades helt. Beloppet är oförändrat på 4 500 miljoner kronor per år. Gränsen på 500 000 kronor är partiets egen siffra — det som uppskattas är hur sparandet fördelar sig under och över den.",
         "commit": "0ddaaeb297d6367ee39d3a46b23734f9ca4325f7"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med partiets två vagare löften om samma sak, så att skattefritt sparande räknas en gång. Det här löftet bär partiets egen gräns, 500 000 kronor, och gruppen vilar på den. Beloppet är oförändrat 4 500 miljoner kronor per år.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -18353,14 +18440,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 17000,
+      "msek_low": 8000,
+      "msek_base": 12000,
+      "msek_high": 21000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Sänkt moms på utvalda basvaror från 12 till 6 procent. Beloppet är satt genom mänskligt beslut och vilar på livsmedelsmomsens storlek; spannet är brett eftersom löftet inte definierar vilka varor som avses.",
-      "confidence": 0.9,
-      "calculation": "Momsen på livsmedel är normalt 12 procent. Den nedsatta satsen på 6 procent är tidsbegränsad; löftet är att låta den gälla permanent. Kostnaden är alltså den uteblivna momsintäkten från den dag nedsättningen annars skulle upphöra. Antagande: livsmedelsmomsen ger staten kring 35 000 miljoner kronor per år vid 12 procent. En halverad skattesats tar bort ungefär hälften, cirka 17 000 miljoner kronor per år om den gäller alla livsmedel — det höga scenariot. Löftet avser \"primärt\" basvaror som kan produceras i Sverige. Antas 30–60 procent av underlaget falla utanför landar årskostnaden på 7 000–12 000 miljoner kronor; bas 10 000. Det låga talet speglar en snäv tolkning av basvaror. Ingen myndighetsberäkning ligger bakom — antagandena står öppet ovan."
+      "basis_url": "https://www.regeringen.se/pressmeddelanden/2025/11/regeringen-tar-nasta-steg-mot-tillfalligt-sankt-moms-pa-livsmedel/",
+      "method_note": "Permanent sänkt matmoms. Prissatt på regeringens egen siffra för den tillfälliga sänkningen, med avdrag för att den redan gäller in i mandatperioden.",
+      "confidence": 0.6,
+      "calculation": "Momsen på livsmedel är sänkt från 12 till 6 procent mellan 1 april 2026 och 31 december 2027, och regeringen anger skattebortfallet till 37,2 miljarder kronor för den perioden — alltså omkring 21 miljarder kronor per år. Löftet är att låta sänkningen gälla permanent. Eftersom den redan är beslutad till och med 2027 kostar löftet bara åren därefter, tre av mandatperiodens fyra år, vilket utslaget blir omkring 16 miljarder per år. Partiet vill dessutom avgränsa till basvaror som kan produceras i Sverige, vilket drar ner beloppet till 12 miljarder kronor per år."
     },
     "financing_claimed": {
       "described": false,
@@ -18375,6 +18462,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen bakom beloppet är nu offentlig: den visar stegen från livsmedelsmomsens storlek till årskostnaden för att låta den nedsatta satsen gälla permanent. Beloppet är oförändrat. Den omräknade uträkningen ville sätta det till 0 kronor med motiveringen att den nedsatta matmomsen redan är permanent — det stämmer inte, nedsättningen är tidsbegränsad, och därför står beloppet kvar.",
         "commit": "4aabb3933eafaf0758f15db0982acedaeb78756b"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 10 000 till 12 000 miljoner kronor per år, men framför allt satt på en riktig grund. Den tidigare uträkningen antog att livsmedelsmomsen ger omkring 35 miljarder kronor per år vid 12 procent. Regeringen anger själv skattebortfallet för den tillfälliga sänkningen till 37,2 miljarder kronor för perioden april 2026 till december 2027, alltså omkring 21 miljarder per år, och sänkningen är redan beslutad till och med 2027.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -21063,14 +21155,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1500,
-      "msek_high": 2000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar skattesänkning ca 3000 kr/år för 500 000 studerande med arbetsinkomst, brett intervall för osäkerhet.",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Bas: jämförbart löfte om avdrag för utbildning under arbetslivet hos Moderaterna på 2000 miljoner kronor per år. Löftet här saknar detaljer om avgränsning, målgrupp eller avdragstak. Därför lågt intervall 500 miljoner kronor (snävare tolkning) och högt 3000 miljoner kronor (bred tolkning med högre utnyttjande)."
+      "method_note": "Uppräkning över flera politikområden. Partiets konkreta löften bär kostnaderna.",
+      "confidence": 0.55,
+      "calculation": "Citatet räknar upp allt från sänkt skatt för den som utbildar sig till en personlig husläkare — en uppräkning över flera politikområden utan konkret åtagande. Delarna ligger redan på partiets specifika löften och prissätts där."
     },
     "financing_claimed": {
       "described": false,
@@ -21085,6 +21177,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Nollat, från 1 500 miljoner kronor per år. Citatet är en uppräkning över flera politikområden utan angiven nivå, och delarna prissätts på partiets egna konkreta löften. Den tidigare uträkningen lånade dessutom ett belopp från ett annat partis löfte som sedan dess har räknats om.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
