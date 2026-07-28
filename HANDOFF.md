@@ -410,12 +410,12 @@ procentsats utan erfarenhet bakom). Det ligger i session 10.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json`, uppdaterad efter session 7. En **räkneenhet**
+Mätt på `data/promises.json`, uppdaterad efter session 8. En **räkneenhet**
 är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
-av sitt högsta belopp. 420 aktiva löften blir 360 räkneenheter, varav 216 bär
+av sitt högsta belopp. 420 aktiva löften blir 358 räkneenheter, varav 213 bär
 ett belopp över noll. Pengarna är fortfarande snedfördelade, men mindre än
-när planen skrevs: hälften av mandattotalen ligger nu i 12 enheter, 80 procent
-i 38 och 95 procent i 86. Det var alltså de tyngsta enheterna som var mest
+när planen skrevs: hälften av mandattotalen ligger nu i 11 enheter, 80 procent
+i 36 och 95 procent i 85. Det var alltså de tyngsta enheterna som var mest
 felräknade — vilket är precis vad ordningen i planen bygger på. Kolumnen
 Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 
@@ -428,16 +428,16 @@ Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 | 5 | ~~**Välfärd, de tyngsta**~~ **KLAR 2026-07-28.** 17 löften på 12 enheter; ämnet gick från 540 till 360 mdkr. Se avsnittet nedan | klar | **max** |
 | 6 | ~~Välfärd, resten~~ **KLAR 2026-07-28.** 12 omräknade, 1 tillbakadraget, resten kontrollerade; ämnet 360 → 363 mdkr. **Välfärden är därmed helt genomgången.** Se avsnittet nedan | klar | hög |
 | 7 | ~~Utbildning, hela ämnet~~ **KLAR 2026-07-28.** 9 omräknade, resten kontrollerade; ämnet 359 → 191 mdkr. Se avsnittet nedan | klar | hög |
-| 8 | Klimat-miljö, hela ämnet | 38 | hög |
+| 8 | ~~Klimat-miljö, hela ämnet~~ **KLAR 2026-07-28.** 16 omräknade; ämnet 268 → 122 mdkr. Se avsnittet nedan | klar | hög |
 | 9 | Övrigt (25) och infrastruktur (11) | 36 | hög |
 | 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
 
-Ämnesordningen är mandattotalen, efter session 7: skatter 1 115 mdkr (klart),
-försvar 460 (klart), välfärd 363 (klart), **klimat-miljö 268**, utbildning 191
-(klart), övrigt 120, rättsväsende 71, infrastruktur 63, migration 47. Fyra
-ämnen är alltså helt genomgångna. **Klimat-miljö (rad 8) är nu det tyngsta som
-återstår** — ordningen i tabellen stämmer fortfarande, men märk att ämnet gick
-om utbildningen först när utbildningen räknats om. Löften som ger staten pengar
+Ämnesordningen är mandattotalen, efter session 8: skatter 1 115 mdkr (klart),
+försvar 460 (klart), välfärd 363 (klart), utbildning 191 (klart), klimat-miljö
+122 (klart), **övrigt 120**, rättsväsende 71, infrastruktur 63, migration 47.
+Fem ämnen är alltså helt genomgångna, och de tunga ämnena är därmed avklarade.
+Kvar är raderna 9 och 10, som tillsammans väger 300 mdkr — mindre än vad
+klimatämnet ensamt vägde innan det räknades om. Löften som ger staten pengar
 ligger kvar i sitt eget ämne och räknas om i samma session som resten av ämnet.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
@@ -464,6 +464,12 @@ Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
 max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
+
+*Utfall session 8:* 38 enheter genomgångna, varav 16 löften ändrades. Ämnet
+mer än halverades, och nästan allt låg i **en enda grupp om sex löften** — den
+om ny kärnkraft. **Är ett ämne dominerat av en grupp: börja där, och kontrollera
+om det som lovas redan är beslutad lag.** Kärnkraftsstödet var både redan
+beslutat och i grunden ett lån som betalas tillbaka.
 
 *Utfall session 7:* 61 enheter genomgångna, varav 9 löften ändrades. Ämnet
 nästan halverades, men **inte för att beloppen var slarviga — för att två
@@ -532,10 +538,48 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- **Session 8 — klimat-miljö, hela ämnet.** Gren
-  `claude/session-5-valfarden-sbny1t` (samma grennamn, nytt spår efter att
-  session 7 slagits ihop). Rör de 38 räkneenheterna i ämnet klimat-miljö.
-  Ingen annan session bör röra klimatlöften förrän raden är struken.
+- (ingen pågående session)
+
+#### Klimat- och miljöämnet är omräknat — session 8, klar 2026-07-28
+
+Alla 38 enheter genomgångna, sexton löften omräknade. Ämnet gick 268 → **122
+mdkr** och rikssumman till **2 535 996 mkr**. Nästan hela förändringen låg i
+**en enda grupp**.
+
+**Kärnkraften: 40 000 → 8 000 mkr för perioden.** Sex löften stod på 10 000
+mkr/år, uträknat som hela byggkostnaden för två reaktorer utslagen på
+byggtiden. Tre saker gör att det inte är statens kostnad under mandatperioden:
+
+1. **Statens stöd är lån som ska betalas tillbaka** när reaktorn är i drift —
+   upp till 220 mdkr över tolv år. Ett återbetalat lån är ingen statlig utgift;
+   det som kostar är räntestödet och kreditrisken.
+2. **Prissäkringen (1–3 mdkr/år) löper först efter driftsättning**, och ingen
+   ny reaktor hinner tas i drift före 2030.
+3. **Modellen är redan beslutad lag** sedan augusti 2025. Ett löfte som inte går
+   utöver den lovar ingen ny kostnad — samma bedömning som försvarslöftet om
+   "fortsatt starkt stöd".
+
+Liberalernas löfte om statliga garantier låg **utanför gruppen** trots att det
+är samma politik, och är nollat: en garanti är ett åtagande, inte en
+utbetalning, och staten tar dessutom betalt för att bära risken.
+
+**Två breda klimatuppräkningar nollade** (C). Båda räknar upp energi,
+transporter, industri och innovation utan nivå; partiets konkreta klimatlöften
+är redan prissatta var för sig.
+
+**Elbilspremien harmoniserad på den enda angivna nivån** — 50 000 kronor per
+bil, som ett av gruppens löften anger. Miljöpartiets leasingstöd låg prissatt
+**både i gruppen och utanför den**, så samma stöd räknades två gånger. Det är
+tredje sessionen i rad som hittar ett löfte som hör hemma i en befintlig grupp
+men ligger utanför. **Sök på åtgärden i hela datat, inte bara bland gruppens
+medlemmar.**
+
+Dessutom: Miljöpartiets fossilväxling räknades brutto trots att en växling till
+stor del är omfördelning, och låg tre gånger över uträkningens eget basbelopp.
+Sverigedemokraternas löfte om "lägre skatt på el och fortsatt låga skatter på
+drivmedel och livsmedel" prissatte även de skatter som enligt löftet ska förbli
+oförändrade — **"fortsatt låg" är dagens nivå och kostar inget nytt.**
+Miljöpartiets biogaslöfte fick den öppna uträkning det saknade.
 
 #### Utbildningen är omräknad — session 7, klar 2026-07-28
 
