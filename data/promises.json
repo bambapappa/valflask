@@ -4199,14 +4199,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 8000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
-      "confidence": 0.3,
-      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Moderaterna delar löftet med Kristdemokraterna, Liberalerna och Sverigedemokraterna."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/karnkraftsfinansiering/sa-fungerar-stodmodellen-for-finansiering-av-ny-karnkraft/",
+      "method_note": "Statens stöd till ny kärnkraft är lån som ska betalas tillbaka, plus prissäkring som börjar först när reaktorn är i drift. Modellen är dessutom redan beslutad lag. Kvar under mandatperioden blir räntestödet i lånen och administrationen.",
+      "confidence": 0.4,
+      "calculation": "Statens stödmodell för ny kärnkraft är redan beslutad och gäller sedan augusti 2025. Den består av lån på upp till 220 miljarder kronor över tolv år och dubbelriktade differenskontrakt. Två saker gör att detta inte är 220 miljarder i statlig utgift: lånen ska betalas tillbaka när reaktorn är i drift, och prissäkringen på 1–3 miljarder per år löper först efter driftsättning — alltså långt efter mandatperioden 2027–2030. Ingen ny reaktor hinner tas i drift under perioden. Kvar som verklig kostnad blir den del av lånen som är ett stöd: staten lånar ut till sin egen låga ränta och bär kreditrisken. Med en utlåning på omkring 18 miljarder per år och ett stödvärde på omkring tio procent blir det cirka 2 000 miljoner kronor per år. Samma belopp för alla partier som lovar samma sak."
     },
     "financing_claimed": {
       "described": false,
@@ -4221,6 +4221,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen bakom beloppet vilar nu på samma öppet redovisade grund som övriga partiers löften om ny kärnkraft: statens andel av en satsning på två reaktorer, utslagen per år. Beloppet är oförändrat.",
         "commit": "b1b1ca6a7568a940651807f926fb8140d78f34c6"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 10 000 till 2 000 miljoner kronor per år. Den tidigare uträkningen slog ut hela byggkostnaden för två reaktorer över byggtiden, men statens stöd är lån som ska betalas tillbaka, och prissäkringen börjar först när en reaktor är i drift — vilket inte hinner ske under mandatperioden. Modellen är dessutom redan beslutad och gäller sedan augusti 2025. Kvar som verklig kostnad är räntestödet i lånen.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -4250,14 +4255,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 8000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
-      "confidence": 0.3,
-      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Löftet beskriver den statliga insatsen för samma reaktorer som Moderaternas andra kärnkraftslöfte, och ingår därför i samma delade löfte."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/karnkraftsfinansiering/sa-fungerar-stodmodellen-for-finansiering-av-ny-karnkraft/",
+      "method_note": "Statens stöd till ny kärnkraft är lån som ska betalas tillbaka, plus prissäkring som börjar först när reaktorn är i drift. Modellen är dessutom redan beslutad lag. Kvar under mandatperioden blir räntestödet i lånen och administrationen.",
+      "confidence": 0.4,
+      "calculation": "Statens stödmodell för ny kärnkraft är redan beslutad och gäller sedan augusti 2025. Den består av lån på upp till 220 miljarder kronor över tolv år och dubbelriktade differenskontrakt. Två saker gör att detta inte är 220 miljarder i statlig utgift: lånen ska betalas tillbaka när reaktorn är i drift, och prissäkringen på 1–3 miljarder per år löper först efter driftsättning — alltså långt efter mandatperioden 2027–2030. Ingen ny reaktor hinner tas i drift under perioden. Kvar som verklig kostnad blir den del av lånen som är ett stöd: staten lånar ut till sin egen låga ränta och bär kreditrisken. Med en utlåning på omkring 18 miljarder per år och ett stödvärde på omkring tio procent blir det cirka 2 000 miljoner kronor per år. Samma belopp för alla partier som lovar samma sak."
     },
     "financing_claimed": {
       "described": false,
@@ -4272,6 +4277,11 @@
         "date": "2026-07-27",
         "change": "Kostnadsestimatet ändrat från 20 000 till 10 000 miljoner kronor per år och löftet kopplat till samma delade löfte som partiets andra kärnkraftslöfte. Löftet beskriver hur staten ska bära risken för de reaktorer som redan prissätts på p-2026-0082 — Moderaterna räknades därmed två gånger för samma satsning. Löftets egen uträkning landade dessutom på omkring 6 000 miljoner kronor per år, inte 20 000. Se rättelseloggen.",
         "commit": "b1b1ca6a7568a940651807f926fb8140d78f34c6"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 10 000 till 2 000 miljoner kronor per år. Löftet beskriver den finansieringsmodell som riksdagen redan beslutat och som gäller sedan augusti 2025, alltså gällande rätt snarare än ett nytt åtagande. Beloppet vilar nu på vad modellen faktiskt kostar staten under mandatperioden: stödet är lån som ska betalas tillbaka, och prissäkringen börjar först när en reaktor är i drift, vilket inte hinner ske före 2030.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -5534,14 +5544,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 8000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
-      "confidence": 0.3,
-      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Kristdemokraterna delar löftet med Moderaterna, Liberalerna och Sverigedemokraterna."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/karnkraftsfinansiering/sa-fungerar-stodmodellen-for-finansiering-av-ny-karnkraft/",
+      "method_note": "Statens stöd till ny kärnkraft är lån som ska betalas tillbaka, plus prissäkring som börjar först när reaktorn är i drift. Modellen är dessutom redan beslutad lag. Kvar under mandatperioden blir räntestödet i lånen och administrationen.",
+      "confidence": 0.4,
+      "calculation": "Statens stödmodell för ny kärnkraft är redan beslutad och gäller sedan augusti 2025. Den består av lån på upp till 220 miljarder kronor över tolv år och dubbelriktade differenskontrakt. Två saker gör att detta inte är 220 miljarder i statlig utgift: lånen ska betalas tillbaka när reaktorn är i drift, och prissäkringen på 1–3 miljarder per år löper först efter driftsättning — alltså långt efter mandatperioden 2027–2030. Ingen ny reaktor hinner tas i drift under perioden. Kvar som verklig kostnad blir den del av lånen som är ett stöd: staten lånar ut till sin egen låga ränta och bär kreditrisken. Med en utlåning på omkring 18 miljarder per år och ett stödvärde på omkring tio procent blir det cirka 2 000 miljoner kronor per år. Samma belopp för alla partier som lovar samma sak."
     },
     "financing_claimed": {
       "described": false,
@@ -5561,6 +5571,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen bakom beloppet vilar nu på samma öppet redovisade grund som övriga partiers löften om ny kärnkraft: statens andel av en satsning på två reaktorer, utslagen per år. Beloppet är oförändrat.",
         "commit": "b1b1ca6a7568a940651807f926fb8140d78f34c6"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 10 000 till 2 000 miljoner kronor per år. Den tidigare uträkningen slog ut hela byggkostnaden för två reaktorer över byggtiden, men statens stöd är lån som ska betalas tillbaka, och prissäkringen börjar först när en reaktor är i drift — vilket inte hinner ske under mandatperioden. Modellen är dessutom redan beslutad och gäller sedan augusti 2025. Kvar som verklig kostnad är räntestödet i lånen.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -6464,14 +6479,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 1600,
+      "msek_low": 3000,
       "msek_base": 8000,
-      "msek_high": 14400,
+      "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Lägre skatt på el och livsmedel. Elmoms sänkt till 6% idag. Ytterligare sänkning ~8 mdr/år.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. El: sänkning ~5–15 öre/kWh för hushåll/tjänster (~80 TWh) → 4–12 miljarder kronor. Drivmedel: behåller tillfällig sänkning (~1,5 kr/l) på ~6–7 miljarder kronor liter → 9–10 miljarder kronor. Summa ~13–22 miljarder kronor, men med försiktighetsmarginal och möjligt smalare omfattning sätts intervallet 3 000–15 000 miljoner kronor."
+      "method_note": "Bara sänkningen av elskatten är en ny kostnad. Att hålla drivmedels- och matskatterna fortsatt låga är att behålla dagens nivå, och matmomsen är prissatt på partiets skattelöften.",
+      "confidence": 0.4,
+      "calculation": "Löftet har tre delar men bara en av dem är ny. Lägre skatt på el: hushåll och tjänster använder omkring 80 terawattimmar, och en sänkning på 5–15 öre per kilowattimme ger 4 000–12 000 miljoner kronor per år i uteblivna skatteintäkter, med 8 000 som basbelopp. Att skatterna på drivmedel och livsmedel ska vara \"fortsatt låga\" är däremot att behålla dagens nivå, vilket inte kostar något nytt jämfört med i dag. Matmomsen prissätts dessutom på partiets egna skattelöften och får inte räknas två gånger. Den tidigare uträkningen lade in 9–10 miljarder för drivmedlen som om det vore en ny sänkning."
     },
     "financing_claimed": {
       "described": false,
@@ -6481,7 +6496,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet oförändrat, 8 000 miljoner kronor per år, men grunden utbytt. Den tidigare uträkningen prissatte även \"fortsatt låga skatter på drivmedel och livsmedel\" som en ny sänkning, trots att det är att behålla dagens nivå — och matmomsen ligger dessutom prissatt på partiets egna skattelöften. Kvar är sänkningen av elskatten, som är den enda delen som är ny.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7814,14 +7835,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 8000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
-      "confidence": 0.3,
-      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Liberalerna delar löftet med Moderaterna, Kristdemokraterna och Sverigedemokraterna."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/karnkraftsfinansiering/sa-fungerar-stodmodellen-for-finansiering-av-ny-karnkraft/",
+      "method_note": "Statens stöd till ny kärnkraft är lån som ska betalas tillbaka, plus prissäkring som börjar först när reaktorn är i drift. Modellen är dessutom redan beslutad lag. Kvar under mandatperioden blir räntestödet i lånen och administrationen.",
+      "confidence": 0.4,
+      "calculation": "Statens stödmodell för ny kärnkraft är redan beslutad och gäller sedan augusti 2025. Den består av lån på upp till 220 miljarder kronor över tolv år och dubbelriktade differenskontrakt. Två saker gör att detta inte är 220 miljarder i statlig utgift: lånen ska betalas tillbaka när reaktorn är i drift, och prissäkringen på 1–3 miljarder per år löper först efter driftsättning — alltså långt efter mandatperioden 2027–2030. Ingen ny reaktor hinner tas i drift under perioden. Kvar som verklig kostnad blir den del av lånen som är ett stöd: staten lånar ut till sin egen låga ränta och bär kreditrisken. Med en utlåning på omkring 18 miljarder per år och ett stödvärde på omkring tio procent blir det cirka 2 000 miljoner kronor per år. Samma belopp för alla partier som lovar samma sak."
     },
     "financing_claimed": {
       "described": false,
@@ -7836,6 +7857,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen bakom beloppet vilar nu på samma öppet redovisade grund som övriga partiers löften om ny kärnkraft: statens andel av en satsning på två reaktorer, utslagen per år. Beloppet är oförändrat.",
         "commit": "b1b1ca6a7568a940651807f926fb8140d78f34c6"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 10 000 till 2 000 miljoner kronor per år. Den tidigare uträkningen slog ut hela byggkostnaden för två reaktorer över byggtiden, men statens stöd är lån som ska betalas tillbaka, och prissäkringen börjar först när en reaktor är i drift — vilket inte hinner ske under mandatperioden. Modellen är dessutom redan beslutad och gäller sedan augusti 2025. Kvar som verklig kostnad är räntestödet i lånen.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -9532,14 +9558,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
+      "msek_low": 4000,
       "msek_base": 7500,
       "msek_high": 15000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Löfte inom Energi. ~50 mdr/år. [granskning 2026-07-09: elbilsbonus ~7,5 mdr/år, ej 50]",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Tidigare bonus gav ca 4 miljarder kronor per år vid ca 60 000 kronor/bil och ~35 % elbilsandel av 300 000 nya bilar. Med 'större bonus' antas snitt 50–70 000 kronor och elandel 50–70 %. ~300 000 × 0.6 × 60 000 ≈ 10 800 miljoner kronor, spann 4 500–15 750 miljoner kronor. Avrundat till 4–15 miljarder kronor."
+      "method_note": "Elbilspremie. Nivån — 50 000 kronor per bil — är hämtad från det enda löftet i gruppen som anger en, och att den är lånad står utskrivet. Samma politik räknas en gång.",
+      "confidence": 0.45,
+      "calculation": "Ett av löftena i gruppen anger nivån: en bonus på 50 000 kronor direkt vid köp. Den siffran används för alla, och att den är lånad från ett annat partis löfte står utskrivet. Det säljs omkring 300 000 nya personbilar per år i Sverige. Med en elbilsandel på 50–60 procent, alltså 150 000–180 000 bilar, och 50 000 kronor per bil blir kostnaden 7 500–9 000 miljoner kronor per år. Basbeloppet läggs på 7 500 miljoner. Låg: 4 000, ungefär vad den tidigare elbilsbonusen faktiskt kostade innan den togs bort. Hög: 15 000, om premien också omfattar begagnade bilar eller leasing i stor skala. Samma politik hos flera partier räknas en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -9549,7 +9575,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet oförändrat, 7 500 miljoner kronor per år, men grunden utbytt. Den tidigare uträkningen antog en bonus på 50–70 000 kronor och landade själv på 10 800 miljoner, alltså inte på beloppet i fältet. Beloppet vilar nu på den enda nivå något av gruppens löften anger — 50 000 kronor direkt vid köp — och att den siffran är lånad från ett annat partis löfte står utskrivet.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -10000,14 +10032,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 20000,
-      "msek_high": 36000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Elektrifiering transporter/industri + innovation. Estimat 20 mdr/år.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Jämförbara klimatpaket: 20 000 miljoner kronor per år (p-0342, p-0454). Löftet är ospecificerat men antyder flera åtgärder. Antagande: energiinvesteringar 5–15 miljarder kronor, elfordons- och transportstöd 2–8 miljarder kronor, industristöd/innovation 3–10 miljarder kronor, övrigt 0–7 miljarder kronor. Summerat spann 10–40 miljarder kronor, avrundat 5 000–40 000 miljoner kronor per år. Basfall 15 000 miljoner kronor per år som medel."
+      "method_note": "Brett löfte över flera politikområden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika klimatlöften.",
+      "confidence": 0.55,
+      "calculation": "Löftet räknar upp flera politikområden — energi, transporter, industri, innovation — och säger att omställningen ska bli enklare, billigare och snabbare, men anger ingen nivå för något av dem. Ett sådant brett löfte prissätts inte: partiet har egna konkreta klimatlöften om elbilspremie, om livsmedelsförsörjning, om tillståndsprövning och om skogsägande, och de är prissatta var för sig. Att lägga ett belopp här också vore att räkna samma politik två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena. Det tidigare beloppet, 20 000 miljoner kronor per år, låg dessutom över uträkningens eget basfall på 15 000."
     },
     "financing_claimed": {
       "described": false,
@@ -10017,7 +10049,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet nollat, från 20 000 miljoner kronor per år. Löftet räknar upp energi, transporter, industri och innovation utan att ange någon nivå, och partiets konkreta klimatlöften är redan prissatta var för sig. Beloppet låg dessutom över uträkningens eget basfall på 15 000. Samma bedömning som redan gäller för andra partiers breda uppräkningar.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot val2026 live)",
@@ -10365,13 +10403,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5100,
-      "msek_base": 6000,
-      "msek_high": 6900,
+      "msek_low": 4000,
+      "msek_base": 7500,
+      "msek_high": 15000,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Källan anger: 'upp till 60 000 kronor i bonus'. Tidigare elbilsbonus (borttagen 2022) kostade ca 2,5 mdr/år vid 70 000 kr/bil och ca 100 000 sålda elbilar/år. Med 60 000 kr × 100 000 bilar = 6 mdr/år.",
-      "confidence": 0.85
+      "method_note": "Elbilspremie. Nivån — 50 000 kronor per bil — är hämtad från det enda löftet i gruppen som anger en, och att den är lånad står utskrivet. Samma politik räknas en gång.",
+      "confidence": 0.45,
+      "calculation": "Ett av löftena i gruppen anger nivån: en bonus på 50 000 kronor direkt vid köp. Den siffran används för alla, och att den är lånad från ett annat partis löfte står utskrivet. Det säljs omkring 300 000 nya personbilar per år i Sverige. Med en elbilsandel på 50–60 procent, alltså 150 000–180 000 bilar, och 50 000 kronor per bil blir kostnaden 7 500–9 000 miljoner kronor per år. Basbeloppet läggs på 7 500 miljoner. Låg: 4 000, ungefär vad den tidigare elbilsbonusen faktiskt kostade innan den togs bort. Hög: 15 000, om premien också omfattar begagnade bilar eller leasing i stor skala. Samma politik hos flera partier räknas en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -10381,7 +10420,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 6 000 till 7 500 miljoner kronor per år, harmoniserat med gruppens övriga löften om elbilsstöd. Nivån är hämtad från det enda löftet i gruppen som anger en, och att den är lånad står utskrivet i uträkningen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -10390,7 +10435,7 @@
   },
   {
     "id": "p-2026-0323",
-    "group_id": null,
+    "group_id": "g-elbilspremie",
     "title": "Med vårt leasingstöd kan man komma ner till 1500 kronor i månaden för att leasa en elbil",
     "slug": "med-vart-leasingstod-kan-man-komma-ner-till-1500-kronor-i-manaden-for-att-leasa-en-elbil",
     "parties": [
@@ -10412,13 +10457,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3060,
-      "msek_base": 3600,
-      "msek_high": 4140,
+      "msek_low": 4000,
+      "msek_base": 7500,
+      "msek_high": 15000,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Källan anger: '1500 kronor i månaden för att leasa en elbil'. Om stödet täcker skillnaden mellan elbil och fossilbil: ca 1500 kr/mån subvention. Om 200 000 elbilar × 1500 × 12 = 3,6 mdr/år.",
-      "confidence": 0.85
+      "method_note": "Elbilspremie. Nivån — 50 000 kronor per bil — är hämtad från det enda löftet i gruppen som anger en, och att den är lånad står utskrivet. Samma politik räknas en gång.",
+      "confidence": 0.45,
+      "calculation": "Ett av löftena i gruppen anger nivån: en bonus på 50 000 kronor direkt vid köp. Den siffran används för alla, och att den är lånad från ett annat partis löfte står utskrivet. Det säljs omkring 300 000 nya personbilar per år i Sverige. Med en elbilsandel på 50–60 procent, alltså 150 000–180 000 bilar, och 50 000 kronor per bil blir kostnaden 7 500–9 000 miljoner kronor per år. Basbeloppet läggs på 7 500 miljoner. Låg: 4 000, ungefär vad den tidigare elbilsbonusen faktiskt kostade innan den togs bort. Hög: 15 000, om premien också omfattar begagnade bilar eller leasing i stor skala. Samma politik hos flera partier räknas en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -10428,7 +10474,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Löftet grupplänkat med partiets och de andra partiernas löften om stöd för att byta till elbil, och beloppet justerat från 3 600 till 7 500 miljoner kronor per år. Partiets leasingstöd låg prissatt på två löften samtidigt — ett i gruppen och ett utanför — och räknades därför två gånger i summan. Löftet saknade dessutom öppen uträkning.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -10936,13 +10988,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 4000,
-      "msek_high": 8000,
+      "msek_low": 800,
+      "msek_base": 2000,
+      "msek_high": 5000,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Källan anger: 'femdubbla den svenska biogasproduktionen'. Nuvarande biogasproduktion ca 2 TWh. Femdubbling = 10 TWh ny p [granskning 2026-07-09: biogas: stor privat andel, statligt stöd ~4 mdr/år]",
-      "confidence": 0.5
+      "method_note": "Partiets egen nivå: femdubblad biogasproduktion. Stödet per kilowattimme och utbyggnadstakten är våra antaganden, och beloppet är genomsnittet under perioden.",
+      "confidence": 0.4,
+      "calculation": "Partiet anger själv nivån för den tyngsta delen: biogasproduktionen ska femdubblas. Sverige producerar omkring 2 terawattimmar biogas, så femdubbling betyder omkring 8 nya terawattimmar. Ett produktionsstöd i storleksordningen 20–40 öre per kilowattimme — vårt antagande, inte partiets — ger 1 600–3 200 miljoner kronor per år när produktionen är fullt utbyggd. Men en femdubbling sker inte första året, och en utbyggnad som når sin nivå i slutet av mandatperioden kostar i genomsnitt ungefär hälften: omkring 1 200 miljoner. Ökad produktion av andra biodrivmedel och elektrifiering av jordbrukets maskiner läggs till med omkring 800 miljoner. Sammantaget 2 000 miljoner kronor per år."
     },
     "financing_claimed": {
       "described": false,
@@ -10952,7 +11005,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 4 000 till 2 000 miljoner kronor per år, och löftet har fått den öppna uträkning det saknade. Två ändringar: den mesta av produktionen byggs och betalas av privata aktörer, så statens del är ett produktionsstöd och inte hela investeringen, och en femdubbling som når sin nivå i slutet av mandatperioden kostar genomsnittet av upptrappningen och inte slutnivån gånger fyra. Partiets egen nivå — femdubblad produktion — står kvar.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -11371,14 +11430,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 20000,
-      "msek_high": 100000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett löfte utan belopp. Antaganden baseras på kostnader för subventioner, investeringsstöd och tekniksatsningar för fossilfri el/industri. Stort osäkerhetsintervall p.g.a. otydlig inriktning.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Jämför med partiets eget löfte om en enklare klimatomställning: 20 000 miljoner kronor per år för att göra klimatomställningen enklare, billigare och snabbare. Löftet är lika brett och omfattar fossilfri el, grön industri och ny teknik, så bas = 20 000. Osäkerhet: låg 10 000, hög 40 000 miljoner kronor per år."
+      "method_note": "Brett löfte över flera politikområden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika klimatlöften.",
+      "confidence": 0.55,
+      "calculation": "Löftet räknar upp flera politikområden — energi, transporter, industri, innovation — och säger att omställningen ska bli enklare, billigare och snabbare, men anger ingen nivå för något av dem. Ett sådant brett löfte prissätts inte: partiet har egna konkreta klimatlöften om elbilspremie, om livsmedelsförsörjning, om tillståndsprövning och om skogsägande, och de är prissatta var för sig. Att lägga ett belopp här också vore att räkna samma politik två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena. Det tidigare beloppet, 20 000 miljoner kronor per år, låg dessutom över uträkningens eget basfall på 15 000."
     },
     "financing_claimed": {
       "described": false,
@@ -11393,6 +11452,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet nollat, från 20 000 miljoner kronor per år. Löftet är samma breda uppräkning som gruppens andra löfte — fossilfri el, grön industri, ny teknik och snabbare omställning utan angiven nivå — och partiets konkreta klimatlöften är redan prissatta var för sig.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -11849,14 +11913,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 7000,
+      "msek_low": 4000,
+      "msek_base": 7500,
       "msek_high": 15000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Kostnaden beror på antal nya elbilar per år (ca 100 000–300 000). 50 000 kr/bil = 5–15 mdkr. Om premien även gäller leasing ökar volymen. Osäkerhet kring avgränsningar och varaktighet.",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Nybilsregistreringar ~300 000 per år, BEV-andel ~33 % ger ~100 000 bilar. 100 000 × 50 000 kr = 5 000 miljoner kronor. Lågt scenario 40 000 bilar (2 000 miljoner kronor); högt scenario 160 000 bilar (8 000 miljoner kronor) om stöd omfattar fler fordon eller efterfrågan ökar."
+      "method_note": "Elbilspremie. Nivån — 50 000 kronor per bil — är hämtad från det enda löftet i gruppen som anger en, och att den är lånad står utskrivet. Samma politik räknas en gång.",
+      "confidence": 0.45,
+      "calculation": "Ett av löftena i gruppen anger nivån: en bonus på 50 000 kronor direkt vid köp. Den siffran används för alla, och att den är lånad från ett annat partis löfte står utskrivet. Det säljs omkring 300 000 nya personbilar per år i Sverige. Med en elbilsandel på 50–60 procent, alltså 150 000–180 000 bilar, och 50 000 kronor per bil blir kostnaden 7 500–9 000 miljoner kronor per år. Basbeloppet läggs på 7 500 miljoner. Låg: 4 000, ungefär vad den tidigare elbilsbonusen faktiskt kostade innan den togs bort. Hög: 15 000, om premien också omfattar begagnade bilar eller leasing i stor skala. Samma politik hos flera partier räknas en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -11866,7 +11930,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 7 000 till 7 500 miljoner kronor per år, så att gruppens löften om samma politik vilar på samma uträkning. Det är det här löftet som anger nivån — en bonus på 50 000 kronor direkt — och den siffran bär nu hela gruppen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14120,7 +14190,7 @@
   },
   {
     "id": "p-2026-0396",
-    "group_id": null,
+    "group_id": "g-ny-karnkraft-baskraft",
     "title": "Staten ska ge garantier för kärnreaktorer",
     "slug": "staten-ska-ge-garantier-for-karnreaktorer",
     "parties": [
@@ -14139,14 +14209,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 1500,
-      "msek_base": 5000,
-      "msek_high": 15000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antar statliga kreditgarantier för 2-4 kärnreaktorer, totalt garanterat 160-320 mdkr, förväntad förlust 2-5% i nuvärde. Osäkerhet om avgiftsuttag.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. 2 reaktorer × 80 miljarder kronor garanterade lån × 2 % ränteskillnad = 3,2 miljarder kronor per år. Justerat för 50 % sannolikhet: 1,6 miljarder kronor per år. Lågt scenario: 0,1 miljarder kronor (få investeringar). Högt scenario: 5 miljarder kronor (fler reaktorer, högre subvention)."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/karnkraftsfinansiering/sa-fungerar-stodmodellen-for-finansiering-av-ny-karnkraft/",
+      "method_note": "En statlig garanti är inget som betalas ut — den kostar först om den faller ut. Delat löfte med de andra partiernas löften om statligt stöd till ny kärnkraft.",
+      "confidence": 0.5,
+      "calculation": "Löftet är att staten ska ge garantier för kärnreaktorer. En garanti är ett åtagande, inte en utbetalning: den kostar statskassan ingenting så länge den inte faller ut, och staten tar dessutom ut en avgift för att bära risken. Garantier till ny kärnkraft ingår redan i den stödmodell riksdagen beslutat och som gäller sedan augusti 2025, så löftet lovar inget utöver det som redan är bestämt. Den del av stödet som faktiskt kostar staten pengar under mandatperioden — räntestödet i lånen — är prissatt på gruppens övriga löften och räknas därför inte här också."
     },
     "financing_claimed": {
       "described": false,
@@ -14156,7 +14226,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet nollat, från 5 000 miljoner kronor som engångskostnad, och löftet grupplänkat med de andra partiernas löften om statligt stöd till ny kärnkraft. Två skäl: en garanti är ett åtagande och ingen utbetalning, och garantier ingår redan i den stödmodell som gäller sedan augusti 2025. Löftet hörde hemma i gruppen men låg utanför den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14618,14 +14694,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 2500,
-      "msek_high": 10000,
+      "msek_low": 400,
+      "msek_base": 800,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar att dagens fossilsubvention (ca 2,5 mdkr/år för jordbruksdiesel) ersätts med gröna avdrag/investeringar. Nettoeffekt mellan oförändrat och upp till 10 mdkr vid hög ambitonsnivå.",
+      "method_note": "Växling av fossila subventioner mot gröna styrmedel. En växling är till stor del omfördelning — bara skillnaden är ny kostnad för staten.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Jämförbart löfte partiets eget löfte om jordbruksavdrag och biopremie uppskattas till 1200 miljoner kronor per år för bredare åtgärd. Detta löfte fokuserar på skattemässiga avskrivningar för gröna investeringar, vilket är en delmängd. Antag 33-100% av jämförbart löftes kostnad: 400-1200 miljoner kronor per år, med 800 miljoner kronor som bas."
+      "calculation": "Löftet vill växla dagens stöd till fossila drivmedel mot stöd som driver fram fossilfria alternativ. En växling är till stor del en omfördelning: pengar som i dag går till nedsatt skatt på jordbruksdiesel, omkring 2,5 miljarder kronor per år, flyttas till gröna avdrag och investeringsstöd. Nettokostnaden för staten är därför bara den del som är ny, alltså skillnaden mellan det som växlas bort och det som växlas in. Uträkningen landar på 400–1 200 miljoner kronor per år med 800 som basbelopp. Det tidigare beloppet, 2 500, var tre gånger så högt som uträkningens eget basbelopp och räknade i praktiken bruttot i stället för växlingen."
     },
     "financing_claimed": {
       "described": false,
@@ -14640,6 +14716,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 2 500 till 800 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som räknade fram 400–1 200 miljoner med 800 som basbelopp. Uträkningen vilade dessutom på ett annat av partiets löften i stället för på något utanför sig själv, och skriver nu i stället ut att en växling till stor del är en omfördelning och att bara skillnaden är ny kostnad.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -17269,14 +17350,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 2500,
-      "msek_high": 4000,
+      "msek_low": 400,
+      "msek_base": 800,
+      "msek_high": 2000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Växling: intäkter från slopade fossila subventioner (skattebefrielser) antas 2–4 mdkr/år. Nya avdrag och biopremie uppskattas till 2–5 mdkr. Nettokostnad vid imperfekt matchning ger brett intervall.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Jordbruksavdrag: 40 000–60 000 jordbrukare × 30 000–50 000 kr per år ≈ 1,2–3 miljarder kronor. Biopremie: produktion av förnybart drivmedel ~0,5–1 miljarder kronor. Summa 1,5–4 miljarder kronor, bas 2,5 miljarder kronor. Jämför partiets eget löfte om gröna skatteavdrag för lantbruket."
+      "method_note": "Växling av fossila subventioner mot gröna styrmedel. En växling är till stor del omfördelning — bara skillnaden är ny kostnad för staten.",
+      "confidence": 0.4,
+      "calculation": "Löftet vill växla dagens stöd till fossila drivmedel mot stöd som driver fram fossilfria alternativ. En växling är till stor del en omfördelning: pengar som i dag går till nedsatt skatt på jordbruksdiesel, omkring 2,5 miljarder kronor per år, flyttas till gröna avdrag och investeringsstöd. Nettokostnaden för staten är därför bara den del som är ny, alltså skillnaden mellan det som växlas bort och det som växlas in. Uträkningen landar på 400–1 200 miljoner kronor per år med 800 som basbelopp. Det tidigare beloppet, 2 500, var tre gånger så högt som uträkningens eget basbelopp och räknade i praktiken bruttot i stället för växlingen."
     },
     "financing_claimed": {
       "described": false,
@@ -17296,6 +17377,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 2 500 till 800 miljoner kronor per år, harmoniserat med gruppens andra löfte om samma växling. En växling av fossila subventioner mot gröna är till stor del en omfördelning, och bara skillnaden mellan det som växlas bort och det som växlas in är ny kostnad för staten.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -22014,14 +22100,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 8000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Statens andel av en satsning på ny kärnkraft, utslagen per år. Samma belopp för alla partier som lovar samma sak; räknas en gång i den samlade summan.",
-      "calculation": "Ny kärnkraft är en investering i storleksordningen 80–150 miljarder kronor per reaktor, byggd över långt mer än en mandatperiod. Antagande: två reaktorer, alltså ungefär 100–150 miljarder kronor, där staten står för en del genom ägarkapital, finansieringslösning och garantier. Utslaget på byggtiden ger det omkring 10 000 miljoner kronor per år. Det låga talet speglar en mindre statlig andel, det höga ett större statligt ägande. Samma belopp används för alla partier som lovar ny kärnkraft med statligt stöd — samma politik ska kosta lika — och löftena bildar ett delat löfte som räknas en gång i den samlade summan. Sverigedemokraterna delar löftet med Moderaterna, Kristdemokraterna och Liberalerna.",
-      "confidence": 0.25
+      "basis_url": "https://www.regeringen.se/regeringens-politik/karnkraftsfinansiering/sa-fungerar-stodmodellen-for-finansiering-av-ny-karnkraft/",
+      "method_note": "Statens stöd till ny kärnkraft är lån som ska betalas tillbaka, plus prissäkring som börjar först när reaktorn är i drift. Modellen är dessutom redan beslutad lag. Kvar under mandatperioden blir räntestödet i lånen och administrationen.",
+      "calculation": "Statens stödmodell för ny kärnkraft är redan beslutad och gäller sedan augusti 2025. Den består av lån på upp till 220 miljarder kronor över tolv år och dubbelriktade differenskontrakt. Två saker gör att detta inte är 220 miljarder i statlig utgift: lånen ska betalas tillbaka när reaktorn är i drift, och prissäkringen på 1–3 miljarder per år löper först efter driftsättning — alltså långt efter mandatperioden 2027–2030. Ingen ny reaktor hinner tas i drift under perioden. Kvar som verklig kostnad blir den del av lånen som är ett stöd: staten lånar ut till sin egen låga ränta och bär kreditrisken. Med en utlåning på omkring 18 miljarder per år och ett stödvärde på omkring tio procent blir det cirka 2 000 miljoner kronor per år. Samma belopp för alla partier som lovar samma sak.",
+      "confidence": 0.4
     },
     "financing_claimed": {
       "described": false,
@@ -22041,6 +22127,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen bakom beloppet vilar nu på samma öppet redovisade grund som övriga partiers löften om ny kärnkraft: statens andel av en satsning på två reaktorer, utslagen per år. Beloppet är oförändrat.",
         "commit": "b1b1ca6a7568a940651807f926fb8140d78f34c6"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 10 000 till 2 000 miljoner kronor per år. Den tidigare uträkningen slog ut hela byggkostnaden för två reaktorer över byggtiden, men statens stöd är lån som ska betalas tillbaka, och prissäkringen börjar först när en reaktor är i drift — vilket inte hinner ske under mandatperioden. Modellen är dessutom redan beslutad och gäller sedan augusti 2025. Kvar som verklig kostnad är räntestödet i lånen.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
