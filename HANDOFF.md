@@ -505,7 +505,10 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- (ingen pågående session)
+- **Session 5 — välfärden, de tyngsta enheterna.** Gren
+  `claude/session-5-valfarden-sbny1t`. Rör de tolv tyngsta räkneenheterna i
+  ämnet välfärd (tandvårdsgruppen hoppas över, den är gjord i session 1).
+  Ingen annan session bör röra välfärdslöften förrän raden är struken.
 
 #### Skatteämnet är färdiggånget — session 3, klar 2026-07-27
 
