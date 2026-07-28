@@ -26,6 +26,10 @@ const people = getPeople();
 const constants = getConstants();
 const partyNames = promise.parties.map((c) => getPartyByCode(parties, c)?.name || c).join(', ');
 const total = formatMsek(promiseTotalMsek(promise), promise.cost.basis);
+// En besparing eller en ny intäkt är ingen kostnad. Etiketten följer typen, så
+// att sidan inte påstår att partiet lovar bort pengar det vill spara in.
+const sparar = promise.cost.type === "besparing" || promise.cost.type === "intäktsökning";
+const beloppsord = sparar ? "Besparing" : "Kostnad";
 const personName = promise.person?.name || null;
 const comparisons = computeComparisons(promise, constants);
 const canonicalPath = `/lofte/${promise.id}/${promise.slug}`;
@@ -39,7 +43,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": promise.title,
-    "description": `${partyNames} lovar: ${promise.title}. Kostnad: ${total}.`,
+    "description": `${partyNames} lovar: ${promise.title}. ${beloppsord}: ${total}.`,
     "url": `https://drygast.nu${canonicalPath}`,
     "datePublished": promise.date_stated,
     "author": {
@@ -61,7 +65,7 @@ const jsonLd = [
   },
 ];
 ---
-<Layout title={pageTitle} description={`${partyNames} lovar: ${promise.title}. Kostnad: ${total}.`} ogImage={`/og/${promise.id}/og.png`} jsonLd={jsonLd} canonicalPath={canonicalPath}>
+<Layout title={pageTitle} description={`${partyNames} lovar: ${promise.title}. ${beloppsord}: ${total}.`} ogImage={`/og/${promise.id}/og.png`} jsonLd={jsonLd} canonicalPath={canonicalPath}>
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <ArendeHuvud id={promise.id} dateStated={promise.date_stated} domain={promise.source.domain} status={promise.status} />
@@ -75,7 +79,7 @@ const jsonLd = [
       )}
 
       <p class="lofte-summary">
-        {partyNames} lovar {promise.title.toLowerCase()}. Kostnad: <strong class="num belopp">{total}</strong> för de fyra åren 2027–2030.
+        {partyNames} lovar {promise.title.toLowerCase()}. {beloppsord}: <strong class="num belopp">{total}</strong> för de fyra åren 2027–2030.
       </p>
 
       <Citat
@@ -90,7 +94,7 @@ const jsonLd = [
       />
 
       <section class="sektion" id="kostnad">
-        <h2>Kostnad</h2>
+        <h2>{beloppsord}</h2>
         <div class="datavy datavy--scroll" tabindex="0" role="region" aria-label="Kostnadstabell">
           <table>
             <thead>
