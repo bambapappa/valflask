@@ -39,10 +39,29 @@ av pipelinen eller via review-CLI:t.
 - [ ] Merga PR:en — torrkörningen startar av sig själv vid nästa schemalagda
       körning (STANCES_MODE osatt = review: ALLT hamnar i `data/stances_review.json`,
       inget publiceras; löftesflödets PIPELINE_MODE påverkas inte).
-- [ ] Granska kön med `pnpm stances:review`: träffar extraktionen rätt delfrågor?
+- [x] Granska kön med `pnpm stances:review`: träffar extraktionen rätt delfrågor?
       Är citaten ordagranna och beskeden rimliga? Är LLM B:s bedömningar strikta?
-- [ ] Justera promptar/grindar vid behov och kör om. Upprepa tills en hel veckas
-      körningar ser rätt ut.
+      **Första genomgången gjord 2026-07-28** (5 poster): 2 höll, 3 skulle avvisas.
+      Verifieraren fångade en av dem själv — bra tecken. Två av tre avvisningar var
+      SAMMA fel, se nedan.
+- [x] Justera promptar/grindar vid behov och kör om. **Åtgärdat 2026-07-28:**
+      delfrågans `fairness_note` skickades aldrig in till modellen, bara frågetexten.
+      Avgränsningen är det som gör frågan till ett äkta vägval — flera delfrågor
+      handlar om att gå UTÖVER en redan beslutad nivå eller om att göra en tillfällig
+      ordning permanent — så utan den lästes ett allmänt stöd för ämnet som ett besked:
+      "fler värnpliktiga" blev ett ja på frågan om utökning utöver beslutade nivåer,
+      och "fortsatt låga skatter på livsmedel" ett ja på frågan om permanentad matmoms.
+      Avgränsningen skickas nu in i både A6 och A7, båda prompterna har en regel om
+      den, och fyra tester vaktar att den når fram.
+- [ ] Kör om och upprepa tills en hel veckas körningar ser rätt ut. **Nästa steg:**
+      kön är inte tömd — de 5 posterna ligger kvar och bör bedömas om efter att den
+      nya prompten kört ett varv, så att man ser om ändringen räcker.
+
+**Arkivluckan att känna till:** tre av de fem köposterna saknade `archiveUrl`.
+Pipelinen arkiverar ståndpunktskällor direkt i körningen, men till skillnad från
+löftesflödet finns ingen backfill som tar om de som misslyckades — `archive:backfill`
+rör bara `promises.json`. Steg 3 kräver klickbar arkivlänk, så luckan behöver täppas
+innan något publiceras.
 
 ## Steg 3 — Verifiering nr 3: första publiceringarna (ägare)
 

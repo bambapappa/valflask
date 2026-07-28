@@ -326,10 +326,17 @@ export async function runPipeline(
           stanceGateReview.push({ ...r, article });
         }
         for (const accepted of stanceReport.accepted) {
-          const sqText = issuesFile.issues
+          const sq = issuesFile.issues
             .flatMap((i) => i.subquestions)
-            .find((sq) => sq.id === accepted.subquestion_id)?.text ?? "";
-          const verify = await verifyStance(accepted, sqText, article, ctx.llm, ctx.models.verify);
+            .find((x) => x.id === accepted.subquestion_id);
+          const verify = await verifyStance(
+            accepted,
+            sq?.text ?? "",
+            article,
+            ctx.llm,
+            ctx.models.verify,
+            sq?.fairness_note,
+          );
           const archiveResult = await ctx.archiveFn(article.url);
           processedStances.push({
             candidate: accepted,
