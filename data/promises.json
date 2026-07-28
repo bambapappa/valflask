@@ -1082,14 +1082,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 20000,
-      "msek_base": 60000,
-      "msek_high": 120000,
+      "msek_low": 10000,
+      "msek_base": 25000,
+      "msek_high": 50000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Omfattande upprustning utan angiven nivå. Spannet spänner från måttlig ökning till fördubblad försvarsbudget.",
-      "confidence": 0.3,
-      "calculation": "Dagens försvarsbudget ligger på omkring 120 miljarder kronor. Löftet talar om en omfattande upprustning med fler värnpliktiga, stridsflyg, stridsfartyg och en stark armé, men anger ingen nivå. Det kan betyda allt från en måttlig ökning på 20 miljarder, alltså knappt en femtedel, till en fördubbling på 120 miljarder. Basbeloppet 60 miljarder motsvarar en ökning på halva budgeten — en tolkning av ordet omfattande som ändå inte når den femprocentsnivå av BNP som andra partier lovat."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/forsvarsbudget/",
+      "method_note": "Omfattande upprustning utan angiven nivå. Prissatt på samma grund som andra partiers försvarslöften, mellan den beslutade banan och femprocentsmålet.",
+      "confidence": 0.35,
+      "calculation": "Löftet anger ingen nivå — varken andel av BNP, årtal eller antal värnpliktiga — så det prissätts på samma grund som andra partiers försvarslöften. Försvarsanslagen är 175 miljarder kronor 2026, och beslutade planer tar dem till 3,1 procent av BNP från 2028. En omfattande upprustning utöver den banan, men utan det femprocentsmål som andra partier skrivit ut, ligger rimligen mellan de två: basbeloppet är 25 miljarder kronor per år. Det tidigare beloppet, 60 miljarder, motsvarade halva försvarsbudgeten och vilade bara på ordet omfattande."
     },
     "financing_claimed": {
       "described": false,
@@ -1104,6 +1104,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 50 000 till 60 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 60 000, inte de 50 000 som visades. Löftet anger ingen egen siffra, så uträkningens tolkning av ordet omfattande får gälla.",
         "commit": "2fbd60f9093f8a539a1090ded9fb135b7f939570"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 60 000 till 25 000 miljoner kronor per år. Det gamla basbeloppet var en tolkning av ordet omfattande — halva försvarsbudgeten — utan annan grund. Beloppet ligger nu mellan den beslutade banan och det femprocentsmål andra partier satt ut, och uträkningen skriver ut att löftet inte anger någon nivå.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -2084,7 +2089,7 @@
   },
   {
     "id": "p-2026-0041",
-    "group_id": "g-m-forsvar-nato-mal",
+    "group_id": "g-forsvar-fem-procent-bnp",
     "title": "Sverige ska ha ambitionen att uppnå Natos mål för försvarsutgifter redan 2030",
     "slug": "sverige-ska-ha-ambitionen-att-uppna-natos-mal-for-forsvarsutgifter-redan-2030",
     "parties": [
@@ -2103,14 +2108,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 30000,
+      "msek_low": 25000,
+      "msek_base": 50000,
+      "msek_high": 120000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Skillnaden mellan dagens försvarsanslag och Natos utgiftsmål 2030. Beror på vilken bana anslagen följer.",
-      "confidence": 0.4,
-      "calculation": "Natos mål motsvarar omkring 140 miljarder kronor år 2030. Dagens militära försvarsanslag ligger på omkring 120 miljarder och är på väg upp. Gapet blir därmed 0–30 miljarder kronor per år beroende på vilken bana anslagen följer fram till 2030. Basbeloppet 15 miljarder ligger i linje med hur motsvarande försvarslöften prissatts. Det låga alternativet, 5 miljarder, gäller om bara mindre justeringar krävs; det höga, 30 miljarder, om hela uppräkningen måste göras från en lägre utgångspunkt."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/forsvarsbudget/",
+      "method_note": "Höjning till Natos mål om fem procent av BNP. Prissatt som den genomsnittliga årliga ökningen över den redan beslutade banan under mandatperioden. Delat löfte med andra partier.",
+      "confidence": 0.5,
+      "calculation": "Försvarsanslagen är 175 miljarder kronor 2026, vilket motsvarar 2,8 procent av BNP enligt Natos sätt att räkna, och beslutade planer tar dem till 3,1 procent från 2028. Fem procent av en BNP kring 6 250 miljarder är 312 miljarder kronor per år, alltså omkring 118 miljarder över den beslutade banan när målet väl är nått. Men det nås inte första året: nås det 2030, sista året i mandatperioden, blir det som faktiskt betalas ut under 2027–2030 i genomsnitt omkring 50 miljarder kronor per år. Det låga alternativet gäller om den del av målet som avser civilt försvar och infrastruktur, 1,5 av de fem procenten, till stor del fylls av utgifter som redan finns. Det höga gäller om hela nivån nås tidigt i perioden."
     },
     "financing_claimed": {
       "described": false,
@@ -2125,6 +2130,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 20 000 till 15 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 15 000, inte de 20 000 som visades.",
         "commit": "30f1cd3b55f1089d16541c041934e103f0fe6200"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med de andra partiernas löften om Natos mål på fem procent av BNP: det är samma mål, här med årtalet 2030 utsatt, och samma upprustning kan bara genomföras en gång. Beloppet omräknat från 15 000 till 50 000 miljoner kronor per år, på samma grund som de övriga: skillnaden mot den beslutade banan, utslagen över mandatperioden. Den tidigare uträkningen satte Natos mål till omkring 140 miljarder kronor 2030, vilket motsvarar den gamla tvåprocentsnivån och inte det mål som gäller sedan toppmötet i Haag.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -2154,14 +2164,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 10000,
-      "msek_high": 18000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Estimat: Militärt och humanitärt stöd. Sverige har gett ca 30 mdr totalt sedan 2022. Fortsatt stöd ~10 mdr/år.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antar att 'starkt och långsiktigt stöd' motsvarar minst dagens nivå och rimligtvis upp till en högre långsiktig ram. Låg: 3 miljarder kronor per år (miniminivå för att anses starkt jämfört med tidigare år). Bas: 10 miljarder kronor per år (ungefärlig nuvarande årstakt inkl. materiel och bidrag). Hög: 25 miljarder kronor per år (aviserad treårsram 2025–2027, speglar hög ambitionsnivå). Alla belopp i fasta priser, brutto före finansiering."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/sveriges-stod-till-ukraina/militart-stod-till-ukraina/",
+      "method_note": "Stödet som beskrivs är redan beslutat, och löftet anger ingen nivå över den. Partiets konkreta löfte om stödets innehåll prissätts för sig.",
+      "confidence": 0.6,
+      "calculation": "Löftet anger ingen nivå, och det stöd det beskriver är redan beslutat: ramen för det militära stödet till Ukraina är 40 miljarder kronor per år för 2026 och 2027. Ett löfte om att fortsätta med det som redan gäller är ingen ny kostnad för mandatperioden. Partiets konkreta löfte om vad stödet ska innehålla prissätts för sig."
     },
     "financing_claimed": {
       "described": false,
@@ -2171,7 +2181,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Nollat, från 10 000 miljoner kronor per år. Den tidigare uträkningen antog att starkt och långsiktigt stöd motsvarar ungefär dagens årstakt — men dagens årstakt är redan beslutad, 40 miljarder kronor per år för 2026 och 2027, och ett löfte om att fortsätta med den är ingen ny kostnad.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -2202,13 +2218,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 15000,
-      "msek_base": 20000,
-      "msek_high": 30000,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Källan anger: 20 Gripen E/F köp + 16 JAS 39 Gripen C/D skänks. Värdet av 16 skänkta Gripen C/D estimeras till ca 15-20 mdr + stödkostnader. Totalt estimerat 30 mdr (en-gång, ej årligen). Årsbasis: spr",
-      "confidence": 0.85
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": "https://www.regeringen.se/regeringens-politik/sveriges-stod-till-ukraina/militart-stod-till-ukraina/",
+      "method_note": "Gåva av upp till 16 begagnade Gripen C/D. Engångskostnad: flygplanen fasas ut när Gripen E tas i drift, så det staten avstår är deras återstående värde.",
+      "confidence": 0.4,
+      "calculation": "Löftet har två delar och bara den ena kostar staten pengar. Att Ukraina köper 20 Gripen E/F är en affär där Sverige får betalt, inte en utgift. Gåvan av upp till 16 begagnade Gripen C/D är däremot en kostnad — men en engångskostnad, inte en årlig. Planen är att de flygplanen ska fasas ut när Gripen E tas i drift, så det staten avstår är deras återstående värde plus den ammunition som följer med. Vi uppskattar det till omkring 5 miljarder kronor en gång, och den kostnaden ryms sannolikt inom den redan beslutade ramen för militärt stöd till Ukraina."
     },
     "financing_claimed": {
       "described": false,
@@ -2218,7 +2235,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Ändrat från 20 000 miljoner kronor per år till 5 000 miljoner som engångskostnad. Gåvan av begagnade flygplan sker en gång, men beloppet räknades fyra gånger, en för varje år i mandatperioden. Dessutom saknades uträkning helt: att Ukraina köper Gripen E/F är en intäkt för Sverige, inte en utgift, och det är bara gåvan av C/D som kostar.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5841,13 +5864,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 12750,
-      "msek_base": 15000,
-      "msek_high": 17250,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Källan anger: 'alla unga som går ur gymnasiet bör göra värnplikt, civil eller militär i 2-5 månader'. Ca 100 000 ungdomar/år × 150 000 kr/månad × 3 mån medel = 45 mdr. Med hänsyn till att vissa undant",
-      "confidence": 0.85
+      "msek_low": 8000,
+      "msek_base": 13000,
+      "msek_high": 25000,
+      "basis": "llm_estimat",
+      "basis_url": "https://www.forsvarsmakten.se/varnplikt-och-karriar/grundutbildning-med-varnplikt/om-grundutbildning/formaner-och-villkor-under-varnplikt/",
+      "method_note": "Allmän värnplikt för alla som går ut gymnasiet. Prissatt på statens kostnad per värnpliktig gånger partiets eget antal.",
+      "confidence": 0.5,
+      "calculation": "Partiet anger själv omfattningen: alla som går ut gymnasiet, omkring 100 000 personer per år, i två till fem månader. Vad staten betalar per värnpliktig är känt — dagersättning, utbildningspremie och värdet av mat, boende och kläder är omkring 217 000 kronor för ett helt år, alltså cirka 63 000 kronor för tre och en halv månad. För 100 000 personer blir det 6,3 miljarder kronor per år. Till det kommer befäl, lokaler och materiel, som rimligen kostar ungefär lika mycket när volymen tiodubblas från dagens omkring 10 000 värnpliktiga. Basbeloppet är därför 13 miljarder kronor per år. Antalet och tiden är partiets, kostnaden per värnpliktig är statens egen siffra, och uppräkningen är vår."
     },
     "financing_claimed": {
       "described": false,
@@ -5857,7 +5881,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Löftet hade ett belopp men ingen uträkning. Nu bygger det på Försvarsmaktens egen kostnad per värnpliktig — omkring 217 000 kronor för ett helt år inklusive mat, boende och kläder — gånger partiets eget antal och partiets egen tid. 13 000 i stället för 15 000 miljoner kronor per år.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5885,13 +5915,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 12750,
-      "msek_base": 15000,
-      "msek_high": 17250,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Samma löfte som #146 formulerat annorlunda. ~15 mdr/år.",
-      "confidence": 0.85
+      "msek_low": 8000,
+      "msek_base": 13000,
+      "msek_high": 25000,
+      "basis": "llm_estimat",
+      "basis_url": "https://www.forsvarsmakten.se/varnplikt-och-karriar/grundutbildning-med-varnplikt/om-grundutbildning/formaner-och-villkor-under-varnplikt/",
+      "method_note": "Allmän värnplikt för alla som går ut gymnasiet. Prissatt på statens kostnad per värnpliktig gånger partiets eget antal.",
+      "confidence": 0.5,
+      "calculation": "Partiet anger själv omfattningen: alla som går ut gymnasiet, omkring 100 000 personer per år, i två till fem månader. Vad staten betalar per värnpliktig är känt — dagersättning, utbildningspremie och värdet av mat, boende och kläder är omkring 217 000 kronor för ett helt år, alltså cirka 63 000 kronor för tre och en halv månad. För 100 000 personer blir det 6,3 miljarder kronor per år. Till det kommer befäl, lokaler och materiel, som rimligen kostar ungefär lika mycket när volymen tiodubblas från dagens omkring 10 000 värnpliktiga. Basbeloppet är därför 13 miljarder kronor per år. Antalet och tiden är partiets, kostnaden per värnpliktig är statens egen siffra, och uppräkningen är vår."
     },
     "financing_claimed": {
       "described": false,
@@ -5901,7 +5932,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Löftet hade ett belopp men ingen uträkning. Nu bygger det på Försvarsmaktens egen kostnad per värnpliktig — omkring 217 000 kronor för ett helt år inklusive mat, boende och kläder — gånger partiets eget antal och partiets egen tid. 13 000 i stället för 15 000 miljoner kronor per år.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -11089,14 +11126,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 150000,
-      "msek_base": 190000,
-      "msek_high": 250000,
+      "msek_low": 25000,
+      "msek_base": 50000,
+      "msek_high": 120000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Partiets egen nivå: försvarsanslaget ska nå 5 procent av BNP. Endast BNP-nivå och nuvarande anslag är uppskattade.",
-      "confidence": 0.9,
-      "calculation": "Partiet anger själv målet: försvarsanslaget ska nå 5 procent av BNP. Med en BNP på omkring 6 200 miljarder kronor blir 5 procent 310 miljarder. Dagens anslag ligger på omkring 2 procent, alltså ungefär 120 miljarder. Skillnaden — det löftet kostar — blir omkring 190 miljarder kronor per år när det är fullt infört. Det låga alternativet, 150 miljarder, gäller vid lägre BNP eller om civilförsvaret räknas in i dagens nivå; det höga, 250 miljarder, vid högre BNP och en högre slutnivå. Målnivån är partiets egen; BNP och dagens anslag är våra uppskattningar."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/forsvarsbudget/",
+      "method_note": "Höjning till Natos mål om fem procent av BNP. Prissatt som den genomsnittliga årliga ökningen över den redan beslutade banan under mandatperioden. Delat löfte med andra partier.",
+      "confidence": 0.5,
+      "calculation": "Försvarsanslagen är 175 miljarder kronor 2026, vilket motsvarar 2,8 procent av BNP enligt Natos sätt att räkna, och beslutade planer tar dem till 3,1 procent från 2028. Fem procent av en BNP kring 6 250 miljarder är 312 miljarder kronor per år, alltså omkring 118 miljarder över den beslutade banan när målet väl är nått. Men det nås inte första året: nås det 2030, sista året i mandatperioden, blir det som faktiskt betalas ut under 2027–2030 i genomsnitt omkring 50 miljarder kronor per år. Det låga alternativet gäller om den del av målet som avser civilt försvar och infrastruktur, 1,5 av de fem procenten, till stor del fylls av utgifter som redan finns. Det höga gäller om hela nivån nås tidigt i perioden."
     },
     "financing_claimed": {
       "described": false,
@@ -11111,6 +11148,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 200 000 till 190 000 miljoner kronor per år. Den publicerade uträkningen räknade fram 190 000 men beloppet stod på 200 000, och det andra partiet i samma delade löfte låg redan på 190 000. Nu räknar båda lika, och löftet räknar det uträkningen visar.",
         "commit": "0ddaaeb297d6367ee39d3a46b23734f9ca4325f7"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 190 000 till 50 000 miljoner kronor per år. Den tidigare uträkningen utgick från att dagens försvarsanslag ligger på omkring 120 miljarder kronor, alltså två procent av BNP. De är 175 miljarder 2026, vilket är 2,8 procent, och beslutade planer tar dem till 3,1 procent från 2028. Dessutom räknades hela slutnivån som om den gällde varje år i mandatperioden, trots att målet nås först i slutet av den. Beloppet är nu den genomsnittliga årliga ökningen över den beslutade banan under 2027–2030.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -13229,14 +13271,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 60000,
-      "msek_base": 62870,
-      "msek_high": 90000,
+      "msek_low": 15000,
+      "msek_base": 25000,
+      "msek_high": 35000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "1% av Sveriges BNI (ca 6 287 mdkr 2023) ger ca 62 870 msek/år. Osäkerhet för framtida BNI och möjlig höjning över 1%.",
+      "basis_url": "https://www.regeringen.se/regeringens-politik/sveriges-stod-till-ukraina/militart-stod-till-ukraina/",
+      "method_note": "Stöd till Ukraina på minst en procent av bruttonationalinkomsten. Prissatt som skillnaden mot den redan beslutade ramen.",
       "confidence": 0.6,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. 1 % av BNI. BNI 2024 ≈ 6 700 miljarder kronor → 1 % = 67 miljarder kronor = 67 000 miljoner kronor. Lågt scenario: BNI 6 000 miljarder kronor → 60 000 miljoner kronor. Högt scenario: BNI 9 000 miljarder kronor → 90 000 miljoner kronor. Intervallet fångar osäkerhet i BNI-utveckling och eventuell höjning över miniminivån."
+      "calculation": "Partiet anger själv nivån: minst en procent av bruttonationalinkomsten årligen, vid sidan av biståndsbudgeten. Med en bruttonationalinkomst kring 6 500 miljarder kronor blir det omkring 65 miljarder kronor per år. Men stödet är redan beslutat till en nivå: ramen för det militära stödet till Ukraina är 40 miljarder kronor per år för 2026 och 2027. Löftet kostar därför skillnaden, omkring 25 miljarder kronor per år. Spannet speglar att bruttonationalinkomsten varierar och att partiet skriver minst en procent, alltså kan hamna högre."
     },
     "financing_claimed": {
       "described": false,
@@ -13246,7 +13288,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 62 870 till 25 000 miljoner kronor per år. Den tidigare uträkningen tog en procent av bruttonationalinkomsten rakt av och missade att stödet till Ukraina redan är beslutat till 40 miljarder kronor per år för 2026 och 2027. Det är bara skillnaden mot den nivån som är en ny kostnad.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -13274,14 +13322,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 150000,
-      "msek_base": 190000,
-      "msek_high": 250000,
+      "msek_low": 25000,
+      "msek_base": 50000,
+      "msek_high": 120000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Partiets egen nivå: upprustningen ska fullföljas till 5 procent av BNP. Endast BNP-nivå och nuvarande anslag är uppskattade.",
-      "confidence": 0.6,
-      "calculation": "Partiet anger själv målet: upprustningen ska fullföljas upp till 5 procent av BNP. Med en BNP på omkring 6 200 miljarder kronor blir 5 procent 310 miljarder. Dagens försvarsanslag ligger på omkring 120 miljarder, alltså kostar löftet omkring 190 miljarder kronor per år fullt infört. Det låga alternativet, 150 miljarder, gäller vid lägre BNP eller om civilförsvaret räknas in annorlunda; det höga, 250 miljarder, vid en högre totalram. Ett annat parti har lovat samma nivå, och löftena räknas på samma grund. Målnivån är partiets egen; BNP och dagens anslag är våra uppskattningar."
+      "basis_url": "https://www.regeringen.se/regeringens-politik/forsvarsbudget/",
+      "method_note": "Höjning till Natos mål om fem procent av BNP. Prissatt som den genomsnittliga årliga ökningen över den redan beslutade banan under mandatperioden. Delat löfte med andra partier.",
+      "confidence": 0.5,
+      "calculation": "Försvarsanslagen är 175 miljarder kronor 2026, vilket motsvarar 2,8 procent av BNP enligt Natos sätt att räkna, och beslutade planer tar dem till 3,1 procent från 2028. Fem procent av en BNP kring 6 250 miljarder är 312 miljarder kronor per år, alltså omkring 118 miljarder över den beslutade banan när målet väl är nått. Men det nås inte första året: nås det 2030, sista året i mandatperioden, blir det som faktiskt betalas ut under 2027–2030 i genomsnitt omkring 50 miljarder kronor per år. Det låga alternativet gäller om den del av målet som avser civilt försvar och infrastruktur, 1,5 av de fem procenten, till stor del fylls av utgifter som redan finns. Det höga gäller om hela nivån nås tidigt i perioden."
     },
     "financing_claimed": {
       "described": false,
@@ -13296,6 +13344,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade tidigare till ett annat löfte med dess interna nummer, vilket inte säger läsaren något. Beloppet är oförändrat.",
         "commit": "0ddaaeb297d6367ee39d3a46b23734f9ca4325f7"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 190 000 till 50 000 miljoner kronor per år. Den tidigare uträkningen utgick från att dagens försvarsanslag ligger på omkring 120 miljarder kronor, alltså två procent av BNP. De är 175 miljarder 2026, vilket är 2,8 procent, och beslutade planer tar dem till 3,1 procent från 2028. Dessutom räknades hela slutnivån som om den gällde varje år i mandatperioden, trots att målet nås först i slutet av den. Beloppet är nu den genomsnittliga årliga ökningen över den beslutade banan under 2027–2030.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -13306,7 +13359,7 @@
   },
   {
     "id": "p-2026-0385",
-    "group_id": null,
+    "group_id": "g-beredskapspeng-kommuner",
     "title": "Långsiktig beredskapspeng till kommuner och regioner",
     "slug": "langsiktig-beredskapspeng-till-kommuner-och-regioner",
     "parties": [
@@ -13330,8 +13383,8 @@
       "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Beredskapspeng till 290 kommuner och 21 regioner för civilt försvar. Harmoniserat med det näraliggande p-2026-0412 (MP, mer medel till krisberedskap, 200 mkr/år); tidigare riktade beredskapstillskott brukar vara 100–200 mkr/år. Lagt en aning över grannen då C:s löfte är bredare (uppbyggnad av civilt försvar). Bas 250, spann 100–500 miljoner kronor per år.",
-      "calculation": "Riktade beredskapstillskott till kommuner/regioner har historiskt legat på 100–200 miljoner kronor per år (jämför Miljöpartiets löfte om mer medel till kommunernas krisberedskap, MP, 200 miljoner kronor per år för i stort sett samma politik). C:s löfte är något bredare — uppbyggnad av civilt försvar (lager, ledning, övning) — så basen läggs strax över grannen: 250 miljoner kronor per år, spann 100–500. Den tidigare uppskattningen (2 000 miljoner kronor) antog 5–10 miljoner kronor per enhet utan grannkontroll och blev en 10× avvikare mot det jämförbara löftet.",
+      "method_note": "Beredskapsmedel till kommuner och regioner. Delat löfte med ett annat parti som lovar samma sak.",
+      "calculation": "Löftet är en långsiktig beredskapspeng till kommuner och regioner för lager, ledning och övning. Riktade beredskapstillskott till kommuner och regioner har historiskt legat på 100–200 miljoner kronor per år. Det här löftet är något bredare, så basbeloppet läggs strax över: 250 miljoner kronor per år. Ett annat parti lovar i sak samma sak — mer medel till kommunernas och regionernas krisberedskap — och löftena räknas därför en gång och vilar på samma uträkning.",
       "confidence": 0.4
     },
     "financing_claimed": {
@@ -13352,6 +13405,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med det andra partiets löfte om samma sak — mer medel till kommunernas och regionernas beredskap — så att politiken räknas en gång. Beloppet är oförändrat 250 miljoner kronor per år, och båda löftena vilar nu på samma uträkning.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -13432,14 +13490,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 600,
-      "msek_high": 1500,
+      "msek_low": 150,
+      "msek_base": 300,
+      "msek_high": 600,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar årlig ersättning per apotek för beredskapslager och personal, 0,7–5 msek per apotek, 300 st. Osäkerhet kring exakt innehåll i upphandlingen.",
+      "method_note": "300 beredskapsapotek. Antalet är partiets, ersättningen per apotek är vår uppskattning.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. 300 apotek × 0,5–2 miljoner kr per år i ersättning för beredskapsåtgärder per apotek → 150–600 miljoner kronor per år. Bas = 1 miljoner kronor/apotek = 300 miljoner kronor per år."
+      "calculation": "Partiet anger själv antalet: 300 beredskapsapotek. Ersättningen för att hålla beredskap — lager, jour och särskild bemanning — uppskattas till 0,5–2 miljoner kronor per apotek och år, vilket ger 150–600 miljoner kronor per år. Basbeloppet är en miljon kronor per apotek, alltså 300 miljoner kronor per år. Antalet är partiets, ersättningen per apotek är vår uppskattning."
     },
     "financing_claimed": {
       "described": false,
@@ -13449,7 +13507,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Basbeloppet rättat från 600 till 300 miljoner kronor per år. Uträkningen angav redan 300 miljoner som basbelopp — en miljon kronor per apotek gånger 300 apotek — men beloppsfältet sa 600. Det är samma sorts fel som genomgången av belopp mot uträkning letade efter, och det hade överlevt den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14632,7 +14696,7 @@
   },
   {
     "id": "p-2026-0412",
-    "group_id": null,
+    "group_id": "g-beredskapspeng-kommuner",
     "title": "Kommuner och regioner ska ges mer medel för krisberedskap",
     "slug": "kommuner-och-regioner-ska-ges-mer-medel-for-krisberedskap",
     "parties": [
@@ -14656,9 +14720,9 @@
       "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Jämförbart med tidigare riktade medelstillskott till kommuners krisberedskap, vanligtvis 100–200 mkr per år. Spannet fångar en försiktig till ambitiös höjning.",
+      "method_note": "Beredskapsmedel till kommuner och regioner. Delat löfte med ett annat parti som lovar samma sak.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Bas: 250 miljoner kronor per år (jämförbart löfte). Låg: 100 miljoner kronor per år (minimal ambitionsnivå). Hög: 500 miljoner kronor per år (högre ambitionsnivå). Intervallet satt för att spegla vagheten i löftet."
+      "calculation": "Löftet är mer medel till kommunernas och regionernas krisberedskap, utan angiven nivå. Riktade beredskapstillskott till kommuner och regioner har historiskt legat på 100–200 miljoner kronor per år, och basbeloppet läggs strax över: 250 miljoner kronor per år. Ett annat parti lovar i sak samma sak — en långsiktig beredskapspeng för lager, ledning och övning — och löftena räknas därför en gång och vilar på samma uträkning."
     },
     "financing_claimed": {
       "described": false,
@@ -14673,6 +14737,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med det andra partiets löfte om samma sak — mer medel till kommunernas och regionernas beredskap — så att politiken räknas en gång. Beloppet är oförändrat 250 miljoner kronor per år, och båda löftena vilar nu på samma uträkning.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
