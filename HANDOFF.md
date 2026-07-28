@@ -410,12 +410,12 @@ procentsats utan erfarenhet bakom). Det ligger i session 10.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json`, uppdaterad efter session 5. En **räkneenhet**
+Mätt på `data/promises.json`, uppdaterad efter session 6. En **räkneenhet**
 är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
-av sitt högsta belopp. 421 aktiva löften blir 363 räkneenheter, varav 220 bär
+av sitt högsta belopp. 420 aktiva löften blir 361 räkneenheter, varav 218 bär
 ett belopp över noll. Pengarna är fortfarande snedfördelade, men mindre än
 när planen skrevs: hälften av mandattotalen ligger nu i 13 enheter, 80 procent
-i 39 och 95 procent i 88. Det var alltså de tyngsta enheterna som var mest
+i 38 och 95 procent i 86. Det var alltså de tyngsta enheterna som var mest
 felräknade — vilket är precis vad ordningen i planen bygger på. Kolumnen
 Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 
@@ -426,19 +426,19 @@ Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 | 3 | ~~Skatter, resten~~ **KLAR 2026-07-27.** 15 omräknade, 3 tillbakadragna; ämnet gick från 1 381 till 1 110 mdkr. Se avsnittet nedan | klar | hög |
 | 4 | ~~**Försvar, hela ämnet**~~ **KLAR 2026-07-27.** 12 löften, ämnet gick från 1 437 till 460 mdkr. Se avsnittet nedan | klar | **max** |
 | 5 | ~~**Välfärd, de tyngsta**~~ **KLAR 2026-07-28.** 17 löften på 12 enheter; ämnet gick från 540 till 360 mdkr. Se avsnittet nedan | klar | **max** |
-| 6 | Välfärd, resten | 72 | hög |
+| 6 | ~~Välfärd, resten~~ **KLAR 2026-07-28.** 12 omräknade, 1 tillbakadraget, resten kontrollerade; ämnet 360 → 363 mdkr. **Välfärden är därmed helt genomgången.** Se avsnittet nedan | klar | hög |
 | 7 | Utbildning, hela ämnet, tyngsta först | 60 | hög |
 | 8 | Klimat-miljö, hela ämnet | 38 | hög |
 | 9 | Övrigt (25) och infrastruktur (11) | 36 | hög |
 | 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
 
-Ämnesordningen är mandattotalen, efter session 5: skatter 1 115 mdkr (klart),
-försvar 460 (klart), **välfärd 360** (tyngsta klara), **utbildning 359**,
-klimat-miljö 268, övrigt 120, rättsväsende 71, infrastruktur 63, migration 47.
-Skatterna, försvaret och välfärdens tyngsta är alltså genomgångna; härnäst
-står välfärdens resterande löften (rad 6) och därefter utbildningen. Löften
-som ger staten pengar ligger kvar i sitt eget ämne och räknas om i samma
-session som resten av ämnet.
+Ämnesordningen är mandattotalen, efter session 6: skatter 1 115 mdkr (klart),
+försvar 460 (klart), **välfärd 363 (klart)**, **utbildning 359**, klimat-miljö
+268, övrigt 120, rättsväsende 71, infrastruktur 63, migration 47. Skatterna,
+försvaret och välfärden är alltså helt genomgångna; **härnäst står
+utbildningen (rad 7)**, som nu är det tyngsta ämne som återstår. Löften som
+ger staten pengar ligger kvar i sitt eget ämne och räknas om i samma session
+som resten av ämnet.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
 löften vilar på, eller när en enskild enhet väger över hundra miljarder för
@@ -464,6 +464,14 @@ Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
 max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
+
+*Utfall session 6:* 72 enheter genomgångna, varav 12 löften ändrades och ett
+drogs tillbaka. En hög-session klarar alltså 70+ enheter när ämnets tunga
+enheter redan är gjorda — planens gissning på 40–60 var för försiktig. **Men
+räkna inte med att summan rör sig:** ämnet gick 360 → 363 mdkr. Sessionen
+flyttade beloppen till en redovisad grund, den drog dem inte nedåt, och fyra
+av sex rättade belopp gick **uppåt**. En session som mäts på hur mycket den
+sänker summan mäts på fel sak.
 
 *Utfall session 5:* tolv enheter (sjutton löften), alltså i linje med
 gissningen för en max-session. Fyndet låg inte i räknefelen utan i att ämnet
@@ -517,12 +525,59 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- **Session 6 — välfärdens resterande enheter.** Gren
-  `claude/session-5-valfarden-sbny1t` (samma grennamn, nytt spår efter att
-  session 5 slagits ihop). Rör de 72 återstående räkneenheterna i välfärden,
-  inklusive den öppna frågan om Centerpartiets och Miljöpartiets tillägg till
-  ensamstående föräldrar. Ingen annan session bör röra välfärdslöften förrän
-  raden är struken.
+- (ingen pågående session)
+
+#### Välfärden är färdiggången — session 6, klar 2026-07-28
+
+Alla 72 återstående enheter genomgångna: tolv löften omräknade, ett
+tillbakadraget, resten kontrollerade och lämnade. Ämnet gick 360 → **363
+mdkr** och rikssumman till **2 854 196 mkr**. **Att summan står nästan stilla
+är sessionens viktigaste resultat, inte ett tecken på att den inte gjorde
+något** — arbetet var att byta grund, inte att sänka.
+
+**Sex belopp stämde inte med uträkningen i sitt eget fält, och fyra av dem
+var för LÅGA.** Det är den lärdom som är värd att bära vidare: tidigare
+sessioner har letat efter belopp som ser för höga ut, och den sökningen
+hittar bara hälften av felen.
+
+| Löfte | Beloppsfältet sa | Uträkningen sa |
+|---|---|---|
+| MP, vårdande uppdrag för ungdomshemmen | 1 500 | ~500 |
+| MP, ersätt ungdomshemmen med mindre enheter | 2 000 | 525–1 310 |
+| MP, borttagen brantare nedtrappning i a-kassan | 2 500 | 3 000 |
+| C, fler utbildningsplatser för läkare och sjuksköterskor | 1 200 | 2 300 |
+| C, lämnaprogram med lämnapeng | 500 | 100 |
+| V, avgiftsfri tandvård till 23 år | 600 | 1 000 |
+
+**Tillägget till ensamstående är avgjort** (den öppna frågan från session 5).
+C och MP vilar nu på samma grund, men de är **inte** grupplänkade. Skälet:
+MP:s löfte är ett paket som också höjer barnbidraget, så en grupplänkning
+hade svalt den delen också. Att gruppmekanismen slår på hela löften och inte
+på enskilda delar är gränsen för vad den klarar — när ett paket överlappar
+ett ensamt löfte harmoniseras nivån i stället, och överlappet skrivs ut.
+Grunden är Finlands ensamförsörjartillägg, 73,30 euro i månaden per barn,
+som C:s eget löfte pekar ut ("exempelvis som i våra nordiska grannländer"),
+gånger de omkring 350 000 barn som enligt Statistiska centralbyrån bor med en
+ensamstående förälder och får barnbidrag: ~3 500 mkr/år.
+
+**Tre nya grupper där samma parti lovar samma sak två gånger:**
+`g-mp-sis-reform` (de två löftena om de statliga ungdomshemmen),
+`g-c-lamnaprogram` (två formuleringar av samma lämnapeng — det ena låg i
+välfärden, det andra i rättsväsendet), och Miljöpartiets kostnadsfria vaccin
+mot livmoderhalscancer, som låg prissatt på två löften. Det sista löstes inte
+med en grupp utan genom att ta bort den dubbelräknade delen ur det ena
+löftet, eftersom löftena i övrigt handlar om olika saker. **Leta efter par
+som ligger i olika ämnen — de syns inte när man går igenom ett ämne i taget.**
+
+**Matlyftet räknat netto:** maten i äldreomsorgen lagas och betalas redan av
+kommunerna och av den äldre själv, så bara kvalitetslyftet är ny kostnad för
+staten. 2 000 → 800.
+
+**Ett citat tillbakadraget:** Moderaternas beskrivning av att regeringen
+avsätter pengar i vårbudgeten 2026 för fler behandlingsförsök. Ett redan
+fattat beslut, inget åtagande om nästa mandatperiod — samma grund som de sex
+citat som dragits tillbaka tidigare. Partiets löfte om framtiden ligger kvar
+på dess andra löfte om samma sak, så politiken är fortfarande prissatt.
 
 #### Välfärdens tyngsta är omräknade — session 5, klar 2026-07-28
 
