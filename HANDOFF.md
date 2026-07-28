@@ -1102,11 +1102,39 @@ i stället för miljoner, och en räkning som blandade tre enhetsförkortningar.
 **Totalen** gick från 7 016 120 till **5 867 996 mkr** under omgången, och
 vidare till **5 775 996 mkr** när tandvården räknades om i session 1.
 
-### Öppna frågor som ingen avgjort
+### Kvalitetssökningen — kör den, lita inte på magkänslan
 
-- Fler löften som beskriver genomförd politik i dåtid (se ovan).
-- Fler par där samma politik ligger på två löften utan grupplänk. C:s
-  trippel hittades bara för att en beloppsavvikelse pekade dit.
+`pnpm quality:scan` i `pipeline/` gör de tre sökningar som omräkningen visade
+att vi behövde. Flaggor: `--belopp`, `--grupper`, `--datid`, `--strikt`
+(felkod om något hittas, för CI). Sökningen **föreslår bara** — den ändrar
+aldrig data, och en träff kan mycket väl vara rätt.
+
+| Sökning | Vad den letar efter | Bakgrund |
+|---|---|---|
+| `--belopp` | beloppsfältet mot uträkningen i samma fält, **åt båda hållen** | den gamla sökningen letade bara efter för höga belopp; fyra av sex fel i utbildningen och välfärden var för LÅGA |
+| `--grupper` | löften som hör hemma i en befintlig grupp men ligger utanför | fem fall hittade manuellt, ett per session — de syns aldrig vid en genomgång ämne för ämne |
+| `--datid` | citat som beskriver genomförd politik utan åtagande | sju sådana har dragits tillbaka; extraktionen skiljer inte på löfte och skryt |
+
+**Varför den gamla sökningen dög så illa**, och vad den här gör annorlunda:
+
+- Den läste fragment. "Bas 2 500 kr per förlossning" blev basbeloppet 2 500.
+  Nu måste talet bära en penningenhet, och styckpriser sorteras bort.
+- Den gissade. Nu läses bara ett **uttryckligt** basbelopp, eller en
+  slutsatsmening med ett enda belopp. Är meningen ett spann avstår sökningen
+  hellre än gissar. Det tog träfflistan från 43 till 7.
+- Den blandade ihop tusental. Datat använder smalt hårt mellanslag (U+202F)
+  som tusentalsavskiljare, så "bas 1 000" lästes som talet 1.
+- Ett förkastat belopp i texten ("en efterhandsberäkning på 1 125 avvisades")
+  lästes som basbeloppet.
+
+Logiken ligger i `pipeline/src/quality-scan.ts` och vaktas av 26 tester i
+`pipeline/tests/quality-scan.test.ts`, som prövar den mot de verkliga texter
+felen satt i.
+
+**Läget vid införandet (2026-07-28):** 7 beloppsträffar, 6 gruppförslag,
+6 dåtidscitat. De är genomgångna men INTE åtgärdade — nästa session kan börja
+där. Ett av gruppförslagen är ett äkta femte fall: Vänsterpartiets löfte om
+särskilt ömmande omständigheter ligger utanför gruppen med samma namn.
 
 ### Kör INTE fler backfill-körningar
 
