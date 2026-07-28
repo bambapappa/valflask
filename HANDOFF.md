@@ -410,19 +410,19 @@ procentsats utan erfarenhet bakom). Det ligger i session 10.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json`, uppdaterad efter session 4. En **räkneenhet**
+Mätt på `data/promises.json`, uppdaterad efter session 3. En **räkneenhet**
 är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
-av sitt högsta belopp. 424 aktiva löften blir 372 räkneenheter, varav 234 bär
+av sitt högsta belopp. 421 aktiva löften blir 364 räkneenheter, varav 225 bär
 ett belopp över noll. Pengarna är fortfarande snedfördelade, men mindre än
-när planen skrevs: hälften av mandattotalen ligger nu i 17 enheter, 80 procent
-i 47 och 95 procent i 95. Det var alltså de tyngsta enheterna som var mest
+när planen skrevs: hälften av mandattotalen ligger nu i 15 enheter, 80 procent
+i 40 och 95 procent i 88. Det var alltså de tyngsta enheterna som var mest
 felräknade — vilket är precis vad ordningen i planen bygger på.
 
 | # | Session | Enheter | Tankenivå |
 |---|---|---|---|
 | 1 | ~~**Tandvården**~~ **KLAR 2026-07-27.** 4 löften på 2 enheter blev 1 grupp; ämnet gick från 120 000 till 28 000 mkr. Se avsnittet nedan | klar | **max** |
 | 2 | ~~**Skatter, de elva tyngsta**~~ **KLAR 2026-07-27.** 17 löften, ämnet gick från 2 817 till 1 381 mdkr. Se avsnittet nedan | klar | **max** |
-| 3 | Skatter, resten | 43 | hög |
+| 3 | ~~Skatter, resten~~ **KLAR 2026-07-27.** 15 omräknade, 3 tillbakadragna; ämnet gick från 1 381 till 1 110 mdkr. Se avsnittet nedan | klar | hög |
 | 4 | ~~**Försvar, hela ämnet**~~ **KLAR 2026-07-27.** 12 löften, ämnet gick från 1 437 till 460 mdkr. Se avsnittet nedan | klar | **max** |
 | 5 | **Välfärd, de tyngsta** (tandvården är redan gjord i session 1) | 12 | **max** |
 | 6 | Välfärd, resten | 73 | hög |
@@ -431,12 +431,12 @@ felräknade — vilket är precis vad ordningen i planen bygger på.
 | 9 | Övrigt (25) och infrastruktur (11) | 36 | hög |
 | 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
 
-Ämnesordningen är mandattotalen, efter session 4: **skatter 1 381 mdkr**
-(varav de tyngsta är gjorda), välfärd 540, försvar 460 (klart), utbildning
-414, klimat-miljö 268, övrigt 120, rättsväsende 71, infrastruktur 63,
-migration 45. Härnäst står alltså rad 3, skatternas resterande 43 enheter, och
-därefter välfärden. Löften som ger staten pengar ligger kvar i sitt eget ämne
-och räknas om i samma session som resten av ämnet.
+Ämnesordningen är mandattotalen, efter session 3: skatter 1 110 mdkr (klart),
+**välfärd 540**, försvar 460 (klart), **utbildning 414**, klimat-miljö 268,
+övrigt 120, rättsväsende 71, infrastruktur 63, migration 45. Skatterna och
+försvaret är alltså genomgångna; härnäst står välfärden (raderna 5 och 6) och
+därefter utbildningen. Löften som ger staten pengar ligger kvar i sitt eget
+ämne och räknas om i samma session som resten av ämnet.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
 löften vilar på, eller när en enskild enhet väger över hundra miljarder för
@@ -459,6 +459,11 @@ Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
 max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
+
+*Utfall session 3:* 45 enheter genomgångna, varav 18 löften ändrades — resten
+kontrollerades och lämnades. En hög-session klarar alltså gott och väl de
+40–60 enheter planen gissade, **så länge ämnets tunga enheter redan är
+gjorda**: de små löftena tar tid bara när de visar sig vara dubbletter.
 
 *Utfall session 4:* elva enheter (tolv löften). Hela ämnet vilade på en enda
 föråldrad siffra — vad försvaret kostar i dag. **Kontrollera basåret innan du
@@ -501,6 +506,45 @@ avgjord.
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
 - (ingen pågående session)
+
+#### Skatteämnet är färdiggånget — session 3, klar 2026-07-27
+
+Femton löften omräknade, tre tillbakadragna. Ämnet gick från 1 381 till 1 110
+mdkr och rikssumman till **3 091 596 mkr**. Inga stora enskilda fynd som i
+session 2 — det här var städning, men fyra mönster går igen och är värda att
+leta efter i varje ämne:
+
+**1. Samma parti lovar samma sak i flera formuleringar.** Liberalerna hade
+*tre* löften om skattefritt sparande och ett fjärde om att hälften ska vara
+kvar av löneökningen, som är samma sak som partiets löften om statlig
+inkomstskatt. Fyra nya grupplänkningar gjordes, varav tre inom ett och samma
+parti. **Sök på partinivå innan du prissätter — inte bara mellan partier.**
+
+**2. Sammanfattande citat som räknar upp partiets egna löften.** MP:s citat om
+"slopad karensdag och kortare arbetstid" nämner två åtgärder som partiet lovar
+var för sig och som redan är prissatta. Nollat. Fyra andra nollades på samma
+grund eller för att de är uppräkningar utan nivå.
+
+**3. Belopp som ligger utanför sitt eget spann.** C:s löfte om billigare att
+anställa långtidsarbetslösa stod på 5 000 mkr/år fast uträkningen i samma fält
+angav 500–3 000. **Det är andra sessionen i rad som hittar ett sådant** — efter
+beredskapsapoteken i försvaret. Sökningen som skulle fånga dem missade båda.
+
+**4. Fel kostnadstyp.** MP:s gruvskatt låg som en *utgift* trots att den ger
+staten pengar, alltså räknades den åt fel håll. En höjd brytpunkt låg också som
+utgift i stället för sänkt skatt.
+
+Dessutom: matmomsen satt på regeringens egen siffra (skattebortfallet för den
+tillfälliga sänkningen är 37,2 mdkr för april 2026–december 2027, alltså ~21
+mdkr/år; sänkningen gäller redan till och med 2027, så löftet om permanentning
+kostar bara åren därefter), och införandet av euron ändrat från årlig kostnad
+till engångskostnad.
+
+**Tre citat i dåtid tillbakadragna** (M): "När matmomsen halverades…",
+"Pensionsspararna har mer pengar på kontot…", "Vi har sänkt skatten på arbete
+och pension…". Alla tre beskriver genomförd politik utan åtagande om
+framtiden — samma grund som de två som drogs tillbaka tidigare. **Leta vidare
+i övriga ämnen; extraktionen skiljer fortfarande inte på löfte och skryt.**
 
 #### Försvaret är omräknat — session 4, klar 2026-07-27
 
