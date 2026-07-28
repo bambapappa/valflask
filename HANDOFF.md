@@ -450,7 +450,10 @@ och nollningsreglerna är precis där ett billigare tankepass gör
 systematiska fel som ser rimliga ut i efterhand.
 
 **När sessionen byts.** En rad i tabellen är en session. Den avslutas med
-öppnad PR och uppdaterad HANDOFF, och då byts session. Tar kontexten slut
+öppnad PR och uppdaterad HANDOFF, och då byts session. **PR:en öppnas utan
+att fråga om lov** — stående mänskligt beslut 2026-07-28, se CLAUDE.md
+"Att avsluta ett större spår". Sammanslagningen till `main` är däremot
+fortfarande en människas beslut. Tar kontexten slut
 före ämnet: avsluta där du står och skriv in i tabellen var nästa session
 tar vid. **Bryt aldrig mitt i en grupp och aldrig mitt i en
 harmonisering** — hela gruppen ska räknas om i samma session, annars vilar
@@ -992,7 +995,10 @@ Flera Claude-sessioner kan arbeta i repot samtidigt. Bindande:
   (workflow-concurrency skyddar CI, men gör inte manuella skarpa körningar
   samtidigt).
 - **Arbeta i egen worktree/gren**, committa med tydligt scope, öppna PR mot main.
-  Boten pushar data direkt; människor och Claude går via PR.
+  Boten pushar data direkt; människor och Claude går via PR. **PR:en öppnas
+  utan att fråga om lov** när spåret är färdigt (stående mänskligt beslut
+  2026-07-28, se CLAUDE.md "Att avsluta ett större spår"); att slå ihop den
+  med `main` är fortfarande en människas beslut.
 - Commit-/PR-texter följer språkreglerna (§0).
 
 ---

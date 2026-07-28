@@ -57,6 +57,16 @@ versionen på `origin/main` innan nytt arbete, gör anspråk under
 "Pågår just nu" före start, skörda aldrig parallellt. Fullständiga
 regler i HANDOFF.md §9 "Samarbete mellan parallella sessioner".
 
+## Att avsluta ett större spår
+
+**Öppna PR:en utan att fråga om lov.** Ett färdigt större spår — en session
+i omräkningsplanen eller ett motsvarande avslutat arbete — avslutas med
+uppdaterad `HANDOFF.md`, pushad gren och **öppnad PR mot `main`**. Det är
+ett stående mänskligt beslut (2026-07-28): vänta inte på klartecken för
+själva PR:en, och avsluta inte ett spår utan att öppna den. Behörigheten
+gäller att öppna PR:en — att slå ihop den med `main` är fortfarande en
+människas beslut.
+
 ## Kärnprinciper (fastställda genom mänskligt beslut)
 
 - **Tomma celler är ärliga.** Hitta aldrig på svar för att fylla täckning.
