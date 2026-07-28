@@ -525,7 +525,11 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- (ingen pågående session)
+- **Session 7 — utbildningen, hela ämnet.** Gren
+  `claude/session-5-valfarden-sbny1t` (samma grennamn, nytt spår efter att
+  session 6 slagits ihop). Rör de 61 räkneenheterna i ämnet utbildning,
+  tyngsta först. Ingen annan session bör röra utbildningslöften förrän raden
+  är struken.
 
 #### Välfärden är färdiggången — session 6, klar 2026-07-28
 
