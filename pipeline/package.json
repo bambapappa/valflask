@@ -16,7 +16,8 @@
     "stances:skeleton": "node --import tsx/esm scripts/stances-skeleton.mts",
     "stances:review": "node --import tsx/esm scripts/stances-review.mts",
     "stances:rot-check": "node --import tsx/esm scripts/source-rot-check.mts",
-    "stances:backfill": "node --import tsx/esm scripts/stances-backfill.mts"
+    "stances:backfill": "node --import tsx/esm scripts/stances-backfill.mts",
+    "quality:scan": "node --import tsx/esm scripts/quality-scan.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1",
