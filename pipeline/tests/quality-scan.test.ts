@@ -307,3 +307,68 @@ describe("looksLikeCompletedPolicy — löfte eller skryt", () => {
     assert.deepEqual(found, []);
   });
 });
+
+describe("statedBaseMsek — regressioner från första skarpa körningen", () => {
+  it("basbeloppets EGEN enhet gäller, inte sista beloppet i meningen", () => {
+    // "låg 500, bas 1 500, hög 5 000" lästes som att basbeloppet vore 5 000,
+    // så sökningen larmade på ett löfte som var rätt räknat.
+    assert.equal(
+      statedBaseMsek(
+        "Ökning: låg 500 miljoner kronor (något fler), bas 1 500 miljoner kronor (fördubbling), hög 5 000 miljoner kronor (tredubbling).",
+      ),
+      1500,
+    );
+  });
+
+  it("ett spann med ord mellan talen är fortfarande ett spann", () => {
+    assert.equal(statedBaseMsek("Totalkostnad 0–ca 5 miljoner kronor."), null);
+  });
+});
+
+describe("statedBaseMsek — summering utan ordet kronor", () => {
+  it("läser 'sammanlagt 8 miljoner per år' som slutsatsen", () => {
+    const calc =
+      "Samordning kostar omkring 4 miljoner kronor per år, utvärdering 3 miljoner " +
+      "och resor 1 miljon — sammanlagt 8 miljoner per år.";
+    assert.equal(statedBaseMsek(calc), 8);
+  });
+});
+
+describe("statedBaseMsek — bestämd form och blandade enheter", () => {
+  it("'Basbeloppet är 150 miljoner kronor' läses, inte bara 'bas 150'", () => {
+    // Meningen innehåller både miljoner och miljarder; enheten intill
+    // basbeloppet gäller, inte den som råkar stå sist.
+    assert.equal(
+      statedBaseMsek(
+        "Basbeloppet är 150 miljoner kronor per år, vilket motsvarar ett tioårigt program på sammanlagt 1,5 miljarder.",
+      ),
+      150,
+    );
+  });
+});
+
+describe("statedBaseMsek — talet efter 'Bas:' kan vara en operand", () => {
+  it("'Bas: 1 000 studenter à 50 000 kronor = 50 miljoner' ger 50, inte 1 000", () => {
+    assert.equal(
+      statedBaseMsek("Bas: 1 000 studenter à 50 000 kronor = 50 miljoner kronor per år."),
+      50,
+    );
+  });
+
+  it("'Bas: 10 000 * 10 000 = 100 miljoner kronor' ger 100", () => {
+    assert.equal(statedBaseMsek("Bas: 10 000 * 10 000 = 100 miljoner kronor."), 100);
+  });
+});
+
+describe("statedBaseMsek — operandkollen gäller vid träffen", () => {
+  it("samma tal tidigare i meningen gör inte basbeloppet till en operand", () => {
+    // "(3 000–11 000) à 550 000 kronor → 1 500–6 000 miljoner, bas 3 000":
+    // talet 3 000 står tidigare som operand, men basbeloppet är ändå 3 000.
+    assert.equal(
+      statedBaseMsek(
+        "Antag 3–11 % fler anställda (3 000–11 000) à ~550 000 kronor per år → ~1 500–6 000 miljoner kronor per år, bas 3 000.",
+      ),
+      3000,
+    );
+  });
+});

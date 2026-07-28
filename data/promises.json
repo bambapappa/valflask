@@ -3203,9 +3203,9 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 300,
-      "msek_base": 600,
-      "msek_high": 1000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Engångskostnad för att införa nytt betygssystem: fortbildning av lärare, framtagning och material.",
@@ -3225,6 +3225,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 2 000 till 600 miljoner kronor, och perioden från per år till engångskostnad. Att införa ett betygssystem är en engångsinsats — det tidigare beloppet räknades fyra gånger i mandatperiodens summa.",
         "commit": "09a70ae94bdcb20df891022dc12bc4070bc1b9ea"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet nollat, från 600 miljoner kronor som engångskostnad. Citatet säger själv att den moderatledda regeringen inför det nya betygssystemet från höstterminen 2028 — reformen är alltså redan beslutad och är gällande rätt, inte ett nytt åtagande för nästa mandatperiod. Samma bedömning som redan gäller för andra löften om politik som redan är beslutad.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -4509,12 +4514,17 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-22",
         "change": "Kostnadsestimatet rättat från 200 miljoner kronor per år till 0 kronor: löftet hålls av själva förbudet, vars direkta kostnad är försumbar, medan följdkostnaderna bedöms för osäkra att uppskatta. Se rättelseloggen.",
         "commit": "ad457ab80e3971497507f2cd39a537d2f081d905"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Tillbakadraget: citatet innehåller inget åtagande om framtiden. Citatet beskriver att den moderatledda regeringen har beslutat att förbjuda bottentrålning i marina skyddade områden från 1 juli 2026 — ett beslut som redan är fattat och som dessutom träder i kraft före valet. En beskrivning av genomförd politik är inget vallöfte — samma grund som de sju citat i dåtid som dragits tillbaka tidigare.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -8260,8 +8270,14 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Tillbakadraget: citatet innehåller inget åtagande om framtiden. Citatet konstaterar att Sverige är med i Nato och att försvarsanslaget mer än fördubblats. Båda delarna beskriver vad som redan har skett. En beskrivning av genomförd politik är inget vallöfte — samma grund som de sju citat i dåtid som dragits tillbaka tidigare.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8475,8 +8491,14 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Tillbakadraget: citatet innehåller inget åtagande om framtiden. Citatet beskriver ett nuläge — att omvärlden är tryggare och försvaret starkare — utan att lova något om nästa mandatperiod. En beskrivning av genomförd politik är inget vallöfte — samma grund som de sju citat i dåtid som dragits tillbaka tidigare.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -18462,9 +18484,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 10,
-      "msek_high": 100,
+      "msek_low": 20,
+      "msek_base": 100,
+      "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Regelförändring utan direkt budgetpåverkan. Eventuella handläggningskostnader är avgiftsfinansierade. Osäkerheten är stor då effekten är indirekt.",
@@ -18479,7 +18501,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 10 till 100 miljoner kronor per år, och spannet från 0–100 till 20–500, så att båda stämmer med uträkningen i samma fält. Den anger basfallet 10 000 tillstånd gånger 10 000 kronor i nettokostnad, alltså 100 miljoner kronor, med 20 miljoner som lågt och 500 som högt alternativ.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -19091,7 +19119,7 @@
   },
   {
     "id": "p-2026-0491",
-    "group_id": null,
+    "group_id": "g-sarskilt-ommande-omstandigheter",
     "title": "Återinför särskilt ömmande omständigheter i utlänningslagen",
     "slug": "aterinfor-sarskilt-ommande-omstandigheter-i-utlanningslagen",
     "parties": [
@@ -19114,8 +19142,8 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 400,
-      "msek_base": 1400,
-      "msek_high": 3000,
+      "msek_base": 1000,
+      "msek_high": 2500,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar 2 000-6 000 fler tillstånd/år, statlig snittkostnad 200 000-500 000 kr/person.",
@@ -19130,7 +19158,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 1 400 till 1 000 miljoner kronor per år och löftet grupplänkat med Centerpartiets och Miljöpartiets löften om att återinföra särskilt ömmande omständigheter. Det är samma lagändring hos tre partier och kan bara genomföras en gång. Löftet hörde hemma i gruppen med precis det namnet men låg utanför den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20136,9 +20170,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10,
-      "msek_base": 50,
-      "msek_high": 150,
+      "msek_low": 5,
+      "msek_base": 10,
+      "msek_high": 25,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar att undantaget medför ca 500 extra anhöriginvandrare/år à 100 000 kr i offentliga utgifter. Stort osäkerhetsintervall.",
@@ -20153,7 +20187,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 50 till 10 miljoner kronor per år, och spannet från 10–150 till 5–25, så att båda stämmer med uträkningen i samma fält. Den räknar fram 9–24 miljoner kronor och anger 10 miljoner som avrundad uppskattning med 5 som lågt och 25 som högt alternativ.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20544,7 +20584,7 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 100,
-      "msek_base": 400,
+      "msek_base": 250,
       "msek_high": 800,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -20565,6 +20605,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen tillagd; den saknades. Beloppet är oförändrat.",
         "commit": "2435bf1a9c4ff157a72f9074cdc30115874fdda3"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 400 till 250 miljoner kronor per år, så att det stämmer med uträkningen i samma fält. Den anger att tidigare riktade satsningar på verksamheten legat på omkring 200 miljoner kronor per år och att basbeloppet läggs strax över det — 400 är dubbelt så mycket, inte strax över.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
