@@ -538,7 +538,10 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- (ingen pågående session)
+- **Session 9 — övrigt och infrastruktur.** Gren
+  `claude/session-5-valfarden-sbny1t` (samma grennamn, nytt spår efter att
+  session 8 slagits ihop). Rör de 36 räkneenheterna i ämnena övrigt och
+  infrastruktur. Ingen annan session bör röra dem förrän raden är struken.
 
 #### Klimat- och miljöämnet är omräknat — session 8, klar 2026-07-28
 
