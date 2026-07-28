@@ -1377,13 +1377,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 88128,
-      "msek_base": 103680,
-      "msek_high": 119232,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Källan anger: '1 800 kronor mer i plånboken varje månad' per familj. Uträkning: 1800 kr/mån × 12 mån × 4 800 000 hushåll = 103,68 mdr/år. Notera: Detta är redan genomfört i budget 2026 enligt källan.",
-      "confidence": 0.85
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/statens-budget-2026-rambeslutet_hd01fiu1/",
+      "method_note": "Skattesänkningarna ligger i budgeten för 2026, som redan är beslutad. Kvar är en inriktning som bärs av partiets egna konkreta skattelöften.",
+      "confidence": 0.6,
+      "calculation": "De skattesänkningar citatet räknar upp — på arbete, mat och el — ligger i budgeten för 2026, som riksdagen redan har beslutat. De är alltså gällande rätt och ingen ny kostnad för mandatperioden 2027–2030. Kvar av löftet är inriktningen att fler ska få behålla mer av sina egna pengar, och den bärs av partiets egna konkreta skattelöften, som prissätts var för sig. De 1 800 kronorna i månaden är dessutom vad en familj får av hela budgeten, inte vad ett nytt löfte kostar."
     },
     "financing_claimed": {
       "described": false,
@@ -1393,7 +1394,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Nollat, från 103 680 miljoner kronor per år. Beloppet byggde på partiets siffra om 1 800 kronor i månaden per familj gånger ett antal hushåll, men den siffran beskriver effekten av budgeten för 2026 — som redan är beslutad och därmed gällande rätt. Ett löfte om något som redan är genomfört är ingen ny kostnad för nästa mandatperiod. Inriktningen bärs av partiets egna konkreta skattelöften.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1421,14 +1428,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 25000,
-      "msek_high": 45000,
+      "msek_low": 10000,
+      "msek_base": 20000,
+      "msek_high": 35000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Att höja brytpunkten för statlig inkomstskatt så att fler behåller 50%+ av marginalen. Berör ca 1,5M löntagare. Estimat 25 mdr/år.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~1,1 miljoner betalar statlig inkomstskatt. Snittlig statlig skatt per person ~60 000 kr per år. Total intäkt ~66 miljarder kronor. En åtgärd för att fler ska behålla minst 50 % kan minska intäkten med 20–40 % (~13–26 miljarder kronor). Beroende på utformning kan det röra sig om en mindre justering (3–5 miljarder kronor) eller en större omläggning (upp mot 50 miljarder kronor). Basestimat 15 miljarder kronor."
+      "method_note": "Höjd brytpunkt för statlig inkomstskatt. En höjning gynnar alla som betalar skatten, inte bara dem närmast gränsen.",
+      "confidence": 0.5,
+      "calculation": "Den statliga inkomstskatten är 20 procent på inkomst över brytpunkten 660 400 kronor, och drygt en miljon personer betalar den. Hela skatten drar in i storleksordningen 54–60 miljarder kronor per år. Att fler i vanliga yrken ska få behålla minst hälften av lönen betyder att brytpunkten höjs, och en höjning gynnar alla som betalar skatten — inte bara de närmast gränsen. Höjs brytpunkten med omkring 10 000 kronor i månaden faller 20 procent av 120 000 kronor bort för var och en av dem: cirka 20 miljarder kronor per år. Spannet speglar hur stort steget tas."
     },
     "financing_claimed": {
       "described": false,
@@ -1438,7 +1445,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 25 000 till 20 000 miljoner kronor per år och satt på ett grundat underlag. Den tidigare uträkningen utgick från en snittskatt per person som inte gick att belägga; nu vilar beloppet på skattens storlek, 54–60 miljarder kronor per år, och på att en höjd brytpunkt sänker skatten för alla som betalar den.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -1612,14 +1625,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 5000,
+      "msek_low": 8000,
       "msek_base": 20000,
-      "msek_high": 50000,
+      "msek_high": 45000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Sänkt bolagsskatt och sänkta arbetsgivaravgifter. Beteendejusterat, eftersom lägre skattesatser delvis betalar sig genom större underlag.",
-      "confidence": 0.3,
-      "calculation": "Löftet har två delar. Bolagsskattebasen ligger på 700–950 miljarder kronor, så en procentenhets sänkning kostar 7–9,5 miljarder; en sänkning på 2–5 procentenheter ger 15–50 miljarder kronor. Lönesumman ligger på omkring 2 200 miljarder, så en procentenhet i arbetsgivaravgift är 22 miljarder; en sänkning på 0,5–2 procentenheter ger 11–44 miljarder. Rakt räknat blir summan 26–94 miljarder kronor, men lägre skattesatser ökar underlaget något. Beteendejusterat landar spannet på 5 000–50 000 miljoner kronor med 20 000 som basbelopp."
+      "method_note": "Sänkt bolagsskatt och sänkta arbetsgivaravgifter. Löftet anger ingen nivå; basbeloppet motsvarar ett måttligt steg i vardera.",
+      "confidence": 0.35,
+      "calculation": "Löftet har två delar och anger ingen nivå för någon av dem. Lönesumman i ekonomin är omkring 2 200 miljarder kronor per år, så en procentenhets sänkt arbetsgivaravgift kostar cirka 22 miljarder kronor. Bolagsskatten vilar på ett underlag kring 700–950 miljarder, så en procentenhet där kostar 7–9,5 miljarder. Basbeloppet 20 miljarder kronor per år motsvarar ungefär en halv procentenhet på arbetsgivaravgiften och två procentenheter på bolagsskatten. Spannet rymmer allt från en försiktig justering till den mer långtgående ambition partiet uttrycker."
     },
     "financing_claimed": {
       "described": false,
@@ -1634,6 +1647,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 35 000 till 20 000 miljoner kronor per år, och kostnadstypen från utgift till intäktsminskning. Den publicerade uträkningen räknade fram 20 000, inte de 35 000 som visades. Sänkt bolagsskatt och sänkta arbetsgivaravgifter kostar staten uteblivna intäkter — det är ingen utgift.",
         "commit": "2fbd60f9093f8a539a1090ded9fb135b7f939570"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Basbeloppet är oförändrat 20 000 miljoner kronor per år, men uträkningen anger nu vad basbeloppet faktiskt motsvarar i procentenheter på de två skatterna, i stället för att sluta i en beteendejusterad hopslagning som inte gick att följa. Spannet är justerat därefter.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
       }
     ],
     "extraction": {
@@ -2795,7 +2813,7 @@
   },
   {
     "id": "p-2026-0056",
-    "group_id": null,
+    "group_id": "g-sankt-skatt-pa-arbete",
     "title": "Återupprätta arbetslinjen genom att sänka skatten för alla som arbetar – framför allt för låg- och medelinkomsttagare",
     "slug": "ateruppratta-arbetslinjen-genom-att-sanka-skatten-for-alla-som-arbetar-framfor-allt-for-lag-och-medelinkomsttagare",
     "parties": [
@@ -2814,14 +2832,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 20000,
-      "msek_high": 36000,
+      "msek_low": 8000,
+      "msek_base": 17000,
+      "msek_high": 35000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Estimat: Sänkt skatt för låg/medelinkomsttagare. Jobbskatteavdrag. Estimat 20 mdr/år.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~5 miljoner sysselsatta × 3 000–6 000 kr per år i genomsnittlig skattesänkning = 15–30 miljarder kronor per år. Högre belopp motsvarar ett förstärkt jobbskatteavdrag som framför allt gynnar låg- och medelinkomster."
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/statens-budget-2026-rambeslutet_hd01fiu1/",
+      "method_note": "Ytterligare ett steg i skatten på arbetsinkomster, utan angiven nivå. Prissatt som det senast tagna steget. Delat löfte med ett annat parti.",
+      "confidence": 0.55,
+      "calculation": "Löftet anger ingen nivå, så det prissätts som ett steg av samma storlek som det senast tagna: det tionde jobbskatteavdraget, i budgeten för 2026, kostade 17,36 miljarder kronor per år. Basbeloppet är därför 17 miljarder kronor per år. Det låga alternativet motsvarar ett mindre steg riktat till låga inkomster, det höga två steg under mandatperioden. Ett annat parti lovar samma sak och prissätts på samma grund — samma skattesänkning kan bara genomföras en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -2831,7 +2849,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Prissatt på ett grundat underlag: det tionde jobbskatteavdraget i budgeten för 2026 kostade 17,36 miljarder kronor per år, och basbeloppet är därför 17 000 i stället för 20 000 miljoner kronor per år. Grupplänkat med ett annat partis löfte om samma skattesänkning, som bara kan genomföras en gång.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4535,7 +4559,7 @@
   },
   {
     "id": "p-2026-0092",
-    "group_id": null,
+    "group_id": "g-l-statlig-inkomstskatt",
     "title": "Om Tidöpartierna får väljarnas förtroende i valet i höst kommer Liberalerna att kräva att ett första steg mot en halverad statlig",
     "slug": "om-tidopartierna-far-valjarnas-fortroende-i-valet-i-host-kommer-liberalerna-att-krava-att-ett-forsta-steg-mot-en-halverad-statlig",
     "parties": [
@@ -4557,13 +4581,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 34000,
-      "msek_base": 40000,
-      "msek_high": 46000,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Samma löfte, '1 januari nästa år'. Helhetslöfte halvera = -40 mdr/år.",
-      "confidence": 0.85
+      "msek_low": 3000,
+      "msek_base": 4500,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": "https://www.liberalerna.se/nyheter/liberalerna-kraver-sankt-statlig-inkomstskatt",
+      "method_note": "Första steget mot en halverad statlig inkomstskatt, prissatt på partiets egen kostnad för hela halveringen. Partiets två löften om samma sak räknas en gång.",
+      "confidence": 0.6,
+      "calculation": "Partiet vill halvera den statliga inkomstskatten, från 20 till 10 procent, vilket enligt partiets egen uppgift kostar 30 miljarder kronor per år. Löftet gäller ett första steg vid årsskiftet, och partiledaren har angett en eller två procentenheter. Tio procentenheter kostar 30 miljarder, alltså 3 miljarder per procentenhet, och ett första steg blir därmed 3–6 miljarder kronor per år med 4,5 som basbelopp. Det höga alternativet rymmer att fler steg tas under mandatperioden. Partiets två löften om samma skattesänkning räknas en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -4573,7 +4598,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 40 000 till 4 500 miljoner kronor per år, och grupplänkat med partiets andra löfte om samma skattesänkning. Det gamla beloppet låg över vad partiet självt uppger att hela halveringen kostar, 30 miljarder kronor per år, trots att löftet gäller ett första steg om en eller två procentenheter.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4981,7 +5012,7 @@
   },
   {
     "id": "p-2026-0101",
-    "group_id": null,
+    "group_id": "g-sankt-skatt-pa-arbete",
     "title": "Vi behöver därför fortsätta att sänka skatten för vanligt folk",
     "slug": "vi-behover-darfor-fortsatta-att-sanka-skatten-for-vanligt-folk",
     "parties": [
@@ -5004,14 +5035,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 20000,
-      "msek_high": 36000,
+      "msek_low": 8000,
+      "msek_base": 17000,
+      "msek_high": 35000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Estimat: Fortsatt skattesänkningar utan specifik nivå. Estimat 20 mdr/år.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Bas: 20 000 miljoner kronor (i linje med Moderaternas löfte om sänkt skatt för alla som arbetar). Låg: 10 000 miljoner kronor (ett mindre steg, t.ex. enbart för låginkomsttagare). Hög: 40 000 miljoner kronor (bredare sänkning som inkluderar högre inkomster). Ingen exakt uträkning på grund av avsaknad av specifikation."
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/statens-budget-2026-rambeslutet_hd01fiu1/",
+      "method_note": "Ytterligare ett steg i skatten på arbetsinkomster, utan angiven nivå. Prissatt som det senast tagna steget. Delat löfte med ett annat parti.",
+      "confidence": 0.55,
+      "calculation": "Löftet anger ingen nivå, så det prissätts som ett steg av samma storlek som det senast tagna: det tionde jobbskatteavdraget, i budgeten för 2026, kostade 17,36 miljarder kronor per år. Basbeloppet är därför 17 miljarder kronor per år. Det låga alternativet motsvarar ett mindre steg riktat till låga inkomster, det höga två steg under mandatperioden. Ett annat parti lovar samma sak och prissätts på samma grund — samma skattesänkning kan bara genomföras en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -5026,6 +5057,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Prissatt på ett grundat underlag: det tionde jobbskatteavdraget i budgeten för 2026 kostade 17,36 miljarder kronor per år, och basbeloppet är därför 17 000 i stället för 20 000 miljoner kronor per år. Grupplänkat med ett annat partis löfte om samma skattesänkning, som bara kan genomföras en gång.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
       }
     ],
     "extraction": {
@@ -7035,23 +7071,30 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 89250,
-      "msek_base": 105000,
-      "msek_high": 120750,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Källan anger: 'De första 15 319 kronorna av arbetsinkomsten blir skattefria'. Uträkning: 15 319 kr × 5 400 000 sysselsatta × 12 mån × ca 30% effektiv kommunal skattesats = ungefär 297 mdr brutto. Men ",
-      "confidence": 0.85
+      "msek_low": 55000,
+      "msek_base": 78000,
+      "msek_high": 105000,
+      "basis": "llm_estimat",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/statens-budget-2026-rambeslutet_hd01fiu1/",
+      "method_note": "Skattefri grundlön som ersätter jobbskatteavdraget. Prissatt på partiets egen siffra per person, gånger vår uppskattning av antalet med arbetsinkomst.",
+      "confidence": 0.45,
+      "calculation": "Partiet anger själv vad reformen ger en enskild: 1 200 kronor mer i månaden för någon med 25 000 kronor i lön, alltså 14 400 kronor om året. Antalet mottagare är vår uppskattning: omkring 5,4 miljoner personer med arbetsinkomst. Det ger cirka 78 miljarder kronor per år, netto efter att dagens jobbskatteavdrag och skattereduktion för förvärvsinkomster avskaffas — jobbskatteavdraget kostar i sig omkring 200 miljarder kronor per år. Partiet uppger att reformen i stället ökar skatteintäkterna med 45 miljarder kronor per år genom att fler kommer i arbete. Den effekten redovisas som partiets egen finansiering och räknas inte som en intäkt: följdeffekter räknas inte för något parti."
     },
     "financing_claimed": {
-      "described": false,
-      "summary": null,
-      "msek": null
+      "described": true,
+      "summary": "Partiet uppger att reformen ökar skatteintäkterna med 45 miljarder kronor per år genom att fler kommer i arbete",
+      "msek": 45000
     },
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Reformen låg i två grupper — en som prissatte kostnaden till 105 000 miljoner kronor per år och en som bar partiets påstående om 45 000 miljoner i ökade intäkter. Samma reform räknades alltså två gånger. Grupperna är nu en enda, och beloppet vilar på partiets egen siffra per person: 1 200 kronor i månaden, gånger vår uppskattning av antalet med arbetsinkomst, netto efter avskaffat jobbskatteavdrag. 78 000 i stället för 105 000 miljoner kronor per år.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7082,23 +7125,30 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 89250,
-      "msek_base": 105000,
-      "msek_high": 120750,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Samma löfte som #174 formulerat som arbetslinjen. Samma kostnad: ~105 mdr/år (brutto), delvis finansierat av ökade intäkter.",
-      "confidence": 0.85
+      "msek_low": 55000,
+      "msek_base": 78000,
+      "msek_high": 105000,
+      "basis": "llm_estimat",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/statens-budget-2026-rambeslutet_hd01fiu1/",
+      "method_note": "Skattefri grundlön som ersätter jobbskatteavdraget. Prissatt på partiets egen siffra per person, gånger vår uppskattning av antalet med arbetsinkomst.",
+      "confidence": 0.45,
+      "calculation": "Partiet anger själv vad reformen ger en enskild: 1 200 kronor mer i månaden för någon med 25 000 kronor i lön, alltså 14 400 kronor om året. Antalet mottagare är vår uppskattning: omkring 5,4 miljoner personer med arbetsinkomst. Det ger cirka 78 miljarder kronor per år, netto efter att dagens jobbskatteavdrag och skattereduktion för förvärvsinkomster avskaffas — jobbskatteavdraget kostar i sig omkring 200 miljarder kronor per år. Partiet uppger att reformen i stället ökar skatteintäkterna med 45 miljarder kronor per år genom att fler kommer i arbete. Den effekten redovisas som partiets egen finansiering och räknas inte som en intäkt: följdeffekter räknas inte för något parti."
     },
     "financing_claimed": {
-      "described": false,
-      "summary": null,
-      "msek": null
+      "described": true,
+      "summary": "Partiet uppger att reformen ökar skatteintäkterna med 45 miljarder kronor per år genom att fler kommer i arbete",
+      "msek": 45000
     },
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Reformen låg i två grupper — en som prissatte kostnaden till 105 000 miljoner kronor per år och en som bar partiets påstående om 45 000 miljoner i ökade intäkter. Samma reform räknades alltså två gånger. Grupperna är nu en enda, och beloppet vilar på partiets egen siffra per person: 1 200 kronor i månaden, gånger vår uppskattning av antalet med arbetsinkomst, netto efter avskaffat jobbskatteavdrag. 78 000 i stället för 105 000 miljoner kronor per år.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7161,7 +7211,7 @@
   },
   {
     "id": "p-2026-0144",
-    "group_id": "g-c-skattereform-grundlon",
+    "group_id": "g-c-skattefri-grundlon",
     "title": "45 miljarder kronor i ökade skatteintäkter varje år",
     "slug": "45-miljarder-kronor-i-okade-skatteintakter-varje-ar",
     "parties": [
@@ -7181,16 +7231,16 @@
     },
     "category": "välfärd",
     "cost": {
-      "type": "intäktsökning",
+      "type": "utgift",
       "period": "per_ar",
-      "msek_low": 25000,
-      "msek_base": 45000,
-      "msek_high": 55000,
-      "basis": "parti",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Centerns skattereform: avskaffat jobbskatteavdrag ersätts med en skattefri grundlön. Källan anger reformens nettoeffekt: +45 miljarder kronor per år i ökade skatteintäkter (C:s egen beräkning, bygger på att fler kommer i arbete). Hela reformen räknas en gång här — de närliggande formuleringarna p-2026-0172, p-2026-0252 och p-2026-0254 är samma reform (delad grupp) och bidrar därför 0.",
-      "calculation": "C:s egen siffra för reformens nettoeffekt är +45 miljarder kronor per år i ökade skatteintäkter, enligt partiets utfästelse att en skattefri grundlön i kombination med avskaffat jobbskatteavdrag ökar sysselsättningen så att skattebasen växer. Nettot är omtvistat — en isolerad statisk beräkning av grundlönens kostnad kan i stället peka mot en nettokostnad — men löftet redovisas på partiets egen siffra. Spann 25 000–55 000 speglar osäkerheten kring hur mycket av den utlovade jobbeffekten som realiseras.",
-      "confidence": 0.4
+      "method_note": "Partiets påstående om vad skattereformen ger tillbaka. Redovisas som finansieringspåstående på reformen, inte som en egen intäkt.",
+      "calculation": "Citatet är partiets påstående om vad skattereformen ger tillbaka när fler kommer i arbete — inte ett löfte om en egen åtgärd. Sådana följdeffekter räknas inte för något parti: vi räknar vad ett löfte kostar, inte vad det längre fram kan tänkas dra in. Påståendet redovisas i stället som partiets egen finansiering av reformen, och reformen prissätts en gång genom de löften som bär den.",
+      "confidence": 0.6
     },
     "financing_claimed": {
       "described": false,
@@ -7210,6 +7260,11 @@
         "date": "2026-07-24",
         "change": "Löftet gjort till representant för Centerns skattereform (grupp g-c-skattereform-grundlon, tillsammans med p-2026-0172, p-2026-0252 och p-2026-0254). Reformens nettoeffekt satt till C:s egen siffra, +45 000 miljoner kronor per år i ökade skatteintäkter (spann 25 000-55 000). Reformen räknas en gång här; de andra tre formuleringarna bidrar 0 för att undvika dubbelräkning.",
         "commit": "4d26da23ce3cb52e7651bc7b029afe799f5aa9c2"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Nollat och flyttat in i samma grupp som resten av skattereformen. Beloppet låg tidigare som 45 000 miljoner kronor per år i ökade intäkter, vilket gav partiet ett avdrag på 180 000 miljoner för mandatperioden byggt på en påstådd sysselsättningseffekt. Sådana följdeffekter räknas inte för något parti. Påståendet syns nu som partiets egen finansiering av reformen.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
       }
     ],
     "extraction": {
@@ -7422,7 +7477,7 @@
   },
   {
     "id": "p-2026-0149",
-    "group_id": null,
+    "group_id": "g-l-statlig-inkomstskatt",
     "title": "Därför ska vi skrota straffskatten på utbildning",
     "slug": "darfor-ska-vi-skrota-straffskatten-pa-utbildning",
     "parties": [
@@ -7444,13 +7499,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 34000,
-      "msek_base": 40000,
-      "msek_high": 46000,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Källan anger 'Den statliga inkomstskatten måste sänkas senast vid årsskiftet'. Helhetsmål halvering av statlig inkomstskatt enligt Fas 1 = -40 mdr/år (statlig inkomstskatt ger ca 80 mdr/år, halvering ",
-      "confidence": 0.85
+      "msek_low": 3000,
+      "msek_base": 4500,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": "https://www.liberalerna.se/nyheter/liberalerna-kraver-sankt-statlig-inkomstskatt",
+      "method_note": "Första steget mot en halverad statlig inkomstskatt, prissatt på partiets egen kostnad för hela halveringen. Partiets två löften om samma sak räknas en gång.",
+      "confidence": 0.6,
+      "calculation": "Partiet vill halvera den statliga inkomstskatten, från 20 till 10 procent, vilket enligt partiets egen uppgift kostar 30 miljarder kronor per år. Löftet gäller ett första steg vid årsskiftet, och partiledaren har angett en eller två procentenheter. Tio procentenheter kostar 30 miljarder, alltså 3 miljarder per procentenhet, och ett första steg blir därmed 3–6 miljarder kronor per år med 4,5 som basbelopp. Det höga alternativet rymmer att fler steg tas under mandatperioden. Partiets två löften om samma skattesänkning räknas en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -7460,7 +7516,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 40 000 till 4 500 miljoner kronor per år, och grupplänkat med partiets andra löfte om samma skattesänkning. Det gamla beloppet låg över vad partiet självt uppger att hela halveringen kostar, 30 miljarder kronor per år, trots att löftet gäller ett första steg om en eller två procentenheter.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8538,23 +8600,30 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 89250,
-      "msek_base": 105000,
-      "msek_high": 120750,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Bekräftelse av Fas 1:s kostnad. Skatteunderlag för arbete: 2 200 000 MSEK. Skattefri grundlön 15 319 kr/mån motsvarar en skattesänkning på ca 4-5% av skatteunderlaget ≈ 100-110 mdr kr/år. Effekt för i",
-      "confidence": 0.85
+      "msek_low": 55000,
+      "msek_base": 78000,
+      "msek_high": 105000,
+      "basis": "llm_estimat",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/statens-budget-2026-rambeslutet_hd01fiu1/",
+      "method_note": "Skattefri grundlön som ersätter jobbskatteavdraget. Prissatt på partiets egen siffra per person, gånger vår uppskattning av antalet med arbetsinkomst.",
+      "confidence": 0.45,
+      "calculation": "Partiet anger själv vad reformen ger en enskild: 1 200 kronor mer i månaden för någon med 25 000 kronor i lön, alltså 14 400 kronor om året. Antalet mottagare är vår uppskattning: omkring 5,4 miljoner personer med arbetsinkomst. Det ger cirka 78 miljarder kronor per år, netto efter att dagens jobbskatteavdrag och skattereduktion för förvärvsinkomster avskaffas — jobbskatteavdraget kostar i sig omkring 200 miljarder kronor per år. Partiet uppger att reformen i stället ökar skatteintäkterna med 45 miljarder kronor per år genom att fler kommer i arbete. Den effekten redovisas som partiets egen finansiering och räknas inte som en intäkt: följdeffekter räknas inte för något parti."
     },
     "financing_claimed": {
-      "described": false,
-      "summary": null,
-      "msek": null
+      "described": true,
+      "summary": "Partiet uppger att reformen ökar skatteintäkterna med 45 miljarder kronor per år genom att fler kommer i arbete",
+      "msek": 45000
     },
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Reformen låg i två grupper — en som prissatte kostnaden till 105 000 miljoner kronor per år och en som bar partiets påstående om 45 000 miljoner i ökade intäkter. Samma reform räknades alltså två gånger. Grupperna är nu en enda, och beloppet vilar på partiets egen siffra per person: 1 200 kronor i månaden, gånger vår uppskattning av antalet med arbetsinkomst, netto efter avskaffat jobbskatteavdrag. 78 000 i stället för 105 000 miljoner kronor per år.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -8617,7 +8686,7 @@
   },
   {
     "id": "p-2026-0172",
-    "group_id": "g-c-skattereform-grundlon",
+    "group_id": "g-c-skattefri-grundlon",
     "title": "Förslaget innebär att dagens jobbskatteavdrag och skattereduktion för förvärvsinkomster ersätts med ett samlat avdrag på 15 319 kronor i",
     "slug": "forslaget-innebar-att-dagens-jobbskatteavdrag-och-skattereduktion-for-forvarvsinkomster-ersatts-med-ett-samlat-avdrag-pa-15-319-kronor-i",
     "parties": [
@@ -8644,14 +8713,14 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Ingår i partiets skattereform, som prissätts en gång på partiets egen nettosiffra genom det löfte som representerar den.",
-      "confidence": 0.3,
-      "calculation": "Partiet anger själv nivån: ett samlat avdrag på 15 319 kronor i månaden ersätter dagens jobbskatteavdrag och skattereduktion. Men den siffran beskriver reformens utformning, inte vad den kostar staten netto — det gamla avdraget försvinner samtidigt som det nya införs. Reformen prissätts en gång, på partiets egen nettosiffra, genom det löfte som representerar den. Att räkna beloppet här också skulle räkna samma reform två gånger."
+      "method_note": "Beskriver samma skattereform som partiets övriga grundlönelöften.",
+      "confidence": 0.6,
+      "calculation": "Löftet beskriver hur den skattefria grundlönen är utformad: ett samlat avdrag på 15 319 kronor i månaden som ersätter jobbskatteavdraget. Det är samma reform som partiets övriga löften om skattefri grundlön, och reformen prissätts en gång genom de löften som bär beloppet. Att räkna den här också vore att räkna samma reform två gånger."
     },
     "financing_claimed": {
-      "described": false,
-      "summary": null,
-      "msek": null
+      "described": true,
+      "summary": "Partiet uppger att reformen ökar skatteintäkterna med 45 miljarder kronor per år genom att fler kommer i arbete",
+      "msek": 45000
     },
     "comparisons": [],
     "quip": "",
@@ -8666,6 +8735,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen tillagd; den saknades helt. Beloppet är oförändrat på 0. Löftet är en av flera beskrivningar av samma skattereform, som prissätts en gång genom det löfte som representerar gruppen.",
         "commit": "0ddaaeb297d6367ee39d3a46b23734f9ca4325f7"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Flyttat till samma grupp som resten av skattereformen, som tidigare låg i två grupper och därmed räknades två gånger. Beloppet är oförändrat noll: reformen prissätts en gång genom de löften som bär den.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
       }
     ],
     "extraction": {
@@ -9051,7 +9125,7 @@
   },
   {
     "id": "p-2026-0252",
-    "group_id": "g-c-skattereform-grundlon",
+    "group_id": "g-c-skattefri-grundlon",
     "title": "Det är därför dags att avskaffa jobbskatteavdraget och istället går Centerpartiet i val att ersätta det med en skattefri grundlön",
     "slug": "det-ar-darfor-dags-att-avskaffa-jobbskatteavdraget-och-istallet-gar-centerpartiet-i-val-att-ersatta-det-med-en-skattefri-grundlon",
     "parties": [
@@ -9079,14 +9153,14 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Del av Centerns skattereform (avskaffat jobbskatteavdrag ersätts med en skattefri grundlön). Reformens nettoeffekt redovisas samlat på gruppens representant p-2026-0144 (C:s egen siffra, +45 miljarder kronor per år) och räknas en gång — denna formulering bidrar därför 0.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Avskaffande av jobbskatteavdraget ökar statens intäkter, medan införandet av en skattefri grundlön minskar dem. Enligt det jämförbara löftet är nettoeffekten 0 miljoner kronor per år, vilket indikerar att åtgärderna är kalibrerade för statsfinansiell neutralitet."
+      "method_note": "Beskriver samma skattereform som partiets övriga grundlönelöften.",
+      "confidence": 0.6,
+      "calculation": "Löftet är att avskaffa jobbskatteavdraget och ersätta det med en skattefri grundlön — samma reform som partiets övriga löften om grundlönen. Reformen prissätts en gång, netto, genom de löften som bär beloppet. Att räkna den här också vore att räkna samma reform två gånger."
     },
     "financing_claimed": {
-      "described": false,
-      "summary": null,
-      "msek": null
+      "described": true,
+      "summary": "Partiet uppger att reformen ökar skatteintäkterna med 45 miljarder kronor per år genom att fler kommer i arbete",
+      "msek": 45000
     },
     "comparisons": [],
     "quip": "",
@@ -9096,6 +9170,11 @@
         "date": "2026-07-24",
         "change": "Kostnadsestimat ändrat från 15 000 miljoner kronor per år till 0 och löftet kopplat till gruppen g-c-skattereform-grundlon vid den manuella genomgången. Detta är samma reform som p-2026-0144/0172/0254 och prissattes tidigare fristående; reformens nettoeffekt räknas nu en gång på representanten p-2026-0144 (C:s egen siffra, +45 mdkr).",
         "commit": "4d26da23ce3cb52e7651bc7b029afe799f5aa9c2"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Flyttat till samma grupp som resten av skattereformen, som tidigare låg i två grupper och därmed räknades två gånger. Beloppet är oförändrat noll: reformen prissätts en gång genom de löften som bär den.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
       }
     ],
     "extraction": {
@@ -9106,7 +9185,7 @@
   },
   {
     "id": "p-2026-0254",
-    "group_id": "g-c-skattereform-grundlon",
+    "group_id": "g-c-skattefri-grundlon",
     "title": "Vårt förslag sänker skatten med 1200 kr månaden för en person med normal ingångslön på 25.000 kr",
     "slug": "vart-forslag-sanker-skatten-med-1200-kr-manaden-for-en-person-med-normal-ingangslon-pa-25-000-kr",
     "parties": [
@@ -9134,14 +9213,14 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Ingår i partiets skattereform, som prissätts en gång på partiets egen nettosiffra. Citatets 1 200 kronor är effekten för en enskild person, inte reformens kostnad.",
-      "confidence": 0.3,
-      "calculation": "Citatets siffra — 1 200 kronor i månaden för någon med 25 000 kronor i ingångslön — visar vad reformen ger en enskild person, inte vad den kostar staten. Löftet är en av flera beskrivningar av samma skattereform, och reformen prissätts en gång på partiets egen nettosiffra genom det löfte som representerar den. Att räkna beloppet här också skulle räkna reformen två gånger."
+      "method_note": "Beskriver samma skattereform som partiets övriga grundlönelöften.",
+      "confidence": 0.6,
+      "calculation": "Citatets siffra — 1 200 kronor i månaden för någon med 25 000 kronor i ingångslön — visar vad reformen ger en enskild person, inte vad den kostar staten. Det är samma reform som partiets övriga löften om skattefri grundlön, och den prissätts en gång genom de löften som bär beloppet."
     },
     "financing_claimed": {
-      "described": false,
-      "summary": null,
-      "msek": null
+      "described": true,
+      "summary": "Partiet uppger att reformen ökar skatteintäkterna med 45 miljarder kronor per år genom att fler kommer i arbete",
+      "msek": 45000
     },
     "comparisons": [],
     "quip": "",
@@ -9156,6 +9235,11 @@
         "date": "2026-07-27",
         "change": "Beloppet står kvar på 0, nu med en öppen uträkning. Bakåtfyllnaden ville sätta 5 000 miljoner kronor per år utifrån citatets 1 200 kronor i månaden, men den siffran är effekten för en person — inte reformens kostnad. Reformen prissätts en gång genom det löfte som representerar gruppen.",
         "commit": "790e239090bbcf2b2b9a2e3683928580011c07db"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Flyttat till samma grupp som resten av skattereformen, som tidigare låg i två grupper och därmed räknades två gånger. Beloppet är oförändrat noll: reformen prissätts en gång genom de löften som bär den.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
       }
     ],
     "extraction": {
@@ -10376,14 +10460,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 30000,
-      "msek_base": 150000,
-      "msek_high": 270000,
+      "msek_low": 15000,
+      "msek_base": 30000,
+      "msek_high": 55000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Estimat: Sänka arbetstid från 40 till 35 tim/vecka = 12,5% mindre arbetstid. Om hela arbetskraften: 5,4M × 5 tim × 52 veckor × 250 kr/tim = 351 mdr teoretiskt. Men löntagare tar del av kostnaden via l",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antag 3,5 miljoner heltidsanställda som går från 40 till 35 h, löneborfall 12,5 %. Vid medellön 38 000 kr/mån kostnad per person ca 5 700 kr/mån (68 400 kr per år). Statlig kompensation 20–100 % → 4,8–34,2 miljarder kronor/mån → 57–410 miljarder kronor per år. Lågt scenario (enbart offentlig sektor eller riktad skattekredit) ~10 miljarder kronor; högt scenario vid fullt genomslag ~300 miljarder kronor."
+      "basis_url": "https://www.scb.se/hitta-statistik/statistik-efter-amne/arbetsmarknad/loner-och-arbetskostnader/lonestrukturstatistik-statlig-sektor/pong/tabell-och-diagram/genomsnittlig-manadslon-och-lonespridning-efter-yrke-2025/",
+      "method_note": "Kortare normalarbetstid är en lagändring. Prissatt som statens kostnad för sina egna anställda; kostnaden för andra arbetsgivare ligger utanför statens budget.",
+      "confidence": 0.4,
+      "calculation": "Kortare normalarbetstid är en ändring i arbetstidslagen. Staten betalar därför bara för sina egna anställda — kostnaden för privata och kommunala arbetsgivare, och effekten på ekonomin i stort, ligger utanför statens budget och prissätts inte här. I staten arbetar omkring 281 000 personer med en medellön på 46 300 kronor i månaden, alltså en lönesumma på cirka 156 miljarder kronor per år, eller omkring 220 miljarder med arbetsgivaravgifter och pension. Fem timmar kortare vecka är 12,5 procent mindre arbetad tid, och för att hålla samma verksamhet krävs omkring 14 procent fler anställda: cirka 30 miljarder kronor per år. Spannet rymmer att staten i stället drar ner verksamheten, och att steget till fyradagarsvecka tas."
     },
     "financing_claimed": {
       "described": false,
@@ -10393,7 +10477,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 150 000 till 30 000 miljoner kronor per år. Den tidigare uträkningen antog att staten kompenserar 20–100 procent av allas löneborfall, vilket löftet inte säger något om. Kortare normalarbetstid är en lagändring, och statens egen kostnad är den som uppstår för dess omkring 281 000 anställda. Kostnaden för privata och kommunala arbetsgivare, och effekten på ekonomin i stort, är följder av åtgärden och ska inte ligga i statens nota.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -11253,14 +11343,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 10000,
-      "msek_base": 25000,
-      "msek_high": 50000,
+      "msek_low": 12000,
+      "msek_base": 20000,
+      "msek_high": 45000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Jämför med tidigare nedsättning för unga under 26 år (halv avgift) som kostade ~16 mdkr/år. Helt avskaffad avgift för unga och lågavlönade kan kosta 10-50 mdkr beroende på avgränsning.",
+      "method_note": "Borttagen anställningsskatt för unga och för dem som ska in på arbetsmarknaden. Prissatt på den allmänna löneavgiften.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Unga 15-24 år: ~500 000 anställda, snittlön ~22 000 kr/mån → lönesumma ~132 miljarder kronor. Avgift 31,42% → ~41,5 miljarder kronor. Lågavlönade (exkl. unga) med lön <25 000 kr/mån: ~1 milj, snittlön ~23 000 kr → lönesumma ~276 miljarder kronor, avgift ~86,7 miljarder kronor. Totalt ~128 miljarder kronor. Bred tolkning ger hög kostnad; smalare tolkning (t.ex. endast allmän löneavgift 11,62%) ger ~47 miljarder kronor. Intervall satt utifrån politisk rimlighet och jämförbara löften."
+      "calculation": "Med anställningsskatten avser partiet den del av arbetsgivaravgiften som är ren skatt: den allmänna löneavgiften på 11,62 procent. Unga mellan 15 och 24 år har en lönesumma på omkring 130 miljarder kronor per år, vilket ger cirka 15 miljarder i allmän löneavgift. Gruppen som ska in på arbetsmarknaden är mindre och lägger till några miljarder, så basbeloppet är 20 miljarder kronor per år. Tolkas löftet som hela arbetsgivaravgiften på 31,42 procent blir kostnaden omkring 45 miljarder, vilket är det höga alternativet; det låga rymmer en snävare avgränsning till enbart unga."
     },
     "financing_claimed": {
       "described": false,
@@ -11270,7 +11360,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat från 25 000 till 20 000 miljoner kronor per år. Den tidigare uträkningen landade på 128 miljarder och satte sedan basbeloppet efter vad som bedömdes politiskt rimligt, utan att den bedömningen gick att pröva. Beloppet vilar nu på den allmänna löneavgiften och på ungas lönesumma, och de två tolkningarna av vad anställningsskatten är står utskrivna i spannet.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15915,7 +16011,7 @@
   },
   {
     "id": "p-2026-0440",
-    "group_id": null,
+    "group_id": "g-hogkostnadsskydd-tandvard",
     "title": "Tandvård ska finansieras enligt samma principer som annan hälso- och sjukvård",
     "slug": "tandvard-ska-finansieras-enligt-samma-principer-som-annan-halso-och-sjukvard",
     "parties": [
@@ -15934,14 +16030,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 15000,
-      "msek_base": 20000,
-      "msek_high": 30000,
+      "msek_low": 4600,
+      "msek_base": 7000,
+      "msek_high": 10000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antar att staten tar över merparten av dagens privata tandvårdskostnader (~21 mdkr) minus vissa egenavgifter. Osäkerhet kring efterfrågeeffekter och utformning.",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Total tandvårdskostnad ~45 miljarder kronor per år. Offentlig andel idag ~12 miljarder kronor. Vid 90 % offentlig andel (som sjukvård) fås ~40 miljarder kronor, ökning ~28 miljarder kronor. Lägre ökning vid högre patientavgift. Därav intervall 5–35 miljarder kronor."
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/ett-forstarkt-hogkostnadsskydd-for-tandvard_hd0327/",
+      "method_note": "Tandvården finansierad enligt sjukvårdens principer. Propositionens fullt utbyggda reform, plus vår uppskattning av att ta bort den kvarvarande egenavgiften, minus den etapp som redan är beslutad. Delat löfte med andra partier som lovar samma sak.",
+      "confidence": 0.5,
+      "calculation": "Löftet är att tandvården ska finansieras som annan sjukvård, alltså med sjukvårdens tak på vad patienten själv betalar. Det går längre än det förstärkta högkostnadsskyddet, som lämnar patienten kvar på omkring 26 procent av sin tandvårdsräkning eftersom undersökningar och förebyggande vård står utanför. Utgångspunkten är regeringens siffra: en tandvård där alla från 20 år betalar tio procent kostar staten 8,4 miljarder kronor per år, varav drygt 3,8 redan är beslutat för dem som fyllt 67. Att därutöver ta bort den kvarvarande egenavgiften uppskattar vi till omkring 2 miljarder kronor per år — den delen är vår, inte regeringens. 8,4 plus 2 minus 3,8 blir 6,6, avrundat till 7 miljarder kronor per år."
     },
     "financing_claimed": {
       "described": false,
@@ -15951,7 +16047,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Grupplänkat med Sverigedemokraternas och Vänsterpartiets löften om nästan avgiftsfri vuxentandvård: samma politik räknas en gång, och gruppen företräds av det högsta beloppet, som är det här löftet. Beloppet omräknat från 20 000 till 7 000 miljoner kronor per år. Den tidigare uträkningen antog att tandvården kostar 45 miljarder kronor per år och att det offentliga står för 12 av dem; vuxentandvården inom det statliga stödet omsatte 24,7 miljarder 2024. Beloppet vilar nu på regeringens kostnad för en fullt utbyggd reform, plus vår uppskattning av steget till sjukvårdens principer, minus den etapp som redan är beslutad.",
+        "commit": "bab5fe573916da8392632258901ffca5523df3c7"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18116,14 +18218,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 8000,
-      "msek_base": 10000,
-      "msek_high": 15000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Högkostnadsskyddet i tandvården utvidgas från äldre till alla. Delat löfte med ett annat parti som lovar samma sak.",
-      "confidence": 0.4,
-      "calculation": "Vuxentandvården kostar omkring 25 miljarder kronor per år. Dagens skydd omfattar de omkring 2,2 miljoner som är 65 år eller äldre och kostar 1,5–2 miljarder. Utvidgas det till samtliga vuxna, omkring 7,5 miljoner personer, blir totalkostnaden 8–15 miljarder kronor per år, med 10 miljarder som basbelopp. Ett annat parti lovar samma högkostnadsskydd och prissätts på samma grund. Underlaget är osäkert: partiernas löften om samma sak vilar på olika bild av hur stor vuxentandvården är, 14,7 respektive 25 miljarder kronor. Beloppet är markerat för omräkning."
+      "msek_low": 3200,
+      "msek_base": 4600,
+      "msek_high": 6500,
+      "basis": "myndighet",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/ett-forstarkt-hogkostnadsskydd-for-tandvard_hd0327/",
+      "method_note": "Utvidgning av det förstärkta högkostnadsskyddet till alla vuxna. Beloppet är propositionens kostnad för en fullt utbyggd reform minus den etapp som redan är beslutad. Delat löfte med andra partier som lovar samma sak.",
+      "confidence": 0.75,
+      "calculation": "Sedan januari 2026 betalar den som fyller minst 67 år under året tio procent av referenspriset för behandling av sjukdom och smärta, och staten resten. Regeringens proposition räknar med att den etappen ökar statens utgifter med drygt 3,8 miljarder kronor per år, och att en fullt utbyggd reform för alla från 20 år kostar 7,7–9,9 miljarder per år, med 8,4 som huvudscenario. Löftet är just den utvidgningen, så kvar att betala blir 8,4 minus 3,8: ungefär 4,6 miljarder kronor per år. Spannet 3,2–6,5 följer av propositionens ytterlägen. Vuxentandvården inom det statliga stödet omsatte 24,7 miljarder kronor 2024 — den siffran, inte de 14,7 miljarder en tidigare uträkning utgick från, är den storlek beloppet vilar på."
     },
     "financing_claimed": {
       "described": false,
@@ -18148,6 +18250,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen kompletterad med att underlaget är osäkert: löften om samma sak vilar på olika bild av hur stor vuxentandvården är. Beloppet är oförändrat men markerat för omräkning. Gruppen utökad med ytterligare ett löfte om samma politik.",
         "commit": "48c632799378ad14ccdacedd46dd7b3358ef148d"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat på regeringens egen prislapp. Propositionen om ett förstärkt högkostnadsskydd för tandvård räknar med drygt 3,8 miljarder kronor per år för etappen som redan gäller dem som fyllt 67, och 7,7–9,9 miljarder för en fullt utbyggd reform för alla från 20 år, huvudscenario 8,4. Löftet är utvidgningen, alltså skillnaden: 4 600 i stället för 10 000 miljoner kronor per år. Den tidigare uträkningen gissade en kostnad per person och utgick dessutom från att vuxentandvården kostar 14,7 miljarder kronor per år; den omsatte 24,7 miljarder 2024.",
+        "commit": "bab5fe573916da8392632258901ffca5523df3c7"
       }
     ],
     "extraction": {
@@ -18230,12 +18337,12 @@
       "period": "per_ar",
       "msek_low": 20000,
       "msek_base": 25000,
-      "msek_high": 35000,
+      "msek_high": 28000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Elskatten (energiskatt på el) beräknas ge ca 25 mdkr årligen. Uppskattning baserat på historiska skatteintäkter och elförbrukning.",
-      "confidence": 0.65,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Total elanvändning ~130–140 TWh per år. Hushåll & service ~60 TWh × ~0,40 kr/kWh ≈ 24 miljarder kronor. Industri ~50 TWh × ~0,006 kr/kWh ≈ 0,3 miljarder kronor. Summa ≈24–25 miljarder kronor per år. Variation i förbrukning och skattehöjningar ger ett intervall på 20–30 miljarder kronor."
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/statens-budget-2026-rambeslutet_hd01fiu1/",
+      "method_note": "Slopad energiskatt på el. Prissatt på vad skatten drar in efter sänkningen vid årsskiftet.",
+      "confidence": 0.7,
+      "calculation": "Energiskatten på el sänktes vid årsskiftet till 2022 års nivå, 36 öre per kilowattimme, vilket kostade staten drygt 6 miljarder kronor per år. Efter sänkningen drar skatten fortfarande in över 25 miljarder kronor per år. Att ta bort den helt kostar alltså det som är kvar: omkring 25 miljarder kronor per år. Spannet speglar att elanvändningen varierar mellan år, och att löftet säger att skatten tas bort successivt — hela beloppet faller alltså inte nödvändigtvis ut varje år under perioden."
     },
     "financing_claimed": {
       "described": false,
@@ -18245,7 +18352,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-27",
+        "change": "Basbeloppet är oförändrat 25 000 miljoner kronor per år, men underlaget är utbytt. Den tidigare uträkningen byggde på antagna skattesatser per kilowattimme för hushåll och industri; nu vilar beloppet på vad energiskatten på el faktiskt drar in efter sänkningen vid årsskiftet. Spannet är smalare eftersom underlaget är säkrare.",
+        "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -18377,14 +18490,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 8000,
-      "msek_base": 10000,
-      "msek_high": 15000,
+      "msek_low": 3200,
+      "msek_base": 4600,
+      "msek_high": 6500,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Högkostnadsskydd i tandvården med maxtak 1 450 kronor. Delat löfte med ett annat parti som lovar samma sak.",
-      "confidence": 0.4,
-      "calculation": "Vuxentandvården kostar omkring 25 miljarder kronor per år. Med ett tak på 1 450 kronor betalar staten den del som ligger däröver, uppskattningsvis 32–60 procent av totalkostnaden. Det låga alternativet, 32 procent, ger 8 miljarder kronor per år; basbeloppet, 40 procent, ger 10 miljarder; det höga, 60 procent, ger 15 miljarder. Ett annat parti lovar samma högkostnadsskydd och prissätts på samma grund. Underlaget är osäkert: partiernas löften om samma sak vilar på olika bild av hur stor vuxentandvården är, 14,7 respektive 25 miljarder kronor. Beloppet är markerat för omräkning."
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/ett-forstarkt-hogkostnadsskydd-for-tandvard_hd0327/",
+      "method_note": "Utvidgning av det förstärkta högkostnadsskyddet till alla vuxna. Beloppet är propositionens kostnad för en fullt utbyggd reform minus den etapp som redan är beslutad. Delat löfte med andra partier som lovar samma sak.",
+      "confidence": 0.6,
+      "calculation": "Vänsterpartiet vill ha ett tak på 1 450 kronor per år, alltså sjukvårdens högkostnadsskydd överfört till tandvården. Ingen myndighet har prissatt just det taket, så beloppet är hämtat från regeringens kostnad för en likvärdig reform: en tandvård där alla från 20 år betalar tio procent av referenspriset beräknas kosta staten 7,7–9,9 miljarder kronor per år, huvudscenario 8,4, varav drygt 3,8 redan är beslutat för dem som fyllt 67. Kvar blir ungefär 4,6 miljarder kronor per år. Modellerna ligger nära varandra: samma proposition räknar med att omkring 75 procent av patienterna i första etappen ändå hamnar på 1 400 kronor eller mindre per år, alltså under partiets tak."
     },
     "financing_claimed": {
       "described": false,
@@ -18404,6 +18517,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen kompletterad med att underlaget är osäkert: löften om samma sak vilar på olika bild av hur stor vuxentandvården är. Beloppet är oförändrat men markerat för omräkning. Gruppen utökad med ytterligare ett löfte om samma politik.",
         "commit": "48c632799378ad14ccdacedd46dd7b3358ef148d"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat på regeringens egen prislapp. Propositionen om ett förstärkt högkostnadsskydd för tandvård räknar med drygt 3,8 miljarder kronor per år för etappen som redan gäller dem som fyllt 67, och 7,7–9,9 miljarder för en fullt utbyggd reform för alla från 20 år, huvudscenario 8,4. Löftet är utvidgningen, alltså skillnaden: 4 600 i stället för 10 000 miljoner kronor per år. Den tidigare uträkningen gissade en kostnad per person och utgick dessutom från att vuxentandvården kostar 14,7 miljarder kronor per år; den omsatte 24,7 miljarder 2024.",
+        "commit": "bab5fe573916da8392632258901ffca5523df3c7"
       }
     ],
     "extraction": {
@@ -21567,14 +21685,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 8000,
-      "msek_base": 10000,
-      "msek_high": 15000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Samma politik som partiets andra löfte om att utvidga högkostnadsskyddet till alla vuxna, och prissatt på samma grund.",
-      "calculation": "Löftet är samma politik som partiets andra utfästelse om att utvidga högkostnadsskyddet till alla vuxna, fast med mekanismen utskriven: patienten betalar tio procent av referenspriset. De två räknas därför en gång och på samma grund. Dagens skydd omfattar de omkring 2,2 miljoner som är 65 år eller äldre. Utvidgat till samtliga vuxna, omkring 7,5 miljoner personer, blir kostnaden 8–15 miljarder kronor per år med 10 miljarder som basbelopp. Underlaget är osäkert: partiernas löften om samma sak vilar på olika bild av hur stor vuxentandvården är, 14,7 respektive 25 miljarder kronor. Beloppet är markerat för omräkning.",
-      "confidence": 0.4
+      "msek_low": 3200,
+      "msek_base": 4600,
+      "msek_high": 6500,
+      "basis": "myndighet",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/ett-forstarkt-hogkostnadsskydd-for-tandvard_hd0327/",
+      "method_note": "Utvidgning av det förstärkta högkostnadsskyddet till alla vuxna. Beloppet är propositionens kostnad för en fullt utbyggd reform minus den etapp som redan är beslutad. Delat löfte med andra partier som lovar samma sak.",
+      "calculation": "Löftet är samma politik som partiets andra utfästelse om att utvidga högkostnadsskyddet till alla vuxna, fast med mekanismen utskriven: patienten betalar tio procent av referenspriset. De två räknas därför en gång och på samma grund. Sedan januari 2026 gäller den ordningen för den som fyller minst 67 år under året, och regeringens proposition räknar med drygt 3,8 miljarder kronor per år för den etappen. En fullt utbyggd reform för alla från 20 år kostar enligt samma proposition 7,7–9,9 miljarder per år, huvudscenario 8,4. Utvidgningen till alla vuxna blir alltså 8,4 minus 3,8, ungefär 4,6 miljarder kronor per år, med 3,2–6,5 som spann.",
+      "confidence": 0.75
     },
     "financing_claimed": {
       "described": false,
@@ -21594,6 +21712,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 7 000 till 10 000 miljoner kronor per år och löftet grupplänkat med partiets andra löfte om samma sak samt med Vänsterpartiets. De två SD-löftena beskriver samma utvidgning av högkostnadsskyddet till alla vuxna men stod på 7 000 respektive 10 000, räknade på olika bild av hur stor vuxentandvården är. Samma parti och samma politik ska räknas en gång och kosta lika.",
         "commit": "48c632799378ad14ccdacedd46dd7b3358ef148d"
+      },
+      {
+        "date": "2026-07-27",
+        "change": "Omräknat på regeringens egen prislapp. Propositionen om ett förstärkt högkostnadsskydd för tandvård räknar med drygt 3,8 miljarder kronor per år för etappen som redan gäller dem som fyllt 67, och 7,7–9,9 miljarder för en fullt utbyggd reform för alla från 20 år, huvudscenario 8,4. Löftet är utvidgningen, alltså skillnaden: 4 600 i stället för 10 000 miljoner kronor per år. Den tidigare uträkningen gissade en kostnad per person och utgick dessutom från att vuxentandvården kostar 14,7 miljarder kronor per år; den omsatte 24,7 miljarder 2024.",
+        "commit": "bab5fe573916da8392632258901ffca5523df3c7"
       }
     ],
     "extraction": {
