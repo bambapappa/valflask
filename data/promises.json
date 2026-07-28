@@ -10361,8 +10361,9 @@
       "msek_high": 12000,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Källan anger: 499 kr/mån vuxna, 249 kr unga/studenter/pensionärer. Uträkning: Sveriges kollektivtrafik omsätter ca 75 md [granskning 2026-07-09: Sverigekort: nettosubvention, ej bruttointäkt]",
-      "confidence": 0.5
+      "method_note": "Partiets egna priser: 499 kronor i månaden för vuxna, 249 för unga, studenter och pensionärer. Antalet resenärer med periodkort är vår uppskattning.",
+      "confidence": 0.5,
+      "calculation": "Partiet anger själv priset: 499 kronor i månaden för vuxna och 249 för unga, studenter och pensionärer. Ett periodkort i de större länen kostar i dag omkring 900–1 100 kronor i månaden, så kortet halverar ungefär vad resenären betalar. Skillnaden får staten stå för. Omkring 1,5 miljoner personer reser med periodkort — vår uppskattning, inte partiets — och en subvention på omkring 500 kronor i månaden ger 1,5 miljoner × 500 × 12 ≈ 9 000 miljoner kronor per år. Basbeloppet läggs på 8 000 miljoner eftersom en del av dagens kort redan är billigare än 499 kronor. Att fler reser när priset sjunker ökar kostnaden ytterligare och ligger i spannets övre del."
     },
     "financing_claimed": {
       "described": false,
@@ -10372,7 +10373,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet oförändrat, 8 000 miljoner kronor per år, men löftet har fått den öppna uträkning det saknade. Uträkningen bygger på partiets egna priser — 499 respektive 249 kronor i månaden — och skriver ut att antalet resenärer med periodkort är vår uppskattning och inte partiets.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot mp.se live)",
@@ -13793,13 +13800,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 8000,
-      "msek_base": 12000,
-      "msek_high": 18000,
+      "msek_base": 13000,
+      "msek_high": 26000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Kostnaden är skillnaden mellan 1% av BNI och dagens biståndsnivå (~0,8% av BNI). Med BNI ~6 000 mdkr blir ökningen ~0,2% = 12 mdkr/år. Osäkerhet om BNI-tillväxt och exakt utgångsläge.",
-      "confidence": 0.6,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. BNI 2023 ca 6 200 miljarder kronor. Antag nuvarande bistånd 0,7 % → 43,4 miljarder kronor, 1 % → 62 miljarder kronor, differens 18,6 miljarder kronor. Om nuvarande nivå är 0,8 % → 1 % differens 0,2 % = 12,4 miljarder kronor. Medelvärde ~15,5 miljarder kronor. Spann 10–25 miljarder kronor för att fånga osäkerhet kring BNI-prognos och gradvis infasning."
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/budgetpropositionen-for-2026-utgiftsomrade-7_hd031d9/html/",
+      "method_note": "Skillnaden mellan ett procentmål och dagens fasta biståndsram, räknad som genomsnittet under upptrappningen. Samma politik hos båda partierna räknas en gång.",
+      "confidence": 0.5,
+      "calculation": "Biståndsramen ligger på 53 miljarder kronor per år 2026–2028, ett fast belopp som inte följer bruttonationalinkomsten. Enligt regeringens egna prognoser motsvarar det omkring 0,67 procent av bruttonationalinkomsten 2028, vilket ger en inkomst på omkring 7 900 miljarder kronor. Ett procentmål innebär då ett bistånd på omkring 79 miljarder kronor, alltså omkring 26 miljarder mer än i dag. Men målet nås inte första året: löftet talar om en gradvis upptrappning och anger inget årtal, och en upptrappning som når sin nivå i slutet av mandatperioden kostar i genomsnitt ungefär hälften under perioden. Basbeloppet läggs därför på 13 000 miljoner kronor per år. Det höga alternativet, 26 000, gäller om målet återställs direkt."
     },
     "financing_claimed": {
       "described": false,
@@ -13809,7 +13816,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 12 000 till 13 000 miljoner kronor per år. Två fel tog nästan ut varandra, så beloppet såg rimligt ut trots att båda ingångsvärdena var fel. Det ena: uträkningen antog att biståndet ligger på 0,7–0,8 procent av bruttonationalinkomsten, men biståndsramen är ett fast belopp på 53 miljarder kronor och motsvarar omkring 0,67 procent 2028 — skillnaden till ett procentmål är alltså omkring 26 miljarder, inte 12. Det andra: löftet lovar en gradvis upptrappning utan årtal, och då är kostnaden för perioden genomsnittet av upptrappningen, inte slutnivån varje år.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14904,13 +14917,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 8000,
-      "msek_base": 11500,
-      "msek_high": 18000,
+      "msek_base": 13000,
+      "msek_high": 26000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antar återställande till 1 % av BNI från dagens ca 0,84 % (BNI ≈ 7 200 mdkr); skillnad ~11,5 mdkr/år. Intervall fångar variation i BNI och framtida basnivå.",
-      "confidence": 0.6,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. BNI ≈ 6 200 000 miljoner kronor. 1 % av BNI = 62 000 miljoner kronor. Nuvarande bistånd ~0,8 % = 49 600 miljoner kronor. Ökning = 62 000 - 49 600 = 12 400 miljoner kronor. Avrundas till 12 000 miljoner kronor per år. Låg: 10 000 (om BNI lägre eller högre utgångsläge), hög: 16 000 (om BNI högre eller större ökning)."
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/budgetpropositionen-for-2026-utgiftsomrade-7_hd031d9/html/",
+      "method_note": "Skillnaden mellan ett procentmål och dagens fasta biståndsram, räknad som genomsnittet under upptrappningen. Samma politik hos båda partierna räknas en gång.",
+      "confidence": 0.5,
+      "calculation": "Biståndsramen ligger på 53 miljarder kronor per år 2026–2028, ett fast belopp som inte följer bruttonationalinkomsten. Enligt regeringens egna prognoser motsvarar det omkring 0,67 procent av bruttonationalinkomsten 2028, vilket ger en inkomst på omkring 7 900 miljarder kronor. Ett procentmål innebär då ett bistånd på omkring 79 miljarder kronor, alltså omkring 26 miljarder mer än i dag. Men målet nås inte första året: löftet talar om en gradvis upptrappning och anger inget årtal, och en upptrappning som når sin nivå i slutet av mandatperioden kostar i genomsnitt ungefär hälften under perioden. Basbeloppet läggs därför på 13 000 miljoner kronor per år. Det höga alternativet, 26 000, gäller om målet återställs direkt."
     },
     "financing_claimed": {
       "described": false,
@@ -14920,7 +14933,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 11 500 till 13 000 miljoner kronor per år, harmoniserat med Centerpartiets löfte om samma sak. Uträkningen byggde på en föråldrad bruttonationalinkomst (6 200 miljarder) och på antagandet att biståndet ligger på 0,8 procent. Biståndsramen är ett fast belopp på 53 miljarder kronor och motsvarar omkring 0,67 procent 2028. Målet anger inget årtal, så beloppet är genomsnittet under upptrappningen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15661,7 +15680,7 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 50,
-      "msek_base": 100,
+      "msek_base": 200,
       "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -15677,7 +15696,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 100 till 200 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som angav 200 miljoner som basnivå, motsvarande en ökning av folkbildningsanslaget med omkring fem procent.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15706,7 +15731,7 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 50,
-      "msek_base": 150,
+      "msek_base": 250,
       "msek_high": 400,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -15722,7 +15747,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 150 till 250 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som angav 100–400 miljoner med 250 som basbelopp.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15751,7 +15782,7 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 300,
-      "msek_base": 800,
+      "msek_base": 400,
       "msek_high": 1500,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -15767,7 +15798,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 800 till 400 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som angav 400 miljoner som vald basnivå — drygt en fördubbling av dagens statliga stöd till skapande verksamhet i skolan.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
