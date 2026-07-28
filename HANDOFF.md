@@ -410,11 +410,11 @@ procentsats utan erfarenhet bakom). Det ligger i session 10.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json`, uppdaterad efter session 6. En **räkneenhet**
+Mätt på `data/promises.json`, uppdaterad efter session 7. En **räkneenhet**
 är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
-av sitt högsta belopp. 420 aktiva löften blir 361 räkneenheter, varav 218 bär
+av sitt högsta belopp. 420 aktiva löften blir 360 räkneenheter, varav 216 bär
 ett belopp över noll. Pengarna är fortfarande snedfördelade, men mindre än
-när planen skrevs: hälften av mandattotalen ligger nu i 13 enheter, 80 procent
+när planen skrevs: hälften av mandattotalen ligger nu i 12 enheter, 80 procent
 i 38 och 95 procent i 86. Det var alltså de tyngsta enheterna som var mest
 felräknade — vilket är precis vad ordningen i planen bygger på. Kolumnen
 Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
@@ -427,18 +427,18 @@ Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 | 4 | ~~**Försvar, hela ämnet**~~ **KLAR 2026-07-27.** 12 löften, ämnet gick från 1 437 till 460 mdkr. Se avsnittet nedan | klar | **max** |
 | 5 | ~~**Välfärd, de tyngsta**~~ **KLAR 2026-07-28.** 17 löften på 12 enheter; ämnet gick från 540 till 360 mdkr. Se avsnittet nedan | klar | **max** |
 | 6 | ~~Välfärd, resten~~ **KLAR 2026-07-28.** 12 omräknade, 1 tillbakadraget, resten kontrollerade; ämnet 360 → 363 mdkr. **Välfärden är därmed helt genomgången.** Se avsnittet nedan | klar | hög |
-| 7 | Utbildning, hela ämnet, tyngsta först | 60 | hög |
+| 7 | ~~Utbildning, hela ämnet~~ **KLAR 2026-07-28.** 9 omräknade, resten kontrollerade; ämnet 359 → 191 mdkr. Se avsnittet nedan | klar | hög |
 | 8 | Klimat-miljö, hela ämnet | 38 | hög |
 | 9 | Övrigt (25) och infrastruktur (11) | 36 | hög |
 | 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
 
-Ämnesordningen är mandattotalen, efter session 6: skatter 1 115 mdkr (klart),
-försvar 460 (klart), **välfärd 363 (klart)**, **utbildning 359**, klimat-miljö
-268, övrigt 120, rättsväsende 71, infrastruktur 63, migration 47. Skatterna,
-försvaret och välfärden är alltså helt genomgångna; **härnäst står
-utbildningen (rad 7)**, som nu är det tyngsta ämne som återstår. Löften som
-ger staten pengar ligger kvar i sitt eget ämne och räknas om i samma session
-som resten av ämnet.
+Ämnesordningen är mandattotalen, efter session 7: skatter 1 115 mdkr (klart),
+försvar 460 (klart), välfärd 363 (klart), **klimat-miljö 268**, utbildning 191
+(klart), övrigt 120, rättsväsende 71, infrastruktur 63, migration 47. Fyra
+ämnen är alltså helt genomgångna. **Klimat-miljö (rad 8) är nu det tyngsta som
+återstår** — ordningen i tabellen stämmer fortfarande, men märk att ämnet gick
+om utbildningen först när utbildningen räknats om. Löften som ger staten pengar
+ligger kvar i sitt eget ämne och räknas om i samma session som resten av ämnet.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
 löften vilar på, eller när en enskild enhet väger över hundra miljarder för
@@ -464,6 +464,13 @@ Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
 max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
+
+*Utfall session 7:* 61 enheter genomgångna, varav 9 löften ändrades. Ämnet
+nästan halverades, men **inte för att beloppen var slarviga — för att två
+systematiska fel råkade sitta på de tyngsta löftena**: en nivå räknad som om
+den gällde från dag ett, och två löften som ankrade i varandra. Båda är
+sökbara mönster, inte omdömesfrågor. Det talar för att nästa session bör börja
+med att leta efter just dem i sitt ämne innan den läser löfte för löfte.
 
 *Utfall session 6:* 72 enheter genomgångna, varav 12 löften ändrades och ett
 drogs tillbaka. En hög-session klarar alltså 70+ enheter när ämnets tunga
@@ -525,11 +532,55 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- **Session 7 — utbildningen, hela ämnet.** Gren
-  `claude/session-5-valfarden-sbny1t` (samma grennamn, nytt spår efter att
-  session 6 slagits ihop). Rör de 61 räkneenheterna i ämnet utbildning,
-  tyngsta först. Ingen annan session bör röra utbildningslöften förrän raden
-  är struken.
+- (ingen pågående session)
+
+#### Utbildningen är omräknad — session 7, klar 2026-07-28
+
+Alla 61 enheter genomgångna, nio löften omräknade. Ämnet gick 359 → **191
+mdkr** och rikssumman till **2 682 196 mkr**. Två fel bar nästan hela
+förändringen, och båda är sådana som går att leta efter i vilket ämne som
+helst:
+
+**1. En nivå räknades som om den gällde från första dagen.** Liberalernas mål
+om fyra procent av bruttonationalprodukten till forskning och Moderaternas
+125 000 nya utbildningsplatser stod båda på slutnivån gånger fyra. Inget av
+löftena anger vilket år nivån ska vara nådd. Regeln från försvaret gäller även
+här: **ett mål som nås i slutet av perioden kostar genomsnittet av
+upptrappningen.** 10 000 → 5 000 respektive 12 500 → 5 000 mkr/år. Leta efter
+fler — formuleringar som "öka till", "bygga ut med" och "nå" utan årtal är
+mönstret.
+
+**2. Cirkelresonemang mellan två löften.** Liberalernas två spetsutbildnings-
+löften hämtade var sitt belopp ur det andra: det ena skrev "jämförbart löfte
+~1 500", det andra "jämförbart löfte hos samma parti: 2 000". Ingen av dem
+vilade på något utanför sig själv, och de var dessutom oense om vad det andra
+sa. **Läs alltid vad ett "jämförbart löfte" faktiskt står på innan du lutar
+dig mot det.**
+
+**En missad gruppmedlem.** Kristdemokraternas löfte om mindre klasser hörde
+hemma i `g-mindre-klasser` redan när den gruppen harmoniserades, men missades.
+Det stod därför kvar på 12 000 mkr/år medan de tre andra låg på 2 700 — och
+långt över uträkningen i sitt eget fält, som räknade fram 1,6–5,5 miljarder.
+**När du harmoniserar en grupp: sök på åtgärden i hela datat, inte bara bland
+gruppens befintliga medlemmar.**
+
+**Statligt huvudmannaskap för skolan: 15 000 → 3 000 mkr/år.** Den tidigare
+uträkningen avvisade med rätta bruttokostnaden för hela skolan (~190 mdkr) men
+lade i stället in en utjämning som skulle lyfta underfinansierade kommuner —
+något löftet inte säger ett ord om. Kvar är omställningen: en ny statlig
+organisation som ska anställa en kvarts miljon personer. Utjämningsscenariot
+ligger nu i spannets övre ände, där osäkerhet hör hemma.
+
+**Ett utredningslöfte nollat.** Miljöpartiets löfte om ersättning för
+skolornas utbudsansvar lovar att "en översyn kompletteras med förslag" — ett
+utredningsuppdrag, inte en reform med en nivå. 18 000 mkr för perioden bort.
+
+**Ett belopp uppåt:** Sverigedemokraternas besparing på modersmålsundervisning
+och tolkhjälp stod på 1 400 medan uträkningen angav 2 200. Uträkningen skriver
+nu också ut varför en besparing hos kommunerna räknas som statlig — tar staten
+bort en skyldighet den själv ålagt kommunerna minskar den ersättningen i samma
+mån. Det är samma princip som gör en ny skyldighet till en statlig kostnad, och
+den användes redan åt det hållet i ett av Moderaternas lärarlöften.
 
 #### Välfärden är färdiggången — session 6, klar 2026-07-28
 
