@@ -532,7 +532,10 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- (ingen pågående session)
+- **Session 8 — klimat-miljö, hela ämnet.** Gren
+  `claude/session-5-valfarden-sbny1t` (samma grennamn, nytt spår efter att
+  session 7 slagits ihop). Rör de 38 räkneenheterna i ämnet klimat-miljö.
+  Ingen annan session bör röra klimatlöften förrän raden är struken.
 
 #### Utbildningen är omräknad — session 7, klar 2026-07-28
 
