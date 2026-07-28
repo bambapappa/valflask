@@ -410,20 +410,20 @@ procentsats utan erfarenhet bakom). Det ligger i session 10.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json`, uppdaterad efter session 2. En **räkneenhet**
+Mätt på `data/promises.json`, uppdaterad efter session 3. En **räkneenhet**
 är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
-av sitt högsta belopp. 424 aktiva löften blir 374 räkneenheter, varav 237 bär
-ett belopp över noll. Pengarna är kraftigt snedfördelade: hälften av
-mandattotalen ligger i elva enheter, 80 procent i 40 och 95 procent i 89.
-Snedfördelningen har jämnats ut något — de tyngsta enheterna var också de
-mest felräknade.
+av sitt högsta belopp. 421 aktiva löften blir 364 räkneenheter, varav 225 bär
+ett belopp över noll. Pengarna är fortfarande snedfördelade, men mindre än
+när planen skrevs: hälften av mandattotalen ligger nu i 15 enheter, 80 procent
+i 40 och 95 procent i 88. Det var alltså de tyngsta enheterna som var mest
+felräknade — vilket är precis vad ordningen i planen bygger på.
 
 | # | Session | Enheter | Tankenivå |
 |---|---|---|---|
 | 1 | ~~**Tandvården**~~ **KLAR 2026-07-27.** 4 löften på 2 enheter blev 1 grupp; ämnet gick från 120 000 till 28 000 mkr. Se avsnittet nedan | klar | **max** |
 | 2 | ~~**Skatter, de elva tyngsta**~~ **KLAR 2026-07-27.** 17 löften, ämnet gick från 2 817 till 1 381 mdkr. Se avsnittet nedan | klar | **max** |
-| 3 | Skatter, resten | 43 | hög |
-| 4 | **Försvar, hela ämnet** — 1 437 mdkr, varav 760 i en enda grupp. **Nu det tyngsta ämnet som är kvar — ta det före rad 3** | 19 | **max** |
+| 3 | ~~Skatter, resten~~ **KLAR 2026-07-27.** 15 omräknade, 3 tillbakadragna; ämnet gick från 1 381 till 1 110 mdkr. Se avsnittet nedan | klar | hög |
+| 4 | ~~**Försvar, hela ämnet**~~ **KLAR 2026-07-27.** 12 löften, ämnet gick från 1 437 till 460 mdkr. Se avsnittet nedan | klar | **max** |
 | 5 | **Välfärd, de tyngsta** (tandvården är redan gjord i session 1) | 12 | **max** |
 | 6 | Välfärd, resten | 73 | hög |
 | 7 | Utbildning, hela ämnet, tyngsta först | 61 | hög |
@@ -431,11 +431,12 @@ mest felräknade.
 | 9 | Övrigt (25) och infrastruktur (11) | 36 | hög |
 | 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
 
-Ämnesordningen är mandattotalen, efter session 2: **försvar 1 437 mdkr,
-skatter 1 381**, välfärd 540, utbildning 414, klimat-miljö 268, övrigt 120,
-rättsväsende 71, infrastruktur 63, migration 45. Försvaret har alltså gått om
-skatterna och bör tas härnäst. Löften som ger staten pengar ligger kvar i
-sitt eget ämne och räknas om i samma session som resten av ämnet.
+Ämnesordningen är mandattotalen, efter session 3: skatter 1 110 mdkr (klart),
+**välfärd 540**, försvar 460 (klart), **utbildning 414**, klimat-miljö 268,
+övrigt 120, rättsväsende 71, infrastruktur 63, migration 45. Skatterna och
+försvaret är alltså genomgångna; härnäst står välfärden (raderna 5 och 6) och
+därefter utbildningen. Löften som ger staten pengar ligger kvar i sitt eget
+ämne och räknas om i samma session som resten av ämnet.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
 löften vilar på, eller när en enskild enhet väger över hundra miljarder för
@@ -458,6 +459,16 @@ Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
 max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
+
+*Utfall session 3:* 45 enheter genomgångna, varav 18 löften ändrades — resten
+kontrollerades och lämnades. En hög-session klarar alltså gott och väl de
+40–60 enheter planen gissade, **så länge ämnets tunga enheter redan är
+gjorda**: de små löftena tar tid bara när de visar sig vara dubbletter.
+
+*Utfall session 4:* elva enheter (tolv löften). Hela ämnet vilade på en enda
+föråldrad siffra — vad försvaret kostar i dag. **Kontrollera basåret innan du
+rör beloppen:** går flera löften i samma ämne mot samma nuläge, räcker det att
+det nuläget är fel för att hela ämnet ska bli fel.
 
 *Utfall session 2:* elva enheter (sjutton löften) på en session, alltså i
 linje med gissningen för en max-session. Tre av de fyra stora fynden hittades
@@ -495,6 +506,85 @@ avgjord.
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
 - (ingen pågående session)
+
+#### Skatteämnet är färdiggånget — session 3, klar 2026-07-27
+
+Femton löften omräknade, tre tillbakadragna. Ämnet gick från 1 381 till 1 110
+mdkr och rikssumman till **3 091 596 mkr**. Inga stora enskilda fynd som i
+session 2 — det här var städning, men fyra mönster går igen och är värda att
+leta efter i varje ämne:
+
+**1. Samma parti lovar samma sak i flera formuleringar.** Liberalerna hade
+*tre* löften om skattefritt sparande och ett fjärde om att hälften ska vara
+kvar av löneökningen, som är samma sak som partiets löften om statlig
+inkomstskatt. Fyra nya grupplänkningar gjordes, varav tre inom ett och samma
+parti. **Sök på partinivå innan du prissätter — inte bara mellan partier.**
+
+**2. Sammanfattande citat som räknar upp partiets egna löften.** MP:s citat om
+"slopad karensdag och kortare arbetstid" nämner två åtgärder som partiet lovar
+var för sig och som redan är prissatta. Nollat. Fyra andra nollades på samma
+grund eller för att de är uppräkningar utan nivå.
+
+**3. Belopp som ligger utanför sitt eget spann.** C:s löfte om billigare att
+anställa långtidsarbetslösa stod på 5 000 mkr/år fast uträkningen i samma fält
+angav 500–3 000. **Det är andra sessionen i rad som hittar ett sådant** — efter
+beredskapsapoteken i försvaret. Sökningen som skulle fånga dem missade båda.
+
+**4. Fel kostnadstyp.** MP:s gruvskatt låg som en *utgift* trots att den ger
+staten pengar, alltså räknades den åt fel håll. En höjd brytpunkt låg också som
+utgift i stället för sänkt skatt.
+
+Dessutom: matmomsen satt på regeringens egen siffra (skattebortfallet för den
+tillfälliga sänkningen är 37,2 mdkr för april 2026–december 2027, alltså ~21
+mdkr/år; sänkningen gäller redan till och med 2027, så löftet om permanentning
+kostar bara åren därefter), och införandet av euron ändrat från årlig kostnad
+till engångskostnad.
+
+**Tre citat i dåtid tillbakadragna** (M): "När matmomsen halverades…",
+"Pensionsspararna har mer pengar på kontot…", "Vi har sänkt skatten på arbete
+och pension…". Alla tre beskriver genomförd politik utan åtagande om
+framtiden — samma grund som de två som drogs tillbaka tidigare. **Leta vidare
+i övriga ämnen; extraktionen skiljer fortfarande inte på löfte och skryt.**
+
+#### Försvaret är omräknat — session 4, klar 2026-07-27
+
+Tolv löften i elva räkneenheter. Ämnet gick från 1 437 till 460 mdkr och
+rikssumman till **3 362 596 mkr**. Ett enda faktafel bar det mesta:
+
+**Uträkningarna trodde att försvarsanslagen ligger på omkring 120 miljarder
+kronor per år, alltså två procent av BNP. De är 175 miljarder 2026** — 2,8
+procent enligt Natos sätt att räkna — **och beslutade planer tar dem till 3,1
+procent från 2028.** Skillnaden mot det som redan är beslutat är alltså
+betydligt mindre än skillnaden mot den gamla siffran.
+
+**Fem procent av BNP: 190 000 → 50 000 mkr/år.** Fem procent är 312 miljarder,
+alltså 118 över den beslutade banan när målet är nått. Men Natos mål gäller
+2035 och Sverige siktar på 2030 — sista året i mandatperioden. **Ett mål som
+nås i slutet av perioden kostar inte slutnivån gånger fyra, utan genomsnittet
+av upptrappningen.** Den regeln lär återkomma. M:s löfte om Natos mål till
+2030 är grupplänkat med L:s och C:s: samma mål, samma upprustning, kan bara
+genomföras en gång.
+
+**Stödet till Ukraina har också en beslutad ram: 40 mdkr/år för 2026 och
+2027.** C:s löfte om minst en procent av bruttonationalinkomsten (~65 mdkr)
+kostar skillnaden: 25 000 mkr/år. M:s löfte om fortsatt starkt stöd nollat —
+det anger ingen nivå över den som redan gäller.
+
+**Gripenplanen: 20 000 mkr/år → 5 000 mkr som engångskostnad.** En gåva av
+begagnade flygplan sker en gång, men beloppet räknades fyra gånger. Att
+Ukraina *köper* Gripen E/F är dessutom en intäkt för Sverige, inte en utgift —
+löftet hade ingen uträkning alls.
+
+**Ett belopp rättat rakt av:** beredskapsapoteken stod på 600 mkr/år fast
+uträkningen angav 300 (en miljon kronor per apotek gånger 300 apotek). Samma
+sorts fel som genomgången av belopp mot uträkning letade efter — **den missade
+alltså minst ett.**
+
+Dessutom: S:s omfattande upprustning 60 000 → 25 000 (det gamla beloppet var
+halva försvarsbudgeten, tolkat ur ordet *omfattande*), KD:s allmänna värnplikt
+fick äntligen en uträkning som vilar på statens kostnad per värnpliktig
+(217 000 kr för ett helt år), och beredskapspengen till kommuner
+grupplänkades mellan C och MP.
 
 #### Skatternas tyngsta är omräknade — session 2, klar 2026-07-27
 

@@ -1220,3 +1220,29 @@ kostnaden är verklig och direkt. Behålla ett antagande om statlig kompensation
 — nej, den finns inte i löftet och kan inte beläggas.
 
 **Påverkan:** `data/promises.json` (p-2026-0327), `HANDOFF.md`.
+
+---
+
+## 2026-07-27 — Ett mål som nås i slutet av perioden kostar upptrappningen, inte slutnivån
+
+**Beslut:** Lovar ett parti att nå en nivå vid ett årtal — fem procent av BNP,
+ett antal anställda, en andel — prissätts löftet som den genomsnittliga årliga
+kostnaden under mandatperioden 2027–2030, inte som slutnivån gånger fyra. Nås
+målet först under periodens sista år är det bara den sista årsbudgeten som bär
+hela beloppet, och uträkningen ska skriva ut vilken bana den räknar med.
+
+**Motiv:** Löftena om Natos mål på fem procent av BNP låg på 190 000 miljoner
+kronor per år, alltså 760 000 för mandatperioden. Två fel bar det: att dagens
+försvarsanslag antogs vara 120 miljarder kronor när de är 175, och att
+slutnivån räknades som om den gällde från första dagen. Natos mål gäller 2035
+och Sverige siktar på 2030. En upptrappning som når sitt mål sista året kostar
+i genomsnitt ungefär hälften av slutnivåns gap under perioden — att räkna den
+som fyra fulla år är att ta betalt för pengar som inte hinner betalas ut.
+
+**Förkastade alternativ:** Räkna slutnivån varje år — enkelt, men det gör varje
+långsiktigt mål dyrare än vad någon regering hinner betala under en
+mandatperiod. Räkna bara det sista årets kostnad — nej, upptrappningen dessförinnan
+kostar också pengar.
+
+**Påverkan:** `data/promises.json` (gruppen `g-forsvar-fem-procent-bnp`),
+`HANDOFF.md`. Regeln gäller alla löften med ett årtal och en nivå.
