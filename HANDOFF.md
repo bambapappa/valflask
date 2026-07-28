@@ -517,7 +517,12 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- (ingen pågående session)
+- **Session 6 — välfärdens resterande enheter.** Gren
+  `claude/session-5-valfarden-sbny1t` (samma grennamn, nytt spår efter att
+  session 5 slagits ihop). Rör de 72 återstående räkneenheterna i välfärden,
+  inklusive den öppna frågan om Centerpartiets och Miljöpartiets tillägg till
+  ensamstående föräldrar. Ingen annan session bör röra välfärdslöften förrän
+  raden är struken.
 
 #### Välfärdens tyngsta är omräknade — session 5, klar 2026-07-28
 
