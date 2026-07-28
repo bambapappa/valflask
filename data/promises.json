@@ -3096,13 +3096,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10625,
-      "msek_base": 12500,
-      "msek_high": 14375,
+      "msek_low": 3000,
+      "msek_base": 5000,
+      "msek_high": 10250,
       "basis": "parti",
-      "basis_url": null,
-      "method_note": "Källan anger exakta platser: 72 000 yrkesvux + 53 000 yrkeshögskola. Kostnad per plats ca 100 000 kr/år. Uträkning: (72 000 + 53 000) × 100 000 = 12,5 mdr/år. Notera: många platser redan finansierade.",
-      "confidence": 0.85
+      "basis_url": "https://www.skolverket.se/skolutveckling/statsbidrag/statsbidrag-for-regionalt-yrkesvux-2025",
+      "method_note": "Partiets egna platstal, prissatta med statens egen marginalkostnad per plats. Löftet säger inte vilket år platserna finns, så beloppet är genomsnittet under perioden.",
+      "confidence": 0.5,
+      "calculation": "Partiet anger själv antalet platser: 72 000 inom yrkesvux och 53 000 inom yrkeshögskolan, alltså 125 000. Priset per plats tas från statens egen senaste utbyggnad: 900 miljoner kronor gav omkring 11 000 fler årsstudieplatser i yrkesvux, alltså omkring 82 000 kronor per plats och år. Fullt utbyggt kostar 125 000 platser därmed omkring 10 250 miljoner kronor per år. Men löftet säger inte att platserna finns från första dagen, och en utbyggnad som når sin nivå i slutet av mandatperioden kostar i genomsnitt ungefär hälften under perioden: 5 000 miljoner kronor per år. Att staten redan finansierar omkring 72 000 yrkesvuxplatser visar dessutom hur stor utbyggnaden är — den fördubblar i praktiken dagens nivå."
     },
     "financing_claimed": {
       "described": false,
@@ -3112,7 +3113,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 12 500 till 5 000 miljoner kronor per år, och löftet har fått en öppen uträkning som det saknade. Två ändringar: priset per plats vilar nu på statens egen senaste utbyggnad av yrkesvux (900 miljoner kronor för omkring 11 000 platser) i stället för på en rund hundratusenlapp, och beloppet räknas som genomsnittet under mandatperioden eftersom löftet inte säger att platserna finns från första dagen. Platstalen är fortfarande partiets egna.",
+        "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -4823,13 +4830,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 1000,
-      "msek_base": 2000,
+      "msek_base": 1500,
       "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Spetsutbildning + hjälpklasser i skolan. ~2 mdr/år.",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Jämförbart löfte: fler spetsutbildningar i natur/teknik ~1500 miljoner kronor per år. Detta löfte gäller enbart matematik men adderar stödundervisning. Lågt scenario: begränsad satsning ~500 miljoner kronor per år. Högt scenario: fullskalig reform med många nya speciallärare och spetsprogram ~3000 miljoner kronor per år. Basfallets 1500 miljoner kronor per år följer jämförelsen."
+      "method_note": "Spetsundervisning i matematik plus hjälpklass med speciallärare. Delat löfte med partiets löfte om fler spetsutbildningar i natur och teknik.",
+      "confidence": 0.35,
+      "calculation": "Löftet gör två saker: spetsundervisning för elever som nått långt i matematiken och hjälpklass med speciallärare för dem som behöver mer stöd. Båda delarna handlar om lärartid i mindre grupper. Antag att omkring 2 000 skolor får en halv till en extratjänst var för ändamålet, à omkring 700 000 kronor per år inklusive arbetsgivaravgifter: 700–1 400 miljoner kronor. Med material, fortbildning och samordning läggs basbeloppet på 1 500 miljoner kronor per år. Låg: 1 000, en satsning som når färre skolor. Hög: 3 000, om varje skola får full bemanning för båda delarna."
     },
     "financing_claimed": {
       "described": false,
@@ -4839,7 +4846,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 2 000 till 1 500 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som angav 1 500 som basfall. Uträkningen vilade dessutom på partiets andra spetsutbildningslöfte, vars uträkning i sin tur vilade på det här — de två pekade på varandra. Båda vilar nu på vad extra lärartid faktiskt kostar.",
+        "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -5383,7 +5396,7 @@
   },
   {
     "id": "p-2026-0107",
-    "group_id": null,
+    "group_id": "g-mindre-klasser",
     "title": "I skolan ska det vara lärare – inte skärmar – som präglar undervisningen",
     "slug": "i-skolan-ska-det-vara-larare-inte-skarmar-som-praglar-undervisningen",
     "parties": [
@@ -5406,14 +5419,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2400,
-      "msek_base": 12000,
-      "msek_high": 21600,
+      "msek_low": 1500,
+      "msek_base": 2700,
+      "msek_high": 4500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Mindre klasser i grundskolan. Samma beräkning som S #14. ~12 mdr/år.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Ca 1 miljon grundskoleelever, snitt 20 elever/klass = 50 000 klasser. Minskning 1–3 elever → 2 600–7 900 fler klasser. Lärarkostnad per klass ~600 000 kr per år (lön, sociala avgifter, overhead). Tillkommer lokalkostnad. Totalt 1,6–5,5 miljarder kronor per år, avrundat till 1,5–5,0 miljarder kronor. Staten antas finansiera via ökade generella eller riktade statsbidrag."
+      "method_note": "Mindre klasser i grundskolan. Delat löfte med Socialdemokraternas och Liberalernas löften om samma sak — samma politik räknas en gång och vilar på samma uträkning.",
+      "confidence": 0.45,
+      "calculation": "Fler lärare och mindre klasser är samma åtgärd: en klass till kräver en lärare till. Grundskolan har omkring 1 100 000 elever och en genomsnittlig klass på 21,5 elever, alltså omkring 51 200 klasser. Ett tak på tjugo elever ger omkring 55 000 klasser — 3 800 fler. Varje ny klass kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år, vilket ger 2 700 miljoner kronor per år vid full utbyggnad i hela grundskolan. Bara ett av löftena anger en nivå — taket på tjugo elever — så den nivån används för alla, och att den är lånad står utskrivet. Samma politik hos flera partier räknas en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -5423,7 +5436,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 12 000 till 2 700 miljoner kronor per år och löftet grupplänkat med Socialdemokraternas och Liberalernas löften om mindre klasser. Löftet hörde hemma i den harmoniseringen redan när den gjordes men missades, och stod därför kvar på ett belopp som var mer än fyra gånger så högt som de andra löftena om samma sak. Beloppet låg dessutom långt över uträkningen i sitt eget fält, som räknade fram 1,6–5,5 miljarder kronor per år.",
+        "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7854,9 +7873,9 @@
       "msek_high": 2250,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Estimat: Fler spetsutbildningar i natur/teknik i grund- och gymnasieskola. Ca 100–200 spetsutbildningar × extra resurs estimerat 5–10 mdr/år totalt. Del av Fas 1:s 'Spetsutbildning 2 mdr/år' men natur",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Jämförbart löfte om spetsutbildning i matematik hos samma parti: 2000 miljoner kronor per år för spetsmatematik + hjälpklass. Antar att spetsdelen är 30–50% (600–1000 miljoner kronor). Vårt löfte (natur+teknik) bedöms ha liknande ambitionsnivå men utan stödinsatser: 300–1500 miljoner kronor. Alternativ kalkyl: 10 000–20 000 elever med förstärkt undervisning à 20 000–40 000 kr extra per år = 200–800 miljoner kronor. Bredd på grund av otydlighet."
+      "method_note": "Fler spetsutbildningar i natur och teknik: extra lärartid i mindre grupper. Delat löfte med partiets löfte om spetsundervisning i matematik och hjälpklass.",
+      "confidence": 0.35,
+      "calculation": "Löftet vill se fler spetsutbildningar i natur och teknik men anger varken hur många eller hur stora. Kostnaden är extra lärartid i mindre grupper: antag 10 000–20 000 elever med förstärkt undervisning à 20 000–40 000 kronor extra per år, alltså 200–800 miljoner kronor, plus utrustning och laborationsmaterial i natur och teknik som är dyrare än vanlig undervisning. Basbeloppet läggs på 1 500 miljoner kronor per år, samma som partiets löfte om spetsundervisning i matematik med hjälpklass, eftersom de två löftena beskriver samma sorts satsning och ska kosta lika."
     },
     "financing_claimed": {
       "described": false,
@@ -7871,6 +7890,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Uträkningen omskriven. Den vilade tidigare på partiets andra spetsutbildningslöfte, vars uträkning i sin tur vilade på det här — de två pekade på varandra i stället för på något utanför sig själva. Beloppet är oförändrat, 1 500 miljoner kronor per år, och är nu detsamma som gruppens andra löfte.",
+        "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
       }
     ],
     "extraction": {
@@ -13958,13 +13982,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 2000,
-      "msek_base": 5000,
+      "msek_base": 3500,
       "msek_high": 12000,
       "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Uppskattning baserad på antal lärare (ca 200 000) och en statlig lönesatsning på i snitt 2 000–5 000 kr/mån. Avlastning mentorer antas kosta ytterligare genom fler anställningar. Stort spann pga. okla",
+      "basis_url": "https://www.skolverket.se/styrning-och-ansvar/statsbidrag/hitta-statsbidrag/statsbidrag-for-lararlonelyftet-2025-26",
+      "method_note": "Statlig lönesatsning på lärare plus avlastning av mentorer. Lönerna sätts av kommunerna och de andra huvudmännen, så statens del är ett riktat bidrag.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~200 000 lärare × 1 500–5 000 kr/mån × 12 mån = 3,6–12 miljarder kronor. Mentoravlastning: 0,5–5 miljarder kronor. Totalt 4,1–17 miljarder kronor, avrundat till 2 000–20 000 miljoner kronor för att fånga osäkerhet."
+      "calculation": "Lärarlöner sätts av kommunerna och de andra skolhuvudmännen, inte av staten, så det staten kan lova är ett riktat bidrag. Löftet anger ingen nivå, så beloppet ankras i vad statens nuvarande lönesatsningar kostar: Lärarlönelyftet ligger på 3 000 miljoner kronor för läsåret 2025/26 och statsbidraget för karriärtjänster på 1 852 miljoner kronor per år. Ett nytt lyft i samma storlek som det befintliga ger 3 000 miljoner kronor per år. Avlastningen av mentorer, som kräver fler anställda i skolan, läggs på omkring 500 miljoner. Sammantaget 3 500 miljoner kronor per år. Det höga alternativet, 12 000, motsvarar ett påslag på flera tusen kronor i månaden till samtliga lärare."
     },
     "financing_claimed": {
       "described": false,
@@ -13974,7 +13998,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 5 000 till 3 500 miljoner kronor per år. Den tidigare uträkningen byggde på ett eget antagande om 1 500–5 000 kronor i månaden till alla lärare. Löftet anger ingen nivå, så beloppet vilar nu på vad statens faktiska lönesatsningar kostar — Lärarlönelyftet 3 000 miljoner kronor och karriärtjänsterna 1 852 miljoner. Uträkningen skriver också ut att lönerna sätts av kommunerna och att statens del är ett riktat bidrag.",
+        "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14053,14 +14083,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 40000,
+      "msek_low": 1000,
+      "msek_base": 3000,
+      "msek_high": 20000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet gäller att staten tar över huvudmannaskapet för skolan. Kostnaden avser NETTO — reformens verkliga tillskott (utjämning/likvärdighet, central administration, omställning) — inte skolans hela driftkostnad (~190 mdkr) som redan betalas i dag via kommunerna. Bas 15 000, spann 5 000–40 000 miljoner kronor per år.",
-      "calculation": "Skolans hela driftkostnad är ~190 miljarder kronor per år (grundskola ~140 + gymnasium ~50), men de pengarna spenderas redan i dag via kommunerna och kommunalskatten. Ett statligt huvudmannaskap flyttar vem som betalar — det är en omfördelning, inte 190 miljarder kronor i ny utgift. Den verkliga nettokostnaden är utjämning (lyfta underfinansierade skolor mot en gemensam nivå), central administration och omställning, storleksordning 5–40 miljarder kronor per år, bas 15. En efterhandsberäkning som bokförde hela bruttot (200 miljarder kronor) avvisades vid granskningen som dubbelräkning.",
-      "confidence": 0.4
+      "method_note": "Statligt huvudmannaskap för skolan. Att staten tar över en utgift kommunerna redan betalar är omfördelning, inte ny kostnad — kvar blir omställningen och den nya administrationen. Löftet lovar ingen högre nivå på skolans pengar.",
+      "calculation": "Skolans driftkostnad är omkring 190 miljarder kronor per år, men de pengarna betalas redan i dag via kommunerna. Att flytta huvudmannaskapet flyttar vem som betalar — det är en omfördelning, inte 190 miljarder i ny utgift, och kommunalskatten sänks i samma mån som den statliga höjs. Kvar som verklig ny kostnad blir omställningen: en ny statlig organisation som ska anställa omkring en kvarts miljon personer, löne- och it-system, och dubbel administration under övergången. Det läggs på 3 000 miljoner kronor per år, vår egen uppskattning. Löftet säger inget om att skolans pengar ska öka. Det höga alternativet, 20 000, är vad det skulle kosta om staten dessutom lyfter underfinansierade kommuner mot en gemensam nivå — men det står inte i löftet.",
+      "confidence": 0.3
     },
     "financing_claimed": {
       "described": false,
@@ -14075,6 +14105,11 @@
         "date": "2026-07-24",
         "change": "Beloppet (15 000 miljoner kronor per år, spann 5 000-40 000) bekräftat vid den manuella granskningen av avvikande estimat. En efterhandsberäkning på 200 000 (hela skolans driftkostnad) avvisades - den dubbelräknar pengar som redan spenderas via kommunerna; ett huvudmannaskap flyttar bara vem som betalar. Metodnoten förtydligad och en öppen uträkning tillagd om netto-vs-brutto.",
         "commit": "8ef8c7a3b9695f98e6e85f1390728658d2d39f56"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 15 000 till 3 000 miljoner kronor per år. Den tidigare uträkningen avvisade med rätta bruttokostnaden för hela skolan, men lade i stället in en utjämning som skulle lyfta underfinansierade skolor mot en gemensam nivå — något löftet inte säger ett ord om. Kvar som verklig ny kostnad är omställningen och den nya administrationen. Utjämningsscenariot ligger nu i spannets övre ände i stället för i basbeloppet, där osäkerhet hör hemma.",
+        "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
       }
     ],
     "extraction": {
@@ -14346,14 +14381,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 20000,
+      "msek_low": 2500,
+      "msek_base": 5000,
+      "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar att offentliga FoU-anslag ökar från ca 0,9% till 1,0–1,2% av BNP (BNP ~6 200 mdkr). Osäkerhet om privat medfinansiering och ambitionsnivå.",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. BNP cirka 6 200 miljarder kronor. Nuvarande total FoU cirka 3,4% av BNP, offentlig FoU cirka 0,9% av BNP (andel 27%). För totalt 4% behövs offentlig nivå på 1,07% av BNP, en ökning med 0,16% av BNP ≈ 9 900 miljoner kronor, avrundat 10 000 miljoner kronor. Låg: mindre statlig andel (5 000 miljoner kronor). Hög: staten driver hela ökningen (20 000 miljoner kronor)."
+      "method_note": "Målet gäller privata och offentliga anslag tillsammans. Beloppet är statens del av ökningen, räknad som genomsnittet under upptrappningen till målet.",
+      "confidence": 0.35,
+      "calculation": "Sveriges samlade forskningssatsningar ligger på omkring 3,4 procent av bruttonationalprodukten, som är omkring 6 200 miljarder kronor. För att nå fyra procent krävs ungefär 0,6 procentenheter mer. Det offentliga står för omkring 27 procent av dagens forskning, och behåller staten sin andel blir dess del av ökningen omkring 0,16 procentenheter, alltså omkring 9 900 miljoner kronor per år vid målet. Löftet säger inte vilket år målet ska vara nått, och ett mål som nås i slutet av mandatperioden kostar i genomsnitt ungefär hälften under perioden: 5 000 miljoner kronor per år. Resten av ökningen ska komma från privata anslag, som staten inte bestämmer över."
     },
     "financing_claimed": {
       "described": false,
@@ -14363,7 +14398,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 10 000 till 5 000 miljoner kronor per år. Den tidigare uträkningen räknade målnivån som om den gällde från första dagen. Löftet anger inget år, och ett mål som nås i slutet av mandatperioden kostar genomsnittet av upptrappningen — samma regel som redan tillämpas på försvarsmålen. Uträkningen skriver också ut att större delen av ökningen ska komma från privata anslag, som staten inte bestämmer över.",
+        "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20235,14 +20276,14 @@
     "cost": {
       "type": "besparing",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1400,
-      "msek_high": 2500,
+      "msek_low": 1500,
+      "msek_base": 2200,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på statsbidrag för modersmålsundervisning (ca 1,2 mdkr) och statliga tolkkostnader (ca 0,2-0,5 mdkr). Osäkerhet kring omfattning av begränsning.",
+      "method_note": "Besparing. Tar staten bort en skyldighet den ålagt kommunerna minskar den ersättningen i samma mån, så kommunernas minskade kostnad blir en statlig besparing.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Modersmålsundervisning: ~180 000 elever i grundskola × ~9 000 kr/elev ≈ 1 620 miljoner kronor; gymnasiet ≈ 100 miljoner kronor. Totalt ≈ 1,7 miljarder kronor. Tolk: offentlig sektor totalt ≈ 2,5 miljarder kronor, varav statlig del (domstolar, migration m.m.) ≈ 1 miljarder kronor. En begränsning av rätten kan spara 0,3–0,8 miljarder kronor. Sammanlagd besparing ≈ 2,0–2,5 miljarder kronor per år, med bas ~2,2 miljarder kronor."
+      "calculation": "Två delar. Modersmålsundervisningen omfattar omkring 180 000 elever i grundskolan till omkring 9 000 kronor per elev, alltså omkring 1 620 miljoner kronor, plus omkring 100 miljoner i gymnasiet. Undervisningen utförs av kommunerna, men skyldigheten är statens genom skollagen: tar staten bort en skyldighet den ålagt kommunerna minskar den också ersättningen till dem, så besparingen hamnar i statens budget. Tolkhjälpen kostar det offentliga omkring 2 500 miljoner kronor, varav statens egen del — domstolar och migration — är omkring 1 000 miljoner; en begränsning av rätten sparar 300–800 miljoner. Sammanlagt omkring 2 200 miljoner kronor per år."
     },
     "financing_claimed": {
       "described": false,
@@ -20252,7 +20293,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 1 400 till 2 200 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som räknade fram 2,0–2,5 miljarder kronor med 2,2 som basbelopp. Uträkningen skriver nu också ut varför en besparing hos kommunerna räknas som statlig: tar staten bort en skyldighet den själv ålagt kommunerna minskar den ersättningen till dem i samma mån. Det är samma princip som gör att en ny skyldighet räknas som en statlig kostnad.",
+        "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -20744,14 +20791,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2700,
-      "msek_base": 4500,
-      "msek_high": 8000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar påslag 2-5% på skolpeng (~115 tkr/elev) för 1,2 milj kommunala elever i grund- o gymnasieskola. Ger 2,7-6,8 mdkr/år. Osäkerhet om nivå och omfattning.",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Det finns omkring 1,2 miljoner elever i offentlig grundskola och gymnasium. En extra ersättning på 2 000–6 000 kronor per elev och år ger 2,4–7,2 miljarder kronor per år. Basantagandet 4 500 miljoner kronor ligger i linje med ett jämförbart löfte från Centerpartiet om reformerad skolpeng. Antar att reformen genomförs som ett riktat statsbidrag till kommunerna för att täcka merkostnaderna."
+      "method_note": "Löftet är att en översyn ska kompletteras med förslag. Utredningen prissätts, inte den politik den kan leda till.",
+      "confidence": 0.55,
+      "calculation": "Löftet är att en översyn av friskolesektorn ska kompletteras med förslag om hur skolor ska ersättas för sitt utbudsansvar. Det som lovas är alltså ett utredningsuppdrag, inte en reform med en nivå — hur stor ersättningen skulle bli, och om den ska betalas av staten eller flyttas mellan skolor inom kommunens skolpeng, är just det utredningen ska svara på. Ett utredningsuppdrag prissätts efter vad utredningen kostar, vilket är försumbart i sammanhanget, inte efter den politik den kan leda till. Noll betyder alltså inte att politiken är gratis: den prissätts när partiet anger vad förslaget ska innehålla."
     },
     "financing_claimed": {
       "described": false,
@@ -20761,7 +20808,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet nollat, från 4 500 miljoner kronor per år. Löftet lovar att en översyn av friskolesektorn ska kompletteras med förslag — alltså ett utredningsuppdrag, inte en reform med en angiven nivå. Den tidigare uträkningen prissatte en tänkt ersättning på 2 000–6 000 kronor per elev, en nivå som varken står i löftet eller är avgjord. Samma bedömning som redan gäller för andra utrednings- och planlöften.",
+        "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
