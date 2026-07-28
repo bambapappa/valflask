@@ -386,7 +386,7 @@ från datat som gällde när krönikan skrevs (ögonblicksbild), aldrig dagens s
 
 ## 7. Läget just nu / pågående arbete
 
-*Uppdaterad 2026-07-27.*
+*Uppdaterad 2026-07-28.*
 
 ### Nästa uppgift: räkna om beloppen på säkrare grund
 
@@ -424,19 +424,20 @@ felräknade — vilket är precis vad ordningen i planen bygger på.
 | 2 | ~~**Skatter, de elva tyngsta**~~ **KLAR 2026-07-27.** 17 löften, ämnet gick från 2 817 till 1 381 mdkr. Se avsnittet nedan | klar | **max** |
 | 3 | ~~Skatter, resten~~ **KLAR 2026-07-27.** 15 omräknade, 3 tillbakadragna; ämnet gick från 1 381 till 1 110 mdkr. Se avsnittet nedan | klar | hög |
 | 4 | ~~**Försvar, hela ämnet**~~ **KLAR 2026-07-27.** 12 löften, ämnet gick från 1 437 till 460 mdkr. Se avsnittet nedan | klar | **max** |
-| 5 | **Välfärd, de tyngsta** (tandvården är redan gjord i session 1) | 12 | **max** |
-| 6 | Välfärd, resten | 73 | hög |
-| 7 | Utbildning, hela ämnet, tyngsta först | 61 | hög |
+| 5 | ~~**Välfärd, de tyngsta**~~ **KLAR 2026-07-28.** 17 löften på 12 enheter; ämnet gick från 540 till 360 mdkr. Se avsnittet nedan | klar | **max** |
+| 6 | Välfärd, resten | 72 | hög |
+| 7 | Utbildning, hela ämnet, tyngsta först | 60 | hög |
 | 8 | Klimat-miljö, hela ämnet | 38 | hög |
 | 9 | Övrigt (25) och infrastruktur (11) | 36 | hög |
 | 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
 
-Ämnesordningen är mandattotalen, efter session 3: skatter 1 110 mdkr (klart),
-**välfärd 540**, försvar 460 (klart), **utbildning 414**, klimat-miljö 268,
-övrigt 120, rättsväsende 71, infrastruktur 63, migration 45. Skatterna och
-försvaret är alltså genomgångna; härnäst står välfärden (raderna 5 och 6) och
-därefter utbildningen. Löften som ger staten pengar ligger kvar i sitt eget
-ämne och räknas om i samma session som resten av ämnet.
+Ämnesordningen är mandattotalen, efter session 5: skatter 1 115 mdkr (klart),
+försvar 460 (klart), **välfärd 360** (tyngsta klara), **utbildning 359**,
+klimat-miljö 268, övrigt 120, rättsväsende 71, infrastruktur 63, migration 47.
+Skatterna, försvaret och välfärdens tyngsta är alltså genomgångna; härnäst
+står välfärdens resterande löften (rad 6) och därefter utbildningen. Löften
+som ger staten pengar ligger kvar i sitt eget ämne och räknas om i samma
+session som resten av ämnet.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
 löften vilar på, eller när en enskild enhet väger över hundra miljarder för
@@ -459,6 +460,13 @@ Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
 max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
+
+*Utfall session 5:* tolv enheter (sjutton löften), alltså i linje med
+gissningen för en max-session. Fyndet låg inte i räknefelen utan i att ämnet
+**behandlade samma sorts löfte olika beroende på parti**. Leta efter den
+sneda behandlingen, inte bara efter fel belopp: sortera ämnets löften efter
+form, inte efter belopp, och kontrollera att löften utan angiven nivå
+prissätts lika oavsett vem som gav dem.
 
 *Utfall session 3:* 45 enheter genomgångna, varav 18 löften ändrades — resten
 kontrollerades och lämnades. En hög-session klarar alltså gott och väl de
@@ -505,10 +513,102 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- **Session 5 — välfärden, de tyngsta enheterna.** Gren
-  `claude/session-5-valfarden-sbny1t`. Rör de tolv tyngsta räkneenheterna i
-  ämnet välfärd (tandvårdsgruppen hoppas över, den är gjord i session 1).
-  Ingen annan session bör röra välfärdslöften förrän raden är struken.
+- (ingen pågående session)
+
+#### Välfärdens tyngsta är omräknade — session 5, klar 2026-07-28
+
+Sjutton löften i tolv räkneenheter. Ämnet gick från 540 till 360 mdkr,
+utbildningen från 419 till 359 (ett löfte låg i fel ämne, se nedan) och
+rikssumman till **2 851 596 mkr**. Det stora fyndet var inte ett räknefel:
+
+**Ämnet prissatte samma sorts löfte olika beroende på vilket parti som gav
+det.** Ett löfte som pekar ut en riktning utan att ange någon nivå stod på
+noll hos några partier — "Vi ska satsa på vårdpersonalen", "Pensionen ska
+bli bättre", Sverigedemokraternas uppräkning av hela välfärden — och på
+tiotals miljarder hos andra med exakt samma form. Det är inte bara ett
+prisfel, det är en snedhet i behandlingen av partierna, och den var osynlig
+så länge man läste ett löfte i taget. **Sortera ämnets löften efter form och
+inte efter belopp, så syns det direkt.**
+
+Ordningen som gäller nu, och som är tillämpad rakt igenom ämnet:
+
+| Vad löftet säger | Hur det prissätts |
+|---|---|
+| Ingen åtgärd, ingen nivå ("satsa på välfärden") | noll |
+| Åtgärd utpekad, ingen nivå ("höja barnbidraget") | vad samma åtgärd senast faktiskt kostade |
+| Partiet anger nivån ("till 2 000 kronor") | partiets egen siffra |
+
+**Mellanraden är den nya.** Den fanns i praktiken redan — men den byggde på
+en gissad nivå, och gissningen var i flera fall lånad från ett annat partis
+konkreta löfte utan att det stod utskrivet. Nu är ankaret den senaste
+faktiska höjningen av samma förmån, vilket är samma sorts spårbar siffra
+som ett partis egen.
+
+**Barnbidraget bar hela mönstret.** Fyra partier lovar att höja det. Bara
+Kristdemokraterna anger en nivå (1 250 → 2 000 kronor). Vänsterpartiets
+"höja barnbidraget rejält" var prissatt till 18 000 mkr/år — nästan hela
+Kristdemokraternas konkreta höjning, med den partiets nivå lånad rakt av.
+Nu vilar alla fyra på Försäkringskassans utbetalningsstatistik (2,65 mdkr i
+december 2025 ≈ **1,9 miljoner barn**), och de som inte anger någon nivå
+prissätts som den senaste faktiska höjningen: **200 kronor i månaden, 2018**
+— samma steg som Socialdemokraterna föreslog hösten 2025. V gick till 5 000,
+KD till 17 000 (nära de 16,5 mdkr som angavs när löftet presenterades), och
+MP **upp** från 4 000 till 6 000: uträkningen hade räknat multiplikationen
+till hälften (2 miljoner × 200 kr × 12 mån angavs som 2,4 mdkr).
+
+**Sökningen efter en partisiffra betalade sig igen — den gången genom att
+bekräfta beloppet.** Slopat karensavdrag står kvar på 5 000 mkr/år, men det
+är nu Socialdemokraternas egen siffra för vad förslaget kostar statskassan,
+inte en efterhandsräkning på antal sjukfall. Det avgjorde också en fråga som
+såg ut att gå åt andra hållet: enligt regeln om att en lagändring bärs av
+arbetsgivarna borde beloppet ha skurits till statens egna anställda, men
+partiet anger själv statens kostnad, och **partiets egen siffra går före vår
+egen härledning**. Arbetsgivarnas 21–42 mdkr står nu utskrivna i uträkningen
+som det de är: en följd för dem, inte en post i statens budget.
+
+Samma sak för garantipensionen: V:s "historisk höjning" prissätts som den
+senaste faktiska historiska höjningen, riksdagsbeslutet i juni 2022 (upp till
+1 002 kr/mån), som enligt Pensionsmyndigheten kostade staten **10 467 mkr
+2023**. 12 000 → 10 000, men på en siffra i stället för på ett antagande.
+
+**Fem löften nollade**, alla breda uppräkningar: MP:s och V:s "kraftigt
+stärkta resurser till vård, socialtjänst, psykiatri och skola" (fyra ämnen i
+en mening, 60 000 mkr för perioden), Centerpartiets två vårdlöften och dess
+löfte om förebyggande arbete.
+
+**Ett löfte låg i fel ämne och dubblerade ett annat.** Centerpartiets
+"korta köerna, stärka den nära vården, satsa på ungas psykiska hälsa och ge
+skolan bättre förutsättningar" (p-2026-0316) står som *utbildning* men är
+samma politik som partiets vårdlöfte i välfärden. Det räknades om här i
+stället för att lämnas till session 7, eftersom det annars hade blivit noll i
+ett ämne och 60 000 i ett annat för samma sak. Det bar dessutom **fjärde
+sessionen i rad av samma fel**: beloppet stod på 15 000 mkr/år medan
+uträkningen i samma fält summerade delarna till 6 500 och angav spannet
+3 000–10 000. **Sökningen efter belopp utanför sin egen uträkning har nu
+missat minst fyra. Bygg om den eller lita inte på den.**
+
+**Ny grupp:** `g-aldreomsorg-satsning` (S + L). Båda lovar mer till
+äldreomsorgen utan att ange nivå, och det kan bara göras en gång. Båda står
+nu på 3 000 mkr/år, ankrat på att kommuner och regioner delade på närmare
+nio miljarder i riktade äldreomsorgsbidrag 2023 och att det största enskilda
+(Äldreomsorgslyftet) ligger på ~1,8 mdkr/år.
+
+Dessutom: MP:s pensionslöfte säger "bostadstillägget **eller**
+garantipensionen" men uträkningen prissatte båda och lade ihop dem, och den
+höjda pensionsavgiften betalar den högre allmänna pensionen med sig själv —
+den ligger utanför statsbudgeten och kostar den inget. SD:s a-kassa lovar
+"steg tas mot" en reform, inte reformen, och prissätts nu på den avgift
+kassorna faktiskt betalar in till staten (5,1 mdkr 2025).
+
+**Kontrollerat och lämnat orört:** gruppen om fast läkarkontakt (S, C, L,
+12 600 mkr). Den harmoniserades i en tidigare omgång, och den avvisade
+efterhandsberäkningen på 1 125 mkr står utskriven i noten — ett fattat
+beslut rivs inte upp utan nytt skäl. Tandvårdsgruppen är gjord i session 1.
+
+**Kvar att avgöra:** Centerpartiets och Miljöpartiets tillägg till
+ensamstående föräldrar är samma politik men varken grupplänkade eller
+harmoniserade — MP:s ligger i ett paket med höjt barnbidrag, så en
+grupplänkning skulle svälja även den delen. Ligger i session 6.
 
 #### Skatteämnet är färdiggånget — session 3, klar 2026-07-27
 

@@ -1246,3 +1246,42 @@ kostar också pengar.
 
 **Påverkan:** `data/promises.json` (gruppen `g-forsvar-fem-procent-bnp`),
 `HANDOFF.md`. Regeln gäller alla löften med ett årtal och en nivå.
+
+---
+
+## 2026-07-28 — Utpekad åtgärd utan nivå prissätts som åtgärden senast kostade
+
+**Beslut:** Ett löfte som pekar ut en bestämd åtgärd men inte säger hur mycket
+("höja barnbidraget", "en historisk höjning av garantipensionen", "tydligt
+höjda ambitioner i äldreomsorgen") prissätts på vad samma åtgärd senast
+faktiskt kostade: den senast genomförda höjningen av samma förmån, storleken
+på det befintliga statsbidraget. Ankaret ska stå utskrivet i uträkningen. Ett
+värdeord — "rejält", "historisk", "kraftigt" — är ingen nivå och får inte
+översättas till en siffra, och ett annat partis angivna nivå får inte lånas in
+som basbelopp utan att lånet står utskrivet. Osäkerheten hör hemma i spannet,
+inte i basbeloppet. Nollningsregeln gäller därmed bara löften som varken pekar
+ut en åtgärd eller anger en nivå.
+
+**Motiv:** Välfärdsämnet prissatte samma sorts löfte olika beroende på vilket
+parti som gav det. "Vi ska satsa på vårdpersonalen" och "Pensionen ska bli
+bättre" stod på noll, medan "höja barnbidraget rejält" stod på 18 000 miljoner
+kronor per år och "kraftigt stärkta resurser till vård, socialtjänst,
+psykiatri och skola" på 15 000 — samma form, olika behandling. Nivåerna var
+dessutom i flera fall lånade från ett annat partis konkreta löfte utan att det
+stod utskrivet: Vänsterpartiets "rejält" var prissatt till nästan exakt
+Kristdemokraternas 750 kronor i månaden. Det är inte bara ett prisfel utan en
+snedhet i behandlingen av partierna, och neutraliteten är kontraktet. Med
+ankaret i den senaste faktiska höjningen blir siffran spårbar på samma sätt
+som ett partis egen, och den blir densamma oavsett vem som lovar.
+
+**Förkastade alternativ:** Nolla alla löften utan angiven nivå — nej, då blir
+ett partis politik oprissatt överallt bara för att partiet formulerar sig
+vagare, och det straffar formen i stället för att mäta innehållet. Låna det
+enda parti-angivna beloppet på bordet som gemensam nivå — nej, då sätter det
+mest högljudda partiet priset på alla andras löften, och skillnaden mellan ett
+åtagande och en riktning försvinner. Behålla en fri uppskattning per löfte —
+nej, det är precis det som gav den sneda behandlingen.
+
+**Påverkan:** `data/promises.json` (17 löften i välfärden och ett i
+utbildningen), `CLAUDE.md`, regel 15 i `pipeline/prompts/A5-cost.md`, vaktad
+av ett enhetstest i `pipeline/tests/cost.test.ts`, `HANDOFF.md`.

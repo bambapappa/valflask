@@ -102,6 +102,16 @@ mänskligt beslut och finns även kodade i `pipeline/prompts/A5-cost.md`:
   uppskattas; skriv då ut vilken del som är partiets och vilken som är vår.
   Ett löfte som bär en egen siffra är aldrig ett inriktningslöfte — det ska
   prissättas, inte nollas.
+- **Utpekad åtgärd utan nivå prissätts som åtgärden senast kostade.** Pekar
+  löftet ut en bestämd åtgärd men säger inte hur mycket ("höja barnbidraget",
+  "en historisk höjning av garantipensionen") ankras beloppet i vad samma
+  åtgärd senast faktiskt kostade — den senast genomförda höjningen av samma
+  förmån, det befintliga statsbidragets storlek. Skriv ut vilken höjning
+  ankaret är. Ett värdeord ("rejält", "historisk", "kraftigt") är ingen nivå
+  och får aldrig översättas till en siffra, och ett annat partis angivna nivå
+  får aldrig lånas in som basbelopp utan att lånet står utskrivet.
+  Osäkerheten hör hemma i spannet, inte i basbeloppet. Nollningsregeln gäller
+  bara löften som varken pekar ut en åtgärd eller anger en nivå.
 - **Samma politik ska kosta lika.** Prissätts samma åtgärd hos flera
   partier ska beloppen harmoniseras och vila på samma grund. Samma politik
   hos olika partier är ett delat löfte (`group_id`, räknas en gång, R3);

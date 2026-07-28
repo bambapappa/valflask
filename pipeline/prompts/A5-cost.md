@@ -72,6 +72,17 @@ Avgränsningsregler — de avgör VAD som ska prissättas:
     Undantag: räkna bort det partiet självt säger inte ingår, och lägg inte ihop
     siffran med en annan del av samma reform som redan prissatts på ett annat
     löfte (dubbelräkning).
+15. UTPEKAD ÅTGÄRD UTAN NIVÅ. Pekar löftet ut en bestämd åtgärd men säger inte
+    hur mycket ("höja barnbidraget", "en historisk höjning av garantipensionen")
+    är det varken ett inriktningslöfte enligt regel 13 eller ett fall för regel
+    14. Prissätt det som samma åtgärd SENAST FAKTISKT KOSTADE — den senaste
+    genomförda höjningen av samma förmån, det befintliga statsbidragets storlek
+    — och skriv i calculation vilken höjning du ankrat på. Låna ALDRIG in ett
+    annat partis angivna nivå som base utan att skriva ut att nivån är lånad och
+    inte partiets egen; ett värdeord ("rejält", "historisk", "kraftigt") är
+    ingen nivå och får inte översättas till en siffra. Osäkerheten hör hemma i
+    spannet, inte i basbeloppet. Samma åtgärd utan nivå ska prissättas lika
+    oavsett vilket parti som lovar den.
 
 SCHEMA
 { "type": "utgift" | "intäktsminskning" | "besparing" | "intäktsökning",
