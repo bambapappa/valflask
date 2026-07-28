@@ -410,13 +410,14 @@ procentsats utan erfarenhet bakom). Det ligger i session 10.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json`, uppdaterad efter session 3. En **räkneenhet**
+Mätt på `data/promises.json`, uppdaterad efter session 5. En **räkneenhet**
 är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
-av sitt högsta belopp. 421 aktiva löften blir 364 räkneenheter, varav 225 bär
+av sitt högsta belopp. 421 aktiva löften blir 363 räkneenheter, varav 220 bär
 ett belopp över noll. Pengarna är fortfarande snedfördelade, men mindre än
-när planen skrevs: hälften av mandattotalen ligger nu i 15 enheter, 80 procent
-i 40 och 95 procent i 88. Det var alltså de tyngsta enheterna som var mest
-felräknade — vilket är precis vad ordningen i planen bygger på.
+när planen skrevs: hälften av mandattotalen ligger nu i 13 enheter, 80 procent
+i 39 och 95 procent i 88. Det var alltså de tyngsta enheterna som var mest
+felräknade — vilket är precis vad ordningen i planen bygger på. Kolumnen
+Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 
 | # | Session | Enheter | Tankenivå |
 |---|---|---|---|
