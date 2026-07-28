@@ -35,6 +35,14 @@ const jsonLd = [
     </div>
 
     <section class="sektion">
+      <p class="arkivnot">
+        Fyra tidigare krönikor är <strong>arkiverade</strong>. De byggde på summor som
+        senare visade sig vara tre till fem gånger för höga, och en krönika skrivs aldrig
+        om — därför är de borttagna från sajten i stället för rättade. De finns kvar i sin
+        helhet i projektets data på GitHub och går att läsa där. Se
+        <a href="/rattelser">rättelseloggen</a>.
+      </p>
+
       {chronicles.length === 0 ? (
         <p class="prosa-content">Första krönikan publiceras när veckans första löften vägts in.</p>
       ) : (
@@ -74,5 +82,12 @@ const jsonLd = [
   }
   .kronikarad__meta {
     color: var(--grafit);
+  }
+  .arkivnot {
+    margin: 0 0 1.5rem;
+    padding: 0.9rem 1.1rem;
+    border-left: 3px solid var(--linje, #ccc);
+    background: var(--ruta, #f6f6f4);
+    font-size: 0.95rem;
   }
 </style>

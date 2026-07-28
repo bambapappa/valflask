@@ -142,6 +142,8 @@ export interface Chronicle {
   run_id: string;
   /** Synlig rättelsenot — tyst rättelse är förbjuden. */
   correction_note?: string;
+  /** Arkiverad: finns kvar i datat och i git, men renderas inte på sajten. */
+  archived?: boolean;
 }
 
 export interface Rattelse {
@@ -160,10 +162,19 @@ export function getRattelser(): Rattelse[] {
   }
 }
 
-/** Veckokrönikor. Saknas filen (innan första körningen) → tom lista. */
+/**
+ * Veckokrönikor som VISAS. Saknas filen (innan första körningen) → tom lista.
+ *
+ * Arkiverade krönikor filtreras bort. Krönikor är ögonblicksbilder och skrivs
+ * aldrig om — men de fyra första vilade på summor som senare visade sig vara
+ * tre till fem gånger för höga, och att låta dem ligga kvar synliga hade varit
+ * att publicera siffror vi vet är fel. De finns kvar i sin helhet i
+ * data/chronicles.json och därmed i git; de renderas bara inte.
+ * (Mänskligt beslut 2026-07-28, se data/rattelser.json.)
+ */
 export function getChronicles(): Chronicle[] {
   try {
-    return loadData<Chronicle[]>("chronicles.json");
+    return loadData<Chronicle[]>("chronicles.json").filter((c) => c.archived !== true);
   } catch {
     return [];
   }

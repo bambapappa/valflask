@@ -12,7 +12,8 @@
     "total_msek": 8755415,
     "gap_msek": 8435415,
     "generated_at": "2026-07-23T11:17:53.073Z",
-    "run_id": "run-2026-07-23-11-17"
+    "run_id": "run-2026-07-23-11-17",
+    "archived": true
   },
   {
     "year": 2026,
@@ -99,7 +100,8 @@
     "gap_msek": 8462215,
     "generated_at": "2026-07-17T16:22:45.283Z",
     "run_id": "run-2026-07-17-16-22",
-    "correction_note": "2026-07-25: två av löftena som nämns i texten har dragits tillbaka som dubbletter sedan krönikan skrevs. Socialdemokraternas plånbokslöfte och löftet om att ta bort karensen fanns inlagda två gånger vardera; de räknas nu en gång, under de först inlagda posterna. Politiken står kvar — plånbokslöftet med samma belopp, karensen med 5 000 i stället för 8 000 miljoner kronor per år. Krönikans text står kvar som den skrevs. Samtidigt har kostnadsuppskattningarna setts över i en större genomgång, vilket är en del av varför dagens siffror skiljer sig från veckans."
+    "correction_note": "2026-07-25: två av löftena som nämns i texten har dragits tillbaka som dubbletter sedan krönikan skrevs. Socialdemokraternas plånbokslöfte och löftet om att ta bort karensen fanns inlagda två gånger vardera; de räknas nu en gång, under de först inlagda posterna. Politiken står kvar — plånbokslöftet med samma belopp, karensen med 5 000 i stället för 8 000 miljoner kronor per år. Krönikans text står kvar som den skrevs. Samtidigt har kostnadsuppskattningarna setts över i en större genomgång, vilket är en del av varför dagens siffror skiljer sig från veckans.",
+    "archived": true
   },
   {
     "year": 2026,
@@ -117,7 +119,8 @@
     "gap_msek": 11737183,
     "generated_at": "2026-07-09T06:52:12.660Z",
     "run_id": "run-2026-07-09-06-52",
-    "correction_note": "2026-07-17: rubriken sade tidigare ”skolavskaffande” där Miljöpartiets löfte gäller marknadsskolan; finansieringsgapet angavs till samma belopp som totalsumman (formelfel) och är nu totalsumman minus regeringens reformbudget på 320 miljarder, beräknat med veckans dåvarande underlag. Beloppen är högre än dagens vågmätare eftersom tvärparti-grupperingen — samma politik från flera partier räknas bara en gång — infördes efter att krönikan skrevs."
+    "correction_note": "2026-07-17: rubriken sade tidigare ”skolavskaffande” där Miljöpartiets löfte gäller marknadsskolan; finansieringsgapet angavs till samma belopp som totalsumman (formelfel) och är nu totalsumman minus regeringens reformbudget på 320 miljarder, beräknat med veckans dåvarande underlag. Beloppen är högre än dagens vågmätare eftersom tvärparti-grupperingen — samma politik från flera partier räknas bara en gång — infördes efter att krönikan skrevs.",
+    "archived": true
   },
   {
     "year": 2026,
@@ -443,6 +446,22 @@
     "gap_msek": 12739220,
     "generated_at": "2026-06-29T12:00:00Z",
     "run_id": "seed-chronicle-2026-06-29",
-    "correction_note": "2026-07-17: finansieringsgapet angavs ursprungligen till samma belopp som totalsumman (formelfel) och är nu totalsumman minus regeringens reformbudget på 320 miljarder. Observera att summorna i de tidiga krönikorna räknades innan tvärparti-grupperingen infördes — samma politik som utlovas av flera partier räknas numera bara en gång, och därför visar dagens vågmätare lägre totalbelopp än denna krönika."
+    "correction_note": "2026-07-17: finansieringsgapet angavs ursprungligen till samma belopp som totalsumman (formelfel) och är nu totalsumman minus regeringens reformbudget på 320 miljarder. Observera att summorna i de tidiga krönikorna räknades innan tvärparti-grupperingen infördes — samma politik som utlovas av flera partier räknas numera bara en gång, och därför visar dagens vågmätare lägre totalbelopp än denna krönika.",
+    "archived": true
+  },
+  {
+    "year": 2026,
+    "week": 31,
+    "slug": "2026-31",
+    "headline": "Omstart: 2 509 miljarder lovade, 320 miljarder att ta av",
+    "body_md": "Den här krönikan startar om serien.\n\nDe fyra tidigare krönikorna byggde på summor som sedan dess visat sig vara\nkraftigt felräknade — de talade om 8,8 till 13 miljoner miljoner kronor när\nrikssumman i dag är 2,5. Skillnaden är inte att politiken ändrats, utan att\nbeloppen räknats om från grunden, ämne för ämne, under juli 2026.\n\nKrönikor är ögonblicksbilder och skrivs aldrig om. Därför är de fyra gamla\narkiverade i stället för rättade: de finns kvar i sin helhet i projektets data\npå GitHub och går att läsa där, men de visas inte längre här. Att låta dem\nligga kvar synliga hade varit att publicera siffror vi vet är fel.\n\nSå här ser läget ut i dag. Åtta partier har 417 löften i registret. Det de\nlovar kostar tillsammans 2 509 miljarder kronor för mandatperioden 2027–2030.\nRegeringens reformutrymme för samma period är 320 miljarder. Gapet mellan vad\nsom lovas och vad som finns är alltså 2 189 miljarder kronor.\n\nTvå tredjedelar av pengarna ligger i tre ämnen: skatterna, försvaret och\nvälfärden. Hälften av hela summan ryms i elva löften.\n\nVarje belopp har en öppen uträkning på sin löftessida. Håller du inte med om\nen siffra går det att se exakt vilket antagande den vilar på.",
+    "promise_ids": [
+      "p-2026-0141",
+      "p-2026-0100"
+    ],
+    "total_msek": 2508836,
+    "gap_msek": 2188836,
+    "generated_at": "2026-07-28T15:00:00.000Z",
+    "run_id": "manuell-uppstartskronika-2026-07-28"
   }
 ]
