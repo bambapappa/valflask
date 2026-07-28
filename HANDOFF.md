@@ -388,34 +388,31 @@ från datat som gällde när krönikan skrevs (ögonblicksbild), aldrig dagens s
 
 *Uppdaterad 2026-07-28.*
 
-### Nästa uppgift: räkna om beloppen på säkrare grund
+### Omräkningen är klar — alla tio sessioner genomförda
 
-Genomgången av löften där beloppet inte stämde med den publicerade
-uträkningen är **klar** — 63 rättade, resten kontrollerade och friade. Men
-det arbetet flyttade beloppen till en *redovisad* grund, inte till en
-säkrare. De flesta uträkningar är rekonstruerade i efterhand av
-bakåtfyllnaden, vilket står utskrivet i varje sådan text.
+**Hela omräkningsplanen är genomförd 2026-07-27–28.** Samtliga nio ämnen är
+genomgångna löfte för löfte, och rikssumman gick från 5 867 996 till
+**2 515 436 mkr** under arbetet. Inget löfte är längre märkt för omräkning:
+det sista, sanktionerna mot bidrag, togs i session 10.
 
-**Ordningen för omräkningen (mänskligt beslut 2026-07-27):**
+Bakgrunden: genomgången av löften där beloppet inte stämde med den publicerade
+uträkningen flyttade beloppen till en *redovisad* grund, inte till en säkrare.
+De flesta uträkningar var rekonstruerade i efterhand av bakåtfyllnaden. Den
+här planen bytte grund under dem, ämne för ämne, i fallande storleksordning.
 
-1. ~~**Tandvården först.**~~ **Klar 2026-07-27** — se avsnittet längre ned.
-2. **Därefter övriga ämnen i fallande storleksordning**, alltså det
-   ämnesområde som väger tyngst i mandattotalen först, och inom ämnet de
-   största beloppen först. **Näst på tur: skatterna, de elva tyngsta
-   (session 2).**
-
-Ett löfte är fortfarande uttryckligen märkt för omräkning i sin egen
-uträkning: p-2026-0390 (sanktioner mot bidrag, vilar på en antagen
-procentsats utan erfarenhet bakom). Det ligger i session 10.
+**Vad som återstår är inte en ny omräkning utan underhåll:** nya löften från
+pipelinen prissätts av A5-prompten, som nu bär reglerna arbetet gav upphov
+till, och granskningskön betas som vanligt. Sessionstabellen nedan står kvar
+som protokoll över vad som gjordes och vad som lärdes.
 
 #### Sessionsplan: en rad är en session
 
-Mätt på `data/promises.json`, uppdaterad efter session 9. En **räkneenhet**
+Mätt på `data/promises.json`, uppdaterad efter session 10. En **räkneenhet**
 är ett ensamt löfte eller en hel grupp — gruppen räknas en gång och företräds
-av sitt högsta belopp. 420 aktiva löften blir 358 räkneenheter, varav 213 bär
+av sitt högsta belopp. 420 aktiva löften blir 357 räkneenheter, varav 212 bär
 ett belopp över noll. Pengarna är fortfarande snedfördelade, men mindre än
 när planen skrevs: hälften av mandattotalen ligger nu i 11 enheter, 80 procent
-i 36 och 95 procent i 85. Det var alltså de tyngsta enheterna som var mest
+i 35 och 95 procent i 84. Det var alltså de tyngsta enheterna som var mest
 felräknade — vilket är precis vad ordningen i planen bygger på. Kolumnen
 Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 
@@ -430,14 +427,12 @@ Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 | 7 | ~~Utbildning, hela ämnet~~ **KLAR 2026-07-28.** 9 omräknade, resten kontrollerade; ämnet 359 → 191 mdkr. Se avsnittet nedan | klar | hög |
 | 8 | ~~Klimat-miljö, hela ämnet~~ **KLAR 2026-07-28.** 16 omräknade; ämnet 268 → 122 mdkr. Se avsnittet nedan | klar | hög |
 | 9 | ~~Övrigt och infrastruktur~~ **KLAR 2026-07-28.** 6 omräknade; ämnena 183 → 186 mdkr. Se avsnittet nedan | klar | hög |
-| 10 | Rättsväsende (38) och migration (43, inklusive p-2026-0390) | 81 | hög |
+| 10 | ~~Rättsväsende och migration~~ **KLAR 2026-07-28.** 7 omräknade; ämnena 118 → 94 mdkr. Det sista löftet märkt för omräkning är avfört. Se avsnittet nedan | klar | hög |
 
-Ämnesordningen är mandattotalen, efter session 9: skatter 1 115 mdkr (klart),
-försvar 460 (klart), välfärd 363 (klart), utbildning 191 (klart), övrigt 123
-(klart), klimat-miljö 122 (klart), rättsväsende 71, infrastruktur 63 (klart),
-migration 47. **Bara rad 10 återstår** — rättsväsende och migration, 81 enheter
-och tillsammans 118 mdkr. Löften som ger staten pengar ligger kvar i sitt eget
-ämne och räknas om i samma session som resten av ämnet.
+Ämnesordningen var mandattotalen. Efter session 10, när allt är genomgånget:
+skatter 1 115 mdkr, försvar 460, välfärd 363, utbildning 191, övrigt 123,
+klimat-miljö 122, infrastruktur 63, rättsväsende 47, migration 47. **Alla nio
+ämnen är klara.** Löften som ger staten pengar ligger kvar i sitt eget ämne.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
 löften vilar på, eller när en enskild enhet väger över hundra miljarder för
@@ -463,6 +458,11 @@ Genomströmningen är ännu en gissning: ungefär tio till femton enheter i en
 max-session och fyrtio till sextio i en hög-session. **Skriv in det
 verkliga utfallet** när sessionen är klar, så vilar planen på mätt
 erfarenhet i stället för på ett antagande.
+
+*Utfall session 10:* 81 enheter genomgångna, varav 7 löften ändrades — den
+största raden i enhetstal och den minsta i pengar. Att så få behövde ändras i
+en rad med 81 enheter bekräftar planens ordning: **felen satt i de tunga
+enheterna, precis där ordningen lade kraften.**
 
 *Utfall session 9:* 36 enheter genomgångna, varav 6 löften ändrades. Ämnena
 var i gott skick — de flesta beloppen stämde med sina uträkningar. Sessionens
@@ -544,7 +544,38 @@ avgjord.
 
 Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
 
-- (ingen pågående session)
+- (ingen pågående session — omräkningsplanen är genomförd)
+
+#### Rättsväsende och migration är omräknade — session 10, klar 2026-07-28
+
+Den sista raden i planen. Alla 81 enheter genomgångna, sju löften omräknade.
+Ämnena gick 118 → **94 mdkr** och rikssumman till **2 515 436 mkr**.
+
+**Fjärde sessionen i rad med en missad gruppmedlem.** Liberalernas löfte om en
+storsatsning på synliga poliser stod på 5 000 mkr/år medan Moderaternas och
+Sverigedemokraternas löften om fler poliser låg på 1 500 i sin grupp. **Inget
+av de tre anger något antal poliser** — samma politik, samma brist på nivå,
+tre gånger så högt belopp hos det ena. Efter Kristdemokraternas mindre klasser,
+Liberalernas kärnkraftsgarantier och Miljöpartiets leasingstöd är detta fjärde
+fallet. Mönstret är nu bekräftat och bör byggas in i ett verktyg: **sök på
+åtgärden i hela datat, inte bara bland gruppens medlemmar.**
+
+**De två löftena om mängdrabatt** vilade på olika uträkningar med olika
+storleksordningar och stod båda på 1 500. Den ena räknade själv fram 90–580
+miljoner och avrundade till 300–1 000. Båda vilar nu på antalet extra
+anstaltsdygn: 650 mkr/år.
+
+**Fyra belopp rättade** till vad uträkningen i samma fält kom fram till: våld
+mot kvinnor 2 000 → 1 000, stöd till barn i riskzon 300 → 250, hedersombud
+50 → 10, och mängdrabatten ovan.
+
+**Det sista märkta löftet är avfört.** Sanktionerna mot bidrag vilade på en
+antagen procentsats utan erfarenhet bakom sig. Beloppet är sänkt 150 → 100
+mkr/år, det låga alternativet är noll, och uträkningen skriver nu ut både att
+effekten är ett antagande och att **en del av det som dras in flyttas till
+kommunernas ekonomiska bistånd** i stället för att bli en offentlig besparing.
+Det sista är den generella lärdomen: en besparing hos staten som bara flyttar
+kostnaden till kommunerna är ingen offentlig besparing.
 
 #### Övrigt och infrastruktur är omräknade — session 9, klar 2026-07-28
 
