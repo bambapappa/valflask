@@ -8,6 +8,7 @@
  */
 import { test, describe } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 import type { NormalizedArticle } from "../src/gates.ts";
 import {
@@ -337,10 +338,25 @@ describe("A6-extraktion", () => {
     }
   }
 
-  test("taxonomin innehåller endast aktiva delfrågor, id + text", () => {
-    const taxonomy = JSON.parse(taxonomyForPrompt(issuesFile)) as Array<{ id: string; text: string }>;
-    assert.deepEqual(Object.keys(taxonomy[0]!).sort(), ["id", "text"]);
+  test("taxonomin innehåller endast aktiva delfrågor, id + text + avgränsning", () => {
+    const taxonomy = JSON.parse(taxonomyForPrompt(issuesFile)) as Array<{
+      id: string;
+      text: string;
+      avgransning: string;
+    }>;
+    assert.deepEqual(Object.keys(taxonomy[0]!).sort(), ["avgransning", "id", "text"]);
     assert.equal(taxonomy.length, 2);
+  });
+
+  test("avgränsningen når fram till modellen — utan den blir ämnet till besked", () => {
+    // Torrkörningen gav två falska ja: "fler värnpliktiga" mot frågan om
+    // utökning UTÖVER beslutade nivåer, och "fortsatt låga skatter på
+    // livsmedel" mot frågan om en TILLFÄLLIG momssänkning ska bli permanent.
+    // Båda berodde på att delfrågans avgränsning aldrig skickades in.
+    const taxonomy = JSON.parse(taxonomyForPrompt(issuesFile)) as Array<{ avgransning: string }>;
+    for (const item of taxonomy) {
+      assert.ok(item.avgransning.length > 0, "varje delfråga måste bära sin avgränsning");
+    }
   });
 
   test("svar normaliseras (versal partikod → gemener) och ```-staket skalas", async () => {
@@ -439,5 +455,26 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
     const cell = onResult.find((c) => c.subquestion_id === "sq-energi-karnkraft" && c.party === "m")!;
     assert.equal(cell.statements.length, 1);
     assert.equal(cell.current.position, "ja");
+  });
+});
+
+describe("A6/A7 — avgränsningsregeln är kodad i prompterna", () => {
+  test("A6 kräver att beskedet svarar på frågans avgränsning, inte bara ämnet", () => {
+    const a6 = readFileSync(
+      new URL("../prompts/A6-stance-extract.md", import.meta.url),
+      "utf8",
+    );
+    assert.match(a6, /BESKEDET MÅSTE SVARA PÅ FRÅGAN, INTE BARA PÅ DESS ÄMNE/);
+    assert.match(a6, /avgransning/);
+    assert.match(a6, /utöver de nivåer som\s+redan är beslutade/);
+  });
+
+  test("A7 gör avgränsningen avgörande för quote_on_topic", () => {
+    const a7 = readFileSync(
+      new URL("../prompts/A7-stance-verify.md", import.meta.url),
+      "utf8",
+    );
+    assert.match(a7, /AVGRÄNSNINGEN AVGÖR/);
+    assert.match(a7, /quote_on_topic" FALSE/);
   });
 });

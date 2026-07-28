@@ -98,7 +98,17 @@ export const MAX_STANCES_PER_PARTY_PER_ARTICLE = 3;
 export function taxonomyForPrompt(issuesFile: IssuesFile): string {
   const items = issuesFile.issues
     .filter((i) => i.status === "aktiv")
-    .flatMap((i) => i.subquestions.map((sq) => ({ id: sq.id, text: sq.text })));
+    .flatMap((i) =>
+      i.subquestions.map((sq) => ({
+        id: sq.id,
+        text: sq.text,
+        // Avgränsningen är det som gör delfrågan till ett äkta vägval: flera
+        // frågor handlar om att gå UTÖVER en redan beslutad nivå eller om att
+        // göra en tillfällig ordning permanent. Utan den läser modellen ett
+        // allmänt stöd för ämnet som ett besked på frågan.
+        avgransning: sq.fairness_note,
+      })),
+    );
   return JSON.stringify(items);
 }
 
@@ -268,9 +278,13 @@ export async function verifyStance(
   article: NormalizedArticle,
   llm: LlmClient,
   model: string,
+  /** Delfrågans avgränsning. Verifieraren måste se den för att kunna avgöra
+   *  om citatet svarar på frågan eller bara på dess ämne. */
+  fairnessNote?: string,
 ): Promise<StanceVerifyResult> {
+  const avgransning = fairnessNote ? ` avgransning="${fairnessNote.replace(/"/g, "'")}"` : "";
   const userPrompt =
-    `<DELFRAGA id="${candidate.subquestion_id}">${subquestionText}</DELFRAGA>\n` +
+    `<DELFRAGA id="${candidate.subquestion_id}"${avgransning}>${subquestionText}</DELFRAGA>\n` +
     `<KANDIDAT>\n${JSON.stringify(candidate)}\n</KANDIDAT>\n` +
     `<KALLTEXT url="${article.url}" domain="${article.domain}" published="${article.published}">\n${article.text}\n</KALLTEXT>`;
 
