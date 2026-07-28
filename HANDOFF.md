@@ -1131,10 +1131,27 @@ Logiken ligger i `pipeline/src/quality-scan.ts` och vaktas av 26 tester i
 `pipeline/tests/quality-scan.test.ts`, som prövar den mot de verkliga texter
 felen satt i.
 
-**Läget vid införandet (2026-07-28):** 7 beloppsträffar, 6 gruppförslag,
-6 dåtidscitat. De är genomgångna men INTE åtgärdade — nästa session kan börja
-där. Ett av gruppförslagen är ett äkta femte fall: Vänsterpartiets löfte om
-särskilt ömmande omständigheter ligger utanför gruppen med samma namn.
+**Träffarna är avbetade 2026-07-28.** Nio löften ändrades: tre belopp rättade,
+ett grupplänkat (Vänsterpartiets särskilt ömmande omständigheter — femte fallet
+av en missad gruppmedlem, och det första ett verktyg hittade), ett nollat, tre
+citat tillbakadragna.
+
+**Kända falsklarm — trimma INTE bort dem.** Sökningen ska hellre ge några
+falska träffar än missa äkta. Två klasser återkommer och är medvetet kvar:
+
+- **Gruppsökningen** föreslår löften som bara delar allmänna ord — ett förslag
+  matchade på ordet "centerpartiet". Läs alltid citatet innan du länkar.
+- **Dåtidssökningen** flaggar berättande citat som beskriver ett löftes
+  verkan i presens ("Med skattesänkningar på sparande har familjen fått ihop
+  det till charterresan"). Det är en berättande version av ett löfte som redan
+  är grupplänkat och prissatt, inte skryt om genomförd politik.
+
+**Sökningen blev bättre av att användas.** Första skarpa körningen gav 43
+beloppsträffar; efter genomgång landade den på 3 äkta. Sju av de bortsorterade
+var buggar i sökningen, inte fel i datat — basbeloppets egen enhet gällde
+inte, bestämd form kändes inte igen, operandkollen letade i hela meningen i
+stället för vid träffen, och `\b` biter inte före `à`. Var och en har nu ett
+test. **Lärdomen: när sökningen larmar, kontrollera först om den har fel.**
 
 ### Kör INTE fler backfill-körningar
 
