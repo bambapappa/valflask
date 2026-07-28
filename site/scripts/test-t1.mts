@@ -77,7 +77,13 @@ if (promises.length > 0) {
 // Datadriven: senaste veckokrönikans sida ska finnas (om någon krönika genererats).
 const chroniclesPath = resolve(__dirname, "../../data/chronicles.json");
 if (existsSync(chroniclesPath)) {
-  const chronicles = JSON.parse(readFileSync(chroniclesPath, "utf8")) as Array<{ slug: string }>;
+  const all = JSON.parse(readFileSync(chroniclesPath, "utf8")) as Array<{
+    slug: string;
+    archived?: boolean;
+  }>;
+  // Arkiverade krönikor finns kvar i datat men renderas inte — de får därför
+  // inte förväntas ligga i dist/ (mänskligt beslut 2026-07-28).
+  const chronicles = all.filter((c) => c.archived !== true);
   if (chronicles.length > 0) {
     const c = chronicles[0]!;
     check(

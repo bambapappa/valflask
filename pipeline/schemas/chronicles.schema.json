@@ -7,22 +7,72 @@
   "items": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["year", "week", "slug", "headline", "body_md", "promise_ids", "total_msek", "gap_msek", "generated_at", "run_id"],
+    "required": [
+      "year",
+      "week",
+      "slug",
+      "headline",
+      "body_md",
+      "promise_ids",
+      "total_msek",
+      "gap_msek",
+      "generated_at",
+      "run_id"
+    ],
     "properties": {
-      "year": { "type": "integer", "minimum": 2025, "maximum": 2030 },
-      "week": { "type": "integer", "minimum": 1, "maximum": 53 },
-      "slug": { "type": "string", "pattern": "^\\d{4}-\\d{2}$" },
-      "headline": { "type": "string", "minLength": 3, "maxLength": 160 },
-      "body_md": { "type": "string", "minLength": 1 },
+      "year": {
+        "type": "integer",
+        "minimum": 2025,
+        "maximum": 2030
+      },
+      "week": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 53
+      },
+      "slug": {
+        "type": "string",
+        "pattern": "^\\d{4}-\\d{2}$"
+      },
+      "headline": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 160
+      },
+      "body_md": {
+        "type": "string",
+        "minLength": 1
+      },
       "promise_ids": {
         "type": "array",
-        "items": { "type": "string", "pattern": "^p-\\d{4}-\\d{4}$" }
+        "items": {
+          "type": "string",
+          "pattern": "^p-\\d{4}-\\d{4}$"
+        }
       },
-      "total_msek": { "type": "number", "minimum": 0 },
-      "gap_msek": { "type": "number" },
-      "generated_at": { "type": "string" },
-      "run_id": { "type": "string", "minLength": 1 },
-      "correction_note": { "type": "string", "minLength": 10, "description": "Synlig rättelsenot på krönikans sida (tyst rättelse är förbjuden). Sätts manuellt vid rättelse; listas även på /rattelser." }
+      "total_msek": {
+        "type": "number",
+        "minimum": 0
+      },
+      "gap_msek": {
+        "type": "number"
+      },
+      "generated_at": {
+        "type": "string"
+      },
+      "run_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "correction_note": {
+        "type": "string",
+        "minLength": 10,
+        "description": "Synlig rättelsenot på krönikans sida (tyst rättelse är förbjuden). Sätts manuellt vid rättelse; listas även på /rattelser."
+      },
+      "archived": {
+        "type": "boolean",
+        "description": "Arkiverad: finns kvar i datat och i git, men visas inte på sajten."
+      }
     }
   }
 }
