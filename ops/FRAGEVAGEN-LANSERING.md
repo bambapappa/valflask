@@ -57,11 +57,17 @@ av pipelinen eller via review-CLI:t.
       kön är inte tömd — de 5 posterna ligger kvar och bör bedömas om efter att den
       nya prompten kört ett varv, så att man ser om ändringen räcker.
 
-**Arkivluckan att känna till:** tre av de fem köposterna saknade `archiveUrl`.
-Pipelinen arkiverar ståndpunktskällor direkt i körningen, men till skillnad från
-löftesflödet finns ingen backfill som tar om de som misslyckades — `archive:backfill`
-rör bara `promises.json`. Steg 3 kräver klickbar arkivlänk, så luckan behöver täppas
-innan något publiceras.
+**Arkivluckan är täppt 2026-07-28:** `pnpm stances:archive-backfill` tar om de
+arkiveringar som misslyckades i körningen, på samma sätt som löftesflödets
+`archive:backfill`. En viktig skillnad: den **verifierar att citatet står ordagrant
+i snapshotten** innan den skriver något. Wayback returnerar närmaste kopia, som kan
+vara äldre än sidinnehållet, och en kopia som inte bär citatet backar inte beskedet.
+Går det inte att avgöra lämnas fältet tomt — hellre en synlig lucka än en länk som
+ser ut som bevis.
+
+Flaggor: `avail` (default, bara befintliga kopior), `save` (begär nya, bunden
+budget), `--dry-run`. Vid första körningen fanns snapshots för alla tre saknade
+besked, men ingen kunde verifieras mot citatet, så inget skrevs.
 
 ## Steg 3 — Verifiering nr 3: första publiceringarna (ägare)
 

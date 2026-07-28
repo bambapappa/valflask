@@ -17,6 +17,21 @@ export function promiseTotalHighMsek(p: PromisePost): number {
   return p.cost.msek_high * multiplier;
 }
 
+/**
+ * Beloppet MED TECKEN: en besparing eller en ny intäkt drar ned summan av ett
+ * partis politik i stället för att lägga till den.
+ *
+ * Rikssumman (`totalFlasket`) och besparingarna (`totalBesparingar`) har alltid
+ * hållits isär och dragits av mot varandra i finansieringsgapet. Men
+ * partisummor och ämnesfördelning adderade ALLA löften positivt, så ett parti
+ * som föreslog besparingar såg ut att lova mer utgifter. Det slår mot
+ * opartiskheten, inte bara mot precisionen: summan av en politik är
+ * differensen mellan vad den kostar och vad den sparar, inte deras summa.
+ */
+export function promiseNetMsek(p: PromisePost): number {
+  return isBesparing(p) ? -promiseTotalMsek(p) : promiseTotalMsek(p);
+}
+
 export function isActive(p: PromisePost): boolean {
   return p.status !== "tillbakadragen";
 }
@@ -160,7 +175,7 @@ export function partyTotalMsek(promises: PromisePost[], partyCode: string): numb
   // dedupeByGroup EFTER partifiltret: tvärparti-grupper behåller partiets egen
   // medlem (fullt belopp i partijämförelsen), interna dubbletter räknas en gång.
   return dedupeByGroup(promises.filter((p) => isActive(p) && p.parties.includes(partyCode)))
-    .reduce((s, p) => s + promiseTotalMsek(p), 0);
+    .reduce((s, p) => s + promiseNetMsek(p), 0);
 }
 
 export function getPromisesForParty(promises: PromisePost[], code: string): PromisePost[] {
@@ -185,7 +200,7 @@ export function categoryBreakdown(promises: PromisePost[]): CategoryBreakdown[] 
   const map = new Map<string, { total: number; count: number }>();
   for (const p of dedupeByGroup(promises.filter(isActive))) {
     const entry = map.get(p.category) ?? { total: 0, count: 0 };
-    entry.total += promiseTotalMsek(p);
+    entry.total += promiseNetMsek(p);
     entry.count += 1;
     map.set(p.category, entry);
   }

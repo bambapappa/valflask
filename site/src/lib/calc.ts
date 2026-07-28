@@ -35,24 +35,30 @@ export type {
 } from "./aggregates";
 
 export function formatMsek(msek: number, basis?: string): string {
-  const prefix = basis === "llm_estimat" ? "≈ " : "";
-  if (msek >= 1000) {
-    const mdkr = msek / 1000;
+  // Negativa tal (besparingar i en summa) skrivs med minus framför beloppet,
+  // inte inne i siffran: "≈ −600 mkr", inte "≈ -600 mkr" efter tusenavdelare.
+  const sign = msek < 0 ? "\u2212" : "";
+  const abs = Math.abs(msek);
+  const prefix = (basis === "llm_estimat" ? "≈ " : "") + sign;
+  if (abs >= 1000) {
+    const mdkr = abs / 1000;
     return mdkr >= 10
       ? `${prefix}${mdkr.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00A0")} mdkr`
       : `${prefix}${mdkr.toFixed(1).replace(".", ",")} mdkr`;
   }
-  return `${prefix}${msek.toLocaleString("sv-SE")} mkr`;
+  return `${prefix}${abs.toLocaleString("sv-SE")} mkr`;
 }
 
 export function formatMsekBare(msek: number): string {
-  if (msek >= 1000) {
-    const mdkr = msek / 1000;
+  const sign = msek < 0 ? "\u2212" : "";
+  const abs = Math.abs(msek);
+  if (abs >= 1000) {
+    const mdkr = abs / 1000;
     return mdkr >= 10
-      ? `${mdkr.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00A0")}`
-      : `${mdkr.toFixed(1).replace(".", ",")}`;
+      ? `${sign}${mdkr.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00A0")}`
+      : `${sign}${mdkr.toFixed(1).replace(".", ",")}`;
   }
-  return `${msek.toLocaleString("sv-SE")}`;
+  return `${sign}${abs.toLocaleString("sv-SE")}`;
 }
 
 export function formatMsekShort(msek: number): string {

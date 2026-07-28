@@ -18,6 +18,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
+import { snapshotBacksQuote } from "../src/archive-verify.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const MODE = process.argv[2] ?? "avail";
@@ -36,7 +37,7 @@ function canonical(d: unknown): string {
 }
 const save = (path: string, data: unknown) => writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
 
-interface Promise_ { id: string; source: { url: string; archive_url: string | null; fetched_at?: string }; }
+interface Promise_ { id: string; quote: string; source: { url: string; archive_url: string | null; fetched_at?: string }; }
 const promises = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Promise_[];
 
 const stripFrag = (u: string) => u.split("#")[0]!;
@@ -124,11 +125,28 @@ if (saved.length > 0) {
 }
 
 // --- applicera (behåll ev. #fragment för PDF-sidhänvisning) ---
+// Kärnprincipen: en arkivkopia duger bara om citatet står ordagrant i den.
+// Wayback ger NÄRMASTE snapshot, som kan vara äldre än sidinnehållet — en
+// extern granskning hittade att 4 av 25 arkiv saknade sitt citat. Verifieras
+// per käll-URL: bär snapshotten inte ett av citaten är den fel version av
+// sidan för alla som väntar på den.
+const verified = new Map<string, boolean>();
+for (const [url, snap] of resolved) {
+  const probe = promises.find((p) => !p.source.archive_url && stripFrag(p.source.url) === url);
+  if (!probe) continue;
+  const backs = await snapshotBacksQuote(snap, probe.quote);
+  verified.set(url, backs === true);
+  if (backs !== true) {
+    console.log(`  ✗ snapshot bär inte citatet (${backs === null ? "gick ej att avgöra" : "citat saknas"}): ${url}`);
+  }
+}
+
 const changed: string[] = [];
 for (const p of promises) {
   if (p.source.archive_url) continue;
-  const snap = resolved.get(stripFrag(p.source.url));
-  if (!snap) continue;
+  const key = stripFrag(p.source.url);
+  const snap = resolved.get(key);
+  if (!snap || verified.get(key) !== true) continue;
   const frag = p.source.url.includes("#") ? "#" + p.source.url.split("#")[1] : "";
   p.source.archive_url = snap + frag;
   changed.push(p.id);
