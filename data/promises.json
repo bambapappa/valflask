@@ -1968,7 +1968,7 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 1000,
-      "msek_base": 2000,
+      "msek_base": 1000,
       "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -1984,7 +1984,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 2 000 till 1 000 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som angav 500–2 000 miljoner med 1 000 som basfall.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -9933,14 +9939,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 600,
-      "msek_base": 1500,
-      "msek_high": 2000,
+      "msek_low": 300,
+      "msek_base": 650,
+      "msek_high": 1000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Avskaffad mängdrabatt förlänger fängelsetider och ger en verklig återkommande kostnad för Kriminalvården. Beloppet är harmoniserat med Liberalernas motsvarande löfte (p-2026-0462), som utgår från tidigare politiska beräkningar om cirka 1,5 miljarder kronor per år för slopad mängdrabatt. Spannet speglar osäkerhet om domstolarnas praxis och beteendeeffekter (belopp satt av granskare).",
-      "confidence": 0.5,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antag att slopad mängdrabatt leder till förlängda fängelsestraff för ca 2 000–4 000 personer per år, med genomsnittlig förlängning 90–180 dagar. Med en dygnskostnad på ca 500–800 kr ger det ett kostnadsintervall direkt: 2 000×90×500 ≈ 90 miljoner kronor, 4 000×180×800 ≈ 576 miljoner kronor. Med bredare antaganden (inkl. häktes- och anstaltsplatser) avrundas intervallet till 300–1 000 miljoner kronor per år."
+      "method_note": "Avskaffad mängdrabatt: kostnaden är fler anstaltsdygn. Delat löfte — samma politik räknas en gång och vilar på samma uträkning.",
+      "confidence": 0.4,
+      "calculation": "Att avskaffa mängdrabatten betyder längre fängelsestraff för den som döms för flera brott, och kostnaden är fler anstaltsdygn. Antag att omkring 2 000–4 000 personer per år får sitt straff förlängt med 90–180 dagar. Med en dygnskostnad på 500–800 kronor ger det 2 000 × 90 × 500 ≈ 90 miljoner kronor i den lägre änden och 4 000 × 180 × 800 ≈ 580 miljoner i den högre. Med häktesplatser och den utbyggnad av anstalter som krävs avrundas spannet till 300–1 000 miljoner kronor per år, med 650 som basbelopp. Samma politik hos flera partier räknas en gång och vilar på samma uträkning."
     },
     "financing_claimed": {
       "described": false,
@@ -9955,6 +9961,11 @@
         "date": "2026-07-23",
         "change": "Kostnadsestimatet reviderat från 500 till 1 500 miljoner kronor per år och harmoniserat med Liberalernas motsvarande löfte om slopad mängdrabatt (p-2026-0462), som vilar på tidigare politiska beräkningar. Se rättelseloggen.",
         "commit": "513a0cc03258efc429e7ce0ce8983132bd415782"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 1 500 till 650 miljoner kronor per år, så att det stämmer med uträkningen i samma fält: den räknade fram 90–580 miljoner och avrundade spannet till 300–1 000, medan beloppsfältet stod på 1 500 — över hela det räknade spannet.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -13901,14 +13912,14 @@
     "cost": {
       "type": "besparing",
       "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 150,
+      "msek_low": 0,
+      "msek_base": 100,
       "msek_high": 500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Minskade bidragsutbetalningar vid uteblivet deltagande. Grovt uppskattat — bör räknas om.",
-      "confidence": 0.4,
-      "calculation": "Omkring 150 000–200 000 utrikes födda bidragstagare kostar 30 000–50 000 kronor var per år, alltså 5–10 miljarder kronor sammanlagt. Antas sanktionerna minska utbetalningarna med två procent blir besparingen omkring 150 miljoner kronor per år, med 50–500 miljoner som spann beroende på hur många som berörs och hur hårt sanktionerna tillämpas. Uträkningen vilar på en antagen procentsats snarare än på erfarenhet av liknande sanktioner, och beloppet bör räknas om på säkrare grund."
+      "method_note": "Sanktioner mot bidrag vid utebliven motprestation. Det finns ingen publicerad erfarenhet av vad sådana sanktioner sparar, och en del av det som dras in flyttas till kommunernas ekonomiska bistånd i stället för att bli en offentlig besparing.",
+      "confidence": 0.25,
+      "calculation": "Omkring 150 000–200 000 utrikes födda bidragstagare kostar 30 000–50 000 kronor var per år, alltså 5–10 miljarder kronor sammanlagt. Hur mycket sanktioner minskar de utbetalningarna finns det ingen publicerad erfarenhet av, så vi räknar med en liten effekt på omkring en procent: 100 miljoner kronor per år. Två saker drar ned besparingen. Den som får sitt bidrag indraget söker ofta ekonomiskt bistånd i stället, och det betalas av kommunerna — då är det en omfördelning och inte en offentlig besparing. Sanktioner kräver dessutom kontroll och handläggning som kostar pengar. Det låga alternativet är noll, eftersom en sanktion som ingen träffas av inte sparar något."
     },
     "financing_claimed": {
       "described": false,
@@ -13923,6 +13934,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 500 till 150 miljoner kronor per år. Uträkningen angav ingen summa i kronor, bara ett antagande om två procents minskning av utbetalningarna, vilket ger omkring 150 miljoner. Beloppet är markerat för omräkning på säkrare grund.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 150 till 100 miljoner kronor per år, och löftet är därmed avfört från listan över belopp som väntar på omräkning. Uträkningen vilade på en antagen procentsats utan erfarenhet bakom sig. Den antagna effekten är nu mindre och står uttryckligen som ett antagande, det låga alternativet är noll, och uträkningen skriver ut att en del av det som dras in flyttas till kommunernas ekonomiska bistånd i stället för att bli en offentlig besparing.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -14254,7 +14270,7 @@
   },
   {
     "id": "p-2026-0397",
-    "group_id": null,
+    "group_id": "g-fler-poliser",
     "title": "Statlig storsatsning på synliga poliser i hela Sverige",
     "slug": "statlig-storsatsning-pa-synliga-poliser-i-hela-sverige",
     "parties": [
@@ -14273,14 +14289,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 5000,
-      "msek_high": 12000,
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Antar 2 000–10 000 nya poliser à 1–1,2 msek/år. Baserat på tidigare satsningar (10 000 poliser kostade ca 10 mdkr). Osäkerhet kring antal och omfördelning.",
+      "method_note": "Fler poliser. Löftet anger inget antal, så beloppet läggs på samma nivå som de andra partiernas löften om samma sak. Delat löfte — satsningen görs en gång.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. ~2 000–8 000 miljoner kronor per år. En synlig polis kostar ~1 miljoner kronor per år (lön, utrustning, overhead). 2 000–8 000 poliser motsvarar 2–8 miljarder kronor. Bas 5 miljarder kronor från jämförbart löfte."
+      "calculation": "Löftet anger inget antal poliser, bara att satsningen ska vara stor och att poliserna ska synas. Utan angivet antal läggs beloppet på samma nivå som de andra partiernas löften om fler poliser: 1 500 miljoner kronor per år, vilket motsvarar drygt tusen poliser till en kostnad av omkring 1,2 miljoner kronor per polis och år inklusive utbildning och utrustning. Spannet 500–3 000 miljoner speglar att en storsatsning kan betyda allt från några hundra till flera tusen poliser. Samma politik hos flera partier räknas en gång."
     },
     "financing_claimed": {
       "described": false,
@@ -14290,7 +14306,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 5 000 till 1 500 miljoner kronor per år och löftet grupplänkat med de andra partiernas löften om fler poliser. Löftet hörde hemma i den gruppen men låg utanför den, och stod därför på mer än tre gånger de andras belopp för samma politik. Den tidigare uträkningen angav att basbeloppet var hämtat från ett jämförbart löfte, men beloppet stämde inte med något av de löften den kunde ha avsett.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -14318,9 +14340,9 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10,
-      "msek_base": 50,
-      "msek_high": 150,
+      "msek_low": 5,
+      "msek_base": 10,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med mindre ombudsmannamyndigheter (DO, JämO). Antar en enhet med 5–15 anställda, lokaler och rättshjälp. Låg: integrerad i befintlig myndighet. Hög: ny myndighet med bred verksamhet.",
@@ -14335,7 +14357,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 50 till 10 miljoner kronor per år, så att det stämmer med uträkningen i samma fält: den räknade fram 5–10 miljoner i baskalkylen och upp till 30 miljoner vid en bredare inriktning, medan beloppsfältet stod på 50.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17343,7 +17371,7 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 100,
-      "msek_base": 300,
+      "msek_base": 250,
       "msek_high": 600,
       "basis": "llm_estimat",
       "basis_url": null,
@@ -17359,7 +17387,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet justerat från 300 till 250 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som räknade fram omkring 5 000 barn gånger 50 000 kronor.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -17549,14 +17583,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 600,
-      "msek_base": 1500,
-      "msek_high": 3000,
+      "msek_low": 300,
+      "msek_base": 650,
+      "msek_high": 1000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Utgår från att slopad mängdrabatt enligt tidigare politiska beräkningar kostar ca 1,5 mdkr per år för Kriminalvården; osäkerhet kring tre-brottsregelns tilläggseffekt ger brett spann.",
+      "method_note": "Avskaffad mängdrabatt: kostnaden är fler anstaltsdygn. Delat löfte — samma politik räknas en gång och vilar på samma uträkning.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Utgår från jämförbart uppskattning (Moderaternas löfte om avskaffad mängdrabatt) på 1500 miljoner kronor per år för enbart slopad mängdrabatt. Tillägget med straffminimum ökar sannolikt antalet fängelseår marginellt, men den totala effekten ligger i samma storleksordning. Låg: lägre utnyttjandegrad eller effektivisering (~750 miljoner kronor). Hög: högre efterfrågan på platser och dyrare anstaltsplatser (~2500 miljoner kronor)."
+      "calculation": "Att avskaffa mängdrabatten betyder längre fängelsestraff för den som döms för flera brott, och kostnaden är fler anstaltsdygn. Antag att omkring 2 000–4 000 personer per år får sitt straff förlängt med 90–180 dagar. Med en dygnskostnad på 500–800 kronor ger det 2 000 × 90 × 500 ≈ 90 miljoner kronor i den lägre änden och 4 000 × 180 × 800 ≈ 580 miljoner i den högre. Med häktesplatser och den utbyggnad av anstalter som krävs avrundas spannet till 300–1 000 miljoner kronor per år, med 650 som basbelopp. Samma politik hos flera partier räknas en gång och vilar på samma uträkning."
     },
     "financing_claimed": {
       "described": false,
@@ -17571,6 +17605,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-07-28",
+        "change": "Beloppet omräknat från 1 500 till 650 miljoner kronor per år, harmoniserat med gruppens andra löfte om samma sak. De två löftena vilade på olika uträkningar med olika storleksordningar; båda bygger nu på antalet extra anstaltsdygn.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
