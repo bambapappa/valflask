@@ -1316,3 +1316,56 @@ partier, vilket är precis den snedhet session 5 rättade.
 **Påverkan:** `data/promises.json` (Centerpartiets och Miljöpartiets tillägg
 till ensamstående föräldrar), `HANDOFF.md`. Gränsen gäller alla framtida
 grupplänkningar.
+
+---
+
+## 2026-07-28 — Besparingar räknas med minus i parti- och ämnessummor
+
+**Beslut:** En besparing eller en ny intäkt räknas med negativt tecken i
+partisummor och ämnesfördelning, via `promiseNetMsek`. Rikssumman
+(`totalFlasket`) och besparingssumman (`totalBesparingar`) hålls kvar som två
+separata tal som dras av mot varandra i finansieringsgapet — de var aldrig fel.
+Löftessidan säger "Besparing" i stället för "Kostnad" när typen är det, och
+listor skriver negativa belopp med minustecken.
+
+**Motiv:** Ett parti som föreslog besparingar såg ut att lova mer utgifter,
+eftersom summan adderade alla löften positivt. Det är ett opartiskhetsfel och
+inte bara ett räknefel: sajtens hela premiss är neutral jämförelse mellan
+partier, och som det var straffades den som ville spara. Summan av en politik
+är differensen mellan vad den kostar och vad den sparar.
+
+**Förkastade alternativ:** Låta det vara eftersom beloppen är små (16 mdkr av
+2 509) — nej, felet drabbar partijämförelsen systematiskt och alltid åt samma
+håll. Visa besparingar i en egen kolumn i stället för i summan — nej, då måste
+läsaren själv räkna differensen för att jämföra två partier.
+
+**Påverkan:** `site/src/lib/aggregates.ts`, `site/src/lib/calc.ts`,
+`site/src/pages/lofte/[...path].astro`. Partisummor och ämnessiffror på sajten
+ändrades; rikssumman rördes inte.
+
+---
+
+## 2026-07-28 — Uppenbart felaktiga krönikor arkiveras, inte rättas
+
+**Beslut:** En krönika vars siffror visat sig vara grovt fel tas bort från
+sajten i stället för att skrivas om. Texten ändras aldrig, posten ligger kvar i
+`data/chronicles.json` och därmed i git, och krönikelistan skriver ut var de
+arkiverade finns. En rättelsepost förklarar varför. Fältet `archived` filtreras
+i `getChronicles()`.
+
+**Motiv:** Regeln att en krönika är en ögonblicksbild och aldrig skrivs om finns
+för att förhindra tyst revidering i efterhand. Den finns inte för att tvinga
+fram publicering av siffror vi vet är fel. De fyra första krönikorna talade om
+8,8 till 13 miljoner mkr när rikssumman i dag är 2,5 — skillnaden beror inte på
+ändrad politik utan på att beloppen vilade på fel grund. Att arkivera öppet och
+skriva ut var de finns håller principens andemening: ingenting döljs, ingen text
+ändras.
+
+**Förkastade alternativ:** Räkna om krönikorna med dagens siffror — nej, det är
+precis den tysta revidering regeln förbjuder. Låta dem ligga kvar med en
+rättelsenot — nej, en not gör inte en trefaldigt felaktig summa läsbar, och
+startsidan lyfte fram den. Radera dem — nej, då försvinner spårbarheten.
+
+**Påverkan:** `data/chronicles.json` (4 arkiverade, 1 uppstartskrönika),
+`site/src/lib/data.ts`, `site/src/pages/veckans-flask/index.astro`,
+`site/scripts/test-t1.mts`, `data/rattelser.json`.

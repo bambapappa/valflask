@@ -429,10 +429,13 @@ Enheter räknar vad som är kvar att göra i ämnet, inte ämnets hela storlek.
 | 9 | ~~Övrigt och infrastruktur~~ **KLAR 2026-07-28.** 6 omräknade; ämnena 183 → 186 mdkr. Se avsnittet nedan | klar | hög |
 | 10 | ~~Rättsväsende och migration~~ **KLAR 2026-07-28.** 7 omräknade; ämnena 118 → 94 mdkr. Det sista löftet märkt för omräkning är avfört. Se avsnittet nedan | klar | hög |
 
-Ämnesordningen var mandattotalen. Efter session 10, när allt är genomgånget:
-skatter 1 115 mdkr, försvar 460, välfärd 363, utbildning 191, övrigt 123,
-klimat-miljö 122, infrastruktur 63, rättsväsende 47, migration 47. **Alla nio
-ämnen är klara.** Löften som ger staten pengar ligger kvar i sitt eget ämne.
+Ämnesordningen var mandattotalen. Efter session 10 och teckenrättningen
+2026-07-28: skatter 1 104 mdkr, försvar 460, välfärd 363, utbildning 172,
+övrigt 123, klimat-miljö 122, infrastruktur 63, rättsväsende 47, migration 39.
+**Alla nio ämnen är klara.** Löften som ger staten pengar ligger kvar i sitt
+eget ämne — men de räknas nu med MINUS i ämnes- och partisummor, se nedan.
+Siffror från sessionerna 5–10 är därför något högre än dagens för de ämnen som
+innehåller besparingar.
 
 **Så väljs nivån.** Max när sessionens beslut lägger en grund som andra
 löften vilar på, eller när en enskild enhet väger över hundra miljarder för
@@ -1101,6 +1104,49 @@ i stället för miljoner, och en räkning som blandade tre enhetsförkortningar.
 
 **Totalen** gick från 7 016 120 till **5 867 996 mkr** under omgången, och
 vidare till **5 775 996 mkr** när tandvården räknades om i session 1.
+
+### Besparingar räknas med tecken (2026-07-28)
+
+En besparing behandlades som en kostnad i **partisummor och ämnesfördelning**.
+Rikssumman var alltid rätt — `totalFlasket` räknar bara utgifter och
+intäktsminskningar, besparingarna räknas separat och dras av i gapet — men
+`partyTotalMsek` och `categoryBreakdown` adderade alla löften positivt.
+
+**Följden var ett opartiskhetsfel, inte bara ett räknefel:** ett parti som
+föreslog besparingar såg ut att lova mer utgifter. Summan av en politik är
+differensen mellan vad den kostar och vad den sparar, inte deras summa.
+
+`promiseNetMsek` ger nu beloppet med tecken, och båda funktionerna använder
+den. **Använd den i allt nytt som summerar löften.** Rikssumman är oförändrad,
+2 508 836 mkr.
+
+Visningen: löftessidan säger **"Besparing"** i stället för "Kostnad" när typen
+är besparing eller intäktsökning; listor och summor skriver negativa belopp med
+minustecken (U+2212) framför beloppet.
+
+### Krönikorna: de fyra första är arkiverade (2026-07-28)
+
+Krönikor är ögonblicksbilder och skrivs aldrig om. De fyra första byggde ändå
+på rikssummor mellan 8,8 och 13 miljoner mkr — tre till fem gånger dagens 2,5 —
+eftersom beloppen vilade på fel grund innan omräkningen.
+
+**Mänskligt beslut: arkivera, inte rätta.** Ingen text är ändrad, de finns kvar
+i sin helhet i `data/chronicles.json` och därmed i git, men de renderas inte.
+Fältet `archived` filtreras i `getChronicles()`, som är enda ingången — därför
+följer startsidan, krönikelistan, krönikesidan och RSS med automatiskt. En
+uppstartskrönika (vecka 31) beskriver dagens läge och förklarar omstarten.
+
+Regeln finns för att förhindra **tyst revidering**, inte för att tvinga fram
+publicering av siffror vi vet är fel. Principen håller: ingenting är dolt,
+ingenting omskrivet, och krönikelistan skriver ut var de arkiverade finns.
+
+### Arkivlänkar verifieras i båda flödena (2026-07-28)
+
+`archive:backfill` satte tidigare arkivlänken **utan att pröva citatet mot
+den**, trots att kärnprincipen kräver det. Wayback returnerar närmaste kopia,
+som kan vara äldre än sidinnehållet. Båda flödena verifierar nu med
+`snapshotBacksQuote` och lämnar fältet tomt när det inte går att avgöra.
+Frågevågen har fått en egen backfill: `pnpm stances:archive-backfill`.
 
 ### Kvalitetssökningen — kör den, lita inte på magkänslan
 
