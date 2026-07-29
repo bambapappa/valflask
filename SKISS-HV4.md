@@ -108,12 +108,12 @@ valflasks T-serie) så budgeten är en grind, inte en förhoppning.
 ## 4. Metodsidan
 
 Skrivs i språk alla förstår (CLAUDE.md): hur en koppling blir till
-(förslag → grindarna → ägarbeslut), varför frånvaro aldrig räknas,
+(förslag → grindarna → mänskligt beslut), varför frånvaro aldrig räknas,
 varför enskilda motioner inte binder partiet, vad tomma celler betyder,
 och hur man rättar oss (rättelsevägen). Publiceras med beslutsloggen
 vid HV5.
 
-## 5. Öppna frågor — samlade för ägarbeslut
+## 5. Öppna frågor — samlade för mänskligt beslut
 
 - **F1 (beslutad, ägaren 2026-07-21):** Rutnätet visar **alla åtta
   partier** per löfte — jämförelsen är produkten, och tomma celler är

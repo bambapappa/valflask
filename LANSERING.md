@@ -23,10 +23,10 @@ allt passar lika bra under namnet som ett som inte hållit något, vilket
 
 | | drygast.nu (valflask) | Handlingsvågen |
 | --- | --- | --- |
-| repo | publikt | privat |
+| repo | publikt | privat — **öppnas vid lanseringen** (b-0024) |
 | status | **live och fullt indexerbar** | inte driftsatt |
-| Cloudflare Pages | projekt `drygast` | projekt `handlingsvagen` (ej skapat) |
-| adress | `drygast.nu` | planerad subdomän |
+| värd | GitHub Pages bakom Cloudflares proxy | samma väg vid lansering (b-0024) |
+| adress | `drygast.nu` | `handlingsvagen.utlovat.se` (ej uppsatt) |
 
 **Viktigt att inte missa:** drygast.nu är inte "live i en mindre krets" i
 teknisk mening. `site/public/robots.txt` tillåter allt, bjuder uttryckligen
@@ -49,16 +49,35 @@ sajt är en vecka då adressen finns men inte håller vad den lovar. Och
 varje omdirigering man lägger på i förväg är en till sak som kan gå sönder
 under bygget.
 
-## Steg 0 — gör detta NU, inte vid lanseringen
+## Steg 0 — GJORT (kontrollerat 2026-07-29)
 
-**Registrera `utlovat.se`, `utlovat.nu` och `utlovat.com`.** Alla tre var
-lediga 2026-07-26. Tillgänglighet är inget som består, och kostnaden är
-försumbar jämfört med att upptäcka vid lansering att namnet är borta.
+Alla tre domänerna är registrerade och ligger på Cloudflares namnservrar.
+Läget i detalj, uppmätt och inte antaget:
 
-- `.se` blir kanonisk — signalerar svensk institution, vilket spelar roll
+| domän | namnservrar | poster | svarar |
+| --- | --- | --- | --- |
+| `utlovat.se` | Cloudflare (`brenda`/`scott`) | proxade A-poster mot GitHub Pages | **HTTPS med giltigt certifikat — men `404`** |
+| `www.utlovat.se` | samma zon | samma | samma `404` |
+| `utlovat.nu` | Cloudflare (`scott`/`brenda`) | **inga** | nej |
+| `utlovat.com` | Cloudflare (`lola`/`porter`) | **inga** | nej |
+| `handlingsvagen.drygast.nu` | — | **finns inte** (NXDOMAIN) | nej |
+
+**Läs `404`:et rätt — det är goda nyheter.** Svaret kommer från GitHub Pages
+(`x-github-request-id` i huvudena), genom Cloudflare, över ett giltigt
+certifikat. DNS-vägen och SSL fungerar alltså redan hela vägen fram; GitHub
+vet bara inte vilket repo `utlovat.se` hör till, eftersom ingen repo-inställning
+ännu pekar ut den som sin custom domain. Det enda som fattas för huvudsajten är
+därför steg 4 nedan — inte något DNS-arbete.
+
+**Kvar att göra i zonerna:** `utlovat.nu` och `utlovat.com` är tomma och
+behöver sina omdirigeringsregler (steg 6).
+
+Skälet att ta alla tre står kvar:
+
+- `.se` är kanonisk — signalerar svensk institution, vilket spelar roll
   när journalister ska hänvisa.
 - `.nu` pekar mot `.se`. Bro från nuvarande adress.
-- `.com` tas defensivt. Sajten pekar ut vad partier lovat och inte gjort,
+- `.com` togs defensivt. Sajten pekar ut vad partier lovat och inte gjort,
   vilket gör den till ett naturligt mål: en irriterad sympatisör som
   registrerar den uppenbara adressen och lägger upp en parodi kostar mer
   i förtroende än domänen kostar i pengar.
@@ -66,8 +85,8 @@ försumbar jämfört med att upptäcka vid lansering att namnet är borta.
 Jaga inte svansen därutöver — `.org`, `.info`, felstavningar. Det går inte
 att försvara allt, och nyttan faller brant efter de tre.
 
-Registrera hos valfri registrar och spara inloggningen **offline**
-(samma krav som `ops/AGARSTEG.md` ställer på nuvarande domän).
+Spara registrarens inloggning **offline** (samma krav som
+`ops/AGARSTEG.md` ställer på nuvarande domän).
 
 ## Vad namnbytet faktiskt rör
 
@@ -120,50 +139,71 @@ Det är lätt att tro att Cloudflare serverar drygast.nu. Det gör den inte.
 
 | | serveras av | konfigureras i |
 | --- | --- | --- |
-| `drygast.nu` | **GitHub Pages** | `valflask` → Settings → Pages → Custom domain |
+| `drygast.nu` | **GitHub Pages, bakom Cloudflares proxy** | `valflask` → Settings → Pages → Custom domain |
 | Cloudflare Pages-projektet | ingen (saknar custom-domän) | icke-blockerande spegel i `build.yml` |
 | Netlify | ingen | spegel i `mirror.yml` |
-| DNS för `drygast.nu` | Cloudflare | DNS-poster som pekar mot GitHub Pages |
+| DNS för `drygast.nu` | Cloudflare | proxade poster (orange moln) mot GitHub Pages |
 
 `build.yml` kör `actions/deploy-pages` som **kanoniskt** bygge. Cloudflare-
 och Netlify-stegen är märkta `continue-on-error` just för att de är
 speglar och aldrig får fälla det riktiga bygget.
 
-Cloudflare gör alltså bara DNS åt huvudsajten idag. Namnbytet på
-`utlovat.se` rör därför **inte** Cloudflare Pages.
+**Rättat 2026-07-29:** en tidigare version av det här dokumentet sa att
+Cloudflare "bara gör DNS" åt huvudsajten. Det stämmer inte. `drygast.nu`
+löser upp till Cloudflares egna anycast-adresser (`172.67.…`, `104.21.…`),
+alltså **proxad** trafik — Cloudflare terminerar TLS med sitt eget
+certifikat och hämtar från GitHub Pages som origin. Skillnaden spelar roll
+för namnbytet, se fällan i steg 4 nedan. Namnbytet rör fortfarande **inte**
+Cloudflare Pages.
 
-**Handlingsvågen är undantaget.** Repot är privat, och GitHub Pages från
-privata repon kräver betalplan. Därför ska `handlingsvagen.utlovat.se`
-ligga på **Cloudflare Pages Direct Upload**. Den blandade uppsättningen —
-huvudsajt på GitHub Pages, Handlingsvågen på Cloudflare Pages — är
-avsiktlig.
+**Handlingsvågen ligger också på GitHub Pages (b-0024).** Repot öppnas vid
+lanseringen, och då fungerar GitHub Pages gratis — en CNAME-post för
+`handlingsvagen.utlovat.se`, ingenting mer. Det tidigare valet av Cloudflare
+Pages Direct Upload fanns bara därför att GitHub Pages från ett privat repo
+kräver betalplan; skälet faller bort när repot öppnas. Båda vågorna
+serveras alltså på samma sätt, av samma slags bygge. Se `MIGRERING.md`
+steg 3–4.
 
 ## Domänbytet, steg för steg
 
-1. **Lägg till `utlovat.se` som zon i Cloudflare** och peka domänens
-   namnservrar dit hos registraren. Vänta tills zonen är aktiv.
-2. **Kopiera DNS-posterna** från `drygast.nu`-zonen rakt av till den nya.
-   Samma poster, ny zon — inget behöver slås upp, de befintliga är rätt.
+1. ~~Lägg till `utlovat.se` som zon i Cloudflare~~ — **gjort.** Zonen är
+   aktiv på Cloudflares namnservrar.
+2. ~~Kopiera DNS-posterna från `drygast.nu`-zonen~~ — **gjort.** `utlovat.se`
+   och `www.utlovat.se` har proxade poster mot GitHub Pages och svarar över
+   HTTPS med giltigt certifikat (se steg 0).
 3. **Verifiera domänen hos GitHub** (Settings → Pages → verified domains).
    Skyddar mot att någon annan gör anspråk på den.
 4. **Byt custom domain** i `valflask` → Settings → Pages, från
    `drygast.nu` till `utlovat.se`. Vänta på HTTPS-certifikatet — det kan
-   ta upp till en timme.
+   ta upp till en timme. Detta är steget som gör att `utlovat.se` slutar
+   svara `404` och börjar servera sajten.
 5. **Slå på omdirigeringen** på `drygast.nu`-zonen: ta bort GitHub
    Pages-posterna och lägg en Redirect Rule, 301, **sökväg för sökväg**:
    `concat("https://utlovat.se", http.request.uri.path)`. Inte allt till
    förstasidan — en delad länk till ett visst löfte ska landa på det
    löftet.
-6. **Samma för `utlovat.nu` och `utlovat.com`** → `utlovat.se`.
-7. **Handlingsvågen:** skapa Pages-projektet (Direct Upload, namnet
-   `handlingsvagen`) och sätt custom domain `handlingsvagen.utlovat.se`.
-   Se `MIGRERING.md` steg 3.
+6. **Lägg omdirigeringsreglerna för `utlovat.nu` och `utlovat.com`** →
+   `utlovat.se`. Båda zonerna är tomma idag och behöver en A- eller
+   AAAA-post (eller en proxad platshållare) för att en Redirect Rule alls
+   ska träffa — en regel utan post har ingen trafik att omdirigera.
+7. **Handlingsvågen:** öppna repot, slå på GitHub Pages och sätt custom
+   domain `handlingsvagen.utlovat.se` med CNAME mot `bambapappa.github.io`.
+   Se `MIGRERING.md` steg 3–4 (b-0024 — inget Cloudflare Pages-projekt).
 
 **Fällan i steg 4:** GitHub Pages tillåter bara EN custom domän per repo.
 I samma sekund `utlovat.se` sätts slutar `drygast.nu` serveras därifrån.
 Förbered därför regeln i steg 5 i förväg, sparad men avstängd, och slå på
 den direkt när certifikatet är klart. Annars ligger gamla adressen död en
 stund.
+
+**Den andra fällan i steg 4 — proxyn:** posterna är proxade (orange moln),
+och GitHubs certifikatutfärdande validerar över HTTP. Med proxyn påslagen
+svarar Cloudflare i GitHubs ställe och utfärdandet kan fastna, så att
+"Enforce HTTPS" aldrig går att kryssa. Ställ posten på **DNS-only (grått
+moln)** medan GitHub hämtar certifikatet, kryssa Enforce HTTPS, och slå
+**därefter** på proxyn igen. Samma ordning gäller Handlingsvågens subdomän.
+Att `utlovat.se` redan svarar med giltigt certifikat idag är Cloudflares
+eget Universal SSL — det säger ingenting om att GitHub hunnit utfärda sitt.
 
 **Behåll `drygast.nu`-registreringen** i minst två år. En omdirigering är
 värdelös den dag domänen går ut, och en utgången domän som andra länkat
@@ -180,15 +220,19 @@ Förbered allt i grenar, växla i ett svep.
    en mergad commit är en offentlig förvarning.
 2. Gren i `handlingsvagen` med `astro.config.mjs` → `handlingsvagen.utlovat.se`
    och motsvarande texter.
-3. Cloudflare-stegen 1–3 ovan. Nya adresser svarar, gamla orörda.
-4. Verifiera på de nya adresserna innan något gammalt rörs: förstasidan,
+3. **Verifiera `utlovat.se` hos GitHub** (steg 3 ovan). Zonen och posterna
+   finns redan; nya adresser svarar, gamla orörda.
+4. **Byt custom domain i `valflask`** (steg 4 ovan) — med grått moln under
+   certifikatutfärdandet, orange igen efteråt.
+5. Verifiera på de nya adresserna innan något gammalt rörs: förstasidan,
    ett löfte, ett parti, en ledamot, en djuplänk `?lofte=<id>`, en
    API-ändpunkt, ett schema-`$id`, rättelsesidan.
-5. Släpp privatgrinden på Handlingsvågen — ta bort `noindex` i
-   `Layout.astro` (`MIGRERING.md` steg 4).
-6. Merga båda grenarna, driftsätt båda projekten.
-7. Slå på omdirigeringarna (steg 4 ovan).
-8. Sitemap och `robots.txt` pekar på nya adressen; anmäl den nya sajten i
+6. **Handlingsvågen:** öppna repot och slå på GitHub Pages med subdomänen
+   (`MIGRERING.md` steg 3–4), och släpp sedan privatgrinden — ta bort
+   `noindex` i `Layout.astro` (`MIGRERING.md` steg 5).
+7. Merga båda grenarna, driftsätt båda sajterna.
+8. Slå på omdirigeringarna (stegen 5 och 6 ovan).
+9. Sitemap och `robots.txt` pekar på nya adressen; anmäl den nya sajten i
    Google Search Console och behåll den gamla egendomen så flytten syns.
 
 ## Vad som ska verifieras efteråt
