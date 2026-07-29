@@ -199,6 +199,24 @@ Ren, deterministisk kod (klocka och allowlist injiceras). Underkänd kandidat g�
   whitespace-kollaps) tillämpas **identiskt** på citat och källtext. Citatet
   måste återfinnas ordagrant. **Skiftlägeskänsligt.** Golv 5 ord, tak 40 ord.
   Kan aldrig släppa igenom påhittad text — bara neutralisera typografi.
+  - **Kontrakt mot systerrepot:** `normalizeForVerbatim` finns i en
+    byte-identisk kopia i `handlingsvagen/pipeline/src/grindar.ts`, eftersom
+    Handlingsvågen väger samma citat. Skärps den här och glöms den där får
+    vågorna tysta olika krav på ordagrannhet, och Handlingsvågen godtar ett
+    citat som G3 hade avvisat — ingen grind fäller på det.
+    `tests/citatgrind.test.ts` är därför också en **byte-identisk kopia** i båda
+    repon och ska ge tom `diff`:
+
+        diff pipeline/tests/citatgrind.test.ts \
+             ../handlingsvagen/pipeline/tests/citatgrind.test.ts
+
+    Testet spikar utfallet tecken för tecken plus ett fingeravtryck
+    (`ff6628547e7ba295`). Ändra **aldrig** förväntad utdata för att få testet
+    grönt — ska grinden skärpas görs det i båda repon i samma omgång, och
+    fingeravtrycket uppdateras i båda. Importvägen är gömd bakom
+    `src/citatgrind.ts` just för att testfilen ska kunna vara identisk.
+    Slås repona ihop (`handlingsvagen/SAMMANSLAGNING.md`) ersätts hela
+    konstruktionen av en enda delad källa.
 - **G4** — belopp (R5-tak) + datumfönster ±548 dygn (≈18 mån) mot artikelns
   publiceringsdatum.
 - **G5** (artikelnivå) — max 5 kandidater per artikel (spam-/bombskydd), annars
