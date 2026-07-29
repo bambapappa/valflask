@@ -172,6 +172,22 @@ test("parseForslagSvar: null-svar, giltigt svar, kodstaket, trasigt svar", () =>
   assert.throws(() => parseForslagSvar('{"koppling":{"riktning":"kanske","citat":"x","motivering":"y"}}'));
 });
 
+test("parseForslagSvar: svensk stavning av riktningen godtas", () => {
+  // Prompten ber om "stodjer", men modellen stavar ibland ordet med prickar.
+  // Samma svar, annan stavning — det får inte kosta ett par (föll skarpt i
+  // förslagskörning 30159619034).
+  for (const raw of ["stödjer", "Stödjer", " stödjer ", "STÖDJER"]) {
+    const svar = parseForslagSvar(
+      `{"koppling":{"riktning":${JSON.stringify(raw)},"citat":"x","motivering":"y","confidence":0.7}}`,
+    );
+    assert.equal(svar?.riktning, "stodjer", `stavningen ${raw} skulle tolkas som stodjer`);
+  }
+  const mot = parseForslagSvar('{"koppling":{"riktning":"Motverkar","citat":"x","motivering":"y","confidence":0.7}}');
+  assert.equal(mot?.riktning, "motverkar");
+  // Ett svar som betyder något annat ska fortfarande falla.
+  assert.throws(() => parseForslagSvar('{"koppling":{"riktning":"stöder delvis","citat":"x","motivering":"y"}}'));
+});
+
 function fakeLlm(svar: string): LlmClient {
   return { complete: async () => svar };
 }

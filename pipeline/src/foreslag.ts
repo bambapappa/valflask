@@ -197,6 +197,19 @@ export interface ForslagSvar {
   confidence: number;
 }
 
+/**
+ * Läser riktningen ur svaret. Prompten ber om `stodjer` utan prickar, men
+ * modellen stavar ibland svenska ordagrant ("stödjer") — samma svar, annan
+ * stavning. Skillnaden är inte ett innehållsfel och får inte kosta ett par:
+ * prickarna fälls in och skiftläge och blanktecken normaliseras innan
+ * jämförelsen. Ett svar som betyder något annat faller fortfarande.
+ */
+function normaliseraRiktning(v: unknown): unknown {
+  if (typeof v !== "string") return v;
+  const rensad = v.trim().toLowerCase().replace(/ö/gu, "o").replace(/ä/gu, "a").replace(/å/gu, "a");
+  return rensad === "stodjer" || rensad === "motverkar" ? rensad : v;
+}
+
 /** Rensar ev. kodstaket och tolkar modellsvaret. null = ingen koppling. */
 export function parseForslagSvar(raw: string): ForslagSvar | null {
   const utan = raw.replace(/^\s*```(?:json)?\s*/u, "").replace(/\s*```\s*$/u, "");
@@ -209,11 +222,11 @@ export function parseForslagSvar(raw: string): ForslagSvar | null {
   const k = (parsed as { koppling?: unknown }).koppling;
   if (k === null || k === undefined) return null;
   const o = k as Record<string, unknown>;
-  const riktning = o["riktning"];
+  const riktning = normaliseraRiktning(o["riktning"]);
   const citat = o["citat"];
   const motivering = o["motivering"];
   const confidence = Number(o["confidence"]);
-  if (riktning !== "stodjer" && riktning !== "motverkar") throw new Error(`okänd riktning i svaret: ${String(riktning)}`);
+  if (riktning !== "stodjer" && riktning !== "motverkar") throw new Error(`okänd riktning i svaret: ${String(o["riktning"])}`);
   if (typeof citat !== "string" || typeof motivering !== "string") throw new Error("svaret saknar citat/motivering");
   return { riktning, citat, motivering, confidence: Number.isFinite(confidence) ? confidence : 0 };
 }

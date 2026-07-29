@@ -337,6 +337,24 @@ gör något publikt (kräver ägarens go). Runbook: `MIGRERING.md`.
   (300 ms mellan anrop). `voteringlista` utan `gruppering` ger radnivå.
 - Stack: Node 22, TypeScript strict (`exactOptionalPropertyTypes`),
   `node --test` via tsx — exakt som valflask/pipeline.
+- **En röd förslagskörning betyder oftast inte att den misslyckades.**
+  Körsteget avslutas rött så snart ETT par föll, även när körningen i
+  övrigt gick igenom hundratals löften och pushade dem löpande. Läs alltid
+  loggen innan du drar slutsatsen att inget blev gjort: körning 30159619034
+  betade av 346 löften och skapade 21 granskningsärenden — och blev ändå
+  röd. Det som saknas efter en röd körning är de par som föll, inte
+  körningen.
+- **Slut kredit ser ut som ett kodfel men är det inte.** Samma körning föll
+  till slut på `HTTP 402: Insufficient credits` från reservendpointen
+  (OpenRouter) — 26 par i rad mot slutet. Dödspärren löste ut precis som
+  tänkt. Innan du felsöker kod: kontrollera krediten hos leverantören och
+  att primärendpointen (`LLM_BASE_URL`) faktiskt svarar, annars går varje
+  anrop via reserven.
+- **Modellen stavar svenska ordagrant.** Prompten ber om `stodjer` utan
+  prickar; modellen svarade tidvis `stödjer` och paret föll på "okänd
+  riktning". `parseForslagSvar` fäller nu in prickarna och normaliserar
+  skiftläge innan jämförelsen — ett svar som betyder något annat faller
+  fortfarande. Kostade 2 par i körning 30159619034.
 
 ## Samarbete mellan parallella sessioner (bindande arbetssätt)
 
