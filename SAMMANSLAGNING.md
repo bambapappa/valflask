@@ -4,9 +4,32 @@
 säger samma sak. Den här filen är svaret, med det som mätts upp i stället för
 antagits.
 
-**Beslutet: slå ihop, men EFTER lansering.** Skälet till delningen var
-privatgrinden, och den gäller fram till lanseringen. Att lägga om
-repostrukturen mitt i ett namnbyte är att lägga två risker på samma vecka.
+**Beslutet: slå ihop, och sammanslagningen bör VARA lanseringen.**
+
+Ursprungsförslaget i den här filen var "slå ihop efter lansering". `b-0025`
+gjorde det ohållbart: Handlingsvågen ska ligga på **sökvägen**
+`utlovat.se/handlingsvagen`, och sökvägen är gratis först i ett repo. Så länge
+vågorna bor i två repon krävs en Cloudflare Worker som delar trafiken på path
+— precis det `b-0021` avvisade och som `b-0025` inte återinför.
+
+Därmed finns bara två sammanhängande vägar:
+
+1. **Sammanslagningen är lanseringen** (rekommenderad). Ett bygge, en
+   custom-domän, båda vågorna publika i samma ögonblick. Privatgrinden håller
+   ända fram till dess, eftersom det är sammanslagningen som gör HV publik.
+   Ingen Worker, inga 301:or, ingen subdomän, inget andra Pages-projekt.
+2. **Lansera på subdomänen först och flytta sedan.** Kostar 301:or sökväg för
+   sökväg för varje HV-adress, permanent.
+
+Väg 1 är enklare än den nuvarande åttastegssekvensen i `LANSERING.md`, inte
+svårare: stegen för subdomän, andra domän och andra certifikat faller bort.
+Priset är att sammanslagningens arbete måste vara gjort innan lanseringen kan
+ske, i stället för att kunna skjutas upp.
+
+**Vad som INTE ändras:** privatgrinden. HV-repot förblir privat och `noindex`
+sitter kvar ända till det ögonblick lanseringen sker. Det är sammanslagningen
+som är den publika handlingen, och den kräver ett mänskligt beslut precis som
+förut.
 
 ## Varför alls
 
@@ -67,9 +90,9 @@ Mätt, inte gissat:
 GitHub Pages tillåter **en** custom-domän per repo. Det styr hela topologin:
 
 - **Två repon** ⇒ två domäner ⇒ `utlovat.se` + `handlingsvagen.utlovat.se`.
-  Det är dagens plan (`b-0021`).
+  Det var planen till `b-0025`.
 - **Ett repo** ⇒ en domän ⇒ Handlingsvågen på **sökvägen**
-  `utlovat.se/handlingsvagen`.
+  `utlovat.se/handlingsvagen`. **Detta är valt** (`b-0025`).
 
 Och här inverteras `b-0021`. Det beslutet valde subdomän före sökväg med
 motiveringen att en sökväg krävde en Cloudflare Worker som delar trafiken på
@@ -78,29 +101,48 @@ katalog i samma bygge: ingen Worker, ingen andra domän, inget andra
 certifikat. Invändningen som dödade sökvägsalternativet upphör att finnas.
 
 Notera att `b-0017` ursprungligen valde just sökvägen
-(`drygast.nu/handlingsvagen`), och att HV-sajten redan har byggts med
+(`drygast.nu/handlingsvagen`), och att HV-sajten redan hade byggts med
 basstigen `/handlingsvagen` en gång. Sammanslagningen går alltså tillbaka till
 den ursprungliga topologin, nu utan det som gjorde den dyr.
 
-**Följd för lanseringen:** lanseras Handlingsvågen på subdomänen och flyttas
-den sedan till sökvägen, byter varje HV-adress form. Då krävs 301:or från
-`handlingsvagen.utlovat.se/*` till `utlovat.se/handlingsvagen/*`, och
-`LANSERING.md`:s regel gäller: sökväg för sökväg, aldrig allt till
+**Och därför kan sammanslagningen inte skjutas till efter lanseringen.** Två
+repon kan inte servera en sökväg utan en Worker. Antingen görs
+sammanslagningen först, eller så lanseras HV på en subdomän och flyttas sedan
+till priset av permanenta 301:or från `handlingsvagen.utlovat.se/*` till
+`utlovat.se/handlingsvagen/*` — sökväg för sökväg, aldrig allt till
 förstasidan.
-
-**Därför bör valet göras FÖRE lansering, även om flytten görs efter.**
-Lanseras HV direkt på sökvägen behövs ingen omdirigering någonsin. Det är
-det enda i den här planen som är brådskande.
 
 ## Ordningen
 
-Ingenting här rör privatgrinden; allt sker efter lansering utom steg 0.
+Steg 0 är gjort. Stegen 1–5 är sammanslagningen, och den är samtidigt
+lanseringen: privatgrinden håller till och med steg 4.
 
-**Steg 0 — före lansering (beslut, inte arbete).** Avgör om Handlingsvågen
-lanseras på subdomänen eller direkt på sökvägen. Väljs sökvägen: sätt
-`site/astro.config.mjs` till `https://utlovat.se` med bas `/handlingsvagen`,
-och hoppa över subdomänsteget i `MIGRERING.md`. Väljs subdomänen: räkna med
-301:orna ovan när flytten görs.
+**Steg 0 — GJORT (2026-07-29).** Sökvägen vald (`b-0025`).
+`site/astro.config.mjs` bär `site: 'https://utlovat.se'` och
+`base: '/handlingsvagen'`. Alla interna länkar, sökets API-bas, sökindexet och
+budgetgrindarna är prövade mot den formen: bygget grönt på 440 sidor, alla
+grindar gröna. Subdomänsteget i `MIGRERING.md` utgår.
+
+### Var arbetet får ske — läs detta före steg 1
+
+**En gren i ett publikt repo är publik.** `LANSERING.md`:s regel "förbered i
+grenar, merga inte" räcker för namnbytets *texter*, men inte här: pushas
+Handlingsvågens kodbas till en gren i publikt `valflask` är den läsbar för
+vem som helst, mergad eller inte. Privatgrinden faller i samma sekund.
+
+Därför måste stegen 1–3 ske någonstans som inte är publikt. Två vägar:
+
+- **A (rekommenderad): lokalt.** Klona båda repona, gör sammanslagningen i en
+  lokal gren, kör alla grindar där, och **pusha först vid lanseringen**. Då
+  behåller `valflask` sin publika identitet — det är den adress som är länkad,
+  citerad och indexerad — och ingenting syns i förväg. Priset är att arbetet
+  inte kan granskas i en PR förrän det blir publikt, så det bör göras i små
+  verifierbara steg med grindarna körda lokalt efter varje.
+- **B: i det privata HV-repot.** Dra in valflask hit i stället, unifiera här,
+  gör det här repot publikt vid lanseringen och flytta custom-domänen hit.
+  Priset: repo-identiteten byter — valflasks issues, PR-historik och
+  eventuella stjärnor blir kvar i det gamla repot, och länkar till filer på
+  GitHub slutar fungera.
 
 **Steg 1 — flytta HV in som en underkatalog.** Behåll historiken:
 
@@ -115,7 +157,7 @@ leva sida vid sida tills steg 3.
 **Steg 2 — förena anslagstavlorna och beslutsloggarna.** Här ligger den
 verkliga risken, inte i koden.
 - Två format: valflask har `DECISION_LOG.md` (markdown), HV har
-  `data/beslutslogg.json` (b-0001–b-0024). Välj **ett** och konvertera det
+  `data/beslutslogg.json` (b-0001–b-0025). Välj **ett** och konvertera det
   andra; JSON är maskinläsbart och kan renderas på sajten, markdown är
   lättare att skriva.
 - **Numrera aldrig om någon annans post** — HANDOFF förbjuder det. Bär
@@ -138,8 +180,15 @@ verkliga risken, inte i koden.
    (Astro `^6.4.6`, TypeScript, ajv, tsx) — det är disciplin, inte något som
    upprätthålls, och sammanslagningen gör det upprätthållet.
 
-**Steg 4 — en deploy.** Ett bygge, en custom-domän, Handlingsvågen på
-sökvägen. `hv-pages.yml` upphör.
+**Steg 4 — LANSERINGEN.** Det här är den publika handlingen och kräver ett
+mänskligt beslut. I ordning: släpp `noindex` i HV:s `Layout.astro`, pusha det
+sammanslagna trädet till `valflask`, sätt custom domain `utlovat.se` (grått
+moln under certifikatutfärdandet, orange efteråt — se `LANSERING.md`), och
+driftsätt. Ett bygge, en custom-domän, Handlingsvågen på
+`utlovat.se/handlingsvagen`. `hv-pages.yml` upphör.
+
+Verifiera på de nya adresserna **före** omdirigeringarna slås på — det är den
+grind som ligger före den punkt där det blir dyrt.
 
 **Steg 5 — arkivera HV-repot.** Arkivera, radera inte: issue-historiken bär
 granskningsbesluten (kopplingar godkända av människa), och de är en del av

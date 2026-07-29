@@ -6,20 +6,23 @@ går mellan *förberett* och *själva sammanslagningen*. Allt nedanför rubriken
 ditt go" är medvetet **inte** gjort: det är stegen som gör något publikt, och
 de kräver ditt uttryckliga go (spec §8, kärnprincipen om privatgrinden).
 
-Topologi (b-0017 + b-0021 + b-0024): Handlingsvågen driftsätts som en **egen**
-statisk sajt bakom Cloudflare på **subdomänen `handlingsvagen.utlovat.se`**
-(b-0021 valde subdomän före sökväg — ingen Worker behövs; b-0024 satte adressen
-till det nya namnet). Den byggs aldrig in i Fläskvågens repo eller bygge.
-Granskningsflödet speglas till valflask först vid lansering.
+Topologi (b-0017 + b-0024 + **b-0025**): Handlingsvågen ligger på **sökvägen
+`utlovat.se/handlingsvagen`**, serverad av GitHub Pages bakom Cloudflares proxy
+— samma bygge och samma domän som Fläskvågen. `b-0025` ersätter `b-0021`:s
+subdomän och återgår till `b-0017`:s ursprungliga sökväg.
 
-**Värden är GitHub Pages, inte Cloudflare Pages (b-0024).** Repot öppnas vid
-lanseringen, och då fungerar GitHub Pages gratis precis som för Fläskvågen — en
-CNAME-post bakom Cloudflare, ingenting annat. Det tidigare valet av Cloudflare
-Pages Direct Upload fanns bara därför att GitHub Pages från ett privat repo
-kräver betalplan; med ett öppnat repo faller skälet bort och med det ett andra
-Pages-projekt, två API-hemligheter och en andra driftsättningsväg. **Öppnandet
-sker vid lanseringen, inte före** — privatgrinden nedan gäller oförändrad
-till dess.
+**Följden är att sammanslagningen är lanseringen.** GitHub Pages tillåter en
+custom-domän per repo, så en sökväg kräver att vågorna bor i ett repo; med två
+repon skulle den kräva en Cloudflare Worker, vilket `b-0021` avvisade och
+`b-0025` inte återinför. Det finns därför **ingen egen subdomän, inget eget
+Pages-projekt och ingen egen deploy** för Handlingsvågen längre. Runbooken för
+själva sammanslagningen är `SAMMANSLAGNING.md`; den här filen täcker
+förberedelserna fram till den.
+
+**Värden är GitHub Pages, inte Cloudflare Pages (b-0024).** Cloudflare Pages
+fanns i planen bara därför att GitHub Pages från ett privat repo kräver
+betalplan; repot öppnas vid lanseringen och skälet faller bort. **Öppnandet
+sker vid lanseringen, inte före** — privatgrinden gäller oförändrad till dess.
 
 ## HV5-checklistan (spec §8) — status
 
@@ -69,41 +72,41 @@ Gör dessa i ordning. Fram till steg 4 är ingenting publikt.
    pipeline-tester, typkontroll, sajtens grindar och `astro build`. Ingenting
    publikt rördes. Kör om efter varje dataändring.)* Kör `hv-pages` (Actions)
    med `deploy=false`. Grönt = sajten är driftsättningsbar.
-3. **Öppna repot.** Settings → General → Danger Zone → Change visibility →
-   Public. Historiken kontrollerades 2026-07-29 och är ren — inga nycklar,
-   tokens eller certifikat i något av repots 572 objekt. Görs om kontrollen
-   är gammal: skanna om innan du öppnar. **Detta är samma grind som steg 5 —
-   från och med nu är metoden och beslutsloggen offentliga.**
-4. **Slå på GitHub Pages.** Settings → Pages → Source: GitHub Actions. Sätt
-   custom domain **`handlingsvagen.utlovat.se`**. Lägg posten i
-   `utlovat.se`-zonen i Cloudflare: CNAME `handlingsvagen` →
-   `bambapappa.github.io`.
+3. **Sammanslagningen — och den ÄR lanseringen (b-0025).** Härifrån gäller
+   `SAMMANSLAGNING.md`, inte den här filen.
 
-   **Sätt posten på DNS-only (grått moln) först.** Med proxyn påslagen
-   svarar Cloudflare i GitHubs ställe, och GitHubs certifikatutfärdande —
-   som validerar över HTTP — kan då fastna så att "Enforce HTTPS" aldrig går
-   att kryssa. Vänta på certifikatet, kryssa Enforce HTTPS, och slå
-   **därefter** på proxyn (orange moln) så sajten ligger bakom Cloudflare som
-   Fläskvågen gör.
-5. **Släpp privatgrinden.** Ta bort `<meta name="robots" content="noindex" />`
-   i `site/src/layouts/Layout.astro`. **Detta är den punkt där sajten blir
-   avsedd för publik indexering — gör det först när allt annat är klart och du
-   gett go.**
-6. **Driftsätt och verifiera subdomänen.** Kör `hv-pages`. Sajten byggs och
-   publiceras av GitHub Pages; `handlingsvagen.utlovat.se` ska svara över
-   HTTPS med giltigt certifikat. Först nu är sajten live.
-7. **Spegla granskningsflödet till valflask.** Koppling-issue-flödet
-   (`koppling-sync.yml`, `koppling-review.yml`) ligger i detta repo och kan
-   flyttas/speglas till valflask (skripten läser `GITHUB_REPOSITORY`). Behåll
-   det här eller flytta — ditt val; inget behöver ligga i valflask före HV5.
-8. **Verifiera live.** Gå igenom rutnätet, en partisida, en ledamotssida,
-   detaljpanelen med arkivlänk, sök och filter på `handlingsvagen.utlovat.se`.
+   Skälet: Handlingsvågen ska ligga på **sökvägen**
+   `utlovat.se/handlingsvagen`, och GitHub Pages tillåter bara en
+   custom-domän per repo. Sökvägen är alltså gratis först när vågorna bor i
+   ett repo; med två repon skulle den kräva en Cloudflare Worker, vilket
+   `b-0021` avvisade och `b-0025` inte återinför.
+
+   Därför finns **ingen egen subdomän att sätta upp**, inget eget
+   Pages-projekt och ingen egen deploy för Handlingsvågen. Sajtens basstig är
+   redan satt till `/handlingsvagen` och prövad (bygget grönt på 440 sidor,
+   alla grindar gröna). Det som återstår är att slå ihop repona och publicera
+   det sammanslagna trädet — steg 1–4 i `SAMMANSLAGNING.md`, där steg 4 är
+   den publika handlingen och kräver ditt go.
+
+   Privatgrinden håller ända dit: repot är privat och `noindex` sitter kvar
+   till och med steg 4. **Läs "Var arbetet får ske" i `SAMMANSLAGNING.md`
+   först** — en gren i publikt `valflask` är publik, så förberedelsearbetet
+   får inte pushas dit.
+4. **Granskningsflödet behöver inte flyttas.** Koppling-issue-flödet
+   (`koppling-sync.yml`, `koppling-review.yml`) läser `GITHUB_REPOSITORY` och
+   följer därför med av sig självt när trädet slås ihop. Det som tidigare stod
+   här — att flödet skulle speglas till valflask vid lansering — utgår med
+   `b-0025`: efter sammanslagningen finns bara ett repo att ligga i.
+5. **Verifiera live.** Gå igenom rutnätet, en partisida, en ledamotssida,
+   detaljpanelen med arkivlänk, sök och filter — på
+   `utlovat.se/handlingsvagen`.
 
 ## Vad den här förberedelsen medvetet INTE gjort
 
-Inget publikt: `noindex` sitter kvar, repot är fortfarande privat, ingen deploy
-är körd, subdomänen är inte uppsatt, och granskningsflödet är inte speglat till
-valflask. Det är själva sammanslagningen — den väntar på ditt go.
+Inget publikt: `noindex` sitter kvar, repot är fortfarande privat, och
+ingenting är driftsatt. Det är själva sammanslagningen som är lanseringen, och
+den väntar på ditt go.
 
-Arkivskörden och byggvalideringen är däremot körda (steg 1 och 2 ovan) — båda
-rör bara detta privata repo och kunde därför göras i förväg.
+Körda i förväg, eftersom de bara rör detta privata repo: arkivskörden,
+byggvalideringen, och basstigen `/handlingsvagen` med alla grindar gröna mot
+den slutliga adressformen.
