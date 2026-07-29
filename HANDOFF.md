@@ -370,6 +370,30 @@ gör något publikt (kräver ägarens go). Runbook: `MIGRERING.md`.
   (300 ms mellan anrop). `voteringlista` utan `gruppering` ger radnivå.
 - Stack: Node 22, TypeScript strict (`exactOptionalPropertyTypes`),
   `node --test` via tsx — exakt som valflask/pipeline.
+- **Citatgrinden har ett kontrakt mot systerrepot.**
+  `pipeline/tests/citatgrind.test.ts` är en **byte-identisk kopia** i detta repo
+  och i valflask. `diff` mellan de två filerna ska vara tom:
+
+      diff pipeline/tests/citatgrind.test.ts \
+           ../valflask/pipeline/tests/citatgrind.test.ts
+
+  Skälet: `normalizeForVerbatim` finns i två oberoende kopior (`grindar.ts` här,
+  `gates.ts` där). Skärps den ena och glöms den andra får vågorna tysta olika
+  krav på ordagrannhet — Handlingsvågen godtar ett citat Fläskvågen hade
+  avvisat, utan att någon grind fäller. Testet spikar utfallet tecken för tecken
+  plus ett fingeravtryck (`ff6628547e7ba295`), så varje beteendeändring fäller
+  högt. Ändra ALDRIG förväntad utdata för att få testet grönt; ska grinden
+  skärpas görs det i båda repon i samma omgång, och fingeravtrycket uppdateras i
+  båda. Importvägen är gömd bakom `src/citatgrind.ts` just för att testfilen ska
+  kunna vara identisk.
+- **Löfteskopian uppdateras med `vendor.yml`, inte för hand.**
+  `data/loften-index.json` är en läskopia av valflasks löften (b-0019 a).
+  Den hann bli gammal åt två håll samtidigt: saknade sex nya löften och bar
+  rader för fem tillbakadragna. Kör `vendor`-workflown efter att valflask ändrat
+  löften. Kopian bär bara **aktiva** löften (417 vid skrivandet av detta);
+  tillbakadragna utesluts med avsikt. Bygget läser den incheckade filen och når
+  aldrig valflask — det är hela poängen med b-0019, så lägg inte
+  vendoringen i `hv-pages`.
 - **En röd förslagskörning betyder oftast inte att den misslyckades.**
   Körsteget avslutas rött så snart ETT par föll, även när körningen i
   övrigt gick igenom hundratals löften och pushade dem löpande. Läs alltid
