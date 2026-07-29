@@ -26,6 +26,8 @@ function bygg(handlare: (url: string) => Response | Promise<Response>) {
   const sovit: number[] = [];
   let nu = 1_000_000;
   const anrop: string[] = [];
+  // Fångar reservvarningen i stället för att skriva den till console under test.
+  const reservSkal: string[] = [];
   const klient = new OpenRouterClient({
     apiKey: "k1",
     baseUrl: GO,
@@ -36,6 +38,7 @@ function bygg(handlare: (url: string) => Response | Promise<Response>) {
     maxBackoffMs: 20_000,
     nedkylningMs: 60_000,
     minIntervalMs: 0,
+    onReservSvarade: (skal) => reservSkal.push(skal),
     httpFetch: async (url) => {
       anrop.push(url);
       return handlare(url);
@@ -46,7 +49,7 @@ function bygg(handlare: (url: string) => Response | Promise<Response>) {
     },
     now: () => nu,
   });
-  return { klient, sovit, anrop, framat: (ms: number) => (nu += ms) };
+  return { klient, sovit, anrop, reservSkal, framat: (ms: number) => (nu += ms) };
 }
 
 test("primärvägens fel maskeras inte av reservvägens", async () => {
@@ -132,4 +135,27 @@ test("alla vägar ur spel ger snabbt fel utan nya anrop", async () => {
 test("fungerande primär påverkas inte", async () => {
   const { klient } = bygg((url) => (url.startsWith(GO) ? svarOk("hej") : svar(500)));
   assert.equal(await klient.complete("x", { model: "m" }), "hej");
+});
+
+test("en tyst reserv rapporteras — med primärens skäl, en gång", async () => {
+  // Primären är kreditlös, reserven svarar. Utan varning ser körningen
+  // frisk ut ända till reserven också tar slut — den blinda fläcken som
+  // gjorde att förslagskörning 30159619034 inte gick att felsöka.
+  const { klient, reservSkal } = bygg((url) =>
+    url.startsWith(GO) ? svar(402, { text: "Insufficient credits" }) : svarOk("hej"),
+  );
+  assert.equal(await klient.complete("a", { model: "m" }), "hej");
+  assert.equal(reservSkal.length, 1, "reservläget ska rapporteras");
+  assert.match(reservSkal[0]!, /402/u, "skälet ska bära primärens fel");
+  assert.match(reservSkal[0]!, /go\.example/u, "skälet ska peka ut primären");
+
+  // Andra anropet går också via reserven, men varningen upprepas inte.
+  assert.equal(await klient.complete("b", { model: "m" }), "hej");
+  assert.equal(reservSkal.length, 1, "varningen ska komma en gång per körning");
+});
+
+test("en frisk primär rapporterar inget reservläge", async () => {
+  const { klient, reservSkal } = bygg((url) => (url.startsWith(GO) ? svarOk("hej") : svar(500)));
+  assert.equal(await klient.complete("x", { model: "m" }), "hej");
+  assert.equal(reservSkal.length, 0, "ingen varning när primären svarar");
 });
