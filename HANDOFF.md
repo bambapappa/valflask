@@ -65,6 +65,39 @@ valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
 
+**Gjort 2026-07-29 (lanseringsvägen mätt upp och förenklad, grenen `claude/handoongsvagen-launch-c25uzg`):**
+
+- **b-0024 fastställt: Handlingsvågen görs publik vid lanseringen och ligger på
+  GitHub Pages**, inte Cloudflare Pages. Cloudflare Pages fanns i planen av ett
+  enda skäl — GitHub Pages från privat repo kräver betalplan — och det skälet
+  faller när repot öppnas. Bort försvinner ett Pages-projekt, två
+  API-hemligheter och en andra driftsättningsväg. `LANSERING.md` och
+  `MIGRERING.md` är omskrivna efter beslutet. **Privatgrinden är orörd** — repot
+  öppnas VID lanseringen, inte före.
+- **Historiken kontrollerad före beslutet:** inga nycklar, tokens eller
+  certifikat i något av repots 572 objekt, varken i arbetsträdet eller bakåt.
+  Görs om skanningen hunnit bli gammal när lanseringen sker.
+- **DNS uppmätt, inte antagen.** `utlovat.se` och `www.utlovat.se` svarar redan
+  över HTTPS med giltigt certifikat, går genom Cloudflare och landar på GitHub
+  Pages — men returnerar `404`, eftersom ingen repo-inställning pekar ut dem som
+  sin custom domain. DNS och SSL är alltså inte kvarvarande arbete för
+  huvudsajten; det enda som fattas är att byta custom domain i valflask.
+  `utlovat.nu` och `utlovat.com` är tomma zoner. `handlingsvagen.drygast.nu`
+  finns inte (NXDOMAIN) och behövs inte längre.
+- **Två fel i `LANSERING.md` rättade.** Dokumentet sa att Cloudflare "bara gör
+  DNS" åt huvudsajten — fel: `drygast.nu` löser upp till Cloudflares anycast-
+  adresser, alltså proxad trafik. Det spelar roll, för GitHubs
+  certifikatutfärdande validerar över HTTP och kan fastna bakom proxyn; posten
+  ska stå på grått moln till certifikatet är utfärdat. Steg 0 sa också att
+  domänerna skulle registreras — de är redan registrerade.
+- **`hv-pages` med `deploy=false` körd på `main`: grön** (körning 30491901476).
+  MIGRERING.md steg 2 därmed avklarat. Ingenting publikt rördes.
+- **Stavningsfix i förslagsparsern** (PR #206) — se de dyrköpta
+  anteckningarna om röda körningar och slut kredit.
+- **Språkregeln lagad där koden bröt den:** `foreslag.mts` skrev "väntar på
+  ägarbeslut H6" vid varje körning. Nu "väntar på mänskligt beslut" — utan
+  grindkod. Samma ord rättat i `prototyp/README.md` och `SKISS-HV4.md`.
+
 **Gjort 2026-07-22 (HV5-migreringen FÖRBEREDD utan go-live, grenen `claude/handoff-next-steps-osvpyr`):**
 
 Allt som går att göra bakom privatgrinden är gjort; kvar är bara de steg som

@@ -1,6 +1,6 @@
 # HV4-prototyp
 
-Klickbar prototyp på riktig data — underlag för ägarbeslut om
+Klickbar prototyp på riktig data — underlag för mänskligt beslut om
 visualiseringen (se SKISS-HV4.md, frågorna F1–F5). Publiceras aldrig.
 
 Bygg:

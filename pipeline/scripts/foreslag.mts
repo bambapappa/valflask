@@ -182,7 +182,7 @@ async function main() {
   if (!dryRun) {
     sparaKo();
     sparaProvade();
-    console.log(`klart: ${nya} nya förslag → ${koPath} (väntar på ägarbeslut H6)`);
+    console.log(`klart: ${nya} nya förslag → ${koPath} (väntar på mänskligt beslut)`);
     if (parFel > 0) {
       console.error(`obs: ${parFel} par föll på fel under körningen — en omkörning prövar dem igen`);
       process.exitCode = 1;
