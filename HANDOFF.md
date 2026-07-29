@@ -383,6 +383,17 @@ gör något publikt (kräver ägarens go). Runbook: `MIGRERING.md`.
   tänkt. Innan du felsöker kod: kontrollera krediten hos leverantören och
   att primärendpointen (`LLM_BASE_URL`) faktiskt svarar, annars går varje
   anrop via reserven.
+- **Ett tyst reservläge var osynligt — nu varnar klienten.** Endpointkedjan
+  är opencode Go som primär (`LLM_BASE_URL` + `LLM_API_KEY`) och OpenRouter
+  som reserv (`LLM_FALLBACK_BASE_URL` + `LLM_FALLBACK_KEY`; workflown godtar
+  också `LLM_FALLBACK_API_KEY`). Föll primären svarade reserven utan ett ord
+  i loggen, så en död primär såg exakt ut som en frisk körning — ända till
+  reserven också tog slut. Det var därför 30159619034 inte gick att felsöka
+  i efterhand: felet från OpenRouter var allt man såg, och opencodes eget
+  fel fanns ingenstans. `OpenRouterClient` skriver nu **en** rad första
+  gången reserven svarar i primärens ställe, med primärens fel som skäl
+  (`onReservSvarade`, default `console.error`). Ser du den raden i en logg:
+  primären är nere, oavsett att körningen blev grön.
 - **Modellen stavar svenska ordagrant.** Prompten ber om `stodjer` utan
   prickar; modellen svarade tidvis `stödjer` och paret föll på "okänd
   riktning". `parseForslagSvar` fäller nu in prickarna och normaliserar

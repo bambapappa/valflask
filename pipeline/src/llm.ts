@@ -42,6 +42,9 @@ export class OpenRouterClient implements LlmClient {
   private httpFetch: HttpFetch;
   private sleep: (ms: number) => Promise<void>;
   private now: () => number;
+  private onReservSvarade: (skal: string) => void;
+  /** Sant när reservläget redan rapporterats — varningen ska komma en gång. */
+  private reservRapporterad = false;
   private lastCallAt = 0;
   /**
    * Endpoints som tagits ur spel, och till när (tidsstämpel i ms).
@@ -85,6 +88,14 @@ export class OpenRouterClient implements LlmClient {
     nedkylningMs?: number;
     /** Proaktiv throttle: minsta tid mellan anrop (ms). Default 1200. */
     minIntervalMs?: number;
+    /**
+     * Ropas EN gång per körning första gången reserven svarar i primärens
+     * ställe, med primärens fel som skäl. Utan den är ett tyst
+     * reservläge osynligt: en död primär ser precis ut som en frisk
+     * körning ända till reserven också tar slut. Default: skriv till
+     * console.error.
+     */
+    onReservSvarade?: (skal: string) => void;
     httpFetch?: HttpFetch;
     sleep?: (ms: number) => Promise<void>;
     now?: () => number;
@@ -104,6 +115,12 @@ export class OpenRouterClient implements LlmClient {
       opts.httpFetch ?? (globalThis.fetch.bind(globalThis) as HttpFetch);
     this.sleep = opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)));
     this.now = opts.now ?? (() => Date.now());
+    this.onReservSvarade =
+      opts.onReservSvarade ??
+      ((skal) =>
+        console.error(
+          `OBS: reserven svarar i primärens ställe — primären föll: ${skal}`,
+        ));
   }
 
   private backoff(attempt: number): number {
@@ -224,6 +241,15 @@ export class OpenRouterClient implements LlmClient {
           const content = data?.choices?.[0]?.message?.content;
           if (typeof content !== "string") {
             throw new Error("Inget innehåll i LLM-svaret");
+          }
+          // Svarade någon annan än primären? Då är primären nere, och det
+          // syns annars ingenstans: körningen ser frisk ut ända till
+          // reserven också tar slut. Rapportera en gång, med skälet.
+          if (ep.url !== endpoints[0]?.url && !this.reservRapporterad) {
+            this.reservRapporterad = true;
+            this.onReservSvarade(
+              fel.length > 0 ? fel.join(" | ") : "okänt skäl",
+            );
           }
           return content;
         } catch (e) {
