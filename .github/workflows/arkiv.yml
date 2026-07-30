@@ -2,9 +2,14 @@ name: arkiv
 # Arkivskörd + verifiering på GitHubs runners (fritt utnät): hämtar en
 # arkivögonblicksbild av varje vägt dokument och KONTROLLERAR att kopplingens
 # citat står ord för ord i kopian (kärnprincipen "arkivlänkar måste bära
-# citatet"). Startas för hand. Delsparar per handling och committar bara
-# data/arkiv.json — kopplingar, kön och skördefilerna rörs aldrig här, så ett
-# samtidigt granskningsbeslut kan inte skrivas över. En HV5-checklistepunkt.
+# citatet"). Delsparar per handling och committar bara data/arkiv.json —
+# kopplingar, kön och skördefilerna rörs aldrig här, så ett samtidigt
+# granskningsbeslut kan inte skrivas över. En HV5-checklistepunkt.
+#
+# SCHEMALAGD KÖRNING: veckovis, en timme efter foreslag.yml samma dag, så
+# veckans godkända kopplingar (H6, oavsett om de godkänts via granska-CLI:t
+# eller issue-flödet) hinner få arkivkopia utan att någon behöver komma
+# ihåg att trycka på knappen.
 on:
   workflow_dispatch:
     inputs:
@@ -12,6 +17,8 @@ on:
         description: "Max antal handlingar att pröva denna körning (tomt = alla)"
         required: false
         default: ""
+  schedule:
+    - cron: "0 8 * * 1"
 permissions:
   contents: write
 concurrency:
