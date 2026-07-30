@@ -1,16 +1,22 @@
 /**
  * Arkivskörd + verifiering (HV5-checklistan: "arkivkopior verifierade").
  *
- * För varje AKTIV koppling mot ett dokument (motion/proposition/interpellation/
- * skriftlig fråga) hämtas en arkivögonblicksbild av riksdagsdokumentet och det
- * KONTROLLERAS att kopplingens exakta citat står ord för ord i ögonblicksbilden
- * — kärnprincipen "arkivlänkar måste bära citatet". En arkivkopia som inte bär
- * citatet accepteras aldrig; den posten lämnas som overifierad (ärligt tomt).
+ * För varje AKTIV koppling hämtas en arkivögonblicksbild av källdokumentet och
+ * det KONTROLLERAS att kopplingens exakta citat står ord för ord i
+ * ögonblicksbilden — kärnprincipen "arkivlänkar måste bära citatet". En
+ * arkivkopia som inte bär citatet accepteras aldrig; den posten lämnas som
+ * overifierad (ärligt tomt).
+ *
+ * Källdokumentet är handlingens egen dokument för motion/proposition/
+ * interpellation/skriftlig fråga (`h.url`) — men för en voteringskoppling är
+ * det utskottsbetänkandet citatet faktiskt står i (`bevis.kalla_dok_id`),
+ * eftersom voteringens egen post saknar sakinnehåll (se beslutslogg b-0013 om
+ * betänkandekoppling). Samma verifiering, samma normalisering, bara annan
+ * källa — och posten sparas ändå under voteringens `handling_id`, så sajtens
+ * uppslag (`arkiv.get(handling_id)`) fungerar oförändrat.
  *
  * Resultatet skrivs till data/arkiv.json (en verifieringspost per handling), som
- * sajten slår upp vid byggtid. handlingar.json rörs inte. Voteringskopplingar
- * hoppas över här — deras citat står i betänkandet (kalla_dok_id), en egen
- * arkivväg som byggs när betänkandelänkarna behövs.
+ * sajten slår upp vid byggtid. handlingar.json och betankanden.json rörs inte.
  *
  * Nätblockerat i sessionscontainern (web.archive.org nekas) — körs som
  * Actions-workflow (arkiv.yml) på GitHubs runners med öppet utnät, eller lokalt
@@ -21,7 +27,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { normalizeForVerbatim } from "../src/grindar.ts";
-import { htmlTillText, type HttpFetch } from "../src/riksdagen.ts";
+import { dokumentUrl, htmlTillText, type HttpFetch } from "../src/riksdagen.ts";
 import { politeFetch } from "./hamta.mts";
 
 interface Koppling {
@@ -47,6 +53,17 @@ interface ArkivPost {
 
 const DOKUMENT = new Set(["motion", "proposition", "interpellation", "skriftlig_fraga"]);
 const idag = () => new Date().toISOString().slice(0, 10);
+
+/**
+ * URL:en vars ögonblicksbild ska bära citatet — handlingens egen sida för
+ * dokumenttyperna, betänkandets sida (via `kalla_dok_id`) för voteringar.
+ * Saknar en voteringskoppling `kalla_dok_id` finns ingen källa att arkivera
+ * (ärligt: hoppa över, gissa aldrig ett dok-id).
+ */
+function kallUrl(k: Koppling, h: Handling): string | null {
+  if (h.kind === "votering") return k.bevis.kalla_dok_id ? dokumentUrl(k.bevis.kalla_dok_id) : null;
+  return DOKUMENT.has(h.kind) ? h.url : null;
+}
 
 /** Slår upp/utlöser en Wayback-ögonblicksbild och returnerar dess URL, eller null. */
 async function waybackSnapshot(fetcher: HttpFetch, url: string): Promise<string | null> {
@@ -97,23 +114,25 @@ async function main() {
   for (const k of aktiva) {
     if (nya >= limit) break;
     const h = handlingar.get(k.handling_id);
-    if (!h || !DOKUMENT.has(h.kind)) continue; // voteringar: egen betänkandeväg
+    if (!h) continue;
+    const url = kallUrl(k, h);
+    if (!url) continue; // votering utan kalla_dok_id: ingen källa att arkivera (ärligt)
     if (redanVerifierad.has(h.id)) continue;
     nya += 1;
-    console.log(`arkiverar ${h.id} (${h.kind}) …`);
+    console.log(`arkiverar ${h.id} (${h.kind}${h.kind === "votering" ? " via betänkande" : ""}) …`);
     let post: ArkivPost;
     try {
-      const snapshot = await waybackSnapshot(fetcher, h.url);
+      const snapshot = await waybackSnapshot(fetcher, url);
       if (!snapshot) {
-        post = { handling_id: h.id, koppling_id: k.id, kalla_url: h.url, arkiv_url: null, verifierad: false, skal: "ingen arkivögonblicksbild kunde skapas", datum: idag() };
+        post = { handling_id: h.id, koppling_id: k.id, kalla_url: url, arkiv_url: null, verifierad: false, skal: "ingen arkivögonblicksbild kunde skapas", datum: idag() };
       } else if (await barCitatet(fetcher, snapshot, k.bevis.citat)) {
-        post = { handling_id: h.id, koppling_id: k.id, kalla_url: h.url, arkiv_url: snapshot, verifierad: true, datum: idag() };
+        post = { handling_id: h.id, koppling_id: k.id, kalla_url: url, arkiv_url: snapshot, verifierad: true, datum: idag() };
         bekraftade += 1;
       } else {
-        post = { handling_id: h.id, koppling_id: k.id, kalla_url: h.url, arkiv_url: snapshot, verifierad: false, skal: "citatet stod inte ord för ord i ögonblicksbilden", datum: idag() };
+        post = { handling_id: h.id, koppling_id: k.id, kalla_url: url, arkiv_url: snapshot, verifierad: false, skal: "citatet stod inte ord för ord i ögonblicksbilden", datum: idag() };
       }
     } catch (e) {
-      post = { handling_id: h.id, koppling_id: k.id, kalla_url: h.url, arkiv_url: null, verifierad: false, skal: `fel: ${e instanceof Error ? e.message : String(e)}`, datum: idag() };
+      post = { handling_id: h.id, koppling_id: k.id, kalla_url: url, arkiv_url: null, verifierad: false, skal: `fel: ${e instanceof Error ? e.message : String(e)}`, datum: idag() };
     }
     const i = arkiv.findIndex((a) => a.handling_id === h.id);
     if (i >= 0) arkiv[i] = post;
