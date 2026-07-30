@@ -66,6 +66,48 @@ valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
 
+**Gjort 2026-07-30, senare passet (zai-glm skarpt provat, backfill igång, modelljämförelse 20/20):**
+
+- **z.ai/GLM-5.2 verifierat skarpt.** Sedan hemligheterna (`LLM_ZAI_API_KEY`,
+  `LLM_ZAI_BASE_URL`, `MODEL_KOPPLING_ZAI`) lagts in: en riktad testkörning
+  (`workflow_dispatch`, `primar: zai-glm`, ett löfte) bekräftade ett äkta
+  modellanrop — inte ett tyst fall-through till opencode. Kön bär nu ett
+  förslag med `"model": "glm-5.2"` sida vid sida med deepseek-genererade.
+  Ett första testförsök med `max_kandidater: 2` råkade bara träffa redan
+  avgjorda par (0 anrop); lärdomen är att `max_kandidater` måste matcha det
+  dry-run-fynd som pekade ut det oprövade paret, annars testar man inget.
+- **Full backfill mot zai-glm igång** (`--alla`, `max_kandidater: 8`,
+  startad 14:44). Går fortfarande efter mer än en timme utan att kylas —
+  till skillnad från opencode Go, som kylde efter ~1,5–2 h i de tidigare
+  körningarna. Antingen har z.ai en högre kvot eller en annan
+  kylningsstruktur; vet vi inte förrän den faktiskt kyls första gången.
+  Kön: 99 → 133+ (och växer), provade par: 1630 → 1795+. Fortsätt trigga om
+  den kyls, tills backloggen (de ~1 700 obehandlade paren från den frusna
+  korpusen, se de dyrköpta anteckningarna om röda körningar nedan) är
+  avbetad.
+- **Modelljämförelse: 20/20 samstämmigt mellan deepseek-v4-pro och
+  glm-5.2.** Nytt fristående verktyg,
+  `pipeline/scripts/jamfor-modeller.mts` + `.github/workflows/jamfor.yml`
+  (PR #301): kör om ETT GIVET urval redan avgjorda par mot en ny modell,
+  utan att röra `kopplingsforslag.json`/`provade-par.json` eller skapa
+  GitHub-issues — bara ett fristående jämförelseunderlag. Urvalet
+  (`data/jamforelse-urval-2026-07-30.json`, 20 par: 10 där deepseek
+  föreslog en koppling, 10 där den nobbade, deterministiskt valda ur
+  produktionsdatat) och resultatet
+  (`data/modelljamforelse-2026-07-30.json`) ligger incheckade för
+  spårbarhet. Slutresultat: **10/10 på de positiva förslagen, 10/10 på
+  nej-svaren** — inget tecken på att modellbytet dömer annorlunda på samma
+  indata.
+- **En bugg i jämförelseverktyget, inte i produktionskoden** (PR #302):
+  första körningen gav 17/20 — de tre "avvikande" var faktiskt tre 404:or
+  vid källtexthämtningen för voteringspar, inte oenighet. Orsak: jämförelse-
+  skriptet indexerade betänkanden på deras EGET `dok_id` (`"HA01KrU4"`)
+  i stället för `betankandeNyckel(rm, beteckning)` (`"202425:KrU4"`), som
+  är den form en voterings `handling.dok_id` faktiskt har.
+  `foreslag.mts`/`rankaVoteringsKandidater` har alltid använt rätt
+  funktion (`indexeraBetankanden()`) — bara det nya, fristående skriptet
+  hade sin egen felaktiga indexering. Lagat, omkört, 20/20.
+
 **Gjort 2026-07-30 (veckoschema + andra primär för engångsjobb, grenen `claude/foreslag-schema-och-zai`):**
 
 - **`skord.yml` och `foreslag.yml` är nu schemalagda veckovis** — skörd
