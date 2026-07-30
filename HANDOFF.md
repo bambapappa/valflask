@@ -117,6 +117,29 @@ Settings → Secrets and variables → Actions.
   "Kontrollera nycklar"-steget kollar nu alla tre zai-fälten innan
   körningen ens startar.
 
+**Gjort 2026-07-29, senare passet (sökvägen vald — sammanslagningen är nu lanseringen):**
+
+- **b-0025 fastställt: Handlingsvågen ligger på sökvägen
+  `utlovat.se/handlingsvagen`**, inte på en subdomän. Ersätter `b-0021` och
+  återgår till `b-0017`:s ursprungliga topologi.
+  `site/astro.config.mjs` bär nu `site: 'https://utlovat.se'` +
+  `base: '/handlingsvagen'`. Sajten var redan basstig-medveten
+  (`import.meta.env.BASE_URL` genomgående), så bytet krävde ingen länkjakt:
+  bygget grönt på 440 sidor, alla grindar gröna, och varje länk plus sökets
+  `data-api-base` bär `/handlingsvagen/` i utdatan.
+- **Följden är stor och står i `SAMMANSLAGNING.md`: sammanslagningen är
+  lanseringen.** GitHub Pages tillåter en custom-domän per repo, så en sökväg
+  kräver ett repo. Med två repon skulle den kräva en Cloudflare Worker, vilket
+  `b-0021` avvisade. Alltså: ingen egen subdomän, inget eget Pages-projekt,
+  ingen egen deploy, inga 301:or — men sammanslagningens arbete måste vara
+  gjort innan lanseringen kan ske. `MIGRERING.md` steg 3 pekar nu vidare till
+  `SAMMANSLAGNING.md` i stället för att sätta upp en subdomän.
+- **En fälla skriven in:** en gren i publikt `valflask` är publik. `LANSERING.md`:s
+  "förbered i grenar, merga inte" räcker för namnbytets texter men INTE för
+  Handlingsvågens kodbas — pushas den dit faller privatgrinden direkt, mergad
+  eller inte. Sammanslagningsarbetet måste därför ske lokalt (rekommenderat) eller
+  i detta privata repo. Står under "Var arbetet får ske" i `SAMMANSLAGNING.md`.
+
 **Gjort 2026-07-29 (lanseringsvägen mätt upp och förenklad, grenen `claude/handoongsvagen-launch-c25uzg`):**
 
 - **b-0024 fastställt: Handlingsvågen görs publik vid lanseringen och ligger på
@@ -398,6 +421,14 @@ gör något publikt (kräver ägarens go). Runbook: `MIGRERING.md`.
    Worker); (7) spegla granskningsflödet till valflask; (8) verifiera live.
    Ägarens uttryckliga go krävs.
    Då speglas även granskningsflödet till valflask.
+
+   > **ERSATT 2026-07-29 — läs inte stegen ovan som en att-göra-lista.**
+   > `b-0024` och `b-0025` tog bort punkterna 3, 5, 6 och 7: det finns inget
+   > Cloudflare-projekt, ingen egen deploy, ingen subdomän och inget flöde att
+   > spegla. Handlingsvågen ligger på sökvägen `utlovat.se/handlingsvagen` i
+   > samma bygge som Fläskvågen, vilket gör **sammanslagningen till
+   > lanseringen**. Punkterna 1, 2 och 4 gäller fortfarande; 1 och 2 är körda.
+   > Aktuell ordning: `SAMMANSLAGNING.md`.
 
 ## Tekniska anteckningar (dyrköpta)
 

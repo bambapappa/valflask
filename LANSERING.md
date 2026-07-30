@@ -26,7 +26,7 @@ allt passar lika bra under namnet som ett som inte hållit något, vilket
 | repo | publikt | privat — **öppnas vid lanseringen** (b-0024) |
 | status | **live och fullt indexerbar** | inte driftsatt |
 | värd | GitHub Pages bakom Cloudflares proxy | samma väg vid lansering (b-0024) |
-| adress | `drygast.nu` | `handlingsvagen.utlovat.se` (ej uppsatt) |
+| adress | `drygast.nu` | `utlovat.se/handlingsvagen` — sökväg, inget eget DNS (b-0025) |
 
 **Viktigt att inte missa:** drygast.nu är inte "live i en mindre krets" i
 teknisk mening. `site/public/robots.txt` tillåter allt, bjuder uttryckligen
@@ -156,13 +156,14 @@ certifikat och hämtar från GitHub Pages som origin. Skillnaden spelar roll
 för namnbytet, se fällan i steg 4 nedan. Namnbytet rör fortfarande **inte**
 Cloudflare Pages.
 
-**Handlingsvågen ligger också på GitHub Pages (b-0024).** Repot öppnas vid
-lanseringen, och då fungerar GitHub Pages gratis — en CNAME-post för
-`handlingsvagen.utlovat.se`, ingenting mer. Det tidigare valet av Cloudflare
-Pages Direct Upload fanns bara därför att GitHub Pages från ett privat repo
-kräver betalplan; skälet faller bort när repot öppnas. Båda vågorna
-serveras alltså på samma sätt, av samma slags bygge. Se `MIGRERING.md`
-steg 3–4.
+**Handlingsvågen ligger på SÖKVÄGEN `utlovat.se/handlingsvagen` (b-0025).**
+Ingen egen subdomän, ingen egen domän, inget eget Pages-projekt och ingen egen
+deploy: samma bygge och samma custom-domän som Fläskvågen. Det följer av att
+GitHub Pages bara tillåter en custom-domän per repo — en sökväg kräver alltså
+att vågorna bor i ett repo, och därför **är sammanslagningen lanseringen**. Se
+`SAMMANSLAGNING.md`.
+
+Namnbytet nedan rör därmed bara **en** adress att sätta: `utlovat.se`.
 
 ## Domänbytet, steg för steg
 
@@ -186,9 +187,10 @@ steg 3–4.
    `utlovat.se`. Båda zonerna är tomma idag och behöver en A- eller
    AAAA-post (eller en proxad platshållare) för att en Redirect Rule alls
    ska träffa — en regel utan post har ingen trafik att omdirigera.
-7. **Handlingsvågen:** öppna repot, slå på GitHub Pages och sätt custom
-   domain `handlingsvagen.utlovat.se` med CNAME mot `bambapappa.github.io`.
-   Se `MIGRERING.md` steg 3–4 (b-0024 — inget Cloudflare Pages-projekt).
+7. **Handlingsvågen kräver inget DNS-arbete alls (b-0025).** Den ligger på
+   sökvägen `utlovat.se/handlingsvagen` — ingen post, inget certifikat, ingen
+   subdomän. Det som återstår är sammanslagningen, och den är lanseringen: se
+   `SAMMANSLAGNING.md`.
 
 **Fällan i steg 4:** GitHub Pages tillåter bara EN custom domän per repo.
 I samma sekund `utlovat.se` sätts slutar `drygast.nu` serveras därifrån.
@@ -201,9 +203,11 @@ och GitHubs certifikatutfärdande validerar över HTTP. Med proxyn påslagen
 svarar Cloudflare i GitHubs ställe och utfärdandet kan fastna, så att
 "Enforce HTTPS" aldrig går att kryssa. Ställ posten på **DNS-only (grått
 moln)** medan GitHub hämtar certifikatet, kryssa Enforce HTTPS, och slå
-**därefter** på proxyn igen. Samma ordning gäller Handlingsvågens subdomän.
-Att `utlovat.se` redan svarar med giltigt certifikat idag är Cloudflares
-eget Universal SSL — det säger ingenting om att GitHub hunnit utfärda sitt.
+**därefter** på proxyn igen. Att `utlovat.se` redan svarar med giltigt
+certifikat idag är Cloudflares eget Universal SSL — det säger ingenting om att
+GitHub hunnit utfärda sitt. Ordningen behöver bara göras **en gång**, för
+`utlovat.se`: Handlingsvågen ligger på sökvägen och har inget eget certifikat
+(`b-0025`).
 
 **Behåll `drygast.nu`-registreringen** i minst två år. En omdirigering är
 värdelös den dag domänen går ut, och en utgången domän som andra länkat
@@ -214,25 +218,29 @@ gälla på nya adressen från första minuten.
 
 ## Sekvensen vid själva bytet
 
-Förbered allt i grenar, växla i ett svep.
+Förbered allt utanför det publika repot, växla i ett svep. Namnbytet och
+Handlingsvågens lansering är nu **samma händelse**, eftersom båda hänger på att
+`utlovat.se` sätts som custom domain på det sammanslagna trädet (`b-0025`).
 
-1. Gren i `valflask` med alla A–C-ändringar. **Merga inte.** Publikt repo:
-   en mergad commit är en offentlig förvarning.
-2. Gren i `handlingsvagen` med `astro.config.mjs` → `handlingsvagen.utlovat.se`
-   och motsvarande texter.
+1. Förbered A–C-ändringarna i `valflask` **utan att pusha dem dit.** En gren i
+   ett publikt repo är läsbar för alla, så namnbytet skulle synas i förväg —
+   och tillsammans med det sammanslagna trädet även hela Handlingsvågen. Se
+   "Var arbetet får ske" i `SAMMANSLAGNING.md`.
+2. Slå ihop repona lokalt (`SAMMANSLAGNING.md` steg 1–3) och kör alla grindar
+   där. Handlingsvågens `astro.config.mjs` bär redan `https://utlovat.se` med
+   bas `/handlingsvagen`.
 3. **Verifiera `utlovat.se` hos GitHub** (steg 3 ovan). Zonen och posterna
    finns redan; nya adresser svarar, gamla orörda.
-4. **Byt custom domain i `valflask`** (steg 4 ovan) — med grått moln under
-   certifikatutfärdandet, orange igen efteråt.
-5. Verifiera på de nya adresserna innan något gammalt rörs: förstasidan,
-   ett löfte, ett parti, en ledamot, en djuplänk `?lofte=<id>`, en
-   API-ändpunkt, ett schema-`$id`, rättelsesidan.
-6. **Handlingsvågen:** öppna repot och slå på GitHub Pages med subdomänen
-   (`MIGRERING.md` steg 3–4), och släpp sedan privatgrinden — ta bort
-   `noindex` i `Layout.astro` (`MIGRERING.md` steg 5).
-7. Merga båda grenarna, driftsätt båda sajterna.
-8. Slå på omdirigeringarna (stegen 5 och 6 ovan).
-9. Sitemap och `robots.txt` pekar på nya adressen; anmäl den nya sajten i
+4. Släpp privatgrinden: ta bort `noindex` i Handlingsvågens `Layout.astro`.
+5. Pusha det sammanslagna trädet och **byt custom domain i `valflask`** till
+   `utlovat.se` (steg 4 ovan) — grått moln under certifikatutfärdandet, orange
+   igen efteråt.
+6. Verifiera på de nya adresserna innan något gammalt rörs: förstasidan, ett
+   löfte, ett parti, en ledamot, en djuplänk `?lofte=<id>`, en API-ändpunkt,
+   ett schema-`$id`, rättelsesidan — **och** Handlingsvågens rutnät, partisida,
+   ledamotssida, sök och filter under `utlovat.se/handlingsvagen`.
+7. Slå på omdirigeringarna (stegen 5 och 6 ovan).
+8. Sitemap och `robots.txt` pekar på nya adressen; anmäl den nya sajten i
    Google Search Console och behåll den gamla egendomen så flytten syns.
 
 ## Vad som ska verifieras efteråt
