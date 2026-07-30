@@ -59,11 +59,63 @@ gratis, handlingar räknas. **Privat tills lanseringsgrinden HV5 passerats**
 och openrouter.ai (403, organisationspolicy) — inga skördar eller
 modellanrop kan köras från sessionscontainern. **Lösningen är byggd:**
 skördar och förslagskörningar går som workflows på GitHubs runners
-(fritt utnät) — `skord.yml` respektive `foreslag.yml`, båda startas
-för hand under Actions-fliken. OpenRouter-nyckeln finns som hemlighet i
+(fritt utnät) — `skord.yml` respektive `foreslag.yml`, **schemalagda
+veckovis sedan 2026-07-30** (se nedan) men går fortsatt att starta för
+hand under Actions-fliken. OpenRouter-nyckeln finns som hemlighet i
 valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
+
+**Gjort 2026-07-30 (veckoschema + andra primär för engångsjobb, grenen `claude/foreslag-schema-och-zai`):**
+
+- **`skord.yml` och `foreslag.yml` är nu schemalagda veckovis** — skörd
+  måndag 04:00 UTC, matchning måndag 07:00 UTC (tre timmars marginal, gott
+  om tid för en normal veckoskörd som tar minuter, inte timmar). Bägge går
+  fortfarande att starta för hand.
+- **`skord.yml` skördade tidigare bara röster och betänkanden — aldrig
+  `data/handlingar.json` själv.** Det förklarar varför den filen bara hade
+  EN commit i hela historiken sedan förstaskörden 25 juli. Ett nytt steg
+  "Dokumentskörd" kör `harvest.mts` (standardtyperna mot/prop/ip/fr/vot) och
+  fixar det. Ett schema-triggat anrop skördar bara INNEVARANDE riksmöte
+  (beräknat av datum, september–augusti) — inte alla fyra historiska, det
+  vore slöseri varje vecka. Manuella körningar respekterar `--rm` som förut.
+- **Mätt, inte gissat, hur mycket en veckoskörd faktiskt kostar i
+  modellanrop.** Byggde en engångssimulering med den riktiga
+  `rankaKandidater`/`rankaVoteringsKandidater`-koden: tog bort en given
+  veckas handlingar ur korpusen, rankade alla 417 aktiva löften mot både
+  full och reducerad korpus, och räknade hur många av veckans handlingar
+  som faktiskt bröt in i något löftes topp-8. **9 normalveckor (2026 v18–27):
+  2–66 nya par, medel 22,4/vecka (~97/månad).** Toppen på hela året —
+  allmänna motionstidens 2 352 handlingar på EN vecka (2024 v40) — gav
+  ändå bara 200 nya par, för taket på 8+8 kandidater per löfte gör att
+  volymen inte skalar linjärt med korpustillväxt. Hela sexveckorsfönstret
+  runt motionstiden (2024 v38–43): 308 par totalt. Skälet är strukturellt:
+  en ny handling kostar bara ett anrop om den faktiskt slår ut något som
+  redan ligger i ett löftes topp-8 — inte annars.
+- **opencode Go (deepseek-v4-pro) håller ~2 körningar som de vi körde i
+  helgen per månad** (ägarens egen kontogräns, inte något vi kan läsa ur
+  loggarna) — ≈280–540 par/månad, ~400 som riktvärde. Jämfört med
+  simuleringen ovan: **löpande veckovis drift ryms bekvämt** (~24 % av
+  budgeten en normal månad, ~77 % i toppmånaden). Den nuvarande
+  engångsbacken på ~1 700 par däremot skulle ätit 4+ månaders hela budget
+  och blockerat all löpande skörd under tiden.
+- **Ny `primar`-växel i `foreslag.yml`** (`workflow_dispatch`-val
+  `opencode-go` | `zai-glm`) löser det: engångsbacken kan betas av mot en
+  helt SKILD kvot (z.ai, GLM-modell) utan att röra Go-budgeten, medan Go
+  reserveras för den löpande veckoskörden. Kräver tre nya inställningar i
+  DETTA repo: hemligheten `LLM_ZAI_API_KEY`, variabeln `LLM_ZAI_BASE_URL`
+  (z.ai:s OpenAI-kompatibla endpoint) och variabeln `MODEL_KOPPLING_ZAI`
+  (t.ex. `glm-5.2` — verifiera mot leverantörens egen modellista).
+  **Schemat kan inte välja `zai-glm`** — bara ett medvetet
+  `workflow_dispatch` — så en glömd inställning kan aldrig läcka in i
+  nästa veckas automatiska körning. Ingen reserv kopplas in i zai-läget
+  (OpenRouter har fortsatt ingen kredit).
+- **En risk hittad och lagad i den egna kodgranskningen:** ternary-mönstret
+  `PRIMAR == 'zai-glm' && vars.X || vars.Y` faller TYST tillbaka på
+  opencodes värde om ett enskilt zai-fält glöms (t.ex. bas-URL:en satt men
+  inte modellen) — skulle ha skickat z.ai:s nyckel till opencodes endpoint.
+  "Kontrollera nycklar"-steget kollar nu alla tre zai-fälten innan
+  körningen ens startar.
 
 **Gjort 2026-07-29, senare passet (sökvägen vald — sammanslagningen är nu lanseringen):**
 
