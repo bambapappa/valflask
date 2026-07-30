@@ -13,6 +13,17 @@ name: foreslag
 # LLM_FALLBACK_API_KEY (alias LLM_FALLBACK_KEY godtas), och variabeln
 # MODEL_KOPPLING_FALLBACK. Löftena läses ur publika valflask.
 #
+# ANDRA PRIMÄREN (primar=zai-glm): en helt SKILD kvot, för engångsjobb som
+# inte ska äta av Go-budgeten (t.ex. att beta av en stor kö). Kräver:
+#   hemlighet  LLM_ZAI_API_KEY
+#   variabel   LLM_ZAI_BASE_URL     z.ai:s OpenAI-kompatibla endpoint
+#   variabel   MODEL_KOPPLING_ZAI   modell-id, t.ex. glm-5.2
+# Ingen reserv kopplas in i det läget (OpenRouter har ingen kredit) — ett fel
+# faller direkt till nästa par i stället för att slösa försök på en död reserv.
+# VALET GÄLLER BARA DEN ENSKILDA KÖRNINGEN. Schemat nedan kan inte välja
+# zai-glm — det kräver ett medvetet workflow_dispatch — så en glömd inställning
+# kan aldrig läcka in i nästa veckas automatiska körning.
+#
 # Körningen är idempotent (par med förslag i kön hoppas över) och pushar
 # LÖFTE FÖR LÖFTE: varje klart löftes nya poster läggs på färsk defaultgren
 # direkt, så det som gjorts ligger löpande på main och överlever även en hård
@@ -29,6 +40,11 @@ name: foreslag
 on:
   workflow_dispatch:
     inputs:
+      primar:
+        description: "Primär endpoint för DENNA körning (schemat använder alltid opencode-go)"
+        type: choice
+        options: [opencode-go, zai-glm]
+        default: opencode-go
       lofte:
         description: "Ett löftes-id (p-2026-XXXX) — tomt = alla aktiva"
         required: false
@@ -41,6 +57,11 @@ on:
         description: "Bara kandidatlistor — inga modellanrop, ingen skrivning"
         type: boolean
         default: false
+  schedule:
+    # Veckovis matchning av det skörden hämtat sedan sist (se skord.yml,
+    # som är schemalagd tre timmar tidigare samma dag). Kör alltid mot
+    # opencode Go — se stycket om primar ovan för varför.
+    - cron: "0 7 * * 1"
 permissions:
   contents: write
   issues: write
@@ -53,6 +74,12 @@ jobs:
     # Full körning över alla löften tar timmar (throttle 2,5 s per modellanrop
     # plus källtexthämtning per par) — 120 min räckte inte.
     timeout-minutes: 300
+    env:
+      # inputs.* är tomt på schema-triggade körningar (ingen dispatch skedde) —
+      # föll det igenom skulle jämförelsen nedan aldrig träffa 'zai-glm', vilket
+      # RÅKAR ge rätt resultat (opencode-go) men av fel skäl. Explicit fallback
+      # här gör det uttalat i stället för en tyst bieffekt av tom sträng.
+      PRIMAR: ${{ inputs.primar || 'opencode-go' }}
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
         with:
@@ -71,11 +98,20 @@ jobs:
       - name: Kontrollera nycklar
         if: ${{ !inputs.dry_run }}
         env:
-          HAR_NYCKEL: ${{ (secrets.LLM_API_KEY != '' || secrets.OPENROUTER_API_KEY != '') }}
-          HAR_MODELL: ${{ vars.MODEL_KOPPLING != '' }}
+          HAR_NYCKEL: ${{ (env.PRIMAR == 'zai-glm' && secrets.LLM_ZAI_API_KEY != '') || (env.PRIMAR != 'zai-glm' && (secrets.LLM_API_KEY != '' || secrets.OPENROUTER_API_KEY != '')) }}
+          HAR_MODELL: ${{ (env.PRIMAR == 'zai-glm' && vars.MODEL_KOPPLING_ZAI != '') || (env.PRIMAR != 'zai-glm' && vars.MODEL_KOPPLING != '') }}
+          # Saknas just bas-URL:en för zai-glm faller "Förslagskörning"-steget
+          # tyst tillbaka på vars.LLM_BASE_URL (se kommentaren där) och skulle
+          # skicka z.ai:s nyckel till opencodes endpoint. Måste alltså
+          # kontrolleras här också, inte bara nyckel och modell.
+          HAR_URL: ${{ env.PRIMAR != 'zai-glm' || vars.LLM_ZAI_BASE_URL != '' }}
         run: |
-          if [ "$HAR_NYCKEL" != "true" ] || [ "$HAR_MODELL" != "true" ]; then
-            echo "Saknas i detta repo: hemligheten LLM_API_KEY (eller OPENROUTER_API_KEY) och/eller variabeln MODEL_KOPPLING."
+          if [ "$HAR_NYCKEL" != "true" ] || [ "$HAR_MODELL" != "true" ] || [ "$HAR_URL" != "true" ]; then
+            if [ "$PRIMAR" = "zai-glm" ]; then
+              echo "Saknas i detta repo för primar=zai-glm: hemligheten LLM_ZAI_API_KEY, variabeln MODEL_KOPPLING_ZAI och/eller variabeln LLM_ZAI_BASE_URL."
+            else
+              echo "Saknas i detta repo: hemligheten LLM_API_KEY (eller OPENROUTER_API_KEY) och/eller variabeln MODEL_KOPPLING."
+            fi
             echo "Lägg in dem under Settings → Secrets and variables → Actions och kör igen."
             exit 1
           fi
@@ -90,18 +126,24 @@ jobs:
         id: kor
         continue-on-error: true
         env:
-          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          # zai-glm kör helt utan reserv (OpenRouter har ingen kredit; att ändå
+          # koppla in den skulle bara lägga ett garanterat 402-försök på varje
+          # par). opencode-go har kvar sin OpenRouter-reserv som förut.
+          LLM_BASE_URL: ${{ env.PRIMAR == 'zai-glm' && vars.LLM_ZAI_BASE_URL || vars.LLM_BASE_URL }}
+          LLM_API_KEY: ${{ env.PRIMAR == 'zai-glm' && secrets.LLM_ZAI_API_KEY || secrets.LLM_API_KEY }}
+          OPENROUTER_API_KEY: ${{ env.PRIMAR == 'zai-glm' && '' || secrets.OPENROUTER_API_KEY }}
           # Base-URL är inte hemlig — läs den ur variabler i första hand
           # (secrets kvar som reserv). Nyckelnamnet har historiskt stavats
           # LLM_FALLBACK_KEY i detta repo (HANDOFF-varning); godta båda.
-          LLM_FALLBACK_BASE_URL: ${{ vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL }}
-          LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY || secrets.LLM_FALLBACK_KEY }}
-          MODEL_KOPPLING: ${{ vars.MODEL_KOPPLING }}
-          MODEL_KOPPLING_FALLBACK: ${{ vars.MODEL_KOPPLING_FALLBACK }}
+          LLM_FALLBACK_BASE_URL: ${{ env.PRIMAR == 'zai-glm' && '' || (vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL) }}
+          LLM_FALLBACK_API_KEY: ${{ env.PRIMAR == 'zai-glm' && '' || (secrets.LLM_FALLBACK_API_KEY || secrets.LLM_FALLBACK_KEY) }}
+          MODEL_KOPPLING: ${{ env.PRIMAR == 'zai-glm' && vars.MODEL_KOPPLING_ZAI || vars.MODEL_KOPPLING }}
+          MODEL_KOPPLING_FALLBACK: ${{ env.PRIMAR == 'zai-glm' && '' || vars.MODEL_KOPPLING_FALLBACK }}
           LOFTE: ${{ inputs.lofte }}
-          MAXK: ${{ inputs.max_kandidater }}
+          # Number("") === 0 i foreslag.mts — utan fallbacken skulle en
+          # schema-triggad körning (tomma inputs) tysta kapa kandidatlistan
+          # till noll och aldrig pröva ett enda par.
+          MAXK: ${{ inputs.max_kandidater || '8' }}
           DRY: ${{ inputs.dry_run }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           PROMISES: ${{ github.workspace }}/valflask-lofter/data/promises.json
@@ -115,6 +157,7 @@ jobs:
           # fälla skriptet).
           set -uo pipefail
           set +e
+          echo "primär endpoint: $PRIMAR"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
