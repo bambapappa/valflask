@@ -16,7 +16,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { fetchDokumentText, type HttpFetch } from "../src/riksdagen.ts";
-import type { Betankande } from "../src/betankanden.ts";
+import { indexeraBetankanden, type Betankande } from "../src/betankanden.ts";
 import type { Handling } from "../src/handlingar.ts";
 import { OpenRouterClient } from "../src/llm.ts";
 import { skapaForslag, type Lofte } from "../src/foreslag.ts";
@@ -61,7 +61,12 @@ async function main() {
   const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
   const betPath = resolve(rot, "data/betankanden.json");
   const betankanden: Betankande[] = existsSync(betPath) ? JSON.parse(readFileSync(betPath, "utf8")) : [];
-  const betIndex = new Map(betankanden.map((b) => [b.dok_id, b]));
+  // Voteringars dok_id är formen "202425:KrU4" (riksmöte+beteckning), inte
+  // betänkandets EGET dok_id (t.ex. "HA01KrU4") — samma indexering som
+  // rankaVoteringsKandidater använder i produktionskoden. Att index på
+  // b.dok_id direkt (första versionen av detta script) missade varje
+  // votering och gav ett falskt 404 vid källtexthämtningen.
+  const betIndex = indexeraBetankanden(betankanden);
 
   const apiKey = process.env["LLM_API_KEY"] ?? process.env["OPENROUTER_API_KEY"];
   const baseUrl = process.env["LLM_BASE_URL"];
