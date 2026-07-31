@@ -14,6 +14,7 @@ import { aktorsPartier, type Handling } from "./handlingar.ts";
 import { termPoang, type DokumentTermer } from "./nyckelord.ts";
 import { stamma } from "./stam.ts";
 import type { LlmClient } from "./llm.ts";
+import type { Utskottspunkt } from "./riksdagen.ts";
 import { provaGrindarna, type GrindFel, type GrindKontext, type KopplingsForslag } from "./grindar.ts";
 
 /** Löftesfälten förslagssteget behöver (delmängd av valflask promises.json). */
@@ -231,7 +232,16 @@ export function parseForslagSvar(raw: string): ForslagSvar | null {
   return { riktning, citat, motivering, confidence: Number.isFinite(confidence) ? confidence : 0 };
 }
 
-export function byggPrompt(lofte: Lofte, handling: Handling, kalltext: string, betankande?: Betankande): string {
+/** Hur mycket av punktens beslutstext som får plats i prompten. */
+const PUNKTTEXT_MAX = 1200;
+
+export function byggPrompt(
+  lofte: Lofte,
+  handling: Handling,
+  kalltext: string,
+  betankande?: Betankande,
+  punkt?: Utskottspunkt,
+): string {
   return [
     `LÖFTE (${lofte.parties.join(", ").toUpperCase()}): ${lofte.title}`,
     `Exakt citat ur löfteskällan: "${lofte.quote}"`,
@@ -242,6 +252,22 @@ export function byggPrompt(lofte: Lofte, handling: Handling, kalltext: string, b
           `Voteringen gällde punkt ${handling.punkt ?? "?"} i betänkandet ` +
             `${betankande.rm}:${betankande.beteckning} "${betankande.titel}". ` +
             "DOKUMENTTEXT nedan är betänkandets text — citatet ska stå där.",
+        ]
+      : []),
+    // Punktens EGET beslut. Ett betänkande antar typiskt lagförslagen i
+    // punkt 1 och avslår motioner i punkterna därefter; utan den här
+    // upplysningen citeras gärna sammanfattningens beskrivning av
+    // propositionen som bevis för en punkt som bara avslog motioner.
+    ...(punkt
+      ? [
+          "",
+          `DEN HÄR PUNKTEN — punkt ${punkt.punkt}: ${punkt.rubrik}`,
+          `Punktens beslut: ${punkt.forslag.slice(0, PUNKTTEXT_MAX)}`,
+          "VIKTIGT: beviset ska gälla DET beslutet, inte betänkandet i stort. " +
+            "Avslår punkten bara motioner är det avslaget som är handlingen — " +
+            "citera inte sammanfattningens beskrivning av lagförslagen som om " +
+            "den vore vad den här punkten avgjorde. Räcker inte punktens egen " +
+            "sak för att belägga löftet: svara att ingen koppling finns.",
         ]
       : []),
     "",
@@ -270,9 +296,10 @@ export async function skapaForslag(
   kalltext: string,
   fonster: GrindKontext["fonster"],
   betankande?: Betankande,
+  punkt?: Utskottspunkt,
 ): Promise<ForslagResultat> {
   const svar = parseForslagSvar(
-    await llm.complete(byggPrompt(lofte, handling, kalltext, betankande), {
+    await llm.complete(byggPrompt(lofte, handling, kalltext, betankande, punkt), {
       systemPrompt,
       model,
       temperature: 0,

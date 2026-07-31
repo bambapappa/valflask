@@ -271,6 +271,32 @@ test("byggPrompt för votering pekar ut betänkandet och punkten", () => {
   assert.ok(p.includes("punkt 3") && p.includes("2022/23:AU10") && p.includes("betänkandet"));
 });
 
+test("byggPrompt: punktens eget beslut skrivs ut när det är känt", () => {
+  const p = byggPrompt(lofte, votering(), "text", betankande, {
+    punkt: 3,
+    rubrik: "Arbetslöshetsförsäkringen",
+    forslag: "Riksdagen avslår motionerna 2022/23:1234 av Namn Namnsson (S) yrkande 2.",
+  });
+  assert.ok(p.includes("punkt 3: Arbetslöshetsförsäkringen"), "punktens rubrik ska stå i prompten");
+  assert.ok(p.includes("Riksdagen avslår motionerna"), "punktens beslutstext ska stå i prompten");
+  // Kärnan i b-fyndet: modellen ska varnas för att låna sammanfattningens
+  // beskrivning av lagförslagen som bevis för ett rent motionsavslag.
+  assert.ok(p.includes("Avslår punkten bara motioner"), "varningen om motionsavslag ska följa med");
+});
+
+test("byggPrompt: utan känd punkt byggs prompten som förr (inget stopp)", () => {
+  const p = byggPrompt(lofte, votering(), "text", betankande, undefined);
+  assert.ok(!p.includes("DEN HÄR PUNKTEN"), "ingen punktsektion när punkten är okänd");
+  assert.ok(p.includes("punkt 3") && p.includes("DOKUMENTTEXT:"), "resten av prompten är oförändrad");
+});
+
+test("byggPrompt: lång beslutstext kapas så prompten inte sväller", () => {
+  const langt = "Riksdagen antar regeringens förslag till ".repeat(200);
+  const p = byggPrompt(lofte, votering(), "text", betankande, { punkt: 3, rubrik: "Lagförslagen", forslag: langt });
+  assert.ok(p.includes("Punktens beslut: Riksdagen antar"));
+  assert.ok(p.length < langt.length, "hela den långa texten ska inte följa med");
+});
+
 test("skapaForslag för votering: citat ur betänkandetexten, beviset bär betänkandets dok_id", async () => {
   const betText =
     "Utskottet föreslår att riksdagen avslår motionsyrkanden om att taket i " +

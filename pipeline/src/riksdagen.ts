@@ -248,6 +248,45 @@ export async function fetchDokumentText(fetcher: HttpFetch, dokId: string): Prom
   return htmlTillText(html);
 }
 
+/** En förslagspunkt i ett betänkande — det kammaren faktiskt röstade om. */
+export interface Utskottspunkt {
+  /** Punktnumret, som en voterings `punkt`. */
+  punkt: number;
+  /** Punktens rubrik, t.ex. "Lagförslagen" eller "Vandelsprövningen". */
+  rubrik: string;
+  /** Beslutstexten: "Riksdagen antar…" eller "Riksdagen avslår motionerna…". */
+  forslag: string;
+}
+
+/**
+ * Betänkandets förslagspunkter — vad varje punkt faktiskt avgjorde.
+ *
+ * Utan detta vet vi bara VILKEN punkt en votering gällde, inte VAD den
+ * punkten beslutade. Ett betänkande antar typiskt lagförslagen i punkt 1
+ * och avslår motioner i punkt 2 och framåt; en modell som bara får
+ * punktnumret och hela betänkandetexten citerar då gärna sammanfattningens
+ * beskrivning av propositionen — alltså punkt 1:s sak — som bevis för en
+ * punkt som i själva verket bara avslog några motioner.
+ */
+export async function fetchUtskottspunkter(fetcher: HttpFetch, dokId: string): Promise<Utskottspunkt[]> {
+  const payload = (await getJson(fetcher, `${BASE}/utskottsforslag/${dokId}.json`)) as {
+    utskottsforslag?: { dokutskottsforslag?: { utskottsforslag?: unknown } };
+  };
+  const rad = payload.utskottsforslag?.dokutskottsforslag?.utskottsforslag;
+  const lista = Array.isArray(rad) ? rad : rad ? [rad] : [];
+  const ut: Utskottspunkt[] = [];
+  for (const p of lista as Array<Record<string, unknown>>) {
+    const punkt = Number(p["punkt"]);
+    if (!Number.isInteger(punkt)) continue;
+    ut.push({
+      punkt,
+      rubrik: htmlTillText(String(p["rubrik"] ?? "")),
+      forslag: htmlTillText(String(p["forslag"] ?? "")),
+    });
+  }
+  return ut;
+}
+
 /** Publik webbadress för ett dokument (den vi visar och arkiverar). */
 export function dokumentUrl(dokId: string): string {
   return `https://data.riksdagen.se/dokument/${dokId}`;

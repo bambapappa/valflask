@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parseDokumentLista, parseVotering, parseVoteringLista } from "../src/riksdagen.ts";
+import { fetchUtskottspunkter, parseDokumentLista, parseVotering, parseVoteringLista, type HttpFetch } from "../src/riksdagen.ts";
 import {
   berikaPartier,
   motionstypAvSubtyp,
@@ -154,4 +154,51 @@ test("mergeHandlingar skiljer voteringspunkter åt", () => {
   const other = norm.map((h) => ({ ...h, punkt: 4 }));
   const merged = mergeHandlingar(mergeHandlingar([] as Handling[], norm, 2026), other, 2026);
   assert.equal(merged.length, 2);
+});
+
+/**
+ * Fixtur formad exakt som riktiga utskottsforslag-svar (kontrollerad
+ * 2026-07-31 mot HD01JuU2): punkt 1 antar lagförslagen, punkt 2 avslår
+ * bara motioner. Det är precis den skillnaden matchningen måste se.
+ */
+const utskottsPayload = {
+  utskottsforslag: {
+    dokutskottsforslag: {
+      utskottsforslag: [
+        {
+          punkt: "1",
+          rubrik: "Lagf&ouml;rslagen",
+          forslag: "Riksdagen antar regeringens f&ouml;rslag till lag om &auml;ndring i r&auml;tteg&aring;ngsbalken.<BR/>",
+        },
+        {
+          punkt: "2",
+          rubrik: "Hemliga tv&aring;ngsmedel",
+          forslag: "Riksdagen avsl&aring;r motionerna 2024/25:3444 av Gudrun Nordborg m.fl. (V) yrkandena 2 och 3.",
+        },
+      ],
+    },
+  },
+};
+
+test("fetchUtskottspunkter: punkternas rubrik och beslut plockas ut, entiteter avkodade", async () => {
+  const fetcher: HttpFetch = async () =>
+    new Response(JSON.stringify(utskottsPayload), { status: 200 }) as unknown as Awaited<ReturnType<HttpFetch>>;
+  const punkter = await fetchUtskottspunkter(fetcher, "HD01JuU2");
+  assert.equal(punkter.length, 2);
+  assert.deepEqual(punkter[0], { punkt: 1, rubrik: "Lagförslagen", forslag: "Riksdagen antar regeringens förslag till lag om ändring i rättegångsbalken." });
+  assert.equal(punkter[1]!.punkt, 2);
+  assert.ok(punkter[1]!.forslag.startsWith("Riksdagen avslår motionerna"));
+});
+
+test("fetchUtskottspunkter: ensam punkt kommer som objekt, inte lista", async () => {
+  const en = { utskottsforslag: { dokutskottsforslag: { utskottsforslag: { punkt: "1", rubrik: "Enda", forslag: "Riksdagen antar." } } } };
+  const fetcher: HttpFetch = async () =>
+    new Response(JSON.stringify(en), { status: 200 }) as unknown as Awaited<ReturnType<HttpFetch>>;
+  assert.deepEqual(await fetchUtskottspunkter(fetcher, "X"), [{ punkt: 1, rubrik: "Enda", forslag: "Riksdagen antar." }]);
+});
+
+test("fetchUtskottspunkter: tomt svar ger tom lista, inget kast", async () => {
+  const fetcher: HttpFetch = async () =>
+    new Response(JSON.stringify({ utskottsforslag: {} }), { status: 200 }) as unknown as Awaited<ReturnType<HttpFetch>>;
+  assert.deepEqual(await fetchUtskottspunkter(fetcher, "X"), []);
 });

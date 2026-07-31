@@ -19,7 +19,7 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
-import { fetchDokumentText, type HttpFetch } from "../src/riksdagen.ts";
+import { fetchDokumentText, fetchUtskottspunkter, type HttpFetch, type Utskottspunkt } from "../src/riksdagen.ts";
 import type { Betankande } from "../src/betankanden.ts";
 import type { Handling } from "../src/handlingar.ts";
 import { OpenRouterClient } from "../src/llm.ts";
@@ -56,6 +56,30 @@ const politeFetch: HttpFetch = async (url) => {
   await new Promise((r) => setTimeout(r, 300));
   return fetch(url);
 };
+
+/**
+ * Punktlistan per betänkande, hämtad en gång. Ett betänkande bär ofta flera
+ * voteringar, så utan cachen frågas riksdagen om samma lista om och om igen.
+ */
+const punktCache = new Map<string, Utskottspunkt[]>();
+
+/**
+ * Beslutstexten för den punkt voteringen gällde. Faller hämtningen (eller
+ * saknas punkten i listan) blir svaret undefined och prompten byggs som
+ * förr — en trasig biuppgift ska aldrig stoppa själva prövningen.
+ */
+async function hamtaPunkt(betDokId: string, punkt: number | null | undefined): Promise<Utskottspunkt | undefined> {
+  if (punkt === undefined || punkt === null) return undefined;
+  if (!punktCache.has(betDokId)) {
+    try {
+      punktCache.set(betDokId, await fetchUtskottspunkter(politeFetch, betDokId));
+    } catch (e) {
+      console.log(`  obs: kunde inte hämta punktlistan för ${betDokId} (${e instanceof Error ? e.message : String(e)})`);
+      punktCache.set(betDokId, []);
+    }
+  }
+  return punktCache.get(betDokId)!.find((p) => p.punkt === punkt);
+}
 
 async function main() {
   const { promisesPath, lofteId, maxKandidater, dryRun } = parseArgs(process.argv.slice(2));
@@ -146,7 +170,13 @@ async function main() {
       try {
         // För en votering är källtexten betänkandets — samma text till modell och H2.
         const kalltext = await fetchDokumentText(politeFetch, betankande?.dok_id ?? handling.dok_id);
-        const { forslag, grindfel } = await skapaForslag(llm!, systemPrompt, model, lofte, handling, kalltext, LAGE_A_FONSTER, betankande);
+        // ... och punktens EGEN beslutstext, så modellen vet vad kammaren
+        // faktiskt avgjorde och inte belägger ett motionsavslag med
+        // sammanfattningens beskrivning av lagförslagen. Faller hämtningen
+        // körs paret ändå — utan punkttexten blir prompten den gamla, aldrig
+        // ett stopp.
+        const punkt = betankande ? await hamtaPunkt(betankande.dok_id, handling.punkt) : undefined;
+        const { forslag, grindfel } = await skapaForslag(llm!, systemPrompt, model, lofte, handling, kalltext, LAGE_A_FONSTER, betankande, punkt);
         // Paret är prövat klart — registreras oavsett utfall (förslag, nej
         // eller grindfel) så en omkörning aldrig frågar om det igen.
         provade.add(parNyckel(lofte.id, handling.id));
