@@ -23,7 +23,7 @@ allt passar lika bra under namnet som ett som inte hållit något, vilket
 
 | | drygast.nu (valflask) | Handlingsvågen |
 | --- | --- | --- |
-| repo | publikt | privat — **öppnas vid lanseringen** (b-0024) |
+| repo | publikt | privat — **koden flyttar in i valflask, repot arkiveras privat** (b-0027) |
 | status | **live och fullt indexerbar** | inte driftsatt |
 | värd | GitHub Pages bakom Cloudflares proxy | samma väg vid lansering (b-0024) |
 | adress | `drygast.nu` | `utlovat.se/handlingsvagen` — sökväg, inget eget DNS (b-0025) |
@@ -273,6 +273,34 @@ båda historikerna kvar.
    mejl till en journalist i skräpposten betydligt oftare, och vem som
    helst kan skriva brev som ser ut att komma från presskontakten. För en
    sajt vars hela produkt är trovärdighet är det inte en detalj.
+
+   **Att göra i Cloudflare, zonen `utlovat.se`** (alla på grått moln —
+   e-post- och verifieringsposter proxas aldrig):
+
+   ```
+   TA BORT
+     Typ MX   Namn www              mailsec.protonmail.ch    prio 20
+
+   LÄGG TILL
+     Typ MX   Namn @                mailsec.protonmail.ch    prio 20
+     Typ TXT  Namn @                v=spf1 include:_spf.protonmail.ch ~all
+     Typ TXT  Namn _dmarc           v=DMARC1; p=quarantine; rua=mailto:hej@utlovat.se
+
+   LÄGG TILL — DKIM, tre CNAME. Målvärdena är unika per domän och står i
+   Proton under Settings → Domain names → utlovat.se → DKIM. Kopiera dem
+   därifrån; de går inte att gissa fram.
+     Typ CNAME  Namn protonmail._domainkey    <värde ur Proton>
+     Typ CNAME  Namn protonmail2._domainkey   <värde ur Proton>
+     Typ CNAME  Namn protonmail3._domainkey   <värde ur Proton>
+   ```
+
+   Kontrollera efteråt att Proton visar alla poster som gröna, och skicka
+   ett provbrev från `hej@utlovat.se` till en adress utanför Proton — kolla
+   i mottagarens rubriker att `spf=pass` och `dkim=pass` står där.
+
+   `p=quarantine` är ett medvetet mellanläge: förfalskade brev hamnar i
+   skräpposten i stället för att avvisas. Skärp till `p=reject` först när
+   du sett att egna brev går igenom.
 2. **Flytta Handlingsvågens inställningar till `valflask`**, annars slutar
    skörd och matchning fungera i samma stund trädet flyttar:
    hemligheterna `LLM_API_KEY` (eller `OPENROUTER_API_KEY`) och
@@ -316,6 +344,12 @@ båda historikerna kvar.
    skulle bryta sökrutan. HSTS är medvetet inte påslagen (se
    `ops/HANDOFF.md`) — låt den ligga.
 
+   **Orange moln är slutläget** (mänskligt beslut 2026-07-31, `b-0027`) —
+   samma uppsättning som `drygast.nu` har i dag: proxad trafik,
+   SSL/TLS-läge Full, Cloudflare-edge mot GitHub Pages som origin. Grått
+   är bara ett genomgångsläge medan certifikatet utfärdas. Posterna för
+   e-post (MX, SPF, DMARC, DKIM) proxas aldrig och står kvar på grått.
+
    Verifiera efteråt: `curl -sI https://utlovat.se/` ska visa alla sex.
 8. **Verifiera på de nya adresserna innan något gammalt rörs:** förstasidan,
    ett löfte, ett parti, en ledamot, en djuplänk `?lofte=<id>`, en
@@ -324,9 +358,22 @@ båda historikerna kvar.
 9. **Slå på omdirigeringarna** (stegen 5–6 i domänbytet ovan).
 10. **Stäng av Handlingsvågens scheman i det privata repot** (`skord.yml`,
    `foreslag.yml`, `arkiv.yml`). Annars fortsätter de skörda dit, och de
-   två datamängderna glider isär utan att någon märker det. Arkivera repot
-   när du är säker på att inget saknas — arkivera, radera inte:
-   issue-historiken bär granskningsbesluten.
+   två datamängderna glider isär utan att någon märker det.
+
+   **Arkivera sedan repot — privat.** Det behöver aldrig göras publikt
+   (`b-0027`, ersätter den delen av `b-0024`): skälet att öppna det var att
+   GitHub Pages inte serverar från ett privat repo på gratisplanen, och
+   det skälet gäller bara om sajten serveras därifrån. Nu serveras den
+   från `valflask`. Att ändå öppna repot vore att lägga ut en andra,
+   oskyddad kopia av samma kod — `valflask` har skyddad huvudgren, det här
+   repot har det inte.
+
+   **Arkivera, radera inte.** Issue-historiken bär de enskilda
+   granskningsbesluten och deras skäl. Spårbarheten utåt vilar inte på
+   den: varje koppling bär i datat att en människa godkänt den, hela
+   beslutsloggen följer med in i `valflask`, och nya granskningsärenden
+   skapas hädanefter i det publika repot. Historiken är alltså en intern
+   arbetslogg som bevaras, inte det publika beviset.
 11. **Anmäl den nya sajten i Google Search Console** och behåll den gamla
     egendomen så flytten syns.
 

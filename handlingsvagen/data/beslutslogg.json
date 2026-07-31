@@ -290,5 +290,14 @@
     "why": "Målet är utlovat.se live senast 2026-08-02 med Handlingsvågen med. Sökvägen kräver ett repo (b-0025), alltså måste sammanslagningen ske före lanseringen. Med två dagar är det avdubbleringen som ska vänta: den rör kod som fungerar, medan flytten och det gemensamma bygget är det som faktiskt måste vara på plats. Arbetet sker i det privata repot därför att en gren i publika valflask är läsbar för vem som helst — privatgrinden skulle falla i samma sekund kodbasen pushades dit, mergad eller inte.",
     "alternatives": "Lansera Handlingsvågen på subdomänen först och flytta sedan — förkastat av b-0025 (permanenta omdirigeringar). Göra hela avdubbleringen före lanseringen — förkastat: den största posten (citatgrindens delade källa) rör den grind som aldrig får lossna, och den ska inte göras under tidspress. Behålla vendor.yml och den incheckade löfteskopian — förkastat: i samma träd kan indexet skrivas om vid varje bygge, och då kan det inte längre visa gamla löften.",
     "decided_by": "mänskligt beslut 2026-07-31"
+  },
+  {
+    "date": "2026-07-31",
+    "id": "b-0027",
+    "status": "fastställd",
+    "decision": "Handlingsvågens repo görs ALDRIG publikt. Det arkiveras privat vid lanseringen. Detta ersätter den del av b-0024 som sade att repot öppnas vid lanseringen; värdvalet i b-0024 (GitHub Pages, inte Cloudflare Pages) står kvar oförändrat. Zonen utlovat.se ska stå på proxad trafik (orange moln) som slutläge, med grått moln endast under GitHubs certifikatutfärdande.",
+    "why": "b-0024 utgick från att Handlingsvågen skulle serveras från sitt eget repo, och GitHub Pages från ett privat repo kräver betalplan — därav öppnandet. Med sökvägen (b-0025) och sammanslagningen (b-0026) flyttar koden in i valflask, som redan är publikt, och då finns det ingenting kvar som kräver att det gamla repot öppnas. Att ändå öppna det vore att publicera en andra, oskyddad kopia av samma kod: valflask har skyddad huvudgren, det här repot har det inte. Orange moln som slutläge är inte en smaksak utan en förutsättning: säkerhetsheadersen sätts av en Cloudflare-regel som bara kan köra på proxad trafik, eftersom GitHub Pages inte respekterar site/public/_headers.",
+    "alternatives": "Öppna repot ändå för spårbarhetens skull — förkastat: granskningsbesluten finns redan i datat (varje koppling bär att en människa godkänt den) och i beslutsloggen som följer med in i valflask, och nya granskningsärenden skapas hädanefter i det publika repot. Radera repot i stället för att arkivera — förkastat: issue-historiken bär de enskilda granskningsbesluten och deras skäl, och den är en del av spårbarheten även om den inte är publik. Lämna zonen på grått moln — förkastat: då tappar sajten CSP och de andra säkerhetsheadersen tyst.",
+    "decided_by": "mänskligt beslut 2026-07-31"
   }
 ]

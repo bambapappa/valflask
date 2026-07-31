@@ -21,8 +21,14 @@ förberedelserna fram till den.
 
 **Värden är GitHub Pages, inte Cloudflare Pages (b-0024).** Cloudflare Pages
 fanns i planen bara därför att GitHub Pages från ett privat repo kräver
-betalplan; repot öppnas vid lanseringen och skälet faller bort. **Öppnandet
-sker vid lanseringen, inte före** — privatgrinden gäller oförändrad till dess.
+betalplan.
+
+**Följdändring 2026-07-31 (b-0027): det här repot behöver aldrig bli publikt.**
+b-0024 utgick från att Handlingsvågen skulle serveras HÄRIFRÅN, och då krävdes
+öppnandet. Med sökvägen och sammanslagningen (b-0025, b-0026) flyttar koden i
+stället in i `valflask`, som redan är publikt — och då finns det inget kvar för
+det här repot att göra. Det arkiveras privat vid lanseringen. Privatgrinden
+gäller oförändrad fram till dess.
 
 ## HV5-checklistan (spec §8) — status
 
@@ -30,7 +36,7 @@ sker vid lanseringen, inte före** — privatgrinden gäller oförändrad till d
 |---|---|---|
 | Metodsidan skriven i språk alla förstår | **Klar** | `site/src/pages/metod.astro` |
 | Neutralitetskontraktet publicerbart | **Klar** | `site/src/pages/neutralitet.astro` (spec §7) |
-| Beslutsloggen publicerbar | **Klar** | `data/beslutslogg.json` (blir publik när repot blir publikt) |
+| Beslutsloggen publicerbar | **Klar** | `data/beslutslogg.json` (blir publik när trädet flyttar in i valflask) |
 | Symmetritestet redovisat | **Klar** | `pipeline/tests/symmetri.test.ts`, b-0020 |
 | Rättelseväg på plats | **Klar** | `site/src/pages/rattelser.astro`, `Rattelsenot.astro`, `data/rattelser.json` |
 | Arkivkopior verifierade | **Skript + workflow klara, körning återstår** | `pipeline/scripts/arkiv.mts`, `.github/workflows/arkiv.yml` (0/16 körda) |
