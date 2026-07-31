@@ -216,6 +216,71 @@ till är precis vad någon annan vill ha.
 **Kontrollera att `site/public/_headers` följer med** — CSP och HSTS ska
 gälla på nya adressen från första minuten.
 
+## Lanseringsdagen — vad som är förberett och vad som återstår
+
+Uppdaterat 2026-07-31. Sammanslagningens steg 1–2 är gjorda på grenen
+`claude/lansering-utlovat-emtbcq` i **det privata HV-repot** (en gren i
+publika `valflask` vore publik). Grenen bär hela det sammanslagna trädet:
+Fläskvågen och Frågevågen i roten, Handlingsvågen under `handlingsvagen/`,
+båda historikerna kvar.
+
+**Klart på grenen:**
+
+- Trädet sammanslaget, alla grindar körda: 305 + 139 pipelinetester, båda
+  typkontrollerna rena, båda sajterna byggda, citatgrindens fingeravtryck
+  oförändrat.
+- Ett bygge: `build.yml` bygger båda sajterna och lägger Handlingsvågen
+  under `site/dist/handlingsvagen`. En custom-domän, en driftsättning.
+- Namnbytet gjort i kod, sajttext, scheman och botens identitet:
+  `drygast.nu` → `utlovat.se` överallt utom i historiska loggposter, i
+  `ops/` (de beskriver hur det ÄR uppsatt och uppdateras efter bytet) och i
+  Cloudflare Pages-projektets namn, som är ett riktigt projektnamn hos
+  leverantören.
+- Adressbytet står skrivet där det ska: en rad på förstasidan och ett
+  `adressbyte`-fält i `/api/v1/changelog.json`.
+- Vågarna länkar till varandra: "Handlingarna" i sidhuvudet och sidfoten,
+  och tillbakalänk från Handlingsvågens sidhuvud.
+- Handlingsvågen får en egen `sitemap.xml` som `robots.txt` pekar ut —
+  annars vore tredje vågen läsbar men osynlig för sökmotorerna.
+
+**Kvar, i ordning — det här är lanseringen:**
+
+1. **Kontrollera att `hej@utlovat.se` går fram.** Presskontakten står på
+   presssidan, i sidfoten och i README. En adress som studsar är värre än
+   ingen adress. (Zonen ligger hos Cloudflare; e-postvidarebefordran sätts
+   där.)
+2. **Flytta Handlingsvågens inställningar till `valflask`**, annars slutar
+   skörd och matchning fungera i samma stund trädet flyttar:
+   hemligheterna `LLM_API_KEY` (eller `OPENROUTER_API_KEY`) och
+   `LLM_ZAI_API_KEY`, variablerna `MODEL_KOPPLING`, `LLM_BASE_URL`,
+   `MODEL_KOPPLING_ZAI` och `LLM_ZAI_BASE_URL`. `BOT_APP_ID`/`BOT_APP_KEY`
+   finns redan där.
+3. **Verifiera `utlovat.se` hos GitHub** (Settings → Pages → verified
+   domains). Zonen och posterna finns sedan tidigare.
+4. **Släpp lanseringsgrinden:** sista committen på grenen tar bort
+   `noindex` i `handlingsvagen/site/src/layouts/Layout.astro`. Ligger den
+   inte med — kontrollera innan pushen.
+5. **Pusha det sammanslagna trädet till `valflask`.** Det är den publika
+   handlingen. Låt bygget bli grönt innan nästa steg.
+6. **Byt custom domain** i `valflask` → Settings → Pages till
+   `utlovat.se`. Grått moln under certifikatutfärdandet, kryssa Enforce
+   HTTPS, orange moln igen efteråt (se fällorna i steg 4 ovan).
+7. **Verifiera på de nya adresserna innan något gammalt rörs:** förstasidan,
+   ett löfte, ett parti, en ledamot, en djuplänk `?lofte=<id>`, en
+   API-ändpunkt, rättelsesidan — och Handlingsvågens rutnät, partisida,
+   ledamotssida, sök och filter under `utlovat.se/handlingsvagen`.
+8. **Slå på omdirigeringarna** (stegen 5–6 i domänbytet ovan).
+9. **Stäng av Handlingsvågens scheman i det privata repot** (`skord.yml`,
+   `foreslag.yml`, `arkiv.yml`). Annars fortsätter de skörda dit, och de
+   två datamängderna glider isär utan att någon märker det. Arkivera repot
+   när du är säker på att inget saknas — arkivera, radera inte:
+   issue-historiken bär granskningsbesluten.
+10. **Anmäl den nya sajten i Google Search Console** och behåll den gamla
+    egendomen så flytten syns.
+
+**Rullbart tillbaka fram till steg 8.** Efter att omdirigeringarna slagits
+på är vägen framåt att laga, inte att backa.
+
 ## Sekvensen vid själva bytet
 
 Förbered allt utanför det publika repot, växla i ett svep. Namnbytet och

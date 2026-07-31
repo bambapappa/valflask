@@ -25,17 +25,24 @@ upp och ingen egen deploy.
 - Arkivkopiorna: 79 verifierade ord för ord (var 28), och betänkandevägen
   för voteringar är byggd så att även de kan arkiveras.
 
-**Kritisk väg till söndag — steg 1, 2 och 4:**
-1. Slå ihop repona (`git merge --allow-unrelated-histories`, HV under egen
-   rot). Mekaniskt.
-2. Förena anslagstavlorna och beslutsloggarna. **Här ligger den verkliga
-   risken**, inte i koden: två format (`DECISION_LOG.md` mot
-   `data/beslutslogg.json`), två HANDOFF-filer på 80 + 38 KB, och regeln
-   att aldrig numrera om någon annans post.
-4. Lanseringen: släpp `noindex`, öppna repot, pusha det sammanslagna
-   trädet till `valflask`, sätt custom domain `utlovat.se`, driftsätt.
-   Verifiera på de nya adresserna FÖRE omdirigeringarna slås på — det är
-   grinden som ligger före den punkt där det blir dyrt.
+**Stegen 1 och 2 är GJORDA (2026-07-31)**, tillsammans med hela namnbytet,
+på grenen `claude/lansering-utlovat-emtbcq` **i det här privata repot**.
+Grenen bär det sammanslagna trädet: Fläskvågen och Frågevågen i roten,
+Handlingsvågen under `handlingsvagen/`, båda historikerna kvar. Alla
+grindar körda i det sammanslagna trädet — 305 + 139 pipelinetester, båda
+typkontrollerna rena, båda sajterna byggda, citatgrindens fingeravtryck
+oförändrat. `build.yml` bygger nu båda vågorna och lägger Handlingsvågen
+under `site/dist/handlingsvagen`: ett bygge, en domän, en driftsättning.
+
+**Steg 4 (lanseringen) återstår och är en människas beslut.** Den ordnade
+listan står i `LANSERING.md` under "Lanseringsdagen". Tre saker där är
+lätta att missa och skulle märkas först efteråt:
+
+- **`hej@utlovat.se` måste gå fram** innan presssidan blir publik.
+- **Handlingsvågens modellnycklar och variabler måste in i `valflask`**,
+  annars slutar skörd och matchning fungera i samma stund trädet flyttar.
+- **Schemana här måste stängas av vid lanseringen**, annars fortsätter de
+  skörda till det privata repot och datamängderna glider isär.
 
 **Steg 3 (avdubblering) bör skjutas.** Planen tillåter uttryckligen att
 två `pipeline/`- och två `site/`-träd lever sida vid sida till dess. Med

@@ -144,6 +144,29 @@ Därför måste stegen 1–3 ske någonstans som inte är publikt. Två vägar:
   eventuella stjärnor blir kvar i det gamla repot, och länkar till filer på
   GitHub slutar fungera.
 
+**Stegen 1 och 2 är GJORDA (2026-07-31)** på grenen
+`claude/lansering-utlovat-emtbcq` i det privata HV-repot, tillsammans med
+namnbytet. Beskrivningarna nedan står kvar som de skrevs; det som faktiskt
+gjordes och vad som återstår står i `LANSERING.md` under
+"Lanseringsdagen". Avvikelser mot planen, med skäl:
+
+- **Beslutsloggarna slogs inte ihop till ett format.** `DECISION_LOG.md`
+  bär Fläskvågen, Frågevågen och det som rör hela sajten;
+  `data/beslutslogg.json` bär Handlingsvågens `b-`serie som förut. Att
+  konvertera 25 poster två dagar före lansering är ett rent
+  omskrivningsarbete med verklig risk att förskjuta en post, och JSON-loggen
+  renderas på metodsidan. Beslutet står i `DECISION_LOG.md` (2026-07-31)
+  och som `b-0026`.
+- **Anslagstavlorna slogs inte ihop till en fil.** Rot-`HANDOFF.md` är
+  tavlan — anspråk skrivs där, för alla tre vågorna — men
+  `handlingsvagen/HANDOFF.md` ligger kvar orörd. Anteckningarna där är
+  dyrköpta och skulle förlora sitt sammanhang av en sammanfattning.
+- **Två workflows utgick i stället för att flyttas:** `hv-pages.yml`
+  (bygget och grindarna ligger nu i `build.yml`) och `vendor.yml`
+  (löftesindexet skrivs om vid varje bygge ur `data/promises.json`, så
+  kopian kan inte längre bli gammal — punkt 2 under "Varför alls" är
+  därmed löst).
+
 **Steg 1 — flytta HV in som en underkatalog.** Behåll historiken:
 
     git remote add hv <handlingsvagen>

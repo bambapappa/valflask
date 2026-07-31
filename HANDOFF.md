@@ -1,6 +1,6 @@
-# HANDOFF — drygast.nu (Fläskvågen + Frågevågen)
+# HANDOFF — utlovat.se (Fläskvågen + Frågevågen + Handlingsvågen)
 
-Fullständig karta över hela `valflask`-repot så att vilken ny Claude-session som
+Fullständig karta över hela repot så att vilken ny Claude-session som
 helst kan sätta sig in och ta vid. Status per **2026-07-23**, verifierad mot
 koden (se §11 för testkörning).
 
@@ -11,6 +11,18 @@ det längsta och viktigaste dokumentet), `CLAUDE.md` (bindande språkregler),
 `ops/HANDOFF.md` (äldre, mer detaljerad driftlogg t.o.m. drift/deploy),
 `ops/RUNBOOK.md` (drift/katastrof), `ops/AGARSTEG.md` (kontosteg),
 `ops/FRAGEVAGEN-LANSERING.md` (lanseringsstegen för Frågevågen).
+
+**Handlingsvågen ligger under `handlingsvagen/`** och har kvar sin egen,
+mer detaljerade överlämning i `handlingsvagen/HANDOFF.md` — den är inte
+inarbetad här, för anteckningarna där är dyrköpta och skulle förlora sitt
+sammanhang av en sammanfattning. Läs den innan du rör något under
+`handlingsvagen/`. Metoden står i `handlingsvagen/SPEC-HANDLINGSVAGEN.md`,
+besluten i `handlingsvagen/data/beslutslogg.json`, vägen hit i
+`handlingsvagen/SAMMANSLAGNING.md` och `handlingsvagen/LANSERING.md`.
+
+**Anslagstavlan är gemensam.** Gör anspråk på det du tar dig an under
+"Pågår just nu" i §9 här nedan, oavsett vilken våg arbetet rör — annars
+ser sessionerna inte varandra. Skörda aldrig parallellt.
 
 ---
 
@@ -34,8 +46,8 @@ det längsta och viktigaste dokumentet), `CLAUDE.md` (bindande språkregler),
 
 ## 1. Vad projektet är
 
-**drygast.nu** är ett neutralt, källspårat register inför riksdagsvalet
-**13 september 2026**. Det består av två delar som delar infrastruktur:
+**utlovat.se** är ett neutralt, källspårat register inför riksdagsvalet
+**13 september 2026**. Det består av tre delar som delar infrastruktur:
 
 - **Fläskvågen** — väger vad partiernas **vallöften kostar**. Varje löfte fångas
   med ordagrant citat, prissätts (spann med osäkerhet), summeras per parti och
@@ -46,6 +58,11 @@ det längsta och viktigaste dokumentet), `CLAUDE.md` (bindande språkregler),
   Append-only: byter ett parti fot syns gamla och nya beskedet sida vid sida.
   Väger ingenting — registrerar besked, värderar dem aldrig. "Inget tydligt
   besked" är ett förstklassigt, likabehandlat värde.
+- **Handlingsvågen** — väger partiernas och ledamöternas **faktiska
+  riksdagshandlingar** mot löftena och ståndpunkterna. Devis: *"Ord är gratis,
+  handlingar räknas."* Varje koppling mellan ett löfte och en handling bär ett
+  exakt citat och är godkänd av en människa. Ligger under `handlingsvagen/` och
+  på sökvägen `utlovat.se/handlingsvagen`, i samma bygge som de andra två.
 
 **Opartiskhet är kontraktet:** identisk insamling, metod och ton för alla åtta
 riksdagspartier (s, m, sd, c, v, kd, l, mp). Inga röstrekommendationer, ingen
@@ -53,9 +70,16 @@ värdering av sakpolitiken. **Ingen reklam, inga intäkter, ingen finansiär** (
 gamla intäktsplanen skrotades 2026-07-01). Byggd och underhållen av en
 privatperson på fritiden, med hjälp av AI.
 
-**Publik status:** Sajten är **LIVE och härdad** på
-[drygast.nu](https://drygast.nu). Data-licens CC BY 4.0. Presskontakt
-hej@drygast.nu.
+**Publik status:** Sajten är **LIVE och härdad**. Data-licens CC BY 4.0.
+Presskontakt hej@utlovat.se.
+
+**Namnbytet och Handlingsvågens lansering är samma händelse.** Sajten hette
+`drygast.nu`; namnet utsåg en vinnare i en tävling om vem som är drygast, medan
+metoden i övrigt aldrig tycker något datat inte bär. `utlovat.se` namnger
+måttstocken i stället för domen. Bytet är förberett i kod och text; de steg som
+gör det publikt står i `handlingsvagen/LANSERING.md` under "Lanseringsdagen"
+och kräver ett mänskligt beslut. Gamla adresser ska peka vidare **sökväg för
+sökväg** — en delad länk till ett visst löfte ska landa på det löftet.
 
 **Viktig produktpivot (mänskligt beslut 2026-07-21, DECISION_LOG):**
 kostnadsestimat är numera ett **tillval bakom en godkännandegrind** — läsaren
@@ -329,7 +353,7 @@ Kedjan: **GitHub Pages** (origin, `build.yml` bygger `site/dist`) bakom
 Cloudflare **Transform Rule** (GitHub Pages struntar i `_headers`). **Rocket
 Loader måste vara AV** (bryter strikt CSP). HSTS medvetet uppskjuten. Konto på
 Martin.kronvall@outlook.com's Cloudflare. Verifiera: `curl -sI
-https://drygast.nu/` och `curl -s https://drygast.nu/api/v1/summary.json`.
+https://utlovat.se/` och `curl -s https://utlovat.se/api/v1/summary.json`.
 
 ---
 
@@ -1339,6 +1363,25 @@ Flera Claude-sessioner kan arbeta i repot samtidigt. Bindande:
   2026-07-28, se CLAUDE.md "Att avsluta ett större spår"); att slå ihop den
   med `main` är fortfarande en människas beslut.
 - Commit-/PR-texter följer språkreglerna (§0).
+- **En anslagstavla för alla tre vågorna.** Efter sammanslagningen bor
+  Handlingsvågen i samma repo; anspråk skrivs här nedan även när arbetet bara
+  rör `handlingsvagen/`. Beslutsnumren i `handlingsvagen/data/beslutslogg.json`
+  (`b-`serien) fortsätter som förut — **numrera aldrig om någon annans post.**
+- **Skilda körningar, samma `main`.** Fläskvågens pipeline och Handlingsvågens
+  skörd/matchning pushar båda data direkt till `main`, i egna
+  concurrency-grupper. De trängs alltså på samma gren: rebasa mot färsk
+  `origin/main` innan du pushar, och räkna med att en fullkörning i
+  Handlingsvågen pushar en gång per löfte i timmar.
+
+### Pågår just nu
+
+Skriv din rad här innan du börjar, stryk den när PR:en är öppnad.
+
+- 2026-07-31 `claude/lansering-utlovat-emtbcq` → sammanslagningen och
+  namnbytet till utlovat.se. Grenen ligger i det privata HV-repot fram till
+  lanseringen (en gren i publikt `valflask` vore publik). Rör inte
+  workflowsen, `HANDOFF.md`, `LANSERING.md` eller `SAMMANSLAGNING.md`
+  parallellt.
 
 ---
 
