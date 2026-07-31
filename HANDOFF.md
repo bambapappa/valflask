@@ -8,6 +8,48 @@ självt hämtades ur). Läs `CLAUDE.md` först (bindande
 språkregler och kärnprinciper), sedan `SPEC-HANDLINGSVAGEN.md` (fastställd
 spec) och `NEUTRALITET.md`. Alla metodval står i `data/beslutslogg.json`.
 
+## MÅLET: utlovat.se live senast söndag 2026-08-02 — Handlingsvågen med
+
+Fastställt genom mänskligt beslut 2026-07-31. Handlingsvågen ska **med i
+lanseringen**, inte följa efter. Två dagar från beslutet.
+
+Eftersom sammanslagningen ÄR lanseringen (`b-0025`) går vägen genom
+`SAMMANSLAGNING.md`, inte `MIGRERING.md`. Handlingsvågen hamnar på
+sökvägen `utlovat.se/handlingsvagen`; det finns ingen subdomän att sätta
+upp och ingen egen deploy.
+
+**Klart och avprickat:**
+- Steg 0 — sökvägen vald, basstigen satt, bygget grönt på 440 sidor.
+- HV5-checklistan: metodsidan, neutralitetskontraktet, beslutsloggen,
+  symmetritestet och rättelsevägen är alla klara.
+- Arkivkopiorna: 79 verifierade ord för ord (var 28), och betänkandevägen
+  för voteringar är byggd så att även de kan arkiveras.
+
+**Kritisk väg till söndag — steg 1, 2 och 4:**
+1. Slå ihop repona (`git merge --allow-unrelated-histories`, HV under egen
+   rot). Mekaniskt.
+2. Förena anslagstavlorna och beslutsloggarna. **Här ligger den verkliga
+   risken**, inte i koden: två format (`DECISION_LOG.md` mot
+   `data/beslutslogg.json`), två HANDOFF-filer på 80 + 38 KB, och regeln
+   att aldrig numrera om någon annans post.
+4. Lanseringen: släpp `noindex`, öppna repot, pusha det sammanslagna
+   trädet till `valflask`, sätt custom domain `utlovat.se`, driftsätt.
+   Verifiera på de nya adresserna FÖRE omdirigeringarna slås på — det är
+   grinden som ligger före den punkt där det blir dyrt.
+
+**Steg 3 (avdubblering) bör skjutas.** Planen tillåter uttryckligen att
+två `pipeline/`- och två `site/`-träd lever sida vid sida till dess. Med
+två dagar är det den del som ska vänta — citatgrindens delade källa,
+temat, söket, workflowsen och beroendena. Steg 5 (arkivera HV-repot)
+likaså.
+
+**Blockerar INTE lanseringen:** de 370 ogranskade förslagen i kön och den
+pågående omkörningen. Inget av det är publikt — tomma celler är ärliga,
+och sajten visar bara det en människa godkänt.
+
+**Läs "Var arbetet får ske" i `SAMMANSLAGNING.md` före steg 1.** En gren i
+publika `valflask` är publik; förberedelsearbetet får inte pushas dit.
+
 ## Vad detta är
 
 Tredje vågen för drygast.nu (systerrepo `bambapappa/valflask`, publikt):
