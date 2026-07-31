@@ -232,6 +232,19 @@ export function byggIssueBody(post: KoPost, id: string, handling?: Handling, lof
   const lines: string[] = [];
   const target = post.promise_id ?? post.stance_id ?? "?";
 
+  // Kön ligger numera i det publika repot, så vem som helst kan läsa det här
+  // issuet. Rubriken avslöjar ingenting — den bär bara två id:n — men den som
+  // öppnar issuet ser ett påstående om ett parti som ingen människa har prövat.
+  // Varningen står därför överst, före allt annat: den som kan läsa påståendet
+  // kan aldrig missa förbehållet.
+  lines.push(`> ⚠️ **Ogranskat förslag — inte publicerat, inte kontrollerat av en människa.**`);
+  lines.push(`> En språkmodell har föreslagit att riksdagshandlingen nedan hör ihop med löftet.`);
+  lines.push(`> Förslaget kan vara fel: det kan gälla fel beslut, citera fel parti eller peka på`);
+  lines.push(`> papperet löftet självt stod skrivet på. Ingenting av det här syns på sajten, och`);
+  lines.push(`> ingenting räknas, förrän en människa läst citatet mot källan och sagt ja.`);
+  lines.push(`> **Läs det som en fråga, inte som ett påstående om partiet.**`);
+  lines.push("");
+
   lines.push(`### Löfte/ståndpunkt`);
   if (lofte?.title) {
     lines.push(`**${lofte.title}** (\`${target}\`${lofte.parties?.length ? `, ${lofte.parties.map((p) => p.toUpperCase()).join(", ")}` : ""})`);
