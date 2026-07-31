@@ -1,8 +1,10 @@
 # Överlämning — Handlingsvågen
 
-Skriven 2026-07-19; senast uppdaterad 2026-07-22 (HV4 färdig + HV5-migreringen
-FÖRBEREDD utan go-live: symmetritest b-0020, arkivväg, rättelseväg,
-gated deploy, `MIGRERING.md`). Läs `CLAUDE.md` först (bindande
+Skriven 2026-07-19; senast uppdaterad 2026-07-31 (granskning i skala: 60
+kopplingar avgjorda av en människa, hela beståndet reviderat mot färska
+källtexter, tre fel i matchningen hittade och täppta — fel voteringspunkt,
+citat ur annat partis reservation, och koppling till dokumentet löftet
+självt hämtades ur). Läs `CLAUDE.md` först (bindande
 språkregler och kärnprinciper), sedan `SPEC-HANDLINGSVAGEN.md` (fastställd
 spec) och `NEUTRALITET.md`. Alla metodval står i `data/beslutslogg.json`.
 
