@@ -1,0 +1,128 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const title = "Metod — drygast.nu";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Hur räknar ni ut vad ett löfte kostar?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Vi räknar i 2026 års penningvärde och tittar på vad löftet kostar under hela mandatperioden, alltså de fyra åren 2027–2030. Ett löfte som kostar varje år räknas gånger fyra. Vi använder helst en officiell siffra; finns ingen gör vi en egen uppskattning och märker den tydligt.",
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "Är ni rättvisa mot alla partier?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ja. Vi samlar in, räknar och skämtar exakt likadant om alla åtta riksdagspartier. Vi säger aldrig om en politik är bra eller dålig, och topplistorna är ren sortering av siffror, inte våra åsikter.",
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "Varför visar ni ett spann i stället för en exakt siffra?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Eftersom en exakt prislapp sällan finns. Varje löfte får ett lägsta, ett troligast och ett högsta belopp. När vi lägger ihop allt blir totalen ett spann — en siffra plus ett intervall som täcker det troliga utfallet. Siffran är inte facit, spannet är ärligheten.",
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "Hur väljer ni frågorna i Frågevågen — och hur avgör ni vad ett parti tycker?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Frågelistan följer ett publicerat kriterium: frågan ska ligga bland väljarnas viktigaste hos två oberoende undersökningsinstitut (Novus och SOM-institutet) — vi handplockar inget. Partiernas besked hämtas enbart ur publicerade källor: ordagrant citat, källänk och arkivkopia. Vi frågar aldrig partierna själva. Kan beskedet inte läsas ur citatet ensamt visar vi 'besked saknas'. Byter ett parti fot visas gamla och nya beskedet sida vid sida — inget raderas.",
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "Hur hanterar ni löften som sägs i tal eller på video?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Löften ur text måste stå ordagrant i källan. Löften ur tal jämför vi mot en sparad textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken, eftersom en automatisk textversion ofta blir slarvig med det. Vi märker alltid ut löften som kommer från tal och länkar till filmen vid den tidpunkt orden sägs; textversionen sparas som internt underlag.",
+        },
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Metod", "item": "https://drygast.nu/metod" },
+    ],
+  },
+];
+---
+<Layout title={title} description="Så räknar vi ut vad partiernas vallöften kostar — förklarat i klartext, lika för alla åtta partier." jsonLd={jsonLd} canonicalPath="/metod">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Metod</h1>
+      <p>Här förklarar vi i klartext hur vi räknar ut vad partiernas vallöften kostar. Allt är öppet — vem som helst kan kontrollera siffrorna. Och vi räknar på exakt samma sätt för alla åtta riksdagspartier.</p>
+
+      <h2>Så räknar vi pengarna</h2>
+      <p>Vi räknar allt i 2026 års penningvärde, så att äldre och nyare löften går att jämföra rakt av. Och vi räknar bara vad ett löfte <em>kostar</em> — inte vad det längre fram kanske skulle dra in eller spara. Sådana "om&nbsp;det&nbsp;här,&nbsp;så&nbsp;det&nbsp;där"-effekter räknar inget parti på samma sätt, så vi låter bli helt och säger det rakt ut. Hellre jämförbart än krångligt.</p>
+
+      <h2>Var siffrorna kommer ifrån</h2>
+      <p>Helst vill vi ha en siffra som någon med insyn redan har räknat på. Vi tar dem i den här ordningen, med den mest pålitliga först:</p>
+      <ol>
+        <li><strong>En myndighet</strong> — till exempel Riksdagens utredningstjänst, som räknar åt riksdagens ledamöter. Det vi litar mest på.</li>
+        <li><strong>Partiet självt</strong> — när partiet har satt en egen prislapp på sitt löfte.</li>
+        <li><strong>Etablerade medier</strong> — siffror från de nyhetskällor vi har godkänt i förväg.</li>
+        <li><strong>En egen uppskattning</strong> — när ingen annan angett ett belopp gör vi en datorgjord uppskattning utifrån vad liknande reformer har kostat. Den märks alltid med ett ungefär-tecken och ett spann, så att man ser att det är en uppskattning.</li>
+      </ol>
+      <p>Vilken av nivåerna en siffra kommer från syns alltid på löftessidan. Vi hittar aldrig på, och vi visar aldrig en uppskattning som om den vore exakt.</p>
+
+      <h2>Vad vi räknar ihop</h2>
+      <ul>
+        <li><strong>Hela mandatperioden.</strong> Vi summerar kostnaden för de fyra åren 2027–2030, då nästa regering sitter. Ett löfte som kostar varje år räknas gånger fyra; en engångskostnad räknas en gång.</li>
+        <li><strong>Skattesänkningar räknas som en kostnad.</strong> Om staten får in mindre pengar är det lika mycket ett hål i kassan som en ny utgift.</li>
+        <li><strong>Sparande räknas separat.</strong> Säger ett parti att de ska spara in pengar någon annanstans drar vi av det tydligt och för sig — så att ingen kan nolla sin nota med en svepande rad om "effektiviseringar".</li>
+        <li><strong>Samma politik räknas bara en gång.</strong> Lovar flera partier samma sak — till exempel att försvaret ska nå fem procent av BNP — räknas det en enda gång i totalsumman och i en tänkt regering: politiken går bara att genomföra en gång, annars skulle samma krona räknas dubbelt. I jämförelsen <em>mellan</em> partier räknas däremot varje partis löfte fullt ut, för vart och ett av dem skulle genomföra det. Skiljer sig prislapparna åt visar vi spannet mellan dem, och länkningen syns öppet i datan (grupp-id).</li>
+        <li><strong>Orimligt stora löften granskas för hand.</strong> Ett enskilt löfte med en osannolikt hög prislapp publiceras inte automatiskt — en människa tittar på det först, som en spärr mot uppenbara fel.</li>
+      </ul>
+
+      <h2>Totalsumman är ett spann, inte en exakt siffra</h2>
+      <p>En enda prislapp är sällan exakt. Därför ger vi varje löfte ett spann — ett lägsta, ett troligast och ett högsta belopp — i stället för en tvärsäker siffra. Hur brett spannet är beror på hur säker källan är: en officiell siffra får ett smalt spann, en egen uppskattning ett bredare.</p>
+      <p>Varje egen uppskattning granskas av en människa innan den publiceras: uppskattningen läggs i en öppen granskningskö där beloppet bekräftas, justeras eller avvisas — och varje beslut loggas publikt med vem, när och varför. Spannet följer alltid med; granskningen gör inte en gissning till ett facit, den kontrollerar att gissningen är rimlig och rätt klassad.</p>
+      <p>När vi sedan lägger ihop alla löften till en totalsumma blir den faktiskt <em>säkrare</em> än varje enskild gissning. Tänk dig att du gissar vikten på hundra paket. På en del gissar du för högt, på andra för lågt — och felen tar till stor del ut varandra, så din gissning på den totala vikten hamnar närmare sanningen än de flesta enskilda gissningarna. Samma sak här: totalens spann blir tätare än om man bara la ihop alla lägsta belopp för sig och alla högsta för sig (vilket skulle anta att vi råkat gissa fel åt precis samma håll på allt — osannolikt).</p>
+      <p>Men eftersom våra uppskattningar är gjorda på samma sätt drar de ändå åt lite samma håll, så vi snävar inte till spannet ända in. Vi visar totalen som en siffra plus ett spann som täcker det troliga utfallet i ungefär fyra fall av fem. Siffran är inte ett facit — spannet är ärligheten. Hela uträkningen ligger öppet i koden bakom sajten, fri att granska.</p>
+
+      <h2>Jämförelser som alla förstår</h2>
+      <p>Siffror i miljarder är svåra att känna. Därför får varje löfte en kort, torr rad som översätter prislappen till en helt opolitisk vikt-liknelse: <em>om varje krona vägde ett gram</em>, hur mycket väger då löftet? Svaret uttrycks i djur — blåvalar, elefanter, giraffar. Vi undviker med flit måttstockar som själva kan vara vallöften (som vårdplatser eller skolluncher), eftersom sådana inte är neutrala.</p>
+      <p>Raden skrivs av datorn efter en fast mall som är exakt likadan för alla åtta partier, och skämtar aldrig om sakfrågan, personen eller partiet — bara om storleken. Samma belopp ger ordagrant samma rad oavsett vilket parti som lovat. Vilket djur som används beror bara på ämnesområdet, enbart för omväxlings skull, så att inte allt jämförs med blåvalar.</p>
+      <p>Varje löfte visas med en till tre jämförelser: minst en vardaglig och på sin höjd en på skoj-i-rymden (till exempel en trave enkronor jämförd med avståndet till månen, redovisad som hur stor del av vägen traven räcker). Samma löfte visar alltid samma jämförelser, så att de går att känna igen och dela vidare.</p>
+
+      <h2>Vi kontrollerar varje citat</h2>
+      <p>Varje citat vi publicerar måste stå <strong>ordagrant</strong> i källan. Hittar vi inte exakt de orden stryker vi citatet. Det är vårt starkaste skydd mot påhitt — ingen kan smuggla in ett löfte som ingen faktiskt har sagt. När en dator föreslår ett belopp får dessutom en annan, oberoende dator dubbelkolla det. All kontroll sker automatiskt, och koden ligger öppen för den som vill granska den.</p>
+
+      <h3>Löften från tal och video</h3>
+      <p>De flesta löften kommer från text — partiernas webbplatser, riksdagens dokument, nyhetsartiklar — och då kräver vi att citatet står exakt så i texten. Men en del löften sägs i tal, till exempel i Almedalen, där det enda som finns är talarens egna ord i en film.</p>
+      <p>Då jämför vi citatet mot en sparad textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken — eftersom en automatisk textversion av tal ofta blir slarvig med just det. Det är en medveten och liten uppmjukning som <strong>bara</strong> gäller tal; text behåller den strikta kontrollen. Vi märker alltid ut när ett löfte kommer från ett tal och länkar till filmen vid den tidpunkt orden sägs, så att vem som helst kan höra dem själv. Textversionen sparar vi som internt underlag — så att kontrollen finns kvar även om filmen senare tas bort.</p>
+
+      <h2 id="fragevagen">Frågevågen — så registrerar vi partiernas besked</h2>
+      <p><a href="/fragor">Frågevågen</a> för register över vad partierna <strong>säger</strong> i valets stora frågor. Metoden i fem punkter:</p>
+      <p><strong>1. Frågorna väljs av väljarna, inte av oss.</strong> En fråga tas in när den ligger bland de viktigaste i mätningar från två oberoende undersökningsinstitut — Novus ("Viktigaste politiska frågan", topp 10, någon av de två senaste mätningarna räknas) och den nationella SOM-undersökningen (topp 15). Källbeläggen står på varje frågesida. Frågor tas aldrig bort före valdagen.</p>
+      <p><strong>2. Vi frågar aldrig partierna.</strong> Ett besked finns för oss bara om det är publicerat: ordagrant citat ur en källa på vår öppna källista, med länk, arkivkopia och datum. Enkäter går att putsa i efterhand — publicerade ord går inte att putsa.</p>
+      <p><strong>3. Beskedet måste stå i citatet.</strong> Varje delfråga besvaras med ja, nej eller villkorat — och bara om citatet <em>ensamt</em> räcker som belägg. En dator föreslår, en annan oberoende dator måste hålla med; vid minsta tvekan visar vi "besked saknas" i stället för att gissa. Tystnad redovisas exakt likadant för alla åtta partier, och den kommenteras aldrig.</p>
+      <p><strong>4. Ingen backar i tysthet.</strong> Publicerade besked raderas aldrig. Byter ett parti position visas det gamla och det nya beskedet sida vid sida i <a href="/svangningar">svängregistret</a>, båda med citat, källa och arkivkopia. Ett byte mellan ja och nej publiceras aldrig utan mänsklig granskning — regeln är densamma för alla partier. Och varje vecka kontrollerar vi att källorna finns kvar: en borttagen eller omskriven källsida stämplas synligt, och arkivkopian gäller.</p>
+      <p><strong>5. Ingen valkompass, ingen skala.</strong> Vi matchar inte dina åsikter mot partiernas, sätter inga betyg och placerar ingen på en axel. Vi visar beskeden bredvid varandra — slutsatserna är dina.</p>
+
+      <h2 id="gap">Hur mycket finns det egentligen att röra sig med?</h2>
+      <p>Det finns en gräns för hur mycket nya pengar staten realistiskt kan lägga på reformer. Som mått använder vi ett konkret, officiellt tal: <strong>regeringens egen reformbudget i budgetpropositionen för 2026</strong> — knappt 80 miljarder kronor per år, utöver försvar och stöd till Ukraina. Vi ställer summan av alla löften mot det utrymmet över hela mandatperioden (fyra år, alltså cirka 320 miljarder) — och den blir nästan alltid övertrasserad. Det är liksom poängen.</p>
+      <p>Varför just den siffran? För att den är hämtad ur regeringens egen budget och därför lätt att kontrollera. Konjunkturinstitutets bedömning av det <em>egentliga</em> reformutrymmet är dessutom ännu snävare — så om något är vår mätare snäll mot löftena. Saknas en pålitlig siffra visar vi bara löftessumman och säger varför.</p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+</style>

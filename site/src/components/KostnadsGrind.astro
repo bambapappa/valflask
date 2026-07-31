@@ -1,0 +1,97 @@
+---
+// Godkännanderuta för kostnadsestimat (DECISION_LOG 2026-07-21, b-0016).
+// Renderas dold på varje sida; öppnas av estimat-grind.js när läsaren klickar
+// på ett maskat belopp eller på "Lås upp beloppen". Ingen kaka, bara localStorage.
+---
+<div class="grind" data-grind hidden role="dialog" aria-modal="true" aria-labelledby="grind-rubrik">
+  <div class="grind__baksida" data-grind-stang></div>
+  <div class="grind__ruta">
+    <h2 id="grind-rubrik" class="grind__rubrik">Innan du ser beloppen — kvittera en sak</h2>
+    <div class="grind__text">
+      <p>För att se kostnadssiffrorna behöver du klicka i att du vet att de är uppskattningar, inte facit.</p>
+      <p>Jag är en ensam person, inte en avdelning nationalekonomer. Att sätta en peng på en kedja av effekter är svårt — så svårt att partierna själva oftast låter bli. Och det är ju hela poängen: det är lätt att lova, men svårt att förutse hur och vad det faktiskt kostar.</p>
+      <p>Källnivån syns alltid, och <span class="grind__tecken">≈</span> betyder att en dator har gissat. Hur jag räknat står öppet på <a href="/metod">Metod-sidan</a>. Hittar du ett verkligt fel rättar jag det synligt — men exakta blir siffrorna aldrig. Godkänner du det får du se dem.</p>
+    </div>
+    <div class="grind__knappar">
+      <button type="button" class="grind__ja" data-grind-ja>Jag förstår — visa beloppen</button>
+      <button type="button" class="grind__nej" data-grind-nej>Nej tack, håll dig till antal</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .grind {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .grind[hidden] {
+    display: none;
+  }
+  .grind__baksida {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 17, 17, 0.72);
+  }
+  .grind__ruta {
+    position: relative;
+    background: var(--papper);
+    color: var(--svarta);
+    border: var(--linje-tabell-ytter);
+    max-width: 34rem;
+    width: 100%;
+    padding: 1.5rem;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .grind__rubrik {
+    font-family: var(--font-display);
+    font-size: var(--steg-2);
+    text-transform: uppercase;
+    letter-spacing: var(--sparrning-display);
+    font-weight: 400;
+    margin: 0 0 0.75rem;
+    line-height: var(--radavstand-display);
+  }
+  .grind__text p {
+    font-family: var(--font-brod);
+    font-size: var(--steg-0);
+    margin: 0 0 0.75rem;
+  }
+  .grind__knappar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+  .grind__ja,
+  .grind__nej {
+    font-family: var(--font-mono);
+    font-size: var(--steg-0);
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--svarta);
+    border-radius: 0;
+    cursor: pointer;
+  }
+  .grind__ja {
+    background: var(--gul);
+    color: var(--svarta);
+    font-weight: 700;
+  }
+  .grind__nej {
+    background: var(--papper);
+    color: var(--svarta);
+  }
+  .grind__ja:hover,
+  .grind__nej:hover {
+    outline: 2px solid var(--svarta);
+    outline-offset: 1px;
+  }
+  .grind__tecken {
+    font-family: var(--font-mono);
+  }
+</style>

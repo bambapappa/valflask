@@ -1,0 +1,127 @@
+name: build
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  test-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+      - uses: pnpm/action-setup@v4  # ogiltig SHA-pin ersatt 2026-06-15
+        with:
+          version: 9
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
+      - name: Install pipeline dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Run pipeline tests
+        run: pnpm test
+        working-directory: pipeline
+      - name: Typecheck pipeline
+        run: pnpm typecheck
+        working-directory: pipeline
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    needs: test-pipeline
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+      - uses: pnpm/action-setup@v4  # ogiltig SHA-pin ersatt 2026-06-15
+        with:
+          version: 9
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: site/pnpm-lock.yaml
+      - name: Install python fonttools
+        run: pip install --user fonttools brotli
+      - name: Decompress fonts for OG generation
+        run: |
+          cd site/public/fonts
+          for f in *.woff2; do
+            ttf="${f%.woff2}.ttf"
+            fonttools ttLib.woff2 decompress "$f" --output "$ttf" || true
+          done
+      - name: Install site dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: site
+      - name: Build site + OG images
+        run: pnpm build
+        working-directory: site
+      - name: Run T1 (build output)
+        run: pnpm test:t1
+        working-directory: site
+      - name: Run T3 (schema + HTML validation)
+        run: pnpm test:t3
+        working-directory: site
+      # Cloudflare Pages (primär, drygast.nu): CF:s egen byggmiljö saknar pnpm +
+      # Python-fonttools och failar därför sitt git-integrerade bygge. Vi laddar
+      # i stället upp de FÄRDIGBYGGDA filerna med wrangler (Direct Upload) — CF
+      # bygger då inget själv. Hoppar graciöst om token saknas (som Netlify nedan).
+      - name: Deploy to Cloudflare Pages (if token exists)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        # Icke-blockerande: en CF-felkonfiguration får ALDRIG fälla det kanoniska
+        # GitHub Pages-bygget nedan. Vid fel listas tillgängliga projektnamn.
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_PROJECT: ${{ vars.CLOUDFLARE_PROJECT_NAME || 'drygast' }}
+        run: |
+          if [ -n "${CLOUDFLARE_API_TOKEN}" ] && [ -n "${CLOUDFLARE_ACCOUNT_ID}" ]; then
+            npx --yes wrangler@3 pages deploy site/dist --project-name "${CF_PROJECT}" --branch main || {
+              echo "::warning::Cloudflare-deploy misslyckades för projekt '${CF_PROJECT}'. Tillgängliga projekt:"
+              npx --yes wrangler@3 pages project list || true
+              exit 1
+            }
+          else
+            echo "SKIP: Cloudflare deploy skipped — secrets.CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID not set."
+            echo "Ägarsteg: lägg CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID som GitHub Secrets"
+            echo "(och ev. CLOUDFLARE_PROJECT_NAME som variabel om projektet inte heter 'drygast')."
+          fi
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
+        with:
+          path: site/dist
+
+  deploy-pages:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128
+
+  # IndexNow: pinga Bing (→ Copilot/ChatGPT-sök) m.fl. med de sidor som ändrats,
+  # EFTER att sajten (och nyckelfilen) är live. Använder bara Node-inbyggda API:er
+  # (ingen install). Icke-blockerande — får aldrig påverka deploy-status.
+  indexnow:
+    needs: deploy-pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        with:
+          node-version: 22
+      - name: Submit changed URLs to IndexNow
+        run: node --experimental-strip-types scripts/indexnow-submit.mts
+        working-directory: site

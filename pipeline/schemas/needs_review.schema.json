@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drygast.nu/schemas/needs_review.schema.json",
+  "title": "Behöver granskning",
+  "description": "Poster som inte passerat grindarna (§7). Publiceras ALDRIG på sajten. Schemat speglar NeedsReviewEntry i pipeline/src/publish.ts.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["candidate", "failures", "articleUrl", "articleTitle"],
+    "properties": {
+      "candidate": {},
+      "failures": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["gate", "reason"],
+          "properties": {
+            "gate": {
+              "enum": ["G1", "G2", "G3", "G4", "G5"]
+            },
+            "reason": { "type": "string" }
+          }
+        }
+      },
+      "articleUrl": { "type": "string" },
+      "articleTitle": { "type": "string" },
+      "verifyReason": { "type": "string" },
+      "costReason": { "type": "string" },
+      "cost": {},
+      "duplicateOf": { "type": "string" }
+    }
+  }
+}

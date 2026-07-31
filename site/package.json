@@ -1,0 +1,28 @@
+{
+  "name": "drygast-site",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node --experimental-strip-types scripts/build-kombinator.mts && astro build && npx pagefind --site dist --output-path dist/pagefind && node --experimental-strip-types scripts/generate-og.mts",
+    "test:t1": "node --experimental-strip-types scripts/test-t1.mts",
+    "test:t3": "node --experimental-strip-types scripts/test-t3.mts",
+    "test:t9": "node --experimental-strip-types scripts/test-t9.mts",
+    "test:interval": "node --experimental-strip-types scripts/test-interval.mts",
+    "test": "node --experimental-strip-types scripts/test-t1.mts && node --experimental-strip-types scripts/test-t3.mts && node --experimental-strip-types scripts/test-t9.mts && node --experimental-strip-types scripts/test-t3-stale.mts && node --experimental-strip-types scripts/test-interval.mts && node --experimental-strip-types scripts/test-drylinje.mts && node --experimental-strip-types scripts/test-t14.mts && node --experimental-strip-types scripts/test-data-clean.mts",
+    "preview": "astro preview",
+    "indexnow": "node --experimental-strip-types scripts/indexnow-submit.mts",
+    "test:t14": "node --experimental-strip-types scripts/test-t14.mts",
+    "test:data-clean": "node --experimental-strip-types scripts/test-data-clean.mts"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "ajv": "^8.20.0",
+    "astro": "^6.4.6",
+    "satori": "^0.26.0"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,181 @@
+allowlist_domains:
+  - riksdagen.se
+  - data.riksdagen.se
+  - regeringen.se
+  - socialdemokraterna.se
+  - moderaterna.se
+  - sd.se
+  - centerpartiet.se
+  - val2026.centerpartiet.se
+  - vansterpartiet.se
+  - kristdemokraterna.se
+  - liberalerna.se
+  - mp.se
+  - dn.se
+  - svd.se
+  - svt.se
+  - sverigesradio.se
+  - tt.se
+  - altinget.se
+  - expressen.se
+  - aftonbladet.se
+  - gp.se
+  - di.se
+
+feeds:
+  # --- Partier (verifierade 2026-06-12 via live HTTP) ---
+  - id: moderaterna
+    type: rss
+    url: "https://moderaterna.se/feed/"
+    verified: "2026-06-12 — 200, RSS 2.0, WordPress"
+
+  - id: sverigedemokraterna
+    type: rss
+    url: "https://www.sd.se/feed/"
+    verified: "2026-06-12 — 200, RSS 2.0, WordPress"
+
+  - id: vansterpartiet
+    type: rss
+    url: "https://www.vansterpartiet.se/feed/"
+    verified: "2026-06-12 — 200, RSS 2.0, WordPress"
+
+  - id: liberalerna
+    type: rss
+    url: "https://www.liberalerna.se/feed/"
+    verified: "2026-06-12 — 200, RSS 2.0, WordPress"
+
+  - id: miljopartiet
+    type: rss
+    url: "https://www.mp.se/wp-content/themes/mp/assets/php/rss/rss-news.php"
+    verified: "2026-06-12 — 200, RSS, custom PHP endpoint"
+
+  # Socialdemokraterna: INGEN RSS hittad (SiteVision CMS). Press via tt.se.
+  # Centerpartiet: INGEN RSS hittad (SiteVision CMS). Inget offentligt flöde.
+  # Kristdemokraterna: INGEN RSS hittad (SiteVision + Notified). Press via press.kristdemokraterna.se.
+
+  # --- Riksdagen API (verifierade 2026-06-12 via live HTTP) ---
+  - id: riksdagen-motioner
+    type: riksdagen_api
+    url: "https://data.riksdagen.se/dokumentlista/?doktyp=mot&utformat=json&sort=datum&a=S%C3%A5Sedan"
+    verified: "2026-06-12 — 200, JSON, 257928 träffar, sidor 12897"
+
+  - id: riksdagen-anforanden
+    type: riksdagen_api
+    url: "https://data.riksdagen.se/anforandelista/?utformat=json&a=S%C3%A5Sedan"
+    verified: "2026-06-12 — 200, JSON, separat endpoint (ej dokumentlista)"
+
+  # --- Medier (verifierade 2026-06-12 via live HTTP) ---
+  - id: dn-politik
+    type: rss
+    url: "https://www.dn.se/rss/politik"
+    verified: "2026-06-12 — 200, RSS 2.0, dedikerad svensk politik"
+
+  - id: sr-ekot
+    type: rss
+    url: "https://api.sr.se/api/rss/program/4540"
+    verified: "2026-06-12 — 200, Atom, Ekot program 4540"
+
+  - id: svt-nyheter
+    type: rss
+    url: "https://www.svt.se/rss.xml"
+    verified: "2026-06-12 — 200, RSS 2.0, bred nyhetstäckning med politik"
+
+  - id: di
+    type: rss
+    url: "https://www.di.se/rss"
+    verified: "2026-06-12 — 200, RSS 2.0, ekonomi/politik-overlap"
+
+  # SvD: INGEN offentlig RSS hittad (404 på /rss, /feed, /nyheter/rss).
+  # Expressen, Aftonbladet, GP, Altinget, TT: ej testade i denna omgång;
+  # kan läggas till efter verifiering.
+
+  # --- Skrivna manifest/policysidor (page) ---
+  # Partiernas skrivna löften finns inte som RSS. "page"-typen hämtar en HTML-sida
+  # ELLER PDF, extraherar text och kör LLM-extraktion + grindarna. Sidorna
+  # ändringsbevakas (contentHash i seen) och manifest-PDF:er länkade från en sida
+  # auto-följs (samma domän, .pdf + manifest/valplattform/valprogram i sökvägen).
+  # DÄRFÖR ska VARJE parti ha minst en valsida här även innan manifestet släppts:
+  # den dag partiet länkar sin manifest-PDF fångas den automatiskt.
+  # Läge 2026-07-03: fullt manifest publicerat av C (96 s.), L (40 s.);
+  # valplattform av S (4 s.), V (4 s.); MP har HTML-utkast; M/SD/KD ej ännu.
+
+  # C — fullt manifest (PDF) + sammanfattningssida
+  - id: c-valmanifest
+    type: page
+    url: "https://val2026.centerpartiet.se/"
+    verified: "2026-07-02 — 200, Centerpartiets valmanifest 2026 (sammanfattningssida; länkar PDF:en)"
+  - id: c-valmanifest-pdf
+    type: page
+    url: "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf"
+    verified: "2026-07-03 — 200, application/pdf, 96 s. — hela valmanifestet (sha256 69013e13c1ab…)"
+
+  # S — valplattform (PDF) + val-2026-sida (länkar PDF:en; ingen RSS)
+  - id: s-valmanifest
+    type: page
+    url: "https://www.socialdemokraterna.se/val-2026"
+    verified: "2026-07-03 — 200, S:s val-2026-sida; länkar Valplattform.pdf"
+  - id: s-valplattform-pdf
+    type: page
+    url: "https://www.socialdemokraterna.se/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf"
+    verified: "2026-07-03 — 200, application/pdf, 4 s., CreationDate 2026-02-04"
+
+  # M — inget valmanifest publicerat ännu; politiksidan bevakas (auto-följ tar PDF:en när den släpps)
+  - id: m-politik
+    type: page
+    url: "https://moderaterna.se/var-politik/"
+    verified: "2026-07-03 — 200, M:s politiksida; manifest ej publicerat ännu"
+
+  # SD — inget valmanifest publicerat ännu; politiksidan bevakas
+  - id: sd-vadvivill
+    type: page
+    url: "https://sd.se/vad-vi-vill/"
+    verified: "2026-07-02 — 200 (via redirect), SD:s politik; manifest ej publicerat ännu"
+
+  # V — valplattform beslutad på kongressen 2026 (PDF) + valsida
+  - id: v-val2026
+    type: page
+    url: "https://www.vansterpartiet.se/val2026/"
+    verified: "2026-07-03 — 200, V:s valsida"
+  - id: v-valplattform-pdf
+    type: page
+    url: "https://www.vansterpartiet.se/wp-content/uploads/2026/04/Preliminar-Valplattform-efter-beslut-pa-kongressen-2026.pdf"
+    verified: "2026-07-03 — 200, application/pdf, 4 s., CreationDate 2026-04-19"
+
+  # KD — inget valmanifest publicerat ännu ('Tro på Sverige' = kampanjtema); politiksidan bevakas
+  - id: kd-politik
+    type: page
+    url: "https://kristdemokraterna.se/var-politik"
+    verified: "2026-07-03 — 200, KD:s politiksida; manifest ej publicerat ännu"
+
+  # L — fullt valmanifest 'För din frihet' (PDF) + manifestsida (länkar PDF:en)
+  - id: l-valmanifest
+    type: page
+    url: "https://www.liberalerna.se/liberalernas-valmanifest-2026"
+    verified: "2026-07-03 — 200, L:s manifestsida; länkar PDF:en"
+  - id: l-valmanifest-pdf
+    type: page
+    url: "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf"
+    verified: "2026-07-03 — 200, application/pdf, 40 s., CreationDate 2026-06-02"
+
+  # MP — valmanifest 2026 ännu ej offentligt (utkastsidan är lösenordsskyddad);
+  # politiksidan bevakas + politiskt handlingsprogram 2026–2030 (beslutat, PDF)
+  - id: mp-politik
+    type: page
+    url: "https://www.mp.se/politik/"
+    verified: "2026-07-03 — 200, MP:s politiksida; valmanifest-2026-utkast är lösenordsskyddat"
+  - id: mp-handlingsprogram-pdf
+    type: page
+    url: "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf"
+    verified: "2026-07-03 — 200, application/pdf — politiskt handlingsprogram 2026–2030"
+  - id: mp-almedalstal
+    type: page
+    url: "https://www.mp.se/just-nu/daniel-helldens-almedalstal/"
+    verified: "2026-07-02 — 200, Daniel Helldéns Almedalstal (skriven)"
+  - id: mp-matstrategi
+    type: page
+    url: "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/"
+    verified: "2026-07-02 — 200, MP fossilfri matproduktion"
+
+limits:
+  max_articles_per_run: 20
+  min_chars: 400

@@ -1,0 +1,39 @@
+---
+import { sourceLinkLabel, archiveLinkLabel } from "../lib/source-link";
+
+interface Props {
+  quote: string;
+  person: string | null;
+  party: string;
+  domain: string;
+  date: string;
+  sourceUrl: string;
+  archiveUrl: string | null;
+  kind?: "webb" | "tal";
+}
+const { quote, person, party, domain, date, sourceUrl, archiveUrl, kind } = Astro.props;
+const isTal = kind === "tal";
+// Talat löfte länkar till filmen (tidsstämpel); webb/PDF får "källa (PDF, s. N)".
+const sourceLabel = isTal ? "se i talet" : sourceLinkLabel(sourceUrl);
+---
+<blockquote>
+  <p>{quote}</p>
+</blockquote>
+<div class="etikett citat-attribution">
+  — {person || party}, {domain}, {date}
+  {isTal && <> · <span class="tal-markor" title="Löftet är sagt i tal och kontrolleras mot en sparad textversion (se /metod)">talat löfte</span></>}
+  {' '}· <a href={sourceUrl}>{sourceLabel}<span aria-hidden="true"> ↗</span></a>
+  {archiveUrl && <> · <a href={archiveUrl}>{archiveLinkLabel(archiveUrl)}<span aria-hidden="true"> ↗</span></a></>}
+</div>
+
+<style>
+  .citat-attribution {
+    margin-top: -0.5rem;
+    margin-bottom: var(--mellanrum);
+  }
+  .tal-markor {
+    font-variant: small-caps;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+  }
+</style>

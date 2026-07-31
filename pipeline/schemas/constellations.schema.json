@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Constellations",
+  "description": "Predefined coalition constellations for /regeringar",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": { "type": "string" },
+      "label": { "type": "string" },
+      "description": { "type": "string" },
+      "parties": {
+        "type": "array",
+        "items": { "type": "string" },
+        "minItems": 1
+      }
+    },
+    "required": ["id", "label", "description", "parties"],
+    "additionalProperties": false
+  }
+}

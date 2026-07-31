@@ -1,0 +1,652 @@
+[
+  {
+    "candidate": {
+      "title": "Höjd assistansersättning med 7 procent",
+      "parties": [
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "assistansersättningen höjs med cirka 7 procent för att kompensera för de senaste årens kostnadsökningar,",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-starka-den-personliga-assistansen",
+    "articleTitle": "Liberalerna vill stärka den personliga assistansen",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1800,
+      "msek_base": 2300,
+      "msek_high": 3500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar total statlig assistansersättning på ca 30-35 mdkr årligen. 7% höjning ger ökning på ca 2,1-2,5 mdkr. Osäkerhet kring exakt bas, om höjningen avser hela schablonen samt timutveckling.",
+      "confidence": 0.6,
+      "calculation": "30-35 mdkr × 0,07 ≈ 2,1-2,45 mdkr. Baserat på budgetens anslag för assistansersättning (ca 32-35 mdkr) blir mittpunkten ~2,3 mdkr. Låg skattning 1,8 mdkr vid smalare tillämpning, hög 3,5 mdkr vid bredare och ökad volym."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Indexering av assistansersättningen",
+      "parties": [
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "ersättningen därefter indexeras så att den följer kostnadsutvecklingen,",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-starka-den-personliga-assistansen",
+    "articleTitle": "Liberalerna vill stärka den personliga assistansen",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 600,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för att indexera assistansersättningen till faktisk kostnadsutveckling (löneindex). Antagande: uppräkning 1–4 procentenheter utöver nuvarande oregelbundna justeringar, på en total årlig statli",
+      "confidence": 0.4,
+      "calculation": "Totala statliga utgifter för assistansersättning ≈ 30 000 mkr/år. En extra årlig uppräkning med 1–4 % (utöver redan beslutade/budgeterade nivåer) ger en årlig merkostnad på 300–1 200 mkr. Base 600 mkr vid 2 % extra indexering."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Förstatligande av personlig assistans",
+      "parties": [
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "den personliga assistansen förstatligas för att skapa mer likvärdiga och rättssäkra bedömningar,",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-starka-den-personliga-assistansen",
+    "articleTitle": "Liberalerna vill stärka den personliga assistansen",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förstatligandet är en omfördelning av en befintlig offentlig utgift. Statens nya nettokostnad består främst av marginellt ökad central administration (fler handläggare, systemanpassning). Jämförbart l",
+      "confidence": 0.3,
+      "calculation": "Antag att statlig övertagning kräver 20–100 nya handläggartjänster à ~800 tkr/år = 16–80 mkr/år. Omställningskostnad (utredning, IT) ~10–50 mkr engång. Netto löpande administrationsökning efter minskad kommunal dito ≈ 0–50 mkr/år. Base sätts försiktigt till 10 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0487 (5000) ⚠ AVVIKER: 10 avviker 500.0× från jämförbara (median 5000)"
+  },
+  {
+    "candidate": {
+      "title": "Stopp för orimliga återkrav från Försäkringskassan",
+      "parties": [
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "orimliga återkrav från Försäkringskassan stoppas, samtidigt som arbetet mot välfärdsbrott fortsätter,",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-starka-den-personliga-assistansen",
+    "articleTitle": "Liberalerna vill stärka den personliga assistansen",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 300,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte om att stoppa vissa återkrav från Försäkringskassan. Uppskattningen avser uteblivna återbetalningar som annars skulle ha influtit till staten. Andelen återkrav som bedöms orimliga samt den ",
+      "confidence": 0.3,
+      "calculation": "Antag totala årliga återkravsfordringar ~4 mdkr. 10–25 % kan anses orimliga. Staten får idag in ~30–50 % av utestående fordringar. Intäktsminskning = 4 mdkr × (0,1–0,25) × (0,3–0,5) ≈ 120–500 mkr. Osäkerheten motiverar ett bredare intervall (50–1000 mkr) med bas 300 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fler fysiska möten för assistansbedömningar",
+      "parties": [
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "fler fysiska möten införs för att säkerställa korrekta bedömningar och minska risken för fusk",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-starka-den-personliga-assistansen",
+    "articleTitle": "Liberalerna vill stärka den personliga assistansen",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande om fler fysiska hembesök istället för telefon-/videomöten. ~10 000 bedömningar/år, ökad andel fysiska möten med 20–40 %-enheter, extra kostnad 1 500–2 500 kr/möte. Årskostnad 5–50 msek.",
+      "confidence": 0.3,
+      "calculation": "~10 000 bedömningar/år × (20–40 % fler fysiska) × 1 500–2 500 kr extra/möte ≈ 3–10 mkr direkt, med personal och admin kan det bli högre; intervall 5–50 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Gör medlemskap i kriminella gäng olagligt",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill ändra lagen så att aktivt medlemskap i kriminella gäng blir straffbart.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0534"
+  },
+  {
+    "candidate": {
+      "title": "Maxtak på 20 elever i lågstadieklasser",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "införa ett maxtak på 20 elever i lågstadieklasser",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-nu-tar-vi-nasta-steg-for-att-skapa-studiero-i-skolan",
+    "articleTitle": "Liberalerna: Nu tar vi nästa steg för att skapa studiero i skolan",
+    "duplicateOf": "p-2026-0391"
+  },
+  {
+    "candidate": {
+      "title": "Ytterligare minskad invandring och skärpta krav",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Asylinvandringen ska vara så låg som möjligt och arbetskraftsinvandringen ska vara högkvalificerad och behovsanpassad för att undvika lönedumpning.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0527"
+  },
+  {
+    "candidate": {
+      "title": "Staten ska ta över skolan",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "göra skolan statlig",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 3 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-nu-tar-vi-nasta-steg-for-att-skapa-studiero-i-skolan",
+    "articleTitle": "Liberalerna: Nu tar vi nästa steg för att skapa studiero i skolan"
+  },
+  {
+    "candidate": {
+      "title": "Göra skolan statlig",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "göra skolan statlig",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 3 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-nu-tar-vi-nasta-steg-for-att-skapa-studiero-i-skolan",
+    "articleTitle": "Liberalerna: Nu tar vi nästa steg för att skapa studiero i skolan"
+  },
+  {
+    "candidate": {
+      "title": "Införa maxtak på 20 elever i lågstadieklasser",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "införa ett maxtak på 20 elever i lågstadieklasser",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-nu-tar-vi-nasta-steg-for-att-skapa-studiero-i-skolan",
+    "articleTitle": "Liberalerna: Nu tar vi nästa steg för att skapa studiero i skolan",
+    "duplicateOf": "p-2026-0391"
+  },
+  {
+    "candidate": {
+      "title": "Skapa hjälpklasser för utåtagerande elever",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "skapa hjälpklasser för elever med utåtagerande beteende",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-nu-tar-vi-nasta-steg-for-att-skapa-studiero-i-skolan",
+    "articleTitle": "Liberalerna: Nu tar vi nästa steg för att skapa studiero i skolan",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 400,
+      "msek_high": 900,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden avser statsbidrag till kommuner för att inrätta och driva hjälpklasser för utåtagerande elever. Antaganden om antal elever och merkostnad per elev. Jämförbart men bredare löfte estimerat til",
+      "confidence": 0.35,
+      "calculation": "Grundantagande: ~1,1 milj elever i grundskolan, varav 0,5–2 % har grav utåtagerande problematik (5 500–22 000). Extrakostnad per elev för mindre grupp och extra personal: 50–150 tkr/år. Låg: 5 500×50=275 mkr, hög: 22 000×150=3 300 mkr. Bas: 400 mkr (motsvarar ~8 000 elever à 50 tkr, justerat för viss redan befintlig verksamhet)."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0096 (1500) ⚠ AVVIKER: 400 avviker 3.8× från jämförbara (median 1500)"
+  },
+  {
+    "candidate": {
+      "title": "Införa nolltolerans mot hot, kränkningar och ordningsstörningar",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "införa nolltolerans mot hot, kränkningar och ordningsstörningar",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-nu-tar-vi-nasta-steg-for-att-skapa-studiero-i-skolan",
+    "articleTitle": "Liberalerna: Nu tar vi nästa steg för att skapa studiero i skolan",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Åtgärden är en reglering utan specificerad finansiering. Jämförbart förbud har estimerats till 0 mkr/år. Den direkta statliga kostnaden är försumbar; spannet inkluderar möjliga tillsynskostnader.",
+      "confidence": 0.3,
+      "calculation": "Base 0 då löftet inte innehåller några anslag. Eventuella kostnader för Skolinspektionens tillsyn eller myndighetsföreskrifter antas rymmas inom befintliga ramar. Högt scenario: 50 mkr/år för ökad administration och uppföljning. Jmf p-2026-0476."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0476 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Dra in studiebidrag för gymnasieelever som hotar eller kränker",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "kunna dra in studiebidrag för gymnasieelever som återkommande hotar eller kränker andra",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-nu-tar-vi-nasta-steg-for-att-skapa-studiero-i-skolan",
+    "articleTitle": "Liberalerna: Nu tar vi nästa steg för att skapa studiero i skolan",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 1,
+      "msek_base": 5,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattar att ett fåtal gymnasieelever (ca 100–700 per år) får studiebidraget indraget på grund av upprepade hot eller kränkningar. Studiebidraget är ca 12 500 kr per år (10 månader).",
+      "confidence": 0.3,
+      "calculation": "~360 000 gymnasieelever × 0,03–0,2 % berörda × 12,5 tkr/år ≈ 1,4–9,0 mkr. Base satt till 5 mkr för ett mellanscenario."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Säkerställa platser för skytteövningar i hela landet",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "När jägare, sportskyttar och försvaret behöver öva ska det finnas platser att göra det på – i hela landet.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/vi-vill-se-ett-skjutbanelyft/",
+    "articleTitle": "Vi vill se ett skjutbanelyft",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 30,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte – kan uppfyllas genom reglering (försumbar direkt kostnad) eller genom ett ekonomiskt stöd. Basantagandet är ett mindre årligt bidrag till skytteanläggningar, jämförbart med befintliga milj",
+      "confidence": 0.3,
+      "calculation": "Låg: regelförändring/planering ≈ 0 mkr. Bas: driftbidrag till 50–100 anläggningar à 0,3–0,6 mkr/år ≈ 30 mkr. Hög: större investeringsstöd till 200+ anläggningar à ~1 mkr/år ≈ 200 mkr. Spannet är brett p.g.a. oklar ambitionsnivå."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0387 (300) ⚠ AVVIKER: 30 avviker 10.0× från jämförbara (median 300)"
+  },
+  {
+    "candidate": {
+      "title": "Ge alla svenskar 90 procents rabatt på tandvård",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill utöka det nyligen införda förstärkta högkostnadsskyddet för tandvård, där patienten endast betalar 10 procent av referenspriset för de flesta behandlingar, så att det omfattar alla vuxna.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0552"
+  },
+  {
+    "candidate": {
+      "title": "Bygg ny kärnkraft i Sverige",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill däremot främja nybyggnation av svensk kärnkraft genom statligt stöd, förenklade tillståndsprocesser och minskat regelkrångel.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0551"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta en effektiviseringsminister",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill inrätta en effektiviseringsminister som får i uppdrag att minska slöseri och byråkrati i offentlig sektor.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 10,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för ministerposten inkl. stab (löner, lokaler, omkostnader). Eventuella framtida besparingar från minskat slöseri är inte medräknade enligt regel 9.",
+      "confidence": 0.4,
+      "calculation": "Antaganden: Ministerlön ~1,5 mkr, 1 statssekreterare ~1,3 mkr, 3 politiskt sakkunniga à 0,8 mkr, övrig personal och driftskostnader ~2-5 mkr. Totalt 7-15 mkr/år. Lågt 5 mkr, högt 20 mkr för att täcka osäkerhet kring stabens storlek."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Liberalerna vill återinföra läxhjälps-RUT",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill återinföra läxhjälps-RUT som en del av partiets nya satsning på livspusselfeminism.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+    "articleTitle": "Liberalerna stärker barnfamiljerna med nytt vallöfte om läxhjälp",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning baserad på tidigare läxhjälps-RUT. Bygger på antaganden om antal användare (10 000–40 000 hushåll) och genomsnittligt skatteavdrag (5 000–10 000 kr/år).",
+      "confidence": 0.4,
+      "calculation": "Antag ~20 000 hushåll som utnyttjar avdraget, med ett genomsnittligt avdrag på 7 500 kr (50 % av totalkostnad ~15 000 kr). Det ger en årlig intäktsminskning på ~150 mkr. Låg=10 000 hushåll × 5 000 kr = 50 mkr. Hög=40 000 hushåll × 10 000 kr = 400 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0430 (150), p-2026-0065 (5000), p-2026-0093 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Handlingsplan för fossilfri gödsel och stärkt kretsloppsjordbruk",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill ta fram en handlingsplan för det svenska lantbrukets behov av näring och fossilfri gödsel.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet presenterar strategi för fossiloberoende matproduktion",
+    "duplicateOf": "p-2026-0332"
+  },
+  {
+    "candidate": {
+      "title": "Femdubbla biogasproduktionen och elektrifiera jordbrukets maskiner",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill därför öka produktionen av hållbara biodrivmedel, femdubbla den svenska biogasproduktionen och påskynda elektrifieringen av jordbrukets maskiner.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet presenterar strategi för fossiloberoende matproduktion",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 2000,
+      "msek_high": 3000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimatet baseras på partiets egen tidigare angivna kostnad för samma löfte (2000 msek/år). Intervallet speglar osäkerhet i stödnivåer och utbyggnadstakt.",
+      "confidence": 0.6,
+      "calculation": "Partiets siffra 2000 msek/år används som bas (från jämförbart löfte). Låg: 1000 (långsammare utbyggnad), hög: 3000 (högre stödnivåer). Inga detaljerade antaganden om antal maskiner eller biogasproduktion."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0333 (2000)"
+  },
+  {
+    "candidate": {
+      "title": "Förenkla för gårdar att producera egen förnybar energi",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "För att stärka både beredskap och lönsamhet vill Miljöpartiet göra det enklare för lantbruk att producera egen förnybar energi.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet presenterar strategi för fossiloberoende matproduktion",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser regelförenkling utan angivna subventioner. Direkta kostnader är normalt försumbara; osäkerheten fångas i den övre gränsen för eventuell administration.",
+      "confidence": 0.4,
+      "calculation": "Antar att åtgärden är en regelförenkling (t.ex. förenklade tillståndsprocesser) utan nya statsbidrag. Kostnaden för en mindre utredning eller administrativ omställning uppskattas till 0–10 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Införa regionala mål för livsmedelsproduktion",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill införa regionala mål för livsmedelsproduktionen för att stärka Sveriges försörjningsförmåga och beredskap.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet presenterar strategi för fossiloberoende matproduktion",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Införandet av regionala mål är en regulatorisk åtgärd utan direkta subventioner. Den statliga kostnaden är marginell och avser administration/utredning.",
+      "confidence": 0.65,
+      "calculation": "Jämförbart med en mindre statlig utredning eller internt framtagande av mål: ~5–30 mkr engångskostnad. Beloppet omfattar enbart själva införandet, inte eventuella framtida program för att uppnå målen."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0415 (1000) ⚠ AVVIKER: 5 avviker 200.0× från jämförbara (median 1000)"
+  },
+  {
+    "candidate": {
+      "title": "Ersätta fossila subventioner med klimatinvesteringar i lantbruket",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill ersätta dagens fokus på fossila subventioner med ekonomiska styrmedel som driver investeringar i fossilfria alternativ.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet presenterar strategi för fossiloberoende matproduktion",
+    "duplicateOf": "p-2026-0406"
+  },
+  {
+    "candidate": {
+      "title": "Sverigekort för 499 kr/mån i kollektivtrafik",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Med vårt Sverigekort kan du resa fritt på all kollektivtrafik i hela landet till en billig penning. 499 kronor i månaden för vuxna, och 249 kronor för unga, studenter och pensionärer.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 6000,
+      "msek_base": 8000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Partiet har i ett liknande löfte (p-2026-0321) självt angett kostnaden till 8000 mkr/år. Vi utgår från den siffran och ansätter ett brett osäkerhetsintervall då utnyttjandegrad och biljettintäkter är ",
+      "confidence": 0.5,
+      "calculation": "Partiets egen siffra: 8 000 mkr/år. Osäkerhetsintervall från 6 000 till 12 000 mkr/år. Motsvarar en subvention som täcker mellanskillnaden mellan kortintäkter och dagens biljettintäkter på ca 20–25 mdkr/år, beroende på hur många som byter till kortet."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0439 (1000), p-2026-0466 (1200), p-2026-0321 (8000) ⚠ AVVIKER: 8000 avviker 6.7× från jämförbara (median 1200)"
+  },
+  {
+    "candidate": {
+      "title": "Plånbokslöfte med höjt barnbidrag och billigare mediciner",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi ska ge tillbaka det du förlorat med ett plånbokslöfte: höjt barn- och studiebidrag, billigare mediciner, avgiftsfri tandvård för unga, hårdare press på banker och matkedjor och starkare skydd mot höga elpriser för villaägare.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en bred uppräkning av flera politikområden utan konkret enskilt åtagande eller belopp. Behandlas som inriktningslöfte enligt regel 13, varför kostnaden sätts till 0.",
+      "confidence": 0.65,
+      "calculation": "Ingen nivå anges för höjt barnbidrag, billigare mediciner eller avgiftsfri tandvård. Regel 13: breda önskelöften som räknar upp flera politikområden prissätts som inriktningslöfte med 0 mkr. Jämförbart löfte p-2026-0279 har också estimerats till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0279 (0), p-2026-0468 (5600), p-2026-0325 (8100), p-2026-0125 (0), p-2026-0100 (17000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~5600"
+  }
+]

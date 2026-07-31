@@ -1,0 +1,34 @@
+{
+  "name": "drygast-pipeline",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "pipeline:run": "node --import tsx/esm src/cli-run.ts",
+    "pipeline:dry-run": "node --import tsx/esm src/cli-dry-run.ts",
+    "import:vallen": "node --import tsx/esm src/cli-import-vallen.ts",
+    "review": "node --import tsx/esm src/review.ts",
+    "check-t7": "node --import tsx/esm scripts/check-t7.mts",
+    "calc:backfill": "node --import tsx/esm scripts/calculation-backfill.mts",
+    "archive:backfill": "node --import tsx/esm scripts/archive-backfill.mts",
+    "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit",
+    "revalidate": "node --import tsx/esm scripts/revalidate-quotes.mts",
+    "stances:skeleton": "node --import tsx/esm scripts/stances-skeleton.mts",
+    "stances:review": "node --import tsx/esm scripts/stances-review.mts",
+    "stances:rot-check": "node --import tsx/esm scripts/source-rot-check.mts",
+    "stances:backfill": "node --import tsx/esm scripts/stances-backfill.mts",
+    "quality:scan": "node --import tsx/esm scripts/quality-scan.mts",
+    "stances:archive-backfill": "node --import tsx/esm scripts/stances-archive-backfill.mts"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "fast-xml-parser": "^5.9.3",
+    "pdfjs-dist": "^6.1.200",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "tsx": "^4.23.0",
+    "typescript": "^5.0.0"
+  }
+}

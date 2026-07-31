@@ -1,0 +1,183 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Lopsedel from "../../components/Lopsedel.astro";
+import GapMatare from "../../components/GapMatare.astro";
+import MetodLank from "../../components/MetodLank.astro";
+import KallRad from "../../components/KallRad.astro";
+import Dela from "../../components/Dela.astro";
+import { getPromises, getParties, getConstants } from "../../lib/data";
+import { formatMsek, formatMsekShort } from "../../lib/calc";
+import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseTotalMsek } from "../../lib/aggregates";
+import { getIssuesFile, getStances, cellFor, emptyCellText, statementById, POSITION_LABEL } from "../../lib/stances";
+
+export function getStaticPaths() {
+  const parties = getParties();
+  return parties.map((p) => ({ params: { kod: p.code } }));
+}
+
+const { kod } = Astro.params;
+const promises = getPromises();
+const parties = getParties();
+const constants = getConstants();
+const party = parties.find((p) => p.code === kod)!;
+const partyPromises = getPromisesForParty(promises, kod);
+const total = partyTotalMsek(promises, kod);
+const flasket = totalFlasket(promises);
+const gap = financingGap(promises);
+const reformutrymme = constants.reformutrymme_msek_per_ar.value;
+const perRost = flasketPerRost(total, party.votes_2022);
+const categories = categoryBreakdown(partyPromises);
+const canonicalPath = `/parti/${kod}`;
+const issuesFile = getIssuesFile();
+const stances = getStances();
+const stanceRows = issuesFile.issues.flatMap((issue) =>
+  issue.subquestions.map((sq) => {
+    const cell = cellFor(stances, sq.id, kod!);
+    const st = cell ? statementById(cell, cell.current.statement_id) : undefined;
+    return { issue, sq, cell, st };
+  }),
+);
+const hasLlm = partyPromises.some((p) => p.cost.basis === 'llm_estimat');
+const pageTitle = hasLlm
+  ? `Vad kostar ${party.name}s vallöften 2026? ≈ ${formatMsekShort(total)} mdkr — drygast.nu`
+  : `Vad kostar ${party.name}s vallöften 2026? ${formatMsekShort(total)} mdkr — drygast.nu`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": party.name, "item": `https://drygast.nu${canonicalPath}` },
+    ],
+  },
+];
+---
+<Layout title={pageTitle} description={`${party.name}s vallöften 2026 kostar ${formatMsekShort(total)} mdkr för mandatperioden. Oberoende, källspårad.`} ogImage={`/og/parti-${kod}.png`} jsonLd={jsonLd} canonicalPath={canonicalPath}>
+  <div class="page-content">
+    <Lopsedel total={formatMsek(total)} subtitle={party.name.toUpperCase()} count={partyPromises.length} date="2026" />
+
+    <div class="prosa-content prosa-content--centered">
+      <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num belopp">{formatMsekShort(total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {partyPromises.length} löften. Fläsk per röst: <strong class="num belopp">{Math.round(perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
+      <p class="manifest-status">{party.manifest_2026}</p>
+    </div>
+
+    <MetodLank />
+
+    <GapMatare flasket={flasket} reformutrymme={reformutrymme} />
+
+    <section class="sektion">
+      <h2>Kategorifördelning</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Kategori</th>
+              <th class="num">Totalt (mdkr)</th>
+              <th class="num">Löften</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories.map((cat, i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td>{cat.category}</td>
+                <td class="num belopp">{formatMsek(cat.totalMsek)}</td>
+                <td class="num">{cat.count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sektion">
+      <h2>{party.name}:s löften</h2>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="radnr">#</th>
+              <th>Löfte</th>
+              <th>Kategori</th>
+              <th class="num">Kostnad (mdkr)</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partyPromises.map((p, i) => (
+              <tr>
+                <td class="radnr">{i + 1}</td>
+                <td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td>
+                <td>{p.category}</td>
+                <td class="num belopp">{formatMsek(promiseTotalMsek(p), p.cost.basis)}</td>
+                <td>{p.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sektion" id="besked">
+      <h2>Besked i de stora frågorna</h2>
+      <p class="prosa-content beskednot">Ur <a href="/fragor">Frågevågen</a> — partiets senaste besked per delfråga, med ordagrant citat, källa och arkivkopia på frågesidan. Samma bevakning för alla åtta partier.</p>
+      <div class="datavy datavy--scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Fråga</th>
+              <th>Delfråga</th>
+              <th>Besked</th>
+              <th class="num">Datum</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stanceRows.map(({ issue, sq, cell, st }) => (
+              <tr>
+                <td><a href={`/fraga/${issue.slug}#${sq.id}-${kod}`}>{issue.title}</a></td>
+                <td>{sq.text}</td>
+                <td class="num beskedcell">{st ? POSITION_LABEL[cell!.current.position] : <span class="tomcell">{emptyCellText(cell?.last_searched ?? null)}</span>}</td>
+                <td class="num">{st?.date_stated ?? "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <KallRad source={`${party.name}:s valprogram`} />
+
+    <Dela path={canonicalPath} title={pageTitle} text={`${party.name}s vallöften 2026 väger ${formatMsekShort(total)} mdkr. Källspårat på drygast.nu`} />
+  </div>
+</Layout>
+
+<style>
+  .manifest-status {
+    font-size: 0.85rem;
+    color: var(--farg-text-svag, #666);
+    font-style: italic;
+  }
+
+  .prosa-content--centered {
+    margin: 1.5rem auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+  .beskednot {
+    font-size: 0.9rem;
+    color: var(--grafit);
+  }
+  .beskedcell {
+    font-weight: 700;
+  }
+  .tomcell {
+    font-weight: 400;
+    color: var(--dis);
+  }
+</style>

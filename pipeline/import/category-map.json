@@ -1,0 +1,787 @@
+{
+  "Övrigt": {
+    "enum": "övrigt",
+    "n": 65,
+    "flag": true
+  },
+  "Ekonomi/Skatt": {
+    "enum": "skatter",
+    "n": 34,
+    "flag": false
+  },
+  "Energi": {
+    "enum": "klimat-miljö",
+    "n": 24,
+    "flag": false
+  },
+  "Jobb": {
+    "enum": "skatter",
+    "n": 17,
+    "flag": true
+  },
+  "Migration": {
+    "enum": "migration",
+    "n": 12,
+    "flag": false
+  },
+  "Ekonomi": {
+    "enum": "skatter",
+    "n": 8,
+    "flag": false
+  },
+  "Sjukvård": {
+    "enum": "välfärd",
+    "n": 8,
+    "flag": false
+  },
+  "Jobb och arbetsmarknad": {
+    "enum": "skatter",
+    "n": 5,
+    "flag": true
+  },
+  "Skola": {
+    "enum": "utbildning",
+    "n": 5,
+    "flag": false
+  },
+  "Brottsbekämpning och trygghet": {
+    "enum": "rättsväsende",
+    "n": 4,
+    "flag": false
+  },
+  "Lag och ordning": {
+    "enum": "rättsväsende",
+    "n": 4,
+    "flag": false
+  },
+  "Försvar": {
+    "enum": "försvar",
+    "n": 4,
+    "flag": false
+  },
+  "Hälso- och sjukvård/Förlossningsvård": {
+    "enum": "välfärd",
+    "n": 4,
+    "flag": false
+  },
+  "Bostad": {
+    "enum": "välfärd",
+    "n": 4,
+    "flag": false
+  },
+  "Klimat/Miljö": {
+    "enum": "klimat-miljö",
+    "n": 4,
+    "flag": false
+  },
+  "Familj/Barn": {
+    "enum": "välfärd",
+    "n": 4,
+    "flag": false
+  },
+  "Integration": {
+    "enum": "migration",
+    "n": 3,
+    "flag": false
+  },
+  "Ekonomi/Företagande": {
+    "enum": "skatter",
+    "n": 3,
+    "flag": false
+  },
+  "Skola/Lärare": {
+    "enum": "utbildning",
+    "n": 3,
+    "flag": false
+  },
+  "Skola/Språk": {
+    "enum": "utbildning",
+    "n": 3,
+    "flag": false
+  },
+  "Migration/Arbetskraftsinvandring": {
+    "enum": "migration",
+    "n": 3,
+    "flag": true
+  },
+  "Skatt/Statlig inkomstskatt": {
+    "enum": "skatter",
+    "n": 3,
+    "flag": false
+  },
+  "Välfärd": {
+    "enum": "välfärd",
+    "n": 3,
+    "flag": false
+  },
+  "Övergripande": {
+    "enum": "övrigt",
+    "n": 2,
+    "flag": true
+  },
+  "Pension": {
+    "enum": "välfärd",
+    "n": 2,
+    "flag": false
+  },
+  "Skola och utbildning": {
+    "enum": "utbildning",
+    "n": 2,
+    "flag": false
+  },
+  "Försvar och krisberedskap": {
+    "enum": "försvar",
+    "n": 2,
+    "flag": false
+  },
+  "Lag och ordning/Brottsoffer": {
+    "enum": "rättsväsende",
+    "n": 2,
+    "flag": false
+  },
+  "Lag och ordning/Våld mot kvinnor": {
+    "enum": "rättsväsende",
+    "n": 2,
+    "flag": false
+  },
+  "Försvar/Nato": {
+    "enum": "försvar",
+    "n": 2,
+    "flag": false
+  },
+  "Hälso- och sjukvård": {
+    "enum": "välfärd",
+    "n": 2,
+    "flag": false
+  },
+  "Hälso- och sjukvård/Psykiatri": {
+    "enum": "välfärd",
+    "n": 2,
+    "flag": false
+  },
+  "Hälso- och sjukvård/Kvinnors hälsa": {
+    "enum": "välfärd",
+    "n": 2,
+    "flag": false
+  },
+  "Integration/Språk": {
+    "enum": "migration",
+    "n": 2,
+    "flag": false
+  },
+  "Skola/Studiero": {
+    "enum": "utbildning",
+    "n": 2,
+    "flag": false
+  },
+  "Migration/Utvisning": {
+    "enum": "migration",
+    "n": 2,
+    "flag": false
+  },
+  "Klimat-miljö-energi/Kärnkraft": {
+    "enum": "klimat-miljö",
+    "n": 2,
+    "flag": false
+  },
+  "Klimat-miljö-energi/Elpriser": {
+    "enum": "klimat-miljö",
+    "n": 2,
+    "flag": false
+  },
+  "Klimat-miljö-energi/Hav": {
+    "enum": "klimat-miljö",
+    "n": 2,
+    "flag": false
+  },
+  "Klimat/Elbilar": {
+    "enum": "klimat-miljö",
+    "n": 2,
+    "flag": false
+  },
+  "Familj/Barnbidrag": {
+    "enum": "välfärd",
+    "n": 2,
+    "flag": false
+  },
+  "Skatt/Marginalskatt": {
+    "enum": "skatter",
+    "n": 2,
+    "flag": false
+  },
+  "Skola/Spetsutbildning": {
+    "enum": "utbildning",
+    "n": 2,
+    "flag": false
+  },
+  "Bostad/Familj": {
+    "enum": "välfärd",
+    "n": 2,
+    "flag": false
+  },
+  "Energi/Kärnkraft": {
+    "enum": "klimat-miljö",
+    "n": 2,
+    "flag": false
+  },
+  "Migration/integration/medborgarskap": {
+    "enum": "migration",
+    "n": 2,
+    "flag": false
+  },
+  "Bostadspolitik/slumhyresvärdar": {
+    "enum": "välfärd",
+    "n": 2,
+    "flag": false
+  },
+  "Ekonomi/välfärdsfinansiering": {
+    "enum": "välfärd",
+    "n": 2,
+    "flag": false
+  },
+  "Infrastruktur": {
+    "enum": "infrastruktur",
+    "n": 2,
+    "flag": false
+  },
+  "Landsbygd och infrastruktur": {
+    "enum": "infrastruktur",
+    "n": 1,
+    "flag": false
+  },
+  "Sjukvård och psykiatri": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Äldreomsorg": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Demokrati och civilsamhälle": {
+    "enum": "övrigt",
+    "n": 1,
+    "flag": true
+  },
+  "Lag och ordning/Straff": {
+    "enum": "rättsväsende",
+    "n": 1,
+    "flag": false
+  },
+  "Lag och ordning/Hedersvåld": {
+    "enum": "rättsväsende",
+    "n": 1,
+    "flag": false
+  },
+  "Försvar/Utrikespolitik": {
+    "enum": "försvar",
+    "n": 1,
+    "flag": false
+  },
+  "Försvar/Ukraina": {
+    "enum": "försvar",
+    "n": 1,
+    "flag": false
+  },
+  "Integration/Medborgarskap": {
+    "enum": "migration",
+    "n": 1,
+    "flag": false
+  },
+  "Jobb/Kompetens": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": true
+  },
+  "Jobb/Utbildning": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": true
+  },
+  "Migration/Medborgarskap": {
+    "enum": "migration",
+    "n": 1,
+    "flag": false
+  },
+  "Migration/Återvändande": {
+    "enum": "migration",
+    "n": 1,
+    "flag": false
+  },
+  "Klimat-miljö-energi/Elmarknad": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Klimat-miljö-energi/Klimatmål": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Klimat-miljö-energi/Elektrifiering": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Infrastruktur/Järnväg": {
+    "enum": "infrastruktur",
+    "n": 1,
+    "flag": false
+  },
+  "Kollektivtrafik": {
+    "enum": "infrastruktur",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/Fördelning": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Skola/Välfärd": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Arbetsliv/Sjukförsäkring": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": true
+  },
+  "Arbetsliv/Arbetstid": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": true
+  },
+  "Migration/Familj": {
+    "enum": "migration",
+    "n": 1,
+    "flag": false
+  },
+  "Migration/Uppehållstillstånd": {
+    "enum": "migration",
+    "n": 1,
+    "flag": false
+  },
+  "Jordbruk/Klimat/Beredskap": {
+    "enum": "försvar",
+    "n": 1,
+    "flag": false
+  },
+  "Jordbruk/Gödsel": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Jordbruk/Energi/Biogas": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Livsmedelsproduktion/Beredskap": {
+    "enum": "försvar",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/Kunskap": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Utbildning/Kunskap": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Utbildning/Mätetal": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Trygghet/Vård/RUT": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Äldreomsorg/Språkkrav": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Skola/Elevhälsa": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Infrastruktur/Kärnkraft": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Förvaltning/Byråkrati": {
+    "enum": "övrigt",
+    "n": 1,
+    "flag": true
+  },
+  "Förvaltning/Samhällsbyggnad": {
+    "enum": "infrastruktur",
+    "n": 1,
+    "flag": true
+  },
+  "Värderingar/Klädsel": {
+    "enum": "övrigt",
+    "n": 1,
+    "flag": true
+  },
+  "Bistånd/Utrikes": {
+    "enum": "övrigt",
+    "n": 1,
+    "flag": false
+  },
+  "Barn/Skärmtid/Teknik": {
+    "enum": "övrigt",
+    "n": 1,
+    "flag": true
+  },
+  "Migration/Asyl": {
+    "enum": "migration",
+    "n": 1,
+    "flag": false
+  },
+  "Försvar/Värnplikt": {
+    "enum": "försvar",
+    "n": 1,
+    "flag": false
+  },
+  "Försvar/Värnplikt/Samhällsgemenskap": {
+    "enum": "försvar",
+    "n": 1,
+    "flag": false
+  },
+  "Regeringsunderlag": {
+    "enum": "övrigt",
+    "n": 1,
+    "flag": true
+  },
+  "Brottslighet/trygghet/rättsväsende": {
+    "enum": "rättsväsende",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/ekonomi/ärendekrångel": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Ekonomi/energi/EU": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Välfärd/sjukvård/tandvård/skola": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Försvar/totalförsvar": {
+    "enum": "försvar",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/energi/livesmedel": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Barnfamiljer/familjepolitik": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Samlat löftepaket: pension/löner/bostad/tandvård/mat/el/kollektivtrafik/arbetstid": {
+    "enum": "övrigt",
+    "n": 1,
+    "flag": true
+  },
+  "Familjepolitik": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Barnbidrag/förskola/föräldrapenning": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Bostadspolitik": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Bostadspolitik/hyresrätter": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Bostadspolitik/hyror": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Norrland/regionpolitik/naturresurser": {
+    "enum": "infrastruktur",
+    "n": 1,
+    "flag": false
+  },
+  "Energi/norrland/skatt": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Sjukvård/landsbygd": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Bostadshyror/pension": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Välfärd/vinster i välfärden": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Välfärd/skola/sjukvård/kommunala skillnader": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Jobb/sysselsättning": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": true
+  },
+  "Skatt/jobbskatteavdrag/skattefri grundlön": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": true
+  },
+  "Jobb/skatt/arbetslinjen": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": true
+  },
+  "Jobb/arbetsgivaravgift/företagande": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": true
+  },
+  "Övergripande/tillväxt": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": true
+  },
+  "Klimat/energi/elektrifiering": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Välfärd/sjukvård/skola/psykisk hälsa": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Landsbygd/infrastruktur": {
+    "enum": "infrastruktur",
+    "n": 1,
+    "flag": false
+  },
+  "Trygghet/rättsstat/polisen": {
+    "enum": "rättsväsende",
+    "n": 1,
+    "flag": false
+  },
+  "Försvar/utrikes/säkerhet/Ukraina": {
+    "enum": "försvar",
+    "n": 1,
+    "flag": false
+  },
+  "Migration/utvisningar": {
+    "enum": "migration",
+    "n": 1,
+    "flag": false
+  },
+  "Kommunal självstyrelse/centralism": {
+    "enum": "övrigt",
+    "n": 1,
+    "flag": true
+  },
+  "Energi/elproduktion": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Utbildning/Kunskap/Målsättning": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/Statlig inkomstskatt/Utbildning": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/Sparande/Kapital": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "EU/Valuta/Ekonomi": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Forskning/Högskola": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Skola/Klassstorlek": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/Bred skattesänkning": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/Sparande": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Familj/Föräldraledighet/Skola": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Övergripande/Klimatomställning": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": true
+  },
+  "Ekonomi/skatt/familjepolitik": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Jobb/bidrag/arbetslinjen": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": true
+  },
+  "Hälso- och sjukvård/Förlossningsvård/IVF": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Klimat-miljö-energi/Miljöbalk/regelverk": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  },
+  "Ekonomi/familjepolitik/skatt": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Försvar/utrikes/Nato": {
+    "enum": "försvar",
+    "n": 1,
+    "flag": false
+  },
+  "Migration/utvisning": {
+    "enum": "migration",
+    "n": 1,
+    "flag": false
+  },
+  "Ekonomi/matmoms/konsument": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Ekonomi/familj/förskola": {
+    "enum": "utbildning",
+    "n": 1,
+    "flag": false
+  },
+  "Ekonomi/pensionssparande": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Ekonomi/ISK-sparande": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Lag och ordning/gäng": {
+    "enum": "rättsväsende",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/skattefri grundlön/konsekvensberäkning": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Skatt/skattefri grundlön/reformbeskrivning": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Barnfamiljer/bebispeng": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Sjukvård/tandvård": {
+    "enum": "välfärd",
+    "n": 1,
+    "flag": false
+  },
+  "Ekonomi/Prioritering": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Ekonomi/Skatt/Familj": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Ekonomi/Tillväxt": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Näringsliv": {
+    "enum": "skatter",
+    "n": 1,
+    "flag": false
+  },
+  "Näringsliv/Skog": {
+    "enum": "klimat-miljö",
+    "n": 1,
+    "flag": false
+  }
+}

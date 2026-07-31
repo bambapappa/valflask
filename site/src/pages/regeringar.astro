@@ -1,0 +1,131 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MetodLank from "../components/MetodLank.astro";
+import { getPromises, getParties } from "../lib/data";
+import { formatMsek } from "../lib/calc";
+import { coalitionAggregates } from "../lib/aggregates";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
+const promises = getPromises();
+const parties = getParties();
+const constellations = JSON.parse(
+  readFileSync(resolve(process.cwd(), "../data/constellations.json"), "utf8")
+);
+
+type ConstellationDef = { id: string; label: string; description: string; parties: string[] };
+
+const results = (constellations as ConstellationDef[]).map((c) => ({
+  ...c,
+  aggregates: coalitionAggregates(promises, parties, c.parties),
+}));
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://drygast.nu/" },
+      { "@type": "ListItem", "position": 2, "name": "Regeringar", "item": "https://drygast.nu/regeringar" },
+    ],
+  },
+];
+---
+<Layout title="Regeringsunderlag — drygast.nu" description="Förvalda konstellationer med kostnader, finansieringsgap och löften som flera partier delar räknade en gång." jsonLd={jsonLd} canonicalPath="/regeringar">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Regeringar</h1>
+      <p>Färdiga partikombinationer med uträknade kostnader och hur mycket som saknar täckning. Lovar flera partier i en grupp samma sak räknas det en gång. Har de satt olika prislapp på samma löfte visar vi spannet mellan dem.</p>
+    </div>
+
+    <MetodLank />
+
+    {results.map((c) => {
+      const a = c.aggregates;
+      const gapLabel = a.financingGap < 0 ? `RYMS (${formatMsek(Math.abs(a.financingGap))} över)` : formatMsek(a.financingGap);
+      return (
+        <section class="sektion">
+          <h2>{c.label}</h2>
+          <p class="etikett">{c.description} · {a.mandatesSum} mandat</p>
+          <div class="datavy datavy--scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th class="radnr">#</th>
+                  <th>Parti</th>
+                  <th class="num">Löften</th>
+                  <th class="num">Mandat</th>
+                </tr>
+              </thead>
+              <tbody>
+                {c.parties.map((code: string, i: number) => {
+                  const party = parties.find((p) => p.code === code);
+                  const partyPromiseCount = promises.filter(
+                    (p) => p.parties.includes(code) && p.status !== "tillbakadragen",
+                  ).length;
+                  return party ? (
+                    <tr>
+                      <td class="radnr">{i + 1}</td>
+                      <td><a href={`/parti/${code}`}>{party.name}</a></td>
+                      <td class="num">{partyPromiseCount}</td>
+                      <td class="num">{party.mandate_2022}</td>
+                    </tr>
+                  ) : null;
+                })}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2"><strong>Fläsket (delade löften räknas en gång)</strong></td>
+                  <td class="num" colspan="2"><strong class="num belopp">{formatMsek(a.totalFlasket)}</strong></td>
+                </tr>
+                <tr>
+                  <td colspan="2">Sparande</td>
+                  <td class="num belopp" colspan="2">{formatMsek(a.totalBesparingar)}</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Angiven finansiering</td>
+                  <td class="num belopp" colspan="2">{formatMsek(a.totalFinancingClaimed)}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><strong>Saknar täckning</strong></td>
+                  <td class="num" colspan="2"><strong class="num belopp">{gapLabel}</strong></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          {a.groupNotes.length > 0 && (
+            <div class="fotnoter">
+              <div class="etikett">DELADE LÖFTEN</div>
+              {a.groupNotes.map((gn) => (
+                <p class="fotnot">Ett löfte som flera partier delar — prislappen varierar mellan <span class="belopp">{formatMsek(gn.minMsek)}</span> och <span class="belopp">{formatMsek(gn.maxMsek)}</span> ({gn.parties.join(", ")})</p>
+              ))}
+            </div>
+          )}
+        </section>
+      );
+    })}
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 0 auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+  .fotnoter {
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--linje-svag);
+  }
+  .fotnot {
+    font-size: var(--steg--1);
+    color: var(--dis);
+    margin: 0.25rem 0;
+    font-family: var(--font-mono);
+  }
+</style>
