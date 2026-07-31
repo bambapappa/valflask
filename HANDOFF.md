@@ -66,6 +66,68 @@ valflask men hemligheter kan aldrig läsas ut ur GitHub — ägaren lägger
 in den (och `MODEL_KOPPLING`-variabeln) i DETTA repo:
 Settings → Secrets and variables → Actions.
 
+**Gjort 2026-07-31 (granskning i skala + tre härdningar av matchningen):**
+
+Allt nedan gick direkt till `main` — ingen gren, ingen PR. 60 kopplingar
+avgjorda av en människa, hela beståndet reviderat, och tre fel i
+matchningen hittade och täppta.
+
+- **Granskningen.** 50 köposter lästa mot källorna: 47 godkända
+  (`k-2026-0138`–`0184`), 3 avvisade. Fyra citat bytta mot starkare ur
+  samma dokument. Sedan revision av SAMTLIGA 167 aktiva kopplingar mot
+  färska källtexter: **inget citat hade spruckit** — alla stod
+  fortfarande ordagrant i källan.
+- **Metodlärdom värd att bära vidare.** Första genomläsningen gjordes på
+  löftenas `title` (avhuggen) och citatet ensamt. Den bedömningen höll
+  inte: vid omläsning mot hela `quote` och hela källdokumentet vände
+  domen på de flesta. Flera "floskler" var ingressmeningen i partiets
+  EGEN motion på precis löftets sakfråga, följd av skarpa yrkanden.
+  **Läs alltid hela löftescitatet och dokumentet runt citatet.**
+- **Fel 1 — fel voteringspunkt.** Prompten sade VILKEN punkt en votering
+  gällde men aldrig VAD punkten beslutade. Modellen fick hela betänkandet
+  och citerade sammanfattningens beskrivning av propositionen — alltså
+  punkt 1:s sak — som bevis för en punkt som bara avslog motioner. Av 51
+  voteringskopplingar bar 7 det felet. Fixat: punktens rubrik och
+  beslutstext hämtas nu från `utskottsforslag`-ändpunkten och skickas med.
+- **Fel 2 — annat partis reservation.** Ett betänkande blandar utskottets
+  text, propositionens sammanfattning och flera partiers reservationer i
+  samma fil. Aktörsgrinden ser vilka partier som RÖSTADE (alla), inte vem
+  som SKREV stycket. `k-2026-0124` belade ett M-löfte med text ur en
+  reservation av S, V och MP. Fixat med promptregel; två andra
+  reservationscitat visade sig giltiga (löftets parti stod bland
+  undertecknarna).
+- **Fel 3 — cirkulär koppling.** 58 av 417 aktiva löften är extraherade
+  ur riksdagsdokument. Kandidaturvalet uteslöt aldrig löftets EGET
+  källdokument, så modellen fick det serverat och hittade en perfekt
+  träff — i ett fall ordagrant identisk med löftescitatet. Kopplingen
+  svarade på "höll partiet sitt löfte?" genom att peka på papperet löftet
+  stod skrivet på. **Fixat deterministiskt i koden, inte med en
+  promptregel** — `lofteskallaDokId()` plus spärr i `rankaKandidater` och
+  `rankaVoteringsKandidater`. En spärr i kod kan inte övertalas. Rensat:
+  23 ur kön, 1 indragen (`k-2026-0083`).
+- **Stickprov på glm-5.2.** Kön är till 89 % glm-5.2, men INGEN av de
+  godkända kopplingarna kom därifrån — revisionen mätte alltså fel
+  population. 20 glm-förslag lästes därför mot källorna: 15 starka, 3
+  gränsfall (alla med ärligt låg confidence), 2 cirkulära. **Modellbytet
+  i sig motiverar ingen omkörning** — glm-5.2 håller jämn kvalitet med
+  deepseek-v4-pro i sak.
+- **Riktad omkörning.** Alla sakfel satt i voteringar; dokumentkopplingarna
+  hade inte ett enda. Därför glömdes 797 voteringspar för omprövning
+  medan 2 335 dokumentpar lämnades orörda. **Viktigt om du gör om detta:**
+  `foreslag.mts` minns godkända par BARA via `provade-par.json` — den
+  läser aldrig `kopplingar.json`. Glömmer du ett godkänt par föds en
+  dubblett i kön för något en människa redan avgjort.
+- **Arkivvägen för voteringar byggd.** `arkiv.mts` hoppade tidigare över
+  voteringskopplingar. Nu arkiveras och verifieras betänkandet som
+  `bevis.kalla_dok_id` pekar ut. `arkiv.yml` är dessutom schemalagd
+  veckovis (måndag 08:00 UTC, en timme efter `foreslag.yml`).
+
+**Kvar härifrån:** 8 gränsfall bland voteringarna väntar på manuell
+läsning (`k-2026-0040` och `k-2026-0042` ser mest tveksamma ut) — de har
+en punkt som bara avslår motioner men citatet i brödtexten, vilket
+maskinen inte kan avgöra. De ~45 avhuggna citaten i beståndet lämnades
+med flit: de är sanna, och prompten gör nya citat till hela meningar.
+
 **Gjort 2026-07-30, senare passet (zai-glm skarpt provat, backfill igång, modelljämförelse 20/20):**
 
 - **z.ai/GLM-5.2 verifierat skarpt.** Sedan hemligheterna (`LLM_ZAI_API_KEY`,
