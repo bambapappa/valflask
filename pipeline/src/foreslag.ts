@@ -25,6 +25,23 @@ export interface Lofte {
   parties: string[];
   person?: string | null;
   category?: string;
+  /** Varifrån löftet hämtades — bär dokument-id när källan är riksdagen. */
+  source?: { url?: string | null } | null;
+}
+
+/**
+ * Dokument-id:t i löftets källa, när löftet är hämtat UR ett
+ * riksdagsdokument (t.ex. "HD024219" ur en motion).
+ *
+ * Ungefär ett löfte av sju kommer den vägen. Kopplas ett sådant löfte till
+ * just det dokumentet svarar registret på frågan "höll partiet sitt löfte?"
+ * genom att peka på papperet löftet stod skrivet på — citatet blir
+ * ordagrant identiskt med löftescitatet, grindarna passerar, och läsaren
+ * får veta ingenting. Handlingen ÄR löftet, inte ett agerande efter det.
+ */
+export function lofteskallaDokId(lofte: Lofte): string | null {
+  const m = /data\.riksdagen\.se\/dokument\/([A-Za-z0-9]+)/u.exec(lofte.source?.url ?? "");
+  return m ? m[1]! : null;
 }
 
 const STOPPORD = new Set([
@@ -88,9 +105,11 @@ export function rankaKandidater(
   index?: TermIndex,
 ): Kandidat[] {
   const mal = nyckelord(`${lofte.title} ${lofte.quote} ${lofte.category ?? ""}`);
+  const kalla = lofteskallaDokId(lofte);
   const kandidater: Kandidat[] = [];
   for (const h of handlingar) {
     if (h.kind === "votering") continue;
+    if (kalla && h.dok_id === kalla) continue; // löftets eget källdokument — cirkulärt
     // Aktörspartier, inte handling.parties: en fråga/interpellation bär
     // den tillfrågade ministerns parti i sin lista, men ministern är inte
     // aktör (samma spärr som H3).
@@ -161,11 +180,15 @@ export function rankaVoteringsKandidater(
 ): VoteringsKandidat[] {
   const index = indexeraBetankanden(betankanden);
   const mal = nyckelord(`${lofte.title} ${lofte.quote} ${lofte.category ?? ""}`);
+  const kalla = lofteskallaDokId(lofte);
   const kandidater: VoteringsKandidat[] = [];
   for (const h of handlingar) {
     if (h.kind !== "votering") continue;
     const bet = index.get(h.dok_id);
     if (!bet) continue;
+    // Källtexten för en voteringskoppling är BETÄNKANDETS, så cirkeln
+    // uppstår om löftet självt är hämtat ur just det betänkandet.
+    if (kalla && bet.dok_id === kalla) continue;
     const partier = h.rostfordelning ? Object.keys(h.rostfordelning) : [];
     if (lofte.parties.length > 0 && partier.length > 0 && !lofte.parties.some((p) => partier.includes(p))) {
       continue;

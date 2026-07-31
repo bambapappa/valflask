@@ -6,6 +6,7 @@ import {
   motionstypAvHandling,
   nyckelord,
   parseForslagSvar,
+  lofteskallaDokId,
   rankaKandidater,
   rankaVoteringsKandidater,
   skapaForslag,
@@ -316,4 +317,47 @@ test("skapaForslag för votering: citat som bara finns i motionen fälls av H2 m
     '","motivering":"x","confidence":0.7}}';
   const res = await skapaForslag(fakeLlm(svar), "system", "modell", lofte, votering(), "Utskottets korta text om annat.", LAGE_A_FONSTER, betankande);
   assert.ok(res.grindfel.some((f) => f.grind === "H2"));
+});
+
+/**
+ * Cirkelspärren: ungefär ett löfte av sju är hämtat ur ett riksdagsdokument.
+ * Kopplas ett sådant löfte till just det dokumentet blir citatet ordagrant
+ * identiskt med löftescitatet — grindarna passerar, men handlingen ÄR
+ * löftet och säger ingenting om huruvida partiet agerat efter det.
+ */
+const lofteFranRiksdagen: Lofte = {
+  ...lofte,
+  source: { url: "https://data.riksdagen.se/dokument/HD021234" },
+};
+
+test("lofteskallaDokId: plockar dokument-id ur en riksdagskälla", () => {
+  assert.equal(lofteskallaDokId(lofteFranRiksdagen), "HD021234");
+});
+
+test("lofteskallaDokId: partikälla ger null (inget att utesluta)", () => {
+  assert.equal(lofteskallaDokId({ ...lofte, source: { url: "https://moderaterna.se/var-politik/" } }), null);
+  assert.equal(lofteskallaDokId(lofte), null);
+  assert.equal(lofteskallaDokId({ ...lofte, source: null }), null);
+});
+
+test("rankaKandidater: löftets EGET källdokument blir aldrig kandidat", () => {
+  const egen = handling({ id: "h-2026-0100", dok_id: "HD021234", titel: "Höj taket i arbetslöshetsförsäkringen" });
+  const annan = handling({ id: "h-2026-0101", dok_id: "HD029999", titel: "Höj taket i arbetslöshetsförsäkringen" });
+  // Utan källa är båda kandidater — spärren får inte gallra av misstag.
+  assert.deepEqual(
+    rankaKandidater(lofte, [egen, annan], 5).map((k) => k.handling.id),
+    ["h-2026-0100", "h-2026-0101"],
+  );
+  // Med källan kvar står bara den andra motionen.
+  assert.deepEqual(
+    rankaKandidater(lofteFranRiksdagen, [egen, annan], 5).map((k) => k.handling.id),
+    ["h-2026-0101"],
+  );
+});
+
+test("rankaVoteringsKandidater: votering vars betänkande ÄR löftets källa utesluts", () => {
+  const v = votering();
+  const franBetankandet: Lofte = { ...lofte, source: { url: "https://data.riksdagen.se/dokument/HA01AU10" } };
+  assert.equal(rankaVoteringsKandidater(lofte, [v], [betankande], 5).length, 1);
+  assert.deepEqual(rankaVoteringsKandidater(franBetankandet, [v], [betankande], 5), []);
 });
