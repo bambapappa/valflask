@@ -49,25 +49,32 @@ sajt är en vecka då adressen finns men inte håller vad den lovar. Och
 varje omdirigering man lägger på i förväg är en till sak som kan gå sönder
 under bygget.
 
-## Steg 0 — GJORT (kontrollerat 2026-07-29)
+## Steg 0 — GJORT (poster kontrollerade mot zonexport 2026-07-31 14:54)
 
 Alla tre domänerna är registrerade och ligger på Cloudflares namnservrar.
-Läget i detalj, uppmätt och inte antaget:
 
-| domän | namnservrar | poster | svarar |
-| --- | --- | --- | --- |
-| `utlovat.se` | Cloudflare (`brenda`/`scott`) | proxade A-poster mot GitHub Pages | **HTTPS med giltigt certifikat — men `404`** |
-| `www.utlovat.se` | samma zon | samma | samma `404` |
-| `utlovat.nu` | Cloudflare (`scott`/`brenda`) | **inga** | nej |
-| `utlovat.com` | Cloudflare (`lola`/`porter`) | **inga** | nej |
-| `handlingsvagen.drygast.nu` | — | **finns inte** (NXDOMAIN) | nej |
+| domän | namnservrar | poster |
+| --- | --- | --- |
+| `utlovat.se` | Cloudflare (`brenda`/`scott`) | fyra A-poster `185.199.108–111.153` mot GitHub Pages, **grått moln** |
+| `www.utlovat.se` | samma zon | CNAME `bambapappa.github.io`, **grått moln** |
+| `utlovat.nu` | Cloudflare (`scott`/`brenda`) | **inga** |
+| `utlovat.com` | Cloudflare (`lola`/`porter`) | **inga** |
+| `handlingsvagen.drygast.nu` | — | **finns inte** (NXDOMAIN) |
 
-**Läs `404`:et rätt — det är goda nyheter.** Svaret kommer från GitHub Pages
-(`x-github-request-id` i huvudena), genom Cloudflare, över ett giltigt
-certifikat. DNS-vägen och SSL fungerar alltså redan hela vägen fram; GitHub
-vet bara inte vilket repo `utlovat.se` hör till, eftersom ingen repo-inställning
-ännu pekar ut den som sin custom domain. Det enda som fattas för huvudsajten är
-därför steg 4 nedan — inte något DNS-arbete.
+Adresserna pekar alltså redan rätt. Det enda som fattas för huvudsajten är
+att ett repo gör anspråk på domänen — inte något DNS-arbete.
+
+**Ändrat sedan 29 juli: posterna står nu på grått moln (DNS-only), inte
+proxade.** Det är rätt läge inför certifikatutfärdandet, men det ändrar vad
+adressen svarar under tiden. Med grått moln går trafiken direkt till GitHub
+Pages, som inte har något certifikat för `utlovat.se` förrän domänen är satt
+som custom domain — så `https://utlovat.se` väntas nu ge ett **certifikatfel**
+i stället för den `404` med giltigt certifikat som mättes 29 juli (då svarade
+Cloudflares eget Universal SSL vid proxyn). Bli inte orolig av det på
+lanseringsdagen: det är väntat och försvinner när certifikatet är utfärdat.
+
+Grått moln får däremot **inte** bli slutläget — se punkt 7 i lanseringsdagens
+lista om säkerhetsheadersen.
 
 **Kvar att göra i zonerna:** `utlovat.nu` och `utlovat.com` är tomma och
 behöver sina omdirigeringsregler (steg 6).
@@ -245,10 +252,27 @@ båda historikerna kvar.
 
 **Kvar, i ordning — det här är lanseringen:**
 
-1. **Kontrollera att `hej@utlovat.se` går fram.** Presskontakten står på
-   presssidan, i sidfoten och i README. En adress som studsar är värre än
-   ingen adress. (Zonen ligger hos Cloudflare; e-postvidarebefordran sätts
-   där.)
+1. **E-posten: mottagning fungerar, avsändandet är inte klart.**
+   Kontrollerat mot zonexporten 2026-07-31 14:54. Postlådan finns hos
+   Proton och tar emot, men fyra poster fattas eller sitter fel:
+
+   | Post | Läge | Ska vara |
+   | --- | --- | --- |
+   | `MX 10 mail.protonmail.ch` | på `utlovat.se` ✓ | oförändrad |
+   | `MX 20 mailsec.protonmail.ch` | **på `www.utlovat.se`** | på `utlovat.se` |
+   | SPF | **saknas** | `utlovat.se TXT "v=spf1 include:_spf.protonmail.ch ~all"` |
+   | DKIM | **saknas** | Protons tre CNAME `protonmail._domainkey` m.fl. — värdena är unika per domän och står i Protons panel |
+   | DMARC | **saknas** | `_dmarc TXT "v=DMARC1; p=quarantine; rua=mailto:hej@utlovat.se"` |
+
+   Den felplacerade MX-posten är två fel i ett: adressen har bara **en**
+   mottagande server i dag, och `www` bär nu både CNAME och MX, vilket
+   DNS inte tillåter — ett namn med CNAME får inte ha andra posttyper.
+   Ta bort den och lägg den på apex.
+
+   SPF och DKIM avgör om **utgående** brev kommer fram. Utan dem hamnar
+   mejl till en journalist i skräpposten betydligt oftare, och vem som
+   helst kan skriva brev som ser ut att komma från presskontakten. För en
+   sajt vars hela produkt är trovärdighet är det inte en detalj.
 2. **Flytta Handlingsvågens inställningar till `valflask`**, annars slutar
    skörd och matchning fungera i samma stund trädet flyttar:
    hemligheterna `LLM_API_KEY` (eller `OPENROUTER_API_KEY`) och
@@ -273,21 +297,40 @@ båda historikerna kvar.
    Det är den publika handlingen. Låt bygget bli grönt innan nästa steg.
 6. **Byt custom domain** i `valflask` → Settings → Pages till
    `utlovat.se`. Grått moln under certifikatutfärdandet, kryssa Enforce
-   HTTPS, orange moln igen efteråt (se fällorna i steg 4 ovan).
-7. **Verifiera på de nya adresserna innan något gammalt rörs:** förstasidan,
+   HTTPS, orange moln igen efteråt (se fällorna i steg 4 ovan). Zonen står
+   redan på grått (kontrollerat 2026-07-31), så inget behöver ändras före
+   utfärdandet — men **grått får inte bli slutläget**, se nästa punkt.
+7. **Återskapa säkerhetsheadersen i `utlovat.se`-zonen och slå på
+   proxyn.** Det här är det lätta att missa: GitHub Pages struntar i
+   `site/public/_headers`. Headersen sätts i drift av en **Cloudflare
+   Transform Rule** ("Säkerhetsheaders", Modify Response Header, All
+   incoming requests) som i dag bara finns i `drygast.nu`-zonen — och en
+   Transform Rule kan bara köra på **proxad** trafik. Lämnas den nya
+   zonen grå, eller kopieras regeln inte, tappar sajten CSP,
+   `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`,
+   `Cross-Origin-Opener-Policy` och API:ets
+   `Access-Control-Allow-Origin: *` — utan ett enda felmeddelande.
+   Värdena står i `site/public/_headers`; filen är källan, inte
+   mekanismen. Kontrollera också att **Rocket Loader är AV** i den nya
+   zonen: den injicerar skript som den strikta policyn blockerar, vilket
+   skulle bryta sökrutan. HSTS är medvetet inte påslagen (se
+   `ops/HANDOFF.md`) — låt den ligga.
+
+   Verifiera efteråt: `curl -sI https://utlovat.se/` ska visa alla sex.
+8. **Verifiera på de nya adresserna innan något gammalt rörs:** förstasidan,
    ett löfte, ett parti, en ledamot, en djuplänk `?lofte=<id>`, en
    API-ändpunkt, rättelsesidan — och Handlingsvågens rutnät, partisida,
    ledamotssida, sök och filter under `utlovat.se/handlingsvagen`.
-8. **Slå på omdirigeringarna** (stegen 5–6 i domänbytet ovan).
-9. **Stäng av Handlingsvågens scheman i det privata repot** (`skord.yml`,
+9. **Slå på omdirigeringarna** (stegen 5–6 i domänbytet ovan).
+10. **Stäng av Handlingsvågens scheman i det privata repot** (`skord.yml`,
    `foreslag.yml`, `arkiv.yml`). Annars fortsätter de skörda dit, och de
    två datamängderna glider isär utan att någon märker det. Arkivera repot
    när du är säker på att inget saknas — arkivera, radera inte:
    issue-historiken bär granskningsbesluten.
-10. **Anmäl den nya sajten i Google Search Console** och behåll den gamla
+11. **Anmäl den nya sajten i Google Search Console** och behåll den gamla
     egendomen så flytten syns.
 
-**Rullbart tillbaka fram till steg 8.** Efter att omdirigeringarna slagits
+**Rullbart tillbaka fram till steg 9.** Efter att omdirigeringarna slagits
 på är vägen framåt att laga, inte att backa.
 
 ## Sekvensen vid själva bytet
