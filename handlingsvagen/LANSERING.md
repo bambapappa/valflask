@@ -260,8 +260,17 @@ båda historikerna kvar.
 4. **Släpp lanseringsgrinden:** sista committen på grenen tar bort
    `noindex` i `handlingsvagen/site/src/layouts/Layout.astro`. Ligger den
    inte med — kontrollera innan pushen.
-5. **Pusha det sammanslagna trädet till `valflask`.** Det är den publika
-   handlingen. Låt bygget bli grönt innan nästa steg.
+5. **Hämta hem färsk data i båda riktningarna, pusha sedan det
+   sammanslagna trädet till `valflask`.** Båda huvudgrenarna rör sig hela
+   tiden — Fläskvågens pipeline kör tre gånger om dagen och Handlingsvågens
+   matchningskörning pushar en gång per löfte. Grenen är byggd på ett
+   ögonblick av båda:
+
+       git fetch origin main && git merge origin/main        # Handlingsvågen
+       git fetch vf main    && git merge vf/main             # Fläskvågen
+       # kör grindarna igen, pusha sedan till valflask
+
+   Det är den publika handlingen. Låt bygget bli grönt innan nästa steg.
 6. **Byt custom domain** i `valflask` → Settings → Pages till
    `utlovat.se`. Grått moln under certifikatutfärdandet, kryssa Enforce
    HTTPS, orange moln igen efteråt (se fällorna i steg 4 ovan).
