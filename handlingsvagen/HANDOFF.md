@@ -106,9 +106,14 @@ gratis, handlingar räknas. **Privat tills lanseringsgrinden HV5 passerats**
   flödet här och speglas till valflask vid HV5 (spec §8). Vill ägaren
   annorlunda är flytten trivial (skripten läser GITHUB_REPOSITORY).
 
-**Nätblockering i denna miljö:** egressproxyn nekar data.riksdagen.se
-och openrouter.ai (403, organisationspolicy) — inga skördar eller
-modellanrop kan köras från sessionscontainern. **Lösningen är byggd:**
+**Nätblockering i denna miljö — GÄLLER INTE LÄNGRE (kontrollerat
+2026-07-31):** egressproxyn nekade tidigare data.riksdagen.se och
+openrouter.ai (403, organisationspolicy). Efter att inställningarna ändrats
+svarar bägge nu normalt, liksom opencode.ai och api.z.ai. Skördar och
+modellanrop går alltså att köra direkt från sessionen igen — men mät själv
+innan du förlitar dig på det, miljön kan vara satt annorlunda för din
+session. Workflowvägen nedan fungerar oavsett och är fortsatt den som
+används skarpt. **Lösningen är byggd:**
 skördar och förslagskörningar går som workflows på GitHubs runners
 (fritt utnät) — `skord.yml` respektive `foreslag.yml`, **schemalagda
 veckovis sedan 2026-07-30** (se nedan) men går fortsatt att starta för

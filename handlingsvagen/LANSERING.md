@@ -66,12 +66,17 @@ att ett repo gör anspråk på domänen — inte något DNS-arbete.
 
 **Ändrat sedan 29 juli: posterna står nu på grått moln (DNS-only), inte
 proxade.** Det är rätt läge inför certifikatutfärdandet, men det ändrar vad
-adressen svarar under tiden. Med grått moln går trafiken direkt till GitHub
-Pages, som inte har något certifikat för `utlovat.se` förrän domänen är satt
-som custom domain — så `https://utlovat.se` väntas nu ge ett **certifikatfel**
-i stället för den `404` med giltigt certifikat som mättes 29 juli (då svarade
-Cloudflares eget Universal SSL vid proxyn). Bli inte orolig av det på
-lanseringsdagen: det är väntat och försvinner när certifikatet är utfärdat.
+adressen svarar under tiden. Uppmätt 2026-07-31:
+
+    $ curl -I https://utlovat.se/
+    SSL: no alternative certificate subject name matches target host name
+
+Med grått moln går trafiken direkt till GitHub Pages, som inte har något
+certifikat för `utlovat.se` förrän domänen är satt som custom domain. Den
+`404` med giltigt certifikat som mättes 29 juli kom från Cloudflares eget
+Universal SSL vid proxyn — den vägen finns inte längre. **Bli inte orolig av
+certifikatfelet på lanseringsdagen:** det är väntat och försvinner när GitHub
+utfärdat sitt certifikat.
 
 Grått moln får däremot **inte** bli slutläget — se punkt 7 i lanseringsdagens
 lista om säkerhetsheadersen.
@@ -351,6 +356,12 @@ båda historikerna kvar.
    e-post (MX, SPF, DMARC, DKIM) proxas aldrig och står kvar på grått.
 
    Verifiera efteråt: `curl -sI https://utlovat.se/` ska visa alla sex.
+   Så här ser det ut när det fungerar — uppmätt på `drygast.nu` 2026-07-31:
+   `server: cloudflare`, `via: 1.1 varnish` (GitHub Pages som origin) och
+   `content-security-policy`, `x-content-type-options`, `referrer-policy`,
+   `permissions-policy`, `cross-origin-opener-policy` på plats. Ingen
+   `strict-transport-security` — HSTS är medvetet avstängd, så dess frånvaro
+   är rätt.
 8. **Verifiera på de nya adresserna innan något gammalt rörs:** förstasidan,
    ett löfte, ett parti, en ledamot, en djuplänk `?lofte=<id>`, en
    API-ändpunkt, rättelsesidan — och Handlingsvågens rutnät, partisida,
