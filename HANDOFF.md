@@ -713,6 +713,13 @@ inte). Git är brevlådan och HANDOFF är anslagstavlan:
   partifilter och röstfrågor (b-0023). Rör inte `site/src/lib/amne.ts`,
   `site/src/lib/delat.ts`, `site/src/pages/amnen.astro` eller
   `site/src/pages/api/hv/` parallellt.
+- 2026-07-31 `claude/lansering-utlovat-emtbcq` → **sammanslagningen
+  (stegen 1–2) och namnbytet till utlovat.se**, förberett i DETTA privata
+  repo. Grenen bär hela det sammanslagna trädet: Handlingsvågen under
+  `handlingsvagen/`, Fläskvågen i roten. Rör inte filflytten, workflowsen
+  eller `HANDOFF.md`/`LANSERING.md`/`SAMMANSLAGNING.md` parallellt.
+  Skördar och förslagskörningar berörs inte — de fortsätter mot `main`
+  som vanligt.
 
 #### Klart och mergat
 
