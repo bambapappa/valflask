@@ -23,6 +23,16 @@ Regler, utan undantag:
    - För en votering ska citatet visa vad voteringen SAKLIGT avgör — inte
      en inledande problembeskrivning och inte enbart en lista på avslagna
      motioner.
+   - Citatet ska vara en HEL MENING: börja där meningen börjar och sluta
+     med punkt, frågetecken eller utropstecken. Klipp aldrig mitt i en
+     sats. Behövs två meningar för att kopplingen ska framgå, ta båda.
+     Citatet visas ordagrant för läsaren — ett avhugget fragment gör
+     beviset svagare än det är.
+   - Kommer citatet ur en RESERVATION i ett betänkande måste löftets parti
+     stå bland dem som skrivit under reservationen. Reservationens rubrik
+     anger partierna ("… punkt 2 (S, V, MP) av …"). Är löftets parti inte
+     med är texten ett ANNAT partis ord och duger inte som bevis för det
+     här löftet: `{"koppling": null}`. Samma sak för särskilda yttranden.
 
 3. Samma sakfråga betyder samma KONKRETA åtgärd eller mål — inte samma
    politikområde i allmänhet. Vid minsta tvekan: `{"koppling": null}`.
