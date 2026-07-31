@@ -1,4 +1,4 @@
-Skriv "Veckans fläsk" för drygast.nu: 250–400 ord på svenska + ett rubrikförslag.
+Skriv "Veckans fläsk" för utlovat.se: 250–400 ord på svenska + ett rubrikförslag.
 Underlag: ENDAST den bifogade JSON-listan över veckans nya/ändrade löften med belopp och jämförelser.
 Varje sakpåstående i texten måste gå att härleda till ett löftes-id i underlaget — skriv id inom
 hakparentes efter påståendet, t.ex. [p-2026-0142]; dessa blir länkar vid rendering.

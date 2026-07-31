@@ -13,7 +13,7 @@ function escapeXml(s: string): string {
 }
 
 export async function GET() {
-  const BASE = "https://drygast.nu";
+  const BASE = "https://utlovat.se";
   const issuesFile = getIssuesFile();
   const parties = getParties();
   const changes = allChanges(issuesFile.issues, getStances()).slice(0, 100);
@@ -27,7 +27,7 @@ export async function GET() {
         `${ch.subquestion.text} ` +
         `Då (${ch.from.date_stated}): ”${ch.from.quote}” ` +
         `Nu (${ch.to.date_stated}): ”${ch.to.quote}” ` +
-        `Båda beskeden med källa och arkivkopia på drygast.nu.`;
+        `Båda beskeden med källa och arkivkopia på utlovat.se.`;
       return `    <item>
       <title>${escapeXml(title)}</title>
       <link>${link}</link>
@@ -41,7 +41,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>drygast.nu — Svängregistret</title>
+    <title>utlovat.se — Svängregistret</title>
     <link>${BASE}/svangningar</link>
     <description>Varje gång ett riksdagsparti ändrar sitt besked i en av valets stora frågor: gamla och nya beskedet, båda med ordagrant citat, källa och arkivkopia. Ren datasortering.</description>
     <language>sv</language>

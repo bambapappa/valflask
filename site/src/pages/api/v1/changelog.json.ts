@@ -11,6 +11,16 @@ export async function GET() {
     generated_at: new Date().toISOString(),
     data_hash,
     license: "CC-BY-4.0",
+    // Sajten bytte adress 2026-08-02. Gamla adresser pekar vidare, men den
+    // som hämtar data maskinellt ska aldrig behöva gissa varför värdnamnet
+    // ändrats — därför står bytet skrivet i svaret.
+    adressbyte: {
+      datum: "2026-08-02",
+      fran: "drygast.nu",
+      till: "utlovat.se",
+      kommentar:
+        "Sajten heter numera utlovat.se. Gamla adresser pekar vidare med permanent omdirigering, sökväg för sökväg.",
+    },
     data: changelog,
   };
 

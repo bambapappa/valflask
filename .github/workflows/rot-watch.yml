@@ -44,6 +44,6 @@ jobs:
         working-directory: pipeline
       - name: Commit data if changed
         run: |
-          git config user.name "drygast-bot" && git config user.email "bot@drygast.nu"
+          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
           git add data/stances.json && git diff --cached --quiet || git commit -m "data: källröta-kontroll $(date -u +%F) (run ${{ github.run_id }})"
           git push

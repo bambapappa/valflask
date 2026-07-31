@@ -50,8 +50,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           NOTIFY_FILE: ${{ runner.temp }}/notify.json
         run: |
-          git config user.name "drygast-bot"
-          git config user.email "bot@drygast.nu"
+          git config user.name "utlovat-bot"
+          git config user.email "bot@utlovat.se"
           for attempt in 1 2 3 4 5; do
             git fetch origin main && git reset --hard origin/main
             (cd pipeline && node --import tsx/esm scripts/apply-labeled-decisions.mts apply)

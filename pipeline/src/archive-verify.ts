@@ -10,7 +10,7 @@ import { extractPdfText, looksLikePdf, stripHtml } from "./fetch.ts";
 import { normalizeForVerbatim } from "./gates.ts";
 import type { HttpFetch } from "./archive.ts";
 
-const UA = "DrygastBot/1.0 (+https://drygast.nu/om)";
+const UA = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 
 /**
  * Hämtar arkivkopian och avgör om citatet står ordagrant i den (G3-kanon).

@@ -161,9 +161,9 @@ describe("Riksdagen API-parsning", () => {
 /* ──────────────────────── Robots.txt ── */
 
 describe("Robots.txt-respekt", () => {
-  test("tolkar robots.txt med User-Agent DrygastBot", () => {
+  test("tolkar robots.txt med User-Agent UtlovatBot", () => {
     const text = readFixture("robots-allowed.txt");
-    const rules = parseRobotsTxt(text, "DrygastBot");
+    const rules = parseRobotsTxt(text, "UtlovatBot");
 
     assert.ok(rules.length >= 2, `Minst 2 regler: ${rules.length}`);
     assert.ok(isPathAllowed("/nyheter/press/", rules), "Tillåten path");
@@ -173,7 +173,7 @@ describe("Robots.txt-respekt", () => {
 
   test("Disallow: / blockerar allt", () => {
     const text = readFixture("robots-denied.txt");
-    const rules = parseRobotsTxt(text, "DrygastBot");
+    const rules = parseRobotsTxt(text, "UtlovatBot");
 
     assert.ok(rules.length > 0);
     assert.ok(!isPathAllowed("/any/path", rules), "Allt blockerat");
@@ -181,7 +181,7 @@ describe("Robots.txt-respekt", () => {
 
   test("ignorerar kommentarer och tomma rader", () => {
     const text = "# Kommentar\n\nUser-agent: *\nAllow: /\n# Mer kommentar\n";
-    const rules = parseRobotsTxt(text, "DrygastBot");
+    const rules = parseRobotsTxt(text, "UtlovatBot");
     assert.equal(rules.length, 1);
     assert.ok(rules[0]!.allow);
   });
@@ -195,8 +195,8 @@ describe("Robots.txt-respekt", () => {
   });
 
   test("specifik UA har företräde framför *", () => {
-    const text = "User-agent: *\nDisallow: /\n\nUser-agent: DrygastBot\nAllow: /nyheter/\n";
-    const rules = parseRobotsTxt(text, "DrygastBot");
+    const text = "User-agent: *\nDisallow: /\n\nUser-agent: UtlovatBot\nAllow: /nyheter/\n";
+    const rules = parseRobotsTxt(text, "UtlovatBot");
     assert.equal(rules.length, 1);
     assert.ok(rules[0]!.allow);
     assert.equal(rules[0]!.path, "/nyheter/");
@@ -377,7 +377,7 @@ describe("LiveSource med mock-HTTP", () => {
 
     const mockFetch: HttpFetchFn = async (url) => {
       if (url.includes("robots.txt")) {
-        return new Response("User-agent: DrygastBot/1.0\nDisallow: /\n", { status: 200 });
+        return new Response("User-agent: UtlovatBot/1.0\nDisallow: /\n", { status: 200 });
       }
       return new Response(rssXml, { status: 200 });
     };
@@ -460,7 +460,7 @@ describe("LiveSource med mock-HTTP", () => {
     });
 
     await source.fetch();
-    assert.equal(receivedHeaders["User-Agent"], "DrygastBot/1.0 (+https://drygast.nu/om)");
+    assert.equal(receivedHeaders["User-Agent"], "UtlovatBot/1.0 (+https://utlovat.se/om)");
   });
 
   test("hämtar page-källa (HTML-sida) via mock", async () => {

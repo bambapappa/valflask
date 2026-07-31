@@ -15,7 +15,7 @@ const {
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // alltid exakt en avslutande slash
-const canonicalBase = Astro.site?.origin ?? "https://drygast.nu";
+const canonicalBase = Astro.site?.origin ?? "https://utlovat.se";
 const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new URL(Astro.url.pathname, canonicalBase).href;
 ---
 <!DOCTYPE html>
@@ -36,6 +36,7 @@ const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new UR
       <a class="marke" href={base}>Handlingsvågen</a>
       <p class="devis">Ord är gratis, handlingar räknas.</p>
       <nav class="toppnav">
+        <a href="/">Till löftena och frågorna</a>
         <a href={base}>Rutnätet</a>
         <a href={`${base}partier`}>Partier</a>
         <a href={`${base}ledamoter`}>Ledamöter</a>
@@ -54,7 +55,7 @@ const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new UR
   </main>
   <footer class="botten">
     <p>
-      Handlingsvågen är den tredje vågen för drygast.nu. Registret visas —
+      Handlingsvågen är den tredje vågen för utlovat.se. Registret visas —
       läsaren dömer. Varje koppling mellan ett löfte och en riksdagshandling är
       godkänd av en människa och bär ett exakt citat. Tomma celler är ärliga:
       ett parti utan en ren, kontrollerad koppling lämnas tomt.
@@ -63,7 +64,7 @@ const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new UR
       <a href={`${base}metod`}>Så görs vägningen</a>
       <a href={`${base}neutralitet`}>Neutralitetskontraktet</a>
       <a href={`${base}rattelser`}>Rättelser</a>
-      <a href="https://github.com/bambapappa/handlingsvagen" rel="noopener" target="_blank">Källkod och data</a>
+      <a href="https://github.com/bambapappa/valflask" rel="noopener" target="_blank">Källkod och data</a>
     </nav>
   </footer>
   <script is:inline src={`${base}hv-sok.js`}></script>

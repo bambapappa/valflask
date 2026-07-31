@@ -1,4 +1,4 @@
-# DRYGAST.NU — Delspecifikation: "Frågevågen"
+# UTLOVAT.SE — Delspecifikation: "Frågevågen"
 
 **Version 1.0 · 2026-07-11 · Status: REDO FÖR IMPLEMENTATION — samtliga §11-ägarbeslut fattade 2026-07-11 (namn, kriterium, frågelista, topplista avvaktar, review-regel PÅ, källröta veckovis)**
 **Relation till SPEC.md: detta dokument är ett DELTA. Allt som inte uttryckligen ändras här ärvs oförändrat från SPEC.md — arkitektur (§2), teknikval (§3), säkerhet (§14), drift (§15), juridik/etik/neutralitet (§17).**
@@ -192,10 +192,10 @@ Veckovis jobb (utökning av befintlig cron): re-hämta käll-URL:er för publice
 | `/parti/[kod]` | Utökas med sektionen "Besked i de stora frågorna": partiets rad ur samtliga grider + partiets egna ändringsposter. |
 | `/lofte/[id]/[slug]` | Utökas med "Hör till frågan: [länk]" när korslänk finns. |
 | `/metod` | Nytt avsnitt: urvalskriteriet med källor, klassificeringsmetoden (dubbel maskinell enighet), review-regeln för riktningsbyten, källröta-bevakningen, vad "inget tydligt besked" betyder. |
-| `/api/v1/issues.json`, `/api/v1/stances.json` | Öppet API, CC BY 4.0, CORS `*`, dokumenterat på /api med schemas. `llms.txt` utökas med pekare + citeringsmall: *"Enligt drygast.nu (hämtat ÅÅÅÅ-MM-DD) säger [parti] [ja/nej] till [delfråga], källa: [url]."* |
+| `/api/v1/issues.json`, `/api/v1/stances.json` | Öppet API, CC BY 4.0, CORS `*`, dokumenterat på /api med schemas. `llms.txt` utökas med pekare + citeringsmall: *"Enligt utlovat.se (hämtat ÅÅÅÅ-MM-DD) säger [parti] [ja/nej] till [delfråga], källa: [url]."* |
 | `/rss.xml` | Nya besked tas in i huvudflödet; ändringar även i `/svangningar.rss.xml`. |
 
-**Design:** ärver riktning A kompromisslöst. Beskeden sätts som stämplar (Plex Mono, versal); ja/nej får ALDRIG färgsemantik (ingen grön/röd — beslut 2026-06-12 gäller), endast svärta/papper/gul enligt tokens. Partifärg endast i dataviz-sammanhang precis som idag. Griden ska tåla skärmdump: rubrik, källrad, datum, "drygast.nu" — den kommer att delas, designa för det. Print-CSS: en frågesida ska fungera som flygblad.
+**Design:** ärver riktning A kompromisslöst. Beskeden sätts som stämplar (Plex Mono, versal); ja/nej får ALDRIG färgsemantik (ingen grön/röd — beslut 2026-06-12 gäller), endast svärta/papper/gul enligt tokens. Partifärg endast i dataviz-sammanhang precis som idag. Griden ska tåla skärmdump: rubrik, källrad, datum, "utlovat.se" — den kommer att delas, designa för det. Print-CSS: en frågesida ska fungera som flygblad.
 
 ---
 
@@ -203,7 +203,7 @@ Veckovis jobb (utökning av befintlig cron): re-hämta käll-URL:er för publice
 
 - Svarsförst-struktur på varje frågesida (citerbar utan omskrivning), stabila ankare per parti och delfråga.
 - JSON-LD: `Article` per frågesida; `Dataset` på /api utökas. `ClaimReview` används INTE (vi granskar inte sanningshalt — fel schema för registerdata).
-- Title-mall: "Var står partierna om [fråga]? Besked, citat och svängar — drygast.nu".
+- Title-mall: "Var står partierna om [fråga]? Besked, citat och svängar — utlovat.se".
 - Svängregistrets RSS är färskvarusignalen; varje ändringspost är en potentiell nyhet med färdig OG-bild.
 
 ---

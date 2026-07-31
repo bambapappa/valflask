@@ -4,7 +4,7 @@
  * Sökmotorer trunkerar titlar runt ~65 tecken med "…" — då kapas beloppet
  * och avsändaren bort, vilket är precis det vi vill visa (Bing-varning
  * 2026-07-14: 353 sidor). Regeln är identisk för alla partier: långa
- * löftestitlar kapas vid ordgräns så att belopp + "drygast.nu" alltid
+ * löftestitlar kapas vid ordgräns så att belopp + "utlovat.se" alltid
  * överlever; korta titlar behåller den fulla frågemallen. H1 och innehåll
  * visar alltid den okapade titeln — detta gäller enbart <title>.
  */
@@ -27,8 +27,8 @@ export function truncateAtWord(s: string, max: number): string {
  * `amount` kommer från formatMsek och bär redan "≈ " vid llm_estimat.
  */
 export function promisePageTitle(promiseTitle: string, amount: string): string {
-  const full = `Vad kostar löftet "${promiseTitle}"? ${amount} — drygast.nu`;
+  const full = `Vad kostar löftet "${promiseTitle}"? ${amount} — utlovat.se`;
   if (full.length <= TITLE_BUDGET) return full;
-  const overhead = ` ${amount} — drygast.nu`.length;
-  return `${truncateAtWord(promiseTitle, TITLE_BUDGET - overhead)} ${amount} — drygast.nu`;
+  const overhead = ` ${amount} — utlovat.se`.length;
+  return `${truncateAtWord(promiseTitle, TITLE_BUDGET - overhead)} ${amount} — utlovat.se`;
 }

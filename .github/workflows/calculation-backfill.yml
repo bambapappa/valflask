@@ -138,7 +138,7 @@ jobs:
           github-token: ${{ github.token }}
       - name: Applicera och pusha
         run: |
-          git config user.name "drygast-bot" && git config user.email "bot@drygast.nu"
+          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
           for f in promises.json calculation_review.json changelog.json rattelser.json; do
             src="$(find artifact-data -name "$f" | head -1)"
             [ -n "$src" ] && cp "$src" "data/$f" && echo "applicerade data/$f"

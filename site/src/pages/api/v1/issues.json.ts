@@ -7,7 +7,7 @@ export async function GET() {
   const body = {
     generated_at: new Date().toISOString(),
     license: "CC-BY-4.0",
-    attribution: "drygast.nu",
+    attribution: "utlovat.se",
     criteria_note: issuesFile.criteria_note,
     formulation_note: issuesFile.formulation_note,
     issues: issuesFile.issues,

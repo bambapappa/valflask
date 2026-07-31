@@ -207,10 +207,10 @@ async function main() {
   const flasket = totalFlasket(promises);
 
   const startPng = await generateOgImage({
-    topLabel: "DRYGAST.NU · FLÄSKVÅGEN",
+    topLabel: "UTLOVAT.SE · FLÄSKVÅGEN",
     bigNumber: `${formatMsekOg(flasket)} MDKR`,
     title: "RIKSDAGSPARTIERNAS VALLÖFTEN 2026",
-    bottomLine: "drygast.nu · Uppskattningar enligt öppen metod",
+    bottomLine: "utlovat.se · Uppskattningar enligt öppen metod",
   });
   writeFileSync(resolve(ogDir, "start.png"), startPng);
   console.log(`OG: start.png (${formatMsekOg(flasket)} MDKR)`);
@@ -220,10 +220,10 @@ async function main() {
     const partyCount = promises.filter((p) => p.parties.includes(party.code) && p.status !== "tillbakadragen").length;
 
     const png = await generateOgImage({
-      topLabel: `DRYGAST.NU · PARTI`,
+      topLabel: `UTLOVAT.SE · PARTI`,
       bigNumber: `${formatMsekOg(partyTotal)} MDKR`,
       title: `VAD KOSTAR ${party.name.toUpperCase()}S VALLÖFTEN?`,
-      bottomLine: `${partyCount} löften · drygast.nu`,
+      bottomLine: `${partyCount} löften · utlovat.se`,
     });
     writeFileSync(resolve(ogDir, `parti-${party.code}.png`), png);
     console.log(`OG: parti-${party.code}.png`);
@@ -242,10 +242,10 @@ async function main() {
       stances.filter((c) => sqIds.has(c.subquestion_id) && c.statements.length > 0).map((c) => c.party),
     ).size;
     const png = await generateOgImage({
-      topLabel: `DRYGAST.NU · FRÅGEVÅGEN · ${issue.slug}`,
+      topLabel: `UTLOVAT.SE · FRÅGEVÅGEN · ${issue.slug}`,
       bigNumber: `${partiesWithStance}/8`,
       title: `VAR STÅR PARTIERNA OM ${issue.title.toUpperCase()}?`,
-      bottomLine: "Partier med tydligt besked · Ordagranna citat med arkivkopior · drygast.nu",
+      bottomLine: "Partier med tydligt besked · Ordagranna citat med arkivkopior · utlovat.se",
     });
     writeFileSync(resolve(ogDir, `fraga-${issue.slug}.png`), png);
   }
@@ -255,10 +255,10 @@ async function main() {
     const total = promiseTotalMsek(p);
 
     const png = await generateOgImage({
-      topLabel: `DRYGAST.NU · ÄRENDE ${p.id} · ${p.source.domain}`,
+      topLabel: `UTLOVAT.SE · ÄRENDE ${p.id} · ${p.source.domain}`,
       bigNumber: `${formatMsekOg(total, p.cost.basis)} MDKR`,
       title: p.title.toUpperCase(),
-      bottomLine: `Källa: ${formatBasisLabel(p.cost.basis)} · Hämtad ${p.source.fetched_at.slice(0, 10)} · drygast.nu`,
+      bottomLine: `Källa: ${formatBasisLabel(p.cost.basis)} · Hämtad ${p.source.fetched_at.slice(0, 10)} · utlovat.se`,
     });
     const promiseDir = resolve(ogDir, p.id);
     if (!existsSync(promiseDir)) mkdirSync(promiseDir, { recursive: true });

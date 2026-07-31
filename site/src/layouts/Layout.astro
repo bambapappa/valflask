@@ -39,7 +39,7 @@ interface Props {
   canonicalPath?: string;
 }
 
-const canonicalBase = Astro.site?.origin ?? "https://drygast.nu";
+const canonicalBase = Astro.site?.origin ?? "https://utlovat.se";
 const { title, description = "Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften.", ogImage = "/og/start.png", hasTaxameter = false, jsonLd, canonicalPath } = Astro.props;
 const ogImageUrl = ogImage.startsWith("https://") ? ogImage : `${canonicalBase}${ogImage}`;
 const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new URL(Astro.url.pathname, canonicalBase).href;
@@ -61,7 +61,7 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalUrl} />
-  <meta property="og:site_name" content="drygast.nu" />
+  <meta property="og:site_name" content="utlovat.se" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="sv_SE" />
   <meta property="twitter:title" content={title} />

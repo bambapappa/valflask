@@ -1,10 +1,10 @@
-# drygast.nu — Fläskvågen
+# utlovat.se — Fläskvågen
 
 > Neutral, källspårad prislapp på svenska riksdagspartiers vallöften inför riksdagsvalet den 13 september 2026.
 
-**Live: [drygast.nu](https://drygast.nu)**
+**Live: [utlovat.se](https://utlovat.se)**
 
-drygast.nu väger valfläsket: varje vallöfte fångas, prissätts, summeras per parti och koalition, och översätts till jämförelser som alla förstår. Allvar i siffrorna, torr humor i glasyren.
+utlovat.se väger valfläsket: varje vallöfte fångas, prissätts, summeras per parti och koalition, och översätts till jämförelser som alla förstår. Allvar i siffrorna, torr humor i glasyren.
 
 ## Opartiskhet
 
@@ -20,8 +20,8 @@ Identisk insamling, metod och ton för alla åtta riksdagspartier. Inga röstrek
 
 För journalister, forskare och skeptiker — allt underlag är öppet:
 
-- Metoden i klartext: [drygast.nu/metod](https://drygast.nu/metod)
-- Öppet API (CC BY 4.0): [drygast.nu/api](https://drygast.nu/api)
+- Metoden i klartext: [utlovat.se/metod](https://utlovat.se/metod)
+- Öppet API (CC BY 4.0): [utlovat.se/api](https://utlovat.se/api)
 - **[SPEC.md](SPEC.md)** — fullständig metod, neutralitetskontrakt och säkerhetsdesign.
 - **[DECISION_LOG.md](DECISION_LOG.md)** — varje beslut med motiv, i tidsordning.
 - Git-historiken är en publik, omanipulerbar revisionslogg — varje sifferändring är spårbar.
@@ -32,4 +32,4 @@ En statisk sajt (Astro) driven av en schemalagd pipeline: den hämtar löften ur
 
 ## Licens & kontakt
 
-Data: **CC BY 4.0** — ange "drygast.nu" som källa. · [Om projektet](https://drygast.nu/om) · press: hej@drygast.nu
+Data: **CC BY 4.0** — ange "utlovat.se" som källa. · [Om projektet](https://utlovat.se/om) · press: hej@utlovat.se

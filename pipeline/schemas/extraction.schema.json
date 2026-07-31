@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://drygast.nu/schemas/extraction.schema.json",
+  "$id": "https://utlovat.se/schemas/extraction.schema.json",
   "title": "Extraktionskandidat",
   "description": "En kandidat ur LLM A:s svar (prompt A1). Valideras i grind G1 (§7) med additionalProperties:false som injektionshygien — fält utöver kontraktet släpps aldrig vidare i pipelinen.",
   "type": "object",

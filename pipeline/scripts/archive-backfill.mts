@@ -24,7 +24,7 @@ const DATA = join(import.meta.dirname, "../../data");
 const MODE = process.argv[2] ?? "avail";
 const MAX_SAVES = parseInt(process.argv[3] ?? "0", 10) || (MODE === "save" ? 25 : 0);
 const LIMIT = parseInt(process.argv[4] ?? "0", 10) || Infinity;
-const UA = "DrygastBot/1.0 (+https://drygast.nu/om)";
+const UA = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 function canonical(d: unknown): string {

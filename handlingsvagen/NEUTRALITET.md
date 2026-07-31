@@ -37,7 +37,7 @@ vid lansering. Ändringar i kontraktet loggas i beslutsloggen.
    — loggas med datum, motiv och alternativ. Publiceras vid lansering.
 
 9. **Tyst rättelse är förbjuden.** Fel rättas synligt med rättelsenot
-   och post i rättelseloggen, precis som på drygast.nu.
+   och post i rättelseloggen, precis som på utlovat.se.
 
 10. **Symmetritest före lansering.** Metoden körs mot testfall från
     båda blocken; utfallet redovisas öppet innan något går live.

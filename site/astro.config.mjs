@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://drygast.nu',
+  site: 'https://utlovat.se',
   output: 'static',
   build: {
     format: 'directory',

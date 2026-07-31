@@ -27,7 +27,7 @@ import { validateStanceInvariants, type IssuesFile, type StanceCell } from "../s
 
 const DATA = join(import.meta.dirname, "../../data");
 const DRY_RUN = process.argv.includes("--dry-run");
-const UA = "DrygastBot/1.0 (+https://drygast.nu/om)";
+const UA = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const isPdf = (u: string) => /\.pdf(?:#|$)/iu.test(u);

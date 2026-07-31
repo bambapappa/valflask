@@ -86,7 +86,7 @@ EN signalfärg. Partifärger finns inte i sajtens kostym.
 
 ## 5. Komponentmotiv (byggs i M1, namnen är bindande)
 
-- **`SiteHeader`** — "DRYGAST" i Anton + ".NU" på gul markeringsplatta. Därunder mono-rad: `VÅGSTATION FÖR VALFLÄSK · UPPDATERAD {datum} · AKT {data_hash kort}`. Nav i mono versal med hårlinje under.
+- **`SiteHeader`** — "UTLOVAT" i Anton + ".SE" på gul markeringsplatta. Därunder mono-rad: `VÅGSTATION FÖR VALFLÄSK · UPPDATERAD {datum} · AKT {data_hash kort}`. Nav i mono versal med hårlinje under.
 - **`Lopsedel`** — svärta-platta, full bredd: kicker (Anton, platta-text) → jättesiffra (gul, mono 700, steg 6, taxameter på `/`) → underrad (mono 400, platta-text): `för mandatperioden 2027–2030 · {N} löften · {datum}`. Direkt under plattan: svarsförst-stycket i serif (§12).
 - **`ArendeHuvud`** — överst på varje löftessida, mono inom 1px-ram: `ÄRENDE {id} · REGISTRERAT {date_stated} · KÄLLA {domain} · STATUS {status versal}`. Id:t är sidans permanenta identitet — visa det stolt.
 - **`Stampel`** — mono 700 versal, `2px solid`, padding 2px 10px, `transform: rotate(-2.5deg)`. Endast för statusord ur datamodellen: `UPPDATERAT`, `TILLBAKADRAGET`, `INFRIAT`, samt `FINANSIERING EJ ANGIVEN` när `financing_claimed.described = false`. Samma stämpelregler för alla partier.
@@ -94,7 +94,7 @@ EN signalfärg. Partifärger finns inte i sajtens kostym.
 - **`Citat`** — serif italic, steg 1, 2px svärta vänsterlinje, indrag; källrad i mono under: `— {person/parti}, {domain}, {datum} · [källa ↗] [arkiv ↗]`. Citatet är sajtens bevismaterial — ge det rum.
 - **`Marginalanteckning`** (quip-fältet) — hårlinje ovan, mono-etikett `MARGINALANTECKNING`, därunder quipen i serif italic. Tydligt avgränsad per §1.5: humorn har en egen, märkt ruta.
 - **`GapMatare`** — byggtids-SVG: horisontell svärta-stapel (Fläsket) mot hårlinjemarkerat reformutrymme × 4; överskjutande del gulmarkerad med mono-etikett `GAP ≈ {X} MDKR`.
-- **`KallRad`** — obligatorisk under varje diagram och i varje OG-bild: mono steg -1, `Källa: {basis/källa} · Hämtad {datum} · drygast.nu`.
+- **`KallRad`** — obligatorisk under varje diagram och i varje OG-bild: mono steg -1, `Källa: {basis/källa} · Hämtad {datum} · utlovat.se`.
 - **`MetodLank`** — varje sida med belopp bär `Uppskattningar — så här räknar vi → /metod` (§8) i mono.
 - **`SiteFooter`** — hårlinje, mono: data_hash (länk till `/api/v1/integrity.json`), CC BY 4.0, länkar (metod, rättelser, press, api), disclaimern ur §17: "Uppskattningar enligt öppen metod — inte facit, inte rådgivning."
 
@@ -105,7 +105,7 @@ EN signalfärg. Partifärger finns inte i sajtens kostym.
 - Svärta på papper. Staplar fyllda `--svarta`; det värde sidan handlar om markeras `--gul`. Partifärger endast när partier jämförs sida vid sida.
 - Inga 3D-effekter, skuggor, gradienter eller gridlines — endast baslinje (1px svärta) och vid behov svaga referenslinjer (`--linje-svag`).
 - Text i SVG: titel Anton-ekvivalent (versal, 20px), axel-/dataetiketter Plex Mono 12px. Fonter måste vara inbäddade eller säkras via sidans CSS (SVG:n renderas inline).
-- Varje diagram bär titel, `KallRad` och "drygast.nu" — de kommer att skärmdumpas, designa för det. Fast `viewBox` (bredd 720), höjd efter innehåll.
+- Varje diagram bär titel, `KallRad` och "utlovat.se" — de kommer att skärmdumpas, designa för det. Fast `viewBox` (bredd 720), höjd efter innehåll.
 
 ---
 
@@ -113,7 +113,7 @@ EN signalfärg. Partifärger finns inte i sajtens kostym.
 
 1200 × 630, identisk kostym för alla partier och löften (ingen partifärg — neutral kostym):
 
-1. Topprad (mono 28, `--dis` på svärta): `DRYGAST.NU · ÄRENDE {id} · {domain}`
+1. Topprad (mono 28, `--dis` på svärta): `UTLOVAT.SE · ÄRENDE {id} · {domain}`
 2. Jättesiffra (Plex Mono 700, gul, ~176px, krymp till 128px om > 9 tecken): `≈ 412 MDKR`
 3. Titel (Anton, vit, versal, max 2 rader, 56px)
 4. Bottenrad ovanför 2px hårlinje (mono 24): `{KallRad-innehåll}` + `CC BY 4.0`

@@ -11,7 +11,7 @@ export async function GET() {
     algorithm: "sha256",
     canonical_source: "stances.json",
     license: "CC-BY-4.0",
-    attribution: "drygast.nu",
+    attribution: "utlovat.se",
     note: "Append-only: publicerade besked ändras eller raderas aldrig; ändringar är egna poster (changes). Tomma celler (inget_tydligt_besked) är förstklassig, likabehandlad data.",
     stances,
   };

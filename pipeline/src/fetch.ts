@@ -533,7 +533,7 @@ export function loadSeen(path: string): Map<string, string> {
 
 /* ──────────────────────── LiveSource (skarp fetch) ── */
 
-const USER_AGENT = "DrygastBot/1.0 (+https://drygast.nu/om)";
+const USER_AGENT = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 
 export class LiveSource implements ArticleSource {
   private feeds: SourceFeed[];
