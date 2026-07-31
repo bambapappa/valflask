@@ -122,11 +122,28 @@ matchningen hittade och täppta.
   `bevis.kalla_dok_id` pekar ut. `arkiv.yml` är dessutom schemalagd
   veckovis (måndag 08:00 UTC, en timme efter `foreslag.yml`).
 
-**Kvar härifrån:** 8 gränsfall bland voteringarna väntar på manuell
-läsning (`k-2026-0040` och `k-2026-0042` ser mest tveksamma ut) — de har
-en punkt som bara avslår motioner men citatet i brödtexten, vilket
-maskinen inte kan avgöra. De ~45 avhuggna citaten i beståndet lämnades
-med flit: de är sanna, och prompten gör nya citat till hela meningar.
+- **Gränsfallen avgjorda.** De 8 blev 3 vid omräkning — fem låg i kön och
+  lyftes ur vid omkörningen, så de återkommer med den fixade prompten.
+  Av de tre: `k-2026-0040` indragen (citatet beskrev punkt 1:s truppinsats,
+  men voteringen gällde punkt 2 "Kärnvapenanvändning" som bara avslår en
+  motion — samma fel som de sex, men mitt maskinella test missade den
+  eftersom texten står under "Utskottets överväganden" i stället för i
+  sammanfattningen). `k-2026-0044` indragen (citatet var enbart punktens
+  lista på avslagna motioner, vilket prompten själv förbjuder; något
+  bärande citat finns inte — kvar står bara S:s och C:s reservationer,
+  andra partiers ord). **`k-2026-0042` behölls** och är värd att förstå:
+  punkt 1 hette "Avslag på propositionen" och avslog V:s motion om att
+  fälla propositionen, så M:s ja betyder att propositionen står kvar.
+  **Ett motionsavslag är inte automatiskt fel underlag — det beror på vad
+  motionen ville.** Läs alltid vad som avslogs innan du dömer.
+
+**Kvar härifrån:** de ~45 avhuggna citaten i beståndet lämnades med flit —
+de är sanna, och prompten gör nya citat till hela meningar. Omkörningen av
+de 797 voteringsparen var igång när passet slutade; se om den nådde slutet
+eller föll på z.ai:s kvot (gårdagens pass höll 2 h 53 min innan HTTP 429).
+Kolla också vad de nya citatreglerna gav: de första 40 paren gav noll
+förslag, vilket kan vara reglerna som biter — eller något som är för hårt.
+Loggen per par säger vilket.
 
 **Gjort 2026-07-30, senare passet (zai-glm skarpt provat, backfill igång, modelljämförelse 20/20):**
 
