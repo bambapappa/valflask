@@ -49,6 +49,18 @@ const enskildMotion: Handling = {
   persons: [{ name: "Enskild M", party: "m", riksdagen_id: "222" }],
 };
 
+// En proposition bär inget parti — den skrivs av ett departement. Fixturen
+// finns för att spärren mot partilös handling ska gå att pröva.
+const proposition: Handling = {
+  ...partimotion,
+  id: "h-2026-0005",
+  kind: "proposition",
+  dok_id: "HD03100",
+  titel: "Proposition utan avsändarparti",
+  parties: [],
+  persons: [],
+};
+
 const interpellation: Handling = {
   ...partimotion,
   id: "h-2026-0004",
@@ -58,7 +70,7 @@ const interpellation: Handling = {
   persons: [{ name: "Fragande M", party: "m", riksdagen_id: "333" }],
 };
 
-const handlingar = [votering, partimotion, enskildMotion, interpellation];
+const handlingar = [votering, partimotion, enskildMotion, interpellation, proposition];
 
 function k(partial: Partial<Koppling> & Pick<Koppling, "id" | "handling_id" | "riktning">): Koppling {
   return { promise_id: "p-2026-0001", status: "aktiv", ...partial };
@@ -99,6 +111,17 @@ test("partimotion ger partidom, enskild motion gör det inte (b-0007)", () => {
   );
   assert.equal(domar[0]!.status, "agerat_i_linje");
   assert.deepEqual(domar[0]!.i_linje, ["k-2026-0003"]); // den enskilda syns inte här
+});
+
+test("handling utan partiuppgift tillgodoräknas inget parti (b-0031)", () => {
+  // Utan spärren skulle en partilös handling räknas för samtliga partier,
+  // eftersom kontrollen annars bara utesluter fel parti när listan är ifylld.
+  const kop = [k({ id: "k-2026-0011", handling_id: "h-2026-0005", riktning: "stodjer" })];
+  const domar = computePartiDomar(kop, handlingar, { "p-2026-0001": ["m", "s", "v"] });
+  for (const dom of domar) {
+    assert.equal(dom.status, "ingen_handling_annu");
+    assert.deepEqual(dom.i_linje, []);
+  }
 });
 
 test("interpellation fäller aldrig partidom (b-0009) men syns i ledamotens meritlista", () => {

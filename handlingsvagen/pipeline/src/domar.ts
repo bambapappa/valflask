@@ -110,7 +110,15 @@ export function computePartiDomar(
           else if (utslag === "emot") emot.push(k.id);
           else avstod.push(k.id);
         } else {
-          if (h.parties.length > 0 && !h.parties.includes(party)) continue;
+          // Tom partilista betyder att handlingen inte bär någon avsändare —
+          // en proposition skrivs av ett departement, inte av ett parti. Utan
+          // spärren nedan skulle en sådan handling tillgodoräknas SAMTLIGA
+          // partier, eftersom nästa rad bara utesluter fel parti när listan är
+          // ifylld. Inga sådana kopplingar finns i dag (aktörsgrinden fäller
+          // dem), men spärren hör hemma här och inte bara i grinden: det som
+          // avgör en dom ska stå i domsmotorn.
+          if (h.parties.length === 0) continue;
+          if (!h.parties.includes(party)) continue;
           if (k.riktning === "stodjer") iLinje.push(k.id);
           else emot.push(k.id);
         }
