@@ -16,11 +16,11 @@ on:
       urval:
         description: "Sökväg till urvalsfilen (par att jämföra)"
         required: false
-        default: "data/jamforelse-urval-2026-07-30.json"
+        default: "handlingsvagen/data/jamforelse-urval-2026-07-30.json"
       ut:
         description: "Sökväg dit jämförelseresultatet skrivs"
         required: false
-        default: "data/modelljamforelse-2026-07-30.json"
+        default: "handlingsvagen/data/modelljamforelse-2026-07-30.json"
 permissions:
   contents: write
 concurrency:
@@ -29,22 +29,33 @@ concurrency:
 jobs:
   jamfor:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        # Alla run-steg utan egen working-directory kör ur Handlingsvågens
+        # rot, så relativa sökvägar (data/, cd pipeline) betyder samma sak
+        # som före sammanslagningen.
+        working-directory: handlingsvagen
     timeout-minutes: 60
     steps:
+      - name: Mint bot app token
+        id: app-token
+        # Efter sammanslagningen pushar den här körningen till valflasks main,
+        # där direktpush kräver botens token (samma väg som pipeline.yml).
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
         with:
+          token: ${{ steps.app-token.outputs.token }}
           ref: ${{ github.event.repository.default_branch }}
           persist-credentials: true
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
-        with:
-          repository: bambapappa/valflask
-          path: valflask-lofter
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
         with:
           node-version: 22
       - name: Install pipeline deps
         run: npm ci
-        working-directory: pipeline
+        working-directory: handlingsvagen/pipeline
       - name: Kör jämförelsen mot zai-glm
         env:
           LLM_BASE_URL: ${{ vars.LLM_ZAI_BASE_URL }}
@@ -53,14 +64,14 @@ jobs:
         run: |
           node --import tsx/esm scripts/jamfor-modeller.mts \
             --urval "${{ github.workspace }}/${{ inputs.urval }}" \
-            --promises "${{ github.workspace }}/valflask-lofter/data/promises.json" \
+            --promises "${{ github.workspace }}/data/promises.json" \
             --ut "${{ github.workspace }}/${{ inputs.ut }}"
-        working-directory: pipeline
+        working-directory: handlingsvagen/pipeline
       - name: Committa jämförelseresultatet
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "${{ inputs.ut }}"
+          git add "${{ github.workspace }}/${{ inputs.ut }}"
           if git diff --cached --quiet; then
             echo "Inget nytt att committa."
             exit 0
