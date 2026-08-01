@@ -81,8 +81,19 @@ utfärdat sitt certifikat.
 Grått moln får däremot **inte** bli slutläget — se punkt 7 i lanseringsdagens
 lista om säkerhetsheadersen.
 
-**Kvar att göra i zonerna:** `utlovat.nu` och `utlovat.com` är tomma och
-behöver sina omdirigeringsregler (steg 6).
+**Zonerna för `utlovat.nu` och `utlovat.com` är klara** (2026-08-01).
+Proxad platshållarpost (`192.0.2.1`, reserverad för dokumentation) på apex
+och www, plus en omdirigeringsregel per zon med
+`concat("https://utlovat.se", http.request.uri.path)`, 301, querysträng
+bevarad. Platshållaren behövs därför att en regel bara kan träffa trafik
+Cloudflare faktiskt ser, och en tom zon får ingen. Uppmätt:
+
+    utlovat.nu/lofte/p-2026-0448  → 301  utlovat.se/lofte/p-2026-0448
+    utlovat.com/parti/mp          → 301  utlovat.se/parti/mp
+    utlovat.nu/sok?q=skatt        → 301  utlovat.se/sok?q=skatt
+
+Kvar i zonerna: bara omdirigeringen från `drygast.nu`, och den slås på
+FÖRST när de nya adresserna är verifierade (steg 9).
 
 Skälet att ta alla tre står kvar:
 
