@@ -1,0 +1,72 @@
+# AI-atkomst — bevakar att sajten släpper in AI-agenterna.
+#
+# Kontrollen läser den LEVERERADE robots.txt:en, inte repots. Skälet står i
+# ops/ai-atkomst.mjs: 2026-08-01 stängdes Gemini, Claude och GPTBot ute av ett
+# block som Cloudflare la in i filen på vägen ut. Inget syntes i repot, och
+# ingenting i bygget hade fångat det — bara ett anrop mot skarp adress gör det.
+name: ai-atkomst
+on:
+  schedule:
+    - cron: "20 5 * * *"   # dagligen 05:20 UTC, före arbetsdagen
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  issues: write
+concurrency: { group: ai-atkomst, cancel-in-progress: false }
+jobs:
+  kontroll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+      - name: Kontrollera AI-atkomst
+        run: node ops/ai-atkomst.mjs https://utlovat.se
+        timeout-minutes: 5
+      - name: Create issue on failure
+        if: failure()
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v9.0.0
+        with:
+          script: |
+            const dag = new Date().toISOString().slice(0, 10);
+            const titel = `ALERT: AI-agenter stängs ute från utlovat.se (${dag})`;
+            // Larmet är dagligt men problemet varar tills någon åtgärdar det.
+            // Öppna inte ett nytt ärende per dygn — kommentera på det öppna.
+            const oppna = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              labels: "ai-atkomst",
+              per_page: 1,
+            });
+            const kropp = [
+              "AI-atkomstkontrollen misslyckades. Sajten kan ha slutat vara läsbar för",
+              "AI-agenter — det märks inte på sajten och inte i repot, bara här.",
+              "",
+              `- Körning: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              "",
+              "Vanligaste orsaken är att Cloudflares *managed robots.txt* har slagits",
+              "på igen på zonen. Den lägger ett eget block överst i robots.txt som",
+              "förbjuder Google-Extended, GPTBot, ClaudeBot med flera, oavsett vad vi",
+              "skriver i `site/public/robots.txt`.",
+              "",
+              "Åtgärd: se `ops/RUNBOOK.md`, avsnittet om AI-atkomst.",
+              "Kör `node ops/ai-atkomst.mjs` lokalt för att se exakt vad som brister.",
+            ].join("\n");
+            if (oppna.data.length > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: oppna.data[0].number,
+                body: `Kvarstår ${dag}.\n\n${kropp}`,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: titel,
+                labels: ["ai-atkomst"],
+                body: kropp,
+              });
+            }

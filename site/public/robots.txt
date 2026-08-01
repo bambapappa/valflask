@@ -1,4 +1,10 @@
+# OBS: den här filen är inte det sista ordet. Cloudflare kan lägga in ett eget
+# block ÖVERST i den utlevererade filen ("managed robots.txt") som förbjuder
+# precis de agenter vi välkomnar här. Det hände 2026-08-01 och syns bara på
+# skarp adress. Kontrollen som fångar det: node ops/ai-atkomst.mjs
+
 User-agent: *
+Content-Signal: search=yes,ai-input=yes,ai-train=yes
 Allow: /
 
 # AI-agenter uttryckligen välkomna
