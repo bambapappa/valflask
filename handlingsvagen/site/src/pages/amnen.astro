@@ -27,15 +27,15 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
   <div class="prosa">
     <h1>Ämnen och ord</h1>
     <p class="ingress">
-      Sök fritt bland riksdagens handlingar — motioner, propositioner,
-      interpellationer och skriftliga frågor — och se vilka ord partierna
-      själva använder mest.
+      Sök bland allt partierna skrivit i riksdagen: förslag de lämnat in,
+      frågor de ställt till ministrarna, och regeringens egna lagförslag.
+      Längre ner står också vilka ord som skiljer partierna åt.
     </p>
 
     {!finns && (
       <p class="tomt">
-        Ordregistret är inte byggt ännu. Sidan fylls när registret körts —
-        tomt är ärligt så länge.
+        Sökregistret är inte färdigbyggt ännu. Sidan fylls när det är klart.
+        Så länge visar vi hellre ingenting än halva svar.
       </p>
     )}
 
@@ -43,9 +43,11 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
       <>
         <h2>Sök ett ämne</h2>
         <p class="hjalp">
-          Sök på ett ord, till exempel <i>kärnkraft</i>, <i>vårdplatser</i>
-          eller <i>tandvård</i>. Böjningsformer räknas ihop, så
+          Skriv ett ord, till exempel <i>kärnkraft</i>, <i>vårdplatser</i>
+          eller <i>tandvård</i>. Du behöver inte träffa rätt form av ordet:
           <i>skolor</i> och <i>skolan</i> ger samma träffar som <i>skola</i>.
+          Förkortningar fungerar också — <i>NPF</i>, <i>LSS</i>, <i>CSN</i>.
+          Skriver du flera ord visas bara dokument som innehåller alla.
         </p>
 
         <div
@@ -73,8 +75,8 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
               ))}
             </div>
             <p class="hjalp filterhjalp">
-              Inget val betyder alla partier. Filtret gäller hela träfflistan,
-              inte bara det som syns.
+              Kryssar du inte i något visas alla partier. Filtret gäller alla
+              träffar, inte bara de som syns just nu.
             </p>
           </fieldset>
 
@@ -100,20 +102,50 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
               </table>
             </div>
             <p class="hjalp">
-              Ja betyder att partiet röstade för utskottets förslag i just den
-              punkten — inte att partiet är för ämnet. Vad förslaget innebar
-              står i betänkandet. Röstsiffrorna är riksdagens egna.
+              Läs det här försiktigt: <b>ja</b> betyder att partiet röstade för
+              det förslag som låg på bordet — inte att partiet är för ämnet.
+              Gällde omröstningen att <i>avslå</i> ett förslag om kärnkraft, då
+              är ett ja en röst mot kärnkraft. Vad som stod på bordet framgår av
+              utskottets text, som är länkad vid varje omröstning.
+              Röstsiffrorna är riksdagens egna.
             </p>
             <ul id="amne-voteringar" class="voteringar"></ul>
           </section>
         </div>
 
-        <h2>Vilka ord använder partierna?</h2>
+        <h2>Ord som skiljer partierna åt</h2>
         <p class="hjalp">
-          Orden nedan är de som respektive parti använder <b>mer än de
-          andra</b> i sina egna handlingar. Stapeln visar hur utmärkande
-          ordet är. Det här är partiernas eget ordval, räknat — inte ett
-          omdöme om vad de tycker, och inte kopplat till något löfte.
+          Här står inte de ord ett parti använder <i>mest</i> — då skulle alla
+          åtta listor se likadana ut, för alla skriver ofta om skola och vård.
+          Här står de ord partiet använder <b>oftare än de sju andra gör</b>.
+        </p>
+        <p class="hjalp">
+          Så räknas det: vi tar andelen av partiets egna dokument där ordet
+          står, och jämför den med andelen hos alla andra partier tillsammans.
+          Är andelen mycket större hamnar ordet högt i listan. Ett ord kan
+          alltså komma med trots att det bara står i en handfull dokument —
+          om nästan ingen annan skriver det.
+        </p>
+        <p class="hjalp">
+          <b>Stapeln</b> visar hur stor den skillnaden är, jämfört med det
+          mest utmärkande ordet på hela sidan. <b>Talet till höger</b> är
+          något annat: antalet av partiets egna dokument där ordet faktiskt
+          står. Ett kort streck och ett högt tal betyder ett ord partiet
+          skriver ofta men som de andra också gör.
+        </p>
+        <p class="hjalp">
+          Det här är räknat, inte tolkat. Att ett ord står högt säger vad
+          partiet skriver om — inte vad det tycker i frågan, och ingenting om
+          något löfte. Ledamöternas förnamn är bortplockade: att ett parti
+          ofta nämner en motståndare är inget ämne.
+        </p>
+        <p class="hjalp">
+          Och alla ord är inte ämnen. Riksdagen har ett eget språk, fullt av
+          ord som <i>avslå</i>, <i>återkomma</i> och <i>övervägas</i>. Vi
+          rensar bort det vi hittar, men en del tar sig igenom — och ett parti
+          som skriver många förslag av en viss sort får då sina vanor med i
+          listan. Ser du ett sådant ord säger det mer om hur partiet skriver
+          än om vad det driver.
         </p>
 
         <div class="trender">
@@ -121,19 +153,26 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
             <section class="trend">
               <h3>
                 <a href={`${base}parti/${t.kod}`}>{t.namn}</a>
-                <span class="antal">{t.handlingar.toLocaleString("sv-SE")} handlingar</span>
+                <span class="antal">{t.handlingar.toLocaleString("sv-SE")} dokument totalt</span>
               </h3>
               {t.ord.length === 0 ? (
-                <p class="tomt">Inga ord med tillräckligt underlag ännu.</p>
+                <p class="tomt">För få dokument från partiet för att kunna räkna på ännu.</p>
               ) : (
                 <ul class="ordlista">
                   {t.ord.map((o) => (
                     <li>
                       <span class="ord">{o.ord}</span>
-                      <span class="stapel" aria-hidden="true">
+                      <span
+                        class="stapel"
+                        aria-hidden="true"
+                        title={`Använder ordet ${o.vikt.toFixed(1)} gånger så ofta som de andra partierna, räknat på andel av dokumenten`}
+                      >
                         <span class="fyll" style={`width:${Math.round((o.vikt / maxVikt) * 100)}%`}></span>
                       </span>
-                      <span class="ordtal">{o.antal.toLocaleString("sv-SE")}</span>
+                      <span class="ordtal" title="Antal av partiets egna dokument där ordet står">
+                        {o.antal.toLocaleString("sv-SE")}
+                        <span class="hoppa"> dokument</span>
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -142,12 +181,19 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
           ))}
         </div>
 
-        <h2>Vad sökningen säger — och inte säger</h2>
+        <h2>Vad en träff betyder — och inte betyder</h2>
         <p>
-          En träff betyder att ordet står i handlingens text. Det säger
-          ingenting om huruvida partiet är för eller emot något. Där ett
-          utslag faktiskt vägts står riktningen utskriven vid träffen —
-          annars är dokumentet bara ett dokument som nämner ordet.
+          En träff betyder en enda sak: ordet står i dokumentets text. Den
+          säger ingenting om partiet är för eller emot. Ett parti kan skriva
+          om kärnkraft för att det vill bygga ut den, och ett annat för att
+          det vill avveckla den — båda hamnar i samma träfflista.
+        </p>
+        <p>
+          Vill du veta vad partiet <i>ville</i> får du läsa dokumentet; länken
+          går till riksdagens egen sida. På de träffar där någon hos oss läst
+          dokumentet och vägt det mot ett löfte står det utskrivet vid
+          träffen. På övriga står ingenting, och då är det för att ingen vägt
+          dem — inte för att svaret vore oklart.
         </p>
       </>
     )}

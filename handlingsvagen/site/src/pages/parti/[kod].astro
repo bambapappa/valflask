@@ -40,7 +40,7 @@ function statusToken(l: PartiLofteRad): string {
   <p class="brodsmula"><a href={base}>Rutnätet</a> · <a href={`${base}partier`}>Partier</a></p>
   <h1>{sida.namn}</h1>
   <Rattelsenot rattelser={rattelserForPath(`/parti/${kod}`)} />
-  <p class="ingress">Partiets löften vägda mot dess egna handlingar i riksdagen. Tomt är ärligt — registret väger allt eftersom.</p>
+  <p class="ingress">Partiets löften, bredvid det partiet självt gjort i riksdagen. Står en rad tom har vi inte granskat den ännu — det är inget omdöme om partiet.</p>
 
   <div class="summa" role="group" aria-label="Sammanfattning">
     <div><b>{sida.summa.total_loften}</b><span>löften totalt</span></div>
@@ -77,7 +77,7 @@ function statusToken(l: PartiLofteRad): string {
   </ul>
   <script is:inline src={`${base}hv-listfilter.js`}></script>
 
-  <h2>Handlingar som gett utslag <span class="rakn">({sida.handlingar.length})</span></h2>
+  <h2>Det partiet gjort, granskat av oss <span class="rakn">({sida.handlingar.length})</span></h2>
   {sida.handlingar.length === 0 ? (
     <p class="tom-not">Inga granskade kopplingar har ännu gett utslag för {sida.namn}.</p>
   ) : (
