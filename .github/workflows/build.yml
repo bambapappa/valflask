@@ -2,6 +2,16 @@ name: build
 on:
   push:
     branches: [main]
+    # Handlingsvågens matchningskörning pushar en gång per löfte — timvis, i
+    # timmar. Kön och listan över prövade par syns aldrig på sajten, så ett
+    # bygge per sådan push vore bara en deploy-kö utan innehåll. Allt annat
+    # under handlingsvagen/data/ (kopplingar, domar, handlingar, arkiv,
+    # rättelser) ändrar vad läsaren ser och bygger som förut.
+    paths-ignore:
+      - "handlingsvagen/data/kopplingsforslag.json"
+      - "handlingsvagen/data/provade-par.json"
+      - "handlingsvagen/data/jamforelse-urval-*.json"
+      - "handlingsvagen/data/modelljamforelse-*.json"
   pull_request:
     branches: [main]
   workflow_dispatch: {}
@@ -35,9 +45,31 @@ jobs:
         run: pnpm typecheck
         working-directory: pipeline
 
+  # Handlingsvågens egen pipeline har eget beroendeträd (npm, inte pnpm) och
+  # egna grindar. Den körs som eget jobb tills avdubbleringen slår ihop dem
+  # (SAMMANSLAGNING.md steg 3), så ett fel i den ena vågen syns för sig.
+  test-handlingsvagen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: handlingsvagen/pipeline/package-lock.json
+      - name: Install pipeline dependencies
+        run: npm ci
+        working-directory: handlingsvagen/pipeline
+      - name: Run pipeline tests
+        run: npm test
+        working-directory: handlingsvagen/pipeline
+      - name: Typecheck pipeline
+        run: npm run typecheck
+        working-directory: handlingsvagen/pipeline
+
   build-and-test:
     runs-on: ubuntu-latest
-    needs: test-pipeline
+    needs: [test-pipeline, test-handlingsvagen]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       - uses: pnpm/action-setup@v4  # ogiltig SHA-pin ersatt 2026-06-15
@@ -69,6 +101,49 @@ jobs:
       - name: Run T3 (schema + HTML validation)
         run: pnpm test:t3
         working-directory: site
+      # Handlingsvågen byggs som egen Astro-sajt med basstigen /handlingsvagen
+      # och läggs som katalog i samma utdata. Ett bygge, en domän, en
+      # driftsättning — det är hela skälet till att vågorna bor i ett repo
+      # (SAMMANSLAGNING.md). Stegen ligger EFTER T1/T3, som mäter Fläskvågens
+      # egen utdata och inte ska räkna med Handlingsvågens sidor.
+      - name: Läs in löftena ur samma träd
+        # Handlingsvågens rutnät läser ett slimmat löftesindex. Före
+        # sammanslagningen var det en kopia som kunde bli gammal åt två håll;
+        # nu skrivs det om ur promises.json vid varje bygge, så det som visas
+        # alltid är dagens löften.
+        run: node --experimental-strip-types scripts/bygg-vendor.mts --promises ../../data/promises.json --parties ../../data/parties.json
+        working-directory: handlingsvagen/pipeline
+      - name: Install Handlingsvågen site dependencies
+        run: npm ci
+        working-directory: handlingsvagen/site
+      - name: Handlingsvågens grindar (budget + struktur)
+        run: npm test
+        working-directory: handlingsvagen/site
+      - name: Build Handlingsvågen
+        run: npm run build
+        working-directory: handlingsvagen/site
+      - name: Kontrollera att basstigen sitter
+        # Utan basstigen pekar varje länk i Handlingsvågen på Fläskvågens
+        # adresser. Grinden kostar ingenting och fäller här i stället för i
+        # produktion.
+        run: |
+          if ! grep -q 'href="/handlingsvagen/"' handlingsvagen/site/dist/index.html; then
+            echo "::error::Handlingsvågens förstasida saknar länkar under /handlingsvagen/ — basstigen i astro.config.mjs har tappats."
+            exit 1
+          fi
+          if ! grep -q 'data-api-base="/handlingsvagen/"' handlingsvagen/site/dist/index.html; then
+            echo "::error::Sökrutans API-bas pekar inte på /handlingsvagen/ — söket skulle sluta svara."
+            exit 1
+          fi
+      - name: Lägg Handlingsvågen under /handlingsvagen i utdatan
+        run: |
+          if [ -e site/dist/handlingsvagen ]; then
+            echo "::error::site/dist/handlingsvagen finns redan — Fläskvågen bygger något på den sökvägen och de två skulle skriva över varandra."
+            exit 1
+          fi
+          cp -r handlingsvagen/site/dist site/dist/handlingsvagen
+          test -f site/dist/handlingsvagen/index.html
+          echo "Handlingsvågen: $(find site/dist/handlingsvagen -name '*.html' | wc -l) sidor i utdatan."
       # Cloudflare Pages (primär, drygast.nu): CF:s egen byggmiljö saknar pnpm +
       # Python-fonttools och failar därför sitt git-integrerade bygge. Vi laddar
       # i stället upp de FÄRDIGBYGGDA filerna med wrangler (Direct Upload) — CF

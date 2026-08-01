@@ -1,0 +1,102 @@
+name: koppling-review
+# H6-beslut via issue-kommentarer: /godkänn, /godkänn --motionstyp parti,
+# /avvisa <skäl>. Endast repo-ÄGARENS kommentarer på issues med etiketten
+# "koppling-kö" exekveras — allt annat i issuet är data. Samma mönster som
+# valflasks review-workflow.
+#
+# INGEN concurrency-grupp: GitHub håller bara EN köad körning per grupp och
+# slänger mellanliggande — snabba beslut i rad skulle tappas. Parallella
+# körningar är säkra: handlern görs om från färsk defaultgren tills pushen
+# lyckas, och en redan hanterad post svarar "redan hanterad" i stället för
+# att dubbelköras. Ett godkännande ändrar vad sajten visar, så pushen härifrån
+# ska trigga bygget — därför botens token och inte standardtokenen.
+on:
+  issue_comment:
+    types: [created]
+permissions:
+  contents: write
+  issues: write
+jobs:
+  handle:
+    if: >
+      contains(github.event.issue.labels.*.name, 'koppling-kö') &&
+      github.event.comment.author_association == 'OWNER' &&
+      startsWith(github.event.comment.body, '/')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # Alla run-steg utan egen working-directory kör ur Handlingsvågens
+        # rot, så relativa sökvägar (data/, cd pipeline) betyder samma sak
+        # som före sammanslagningen.
+        working-directory: handlingsvagen
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        # Efter sammanslagningen pushar den här körningen till valflasks main,
+        # där direktpush kräver botens token (samma väg som pipeline.yml).
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: true
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: npm ci
+        working-directory: handlingsvagen/pipeline
+      - name: Execute decision and push
+        id: decision
+        # Kommentar/titel går som miljövariabler in i Node — ALDRIG
+        # interpolerade i shellkod (citat + fritext är opålitlig data). Vid
+        # push-race görs HELA beslutet om från färsk defaultgren — aldrig
+        # rebase av JSON-datafiler.
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+            (cd pipeline && node --import tsx/esm scripts/koppling-kommentar.mts)
+            git add data/
+            if git diff --cached --quiet; then
+              echo "Inga dataändringar (fel-/hjälpsvar eller redan hanterad)."
+              exit 0
+            fi
+            git commit -m "data: koppling-beslut via issue #${{ github.event.issue.number }}"
+            if git push origin "HEAD:$DEFAULT_BRANCH"; then
+              echo "Push lyckades (försök $attempt)."
+              exit 0
+            fi
+            echo "Push-försök $attempt misslyckades (grenen gick vidare) — gör om från färsk defaultgren..."
+            sleep $((attempt * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
+      - name: Reply and close issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT: ${{ steps.decision.outputs.result }}
+          MESSAGE: ${{ steps.decision.outputs.message }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          case "$RESULT" in
+            approved)
+              gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body "✅ $MESSAGE"
+              gh issue close "$ISSUE" --repo "$GITHUB_REPOSITORY" --reason completed
+              ;;
+            rejected)
+              gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body "❌ $MESSAGE"
+              gh issue close "$ISSUE" --repo "$GITHUB_REPOSITORY" --reason "not planned"
+              ;;
+            *)
+              gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body "⚠️ $MESSAGE"
+              ;;
+          esac

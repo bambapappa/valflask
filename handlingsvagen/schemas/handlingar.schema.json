@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "handlingar.json — normaliserade riksdagshändelser (utkast HV0)",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "kind", "dok_id", "datum", "parties", "titel", "url", "archive_url"],
+    "additionalProperties": false,
+    "properties": {
+      "id": { "type": "string", "pattern": "^h-\\d{4}-\\d{4,5}$" },
+      "kind": { "enum": ["votering", "motion", "proposition", "interpellation", "skriftlig_fraga"] },
+      "dok_id": { "type": "string", "minLength": 1 },
+      "votering_id": { "type": ["string", "null"] },
+      "punkt": { "type": ["integer", "null"] },
+      "datum": { "type": "string", "format": "date" },
+      "organ": { "type": "string" },
+      "motionstyp": { "enum": ["parti", "kommitte", "enskild"] },
+      "parties": { "type": "array", "items": { "type": "string" } },
+      "persons": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["name", "party"],
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string" },
+            "party": { "type": "string" },
+            "riksdagen_id": { "type": ["string", "null"] }
+          }
+        }
+      },
+      "titel": { "type": "string", "minLength": 1 },
+      "url": { "type": "string", "format": "uri" },
+      "archive_url": { "type": ["string", "null"], "format": "uri" },
+      "utfall": { "type": ["string", "null"] },
+      "rostfordelning": {
+        "type": ["object", "null"],
+        "additionalProperties": {
+          "type": "object",
+          "required": ["ja", "nej", "avstar", "franvarande"],
+          "additionalProperties": false,
+          "properties": {
+            "ja": { "type": "integer", "minimum": 0 },
+            "nej": { "type": "integer", "minimum": 0 },
+            "avstar": { "type": "integer", "minimum": 0 },
+            "franvarande": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    }
+  }
+}

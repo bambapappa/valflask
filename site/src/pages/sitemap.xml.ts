@@ -4,7 +4,7 @@ import { getIssuesFile } from "../lib/stances";
 export const prerender = true;
 
 export async function GET() {
-  const BASE = "https://drygast.nu";
+  const BASE = "https://utlovat.se";
   const promises = getPromises();
   const parties = getParties();
   const people = getPeople();

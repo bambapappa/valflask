@@ -18,7 +18,7 @@ interface Props {
   text?: string;
 }
 const { path, title, text } = Astro.props;
-const base = Astro.site?.origin ?? "https://drygast.nu";
+const base = Astro.site?.origin ?? "https://utlovat.se";
 const url = `${base}${path}`;
 const shareText = text ?? title;
 const enc = encodeURIComponent;

@@ -1,0 +1,87 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Rattelsenot from "../../components/Rattelsenot.astro";
+import { buildLedamotSida, ledamotIds } from "../../lib/vyer.ts";
+import { rattelserForPath } from "../../lib/data.ts";
+
+export function getStaticPaths() {
+  return ledamotIds().map((id) => ({ params: { id } }));
+}
+
+const { id } = Astro.params;
+const sida = buildLedamotSida(id!);
+if (!sida) return Astro.redirect("/ledamoter");
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+const KIND: Record<string, string> = {
+  votering: "votering", motion: "motion", proposition: "proposition",
+  interpellation: "interpellation", skriftlig_fraga: "skriftlig fråga",
+};
+const UTSLAGORD: Record<string, string> = { i_linje: "i linje", emot: "emot", avstod: "avstod", franvarande: "frånvarande" };
+const UTSLAGKLASS: Record<string, string> = { i_linje: "status--linje", emot: "status--emot", avstod: "status--avstod", franvarande: "status--tom" };
+---
+<Layout title={`${sida.namn} (${sida.parti.toUpperCase()}) — Handlingsvågen`} canonicalPath={`/ledamot/${id}`}>
+  <p class="brodsmula"><a href={base}>Rutnätet</a> · <a href={`${base}ledamoter`}>Ledamöter</a></p>
+  <h1>{sida.namn}</h1>
+  <p class="under">
+    <a href={`${base}parti/${sida.parti}`}>{sida.parti.toUpperCase()}</a>
+    {sida.valkrets ? ` · ${sida.valkrets}` : ""}
+  </p>
+  <Rattelsenot rattelser={rattelserForPath(`/ledamot/${id}`)} />
+
+  <div class="summa" role="group" aria-label="Sammanfattning">
+    <div><b>{sida.summa.loften}</b><span>löften med merit</span></div>
+    <div><b>{sida.summa.i_linje}</b><span>i linje</span></div>
+    <div><b>{sida.summa.emot}</b><span>emot</span></div>
+    <div><b>{sida.summa.avstod}</b><span>avstod</span></div>
+    <div><b>{sida.summa.franvarande}</b><span>frånvarande</span></div>
+    <div><b>{sida.summa.avvikelser}</b><span>avvek från partilinjen</span></div>
+  </div>
+
+  <p class="kvittning">
+    Frånvaro visas men fäller aldrig ett utslag. Riksdagen har ett
+    kvittningssystem — att inte rösta kan vara överenskommet, och räknas därför
+    aldrig som ett ställningstagande.
+  </p>
+
+  {sida.meriter.length === 0 ? (
+    <p class="tom-not">Inga vägda handlingar ännu. Det betyder inte att ledamoten varit passiv — bara att registret ännu inte kopplat någon av hens handlingar till ett löfte.</p>
+  ) : (
+    sida.meriter.map((m) => (
+      <section class="merit">
+        <h2><a href={`${base}?lofte=${m.lofte_id}`}>{m.lofte_titel}</a></h2>
+        <ul class="vy-lista">
+          {m.poster.map((p) => (
+            <li>
+              <span class="vy-meta">
+                {p.egen_handling ? "egen handling" : "röst i votering"} · {KIND[p.handling.kind] ?? p.handling.kind}{p.handling.datum ? ` · ${p.handling.datum}` : ""}
+              </span>
+              {p.handling.url ? <a class="vy-titel" href={p.handling.url} rel="noopener" target="_blank">{p.handling.titel || p.handling.id}</a> : <span class="vy-titel">{p.handling.titel || p.handling.id}</span>}
+              <span class="markorer">
+                <span class={`status ${UTSLAGKLASS[p.utslag]}`}>{UTSLAGORD[p.utslag]}</span>
+                {p.avvikelse ? <span class="avvek" title="Ledamoten röstade annorlunda än partiets huvudlinje">avvek från partilinjen</span> : null}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  )}
+</Layout>
+
+<style>
+  .brodsmula { color: var(--text-svag); font-size: 0.9rem; margin: 0 0 0.3rem; }
+  .brodsmula a { color: var(--fokus); }
+  .under { color: var(--text-svag); margin: 0 0 1rem; }
+  .under a { color: var(--fokus); }
+  .kvittning { font-size: 0.9rem; color: var(--text-svag); border-left: 3px solid var(--linje); padding-left: 0.8rem; max-width: 62ch; }
+  .merit { margin-top: 1.6rem; }
+  .merit h2 { font-size: 1.1rem; margin: 0 0 0.4rem; }
+  .merit h2 a { color: inherit; }
+  .tom-not { color: var(--text-svag); font-style: italic; max-width: 62ch; }
+  .markorer { display: inline-flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+  .avvek {
+    font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+    color: var(--a-emot); border: 2px dashed var(--a-emot); border-radius: 999px; padding: 0.12rem 0.5rem;
+  }
+</style>

@@ -107,7 +107,7 @@ if (existsSync(sitemapPath)) {
   check("sitemap has xml declaration", content.startsWith("<?xml"));
   check("sitemap has urlset", content.includes("<urlset"));
   check("sitemap has urls", content.includes("<url><loc>"));
-  check("sitemap has start page", content.includes("https://drygast.nu/</loc>"));
+  check("sitemap has start page", content.includes("https://utlovat.se/</loc>"));
   check("sitemap has promise pages", content.includes("/lofte/"));
   check("sitemap has party pages", content.includes("/parti/"));
 }
@@ -164,7 +164,7 @@ if (existsSync(robotsPath)) {
   const content = readFileSync(robotsPath, "utf8");
   check("robots.txt allows all", content.includes("User-agent: *") && content.includes("Allow: /"));
   check("robots.txt lists AI bots", content.includes("GPTBot") && content.includes("ClaudeBot") && content.includes("PerplexityBot"));
-  check("robots.txt has sitemap", content.includes("Sitemap: https://drygast.nu/sitemap.xml"));
+  check("robots.txt has sitemap", content.includes("Sitemap: https://utlovat.se/sitemap.xml"));
 }
 
 // 10. Canonical link on pages

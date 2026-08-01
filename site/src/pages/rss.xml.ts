@@ -5,7 +5,7 @@ import { formatMsek } from "../lib/calc";
 export const prerender = true;
 
 export async function GET() {
-  const BASE = "https://drygast.nu";
+  const BASE = "https://utlovat.se";
   const promises = getPromises();
   const parties = getParties();
 
@@ -45,7 +45,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>drygast.nu — Vallöften 2026</title>
+    <title>utlovat.se — Vallöften 2026</title>
     <link>${BASE}</link>
     <description>Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför valet 2026.</description>
     <language>sv</language>

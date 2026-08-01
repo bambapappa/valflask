@@ -1,0 +1,635 @@
+---
+/**
+ * Ämnessök och ordtrender (b-0014). Två delar:
+ *
+ *  1. Fritextsök över alla riksdagshandlingar i registret. Indexet SÖKER —
+ *     det dömer aldrig. Riktning ("stödjer/motverkar") visas bara på de
+ *     handlingar som burit ett granskat utslag.
+ *  2. Ordtrender: vilka ord varje parti använder mer än de andra. Partiernas
+ *     egna ord, räknade — ingen tolkning.
+ */
+import Layout from "../layouts/Layout.astro";
+import { byggPartiTrender, indexFinns, ordSkarvor, voteringSkarvor } from "../lib/amne.ts";
+import { getParties } from "../lib/data.ts";
+import { PARTIBITAR } from "../lib/delat.ts";
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const finns = indexFinns();
+const trender = finns ? byggPartiTrender() : [];
+const skarvnycklar = finns ? ordSkarvor() : [];
+const rostskarvor = finns ? voteringSkarvor() : [];
+const partier = getParties()
+  .filter((p) => PARTIBITAR.includes(p.code))
+  .sort((a, b) => a.code.localeCompare(b.code, "sv"));
+const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vikt)));
+---
+<Layout title="Ämnen och ord — Handlingsvågen" canonicalPath="/amnen">
+  <div class="prosa">
+    <h1>Ämnen och ord</h1>
+    <p class="ingress">
+      Sök fritt bland riksdagens handlingar — motioner, propositioner,
+      interpellationer och skriftliga frågor — och se vilka ord partierna
+      själva använder mest.
+    </p>
+
+    {!finns && (
+      <p class="tomt">
+        Ordregistret är inte byggt ännu. Sidan fylls när registret körts —
+        tomt är ärligt så länge.
+      </p>
+    )}
+
+    {finns && (
+      <>
+        <h2>Sök ett ämne</h2>
+        <p class="hjalp">
+          Sök på ett ord, till exempel <i>kärnkraft</i>, <i>vårdplatser</i>
+          eller <i>tandvård</i>. Böjningsformer räknas ihop, så
+          <i>skolor</i> och <i>skolan</i> ger samma träffar som <i>skola</i>.
+        </p>
+
+        <div
+          class="amnesok"
+          data-bas={base}
+          data-skarvor={skarvnycklar.join(" ")}
+          data-rostskarvor={rostskarvor.join(" ")}
+        >
+          <label class="hoppa" for="amne-falt">Sök ord bland riksdagens handlingar</label>
+          <input
+            id="amne-falt"
+            type="search"
+            placeholder="Sök ord — kärnkraft, vårdplatser, tandvård…"
+            autocomplete="off"
+          />
+
+          <fieldset class="partifilter">
+            <legend>Visa bara handlingar från</legend>
+            <div class="partival">
+              {partier.map((p) => (
+                <label class="partikryss">
+                  <input type="checkbox" name="parti" value={p.code} />
+                  <span>{p.namn}</span>
+                </label>
+              ))}
+            </div>
+            <p class="hjalp filterhjalp">
+              Inget val betyder alla partier. Filtret gäller hela träfflistan,
+              inte bara det som syns.
+            </p>
+          </fieldset>
+
+          <p id="amne-status" class="status" role="status" aria-live="polite"></p>
+          <ul id="amne-traffar" class="traffar"></ul>
+          <p id="amne-mer" class="status"></p>
+
+          <section id="amne-roster" class="roster" hidden>
+            <h3>Så röstade partierna i omröstningar om ämnet</h3>
+            <p id="amne-roster-om" class="hjalp"></p>
+            <div class="rosttabell-yta">
+              <table class="rosttabell">
+                <thead>
+                  <tr>
+                    <th scope="col">Parti</th>
+                    <th scope="col">Ja</th>
+                    <th scope="col">Nej</th>
+                    <th scope="col">Avstod</th>
+                    <th scope="col">Frånvarande</th>
+                  </tr>
+                </thead>
+                <tbody id="amne-roster-rader"></tbody>
+              </table>
+            </div>
+            <p class="hjalp">
+              Ja betyder att partiet röstade för utskottets förslag i just den
+              punkten — inte att partiet är för ämnet. Vad förslaget innebar
+              står i betänkandet. Röstsiffrorna är riksdagens egna.
+            </p>
+            <ul id="amne-voteringar" class="voteringar"></ul>
+          </section>
+        </div>
+
+        <h2>Vilka ord använder partierna?</h2>
+        <p class="hjalp">
+          Orden nedan är de som respektive parti använder <b>mer än de
+          andra</b> i sina egna handlingar. Stapeln visar hur utmärkande
+          ordet är. Det här är partiernas eget ordval, räknat — inte ett
+          omdöme om vad de tycker, och inte kopplat till något löfte.
+        </p>
+
+        <div class="trender">
+          {trender.map((t) => (
+            <section class="trend">
+              <h3>
+                <a href={`${base}parti/${t.kod}`}>{t.namn}</a>
+                <span class="antal">{t.handlingar.toLocaleString("sv-SE")} handlingar</span>
+              </h3>
+              {t.ord.length === 0 ? (
+                <p class="tomt">Inga ord med tillräckligt underlag ännu.</p>
+              ) : (
+                <ul class="ordlista">
+                  {t.ord.map((o) => (
+                    <li>
+                      <span class="ord">{o.ord}</span>
+                      <span class="stapel" aria-hidden="true">
+                        <span class="fyll" style={`width:${Math.round((o.vikt / maxVikt) * 100)}%`}></span>
+                      </span>
+                      <span class="ordtal">{o.antal.toLocaleString("sv-SE")}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))}
+        </div>
+
+        <h2>Vad sökningen säger — och inte säger</h2>
+        <p>
+          En träff betyder att ordet står i handlingens text. Det säger
+          ingenting om huruvida partiet är för eller emot något. Där ett
+          utslag faktiskt vägts står riktningen utskriven vid träffen —
+          annars är dokumentet bara ett dokument som nämner ordet.
+        </p>
+      </>
+    )}
+  </div>
+</Layout>
+
+{finns && (
+  <script>
+    // Buntas av Astro, så den kan använda SAMMA stamning som indexbygget.
+    // Duplicerad stamningslogik skulle tyst börja gå isär med indexet.
+    import { sokStammar } from "../../../pipeline/src/nyckelord.ts";
+    import { PARTIBITAR, partiStandpunkt, STANDPUNKT_TEXT } from "../lib/delat.ts";
+    import type { Roster, Standpunkt } from "../lib/delat.ts";
+
+    const rot = document.querySelector<HTMLElement>(".amnesok");
+    const falt = document.querySelector<HTMLInputElement>("#amne-falt");
+    const status = document.querySelector<HTMLElement>("#amne-status");
+    const traffar = document.querySelector<HTMLElement>("#amne-traffar");
+    const mer = document.querySelector<HTMLElement>("#amne-mer");
+    const rosterYta = document.querySelector<HTMLElement>("#amne-roster");
+    const rosterOm = document.querySelector<HTMLElement>("#amne-roster-om");
+    const rosterRader = document.querySelector<HTMLElement>("#amne-roster-rader");
+    const voteringslista = document.querySelector<HTMLElement>("#amne-voteringar");
+    const partikryss = [...document.querySelectorAll<HTMLInputElement>('input[name="parti"]')];
+
+    if (rot && falt && status && traffar && mer && rosterYta && rosterOm && rosterRader && voteringslista) {
+      const bas = rot.dataset.bas ?? "/";
+      // Vilka skärvor som faktiskt finns — sparar en bomhämtning per okänt
+      // sökord (och därmed ett 404 i konsolen).
+      const finnsSkarva = new Set((rot.dataset.skarvor ?? "").split(" ").filter(Boolean));
+      const finnsRostskarva = new Set((rot.dataset.rostskarvor ?? "").split(" ").filter(Boolean));
+      const MAX_TRAFFAR = 60;
+      const MAX_VOTERINGAR = 12;
+      const cache = new Map<string, unknown>();
+      let vagda: Record<string, { riktning: string; lofte: string }> | null = null;
+      let korning = 0;
+
+      interface OrdPost {
+        n: number;
+        i: (number | string)[];
+        p: string;
+        bn: number;
+        b: string[];
+      }
+      interface OrdSkarva { pre: string; bredd: number; o: Record<string, OrdPost> }
+      interface VoteringKort { p: number; d: string; u: string; url: string; r: Record<string, Roster> }
+      interface BetankandeKort { t: string; o: string; d: string; v: VoteringKort[] }
+
+      async function hamta<T>(url: string): Promise<T | null> {
+        if (cache.has(url)) return cache.get(url) as T;
+        try {
+          const svar = await fetch(url);
+          if (!svar.ok) return null;
+          const data = (await svar.json()) as T;
+          cache.set(url, data);
+          return data;
+        } catch {
+          return null;
+        }
+      }
+
+      const SORT: Record<string, string> = {
+        motion: "motion",
+        proposition: "proposition",
+        interpellation: "interpellation",
+        skriftlig_fraga: "skriftlig fråga",
+        votering: "votering",
+      };
+
+      const tal = (n: number) => n.toLocaleString("sv-SE");
+
+      /** De ikryssade partierna som bitmask. Noll betyder "alla partier". */
+      function valdMask(): number {
+        let mask = 0;
+        for (const kryss of partikryss) {
+          if (!kryss.checked) continue;
+          const bit = PARTIBITAR.indexOf(kryss.value);
+          if (bit >= 0) mask |= 1 << bit;
+        }
+        return mask;
+      }
+
+      function valdaNamn(): string[] {
+        return partikryss
+          .filter((k) => k.checked)
+          .map((k) => k.parentElement?.querySelector("span")?.textContent ?? k.value);
+      }
+
+      /**
+       * Sökorden, vart och ett med de stammar det ska slås upp på. Bestämd
+       * form och grundform hamnar inte alltid på samma stam ("skolan" och
+       * "skola"), så ett ord kan ge flera stammar. De slås ihop till EN
+       * träfflista för ordet — läsaren ska inte behöva gissa vilken form
+       * registret vill ha.
+       */
+      function sokord(text: string): { ord: string; stammar: string[] }[] {
+        const ord = [...new Set(
+          text.toLowerCase().split(/[^a-zåäöéü0-9-]+/u).filter((w) => w.length >= 3),
+        )];
+        return ord.map((o) => ({ ord: o, stammar: sokStammar(o) }));
+      }
+
+      function handlingSkarva(id: string): string {
+        const m = id.match(/^h-\d{4}-(\d+)$/u);
+        return m ? String(Math.floor(Number(m[1]) / 1000)).padStart(2, "0") : "ovrigt";
+      }
+
+      function tomtResultat() {
+        traffar.replaceChildren();
+        mer.textContent = "";
+        rosterYta.hidden = true;
+        rosterRader.replaceChildren();
+        voteringslista.replaceChildren();
+      }
+
+      async function sok(fraga: string) {
+        const min = ++korning;
+        const orden = sokord(fraga);
+        tomtResultat();
+        if (orden.length === 0) {
+          status.textContent = "";
+          return;
+        }
+        status.textContent = "Söker…";
+        const flera = orden.length > 1 ? "alla orden" : "ordet";
+
+        // Ett ord i taget: slå ihop ordets egna former, och skär sedan
+        // snittet mellan orden — flera ord smalnar av träffen i stället
+        // för att bredda den.
+        let ids: string[] | null = null;
+        let betIds: string[] | null = null;
+        const masker = new Map<string, number>();
+        let helaAntalet = 0;
+        let helaBetAntalet = 0;
+        let kapat = false;
+        let betKapat = false;
+        // Sant när ett ords träffar kommer från flera stammar: då vet vi
+        // bara ett undre tak för hela antalet, aldrig det exakta.
+        let underTak = false;
+        for (const { stammar } of orden) {
+          const union = new Set<string>();
+          const betUnion = new Set<string>();
+          let antal = 0;
+          let betAntal = 0;
+          let traffadeStammar = 0;
+          for (const stam of stammar) {
+            const nyckel = stam.slice(0, 2) || "_";
+            const skarva = finnsSkarva.has(nyckel)
+              ? await hamta<OrdSkarva>(`${bas}api/hv/amne/${encodeURIComponent(nyckel)}.json`)
+              : null;
+            const post = skarva?.o?.[stam];
+            if (!post || !skarva) continue;
+            traffadeStammar += 1;
+            if (post.n > post.i.length) kapat = true;
+            if (post.bn > post.b.length) betKapat = true;
+            // Unionen är minst den största delmängden, högst summan — vi
+            // har bara antalen, så vi håller oss till det vi vet.
+            antal = Math.max(antal, post.n);
+            betAntal = Math.max(betAntal, post.bn);
+            post.i.forEach((kort, k) => {
+              // Id:na kommer förkortade till sitt löpnummer. Nollfyllningen
+              // MÅSTE tillbaka — `h-2026-868` är en annan handling än
+              // `h-2026-0868`.
+              const id = typeof kort === "number"
+                ? `${skarva.pre}${String(kort).padStart(skarva.bredd, "0")}`
+                : kort;
+              union.add(id);
+              // Partierna ligger i ordskärvan just för att filtret ska
+              // kunna gallra FÖRE listan kapas — annars vore antalet en lögn.
+              masker.set(id, Number.parseInt(post.p.slice(k * 2, k * 2 + 2), 16) || 0);
+            });
+            for (const b of post.b) betUnion.add(b);
+          }
+          if (traffadeStammar > 1) underTak = true;
+          helaAntalet = ids === null ? antal : Math.min(helaAntalet, antal);
+          helaBetAntalet = betIds === null ? betAntal : Math.min(helaBetAntalet, betAntal);
+          ids = ids === null ? [...union].sort().reverse() : ids.filter((id) => union.has(id));
+          betIds = betIds === null
+            ? [...betUnion].sort().reverse()
+            : betIds.filter((id) => betUnion.has(id));
+          if (ids.length === 0 && betIds.length === 0) break;
+        }
+        if (min !== korning) return; // en nyare sökning har hunnit före
+
+        const mask = valdMask();
+        const funna = ids ?? [];
+        // Filtret gäller HELA listan, inte bara de sextio som visas.
+        const alla = mask === 0 ? funna : funna.filter((id) => ((masker.get(id) ?? 0) & mask) !== 0);
+
+        void visaRoster(betIds ?? [], helaBetAntalet, betKapat, min);
+
+        if (alla.length === 0) {
+          status.textContent = mask === 0
+            ? `Inga handlingar innehåller ${flera}.`
+            : `Inga handlingar från ${valdaNamn().join(", ")} innehåller ${flera}.`;
+          return;
+        }
+
+        const visade = alla.slice(0, MAX_TRAFFAR);
+        const skarvor = [...new Set(visade.map(handlingSkarva))];
+        const kort: Record<string, any> = {};
+        for (const s of skarvor) {
+          const del = await hamta<Record<string, any>>(`${bas}api/hv/handling/${s}.json`);
+          Object.assign(kort, del ?? {});
+        }
+        vagda ??= (await hamta<Record<string, { riktning: string; lofte: string }>>(`${bas}api/hv/vagda.json`)) ?? {};
+        if (min !== korning) return;
+
+        // Vad vi kan stå för beror på om listan kapats och om ett filter är
+        // på. Med filter känner vi bara partierna för de handlingar
+        // registret levererat — då redovisas det, aldrig ett antal vi
+        // inte har täckning för.
+        if (mask === 0) {
+          // Utan kapning är listan komplett och antalet exakt. Med kapning
+          // redovisas det antal vi kan stå för — "minst" när flera former av
+          // samma ord slagits ihop och unionen inte går att räkna exakt.
+          const rubrik = kapat
+            ? `${underTak ? "Minst " : ""}${tal(helaAntalet)} handlingar innehåller ${flera}.`
+            : `${tal(alla.length)} handlingar innehåller ${flera}.`;
+          status.textContent = kapat
+            ? `${rubrik} Registret levererar de ${tal(funna.length)} senaste.`
+            : rubrik;
+        } else {
+          const vilka = valdaNamn().join(", ");
+          status.textContent = kapat
+            ? `${tal(alla.length)} av de ${tal(funna.length)} senaste handlingarna som innehåller ${flera} är från ${vilka}. Totalt innehåller ${flera} ${underTak ? "minst " : ""}${tal(helaAntalet)} handlingar.`
+            : `${tal(alla.length)} av ${tal(funna.length)} handlingar som innehåller ${flera} är från ${vilka}.`;
+        }
+
+        const poster = visade
+          .map((id) => ({ id, k: kort[id] }))
+          .filter((x) => x.k)
+          .sort((a, b) => String(b.k.d).localeCompare(String(a.k.d)));
+
+        for (const { id, k } of poster) {
+          const li = document.createElement("li");
+          const rad = document.createElement("div");
+          rad.className = "rad1";
+
+          const a = document.createElement("a");
+          a.className = "titel";
+          a.href = k.u;
+          a.rel = "noopener";
+          a.textContent = k.t;
+          rad.append(a);
+
+          const meta = document.createElement("span");
+          meta.className = "meta";
+          meta.textContent = `${SORT[k.k] ?? k.k} · ${k.d}${k.o ? " · " + k.o : ""}`;
+          rad.append(meta);
+
+          if (Array.isArray(k.p) && k.p.length > 0) {
+            const pw = document.createElement("span");
+            pw.className = "partier";
+            for (const kod of k.p) {
+              const pk = document.createElement("span");
+              pk.className = "pk";
+              pk.textContent = kod;
+              pw.append(pk);
+            }
+            rad.append(pw);
+          }
+
+          li.append(rad);
+
+          // Riktning visas BARA där ett utslag faktiskt vägts. Att ordet
+          // står i texten säger ingenting om för eller emot.
+          const v = vagda?.[id];
+          if (v) {
+            const u = document.createElement("div");
+            u.className = "utslag";
+            u.textContent = v.riktning === "stodjer"
+              ? "Vägd: stödjer ett löfte"
+              : "Vägd: motverkar ett löfte";
+            li.append(u);
+          }
+          traffar.append(li);
+        }
+        if (alla.length > visade.length) {
+          mer.textContent = `Visar de ${visade.length} senaste av ${tal(alla.length)}.`;
+        }
+      }
+
+      /**
+       * Röstsammanställningen: hur partierna röstade i de omröstningar som
+       * hölls om betänkanden där ordet står.
+       *
+       * Detta är en HELT annan sak än träfflistan ovan, och de får aldrig
+       * blandas ihop: att ett ord står i en text betyder att ämnet är
+       * berört, medan en röst är något partiet faktiskt gjorde. Därför står
+       * siffrorna för sig, med riksdagens egna tal.
+       */
+      async function visaRoster(betIds: string[], helaAntalet: number, kapat: boolean, min: number) {
+        if (betIds.length === 0) return;
+        const skarvor = [...new Set(betIds.map((id) => id.split(":")[0] ?? ""))];
+        const betankanden: Record<string, BetankandeKort> = {};
+        for (const s of skarvor) {
+          if (!finnsRostskarva.has(s)) continue;
+          const del = await hamta<Record<string, BetankandeKort>>(
+            `${bas}api/hv/votering/${encodeURIComponent(s)}.json`,
+          );
+          Object.assign(betankanden, del ?? {});
+        }
+        if (min !== korning) return;
+
+        // Ett betänkande utan votering har inget röstresultat att visa.
+        const traffade = betIds.filter((id) => betankanden[id]);
+        if (traffade.length === 0) return;
+
+        const summa = new Map<string, Record<Standpunkt, number>>();
+        const rader: { nyckel: string; bet: BetankandeKort; v: VoteringKort }[] = [];
+        let antalVoteringar = 0;
+        for (const nyckel of traffade) {
+          const bet = betankanden[nyckel]!;
+          for (const v of bet.v) {
+            antalVoteringar += 1;
+            rader.push({ nyckel, bet, v });
+            for (const [parti, r] of Object.entries(v.r)) {
+              const post = summa.get(parti) ?? { ja: 0, nej: 0, avstar: 0, franvarande: 0 };
+              post[partiStandpunkt(r).val] += 1;
+              summa.set(parti, post);
+            }
+          }
+        }
+        if (antalVoteringar === 0) return;
+
+        rosterOm.textContent = kapat
+          ? `Räknat på ${tal(antalVoteringar)} omröstningar i de ${tal(traffade.length)} senaste betänkandena som nämner ordet — av ${tal(helaAntalet)} betänkanden totalt.`
+          : `Räknat på ${tal(antalVoteringar)} omröstningar i ${tal(traffade.length)} betänkanden som nämner ordet.`;
+
+        rosterRader.replaceChildren();
+        const mask = valdMask();
+        for (const parti of PARTIBITAR) {
+          const post = summa.get(parti);
+          if (!post) continue;
+          const bit = PARTIBITAR.indexOf(parti);
+          const tr = document.createElement("tr");
+          if (mask !== 0 && (mask & (1 << bit)) !== 0) tr.className = "vald";
+          const namn = document.createElement("th");
+          namn.scope = "row";
+          namn.textContent = parti.toUpperCase();
+          tr.append(namn);
+          for (const val of ["ja", "nej", "avstar", "franvarande"] as Standpunkt[]) {
+            const td = document.createElement("td");
+            td.textContent = tal(post[val]);
+            tr.append(td);
+          }
+          rosterRader.append(tr);
+        }
+
+        voteringslista.replaceChildren();
+        rader.sort((a, b) => b.v.d.localeCompare(a.v.d) || a.v.p - b.v.p);
+        for (const { bet, v } of rader.slice(0, MAX_VOTERINGAR)) {
+          const li = document.createElement("li");
+          const rad = document.createElement("div");
+          rad.className = "rad1";
+          const a = document.createElement("a");
+          a.className = "titel";
+          a.href = v.url;
+          a.rel = "noopener";
+          a.textContent = bet.t;
+          rad.append(a);
+          const meta = document.createElement("span");
+          meta.className = "meta";
+          meta.textContent = `punkt ${v.p} · ${v.d}${bet.o ? " · " + bet.o : ""} · ${v.u}`;
+          rad.append(meta);
+          li.append(rad);
+
+          const stand = document.createElement("div");
+          stand.className = "standpunkter";
+          for (const parti of PARTIBITAR) {
+            const r = v.r[parti];
+            if (!r) continue;
+            const { val, delad } = partiStandpunkt(r);
+            const chip = document.createElement("span");
+            chip.className = `stand ${val}`;
+            chip.textContent = `${parti.toUpperCase()} ${STANDPUNKT_TEXT[val].toLowerCase()}${delad ? " (delat)" : ""}`;
+            chip.title = `${r[0]} ja, ${r[1]} nej, ${r[2]} avstod, ${r[3]} frånvarande`;
+            stand.append(chip);
+          }
+          li.append(stand);
+          voteringslista.append(li);
+        }
+        if (rader.length > MAX_VOTERINGAR) {
+          const li = document.createElement("li");
+          li.className = "flerrad";
+          li.textContent = `Visar de ${MAX_VOTERINGAR} senaste av ${tal(rader.length)} omröstningar.`;
+          voteringslista.append(li);
+        }
+        rosterYta.hidden = false;
+      }
+
+      let timer: number | undefined;
+      falt.addEventListener("input", () => {
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => void sok(falt.value), 200);
+      });
+      // Filtret ska verka direkt — annars visar listan ett urval som inte
+      // stämmer med kryssen.
+      for (const kryss of partikryss) {
+        kryss.addEventListener("change", () => void sok(falt.value));
+      }
+    }
+  </script>
+)}
+
+<style>
+  .hjalp { color: var(--text-svag); }
+  .hjalp i { font-style: normal; background: var(--yta); padding: 0.05em 0.35em; border-radius: 4px; }
+  .tomt { color: var(--text-svag); font-style: italic; }
+
+  .amnesok { margin: 1rem 0 2rem; }
+  .amnesok input {
+    width: 100%; padding: 0.7rem 0.9rem; font-size: 1rem;
+    border: 1px solid var(--linje); border-radius: var(--radie);
+    background: var(--yta); color: inherit;
+  }
+  .status { color: var(--text-svag); font-size: 0.9rem; margin: 0.5rem 0 0; }
+
+  .partifilter { border: 0; padding: 0; margin: 0.7rem 0 0; }
+  .partifilter legend { padding: 0; font-size: 0.9rem; font-weight: 600; }
+  .partival { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; }
+  .partikryss {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    padding: 0.25rem 0.6rem; font-size: 0.85rem; cursor: pointer;
+    background: var(--yta); border: 1px solid var(--linje); border-radius: 999px;
+  }
+  .partikryss:has(input:checked) { border-color: var(--a-linje); font-weight: 600; }
+  .partikryss input { margin: 0; }
+  .filterhjalp { font-size: 0.85rem; margin: 0.4rem 0 0; }
+
+  .roster { margin: 1.6rem 0 0; padding-top: 1rem; border-top: 1px solid var(--linje); }
+  .roster h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+  .rosttabell-yta { overflow-x: auto; }
+  .rosttabell { border-collapse: collapse; margin: 0.6rem 0; font-size: 0.9rem; }
+  .rosttabell th, .rosttabell td {
+    padding: 0.3rem 0.7rem; text-align: right; border-bottom: 1px solid var(--linje);
+    font-variant-numeric: tabular-nums;
+  }
+  .rosttabell th[scope="row"] { text-align: left; font-weight: 800; }
+  .rosttabell tr.vald { background: var(--yta); }
+
+  .voteringar { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.5rem; }
+  .voteringar li {
+    padding: 0.65rem 0.9rem; background: var(--yta);
+    border: 1px solid var(--linje); border-radius: var(--radie);
+  }
+  .voteringar .rad1 { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: baseline; }
+  .voteringar .titel { font-weight: 600; }
+  .voteringar .meta { color: var(--text-svag); font-size: 0.85rem; }
+  .voteringar .flerrad { color: var(--text-svag); font-size: 0.85rem; background: none; border: 0; padding: 0.2rem 0; }
+  .standpunkter { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.45rem; }
+  .stand {
+    font-size: 0.75rem; padding: 0.05rem 0.4rem; border-radius: 4px;
+    border: 1px solid var(--linje);
+  }
+  .stand.ja { border-color: var(--a-linje); font-weight: 600; }
+  .stand.franvarande { color: var(--text-svag); }
+
+  .traffar { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.5rem; }
+  .traffar li {
+    padding: 0.65rem 0.9rem; background: var(--yta);
+    border: 1px solid var(--linje); border-radius: var(--radie);
+  }
+  .traffar .rad1 { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: baseline; }
+  .traffar .titel { font-weight: 600; }
+  .traffar .meta { color: var(--text-svag); font-size: 0.85rem; }
+  .traffar .partier { display: inline-flex; gap: 0.3rem; }
+  .traffar .pk {
+    font-weight: 800; font-size: 0.75rem; text-transform: uppercase;
+    border: 1px solid var(--linje); border-radius: 4px; padding: 0.05rem 0.3rem;
+  }
+  .traffar .utslag { font-size: 0.85rem; font-weight: 600; }
+
+  .trender { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); margin: 1.2rem 0 2rem; }
+  .trend { background: var(--yta); border: 1px solid var(--linje); border-radius: var(--radie); padding: 0.9rem 1rem; }
+  .trend h3 { margin: 0 0 0.7rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; font-size: 1rem; }
+  .trend h3 .antal { color: var(--text-svag); font-weight: 400; font-size: 0.85rem; margin-left: auto; }
+  .ordlista { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.3rem; }
+  .ordlista li { display: grid; grid-template-columns: minmax(5rem, auto) 1fr auto; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
+  .ordlista .ord { font-weight: 600; overflow-wrap: anywhere; }
+  .ordlista .stapel { height: 0.5rem; background: var(--linje); border-radius: 999px; overflow: hidden; }
+  .ordlista .fyll { display: block; height: 100%; background: var(--a-linje); }
+  .ordlista .ordtal { color: var(--text-svag); font-variant-numeric: tabular-nums; font-size: 0.8rem; }
+</style>

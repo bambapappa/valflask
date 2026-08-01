@@ -1,0 +1,159 @@
+name: skord
+# Skörd på GitHubs runners (fritt utnät): dokument (motioner, propositioner,
+# interpellationer, skriftliga frågor, voteringar), röster (b-0012) och
+# betänkanden (b-0013). Stegen körs SEKVENTIELLT — aldrig två skördar
+# parallellt (HANDOFF) — och skördarna delsparar per block, så delresultat
+# committas även om ett steg faller OCH om jobbet avbryts eller slår i
+# timeout-taket (always()-committen nedan); omkörning är idempotent och
+# fortsätter där det slutade. Endast skördefilerna återställs i pushloopen
+# (data/roster/, personer.json, betankanden.json, handlingar.json) — kön och
+# kopplingarna rörs aldrig här, så ett samtidigt granskningsbeslut kan inte
+# skrivas över.
+#
+# SCHEMALAGD KÖRNING: veckovis, se cron nedan. Ett manuellt anrop utan --rm
+# skördar de fyra kända riksmötena i sin helhet (rimligt för en förstagångs-
+# eller katastrofåterställningskörning); en schema-triggad körning har inga
+# inputs alls och skördar då bara INNEVARANDE riksmöte, beräknat av steget
+# "Bestäm riksmöte" nedan — annars skulle varje vecka skörda om fyra års
+# historik i onödan. foreslag.yml är schemalagd tre timmar senare samma dag,
+# så den nya datan hinner committas innan matchningen läser den.
+on:
+  workflow_dispatch:
+    inputs:
+      typ:
+        description: "Vad ska skördas?"
+        type: choice
+        options: [bada, dok, roster, bet]
+        default: bada
+      rm:
+        description: "Riksmöten (mellanslagsseparerade) — tomt = innevarande (räknat från datumet körningen sker)"
+        required: false
+        default: "2022/23 2023/24 2024/25 2025/26"
+  schedule:
+    - cron: "0 4 * * 1"
+permissions:
+  contents: write
+concurrency:
+  group: skord
+  cancel-in-progress: false
+jobs:
+  skorda:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # Alla run-steg utan egen working-directory kör ur Handlingsvågens
+        # rot, så relativa sökvägar (data/, cd pipeline) betyder samma sak
+        # som före sammanslagningen.
+        working-directory: handlingsvagen
+    timeout-minutes: 300
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        # Efter sammanslagningen pushar den här körningen till valflasks main,
+        # där direktpush kräver botens token (samma väg som pipeline.yml).
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: true
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: npm ci
+        working-directory: handlingsvagen/pipeline
+      - name: Bestäm riksmöte
+        # inputs.rm är tomt på schema-triggade körningar (ingen dispatch
+        # skedde, defaulten i "on" ovan gäller bara UI:t för manuella
+        # körningar) — och tomt betyder här "räkna ut innevarande riksmöte",
+        # inte "skörda inget". Ett riksmöte löper september–augusti.
+        id: rm
+        run: |
+          if [ -n "${{ inputs.rm }}" ]; then
+            echo "rm=${{ inputs.rm }}" >> "$GITHUB_OUTPUT"
+          else
+            y=$(date -u +%-Y); m=$(date -u +%-m)
+            if [ "$m" -ge 9 ]; then start=$y; else start=$((y - 1)); fi
+            end2=$(printf "%02d" $(( (start + 1) % 100 )))
+            echo "rm=${start}/${end2}" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Dokumentskörd (motioner, propositioner, interpellationer, frågor, voteringar)
+        id: dok
+        if: ${{ inputs.typ == 'bada' || inputs.typ == 'dok' || inputs.typ == '' }}
+        continue-on-error: true
+        env:
+          RM: ${{ steps.rm.outputs.rm }}
+        run: |
+          args=()
+          for r in $RM; do args+=(--rm "$r"); done
+          node --import tsx/esm scripts/harvest.mts "${args[@]}"
+        working-directory: handlingsvagen/pipeline
+      - name: Röstskörd
+        id: roster
+        if: ${{ inputs.typ == 'bada' || inputs.typ == 'roster' || inputs.typ == '' }}
+        continue-on-error: true
+        env:
+          RM: ${{ steps.rm.outputs.rm }}
+        run: |
+          args=()
+          for r in $RM; do args+=(--rm "$r"); done
+          node --import tsx/esm scripts/roster.mts "${args[@]}"
+        working-directory: handlingsvagen/pipeline
+      - name: Betänkandeskörd
+        id: bet
+        if: ${{ inputs.typ == 'bada' || inputs.typ == 'bet' || inputs.typ == '' }}
+        continue-on-error: true
+        env:
+          RM: ${{ steps.rm.outputs.rm }}
+        run: |
+          args=(--typ bet)
+          for r in $RM; do args+=(--rm "$r"); done
+          node --import tsx/esm scripts/harvest.mts "${args[@]}"
+        working-directory: handlingsvagen/pipeline
+      - name: Committa skördefilerna
+        # always(): delresultatet ska committas ÄVEN vid cancel och timeout,
+        # inte bara på framgångsvägen — utan det (implicit success()) kastas de
+        # skördade blocken bort när jobbet avbryts eller slår i 300-min-taket,
+        # eftersom de bara finns på runnerns tillfälliga disk tills detta steg
+        # pushar dem. Skörden delsparar per block, så en omkörning fortsätter
+        # där det slutade.
+        if: ${{ always() }}
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/skord
+          for p in data/roster data/personer.json data/betankanden.json data/handlingar.json; do
+            [ -e "$p" ] && cp -r "$p" /tmp/skord/ || true
+          done
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+            for p in roster personer.json betankanden.json handlingar.json; do
+              [ -e "/tmp/skord/$p" ] && cp -r "/tmp/skord/$p" data/ || true
+            done
+            git add data/roster data/personer.json data/betankanden.json data/handlingar.json 2>/dev/null || git add data/
+            if git diff --cached --quiet; then
+              echo "Inga nya skördedata."
+              exit 0
+            fi
+            git commit -m "data: skörd via workflow (${{ inputs.typ || 'schema' }})"
+            if git push origin "HEAD:$DEFAULT_BRANCH"; then
+              echo "Push lyckades (försök $attempt)."
+              exit 0
+            fi
+            echo "Push-försök $attempt misslyckades — gör om från färsk defaultgren..."
+            sleep $((attempt * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
+      - name: Fall röd om ett skördesteg föll
+        if: steps.dok.outcome == 'failure' || steps.roster.outcome == 'failure' || steps.bet.outcome == 'failure'
+        run: |
+          echo "Ett skördesteg föll (dok: ${{ steps.dok.outcome }}, roster: ${{ steps.roster.outcome }}, bet: ${{ steps.bet.outcome }})."
+          echo "Delresultat är committade — omkörning fortsätter där det slutade."
+          exit 1

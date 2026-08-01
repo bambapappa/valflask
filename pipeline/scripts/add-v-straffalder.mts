@@ -21,7 +21,7 @@ import { parse as parseYaml } from "yaml";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const DATA = join(ROOT, "data");
-const UA = "DrygastBot/1.0 (+https://drygast.nu/om)";
+const UA = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 
 const SOURCE_URL = "https://data.riksdagen.se/dokument/HD024211";
 const PUBLISHED = "2026-07-07T00:00:00Z";

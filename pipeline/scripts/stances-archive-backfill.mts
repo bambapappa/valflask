@@ -31,7 +31,7 @@ const positional = args.filter((a) => !a.startsWith("--"));
 const MODE = positional[0] ?? "avail";
 const MAX_SAVES = parseInt(positional[1] ?? "0", 10) || (MODE === "save" ? 10 : 0);
 const LIMIT = parseInt(positional[2] ?? "0", 10) || Infinity;
-const UA = "DrygastBot/1.0 (+https://drygast.nu/om)";
+const UA = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 interface StanceSource {

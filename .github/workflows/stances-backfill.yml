@@ -56,7 +56,7 @@ jobs:
       - name: Commit data if changed
         if: ${{ !inputs.dry_run }}
         run: |
-          git config user.name "drygast-bot" && git config user.email "bot@drygast.nu"
+          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
           git add data/stances.json data/stances_review.json
           if git diff --cached --quiet; then
             echo "Inga ändringar — inget att committa."

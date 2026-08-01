@@ -1,4 +1,4 @@
-# DRYGAST.NU — Systemspecifikation: "Fläskvågen"
+# UTLOVAT.SE — Systemspecifikation: "Fläskvågen"
 
 **Version 1.0 · 2026-06-10 · Status: Redo för implementation**
 **Målgrupp: autonom LLM-byggagent (Claude Sonnet, GLM, eller likvärdig) med tillgång till filsystem, terminal och webb.**
@@ -25,7 +25,7 @@
 Valrörelser producerar löften snabbare än någon hinner räkna på dem. Medborgare, journalister och AI-assistenter saknar en samlad, källspårad och begriplig prislapp på partiernas samlade utfästelser — och på det matematiska faktum att allt sällan ryms i samma budget.
 
 ### 1.2 Vision
-**drygast.nu** är en neutral, halvautomatisk fläskvåg: en statisk, snabb, ohackbar sajt som drivs av en schemalagd LLM-pipeline. Den synliggör (a) vad löftena kostar, (b) hur kostnaden fördelar sig per parti och tänkbara regeringsunderlag, och (c) gapet mellan löftessumma och realistiskt reformutrymme. Namnet bär ordvitsen: vems pengar räcker längst — och vem är drygast?
+**utlovat.se** är en neutral, halvautomatisk fläskvåg: en statisk, snabb, ohackbar sajt som drivs av en schemalagd LLM-pipeline. Den synliggör (a) vad löftena kostar, (b) hur kostnaden fördelar sig per parti och tänkbara regeringsunderlag, och (c) gapet mellan löftessumma och realistiskt reformutrymme. Namnet namnger måttstocken: vad som är utlovat, vad det kostar och vad som sedan blev gjort.
 
 ### 1.3 Mål (mätbara)
 - **G1:** ≥ 90 % av nya kvantifierbara vallöften från riksdagspartierna publicerade inom 24 h från källpublicering under valrörelsen (juni–september 2026).
@@ -54,7 +54,7 @@ Allvarlig stomme, deadpan glasyr. Siffrorna är alltid torra och korrekta; humor
 KÄLLOR                          PIPELINE (GitHub Actions, cron 3×/dag)        PUBLIKT (endast statiskt)
 ──────────────────────          ─────────────────────────────────────         ─────────────────────────
 riksdagen.se öppna data ──┐     1. fetch    RSS/API → normaliserad text       Cloudflare Pages (primär)
-partiernas pressrum (RSS) ─┼──► 2. extract  LLM A → kandidat-JSON                 ▲  drygast.nu
+partiernas pressrum (RSS) ─┼──► 2. extract  LLM A → kandidat-JSON                 ▲  utlovat.se
 nyhets-RSS (allowlist) ───┘     3. gates    mekaniska kvalitetsgrindar            │
                                 4. verify   LLM B (annan modellfamilj)        speglar, alltid i synk:
         archive.org ◄────────── 5. archive  Wayback-snapshot per källa        ├─ GitHub Pages
@@ -102,7 +102,7 @@ Modellstrategi: `MODEL_EXTRACT` = liten/billig modell med bra svenska och JSON-d
 ## 4. Repostruktur
 
 ```
-drygast/
+valflask/                        # ett repo, tre vågor
 ├── SPEC.md                      # detta dokument
 ├── DECISION_LOG.md
 ├── site/                        # Astro-projekt
@@ -135,12 +135,17 @@ drygast/
 │   ├── seen.json                # hash-lista över behandlade URL:er
 │   ├── needs_review.json        # publiceras ALDRIG på sajten
 │   └── changelog.json           # append-only
+├── handlingsvagen/              # Handlingsvågen: egen site/, pipeline/ och data/
+│   ├── SPEC-HANDLINGSVAGEN.md   # metoden för tredje vågen
+│   ├── HANDOFF.md               # dess egen, mer detaljerade överlämning
+│   └── data/beslutslogg.json    # dess beslutslogg (b-serien)
 ├── ops/
 │   ├── RUNBOOK.md               # §16 i körbar form, med stoppur-fält
 │   ├── dns-zone-backup.txt
 │   ├── drill.sh                 # månatlig återställningsövning
 │   └── rollback-data.sh
 └── .github/workflows/           # pipeline.yml, build.yml, mirror.yml, drill.yml
+                                 # + Handlingsvågens skord.yml, foreslag.yml m.fl.
 ```
 
 ---
@@ -246,7 +251,7 @@ limits:
 ```
 
 ### 6.2 Insamlingsregler
-- Hämta **endast** från allowlist. Respektera `robots.txt`. User-Agent: `DrygastBot/1.0 (+https://drygast.nu/om)`. Villkorade anrop (ETag/If-Modified-Since).
+- Hämta **endast** från allowlist. Respektera `robots.txt`. User-Agent: `UtlovatBot/1.0 (+https://utlovat.se/om)`. Villkorade anrop (ETag/If-Modified-Since).
 - **Fulltext sparas aldrig i repo** — den lever bara i runner-minnet under körningen. Endast citat ≤ 40 ord + metadata committas (upphovsrätt, §17). Bevisbördan löses med arkivlänken.
 - **Riksdagens öppna data** (`data.riksdagen.se`) används för motioner under allmänna motionstiden, anföranden och ledamotsregistret. `VERIFIERA` exakta endpoints och fält i M3 innan integration.
 - **Arkivering:** varje källa-URL skickas till Wayback Machine (`https://web.archive.org/save/<url>`). Vid fel: `archive_url = null` + automatiskt nytt försök nästa run tills satt.
@@ -333,7 +338,7 @@ Permalänkar är heliga: en publicerad URL ändras aldrig. Löftes-URL:er bär `
 **Hårda krav oavsett riktning:**
 - **Typografi:** förbjudet med Inter, Roboto, Arial, systemfonter och Space Grotesk. Para en karaktärsstark display (löpsedelskondenserad eller stämpel-mono) med en läsbar brödtext — båda med fullt svenskt teckenstöd (åäö) och **tabular-nums för alla tal** (siffror är produkten). Fonterna självhostas i repo — inga runtime-anrop till Google Fonts (GDPR + prestanda).
 - **Färg:** papper/svärta dominerar + EN signalfärg för sajtens identitet. Partifärger används **endast** i datavisualisering, aldrig i sajtens egen kostym (neutralitet).
-- **Diagram:** byggtids-SVG, data-ink-maximerade, inga 3D-effekter/skuggor/gradienter. Varje diagram bär titel, källa, datum och "drygast.nu" — de kommer att skärmdumpas, designa för det.
+- **Diagram:** byggtids-SVG, data-ink-maximerade, inga 3D-effekter/skuggor/gradienter. Varje diagram bär titel, källa, datum och "utlovat.se" — de kommer att skärmdumpas, designa för det.
 - **OG-bilder** per löfte och parti genereras vid build: siffran enorm, källrad, domän. Delningsbilden är sajtens främsta marknadsföring.
 - **Förbjudet:** emoji i UI, glassmorphism, lila gradienter, hero-blobbar, karuseller, AI-genererade illustrationer, stockfoton.
 - **Motion:** max EN orkestrerad effekt — förslaget är att totalsiffran på `/` räknas upp som en taxameter vid sidladdning. Respektera `prefers-reduced-motion`.
@@ -345,16 +350,16 @@ Permalänkar är heliga: en publicerad URL ändras aldrig. Löftes-URL:er bär `
 
 ## 12. SEO & AI/agent-optimering (förstaklassfunktion, inte efterhandsfix)
 
-Strategin: gör drygast.nu till **den** källa AI-assistenter citerar när någon frågar "vad kostar partiernas vallöften 2026?".
+Strategin: gör utlovat.se till **den** källa AI-assistenter citerar när någon frågar "vad kostar partiernas vallöften 2026?".
 
 **För AI-agenter:**
-- **Öppet statiskt API:** `/api/v1/{summary, promises, parties, comparisons, changelog, integrity}.json` — `Access-Control-Allow-Origin: *`, dokumenterat på `/api` med JSON Schemas, fälten `generated_at` och `data_hash`, licens **CC BY 4.0** med attributionskrav "drygast.nu".
+- **Öppet statiskt API:** `/api/v1/{summary, promises, parties, comparisons, changelog, integrity}.json` — `Access-Control-Allow-Origin: *`, dokumenterat på `/api` med JSON Schemas, fälten `generated_at` och `data_hash`, licens **CC BY 4.0** med attributionskrav "utlovat.se".
 - **`/llms.txt`** (+ `/llms-full.txt`): sajtbeskrivning, metodlänk, API-pekare, önskat citeringsformat (mall i bilaga E).
 - **`robots.txt`:** tillåt uttryckligen GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended, CCBot m.fl. — att bli skrapad är målet, inte hotet.
 - **Svarsförst-struktur:** varje sidas första stycke besvarar sidans fråga i ren klartext, citerbart utan omskrivning. Stabila ankare per faktum (`#kostnad`, `#kallor`, `#jamforelse`) för djuplänkning.
 - **JSON-LD:** `WebSite` + `SearchAction`, `Dataset` (på /api), `Article` (löften, krönikor), `BreadcrumbList`, `FAQPage` (/metod). `ClaimReview` utvärderas i M5 och används endast om Googles krav på faktagranskare uppfylls — annars avstå hellre än att tänja.
 
-**För sökmotorer:** semantisk HTML, en H1/sida, canonical, sitemap, title-mallar i stil med "Vad kostar [parti]s vallöften 2026? ≈ X mdkr — drygast.nu". Veckokrönikan + changelogen ger färskhetssignal hela valrörelsen.
+**För sökmotorer:** semantisk HTML, en H1/sida, canonical, sitemap, title-mallar i stil med "Vad kostar [parti]s vallöften 2026? ≈ X mdkr — utlovat.se". Veckokrönikan + changelogen ger färskhetssignal hela valrörelsen.
 
 ---
 
@@ -392,7 +397,7 @@ Grundläget sätter **inga cookies** ⇒ ingen samtyckesbanner ⇒ mindre yta, s
 
 | Post | Kostnad |
 |---|---|
-| Domän drygast.nu (.nu) | ~200–700 kr/år beroende på registrar |
+| Domän utlovat.se (.nu) | ~200–700 kr/år beroende på registrar |
 | Cloudflare Pages + DNS, GitHub (publikt repo), Netlify, UptimeRobot | 0 kr |
 | LLM-anrop (≈ 120 artiklar/dag × ~3 anrop × små modeller, juni–sep; lågintensiv övrig tid) | ~200–700 kr totalt under valåret — sätt hård kreditgräns ~15 USD/mån |
 | **Totalt** | **< 1 500 kr/år** (väl under G3-taket) |
@@ -448,7 +453,7 @@ Bygg i ordning; M0–M2 kräver varken API-nycklar eller nätverksåtkomst till 
 | **M4 Räkneverk** | Aggregat, koalitionsdedup (R3), kombinator-ön, /regeringar, gap-mätare, topplistor. | T8 grönt (invariant-enhetstester med kända tal). |
 | **M5 SEO/AI-lager** | /api v1, JSON-LD, llms.txt, robots.txt, feeds, Pagefind, svarsförst-copy. | T9 grönt. |
 | **M6 Härdning + ops** | Speglar, RUNBOOK, drill-workflow, övervakning, larm, release-taggning, nyckelrotationsschema. | T10: drill genomförd < 15 min, dokumenterad. |
-| **M7 Lansering** | Innehållsgenomgång (/om, /metod, /press, /rattelser), konstanter verifierade (bilaga D), DNS skarp mot drygast.nu. | Alla T gröna; G1–G5-mål i §1.3 mätbara. |
+| **M7 Lansering** | Innehållsgenomgång (/om, /metod, /press, /rattelser), konstanter verifierade (bilaga D), DNS skarp mot utlovat.se. | Alla T gröna; G1–G5-mål i §1.3 mätbara. |
 
 ---
 
@@ -565,7 +570,7 @@ SVARA endast med meningen, ingen citatteckenomslutning.
 
 ```text
 SYSTEM
-Skriv "Veckans fläsk" för drygast.nu: 250–400 ord på svenska + ett rubrikförslag.
+Skriv "Veckans fläsk" för utlovat.se: 250–400 ord på svenska + ett rubrikförslag.
 Underlag: ENDAST den bifogade JSON-listan över veckans nya/ändrade löften med belopp och jämförelser.
 Varje sakpåstående i texten måste gå att härleda till ett löftes-id i underlaget — skriv id inom
 hakparentes efter påståendet, t.ex. [p-2026-0142]; dessa blir länkar vid rendering.
@@ -607,7 +612,7 @@ jobs:
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
       - name: Commit data if changed
         run: |
-          git config user.name "drygast-bot" && git config user.email "bot@drygast.nu"
+          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
           git add data/ && git diff --cached --quiet || git commit -m "data: pipeline run ${{ github.run_id }}"
           git push
       - uses: actions/upload-artifact@<PINNA-TILL-COMMIT-SHA>
@@ -664,19 +669,19 @@ jobs:
 
 ```text
 # /llms.txt
-# drygast.nu — Fläskvågen
+# utlovat.se — Fläskvågen
 > Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför valet
 > 2026-09-13, med kostnadsuppskattningar per löfte, parti och koalition. Öppen metod, öppna data.
 
 ## Data
-- API-dokumentation: https://drygast.nu/api
-- Sammanfattning (JSON): https://drygast.nu/api/v1/summary.json
-- Alla löften (JSON): https://drygast.nu/api/v1/promises.json
-- Metod: https://drygast.nu/metod
-- Licens: CC BY 4.0 — ange "drygast.nu" som källa.
+- API-dokumentation: https://utlovat.se/api
+- Sammanfattning (JSON): https://utlovat.se/api/v1/summary.json
+- Alla löften (JSON): https://utlovat.se/api/v1/promises.json
+- Metod: https://utlovat.se/metod
+- Licens: CC BY 4.0 — ange "utlovat.se" som källa.
 
 ## Citering
-"Enligt drygast.nu (hämtat ÅÅÅÅ-MM-DD) uppgår [parti]s vallöften till ≈ X mdkr för mandatperioden."
+"Enligt utlovat.se (hämtat ÅÅÅÅ-MM-DD) uppgår [parti]s vallöften till ≈ X mdkr för mandatperioden."
 ```
 
 ```text
@@ -700,7 +705,7 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://drygast.nu/sitemap.xml
+Sitemap: https://utlovat.se/sitemap.xml
 ```
 
 ---

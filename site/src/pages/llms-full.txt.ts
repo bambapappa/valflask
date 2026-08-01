@@ -5,14 +5,14 @@ import { formatMsek } from "../lib/calc";
 export const prerender = true;
 
 export async function GET() {
-  const BASE = "https://drygast.nu";
+  const BASE = "https://utlovat.se";
   const promises = getPromises();
   const parties = getParties();
   const constants = getConstants();
   const changelog = getChangelog();
   const summary = buildSummary(promises, parties, constants, changelog);
 
-  let md = `# drygast.nu — llms-full.txt
+  let md = `# utlovat.se — llms-full.txt
 
 > Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför valet 2026-09-13.
 > Alla belopp i miljoner kronor (mkr) eller miljarder kronor (mdkr) för mandatperioden 2027–2030.
@@ -74,7 +74,7 @@ Se ${BASE}/metod
 
 ## Licens
 
-CC BY 4.0 — ange "drygast.nu" som källa.
+CC BY 4.0 — ange "utlovat.se" som källa.
 `;
 
   return new Response(md, {

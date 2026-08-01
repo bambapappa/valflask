@@ -10,7 +10,7 @@ const WAYBACK_TIMEOUT_MS = 15_000;
 const ARCHIVE_TODAY_TIMEOUT_MS = 45_000;
 const MAX_RETRIES = 2;
 const BACKOFF_BASE_MS = 1_000;
-const UA = "DrygastBot/1.0 (+https://drygast.nu/om)";
+const UA = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 
 /* ─────────────────────────────────────────────────────────── Wayback ── */
 

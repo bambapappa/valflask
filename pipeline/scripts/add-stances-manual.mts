@@ -24,7 +24,7 @@ import { parse as parseYaml } from "yaml";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const DATA = join(ROOT, "data");
-const UA = "DrygastBot/1.0 (+https://drygast.nu/om)";
+const UA = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 
 interface Manual {
   candidate: StanceCandidate;

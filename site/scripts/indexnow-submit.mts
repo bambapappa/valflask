@@ -13,7 +13,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const HOST = "drygast.nu";
+const HOST = "utlovat.se";
 const BASE = `https://${HOST}`;
 // Publik nyckel (ingen hemlighet — den ligger dessutom på /<KEY>.txt).
 const KEY = "547b2beea892cfb44a32d83e1901c410";

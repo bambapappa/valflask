@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://drygast.nu/schemas/stance-extraction.schema.json",
+  "$id": "https://utlovat.se/schemas/stance-extraction.schema.json",
   "title": "Frågevågen — extraktionskandidat (A6)",
   "description": "En kandidat ur LLM A:s A6-svar. Valideras per kandidat i G1 (stance). additionalProperties:false är injektionshygien — okända fält fäller kandidaten.",
   "type": "object",

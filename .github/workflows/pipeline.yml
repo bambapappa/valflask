@@ -85,8 +85,8 @@ jobs:
         env:
           PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
-          git config user.name "drygast-bot"
-          git config user.email "bot@drygast.nu"
+          git config user.name "utlovat-bot"
+          git config user.email "bot@utlovat.se"
           # Checkout-stegets persisted auth-header bär jobbstart-tokenen (kan ha
           # gått ut) och vinner över remote-URL:en — rensa den och pusha med den
           # färska tokenen i stället.

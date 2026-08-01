@@ -1,0 +1,28 @@
+{
+  "name": "handlingsvagen-pipeline",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "harvest": "node --import tsx/esm scripts/harvest.mts",
+    "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit",
+    "foreslag": "node --import tsx/esm scripts/foreslag.mts",
+    "granska": "node --import tsx/esm scripts/koppling-granska.mts",
+    "roster": "node --import tsx/esm scripts/roster.mts",
+    "vendor": "node --import tsx/esm scripts/bygg-vendor.mts",
+    "arkiv": "node --import tsx/esm scripts/arkiv.mts",
+    "domar": "node --import tsx/esm scripts/domar.mts",
+    "organ-backfill": "node --import tsx/esm scripts/organ-backfill.mts",
+    "motionstyp-backfill": "node --import tsx/esm scripts/motionstyp-backfill.mts",
+    "nyckelord": "node --import tsx/esm scripts/nyckelord-index.mts",
+    "jamfor": "node --import tsx/esm scripts/jamfor-modeller.mts"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "tsx": "^4.23.0",
+    "typescript": "^5.0.0"
+  }
+}

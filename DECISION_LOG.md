@@ -1369,3 +1369,30 @@ startsidan lyfte fram den. Radera dem — nej, då försvinner spårbarheten.
 **Påverkan:** `data/chronicles.json` (4 arkiverade, 1 uppstartskrönika),
 `site/src/lib/data.ts`, `site/src/pages/veckans-flask/index.astro`,
 `site/scripts/test-t1.mts`, `data/rattelser.json`.
+
+## 2026-07-31 — Sammanslagning: två repon blir ett, två beslutsloggar består
+
+**Beslut:** Handlingsvågen flyttas in i det här repot under `handlingsvagen/`
+med historiken bevarad, och sammanslagningen är samtidigt lanseringen av
+utlovat.se. De två beslutsloggarna slås **inte** ihop till ett format:
+`DECISION_LOG.md` fortsätter bära besluten om Fläskvågen, Frågevågen och det
+som rör hela sajten, medan `handlingsvagen/data/beslutslogg.json` fortsätter
+bära Handlingsvågens `b-`serie. Ett beslut som rör båda skrivs här, med
+b-numret utskrivet om ett sådant finns.
+
+**Motiv:** Ingen post får numreras om — det är bindande i båda repona — och
+JSON-loggen är maskinläsbar och renderas på Handlingsvågens metodsida. Att
+konvertera 25 poster i endera riktningen två dagar före lansering hade varit
+ett rent omskrivningsarbete med en verklig risk att tappa eller förskjuta en
+post, utan något som läsaren märker.
+
+**Förkastade alternativ:** Konvertera JSON-loggen till markdown (tappar
+renderingen på metodsidan och maskinläsbarheten). Konvertera `DECISION_LOG.md`
+till JSON (1 371 rader fri prosa, ingen vinst). Prefixa om `b-`serien till
+`hv-` (att numrera om någon annans post är förbjudet). Slå ihop efter
+lanseringen ändå — det ligger kvar som steg 3 i
+`handlingsvagen/SAMMANSLAGNING.md`, men det är ingen brådska.
+
+**Påverkan:** hela repot; `handlingsvagen/SAMMANSLAGNING.md` (steg 1–2),
+`HANDOFF.md` §9 (en anslagstavla), `.github/workflows/` (18 workflows i ett
+repo, skilda concurrency-grupper).

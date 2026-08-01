@@ -1,9 +1,9 @@
-# Projektminne för drygast.nu / valflask
+# Projektminne för utlovat.se / valflask
 
 Regler som gäller allt arbete i det här repot — chat, issuekommentarer,
 commit-texter, PR-texter, sajtcopy, prompter och dokumentation.
 
-## Vad drygast.nu är
+## Vad utlovat.se är
 
 En granskningssajt inför valet 2026 som granskar partierna öppet och
 spårbart. Tjänsten består av tre vågor:
@@ -16,18 +16,20 @@ spårbart. Tjänsten består av tre vågor:
   belagt med exakta citat. Saknas rent citat lämnas cellen tom.
 - **Handlingsvågen** — håller de vad de lovar? Väger partiernas och
   ledamöternas faktiska riksdagshandlingar mot löftena och ståndpunkterna.
-  Utvecklas i systerrepot `bambapappa/handlingsvagen` och driftsätts på
-  `handlingsvagen.drygast.nu`. **Privat tills ägaren släpper den** — den
-  byggs medvetet inte in i det här repot, just för att skydda den grinden.
-  Sammanslagning kan omvärderas efter lansering.
+  Ligger under `handlingsvagen/` i det här repot och på sökvägen
+  `utlovat.se/handlingsvagen` — samma bygge och samma domän som de andra
+  två vågorna. Har egen `HANDOFF.md`, egen spec och egen beslutslogg;
+  läs dem innan du rör något där.
 
-Det här repot (`valflask`) rymmer Fläskvågen och Frågevågen. Data lever i
+Repot rymmer alla tre vågorna. Fläskvågens och Frågevågens data lever i
 `data/promises.json` (löften), `data/changelog.json` (körlogg med
 `data_hash`), `data/rattelser.json` (offentlig rättelselogg) och
-`data/needs_review.json` (granskningskö). Pipelinen i `pipeline/`
-extraherar, grindar (G1–G5), verifierar och uppskattar kostnad; sajten i
-`site/` byggs med Astro. Inget LLM-estimat publiceras utan att en
-människa godkänt det.
+`data/needs_review.json` (granskningskö); Handlingsvågens ligger under
+`handlingsvagen/data/`. Pipelinen i `pipeline/` extraherar, grindar
+(G1–G5), verifierar och uppskattar kostnad; sajten i `site/` byggs med
+Astro, och Handlingsvågens sajt byggs i samma körning och läggs under
+`/handlingsvagen`. Inget LLM-estimat publiceras utan att en människa
+godkänt det, och ingen koppling mellan löfte och handling heller.
 
 Tonen är torr och saklig — humorn ligger i siffrornas storlek, aldrig i
 att håna ett parti eller en person.

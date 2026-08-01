@@ -1,0 +1,298 @@
+name: foreslag
+# Skarpa förslagskörningar (HV2) på GitHubs runners. Kräver i DETTA repo:
+#   hemlighet  LLM_API_KEY          (Settings → Secrets and variables → Actions)
+#                                   OPENROUTER_API_KEY godtas som alias.
+#   variabel   MODEL_KOPPLING       (samma ställe, fliken Variables) — modell-id
+#                                   hos primärleverantören (t.ex. Go:
+#                                   deepseek-v4-pro — modellkataloger rör sig,
+#                                   verifiera mot leverantörens egen lista).
+#   variabel   LLM_BASE_URL         primär endpoint, t.ex. OpenCode Go
+#                                   https://opencode.ai/zen/go/v1. Utan den
+#                                   används OpenRouter.
+# Valfria: variabeln LLM_FALLBACK_BASE_URL (secret som reserv), hemligheten
+# LLM_FALLBACK_API_KEY (alias LLM_FALLBACK_KEY godtas), och variabeln
+# MODEL_KOPPLING_FALLBACK. Löftena läses ur data/promises.json i samma träd.
+#
+# ANDRA PRIMÄREN (primar=zai-glm): en helt SKILD kvot, för engångsjobb som
+# inte ska äta av Go-budgeten (t.ex. att beta av en stor kö). Kräver:
+#   hemlighet  LLM_ZAI_API_KEY
+#   variabel   LLM_ZAI_BASE_URL     z.ai:s OpenAI-kompatibla endpoint
+#   variabel   MODEL_KOPPLING_ZAI   modell-id, t.ex. glm-5.2
+# Ingen reserv kopplas in i det läget (OpenRouter har ingen kredit) — ett fel
+# faller direkt till nästa par i stället för att slösa försök på en död reserv.
+# VALET GÄLLER BARA DEN ENSKILDA KÖRNINGEN. Schemat nedan kan inte välja
+# zai-glm — det kräver ett medvetet workflow_dispatch — så en glömd inställning
+# kan aldrig läcka in i nästa veckas automatiska körning.
+#
+# Körningen är idempotent (par med förslag i kön hoppas över) och pushar
+# LÖFTE FÖR LÖFTE: varje klart löftes nya poster läggs på färsk defaultgren
+# direkt, så det som gjorts ligger löpande på main och överlever även en hård
+# runner-krasch mitt i. Pushloopen lägger bara körningens NYA köposter (via
+# scripts/ko-uppdatera.mts) — ett granskningsbeslut som hann fattas under
+# körningen återuppstår aldrig. Slutar nyckeln svara, tar krediten slut
+# eller slår leverantören i kvottaket bryter körningen efter tre löften i
+# rad utan framsteg — klienten tar då endpointen ur spel, så ett dött läge
+# kostar sekunder i stället för minuter. Salvage-committen sist är ett always()-steg
+# som flushar det sista löftets delta ÄVEN om jobbet avbryts eller slår i
+# timeout-taket (300 min). När committen lyckats synkas kön till issues;
+# hoppas det steget över (kort avbrottsfönster) tar koppling-sync.yml det i
+# efterhand.
+on:
+  workflow_dispatch:
+    inputs:
+      primar:
+        description: "Primär endpoint för DENNA körning (schemat använder alltid opencode-go)"
+        type: choice
+        options: [opencode-go, zai-glm]
+        default: opencode-go
+      lofte:
+        description: "Ett löftes-id (p-2026-XXXX) — tomt = alla aktiva"
+        required: false
+        default: ""
+      max_kandidater:
+        description: "Max kandidater per löfte och sort"
+        required: false
+        default: "8"
+      dry_run:
+        description: "Bara kandidatlistor — inga modellanrop, ingen skrivning"
+        type: boolean
+        default: false
+  schedule:
+    # Veckovis matchning av det skörden hämtat sedan sist (se skord.yml,
+    # som är schemalagd tre timmar tidigare samma dag). Kör alltid mot
+    # opencode Go — se stycket om primar ovan för varför.
+    - cron: "0 7 * * 1"
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: foreslag
+  cancel-in-progress: false
+jobs:
+  foresla:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # Alla run-steg utan egen working-directory kör ur Handlingsvågens
+        # rot, så relativa sökvägar (data/, cd pipeline) betyder samma sak
+        # som före sammanslagningen.
+        working-directory: handlingsvagen
+    # Full körning över alla löften tar timmar (throttle 2,5 s per modellanrop
+    # plus källtexthämtning per par) — 120 min räckte inte.
+    timeout-minutes: 300
+    env:
+      # inputs.* är tomt på schema-triggade körningar (ingen dispatch skedde) —
+      # föll det igenom skulle jämförelsen nedan aldrig träffa 'zai-glm', vilket
+      # RÅKAR ge rätt resultat (opencode-go) men av fel skäl. Explicit fallback
+      # här gör det uttalat i stället för en tyst bieffekt av tom sträng.
+      PRIMAR: ${{ inputs.primar || 'opencode-go' }}
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        # Efter sammanslagningen pushar den här körningen till valflasks main,
+        # där direktpush kräver botens token (samma väg som pipeline.yml).
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: true
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: npm ci
+        working-directory: handlingsvagen/pipeline
+      - name: Kontrollera nycklar
+        if: ${{ !inputs.dry_run }}
+        env:
+          HAR_NYCKEL: ${{ (env.PRIMAR == 'zai-glm' && secrets.LLM_ZAI_API_KEY != '') || (env.PRIMAR != 'zai-glm' && (secrets.LLM_API_KEY != '' || secrets.OPENROUTER_API_KEY != '')) }}
+          HAR_MODELL: ${{ (env.PRIMAR == 'zai-glm' && vars.MODEL_KOPPLING_ZAI != '') || (env.PRIMAR != 'zai-glm' && vars.MODEL_KOPPLING != '') }}
+          # Saknas just bas-URL:en för zai-glm faller "Förslagskörning"-steget
+          # tyst tillbaka på vars.LLM_BASE_URL (se kommentaren där) och skulle
+          # skicka z.ai:s nyckel till opencodes endpoint. Måste alltså
+          # kontrolleras här också, inte bara nyckel och modell.
+          HAR_URL: ${{ env.PRIMAR != 'zai-glm' || vars.LLM_ZAI_BASE_URL != '' }}
+        run: |
+          if [ "$HAR_NYCKEL" != "true" ] || [ "$HAR_MODELL" != "true" ] || [ "$HAR_URL" != "true" ]; then
+            if [ "$PRIMAR" = "zai-glm" ]; then
+              echo "Saknas i detta repo för primar=zai-glm: hemligheten LLM_ZAI_API_KEY, variabeln MODEL_KOPPLING_ZAI och/eller variabeln LLM_ZAI_BASE_URL."
+            else
+              echo "Saknas i detta repo: hemligheten LLM_API_KEY (eller OPENROUTER_API_KEY) och/eller variabeln MODEL_KOPPLING."
+            fi
+            echo "Lägg in dem under Settings → Secrets and variables → Actions och kör igen."
+            exit 1
+          fi
+      - name: Spara köns startläge
+        run: cp data/kopplingsforslag.json /tmp/ko-start.json
+      - name: Förslagskörning (löfte för löfte, push efter varje)
+        # Kör ett löfte i taget och pushar dess resultat till defaultgrenen
+        # DIREKT — inte allt på slutet. Då ligger varje klart löfte på main
+        # löpande och är oförstörbart även om runnern kraschar mitt i (utöver
+        # cancel/timeout, som salvage-steget nedan täcker). Slutar nyckeln
+        # svara mitt i tappas inget som redan pushats.
+        id: kor
+        continue-on-error: true
+        env:
+          # zai-glm kör helt utan reserv (OpenRouter har ingen kredit; att ändå
+          # koppla in den skulle bara lägga ett garanterat 402-försök på varje
+          # par). opencode-go har kvar sin OpenRouter-reserv som förut.
+          LLM_BASE_URL: ${{ env.PRIMAR == 'zai-glm' && vars.LLM_ZAI_BASE_URL || vars.LLM_BASE_URL }}
+          LLM_API_KEY: ${{ env.PRIMAR == 'zai-glm' && secrets.LLM_ZAI_API_KEY || secrets.LLM_API_KEY }}
+          OPENROUTER_API_KEY: ${{ env.PRIMAR == 'zai-glm' && '' || secrets.OPENROUTER_API_KEY }}
+          # Base-URL är inte hemlig — läs den ur variabler i första hand
+          # (secrets kvar som reserv). Nyckelnamnet har historiskt stavats
+          # LLM_FALLBACK_KEY i detta repo (HANDOFF-varning); godta båda.
+          LLM_FALLBACK_BASE_URL: ${{ env.PRIMAR == 'zai-glm' && '' || (vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL) }}
+          LLM_FALLBACK_API_KEY: ${{ env.PRIMAR == 'zai-glm' && '' || (secrets.LLM_FALLBACK_API_KEY || secrets.LLM_FALLBACK_KEY) }}
+          MODEL_KOPPLING: ${{ env.PRIMAR == 'zai-glm' && vars.MODEL_KOPPLING_ZAI || vars.MODEL_KOPPLING }}
+          MODEL_KOPPLING_FALLBACK: ${{ env.PRIMAR == 'zai-glm' && '' || vars.MODEL_KOPPLING_FALLBACK }}
+          LOFTE: ${{ inputs.lofte }}
+          # Number("") === 0 i foreslag.mts — utan fallbacken skulle en
+          # schema-triggad körning (tomma inputs) tysta kapa kandidatlistan
+          # till noll och aldrig pröva ett enda par.
+          MAXK: ${{ inputs.max_kandidater || '8' }}
+          DRY: ${{ inputs.dry_run }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PROMISES: ${{ github.workspace }}/data/promises.json
+        run: |
+          # GitHub kör run:-steg som "bash -e" som standard. Med -e PÅ dödar
+          # ETT enda misslyckat modellanrop (icke-noll exitkod från
+          # foreslag.mts) HELA skriptet direkt — innan fexit=$? och
+          # dödspärren (tre löften i rad) ens hinner köra. Loopen nedan är
+          # byggd för att hantera fel explicit via $?, så -e stängs av
+          # medvetet; -u och pipefail är kvar (typofel/pipe-fel ska ändå
+          # fälla skriptet).
+          set -uo pipefail
+          set +e
+          echo "primär endpoint: $PRIMAR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Torrkörning skriver ingenting och pushar inte — bara kandidatlistor.
+          if [ "$DRY" = "true" ]; then
+            args=(--promises "$PROMISES" --max-kandidater "$MAXK")
+            if [ -n "$LOFTE" ]; then args+=(--lofte "$LOFTE"); else args+=(--alla); fi
+            args+=(--dry-run)
+            (cd pipeline && node --import tsx/esm scripts/foreslag.mts "${args[@]}")
+            exit $?
+          fi
+
+          # Pushar körningens NYA kö-/provade-poster race-säkert mot färsk main
+          # (ko-uppdatera lägger bara på det som är nytt sedan startläget,
+          # provade-uppdatera unionar). Inget att committa räknas som lyckad
+          # push. Efter varje push flyttas startläget fram, så nästa löftes
+          # delta blir bara dess egna poster.
+          push_delta() {
+            cp data/kopplingsforslag.json /tmp/ko-resultat.json
+            cp data/provade-par.json /tmp/provade-resultat.json
+            for attempt in 1 2 3 4 5; do
+              git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+              (cd pipeline && node --import tsx/esm scripts/ko-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json)
+              (cd pipeline && node --import tsx/esm scripts/provade-uppdatera.mts /tmp/provade-resultat.json)
+              git add data/kopplingsforslag.json data/provade-par.json
+              if git diff --cached --quiet; then
+                cp data/kopplingsforslag.json /tmp/ko-start.json
+                return 0
+              fi
+              git commit -m "data: förslagskörning via workflow (löpande)"
+              if git push origin "HEAD:$DEFAULT_BRANCH"; then
+                echo "  push lyckades (försök $attempt)"
+                cp data/kopplingsforslag.json /tmp/ko-start.json
+                return 0
+              fi
+              echo "  push-försök $attempt misslyckades — gör om från färsk defaultgren..."
+              sleep $((attempt * 5))
+            done
+            echo "  push misslyckades efter 5 försök"
+            return 1
+          }
+
+          # Löftena att köra: ett givet id, annars alla aktiva ur promises.json.
+          if [ -n "$LOFTE" ]; then
+            loften="$LOFTE"
+          else
+            loften="$(jq -r '.[] | select((.status // "aktiv") == "aktiv") | .id' "$PROMISES")"
+          fi
+
+          rc=0
+          dodstreck=0
+          for id in $loften; do
+            (cd pipeline && node --import tsx/esm scripts/foreslag.mts \
+              --promises "$PROMISES" --lofte "$id" --max-kandidater "$MAXK")
+            fexit=$?
+            if [ -n "$(git status --porcelain -- data/kopplingsforslag.json data/provade-par.json)" ]; then
+              # Löftet gav nya kö-/provade-poster — pusha dem innan nästa löfte.
+              push_delta || rc=1
+              dodstreck=0
+            elif [ "$fexit" != "0" ]; then
+              # Föll utan att lämna ett enda avgjort par (t.ex. död nyckel).
+              rc=1
+              dodstreck=$((dodstreck + 1))
+              echo "$id: föll utan framsteg (streck $dodstreck)"
+              # Tre i rad räcker: klienten tar numera en kvotspärrad eller
+              # kreditlös endpoint UR SPEL, så ett dött läge kostar sekunder
+              # per löfte i stället för minuter. Åtta var rimligt när varje
+              # par betalade om hela omförsöksstegen — körning 30159619034
+              # brände 2,5 h på just det innan pärren löste ut.
+              if [ "$dodstreck" -ge 3 ]; then
+                echo "Avbryter: 3 löften i rad föll utan ett enda lyckat modellanrop — trolig nyckel-/kredit-/kvotkrasch. Det som hann köas är redan pushat löpande."
+                break
+              fi
+            fi
+          done
+          exit $rc
+      - name: Committa kön (slutlig salvage av sista löftet)
+        # Körsteget pushar löpande efter varje löfte; detta steg flushar bara
+        # det SISTA löftets delta som ännu inte hunnit pushas. always(): det
+        # ska landa ÄVEN när jobbet avbryts eller slår i timeout-taket — inte
+        # bara på framgångsvägen. På normal avslutning är deltat tomt (allt är
+        # redan pushat) och steget blir en no-op.
+        id: commit
+        if: ${{ always() && !inputs.dry_run }}
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp data/kopplingsforslag.json /tmp/ko-resultat.json
+          cp data/provade-par.json /tmp/provade-resultat.json
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+            (cd pipeline && node --import tsx/esm scripts/ko-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json)
+            (cd pipeline && node --import tsx/esm scripts/provade-uppdatera.mts /tmp/provade-resultat.json)
+            git add data/kopplingsforslag.json data/provade-par.json
+            if git diff --cached --quiet; then
+              echo "Inget nytt att committa."
+              exit 0
+            fi
+            git commit -m "data: förslagskörning via workflow"
+            if git push origin "HEAD:$DEFAULT_BRANCH"; then
+              echo "Push lyckades (försök $attempt)."
+              exit 0
+            fi
+            echo "Push-försök $attempt misslyckades — gör om från färsk defaultgren..."
+            sleep $((attempt * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
+      - name: Synka kön till issues
+        # Kör så snart committen faktiskt lyckades (även på cancel/timeout-
+        # salvagen), men ALDRIG om pushen föll — då finns inga nya poster i
+        # main att skapa issues för. Skulle detta steg hoppas över (t.ex. för
+        # kort avbrottsfönster) synkas kön i efterhand via koppling-sync.yml.
+        if: ${{ always() && !inputs.dry_run && steps.commit.outcome == 'success' }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PROMISES_PATH: ${{ github.workspace }}/data/promises.json
+        run: node --import tsx/esm scripts/koppling-issues.mts
+        working-directory: handlingsvagen/pipeline
+      - name: Fall röd om körsteget föll
+        if: steps.kor.outcome == 'failure'
+        run: |
+          echo "Förslagskörningen föll — det som hann köas är ändå committat."
+          echo "En omkörning prövar de par som föll igen."
+          exit 1

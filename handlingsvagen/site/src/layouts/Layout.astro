@@ -1,0 +1,71 @@
+---
+import "../styles/tokens.css";
+import "../styles/rutnat.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title,
+  description = "Handlingsvågen väger riksdagspartiernas faktiska handlingar mot deras löften. Ord är gratis, handlingar räknas.",
+  canonicalPath,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // alltid exakt en avslutande slash
+const canonicalBase = Astro.site?.origin ?? "https://utlovat.se";
+const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new URL(Astro.url.pathname, canonicalBase).href;
+---
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+  <link rel="canonical" href={canonicalUrl} />
+</head>
+<body>
+  <a href="#huvud" class="hoppa">Hoppa till innehållet</a>
+  <header class="topp">
+    <div class="topp-inner">
+      <a class="marke" href={base}>Handlingsvågen</a>
+      <p class="devis">Ord är gratis, handlingar räknas.</p>
+      <nav class="toppnav">
+        <a href="/">Till löftena och frågorna</a>
+        <a href={base}>Rutnätet</a>
+        <a href={`${base}partier`}>Partier</a>
+        <a href={`${base}ledamoter`}>Ledamöter</a>
+        <a href={`${base}amnen`}>Ämnen och ord</a>
+        <a href={`${base}metod`}>Så görs vägningen</a>
+      </nav>
+      <div class="sok" data-api-base={base}>
+        <label class="hoppa" for="sok-falt">Sök löfte, parti eller ledamot</label>
+        <input id="sok-falt" type="search" placeholder="Sök löfte, parti eller ledamot…" autocomplete="off" aria-controls="sok-traffar" />
+        <ul id="sok-traffar" class="sok-traffar" role="listbox" aria-label="Sökträffar"></ul>
+      </div>
+    </div>
+  </header>
+  <main id="huvud">
+    <slot />
+  </main>
+  <footer class="botten">
+    <p>
+      Handlingsvågen är den tredje vågen för utlovat.se. Registret visas —
+      läsaren dömer. Varje koppling mellan ett löfte och en riksdagshandling är
+      godkänd av en människa och bär ett exakt citat. Tomma celler är ärliga:
+      ett parti utan en ren, kontrollerad koppling lämnas tomt.
+    </p>
+    <nav class="bottennav">
+      <a href={`${base}metod`}>Så görs vägningen</a>
+      <a href={`${base}neutralitet`}>Neutralitetskontraktet</a>
+      <a href={`${base}rattelser`}>Rättelser</a>
+      <a href="https://github.com/bambapappa/valflask" rel="noopener" target="_blank">Källkod och data</a>
+    </nav>
+  </footer>
+  <script is:inline src={`${base}hv-sok.js`}></script>
+</body>
+</html>

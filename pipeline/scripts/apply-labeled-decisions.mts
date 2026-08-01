@@ -48,7 +48,7 @@ const HEADERS = {
   Authorization: `Bearer ${token}`,
   Accept: "application/vnd.github+json",
   "X-GitHub-Api-Version": "2022-11-28",
-  "User-Agent": "drygast-review-apply",
+  "User-Agent": "utlovat-review-apply",
 };
 
 async function api(path: string, init?: RequestInit): Promise<{ status: number; json: unknown }> {

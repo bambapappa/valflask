@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://drygast.nu/schemas/stances.schema.json",
+  "$id": "https://utlovat.se/schemas/stances.schema.json",
   "title": "Frågevågen — besked",
   "description": "Partiernas besked per delfråga (SPEC-FRAGEVAGEN.md §4.2). Skrivs ENDAST av pipelinen; statements är append-only (RS2). En post per (delfråga × parti), RS1-komplett.",
   "type": "array",

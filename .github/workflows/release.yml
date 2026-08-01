@@ -14,8 +14,8 @@ jobs:
           fetch-depth: 0
       - name: Configure git
         run: |
-          git config user.name "drygast-bot"
-          git config user.email "bot@drygast.nu"
+          git config user.name "utlovat-bot"
+          git config user.email "bot@utlovat.se"
       - name: Create annotated tag
         run: |
           TAG="release/v$(date +%Y-%m-%d)"
@@ -31,7 +31,7 @@ jobs:
               repo: context.repo.repo,
               tag_name: tag,
               name: `Release ${tag}`,
-              body: `Veckovis release-tagg för drygast.nu.\n\n- Data-hash: se integrity.json i byggt artifact\n- Deploy: Cloudflare Pages (primär), GitHub Pages, Netlify\n\n**GPG-signering:** ägarsteg — när GPG-nyckel är konfigurerad, byt till \\"git tag -s\\" i workflow.`
+              body: `Veckovis release-tagg för utlovat.se.\n\n- Data-hash: se integrity.json i byggt artifact\n- Deploy: Cloudflare Pages (primär), GitHub Pages, Netlify\n\n**GPG-signering:** ägarsteg — när GPG-nyckel är konfigurerad, byt till \\"git tag -s\\" i workflow.`
             });
       - name: Mirror to secondary remote (if configured)
         run: |
