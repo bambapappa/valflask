@@ -30,22 +30,23 @@ const UTSLAGKLASS: Record<string, string> = { i_linje: "status--linje", emot: "s
   <Rattelsenot rattelser={rattelserForPath(`/ledamot/${id}`)} />
 
   <div class="summa" role="group" aria-label="Sammanfattning">
-    <div><b>{sida.summa.loften}</b><span>löften med merit</span></div>
+    <div><b>{sida.summa.loften}</b><span>löften hen gjort något åt</span></div>
     <div><b>{sida.summa.i_linje}</b><span>i linje</span></div>
     <div><b>{sida.summa.emot}</b><span>emot</span></div>
     <div><b>{sida.summa.avstod}</b><span>avstod</span></div>
     <div><b>{sida.summa.franvarande}</b><span>frånvarande</span></div>
-    <div><b>{sida.summa.avvikelser}</b><span>avvek från partilinjen</span></div>
+    <div><b>{sida.summa.avvikelser}</b><span>gånger hen röstade mot sitt eget parti</span></div>
   </div>
 
   <p class="kvittning">
-    Frånvaro visas men fäller aldrig ett utslag. Riksdagen har ett
-    kvittningssystem — att inte rösta kan vara överenskommet, och räknas därför
-    aldrig som ett ställningstagande.
+    Att inte ha röstat räknas aldrig emot någon. Riksdagen har ett system där
+    partier kommer överens om att lika många från varje sida stannar hemma, så
+    att styrkeförhållandet består. Frånvaro är alltså ofta planerad, och säger
+    ingenting om vad ledamoten tycker. Vi visar den, men väger den aldrig.
   </p>
 
   {sida.meriter.length === 0 ? (
-    <p class="tom-not">Inga vägda handlingar ännu. Det betyder inte att ledamoten varit passiv — bara att registret ännu inte kopplat någon av hens handlingar till ett löfte.</p>
+    <p class="tom-not">Vi har inte granskat något av den här ledamoten ännu. Det betyder inte att hen varit passiv — bara att vi inte hunnit koppla något hen gjort till ett löfte.</p>
   ) : (
     sida.meriter.map((m) => (
       <section class="merit">

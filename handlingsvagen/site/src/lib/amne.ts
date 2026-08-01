@@ -59,6 +59,39 @@ export function indexFinns(): boolean {
   return getTermIndex().size > 0;
 }
 
+/**
+ * Bär indexet förkortningar ännu?
+ *
+ * Regeln som släpper in tvåställiga och treställiga versalord kom med
+ * `b-0033`, men den syns först när indexet byggts om — och omindexeringen
+ * tar timmar. Under tiden vore det fel att skriva på sidan att man kan söka
+ * på NPF: sajten ska aldrig lova mer än datat bär.
+ *
+ * Kontrollen är billig och gör texten självrättande. Innan omkörningen är
+ * klar står meningen inte där; efter den dyker den upp av sig själv vid
+ * nästa bygge, utan att någon behöver komma ihåg att ändra tillbaka.
+ */
+export function forkortningarIIndexet(): boolean {
+  const index = getTermIndex();
+  for (const { t } of index.values()) {
+    for (const term of t) {
+      if (term.length <= 3 && /^[a-zåäöéü]+$/u.test(term) && KANDA_FORKORTNINGAR.has(term)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Stickprovet: förkortningar som bevisligen står i riksdagsmaterialet och
+ * som INTE kan uppstå av att ett längre ord stammats ner — annars vore
+ * svaret ja redan före omindexeringen.
+ */
+const KANDA_FORKORTNINGAR: ReadonlySet<string> = new Set([
+  "npf", "lss", "sfi", "csn", "bnp", "hvb", "lvu", "eu",
+]);
+
 /** Skärvnyckel för en ordstam: två första tecknen, så varje hämtning blir liten. */
 export function ordSkarva(stam: string): string {
   return stam.slice(0, 2) || "_";

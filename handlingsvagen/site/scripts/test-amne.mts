@@ -16,6 +16,7 @@ import {
   byggPartiTrender,
   byggVagda,
   byggVoteringSkarva,
+  forkortningarIIndexet,
   handlingSkarva,
   handlingSkarvor,
   indexFinns,
@@ -208,6 +209,17 @@ if (!indexFinns()) {
     "ordtrenderna bär inga förfarandeord",
     procedurITrend.length === 0,
     procedurITrend.slice(0, 8).join(" "),
+  );
+
+  // Sidan lovar bara det indexet bär. Står det att man kan söka på NPF
+  // måste NPF gå att söka på — annars är omindexeringen inte gjord och
+  // meningen ska inte synas. Grinden håller de två i takt åt BÅDA hållen.
+  const harForkortningar = forkortningarIIndexet();
+  const npfFinns = [...getTermIndex().values()].some((d) => d.t.includes("npf"));
+  grind(
+    "påståendet om förkortningar följer indexet",
+    harForkortningar === npfFinns,
+    harForkortningar ? "indexet bär förkortningar" : "ännu inte omindexerat — meningen döljs",
   );
 
   // Filtret får rensa språk, aldrig tömma ett parti. Faller det här har

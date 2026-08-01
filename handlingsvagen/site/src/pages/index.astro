@@ -9,12 +9,12 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // alltid exakt en a
 const PARTINAMN = new Map(summary.partier.map((p) => [p.code, p.namn]));
 
 function cellVy(c: Cell | undefined): { klass: string; ord: string; aria: string } {
-  if (!c) return { klass: "status--tom", ord: "–", aria: "ingen ren koppling ännu" };
-  if (c.status === "bade_och") return { klass: "status--bade", ord: "både och", aria: "både i linje och emot" };
-  if (c.status === "agerat_i_linje") return { klass: "status--linje", ord: "i linje", aria: "agerat i linje" };
-  if (c.status === "agerat_emot") return { klass: "status--emot", ord: "emot", aria: "agerat emot" };
-  if (c.n_avstod > 0) return { klass: "status--avstod", ord: "avstod", aria: "avstod" };
-  return { klass: "status--tom", ord: "–", aria: "ingen ren koppling ännu" };
+  if (!c) return { klass: "status--tom", ord: "–", aria: "inget kontrollerat ännu" };
+  if (c.status === "bade_och") return { klass: "status--bade", ord: "både och", aria: "både i linje och emot, vid olika tillfällen" };
+  if (c.status === "agerat_i_linje") return { klass: "status--linje", ord: "i linje", aria: "har agerat i linje med löftet" };
+  if (c.status === "agerat_emot") return { klass: "status--emot", ord: "emot", aria: "har agerat emot löftet" };
+  if (c.n_avstod > 0) return { klass: "status--avstod", ord: "avstod", aria: "lade ner sin röst" };
+  return { klass: "status--tom", ord: "–", aria: "inget kontrollerat ännu" };
 }
 
 // Filtrens etiketter (SKISS §3). Statusnycklarna matchar URL-parametrarna.
@@ -41,15 +41,17 @@ function statusTokens(celler: Record<string, Cell>): string[] {
   <div data-api-base={base} id="rutnat-rot">
     <h1>Rutnätet</h1>
     <p class="ingress">
-      En rad per löfte, en kolumn per riksdagsparti. Varje ifylld cell är en
-      handling i riksdagen som en människa kopplat till löftet och kontrollerat
-      ord för ord. Klicka på ett löfte för att se bevisen bakom.
+      En rad per löfte, en kolumn per parti. En cell fylls när partiet gjort
+      något i riksdagen som hör ihop med löftet — röstat om det, lämnat in ett
+      förslag, ställt en fråga. Varje sådan cell är kontrollerad av en
+      människa, ord för ord mot riksdagens eget dokument. Klicka på ett löfte
+      för att läsa bevisen.
     </p>
 
     <div class="summa" role="group" aria-label="Sammanfattning">
-      <div><b>{summary.summa.vagda}</b><span>löften vägda mot handling</span></div>
-      <div><b>{summary.summa.total_lof}</b><span>löften i registret totalt</span></div>
-      <div><b>{summary.summa.utan_handling}</b><span>väntar ännu på en granskad koppling</span></div>
+      <div><b>{summary.summa.vagda}</b><span>löften där vi hittat en handling</span></div>
+      <div><b>{summary.summa.total_lof}</b><span>löften vi följer totalt</span></div>
+      <div><b>{summary.summa.utan_handling}</b><span>väntar fortfarande på granskning</span></div>
     </div>
 
     {/*
@@ -114,11 +116,11 @@ function statusTokens(celler: Record<string, Cell>): string[] {
     <section class="forklaring" aria-label="Så läses cellerna">
       <h2>Så läses cellerna</h2>
       <ul>
-        <li><span class="status status--linje">i linje</span> partiet har agerat i linje med löftet</li>
-        <li><span class="status status--emot">emot</span> partiet har agerat emot</li>
-        <li><span class="status status--bade">både och</span> både i linje och emot</li>
-        <li><span class="status status--avstod">avstod</span> avstod i en kopplad votering</li>
-        <li><span class="status status--tom">ingen ren koppling ännu</span> tomt är ärligt — ingen kontrollerad koppling</li>
+        <li><span class="status status--linje">i linje</span> partiet har gjort något som drar åt samma håll som löftet</li>
+        <li><span class="status status--emot">emot</span> partiet har gjort något som drar åt motsatt håll</li>
+        <li><span class="status status--bade">både och</span> partiet har gjort båda delarna, vid olika tillfällen</li>
+        <li><span class="status status--avstod">avstod</span> partiet lade ner sin röst i en omröstning om saken</li>
+        <li><span class="status status--tom">tomt</span> ingen har hittat och kontrollerat något ännu — det är inget betyg</li>
       </ul>
     </section>
 
@@ -163,9 +165,10 @@ function statusTokens(celler: Record<string, Cell>): string[] {
     </div>
 
     <p class="ingress" style="margin-top:1rem">
-      {summary.summa.utan_handling} av {summary.summa.total_lof} löften står ännu
-      utan en granskad koppling. Det är inte ett betyg — registret växer allt
-      eftersom fler handlingar prövas mot löftena, en människa i taget.
+      {summary.summa.utan_handling} av {summary.summa.total_lof} löften har vi
+      ännu inte hittat någon kontrollerad handling till. Det säger ingenting om
+      partierna — bara att arbetet inte är färdigt. Varje rad granskas av en
+      människa, och det tar tid.
     </p>
 
     <dialog class="panel" id="detalj" aria-label="Bevis bakom löftet"></dialog>
