@@ -257,56 +257,23 @@ båda historikerna kvar.
 
 **Kvar, i ordning — det här är lanseringen:**
 
-1. **E-posten: mottagning fungerar, avsändandet är inte klart.**
-   Kontrollerat mot zonexporten 2026-07-31 14:54. Postlådan finns hos
-   Proton och tar emot, men fyra poster fattas eller sitter fel:
+1. ~~**E-posten**~~ — **KLAR, uppmätt 2026-08-01.** Alla poster svarar:
 
-   | Post | Läge | Ska vara |
-   | --- | --- | --- |
-   | `MX 10 mail.protonmail.ch` | på `utlovat.se` ✓ | oförändrad |
-   | `MX 20 mailsec.protonmail.ch` | **på `www.utlovat.se`** | på `utlovat.se` |
-   | SPF | **saknas** | `utlovat.se TXT "v=spf1 include:_spf.protonmail.ch ~all"` |
-   | DKIM | **saknas** | Protons tre CNAME `protonmail._domainkey` m.fl. — värdena är unika per domän och står i Protons panel |
-   | DMARC | **saknas** | `_dmarc TXT "v=DMARC1; p=quarantine; rua=mailto:hej@utlovat.se"` |
+   | Post | Läge |
+   | --- | --- |
+   | `MX 10 mail.protonmail.ch` + `MX 20 mailsec.protonmail.ch` | båda på apex ✓ |
+   | SPF | `v=spf1 include:_spf.protonmail.ch ~all` ✓ |
+   | DKIM | alla tre `protonmail{,2,3}._domainkey` svarar ✓ |
+   | DMARC | `v=DMARC1; p=quarantine` ✓ |
+   | Felplacerad MX på `www` | borttagen ✓ |
 
-   Den felplacerade MX-posten är två fel i ett: adressen har bara **en**
-   mottagande server i dag, och `www` bär nu både CNAME och MX, vilket
-   DNS inte tillåter — ett namn med CNAME får inte ha andra posttyper.
-   Ta bort den och lägg den på apex.
+   Kvar bara som förbättring, inte krav: DMARC saknar `rua=mailto:…`, så
+   ingen rapport kommer om vem som försöker skicka i domänens namn. Lägg
+   till den när det passar. Skicka också ett provbrev utifrån och kontrollera
+   `spf=pass` och `dkim=pass` i mottagarens rubriker — DNS kan vara rätt utan
+   att postlådan är det.
 
-   SPF och DKIM avgör om **utgående** brev kommer fram. Utan dem hamnar
-   mejl till en journalist i skräpposten betydligt oftare, och vem som
-   helst kan skriva brev som ser ut att komma från presskontakten. För en
-   sajt vars hela produkt är trovärdighet är det inte en detalj.
-
-   **Att göra i Cloudflare, zonen `utlovat.se`** (alla på grått moln —
-   e-post- och verifieringsposter proxas aldrig):
-
-   ```
-   TA BORT
-     Typ MX   Namn www              mailsec.protonmail.ch    prio 20
-
-   LÄGG TILL
-     Typ MX   Namn @                mailsec.protonmail.ch    prio 20
-     Typ TXT  Namn @                v=spf1 include:_spf.protonmail.ch ~all
-     Typ TXT  Namn _dmarc           v=DMARC1; p=quarantine; rua=mailto:hej@utlovat.se
-
-   LÄGG TILL — DKIM, tre CNAME. Målvärdena är unika per domän och står i
-   Proton under Settings → Domain names → utlovat.se → DKIM. Kopiera dem
-   därifrån; de går inte att gissa fram.
-     Typ CNAME  Namn protonmail._domainkey    <värde ur Proton>
-     Typ CNAME  Namn protonmail2._domainkey   <värde ur Proton>
-     Typ CNAME  Namn protonmail3._domainkey   <värde ur Proton>
-   ```
-
-   Kontrollera efteråt att Proton visar alla poster som gröna, och skicka
-   ett provbrev från `hej@utlovat.se` till en adress utanför Proton — kolla
-   i mottagarens rubriker att `spf=pass` och `dkim=pass` står där.
-
-   `p=quarantine` är ett medvetet mellanläge: förfalskade brev hamnar i
-   skräpposten i stället för att avvisas. Skärp till `p=reject` först när
-   du sett att egna brev går igenom.
-2. **Flytta Handlingsvågens inställningar till `valflask`**, annars slutar
+2. ~~**Flytta Handlingsvågens inställningar till `valflask`**~~ — **KLAR 2026-08-01.** Annars hade
    skörd och matchning fungera i samma stund trädet flyttar:
    hemligheterna `LLM_API_KEY` (eller `OPENROUTER_API_KEY`) och
    `LLM_ZAI_API_KEY`, variablerna `MODEL_KOPPLING`, `LLM_BASE_URL`,
