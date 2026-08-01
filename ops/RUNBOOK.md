@@ -11,7 +11,6 @@
 - [ ] Rotera GitHub Actions-secrets (OPENROUTER_API_KEY, LLM_FALLBACK_API_KEY, NETLIFY_AUTH_TOKEN)
 - [ ] Rotera Cloudflare API-nyckel (om används)
 - [ ] Kontrollera LLM-leverantörs kreditgräns
-- [ ] Kontrollera Netlify-site-ID och token giltighet
 - [ ] Uppdatera registrar-lösenord (om policy kräver)
 - [ ] Säkerhetskopiera GPG-nyckel till offline-medium (YubiKey/HSM)
 - [ ] Dokumentera rotationsdatum nedan
@@ -69,21 +68,20 @@ refaktorer.
 **Verifieringstrappa (måste passera före merge till `main`):**
 1. Alltid: PR-CI grön — pipeline-tester (175) + typecheck + sajtbygge + T1 + T3.
 2. Rör bygge/rendering/deploy: hela lokala sviten (T1/T3/T9/T3-stale/interval/drylinje)
-   + generera OG + titta på `dist` via Cloudflare branch-preview (`*.pages.dev` per PR).
+   + generera OG + titta på `dist` lokalt (`pnpm build` + `pnpm test`).
 3. Ramverks-/build-action-major: bygg i isolerad `git worktree`, byte-diffa ett urval
    renderade sidor (start/parti/löfte/sitemap/api) gammalt-vs-nytt, och bekräfta att
    `deploy-pages`-jobbet lyckas på `main` (deploy-jobb går inte att testa i PR).
 4. Neutralitetsgrind: `test-drylinje` + aggregat-dedup gröna → ingen partisk skillnad.
 
-**Rollback av kod (skild från datarollback):** snabbast först.
-1. Cloudflare Pages → Rollback (1 klick, se S1) — sub-minut.
-2. `git revert <sha>` på `main` → push → CI bygger om känt-gott träd (~5 min). Ren,
+**Rollback av kod (skild från datarollback):**
+1. `git revert <sha>` på `main` → push → CI bygger om känt-gott träd (~5 min). Ren,
    spårbar väg. **Rita aldrig om publicerad historik** (force-push bryter revisionsspåret).
-3. Beroendebump: reverta merge-commiten, pinna gamla versionen, låt Dependabot försöka igen.
-4. Data: separat spår — `ops/rollback-data.sh <datum>` + rättelselogg (se S2). Blanda aldrig ihop.
+2. Beroendebump: reverta merge-commiten, pinna gamla versionen, låt Dependabot försöka igen.
+3. Data: separat spår — `ops/rollback-data.sh <datum>` + rättelselogg (se S2). Blanda aldrig ihop.
 
-Grundtrygghet: en misslyckad deploy = **ingen uppdatering, inte nedtid** — både Pages
-och GitHub Pages behåller förra bygget. Stale-bannern varnar om datan fryser.
+Grundtrygghet: en misslyckad deploy = **ingen uppdatering, inte nedtid** — GitHub Pages
+behåller förra bygget tills ett nytt lyckas. Stale-bannern varnar om datan fryser.
 
 **Gör inte:** ingen major/refaktor i frysfönster (utom säkerhet) · ingen force-push på
 publicerade commits · handredigera aldrig lockfilen blint (regenerera + testa) · merga
@@ -95,9 +93,13 @@ beroendebump röra neutralitetslogik utan att neutralitetstesterna passerar.
 ## S1 — Trasig deploy / visuellt fel
 
 ```
-# Cloudflare Pages → Rollback (1 klick i dashboard), ELLER:
-git revert HEAD && git push
+git revert HEAD && git push        # CI bygger om och driftsätter förra kända träd
 ```
+
+Det finns ingen snabbare knapp. Speglarna hos Cloudflare Pages och Netlify togs
+bort 2026-08-01: de saknade custom-domän, tog aldrig emot trafik, och en
+rollback-knapp som pekar på en sajt ingen besöker är farligare än ingen knapp
+alls — den ser ut som en utväg.
 **Stoppur:** senast övad: 2026-06-12, tid: 1 min (rollback via revert)
 
 ---
@@ -125,11 +127,19 @@ bash ops/drill.sh
 
 ---
 
-## S3 — Cloudflare Pages nere
+## S3 — GitHub Pages nere
 
-I Cloudflare DNS: peka `www`/apex-CNAME mot Netlify-spegeln.
-TTL: 300 → propagering på minuter.
-**Stoppur:** senast övad: 2026-06-12, tid: — (ägarsteg — kräver Cloudflare-konto)
+Sajten har **en** väg ut: GitHub Pages som origin, Cloudflare som proxy. Ligger
+Pages nere finns ingen spegel att växla till — det är ett medvetet val, eftersom
+en spegel utan egen domän ändå aldrig hade tagit trafiken.
+
+Det som går att göra: sätt Cloudflare i **Always Online** (serverar sin cache av
+sidorna) och lägg en driftnot på statussidan. Är avbrottet långt kan
+`site/dist` från senaste gröna bygget laddas upp manuellt till valfri statisk
+värd, varefter apex och `www` pekas dit — men räkna med minuter av arbete, inte
+sekunder.
+
+**Stoppur:** ej övad efter omläggningen 2026-08-01.
 
 ---
 
@@ -150,7 +160,7 @@ Publik sajt opåverkad (statisk). Pipeline pausar. Ingen åtgärd < 24h.
 
 ## S6 — Nyckelläcka
 
-1. Rotera/revokera hos LLM-leverantör, Netlify, Cloudflare
+1. Rotera/revokera hos LLM-leverantör och Cloudflare
 2. `git log --all -- data/ | head -20` — granska mot data_hash-kedja i changelog.json
 
 **Stoppur:** senast övad: 2026-06-12, tid: — (ägarsteg — kräver kontoinloggning)
@@ -171,9 +181,7 @@ Publik sajt opåverkad (statisk). Pipeline pausar. Ingen åtgärd < 24h.
 
 | Tjänst | Vad behövs | Var sätter det |
 |--------|-----------|---------------|
-| Cloudflare Pages | Konto + GitHub-integrering | Cloudflare dashboard |
-| Cloudflare DNS | Konto + zon för drygast.nu | Cloudflare dashboard |
-| Netlify | Site-ID + Auth Token | GitHub Secrets (NETLIFY_SITE_ID, NETLIFY_AUTH_TOKEN) |
+| Cloudflare DNS | Konto + zoner för utlovat.se, utlovat.nu, utlovat.com, drygast.nu | Cloudflare dashboard |
 | UptimeRobot | Konto + monitor på / och /api/v1/summary.json med keyword `generated_at` | UptimeRobot dashboard |
 | Registrar | Konto + 2FA + reserv-DNS NS | Offline-dokumentation |
 | GPG | Nyckel för signerade taggar | GitHub GPG keys + Secrets |
