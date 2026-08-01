@@ -34,6 +34,33 @@ typkontrollerna rena, båda sajterna byggda, citatgrindens fingeravtryck
 oförändrat. `build.yml` bygger nu båda vågorna och lägger Handlingsvågen
 under `site/dist/handlingsvagen`: ett bygge, en domän, en driftsättning.
 
+**LÄGET 2026-08-01 08:10 — allt utom själva bytet är klart och verifierat.**
+
+Ägarens sida är avklarad: e-posten (MX på apex, SPF, alla tre DKIM, DMARC —
+uppmätt), hemligheterna i valflask, domänerna verifierade hos GitHub,
+säkerhetsheadersregeln skapad men vilande i utlovat.se-zonen, och
+omdirigeringarna för utlovat.nu och utlovat.com i drift (uppmätt: 301 med
+sökväg och querysträng bevarade).
+
+Trädet är förberett med färsk data från BÅDA huvudgrenarna och samtliga
+grindar körda 2026-08-01: Fläskvågen 305 tester + ren typkontroll + T7 OK
++ bygge + hela sajtsviten; Handlingsvågen 141 tester + ren typkontroll +
+bygge på 440 sidor + alla sajtgrindar. Registret: 407 aktiva kopplingar på
+150 löften. Kön: 149, orörd och inte publik.
+
+**Nästa steg är pushen till valflask, och den väntar på ett mänskligt
+beslut.** Innan den: hämta hem färsk data en gång till från båda
+huvudgrenarna, eftersom matchningskörningen fortsätter pusha till main.
+
+**Varning inför den sammanslagningen:** git parar ihop fel filer. Min gren
+flyttade data/ till handlingsvagen/data/, och när kön krympt med de
+avgjorda posterna föll likheten under gits tröskel — då matchades
+kopplingar.json mot mains kopplingsforslag.json. En rak resolution blandar
+in ogranskade förslag bland de godkända kopplingarna, och inget test fäller
+på det. Lös i stället uträknat: kopplingarna orörda, kön = mina plus de nya
+som varken ligger i kön eller redan är avgjorda, prövade par = unionen.
+Kontrollera efteråt att ingen köpost bär kopplings-id.
+
 **Steg 4 (lanseringen) återstår och är en människas beslut.** Den ordnade
 listan står i `LANSERING.md` under "Lanseringsdagen". Tre saker där är
 lätta att missa och skulle märkas först efteråt:
