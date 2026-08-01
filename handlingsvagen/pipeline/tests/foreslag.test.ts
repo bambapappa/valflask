@@ -80,6 +80,21 @@ test("rankaKandidater: ordöverlapp, voteringar och fel parti utelämnas", () =>
   assert.ok(kandidater[0]!.poang >= 2);
 });
 
+test("rankaKandidater: proposition rankas aldrig som kandidat", () => {
+  // En proposition bär inget parti och fälls därför alltid av aktörsgrinden.
+  // Utan spärren rankas den ändå och kostar ett modellanrop i onödan.
+  const prop = handling({
+    id: "h-2026-0005",
+    kind: "proposition",
+    dok_id: "HD03100",
+    parties: [],
+    persons: [],
+    titel: "Höjt tak i arbetslöshetsförsäkringen",
+  });
+  const kandidater = rankaKandidater(lofte, [prop, handling()], 5);
+  assert.deepEqual(kandidater.map((k) => k.handling.id), ["h-2026-0001"]);
+});
+
 test("rankaKandidater: fråga räknas på frågeställarens parti, inte tillfrågad minister", () => {
   const mLofte: Lofte = { ...lofte, parties: ["m"] };
   // M-ledamot ställer frågan (till ett S-statsråd) → M är aktör: kandidat med.
