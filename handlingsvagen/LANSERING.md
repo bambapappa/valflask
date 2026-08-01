@@ -254,6 +254,15 @@ båda historikerna kvar.
   och tillbakalänk från Handlingsvågens sidhuvud.
 - Handlingsvågen får en egen `sitemap.xml` som `robots.txt` pekar ut —
   annars vore tredje vågen läsbar men osynlig för sökmotorerna.
+- **Säkerhetsheadersen är förberedda i `utlovat.se`-zonen** (2026-08-01).
+  Transform Rule "Säkerhetsheaders", All incoming requests, sex headers satta
+  med *Set static*: CSP, `X-Content-Type-Options`, `Referrer-Policy`,
+  `Permissions-Policy`, `Cross-Origin-Opener-Policy` och
+  `Access-Control-Allow-Origin`. Värdena kontrollerade tecken för tecken mot
+  `site/public/_headers`. Regeln är vilande tills molnet blir orange —
+  med grått moln passerar trafiken utanför Cloudflare och det finns ingen
+  förfrågan att ändra.
+- **E-posten klar och uppmätt**, se punkt 1 nedan.
 
 **Kvar, i ordning — det här är lanseringen:**
 
@@ -300,8 +309,9 @@ båda historikerna kvar.
    HTTPS, orange moln igen efteråt (se fällorna i steg 4 ovan). Zonen står
    redan på grått (kontrollerat 2026-07-31), så inget behöver ändras före
    utfärdandet — men **grått får inte bli slutläget**, se nästa punkt.
-7. **Återskapa säkerhetsheadersen i `utlovat.se`-zonen och slå på
-   proxyn.** Det här är det lätta att missa: GitHub Pages struntar i
+7. **Slå på proxyn (orange moln) och verifiera de sex headersen.** Regeln
+   är redan skapad (se listan ovan) men vilande. Det här är det lätta att
+   missa: GitHub Pages struntar i
    `site/public/_headers`. Headersen sätts i drift av en **Cloudflare
    Transform Rule** ("Säkerhetsheaders", Modify Response Header, All
    incoming requests) som i dag bara finns i `drygast.nu`-zonen — och en
