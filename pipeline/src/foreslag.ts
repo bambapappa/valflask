@@ -110,6 +110,12 @@ export function rankaKandidater(
   for (const h of handlingar) {
     if (h.kind === "votering") continue;
     if (kalla && h.dok_id === kalla) continue; // löftets eget källdokument — cirkulärt
+    // En proposition skrivs av ett departement och bär inget parti, så
+    // aktörsgrinden fäller den alltid. Utan spärren här rankas den ändå som
+    // kandidat och kostar ett modellanrop som aldrig kan leda någonstans —
+    // 68 av de 645 par som återstod 2026-07-31 var av det slaget. Vägen till
+    // regeringens handlingar går genom omröstningarna i stället.
+    if (h.kind === "proposition") continue;
     // Aktörspartier, inte handling.parties: en fråga/interpellation bär
     // den tillfrågade ministerns parti i sin lista, men ministern är inte
     // aktör (samma spärr som H3).
