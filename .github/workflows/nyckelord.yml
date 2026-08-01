@@ -9,6 +9,11 @@ name: nyckelord
 # Körningen är återupptagbar: redan indexerade handlingar hoppas över och
 # skärvorna delsparas löpande, så en avbruten körning fortsätter där den
 # slutade. Kör om workflowen tills "kvar att indexera: 0".
+#
+# VIKTIGT: delsparandet sker till RUNNERNS disk, inte till grenen. Ingenting
+# är räddat förrän commit-steget pushat, och runnern städas bort direkt
+# efteråt. Kontrollera därför alltid att loggen slutar med "Push lyckades" —
+# ett grönt jobb räcker inte som bevis (se rättelsen 2026-08-01).
 on:
   workflow_dispatch:
     inputs:
@@ -74,6 +79,19 @@ jobs:
           if [ -n "$LIMIT" ]; then args+=(--limit "$LIMIT"); fi
           if [ "$OM" = "true" ]; then args+=(--om); fi
           (cd pipeline && node --import tsx/esm scripts/nyckelord-index.mts "${args[@]}")
+      - name: Förnya botens token inför push
+        id: push-token
+        # Botens token lever EN timme. Indexbygget tar tre till åtta, så
+        # token som minta:des vid starten är sedan länge död när det är dags
+        # att pusha — och checkouten har skrivit in just den i git-configen.
+        # 2026-08-01 kostade det en hel körning: 22 511 dokument hämtade
+        # under 3 h 19 min, push nekad med "could not read Username", allt
+        # kastat. En färsk token här är hela skillnaden.
+        if: ${{ always() }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Committa indexet
         # always(): det som hunnit indexeras ska landa ÄVEN om körningen
         # avbryts eller slår i timeout-taket — hämtningarna är dyra i tid
@@ -81,24 +99,41 @@ jobs:
         if: ${{ always() }}
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           set -uo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Peka om origin till den färska token. Checkoutens inskrivna
+          # uppgifter är utgångna vid det här laget.
+          git remote set-url origin \
+            "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           if [ -z "$(git status --porcelain -- data/nyckelord)" ]; then
             echo "Inget nytt att committa."
             exit 0
           fi
           cp -r data/nyckelord /tmp/nyckelord-resultat
           for attempt in 1 2 3 4 5; do
-            git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+            # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
+            # gammalt träd, och då blir allt efteråt fel: förra försöket
+            # committade lokalt mot den stalen, nästa varv såg "inget nytt
+            # att committa" och avslutade med noll — grön körning, tom push.
+            if ! git fetch origin "$DEFAULT_BRANCH"; then
+              echo "Försök $attempt: kunde inte hämta $DEFAULT_BRANCH."
+              sleep $((attempt * 5))
+              continue
+            fi
+            git reset --hard "origin/$DEFAULT_BRANCH"
             # Union mot färsk gren: en handling som någon annan hunnit
             # indexera får aldrig försvinna för att den här körningen inte
             # kände till den.
             (cd pipeline && node --import tsx/esm scripts/nyckelord-uppdatera.mts /tmp/nyckelord-resultat)
             git add data/nyckelord
             if git diff --cached --quiet; then
-              echo "Inget nytt att committa."
+              # Nu är det ett äkta besked: vi står på färsk defaultgren och
+              # har lagt tillbaka vårt resultat ovanpå den. Är det tomt bär
+              # grenen redan allt vi räknat fram.
+              echo "Inget nytt att committa — $DEFAULT_BRANCH bär redan resultatet."
               exit 0
             fi
             git commit -m "data: nyckelordsindex (b-0014)"
@@ -109,7 +144,7 @@ jobs:
             echo "Push-försök $attempt misslyckades — gör om från färsk defaultgren..."
             sleep $((attempt * 5))
           done
-          echo "Push misslyckades efter 5 försök."
+          echo "Push misslyckades efter 5 försök — indexet är INTE sparat."
           exit 1
       - name: Fall röd om indexbygget föll
         if: ${{ steps.kor.outcome != 'success' }}
