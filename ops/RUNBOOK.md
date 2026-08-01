@@ -17,6 +17,11 @@
 
 **Nästa rotation: 2026-09-01**
 
+### Daglig AI-atkomstkontroll (automatiskt, 05:20 UTC)
+Workflow `.github/workflows/ai-atkomst.yml` kör `node ops/ai-atkomst.mjs` mot
+skarp adress och kontrollerar att de AI-agenter sajten välkomnar faktiskt
+släpps in. Brister det öppnas ett ärende med etiketten `ai-atkomst`. Se S8.
+
 ### Veckovis release-taggning (automatiskt, måndagar)
 Workflow `.github/workflows/release.yml` skapar tagg `release/vYYYY-MM-DD` + GitHub Release.
 
@@ -124,6 +129,57 @@ bash ops/drill.sh
 ```
 **Stoppur:** senast övad: 2026-06-12, tid: 36 sekunder
 **Mål:** < 15 min — UPPFYLLT
+
+---
+
+## S8 — AI-agenter stängs ute (Cloudflares managed robots.txt)
+
+**Symptom:** en AI-agent svarar att den inte kommer åt utlovat.se, ungefär
+"sidans tekniska inställningar blockerar min sökrobot". Sajten fungerar för
+läsare, alla sidor svarar 200, och `site/public/robots.txt` ser rätt ut i repot.
+
+**Orsak:** Cloudflares *managed robots.txt* är påslagen på zonen. Den lägger in
+ett eget block **överst** i den utlevererade filen som säger `Disallow: /` för
+Google-Extended, GPTBot, ClaudeBot, CCBot, Applebot-Extended, meta-externalagent,
+Bytespider och Amazonbot, plus `Content-Signal: ai-train=no`. Vårt eget block,
+som välkomnar samma agenter, hamnar under. Robotar är oense om vad som gäller när
+samma namn står i två grupper — flera tar den första de ser, och då är svaret
+nej. Ingenting blockeras på HTTP-nivå: bot-agenterna får 200. Det är bara
+robots.txt.
+
+Att det inte syns i repot är hela poängen med felet — filen skrivs om på vägen
+ut. Därför läser kontrollen skarp adress:
+
+```bash
+node ops/ai-atkomst.mjs            # mot https://utlovat.se
+node ops/ai-atkomst.mjs http://127.0.0.1:4321   # mot en lokal server
+```
+
+Den listar varje välkomnad agent som öppen eller utestängd, kontrollerar att
+sidorna svarar likadant för en robot som för en läsare, och att förstasidan bär
+sitt innehåll utan JavaScript. Samma kontroll kör dagligen i workflowen
+`ai-atkomst` och öppnar ett ärende (etikett `ai-atkomst`) när den brister.
+
+**Åtgärd — en människas steg, kräver Cloudflare-panelen:**
+
+1. Logga in på Cloudflare, välj zonen `utlovat.se`.
+2. Gå till **AI Crawl Control** (har hetat *AI Audit* och *Block AI bots*).
+3. Slå **av** managed robots.txt / blockeringen av AI-robotar. Vill man ändå
+   ha kvar en policy: välj den variant som bara blockerar träningsrobotar och
+   släpper in svarsmotorerna — men sajtens hållning är att alla är välkomna.
+4. Kontrollera att inga WAF- eller bot-regler blockerar AI-robotar separat.
+5. Verifiera: `node ops/ai-atkomst.mjs` ska ge `AI-ATKOMST OK`.
+6. Cachen kan hålla kvar den gamla filen — rensa `utlovat.se/robots.txt` i
+   Cloudflares cache om steg 5 fortfarande visar det gamla innehållet.
+
+**Varför det spelar roll:** sajten finns för att vara den spårbara källan när
+någon frågar en AI-agent om valet. Stängs agenterna ute går det inte att märka
+på sajten — den ser felfri ut för alla som tittar. Nästa gång ett verktyg hos
+Cloudflare erbjuder sig att "skydda innehållet mot AI" är svaret för den här
+sajten nej; innehållet är CC BY 4.0 och ska spridas.
+
+**Stoppur:** upptäckt 2026-08-01 (rapporterad av en Gemini-agent), kontroll och
+larm på plats samma dag. Panelsteget ej övat — kräver ägarens konto.
 
 ---
 

@@ -1460,3 +1460,60 @@ Bara `overflow-wrap: break-word` — bryter mitt i ordet utan bindestreck, vilke
 
 **Påverkan:** `site/src/styles/base.css`. Gäller båda sajterna eftersom filen
 är delad; Fläskvågens bygge, T1 och T3 är körda och gröna efter ändringen.
+
+## 2026-08-01 — AI-agenter stängdes ute av Cloudflare; daglig atkomstkontroll
+
+**Bakgrund:** En Gemini-agent nekades läsa utlovat.se — "sidans tekniska
+inställningar blockerar min sökrobot". Sajten var felfri för läsare, alla
+sidor svarade 200 och `site/public/robots.txt` välkomnade uttryckligen
+Google-Extended sedan 2026-07-10. Felet låg mellan repot och läsaren:
+Cloudflares *managed robots.txt* var påslagen på zonen och la in ett eget
+block **överst** i den utlevererade filen med `Disallow: /` för
+Google-Extended, GPTBot, ClaudeBot, CCBot, Applebot-Extended,
+meta-externalagent, Bytespider och Amazonbot, plus
+`Content-Signal: search=yes,ai-train=no,use=reference`. Vårt block hamnade
+under. Robotar är oense om vad som gäller när samma namn står i två grupper —
+flera tar den första de ser, och då är svaret nej. Mätt på skarp adress:
+OAI-SearchBot och PerplexityBot slapp in (de saknas i Cloudflares lista),
+övriga fem stängdes ute. Inget blockerades på HTTP-nivå; bot-agenterna fick
+200. Sajten fanns alltså för ChatGPT-sök och Perplexity men inte för Gemini
+eller Claude — utan att det gick att se någonstans.
+
+**Beslut:** (1) Ny kontroll `ops/ai-atkomst.mjs` (Node, inga beroenden) som
+läser den **levererade** robots.txt:en och rapporterar varje välkomnad agent
+som öppen eller utestängd. Den tolkar filen pessimistiskt — första matchande
+gruppen vinner, samma val som vår egen hämtare gör i `pipeline/src/fetch.ts` —
+eftersom en kontroll som antar det generösa missar precis det fall den finns
+för. Den larmar också på `Content-Signal: …=no`, på att Cloudflares block över
+huvud taget står i filen, på sidor som svarar annorlunda för en robot än för en
+läsare, och på att förstasidan skulle tappa sitt innehåll utan JavaScript.
+(2) Ny workflow `ai-atkomst.yml`, dagligen 05:20 UTC, öppnar ett ärende med
+etiketten `ai-atkomst` när kontrollen brister och kommenterar på det öppna
+ärendet i stället för att öppna ett nytt per dygn. (3) `site/public/robots.txt`
+säger nu själv `Content-Signal: search=yes,ai-input=yes,ai-train=yes` och bär
+en varning om att filen kan skrivas om på vägen ut. (4) `ops/RUNBOOK.md` S8
+beskriver felet och panelstegen.
+
+**Motiv:** Sajten finns för att vara den spårbara källan när någon frågar en
+AI-agent om valet. Att stängas ute från agenterna är ett driftavbrott lika
+mycket som en trasig deploy — skillnaden är att det inte syns på sajten,
+inte i bygget och inte i repot. Det enda stället det syns är i ett anrop mot
+skarp adress, alltså är det där kontrollen måste stå. `ai-train=yes` följer av
+att datat redan är CC BY 4.0: hållningen är att innehållet ska spridas, och en
+signal som säger nej till träning motsäger licensen vi själva valt.
+
+**Förkastade alternativ:** Skriva om vår robots.txt så att den vinner över
+Cloudflares block — går inte, blocket läggs in ovanför oavsett vad filen säger;
+enda vägen är att stänga av funktionen i panelen. Behålla managed robots.txt
+med en snävare policy som bara blockerar träningsrobotar — hade räddat Gemini
+men inte ClaudeBot och CCBot, och innebär att en tredje part fortsätter skriva
+i en fil som är ett löfte till läsaren. Kontrollera robots.txt i bygget i
+stället för på skarp adress — hade aldrig fångat det här felet, eftersom
+källfilen var korrekt hela tiden.
+
+**Påverkan:** nya `ops/ai-atkomst.mjs` och `.github/workflows/ai-atkomst.yml`;
+`site/public/robots.txt`, `ops/RUNBOOK.md`. Kontrollen är prövad åt båda
+hållen: den faller på skarp adress (fem agenter utestängda) och godkänner vår
+egen fil när den serveras utan Cloudflares block. **Själva avstängningen är en
+människas åtgärd i Cloudflare-panelen och är ännu inte gjord** — kontrollen
+kommer att larma tills den är det.
