@@ -27,6 +27,68 @@ test("taOrd: gemener, korta ord bort, svenska tecken behålls", () => {
   assert.ok(ord.includes("2026"));
 });
 
+test("taOrd: förkortningar i versaler kommer med, gemena småord gör det inte", () => {
+  const ord = taOrd("Elever med NPF och insatser enligt LSS. Ersättning från CSN.");
+  for (const f of ["npf", "lss", "csn"]) {
+    assert.ok(ord.includes(f), `${f} ska indexeras`);
+  }
+  // Samma bokstavslängd, men gemena — de ska fortfarande falla på
+  // längdregeln. (Längre stoppord som "från" släpps igenom här och rensas
+  // först av stopporden i `raknaTermerMedFormer` — annan grind, annat steg.)
+  assert.ok(!ord.includes("och"), "gemena småord passerar inte");
+  assert.ok(!ord.includes("med"));
+});
+
+test("taOrd: bara ord skrivna helt i versaler räknas som förkortning", () => {
+  assert.ok(!taOrd("Han bor i en by").includes("bor"));
+  assert.ok(!taOrd("Npf är vanligt").includes("npf"), "inledande versal räcker inte");
+  assert.ok(taOrd("NPF är vanligt").includes("npf"));
+});
+
+test("taOrd: partikoder hålls utanför även i versaler", () => {
+  // Ett parti är nästan ensamt om att skriva ut sin egen kod, så koden blir
+  // partiets mest "utmärkande ord" — vilket bara säger vem som skrivit
+  // dokumentet. Samma skäl som partinamnen rensas av.
+  const ord = taOrd("Motion av SD och KD om MP:s politik gällande NPF");
+  for (const kod of ["sd", "kd", "mp"]) {
+    assert.ok(!ord.includes(kod), `${kod} är ett filter, inte ett sökord`);
+  }
+  assert.ok(ord.includes("npf"), "riktiga förkortningar påverkas inte");
+});
+
+test("taOrd: versala småord ur rubriker slinker inte igenom", () => {
+  const ord = taOrd("UR DEBATTEN OM VÅRD OCH SÅ VIDARE");
+  for (const w of ["ur", "om", "och", "så"]) {
+    assert.ok(!ord.includes(w), `${w} är inget ämnesord`);
+  }
+  assert.ok(ord.includes("debatten"));
+  assert.ok(ord.includes("vård"));
+});
+
+test("taOrd: bindestreck i kanten skalas av så EU- möter EU", () => {
+  const ord = taOrd("EU- och utrikespolitiken samt EU:s budget");
+  assert.equal(ord.filter((w) => w === "eu").length, 2);
+});
+
+test("taOrd: rena tal räknas inte som förkortning", () => {
+  const ord = taOrd("Under 20 år, se avsnitt 4.2");
+  assert.ok(!ord.includes("20"));
+  assert.ok(!ord.includes("4"));
+});
+
+test("stamma lämnar förkortningar orörda", () => {
+  // Vore stammaren aktiv på så korta ord skulle den kunna stympa dem —
+  // "LSS" till "ls" — och då vore de omöjliga att söka fram ändå.
+  for (const f of ["npf", "lss", "sfi", "csn", "bnp", "vab", "hvb", "lvu", "ivo", "eu"]) {
+    assert.equal(stamma(f), f, `${f} ska överleva stamningen`);
+  }
+});
+
+test("sokStammar når förkortningar från två tecken", () => {
+  assert.ok(sokStammar("eu").includes("eu"));
+  assert.ok(sokStammar("npf").includes("npf"));
+});
+
 test("raknaTermer: riksdagens formelspråk rensas bort", () => {
   const formel =
     "Riksdagen ställer sig bakom det som anförs i motionen och tillkännager detta för regeringen.";

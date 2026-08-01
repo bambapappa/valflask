@@ -245,7 +245,9 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
        */
       function sokord(text: string): { ord: string; stammar: string[] }[] {
         const ord = [...new Set(
-          text.toLowerCase().split(/[^a-zåäöéü0-9-]+/u).filter((w) => w.length >= 3),
+          // Två tecken, inte tre: förkortningar indexeras från den längden,
+          // och EU ska gå att söka på.
+          text.toLowerCase().split(/[^a-zåäöéü0-9-]+/u).filter((w) => w.length >= 2),
         )];
         return ord.map((o) => ({ ord: o, stammar: sokStammar(o) }));
       }

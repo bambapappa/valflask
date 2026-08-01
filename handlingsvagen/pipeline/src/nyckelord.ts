@@ -160,15 +160,77 @@ export interface Skarva {
 }
 
 /**
+ * Partiernas bokstavskoder. Samma skäl som `PARTINAMN` ovan: koden säger
+ * vem som skrivit dokumentet, inte vad det handlar om, och ett parti är
+ * nästan ensamt om att skriva ut sin egen. Att söka fram ett partis
+ * handlingar är ett filter på parti, inte en sökning på ett ord.
+ *
+ * De behövs för att förkortningsregeln nedan annars släpper in dem: `SD`,
+ * `KD` och `MP` skrivs i versaler och är två–tre tecken. Mätt på 250
+ * dokument stod de tre för 231 av 1 748 versalförekomster — var åttonde.
+ * Enbokstavskoderna faller redan på tvåteckensgolvet men står med för att
+ * listan ska vara läsbar som helhet.
+ */
+const PARTIKODER = new Set(["s", "m", "sd", "c", "v", "kd", "l", "mp"]);
+
+/**
+ * Korta svenska ord som kan stå i versaler utan att vara förkortningar —
+ * en versal rubrik ("UR DEBATTEN") räcker för att de ska slinka igenom.
+ *
+ * Listan är kort med flit: mätt på 250 riktiga dokument var det bara `ur`
+ * (7 förekomster) och `nu` (1) av 1 748 versalförekomster som var vanliga
+ * ord. Versala rubriker är alltså sällsynta i materialet. Resten av listan
+ * är sådant som rimligen kan dyka upp i en rubrik, inte en spekulation om
+ * att det redan gör det.
+ */
+const KORTA_SMAORD = new Set([
+  "ur", "nu", "så", "om", "av", "en", "ett", "är", "och", "att", "på", "de",
+  "vi", "ni", "han", "hon", "kan", "har", "men", "ska", "för", "som", "det",
+  "den", "vid", "mot", "åt", "ej", "ge", "se", "var", "vad", "där", "här",
+  "hur", "än", "du", "jag", "mig", "dig", "sig", "med", "din", "min", "vår",
+  "er", "ju", "bli", "blir", "dess", "ur",
+]);
+
+/**
  * Delar upp en text i ord enligt samma regler som förslagsstegets
- * kandidaturval (gemener, ≥ 4 tecken) så att löftets och dokumentets ord
- * är jämförbara.
+ * kandidaturval, så att löftets och dokumentets ord är jämförbara.
+ * `foreslag.ts` anropar den här funktionen — regeln finns på ett ställe.
+ *
+ * Grundregeln är ord på minst fyra tecken. **Undantaget är förkortningar:**
+ * ett ord på två eller tre tecken släpps igenom om det står i VERSALER i
+ * källtexten. Nästan varje svensk politikförkortning är precis tre
+ * bokstäver — NPF, LSS, SFI, CSN, BNP, VAB, HVB, LVU, IVO, HFD, TLV — och
+ * utan undantaget kunde ingen av dem sökas fram, hur ofta de än stod i
+ * texten.
+ *
+ * Därför läses versalerna FÖRE `toLowerCase()`. Att göra tvärtom var vad
+ * som gjorde det omöjligt förut: informationen som beslutet vilar på var
+ * redan bortkastad när beslutet fattades.
+ *
+ * Fyrateckensgolvet står kvar för gemena ord, och av samma skäl som förut:
+ * utan det fylls termlistorna av småord. Versalkravet är det som håller
+ * dörren stängd för dem — ett vanligt ord skrivs inte i versaler.
+ *
+ * Inledande och avslutande bindestreck skalas av, så att "EU-" i "EU- och
+ * utrikespolitiken" räknas som samma ord som "EU".
  */
 export function taOrd(text: string): string[] {
-  return text
-    .toLowerCase()
-    .split(/[^a-zåäöéü0-9-]+/u)
-    .filter((w) => w.length >= 4);
+  const ut: string[] = [];
+  for (const rått of text.split(/[^A-Za-zÅÄÖÉÜåäöéü0-9-]+/u)) {
+    const ord = rått.replace(/^-+|-+$/gu, "");
+    if (ord.length === 0) continue;
+    const gemen = ord.toLowerCase();
+    if (gemen.length >= 4) {
+      ut.push(gemen);
+      continue;
+    }
+    if (gemen.length < 2) continue;
+    if (ord !== ord.toUpperCase()) continue; // bara ord skrivna helt i versaler
+    if (!/[A-ZÅÄÖÉÜ]/u.test(ord)) continue; // minst en bokstav; rena tal säger inget
+    if (PARTIKODER.has(gemen) || KORTA_SMAORD.has(gemen)) continue;
+    ut.push(gemen);
+  }
+  return ut;
 }
 
 /**
@@ -410,9 +472,11 @@ export function sokStammar(ord: string): string[] {
     else if (!VOKALER.has(bas.slice(-1))) former.add(`${bas}et`);
   }
 
+  // Två tecken räcker: förkortningar indexeras från den längden (se `taOrd`),
+  // och `EU` ska gå att söka på. `stamma()` lämnar så korta ord orörda.
   const stammar = new Set<string>();
   for (const form of former) {
-    if (form.length >= 3) stammar.add(stamma(form));
+    if (form.length >= 2) stammar.add(stamma(form));
   }
   return [...stammar].sort();
 }

@@ -11,7 +11,7 @@
 import type { Betankande } from "./betankanden.ts";
 import { indexeraBetankanden } from "./betankanden.ts";
 import { aktorsPartier, type Handling } from "./handlingar.ts";
-import { termPoang, type DokumentTermer } from "./nyckelord.ts";
+import { taOrd, termPoang, type DokumentTermer } from "./nyckelord.ts";
 import { stamma } from "./stam.ts";
 import type { LlmClient } from "./llm.ts";
 import type { Utskottspunkt } from "./riksdagen.ts";
@@ -52,18 +52,25 @@ const STOPPORD = new Set([
 ]);
 
 /**
- * Ordstammar (gemener, ≥ 4 tecken, ej stoppord) ur en text —
- * deterministiskt. Stammarna gör att böjningsformer möts: ett löfte som
- * säger "höja" träffar ett dokument som säger "höjas". Samma reduktion
- * används när dokumentens termer utvinns till nyckelordsindexet, så att
- * de två sidorna är jämförbara.
+ * Ordstammar (ej stoppord) ur en text — deterministiskt. Stammarna gör att
+ * böjningsformer möts: ett löfte som säger "höja" träffar ett dokument som
+ * säger "höjas".
+ *
+ * Uppdelningen i ord görs av `taOrd` i `nyckelord.ts`, samma funktion som
+ * dokumentens termer utvinns med. Det är inte en förenkling utan ett krav:
+ * regeln för vilka ord som räknas måste vara EN, annars blir löftets ord
+ * och dokumentets ord ojämförbara. Förut stod den skriven två gånger, och
+ * en halv ändring hade slagit här — i vilka handlingar som alls kommer upp
+ * för granskning — utan att synas i sökrutan man trodde man ändrade.
+ *
+ * Stopporden nedan är däremot förslagsstegets egna och avsiktligt en
+ * kortare lista än indexets: här gäller det att hitta kandidater, inte att
+ * beskriva ett dokuments ämne.
  */
 export function nyckelord(text: string): Set<string> {
   return new Set(
-    text
-      .toLowerCase()
-      .split(/[^a-zåäöéü0-9-]+/u)
-      .filter((w) => w.length >= 4 && !STOPPORD.has(w))
+    taOrd(text)
+      .filter((w) => !STOPPORD.has(w))
       .map(stamma),
   );
 }
