@@ -16,6 +16,7 @@ import {
   byggPartiTrender,
   byggVagda,
   byggVoteringSkarva,
+  forkortningarIIndexet,
   handlingSkarva,
   handlingSkarvor,
   indexFinns,
@@ -191,6 +192,43 @@ if (!indexFinns()) {
     "ordtrenderna bär inga ledamotsnamn",
     namnITrend.length === 0,
     namnITrend.slice(0, 8).join(" "),
+  );
+
+  // Riksdagens förfarandeord får aldrig stå som ett partis ämne. De säger
+  // att partiet skriver många motioner, inte vad det driver — och de drabbar
+  // det parti som skriver flest, vilket gör listan skev åt fel håll.
+  const procedur = ["avslå", "anfört", "återkomm", "ställ", "överväg", "utred",
+                    "utgiftsområd", "avgör", "däremot", "självkl"];
+  const procedurITrend: string[] = [];
+  for (const t of trender) {
+    for (const o of t.ord) {
+      if (procedur.includes(o.stam)) procedurITrend.push(`${t.kod}:${o.ord}`);
+    }
+  }
+  grind(
+    "ordtrenderna bär inga förfarandeord",
+    procedurITrend.length === 0,
+    procedurITrend.slice(0, 8).join(" "),
+  );
+
+  // Sidan lovar bara det indexet bär. Står det att man kan söka på NPF
+  // måste NPF gå att söka på — annars är omindexeringen inte gjord och
+  // meningen ska inte synas. Grinden håller de två i takt åt BÅDA hållen.
+  const harForkortningar = forkortningarIIndexet();
+  const npfFinns = [...getTermIndex().values()].some((d) => d.t.includes("npf"));
+  grind(
+    "påståendet om förkortningar följer indexet",
+    harForkortningar === npfFinns,
+    harForkortningar ? "indexet bär förkortningar" : "ännu inte omindexerat — meningen döljs",
+  );
+
+  // Filtret får rensa språk, aldrig tömma ett parti. Faller det här har
+  // listan blivit för bred och tagit sakord med sig.
+  const tunnast = Math.min(...medOrd.map((t) => t.ord.length));
+  grind(
+    "varje parti har kvar en full ordlista",
+    tunnast >= 15,
+    `tunnaste listan: ${tunnast} ord`,
   );
 
   // Formen läsaren råkar skriva får inte avgöra träffen. "skolan" och

@@ -59,6 +59,39 @@ export function indexFinns(): boolean {
   return getTermIndex().size > 0;
 }
 
+/**
+ * Bär indexet förkortningar ännu?
+ *
+ * Regeln som släpper in tvåställiga och treställiga versalord kom med
+ * `b-0033`, men den syns först när indexet byggts om — och omindexeringen
+ * tar timmar. Under tiden vore det fel att skriva på sidan att man kan söka
+ * på NPF: sajten ska aldrig lova mer än datat bär.
+ *
+ * Kontrollen är billig och gör texten självrättande. Innan omkörningen är
+ * klar står meningen inte där; efter den dyker den upp av sig själv vid
+ * nästa bygge, utan att någon behöver komma ihåg att ändra tillbaka.
+ */
+export function forkortningarIIndexet(): boolean {
+  const index = getTermIndex();
+  for (const { t } of index.values()) {
+    for (const term of t) {
+      if (term.length <= 3 && /^[a-zåäöéü]+$/u.test(term) && KANDA_FORKORTNINGAR.has(term)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Stickprovet: förkortningar som bevisligen står i riksdagsmaterialet och
+ * som INTE kan uppstå av att ett längre ord stammats ner — annars vore
+ * svaret ja redan före omindexeringen.
+ */
+const KANDA_FORKORTNINGAR: ReadonlySet<string> = new Set([
+  "npf", "lss", "sfi", "csn", "bnp", "hvb", "lvu", "eu",
+]);
+
 /** Skärvnyckel för en ordstam: två första tecknen, så varje hämtning blir liten. */
 export function ordSkarva(stam: string): string {
   return stam.slice(0, 2) || "_";
@@ -399,6 +432,41 @@ export interface PartiTrend {
  * säger mer om slumpen än om partiet. Nämnaren får ett påslag på ett så att
  * ett ord ingen annan använt ger ett stort men ändligt tal.
  */
+/**
+ * Ord som aldrig får stå som ett partis "ämne" — de säger något om hur
+ * riksdagen skriver, inte om vad ett parti driver.
+ *
+ * Varför en andra lista, när utvinningen redan rensar formelspråk: de
+ * listorna matchar på ORDFORMER ("avslår", "avslag"), medan indexet lagrar
+ * ORDSTAMMAR. En böjning som inte råkar stå med i formlistan slinker
+ * igenom, stammas, och dyker upp här. "avslå" och "avslås" är just sådana.
+ * Den här listan är därför skriven på STAMMAR och fångar alla böjningar på
+ * en gång — och den gör det utan att indexet behöver byggas om.
+ *
+ * Gränsdragningen är språklig, aldrig politisk:
+ *
+ *   · Ord om riksdagens FÖRFARANDE åker ut. Att ett parti ofta skriver
+ *     "riksdagen bör avslå" är en följd av att det skriver många motioner,
+ *     inte ett ämne det driver.
+ *   · Ord UTAN sakinnehåll åker ut — "avgör", "däremot", "självklar".
+ *   · Allt annat står kvar. Sakfrågor, platser, länder, och ord ett parti
+ *     använder om sina motståndare rörs inte: att avgöra vad som är
+ *     "riktig" politik vore precis den bedömning registret inte gör.
+ *
+ * Listan tillämpas lika på alla åtta partier. Ett ord som råkar vara
+ * utmärkande för ett enda parti får aldrig läggas till här av det skälet.
+ */
+const INTE_AMNESORD: ReadonlySet<string> = new Set([
+  // Riksdagens förfarande.
+  "avslå", "avstyrk", "tillstyrk", "anfört", "återkomm", "ställ", "överväg",
+  "utred", "utgiftsområd", "tillkännag", "yrkand", "bifall", "hemställ",
+  // Ord utan sakinnehåll.
+  "avgör", "byt", "däremot", "längr", "enkl", "beroend", "självkl",
+  "intressant", "attraktivt", "fullkom", "olägen", "begångn", "fördyr",
+  "dåtid", "poäng", "summ", "ändamål", "känn", "lik", "gör", "sats",
+  "krång", "enhet", "flexibel", "system", "funktion", "egen", "mest",
+]);
+
 export function byggPartiTrender(maxOrd = 18, minAntal = 15): PartiTrend[] {
   const index = getTermIndex();
   const handlingar = getHandlingMap();
@@ -462,6 +530,7 @@ export function byggPartiTrender(maxOrd = 18, minAntal = 15): PartiTrend[] {
     for (const [stam, antal] of karta) {
       if (antal < minAntal) continue;
       if (fornamn.has(stam)) continue;
+      if (INTE_AMNESORD.has(stam)) continue;
       // Partiets andel delat med de övrigas andel av samma ord.
       const iOvriga = (globalDf.get(stam) ?? antal) - antal;
       const andel = antal / partiTotalt;

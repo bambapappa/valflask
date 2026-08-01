@@ -9,7 +9,7 @@
  *     egna ord, räknade — ingen tolkning.
  */
 import Layout from "../layouts/Layout.astro";
-import { byggPartiTrender, indexFinns, ordSkarvor, voteringSkarvor } from "../lib/amne.ts";
+import { byggPartiTrender, forkortningarIIndexet, indexFinns, ordSkarvor, voteringSkarvor } from "../lib/amne.ts";
 import { getParties } from "../lib/data.ts";
 import { PARTIBITAR } from "../lib/delat.ts";
 
@@ -21,6 +21,7 @@ const rostskarvor = finns ? voteringSkarvor() : [];
 const partier = getParties()
   .filter((p) => PARTIBITAR.includes(p.code))
   .sort((a, b) => a.code.localeCompare(b.code, "sv"));
+const forkortningar = finns && forkortningarIIndexet();
 const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vikt)));
 ---
 <Layout title="Ämnen och ord — Handlingsvågen" canonicalPath="/amnen">
@@ -46,7 +47,9 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
           Skriv ett ord, till exempel <i>kärnkraft</i>, <i>vårdplatser</i>
           eller <i>tandvård</i>. Du behöver inte träffa rätt form av ordet:
           <i>skolor</i> och <i>skolan</i> ger samma träffar som <i>skola</i>.
-          Förkortningar fungerar också — <i>NPF</i>, <i>LSS</i>, <i>CSN</i>.
+          {forkortningar && (
+            <> Förkortningar fungerar också — <i>NPF</i>, <i>LSS</i>, <i>CSN</i>.</>
+          )}
           Skriver du flera ord visas bara dokument som innehåller alla.
         </p>
 
