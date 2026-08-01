@@ -128,6 +128,17 @@ jobs:
           fi
       - name: Spara köns startläge
         run: cp data/kopplingsforslag.json /tmp/ko-start.json
+      - name: Förnya botens token inför push
+        id: push-token
+        # Botens token lever EN timme, och jobbet kan hålla på mycket längre.
+        # Den som mintades i första steget är då död, och checkouten har
+        # skrivit in just den i git-configen. Samma fälla kostade
+        # nyckelordsbygget en hel körning 2026-08-01.
+        if: ${{ always() }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Förslagskörning (löfte för löfte, push efter varje)
         # Kör ett löfte i taget och pushar dess resultat till defaultgrenen
         # DIREKT — inte allt på slutet. Då ligger varje klart löfte på main
@@ -157,6 +168,7 @@ jobs:
           MAXK: ${{ inputs.max_kandidater || '8' }}
           DRY: ${{ inputs.dry_run }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
           PROMISES: ${{ github.workspace }}/data/promises.json
         run: |
           # GitHub kör run:-steg som "bash -e" som standard. Med -e PÅ dödar
@@ -167,6 +179,10 @@ jobs:
           # medvetet; -u och pipefail är kvar (typofel/pipe-fel ska ändå
           # fälla skriptet).
           set -uo pipefail
+          # Peka om origin till den färska token — checkoutens uppgifter kan
+          # vara utgångna vid det här laget.
+          git remote set-url origin \
+            "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           set +e
           echo "primär endpoint: $PRIMAR"
           git config user.name "github-actions[bot]"
@@ -190,7 +206,15 @@ jobs:
             cp data/kopplingsforslag.json /tmp/ko-resultat.json
             cp data/provade-par.json /tmp/provade-resultat.json
             for attempt in 1 2 3 4 5; do
-              git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+              # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
+              # gammalt träd, och då blir allt efteråt fel — en misslyckad push
+              # kan se ut som "inget nytt att committa".
+              if ! git fetch origin "$DEFAULT_BRANCH"; then
+                echo "försök $attempt: kunde inte hämta $DEFAULT_BRANCH"
+                sleep $((attempt * 5))
+                continue
+              fi
+              git reset --hard "origin/$DEFAULT_BRANCH"
               (cd pipeline && node --import tsx/esm scripts/ko-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json)
               (cd pipeline && node --import tsx/esm scripts/provade-uppdatera.mts /tmp/provade-resultat.json)
               git add data/kopplingsforslag.json data/provade-par.json
@@ -255,13 +279,22 @@ jobs:
         if: ${{ always() && !inputs.dry_run }}
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cp data/kopplingsforslag.json /tmp/ko-resultat.json
           cp data/provade-par.json /tmp/provade-resultat.json
           for attempt in 1 2 3 4 5; do
-            git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+            # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
+            # gammalt träd, och då blir allt efteråt fel — en misslyckad push
+            # kan se ut som "inget nytt att committa".
+            if ! git fetch origin "$DEFAULT_BRANCH"; then
+              echo "försök $attempt: kunde inte hämta $DEFAULT_BRANCH"
+              sleep $((attempt * 5))
+              continue
+            fi
+            git reset --hard "origin/$DEFAULT_BRANCH"
             (cd pipeline && node --import tsx/esm scripts/ko-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json)
             (cd pipeline && node --import tsx/esm scripts/provade-uppdatera.mts /tmp/provade-resultat.json)
             git add data/kopplingsforslag.json data/provade-par.json

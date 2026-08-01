@@ -53,7 +53,15 @@ jobs:
           git config user.name "utlovat-bot"
           git config user.email "bot@utlovat.se"
           for attempt in 1 2 3 4 5; do
-            git fetch origin main && git reset --hard origin/main
+            # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
+            # gammalt träd, och då kan en misslyckad push se ut som
+            # "inget nytt att committa" — grön körning, tom push.
+            if ! git fetch origin main; then
+              echo "försök $attempt: kunde inte hämta main"
+              sleep $((attempt * 5))
+              continue
+            fi
+            git reset --hard origin/main
             (cd pipeline && node --import tsx/esm scripts/apply-labeled-decisions.mts apply)
             git add data/
             if git diff --cached --quiet; then

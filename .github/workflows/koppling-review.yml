@@ -63,7 +63,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           for attempt in 1 2 3 4 5; do
-            git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+            # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
+            # gammalt träd, och då kan en misslyckad push se ut som
+            # "inget nytt att committa" — grön körning, tom push.
+            if ! git fetch origin "$DEFAULT_BRANCH"; then
+              echo "försök $attempt: kunde inte hämta $DEFAULT_BRANCH"
+              sleep $((attempt * 5))
+              continue
+            fi
+            git reset --hard "origin/$DEFAULT_BRANCH"
             (cd pipeline && node --import tsx/esm scripts/koppling-kommentar.mts)
             git add data/
             if git diff --cached --quiet; then

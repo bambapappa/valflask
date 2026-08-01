@@ -114,6 +114,17 @@ jobs:
           for r in $RM; do args+=(--rm "$r"); done
           node --import tsx/esm scripts/harvest.mts "${args[@]}"
         working-directory: handlingsvagen/pipeline
+      - name: Förnya botens token inför push
+        id: push-token
+        # Botens token lever EN timme, och jobbet kan hålla på mycket längre.
+        # Den som mintades i första steget är då död, och checkouten har
+        # skrivit in just den i git-configen. Samma fälla kostade
+        # nyckelordsbygget en hel körning 2026-08-01.
+        if: ${{ always() }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Committa skördefilerna
         # always(): delresultatet ska committas ÄVEN vid cancel och timeout,
         # inte bara på framgångsvägen — utan det (implicit success()) kastas de
@@ -124,6 +135,7 @@ jobs:
         if: ${{ always() }}
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -132,7 +144,15 @@ jobs:
             [ -e "$p" ] && cp -r "$p" /tmp/skord/ || true
           done
           for attempt in 1 2 3 4 5; do
-            git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+            # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
+            # gammalt träd, och då blir allt efteråt fel — en misslyckad push
+            # kan se ut som "inget nytt att committa".
+            if ! git fetch origin "$DEFAULT_BRANCH"; then
+              echo "försök $attempt: kunde inte hämta $DEFAULT_BRANCH"
+              sleep $((attempt * 5))
+              continue
+            fi
+            git reset --hard "origin/$DEFAULT_BRANCH"
             for p in roster personer.json betankanden.json handlingar.json; do
               [ -e "/tmp/skord/$p" ] && cp -r "/tmp/skord/$p" data/ || true
             done
