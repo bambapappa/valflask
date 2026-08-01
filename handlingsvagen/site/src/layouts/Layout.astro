@@ -1,4 +1,18 @@
 ---
+/*
+ * Kostymen är hela utlovat.se:s, inte Handlingsvågens egen. Tokens och
+ * basregler importeras ur Fläskvågens mapp — det är där formen är beslutad
+ * och det är där den ska ändras. Handlingsvågens egna filer lägger bara till
+ * det som är dess eget: en brygga för gamla tokennamn, och komponenterna.
+ *
+ * Fonterna ligger på /fonts/ i den byggda sajtens rot. Handlingsvågen läggs
+ * som katalog i samma utdata (build.yml), så de absoluta sökvägarna i
+ * base.css träffar rätt i drift. Byggs den här sajten ensam saknas de och
+ * texten faller tillbaka på systemets serif — det syns i förhandsvisning,
+ * aldrig i drift.
+ */
+import "../../../../site/src/styles/tokens.css";
+import "../../../../site/src/styles/base.css";
 import "../styles/tokens.css";
 import "../styles/rutnat.css";
 
@@ -17,6 +31,25 @@ const {
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // alltid exakt en avslutande slash
 const canonicalBase = Astro.site?.origin ?? "https://utlovat.se";
 const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new URL(Astro.url.pathname, canonicalBase).href;
+
+/*
+ * Navigationen. De två första länkarna går ut ur Handlingsvågen och in i de
+ * andra vågorna — läsaren ska aldrig behöva förstå att det är tre sajter,
+ * för det är det inte. Fläskvågens sidhuvud länkar hit på samma sätt.
+ */
+const NAV: Array<{ href: string; text: string }> = [
+  { href: "/", text: "Löftena" },
+  { href: "/fragor", text: "Frågorna" },
+  { href: base, text: "Rutnätet" },
+  { href: `${base}partier`, text: "Partier" },
+  { href: `${base}ledamoter`, text: "Ledamöter" },
+  { href: `${base}amnen`, text: "Ämnen och ord" },
+  { href: `${base}metod`, text: "Så görs vägningen" },
+];
+const harSida = (href: string): boolean => {
+  const nu = Astro.url.pathname.replace(/\/?$/, "/");
+  return href.replace(/\/?$/, "/") === nu;
+};
 ---
 <!DOCTYPE html>
 <html lang="sv">
@@ -27,20 +60,20 @@ const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new UR
   <meta name="description" content={description} />
   <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
   <link rel="canonical" href={canonicalUrl} />
+  <link rel="preload" href="/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/ibm-plex-mono-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 </head>
 <body>
   <a href="#huvud" class="hoppa">Hoppa till innehållet</a>
   <header class="topp">
     <div class="topp-inner">
-      <a class="marke" href={base}>Handlingsvågen</a>
-      <p class="devis">Ord är gratis, handlingar räknas.</p>
-      <nav class="toppnav">
-        <a href="/">Till löftena och frågorna</a>
-        <a href={base}>Rutnätet</a>
-        <a href={`${base}partier`}>Partier</a>
-        <a href={`${base}ledamoter`}>Ledamöter</a>
-        <a href={`${base}amnen`}>Ämnen och ord</a>
-        <a href={`${base}metod`}>Så görs vägningen</a>
+      <a class="marke" href="/">UTLOVAT<span class="markering">.SE</span></a>
+      <p class="devis etikett">Handlingsvågen · Tredje vågen · Ord är gratis, handlingar räknas</p>
+      <nav class="toppnav" aria-label="Huvudnavigation">
+        {NAV.map((l) => (
+          <a class="etikett" href={l.href} aria-current={harSida(l.href) ? "page" : undefined}>{l.text}</a>
+        ))}
       </nav>
       <div class="sok" data-api-base={base}>
         <label class="hoppa" for="sok-falt">Sök löfte, parti eller ledamot</label>
@@ -59,12 +92,17 @@ const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new UR
       godkänd av en människa och bär ett exakt citat. Tomma celler är ärliga:
       ett parti utan en ren, kontrollerad koppling lämnas tomt.
     </p>
-    <nav class="bottennav">
-      <a href={`${base}metod`}>Så görs vägningen</a>
-      <a href={`${base}neutralitet`}>Neutralitetskontraktet</a>
-      <a href={`${base}rattelser`}>Rättelser</a>
-      <a href="https://github.com/bambapappa/valflask" rel="noopener" target="_blank">Källkod och data</a>
-    </nav>
+    <div class="botten-inner">
+      <nav class="bottennav etikett" aria-label="Sidfotsnavigation">
+        <a href={`${base}metod`}>Så görs vägningen</a>
+        <a href={`${base}neutralitet`}>Neutralitetskontraktet</a>
+        <a href={`${base}rattelser`}>Rättelser</a>
+        <a href="/metod">Metoden i övrigt</a>
+        <a href="/om">Om utlovat.se</a>
+        <a href="https://github.com/bambapappa/valflask" rel="noopener" target="_blank">Källkod och data<span aria-hidden="true"> ↗</span><span class="hoppa"> (öppnas i en ny flik)</span></a>
+      </nav>
+      <p class="bottenlicens etikett">Licens: CC BY 4.0 — ange "utlovat.se" som källa.</p>
+    </div>
   </footer>
   <script is:inline src={`${base}hv-sok.js`}></script>
 </body>

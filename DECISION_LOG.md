@@ -1396,3 +1396,67 @@ lanseringen ändå — det ligger kvar som steg 3 i
 **Påverkan:** hela repot; `handlingsvagen/SAMMANSLAGNING.md` (steg 1–2),
 `HANDOFF.md` §9 (en anslagstavla), `.github/workflows/` (18 workflows i ett
 repo, skilda concurrency-grupper).
+
+## 2026-08-01 — Handlingsvågen bär sajtens kostym, inte en egen
+
+**Beslut:** Handlingsvågen slutar ha ett eget formspråk. Dess sidor importerar
+`site/src/styles/tokens.css` och `site/src/styles/base.css` rakt av, och det
+som blir kvar under `handlingsvagen/site/src/styles/` är en brygga från de
+gamla tokennamnen till den delade paletten plus vågens egna komponenter.
+Följder: Handlingsvågens mörka läge försvinner (papper är konceptet), rundade
+hörn och skuggor försvinner, sidhuvudet blir "UTLOVAT.SE" med vågens namn i
+monoraden under, och statusarna i rutnätet sätts i svärta på papper.
+
+Det här är inte ett nytt formbeslut utan verkställandet av det som `b-0018`
+sköt upp: statusarna skulle skiljas på form och inte på färgton, och "exakta
+kulörer tas i det delade tema-arbetet". Svaret blev att Handlingsvågen inte
+får några egna kulörer alls. Formskillnaden består och blir tydligare: fylld
+platta för "i linje", heldragen kontur för "emot", streckad för "både och",
+prickad för "avstod", ingen ram alls för den tomma cellen — och ordet står
+alltid utskrivet, precis som förut.
+
+**Motiv:** Vågorna ligger på samma domän sedan lanseringen. En läsare som
+klickar från löftena till handlingarna ska inte behöva undra om hen bytt sajt.
+Två formspråk i ett bygge är dessutom två ställen att underhålla, och det
+andra hade uttryckligen platshållarkulörer i sin egen fil.
+
+**Förkastade alternativ:** Kopiera tokens och basregler till Handlingsvågen —
+nej, då finns formen på två ställen och de glider isär vid första ändringen.
+Flytta den delade kostymen till en ny katalog i roten som båda importerar —
+renare på papperet, men det flyttar Fläskvågens levande formfiler mitt under
+drift och `site/DESIGN.md` pekar ut var de bor. Behålla Handlingsvågens mörka
+läge — nej, den delade paletten har inget mörkt läge att spegla det i.
+
+**Påverkan:** `handlingsvagen/site/src/styles/tokens.css` (rewrite),
+`handlingsvagen/site/src/styles/rutnat.css` (rewrite),
+`handlingsvagen/site/src/layouts/Layout.astro`,
+`handlingsvagen/site/src/pages/index.astro`,
+`handlingsvagen/site/src/pages/amnen.astro`,
+`handlingsvagen/site/src/pages/partier.astro`.
+
+**Öppet:** sammanslagningen av de två Astro-projekten till ett bygge är inte
+gjord och står kvar i `handlingsvagen/SAMMANSLAGNING.md`. Kostymen delas nu
+via en relativ import över projektgränsen; det håller, men det är ett
+gränssnitt som bara finns för att projekten ännu är två.
+
+## 2026-08-01 — Rubriker avstavas i stället för att spränga spalten
+
+**Beslut:** `h1, h2, h3, .display` i `site/src/styles/base.css` får
+`hyphens: auto` och `overflow-wrap: break-word`. Typskalan är oförändrad.
+
+**Motiv:** Svenskan bygger långa sammansättningar, och ett enda sådant ord i
+rubrikgrad är bredare än en mobilskärm: "NEUTRALITETSKONTRAKTET" mätte 428 px
+i en 320 px-spalt och "SOCIALDEMOKRATERNA" 376 px. Följden var att hela sidan
+gick att dra i sidled — kravet är att innehållet ska rymmas i en spalt utan
+det. Mätt på Handlingsvågen före ändringen: tre sidor rullade i sidled vid
+320 px, en av dem redan vid 390 px. Efter: ingen sida på någon av de prövade
+bredderna. Sidan är märkt `lang="sv"`, så avstavningen blir en riktig sådan;
+brytregeln är haverireserv för ord som inte går att avstava.
+
+**Förkastade alternativ:** Krympa rubrikgraden på små skärmar med `clamp()` —
+det ändrar den beslutade typskalan, och problemet är ordlängden, inte graden.
+Bara `overflow-wrap: break-word` — bryter mitt i ordet utan bindestreck, vilket
+är sämre satt.
+
+**Påverkan:** `site/src/styles/base.css`. Gäller båda sajterna eftersom filen
+är delad; Fläskvågens bygge, T1 och T3 är körda och gröna efter ändringen.

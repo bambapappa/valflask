@@ -52,48 +52,64 @@ function statusTokens(celler: Record<string, Cell>): string[] {
       <div><b>{summary.summa.utan_handling}</b><span>väntar ännu på en granskad koppling</span></div>
     </div>
 
-    <div class="verktyg" id="filter" data-antal-lof={summary.loften.length}>
-      <label><span class="verktyg-etikett">Kategori</span>
-        <select id="f-kategori" data-falt="kategori" aria-label="Filtrera på kategori">
-          <option value="">alla</option>
-          {summary.kategorier.map((k) => <option value={k}>{k}</option>)}
-        </select>
-      </label>
-      <label><span class="verktyg-etikett">Parti</span>
-        <select id="f-parti" data-falt="parti" aria-label="Filtrera på parti">
-          <option value="">alla</option>
-          {summary.partier.map((p) => <option value={p.code}>{p.namn}</option>)}
-        </select>
-      </label>
-      <label><span class="verktyg-etikett">Status</span>
-        <select id="f-status" data-falt="status" aria-label="Filtrera på status">
-          <option value="">alla</option>
-          {STATUSVAL.map(([v, t]) => <option value={v}>{t}</option>)}
-        </select>
-      </label>
-      <label><span class="verktyg-etikett">Dokumenttyp</span>
-        <select id="f-dokumenttyp" data-falt="dokumenttyp" aria-label="Filtrera på dokumenttyp">
-          <option value="">alla</option>
-          {summary.fasetter.dokumenttyper.map((d) => <option value={d}>{KINDORD[d] ?? d}</option>)}
-        </select>
-      </label>
-      {summary.fasetter.motionstyper.length > 0 && (
-        <label><span class="verktyg-etikett">Motionstyp</span>
-          <select id="f-motionstyp" data-falt="motionstyp" aria-label="Filtrera på motionstyp">
+    {/*
+      Filtren är en blankett: en rubrik, och ett fält per filter med
+      etiketten ovanför sin väljare. Etiketten är inte längre radens minsta
+      och blekaste text — den står i full svärta, och ett satt filter får
+      dessutom fet etikett och tjockare ram.
+
+      `aria-label` behövs inte längre: varje väljare ligger i sin egen
+      <label> med synlig text, vilket är den bättre kopplingen. Id:na,
+      `data-falt`, `#f-rensa` och `#f-antal` är oförändrade — klientkoden i
+      hv-rutnat.js läser dem.
+    */}
+    <section class="verktyg" id="filter" data-antal-lof={summary.loften.length} aria-labelledby="filter-rubrik">
+      <h2 class="verktyg-rubrik" id="filter-rubrik">Filtrera rutnätet</h2>
+      <div class="verktyg-falt">
+        <label><span class="verktyg-etikett">Kategori</span>
+          <select id="f-kategori" data-falt="kategori">
             <option value="">alla</option>
-            {summary.fasetter.motionstyper.map((m) => <option value={m}>{MOTORD[m] ?? m}</option>)}
+            {summary.kategorier.map((k) => <option value={k}>{k}</option>)}
           </select>
         </label>
-      )}
-      <label><span class="verktyg-etikett">Riksmöte</span>
-        <select id="f-riksmote" data-falt="rm" aria-label="Filtrera på riksmöte">
-          <option value="">alla</option>
-          {summary.fasetter.riksmoten.map((r) => <option value={r}>{r}</option>)}
-        </select>
-      </label>
-      <button type="button" id="f-rensa" class="f-rensa" hidden>Rensa filter</button>
-      <p id="f-antal" class="f-antal" aria-live="polite"></p>
-    </div>
+        <label><span class="verktyg-etikett">Parti</span>
+          <select id="f-parti" data-falt="parti">
+            <option value="">alla</option>
+            {summary.partier.map((p) => <option value={p.code}>{p.namn}</option>)}
+          </select>
+        </label>
+        <label><span class="verktyg-etikett">Status</span>
+          <select id="f-status" data-falt="status">
+            <option value="">alla</option>
+            {STATUSVAL.map(([v, t]) => <option value={v}>{t}</option>)}
+          </select>
+        </label>
+        <label><span class="verktyg-etikett">Dokumenttyp</span>
+          <select id="f-dokumenttyp" data-falt="dokumenttyp">
+            <option value="">alla</option>
+            {summary.fasetter.dokumenttyper.map((d) => <option value={d}>{KINDORD[d] ?? d}</option>)}
+          </select>
+        </label>
+        {summary.fasetter.motionstyper.length > 0 && (
+          <label><span class="verktyg-etikett">Motionstyp</span>
+            <select id="f-motionstyp" data-falt="motionstyp">
+              <option value="">alla</option>
+              {summary.fasetter.motionstyper.map((m) => <option value={m}>{MOTORD[m] ?? m}</option>)}
+            </select>
+          </label>
+        )}
+        <label><span class="verktyg-etikett">Riksmöte</span>
+          <select id="f-riksmote" data-falt="rm">
+            <option value="">alla</option>
+            {summary.fasetter.riksmoten.map((r) => <option value={r}>{r}</option>)}
+          </select>
+        </label>
+      </div>
+      <div class="verktyg-rad">
+        <button type="button" id="f-rensa" class="f-rensa" hidden>Rensa filter</button>
+        <p id="f-antal" class="f-antal" aria-live="polite"></p>
+      </div>
+    </section>
 
     <section class="forklaring" aria-label="Så läses cellerna">
       <h2>Så läses cellerna</h2>
