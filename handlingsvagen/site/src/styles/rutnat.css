@@ -1,217 +1,520 @@
-/* Rutnätet (Vy 1), sökrutan, förklaringen och detaljpanelen. */
+/*
+ * Handlingsvågens egna komponenter: sidhuvud och sidfot, rutnätet, filtren,
+ * detaljpanelen och listorna på parti- och ledamotssidorna.
+ *
+ * Formspråket kommer från den delade kostymen (site/src/styles/tokens.css och
+ * base.css, importerade av Layout.astro). Reglerna här hårdkodar aldrig en
+ * kulör, ett mått eller ett fontnamn — de använder tokens.
+ *
+ * Tre saker att hålla i minnet när något läggs till:
+ *   · inga rundade hörn, inga skuggor, inga gradienter — ytor görs med
+ *     hårlinjer och plattor,
+ *   · rubriker i display-fonten (versalt), tal och etiketter i monon,
+ *     löpande text i serifen,
+ *   · färg är aldrig ensam bärare av ett budskap: statusarna skiljs på form.
+ */
 
+/* Hoppa-till-innehållet, och etiketter som bara hjälpmedel ska läsa.
+ * Samma beteende som Fläskvågens skip-länk; klassnamnet är Handlingsvågens
+ * eget sedan tidigare och behålls så att markupen inte behöver röras. */
+.hoppa {
+  position: absolute;
+  left: -9999px;
+}
+a.hoppa:focus {
+  left: var(--mellanrum);
+  top: var(--mellanrum);
+  background: var(--gul);
+  color: var(--svarta);
+  padding: 0.5rem 1rem;
+  z-index: 10;
+}
+
+/* ── Sidhuvud ── */
 .topp {
-  background: var(--yta);
-  border-bottom: 1px solid var(--linje);
+  border-bottom: var(--linje-sektion);
 }
 .topp-inner,
 main,
 .botten-inner {
-  max-width: 1100px;
+  max-width: var(--matt-data);
   margin: 0 auto;
-  padding: 1rem 1.1rem;
+  padding: var(--mellanrum);
 }
 .marke {
-  font-weight: 800;
-  font-size: 1.35rem;
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--steg-3);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-display);
+  line-height: var(--radavstand-display);
   text-decoration: none;
-  letter-spacing: -0.01em;
 }
+.marke:hover { text-decoration: none; }
+/* Vågens namn står i monon under märket — samma plats där Fläskvågen har
+ * sin akt- och datumrad, så sidhuvudena läses som samma sajt. */
 .devis {
-  margin: 0.1rem 0 0.6rem;
-  color: var(--text-svag);
-  font-style: italic;
+  margin: 0.35rem 0 0.9rem;
+  color: var(--dis);
 }
-.toppnav { display: flex; gap: 1.2rem; flex-wrap: wrap; }
-.toppnav a { text-decoration: none; color: var(--text-svag); font-weight: 600; }
-.toppnav a:hover { color: var(--text); }
+/* Navigationen sätts som Fläskvågens: monoetiketter över en sektionslinje. */
+.toppnav {
+  display: flex;
+  gap: 0 calc(var(--mellanrum) * 1.25);
+  flex-wrap: wrap;
+  border-top: var(--linje-sektion);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+.toppnav a {
+  text-decoration: none;
+  padding: 0.25rem 0;
+}
+.toppnav a:hover,
+.toppnav a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
 
+/* ── Sidfot ── */
 .botten {
-  border-top: 1px solid var(--linje);
-  margin-top: 3rem;
-  color: var(--text-svag);
-  font-size: 0.9rem;
+  border-top: var(--linje-sektion);
+  margin-top: calc(var(--mellanrum) * 3);
+  padding-top: calc(var(--mellanrum) * 1.5);
 }
-.botten p { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.1rem 0.4rem; }
-.bottennav { max-width: 1100px; margin: 0 auto; padding: 0 1.1rem 1.2rem; display: flex; gap: 1.2rem; flex-wrap: wrap; }
-.bottennav a { color: var(--fokus); font-weight: 600; text-decoration: none; }
-.bottennav a:hover { text-decoration: underline; }
+.botten-inner {
+  padding-top: 0;
+}
+.botten p {
+  max-width: var(--matt-prosa);
+  margin: 0;
+}
+.bottennav {
+  display: flex;
+  gap: 0.35rem calc(var(--mellanrum) * 1.25);
+  flex-wrap: wrap;
+  color: var(--dis);
+}
+.bottenlicens {
+  margin: 0.6rem 0 0;
+  color: var(--dis);
+}
 
-h1 { font-size: 1.7rem; letter-spacing: -0.01em; margin: 0.2rem 0 0.4rem; }
-.ingress { color: var(--text-svag); max-width: 62ch; }
+/* ── Sidhuvudets ingress ── */
+.ingress {
+  max-width: var(--matt-prosa);
+  font-size: var(--steg-1);
+}
 
+/* ── Sammanfattningen: tre tal i monon på en hårlinjeram ──
+ * Talen är produkten och sätts därför i monon, inte i serifen. */
 .summa {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem 1.4rem;
-  margin: 1rem 0 1.4rem;
-  padding: 0.8rem 1rem;
-  background: var(--yta);
-  border: 1px solid var(--linje);
-  border-radius: var(--radie);
+  gap: var(--mellanrum) calc(var(--mellanrum) * 2);
+  margin: var(--mellanrum) 0 calc(var(--mellanrum) * 1.5);
+  padding: calc(var(--mellanrum) * 0.75) var(--mellanrum);
+  border-top: var(--linje-tabell-ytter);
+  border-bottom: var(--linje-tabell-ytter);
 }
-.summa b { font-size: 1.25rem; display: block; }
-.summa span { color: var(--text-svag); font-size: 0.88rem; }
+.summa b {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--steg-3);
+  line-height: 1.1;
+}
+.summa span {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  color: var(--dis);
+}
 
-/* Sök + filter */
-.verktyg { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; margin-bottom: 1rem; }
+/* ── Sök- och filterfält ── */
 .sok { position: relative; flex: 1 1 260px; }
 .sok input,
-.verktyg select {
+.verktyg select,
+.amnesok input {
   width: 100%;
-  padding: 0.55rem 0.7rem;
-  font-size: 1rem;
-  border: 1px solid var(--linje);
-  border-radius: var(--radie);
-  background: var(--yta);
-  color: var(--text);
+  padding: 0.5rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--steg-0);
+  border: 1px solid var(--svarta);
+  border-radius: 0;
+  background: var(--papper);
+  color: var(--svarta);
 }
-.verktyg select { width: auto; }
 .sok-traffar {
   position: absolute;
-  left: 0; right: 0; top: calc(100% + 4px);
-  background: var(--yta);
-  border: 1px solid var(--linje);
-  border-radius: var(--radie);
-  box-shadow: var(--skugga);
-  list-style: none; margin: 0; padding: 0.25rem;
+  left: 0; right: 0; top: 100%;
+  background: var(--papper);
+  border: 1px solid var(--svarta);
+  border-top: none;
+  list-style: none; margin: 0; padding: 0;
   max-height: 320px; overflow-y: auto;
   z-index: 5;
 }
 .sok-traffar:empty { display: none; }
-.sok-traffar li { padding: 0; }
+.sok-traffar li { padding: 0; border-bottom: var(--linje-under); }
+.sok-traffar li:last-child { border-bottom: none; }
 .sok-traffar button {
   display: block; width: 100%; text-align: left;
-  background: none; border: none; color: inherit;
-  padding: 0.45rem 0.55rem; border-radius: 5px; cursor: pointer;
-  font-size: 0.95rem;
+  background: var(--papper); border: none; color: var(--svarta);
+  padding: 0.45rem 0.6rem; cursor: pointer;
+  font-family: var(--font-brod);
+  font-size: var(--steg-0);
+  text-transform: none;
+  letter-spacing: normal;
 }
-.sok-traffar button:hover, .sok-traffar button:focus-visible { background: var(--yta-2); }
-.sok-traffar .taggen { color: var(--text-svag); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.sok-traffar button:hover,
+.sok-traffar button:focus-visible {
+  background: var(--svarta);
+  color: var(--platta-text);
+}
+.sok-traffar .taggen {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  color: var(--dis);
+}
+.sok-traffar button:hover .taggen,
+.sok-traffar button:focus-visible .taggen { color: var(--platta-text); }
 
-/* Rutnätet */
-.rutnat-hölje { overflow-x: auto; border: 1px solid var(--linje); border-radius: var(--radie); background: var(--yta); }
-table.rutnat { border-collapse: collapse; width: 100%; min-width: 720px; }
-table.rutnat th, table.rutnat td { border-bottom: 1px solid var(--linje); padding: 0.5rem 0.55rem; text-align: left; vertical-align: top; }
-table.rutnat thead th { position: sticky; top: 0; background: var(--yta-2); font-size: 0.82rem; z-index: 2; }
-table.rutnat th.parti { text-align: center; white-space: nowrap; }
-th.lofte-huvud, td.lofte-cell {
-  position: sticky; left: 0; background: var(--yta); z-index: 1;
-  min-width: 240px; max-width: 340px;
+/*
+ * Filtren är en blankett, inte en verktygsrad: en ruta med rubrik, och ett
+ * fält per filter med etiketten OVANFÖR sin väljare. Tidigare låg sex
+ * väljare på en enda rad med etiketten som radens minsta och blekaste text —
+ * man såg knappt vilket parti man filtrerade på.
+ *
+ * Ett valt filter markeras med en tjockare ram och fet etikett, aldrig med
+ * färg: samma regel som statusarna följer.
+ */
+.verktyg {
+  border: 1px solid var(--svarta);
+  padding: calc(var(--mellanrum) * 0.75) var(--mellanrum) var(--mellanrum);
+  margin-bottom: calc(var(--mellanrum) * 1.5);
 }
-table.rutnat thead th.lofte-huvud { z-index: 3; background: var(--yta-2); }
-.lofte-titel { font-weight: 600; cursor: pointer; }
-.lofte-titel:hover { text-decoration: underline; }
-.lofte-kat { color: var(--text-svag); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.verktyg-rubrik {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: var(--linje-under);
+}
+.verktyg-falt {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.75rem var(--mellanrum);
+}
+.verktyg label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+/* Etiketten är läsbar text, inte finstilt: samma storlek som sajtens övriga
+ * etiketter och i full svärta — inte i den dämpade metadatafärgen. */
+.verktyg-etikett {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  color: var(--svarta);
+}
+.verktyg select { width: 100%; }
+/* Ett filter som är satt: 2px ram och fet etikett. Formen bär markeringen. */
+.verktyg label:has(select:not(:has(option[value=""]:checked))) .verktyg-etikett {
+  font-weight: 700;
+}
+.verktyg select:not(:has(option[value=""]:checked)) {
+  border-width: 2px;
+  font-weight: 700;
+}
+.verktyg-rad {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem var(--mellanrum);
+  margin-top: var(--mellanrum);
+  padding-top: 0.75rem;
+  border-top: var(--linje-under);
+}
+.f-rensa[hidden] { display: none; }
+.f-antal {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  color: var(--dis);
+}
+
+/* ── Rutnätet ──
+ * Tabellverket ärver hårlinjegrammatiken ur base.css. Här läggs bara det
+ * rutnätet behöver utöver den: vågrät rullning, klistrad huvudrad och
+ * klistrad löfteskolumn.
+ *
+ * `border-collapse: separate` är ett måste, inte ett formval: med
+ * `collapse` försvinner ramarna på klistrade celler när de rullar. */
+.rutnat-hölje {
+  overflow-x: auto;
+  border-top: var(--linje-tabell-ytter);
+  border-bottom: var(--linje-tabell-ytter);
+}
+table.rutnat {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-top: none;
+  border-bottom: none;
+  width: 100%;
+  min-width: 720px;
+}
+table.rutnat th,
+table.rutnat td {
+  border-bottom: var(--linje-under);
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+  background: var(--papper);
+}
+table.rutnat thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: var(--linje-sektion);
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+}
+table.rutnat th.parti { text-align: center; white-space: nowrap; }
+th.lofte-huvud,
+td.lofte-cell {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 240px;
+  max-width: 340px;
+  border-right: var(--linje-under);
+}
+table.rutnat thead th.lofte-huvud { z-index: 3; }
+.lofte-titel {
+  font-family: var(--font-brod);
+  font-size: var(--steg-0);
+  text-transform: none;
+  letter-spacing: normal;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.lofte-titel:hover {
+  background: none;
+  color: var(--svarta);
+  text-decoration-thickness: 2px;
+}
+.lofte-kat {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  color: var(--dis);
+  margin-top: 0.2rem;
+}
 td.cell { text-align: center; }
 
-/* Statuspiller — form bär budskapet, ordet står alltid utskrivet (F2). */
+/*
+ * Statusarna: fyra former, en färg, ordet alltid utskrivet.
+ *
+ *   i linje    fylld platta        — starkaste formen
+ *   emot       konturad, heldragen — lika tydlig, motsatt form
+ *   både och   konturad, streckad  — delad handling, bruten linje
+ *   avstod     konturad, prickad   — svagaste formen
+ *   (tomt)     ingen ram alls      — tomt är ärligt, inte trasigt
+ *
+ * Att formen bär skillnaden är bindande sedan tidigare — färg får aldrig
+ * vara ensam bärare. Med den delade paletten blir regeln dessutom
+ * självklar: sajten har en signalfärg, och den är inte till för att ranka
+ * partier mot varandra.
+ */
 .status {
   display: inline-block;
-  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
   font-weight: 700;
-  padding: 0.18rem 0.5rem;
-  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  line-height: var(--radavstand-mono);
+  padding: 0.15rem 0.5rem;
   border: 2px solid transparent;
   white-space: nowrap;
-  line-height: 1.3;
+  background: var(--papper);
+  color: var(--svarta);
 }
-.status--linje { background: var(--a-linje); color: #fff; border-color: var(--a-linje); }
-@media (prefers-color-scheme: dark) { .status--linje { color: #10151b; } }
-.status--emot  { background: transparent; color: var(--a-emot); border-color: var(--a-emot); border-style: solid; }
-.status--bade  { background: var(--a-linje-mjuk); color: var(--text); border-color: var(--a-emot); border-style: dashed; }
-.status--avstod{ background: var(--yta-2); color: var(--grå); border-color: var(--grå); border-style: dotted; }
-.status--tom   { color: var(--text-svag); font-weight: 500; font-size: 0.76rem; }
-.status--tom::before { content: "– "; }
+button.status { cursor: pointer; }
+.status--linje { background: var(--svarta); color: var(--platta-text); border-color: var(--svarta); }
+.status--emot  { border-color: var(--svarta); }
+.status--bade  { border-color: var(--svarta); border-style: dashed; }
+.status--avstod{ border-color: var(--grafit); color: var(--grafit); border-style: dotted; }
+.status--tom {
+  border-color: transparent;
+  background: none;
+  color: var(--dis);
+  font-weight: 400;
+  white-space: normal;
+}
+/* Hovring inverterar, som blankettknappen — men bara formen, aldrig ordet. */
+button.status:hover,
+button.status:focus-visible { text-decoration: underline; text-underline-offset: 2px; }
 
-/* Förklaring / legend */
-.forklaring { margin: 1.2rem 0; padding: 0.9rem 1rem; background: var(--yta); border: 1px solid var(--linje); border-radius: var(--radie); }
-.forklaring h2 { font-size: 1rem; margin: 0 0 0.5rem; }
-.forklaring ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; }
-.forklaring li { display: flex; align-items: center; gap: 0.45rem; font-size: 0.9rem; color: var(--text-svag); }
+/* ── Förklaringen (teckenförklaring till cellerna) ── */
+.forklaring {
+  margin: calc(var(--mellanrum) * 1.25) 0;
+  padding: calc(var(--mellanrum) * 0.75) var(--mellanrum);
+  border: 1px solid var(--svarta);
+}
+.forklaring h2 {
+  font-size: var(--steg--1);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  margin: 0 0 0.6rem;
+}
+.forklaring ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0.6rem calc(var(--mellanrum) * 1.25);
+}
+/* Posterna måste kunna brytas: teckenförklaringen bär hela meningar, och
+ * vid 320 px ryms de annars inte utan att sidan börjar rulla i sidled. */
+.forklaring li {
+  display: flex; align-items: center; gap: 0.45rem;
+  flex-wrap: wrap;
+  font-size: var(--steg-0);
+}
 
-/* Detaljpanel */
+/* ── Detaljpanelen ── */
 dialog.panel {
-  border: 1px solid var(--linje);
-  border-radius: 12px;
-  background: var(--yta);
-  color: var(--text);
+  border: var(--linje-tabell-ytter);
+  background: var(--papper);
+  color: var(--svarta);
   max-width: 760px;
   width: calc(100% - 2rem);
   padding: 0;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
 }
-dialog.panel::backdrop { background: rgba(0,0,0,0.45); }
-.panel-inner { padding: 1.2rem 1.3rem 1.6rem; }
-.panel-huvud { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
-.panel h2 { font-size: 1.25rem; margin: 0.2rem 0; }
-.panel .stang { background: none; border: 1px solid var(--linje); border-radius: 6px; padding: 0.3rem 0.6rem; cursor: pointer; color: inherit; font-size: 1rem; }
-.panel .lofte-citat { font-style: italic; border-left: 3px solid var(--linje); padding-left: 0.8rem; margin: 0.8rem 0; color: var(--text-svag); }
-.panel .meta { font-size: 0.85rem; color: var(--text-svag); }
-.panel .meta a { color: var(--fokus); }
+dialog.panel::backdrop { background: rgba(17, 17, 17, 0.55); }
+.panel-inner { padding: var(--mellanrum) calc(var(--mellanrum) * 1.25) calc(var(--mellanrum) * 1.5); }
+.panel-huvud { display: flex; justify-content: space-between; gap: var(--mellanrum); align-items: start; }
+.panel h2 { font-size: var(--steg-2); margin: 0.2rem 0; }
+.panel .stang { padding: 0.3rem 0.7rem; }
+.panel .lofte-citat {
+  font-style: italic;
+  font-size: var(--steg-1);
+  border-left: 2px solid var(--svarta);
+  padding-left: 0.8rem;
+  margin: 0.8rem 0;
+}
+.panel .meta {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  color: var(--dis);
+}
 
-.domrad { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.7rem 0 1rem; }
+.domrad { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.7rem 0 var(--mellanrum); }
 
+/* ── En koppling (löfte ↔ riksdagshandling) ── */
 .koppling {
-  border: 1px solid var(--linje);
-  border-radius: var(--radie);
-  padding: 0.8rem 0.9rem;
-  margin: 0.7rem 0;
-  background: var(--bg);
+  border-top: var(--linje-under);
+  padding: 0.8rem 0 0;
+  margin: 0.8rem 0 0;
 }
-.koppling .kh { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: center; font-size: 0.82rem; color: var(--text-svag); margin-bottom: 0.4rem; }
-.koppling .kind { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text); }
-.koppling blockquote { margin: 0.4rem 0; padding-left: 0.8rem; border-left: 3px solid var(--a-linje); font-size: 0.98rem; }
-.koppling .metodnot { font-size: 0.9rem; color: var(--text-svag); margin: 0.4rem 0; }
-.koppling .lankar { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; font-size: 0.85rem; }
-.koppling .lankar a { color: var(--fokus); }
-.koppling .saknas { color: var(--text-svag); font-style: italic; }
+.koppling .kh {
+  display: flex; flex-wrap: wrap; gap: 0.3rem 0.8rem; align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  color: var(--dis);
+  margin-bottom: 0.4rem;
+}
+.koppling .kind { font-weight: 700; color: var(--svarta); }
+.koppling blockquote {
+  margin: 0.4rem 0;
+  padding-left: 0.8rem;
+  border-left: 2px solid var(--svarta);
+  font-size: var(--steg-0);
+}
+.koppling .metodnot { font-size: var(--steg-0); color: var(--grafit); margin: 0.4rem 0; }
+.koppling .lankar {
+  display: flex; flex-wrap: wrap; gap: 0.3rem var(--mellanrum);
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+}
+.koppling .saknas { color: var(--dis); font-style: italic; }
 
-.laddar { color: var(--text-svag); padding: 1rem 0; }
+.laddar {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  color: var(--dis);
+  padding: var(--mellanrum) 0;
+}
 
 /* Sökrutan i sidhuvudet (global) */
 .topp .sok { margin-top: 0.7rem; max-width: 560px; }
-.verktyg-etikett { font-size: 0.8rem; color: var(--text-svag); }
-.verktyg label { display: inline-flex; align-items: center; gap: 0.35rem; }
-.f-rensa {
-  background: var(--yta-2); border: 1px solid var(--linje); color: var(--text);
-  border-radius: var(--radie); padding: 0.5rem 0.8rem; cursor: pointer; font-size: 0.9rem;
-}
-.f-rensa:hover { background: var(--yta); }
-.f-rensa[hidden] { display: none; }
-.f-antal { width: 100%; margin: 0.1rem 0 0; color: var(--text-svag); font-size: 0.88rem; }
 
-/* Delade listor på parti- och ledamotssidorna */
-.vy-lista { list-style: none; padding: 0; margin: 0.8rem 0; display: grid; gap: 0.5rem; }
+/* ── Delade listor på parti- och ledamotssidorna ── */
+.vy-lista { list-style: none; padding: 0; margin: var(--mellanrum) 0; }
 .vy-lista li {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.7rem;
-  padding: 0.6rem 0.8rem; background: var(--yta); border: 1px solid var(--linje); border-radius: var(--radie);
+  padding: 0.7rem 0;
+  border-bottom: var(--linje-under);
 }
-.vy-titel { font-weight: 600; color: var(--text); text-decoration: none; }
-a.vy-titel { color: var(--fokus); }
-.vy-titel:hover { text-decoration: underline; }
-.vy-kat { color: var(--text-svag); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
-.vy-meta { color: var(--text-svag); font-size: 0.82rem; width: 100%; }
-.vy-lofte { color: var(--text-svag); font-size: 0.85rem; }
-.vy-lofte a { color: var(--fokus); }
+.vy-titel { font-weight: 600; }
+a.vy-titel { text-decoration: underline; text-underline-offset: 2px; }
+.vy-kat,
+.vy-meta {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  color: var(--dis);
+}
+.vy-meta { width: 100%; text-transform: none; letter-spacing: normal; }
+.vy-lofte { font-size: var(--steg-0); color: var(--grafit); }
 .vy-lista .status, .vy-lista .markorer { margin-left: auto; }
 
-/* Synlig rättelsenot (delas av Rattelsenot.astro och rutnätets panel) */
+/*
+ * Rättelsenot: fel rättas synligt. Noten är stämplad, inte färgad — en
+ * tjock ram och en versal monoetikett, i samma anda som sajtens övriga
+ * stämplar.
+ */
 .rattelsenot {
-  border: 2px solid var(--a-emot);
-  border-radius: var(--radie);
-  background: var(--a-emot-mjuk);
-  padding: 0.7rem 0.9rem;
-  margin: 1rem 0;
-  font-size: 0.92rem;
+  border: var(--linje-tabell-ytter);
+  padding: 0.8rem var(--mellanrum);
+  margin: var(--mellanrum) 0;
+}
+.rattelsenot > strong,
+.rattelsenot .etikett {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
 }
 .rattelsenot ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
-.rattelsenot .datum { color: var(--text-svag); }
-.rattelsenot .mer { margin: 0.4rem 0 0; font-size: 0.85rem; }
-.rattelsenot .mer a { color: var(--fokus); }
+.rattelsenot .datum { font-family: var(--font-mono); color: var(--dis); }
+.rattelsenot .mer { margin: 0.4rem 0 0; font-size: var(--steg--1); font-family: var(--font-mono); }
 
 @media (max-width: 640px) {
-  h1 { font-size: 1.4rem; }
-  .topp-inner, main, .botten p { padding: 0.9rem 0.9rem; }
+  .topp-inner, main, .botten p, .botten-inner { padding: 0.9rem; }
+  .marke { font-size: var(--steg-2); }
   .vy-lista .status, .vy-lista .markorer { margin-left: 0; }
+  .summa { gap: 0.75rem var(--mellanrum); }
+  .summa b { font-size: var(--steg-2); }
 }

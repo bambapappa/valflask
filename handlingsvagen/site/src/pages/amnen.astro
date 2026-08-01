@@ -555,8 +555,14 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
 )}
 
 <style>
+  /* Sidan är en datavy, inte en text. Prosabredden ur den delade kostymen
+     gäller därför bara de löpande styckena — söket, partifiltret,
+     rösttabellerna och ordlistorna får hela spaltbredden. */
+  .prosa { max-width: none; }
+  .prosa > p, .prosa .ingress, .prosa section > p { max-width: var(--matt-prosa); }
+
   .hjalp { color: var(--text-svag); }
-  .hjalp i { font-style: normal; background: var(--yta); padding: 0.05em 0.35em; border-radius: 4px; }
+  .hjalp i { font-style: normal; font-family: var(--font-mono); border: 1px solid var(--linje-svag); padding: 0.05em 0.35em; }
   .tomt { color: var(--text-svag); font-style: italic; }
 
   .amnesok { margin: 1rem 0 2rem; }
@@ -568,14 +574,18 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
   .status { color: var(--text-svag); font-size: 0.9rem; margin: 0.5rem 0 0; }
 
   .partifilter { border: 0; padding: 0; margin: 0.7rem 0 0; }
-  .partifilter legend { padding: 0; font-size: 0.9rem; font-weight: 600; }
+  .partifilter legend {
+    padding: 0; font-family: var(--font-mono); font-size: var(--steg--1);
+    text-transform: uppercase; letter-spacing: var(--sparrning-etikett);
+  }
   .partival { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; }
   .partikryss {
     display: inline-flex; align-items: center; gap: 0.35rem;
     padding: 0.25rem 0.6rem; font-size: 0.85rem; cursor: pointer;
-    background: var(--yta); border: 1px solid var(--linje); border-radius: 999px;
+    background: var(--papper); border: 1px solid var(--svarta);
   }
-  .partikryss:has(input:checked) { border-color: var(--a-linje); font-weight: 600; }
+  /* Valt parti markeras med form, aldrig med färg: tjockare ram och fet text. */
+  .partikryss:has(input:checked) { border-width: 2px; font-weight: 700; }
   .partikryss input { margin: 0; }
   .filterhjalp { font-size: 0.85rem; margin: 0.4rem 0 0; }
 
@@ -587,8 +597,10 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
     padding: 0.3rem 0.7rem; text-align: right; border-bottom: 1px solid var(--linje);
     font-variant-numeric: tabular-nums;
   }
-  .rosttabell th[scope="row"] { text-align: left; font-weight: 800; }
-  .rosttabell tr.vald { background: var(--yta); }
+  .rosttabell th[scope="row"] { text-align: left; font-weight: 700; }
+  /* Den rad sidan handlar om markeras med form: fet text och en tjock kantlinje. */
+  .rosttabell tr.vald { font-weight: 700; }
+  .rosttabell tr.vald th[scope="row"] { border-left: 3px solid var(--svarta); padding-left: 0.5rem; }
 
   .voteringar { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.5rem; }
   .voteringar li {
@@ -601,10 +613,10 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
   .voteringar .flerrad { color: var(--text-svag); font-size: 0.85rem; background: none; border: 0; padding: 0.2rem 0; }
   .standpunkter { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.45rem; }
   .stand {
-    font-size: 0.75rem; padding: 0.05rem 0.4rem; border-radius: 4px;
-    border: 1px solid var(--linje);
+    font-family: var(--font-mono); font-size: var(--steg--1); padding: 0.05rem 0.4rem;
+    border: 1px solid var(--linje-svag);
   }
-  .stand.ja { border-color: var(--a-linje); font-weight: 600; }
+  .stand.ja { border-color: var(--svarta); border-width: 2px; font-weight: 700; }
   .stand.franvarande { color: var(--text-svag); }
 
   .traffar { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.5rem; }
@@ -617,8 +629,8 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
   .traffar .meta { color: var(--text-svag); font-size: 0.85rem; }
   .traffar .partier { display: inline-flex; gap: 0.3rem; }
   .traffar .pk {
-    font-weight: 800; font-size: 0.75rem; text-transform: uppercase;
-    border: 1px solid var(--linje); border-radius: 4px; padding: 0.05rem 0.3rem;
+    font-family: var(--font-mono); font-weight: 700; font-size: var(--steg--1); text-transform: uppercase;
+    border: 1px solid var(--linje-svag); padding: 0.05rem 0.3rem;
   }
   .traffar .utslag { font-size: 0.85rem; font-weight: 600; }
 
@@ -629,7 +641,8 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
   .ordlista { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.3rem; }
   .ordlista li { display: grid; grid-template-columns: minmax(5rem, auto) 1fr auto; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
   .ordlista .ord { font-weight: 600; overflow-wrap: anywhere; }
-  .ordlista .stapel { height: 0.5rem; background: var(--linje); border-radius: 999px; overflow: hidden; }
-  .ordlista .fyll { display: block; height: 100%; background: var(--a-linje); }
+  /* Stapeln följer diagramregeln: fylld svärta mot en svag hårlinjeyta. */
+  .ordlista .stapel { height: 0.5rem; background: var(--linje-svag); overflow: hidden; }
+  .ordlista .fyll { display: block; height: 100%; background: var(--svarta); }
   .ordlista .ordtal { color: var(--text-svag); font-variant-numeric: tabular-nums; font-size: 0.8rem; }
 </style>

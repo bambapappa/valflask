@@ -83,6 +83,15 @@ h1, h2, h3, .display {
   letter-spacing: var(--sparrning-display);
   line-height: var(--radavstand-display);
   margin: 0 0 calc(var(--mellanrum) * 0.75);
+  /* Svenskan bygger långa sammansättningar — "NEUTRALITETSKONTRAKTET",
+   * "SVERIGEDEMOKRATERNA" — och ett enda sådant ord är bredare än en
+   * mobilskärm i rubrikgraden. Utan de här två raderna rullar hela sidan i
+   * sidled, vilket fäller kravet på att innehållet ska rymmas i en spalt.
+   * Avstavningen gör brytningen till en typografiskt riktig sådan (sidan är
+   * märkt lang="sv"); brytregeln är haverireserven för ord som inte går att
+   * avstava. Typskalan är oförändrad. */
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 h1 { font-size: var(--steg-4); }
 h2 { font-size: var(--steg-3); }
