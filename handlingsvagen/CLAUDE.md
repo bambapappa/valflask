@@ -23,10 +23,9 @@ commit-texter, PR-texter, sajtcopy, prompter och dokumentation.
 ## Parallella sessioner
 
 Flera Claude-sessioner kan arbeta i repot samtidigt. Bindande:
-`main` är samlingspunkten och `HANDOFF.md` är anslagstavlan — läs
-versionen på `origin/main` innan nytt arbete, gör anspråk under
-"Pågår just nu" före start, skörda aldrig parallellt. Fullständiga
-regler i HANDOFF.md §"Samarbete mellan parallella sessioner".
+`main` är samlingspunkten och anslagstavlan ligger i `handoff`-repot
+(`projekt/utlovat/HANDOFF.md`) — läs den innan nytt arbete, gör anspråk
+under "Pågår just nu" före start, skörda aldrig parallellt. Fullständiga regler i `handoff`-repot, `AGENTS.md`.
 
 ## Kärnprinciper (fastställda genom mänskligt beslut)
 
@@ -40,3 +39,10 @@ regler i HANDOFF.md §"Samarbete mellan parallella sessioner".
   om från datat som gällde när den genererades — inte från dagens siffror.
 - **Arkivlänkar måste bära citatet.** En arkivkopia accepteras bara om
   citatet står ordagrant i själva ögonblicksbilden.
+
+## Överlämningen ligger inte här
+
+Anslagstavlan, lanseringsplanerna och driftanteckningarna ligger i det
+privata repot `bambapappa/handoff` under `projekt/utlovat/`. Ska du ta vid
+i arbetet: börja där, med `AGENTS.md` och `projekt/utlovat/HANDOFF.md`.
+Skriv inte en ny överlämning här.

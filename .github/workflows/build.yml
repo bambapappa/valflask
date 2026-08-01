@@ -10,8 +10,6 @@ on:
     paths-ignore:
       - "handlingsvagen/data/kopplingsforslag.json"
       - "handlingsvagen/data/provade-par.json"
-      - "handlingsvagen/data/jamforelse-urval-*.json"
-      - "handlingsvagen/data/modelljamforelse-*.json"
   pull_request:
     branches: [main]
   workflow_dispatch: {}
