@@ -9,7 +9,7 @@ const partier = partiKoder()
 ---
 <Layout title="Partier — Handlingsvågen" canonicalPath="/partier">
   <h1>Partier</h1>
-  <p class="ingress">Åtta riksdagspartier. Klicka för partiets löften vägda mot dess egna handlingar.</p>
+  <p class="ingress">Åtta partier sitter i riksdagen. Klicka på ett för att se dess löften bredvid det partiet faktiskt gjort.</p>
   <ul class="parti-lista">
     {partier.map((p) => (
       <li>
@@ -17,7 +17,7 @@ const partier = partiKoder()
           <span class="pkod">{p.code.toUpperCase()}</span>
           <span class="pnamn">{p.namn}</span>
         </a>
-        <span class="ptal">{p.summa.vagda} av {p.summa.total_loften} löften vägda</span>
+        <span class="ptal">{p.summa.vagda} av {p.summa.total_loften} löften granskade</span>
       </li>
     ))}
   </ul>

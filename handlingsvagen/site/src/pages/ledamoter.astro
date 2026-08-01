@@ -23,8 +23,9 @@ const grupper = [...perParti.entries()]
 <Layout title="Ledamöter — Handlingsvågen" canonicalPath="/ledamoter">
   <h1>Ledamöter</h1>
   <p class="ingress">
-    De {personer.length} sittande ledamöterna. Varje sida visar ledamotens röster
-    i kopplade voteringar och egna handlingar, per löfte. Sök på namn i fältet ovan.
+    De {personer.length} som sitter i riksdagen i dag. På varje namn ser du hur
+    personen röstat i de omröstningar vi granskat, och vad hen själv skrivit —
+    sorterat efter vilket löfte det gäller. Sök på namn i fältet ovan.
   </p>
   {grupper.map(([kod, lista]) => (
     <section class="grupp">
