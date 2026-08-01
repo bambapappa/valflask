@@ -54,10 +54,9 @@ att håna ett parti eller en person.
 ## Parallella sessioner
 
 Flera Claude-sessioner kan arbeta i repot samtidigt. Bindande:
-`main` är samlingspunkten och `HANDOFF.md` är anslagstavlan — läs
-versionen på `origin/main` innan nytt arbete, gör anspråk under
-"Pågår just nu" före start, skörda aldrig parallellt. Fullständiga
-regler i HANDOFF.md §9 "Samarbete mellan parallella sessioner".
+`main` är samlingspunkten och anslagstavlan ligger i `handoff`-repot
+(`projekt/utlovat/HANDOFF.md`) — läs den innan nytt arbete, gör anspråk
+under "Pågår just nu" före start, skörda aldrig parallellt. Fullständiga regler i `handoff`-repot, `AGENTS.md`.
 
 ## Att avsluta ett större spår
 
@@ -149,3 +148,10 @@ mänskligt beslut och finns även kodade i `pipeline/prompts/A5-cost.md`:
   Enskilda felrättelser får däremot en egen post.
 - Kör `pnpm test` och `tsc --noEmit` i `pipeline/` före push. Ändrad
   klientkod i `site/src/scripts/` kräver ombyggd `site/public/kombinator.js`.
+
+## Överlämningen ligger inte här
+
+Anslagstavlan, lanseringsplanerna och driftanteckningarna ligger i det
+privata repot `bambapappa/handoff` under `projekt/utlovat/`. Ska du ta vid
+i arbetet: börja där, med `AGENTS.md` och `projekt/utlovat/HANDOFF.md`.
+Skriv inte en ny överlämning här.
