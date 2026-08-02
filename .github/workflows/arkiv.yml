@@ -47,7 +47,13 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
           ref: ${{ github.event.repository.default_branch }}
-          persist-credentials: true
+          # INGA sparade uppgifter. Checkouten skriver annars in den token
+          # den fick i git-configen, och den vinner över det vi sätter i
+          # origin-URL:en. Eftersom jobbet kan hålla på i timmar är den
+          # utgången vid pushen, och git skickar då den döda token i stället
+          # för den färska: "Invalid username or token". Bara pushstegen
+          # behöver autentisering, och de bär sin färska token i URL:en.
+          persist-credentials: false
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
         with:
           node-version: 22
@@ -64,15 +70,35 @@ jobs:
           [ -n "$LIMIT" ] && args+=(--limit "$LIMIT")
           npm run arkiv -- "${args[@]}"
         working-directory: handlingsvagen/pipeline
+      - name: Förnya botens token inför push
+        id: push-token
+        # Botens token lever EN timme, och jobbet kan hålla på mycket längre.
+        # Den som mintades i första steget är då död, och checkouten har
+        # skrivit in just den i git-configen. Samma fälla kostade
+        # nyckelordsbygget en hel körning 2026-08-01.
+        if: ${{ always() }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Committa data/arkiv.json
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cp data/arkiv.json /tmp/arkiv.json 2>/dev/null || true
           for attempt in 1 2 3 4 5; do
-            git fetch origin "$DEFAULT_BRANCH" && git reset --hard "origin/$DEFAULT_BRANCH"
+            # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
+            # gammalt träd, och då blir allt efteråt fel — en misslyckad push
+            # kan se ut som "inget nytt att committa".
+            if ! git fetch origin "$DEFAULT_BRANCH"; then
+              echo "försök $attempt: kunde inte hämta $DEFAULT_BRANCH"
+              sleep $((attempt * 5))
+              continue
+            fi
+            git reset --hard "origin/$DEFAULT_BRANCH"
             [ -e /tmp/arkiv.json ] && cp /tmp/arkiv.json data/arkiv.json || true
             git add data/arkiv.json
             if git diff --cached --quiet; then
