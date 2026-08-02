@@ -1602,3 +1602,69 @@ funktion i stället för egen kapning), `pipeline/tests/cost.test.ts` (+5
 kontroller: kort text orörd, ingen avhuggning mitt i ord, inget hängande
 skiljetecken, hård kapning när ett ord fyller hela taket, och att modellens
 not kapas i den skarpa vägen). 310 tester gröna, `tsc --noEmit` ren.
+
+## 2026-08-02 — LLM: tre led, allt variabelstyrt (ersätter 2026-06-24)
+
+**Ersätter** posten *"LLM: modell per endpoint (OpenRouter primär + OpenCode Go
+äkta fallback)"* från 2026-06-24. Den posten står kvar — historik skrivs inte
+om — men **dess tabell över modellnamn är inte längre giltig**: den utgår från
+att primären är OpenRouter, och rollerna har sedan dess bytt plats i driften.
+
+**Problem:** Tre saker, alla upptäckta samma dag när frågan ställdes varför
+primären aldrig verkade användas.
+
+1. `pipeline.yml` skickade aldrig `MODEL_*_FALLBACK`. Utan egna modellnamn får
+   ett led primärens strängar, och leverantörerna har olika namnscheman — så
+   **reserven har aldrig kunnat svara**. Den stod som attrapp medan felen såg
+   ut att handla om kreditsaldo. Att fylla på krediter hade inte hjälpt; ledet
+   hade fallit på modellnamn i stället.
+2. `complete()` hade en enda `lastError` som varje endpoint skrev över.
+   Reserven provas sist, så det som kastades var alltid reservens fel.
+   Primärens orsak försvann spårlöst, och gick inte att få fram ur loggen alls.
+3. Leverantörerna satt i koden: en inbyggd standard-URL för primären, och en
+   kedja som bara rymde två led. Byte krävde kodändring.
+
+**Beslut:** Kedjan är tre led som alla ser likadana ut. Inget om någon
+leverantör finns kvar i koden.
+
+| Led | Adress | Nyckel | Modeller |
+| --- | --- | --- | --- |
+| primär | `LLM_BASE_URL` | `LLM_API_KEY` | `MODEL_<ROLL>` |
+| sekundär | `LLM_FALLBACK_BASE_URL` | `LLM_FALLBACK_API_KEY` | `MODEL_<ROLL>_FALLBACK` |
+| extra | `LLM_ZAI_BASE_URL` | `LLM_ZAI_API_KEY` | `MODEL_<ROLL>_ZAI` |
+
+**Vilka namn som hör var beror på vilken leverantör ledet pekar på** — det är
+hela poängen, och därför står inga värden i den här tabellen. Med driftens
+uppsättning i augusti 2026 (primär = opencode, sekundär = openrouter) bär
+`MODEL_*` opencodes rena namn och `MODEL_*_FALLBACK` openrouters prefixade
+slugar, alltså tvärtom mot tabellen från 2026-06-24.
+
+Felet bär hela kedjan, led för led i den ordning de provades, med värdnamn och
+modell — aldrig nyckel, för körningsloggen är publik:
+
+    primär (opencode.ai, kimi-k2.7-code) → HTTP 401: …  |  sekundär (openrouter.ai, moonshotai/kimi-k2.7-code) → HTTP 402: …
+
+Tre lägen per led: helt osatt hoppas tyst (bortvalt); adress och nyckel utan
+modeller hoppas med en rad i loggen (ledet finns för ett annat arbete — så ser
+det extra ledet ut för pipelinen, eftersom matchningen har sin egen
+`MODEL_KOPPLING_ZAI`); någon men inte alla delar satta stoppar körningen.
+`LLM_FORST` kastar om ordningen för en enskild körning utan att röra
+variablerna.
+
+**Motiv:** Ägaren ville kunna byta leverantör utan kodändring. Men det som
+gjorde ändringen nödvändig var att den gamla konstruktionen kunde stå trasig
+utan att synas: en reserv som inte kunde svara, och ett felmeddelande som
+pekade konsekvent på fel led i kedjan.
+
+**Förkastade alternativ:** Bara koppla `MODEL_*_FALLBACK` i workflowen (löser
+attrappen men inte att leverantören sitter i koden); tyst hoppa över halvt
+konfigurerade led (samma tysta degradering som var problemet); låta
+`foreslag.yml`:s `primar`-ruta vara mönstret (det är kod som väljer
+leverantör, inte variabler).
+
+**Påverkan:** `pipeline/src/llm.ts` (kedja i stället för primär+fallback, fel
+per led), `pipeline/src/cli-run.ts` (`byggLed` läser miljön), `pipeline/scripts/
+calculation-backfill.mts`, `.github/workflows/pipeline.yml`, tester i `llm` och
+`cli-run`. 314 tester gröna, typecheck rent. **Kvar:** Handlingsvågen har en
+egen kopia av klienten som ännu är tvåledad med inbyggd standard-URL, och
+`foreslag.yml`:s `primar`-ruta kan ersättas av `LLM_FORST` när den är omgjord.
