@@ -32,6 +32,29 @@ export interface CostEstimate {
   confidence: number;
 }
 
+/**
+ * Kapar en not till `max` tecken utan att hugga av mitt i ett ord.
+ *
+ * Noten är publik text — den står under beloppet på löftessidan. En rå
+ * teckenavkapning gav meningar som slutade mitt i ett ord ("jämförbart med
+ * befintliga milj"), vilket ser ut som ett fel i datat snarare än som en
+ * förkortning. Vi backar därför till närmaste ordgräns och sätter ut ett
+ * uteslutningstecken, så att läsaren ser att texten är avkortad.
+ *
+ * Ligger kvar en gräns alls för att noten är en sammanfattning; den fulla
+ * beviskedjan finns i `calculation`, som kapas mildare.
+ */
+export function kapaNot(text: string, max: number): string {
+  const t = text.trim();
+  if (t.length <= max) return t;
+  // Ett tecken sparas åt uteslutningstecknet.
+  const hard = t.slice(0, max - 1);
+  const lastSpace = hard.lastIndexOf(" ");
+  // Faller tillbaka på den hårda kapningen om ordet är längre än hela taket.
+  const cut = lastSpace > max * 0.6 ? hard.slice(0, lastSpace) : hard;
+  return `${cut.replace(/[\s,;:.–-]+$/, "")}…`;
+}
+
 function finiteNum(v: unknown): number | null {
   return typeof v === "number" && Number.isFinite(v) ? v : null;
 }
@@ -265,10 +288,10 @@ export async function estimateCost(
 
   const baseNote =
     typeof p.method_note === "string" && p.method_note.trim().length > 0
-      ? p.method_note.slice(0, 200)
+      ? kapaNot(p.method_note, 200)
       : "LLM-estimat utan angivet belopp i källtext.";
   const note = oneOff
-    ? `${baseNote} [period satt till engang: engångssignal i löftet]`.slice(0, 240)
+    ? kapaNot(`${baseNote} [period satt till engang: engångssignal i löftet]`, 240)
     : baseNote;
 
   // Full uträkning (antaganden × räkning) — sparas för spårbarhet. Kapas mildare

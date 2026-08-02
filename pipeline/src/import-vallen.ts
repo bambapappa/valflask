@@ -38,6 +38,7 @@ import {
   type GateFailure,
 } from "./gates.ts";
 import type { CostEstimate } from "./cost.ts";
+import { kapaNot } from "./cost.ts";
 import type { VerifyResult } from "./verify.ts";
 import type { NeedsReviewEntry, PipelinePromise } from "./publish.ts";
 import { findPossibleDuplicate, type ExistingPromiseLite } from "./similarity.ts";
@@ -174,7 +175,7 @@ export function costFromVallen(rec: VallenRecord): CostEstimate {
   const { s, basis, confidence } = spreadFor(rec);
 
   const note = (rec.kostnad_utrakning && rec.kostnad_utrakning.trim().length > 0)
-    ? rec.kostnad_utrakning.trim().slice(0, 200)
+    ? kapaNot(rec.kostnad_utrakning, 200)
     : "Inriktningslöfte utan kvantifierbar kostnad.";
 
   if (!isQuantifiedDirection || krAr <= 0) {
