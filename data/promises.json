@@ -9563,7 +9563,6 @@
   },
   {
     "id": "p-2026-0264",
-    "group_id": "g-elbilspremie",
     "title": "Och vi kommer såklart också se till att snabbare sänka utsläppen från personbilar genom större bonusar för att köpa eller lisa elbilar",
     "slug": "och-vi-kommer-saklart-ocksa-se-till-att-snabbare-sanka-utslappen-fran-personbilar-genom-storre-bonusar-for-att-kopa-eller-lisa-elbilar",
     "parties": [
@@ -9602,12 +9601,17 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-28",
         "change": "Beloppet oförändrat, 7 500 miljoner kronor per år, men grunden utbytt. Den tidigare uträkningen antog en bonus på 50–70 000 kronor och landade själv på 10 800 miljoner, alltså inte på beloppet i fältet. Beloppet vilar nu på den enda nivå något av gruppens löften anger — 50 000 kronor direkt vid köp — och att den siffran är lånad från ett annat partis löfte står utskrivet.",
         "commit": "98517a0ad9c0290808637ef2206150d71cc41bd8"
+      },
+      {
+        "date": "2026-08-02",
+        "change": "Tillbakadraget som dubblett. Samma centerpolitik står redan på p-2026-0351, som dessutom bär partiets egen nivå (50 000 kronor direkt vid köp) medan det här löftet bara säger \"större bonusar\". Samma parti som upprepar sig är en dubblett, inte ett delat löfte. De två godkända kopplingarna är flyttade till p-2026-0351 — handlingarna gäller alltjämt politiken, bara inte det här löftet.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -10421,7 +10425,6 @@
   },
   {
     "id": "p-2026-0322",
-    "group_id": "g-elbilspremie",
     "title": "Vi ser också till, att alla som behöver bilen har råd att byta till en elbil",
     "slug": "vi-ser-ocksa-till-att-alla-som-behover-bilen-har-rad-att-byta-till-en-elbil",
     "parties": [
@@ -10431,7 +10434,7 @@
       "name": "Daniel Helldén",
       "role": "språkrör"
     },
-    "quote": "Vi ser också till, att alla som behöver bilen har råd att byta till en elbil. Med vår rättvisa elbilsbonus kan den som bor på landsbygden få upp till 60 000 kronor i bonus.",
+    "quote": "Vi ser också till, att alla som behöver bilen har råd att byta till en elbil. Med vår rättvisa elbilsbonus kan den som bor på landsbygden få upp till 60 000 kronor i bonus. Med vårt leasingstöd kan man komma ner till 1500 kronor i månaden för att leasa en elbil.",
     "date_stated": "2026-06-26",
     "source": {
       "url": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
@@ -10443,14 +10446,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 7500,
-      "msek_high": 15000,
-      "basis": "parti",
+      "msek_low": 4500,
+      "msek_base": 8500,
+      "msek_high": 16000,
+      "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Elbilspremie. Nivån — 50 000 kronor per bil — är hämtad från det enda löftet i gruppen som anger en, och att den är lånad står utskrivet. Samma politik räknas en gång.",
+      "method_note": "Elbilspremie med leasingstöd. Nivåerna — upp till 60 000 kronor i bonus och 1 500 kronor i månaden för leasing — är Miljöpartiets egna. Genomsnittet och antalet mottagare är uppskattade.",
       "confidence": 0.45,
-      "calculation": "Ett av löftena i gruppen anger nivån: en bonus på 50 000 kronor direkt vid köp. Den siffran används för alla, och att den är lånad från ett annat partis löfte står utskrivet. Det säljs omkring 300 000 nya personbilar per år i Sverige. Med en elbilsandel på 50–60 procent, alltså 150 000–180 000 bilar, och 50 000 kronor per bil blir kostnaden 7 500–9 000 miljoner kronor per år. Basbeloppet läggs på 7 500 miljoner. Låg: 4 000, ungefär vad den tidigare elbilsbonusen faktiskt kostade innan den togs bort. Hög: 15 000, om premien också omfattar begagnade bilar eller leasing i stor skala. Samma politik hos flera partier räknas en gång."
+      "calculation": "Miljöpartiet anger själv två nivåer: en bonus på upp till 60 000 kronor för den som bor på landsbygden, och ett leasingstöd som ska få ner kostnaden till 1 500 kronor i månaden. Båda siffrorna är partiets; genomsnittet och antalet mottagare är våra. 60 000 kronor är ett tak för en del av köparna, inte en nivå för alla — vad övriga får står inte i löftet — så uträkningen bygger på ett snitt under taket. Det säljs omkring 300 000 nya personbilar per år, och med en elbilsandel på 50–60 procent blir det 150 000–180 000 bilar. Med ett snitt på 50 000 kronor blir bonusdelen 7 500–9 000 miljoner kronor per år. Leasingstödet läggs ovanpå: 1 500 kronor i månaden är vad hushållet ska betala, inte vad staten betalar, så dess statliga kostnad saknar egen nivå i löftet och ryms i osäkerheten uppåt. Basbeloppet läggs på 8 500 miljoner. Låg: 4 500, om taket når en mindre grupp och leasingstödet blir litet. Hög: 16 000, om premien också omfattar begagnade bilar och leasingstödet blir omfattande. Beloppet ligger över Centerpartiets för samma sorts premie, och det är avsikten: Miljöpartiets tak ligger högre och leasingstödet är utskrivet som en egen del."
     },
     "financing_claimed": {
       "described": false,
@@ -10465,6 +10468,11 @@
         "date": "2026-07-28",
         "change": "Beloppet justerat från 6 000 till 7 500 miljoner kronor per år, harmoniserat med gruppens övriga löften om elbilsstöd. Nivån är hämtad från det enda löftet i gruppen som anger en, och att den är lånad står utskrivet i uträkningen.",
         "commit": "98517a0ad9c0290808637ef2206150d71cc41bd8"
+      },
+      {
+        "date": "2026-08-02",
+        "change": "Lösgjort ur gruppen g-elbilspremie, och p-2026-0323 uppgår i det här löftet — citatet spänner nu över både köpbonusen och leasingstödet, som är två löpande meningar ur samma tal. Beloppet höjt från 7 500 till 8 500 miljoner kronor per år, eftersom uträkningen nu vilar på Miljöpartiets egna nivåer i stället för en nivå lånad från Centerpartiets löfte. Fältet för grund stod dessutom på \"partiets egen siffra\" trots att beloppet byggde på ett annat partis nivå; det säger nu llm_estimat, vilket är vad det är.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -10475,7 +10483,6 @@
   },
   {
     "id": "p-2026-0323",
-    "group_id": "g-elbilspremie",
     "title": "Med vårt leasingstöd kan man komma ner till 1500 kronor i månaden för att leasa en elbil",
     "slug": "med-vart-leasingstod-kan-man-komma-ner-till-1500-kronor-i-manaden-for-att-leasa-en-elbil",
     "parties": [
@@ -10513,12 +10520,17 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-28",
         "change": "Löftet grupplänkat med partiets och de andra partiernas löften om stöd för att byta till elbil, och beloppet justerat från 3 600 till 7 500 miljoner kronor per år. Partiets leasingstöd låg prissatt på två löften samtidigt — ett i gruppen och ett utanför — och räknades därför två gånger i summan. Löftet saknade dessutom öppen uträkning.",
         "commit": "98517a0ad9c0290808637ef2206150d71cc41bd8"
+      },
+      {
+        "date": "2026-08-02",
+        "change": "Tillbakadraget och uppgånget i p-2026-0322. De två löftena är två löpande meningar ur samma tal samma dag — köpbonusen och leasingstödet — och är en och samma utfästelse. p-2026-0322:s citat spänner nu över båda meningarna. Inga kopplingar berördes; löftet hade inga.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -11934,7 +11946,6 @@
   },
   {
     "id": "p-2026-0351",
-    "group_id": "g-elbilspremie",
     "title": "Kraftfull elbilspremie med bonus på 50 000 kronor direkt vid köp",
     "slug": "kraftfull-elbilspremie-med-bonus-pa-50-000-kronor-direkt-vid-kop",
     "parties": [
@@ -11958,9 +11969,9 @@
       "msek_high": 15000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Elbilspremie. Nivån — 50 000 kronor per bil — är hämtad från det enda löftet i gruppen som anger en, och att den är lånad står utskrivet. Samma politik räknas en gång.",
+      "method_note": "Elbilspremie. Nivån — 50 000 kronor direkt vid köp — är Centerpartiets egen. Antalet mottagare är uppskattat.",
       "confidence": 0.45,
-      "calculation": "Ett av löftena i gruppen anger nivån: en bonus på 50 000 kronor direkt vid köp. Den siffran används för alla, och att den är lånad från ett annat partis löfte står utskrivet. Det säljs omkring 300 000 nya personbilar per år i Sverige. Med en elbilsandel på 50–60 procent, alltså 150 000–180 000 bilar, och 50 000 kronor per bil blir kostnaden 7 500–9 000 miljoner kronor per år. Basbeloppet läggs på 7 500 miljoner. Låg: 4 000, ungefär vad den tidigare elbilsbonusen faktiskt kostade innan den togs bort. Hög: 15 000, om premien också omfattar begagnade bilar eller leasing i stor skala. Samma politik hos flera partier räknas en gång."
+      "calculation": "Centerpartiet anger själv nivån: en bonus på 50 000 kronor direkt vid köp, eller motsvarande nedsättning av leasingen. Den siffran bär uträkningen — bara antalet mottagare är vårt. Det säljs omkring 300 000 nya personbilar per år i Sverige. Med en elbilsandel på 50–60 procent, alltså 150 000–180 000 bilar, och 50 000 kronor per bil blir kostnaden 7 500–9 000 miljoner kronor per år. Basbeloppet läggs på 7 500 miljoner. Låg: 4 000, ungefär vad den tidigare elbilsbonusen faktiskt kostade innan den togs bort. Hög: 15 000, om premien också omfattar begagnade bilar eller leasing i stor skala."
     },
     "financing_claimed": {
       "described": false,
@@ -11975,6 +11986,11 @@
         "date": "2026-07-28",
         "change": "Beloppet justerat från 7 000 till 7 500 miljoner kronor per år, så att gruppens löften om samma politik vilar på samma uträkning. Det är det här löftet som anger nivån — en bonus på 50 000 kronor direkt — och den siffran bär nu hela gruppen.",
         "commit": "98517a0ad9c0290808637ef2206150d71cc41bd8"
+      },
+      {
+        "date": "2026-08-02",
+        "change": "Lösgjort ur gruppen g-elbilspremie. Beloppet är oförändrat, 7 500 miljoner kronor per år, men uträkningen vilar nu på Centerpartiets egen nivå i stället för att bära hela gruppen. Grupperingen antog att partiernas premier var samma politik; de skiljer sig i nivå och utformning, och att harmonisera dem dolde en verklig skillnad mellan partierna.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
