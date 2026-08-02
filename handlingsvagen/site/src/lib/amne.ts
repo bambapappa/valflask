@@ -24,7 +24,7 @@ import {
   type Skarva,
 } from "../../../pipeline/src/nyckelord.ts";
 import { stamma } from "../../../pipeline/src/stam.ts";
-import { partiMask, type Roster } from "./delat.ts";
+import { PARTIBITAR, partiMask, type Roster } from "./delat.ts";
 import {
   getBetankanden,
   getHandlingMap,
@@ -259,8 +259,23 @@ export interface HandlingKort {
   /** sort */ k: string;
   /** datum */ d: string;
   /** aktörspartier */ p: string[];
-  /** utskott */ o?: string;
+  /** utskott eller departement */ o?: string;
   /** riksdagens webbadress */ u: string;
+}
+
+/**
+ * Riksdagens `organ` betyder olika saker för olika sorters handlingar. På en
+ * motion eller ett betänkande står utskottet där och på en proposition
+ * departementet — men på en skriftlig fråga eller en interpellation står
+ * frågeställarens parti, och på en del handlingar bara ett bindestreck.
+ * Partiet visas redan som partikod i träffen, så ett organ som bara upprepar
+ * det säger läsaren ingenting nytt och bär inte sin plats på raden.
+ */
+function visbartOrgan(organ: string | undefined): string | undefined {
+  const rent = (organ ?? "").trim();
+  if (rent === "" || rent === "-") return undefined;
+  if (PARTIBITAR.includes(rent.toLowerCase())) return undefined;
+  return rent;
 }
 
 /** Skärvnyckel för en handling — samma tusentalsindelning som indexet. */
@@ -288,7 +303,7 @@ export function byggHandlingSkarva(nyckel: string): Record<string, HandlingKort>
       k: h.kind,
       d: h.datum,
       p: aktorsPartier(h),
-      ...(h.organ ? { o: h.organ } : {}),
+      ...(visbartOrgan(h.organ) ? { o: visbartOrgan(h.organ)! } : {}),
       u: h.url,
     };
   }
@@ -355,7 +370,7 @@ function byggAllaBetankanden(): Record<string, BetankandeKort> {
       // Är betänkandet inte skördat känner vi ändå voteringarna. Nyckeln
       // står som titel i stället för att hittas på.
       t: b?.titel ?? nyckel,
-      o: b?.organ ?? "",
+      o: visbartOrgan(b?.organ) ?? "",
       d: b?.datum ?? v[0]?.d ?? "",
       v,
     };
