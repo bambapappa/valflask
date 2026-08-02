@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "date": "2026-08-02",
+    "affects": "Handlingsvågens rutnät och löftessidor — 95 löften",
+    "what": "Utslagen på sajten var räknade den 25 juli och hade inte räknats om sedan dess, trots att nya kopplingar godkänts löpande. 95 löften visade \"ingen handling ännu\" fastän de hade godkända handlingar bakom sig. Alla utslag är nu omräknade ur registret: 150 löften har utslag i stället för 55. Ingen koppling har lagts till, tagits bort eller ändrat riktning — det som saknades var själva omräkningen.",
+    "why": "Utslagen räknas fram av ett skript ur de godkända kopplingarna. Godkännandet sparade kopplingen och byggde om sajten, men ingenting körde omräkningen: den fanns bara som ett kommando att starta för hand. Sajten läste därför en åtta dagar gammal fil utan att något sa ifrån. Skriptets egen dokumentation påstod att en inaktuell fil skulle stoppa bygget; den kontrollen fanns inte. Nu räknas utslagen om i samma steg som kopplingen sparas, och ett test jämför den sparade filen med en omräkning så att samma sak inte kan hända tyst igen. Att \"ingen handling ännu\" är en neutral upplysning och inte en anklagelse gör den inte mindre fel när partiet faktiskt handlat.",
+    "commit": "0000000"
+  }
+]

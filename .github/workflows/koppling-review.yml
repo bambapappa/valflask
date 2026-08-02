@@ -73,11 +73,20 @@ jobs:
             fi
             git reset --hard "origin/$DEFAULT_BRANCH"
             (cd pipeline && node --import tsx/esm scripts/koppling-kommentar.mts)
-            git add data/
-            if git diff --cached --quiet; then
+            # Prövas FÖRE omräkningen: domar.json bär ett genereringsdatum och
+            # ändras därför vid varje körning. Räknade vi om ovillkorligt vore
+            # inget beslut någonsin en no-op, och ett hjälpsvar hade committat.
+            if git diff --quiet -- data/kopplingar.json; then
               echo "Inga dataändringar (fel-/hjälpsvar eller redan hanterad)."
               exit 0
             fi
+            # Utslagen räknas om i SAMMA commit som kopplingen. Sajten läser
+            # domar.json som fil, så en kopplingsändring utan omräkning ger en
+            # grön driftsättning av gamla utslag — det hände, och stod still i
+            # åtta dagar. Den som ändrar kopplingar äger domarna.
+            (cd pipeline && npm run --silent vendor -- --promises ../../data/promises.json --parties ../../data/parties.json)
+            (cd pipeline && npm run --silent domar -- --promises ../../data/promises.json)
+            git add data/
             git commit -m "data: koppling-beslut via issue #${{ github.event.issue.number }}"
             if git push origin "HEAD:$DEFAULT_BRANCH"; then
               echo "Push lyckades (försök $attempt)."
