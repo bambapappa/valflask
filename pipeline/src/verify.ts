@@ -33,6 +33,11 @@ export async function verifyCandidate(
     systemPrompt: A2_SYSTEM,
     temperature: 0,
     model,
+    // Verifieringen avgör om ett citat återges ord för ord. Samma underlag
+    // ska ge samma utfall, alltid — annars är grinden ett lotteri. Tar
+    // modellen inte emot temperature ska anropet FALLA, inte tyst köra på
+    // modellens eget default.
+    kravReproducerbart: true,
   };
 
   const raw = await llm.complete(userPrompt, opts);
