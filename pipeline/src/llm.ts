@@ -3,6 +3,17 @@ export interface LlmOptions {
   temperature?: number;
   responseFormat?: { type: "json_object" };
   model?: string;
+  /**
+   * Sätt när svaret MÅSTE vara reproducerbart — samma underlag ska ge samma
+   * utfall. Då görs inget omförsök utan `temperature`: hellre inget svar än
+   * ett svar på ett default vi inte styr.
+   *
+   * Verifieringen är fallet det finns för. Den är den oberoende kontrollen
+   * av att ett citat återges ord för ord, och en grind som svarar olika på
+   * samma indata är ingen grind. Att tyst köra den på modellens eget
+   * default vore att lossa citatgrinden utan att någon bett om det.
+   */
+  kravReproducerbart?: boolean;
 }
 
 export interface LlmClient {
@@ -181,7 +192,12 @@ export class OpenRouterClient implements LlmClient {
             // men hellre ett svar med modellens eget värde än inget svar alls.
             // Prova om utan parametern EN gång på samma endpoint — det kostar
             // ett anrop och räddas hela ledet.
-            if (res.status === 400 && /temperature/i.test(text) && "temperature" in body) {
+            if (
+              res.status === 400 &&
+              /temperature/i.test(text) &&
+              "temperature" in body &&
+              !opts?.kravReproducerbart
+            ) {
               delete body.temperature;
               console.warn(
                 `LLM: ${vardnamn(ep.url)} (${ep.model}) avvisar temperature — ` +
@@ -189,6 +205,19 @@ export class OpenRouterClient implements LlmClient {
                   `inte nödvändigtvis reproducerbart.`,
               );
               continue; // samma försöksnummer: det här är ingen retry på ett fel
+            }
+
+            // Ett reproducerbarhetskrav som möter en modell som inte tar
+            // emot temperature är ingen teknikalitet utan ett modellval som
+            // inte håller. Säg det, i stället för att svaret ska se ut som
+            // vilket 400 som helst.
+            if (res.status === 400 && /temperature/i.test(text) && opts?.kravReproducerbart) {
+              lastError = new Error(
+                `HTTP ${res.status}: modellen ${ep.model} tar inte emot temperature, och ` +
+                  `anropet kräver ett reproducerbart svar. Inget omförsök görs — byt modell ` +
+                  `för den rollen i stället. Svar: ${text.slice(0, 160)}`,
+              );
+              break;
             }
 
             // Övrigt icke-retrybart (401, 402 utan kredit, 404) → nästa endpoint.

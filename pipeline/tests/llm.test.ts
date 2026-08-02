@@ -192,6 +192,36 @@ describe("OpenRouterClient resiliens", () => {
     assert.equal(sent.length, 2);
   });
 
+  /**
+   * Verifieringen är den oberoende kontrollen av att ett citat återges ord
+   * för ord. Samma underlag ska ge samma utfall — annars är grinden ett
+   * lotteri. Tar modellen inte emot temperature ska anropet FALLA, inte
+   * tyst köra på modellens eget default: det vore att lossa citatgrinden
+   * utan att någon bett om det.
+   */
+  it("gör INGET omförsök utan temperature när svaret måste vara reproducerbart", async () => {
+    const sent: Array<Record<string, unknown>> = [];
+    const httpFetch = async (url: string, init?: RequestInit) => {
+      sent.push(JSON.parse(String(init?.body)) as Record<string, unknown>);
+      return resp(400, { error: { message: "invalid temperature: only 1 is allowed for this model" } });
+    };
+    const c = new OpenRouterClient({
+      led: [{ namn: "primär", baseUrl: "https://opencode.ai/zen/go/v1", apiKey: "k" }],
+      httpFetch,
+      ...fast,
+    });
+    await assert.rejects(
+      () => c.complete("p", { model: "m", temperature: 0, kravReproducerbart: true }),
+      (e: Error) => {
+        assert.match(e.message, /reproducerbart/, "skälet ska stå i felet");
+        assert.match(e.message, /byt modell/, "och vad man ska göra åt det");
+        return true;
+      },
+    );
+    assert.equal(sent.length, 1, "bara ETT anrop — inget omförsök");
+    assert.equal(sent[0]?.temperature, 0);
+  });
+
   it("throttle väntar mellan anrop", async () => {
     let t = 0;
     const slept: number[] = [];
