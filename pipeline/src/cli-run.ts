@@ -75,13 +75,29 @@ export function byggLed(
       else modeller[primarModell] = varde;
     }
 
-    // Ett HELT osatt led är ett led man valt bort — hoppa tyst. Ett HALVT
-    // satt led är däremot alltid ett misstag, och det ska sägas rakt ut:
-    // tyst överhoppning skulle betyda att man tror sig ha en reserv man
-    // inte har, vilket är precis så den gamla no-op-fallbacken kunde stå
-    // obemärkt i drift.
+    // Tre lägen, och skillnaden mellan dem är viktig:
+    //
+    //  • HELT osatt        → ledet är bortvalt. Hoppa tyst.
+    //  • adress+nyckel men INGEN modell för någon av rollerna → ledet finns
+    //    för ett ANNAT arbete (t.ex. matchningens `MODEL_KOPPLING_ZAI`) men
+    //    är inte uppsatt för de här rollerna. Hoppa, men säg det — annars
+    //    tror man att kedjan är längre än den är.
+    //  • någon men inte alla delar satta → misstag. Stoppa körningen.
+    //
+    // Mellanläget fanns inte i första versionen, och följden var att
+    // pipelinen hade kastat vid nästa körning bara för att det extra ledets
+    // nycklar finns för matchningens räkning.
+    const antalModeller = Object.keys(modeller).length;
     const antalSatta = 2 + Object.keys(roller).length - saknade.length;
     if (antalSatta === 0) continue;
+    if (baseUrl && apiKey && antalModeller === 0) {
+      console.warn(
+        `LLM-kedjan: ledet "${spec.namn}" (${baseUrl}) har adress och nyckel men inga ` +
+          `modellnamn för rollerna ${Object.keys(roller).join(", ")} — hoppas över. ` +
+          `Sätt MODEL_<ROLL>${spec.suffix} för att ta med det.`,
+      );
+      continue;
+    }
     if (saknade.length > 0) {
       throw new Error(
         `LLM-kedjans led "${spec.namn}" är halvt konfigurerat — saknar ${saknade.join(", ")}. ` +
