@@ -1568,3 +1568,37 @@ aggregates.ts` (`NEUTRALA_SORTER` + spärr i `computeComparisons`, död
 `site/src/pages/api.astro` (beskrivning), `SPEC.md` §9 + bilaga D,
 `site/scripts/test-drylinje.mts` (+3 kontroller: datat, sorten, och att koden
 håller även om någon lägger tillbaka en post). Hela sajtsviten grön.
+
+---
+
+## 2026-08-02 — Kostnadsnoten kapas vid ordgräns, gammal text lämnas orörd
+
+**Beslut:** `method_note` kapas nu vid närmaste ordgräns med ett
+uteslutningstecken i stället för rakt av vid 200 tecken. Gränsen på 200 tecken
+står kvar. Redan publicerade noter rättas **inte** i den här ändringen.
+
+**Motiv:** Noten står under beloppet på löftessidan och är publik text. Den
+hårda kapningen gav meningar som slutade mitt i ett ord — "jämförbart med
+befintliga milj", "Andelen återkrav som bedöms orimliga samt den". Det läser
+en besökare som trasig data, inte som en förkortning, och det underminerar
+just den öppenhet fältet finns för. Mätt vid ändringen: 18 av 428 aktiva
+löften bar en avhuggen not, och 6 av de 26 posterna i granskningskön gjorde
+det. Samma hårda kapning fanns på två ställen — `cost.ts` och
+`import-vallen.ts` — och delar nu en funktion, så nästa ändring bara behöver
+göras en gång.
+
+**Förkastade alternativ:** Ta bort gränsen helt — nej, noten är en
+sammanfattning och den fulla beviskedjan ligger redan i `calculation`, som
+kapas mildare (800 tecken) just därför att den är beviset. Kapa vid
+meningsslut i stället för ordgräns — hade tappat hela noten när första
+meningen är längre än taket. Rätta de 18 publicerade noterna i samma
+ändring — nej, det är en synlig rättelse av publicerad text och ska beslutas
+för sig, med rättelsepost; en kodfix som tyst skriver om vad läsaren sett
+vore precis den tysta rättelse som är förbjuden.
+
+**Påverkan:** `pipeline/src/cost.ts` (ny exporterad `kapaNot`, används på
+`method_note` och på engångsnoten), `pipeline/src/import-vallen.ts` (samma
+funktion i stället för egen kapning), `pipeline/tests/cost.test.ts` (+5
+kontroller: kort text orörd, ingen avhuggning mitt i ord, inget hängande
+skiljetecken, hård kapning när ett ord fyller hela taket, och att modellens
+not kapas i den skarpa vägen). 310 tester gröna, `tsc --noEmit` ren.
