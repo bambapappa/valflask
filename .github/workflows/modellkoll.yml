@@ -1,0 +1,48 @@
+# Vilka modeller tillåter temperature 0?
+#
+# Bakgrund: primären avvisade anrop med
+#   HTTP 400 "invalid temperature: only 1 is allowed for this model"
+# men sa inte VILKEN modell. Leverantörens dokumentation säger ingenting om
+# parameterbegränsningar, så det enda sättet att veta är att fråga API:et.
+#
+# Jobbet gör ett minimalt anrop per modell och roll, först med temperature 0
+# och — om det avvisas — en gång till utan parametern. Svaren kastas bort;
+# det enda som redovisas är vilken kombination som togs emot.
+#
+# Läser bara. Skriver ingenting, committar ingenting, rör ingen data.
+name: modellkoll
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency: { group: modellkoll, cancel-in-progress: true }
+jobs:
+  koll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+      - name: Fråga varje led vilka modeller som tar emot temperature 0
+        env:
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_FALLBACK_BASE_URL: ${{ vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL }}
+          LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+          LLM_ZAI_BASE_URL: ${{ vars.LLM_ZAI_BASE_URL }}
+          LLM_ZAI_API_KEY: ${{ secrets.LLM_ZAI_API_KEY }}
+          MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
+          MODEL_VERIFY: ${{ vars.MODEL_VERIFY }}
+          MODEL_COPY: ${{ vars.MODEL_COPY }}
+          MODEL_EXTRACT_FALLBACK: ${{ vars.MODEL_EXTRACT_FALLBACK }}
+          MODEL_VERIFY_FALLBACK: ${{ vars.MODEL_VERIFY_FALLBACK }}
+          MODEL_COPY_FALLBACK: ${{ vars.MODEL_COPY_FALLBACK }}
+          MODEL_EXTRACT_ZAI: ${{ vars.MODEL_EXTRACT_ZAI }}
+          MODEL_VERIFY_ZAI: ${{ vars.MODEL_VERIFY_ZAI }}
+          MODEL_COPY_ZAI: ${{ vars.MODEL_COPY_ZAI }}
+        run: node --experimental-strip-types scripts/modellkoll.mts
+        working-directory: pipeline

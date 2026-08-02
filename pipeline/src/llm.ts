@@ -172,11 +172,27 @@ export class OpenRouterClient implements LlmClient {
             break; // slut på försök på denna endpoint → prova nästa
           }
 
-          // Icke-retrybart (t.ex. 401/402 utan kredit, 400, 404) → nästa endpoint direkt.
           if (!res.ok) {
-            lastError = new Error(
-              `HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`,
-            );
+            const text = await res.text();
+
+            // En del modeller tillåter bara sitt eget default-temperature och
+            // avvisar allt annat: "invalid temperature: only 1 is allowed for
+            // this model". Vi skickar 0 för att svaren ska bli reproducerbara,
+            // men hellre ett svar med modellens eget värde än inget svar alls.
+            // Prova om utan parametern EN gång på samma endpoint — det kostar
+            // ett anrop och räddas hela ledet.
+            if (res.status === 400 && /temperature/i.test(text) && "temperature" in body) {
+              delete body.temperature;
+              console.warn(
+                `LLM: ${vardnamn(ep.url)} (${ep.model}) avvisar temperature — ` +
+                  `provar om utan den. Svaret blir modellens eget default, alltså ` +
+                  `inte nödvändigtvis reproducerbart.`,
+              );
+              continue; // samma försöksnummer: det här är ingen retry på ett fel
+            }
+
+            // Övrigt icke-retrybart (401, 402 utan kredit, 404) → nästa endpoint.
+            lastError = new Error(`HTTP ${res.status}: ${text.slice(0, 200)}`);
             break;
           }
 
