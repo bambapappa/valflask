@@ -10,6 +10,8 @@ const config: SourceConfig = {
 };
 
 const baseEnv: Record<string, string> = {
+  // Primären har ingen inbyggd leverantör längre — adressen måste anges.
+  LLM_BASE_URL: "https://openrouter.ai/api/v1",
   OPENROUTER_API_KEY: "sk-test",
   MODEL_EXTRACT: "deepseek-v4-pro",
   MODEL_VERIFY: "kimi-k2.7",
@@ -58,7 +60,7 @@ describe("cli-run buildContextFromEnv", () => {
   });
 
   it("kastar utan OPENROUTER_API_KEY", () => {
-    assert.throws(() => buildContextFromEnv(envWithout("OPENROUTER_API_KEY"), opts), /OPENROUTER_API_KEY/);
+    assert.throws(() => buildContextFromEnv(envWithout("OPENROUTER_API_KEY"), opts), /halvt konfigurerat/);
   });
 
   it("kastar utan MODEL_EXTRACT", () => {
@@ -79,15 +81,22 @@ describe("cli-run buildContextFromEnv", () => {
   it("kastar när bara en fallback-del är satt", () => {
     assert.throws(
       () => buildContextFromEnv(envWith({ LLM_FALLBACK_BASE_URL: "https://x/v1" }), opts),
-      /tillsammans/,
+      /halvt konfigurerat/,
     );
   });
 
-  it("accepterar komplett fallback-par (OpenCode Go)", () => {
+  // Ett led är komplett först när det har adress, nyckel OCH egna modellnamn.
+  // Enbart adress + nyckel räcker inte längre: ett led utan egna modellnamn
+  // får primärens strängar och svarar 4xx hos en leverantör med annat
+  // namnschema — det var precis så reserven kunde stå som attrapp i drift.
+  it("accepterar komplett fallback-led (adress, nyckel och modeller)", () => {
     const ctx = buildContextFromEnv(
       envWith({
         LLM_FALLBACK_BASE_URL: "https://opencode.ai/zen/go/v1",
         LLM_FALLBACK_API_KEY: "oc-test",
+        MODEL_EXTRACT_FALLBACK: "deepseek-v4-pro",
+        MODEL_VERIFY_FALLBACK: "kimi-k2.7",
+        MODEL_COPY_FALLBACK: "glm-5.1",
       }),
       opts,
     );
@@ -97,7 +106,7 @@ describe("cli-run buildContextFromEnv", () => {
   it("kastar när bara en fallback-modell är satt (kräver alla tre)", () => {
     assert.throws(
       () => buildContextFromEnv(envWith({ MODEL_EXTRACT_FALLBACK: "deepseek-v4-pro" }), opts),
-      /alla tre tillsammans/,
+      /halvt konfigurerat/,
     );
   });
 

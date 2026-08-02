@@ -34,12 +34,27 @@ function vardnamn(url: string): string {
   }
 }
 
+/**
+ * Ett led i anropskedjan. Ingen leverantör är inbyggd någonstans i koden —
+ * adress, nyckel och modellnamn kommer alla utifrån, så en leverantör kan
+ * bytas ut genom att ändra variabler.
+ */
+export interface LlmLed {
+  /** Vad ledet heter i loggar och fel, t.ex. "primär". Aldrig nyckeln. */
+  namn: string;
+  baseUrl: string;
+  apiKey: string;
+  /**
+   * Ledets egna modell-ID:n, slagna på den model-sträng anropet skickar.
+   * Leverantörerna har olika namnscheman (`leverantör/modell` mot rena
+   * namn), och samma sträng till alla ger 4xx hos den som inte känner igen
+   * den. Saknas en nyckel skickas strängen som den är.
+   */
+  modell?: Record<string, string>;
+}
+
 export class OpenRouterClient implements LlmClient {
-  private apiKey: string;
-  private baseUrl: string;
-  private fallbackBaseUrl: string | undefined;
-  private fallbackApiKey: string | undefined;
-  private fallbackModelMap: Record<string, string>;
+  private led: LlmLed[];
   private timeoutMs: number;
   private maxRetries: number;
   private baseDelayMs: number;
@@ -50,17 +65,12 @@ export class OpenRouterClient implements LlmClient {
   private lastCallAt = 0;
 
   constructor(opts: {
-    apiKey: string;
-    baseUrl?: string;
-    fallbackBaseUrl?: string;
-    fallbackApiKey?: string;
     /**
-     * Översätter primärmodell-ID (OpenRouters leverantör/modell-slug) till
-     * fallback-endpointens eget modell-ID (t.ex. OpenCode Zens namn). Samma
-     * model-sträng skickas annars till båda endpoints, vilket gör att den ena
-     * inte känner igen den → 4xx. Saknas en nyckel används primär-strängen.
+     * Kedjan, i den ordning leden ska provas. Minst ett led. Ordningen
+     * bestäms av den som bygger kedjan (`cli-run`), inte här — det är den
+     * som läser variablerna och vet vilket led som ska ligga först.
      */
-    fallbackModelMap?: Record<string, string>;
+    led: LlmLed[];
     /** Per-anrops-timeout (ms). Default 90s. */
     timeoutMs?: number;
     /** Max antal extra försök per endpoint vid retrybara fel. Default 4. */
@@ -73,11 +83,8 @@ export class OpenRouterClient implements LlmClient {
     sleep?: (ms: number) => Promise<void>;
     now?: () => number;
   }) {
-    this.apiKey = opts.apiKey;
-    this.baseUrl = opts.baseUrl ?? "https://openrouter.ai/api/v1";
-    this.fallbackBaseUrl = opts.fallbackBaseUrl;
-    this.fallbackApiKey = opts.fallbackApiKey;
-    this.fallbackModelMap = opts.fallbackModelMap ?? {};
+    if (opts.led.length === 0) throw new Error("Ingen LLM-endpoint konfigurerad.");
+    this.led = opts.led;
     this.timeoutMs = opts.timeoutMs ?? 90_000;
     this.maxRetries = opts.maxRetries ?? 4;
     this.baseDelayMs = opts.baseDelayMs ?? 2_000;
@@ -118,18 +125,14 @@ export class OpenRouterClient implements LlmClient {
       body.response_format = opts.responseFormat;
     }
 
-    // Modell per endpoint: primären får model-strängen som den är; fallbacken
-    // översätts via fallbackModelMap (saknas nyckel → primär-strängen).
-    const endpoints: Array<{ url: string; key: string; model: string }> = [
-      { url: `${this.baseUrl}/chat/completions`, key: this.apiKey, model: primaryModel },
-    ];
-    if (this.fallbackBaseUrl && this.fallbackApiKey) {
-      endpoints.push({
-        url: `${this.fallbackBaseUrl}/chat/completions`,
-        key: this.fallbackApiKey,
-        model: this.fallbackModelMap[primaryModel] ?? primaryModel,
-      });
-    }
+    // Modell per led: varje led bär sina egna namn. Saknas en nyckel skickas
+    // strängen som den är — samma bakåtkompatibla beteende som förut.
+    const endpoints = this.led.map((l) => ({
+      namn: l.namn,
+      url: `${l.baseUrl}/chat/completions`,
+      key: l.apiKey,
+      model: l.modell?.[primaryModel] ?? primaryModel,
+    }));
 
     // Ett fel PER endpoint, inte ett gemensamt. Tidigare låg det en enda
     // `lastError` här som varje endpoint skrev över, och eftersom reserven
@@ -195,7 +198,9 @@ export class OpenRouterClient implements LlmClient {
           break;
         }
       }
-      if (lastError) felPerEndpoint.push(`${vardnamn(ep.url)} → ${lastError.message}`);
+      if (lastError) {
+        felPerEndpoint.push(`${ep.namn} (${vardnamn(ep.url)}, ${ep.model}) → ${lastError.message}`);
+      }
     }
 
     if (felPerEndpoint.length === 0) throw new Error("Ingen LLM-endpoint tillgänglig");

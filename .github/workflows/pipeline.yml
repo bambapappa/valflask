@@ -2,7 +2,13 @@ name: pipeline
 on:
   schedule:
     - cron: "10 3,9,15 * * *"   # UTC → 05:10, 11:10, 17:10 svensk sommartid
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      forst:
+        description: "Prova detta led först i just den här körningen (tomt = primär → sekundär → extra)"
+        type: choice
+        options: ["", primar, sekundar, extra]
+        default: ""
 permissions:
   contents: write
   issues: write
@@ -61,9 +67,26 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           LLM_FALLBACK_BASE_URL: ${{ vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL }}
           LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+          # Kedjan är tre led, och varje led bär sin egen adress, sin egen
+          # nyckel och sina EGNA modellnamn. Leverantörerna har olika
+          # namnscheman, så ett led utan egna namn kan inte svara — och ett
+          # halvt konfigurerat led stoppar körningen med besked i stället för
+          # att tyst stå som attrapp. Byte av leverantör görs här, i
+          # variablerna, aldrig i koden.
           MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
           MODEL_VERIFY: ${{ vars.MODEL_VERIFY }}
           MODEL_COPY: ${{ vars.MODEL_COPY }}
+          MODEL_EXTRACT_FALLBACK: ${{ vars.MODEL_EXTRACT_FALLBACK }}
+          MODEL_VERIFY_FALLBACK: ${{ vars.MODEL_VERIFY_FALLBACK }}
+          MODEL_COPY_FALLBACK: ${{ vars.MODEL_COPY_FALLBACK }}
+          LLM_ZAI_BASE_URL: ${{ vars.LLM_ZAI_BASE_URL }}
+          LLM_ZAI_API_KEY: ${{ secrets.LLM_ZAI_API_KEY }}
+          MODEL_EXTRACT_ZAI: ${{ vars.MODEL_EXTRACT_ZAI }}
+          MODEL_VERIFY_ZAI: ${{ vars.MODEL_VERIFY_ZAI }}
+          MODEL_COPY_ZAI: ${{ vars.MODEL_COPY_ZAI }}
+          # Kastar om kedjans ordning för EN körning, utan att röra
+          # variablerna. Tomt = vanlig ordning (primär → sekundär → extra).
+          LLM_FORST: ${{ inputs.forst }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
           # Frågevågen PÅ som default (ägarbeslut 2026-07-11); stäng av genom att
           # sätta repovariabeln STANCES_ENABLED=false. STANCES_MODE osatt = review

@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
 import { LiveSource, type SourceConfig } from "./fetch.ts";
-import { OpenRouterClient } from "./llm.ts";
+import { OpenRouterClient, type LlmLed } from "./llm.ts";
 import { createArchiveFn } from "./archive.ts";
 import { runPipeline, type PipelineContext } from "./index.ts";
 
@@ -11,6 +11,94 @@ const DATA_DIR = resolve(process.cwd(), "../data");
 function getEnv(env: NodeJS.ProcessEnv, name: string): string | undefined {
   const v = env[name];
   return v && v.trim() !== "" ? v.trim() : undefined;
+}
+
+/**
+ * Anropskedjans tre led. Varje led har sin egen adress, sin egen nyckel och
+ * sina egna modellnamn — inget om leverantörerna finns i koden, så en
+ * leverantör byts ut genom att ändra variabler.
+ *
+ * Suffixet är det som skiljer variabelnamnen åt: primären har inget,
+ * sekundären `_FALLBACK`, det extra ledet `_ZAI`. Samma mönster gäller
+ * modellerna: `MODEL_COPY`, `MODEL_COPY_FALLBACK`, `MODEL_COPY_ZAI`.
+ */
+const LED_ORDNING = [
+  { namn: "primär", nyckel: "primar", url: "LLM_BASE_URL", key: "LLM_API_KEY", suffix: "" },
+  { namn: "sekundär", nyckel: "sekundar", url: "LLM_FALLBACK_BASE_URL", key: "LLM_FALLBACK_API_KEY", suffix: "_FALLBACK" },
+  { namn: "extra", nyckel: "extra", url: "LLM_ZAI_BASE_URL", key: "LLM_ZAI_API_KEY", suffix: "_ZAI" },
+] as const;
+
+/**
+ * Bygger kedjan ur miljön.
+ *
+ * Ett led kommer med bara om det har adress, nyckel OCH modellnamn för alla
+ * tre rollerna. Saknas modellnamnen hoppas ledet över med en rad i loggen —
+ * tidigare togs det med ändå och fick primärens modellsträngar, vilket gav
+ * 4xx hos en leverantör som inte känner igen dem. Ett led som inte kan svara
+ * ska inte stå i kedjan och låtsas vara en reserv.
+ *
+ * `LLM_FORST` kan namnge ett led som ska provas först i just den här
+ * körningen (`primar`, `sekundar` eller `extra`). Övriga följer i sin
+ * vanliga ordning. Det är ingen omkonfigurering — bara en omkastning för en
+ * körning, så att en leverantör går att prova utan att röra variablerna.
+ */
+export function byggLed(
+  env: NodeJS.ProcessEnv,
+  roller: Record<string, string>,
+): LlmLed[] {
+  const forst = getEnv(env, "LLM_FORST")?.toLowerCase();
+  if (forst && !LED_ORDNING.some((l) => l.nyckel === forst)) {
+    throw new Error(
+      `Ogiltig LLM_FORST: "${forst}" (tillåtet: ${LED_ORDNING.map((l) => l.nyckel).join(" | ")})`,
+    );
+  }
+
+  const ordnade = forst
+    ? [...LED_ORDNING].sort((a, b) => Number(b.nyckel === forst) - Number(a.nyckel === forst))
+    : [...LED_ORDNING];
+
+  const led: LlmLed[] = [];
+  for (const spec of ordnade) {
+    const baseUrl = getEnv(env, spec.url);
+    const apiKey =
+      getEnv(env, spec.key) ??
+      (spec.suffix === "" ? getEnv(env, "OPENROUTER_API_KEY") : undefined);
+
+    const modeller: Record<string, string> = {};
+    const saknade: string[] = [];
+    if (!baseUrl) saknade.push(spec.url);
+    if (!apiKey) saknade.push(spec.key);
+    for (const [roll, primarModell] of Object.entries(roller)) {
+      const namn = `MODEL_${roll.toUpperCase()}${spec.suffix}`;
+      const varde = getEnv(env, namn);
+      if (!varde) saknade.push(namn);
+      else modeller[primarModell] = varde;
+    }
+
+    // Ett HELT osatt led är ett led man valt bort — hoppa tyst. Ett HALVT
+    // satt led är däremot alltid ett misstag, och det ska sägas rakt ut:
+    // tyst överhoppning skulle betyda att man tror sig ha en reserv man
+    // inte har, vilket är precis så den gamla no-op-fallbacken kunde stå
+    // obemärkt i drift.
+    const antalSatta = 2 + Object.keys(roller).length - saknade.length;
+    if (antalSatta === 0) continue;
+    if (saknade.length > 0) {
+      throw new Error(
+        `LLM-kedjans led "${spec.namn}" är halvt konfigurerat — saknar ${saknade.join(", ")}. ` +
+          `Sätt alla, eller ingen av dem om ledet inte ska användas.`,
+      );
+    }
+
+    led.push({ namn: spec.namn, baseUrl: baseUrl!, apiKey: apiKey!, modell: modeller });
+  }
+
+  if (led.length === 0) {
+    throw new Error(
+      "Ingen LLM-endpoint är fullständigt konfigurerad. Varje led behöver adress, " +
+        "nyckel och modellnamn för alla tre rollerna — se LED_ORDNING i cli-run.ts.",
+    );
+  }
+  return led;
 }
 
 /**
@@ -27,22 +115,6 @@ export function buildContextFromEnv(
     cacheDir?: string;
   },
 ): PipelineContext {
-  // Primär endpoint kan pekas om till valfri OpenAI-kompatibel leverantör
-  // (t.ex. OpenCode Go, https://opencode.ai/zen/go/v1) via LLM_BASE_URL +
-  // LLM_API_KEY. OPENROUTER_API_KEY godtas som alias för nyckeln
-  // bakåtkompatibelt; utan LLM_BASE_URL används OpenRouter som förr.
-  const apiKey = getEnv(env, "LLM_API_KEY") ?? getEnv(env, "OPENROUTER_API_KEY");
-  if (!apiKey) throw new Error("Saknad miljövariabel: LLM_API_KEY (eller OPENROUTER_API_KEY)");
-  const baseUrl = getEnv(env, "LLM_BASE_URL");
-
-  const fallbackBaseUrl = getEnv(env, "LLM_FALLBACK_BASE_URL");
-  const fallbackApiKey = getEnv(env, "LLM_FALLBACK_API_KEY");
-  if ((fallbackBaseUrl && !fallbackApiKey) || (!fallbackBaseUrl && fallbackApiKey)) {
-    throw new Error(
-      "LLM_FALLBACK_BASE_URL och LLM_FALLBACK_API_KEY måste sättas tillsammans (eller ingen).",
-    );
-  }
-
   const extract = getEnv(env, "MODEL_EXTRACT");
   const verify = getEnv(env, "MODEL_VERIFY");
   const copy = getEnv(env, "MODEL_COPY");
@@ -52,22 +124,6 @@ export function buildContextFromEnv(
   if (extract === verify) {
     throw new Error(
       "MODEL_VERIFY måste vara en annan modell än MODEL_EXTRACT (§20: oberoende verifiering).",
-    );
-  }
-
-  // Fallback-modeller: primärmodellernas motsvarigheter på fallback-endpointens
-  // namnschema (t.ex. OpenCode Zens ID:n). Primären (OpenRouter) och fallbacken
-  // (Go) har olika namnscheman; utan översättning skickas samma sträng till båda
-  // och den ena svarar 4xx. Alla tre sätts tillsammans eller ingen.
-  const extractFallback = getEnv(env, "MODEL_EXTRACT_FALLBACK");
-  const verifyFallback = getEnv(env, "MODEL_VERIFY_FALLBACK");
-  const copyFallback = getEnv(env, "MODEL_COPY_FALLBACK");
-  const fallbackModelCount = [extractFallback, verifyFallback, copyFallback].filter(
-    Boolean,
-  ).length;
-  if (fallbackModelCount !== 0 && fallbackModelCount !== 3) {
-    throw new Error(
-      "MODEL_EXTRACT_FALLBACK, MODEL_VERIFY_FALLBACK och MODEL_COPY_FALLBACK måste sättas alla tre tillsammans (eller ingen).",
     );
   }
 
@@ -98,29 +154,7 @@ export function buildContextFromEnv(
     throw new Error("sources.yaml: tom allowlist_domains.");
   }
 
-  // Primär→fallback-översättning byggs bara när både fallback-endpoint och de tre
-  // fallback-modellerna är satta. Annars blir fallbacken en no-op (den får
-  // primär-strängen och känner inte igen den) — endpointen finns kvar men kan
-  // inte svara förrän översättningen är konfigurerad.
-  const fallbackModelMap: Record<string, string> =
-    fallbackBaseUrl && fallbackApiKey && fallbackModelCount === 3
-      ? {
-          [extract]: extractFallback as string,
-          [verify]: verifyFallback as string,
-          [copy]: copyFallback as string,
-        }
-      : {};
-
-  const llm =
-    fallbackBaseUrl && fallbackApiKey
-      ? new OpenRouterClient({
-          apiKey,
-          ...(baseUrl ? { baseUrl } : {}),
-          fallbackBaseUrl,
-          fallbackApiKey,
-          fallbackModelMap,
-        })
-      : new OpenRouterClient({ apiKey, ...(baseUrl ? { baseUrl } : {}) });
+  const llm = new OpenRouterClient({ led: byggLed(env, { extract, verify, copy }) });
 
   const articleSource = new LiveSource({
     feeds: config.feeds,
