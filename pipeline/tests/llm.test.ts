@@ -81,6 +81,38 @@ describe("OpenRouterClient resiliens", () => {
     assert.equal(urls.filter((u) => u.includes("openrouter")).length, 1);
   });
 
+  /**
+   * Faller BÅDA endpointerna ska felet bära bådas orsak. Tidigare låg en
+   * enda `lastError` som varje endpoint skrev över, så det som kastades var
+   * alltid den sist provade endpointens fel — reservens. I drift betydde
+   * det att varje misslyckande såg ut att bero på reservens kreditsaldo,
+   * oavsett vad som fällde primären, och primärens orsak gick inte att få
+   * fram ur loggen alls.
+   */
+  it("bär bådas felorsak när både primär och fallback faller", async () => {
+    const httpFetch = async (url: string) =>
+      url.includes("openrouter") ? resp(401, "bad key") : resp(402, "no credit");
+    const c = new OpenRouterClient({
+      apiKey: "k",
+      fallbackBaseUrl: "https://opencode.ai/zen/go/v1",
+      fallbackApiKey: "f",
+      httpFetch,
+      ...fast,
+    });
+    await assert.rejects(() => c.complete("p", { model: "m" }), (e: Error) => {
+      assert.match(e.message, /openrouter\.ai/, "primärens värd ska stå med");
+      assert.match(e.message, /401/, "primärens orsak ska stå med");
+      assert.match(e.message, /opencode\.ai/, "reservens värd ska stå med");
+      assert.match(e.message, /402/, "reservens orsak ska stå med");
+      assert.ok(
+        e.message.indexOf("openrouter.ai") < e.message.indexOf("opencode.ai"),
+        "i den ordning de provades",
+      );
+      assert.doesNotMatch(e.message, /Bearer|\bk\b|\bf\b/u, "aldrig nycklar i felet");
+      return true;
+    });
+  });
+
   it("översätter modell-ID för fallback-endpointen via fallbackModelMap", async () => {
     const sent: Array<{ url: string; model: string }> = [];
     const httpFetch = async (url: string, init?: RequestInit) => {
