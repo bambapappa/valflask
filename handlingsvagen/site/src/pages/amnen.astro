@@ -617,7 +617,9 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
   .tomt { color: var(--text-svag); font-style: italic; }
 
   .amnesok { margin: 1rem 0 2rem; }
-  .amnesok input {
+  /* Bara sökfältet — annars får partifiltrets kryssrutor samma bredd och
+     ram, och rutorna spränger raden på en telefon. */
+  .amnesok input[type="search"] {
     width: 100%; padding: 0.7rem 0.9rem; font-size: 1rem;
     border: 1px solid var(--linje); border-radius: var(--radie);
     background: var(--yta); color: inherit;
