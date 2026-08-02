@@ -21,6 +21,19 @@ function parseRetryAfterMs(h: string | null, capMs: number): number | null {
   return null;
 }
 
+/**
+ * Värdnamnet ur en endpoint-URL, för felmeddelanden. Bara värden — aldrig
+ * sökvägen, och aldrig nyckeln: felet hamnar i körningsloggen, som är
+ * publik.
+ */
+function vardnamn(url: string): string {
+  try {
+    return new URL(url).host;
+  } catch {
+    return "okänd endpoint";
+  }
+}
+
 export class OpenRouterClient implements LlmClient {
   private apiKey: string;
   private baseUrl: string;
@@ -118,9 +131,16 @@ export class OpenRouterClient implements LlmClient {
       });
     }
 
-    let lastError: Error | undefined;
+    // Ett fel PER endpoint, inte ett gemensamt. Tidigare låg det en enda
+    // `lastError` här som varje endpoint skrev över, och eftersom reserven
+    // provas sist var det alltid RESERVENS fel som kastades. Primärens
+    // orsak försvann spårlöst — i drift såg varje misslyckande ut att bero
+    // på reservens kreditsaldo, oavsett vad som egentligen fällde primären.
+    // Nu bär felet hela kedjan, i den ordning endpointerna provades.
+    const felPerEndpoint: string[] = [];
 
     for (const ep of endpoints) {
+      let lastError: Error | undefined;
       body.model = ep.model;
       for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
         await this.throttle();
@@ -175,8 +195,10 @@ export class OpenRouterClient implements LlmClient {
           break;
         }
       }
+      if (lastError) felPerEndpoint.push(`${vardnamn(ep.url)} → ${lastError.message}`);
     }
 
-    throw lastError ?? new Error("Ingen LLM-endpoint tillgänglig");
+    if (felPerEndpoint.length === 0) throw new Error("Ingen LLM-endpoint tillgänglig");
+    throw new Error(felPerEndpoint.join("  |  "));
   }
 }
