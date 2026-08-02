@@ -27,6 +27,7 @@ import {
 } from "../src/similarity.ts";
 import { computeDataHash } from "../src/publish.ts";
 import { OpenRouterClient, type LlmClient } from "../src/llm.ts";
+import { byggLed } from "../src/cli-run.ts";
 
 const DATA = resolve(import.meta.dirname, "../../data");
 
@@ -128,17 +129,12 @@ function buildLlm(): { llm: LlmClient; model: string } {
     };
     return { llm, model: "stub-model" };
   }
-  const apiKey = process.env.LLM_API_KEY || process.env.OPENROUTER_API_KEY;
-  const baseUrl = process.env.LLM_BASE_URL;
   const model = process.env.MODEL_EXTRACT;
-  if (!apiKey) throw new Error("Saknar LLM_API_KEY (eller OPENROUTER_API_KEY) (kör med --stub för lokal logiktest).");
   if (!model) throw new Error("Saknar MODEL_EXTRACT.");
-  const fbUrl = process.env.LLM_FALLBACK_BASE_URL;
-  const fbKey = process.env.LLM_FALLBACK_API_KEY;
-  const llm =
-    fbUrl && fbKey
-      ? new OpenRouterClient({ apiKey, ...(baseUrl ? { baseUrl } : {}), fallbackBaseUrl: fbUrl, fallbackApiKey: fbKey })
-      : new OpenRouterClient({ apiKey, ...(baseUrl ? { baseUrl } : {}) });
+  // Samma kedja som pipelinen: primär → sekundär → extra, allt ur variabler.
+  // Backfillen anropar bara extract-rollen, så bara den efterfrågas — ett led
+  // som saknar MODEL_EXTRACT för sitt suffix hoppas över.
+  const llm = new OpenRouterClient({ led: byggLed(process.env, { extract: model }) });
   return { llm, model };
 }
 

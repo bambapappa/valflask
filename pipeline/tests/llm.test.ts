@@ -33,7 +33,7 @@ describe("OpenRouterClient resiliens", () => {
       calls++;
       return calls === 1 ? resp(429, "rate limited", "0") : ok("HEJ");
     };
-    const c = new OpenRouterClient({ apiKey: "k", httpFetch, ...fast });
+    const c = new OpenRouterClient({ led: [{ namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" }], httpFetch, ...fast });
     assert.equal(await c.complete("p", { model: "m" }), "HEJ");
     assert.equal(calls, 2);
   });
@@ -44,7 +44,7 @@ describe("OpenRouterClient resiliens", () => {
       calls++;
       return resp(500, "boom");
     };
-    const c = new OpenRouterClient({ apiKey: "k", httpFetch, ...fast, maxRetries: 2 });
+    const c = new OpenRouterClient({ led: [{ namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" }], httpFetch, ...fast, maxRetries: 2 });
     await assert.rejects(() => c.complete("p"), /HTTP 500/);
     assert.equal(calls, 3); // 1 + 2 retries
   });
@@ -56,7 +56,7 @@ describe("OpenRouterClient resiliens", () => {
       if (calls === 1) throw new Error("The operation was aborted due to timeout");
       return ok("OK");
     };
-    const c = new OpenRouterClient({ apiKey: "k", httpFetch, ...fast });
+    const c = new OpenRouterClient({ led: [{ namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" }], httpFetch, ...fast });
     assert.equal(await c.complete("p"), "OK");
     assert.equal(calls, 2);
   });
@@ -68,9 +68,10 @@ describe("OpenRouterClient resiliens", () => {
       return url.includes("openrouter") ? resp(402, "no credit") : ok("FALLBACK");
     };
     const c = new OpenRouterClient({
-      apiKey: "k",
-      fallbackBaseUrl: "https://opencode.ai/zen/go/v1",
-      fallbackApiKey: "f",
+      led: [
+        { namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" },
+        { namn: "sekundär", baseUrl: "https://opencode.ai/zen/go/v1", apiKey: "f" },
+      ],
       httpFetch,
       ...fast,
     });
@@ -93,9 +94,10 @@ describe("OpenRouterClient resiliens", () => {
     const httpFetch = async (url: string) =>
       url.includes("openrouter") ? resp(401, "bad key") : resp(402, "no credit");
     const c = new OpenRouterClient({
-      apiKey: "k",
-      fallbackBaseUrl: "https://opencode.ai/zen/go/v1",
-      fallbackApiKey: "f",
+      led: [
+        { namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" },
+        { namn: "sekundär", baseUrl: "https://opencode.ai/zen/go/v1", apiKey: "f" },
+      ],
       httpFetch,
       ...fast,
     });
@@ -113,7 +115,7 @@ describe("OpenRouterClient resiliens", () => {
     });
   });
 
-  it("översätter modell-ID för fallback-endpointen via fallbackModelMap", async () => {
+  it("översätter modell-ID per led via ledets egna modellnamn", async () => {
     const sent: Array<{ url: string; model: string }> = [];
     const httpFetch = async (url: string, init?: RequestInit) => {
       const model = JSON.parse(String(init?.body)).model as string;
@@ -122,10 +124,10 @@ describe("OpenRouterClient resiliens", () => {
       return url.includes("openrouter") ? resp(404, "unknown model") : ok("OK");
     };
     const c = new OpenRouterClient({
-      apiKey: "k",
-      fallbackBaseUrl: "https://opencode.ai/zen/go/v1",
-      fallbackApiKey: "f",
-      fallbackModelMap: { "deepseek/deepseek-v4-pro": "deepseek-v4-pro" },
+      led: [
+        { namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" },
+        { namn: "sekundär", baseUrl: "https://opencode.ai/zen/go/v1", apiKey: "f", modell: { "deepseek/deepseek-v4-pro": "deepseek-v4-pro" } },
+      ],
       httpFetch,
       ...fast,
     });
@@ -146,9 +148,10 @@ describe("OpenRouterClient resiliens", () => {
       return url.includes("openrouter") ? resp(404, "unknown model") : ok("OK");
     };
     const c = new OpenRouterClient({
-      apiKey: "k",
-      fallbackBaseUrl: "https://opencode.ai/zen/go/v1",
-      fallbackApiKey: "f",
+      led: [
+        { namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" },
+        { namn: "sekundär", baseUrl: "https://opencode.ai/zen/go/v1", apiKey: "f" },
+      ],
       httpFetch,
       ...fast,
     });
@@ -160,7 +163,7 @@ describe("OpenRouterClient resiliens", () => {
     let t = 0;
     const slept: number[] = [];
     const c = new OpenRouterClient({
-      apiKey: "k",
+      led: [{ namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" }],
       httpFetch: async () => ok("x"),
       maxRetries: 0,
       baseDelayMs: 0,
