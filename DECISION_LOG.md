@@ -1517,3 +1517,54 @@ hållen: den faller på skarp adress (fem agenter utestängda) och godkänner v�
 egen fil när den serveras utan Cloudflares block. **Själva avstängningen är en
 människas åtgärd i Cloudflare-panelen och är ännu inte gjord** — kontrollen
 kommer att larma tills den är det.
+
+## 2026-08-01 — Policy-måttstockarna borttagna ur datat och spärrade i koden
+
+**Bakgrund:** Beslutet 2026-07-10 bytte glasyren till den apolitiska
+vikt-liknelsen, med motivet att en måttstock som själv kan vara ett vallöfte
+ramar in kostnaden i policytermer. Måttstockarna togs ur *automatiken*, men
+lämnades kvar i `data/constants.json` som kurerbara jämförelser — och
+`computeComparisons` frågade aldrig vad för sorts måttstock den renderade.
+Neutraliteten vilade alltså på att `comparisons`-listan råkade vara tom på
+alla löften. En enda rad i ett löftes lista hade satt "1,5 miljoner
+sjuksköterskelöner" på den publika sajten, utan att något test föll:
+`test-drylinje` kontrollerade bara `dryLine`, inte jämförelserna.
+Upptäckt vid genomgång inför en 3D-tillämpning av datat.
+
+**Beslut:** De sex policy-måttstockarna tas bort ur datat helt —
+`ssk_arskostnad`, `larare_arskostnad`, `vardplats_ar`, `skolmaltid_elev_ar`,
+`forbifart_sthlm`, `jas39e_styck` — och `computeComparisons` släpper bara
+igenom `kind: "kosmisk"` (`NEUTRALA_SORTER` i `aggregates.ts`). Kvar i filen
+står tre rent fysiska storheter: enkronans tjocklek och avstånden till månen
+och Mars. `reformutrymme_msek_per_ar` är orörd — den driver gapmätaren och är
+ingen jämförelse.
+
+Spärren sitter i koden och inte bara i datat med flit: datat kan ändras av vem
+som helst i en enda rad, kodraden syns i en granskning.
+
+Förbifart Stockholm och JAS 39E föll på samma kriterium som lönerna, vilket
+inte var uttalat 2026-07-10. Försvarsanslaget är en av valets mest omstridda
+poster — tre partier har ett grupperat löfte om fem procent av BNP — så att
+mäta ett välfärdslöfte i "gånger hela JAS-notan" är inte en måttstock utan ett
+argument. Förbifart Stockholm är dessutom ett omstritt projekt i sig.
+
+**Förkastade alternativ:** Behålla datat och bara spärra i koden — nej, en
+konstant som aldrig får användas är en fälla för nästa session, och filen är
+sajtens trovärdighetsvaluta. Spärra med en lista över förbjudna id:n i stället
+för på sort — en ny konstant med nytt id hade glidit förbi. Låta bilaga D i
+`SPEC.md` stå orörd — den föreskrev "minst en vardaglig" och motsade beslutet
+som redan var fattat; nu står regeln i klartext och utkastet är märkt som
+historik.
+
+**Ingen rättelsepost.** Jämförelsesektionen har varit tom för alla löften sedan
+2026-07-10, så ingenting en läsare sett ändras. Det som ändras är vad som
+skulle kunna hända. Däremot rättas metodsidan, som beskrev ett beteende som
+inte fanns: den lovade "en till tre jämförelser" per löfte.
+
+**Påverkan:** `data/constants.json` (−6 poster, ny not), `site/src/lib/
+aggregates.ts` (`NEUTRALA_SORTER` + spärr i `computeComparisons`, död
+`deterministComparisons` borttagen, `ggr_gripen`-grenen borttagen),
+`site/src/lib/calc.ts` (export), `site/src/pages/metod.astro` (falsk copy),
+`site/src/pages/api.astro` (beskrivning), `SPEC.md` §9 + bilaga D,
+`site/scripts/test-drylinje.mts` (+3 kontroller: datat, sorten, och att koden
+håller även om någon lägger tillbaka en post). Hela sajtsviten grön.

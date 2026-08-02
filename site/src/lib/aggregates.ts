@@ -315,21 +315,41 @@ export interface ComparisonResult {
   unverifiable: boolean;
 }
 
+/**
+ * Vilka sorters måttstock som får möta en läsare.
+ *
+ * Bara `kosmisk` — rent fysiska storheter (myntstapelns höjd mot ett avstånd).
+ * `vardaglig` (löner, vårdkostnader, skolmåltider) och `infrastruktur`
+ * (byggprojekt, försvarsmateriel) är avsiktligt utestängda: en måttstock som
+ * själv kan vara ett vallöfte ramar tyst in kostnaden i policytermer, och det
+ * är inte neutralt. Mänskligt beslut 2026-07-10, spärrat i kod 2026-08-01.
+ *
+ * Spärren sitter här och inte i datat med flit — datat kan ändras av vem som
+ * helst i en enda rad, den här raden syns i en granskning.
+ */
+const NEUTRALA_SORTER: ReadonlySet<string> = new Set(["kosmisk"]);
+
+function ÄR_NEUTRAL_SORT(kind: string): boolean {
+  return NEUTRALA_SORTER.has(kind);
+}
+
 export function computeComparisons(
   promise: PromisePost,
   constants: Constants
 ): ComparisonResult[] {
   const totalKronor = promiseTotalMsek(promise) * 1_000_000;
-  // Endast KURERADE jämförelser (tom för nästan alla → sektionen döljs). De
-  // gamla auto-jämförelserna (sjuksköterskelöner m.fl.) togs bort: en måttstock
-  // som SJÄLV kan vara ett vallöfte är inte neutral (mänskligt beslut 2026-07-10).
+  // Endast KURERADE jämförelser (tom för alla → sektionen döljs). De gamla
+  // auto-jämförelserna (sjuksköterskelöner m.fl.) togs bort: en måttstock som
+  // SJÄLV kan vara ett vallöfte är inte neutral (mänskligt beslut 2026-07-10).
   // Glasyren är i stället den apolitiska vikt-liknelsen i dryLine().
+  //
+  // Spärren nedan är skärpningen 2026-08-01: tidigare låg neutraliteten bara i
+  // att datat råkade sakna sådana måttstockar, så en enda rad i ett löftes
+  // comparisons-lista hade kunnat ta tillbaka dem till den publika sajten. Nu
+  // renderas bara fysiska storheter utan politiskt innehåll, oavsett vad som
+  // står i constants.json.
   const ids = promise.comparisons ?? [];
-  const results: ComparisonResult[] = [];
-
-  const vardagliga: ComparisonResult[] = [];
   const kosmiska: ComparisonResult[] = [];
-  const infra: ComparisonResult[] = [];
 
   // Enkronan är myntstapelns byggsten — intern referens, inte en egen jämförelse.
   const COIN_ID = "enkrona_tjocklek_m";
@@ -341,6 +361,7 @@ export function computeComparisons(
     const c = constants.items.find((it) => it.id === id);
     if (!c) continue;
     if (c.id === COIN_ID) continue; // intern, renderas aldrig fristående
+    if (!ÄR_NEUTRAL_SORT(c.kind)) continue; // policy-måttstockar renderas aldrig
     if (c.value === "VERIFIERA") {
       const r: ComparisonResult = {
         constantId: c.id,
@@ -350,7 +371,7 @@ export function computeComparisons(
         kind: c.kind,
         unverifiable: true,
       };
-      pushByKind(r);
+      läggTill(r);
       continue;
     }
     let computed: number;
@@ -366,7 +387,7 @@ export function computeComparisons(
           kind: c.kind,
           unverifiable: true,
         };
-        pushByKind(r);
+        läggTill(r);
         continue;
       }
       const stackHeightM = totalKronor * coinThicknessM;
@@ -384,77 +405,14 @@ export function computeComparisons(
       kind: c.kind,
       unverifiable: false,
     };
-    pushByKind(r);
+    läggTill(r);
   }
 
-  function pushByKind(r: ComparisonResult) {
-    if (r.kind === "vardaglig") vardagliga.push(r);
-    else if (r.kind === "kosmisk") kosmiska.push(r);
-    else infra.push(r);
+  function läggTill(r: ComparisonResult) {
+    kosmiska.push(r);
   }
 
-  const out: ComparisonResult[] = [];
-  if (vardagliga.length > 0) out.push(vardagliga[0]);
-  if (infra.length > 0) out.push(infra[0]);
-  if (kosmiska.length > 0 && out.length < 3) out.push(kosmiska[0]);
-  if (out.length < 2 && vardagliga.length > 1) out.push(vardagliga[1]);
-  if (out.length < 3 && infra.length > 1) out.push(infra[1]);
-
-  return out.slice(0, 3);
-}
-
-export function deterministComparisons(
-  promiseId: string,
-  comparisons: string[],
-  constants: Constants
-): ComparisonResult[] {
-  const totalKronorPlaceholder = 0;
-
-  function stableHash(s: string): number {
-    let h = 0;
-    for (let i = 0; i < s.length; i++) {
-      h = ((h << 5) - h + s.charCodeAt(i)) | 0;
-    }
-    return h;
-  }
-
-  const vardagliga: ComparisonResult[] = [];
-  const kosmiska: ComparisonResult[] = [];
-  const infras: ComparisonResult[] = [];
-
-  for (const id of comparisons) {
-    const c = constants.items.find((it) => it.id === id);
-    if (!c) continue;
-    const unverifiable = c.value === "VERIFIERA";
-    const r: ComparisonResult = {
-      constantId: c.id,
-      label: c.label,
-      computed: 0,
-      unit: c.unit,
-      kind: c.kind,
-      unverifiable,
-    };
-    if (c.kind === "vardaglig") vardagliga.push(r);
-    else if (c.kind === "kosmisk") kosmiska.push(r);
-    else infras.push(r);
-  }
-
-  const out: ComparisonResult[] = [];
-
-  if (vardagliga.length > 0) {
-    const idx = Math.abs(stableHash(promiseId)) % vardagliga.length;
-    out.push(vardagliga[idx]);
-  }
-  if (infras.length > 0) {
-    const idx = Math.abs(stableHash(promiseId + "infra")) % infras.length;
-    out.push(infras[idx]);
-  }
-  if (kosmiska.length > 0 && out.length < 3) {
-    const idx = Math.abs(stableHash(promiseId + "kosmisk")) % kosmiska.length;
-    out.push(kosmiska[idx]);
-  }
-
-  return out.slice(0, 3);
+  return kosmiska.slice(0, 3);
 }
 
 export interface SummaryData {
@@ -581,12 +539,9 @@ export function dryLine(promise: PromisePost): string {
 export function formatComparison(r: ComparisonResult): string {
   if (r.unverifiable) return "Värde ej verifierat";
   const val = r.computed;
-  if (r.unit === "ggr_gripen") {
-    // Andel/multipel av hela Gripen-programmet (2013–2026).
-    if (val >= 1) return `${val.toFixed(1).replace(".", ",")} gånger ${r.label}`;
-    if (val >= 0.01) return `${(val * 100).toFixed(0)} % av ${r.label}`;
-    return `${(val * 100).toFixed(1).replace(".", ",")} % av ${r.label}`;
-  }
+  // Grenen för hela Gripen-programmet togs bort 2026-08-01 tillsammans med
+  // konstanten: försvarsanslaget är i sig en valfråga, så "X gånger hela
+  // JAS-notan" är inte en måttstock utan ett argument.
   if (r.unit === "andel_avstand") {
     // Myntstapeln (enkronor) jämförd med ett avstånd.
     if (val >= 1) return `${val.toFixed(1).replace(".", ",")} gånger till ${r.label}`;
