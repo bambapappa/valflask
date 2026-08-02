@@ -16,7 +16,6 @@ export {
   categoryBreakdown,
   coalitionAggregates,
   computeComparisons,
-  deterministComparisons,
   buildSummary,
   formatComparison,
   isActive,

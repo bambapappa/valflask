@@ -5,7 +5,8 @@
  * vikt-liknelse kan aldrig själv vara ett vallöfte (till skillnad från
  * sjuksköterskelöner/vårdplatser/skolluncher).
  */
-import { dryLine } from "../src/lib/aggregates.ts";
+import { readFileSync } from "node:fs";
+import { computeComparisons, dryLine } from "../src/lib/aggregates.ts";
 import type { PromisePost } from "../src/lib/data";
 
 let errors = 0;
@@ -37,6 +38,50 @@ check("finansiering angiven speglas", /Finansiering: angiven\.$/.test(dryLine(p(
 check("finansiering ej angiven speglas", /Finansiering: ej angiven\.$/.test(dryLine(p(5_000, "skatter", false))));
 const noll = dryLine(p(0, "migration", false));
 check("0-kostnad → 'ingen mätbar kostnad', inget djur", noll.startsWith("Ingen mätbar kostnad i kassan.") && !/val|elefant|giraff/.test(noll), noll);
+
+console.log("\n=== Policy-måttstockar kan inte nå läsaren ===");
+// Två oberoende spärrar, för att neutraliteten inte ska vila på att datat
+// råkar se rätt ut. Före 2026-08-01 fanns bara den första sortens skydd, och
+// då hade en enda rad i ett löftes comparisons-lista räckt för att sätta
+// "1,5 miljoner sjuksköterskelöner" på den publika sajten.
+const konstanter = JSON.parse(
+  readFileSync(new URL("../../data/constants.json", import.meta.url), "utf-8"),
+) as { items: Array<{ id: string; label: string; kind: string }> };
+
+const FÖRBJUDET = /sjukskötersk|vårdplats|vårdcentral|skolmål|skollunch|lärarlön|lön|förbifart|gripen|jas\b/i;
+const smugglade = konstanter.items.filter(
+  (it) => FÖRBJUDET.test(it.id) || FÖRBJUDET.test(it.label),
+);
+check(
+  "datat: ingen konstant är en policy-måttstock",
+  smugglade.length === 0,
+  smugglade.map((it) => it.id).join(", "),
+);
+check(
+  "datat: alla konstanter är fysiska storheter (kind = kosmisk)",
+  konstanter.items.every((it) => it.kind === "kosmisk"),
+  konstanter.items.filter((it) => it.kind !== "kosmisk").map((it) => `${it.id}:${it.kind}`).join(", "),
+);
+
+// Koden håller även om någon lägger tillbaka en post i datat.
+const smugglad = {
+  generated_note: "",
+  reformutrymme_msek_per_ar: { value: 80_000, source_url: "x", source_date: "" },
+  items: [
+    { id: "enkrona_tjocklek_m", label: "tjocklek 1-krona", value: 0.00179, unit: "m", kind: "kosmisk", source_url: "x", source_date: "" },
+    { id: "ssk_arskostnad", label: "sjuksköterskelöner (en månad)", value: 43_900, unit: "kr", kind: "vardaglig", source_url: "x", source_date: "" },
+    { id: "jas39e_styck", label: "hela JAS 39E-notan", value: 47e9, unit: "kr", kind: "infrastruktur", source_url: "x", source_date: "" },
+  ],
+} as unknown as Parameters<typeof computeComparisons>[1];
+const medSmuggladeIder = {
+  ...p(50_000, "välfärd", false),
+  comparisons: ["ssk_arskostnad", "jas39e_styck"],
+} as unknown as PromisePost;
+check(
+  "koden: kurerade policy-måttstockar renderas ändå inte",
+  computeComparisons(medSmuggladeIder, smugglad).length === 0,
+  JSON.stringify(computeComparisons(medSmuggladeIder, smugglad)),
+);
 
 console.log("\n=== Neutralitet: partiet påverkar inte raden ===");
 const somS = dryLine(p(5_000, "försvar", false, ["s"]));

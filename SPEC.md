@@ -301,10 +301,11 @@ All översättning till mänskliga storheter sker i **kod** (`site/src/lib/compa
 **Konstantpost:** `{ id, label, value, unit, source_url, source_date, kind: "vardaglig" | "kosmisk" | "infrastruktur" }`
 
 **Regler:**
-- Varje löfte visar 1–3 jämförelser: minst en `vardaglig` (löner, vårdplatser, skolmåltider), max en `kosmisk` (myntstapel till månen/Mars). Valet är deterministiskt på löftes-id → samma löfte visar alltid samma jämförelser (cachebart, citerbart, screenshotbart).
-- Exempel på beräkningar: `sjuksköterskeår = total_kr / arbetskraftskostnad_ssk_per_år`; `myntstapel_m = (total_kr / 1) × tjocklek_1kr_m`, redovisas som "x % av vägen till Mars" när stapeln inte når fram.
-- **Startuppsättning (alla värden `VERIFIERA` mot källa innan lansering):** arbetskraftskostnad sjuksköterska/år [SCB/SKR], lärare/år [SCB], 1-kronans tjocklek [Riksbanken], avstånd till månen och minsta avstånd till Mars [NASA], kostnad Förbifart Stockholm [Trafikverket], styckpris JAS 39E [FMV/Försvarsmakten], skolmåltider per elev och år [Livsmedelsverket], en vårdplats/år [SKR], driftkostnad för en vårdcentral/år [regionkälla]. Utkast i bilaga D.
-- Konstantfilen är medvetet liten (15–25 poster) och varje post har källa — det är sajtens trovärdighetsvaluta.
+- **Bara `kosmisk` får möta en läsare.** `vardaglig` och `infrastruktur` är utestängda i kod (`NEUTRALA_SORTER` i `aggregates.ts`), inte bara frånvarande i datat. En måttstock som själv kan vara ett vallöfte — en lön, en vårdkostnad, en skolmåltid, ett vägbygge, ett vapensystem — ramar tyst in kostnaden i policytermer och är därför inte neutral. Mänskligt beslut 2026-07-10, spärrat i kod 2026-08-01.
+- Jämförelser visas bara när de är kurerade på löftet. Ingen väljs automatiskt; tom lista döljer sektionen. Den glasyr som alltid finns är i stället den apolitiska vikt-liknelsen i `dryLine()`: om varje krona vägde ett gram, hur mycket väger löftet, uttryckt i djur. Ett djur kan aldrig vara ett vallöfte.
+- Enda kvarvarande beräkning: `myntstapel_m = total_kr × tjocklek_1kr_m`, redovisad som "x % av vägen till månen/Mars".
+- **Uppsättningen i drift:** 1-kronans tjocklek [Riksbankens föreskrifter], avstånd till månen och genomsnittligt avstånd till Mars [NASA]. Det är allt. De sex policy-måttstockarna i den ursprungliga uppsättningen (sjuksköterskelön, lärarlön, sjukvård per invånare, skolmåltid, Förbifart Stockholm, JAS 39E-programmet) togs bort 2026-08-01; bilaga D nedan är bevarad som historik och beskriver inte längre datat.
+- Konstantfilen är medvetet liten och varje post har källa — det är sajtens trovärdighetsvaluta. Att den blivit ännu mindre är inte en förlust: en måttstock som är en stridsfråga är inget mått.
 
 ---
 
@@ -644,6 +645,9 @@ jobs:
 ---
 
 ## Bilaga D — `data/constants.json` (utkast; ALLA värden ska verifieras och källsättas före lansering)
+
+> **Historik.** Utkastet nedan är från planeringsfasen och beskriver INTE datat i drift.
+> Sex av posterna är borttagna (se regeln ovan). Bevarat för att visa vad som ändrades och varför.
 
 ```jsonc
 {
