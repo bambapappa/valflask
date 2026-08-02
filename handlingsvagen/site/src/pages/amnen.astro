@@ -645,47 +645,57 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
   .roster { margin: 1.6rem 0 0; padding-top: 1rem; border-top: 1px solid var(--linje); }
   .roster h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
   .rosttabell-yta { overflow-x: auto; }
+  /*
+   * Träfflistan, omröstningslistan och rösttabellens rader byggs i
+   * webbläsaren när någon söker. Astros scopade regler når bara det som
+   * står i mallen, så innehållet i de tre behållarna måste formas med
+   * globala regler. Utan `:global` står raderna helt oformade: titeln
+   * klistras ihop med sorten ("…efter 2035skriftlig fråga"), partikoden
+   * tappar sin ruta och sina versaler. Behållarna själva står i mallen och
+   * är därför kvar som vanliga scopade regler — det är de som avgränsar
+   * var de globala reglerna får verka.
+   */
   .rosttabell { border-collapse: collapse; margin: 0.6rem 0; font-size: 0.9rem; }
-  .rosttabell th, .rosttabell td {
+  .rosttabell :global(th), .rosttabell :global(td) {
     padding: 0.3rem 0.7rem; text-align: right; border-bottom: 1px solid var(--linje);
     font-variant-numeric: tabular-nums;
   }
-  .rosttabell th[scope="row"] { text-align: left; font-weight: 700; }
+  .rosttabell :global(th[scope="row"]) { text-align: left; font-weight: 700; }
   /* Den rad sidan handlar om markeras med form: fet text och en tjock kantlinje. */
-  .rosttabell tr.vald { font-weight: 700; }
-  .rosttabell tr.vald th[scope="row"] { border-left: 3px solid var(--svarta); padding-left: 0.5rem; }
+  .rosttabell :global(tr.vald) { font-weight: 700; }
+  .rosttabell :global(tr.vald th[scope="row"]) { border-left: 3px solid var(--svarta); padding-left: 0.5rem; }
 
   .voteringar { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.5rem; }
-  .voteringar li {
+  .voteringar :global(li) {
     padding: 0.65rem 0.9rem; background: var(--yta);
     border: 1px solid var(--linje); border-radius: var(--radie);
   }
-  .voteringar .rad1 { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: baseline; }
-  .voteringar .titel { font-weight: 600; }
-  .voteringar .meta { color: var(--text-svag); font-size: 0.85rem; }
-  .voteringar .flerrad { color: var(--text-svag); font-size: 0.85rem; background: none; border: 0; padding: 0.2rem 0; }
-  .standpunkter { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.45rem; }
-  .stand {
+  .voteringar :global(.rad1) { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: baseline; }
+  .voteringar :global(.titel) { font-weight: 600; }
+  .voteringar :global(.meta) { color: var(--text-svag); font-size: 0.85rem; }
+  .voteringar :global(.flerrad) { color: var(--text-svag); font-size: 0.85rem; background: none; border: 0; padding: 0.2rem 0; }
+  .voteringar :global(.standpunkter) { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.45rem; }
+  .voteringar :global(.stand) {
     font-family: var(--font-mono); font-size: var(--steg--1); padding: 0.05rem 0.4rem;
     border: 1px solid var(--linje-svag);
   }
-  .stand.ja { border-color: var(--svarta); border-width: 2px; font-weight: 700; }
-  .stand.franvarande { color: var(--text-svag); }
+  .voteringar :global(.stand.ja) { border-color: var(--svarta); border-width: 2px; font-weight: 700; }
+  .voteringar :global(.stand.franvarande) { color: var(--text-svag); }
 
   .traffar { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.5rem; }
-  .traffar li {
+  .traffar :global(li) {
     padding: 0.65rem 0.9rem; background: var(--yta);
     border: 1px solid var(--linje); border-radius: var(--radie);
   }
-  .traffar .rad1 { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: baseline; }
-  .traffar .titel { font-weight: 600; }
-  .traffar .meta { color: var(--text-svag); font-size: 0.85rem; }
-  .traffar .partier { display: inline-flex; gap: 0.3rem; }
-  .traffar .pk {
+  .traffar :global(.rad1) { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: baseline; }
+  .traffar :global(.titel) { font-weight: 600; }
+  .traffar :global(.meta) { color: var(--text-svag); font-size: 0.85rem; }
+  .traffar :global(.partier) { display: inline-flex; flex-wrap: wrap; gap: 0.3rem; }
+  .traffar :global(.pk) {
     font-family: var(--font-mono); font-weight: 700; font-size: var(--steg--1); text-transform: uppercase;
     border: 1px solid var(--linje-svag); padding: 0.05rem 0.3rem;
   }
-  .traffar .utslag { font-size: 0.85rem; font-weight: 600; }
+  .traffar :global(.utslag) { font-size: 0.85rem; font-weight: 600; }
 
   .trender { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); margin: 1.2rem 0 2rem; }
   .trend { background: var(--yta); border: 1px solid var(--linje); border-radius: var(--radie); padding: 0.9rem 1rem; }
