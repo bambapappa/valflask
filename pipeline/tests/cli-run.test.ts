@@ -103,6 +103,18 @@ describe("cli-run buildContextFromEnv", () => {
     assert.ok(ctx.llm);
   });
 
+  // Ett led vars nycklar finns för ETT ANNAT arbete (matchningen har egna
+  // MODEL_KOPPLING_*) ska hoppas över, inte fälla körningen. Utan den
+  // skillnaden hade pipelinen kastat vid nästa körning bara för att det
+  // extra ledets adress och nyckel råkar vara satta i repot.
+  it("hoppar över ett led som har adress och nyckel men inga modeller för rollerna", () => {
+    const ctx = buildContextFromEnv(
+      envWith({ LLM_ZAI_BASE_URL: "https://z.ai/api/paas/v4", LLM_ZAI_API_KEY: "z-test" }),
+      opts,
+    );
+    assert.equal(ctx.models.extract, "deepseek-v4-pro");
+  });
+
   it("kastar när bara en fallback-modell är satt (kräver alla tre)", () => {
     assert.throws(
       () => buildContextFromEnv(envWith({ MODEL_EXTRACT_FALLBACK: "deepseek-v4-pro" }), opts),
