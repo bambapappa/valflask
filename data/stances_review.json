@@ -138,5 +138,33 @@
     "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-nu-tar-vi-nasta-steg-for-att-skapa-studiero-i-skolan",
     "articleTitle": "Liberalerna: Nu tar vi nästa steg för att skapa studiero i skolan",
     "runId": "run-2026-07-29-06-05"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-straffalder",
+      "party": "mp",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Att vi inte accepterar en politik som kastar barn i fängelse.",
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör för Miljöpartiet"
+      }
+    },
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "sourceUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-02",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-02-17-41",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet är en generell princip om att inte acceptera barn i fängelse, men tar inte ställning till det konkreta förslaget om att sänka straffmyndighetsåldern till 14 år för allvarliga brott och kan avse annan politik."
+      }
+    ],
+    "verifyReason": "Citatet är en generell princip om att inte acceptera barn i fängelse, men tar inte ställning till det konkreta förslaget om att sänka straffmyndighetsåldern till 14 år för allvarliga brott och kan avse annan politik."
   }
 ]

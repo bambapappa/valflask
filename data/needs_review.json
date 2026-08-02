@@ -551,5 +551,842 @@
       "calculation": "Partiets egen siffra: 8 000 mkr/år. Osäkerhetsintervall från 6 000 till 12 000 mkr/år. Motsvarar en subvention som täcker mellanskillnaden mellan kortintäkter och dagens biljettintäkter på ca 20–25 mdkr/år, beroende på hur många som byter till kortet."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0439 (1000), p-2026-0466 (1200), p-2026-0321 (8000) ⚠ AVVIKER: 8000 avviker 6.7× från jämförbara (median 1200)"
+  },
+  {
+    "candidate": {
+      "title": "Införa Sverigekort för kollektivtrafik i hela landet till låg månadskostnad",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Med vårt Sverigekort kan du resa fritt på all kollektivtrafik i hela landet till en billig penning. 499 kronor i månaden för vuxna, och 249 kronor för unga, studenter och pensionärer.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 8000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Partiets egen kostnadsbedömning för samma Sverigekort-löfte (p-2026-0321) är 8 000 mkr/år. Intervallet speglar osäkerhet om anslutningsgrad och kompensationsnivåer.",
+      "confidence": 0.65,
+      "calculation": "Bas: partiets siffra 8 000 mkr/år. Lågt scenario (5 000 mkr): lägre anslutning, färre byter från befintliga biljetter. Högt scenario (12 000 mkr): hög anslutning, full kompensation för bortfallna intäkter även från resenärer med tidigare rabatterade kort. Uppskattningen bygger på att staten ersätter trafikhuvudmännen mellanskillnaden mellan Sverigekortets pris och dagens genomsnittliga biljettintäkt per resenär."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0321 (8000), p-2026-0439 (1000), p-2026-0466 (1200) ⚠ AVVIKER: 8000 avviker 6.7× från jämförbara (median 1200)"
+  },
+  {
+    "candidate": {
+      "title": "Rättvis elbilsbonus på upp till 60 000 kr samt leasingstöd för elbil",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Med vår rättvisa elbilsbonus kan den som bor på landsbygden få upp till 60 000 kronor i bonus. Med vårt leasingstöd kan man komma ner till 1500 kronor i månaden för att leasa en elbil.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 6200,
+      "msek_base": 8300,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Leasingstödet baseras på partiets egen kostnadsberäkning (7500 mkr/år). Bonusdelen skattad utifrån antagande om landsbygdens elbilsköp och genomsnittlig bonus om 50 tkr.",
+      "confidence": 0.5,
+      "calculation": "1. Leasingstöd: partiets siffra 7500 mkr/år (p-2026-0323). Osäkerhet kring utnyttjandegrad och villkor ger spann 6000–9000 mkr. 2. Elbilsbonus: upp till 60 000 kr per landsbygdsboende. Antag 4 000–30 000 köpare/år (låg/hög elbilsandel på landsbygd) × snitt 50 tkr = 200–1500 mkr. Totalt: 6200–12000 mkr/år, med bas 8300 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0323 (7500), p-2026-0335 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Höja barnbidraget och införa tillägg för ensamstående föräldrar",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Därför börjar vi med att höja barnbidraget och införa ett tillägg för ensamstående föräldrar.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "duplicateOf": "p-2026-0325"
+  },
+  {
+    "candidate": {
+      "title": "Korta normalarbetstiden till 35-timmarsvecka och sedan till fyra dagars arbetsvecka",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Därför vill vi korta normalarbetstiden. Först till 35-timmarsvecka, sedan till fyra dagars arbetsvecka.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 1,
+      "msek_base": 5,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Prissätter endast den direkta statliga kostnaden för att ta fram och införa en lagstadgad arbetstidsförkortning (utredning, proposition, implementering). Samhällsekonomiska följder som minskad…",
+      "confidence": 0.3,
+      "calculation": "Lagändring kräver utredning (~10-20 mkr för en SOU), proposition och vissa administrativa implementeringskostnader. Engångskostnad uppskattas till 5 mkr som bas, med ett spann mellan 1–30 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Införa en miljardärsskatt",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör"
+      },
+      "quote": "Därför vill Miljöpartiet se en miljardärsskatt, så att dom som har tjänat allra mest på dom senaste decenniernas utveckling är med och bidrar lite mer.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "intäktsökning",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 800,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Resonemang: en förmögenhetsskatt för de allra rikaste, i linje med tidigare MP-förslag. Uppskattning baserad på jämförbart llm-estimat på 800 mkr/år.",
+      "confidence": 0.5,
+      "calculation": "Jämförbart löfte (p-2026-0324) estimerat till 800 mkr/år. Osäkerhet kring skattebas och skattesats: spann 400–1200 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0324 (800)"
+  },
+  {
+    "candidate": {
+      "title": "Totalförsvaret byggs ut",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Totalförsvaret ska byggas ut.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Höjt barn- och studiebidrag, billigare mediciner, avgiftsfri tandvård för unga",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi ska ge tillbaka det du förlorat med ett plånbokslöfte: höjt barn- och studiebidrag, billigare mediciner, avgiftsfri tandvård för unga",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0481"
+  },
+  {
+    "candidate": {
+      "title": "Karensavdraget tas bort",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Den orättvisa karensen ska bort.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0461"
+  },
+  {
+    "candidate": {
+      "title": "Införa jobbtrappa och jobbkontrakt för unga",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi ska införa en jobbtrappa till självförsörjning och jobbkontrakt för unga.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är vagt utan specificerad omfattning eller nivå. Kostnaden beror på antal platser och subventionsgrad. Uppskattas som ett arbetsmarknadspolitiskt program för unga i linje med tidigare…",
+      "confidence": 0.3,
+      "calculation": "Antag 10 000–50 000 unga per år med subventionskostnad 100 000–200 000 kr per plats (lönebidrag motsvarande 50 % av genomsnittlig ingångslön). 10 000 × 100 000 = 1 000 mkr; 50 000 × 200 000 = 10 000 mkr. Centreras kring ca 2 000 mkr, med låg säkerhet."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0435 (500), p-2026-0012 (0), p-2026-0047 (500), p-2026-0441 (300), p-2026-0468 (5600) ⚠ AVVIKER: 2000 avviker 4.0× från jämförbara (median 500)"
+  },
+  {
+    "candidate": {
+      "title": "Förbjuda religiösa friskolor",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill förbjuda religiösa friskolor.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0015"
+  },
+  {
+    "candidate": {
+      "title": "Moderaterna: Bekämpa mäns våld mot kvinnor med samma kraft som gängkriminalitet",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Därför är Moderaterna övertygade om att mäns våld mot kvinnor måste bekämpas med samma kraft som gängkriminaliteten. Och vi följer upp det med konkreta åtgärder mot det fysiska, det psykiska och det ekonomiska våldet,",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/det-ska-inte-vara-livsfarligt-att-vara-kvinna-i-sverige/",
+    "articleTitle": "Det ska inte vara livsfarligt att vara kvinna i Sverige",
+    "duplicateOf": "p-2026-0038"
+  },
+  {
+    "candidate": {
+      "title": "5 000 kronor mer i månaden för barnfamiljer",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare"
+      },
+      "quote": "Om vi får förnyat förtroende ska vi återigen se till att en barnfamiljs ekonomi förstärks med ytterligare 5 000 kronor per månad.",
+      "category": "skatter",
+      "amount_in_text_msek": 0.005,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/5-000-kronor-mer-i-manaden-for-barnfamiljer-med-liberalerna",
+    "articleTitle": "5.000 kronor mer i månaden för barnfamiljer med Liberalerna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 50000,
+      "msek_base": 70000,
+      "msek_high": 105000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "5 000 kr/mån per barnfamilj. Antal barnfamiljer ~1,15 milj. Kostnad = antal × 60 000 kr/år. Spann tar höjd för urval och utnyttjandegrad.",
+      "confidence": 0.5,
+      "calculation": "~1,15 milj hushåll med barn under 18 år × 60 000 kr/år = 69 000 mkr/år. Base 70 000 mkr/år, low 50 000 mkr/år (färre mottagare el. lägre utnyttjande), high 105 000 mkr/år (fler mottagare eller bredare definition)."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0170 (78000), p-2026-0254 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Återinföra läxhjälps-RUT",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Därför vill Liberalerna återinföra läxhjälps-RUT.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+    "articleTitle": "Liberalerna stärker barnfamiljerna med nytt vallöfte om läxhjälp",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 50,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Tidigare läxhjälps-RUT kostade ca 50 mkr/år. Beloppet justeras för inflation och möjlig ökad användning. Spannet återspeglar osäkerhet.",
+      "confidence": 0.6,
+      "calculation": "Bas: tidigare läxhjälps-RUT kostade ~50 mkr per år. Inflationsjustering sedan 2015 (ca 15-20%) ger ~60 mkr, men avrundas till 50 som bas. Låg: minskat utnyttjande 20 mkr. Hög: ökat utnyttjande och priser 100 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0430 (150), p-2026-0065 (5000) ⚠ AVVIKER: 50 avviker 51.5× från jämförbara (median 2575)"
+  },
+  {
+    "candidate": {
+      "title": "Dubbla stödet till hågkomstresor till 16 miljoner kronor per år",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare för Liberalerna"
+      },
+      "quote": "Liberalerna vill därför dubbla statens anslag till hågkomstresor till Förintelsens minnesplatser från 8 till 16 miljoner kronor per år.",
+      "category": "utbildning",
+      "amount_in_text_msek": 16,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-skyddet-for-judiskt-liv-i-sverige",
+    "articleTitle": "Liberalerna stärker skyddet för judiskt liv i Sverige",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 7,
+      "msek_base": 8,
+      "msek_high": 11,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet preciserar en dubblering av anslaget från 8 till 16 mnkr, vilket innebär en årlig kostnadsökning om 8 mnkr. Visst intervall för eventuell indexering eller variation i utnyttjande.",
+      "confidence": 0.65,
+      "calculation": "Nuvarande anslag: 8 mnkr/år, föreslagen nivå: 16 mnkr/år. Ökning = 16 - 8 = 8 mnkr/år. Osäkerhetsspann 7-11 mnkr/år för att täcka framtida prisjusteringar."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Stärk skyddet för synagogor och judiska skolor genom skyddsobjektsstatus",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare för Liberalerna"
+      },
+      "quote": "Liberalerna vill därför att synagogor och judiska skolor ska kunna klassas som skyddsobjekt.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-skyddet-for-judiskt-liv-i-sverige",
+    "articleTitle": "Liberalerna stärker skyddet för judiskt liv i Sverige",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Direkt kostnad för regeländringen (ev. utredning, handläggning) är försumbar; lämnar följdkostnader för ev. skyddsåtgärder okvantifierade enligt regel 9.",
+      "confidence": 0.65,
+      "calculation": "Administrativ hantering av att införa skyddsobjektsstatus för ett fåtal objekt, grovt 0–5 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Inför demokrativillkor för all kommunal och regional bidragsgivning",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare för Liberalerna"
+      },
+      "quote": "Liberalerna vill också införa demokrativillkor för all kommunal och regional bidragsgivning, i linje med de krav som regeringen redan infört för statliga bidrag.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-skyddet-for-judiskt-liv-i-sverige",
+    "articleTitle": "Liberalerna stärker skyddet för judiskt liv i Sverige",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Demokrativillkor är en reglering utan nämnvärd statlig kostnad. Eventuell kontrolladministration ryms inom befintliga ramar.",
+      "confidence": 0.65,
+      "calculation": "Kravet innebär en lag- eller förordningsändring som inte medför några nya direkta utgifter. Inga bidrag eller avgifter förändras, endast villkor för mottagare."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Förenkla regler för uteserveringar",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "förenkla reglerna för uteserveringar,",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-fortsatta-modernisera-alkoholpolitiken",
+    "articleTitle": "Liberalerna vill fortsätta modernisera alkoholpolitiken"
+  },
+  {
+    "candidate": {
+      "title": "Tillåta takeaway-försäljning av alkohol",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "tillåta takeaway-försäljning av alkohol,",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-fortsatta-modernisera-alkoholpolitiken",
+    "articleTitle": "Liberalerna vill fortsätta modernisera alkoholpolitiken"
+  },
+  {
+    "candidate": {
+      "title": "Införa krogmeter för restauranger",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "införa en så kallad ”krogmeter” så att restauranger enklare kan använda en mindre yta utanför sin lokal,",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-fortsatta-modernisera-alkoholpolitiken",
+    "articleTitle": "Liberalerna vill fortsätta modernisera alkoholpolitiken",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regelförenkling utan direkta statsutgifter; marginell engångskostnad för administration.",
+      "confidence": 0.2,
+      "calculation": "Löftet innebär en lag- eller regelförändring som möjliggör uteservering på allmän plats. Inga nya statliga bidrag, skattesänkningar eller avgiftsbortfall specificeras. Engångskostnaden för att ta fram och införa reglerna uppskattas till 0–5 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0427 (400) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~400"
+  },
+  {
+    "candidate": {
+      "title": "Tillåta enklare alkoholservering i fler verksamheter",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "göra det möjligt för fler verksamheter, exempelvis hårsalonger, att servera alkohol under enklare former,",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-fortsatta-modernisera-alkoholpolitiken",
+    "articleTitle": "Liberalerna vill fortsätta modernisera alkoholpolitiken",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En regelförändring utan direkta statliga kostnader utöver försumbart administrativt arbete.",
+      "confidence": 0.65,
+      "calculation": "Förändringen kräver endast en mindre regeljustering, ingen ny myndighetsutgift av betydelse. Base = 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0001 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Tillåta foodtrucks att sälja öppnad öl",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "ge foodtrucks möjlighet att sälja öppnad öl,",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-fortsatta-modernisera-alkoholpolitiken",
+    "articleTitle": "Liberalerna vill fortsätta modernisera alkoholpolitiken",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländringen i sig medför inga direkta statliga kostnader. Eventuellt marginellt administrativt arbete ryms inom ordinarie anslag.",
+      "confidence": 0.65,
+      "calculation": "Åtgärden är en regelförändring (tillståndsgivning) som inte kräver någon ny statlig utgift. Inga nya anslag eller investeringar behövs."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Skärmfritt låg- och mellanstadium",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare"
+      },
+      "quote": "För att skapa de allra bästa förutsättningar för lärande måste skärmarna bort och böckerna tillbaka in i klassrummen",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-vill-ha-skarmfria-lag-och-mellanstadium-for-battre-kunskaper",
+    "articleTitle": "Liberalerna vill ha skärmfria låg- och mellanstadium för bättre kunskaper",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förbudet är en lagändring; direkta statliga kostnader är försumbara (lagstiftning är ordinarie verksamhet).",
+      "confidence": 0.65,
+      "calculation": "Ingen ny budgetpost; eventuellt utredningsarbete ryms inom befintliga anslag."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Skolboksgaranti för egen lärobok i varje ämne",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "införa en skolboksgaranti så att varje elev har en egen lärobok i varje ämne",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-vill-ha-skarmfria-lag-och-mellanstadium-for-battre-kunskaper",
+    "articleTitle": "Liberalerna vill ha skärmfria låg- och mellanstadium för bättre kunskaper",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Liknande vallöften har tidigare kostnadsberäknats till cirka 500 mkr/år. Osäkerheten är hög eftersom dagens läromedelskostnad och kommunernas nuvarande ambitionsgrad påverkar den faktiska…",
+      "confidence": 0.5,
+      "calculation": "Antag ca 1,4 miljoner elever i grund- och gymnasieskola, i snitt 10 ämnen per elev, lärobokskostnad 300 kr/st, användningstid 4 år. Full täckning skulle kosta ca 1 miljard kr per år. I dag täcks kanske hälften, så extra kostnad bedöms runt 500 mkr. Låg/hög speglar variation i dagens läromedelsinköp och pris."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fördubblad läsning i skolan till 2030",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "fördubbla läsningen i skolan till år 2030",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-vill-ha-skarmfria-lag-och-mellanstadium-for-battre-kunskaper",
+    "articleTitle": "Liberalerna vill ha skärmfria låg- och mellanstadium för bättre kunskaper",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkreta åtgärder (regel 13). Inget specifikt åtagande med kostnadsbärande innehåll.",
+      "confidence": 0.1,
+      "calculation": "Löftet saknar angiven åtgärd eller finansiering. Det är ett mål om fördubblad läsning, inget prissättbart program."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0464 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Skärmfria fritidshem och fritidsklubbar",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "göra fritidshem och fritidsklubbar skärmfria som huvudregel",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-vill-ha-skarmfria-lag-och-mellanstadium-for-battre-kunskaper",
+    "articleTitle": "Liberalerna vill ha skärmfria låg- och mellanstadium för bättre kunskaper",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering, ingen direkt statlig kostnad utöver marginell tillsyn/information.",
+      "confidence": 0.65,
+      "calculation": "Ett förbud kräver inga nya anslag; administrationsinsatser på myndighetsnivå uppskattas till 0–5 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "15-årsgräns för sociala medier",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "införa en 15-årsgräns för sociala medier",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/ovrigt/liberalerna-vill-ha-skarmfria-lag-och-mellanstadium-for-battre-kunskaper",
+    "articleTitle": "Liberalerna vill ha skärmfria låg- och mellanstadium för bättre kunskaper",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering/lag med försumbar direkt kostnad. Eventuell inrättande av tillsyn kan kosta några miljoner.",
+      "confidence": 0.3,
+      "calculation": "Lagändring: kostnad 0. En ny tillsynsfunktion (t.ex. 5 årsverken) ~5-10 mkr i uppstart."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Slopad allmän löneavgift för små företag",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi föreslår bland annat slopad allmän löneavgift för upp till tre anställda i fåmansföretag",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.sd.se/6829-2/",
+    "articleTitle": "SD presenterar Jakt- och skogspolitik"
+  },
+  {
+    "candidate": {
+      "title": "Sänkt dieselskatt",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi föreslår bland annat sänkt dieselskatt",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/6829-2/",
+    "articleTitle": "SD presenterar Jakt- och skogspolitik",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 4200,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Utan angiven nivå används den senaste permanenta dieselskatte­sänkningen (1,61 kr/l, ~4,2 mdkr) som bas; spannet speglar tänkbara mindre eller större skattesänkningar.",
+      "confidence": 0.3,
+      "calculation": "Skattepliktig dieselvolym ~4 miljarder liter/år. 0,5 kr/l ger ~2 mdkr; 1,61 kr/l ger teoretiskt 6,4 mdkr men med undantag och beteendeeffekter ~4,2 mdkr. Högre sänkning 2,5 kr/l ger upp till ~10 mdkr. Lågt spann 1,5 mdkr, högt 10 mdkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Full statlig ersättning vid brukanderestriktioner",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "full ekonomisk ersättning från staten vid brukanderestriktioner och elledningsintrång",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/6829-2/",
+    "articleTitle": "SD presenterar Jakt- och skogspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 400,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattad kostnad för statlig ersättning vid brukanderestriktioner och elledningsintrång motsvarar de ersättningar nätbolagen idag betalar till markägare. Storleksordningen är osäker, bygger på…",
+      "confidence": 0.4,
+      "calculation": "Antar att full ersättning från staten ersätter nätbolagens nuvarande ersättningar (intrångsersättning) vid elledningsintrång, grovt uppskattat till 200–500 msek/år. Livslängd för elledningar och nyanläggning ger årlig ersättning. Bredare intervall för att täcka andra brukanderestriktioner och osäkerhet. Base satt till 400 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0427 (400)"
+  },
+  {
+    "candidate": {
+      "title": "Satsning på lokala viltslakterier och skyttebanor",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "För att stärka samhällsberedskapen föreslår vi satsningar på lokala viltslakterier och skyttebanor.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/6829-2/",
+    "articleTitle": "SD presenterar Jakt- och skogspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar årlig satsning med bidrag till lokala anläggningar. Jämförbar satsning på idrottsanläggningar (p-2026-0381, 400 mkr/år) men snävare och lägre snittkostnad. Stor osäkerhet om antal och…",
+      "confidence": 0.5,
+      "calculation": "~50–200 objekt/år (viltslakterier + skyttebanor) × genomsnittligt investeringsbidrag 1–5 mkr → 50–1 000 mkr/år; bas 200 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0381 (400)"
+  },
+  {
+    "candidate": {
+      "title": "Höjd ersättning till eftersöksjägare",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "samt höja ersättningen till eftersöksjägare",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/6829-2/",
+    "articleTitle": "SD presenterar Jakt- och skogspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på senaste kända höjningen 2022 (timersättning från 350 till 500 kr, kilometerersättning höjdes) som kostade ca 15 mkr/år. Höjningens storlek är ospecificerad; spannet återspeglar en mindre…",
+      "confidence": 0.4,
+      "calculation": "~Senaste höjningen 2022: anslag ökades ca 15 mkr/år enligt budgetprop. Antag att ny höjning blir liknande omfattning. Osäkerhetsspann 5–30 mkr/år beroende på ambitionsnivå."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   }
 ]
