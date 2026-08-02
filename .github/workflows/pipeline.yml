@@ -22,7 +22,15 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           token: ${{ steps.app-token.outputs.token }}
-          persist-credentials: true
+          # INGA sparade uppgifter. Checkouten skriver annars in jobbstart-
+          # tokenen i git-configen, och den vinner över den färska token vi
+          # sätter i origin-URL:en före pushen. Tokenen lever en timme, och
+          # körningen tar numera 73–87 minuter — då skickar git den döda
+          # tokenen i stället för den färska: "Invalid username or token".
+          # Samma rättelse som arkiv, foreslag, skord och nyckelord redan
+          # har. Bara commit-steget rör origin, och det bär sin egen färska
+          # token i URL:en.
+          persist-credentials: false
       - uses: pnpm/action-setup@v4  # ogiltig SHA-pin ersatt 2026-06-15
         with:
           version: 9
@@ -87,10 +95,15 @@ jobs:
         run: |
           git config user.name "utlovat-bot"
           git config user.email "bot@utlovat.se"
-          # Checkout-stegets persisted auth-header bär jobbstart-tokenen (kan ha
-          # gått ut) och vinner över remote-URL:en — rensa den och pusha med den
-          # färska tokenen i stället.
-          git config --local --unset-all http.https://github.com/.extraheader || true
+          # Peka om origin till den färska tokenen. Checkouten sparar inga
+          # uppgifter (se persist-credentials ovan), så det här är de enda
+          # inloggningsuppgifter git har att gå på.
+          #
+          # Här stod tidigare en rensning av http.….extraheader. Den var
+          # verkningslös: checkout v7 sparar inte längre uppgifterna i den
+          # rubriken utan i en egen configfil som dras in med includeIf.gitdir,
+          # och den rensningen rörde alltså ingenting. Att stänga av sparandet
+          # i checkout-steget är det som faktiskt håller.
           git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           git add data/
           if git diff --cached --quiet; then
