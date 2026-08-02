@@ -24,9 +24,20 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
         with:
           node-version: 22
+          cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
+      # Skriptet importerar byggLed ur cli-run.ts, som i sin tur drar in
+      # yaml m.fl. Utan beroendena faller jobbet på importen, före första
+      # anropet — vilket det gjorde i körning 30767397976.
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
       - name: Fråga varje led vilka modeller som tar emot temperature 0
         env:
           LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
@@ -44,5 +55,5 @@ jobs:
           MODEL_EXTRACT_ZAI: ${{ vars.MODEL_EXTRACT_ZAI }}
           MODEL_VERIFY_ZAI: ${{ vars.MODEL_VERIFY_ZAI }}
           MODEL_COPY_ZAI: ${{ vars.MODEL_COPY_ZAI }}
-        run: node --experimental-strip-types scripts/modellkoll.mts
+        run: node --import tsx/esm scripts/modellkoll.mts
         working-directory: pipeline
