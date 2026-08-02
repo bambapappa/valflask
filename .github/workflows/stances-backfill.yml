@@ -29,7 +29,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           token: ${{ steps.app-token.outputs.token }}
-          persist-credentials: true
+          # INGA sparade uppgifter — se commit-steget nedan.
+          persist-credentials: false
       - uses: pnpm/action-setup@v4  # samma pin-undantag som pipeline.yml (2026-06-15)
         with:
           version: 9
@@ -53,10 +54,27 @@ jobs:
           MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
           MODEL_VERIFY: ${{ vars.MODEL_VERIFY }}
           MODEL_COPY: ${{ vars.MODEL_COPY }}
+      # App-tokens lever en timme, och en backfill över granskningskön är ett
+      # LLM-jobb som kan ta längre. Mynta därför en FÄRSK token efter
+      # LLM-steget, precis före commit och push — annars är jobbstart-tokenen
+      # död när det är dags att pusha, och hela körningens arbete går
+      # förlorat. Samma mönster som pipeline, arkiv, foreslag och nyckelord.
+      - name: Mint fresh push token
+        id: push-token
+        if: ${{ !inputs.dry_run }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Commit data if changed
         if: ${{ !inputs.dry_run }}
+        env:
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          # Checkouten sparar inga uppgifter, så origin-URL:en är det enda
+          # git har att gå på — och den bär den färska tokenen.
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           git add data/stances.json data/stances_review.json
           if git diff --cached --quiet; then
             echo "Inga ändringar — inget att committa."
