@@ -159,6 +159,39 @@ describe("OpenRouterClient resiliens", () => {
     assert.equal(sent.find((s) => s.url.includes("opencode"))?.model, "m");
   });
 
+  /**
+   * En del modeller tillåter bara sitt eget default-temperature och avvisar
+   * 0 med 400. Primären föll på precis det i drift ("invalid temperature:
+   * only 1 is allowed for this model"), gick vidare till reserven, och
+   * reservens kreditfel blev det enda som syntes — så felet såg ut att handla
+   * om pengar när det handlade om en parameter.
+   */
+  it("provar om utan temperature när modellen avvisar den, på samma endpoint", async () => {
+    const sent: Array<Record<string, unknown>> = [];
+    const httpFetch = async (url: string, init?: RequestInit) => {
+      const body = JSON.parse(String(init?.body)) as Record<string, unknown>;
+      sent.push(body);
+      if ("temperature" in body) {
+        return resp(400, { error: { message: "invalid temperature: only 1 is allowed for this model" } });
+      }
+      return ok("OK");
+    };
+    const c = new OpenRouterClient({
+      led: [
+        { namn: "primär", baseUrl: "https://opencode.ai/zen/go/v1", apiKey: "k" },
+        { namn: "sekundär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "f" },
+      ],
+      httpFetch,
+      ...fast,
+    });
+    assert.equal(await c.complete("p", { model: "m" }), "OK");
+    assert.equal(sent.length, 2, "ett anrop med temperature, ett utan");
+    assert.equal(sent[0]?.temperature, 0);
+    assert.ok(!("temperature" in (sent[1] ?? {})), "andra anropet saknar temperature");
+    // Reserven ska ALDRIG behöva anropas — primären klarade det själv.
+    assert.equal(sent.length, 2);
+  });
+
   it("throttle väntar mellan anrop", async () => {
     let t = 0;
     const slept: number[] = [];
