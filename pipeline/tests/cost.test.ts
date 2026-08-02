@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { estimateCost, looksLikeOneOff, costDeviation } from "../src/cost.ts";
+import { estimateCost, looksLikeOneOff, costDeviation, kapaNot } from "../src/cost.ts";
 import type { ComparableCost } from "../src/similarity.ts";
 import type { LlmClient } from "../src/llm.ts";
 import type { ExtractionCandidate } from "../src/gates.ts";
@@ -287,5 +287,51 @@ describe("looksLikeOneOff (fristående)", () => {
     assert.equal(looksLikeOneOff("investera 50 miljarder under nästa mandatperiod"), true);
     assert.equal(looksLikeOneOff("inlösen av friskoleaktiebolag"), true);
     assert.equal(looksLikeOneOff("höja barnbidraget varje månad"), false);
+  });
+});
+
+describe("kapaNot", () => {
+  it("lämnar korta noter orörda", () => {
+    assert.equal(kapaNot("En kort not.", 200), "En kort not.");
+  });
+
+  it("kapar aldrig mitt i ett ord", () => {
+    // Ordet "miljöbidrag" korsar taket — hela ordet ska falla bort, inte halva.
+    const not = "Basantagandet är ett mindre årligt bidrag jämförbart med befintliga miljöbidrag till föreningar.";
+    const kapad = kapaNot(not, 60);
+    assert.ok(kapad.length <= 60, `för lång: ${kapad.length}`);
+    assert.ok(kapad.endsWith("…"), `saknar uteslutningstecken: ${kapad}`);
+    const sista = kapad.slice(0, -1).split(" ").pop() ?? "";
+    assert.ok(
+      not.split(" ").includes(sista),
+      `sista ordet "${sista}" är avhugget`,
+    );
+  });
+
+  it("lämnar inget skiljetecken hängande före uteslutningstecknet", () => {
+    // Taket faller precis efter kommatecknet — det ska inte bli "antagande,…".
+    assert.equal(kapaNot("Ett antagande, ett till, ett tredje", 16), "Ett antagande…");
+  });
+
+  it("faller tillbaka på hård kapning när ett enda ord fyller hela taket", () => {
+    const kapad = kapaNot("Kostnadsutvecklingsprognosunderlag mer text", 20);
+    assert.ok(kapad.length <= 20, `för lång: ${kapad.length}`);
+    assert.ok(kapad.endsWith("…"));
+  });
+
+  it("method_note från modellen kapas vid ordgräns", async () => {
+    const lang = "Antagandet vilar på att staten redan betalar en del av kostnaden ".repeat(5);
+    const c = await estimateCost(
+      cand(null),
+      mockLlm(JSON.stringify({
+        type: "utgift", period: "per_ar",
+        msek_low: 100, msek_base: 200, msek_high: 300,
+        confidence: 0.4, method_note: lang,
+      })),
+      "m",
+    );
+    assert.ok(c.method_note.length <= 200, `för lång: ${c.method_note.length}`);
+    assert.ok(c.method_note.endsWith("…"));
+    assert.ok(!/\s$/.test(c.method_note.slice(0, -1)));
   });
 });
