@@ -9,6 +9,8 @@ allowlist_domains:
   - val2026.centerpartiet.se
   - vansterpartiet.se
   - kristdemokraterna.se
+  # Underdomän: G2 kräver exakt domänmatch, så pressrummet måste stå för sig.
+  - press.kristdemokraterna.se
   - liberalerna.se
   - mp.se
   - dn.se
@@ -44,14 +46,45 @@ feeds:
     url: "https://www.liberalerna.se/feed/"
     verified: "2026-06-12 — 200, RSS 2.0, WordPress"
 
+  # Frågetecknet är INTE dekoration. Ändpunkten svarar 200 med tio poster i
+  # båda fallen, men den PARAMETERLÖSA adressen serverar en cachad kopia:
+  # mätt 2026-08-03 slutade den på 2026-06-26 medan sajten var uppe på 08-03.
+  # Vilken parameter som helst går förbi cachen (?limit=, ?x=1, ?cb= — alla gav
+  # samma färska innehåll), så det är cachenyckeln som skiljer, inte limit.
+  # Utan den här raden tappade vi fem veckors MP-nyheter tyst: flödet såg friskt
+  # ut hela tiden. Byt aldrig tillbaka till den nakna adressen.
   - id: miljopartiet
     type: rss
-    url: "https://www.mp.se/wp-content/themes/mp/assets/php/rss/rss-news.php"
-    verified: "2026-06-12 — 200, RSS, custom PHP endpoint"
+    url: "https://www.mp.se/wp-content/themes/mp/assets/php/rss/rss-news.php?limit=50"
+    verified: "2026-08-03 — 200, RSS, custom PHP endpoint; nyaste post 2026-08-03 MED parameter, 2026-06-26 utan"
 
-  # Socialdemokraterna: INGEN RSS hittad (SiteVision CMS). Press via tt.se.
-  # Centerpartiet: INGEN RSS hittad (SiteVision CMS). Inget offentligt flöde.
-  # Kristdemokraterna: INGEN RSS hittad (SiteVision + Notified). Press via press.kristdemokraterna.se.
+  # Socialdemokraterna och Centerpartiet: INGEN RSS finns. Omprövat 2026-08-03
+  # — varken /rss, /feed, /nyheter/rss, MyNewsdesk eller ett pressrum svarar,
+  # och sidorna pekar inte ut något flöde via <link rel="alternate">. Båda kör
+  # SiteVision och renderar nyhetslistan utan flödesstöd.
+  #
+  # DET KOSTAR TÄCKNING, och det är mätt 2026-08-03: sedan vårt nyaste
+  # S-löfte (2026-07-17) har S publicerat minst tre nyheter, två av dem samma
+  # dag — bl.a. "Socialdemokraterna går till val på en nationell modell för…".
+  # C har publicerat fem sedan dess, bl.a. totalförbud mot PFAS och åldersgräns
+  # på sociala medier. Ingen av dem har nått oss.
+  #
+  # De två partierna utan flöde är alltså precis de två med äldst egen-täckning.
+  # Att fånga dem kräver att en nyhetslista får följas till artiklarna — samma
+  # sorts steg som auto-följningen av manifest-PDF:er, fast för HTML. Se
+  # HANDOFF.md; det är ett eget spår och ett mänskligt beslut.
+  # Kristdemokraterna: ingen RSS på egna sajten (SiteVision), men pressrummet
+  # (Notified) har ett riktigt flöde — se kd-press nedan.
+
+  - id: kd-press
+    type: rss
+    url: "https://api.client.notified.com/api/rss/publish/view/18224?type=press"
+    verified: "2026-08-03 — 200, text/xml, RSS 2.0, 50 poster, nyaste 2026-07-16; artiklarna ligger på press.kristdemokraterna.se och serveras med text i HTML (≈1 500 tecken), alltså över min_chars"
+    # Flödet självt ligger hos Notified, men VARJE artikel pekar tillbaka på
+    # press.kristdemokraterna.se — och det är artikelns domän G2 prövar.
+    # Utan den här källan hade KD bara 22 löften, 18 av dem ur ett SVT-program
+    # och 2 från egna sajten, med nyaste löfte 2026-07-04 medan M, SD, L och MP
+    # var aktuella till 2026-08-03.
 
   # --- Riksdagen API (verifierade 2026-06-12 via live HTTP) ---
   - id: riksdagen-motioner
@@ -123,13 +156,13 @@ feeds:
   - id: m-politik
     type: page
     url: "https://moderaterna.se/var-politik/"
-    verified: "2026-07-03 — 200, M:s politiksida; manifest ej publicerat ännu"
+    verified: "2026-08-03 — 200, M:s politiksida; valmanifest 2026 ej publicerat (/valmanifest/ svarar 200 men serverar samma politiksida)"
 
   # SD — inget valmanifest publicerat ännu; politiksidan bevakas
   - id: sd-vadvivill
     type: page
     url: "https://sd.se/vad-vi-vill/"
-    verified: "2026-07-02 — 200 (via redirect), SD:s politik; manifest ej publicerat ännu"
+    verified: "2026-08-03 — 200, SD:s politik; valmanifest 2026 ej publicerat. OBS: /valmanifest/ leder vidare till 2022 års manifest-PDF — stoppas av årsspärren"
 
   # V — valplattform beslutad på kongressen 2026 (PDF) + valsida
   - id: v-val2026
@@ -141,11 +174,13 @@ feeds:
     url: "https://www.vansterpartiet.se/wp-content/uploads/2026/04/Preliminar-Valplattform-efter-beslut-pa-kongressen-2026.pdf"
     verified: "2026-07-03 — 200, application/pdf, 4 s., CreationDate 2026-04-19"
 
-  # KD — inget valmanifest publicerat ännu ('Tro på Sverige' = kampanjtema); politiksidan bevakas
+  # KD — inget valmanifest publicerat ännu; politiksidan bevakas.
+  # OBS: sidan länkar 'Manifesto_2024.pdf' från EU-valet. Den matchar
+  # nyckelorden för auto-följning men stoppas av årsspärren (VALAR i fetch.ts).
   - id: kd-politik
     type: page
     url: "https://kristdemokraterna.se/var-politik"
-    verified: "2026-07-03 — 200, KD:s politiksida; manifest ej publicerat ännu"
+    verified: "2026-08-03 — 200, KD:s politiksida; valmanifest 2026 ej publicerat (/valmanifest ger 404)"
 
   # L — fullt valmanifest 'För din frihet' (PDF) + manifestsida (länkar PDF:en)
   - id: l-valmanifest
@@ -162,7 +197,7 @@ feeds:
   - id: mp-politik
     type: page
     url: "https://www.mp.se/politik/"
-    verified: "2026-07-03 — 200, MP:s politiksida; valmanifest-2026-utkast är lösenordsskyddat"
+    verified: "2026-08-03 — 200, MP:s politiksida; valmanifest 2026 ej publicerat. OBS: /valmanifest/ är sidan 'Valmanifest 2022' — dess PDF stoppas av årsspärren"
   - id: mp-handlingsprogram-pdf
     type: page
     url: "https://www.mp.se/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf"
