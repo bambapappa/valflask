@@ -115,6 +115,43 @@ feeds:
     url: "https://kristdemokraterna.se/"
     verified: "2026-08-03 — 200, 3 daterade artiklar"
 
+  # --- Nyhetslistor för partier SOM HAR flöde (andra vägen in) ---
+  # Efter att MP:s flöde visade sig servera en fem veckor gammal cache utan att
+  # något syntes är en enda väg in per parti inte betryggande. De här källorna
+  # är redundans: går flödet tyst fortsätter nyheterna komma. Adresserna är
+  # odaterade slugar, så varje källa pekar ut sitt eget artikelprefix i stället
+  # för att luta sig mot datumkravet.
+
+  - id: m-nyheter
+    type: index
+    url: "https://moderaterna.se/nyheter/"
+    article_pattern: "^/nyhet/"
+    verified: "2026-08-03 — 200, 11 artiklar; datum ur article:published_time i artikeln"
+
+  - id: v-nyheter
+    type: index
+    url: "https://www.vansterpartiet.se/nyheter/"
+    article_pattern: "^/nyheter/(?!page/)"
+    verified: "2026-08-03 — 200, 9 artiklar"
+
+  - id: l-nyheter
+    type: index
+    url: "https://www.liberalerna.se/nyheter/"
+    article_pattern: "^/nyheter/(?!page/)"
+    verified: "2026-08-03 — 200, 8 artiklar"
+
+  - id: mp-nyheter
+    type: index
+    url: "https://www.mp.se/just-nu/"
+    article_pattern: "^/just-nu/"
+    verified: "2026-08-03 — 200, 12 artiklar; datum ur <time datetime> i artikeln"
+
+  # SD saknas här: både /nyheter/ och startsidan bygger artikellistan med
+  # skript, så HTML:en bär bara paginering (/nyheter/page/2/ …). Ingenting att
+  # följa. SD:s RSS fungerar och var aktuell 2026-08-01 — kontrollerat samma
+  # dag. Blir listan någon gång serverrenderad går den att lägga till här med
+  # samma mönster som V och L.
+
   # --- Riksdagen API (verifierade 2026-06-12 via live HTTP) ---
   - id: riksdagen-motioner
     type: riksdagen_api

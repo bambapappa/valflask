@@ -19,6 +19,7 @@ import {
   findManifestPdfLinks,
   findArticleLinks,
   datumUrAdress,
+  datumUrHtml,
   harForegaendeValsAr,
   MAX_INDEX_ARTICLES,
   joinPdfLines,
@@ -689,6 +690,97 @@ describe("LiveSource med mock-HTTP", () => {
       "2026-07-23T12:00:00.000Z",
     );
     assert.equal(datumUrAdress("https://example.se/utan-datum"), null);
+  });
+
+  test("findArticleLinks: article_pattern för partier med odaterade adresser", () => {
+    // De fem WordPress-partierna daterar inte sina adresser men samlar
+    // artiklarna under ett eget prefix. Mönstret är precisare än att gissa.
+    const html =
+      '<a href="/nyhet/det-ska-inte-vara-livsfarligt/">Artikel</a>' +
+      '<a href="/nyhet/brott-ska-straffa-sig/">Artikel</a>' +
+      '<a href="/nyheter/">Nyhetslistan</a>' +
+      '<a href="/var-politik/">Politik</a>' +
+      '<a href="/nyhet/">Prefixet självt</a>';
+    assert.deepEqual(
+      findArticleLinks(html, "https://moderaterna.se/nyheter/", "^/nyhet/"),
+      [
+        "https://moderaterna.se/nyhet/brott-ska-straffa-sig/",
+        "https://moderaterna.se/nyhet/det-ska-inte-vara-livsfarligt/",
+      ],
+      "bara artiklar under prefixet; prefixet självt och annan politik utesluts",
+    );
+  });
+
+  test("findArticleLinks: paginering är fler listor, inte artiklar", () => {
+    // L:s nyhetslista länkar sida 2 till 117. Följdes de blev varje sida en
+    // artikel utan brödtext och åt hela budgeten.
+    const html =
+      '<a href="/nyheter/hbtq-personers-frihet">Artikel</a>' +
+      '<a href="/nyheter/page/2">Sida 2</a>' +
+      '<a href="/nyheter/page/117">Sida 117</a>' +
+      '<a href="/nyheter/sida/3/">Sida 3</a>';
+    assert.deepEqual(
+      findArticleLinks(html, "https://www.liberalerna.se/nyheter/", "^/nyheter/(?!page/)"),
+      ["https://www.liberalerna.se/nyheter/hbtq-personers-frihet"],
+    );
+  });
+
+  test("findArticleLinks: adresser byggda i JavaScript är inte länkar", () => {
+    // MP:s sida bär `href="` inne i skriptsträngar. Utan filtret följde vi
+    // adresser som /just-nu/'+a[s][2]+' och fick skräp varje körning.
+    const html =
+      "<script>var x = 'href=\"/just-nu/'+a[s][2]+'\"';</script>" +
+      '<a href="/just-nu/daniel-helldens-almedalstal/">Riktig</a>';
+    assert.deepEqual(
+      findArticleLinks(html, "https://www.mp.se/just-nu/", "^/just-nu/"),
+      ["https://www.mp.se/just-nu/daniel-helldens-almedalstal/"],
+    );
+  });
+
+  test("datumUrHtml: publiceringsdatum ur artikelns egen HTML", () => {
+    // Behövs för partierna vars adresser saknar datum. Alla tre formerna är
+    // verkliga: M publicerar article:published_time, MP ett <time datetime>.
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="2026-08-02T13:23:03+00:00" />'),
+      "2026-08-02T13:23:03.000Z",
+    );
+    assert.equal(
+      datumUrHtml('<script>{"datePublished":"2026-06-26T11:43:32+02:00"}</script>'),
+      "2026-06-26T09:43:32.000Z",
+    );
+    assert.equal(
+      datumUrHtml('<time class="updated" datetime="2026-06-26T11:43:33+02:00">'),
+      "2026-06-26T09:43:33.000Z",
+    );
+    assert.equal(datumUrHtml("<p>ingen tid alls</p>"), null);
+  });
+
+  test("index-källa: odaterad adress tar datum ur artikeln", async () => {
+    const lista = '<a href="/nyhet/ett-lofte/">Ett löfte</a>';
+    const artikel =
+      '<html><head><title>Ett löfte</title>' +
+      '<meta property="article:published_time" content="2026-07-02T09:00:00+00:00" />' +
+      `</head><body><p>${"Vi lovar saker. ".repeat(40)}</p></body></html>`;
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      if (url.endsWith("/nyhet/ett-lofte/")) {
+        return new Response(artikel, { status: 200, headers: { "content-type": "text/html" } });
+      }
+      return new Response(lista, { status: 200, headers: { "content-type": "text/html" } });
+    };
+    const source = new LiveSource({
+      feeds: [{ id: "m-nyheter", type: "index", url: "https://testpartiet.se/nyheter/", article_pattern: "^/nyhet/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+      now: () => new Date("2026-08-04T00:00:00Z"),
+    });
+    const articles = await source.fetch();
+    assert.equal(articles.length, 1);
+    assert.equal(
+      articles[0]!.published,
+      "2026-07-02T09:00:00.000Z",
+      "artikelns eget datum, inte hämtningsdagen",
+    );
   });
 
   test("findManifestPdfLinks: manifest från ett tidigare val följs inte", () => {

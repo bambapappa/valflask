@@ -35,6 +35,13 @@ export interface SourceFeed {
   id: string;
   type: "rss" | "riksdagen_api" | "page" | "index";
   url: string;
+  /**
+   * Bara för "index": mönster som en artikeladress SÖKVÄG måste matcha.
+   * Utan det krävs ett datum i sökvägen. De fem WordPress-partierna daterar
+   * inte sina adresser men samlar artiklarna under ett eget prefix —
+   * `/nyhet/`, `/nyheter/`, `/just-nu/` — och det är precisare än att gissa.
+   */
+  article_pattern?: string;
   verified?: string;
 }
 
@@ -353,7 +360,20 @@ export const MAX_INDEX_ARTICLES = 12;
  * av 2025 är fortfarande ett löfte inför valet, och datumfönstret i G4 avgör
  * den frågan på artikelns egna datum i stället för på dess adress.
  */
-export function findArticleLinks(html: string, baseUrl: string): string[] {
+export function findArticleLinks(
+  html: string,
+  baseUrl: string,
+  articlePattern?: string,
+): string[] {
+  let mönster: RegExp | null = null;
+  if (articlePattern) {
+    try {
+      mönster = new RegExp(articlePattern, "u");
+    } catch {
+      console.error(`[fetch] ogiltigt article_pattern: ${articlePattern}`);
+      return [];
+    }
+  }
   let baseHost: string;
   try {
     baseHost = canonicalHost(new URL(baseUrl).hostname);
@@ -371,17 +391,57 @@ export function findArticleLinks(html: string, baseUrl: string): string[] {
     }
     if (abs.protocol !== "https:") continue;
     if (canonicalHost(abs.hostname) !== baseHost) continue;
-    if (/\.(pdf|jpg|jpeg|png|gif|svg|webp|mp4|zip)$/iu.test(abs.pathname)) continue;
+    if (/\.(pdf|jpg|jpeg|png|gif|svg|webp|mp4|zip|ico|css|js)$/iu.test(abs.pathname)) continue;
+    // En sökväg som inte ser ut som en sökväg kommer inte från en länk: flera
+    // sajter bygger adresser i JavaScript, och `href="` inne i en skriptsträng
+    // ger skräp som `/just-nu/'+a[s][2]+'`. Bara det en webbadress får bära.
+    if (!/^[\w\-./%~åäöÅÄÖéèü]*$/u.test(decodeURI(abs.pathname))) continue;
+    // Paginering är fler listor, inte artiklar. Följs de blir varje sida en
+    // artikel utan brödtext, och en lista med 117 sidor äter hela budgeten.
+    if (/\/(page|sida)\/\d+\/?$/iu.test(abs.pathname)) continue;
+
     const datum = abs.pathname.match(/(\d{4}-\d{2}-\d{2})/u);
-    if (!datum) continue;
+    if (mönster) {
+      if (!mönster.test(abs.pathname)) continue;
+      // Prefixet självt är listan, inte en artikel: kräv något efter det.
+      if (/\/$/u.test(abs.pathname) && abs.pathname.split("/").filter(Boolean).length < 2) continue;
+    } else if (!datum) {
+      continue;
+    }
+
     abs.hash = "";
     if (abs.href === baseUrl) continue;
-    if (!funna.has(abs.href)) funna.set(abs.href, datum[1]!);
+    // Odaterade adresser sorteras sist men behåller sin inbördes ordning:
+    // listan står redan i redaktionell ordning, nyast överst.
+    if (!funna.has(abs.href)) funna.set(abs.href, datum ? datum[1]! : "");
   }
   return [...funna.entries()]
     .sort((a, b) => b[1].localeCompare(a[1]) || a[0].localeCompare(b[0]))
     .slice(0, MAX_INDEX_ARTICLES)
     .map(([url]) => url);
+}
+
+/**
+ * Publiceringsdatum ur artikelns egen HTML. Behövs för de partier vars
+ * adresser saknar datum: utan det skulle varje gammal artikel se färsk ut och
+ * G4:s datumfönster pröva fel sak. Alla fem WordPress-partierna publicerar
+ * antingen `article:published_time`, JSON-LD:s `datePublished` eller ett
+ * `<time datetime>` — kontrollerat 2026-08-03.
+ */
+export function datumUrHtml(html: string): string | null {
+  const kandidater = [
+    /<meta[^>]+property="article:published_time"[^>]+content="([^"]+)"/i,
+    /<meta[^>]+content="([^"]+)"[^>]+property="article:published_time"/i,
+    /"datePublished"\s*:\s*"([^"]+)"/i,
+    /<time[^>]+datetime="([^"]+)"/i,
+  ];
+  for (const r of kandidater) {
+    const m = html.match(r);
+    if (!m) continue;
+    const d = new Date(m[1]!);
+    if (!Number.isNaN(d.getTime())) return d.toISOString();
+  }
+  return null;
 }
 
 /** Datumet ur en artikeladress, som ISO-tid. G4 prövar publiceringsdatumet,
@@ -836,7 +896,7 @@ export class LiveSource implements ArticleSource {
     if (!listResult) return [];
 
     const listHtml = new TextDecoder("utf-8").decode(listResult.bytes);
-    const lankar = findArticleLinks(listHtml, feed.url);
+    const lankar = findArticleLinks(listHtml, feed.url, feed.article_pattern);
     if (lankar.length === 0) {
       console.log(`[fetch] ${feed.id}: nyhetslistan gav inga daterade artikellänkar`);
       return [];
@@ -858,7 +918,9 @@ export class LiveSource implements ArticleSource {
           domain: extractDomain(lank),
           title: titleMatch ? stripHtml(titleMatch[1]!) : lank,
           text,
-          published: datumUrAdress(lank) ?? new Date().toISOString(),
+          // Adressens datum är sannast när det finns; annars artikelns eget.
+          // Hämtningstiden är sista utvägen och gör en gammal artikel färsk.
+          published: datumUrAdress(lank) ?? datumUrHtml(html) ?? new Date().toISOString(),
           contentHash: sha256(text),
         });
       } catch (e) {
