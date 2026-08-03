@@ -23211,5 +23211,50 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-03T12"
     }
+  },
+  {
+    "id": "p-2026-0572",
+    "group_id": null,
+    "title": "Full statlig ersättning vid brukanderestriktioner",
+    "slug": "full-statlig-ersattning-vid-brukanderestriktioner",
+    "parties": [
+      "sd"
+    ],
+    "person": null,
+    "quote": "full ekonomisk ersättning från staten vid brukanderestriktioner och elledningsintrång",
+    "date_stated": "2026-08-03",
+    "source": {
+      "url": "https://www.sd.se/6829-2/",
+      "domain": "sd.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-03T12:50:35.052Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 400,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattad kostnad för statlig ersättning vid brukanderestriktioner och elledningsintrång motsvarar de ersättningar nätbolagen idag betalar till markägare. Storleksordningen är osäker, bygger på…",
+      "confidence": 0.4,
+      "calculation": "Antar att full ersättning från staten ersätter nätbolagens nuvarande ersättningar (intrångsersättning) vid elledningsintrång, grovt uppskattat till 200–500 msek/år. Livslängd för elledningar och nyanläggning ger årlig ersättning. Bredare intervall för att täcka andra brukanderestriktioner och osäkerhet. Base satt till 400 msek."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-03T12"
+    }
   }
 ]
