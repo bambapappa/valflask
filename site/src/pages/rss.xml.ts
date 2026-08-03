@@ -1,5 +1,5 @@
 import { getPromises, getParties, getChronicles } from "../lib/data";
-import { promiseTotalMsek } from "../lib/aggregates";
+import { promiseNetMsek } from "../lib/aggregates";
 import { formatMsek } from "../lib/calc";
 
 export const prerender = true;
@@ -29,7 +29,7 @@ export async function GET() {
     .slice(0, 50)
     .map((p) => {
       const partyNames = p.parties.map((c) => parties.find((pp) => pp.code === c)?.name || c).join(", ");
-      const total = formatMsek(promiseTotalMsek(p), p.cost.basis);
+      const total = formatMsek(promiseNetMsek(p), p.cost.basis);
       const link = `${BASE}/lofte/${p.id}/${p.slug}`;
       const pubDate = new Date(p.date_stated).toUTCString();
       return `    <item>

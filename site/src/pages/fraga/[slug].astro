@@ -8,7 +8,7 @@ import KallRad from "../../components/KallRad.astro";
 import Dela from "../../components/Dela.astro";
 import { getParties, getPromises } from "../../lib/data";
 import { formatMsek } from "../../lib/calc";
-import { promiseTotalMsek } from "../../lib/aggregates";
+import { promiseNetMsek } from "../../lib/aggregates";
 import {
   getIssuesFile,
   getStances,
@@ -40,7 +40,7 @@ const canonicalPath = `/fraga/${issue.slug}`;
 const relatedPromises = promises.filter(
   (p) => p.category === issue.category && p.status !== "tillbakadragen",
 );
-const relatedTotal = relatedPromises.reduce((s, p) => s + promiseTotalMsek(p), 0);
+const relatedTotal = relatedPromises.reduce((s, p) => s + promiseNetMsek(p), 0);
 
 function cell(sqId: string, party: string): StanceCell | undefined {
   return cellFor(stances, sqId, party);

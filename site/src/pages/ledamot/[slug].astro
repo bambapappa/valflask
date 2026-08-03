@@ -1,7 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getPromises, getPeople, getParties } from "../../lib/data";
-import { promiseTotalMsek, formatDateShort } from "../../lib/calc";
+import { formatDateShort } from "../../lib/calc";
+import { promiseNetMsek } from "../../lib/aggregates";
 
 export function getStaticPaths() {
   const people = getPeople();
@@ -19,7 +20,7 @@ const promises = getPromises();
 const parties = getParties();
 const personPromises = promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen');
 const party = parties.find((p) => p.code === person.party);
-const totalMsek = personPromises.reduce((sum, p) => sum + promiseTotalMsek(p), 0);
+const totalMsek = personPromises.reduce((sum, p) => sum + promiseNetMsek(p), 0);
 const canonicalPath = `/ledamot/${person.slug}`;
 
 const jsonLd = [
@@ -51,7 +52,7 @@ const jsonLd = [
                 <strong>{p.title}</strong>
               </a>
               <div class="etikett etikett--sub">
-                <span class="num belopp">{(promiseTotalMsek(p) / 1000).toFixed(1).replace('.', ',')} mdkr</span>
+                <span class="num belopp">{(promiseNetMsek(p) / 1000).toFixed(1).replace('.', ',')} mdkr</span>
                 {' '}· {p.category} · {formatDateShort(p.date_stated)}
               </div>
             </li>

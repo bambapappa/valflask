@@ -1,5 +1,5 @@
 import { getPromises, getParties, getConstants, getChangelog } from "../lib/data";
-import { buildSummary, promiseTotalMsek } from "../lib/aggregates";
+import { buildSummary, promiseNetMsek } from "../lib/aggregates";
 import { formatMsek } from "../lib/calc";
 
 export const prerender = true;
@@ -42,7 +42,7 @@ export async function GET() {
 
   for (const p of promises) {
     const partyNames = p.parties.map((c) => parties.find((pp) => pp.code === c)?.name || c).join(", ");
-    const total = formatMsek(promiseTotalMsek(p), p.cost.basis);
+    const total = formatMsek(promiseNetMsek(p), p.cost.basis);
     md += `### [${p.title}](${BASE}/lofte/${p.id}/${p.slug})
 
 - ID: ${p.id}
