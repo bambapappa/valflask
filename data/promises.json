@@ -23301,5 +23301,50 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-03T12"
     }
+  },
+  {
+    "id": "p-2026-0574",
+    "group_id": null,
+    "title": "Återinföra läxhjälps-RUT",
+    "slug": "aterinfora-laxhjalps-rut",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "Därför vill Liberalerna återinföra läxhjälps-RUT.",
+    "date_stated": "2026-08-03",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-03T12:50:39.759Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 50,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Tidigare läxhjälps-RUT kostade ca 50 mkr/år. Beloppet justeras för inflation och möjlig ökad användning. Spannet återspeglar osäkerhet.",
+      "confidence": 0.6,
+      "calculation": "Bas: tidigare läxhjälps-RUT kostade ~50 mkr per år. Inflationsjustering sedan 2015 (ca 15-20%) ger ~60 mkr, men avrundas till 50 som bas. Låg: minskat utnyttjande 20 mkr. Hög: ökat utnyttjande och priser 100 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-03T12"
+    }
   }
 ]
