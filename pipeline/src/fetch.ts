@@ -33,7 +33,7 @@ export class FixtureSource implements ArticleSource {
 
 export interface SourceFeed {
   id: string;
-  type: "rss" | "riksdagen_api" | "page";
+  type: "rss" | "riksdagen_api" | "page" | "index";
   url: string;
   verified?: string;
 }
@@ -331,6 +331,69 @@ export const MAX_FOLLOWED_PDFS = 3;
 export const VALAR = 2026;
 
 /**
+ * Max antal artiklar som följs från EN nyhetslista per hämtning.
+ *
+ * "index"-typen finns för partier UTAN flöde. Socialdemokraterna och
+ * Centerpartiet kör SiteVision och publicerar varken RSS eller Atom — mätt
+ * 2026-08-03 fanns varken /rss, /feed, /nyheter/rss, MyNewsdesk eller
+ * pressrum, och sidorna pekar inte ut något flöde. Samtidigt hade S publicerat
+ * minst tre nyheter och C fem sedan vårt nyaste löfte från dem. De två
+ * partierna utan flöde var alltså precis de två med äldst täckning.
+ */
+export const MAX_INDEX_ARTICLES = 12;
+
+/**
+ * Plockar artikellänkar ur en nyhetslista: samma kanoniska domän, https, och
+ * ett datum i sökvägen. Datumkravet är vad som skiljer en artikel från
+ * menyer, taggsidor och paginering — båda partierna daterar sina adresser
+ * (`/nyheter/nyheter/2026-08-03-…`, `/nyheter/arkiv-2026/2026-07-31-…`).
+ *
+ * Nyast först, sedan kapat: en arkivsida kan lista år bakåt, och budgeten ska
+ * gå till det som är färskt. Ingen hård årsspärr här — ett löfte från slutet
+ * av 2025 är fortfarande ett löfte inför valet, och datumfönstret i G4 avgör
+ * den frågan på artikelns egna datum i stället för på dess adress.
+ */
+export function findArticleLinks(html: string, baseUrl: string): string[] {
+  let baseHost: string;
+  try {
+    baseHost = canonicalHost(new URL(baseUrl).hostname);
+  } catch {
+    return [];
+  }
+  const funna = new Map<string, string>();
+  for (const m of html.matchAll(/href="([^"]+)"/gi)) {
+    const raw = m[1]!.replace(/&amp;/g, "&");
+    let abs: URL;
+    try {
+      abs = new URL(raw, baseUrl);
+    } catch {
+      continue;
+    }
+    if (abs.protocol !== "https:") continue;
+    if (canonicalHost(abs.hostname) !== baseHost) continue;
+    if (/\.(pdf|jpg|jpeg|png|gif|svg|webp|mp4|zip)$/iu.test(abs.pathname)) continue;
+    const datum = abs.pathname.match(/(\d{4}-\d{2}-\d{2})/u);
+    if (!datum) continue;
+    abs.hash = "";
+    if (abs.href === baseUrl) continue;
+    if (!funna.has(abs.href)) funna.set(abs.href, datum[1]!);
+  }
+  return [...funna.entries()]
+    .sort((a, b) => b[1].localeCompare(a[1]) || a[0].localeCompare(b[0]))
+    .slice(0, MAX_INDEX_ARTICLES)
+    .map(([url]) => url);
+}
+
+/** Datumet ur en artikeladress, som ISO-tid. G4 prövar publiceringsdatumet,
+ *  och adressens datum är sannare än hämtningstiden för en gammal artikel. */
+export function datumUrAdress(url: string): string | null {
+  const m = url.match(/(\d{4})-(\d{2})-(\d{2})/u);
+  if (!m) return null;
+  const d = new Date(`${m[1]}-${m[2]}-${m[3]}T12:00:00.000Z`);
+  return Number.isNaN(d.getTime()) ? null : d.toISOString();
+}
+
+/**
  * Sant om sökvägen bevisligen hör till ett tidigare val. Saknas årtal helt
  * släpps länken igenom: spärren ska stoppa det vi KAN se är gammalt, aldrig
  * gissa bort ett manifest vars adress inte råkar bära något år.
@@ -610,7 +673,9 @@ export class LiveSource implements ArticleSource {
           ? await this.fetchRiksdagen(feed, etagCache)
           : feed.type === "page"
             ? await this.fetchPage(feed, etagCache)
-            : await this.fetchRss(feed, etagCache);
+            : feed.type === "index"
+              ? await this.fetchIndex(feed, etagCache)
+              : await this.fetchRss(feed, etagCache);
 
         for (const article of feedArticles) {
           if (article.text.length < this.limits.min_chars) continue;
@@ -744,6 +809,62 @@ export class LiveSource implements ArticleSource {
       });
     }
 
+    return articles;
+  }
+
+  /**
+   * "index"-källa: hämtar en nyhetslista och följer den till ARTIKLARNA.
+   *
+   * Listan blir aldrig själv en artikel — den är rubriker utan brödtext och
+   * hade bara gett grindarna skräp att avvisa. Varje artikel hämtas som eget
+   * dokument, med publiceringsdatum ur adressen i stället för hämtningstiden,
+   * så G4:s datumfönster prövar när partiet sa något och inte när vi läste det.
+   *
+   * En trasig artikel fäller aldrig de andra: den loggas och hoppas över.
+   */
+  private async fetchIndex(
+    feed: SourceFeed,
+    etagCache: Map<string, CacheEntry>,
+  ): Promise<NormalizedArticle[]> {
+    if (!(await this.checkRobots(feed.url))) {
+      console.log(`[fetch] robots.txt blockerar ${feed.id}`);
+      return [];
+    }
+    const listResult = await this.fetchRawWithCache(feed.url, etagCache, {
+      Accept: "text/html,application/xhtml+xml",
+    });
+    if (!listResult) return [];
+
+    const listHtml = new TextDecoder("utf-8").decode(listResult.bytes);
+    const lankar = findArticleLinks(listHtml, feed.url);
+    if (lankar.length === 0) {
+      console.log(`[fetch] ${feed.id}: nyhetslistan gav inga daterade artikellänkar`);
+      return [];
+    }
+
+    const articles: NormalizedArticle[] = [];
+    for (const lank of lankar) {
+      try {
+        if (!(await this.checkRobots(lank))) continue;
+        const res = await this.fetchRawWithCache(lank, etagCache, {
+          Accept: "text/html,application/xhtml+xml",
+        });
+        if (!res) continue;
+        const html = new TextDecoder("utf-8").decode(res.bytes);
+        const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
+        const text = stripHtml(html);
+        articles.push({
+          url: lank,
+          domain: extractDomain(lank),
+          title: titleMatch ? stripHtml(titleMatch[1]!) : lank,
+          text,
+          published: datumUrAdress(lank) ?? new Date().toISOString(),
+          contentHash: sha256(text),
+        });
+      } catch (e) {
+        console.error(`[fetch] ${feed.id}: artikeln ${lank} föll: ${e instanceof Error ? e.message : e}`);
+      }
+    }
     return articles;
   }
 

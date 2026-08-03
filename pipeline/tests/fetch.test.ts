@@ -17,7 +17,10 @@ import {
   LiveSource,
   seenKey,
   findManifestPdfLinks,
+  findArticleLinks,
+  datumUrAdress,
   harForegaendeValsAr,
+  MAX_INDEX_ARTICLES,
   joinPdfLines,
   parsePdfDate,
   looksLikePdf,
@@ -636,6 +639,58 @@ describe("LiveSource med mock-HTTP", () => {
     ], "relativ löst mot basen; extern domän, webmanifest och omatchad PDF exkluderade");
   });
 
+  test("findArticleLinks: daterade artiklar på samma domän, nyast först", () => {
+    // Adressformerna är verkliga, hämtade 2026-08-03: S och C daterar sina
+    // artikeladresser, vilket är det som skiljer en artikel från menyer,
+    // taggsidor och paginering.
+    const html =
+      '<a href="/nyheter/nyheter/2026-07-31-socialdemokraterna-vill-starka-skyddet">Äldre</a>' +
+      '<a href="/nyheter/nyheter/2026-08-03-socialdemokraterna-gar-till-val-pa-en-modell">Nyare</a>' +
+      '<a href="/nyheter">Alla nyheter</a>' +
+      '<a href="/vart-parti/vara-politiker/magdalena-andersson">Politiker</a>' +
+      '<a href="https://annandoman.se/nyheter/2026-08-03-nagot">Extern</a>' +
+      '<a href="/bilder/2026-08-03-bild.jpg">Bild</a>';
+    const links = findArticleLinks(html, "https://www.socialdemokraterna.se/");
+    assert.deepEqual(links, [
+      "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-socialdemokraterna-gar-till-val-pa-en-modell",
+      "https://www.socialdemokraterna.se/nyheter/nyheter/2026-07-31-socialdemokraterna-vill-starka-skyddet",
+    ], "nyast först; odaterade, externa och bilder exkluderade");
+  });
+
+  test("findArticleLinks: kapas vid taket och tar de nyaste", () => {
+    const html = Array.from({ length: MAX_INDEX_ARTICLES + 5 }, (_, i) => {
+      const dag = String(i + 1).padStart(2, "0");
+      return `<a href="/nyheter/arkiv-2026/2026-06-${dag}-artikel-${i}">A${i}</a>`;
+    }).join("");
+    const links = findArticleLinks(html, "https://www.centerpartiet.se/nyheter");
+    assert.equal(links.length, MAX_INDEX_ARTICLES, "kapat vid taket");
+    assert.ok(
+      links[0]!.includes("2026-06-17"),
+      `nyaste först, fick ${links[0]}`,
+    );
+    assert.ok(
+      !links.some((u) => u.includes("2026-06-01")),
+      "de äldsta föll bort, inte de nyaste",
+    );
+  });
+
+  test("findArticleLinks: listsidan själv blir aldrig en artikel", () => {
+    // Listan är rubriker utan brödtext. Kom den med hade grindarna fått
+    // skräp att avvisa varje körning.
+    const html = '<a href="https://www.centerpartiet.se/nyheter">Nyheter</a>';
+    assert.deepEqual(findArticleLinks(html, "https://www.centerpartiet.se/nyheter"), []);
+  });
+
+  test("datumUrAdress: publiceringsdatum tas ur adressen, inte hämtningstiden", () => {
+    // G4 prövar publiceringsdatumet. Sattes det till "nu" hade en gammal
+    // artikel sett färsk ut varje gång vi läste om den.
+    assert.equal(
+      datumUrAdress("https://www.centerpartiet.se/nyheter/arkiv-2026/2026-07-23-pfas"),
+      "2026-07-23T12:00:00.000Z",
+    );
+    assert.equal(datumUrAdress("https://example.se/utan-datum"), null);
+  });
+
   test("findManifestPdfLinks: manifest från ett tidigare val följs inte", () => {
     // Alla adresser nedan är verkliga, hämtade 2026-08-03. SD:s och MP:s
     // /valmanifest/ pekar på 2022 års manifest och KD:s politiksida på
@@ -677,6 +732,81 @@ describe("LiveSource med mock-HTTP", () => {
       ["https://testpartiet.se/wp-content/uploads/2026/06/valmanifest-2026.pdf"],
       "bara valårets manifest följs",
     );
+  });
+
+  test("index-källa följer nyhetslistan till artiklarna", async () => {
+    // S och C saknar flöde helt. Utan den här vägen nådde deras nyheter oss
+    // aldrig: mätt 2026-08-03 hade S publicerat tre och C fem sedan vårt
+    // nyaste löfte från dem.
+    const lista =
+      "<html><head><title>Nyheter</title></head><body>" +
+      '<a href="/nyheter/nyheter/2026-07-31-aldre-loftet">Äldre</a>' +
+      '<a href="/nyheter/nyheter/2026-08-03-nyare-loftet">Nyare</a>' +
+      '<a href="/om-oss">Om oss</a></body></html>';
+    const artikel = (namn: string) =>
+      `<html><head><title>${namn}</title></head><body><p>${"Vi lovar att göra saker. ".repeat(20)}</p></body></html>`;
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      if (url.endsWith("2026-08-03-nyare-loftet")) {
+        return new Response(artikel("Nyare löftet"), { status: 200, headers: { "content-type": "text/html" } });
+      }
+      if (url.endsWith("2026-07-31-aldre-loftet")) {
+        return new Response(artikel("Äldre löftet"), { status: 200, headers: { "content-type": "text/html" } });
+      }
+      return new Response(lista, { status: 200, headers: { "content-type": "text/html" } });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "parti-nyheter", type: "index", url: "https://testpartiet.se/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+      now: () => new Date("2026-08-04T00:00:00Z"),
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 2, "bara artiklarna — listan blir aldrig en egen artikel");
+    assert.ok(
+      !articles.some((a) => a.url === "https://testpartiet.se/"),
+      "listsidan får inte komma med",
+    );
+    assert.equal(articles[0]!.url, "https://testpartiet.se/nyheter/nyheter/2026-08-03-nyare-loftet", "nyast först");
+    assert.equal(articles[0]!.title, "Nyare löftet");
+    assert.equal(
+      articles[0]!.published,
+      "2026-08-03T12:00:00.000Z",
+      "publiceringsdatum ur adressen, inte hämtningstiden",
+    );
+    assert.equal(articles[0]!.feedType, "index");
+    assert.ok(articles[0]!.contentHash, "ändringsbevakas via contentHash");
+  });
+
+  test("index-källa: en trasig artikel fäller inte de andra", async () => {
+    const lista =
+      '<a href="/nyheter/2026-08-03-funkar">Funkar</a>' +
+      '<a href="/nyheter/2026-08-02-trasig">Trasig</a>';
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      if (url.endsWith("2026-08-02-trasig")) return new Response("nej", { status: 500 });
+      if (url.endsWith("2026-08-03-funkar")) {
+        return new Response(
+          `<html><head><title>Funkar</title></head><body><p>${"Ett löfte. ".repeat(50)}</p></body></html>`,
+          { status: 200, headers: { "content-type": "text/html" } },
+        );
+      }
+      return new Response(lista, { status: 200, headers: { "content-type": "text/html" } });
+    };
+    const source = new LiveSource({
+      feeds: [{ id: "parti-nyheter", type: "index", url: "https://testpartiet.se/nyheter" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+      now: () => new Date("2026-08-04T00:00:00Z"),
+    });
+    const articles = await source.fetch();
+    assert.equal(articles.length, 1, "den hela artikeln kom med");
+    assert.ok(articles[0]!.url.endsWith("2026-08-03-funkar"));
   });
 
   test("page-källa auto-följer manifest-PDF länkad från sidan", async () => {

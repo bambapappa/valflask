@@ -42,7 +42,7 @@ export interface NormalizedArticle {
    */
   contentHash?: string;
   /** Feed-typ ur sources.yaml — styr processprioritet i runPipeline. */
-  feedType?: "rss" | "riksdagen_api" | "page";
+  feedType?: "rss" | "riksdagen_api" | "page" | "index";
   /**
    * PDF-chunkar: texten sida för sida, så att ett verbatimgranskat citat kan
    * slås upp till sin EXAKTA sida vid publicering (resolveQuotePage). Utan
