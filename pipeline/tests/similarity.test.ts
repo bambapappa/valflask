@@ -78,6 +78,31 @@ describe("findQuoteDuplicate — samma citat är samma yttrande", () => {
     );
   });
 
+  it("en kort mening inuti ett långt citat är INGEN träff", () => {
+    // Utan proportionskravet hade varje kort allmän mening matchat vilket långt
+    // citat som helst som råkar innehålla den.
+    const d = findQuoteDuplicate({ quote: "resa fritt på all kollektivtrafik i hela landet" }, existing);
+    assert.equal(d, null);
+  });
+
+  it("ett kort men fullständigt löfte fångas — friskoleförbudet väger 32 tecken", () => {
+    // Det skarpa fallet: citatet låg publicerat som p-2026-0015 och skördades om.
+    // Med golvet på 40 tecken slank det förbi och kön bar en post för ett löfte
+    // som redan stod på sajten.
+    const friskolor: ExistingPromiseLite[] = [
+      {
+        id: "p-2026-0015",
+        title: "Vi vill förbjuda religiösa friskolor",
+        parties: ["s"],
+        category: "skola",
+        group_id: null,
+        quote: "Vi vill förbjuda religiösa friskolor.",
+      },
+    ];
+    const d = findQuoteDuplicate({ quote: "Vi vill förbjuda religiösa friskolor." }, friskolor);
+    assert.equal(d?.id, "p-2026-0015");
+  });
+
   it("annan politik flaggas inte", () => {
     const d = findQuoteDuplicate(
       { quote: "Vi vill förbjuda religiösa friskolor i hela landet, utan undantag." },

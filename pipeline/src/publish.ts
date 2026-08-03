@@ -278,9 +278,52 @@ export function publish(input: PublishInput): PublishResult {
       existingKeys.add(k);
     }
   }
+  // Ett löfte som redan ligger publicerat har ett beslut bakom sig, och det
+  // beslutet är verkställt. Ligger posten ändå kvar i kön kan den godkännas en
+  // gång till — och då står samma löfte två gånger på sajten och räknas två
+  // gånger i summan. Det hade hänt: sex poster som avgjordes i juli låg kvar,
+  // och eftersom bygget kör testerna först stod hela driftsättningen still.
+  //
+  // Nyckeln är källans adress plus rubriken, samma par som issue-synken och
+  // beslutsvägen använder — så det som städas bort är exakt det som redan är
+  // avgjort. Tillbakadragna löften räknas inte: där är beslutet att löftet inte
+  // ska stå kvar, och en ny skörd av samma text ska mötas av en människa.
+  //
+  // Rubriken ensam räcker inte. Utvinningen härleder rubriken och kan sätta en
+  // annan för samma citat — "Förbjuda religiösa friskolor" i kön mot "Vi vill
+  // förbjuda religiösa friskolor" som publicerat löfte. Därför prövas också
+  // källans adress plus citatet ord för ord; är båda lika är det samma yttrande
+  // ur samma text, och beslutet är redan fattat.
+  const utanSkiljetecken = (s: string): string =>
+    s.toLowerCase().normalize("NFC").replace(/[^a-z0-9åäöéèü]+/giu, "");
+  const publiceradeNycklar = new Set<string>();
+  const publiceradeCitat = new Set<string>();
+  for (const p of allPromises) {
+    if (p.status !== "aktiv") continue;
+    publiceradeNycklar.add(`${p.source?.url ?? ""}::${p.title ?? ""}`);
+    const c = utanSkiljetecken(p.quote ?? "");
+    if (c.length >= 30) publiceradeCitat.add(`${p.source?.url ?? ""}::${c}`);
+  }
+  const redanAvgjord = (r: NeedsReviewEntry): boolean => {
+    if (publiceradeNycklar.has(reviewKey(r))) return true;
+    const c = utanSkiljetecken(
+      (r.candidate as { quote?: string } | null | undefined)?.quote ?? "",
+    );
+    return c.length >= 30 && publiceradeCitat.has(`${r.articleUrl ?? ""}::${c}`);
+  };
+  const kvarglomda = mergedReview.filter(redanAvgjord);
+  const stadadReview = mergedReview.filter((r) => !redanAvgjord(r));
+  if (kvarglomda.length > 0) {
+    console.log(
+      `Städade ${kvarglomda.length} kö-post(er) vars löfte redan är publicerat:\n  ` +
+        kvarglomda
+          .map((r) => (r.candidate as { title?: string } | null)?.title ?? r.articleTitle)
+          .join("\n  "),
+    );
+  }
   writeFileSync(
     `${outputDir}/needs_review.json`,
-    JSON.stringify(mergedReview, null, 2) + "\n",
+    JSON.stringify(stadadReview, null, 2) + "\n",
   );
 
   const existingChangelog = (() => {

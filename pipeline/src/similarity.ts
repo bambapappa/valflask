@@ -82,8 +82,28 @@ function quoteFingerprint(s: string): string {
  * Kortare citat än så jämförs inte. "Vi vill förbjuda religiösa friskolor" är
  * bevisande; "det ska bort" är det inte, och två partier kan säga det oberoende
  * av varandra.
+ *
+ * Satt till 30 efter mätning: det citatet väger 32 tecken utan skiljetecken, och
+ * ett golv på 40 hade släppt igenom det som en ny post trots att löftet redan
+ * låg publicerat. Trettio tecken är ungefär fem ord i rad, ordagrant lika.
  */
-const MIN_QUOTE_CHARS = 40;
+const MIN_QUOTE_CHARS = 30;
+
+/**
+ * En delmängd räknas som träff bara om den utgör minst hälften av det längre
+ * citatet. Utan det kravet hade en kort allmän mening kunnat matcha vilket långt
+ * citat som helst som råkar innehålla den — och då vore två skilda löften
+ * plötsligt ett.
+ *
+ * Hälften, inte mer: när utvinningen kapar ett citat olika långt faller en hel
+ * avslutande mening ofta bort. Mätt på Sverigekortet ligger den kapade varianten
+ * på 0,57 av den fulla, medan en lös mening ur samma citat ligger på 0,42.
+ *
+ * Att den här delen är en heuristik gör mindre än det låter: den styr bara
+ * FLAGGNINGEN till granskning. Där en post tas bort ur kön utan att en människa
+ * ser den (`publish.ts`) krävs att citaten är exakt lika.
+ */
+const MIN_SUBSET_RATIO = 0.5;
 
 /**
  * SAMMA CITAT som ett redan publicerat löfte — alltså ordagrant samma yttrande,
@@ -102,7 +122,7 @@ const MIN_QUOTE_CHARS = 40;
  * som återkommer ordagrant ÄR samma yttrande; skiljer sig partiet är det ett fel
  * i datat som granskaren ska se, inte något som ska gömmas av ett filter.
  * Delmängd räknas som träff åt båda håll — utvinningen kapar ibland citatet
- * olika långt mellan körningar.
+ * olika långt mellan körningar — men bara när delen utgör merparten av helheten.
  */
 export function findQuoteDuplicate(
   candidate: { quote: string },
@@ -113,7 +133,9 @@ export function findQuoteDuplicate(
   for (const e of existing) {
     const q = quoteFingerprint(e.quote ?? "");
     if (q.length < MIN_QUOTE_CHARS) continue;
-    if (q === c || q.includes(c) || c.includes(q)) return e;
+    if (q === c) return e;
+    const [kort, lang] = c.length <= q.length ? [c, q] : [q, c];
+    if (lang.includes(kort) && kort.length >= lang.length * MIN_SUBSET_RATIO) return e;
   }
   return null;
 }
