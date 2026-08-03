@@ -1668,3 +1668,48 @@ calculation-backfill.mts`, `.github/workflows/pipeline.yml`, tester i `llm` och
 `cli-run`. 314 tester gröna, typecheck rent. **Kvar:** Handlingsvågen har en
 egen kopia av klienten som ännu är tvåledad med inbyggd standard-URL, och
 `foreslag.yml`:s `primar`-ruta kan ersättas av `LLM_FORST` när den är omgjord.
+
+## 2026-08-03 — p-2026-0171 tillbakadraget: villkorat resonemang är inget löfte
+
+**Beslut:** Centerpartiets `p-2026-0171` är tillbakadraget efter ett mänskligt
+beslut. Citatet lyder "Om målet om 150 000 nya jobb nås skulle det också ge ett
+betydande tillskott till välfärden. Enligt Centerpartiets beräkningar skulle
+reformerna generera omkring 45 miljarder kronor i ökade skatteintäkter varje
+år." Meningen bär ett villkor och en följd — ingen åtgärd partiet åtar sig att
+genomföra. Löftesdefinitionen i SPEC.md (bilaga A, A1) undantar uttryckligen
+hypotetiska resonemang, och postens egen uträkning slog redan fast att "citatet
+innehåller inget eget åtagande om vad som ska göras". Statusen följer nu den
+slutsatsen.
+
+**Motiv:** Ett villkorat påstående om vad politiken kan ge tillbaka är samma
+slags icke-löfte som de citat i dåtid som drogs tillbaka 2026-07-27 och
+2026-07-28 — där beskrev citatet något som redan skett, här något som kanske
+kommer att ske. Båda saknar det som gör ett vallöfte till ett vallöfte: ett
+åtagande om framtida politik. Att låta meningen stå som ett eget löfte får
+partiet att se ut att ha lovat mer än det gjort, och det är fel åt det håll
+sajten aldrig får luta.
+
+**Ingenting går förlorat:** löftet om 150 000 nya jobb står kvar på
+`p-2026-0140`, och de reformer som ska ge jobben är prissatta på partiets egna
+löften om dem (`p-2026-0141`, `p-2026-0170`, `p-2026-0172`). Beloppet var redan
+noll, så ingen summa och inget finansieringsgap ändras — bara antalet
+publicerade löften, 443 → 442.
+
+**Förkastade alternativ:** låta posten stå kvar nollad (en nollpost räknas ändå
+som ett löfte i antalet och får en egen sida som säger att partiet lovat något
+det inte lovat); ta bort posten helt ur `promises.json` som med dubbletterna
+2026-07-05 (borttagning används när posten aldrig borde ha varit en egen rad —
+här är statusen ärligare, för då syns tillbakadragningen på löftets egen sida
+med stämpeln och historiken); grupplänka den med `p-2026-0140` (de säger inte
+samma sak — den ena lovar jobben, den andra gissar vad jobben ger).
+
+**Påverkan:** `data/promises.json` (status + historikpost),
+`data/changelog.json` (`manuell-granskning-2026-08-03-villkorat-loften`,
+omräknad `data_hash`), `data/rattelser.json` (en post),
+`handlingsvagen/data/loften-index.json` (omgenererat, 443 → 442). 328 tester
+gröna, typecheck rent.
+
+**Kvar att avgöra:** `p-2026-0144` ur samma artikel bär citatet "45 miljarder
+kronor i ökade skatteintäkter varje år" — samma slags följdpåstående, men det
+är grupplänkat (`g-c-skattefri-grundlon`) och används för att visa partiets egen
+finansiering av skattereformen. Det är en egen fråga och rörs inte här.
