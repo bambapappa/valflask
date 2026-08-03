@@ -23526,5 +23526,50 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-03T12"
     }
+  },
+  {
+    "id": "p-2026-0579",
+    "group_id": null,
+    "title": "Höjd VAB-ersättning till 90% under de fem första dagarna",
+    "slug": "hojd-vab-ersattning-till-90-under-de-fem-forsta-dagarna",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "höjd VAB-ersättning till 90 procent under de fem första dagarna,",
+    "date_stated": "2026-08-03",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-03T12:51:37.931Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 600,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Höjer VAB-ersättning från 80% till 90% av sjukpenninggrundande inkomst för de fem första dagarna per vårdperiod. Kostnad uppskattad utifrån total VAB-kostnad ca 6 500 mkr och antagande att 60–80 %…",
+      "confidence": 0.6,
+      "calculation": "Total VAB-kostnad cirka 6 500 mkr/år (statsbudget). Höjning med 10 procentenheter innebär 12,5 % högre kostnad per berörd dag. Antas att 60–80 % av dagar är bland de fem första → kostnadsökning 12,5 % × (0,6–0,8) × 6 500 ≈ 488–650 mkr. Bas 600, spann 500–800 som inrymmer osäkerhet i andel och överlappande korttidsfrånvaro."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-03T12"
+    }
   }
 ]
