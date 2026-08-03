@@ -45,6 +45,41 @@ describe("parseReviewCommand — issue-kommentar till beslut", () => {
     });
   });
 
+  it("en signatur under en vågrät linje följer inte med ut på löftessidan", () => {
+    // Det som faktiskt hände: kommentaren bar en automatisk signatur under en
+    // rad med tre bindestreck, och hela signaturen hamnade i den publicerade
+    // uträkningen för p-2026-0580.
+    const cmd = parseReviewCommand(
+      "/godkänn 0 0 0\nUträkning: Löftet pekar varken ut en åtgärd eller en nivå.\n\n---\n_Genererad av något verktyg_",
+    );
+    assert.deepEqual(cmd, {
+      action: "approve",
+      amounts: [0, 0, 0],
+      calculation: "Löftet pekar varken ut en åtgärd eller en nivå.",
+    });
+  });
+
+  it("understreck och asterisker som vågrät linje kapar också", () => {
+    for (const linje of ["___", "***", "-----"]) {
+      const cmd = parseReviewCommand(`/godkänn\nUträkning: Beloppet är noll.\n${linje}\nsignatur`);
+      assert.equal(
+        (cmd as { calculation?: string }).calculation,
+        "Beloppet är noll.",
+        `föll på ${linje}`,
+      );
+    }
+  });
+
+  it("bindestreck mitt i en mening kapar inte", () => {
+    const cmd = parseReviewCommand(
+      "/godkänn\nUträkning: Anslaget höjs från 8 till 16 mkr — en ökning på 8 mkr per år.",
+    );
+    assert.equal(
+      (cmd as { calculation?: string }).calculation,
+      "Anslaget höjs från 8 till 16 mkr — en ökning på 8 mkr per år.",
+    );
+  });
+
   it("uträkningen kapas till schemats gräns på 800 tecken", () => {
     const cmd = parseReviewCommand("/godkänn\nUträkning: " + "x".repeat(1200));
     assert.equal(cmd?.action, "approve");

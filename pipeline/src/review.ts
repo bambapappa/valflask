@@ -44,7 +44,15 @@ export function parseReviewCommand(body: string): ReviewCommand | null {
   // Uträkningen bakom ett eget belopp anges med en rad som börjar "Uträkning:".
   // Den visas PUBLIKT på löftessidan, så den måste vara uttryckligen märkt —
   // annars hade vilken kommentar som helst under kommandot hamnat på sajten.
-  const calcMatch = text.slice(line.length).match(/^\s*Uträkning:\s*([\s\S]+)$/imu);
+  // En kommentar bär ofta en signatur under en vågrät linje. Den är inte en del
+  // av uträkningen, men uträkningen VISAS PUBLIKT på löftessidan — så allt från
+  // första vågräta linjen och nedåt kapas innan texten läses ut. Utan den här
+  // kapningen hamnade en signatur mitt i den publicerade uträkningen (rättat i
+  // p-2026-0580).
+  const efterKommando = text
+    .slice(line.length)
+    .split(/\n[ \t]*(?:-{3,}|_{3,}|\*{3,})[ \t]*(?:\n|$)/u)[0]!;
+  const calcMatch = efterKommando.match(/^\s*Uträkning:\s*([\s\S]+)$/imu);
   const calculationText = (calcMatch?.[1] ?? "").trim().replace(/\s+/gu, " ").slice(0, MAX_CALCULATION);
   const approve = line.match(/^\/(?:godkänn|godkann|approve)\b(.*)$/iu);
   if (approve) {
@@ -283,7 +291,10 @@ export function approve(
       msek_low: Math.round(low),
       msek_base: Math.round(base),
       msek_high: Math.round(high),
-      basis: cost?.basis ?? "media",
+      // Saknade posten kostnad kommer beloppet från granskaren och ingen
+      // annanstans ifrån. "media" hade sagt läsaren att ett nyhetsmedium stod
+      // bakom siffran — `basis` är just det fält som säger hur förankrad den är.
+      basis: cost?.basis ?? "granskare",
       basis_url: cost?.basis_url ?? null,
       method_note: ((cost?.method_note ?? "") + " (belopp satt av granskare)").trim(),
       ...(calculation ? { calculation } : {}),

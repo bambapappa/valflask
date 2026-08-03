@@ -2,6 +2,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
   titleSimilarity,
+  findQuoteDuplicate,
   findPossibleDuplicate,
   findCrossPartyDuplicate,
   findComparableCosts,
@@ -27,6 +28,80 @@ describe("titleSimilarity", () => {
   });
 });
 
+describe("findQuoteDuplicate — samma citat är samma yttrande", () => {
+  // Det skarpa fallet, mätt 2026-08-03: citatet låg publicerat som p-2026-0321
+  // med hela citatet som titel, och skördades om under en härledd, kortare
+  // titel. Titelkollen missade det tre gånger.
+  const sverigekortet =
+    "Med vårt Sverigekort kan du resa fritt på all kollektivtrafik i hela landet till en billig penning. 499 kronor i månaden för vuxna.";
+  const existing: ExistingPromiseLite[] = [
+    {
+      id: "p-2026-0321",
+      title: sverigekortet,
+      parties: ["mp"],
+      category: "transport",
+      group_id: null,
+      quote: sverigekortet,
+    },
+  ];
+
+  it("identiskt citat flaggas trots att titeln är en annan", () => {
+    const d = findQuoteDuplicate({ quote: sverigekortet }, existing);
+    assert.equal(d?.id, "p-2026-0321");
+  });
+
+  it("titelkollen hade missat samma fall — därför behövs den här", () => {
+    const d = findPossibleDuplicate(
+      { title: "Sverigekort för 499 kr/mån i kollektivtrafik", parties: ["mp"], category: "transport" },
+      existing,
+    );
+    assert.equal(d, null);
+  });
+
+  it("skiljetecken, versaler och radbrott spelar ingen roll", () => {
+    const d = findQuoteDuplicate(
+      { quote: "MED VÅRT SVERIGEKORT KAN DU RESA FRITT\npå all kollektivtrafik i hela landet till en billig penning – 499 kronor i månaden för vuxna!" },
+      existing,
+    );
+    assert.equal(d?.id, "p-2026-0321");
+  });
+
+  it("delmängd räknas åt båda håll — utvinningen kapar citatet olika långt", () => {
+    const kortare = "Med vårt Sverigekort kan du resa fritt på all kollektivtrafik i hela landet";
+    assert.equal(findQuoteDuplicate({ quote: kortare }, existing)?.id, "p-2026-0321");
+    assert.equal(
+      findQuoteDuplicate(
+        { quote: sverigekortet },
+        [{ ...existing[0]!, quote: kortare }],
+      )?.id,
+      "p-2026-0321",
+    );
+  });
+
+  it("annan politik flaggas inte", () => {
+    const d = findQuoteDuplicate(
+      { quote: "Vi vill förbjuda religiösa friskolor i hela landet, utan undantag." },
+      existing,
+    );
+    assert.equal(d, null);
+  });
+
+  it("för kort citat jämförs inte — två partier kan säga 'det ska bort'", () => {
+    const kort: ExistingPromiseLite[] = [
+      { id: "p-1", title: "t", parties: ["s"], category: "välfärd", group_id: null, quote: "Det ska bort." },
+    ];
+    assert.equal(findQuoteDuplicate({ quote: "Det ska bort." }, kort), null);
+  });
+
+  it("saknat citat på någon sida ger ingen träff i stället för en krasch", () => {
+    assert.equal(findQuoteDuplicate({ quote: "" }, existing), null);
+    assert.equal(
+      findQuoteDuplicate({ quote: sverigekortet }, [{ ...existing[0]!, quote: "" }]),
+      null,
+    );
+  });
+});
+
 describe("findPossibleDuplicate", () => {
   const existing: ExistingPromiseLite[] = [
     {
@@ -35,6 +110,7 @@ describe("findPossibleDuplicate", () => {
       parties: ["s"],
       category: "välfärd",
       group_id: null,
+      quote: "Vi vill höja a-kassan till nittio procent av lönen.",
     },
   ];
 
@@ -71,6 +147,7 @@ describe("findCrossPartyDuplicate — samma politik hos annat parti (R3)", () =>
       parties: ["l"],
       category: "försvar",
       group_id: null,
+      quote: "Liberalerna vill höja försvarsanslagen till fem procent av BNP.",
     },
     {
       id: "p-2026-0461",
@@ -78,6 +155,7 @@ describe("findCrossPartyDuplicate — samma politik hos annat parti (R3)", () =>
       parties: ["s"],
       category: "välfärd",
       group_id: null,
+      quote: "Den orättvisan vill vi ta bort, karensavdraget ska avskaffas helt.",
     },
   ];
 

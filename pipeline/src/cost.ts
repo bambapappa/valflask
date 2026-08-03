@@ -19,7 +19,8 @@ export interface CostEstimate {
   msek_low: number;
   msek_base: number;
   msek_high: number;
-  basis: "rut" | "myndighet" | "parti" | "media" | "llm_estimat";
+  /** "granskare" = beloppet är satt för hand av den som godkände löftet. */
+  basis: "rut" | "myndighet" | "parti" | "media" | "llm_estimat" | "granskare";
   basis_url: string | null;
   method_note: string;
   /**

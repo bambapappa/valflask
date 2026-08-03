@@ -41,7 +41,7 @@ import type { CostEstimate } from "./cost.ts";
 import { kapaNot } from "./cost.ts";
 import type { VerifyResult } from "./verify.ts";
 import type { NeedsReviewEntry, PipelinePromise } from "./publish.ts";
-import { findPossibleDuplicate, type ExistingPromiseLite } from "./similarity.ts";
+import { findQuoteDuplicate, findPossibleDuplicate, type ExistingPromiseLite } from "./similarity.ts";
 
 /* ─────────────────────────────────────────────────── Vallen-2026 datamodell ── */
 
@@ -437,6 +437,7 @@ export function importVallen(opts: {
 
   const existingLite: ExistingPromiseLite[] = existingPromises.map((p) => ({
     id: p.id, title: p.title, parties: p.parties, category: p.category, group_id: p.group_id,
+    quote: p.quote,
   }));
 
   // accepterade kandidater (för dedup inom batchen), med normaliserat citat.
@@ -517,10 +518,13 @@ export function importVallen(opts: {
       seenParty.add(party);
 
       // luddig dubbel mot redan PUBLICERADE (inkrementell körning).
-      const dup = findPossibleDuplicate(
-        { title: a.build.candidate.title, parties: a.build.candidate.parties, category: a.build.candidate.category },
-        existingLite,
-      );
+      // Citatkollen först: samma citat är samma yttrande även när titeln skiljer.
+      const dup =
+        findQuoteDuplicate(a.build.candidate, existingLite) ??
+        findPossibleDuplicate(
+          { title: a.build.candidate.title, parties: a.build.candidate.parties, category: a.build.candidate.category },
+          existingLite,
+        );
       if (dup) {
         review.push({
           candidate: a.build.candidate,

@@ -8,7 +8,7 @@ import { runGates, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
 import type { ArchiveFn } from "./archive.ts";
 import { estimateCost, costDeviation } from "./cost.ts";
-import { findPossibleDuplicate, findCrossPartyDuplicate, findComparableCosts, looksLikeUmbrella, findSamePartyInCategory, type ExistingPromiseLite, type ComparablePromiseLite } from "./similarity.ts";
+import { findQuoteDuplicate, findPossibleDuplicate, findCrossPartyDuplicate, findComparableCosts, looksLikeUmbrella, findSamePartyInCategory, type ExistingPromiseLite, type ComparablePromiseLite } from "./similarity.ts";
 import { generateQuip } from "./copy.ts";
 import { maybeGenerateWeekly, type ChronicleEntry } from "./chronicle.ts";
 import {
@@ -129,6 +129,7 @@ export async function runPipeline(
     parties: p.parties,
     category: p.category,
     group_id: p.group_id,
+    quote: p.quote,
   }));
   // Riktmärken för kostnadsankring: befintliga löften med sitt belopp, så ett
   // nytt LLM-estimat hamnar i samma storleksordning som liknande politik.
@@ -220,8 +221,14 @@ export async function runPipeline(
         // Tvärparti-varianten fångar SAMMA POLITIK hos annat parti (5 % av BNP går
         // bara att göra en gång) — även den till review med --group-förslag, så
         // totalen/koalitioner inte dubbelräknar när M/SD/KD släpper sina manifest.
+        // Citatkollen går FÖRST och är den enda som är exakt: samma citat är
+        // samma yttrande, oavsett vilken titel utvinningen råkade sätta.
+        // Titelkollarna nedan är heuristiker och missar just omskördar.
         const dupKey = { title: accepted.title, parties: accepted.parties, category: accepted.category };
-        const dup = findPossibleDuplicate(dupKey, dedupPool) ?? findCrossPartyDuplicate(dupKey, dedupPool);
+        const dup =
+          findQuoteDuplicate(accepted, dedupPool) ??
+          findPossibleDuplicate(dupKey, dedupPool) ??
+          findCrossPartyDuplicate(dupKey, dedupPool);
         if (dup) {
           reviewItems.push({
             candidate: accepted,
@@ -238,6 +245,7 @@ export async function runPipeline(
           parties: accepted.parties,
           category: accepted.category,
           group_id: null,
+          quote: accepted.quote,
         });
 
         // Kostnadsankring: hämta jämförbara publicerade löften (samma politik hos
