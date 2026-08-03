@@ -201,5 +201,75 @@ const alla = getPromises();
   );
 }
 
+// ── Besparingar ska synas som besparingar ─────────────────────────────────
+{
+  // En besparing drar ner ett partis summa. Visas den utan tecken under en
+  // kolumn som heter "Kostnad" ser den ut att kosta lika mycket som den
+  // sparar — p-2026-0349 (600 mkr besparing) stod så.
+  const besparing = p("p-b", 150, ["c"]);
+  (besparing as unknown as { cost: { type: string } }).cost.type = "besparing";
+  check(
+    "en besparing räknas med minustecken",
+    promiseNetMsek(besparing) === -600,
+    `fick ${promiseNetMsek(besparing)}`,
+  );
+  // formatMsek sätter minustecknet framför beloppet; grinden här håller sig
+  // till talet, för det är tecknet som avgör vad läsaren ser.
+  check(
+    "beloppet som visas är negativt, inte magnituden",
+    promiseNetMsek(besparing) < 0 && promiseTotalMsek(besparing) > 0,
+  );
+
+  // Partiets summa ska vara kostnader MINUS besparingar.
+  const data = [p("p-1", 1000, ["c"]), besparing];
+  check(
+    "partiets summa är kostnader minus besparingar",
+    partyTotalMsek(data, "c") === 4000 - 600,
+    `fick ${partyTotalMsek(data, "c")}`,
+  );
+
+  // Och mot verkliga datat: minst en besparing finns, annars vaktar grinden
+  // ingenting och skulle tyst bli meningslös.
+  const verkliga = alla.filter(
+    (x) => x.status !== "tillbakadragen" && (x.cost.type === "besparing" || x.cost.type === "intäktsökning") && x.cost.msek_base > 0,
+  );
+  check("registret bär besparingar att visa tecken för", verkliga.length > 0, `${verkliga.length} st`);
+  check(
+    "varje besparing i datat får negativt visat belopp",
+    verkliga.every((x) => promiseNetMsek(x) < 0),
+  );
+}
+
+{
+  // Ett belopp som visas utan att typen står bredvid måste bära tecken.
+  // Löftessidan är undantagen: där står "besparing" i egen kolumn intill.
+  const läs = (rel: string) => readFileSync(new URL(rel, import.meta.url), "utf8");
+  const utanTecken: string[] = [];
+  for (const rel of [
+    "../src/pages/index.astro",
+    "../src/pages/topplistor.astro",
+    "../src/pages/parti/[kod].astro",
+    "../src/pages/ledamot/[slug].astro",
+    "../src/pages/fraga/[slug].astro",
+    "../src/pages/rss.xml.ts",
+    "../src/pages/llms-full.txt.ts",
+  ]) {
+    if (/promiseTotalMsek/.test(läs(rel))) utanTecken.push(rel.replace("../src/pages/", ""));
+  }
+  check(
+    "inget belopp visas utan tecken där typen inte står bredvid",
+    utanTecken.length === 0,
+    utanTecken.join(", "),
+  );
+
+  // Startsidans lista hade samma gruppfel som topplistan: de tre
+  // formuleringarna av grundlönen tog tre av fem platser.
+  check(
+    "startsidans dyraste-lista grupperar löftena",
+    /groupedPromises\(/.test(läs("../src/pages/index.astro")),
+    "hittade inget anrop till groupedPromises",
+  );
+}
+
 console.log(errors === 0 ? "grupplista: alla grindar gröna" : `grupplista: ${errors} grindar föll`);
 if (errors > 0) process.exit(1);

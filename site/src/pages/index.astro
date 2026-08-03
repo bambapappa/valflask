@@ -6,7 +6,7 @@ import MetodLank from "../components/MetodLank.astro";
 import { getPromises, getParties, getConstants, getChangelog, getChronicles } from "../lib/data";
 import { totalFlasket, financingGap, formatMsek, formatMsekShort, countPromises, dataHash, formatDateShort } from "../lib/calc";
 import { maskeraText } from "../lib/mask";
-import { partyTotalMsek, promiseTotalMsek } from "../lib/aggregates";
+import { partyTotalMsek, promiseNetMsek, groupedPromises } from "../lib/aggregates";
 
 const promises = getPromises();
 const parties = getParties();
@@ -92,17 +92,16 @@ const jsonLd = [
     <section class="sektion">
       <h2>Dyraste löftena</h2>
       <ol class="promise-list">
-        {promises
-          .filter((p) => p.status !== 'tillbakadragen')
-          .sort((a, b) => promiseTotalMsek(b) - promiseTotalMsek(a))
+        {groupedPromises(promises)
+          .sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise))
           .slice(0, 5)
-          .map((p) => (
+          .map(({ promise: p, parties: gp }) => (
             <li>
               <a href={`/lofte/${p.id}/${p.slug}`}>
                 <strong>{p.title}</strong>
               </a>
               <div class="etikett etikett--sub">
-                {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseTotalMsek(p), p.cost.basis)}</span>
+                {gp.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseNetMsek(p), p.cost.basis)}</span>
               </div>
             </li>
           ))}

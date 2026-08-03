@@ -7,7 +7,7 @@ import KallRad from "../../components/KallRad.astro";
 import Dela from "../../components/Dela.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
 import { formatMsek, formatMsekShort } from "../../lib/calc";
-import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseTotalMsek, groupBearersForParty } from "../../lib/aggregates";
+import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseNetMsek, groupBearersForParty } from "../../lib/aggregates";
 import { getIssuesFile, getStances, cellFor, emptyCellText, statementById, POSITION_LABEL } from "../../lib/stances";
 
 export function getStaticPaths() {
@@ -25,6 +25,11 @@ const partyPromises = getPromisesForParty(promises, kod);
 // källa. Men samma politik kostar en gång, så beloppet visas bara på det
 // löfte som bär det i summan; övriga medlemmar pekar dit. Utan det adderade
 // listan till mer än rubriken sa (för C: 1 724 mot 1 018 mdkr, 2026-08-03).
+//
+// Beloppet visas med TECKEN: en besparing drar ner partiets summa och ska
+// synas som ett minus, inte som en kostnad. Kolumnen stod tidigare som ren
+// "Kostnad" med ett positivt tal även för besparingar, så en besparing på
+// 600 miljoner (p-2026-0349) såg ut att kosta lika mycket.
 const bearers = groupBearersForParty(promises, kod);
 const promiseById = new Map(promises.map((p) => [p.id, p]));
 const promiseRows = partyPromises.map((p) => {
@@ -112,7 +117,7 @@ const jsonLd = [
               <th class="radnr">#</th>
               <th>Löfte</th>
               <th>Kategori</th>
-              <th class="num">Kostnad (mdkr)</th>
+              <th class="num">Kostnad, minus för besparing</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -125,7 +130,7 @@ const jsonLd = [
                 <td class="num belopp">
                   {bearer
                     ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span>
-                    : formatMsek(promiseTotalMsek(p), p.cost.basis)}
+                    : formatMsek(promiseNetMsek(p), p.cost.basis)}
                 </td>
                 <td>{p.status}</td>
               </tr>

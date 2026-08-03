@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { getPromises, getParties, getPeople } from "../lib/data";
 import { formatMsek } from "../lib/calc";
-import { promiseTotalMsek, partyTotalMsek, getPromisesForParty, flasketPerRost, categoryBreakdown, groupedPromises } from "../lib/aggregates";
+import { promiseNetMsek, partyTotalMsek, getPromisesForParty, flasketPerRost, categoryBreakdown, groupedPromises } from "../lib/aggregates";
 
 const promises = getPromises();
 const parties = getParties();
@@ -12,7 +12,7 @@ const active = promises.filter((p) => p.status !== 'tillbakadragen');
 // En post per politik, inte en per formulering: ett delat löfte tar en plats
 // och skriver ut alla partier som lovat det. Samma representant som summorna
 // räknar, så listan och totalen aldrig säger olika saker om samma grupp.
-const fetaste = groupedPromises(promises).sort((a, b) => promiseTotalMsek(b.promise) - promiseTotalMsek(a.promise));
+const fetaste = groupedPromises(promises).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise));
 
 const partyTotals = parties.map((p) => ({
   ...p,
@@ -25,7 +25,7 @@ const partyPerVote = [...partyTotals].sort((a, b) => b.perVote - a.perVote);
 const personTotals = people
   .map((person) => ({
     ...person,
-    total: promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen').reduce((s, p) => s + promiseTotalMsek(p), 0),
+    total: promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen').reduce((s, p) => s + promiseNetMsek(p), 0),
     count: promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen').length,
   }))
   .filter((p) => p.count > 0)
@@ -60,7 +60,7 @@ const jsonLd = [
           <li>
             <a href={`/lofte/${g.promise.id}/${g.promise.slug}`}><strong>{g.promise.title}</strong></a>
             <div class="etikett etikett--sub">
-              {g.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseTotalMsek(g.promise))}</span>{g.shared && (<> · <span class="delat">delat löfte, {g.memberIds.length} formuleringar</span></>)}
+              {g.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseNetMsek(g.promise))}</span>{g.shared && (<> · <span class="delat">delat löfte, {g.memberIds.length} formuleringar</span></>)}
             </div>
           </li>
         ))}
