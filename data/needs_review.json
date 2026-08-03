@@ -1388,5 +1388,444 @@
       "calculation": "~Senaste höjningen 2022: anslag ökades ca 15 mkr/år enligt budgetprop. Antag att ny höjning blir liknande omfattning. Osäkerhetsspann 5–30 mkr/år beroende på ambitionsnivå."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ytterligare minskad invandring och skärpta krav",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna är garanten för en fortsatt restriktiv migrationspolitik som sätter Sveriges behov först. Asylinvandringen ska vara så låg som möjligt och arbetskraftsinvandringen ska vara högkvalificerad och behovsanpassad för att undvika lönedumpning.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0527"
+  },
+  {
+    "candidate": {
+      "title": "Gör medlemskap i kriminella gäng olagligt",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "I dag är det inte olagligt att vara medlem i ett kriminellt gäng. Sverigedemokraterna vill ändra lagen så att aktivt medlemskap i kriminella gäng blir straffbart.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0534"
+  },
+  {
+    "candidate": {
+      "title": "Inför ett medborgarveto mot tvångsblandning",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill införa ett medborgarveto för att motverka Socialdemokraternas politik för tvångsblandning, stärka det lokala självbestämmandet och ge invånarna ett mer direkt inflytande över utvecklingen av sin närmiljö.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0531"
+  },
+  {
+    "candidate": {
+      "title": "Ge alla svenskar 90 procents rabatt på tandvård",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill utöka det nyligen införda förstärkta högkostnadsskyddet för tandvård, där patienten endast betalar 10 procent av referenspriset för de flesta behandlingar, så att det omfattar alla vuxna.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0552"
+  },
+  {
+    "candidate": {
+      "title": "Bygg ny kärnkraft i Sverige",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill däremot främja nybyggnation av svensk kärnkraft genom statligt stöd, förenklade tillståndsprocesser och minskat regelkrångel.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0551"
+  },
+  {
+    "candidate": {
+      "title": "Inför Sverigekort för all kollektivtrafik till fast månadspris",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "Språkrör"
+      },
+      "quote": "Med vårt Sverigekort kan du resa fritt på all kollektivtrafik i hela landet till en billig penning. 499 kronor i månaden för vuxna, och 249 kronor för unga, studenter och pensionärer.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 6000,
+      "msek_base": 8000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnadsestimatet baseras på intäktsbortfall och kompensation till regioner, i samma storleksordning som Miljöpartiets beräkning av liknande förslag (8 mdkr/år).",
+      "confidence": 0.6,
+      "calculation": "Antag 3-4 miljoner vuxna betalar 499 kr/mån istället för ~900-1200 kr/mån, bortfall ~500 kr/mån per person. 3,5M * 12 * 500 ≈ 21 mdkr. Efter avdrag för rabattkort, administration och nya resenärer uppskattas nettokostnaden för staten till 6-12 mdkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0321 (8000), p-2026-0439 (1000), p-2026-0466 (1200) ⚠ AVVIKER: 8000 avviker 6.7× från jämförbara (median 1200)"
+  },
+  {
+    "candidate": {
+      "title": "Höj barnbidraget och inför tillägg för ensamstående föräldrar",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "Språkrör"
+      },
+      "quote": "Därför börjar vi med att höja barnbidraget och införa ett tillägg för ensamstående föräldrar.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "duplicateOf": "p-2026-0325"
+  },
+  {
+    "candidate": {
+      "title": "Inför en miljardärsskatt för att öka skatten för de rikaste",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "Språkrör"
+      },
+      "quote": "Därför vill Miljöpartiet se en miljardärsskatt, så att dom som har tjänat allra mest på dom senaste decenniernas utveckling är med och bidrar lite mer.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "intäktsökning",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 800,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på publicerat estimat för samma löfte (p-2026-0324, 800 mkr/år). Osäkerhetsintervall för att fånga variation i förmögenhetsunderlag och skatteplanering.",
+      "confidence": 0.45,
+      "calculation": "Från jämförbart löftesestimat: årlig intäkt ~800 mkr. Antaganden: ca 400 miljardärer med snittförmögenhet ~5 mdr, skattesats 0,15–0,25 % på förmögenhet över 50 mkr. Justerat för beteendeeffekter (kapitalflykt, taxering). Spann 500–1200 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0324 (800), p-2026-0101 (17000) ⚠ AVVIKER: 800 avviker 11.1× från jämförbara (median 8900)"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa vinstuttag i den svenska skolan",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "Språkrör"
+      },
+      "quote": "Vi ska stoppa vinsterna i den svenska skolan!",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förbud mot vinstuttag är en lagändring; den direkta kostnaden för staten är försumbar (0 kr). Följdeffekter kvantifieras inte.",
+      "confidence": 0.65,
+      "calculation": "Inga nya statliga utgifter uppstår vid lagstiftning om stopp för vinstuttag. Jämförbart löfte p-2026-0475 estimerat 0 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0475 (0), p-2026-0070 (3) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1.5"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa tillfälliga uppehållstillstånd",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "Språkrör"
+      },
+      "quote": "Vi säger nej till tillfälliga uppehållstillstånd, som låser in människor i ovisshet och otrygghet.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 2,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regelförändring: direkt kostnad för själva lagändringen är försumbar (regel 9). Indirekta följdeffekter kvantifieras ej.",
+      "confidence": 0.4,
+      "calculation": "Administrativ engångskostnad för att ta fram ny lagstiftning och uppdatera Migrationsverkets rutiner. Grovt uppskattat till högst ett par miljoner kronor."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0331 (0), p-2026-0529 (400), p-2026-0492 (0), p-2026-0498 (100), p-2026-0506 (400) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~100"
+  },
+  {
+    "candidate": {
+      "title": "Stärka skyddet för HBTQ-personer mot hedersförtryck och stoppa bidrag till extremistiska samfund",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill stärka skyddet för HBTQ-personer genom ett kraftfullare arbete mot hedersförtryck och genom att stoppa offentliga bidrag till extremistiska samfund.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/hbtq-personers-frihet-ska-forsvaras-mot-extremism",
+    "articleTitle": "HBTQ-personers frihet ska försvaras mot extremism",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Första delen är ett inriktningslöfte utan direkt kostnad. Andra delen antas minska statsbidrag till extremistiska samfund via SST, en besparing. Storleken är osäker då det är oklart vilka samfund…",
+      "confidence": 0.3,
+      "calculation": "Uppskattad andel av SST:s totala bidrag (~70 mkr/år) som kan dras in: ~0-20 mkr, med ytterligare marginal för osäkerhet. Base satt till 10 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fortsätta pressa tillbaka hedersstrukturer, säkerställa svensk lag och stoppa offentliga bidrag",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill därför fortsätta pressa tillbaka hedersstrukturer, säkerställa att svensk lag gäller i hela landet och stoppa offentliga bidrag till samfund och organisationer som motarbetar demokratiska värderingar och människors fri- och rättigheter.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/hbtq-personers-frihet-ska-forsvaras-mot-extremism",
+    "articleTitle": "HBTQ-personers frihet ska försvaras mot extremism",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 1,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Besparing av statliga bidrag till ett fåtal trossamfund/organisationer som motarbetar demokratin; uppskattad andel av årliga statsbidrag på ~130 mkr.",
+      "confidence": 0.3,
+      "calculation": "Totala statsbidrag till trossamfund via SST ca 130 mkr/år. Bedömer att endast en bråkdel (<10%) av detta avser organisationer som skulle nekas. Lägger även till andra civilsamhällesbidrag. Därför spann 1–20 mkr, base 5 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-0339 (150). Är delarna redan prissatta ska detta löfte sättas till 0."
+  },
+  {
+    "candidate": {
+      "title": "Återinför läxhjälps-RUT",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare"
+      },
+      "quote": "Därför vill Liberalerna återinföra läxhjälps-RUT.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+    "articleTitle": "Liberalerna stärker barnfamiljerna med nytt vallöfte om läxhjälp",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden uppskattas utifrån tidigare RUT-avdrag för läxhjälp. Spannet fångar osäkerhet kring utnyttjandegrad och genomsnittlig reduktion.",
+      "confidence": 0.5,
+      "calculation": "Antag ~20 000 elever utnyttjar avdraget, genomsnittlig reduktion 7 500 kr (50 % av 15 000 kr). Bas: 20 000 × 7 500 = 150 mnkr. Låg: 10 000 × 5 000 = 50 mnkr. Hög: 25 000 × 12 000 = 300 mnkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Höjd VAB-ersättning till 90% under de fem första dagarna",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "höjd VAB-ersättning till 90 procent under de fem första dagarna,",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+    "articleTitle": "Liberalerna stärker barnfamiljerna med nytt vallöfte om läxhjälp",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 600,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Höjer VAB-ersättning från 80% till 90% av sjukpenninggrundande inkomst för de fem första dagarna per vårdperiod. Kostnad uppskattad utifrån total VAB-kostnad ca 6 500 mkr och antagande att 60–80 %…",
+      "confidence": 0.6,
+      "calculation": "Total VAB-kostnad cirka 6 500 mkr/år (statsbudget). Höjning med 10 procentenheter innebär 12,5 % högre kostnad per berörd dag. Antas att 60–80 % av dagar är bland de fem första → kostnadsökning 12,5 % × (0,6–0,8) × 6 500 ≈ 488–650 mkr. Bas 600, spann 500–800 som inrymmer osäkerhet i andel och överlappande korttidsfrånvaro."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Mer generöst RUT-avdrag för personer över 70 år",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "ett mer generöst RUT-avdrag för personer över 70 år,",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+    "articleTitle": "Liberalerna stärker barnfamiljerna med nytt vallöfte om läxhjälp",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 600,
+      "msek_base": 1200,
+      "msek_high": 1800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämförbart med småbarns-RUT (1 500 msek/år). Antagande: höjning av avdrag från 50 % till 70 % för personer över 70. Kostnadsspann utifrån gruppens andel av totalt RUT-uttag och ökad subventionsgrad.",
+      "confidence": 0.4,
+      "calculation": "~1,5 milj. personer 70+. Totalt RUT-avdrag ~6,5 mdkr/år. Antas att 25–35 % av detta avser 70+ (1,6–2,3 mdkr i nuvarande skattereduktion). Höjs avdragsrätten från 50 % till 70 % ökar statens subvention med 40 % av arbetskostnaden, dvs. extrakostnad ~0,6–1,1 mdkr. Med beteendeeffekter (ökat utnyttjande) uppskattas årlig bruttokostnad till ca 1,2 mdkr. Spannet speglar osäkerhet i målgruppens andel och elasticitet."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0467 (1500)"
+  },
+  {
+    "candidate": {
+      "title": "Större möjligheter för apotek att förnya recept och erbjuda enklare vård",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "större möjligheter för apotek att förnya vissa recept och erbjuda enklare vårdtjänster,",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+    "articleTitle": "Liberalerna stärker barnfamiljerna med nytt vallöfte om läxhjälp",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattar statlig ersättning för utökade apotekstjänster (receptförnyelse, enklare vård). Inga belopp i löftet, storleksordning baserad på jämförbara vårdreformer.",
+      "confidence": 0.4,
+      "calculation": "Antag 1–4 miljoner tjänster/år (receptförnyelser, hälsokontroller mm) med ersättning 25–100 kr/st → 25–400 mkr/år. Osäkerheten är stor; med stöd i liknande reformer bedöms ett troligt intervall 50–200 mkr, base 100 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0044 (100), p-2026-0501 (80)"
+  },
+  {
+    "candidate": {
+      "title": "Tjänstepension ska ingå i bodelning vid skilsmässa",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "samt att tjänstepension ska ingå i bodelningen vid skilsmässa.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+    "articleTitle": "Liberalerna stärker barnfamiljerna med nytt vallöfte om läxhjälp",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring utan direkt statlig utgift. Omfördelning mellan makar medför ingen nettokostnad för statsbudgeten; administrativa tilläggskostnader är försumbara.",
+      "confidence": 0.65,
+      "calculation": "Löftet innebär att tjänstepension inkluderas i bodelningsreglerna. Detta omfördelar tillgångar mellan makar utan att staten tillför eller tar emot medel. Kostnaden för eventuell justering av blanketter eller domstolsprövning är marginell (≈ 0)."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
   }
 ]
