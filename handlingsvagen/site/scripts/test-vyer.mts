@@ -21,8 +21,54 @@ for (const kod of koder) {
   }
   assert.strictEqual(s!.summa.total_loften, s!.loften.length, `summan stämmer för ${kod}`);
   assert.strictEqual(s!.summa.ingen_handling, s!.loften.length - s!.summa.vagda, `utan-handling stämmer för ${kod}`);
+
+  // Talen högst upp måste täcka VARJE vägt löfte. Utan den här grinden kunde
+  // ett utfall räknas fram utan att visas — "både och" gjorde precis det, och
+  // ett löfte med en handling i linje och en emot hade då försvunnit ur alla
+  // talen utan att någon märkte det.
+  assert.strictEqual(
+    s!.summa.i_linje + s!.summa.emot + s!.summa.bade_och + s!.summa.avstod,
+    s!.summa.vagda,
+    `utfallen täcker alla vägda löften för ${kod}`,
+  );
+
+  // Summan handlar om partiets EGNA löften; handlingslistan gjorde det inte.
+  // Populationerna hålls isär, annars läser en nolla i toppen som ett
+  // räknefel över en lista full av emot-rader.
   for (const h of s!.handlingar) {
     assert.ok(["i_linje", "emot", "avstod"].includes(h.utslag), `giltigt utslag i ${kod}`);
+    assert.ok(h.eget_lofte, `${h.koppling_id} listas som eget löfte men är det inte`);
+    assert.ok(h.lofte_partier.includes(kod), `${h.koppling_id}: löftet ägs inte av ${kod}`);
+  }
+  for (const h of s!.handlingar_andras) {
+    assert.ok(!h.eget_lofte, `${h.koppling_id} listas som annans löfte men är ${kod}s eget`);
+    assert.ok(!h.lofte_partier.includes(kod), `${h.koppling_id}: löftet ägs av ${kod}`);
+  }
+
+  // Varje rad ska kunna säga vems löfte den vägdes mot.
+  for (const h of [...s!.handlingar, ...s!.handlingar_andras]) {
+    assert.strictEqual(
+      h.lofte_partinamn.length,
+      h.lofte_partier.length,
+      `${h.koppling_id}: partinamn saknas för löftets partier`,
+    );
+  }
+
+  // Talet för emot mot andras löften måste stämma med listan under det.
+  assert.strictEqual(
+    s!.summa.emot_andras,
+    s!.handlingar_andras.filter((h) => h.utslag === "emot").length,
+    `emot-mot-andras stämmer med listan för ${kod}`,
+  );
+
+  // Ett löfte som partiet självt handlat emot ska räknas i emot eller både
+  // och — aldrig hamna i listan utan att synas i talen.
+  const egnaEmot = s!.handlingar.filter((h) => h.utslag === "emot").length;
+  if (egnaEmot > 0) {
+    assert.ok(
+      s!.summa.emot + s!.summa.bade_och > 0,
+      `${kod}: emot mot egna löften finns i listan men inte i talen`,
+    );
   }
 }
 

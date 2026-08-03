@@ -28,6 +28,13 @@ function statusVy(l: PartiLofteRad): { klass: string; ord: string } {
   if (l.n_avstod > 0) return { klass: "status--avstod", ord: "avstod" };
   return { klass: "status--tom", ord: "ingen ren koppling ännu" };
 }
+/** "Moderaternas löfte" / "M och KD:s löfte" — raden ska säga vems det var. */
+function lofteAgare(h: { lofte_partinamn: string[] }): string {
+  const n = h.lofte_partinamn;
+  if (n.length === 0) return "löftet";
+  if (n.length === 1) return `${n[0]}s löfte`;
+  return `${n.slice(0, -1).join(", ")} och ${n[n.length - 1]}s delade löfte`;
+}
 function statusToken(l: PartiLofteRad): string {
   if (l.status === "bade_och") return "bade-och";
   if (l.status === "agerat_i_linje") return "i-linje";
@@ -45,10 +52,18 @@ function statusToken(l: PartiLofteRad): string {
   <div class="summa" role="group" aria-label="Sammanfattning">
     <div><b>{sida.summa.total_loften}</b><span>löften totalt</span></div>
     <div><b>{sida.summa.vagda}</b><span>vägda mot handling</span></div>
-    <div><b>{sida.summa.i_linje}</b><span>i linje</span></div>
-    <div><b>{sida.summa.emot}</b><span>emot</span></div>
+    <div><b>{sida.summa.i_linje}</b><span>i linje med egna löften</span></div>
+    <div><b>{sida.summa.emot}</b><span>emot egna löften</span></div>
+    {sida.summa.bade_och > 0 && <div><b>{sida.summa.bade_och}</b><span>både och</span></div>}
+    {sida.summa.avstod > 0 && <div><b>{sida.summa.avstod}</b><span>avstod</span></div>}
     <div><b>{sida.summa.ingen_handling}</b><span>utan handling ännu</span></div>
   </div>
+  <p class="summanot">
+    Talen ovan gäller <b>partiets egna löften</b>. Vad partiet gjort när andra
+    partier lovat något står längre ner och räknas för sig — det är där
+    <b>emot</b> nästan alltid hamnar, eftersom ett parti sällan handlar mot sitt
+    eget löfte.
+  </p>
 
   <div class="vy-verktyg">
     <h2>Partiets löften</h2>
@@ -77,16 +92,37 @@ function statusToken(l: PartiLofteRad): string {
   </ul>
   <script is:inline src={`${base}hv-listfilter.js`}></script>
 
-  <h2>Det partiet gjort, granskat av oss <span class="rakn">({sida.handlingar.length})</span></h2>
+  <h2>Det partiet gjort om sina egna löften <span class="rakn">({sida.handlingar.length})</span></h2>
   {sida.handlingar.length === 0 ? (
-    <p class="tom-not">Inga granskade kopplingar har ännu gett utslag för {sida.namn}.</p>
+    <p class="tom-not">Inga granskade kopplingar har ännu gett utslag mot {sida.namn}s egna löften.</p>
   ) : (
     <ul class="vy-lista">
       {sida.handlingar.map((h) => (
         <li>
           <span class="vy-meta">{KIND[h.handling.kind] ?? h.handling.kind}{h.handling.datum ? ` · ${h.handling.datum}` : ""}{h.handling.organ ? ` · ${h.handling.organ}` : ""}</span>
           {h.handling.url ? <a class="vy-titel" href={h.handling.url} rel="noopener" target="_blank">{h.handling.titel || h.handling.id}</a> : <span class="vy-titel">{h.handling.titel || h.handling.id}</span>}
-          <span class="vy-lofte">för löftet: <a href={`${base}?lofte=${h.lofte_id}`}>{h.lofte_titel}</a></span>
+          <span class="vy-lofte">för {lofteAgare(h)}: <a href={`${base}?lofte=${h.lofte_id}`}>{h.lofte_titel}</a></span>
+          <span class={`status ${UTSLAGKLASS[h.utslag]}`}>{UTSLAGORD[h.utslag]}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <h2>Det partiet gjort om andra partiers löften <span class="rakn">({sida.handlingar_andras.length})</span></h2>
+  <p class="avsnittsnot">
+    Här räknas inte om {sida.namn} håller vad partiet lovat, utan vad partiet
+    gjort när någon annan lovat något. Ett <b>emot</b> här är inte ett brutet
+    löfte — det är oenighet, och den hör inte hemma i talen högst upp.
+  </p>
+  {sida.handlingar_andras.length === 0 ? (
+    <p class="tom-not">Inga granskade kopplingar har ännu gett utslag för {sida.namn} mot andra partiers löften.</p>
+  ) : (
+    <ul class="vy-lista">
+      {sida.handlingar_andras.map((h) => (
+        <li>
+          <span class="vy-meta">{KIND[h.handling.kind] ?? h.handling.kind}{h.handling.datum ? ` · ${h.handling.datum}` : ""}{h.handling.organ ? ` · ${h.handling.organ}` : ""}</span>
+          {h.handling.url ? <a class="vy-titel" href={h.handling.url} rel="noopener" target="_blank">{h.handling.titel || h.handling.id}</a> : <span class="vy-titel">{h.handling.titel || h.handling.id}</span>}
+          <span class="vy-lofte">för {lofteAgare(h)}: <a href={`${base}?lofte=${h.lofte_id}`}>{h.lofte_titel}</a></span>
           <span class={`status ${UTSLAGKLASS[h.utslag]}`}>{UTSLAGORD[h.utslag]}</span>
         </li>
       ))}
@@ -104,4 +140,13 @@ function statusToken(l: PartiLofteRad): string {
   .vy-filter select { padding: 0.4rem 0.6rem; border: 1px solid var(--linje); border-radius: var(--radie); background: var(--yta); color: var(--text); }
   .rakn { color: var(--text-svag); font-weight: 400; }
   .tom-not { color: var(--text-svag); font-style: italic; }
+  /* Talen högst upp och listorna under mäter olika saker. Noterna säger vilket
+     — utan dem läste en nolla över en lista med emot-rader som ett räknefel. */
+  .summanot, .avsnittsnot {
+    color: var(--text-svag);
+    font-size: 0.9rem;
+    max-width: var(--matt-prosa);
+    margin: 0.6rem 0 0;
+  }
+  .avsnittsnot { margin: 0.3rem 0 0.8rem; }
 </style>
