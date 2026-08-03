@@ -22935,5 +22935,50 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-03T12"
     }
+  },
+  {
+    "id": "p-2026-0566",
+    "group_id": null,
+    "title": "Dra in studiebidrag för gymnasieelever som hotar eller kränker",
+    "slug": "dra-in-studiebidrag-for-gymnasieelever-som-hotar-eller-kranker",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "kunna dra in studiebidrag för gymnasieelever som återkommande hotar eller kränker andra",
+    "date_stated": "2026-08-03",
+    "source": {
+      "url": "https://www.liberalerna.se/ovrigt/liberalerna-nu-tar-vi-nasta-steg-for-att-skapa-studiero-i-skolan",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-03T12:49:30.891Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 1,
+      "msek_base": 5,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattar att ett fåtal gymnasieelever (ca 100–700 per år) får studiebidraget indraget på grund av upprepade hot eller kränkningar. Studiebidraget är ca 12 500 kr per år (10 månader).",
+      "confidence": 0.3,
+      "calculation": "~360 000 gymnasieelever × 0,03–0,2 % berörda × 12,5 tkr/år ≈ 1,4–9,0 mkr. Base satt till 5 mkr för ett mellanscenario."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-03T12"
+    }
   }
 ]
