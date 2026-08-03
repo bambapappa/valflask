@@ -72,16 +72,20 @@ async function existingIssueIds(): Promise<Set<string>> {
   return ids;
 }
 
-/** Öppna koppling-issues med nummer + id (för vaktmästarstädningen). */
-async function openIssues(): Promise<Array<{ number: number; id: string }>> {
-  const out: Array<{ number: number; id: string }> = [];
+/**
+ * Öppna koppling-issues med nummer, id och KROPP. Kroppen behövs för att
+ * upptäcka att kö-posten ändrats sedan issuet skapades — se uppdateringen
+ * nedan.
+ */
+async function openIssues(): Promise<Array<{ number: number; id: string; body: string }>> {
+  const out: Array<{ number: number; id: string; body: string }> = [];
   for (let page = 1; page <= 20; page++) {
     const batch = (await api(
       `/repos/${repo}/issues?labels=${encodeURIComponent(LABEL)}&state=open&per_page=100&page=${page}`,
-    )) as Array<{ number: number; title: string }>;
+    )) as Array<{ number: number; title: string; body: string | null }>;
     for (const issue of batch) {
       const m = issue.title.match(/^\[koppling ([0-9a-f]{12})\]/u);
-      if (m) out.push({ number: issue.number, id: m[1]! });
+      if (m) out.push({ number: issue.number, id: m[1]!, body: issue.body ?? "" });
     }
     if (batch.length < 100) break;
   }
@@ -133,6 +137,48 @@ for (const post of items) {
   if (sleepMs > 0) await new Promise((r) => setTimeout(r, sleepMs));
 }
 console.log(`Klart: ${created} nya issues, ${existing.size} fanns sedan tidigare.`);
+
+// ── Uppdatera issues vars kö-post ändrats sedan issuet skapades.
+//
+// VARFÖR: `kopplingId` är en hash av mål + handling och bär INTE citatet. Byts
+// beviset i kön behåller posten alltså samma id, issuet räknas som befintligt
+// och skapas inte om — men dess text står kvar med det gamla citatet. Då kan
+// den som granskar läsa ett citat, skriva /godkänn, och få ett annat publicerat.
+// Hela poängen med att en människa godkänner varje koppling är att människan
+// ser det som godkänns.
+//
+// Ändringen är aldrig tyst: kroppen skrivs om OCH en kommentar läggs, så det
+// syns i issuets historik att beviset bytts och när.
+const koById = new Map(items.map((p) => [kopplingId(p), p] as const));
+let uppdaterade = 0;
+for (const issue of await openIssues()) {
+  if (uppdaterade + created >= cap) {
+    console.log(`Nådde SYNC_CAP=${cap} — resten uppdateras nästa synk.`);
+    break;
+  }
+  const post = koById.get(issue.id);
+  if (!post) continue; // hanteras av vaktmästaren nedan
+  const handling = hById.get(post.handling_id);
+  const lofte = post.promise_id ? loften.get(post.promise_id) : undefined;
+  const farsk = byggIssueBody(post, issue.id, handling, lofte);
+  if (farsk.trim() === issue.body.trim()) continue;
+  await api(`/repos/${repo}/issues/${issue.number}`, {
+    method: "PATCH",
+    body: JSON.stringify({ body: farsk }),
+  });
+  await api(`/repos/${repo}/issues/${issue.number}/comments`, {
+    method: "POST",
+    body: JSON.stringify({
+      body:
+        "♻️ Förslaget har ändrats sedan issuet skapades — texten ovan är uppdaterad " +
+        "till vad som står i kön nu. Läs om den innan du beslutar.",
+    }),
+  });
+  uppdaterade++;
+  console.log(`  uppdaterade #${issue.number}`);
+  if (sleepMs > 0) await new Promise((r) => setTimeout(r, sleepMs));
+}
+if (uppdaterade > 0) console.log(`Uppdaterade ${uppdaterade} issues vars förslag ändrats.`);
 
 // ── Vaktmästaren: stäng öppna issues vars kö-post inte längre finns —
 // posten har hanterats utanför issue-flödet (granska-CLI:t). Beslutet är
