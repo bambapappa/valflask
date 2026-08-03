@@ -17,6 +17,7 @@ import {
   LiveSource,
   seenKey,
   findManifestPdfLinks,
+  harForegaendeValsAr,
   joinPdfLines,
   parsePdfDate,
   looksLikePdf,
@@ -633,6 +634,49 @@ describe("LiveSource med mock-HTTP", () => {
       "https://testpartiet.se/download/18.abc/1771599906618/Valplattform.pdf",
       "https://www.testpartiet.se/wp-content/valmanifest-2026.pdf",
     ], "relativ löst mot basen; extern domän, webmanifest och omatchad PDF exkluderade");
+  });
+
+  test("findManifestPdfLinks: manifest från ett tidigare val följs inte", () => {
+    // Alla adresser nedan är verkliga, hämtade 2026-08-03. SD:s och MP:s
+    // /valmanifest/ pekar på 2022 års manifest och KD:s politiksida på
+    // EU-valets 2024 — alla tre matchar nyckelordsregeln perfekt. Utan
+    // årsspärren hade de lästs in som 2026 års vallöften.
+    for (const gammal of [
+      "/wp-content/uploads/2022/08/valmanifest.pdf",
+      "/wp-content/uploads/2022/08/valmanifest2022_hela_a4_klart.pdf",
+      "/download/18.69b3406d19a7bcb82b75271/1764661852071/Manifesto_2024.pdf",
+    ]) {
+      assert.equal(harForegaendeValsAr(gammal), true, `borde spärras: ${gammal}`);
+    }
+
+    // Och lika viktigt: valårets egna manifest får inte fastna. C:s och L:s
+    // adressers årtal står på olika ställen, MP:s handlingsprogram bär två.
+    for (const aktuell of [
+      "/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      "/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf",
+      "/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf",
+    ]) {
+      assert.equal(harForegaendeValsAr(aktuell), false, `borde släppas: ${aktuell}`);
+    }
+
+    // En adress utan årtal säger ingenting om ålder och ska släppas igenom —
+    // spärren stoppar det vi kan se är gammalt, den gissar aldrig. Den långa
+    // sifferkedjan i S:s nedladdningsadress är inget årtal.
+    assert.equal(
+      harForegaendeValsAr("/download/18.68544bb219c4794c4a4684c/1771599906618/Valplattform.pdf"),
+      false,
+      "sifferkedja i nedladdningsadress är inget årtal",
+    );
+
+    // Hela vägen genom länkletaren, inte bara predikatet.
+    const html =
+      '<a href="/wp-content/uploads/2022/08/valmanifest.pdf">Valmanifest</a>' +
+      '<a href="/wp-content/uploads/2026/06/valmanifest-2026.pdf">Valmanifest 2026</a>';
+    assert.deepEqual(
+      findManifestPdfLinks(html, "https://testpartiet.se/valmanifest/"),
+      ["https://testpartiet.se/wp-content/uploads/2026/06/valmanifest-2026.pdf"],
+      "bara valårets manifest följs",
+    );
   });
 
   test("page-källa auto-följer manifest-PDF länkad från sidan", async () => {

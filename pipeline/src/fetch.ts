@@ -318,6 +318,32 @@ export async function extractPdfText(bytes: Uint8Array): Promise<PdfExtract> {
 export const MAX_FOLLOWED_PDFS = 3;
 
 /**
+ * Valåret. En manifest-PDF vars sökväg bär ett ÄLDRE årtal följs inte.
+ *
+ * Skälet är mätt, inte hypotetiskt: 2026-08-03 pekade `sd.se/valmanifest/`
+ * vidare till `/wp-content/uploads/2022/08/valmanifest.pdf` och MP:s
+ * `/valmanifest/` var sidan "Valmanifest 2022". KD:s politiksida länkar
+ * `Manifesto_2024.pdf` från EU-valet. Alla tre matchar nyckelordsregeln nedan
+ * perfekt. Utan årsspärren hade fyra år gammal politik kunnat läsas in som
+ * 2026 års vallöften — och ett löfte med fel årtal är värre än ett saknat
+ * löfte, för det ser ut som ett belägg.
+ */
+export const VALAR = 2026;
+
+/**
+ * Sant om sökvägen bevisligen hör till ett tidigare val. Saknas årtal helt
+ * släpps länken igenom: spärren ska stoppa det vi KAN se är gammalt, aldrig
+ * gissa bort ett manifest vars adress inte råkar bära något år.
+ */
+export function harForegaendeValsAr(pathname: string): boolean {
+  // Årtalet måste stå som ett eget tal, inte inuti en lång sifferkedja: en
+  // nedladdningsadress som ".../1771599906618/Valplattform.pdf" bär inget år.
+  const ar = [...pathname.matchAll(/(?<![0-9])(?:19|20)\d{2}(?![0-9])/gu)].map((m) => Number(m[0]));
+  if (ar.length === 0) return false;
+  return Math.max(...ar) < VALAR;
+}
+
+/**
  * Hittar länkar till manifest-PDF:er i en HTML-sida: href som pekar på .pdf
  * på SAMMA kanoniska domän och vars sökväg ser ut som ett valdokument.
  * Detta är B:s "automatisk täckning": partier länkar sina manifest som PDF
@@ -346,6 +372,8 @@ export function findManifestPdfLinks(html: string, baseUrl: string): string[] {
     if (!/\.pdf$/iu.test(abs.pathname)) continue;
     if (!/(manifest|valplattform|valprogram|handlingsprogram)/iu.test(abs.pathname)) continue;
     if (canonicalHost(abs.hostname) !== baseHost) continue;
+    // Ett manifest från ett tidigare val är inte ett vallöfte 2026.
+    if (harForegaendeValsAr(abs.pathname)) continue;
     abs.hash = "";
     links.add(abs.href);
     if (links.size >= MAX_FOLLOWED_PDFS) break;
