@@ -134,9 +134,15 @@ main,
 
 /* ── Sök- och filterfält ── */
 .sok { position: relative; flex: 1 1 260px; }
+/* Bara sökfältet — aldrig `.amnesok input` rakt av. Ämnessidans partifilter
+   ligger inne i samma ruta, och en kryssruta som får full bredd, indrag och
+   egen ram trycker undan partinamnet bredvid sig. Chromium visar det inte:
+   där formas en kryssruta med `appearance: auto` inte av bredd, indrag eller
+   ram, så felet syns bara i webbläsare som gör det. Sidans egen kopia av
+   regeln rättades 2026-08-02; den här stod kvar. */
 .sok input,
 .verktyg select,
-.amnesok input {
+.amnesok input[type="search"] {
   width: 100%;
   padding: 0.5rem 0.6rem;
   font-family: var(--font-mono);

@@ -6,6 +6,7 @@
  * Kör: npm test (från site/).
  */
 import assert from "node:assert";
+import { readFileSync } from "node:fs";
 import { aktorsPartier } from "../../pipeline/src/handlingar.ts";
 import { BETANKANDENYCKEL, sokStammar } from "../../pipeline/src/nyckelord.ts";
 import { getHandlingMap, getPersoner } from "../src/lib/data.ts";
@@ -340,6 +341,22 @@ grind("ingen lagd röst är frånvaro, inte avstående", partiStandpunkt([0, 0, 
 grind("avstående är en egen ståndpunkt", partiStandpunkt([0, 0, 19, 5]).val === "avstar");
 grind("delad röst redovisas som delad", partiStandpunkt([50, 10, 0, 2]).delad === true);
 grind("enig röst redovisas inte som delad", partiStandpunkt([50, 0, 0, 2]).delad === false);
+
+// Fältformen får bara nå sökfältet. Partifiltret ligger i samma ruta, och en
+// kryssruta som får full bredd, indrag och ram trycker undan partinamnet
+// bredvid sig. Regeln fanns i två kopior — sidans egen och den här i
+// stilmallen — och bara den ena rättades, så felet levde vidare. Chromium
+// formar inte en kryssruta med `appearance: auto`, alltså syns det inte där.
+// Grinden läser stilmallen som text: det finns ingen webbläsare i testet.
+{
+  const css = readFileSync(new URL("../src/styles/rutnat.css", import.meta.url), "utf8");
+  const traffar = [...css.matchAll(/(^|,)\s*\.amnesok\s+input([^,{\s]*)/gm)].map((m) => m[2]);
+  grind(
+    "fältformen når bara sökfältet, aldrig partifiltrets kryssrutor",
+    traffar.length > 0 && traffar.every((t) => t === '[type="search"]'),
+    traffar.length === 0 ? "hittade ingen .amnesok input-regel alls" : `hittade: ${traffar.map((t) => `.amnesok input${t}`).join(", ")}`,
+  );
+}
 
 console.log(fel === 0 ? "ämnessök: alla grindar gröna" : `ämnessök: ${fel} grindar föll`);
 if (fel > 0) process.exit(1);
