@@ -23117,5 +23117,51 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-03T12"
     }
+  },
+  {
+    "id": "p-2026-0570",
+    "group_id": null,
+    "title": "Indexering av assistansersättningen",
+    "slug": "indexering-av-assistansersattningen",
+    "parties": [
+      "l",
+      "sd"
+    ],
+    "person": null,
+    "quote": "ersättningen därefter indexeras så att den följer kostnadsutvecklingen,",
+    "date_stated": "2026-08-03",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/liberalerna-vill-starka-den-personliga-assistansen",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-03T12:50:02.047Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 600,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för att indexera assistansersättningen till faktisk kostnadsutveckling (löneindex). Antagande: uppräkning 1–4 procentenheter utöver nuvarande oregelbundna justeringar, på en total årlig statli",
+      "confidence": 0.4,
+      "calculation": "Totala statliga utgifter för assistansersättning ≈ 30 000 mkr/år. En extra årlig uppräkning med 1–4 % (utöver redan beslutade/budgeterade nivåer) ger en årlig merkostnad på 300–1 200 mkr. Base 600 mkr vid 2 % extra indexering."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-03T12"
+    }
   }
 ]
