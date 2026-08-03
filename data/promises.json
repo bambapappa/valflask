@@ -23256,5 +23256,50 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-03T12"
     }
+  },
+  {
+    "id": "p-2026-0573",
+    "group_id": null,
+    "title": "Sänkt dieselskatt",
+    "slug": "sankt-dieselskatt",
+    "parties": [
+      "sd"
+    ],
+    "person": null,
+    "quote": "Vi föreslår bland annat sänkt dieselskatt",
+    "date_stated": "2026-08-03",
+    "source": {
+      "url": "https://www.sd.se/6829-2/",
+      "domain": "sd.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-03T12:50:37.336Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 4200,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Utan angiven nivå används den senaste permanenta dieselskatte­sänkningen (1,61 kr/l, ~4,2 mdkr) som bas; spannet speglar tänkbara mindre eller större skattesänkningar.",
+      "confidence": 0.3,
+      "calculation": "Skattepliktig dieselvolym ~4 miljarder liter/år. 0,5 kr/l ger ~2 mdkr; 1,61 kr/l ger teoretiskt 6,4 mdkr men med undantag och beteendeeffekter ~4,2 mdkr. Högre sänkning 2,5 kr/l ger upp till ~10 mdkr. Lågt spann 1,5 mdkr, högt 10 mdkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-03T12"
+    }
   }
 ]
