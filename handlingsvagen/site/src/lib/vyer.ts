@@ -60,6 +60,12 @@ export interface PartiHandling {
   koppling_id: string;
   lofte_id: string;
   lofte_titel: string;
+  /** Partierna bakom löftet som handlingen vägdes mot. */
+  lofte_partier: string[];
+  /** Deras namn, utskrivna — raden ska säga vems löfte det var. */
+  lofte_partinamn: string[];
+  /** Sant när löftet är partiets eget. */
+  eget_lofte: boolean;
   utslag: Utslag;
   handling: ReturnType<typeof handlingVy>;
 }
@@ -68,9 +74,22 @@ export interface PartiSida {
   code: string;
   namn: string;
   block: string;
-  summa: { total_loften: number; vagda: number; i_linje: number; emot: number; bade_och: number; ingen_handling: number };
+  summa: {
+    total_loften: number;
+    vagda: number;
+    i_linje: number;
+    emot: number;
+    bade_och: number;
+    avstod: number;
+    ingen_handling: number;
+    /** Utslag partiets handlingar gett MOT ANDRA PARTIERS löften. */
+    emot_andras: number;
+  };
   loften: PartiLofteRad[];
+  /** Handlingar vägda mot partiets EGNA löften. */
   handlingar: PartiHandling[];
+  /** Handlingar vägda mot ANDRA partiers löften. */
+  handlingar_andras: PartiHandling[];
 }
 
 export function partiKoder(): string[] {
@@ -103,7 +122,8 @@ export function buildPartiSida(code: string): PartiSida | null {
     return av - bv || a.kategori.localeCompare(b.kategori, "sv") || a.id.localeCompare(b.id);
   });
 
-  const loftenTitel = new Map(getLoften().map((l) => [l.id, l.titel]));
+  const loftenById = new Map(getLoften().map((l) => [l.id, l]));
+  const partiNamn = new Map(getParties().map((p) => [p.code, p.namn]));
   const handlingar_ut: PartiHandling[] = [];
   for (const d of getDomar().partidomar) {
     if (d.party !== code) continue;
@@ -115,16 +135,29 @@ export function buildPartiSida(code: string): PartiSida | null {
     for (const [kid, utslag] of rader) {
       const k = kById.get(kid);
       if (!k) continue;
+      const l = loftenById.get(d.target_id);
+      const partier = l?.parties ?? [];
       handlingar_ut.push({
         koppling_id: kid,
         lofte_id: d.target_id,
-        lofte_titel: loftenTitel.get(d.target_id) ?? d.target_id,
+        lofte_titel: l?.titel ?? d.target_id,
+        lofte_partier: partier,
+        lofte_partinamn: partier.map((c) => partiNamn.get(c) ?? c),
+        eget_lofte: partier.includes(code),
         utslag,
         handling: handlingVy(handlingar.get(k.handling_id), k.handling_id),
       });
     }
   }
   handlingar_ut.sort((a, b) => b.handling.datum.localeCompare(a.handling.datum));
+
+  // Summan handlar om partiets EGNA löften. Handlingslistan gjorde det inte:
+  // den tog med varje utslag partiets handlingar gett, också mot andra
+  // partiers löften — och just de utgör i dag samtliga emot-utslag i
+  // registret. Sida vid sida läste det som att nollan var fel. De två
+  // populationerna hålls nu isär och räknas var för sig.
+  const egna = handlingar_ut.filter((h) => h.eget_lofte);
+  const andras = handlingar_ut.filter((h) => !h.eget_lofte);
 
   const vagda = loften.filter((l) => l.n_i_linje + l.n_emot + l.n_avstod > 0);
   const summa = {
@@ -133,10 +166,19 @@ export function buildPartiSida(code: string): PartiSida | null {
     i_linje: loften.filter((l) => l.status === "agerat_i_linje").length,
     emot: loften.filter((l) => l.status === "agerat_emot").length,
     bade_och: loften.filter((l) => l.status === "bade_och").length,
+    // Avstod-bara: vägt, men varken i linje, emot eller både och. Utan det
+    // talet summerar de fyra utfallen inte till antalet vägda löften.
+    avstod: vagda.filter(
+      (l) => l.status !== "agerat_i_linje" && l.status !== "agerat_emot" && l.status !== "bade_och",
+    ).length,
     ingen_handling: loften.length - vagda.length,
+    emot_andras: andras.filter((h) => h.utslag === "emot").length,
   };
 
-  return { code, namn: parti.namn, block: parti.block, summa, loften, handlingar: handlingar_ut };
+  return {
+    code, namn: parti.namn, block: parti.block, summa, loften,
+    handlingar: egna, handlingar_andras: andras,
+  };
 }
 
 // ---- Vy 3: ledamotssidan -----------------------------------------------
