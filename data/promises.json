@@ -22889,5 +22889,51 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-03T12"
     }
+  },
+  {
+    "id": "p-2026-0565",
+    "group_id": null,
+    "title": "Höjd assistansersättning med 7 procent",
+    "slug": "hojd-assistansersattning-med-7-procent",
+    "parties": [
+      "l",
+      "sd"
+    ],
+    "person": null,
+    "quote": "assistansersättningen höjs med cirka 7 procent för att kompensera för de senaste årens kostnadsökningar,",
+    "date_stated": "2026-08-03",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/liberalerna-vill-starka-den-personliga-assistansen",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-03T12:49:26.214Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1800,
+      "msek_base": 2300,
+      "msek_high": 3500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar total statlig assistansersättning på ca 30-35 mdkr årligen. 7% höjning ger ökning på ca 2,1-2,5 mdkr. Osäkerhet kring exakt bas, om höjningen avser hela schablonen samt timutveckling.",
+      "confidence": 0.6,
+      "calculation": "30-35 mdkr × 0,07 ≈ 2,1-2,45 mdkr. Baserat på budgetens anslag för assistansersättning (ca 32-35 mdkr) blir mittpunkten ~2,3 mdkr. Låg skattning 1,8 mdkr vid smalare tillämpning, hög 3,5 mdkr vid bredare och ökad volym."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-03T12"
+    }
   }
 ]
