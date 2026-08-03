@@ -76,7 +76,12 @@ jobs:
             # Prövas FÖRE omräkningen: domar.json bär ett genereringsdatum och
             # ändras därför vid varje körning. Räknade vi om ovillkorligt vore
             # inget beslut någonsin en no-op, och ett hjälpsvar hade committat.
-            if git diff --quiet -- data/kopplingar.json; then
+            #
+            # BÅDA filerna måste prövas. Ett godkännande skriver kopplingar.json
+            # OCH plockar posten ur kön; en AVVISNING rör bara kön. Prövades bara
+            # kopplingar.json såg varje avvisning ut som "ingen ändring" —
+            # workflown svarade grönt, issuet stängdes, och posten låg kvar i kön.
+            if git diff --quiet -- data/kopplingsforslag.json data/kopplingar.json; then
               echo "Inga dataändringar (fel-/hjälpsvar eller redan hanterad)."
               exit 0
             fi
@@ -84,8 +89,16 @@ jobs:
             # domar.json som fil, så en kopplingsändring utan omräkning ger en
             # grön driftsättning av gamla utslag — det hände, och stod still i
             # åtta dagar. Den som ändrar kopplingar äger domarna.
-            (cd pipeline && npm run --silent vendor -- --promises ../../data/promises.json --parties ../../data/parties.json)
-            (cd pipeline && npm run --silent domar -- --promises ../../data/promises.json)
+            #
+            # Men BARA när kopplingarna ändrats. En avvisning rör bara kön, och
+            # kön står med flit i build.yml:s paths-ignore eftersom den aldrig
+            # syns på sajten. En ovillkorlig omräkning hade skrivit ett nytt
+            # genereringsdatum i domar.json, och då hade varje avvisning byggt om
+            # hela sajten för ingenting.
+            if ! git diff --quiet -- data/kopplingar.json; then
+              (cd pipeline && npm run --silent vendor -- --promises ../../data/promises.json --parties ../../data/parties.json)
+              (cd pipeline && npm run --silent domar -- --promises ../../data/promises.json)
+            fi
             git add data/
             git commit -m "data: koppling-beslut via issue #${{ github.event.issue.number }}"
             if git push origin "HEAD:$DEFAULT_BRANCH"; then
