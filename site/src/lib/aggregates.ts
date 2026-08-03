@@ -190,6 +190,60 @@ export function flasketPerRost(totalMsek: number, votes: number): number {
   return votes > 0 ? (totalMsek * 1000) / votes : 0;
 }
 
+/**
+ * Ett löfte som det ska VISAS i en rangordnad lista: en post per politik, inte
+ * en per formulering. Samma representant som summorna räknar (dedupeByGroup),
+ * så en lista och en summa aldrig kan säga olika saker om samma grupp.
+ *
+ * Utan det här blev topplistan en rangordning av formuleringar: Centerpartiets
+ * skattefria grundlön tog tre av tio platser med samma belopp tre gånger, och
+ * femprocentsmålet för försvaret tre till — sex av tio platser åt två
+ * politikförslag (mätt 2026-08-03). `parties` bär hela gruppens partier, så en
+ * delad utfästelse kan visas som delad i stället för att bokföras på den
+ * medlem som råkade bära beloppet.
+ */
+export interface GroupedPromise {
+  /** Medlemmen som bär gruppens belopp — densamma som i summorna. */
+  promise: PromisePost;
+  /** Alla partier i gruppen, inte bara bärarens. */
+  parties: string[];
+  /** Gruppens medlemmar, bäraren inräknad. */
+  memberIds: string[];
+  /** Sant när gruppen har fler än en medlem. */
+  shared: boolean;
+}
+
+export function groupedPromises(promises: PromisePost[]): GroupedPromise[] {
+  const active = promises.filter(isActive);
+  const members = new Map<string, PromisePost[]>();
+  for (const p of active) {
+    if (!p.group_id) continue;
+    members.set(p.group_id, [...(members.get(p.group_id) ?? []), p]);
+  }
+  return dedupeByGroup(active).map((promise) => {
+    const group = promise.group_id ? members.get(promise.group_id) ?? [promise] : [promise];
+    return {
+      promise,
+      parties: Array.from(new Set(group.flatMap((m) => m.parties))).sort(),
+      memberIds: group.map((m) => m.id),
+      shared: group.length > 1,
+    };
+  });
+}
+
+/**
+ * Vilka av ETT PARTIS löften som bär beloppet i partiets summa. Dedupen sker
+ * efter partifiltret, precis som i partyTotalMsek — en tvärpartigrupp behåller
+ * partiets egen medlem. Partisidan listar alla löften men visar beloppet bara
+ * på bäraren, så listan och rubrikens summa går ihop.
+ */
+export function groupBearersForParty(promises: PromisePost[], code: string): Map<string, string> {
+  const egna = promises.filter((p) => isActive(p) && p.parties.includes(code));
+  const bearers = new Map<string, string>();
+  for (const p of dedupeByGroup(egna)) if (p.group_id) bearers.set(p.group_id, p.id);
+  return bearers;
+}
+
 export interface CategoryBreakdown {
   category: string;
   totalMsek: number;

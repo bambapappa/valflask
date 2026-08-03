@@ -1,0 +1,205 @@
+/**
+ * test-grupplista.mts — enhetstest för att LISTOR och SUMMOR aldrig får säga
+ * olika saker om samma grupp.
+ *
+ * Bakgrunden: topplistan sorterade alla löften rakt av. Samma politik med tre
+ * formuleringar tog då tre platser med samma belopp tre gånger — sex av tio
+ * platser gick till två politikförslag (mätt 2026-08-03). Summorna räknade
+ * redan gruppen en gång, så listan och totalen sa olika saker om samma data.
+ * Partisidan bar samma fel tydligare: rubriken visade gruppen en gång medan
+ * tabellen under upprepade beloppet på varje medlem.
+ *
+ * Grindarna nedan prövas mot både påhittade fall och det verkliga datat.
+ * Körs i sajtens teststil (node --experimental-strip-types).
+ */
+import { readFileSync } from "node:fs";
+import {
+  dedupeByGroup,
+  groupBearersForParty,
+  groupedPromises,
+  partyTotalMsek,
+  promiseNetMsek,
+  promiseTotalMsek,
+} from "../src/lib/aggregates.ts";
+import { getPromises } from "../src/lib/data.ts";
+import type { PromisePost } from "../src/lib/data";
+
+let errors = 0;
+function check(label: string, cond: boolean, msg?: string): void {
+  if (cond) console.log(`  OK: ${label}`);
+  else {
+    console.error(`FAIL: ${label}${msg ? ` — ${msg}` : ""}`);
+    errors++;
+  }
+}
+
+function p(
+  id: string,
+  base: number,
+  parties: string[],
+  group_id: string | null = null,
+  status = "aktiv",
+): PromisePost {
+  return {
+    id,
+    slug: id,
+    title: id,
+    parties,
+    group_id,
+    status,
+    category: "övrigt",
+    cost: {
+      type: "utgift",
+      period: "per_ar",
+      msek_low: base,
+      msek_base: base,
+      msek_high: base,
+      basis: "llm_estimat",
+      basis_url: null,
+      method_note: "x",
+      confidence: 0.4,
+    },
+  } as unknown as PromisePost;
+}
+
+console.log("=== Grupperade listor ===");
+
+// ── Påhittade fall ────────────────────────────────────────────────────────
+{
+  const data = [
+    p("p-1", 100, ["c"], "g-delad"),
+    p("p-2", 100, ["l"], "g-delad"),
+    p("p-3", 100, ["m"], "g-delad"),
+    p("p-4", 90, ["s"]),
+  ];
+  const lista = groupedPromises(data);
+  check("gruppen tar en plats, inte tre", lista.length === 2, `fick ${lista.length}`);
+
+  const delad = lista.find((g) => g.promise.group_id === "g-delad")!;
+  check(
+    "raden bär hela gruppens partier",
+    delad.parties.join(",") === "c,l,m",
+    delad.parties.join(","),
+  );
+  check("raden vet hur många formuleringar som finns", delad.memberIds.length === 3);
+  check("delad markeras som delad", delad.shared === true);
+  check("ogrupperat löfte markeras inte som delat", lista.find((g) => g.promise.id === "p-4")!.shared === false);
+
+  // Bäraren måste vara densamma som summorna använder, annars kan en lista
+  // visa ett annat belopp än totalen räknat med.
+  check(
+    "bäraren är densamma som i dedupeByGroup",
+    delad.promise.id === dedupeByGroup(data).find((x) => x.group_id === "g-delad")!.id,
+  );
+}
+
+{
+  // Ett tillbakadraget löfte får varken ta plats eller dra med sig gruppen.
+  const data = [
+    p("p-1", 100, ["c"], "g-x", "tillbakadragen"),
+    p("p-2", 40, ["c"], "g-x"),
+  ];
+  const lista = groupedPromises(data);
+  check("tillbakadraget löfte listas inte", lista.length === 1 && lista[0]!.promise.id === "p-2");
+  check(
+    "tillbakadraget räknas inte som en formulering",
+    lista[0]!.memberIds.join(",") === "p-2",
+    lista[0]!.memberIds.join(","),
+  );
+}
+
+{
+  // Tvärpartigrupp: partiets summa behåller partiets EGEN medlem, så partisidans
+  // bärare måste räknas fram efter partifiltret — inte globalt.
+  const data = [
+    p("p-1", 100, ["m"], "g-tvar"),
+    p("p-2", 60, ["c"], "g-tvar"),
+  ];
+  check(
+    "partiets bärare är partiets egen medlem",
+    groupBearersForParty(data, "c").get("g-tvar") === "p-2",
+  );
+  check(
+    "det andra partiet bär sin egen",
+    groupBearersForParty(data, "m").get("g-tvar") === "p-1",
+  );
+}
+
+// ── Mot verkliga datat ────────────────────────────────────────────────────
+const alla = getPromises();
+
+{
+  // Ingen grupp får ta två platser i en rangordnad lista.
+  const grupper = groupedPromises(alla).map((g) => g.promise.group_id).filter(Boolean);
+  check(
+    "ingen grupp tar mer än en plats i listan",
+    new Set(grupper).size === grupper.length,
+    `${grupper.length} rader, ${new Set(grupper).size} grupper`,
+  );
+}
+
+{
+  // Kärnan: partisidans lista måste addera till partisidans rubrik. Beloppet
+  // visas bara på bäraren, alltså är summan av de visade beloppen = totalen.
+  for (const kod of ["s", "m", "sd", "c", "v", "kd", "l", "mp"]) {
+    const bearers = groupBearersForParty(alla, kod);
+    const listade = alla.filter((x) => x.status !== "tillbakadragen" && x.parties.includes(kod));
+    const visad = listade
+      .filter((x) => !x.group_id || bearers.get(x.group_id) === x.id)
+      .reduce((s, x) => s + promiseNetMsek(x), 0);
+    const rubrik = partyTotalMsek(alla, kod);
+    check(
+      `${kod}: listans visade belopp summerar till rubrikens total`,
+      Math.abs(visad - rubrik) < 1e-6,
+      `lista ${Math.round(visad)} mot rubrik ${Math.round(rubrik)}`,
+    );
+  }
+}
+
+{
+  // Listan ska vara sorterbar på belopp utan att en grupp smyger in ett
+  // annat belopp än det summorna räknade med.
+  const fel = groupedPromises(alla).filter((g) => {
+    if (!g.promise.group_id) return false;
+    const medlemmar = alla.filter(
+      (x) => x.status !== "tillbakadragen" && x.group_id === g.promise.group_id,
+    );
+    return medlemmar.some((m) => promiseTotalMsek(m) > promiseTotalMsek(g.promise));
+  });
+  check("raden bär gruppens högsta belopp", fel.length === 0, fel.map((g) => g.promise.id).join(" "));
+}
+
+{
+  // Grindarna ovan låser vad hjälpfunktionerna gör. De säger ingenting om att
+  // sidorna faktiskt ANVÄNDER dem — och det var just sidorna som räknade fel.
+  // Därför läses de två mallarna som text: en rangordnad lista får inte gå
+  // rakt på löftena, och partisidans belopp måste stå bakom bärarprövningen.
+  const läs = (rel: string) => readFileSync(new URL(rel, import.meta.url), "utf8");
+
+  const topp = läs("../src/pages/topplistor.astro");
+  check(
+    "topplistan bygger på grupperade löften",
+    /groupedPromises\(/.test(topp),
+    "hittade inget anrop till groupedPromises",
+  );
+  check(
+    "topplistan sorterar inte löftena rakt av",
+    !/\[\.\.\.active\]\.sort/.test(topp),
+    "listan sorterar active direkt igen",
+  );
+
+  const parti = läs("../src/pages/parti/[kod].astro");
+  check(
+    "partisidan räknar fram vilka löften som bär beloppet",
+    /groupBearersForParty\(/.test(parti),
+    "hittade inget anrop till groupBearersForParty",
+  );
+  check(
+    "partisidans belopp står bakom bärarprövningen",
+    /bearerId\s*&&\s*bearerId\s*!==\s*p\.id/.test(parti) && /bearer\s*$|bearer\s*\n\s*\?/m.test(parti),
+    "beloppet ser ut att visas på varje medlem igen",
+  );
+}
+
+console.log(errors === 0 ? "grupplista: alla grindar gröna" : `grupplista: ${errors} grindar föll`);
+if (errors > 0) process.exit(1);
