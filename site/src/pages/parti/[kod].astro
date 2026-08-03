@@ -7,7 +7,7 @@ import KallRad from "../../components/KallRad.astro";
 import Dela from "../../components/Dela.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
 import { formatMsek, formatMsekShort } from "../../lib/calc";
-import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseTotalMsek } from "../../lib/aggregates";
+import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseTotalMsek, groupBearersForParty } from "../../lib/aggregates";
 import { getIssuesFile, getStances, cellFor, emptyCellText, statementById, POSITION_LABEL } from "../../lib/stances";
 
 export function getStaticPaths() {
@@ -21,6 +21,17 @@ const parties = getParties();
 const constants = getConstants();
 const party = parties.find((p) => p.code === kod)!;
 const partyPromises = getPromisesForParty(promises, kod);
+// Alla löften står kvar i listan — varje citat är ett eget belägg med egen
+// källa. Men samma politik kostar en gång, så beloppet visas bara på det
+// löfte som bär det i summan; övriga medlemmar pekar dit. Utan det adderade
+// listan till mer än rubriken sa (för C: 1 724 mot 1 018 mdkr, 2026-08-03).
+const bearers = groupBearersForParty(promises, kod);
+const promiseById = new Map(promises.map((p) => [p.id, p]));
+const promiseRows = partyPromises.map((p) => {
+  const bearerId = p.group_id ? bearers.get(p.group_id) : undefined;
+  const bearer = bearerId && bearerId !== p.id ? promiseById.get(bearerId) : undefined;
+  return { p, bearer };
+});
 const total = partyTotalMsek(promises, kod);
 const flasket = totalFlasket(promises);
 const gap = financingGap(promises);
@@ -106,12 +117,16 @@ const jsonLd = [
             </tr>
           </thead>
           <tbody>
-            {partyPromises.map((p, i) => (
+            {promiseRows.map(({ p, bearer }, i) => (
               <tr>
                 <td class="radnr">{i + 1}</td>
                 <td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td>
                 <td>{p.category}</td>
-                <td class="num belopp">{formatMsek(promiseTotalMsek(p), p.cost.basis)}</td>
+                <td class="num belopp">
+                  {bearer
+                    ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span>
+                    : formatMsek(promiseTotalMsek(p), p.cost.basis)}
+                </td>
                 <td>{p.status}</td>
               </tr>
             ))}
@@ -154,6 +169,16 @@ const jsonLd = [
 </Layout>
 
 <style>
+  /* Ett löfte som räknas i ett annat visar var, inte ett belopp. Ingen färg —
+     texten säger det själv, så det syns även i svartvitt och för den som
+     lyssnar på sidan. */
+  .raknas {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    color: var(--text-svag);
+    white-space: normal;
+  }
+
   .manifest-status {
     font-size: 0.85rem;
     color: var(--farg-text-svag, #666);

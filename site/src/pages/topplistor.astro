@@ -2,14 +2,17 @@
 import Layout from "../layouts/Layout.astro";
 import { getPromises, getParties, getPeople } from "../lib/data";
 import { formatMsek } from "../lib/calc";
-import { promiseTotalMsek, partyTotalMsek, getPromisesForParty, flasketPerRost, categoryBreakdown } from "../lib/aggregates";
+import { promiseTotalMsek, partyTotalMsek, getPromisesForParty, flasketPerRost, categoryBreakdown, groupedPromises } from "../lib/aggregates";
 
 const promises = getPromises();
 const parties = getParties();
 const people = getPeople();
 const active = promises.filter((p) => p.status !== 'tillbakadragen');
 
-const fetaste = [...active].sort((a, b) => promiseTotalMsek(b) - promiseTotalMsek(a));
+// En post per politik, inte en per formulering: ett delat löfte tar en plats
+// och skriver ut alla partier som lovat det. Samma representant som summorna
+// räknar, så listan och totalen aldrig säger olika saker om samma grupp.
+const fetaste = groupedPromises(promises).sort((a, b) => promiseTotalMsek(b.promise) - promiseTotalMsek(a.promise));
 
 const partyTotals = parties.map((p) => ({
   ...p,
@@ -42,7 +45,7 @@ const jsonLd = [
   },
 ];
 ---
-<Layout title="Topplistor — utlovat.se" description="Fetaste enskilda fläsket, fläskigaste partiet, dyraste kategorin. Rena datasorteringar." jsonLd={jsonLd} canonicalPath="/topplistor">
+<Layout title="Topplistor — utlovat.se" description="Fetaste fläsket, fläskigaste partiet, dyraste kategorin. Rena datasorteringar." jsonLd={jsonLd} canonicalPath="/topplistor">
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
       <h1>Topplistor</h1>
@@ -50,13 +53,14 @@ const jsonLd = [
     </div>
 
     <section class="sektion">
-      <h2>Fetaste enskilda fläsket</h2>
+      <h2>Fetaste fläsket</h2>
+      <p class="prosa-content listnot">Lovar flera partier samma sak går det bara att genomföra en gång, så det räknas en gång och tar en plats här. Alla partier bakom löftet står utskrivna.</p>
       <ol class="promise-list">
-        {fetaste.slice(0, 10).map((p) => (
+        {fetaste.slice(0, 10).map((g) => (
           <li>
-            <a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a>
+            <a href={`/lofte/${g.promise.id}/${g.promise.slug}`}><strong>{g.promise.title}</strong></a>
             <div class="etikett etikett--sub">
-              {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseTotalMsek(p))}</span>
+              {g.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseTotalMsek(g.promise))}</span>{g.shared && (<> · <span class="delat">delat löfte, {g.memberIds.length} formuleringar</span></>)}
             </div>
           </li>
         ))}
@@ -168,6 +172,17 @@ const jsonLd = [
 <style>
   .prosa-content--centered {
     margin: 0 auto;
+  }
+  .listnot {
+    color: var(--text-svag);
+    font-size: var(--steg--1);
+    margin: 0 0 0.6rem;
+  }
+  /* Delandet märks med ord, aldrig med färg — samma regel som resten av
+     sajten: formen bär betydelsen, så den syns även i svartvitt. */
+  .delat {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
   }
   .sektion {
     margin-top: 1.5rem;

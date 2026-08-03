@@ -90,6 +90,11 @@ jobs:
       - name: Install site dependencies
         run: pnpm install --frozen-lockfile
         working-directory: site
+      # Går före bygget: den mäter data och kod, inte utdata, och ett fel här
+      # betyder att en lista och en summa säger olika saker om samma grupp.
+      - name: Grindar för grupperade listor
+        run: node --experimental-strip-types scripts/test-grupplista.mts
+        working-directory: site
       - name: Build site + OG images
         run: pnpm build
         working-directory: site
