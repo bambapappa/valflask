@@ -10,6 +10,8 @@ export interface ExistingPromiseLite {
   parties: string[];
   category: string;
   group_id: string | null;
+  /** Citatet löftet vilar på — nyckeln i den exakta dublettkollen nedan. */
+  quote: string;
 }
 
 export interface DupKey {
@@ -66,6 +68,57 @@ export function findPossibleDuplicate(
 }
 
 /**
+ * Skalar bort allt som inte är innehåll: versaler, skiljetecken och mellanrum.
+ * Två återgivningar av samma yttrande skiljer sig ofta på ett kommatecken eller
+ * ett radbrott, och den skillnaden säger ingenting om huruvida det är samma
+ * löfte. HÅLLS SKILD från `tokens` — det här är en identitetsjämförelse, inte
+ * en likhetsmätning.
+ */
+function quoteFingerprint(s: string): string {
+  return s.toLowerCase().normalize("NFC").replace(/[^a-z0-9åäöéèü]+/giu, "");
+}
+
+/**
+ * Kortare citat än så jämförs inte. "Vi vill förbjuda religiösa friskolor" är
+ * bevisande; "det ska bort" är det inte, och två partier kan säga det oberoende
+ * av varandra.
+ */
+const MIN_QUOTE_CHARS = 40;
+
+/**
+ * SAMMA CITAT som ett redan publicerat löfte — alltså ordagrant samma yttrande,
+ * inte bara samma politik. Fångar omskördar: en artikel som lästs om, eller en
+ * nyhetstext och ett valmanifest som återger samma mening.
+ *
+ * Varför den behövs: `findPossibleDuplicate` jämför bara TITLAR, och titeln är
+ * härledd. Samma citat kan bära titeln "Sverigekort för 499 kr/mån i
+ * kollektivtrafik" i en körning och hela citatet som titel i en annan — då blir
+ * titellikheten låg och dubbletten slinker igenom. Mätt 2026-08-03 på skarpa
+ * data: 24 av 63 poster i granskningskön bar exakt samma citat som ett redan
+ * publicerat löfte, och titelkollen hade missat samtliga. Sverigekortet låg i
+ * kön tre gånger.
+ *
+ * Varken parti eller kategori filtrerar här. Ett citat på 40 tecken eller mer
+ * som återkommer ordagrant ÄR samma yttrande; skiljer sig partiet är det ett fel
+ * i datat som granskaren ska se, inte något som ska gömmas av ett filter.
+ * Delmängd räknas som träff åt båda håll — utvinningen kapar ibland citatet
+ * olika långt mellan körningar.
+ */
+export function findQuoteDuplicate(
+  candidate: { quote: string },
+  existing: ExistingPromiseLite[],
+): ExistingPromiseLite | null {
+  const c = quoteFingerprint(candidate.quote ?? "");
+  if (c.length < MIN_QUOTE_CHARS) return null;
+  for (const e of existing) {
+    const q = quoteFingerprint(e.quote ?? "");
+    if (q.length < MIN_QUOTE_CHARS) continue;
+    if (q === c || q.includes(c) || c.includes(q)) return e;
+  }
+  return null;
+}
+
+/**
  * Samma politik hos ett ANNAT parti (inget partiöverlapp): samma kategori +
  * hög titellikhet. Fångar t.ex. att flera partier lovar 5 % av BNP till
  * försvaret — sådana ska group-länkas (R3: räknas en gång i totalen/koalitioner,
@@ -95,8 +148,13 @@ export function findCrossPartyDuplicate(
   return best;
 }
 
-/** Befintligt löfte med sitt belopp — underlag för kostnadsankring. */
-export interface ComparablePromiseLite extends ExistingPromiseLite {
+/**
+ * Befintligt löfte med sitt belopp — underlag för kostnadsankring. Bär medvetet
+ * INTE citatet: ankringen jämför politik via titlar, och ett obligatoriskt
+ * citatfält här hade tvingat varje anropare att fylla i något som aldrig läses.
+ * Citatet krävs bara där det faktiskt avgör något, i dublettkollen.
+ */
+export interface ComparablePromiseLite extends Omit<ExistingPromiseLite, "quote"> {
   msek_base: number;
   period: "per_ar" | "engang";
   basis: string;

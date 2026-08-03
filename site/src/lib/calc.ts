@@ -102,6 +102,7 @@ export function formatBasisLabel(basis: string): string {
     parti: "Partiets egen siffra",
     media: "Nyhetsmedier",
     llm_estimat: "Datoruppskattning",
+    granskare: "Satt för hand vid granskningen",
   };
   return labels[basis] ?? basis;
 }
