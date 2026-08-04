@@ -265,37 +265,5 @@
       "calculation": "Beredskapsapotek: ~300 apotek × ~1 mkr/år i drift/upphandling = 300 mkr/år. Stärkt landsbygdsstöd: nuvarande stöd ~150 mkr/år, en förstärkning på 100–200 mkr/år ger totalt 400–500 mkr/år, osäkerhet 300–700."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0387 (300)"
-  },
-  {
-    "candidate": {
-      "title": "Införa ett barnavdrag för dem som jobbar",
-      "parties": [
-        "l"
-      ],
-      "person": {
-        "name": "Simona Mohamsson",
-        "role": "partiledare"
-      },
-      "quote": "införandet av ett barnavdrag för de som jobbar",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/nyheter/5-000-kronor-mer-i-manaden-for-barnfamiljer-med-liberalerna",
-    "articleTitle": "5.000 kronor mer i månaden för barnfamiljer med Liberalerna – Liberalerna",
-    "cost": {
-      "type": "intäktsminskning",
-      "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 4000,
-      "msek_high": 18000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Inget belopp anges. Kostnad beror på avdragets storlek och omfattning. Jämförbart löfte (p-2026-0465) uppskattades till 5 900 msek/år för 10 000 kr per barn. Detta intervall spänner från ett…",
-      "confidence": 0.3,
-      "calculation": "Antag 1,8 miljoner barn med minst en förvärvsarbetande förälder. Vid en skattereduktion kostar varje 1 000 kr per barn ~1,8 mdkr. Låg nivå 2 000 kr per barn ger 3,6 mdkr (avrundat 4 000 msek), hög nivå 10 000 kr per barn ger 18 mdkr. Golvet 1 000 msek motsvarar ett smalare avdrag (t.ex. bara yngre barn). Jämförelsen 5 900 msek för 10 000 kr tyder på färre barn eller inkomstprövning."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0465 (5900), p-2026-0057 (150), p-2026-0176 (0) ⚠ AVVIKER: 4000 avviker 26.7× från jämförbara (median 150)"
   }
 ]
