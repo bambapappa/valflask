@@ -1967,14 +1967,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 1000,
-      "msek_high": 3000,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Estimat: Utökade resurser för våld mot kvinnor. ~2 mdr/år.",
+      "method_note": "Inriktning utan utpekad åtgärd och utan nivå. De konkreta åtgärderna prissätts på sina egna löften.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Jämförbara löften har estimats till 500 resp. 1500 miljoner kronor per år. Löftets formulering 'med samma kraft som gängkriminaliteten' antyder en satsning i den högre storleksordningen. Här antas ett brett intervall: 500–2000 miljoner kronor per år, med basfall 1000 miljoner kronor per år."
+      "calculation": "Beloppet är noll. Citatet pekar varken ut en åtgärd eller en nivå: att våld mot kvinnor och barn ska bekämpas med samma kraft som gängkriminaliteten säger hur högt ambitionen ligger, inte vad den kostar. Ett sådant uttryck översätts aldrig till en siffra. Samma påstående ur en annan källa står på p-2026-0580 och är prissatt till noll där, och partiets konkreta åtgärder mot mäns våld mot kvinnor prissätts på sina egna löften."
     },
     "financing_claimed": {
       "described": false,
@@ -1989,6 +1989,11 @@
         "date": "2026-07-28",
         "change": "Beloppet justerat från 2 000 till 1 000 miljoner kronor per år, så att det stämmer med uträkningen i samma fält, som angav 500–2 000 miljoner med 1 000 som basfall.",
         "commit": "c91c98bbc1c3a0add1c4bdc3fcd0911f81dd3455"
+      },
+      {
+        "date": "2026-08-04",
+        "change": "Beloppet nollat, från 1 000 miljoner kronor per år. Siffran var härledd ur formuleringen \"med samma kraft som gängkriminaliteten\", alltså ur ett värdeord — och den tidigare uträkningen sa själv att den var rekonstruerad i efterhand. Ett värdeord är ingen nivå och får aldrig bli ett belopp. Summan ändras inte: löftet delar grupp med p-2026-0039, som bär det högre beloppet och därmed representerar gruppen.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -2256,12 +2261,17 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-27",
         "change": "Ändrat från 20 000 miljoner kronor per år till 5 000 miljoner som engångskostnad. Gåvan av begagnade flygplan sker en gång, men beloppet räknades fyra gånger, en för varje år i mandatperioden. Dessutom saknades uträkning helt: att Ukraina köper Gripen E/F är en intäkt för Sverige, inte en utgift, och det är bara gåvan av C/D som kostar.",
         "commit": "dca6173ccf4dace78ee3557397b923dd8d58cf8c"
+      },
+      {
+        "date": "2026-08-04",
+        "change": "Tillbakadraget: citatet beskriver något som redan skett — \"det största steget hittills är Gripen-affären\" — inte ett åtagande för nästa mandatperiod. Att Ukraina köper 20 Gripen E/F är dessutom en affär där Sverige får betalt, och gåvan av upp till 16 begagnade Gripen C/D ryms enligt löftets egen uträkning inom den redan beslutade försvarsramen, alltså ingen ny nettokostnad för staten. Beloppet var 5 000 miljoner kronor som engångskostnad, och Moderaternas summa för mandatperioden minskar med lika mycket. Löftet om fortsatt militärt stöd till Ukraina står kvar på p-2026-0042.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -3208,9 +3218,9 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Engångskostnad för att införa nytt betygssystem: fortbildning av lärare, framtagning och material.",
+      "method_note": "Redan beslutad politik: regeringen inför betygssystemet från höstterminen 2028. Ingen ny kostnad för nästa mandatperiod.",
       "confidence": 0.4,
-      "calculation": "Ungefär 150 000 lärare berörs. Statsbidrag till skolhuvudmännen för fortbildning av 80 000–120 000 lärare à 3 000–7 000 kronor ger 240–840 miljoner kronor. Skolverkets arbete med att ta fram systemet läggs till med 30–80 miljoner och material och it-stöd med 15–30 miljoner. Summan blir 285–950 miljoner kronor som en engångskostnad vid införandet."
+      "calculation": "Beloppet är noll, för reformen är redan beslutad. Citatet säger det själv: den moderatledda regeringen inför det nya betygssystemet från höstterminen 2028. Vi prissätter ny politik för nästa mandatperiod, och det som redan är beslutat bärs av de besluten. Införandet kostar förstås pengar — fortbildning av lärare, framtagning av betygskriterier, material och it-stöd — men den kostnaden är inte ny. Nollan betyder att ingenting tillkommer, inte att reformen är gratis."
     },
     "financing_claimed": {
       "described": false,
@@ -3230,6 +3240,11 @@
         "date": "2026-07-28",
         "change": "Beloppet nollat, från 600 miljoner kronor som engångskostnad. Citatet säger själv att den moderatledda regeringen inför det nya betygssystemet från höstterminen 2028 — reformen är alltså redan beslutad och är gällande rätt, inte ett nytt åtagande för nästa mandatperiod. Samma bedömning som redan gäller för andra löften om politik som redan är beslutad.",
         "commit": "c121898db268fa606cbeee5f2be4d57fe1c70d5f"
+      },
+      {
+        "date": "2026-08-04",
+        "change": "Uträkningen omskriven. Beloppet är oförändrat på 0. Texten räknade fortfarande fram 285–950 miljoner kronor i införandekostnad och stod alltså och motsade beloppet intill — den skrevs aldrig om när beloppet nollades 2026-07-28. Nu förklarar den nollan i stället.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -8766,8 +8781,14 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-04",
+        "change": "Tillbakadraget: citatet innehåller ingen utfästelse. \"Vi har stöttat välfärden genom tuffa år\" beskriver vad som redan gjorts, och att resurserna \"fortsätter öka\" är en riktning utan åtagande och utan nivå. Beloppet var redan noll, så ingen summa ändras. Partiets konkreta välfärdslöften står kvar var för sig.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
