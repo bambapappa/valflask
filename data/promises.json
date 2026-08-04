@@ -6033,12 +6033,17 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-27",
         "change": "Löftet hade ett belopp men ingen uträkning. Nu bygger det på Försvarsmaktens egen kostnad per värnpliktig — omkring 217 000 kronor för ett helt år inklusive mat, boende och kläder — gånger partiets eget antal och partiets egen tid. 13 000 i stället för 15 000 miljoner kronor per år.",
         "commit": "dca6173ccf4dace78ee3557397b923dd8d58cf8c"
+      },
+      {
+        "date": "2026-08-04",
+        "change": "Tillbakadraget som Kristdemokraternas egen dubblett av p-2026-0116. Båda posterna kommer ur samma artikel och gäller samma löfte om allmän värnplikt. p-2026-0116 står kvar eftersom dess citat bär själva åtagandet — vilka som ska göra värnplikt och hur länge; det här citatet motiverar bara varför partiet vill det, och en motivering är inget åtagande. Posterna var redan sammanlänkade och bar samma belopp, så ingen summa ändras.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -9955,7 +9960,7 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-27",
@@ -9966,6 +9971,11 @@
         "date": "2026-07-28",
         "change": "Beloppet justerat från 17 500 till 17 000 miljoner kronor per år, och grunden ändrad från datorgissning till partiets egen siffra — samma grund som gruppens andra löfte om samma höjning. Antalet barn vilar nu på Försäkringskassans utbetalningsstatistik.",
         "commit": "89f3c3cc6f4cd1fe5c37095210baf4eb00a2ee30"
+      },
+      {
+        "date": "2026-08-04",
+        "change": "Tillbakadraget som Kristdemokraternas egen dubblett av p-2026-0100. Båda posterna gäller samma löfte om ett barnbidrag på 2 000 kronor i månaden. p-2026-0100 står kvar eftersom citatet är partiledarens egna ord ur Almedalstalet; den här posten citerar i stället en nyhetsartikel som återger löftet i tredje person, och en återgivning är svagare än det som faktiskt sades. Posterna var redan sammanlänkade och bar samma belopp, så ingen summa ändras.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -24681,8 +24691,8 @@
       "msek_high": 8000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattar ett nytt skatteavdrag på arbetsrelaterad pension. Bredden är okänd, så intervallet spänner från låg till hög genomsnittlig skattelättnad per pensionär. (belopp satt av granskare)",
-      "calculation": "Löftet pekar ut en bestämd åtgärd — ett nytt avdrag som sänker skatten på pension som tjänats in genom arbete — men säger ingen nivå. Beloppet ankras därför i vad samma sorts åtgärd senast faktiskt kostade. Den senast genomförda sänkningen av skatten på pension är förstärkningen av det förhöjda grundavdraget för personer som fyllt 66 år, som gäller från 1 januari 2026 och som regeringen räknar till 4 040 miljoner kronor per år. Det är basbeloppet. Den låga änden, 2 000 miljoner, är den föregående sänkningen av pensionärernas skatt från 2023. Den höga änden, 8 000 miljoner, speglar att Moderaterna beskriver ett nytt avdrag ovanpå det befintliga och inte en justering av samma avdrag. Att löftet bara gäller arbetsrelaterad pension och inte garantipension drar åt andra hållet, men hur mycket g",
+      "method_note": "Utpekad åtgärd utan angiven nivå, ankrad i den senast genomförda sänkningen av skatten på pension (belopp satt av granskare).",
+      "calculation": "Löftet pekar ut en bestämd åtgärd — ett nytt avdrag som sänker skatten på pension som tjänats in genom arbete — men säger ingen nivå. Beloppet ankras därför i vad samma sorts åtgärd senast faktiskt kostade. Den senast genomförda sänkningen av skatten på pension är förstärkningen av det förhöjda grundavdraget för personer som fyllt 66 år, i kraft 1 januari 2026, som regeringen räknar till 4 040 miljoner kronor per år. Det är basbeloppet. Den låga änden, 2 000 miljoner, är den föregående sänkningen av pensionärernas skatt från 2023. Den höga, 8 000 miljoner, speglar att Moderaterna beskriver ett nytt avdrag ovanpå det befintliga. Att löftet bara gäller arbetsrelaterad pension drar åt andra hållet, men hur mycket går inte att säga utan en nivå från partiet.",
       "confidence": 0.9
     },
     "financing_claimed": {
@@ -24693,7 +24703,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-04",
+        "change": "Uträkningen skrevs om. Den text som sattes vid godkännandet var längre än det som ryms på en löftessida och kapades mitt i ett ord, så sista meningen slutade i luften. Metodnoten beskrev dessutom fortfarande den uppskattning per pensionär som beloppet inte längre bygger på. Beloppet är oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
