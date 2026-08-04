@@ -1818,3 +1818,54 @@ Moderaternas summa för mandatperioden minskar med 5 000 miljoner kronor.
 nollor med motiveringen att nollor är beslut, inte räknefel. Det stämmer om
 nollan men inte om texten bredvid, och därför gick `p-2026-0062` fri. En sökning
 som fångar noll-belopp vars uträkning ändå räknar fram en summa är inte byggd.
+
+---
+
+## 2026-08-04 — Regionala och kommunala valmanifest granskas inte
+
+**Beslut (mänskligt beslut 2026-08-04):** Sajten granskar riksdagsvalet, och
+bara partiernas riksdokument skördas. Skördaren följer inte längre automatiskt
+manifest-PDF:er vars adress pekar ut region-, kommun- eller landstingspolitik
+(`arRegionEllerKommundokument` i `fetch.ts`). `p-2026-0585`, det enda löfte som
+kommit in den vägen, dras tillbaka.
+
+**Motiv:** Regionerna och kommunerna har egna kassor. Ett löfte om vad en region
+ska göra hör inte hemma i en summa som mäter statens nya nettokostnad. Dokumentet
+kom in av misstag: den automatiska följningen av manifest-PDF:er från en partisida
+skilde inte på riksmanifest och regionmanifest, och Sverigedemokraternas
+regionmanifest var det **enda** regionala dokumentet i hela registret — de fem
+andra manifest-PDF:erna är riksdokument (C:s valmanifest, MP:s handlingsprogram,
+L:s valmanifest, SD:s valplattform, V:s valplattform). Att låta det ligga kvar
+hade behandlat partierna olika, vilket är allvarligare än att tappa en post.
+
+Att döma **dokument för dokument** i stället för löfte för löfte är valt med
+öppna ögon: en sakfråga kan avgöras både nationellt och regionalt — ett
+screeningprogram beslutas nationellt även om vården drivs av regionerna — men en
+regel som går på dokumentets nivå är förutsägbar och går att förklara för en
+läsare. En regel som väger varje löfte för sig hade blivit en bedömning per post.
+
+**Vad det kostar:** ett löfte, prissatt till noll. Sverigedemokraternas täckning
+är oförändrad i praktiken: 38 av 39 aktiva löften kommer från riksdokument, och
+samma inriktning som det tillbakadragna löftet bar finns kvar på `p-2026-0125`.
+Partiet saknar fortfarande ett publicerat valmanifest för riksdagsvalet — deras
+`/valmanifest/` pekar på 2022 års PDF och stoppas av årsspärren — men den
+beslutade valplattformen för 2026 skördas och bär partiets tyngsta löften.
+
+**Förkastade alternativ:** att låta löftet stå eftersom beloppet ändå är noll
+(regeln måste gälla lika för alla, och nästa regionmanifest kan bära belopp); att
+ta in regionmanifest för alla partier (fel val — sajten mäter statens kostnader);
+att bedöma löfte för löfte om innehållet är nationellt (en bedömning per post,
+omöjlig att förklara och lätt att göra olika för olika partier); att spärra på
+dokumentets innehåll i stället för adressen (kräver att dokumentet först hämtas
+och lästs — adressen räcker och kostar ingenting).
+
+**Påverkan:** `pipeline/src/fetch.ts` (`arRegionEllerKommundokument`, spärr i
+`findManifestPdfLinks`), `data/promises.json` (statusbyte + historikpost),
+`data/changelog.json`, `data/rattelser.json` (en post),
+`handlingsvagen/data/loften-index.json` (omgenererat, 456 aktiva löften).
+En ny grind i `tests/fetch.test.ts`, 350 tester gröna.
+
+**Fotnot:** de fyra korta citaten ur samma regionmanifest, som avvisades ur
+granskningskön 2026-08-04 på citatgolvet, stannar därmed ute oavsett golvets nya
+undantag. Undantaget gäller partiernas riksdokument och riksdokumentens
+punktlistor, och gör fortfarande nytta där.
