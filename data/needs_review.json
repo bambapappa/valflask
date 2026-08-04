@@ -1,1 +1,280 @@
-[]
+[
+  {
+    "candidate": {
+      "title": "Nej till försämringar av a-kassan",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi kommer inte att acceptera försämringar av a-kassan.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är ett försvarslöfte utan konkret nivå; att inte försämra a-kassan innebär ingen ny statlig kostnad jämfört med dagsläget.",
+      "confidence": 0.65,
+      "calculation": "Ingen ny åtgärd att prissätta; status quo. Inriktningslöfte enligt regel 13."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Rättvis elbilsbonus upp till 60 000 kr och leasingstöd för elbil",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör för Miljöpartiet"
+      },
+      "quote": "Med vår rättvisa elbilsbonus kan den som bor på landsbygden få upp till 60 000 kronor i bonus. Med vårt leasingstöd kan man komma ner till 1500 kronor i månaden för att leasa en elbil.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "duplicateOf": "p-2026-0322"
+  },
+  {
+    "candidate": {
+      "title": "Införa en miljardärsskatt",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör för Miljöpartiet"
+      },
+      "quote": "Därför vill Miljöpartiet se en miljardärsskatt",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "cost": {
+      "type": "intäktsökning",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 800,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Identiskt löfte som p-2026-0324 med publicerat estimat 800 msek/år. Osäkerhet kring antal miljardärer, skattebas och beteendeeffekter motiverar ett brett intervall.",
+      "confidence": 0.5,
+      "calculation": "~200 individer med nettoförmögenhet >1 mdkr. Skattebas: förmögenhet över tröskeln, osäker storlek. Skattesats cirka 0,5–1 % per år. 0,5 % på en uppskattad bas om 100–200 mdkr ger 500–1 000 msek, med utrymme för kapitalflykt upp till 1 200 msek. Bas 800 msek från tidigare jämförbart estimat."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0324 (800)"
+  },
+  {
+    "candidate": {
+      "title": "Stärkta stöd och gröna avskrivningar för lantbrukares klimatinvesteringar",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill stärka stöden till lantbrukare som investerar i klimatsmarta lösningar, exempelvis genom gröna snabba avskrivningar som inte kräver någon ansökan.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet presenterar strategi för fossiloberoende matproduktion"
+  },
+  {
+    "candidate": {
+      "title": "Handlingsplan för fossilfri gödsel och minskat importberoende",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill ta fram en handlingsplan för det svenska lantbrukets behov av näring och fossilfri gödsel.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet presenterar strategi för fossiloberoende matproduktion",
+    "duplicateOf": "p-2026-0332"
+  },
+  {
+    "candidate": {
+      "title": "Förstärkta klimatinvesteringar och gröna skatteavdrag för lantbruket",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet föreslår bland annat förstärkta klimatinvesteringar och nya möjligheter till gröna skattemässiga avskrivningar för lantbruket.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-ny-strategi-for-fossilfri-matproduktion-starker-sveriges-beredskap/",
+    "articleTitle": "Miljöpartiet presenterar strategi för fossiloberoende matproduktion",
+    "duplicateOf": "p-2026-0406"
+  },
+  {
+    "candidate": {
+      "title": "Införa prostatacancerscreening",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Införa prostatacancerscreening",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 2 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/08/sd-region-valmanifest-2026.pdf",
+    "articleTitle": "sd-vadvivill"
+  },
+  {
+    "candidate": {
+      "title": "Höja språkkraven inom sjukvården",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Höja språkkraven inom sjukvården",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/08/sd-region-valmanifest-2026.pdf",
+    "articleTitle": "sd-vadvivill"
+  },
+  {
+    "candidate": {
+      "title": "Förbjuda slöja i sjukvården",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Förbjud slöja i sjukvården",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/08/sd-region-valmanifest-2026.pdf",
+    "articleTitle": "sd-vadvivill"
+  },
+  {
+    "candidate": {
+      "title": "Skrota enprocentsregeln",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Skrota enprocentsregeln",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 2 ord — minst 5 krävs"
+      }
+    ],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/08/sd-region-valmanifest-2026.pdf",
+    "articleTitle": "sd-vadvivill"
+  },
+  {
+    "candidate": {
+      "title": "Prioritera hälso- och sjukvården",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi prioriterar hälso- och sjukvården.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/wp-content/uploads/2026/08/sd-region-valmanifest-2026.pdf",
+    "articleTitle": "sd-vadvivill",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred prioritering utan angiven åtgärd eller budget; inga nya statliga kostnader härleds.",
+      "confidence": 0.5,
+      "calculation": "Inriktningslöfte utan konkret reform, bedöms inte medföra direkt kostnad. Specifika satsningar prissätts separat."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0440 (7000), p-2026-0052 (150), p-2026-0013 (0), p-2026-0139 (0), p-2026-0105 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Moderaterna: slopa mängdrabatten och få förslagen i kraft nästa mandatperiod",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna kommer prioritera genomförande av förslagen som innebär att dagens mängdrabatt slopas. Vår ambition är att förslagen ska träda i kraft under nästa mandatperiod.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/m-ska-gora-det-s-inte-klarar-av-att-ta-bort-mangdrabatten-nasta-mandatperiod/",
+    "articleTitle": "M ska göra det S inte klarar av – att ta bort mängdrabatten nästa mandatperiod",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 400,
+      "msek_base": 650,
+      "msek_high": 950,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Slopad mängdrabatt innebär längre fängelsestraff för flerbrottslingar och därmed högre anstaltskostnader. Kostnadsbedömningen följer tidigare kalkyler för identisk reform (p-2026-0462/0313). [period satt till engang: engångssignal i löftet]",
+      "confidence": 0.65,
+      "calculation": "Enligt tidigare beräkningar från i princip samma förslag (p-2026-0462, p-2026-0313) uppskattas kostnaden till ca 650 mkr/år för utökad fängelsekapacitet och fler anstaltsdygn. Spannet 400–950 mkr/år speglar osäkerhet om domstolarnas tillämpning och faktisk ökning av medelstrafftiden."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0462 (650), p-2026-0580 (0), p-2026-0313 (650), p-2026-0314 (20)"
+  }
+]
