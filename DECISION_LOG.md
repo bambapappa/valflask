@@ -1759,3 +1759,62 @@ som löften).
 **Kvar att göra:** de fem löften som avvisades på längden ligger inte kvar i kön
 och kommer inte tillbaka av sig själva förrän källsidan skördas om. De tas in på
 nytt vid nästa körning av respektive partisida.
+
+---
+
+## 2026-08-04 — Genomgång av Moderaternas löften: två tillbakadragna, ett nollat, en uträkning omskriven
+
+**Beslut (mänskligt beslut 2026-08-04):** Efter en genomgång av partiets samtliga
+81 aktiva löften rättas fyra.
+
+- `p-2026-0043` (Gripen-affären, 5 000 mkr engångskostnad) **dras tillbaka.**
+  Citatet beskriver vad som redan skett — "det största steget hittills är
+  Gripen-affären" — inte ett åtagande för nästa mandatperiod.
+- `p-2026-0169` ("Vi har stöttat välfärden genom tuffa år") **dras tillbaka.**
+  Dåtid plus en riktning utan åtagande och utan nivå. Beloppet var redan noll.
+- `p-2026-0038` **nollas** från 1 000 mkr per år. Beloppet var härlett ur
+  formuleringen "med samma kraft som gängkriminaliteten".
+- `p-2026-0062` behåller sitt belopp på noll men får en **omskriven uträkning.**
+
+**Motiv:** De två tillbakadragna faller på samma grund som `p-2026-0171` och
+`p-2026-0144` (2026-08-03): vi räknar konkreta åtaganden om framtida politik, och
+en beskrivning av vad som redan gjorts är ingen utfästelse. Gripen-posten bar
+dessutom ett belopp som löftets egen uträkning underminerade — gåvan "ryms
+sannolikt inom den redan beslutade ramen", alltså ingen ny nettokostnad.
+
+Nollningen av `p-2026-0038` följer regeln att ett värdeord aldrig får bli en
+siffra. Den gamla uträkningen sa själv att den var rekonstruerad i efterhand och
+att uttrycket "antyder en satsning i den högre storleksordningen". Samma
+påstående ur en annan källa står på `p-2026-0580` och var redan prissatt till
+noll — samma politik ska kosta lika.
+
+`p-2026-0062` är den intressanta: beloppet nollades 2026-07-28 med rätt motiv
+(reformen är redan beslutad), men **uträkningstexten skrevs aldrig om**. Den stod
+kvar och räknade fram 285–950 miljoner kronor under ett belopp på noll, publikt.
+En uträkning som visas för läsaren måste ge det belopp som står intill; annars
+läser den som en räknemiss i stället för som det beslut den beskriver.
+
+**Förkastade alternativ:** att bara nolla Gripen-posten i stället för att dra
+tillbaka den (beloppet är inte det som är fel — löftet är inte ett löfte); att
+låta `p-2026-0038` ligga kvar med 1 000 eftersom gruppen ändå räknas på
+`p-2026-0039`:s högre belopp (summan hade stämt, men sidan hade visat ett belopp
+som inte får finnas); att skriva om `p-2026-0062`:s belopp i stället för texten
+(beslutet från 2026-07-28 är riktigt och står fast).
+
+**Kvar att avgöra:** `p-2026-0039` bär 3 000 mkr per år för ett helt åtgärdspaket
+mot mäns våld mot kvinnor, och enligt dess egen uträkning är den enda säkra
+posten patientavgiften, "under en miljon kronor". Nu ligger dessutom tre enskilda
+åtgärder ur samma område publicerade bredvid det. Det är en egen omvärdering och
+rörs inte här.
+
+**Påverkan:** `data/promises.json` (två statusbyten, ett nollat belopp, en
+omskriven uträkning, egen historikpost på vardera),
+`data/changelog.json` (`manuell-granskning-2026-08-04-moderaterna`, omräknad
+`data_hash`), `data/rattelser.json` (en samlad post för genomgången),
+`handlingsvagen/data/loften-index.json` (omgenererat, 457 aktiva löften).
+Moderaternas summa för mandatperioden minskar med 5 000 miljoner kronor.
+
+**Lucka som står kvar:** kvalitetssökningens `findAmountMismatches` hoppar över
+nollor med motiveringen att nollor är beslut, inte räknefel. Det stämmer om
+nollan men inte om texten bredvid, och därför gick `p-2026-0062` fri. En sökning
+som fångar noll-belopp vars uträkning ändå räknar fram en summa är inte byggd.
