@@ -7,7 +7,7 @@ import KallRad from "../../components/KallRad.astro";
 import Dela from "../../components/Dela.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
 import { formatMsek, formatMsekShort } from "../../lib/calc";
-import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseNetMsek, groupBearersForParty } from "../../lib/aggregates";
+import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseNetMsek, groupBearersForParty, partyCoverage } from "../../lib/aggregates";
 import { getIssuesFile, getStances, cellFor, emptyCellText, statementById, POSITION_LABEL } from "../../lib/stances";
 
 export function getStaticPaths() {
@@ -43,6 +43,12 @@ const gap = financingGap(promises);
 const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 const perRost = flasketPerRost(total, party.votes_2022);
 const categories = categoryBreakdown(partyPromises);
+// Underlaget bakom siffran: hur brett det är, och hur mycket som hänger på de
+// största löftena. Talen skiljer sig kraftigt mellan partierna, och det syns
+// inte i ett totalbelopp.
+const tackning = partyCoverage(promises, kod);
+const andelEgna = tackning.antal > 0 ? Math.round((100 * tackning.egna) / tackning.antal) : 0;
+const koncentrerat = tackning.topp3Andel >= 0.7;
 const canonicalPath = `/parti/${kod}`;
 const issuesFile = getIssuesFile();
 const stances = getStances();
@@ -77,6 +83,30 @@ const jsonLd = [
       <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num belopp">{formatMsekShort(total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {partyPromises.length} löften. Fläsk per röst: <strong class="num belopp">{Math.round(perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
       <p class="manifest-status">{party.manifest_2026}</p>
     </div>
+
+    <section class="sektion prosa-content prosa-content--centered underlag">
+      <h2>Vad siffran vilar på</h2>
+      <p>
+        {tackning.antal} löften från {tackning.kallor} olika källor.
+        <strong>{andelEgna} %</strong> av dem är hämtade från {party.name}s egna kanaler;{" "}
+        {tackning.antal - tackning.egna === 0
+          ? "inga kommer från medier eller riksdagens handlingar"
+          : `${tackning.antal - tackning.egna} kommer från medier, riksdagens handlingar eller video`}.
+        {tackning.senaste && <> Det senaste löftet är uttalat {tackning.senaste}.</>}
+      </p>
+      {koncentrerat && (
+        <p class="varning">
+          De tre största löftena bär <strong>{Math.round(tackning.topp3Andel * 100)} %</strong> av summan,
+          det största ensamt {Math.round(tackning.storstaAndel * 100)} %. Ett enskilt estimat väger alltså
+          tungt här — läs uträkningarna bakom dem innan du jämför partier.
+        </p>
+      )}
+      <p class="notis">
+        Vi räknar bara det partiet självt har lovat, med ordagrant citat och källa. Ett parti som
+        publicerar mer material får därför fler löften här — det säger något om underlaget, inte om
+        hur mycket partiet vill spendera.
+      </p>
+    </section>
 
     <MetodLank />
 
@@ -192,6 +222,20 @@ const jsonLd = [
 
   .prosa-content--centered {
     margin: 1.5rem auto;
+  }
+  .underlag p {
+    margin: 0 0 0.5rem;
+  }
+  /* Varningen bär sin betydelse i orden, aldrig i färgen — samma regel som
+     resten av sajten, så den syns även i svartvitt och för den som inte
+     skiljer färger. */
+  .underlag .varning {
+    border-left: 3px solid var(--linje);
+    padding-left: 0.75rem;
+  }
+  .underlag .notis {
+    color: var(--text-svag);
+    font-size: var(--steg--1);
   }
   .sektion {
     margin-top: 2rem;

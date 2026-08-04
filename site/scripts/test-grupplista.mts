@@ -17,6 +17,8 @@ import {
   dedupeByGroup,
   groupBearersForParty,
   groupedPromises,
+  arPartiegenKalla,
+  partyCoverage,
   partyTotalMsek,
   promiseNetMsek,
   promiseTotalMsek,
@@ -268,6 +270,56 @@ const alla = getPromises();
     "startsidans dyraste-lista grupperar löftena",
     /groupedPromises\(/.test(läs("../src/pages/index.astro")),
     "hittade inget anrop till groupedPromises",
+  );
+}
+
+
+// ── Underlaget bakom partiets siffra ──────────────────────────────────────
+{
+  // Talen på sajten säger vad ett parti lovar, inte hur brett underlaget är —
+  // och det skiljer sig kraftigt. Mätt 2026-08-04 kom 21 % av KD:s löften från
+  // partiets egen kanal mot 100 % för M och L, och hos KD bar tre löften 91 %
+  // av summan. Grindarna nedan låser både räkningen och att den syns.
+  const partiEgen = "https://kristdemokraterna.se/var-politik/nagot";
+  const media = "https://www.svt.se/nyheter/inrikes/nagot";
+
+  const data = [
+    { ...p("p-1", 1000, ["kd"]), source: { url: partiEgen }, date_stated: "2026-07-01" },
+    { ...p("p-2", 10, ["kd"]), source: { url: media }, date_stated: "2026-08-01" },
+    { ...p("p-3", 10, ["kd"]), source: { url: media }, date_stated: "2026-06-01" },
+  ] as unknown as PromisePost[];
+
+  const t = partyCoverage(data, "kd");
+  check("täckningen räknar partiets egna källor", t.egna === 1 && t.antal === 3, `${t.egna}/${t.antal}`);
+  check("täckningen räknar skilda källadresser", t.kallor === 2, String(t.kallor));
+  check("täckningen tar senaste datumet", t.senaste === "2026-08-01", String(t.senaste));
+  // 1000+10+10 = 1020 av 1020 → hela summan ligger i topp tre.
+  check("koncentrationen mäts mot rubrikens total", Math.abs(t.topp3Andel - 1) < 1e-9, String(t.topp3Andel));
+  check(
+    "största löftets andel räknas för sig",
+    Math.abs(t.storstaAndel - 1000 / 1020) < 1e-9,
+    String(t.storstaAndel),
+  );
+
+  // Underdomäner hör till partiet; pressrummet är partiets eget rum.
+  check("pressrummet räknas som partiets egen kanal", arPartiegenKalla("https://press.kristdemokraterna.se/x"));
+  check("ett medium räknas inte som partiets egen kanal", !arPartiegenKalla("https://www.svt.se/x"));
+  check("en video räknas inte som partiets egen kanal", !arPartiegenKalla("https://youtube.com/watch?v=1"));
+  check("en tom adress räknas aldrig som partiets", !arPartiegenKalla(""));
+
+  // Ett tillbakadraget löfte hör inte till underlaget.
+  const medDraget = [
+    ...data,
+    { ...p("p-4", 500, ["kd"], null, "tillbakadragen"), source: { url: partiEgen }, date_stated: "2026-09-01" },
+  ] as unknown as PromisePost[];
+  check("tillbakadraget löfte räknas inte in i underlaget", partyCoverage(medDraget, "kd").antal === 3);
+
+  // Och mot mallen: räkningen ska faktiskt visas.
+  const parti = readFileSync(new URL("../src/pages/parti/[kod].astro", import.meta.url), "utf8");
+  check("partisidan visar vad siffran vilar på", /partyCoverage\(/.test(parti) && /Vad siffran vilar på/.test(parti));
+  check(
+    "koncentrationen skrivs ut när tre löften bär över sjuttio procent",
+    /topp3Andel\s*>=\s*0\.7/.test(parti),
   );
 }
 

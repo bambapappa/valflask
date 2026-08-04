@@ -4,6 +4,7 @@ import {
   parseAmountsMsek,
   statedBaseMsek,
   findAmountMismatches,
+  findZeroWithCalculatedSum,
   findUngroupedTwins,
   looksLikeCompletedPolicy,
   findCompletedPolicyQuotes,
@@ -200,6 +201,83 @@ describe("findAmountMismatches — åt båda hållen", () => {
       }),
     ]);
     assert.deepEqual(found, []);
+  });
+});
+
+describe("findZeroWithCalculatedSum — nollan stämmer, men inte texten bredvid", () => {
+  // Den verkliga texten från p-2026-0062. Beloppet nollades 2026-07-28 eftersom
+  // betygsreformen redan var beslutad, men uträkningen skrevs aldrig om och
+  // räknade vidare fram 285–950 miljoner kronor — publikt, under en nolla.
+  const GAMLA_TEXTEN =
+    "Ungefär 150 000 lärare berörs. Statsbidrag till skolhuvudmännen för fortbildning av " +
+    "80 000–120 000 lärare à 3 000–7 000 kronor ger 240–840 miljoner kronor. Skolverkets " +
+    "arbete med att ta fram systemet läggs till med 30–80 miljoner och material och it-stöd " +
+    "med 15–30 miljoner. Summan blir 285–950 miljoner kronor som en engångskostnad vid " +
+    "införandet.";
+
+  it("fångar en nolla vars uträkning räknar fram en summa", () => {
+    const found = findZeroWithCalculatedSum([
+      p({
+        id: "p-1",
+        cost: { msek_base: 0, period: "engang", basis: "llm_estimat", calculation: GAMLA_TEXTEN },
+      }),
+    ]);
+    assert.equal(found.length, 1, JSON.stringify(found));
+    assert.equal(found[0]!.id, "p-1");
+    assert.ok(found[0]!.stated > 0);
+  });
+
+  it("tiger när uträkningen förklarar nollan", () => {
+    // Den omskrivna texten på samma löfte. Beloppet är fortfarande noll och
+    // texten nämner fortfarande kostnader — men den säger varför nollan står där.
+    const nya =
+      "Beloppet är noll, för reformen är redan beslutad. Införandet kostar förstås pengar — " +
+      "fortbildning av lärare och material — men den kostnaden är inte ny.";
+    assert.deepEqual(
+      findZeroWithCalculatedSum([
+        p({ id: "p-1", cost: { msek_base: 0, period: "engang", basis: "llm_estimat", calculation: nya } }),
+      ]),
+      [],
+    );
+  });
+
+  it("tiger när texten själv namnger basbeloppet som noll", () => {
+    // Verklig text från p-2026-0354. Uträkningen räknar upp delar på vägen,
+    // men landar uttryckligen på noll — nollan ÄR förklarad.
+    const calc =
+      "Tillsyn: 1–3 extra tjänster à ~0,8–1,2 miljoner kronor per år ≈ 1–4 miljoner kronor per år. " +
+      "Totalt 2–5 miljoner kronor per år om nya medel tillförs; basfall 0 miljoner kronor " +
+      "(inryms i befintlig verksamhet).";
+    assert.deepEqual(
+      findZeroWithCalculatedSum([
+        p({ id: "p-1", cost: { msek_base: 0, period: "per_ar", basis: "llm_estimat", calculation: calc } }),
+      ]),
+      [],
+    );
+  });
+
+  it("rör inte löften som faktiskt bär ett belopp", () => {
+    assert.deepEqual(
+      findZeroWithCalculatedSum([
+        p({
+          id: "p-1",
+          cost: { msek_base: 500, period: "per_ar", basis: "llm_estimat", calculation: "Summan blir 500 miljoner kronor." },
+        }),
+      ]),
+      [],
+    );
+  });
+
+  it("tiger när uträkningen inte når någon summa", () => {
+    assert.deepEqual(
+      findZeroWithCalculatedSum([
+        p({
+          id: "p-1",
+          cost: { msek_base: 0, period: "per_ar", basis: "llm_estimat", calculation: "Löftet anger ingen nivå." },
+        }),
+      ]),
+      [],
+    );
   });
 });
 
