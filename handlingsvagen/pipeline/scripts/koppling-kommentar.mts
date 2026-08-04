@@ -16,9 +16,11 @@ import {
   godkannForslag,
   GranskningsFel,
   parseGranskningsKommando,
+  provaNyttBevis,
   type KopplingPost,
   type KoPost,
 } from "../src/granskning.ts";
+import { fetchDokumentText } from "../src/riksdagen.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -55,7 +57,9 @@ const cmd = parseGranskningsKommando(body);
 if (!cmd) {
   output(
     "error",
-    "Oklart kommando. Använd `/godkänn`, `/godkänn --motionstyp parti|kommitte|enskild` eller `/avvisa <skäl>`.",
+    "Oklart kommando. Använd `/godkänn`, `/godkänn --motionstyp parti|kommitte|enskild` eller `/avvisa <skäl>`. " +
+      "Bär förslaget fel citat men dokumentet ett bättre: lägg en rad `Bevis: <citatet>` under kommandot, " +
+      "så prövas det ordagrant mot källdokumentet innan det sparas.",
   );
   process.exit(0);
 }
@@ -75,20 +79,53 @@ if (cmd.action === "reject") {
   process.exit(0);
 }
 
+// Ett utbytt bevis prövas mot dokumentet som det ser ut NU, före allt annat.
+// Håller det inte sker ingen ändring alls — varken i kön eller i kopplingarna.
+const handlingar = lasJson<Handling[]>(join(DATA_DIR, "handlingar.json"), []);
+if (cmd.bevis) {
+  const post = ko[index]!;
+  const handling = handlingar.find((h) => h.id === post.handling_id);
+  if (!handling?.dok_id) {
+    output("error", `Handlingen ${post.handling_id} saknar dokument-id — det går inte att pröva ett nytt citat mot källan.`);
+    process.exit(0);
+  }
+  let kalltext: string;
+  try {
+    kalltext = await fetchDokumentText((url) => fetch(url), handling.dok_id);
+  } catch (e) {
+    // Nätfel är INTE ett underkänt citat. Att svara "citatet håller inte" när
+    // vi inte kunnat läsa källan vore att ljuga om vad vi vet.
+    output("error", `Kunde inte hämta källdokumentet ${handling.dok_id}: ${e instanceof Error ? e.message : e}. Försök igen — inget beslut är fattat.`);
+    process.exit(0);
+  }
+  const prov = provaNyttBevis(cmd.bevis, kalltext);
+  if (!prov.ok) {
+    output("error", `Det angivna beviset håller inte: ${prov.skal}`);
+    process.exit(0);
+  }
+}
+
 const kopplingarPath = join(DATA_DIR, "kopplingar.json");
 try {
   const res = godkannForslag(
     ko,
     index,
     lasJson<KopplingPost[]>(kopplingarPath, []),
-    lasJson<Handling[]>(join(DATA_DIR, "handlingar.json"), []),
-    cmd.motionstyp ? { motionstyp: cmd.motionstyp } : {},
+    handlingar,
+    {
+      ...(cmd.motionstyp ? { motionstyp: cmd.motionstyp } : {}),
+      ...(cmd.bevis ? { bevis: cmd.bevis } : {}),
+    },
   );
   skrivJson(kopplingarPath, res.kopplingar);
   skrivJson(koPath, res.ko);
   output(
     "approved",
-    `Godkänd som **${res.koppling.id}** — ${res.koppling.promise_id ?? res.koppling.stance_id} ↔ ${res.koppling.handling_id} (${res.koppling.riktning}). Domarna räknas om vid nästa domskörning.`,
+    `Godkänd som **${res.koppling.id}** — ${res.koppling.promise_id ?? res.koppling.stance_id} ↔ ${res.koppling.handling_id} (${res.koppling.riktning}).` +
+      (cmd.bevis
+        ? ` Beviset är utbytt mot citatet du angav, kontrollerat ord för ord mot källdokumentet: "${res.koppling.bevis.citat}"`
+        : "") +
+      " Domarna räknas om vid nästa domskörning.",
   );
 } catch (e) {
   if (e instanceof GranskningsFel) {

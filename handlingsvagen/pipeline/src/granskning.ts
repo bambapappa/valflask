@@ -17,7 +17,7 @@
 import { createHash } from "node:crypto";
 import type { Handling } from "./handlingar.ts";
 import type { KopplingsForslag } from "./grindar.ts";
-import { CITAT_MIN_TECKEN } from "./grindar.ts";
+import { CITAT_MIN_TECKEN, normalizeForVerbatim } from "./grindar.ts";
 import { dokumentUrl } from "./riksdagen.ts";
 
 /** En köpost i data/kopplingsforslag.json (skriven av scripts/foreslag.mts). */
@@ -56,7 +56,12 @@ export function findIndexByKopplingId(items: KoPost[], id: string): number {
 }
 
 export type GranskningsKommando =
-  | { action: "approve"; motionstyp?: "parti" | "kommitte" | "enskild" }
+  | {
+      action: "approve";
+      motionstyp?: "parti" | "kommitte" | "enskild";
+      /** Ett bättre citat ur SAMMA dokument, angivet av granskaren. */
+      bevis?: string;
+    }
   | { action: "reject"; reason: string };
 
 const MOTIONSTYPER: Record<string, "parti" | "kommitte" | "enskild"> = {
@@ -72,19 +77,38 @@ const MOTIONSTYPER: Record<string, "parti" | "kommitte" | "enskild"> = {
  *  /godkänn --motionstyp parti     → ja, och motionstypen sätts av granskaren
  *                                    (b-0007: "parti" sätts alltid av människa)
  *  /avvisa <skäl>                  → nej
- * Engelska alias: /approve, /reject. Endast FÖRSTA raden tolkas.
+ * Engelska alias: /approve, /reject. Endast FÖRSTA raden tolkas som kommando.
+ *
+ * En rad som börjar "Bevis:" byter ut förslagets citat mot ett bättre ur SAMMA
+ * dokument. Den låg tidigare utanför räckhåll: en genomgång av kön 2026-08-02
+ * lade 28 förslag i högen "citatet bär inte, men dokumentet bär sannolikt ett
+ * bättre" — och det fanns ingen väg att lägga in det bättre citatet. Det nya
+ * citatet prövas ordagrant mot källdokumentet innan det sparas; håller det
+ * inte sker ingen ändring alls. Formen speglar granskningsköns "Uträkning:".
+ *
  * Okänt eller grumligt kommando ⇒ null (workflown svarar med hjälptext).
  */
 export function parseGranskningsKommando(body: string): GranskningsKommando | null {
-  const line = (body ?? "").trim().split("\n", 1)[0]!.trim();
+  const text = (body ?? "").trim();
+  const line = text.split("\n", 1)[0]!.trim();
+  // Citatet får bära vad som helst utom radbrytning — kapa vid signaturens
+  // vågräta linje, precis som granskningskön gör med uträkningen, så att en
+  // signatur aldrig kan hamna i ett publicerat bevis.
+  const efterKommando = text
+    .slice(line.length)
+    .split(/\n[ \t]*(?:-{3,}|_{3,}|\*{3,})[ \t]*(?:\n|$)/u)[0]!;
+  const bevisMatch = efterKommando.match(/^[ \t]*Bevis:[ \t]*(.+)$/imu);
+  const bevis = bevisMatch?.[1]?.trim();
+
   const approve = line.match(/^\/(?:godkänn|godkann|approve)\b(.*)$/iu);
   if (approve) {
     const rest = approve[1]!.trim();
-    if (rest === "") return { action: "approve" };
+    const medBevis = bevis && bevis !== "" ? { bevis } : {};
+    if (rest === "") return { action: "approve", ...medBevis };
     const m = rest.match(/^--motionstyp[= ]+(\S+)$/u);
     const typ = m ? MOTIONSTYPER[m[1]!.toLowerCase()] : undefined;
     if (!typ) return null; // något annat än ren motionstyp — be om förtydligande
-    return { action: "approve", motionstyp: typ };
+    return { action: "approve", motionstyp: typ, ...medBevis };
   }
   const reject = line.match(/^\/(?:avvisa|reject)\b(.*)$/iu);
   if (reject) {
@@ -101,6 +125,33 @@ export function nastaKopplingsId(kopplingar: Array<{ id: string }>, year: number
     return m ? Math.max(acc, parseInt(m[1]!, 10)) : acc;
   }, 0);
   return `k-${year}-${String(max + 1).padStart(4, "0")}`;
+}
+
+/**
+ * Prövar ett citat granskaren angett mot källdokumentets text. Samma kanon och
+ * samma golv som H2 använder när förslaget skapas — ett bevis som byts ut ska
+ * hålla exakt lika hårt som ett bevis som föreslås.
+ *
+ * Källtexten hämtas av anroparen (den här modulen rör aldrig nätet), så
+ * kontrollen sker mot dokumentet som det ser ut NU, inte mot en kopia.
+ */
+export function provaNyttBevis(
+  citat: string,
+  kalltext: string,
+): { ok: true } | { ok: false; skal: string } {
+  const c = normalizeForVerbatim(citat);
+  if (c.length < CITAT_MIN_TECKEN) {
+    return { ok: false, skal: `Citatet har ${c.length} tecken — minst ${CITAT_MIN_TECKEN} krävs.` };
+  }
+  if (!normalizeForVerbatim(kalltext).includes(c)) {
+    return {
+      ok: false,
+      skal:
+        "Citatet står inte ordagrant i riksdagsdokumentet. Kontrollera att det är kopierat teckenrätt " +
+        "och att det kommer ur SAMMA dokument som förslaget pekar på.",
+    };
+  }
+  return { ok: true };
 }
 
 /** Fel i granskningen som ska besvaras vänligt, inte krascha workflown. */
@@ -124,7 +175,16 @@ export function godkannForslag(
   index: number,
   kopplingar: KopplingPost[],
   handlingar: Handling[],
-  opts: { motionstyp?: "parti" | "kommitte" | "enskild"; year?: number } = {},
+  opts: {
+    motionstyp?: "parti" | "kommitte" | "enskild";
+    year?: number;
+    /**
+     * Ett bättre citat, REDAN prövat ordagrant mot källdokumentet av
+     * anroparen (provaNyttBevis). Den här modulen når inte nätet och kan
+     * därför inte pröva det själv — därav kravet.
+     */
+    bevis?: string;
+  } = {},
 ): GodkannResultat {
   const post = ko[index];
   if (!post) throw new GranskningsFel(`Ogiltigt kö-index ${index} — kön har ${ko.length} poster.`);
@@ -138,7 +198,8 @@ export function godkannForslag(
   if (post.riktning !== "stodjer" && post.riktning !== "motverkar") {
     throw new GranskningsFel(`Okänd riktning: "${String(post.riktning)}".`);
   }
-  if ((post.bevis?.citat ?? "").length < CITAT_MIN_TECKEN) {
+  const citat = opts.bevis?.trim() || post.bevis?.citat || "";
+  if (normalizeForVerbatim(citat).length < CITAT_MIN_TECKEN) {
     throw new GranskningsFel(`Citatet är kortare än ${CITAT_MIN_TECKEN} tecken — förslaget är trasigt, avvisa det.`);
   }
   if ((post.method_note ?? "").trim() === "") {
@@ -159,9 +220,11 @@ export function godkannForslag(
     ...(post.stance_id ? { stance_id: post.stance_id } : {}),
     handling_id: post.handling_id,
     riktning: post.riktning,
-    bevis: { ...post.bevis },
+    bevis: { ...post.bevis, citat },
     ...(motionstyp ? { motionstyp } : {}),
-    method_note: post.method_note,
+    method_note: opts.bevis
+      ? `${post.method_note} (beviset utbytt av granskaren mot ett annat citat ur samma dokument)`
+      : post.method_note,
     confidence: post.confidence,
     extraction: { ...post.extraction, verified_by: "owner" },
     status: "aktiv",
@@ -296,7 +359,14 @@ export function byggIssueBody(post: KoPost, id: string, handling?: Handling, lof
   if (handling?.kind === "motion") {
     lines.push("| ✏️ Ja, med motionstyp satt av dig | `/godkänn --motionstyp parti` (eller `kommitte`/`enskild`) |");
   }
+  lines.push("| 📄 Ja, men på ett bättre citat | `/godkänn` + en rad `Bevis: <citatet>` |");
   lines.push("| ❌ Nej | `/avvisa <skäl>` |");
+  lines.push("");
+  lines.push(
+    "Bär förslaget fel citat men dokumentet ett bättre: skriv citatet på en rad som börjar " +
+      "`Bevis:` under kommandot. Det prövas ord för ord mot källdokumentet innan det sparas — " +
+      "håller det inte sker ingen ändring alls.",
+  );
   lines.push("");
   lines.push(`<sub>koppling-id \`${id}\` · beslutet exekveras av koppling-review-workflown och committas — full spårbarhet i git + detta issue. De automatiska kontrollerna passerades när förslaget skapades; det här är det mänskliga beslutet.</sub>`);
   return lines.join("\n");
