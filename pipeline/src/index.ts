@@ -89,12 +89,19 @@ export async function runPipeline(
   ctx: PipelineContext,
 ): Promise<PipelineResult> {
   const articles = await ctx.articleSource.fetch();
-  // Processprioritet inom budgeten: (1) page — partiernas egna skrivna manifest
-  // är projektets primärkälla och ger bara artiklar när innehåll är nytt/ändrat,
-  // så de får aldrig svältas ut av flödesbrus; (2) riksdagen (motioner/anföranden);
-  // (3) övriga. URL-sortering inom varje grupp ger determinism.
+  // Processprioritet inom budgeten: (1) page och index — partiernas egna
+  // skrivna manifest och deras nyheter är projektets primärkälla och ger bara
+  // artiklar när innehåll är nytt/ändrat, så de får aldrig svältas ut av
+  // flödesbrus. `index` ligger här av samma skäl som `page`, och för att de
+  // partier som saknar flöde helt (S och C) annars aldrig hinner med;
+  // (2) riksdagen (motioner/anföranden); (3) övriga. URL-sortering inom varje
+  // grupp ger determinism.
   const prio = (a: NormalizedArticle): number =>
-    a.feedType === "page" ? 0 : a.domain === "data.riksdagen.se" ? 1 : 2;
+    a.feedType === "page" || a.feedType === "index"
+      ? 0
+      : a.domain === "data.riksdagen.se"
+        ? 1
+        : 2;
   articles.sort((a, b) => prio(a) - prio(b) || a.url.localeCompare(b.url));
 
   const seenPath = `${ctx.dataDir}/seen.json`;
