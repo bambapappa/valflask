@@ -8404,7 +8404,7 @@
   },
   {
     "id": "p-2026-0163",
-    "group_id": null,
+    "group_id": "g-p-2026-0163",
     "title": "För 20 år sedan gick vi i Moderaterna till val på jobbskatteavdraget",
     "slug": "for-20-ar-sedan-gick-vi-i-moderaterna-till-val-pa-jobbskatteavdraget",
     "parties": [
@@ -24243,6 +24243,231 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-08-04T08"
+    }
+  },
+  {
+    "id": "p-2026-0594",
+    "group_id": null,
+    "title": "Realtidsövervakning av förövare vid kontaktförbud",
+    "slug": "realtidsovervakning-av-forovare-vid-kontaktforbud",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Förövare bör kunna övervakas och positioneras i realtid av polisen för att skapa ökad trygghet och ge polisen bättre möjlighet att ingripa i tid, innan det är för sent.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/det-ska-inte-vara-livsfarligt-att-vara-kvinna-i-sverige/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T11:47:32.875Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar att 5-15% av utfärdade kontaktförbud (~10 000/år) blir föremål för fotboja med GPS-övervakning, med dygnskostnad 800-1200 kr.",
+      "confidence": 0.4,
+      "calculation": "~10 000 kontaktförbud/år, 5-15 % bedöms få fotboja → 500-1500 personer. Dygnskostnad fotboja med aktiv GPS-övervakning antas 800-1200 kr → årskostnad 292-438 tkr/person. Totalt 146-657 mkr/år, avrundat till 100-600 mkr, bas 300 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-04T11"
+    }
+  },
+  {
+    "id": "p-2026-0595",
+    "group_id": null,
+    "title": "Kontaktförbud med vistelseförbud för förövare",
+    "slug": "kontaktforbud-med-vistelseforbud-for-forovare",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Vi vill även se över möjligheten att kunna meddela ett kontaktförbud som innebär att en förövare inte tillåts lämna ett visst område.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/det-ska-inte-vara-livsfarligt-att-vara-kvinna-i-sverige/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T11:47:39.968Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 3,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en översyn av en ny typ av kontaktförbud. Enligt regel 10 prissätts endast utredningen, inte den framtida reformen. Statliga utredningar (SOU) kostar normalt 5–30 mkr.",
+      "confidence": 0.6,
+      "calculation": "Kostnaden för en statlig utredning av denna storlek uppskattas till ca 10 mkr baserat på typisk omfattning (personal, kansli, remissarbete). Spannet 3–30 mkr fångar enklare respektive mer omfattande översyner."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-04T11"
+    }
+  },
+  {
+    "id": "p-2026-0596",
+    "group_id": null,
+    "title": "Skärpta straff för överträdelser av kontaktförbud",
+    "slug": "skarpta-straff-for-overtradelser-av-kontaktforbud",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Skärpa straffen vid överträdelse av kontaktförbud, så att straffen speglar den allvarliga fridskränkningen som en överträdelse innebär för den utsatta personen.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/det-ska-inte-vara-livsfarligt-att-vara-kvinna-i-sverige/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T11:47:46.861Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 70,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Straffskärpning medför fler och längre fängelsestraff för överträdelse av kontaktförbud. Uppskattning utifrån antal anmälda brott och antaganden om påverkan på domstolspraxis. Kostnad för…",
+      "confidence": 0.4,
+      "calculation": "~7 000 anmälda överträdelser per år (Brå). Anta att straffskärpning leder till fler fängelsestraff och längre tid. Uppskattningsvis 50–100 extra personer i fängelse per år med en genomsnittlig straffökning på 2–4 månader. Kostnad per fängelsedygn ~3 500 kr. Extra ~4 500–12 000 fängelsedygn per år => 15–42 mkr. Lägg till vissa fler dygn för dem som redan döms => totalt 30–150 mkr, bas 70 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-04T11"
+    }
+  },
+  {
+    "id": "p-2026-0597",
+    "group_id": "g-p-2026-0163",
+    "title": "Ytterligare 5 000 kr till barnfamiljer under nästa mandatperiod",
+    "slug": "ytterligare-5-000-kr-till-barnfamiljer-under-nasta-mandatperiod",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Ett av våra viktigaste vallöften är att se till att en barnfamilj får ytterligare 5 000 kronor i plånboken under nästa mandatperiod.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/manniskor-ser-allt-ljusare-pa-svensk-ekonomi/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T11:48:00.840Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "engang",
+      "msek_low": 800,
+      "msek_base": 1400,
+      "msek_high": 2200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet tolkas som en skattesänkning om totalt 5 000 kr per barnfamilj under mandatperioden, vilket ger 1 250 kr/år. Antal barnfamiljer uppskattas till ca 1,1 miljoner. Intervallet speglar osäkerhet… [period satt till engang: engångssignal…",
+      "confidence": 0.4,
+      "calculation": "~1 100 000 barnfamiljer × (5 000 kr / 4 år) ≈ 1 375 mn kr/år. Base rundas till 1 400. Lågt scenario: färre familjer eller lägre utnyttjande (800 mn kr). Högt scenario: fler familjer eller högre utnyttjande (2 200 mn kr)."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-04T11"
+    }
+  },
+  {
+    "id": "p-2026-0598",
+    "group_id": null,
+    "title": "Förstärkt jobbskatteavdrag",
+    "slug": "forstarkt-jobbskatteavdrag",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "Bland förslagen finns ett förstärkt jobbskatteavdrag, ett nytt barnavdrag för arbetande föräldrar och ett utbyggt småbarns-RUT.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/5-000-kronor-mer-i-manaden-for-barnfamiljer-med-liberalerna",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T11:48:07.898Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 11000,
+      "msek_high": 15000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ankrat på den senaste permanenta höjningen av jobbskatteavdraget (BP24, ~11 mdkr/år). Stort spann då löftet saknar nivå.",
+      "confidence": 0.5,
+      "calculation": "Senaste förstärkningen av jobbskatteavdraget (Budgetpropositionen för 2024) kostade runt 11 mdkr per år. Antar att nytt förstärkt avdrag kan ligga i samma storleksordning, med spann 5–15 mdkr pga osäkerhet om ambitionsnivå."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-04T11"
     }
   }
 ]
