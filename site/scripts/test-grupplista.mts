@@ -20,10 +20,16 @@ import {
   arPartiegenKalla,
   partyCoverage,
   partyTotalMsek,
+  totalFinancingClaimed,
+  financingClaimedMsek,
+  financingGap,
+  totalFlasket,
+  totalBesparingar,
+  coalitionAggregates,
   promiseNetMsek,
   promiseTotalMsek,
 } from "../src/lib/aggregates.ts";
-import { getPromises } from "../src/lib/data.ts";
+import { getPromises, getParties } from "../src/lib/data.ts";
 import type { PromisePost } from "../src/lib/data";
 
 let errors = 0;
@@ -320,6 +326,105 @@ const alla = getPromises();
   check(
     "koncentrationen skrivs ut när tre löften bär över sjuttio procent",
     /topp3Andel\s*>=\s*0\.7/.test(parti),
+  );
+}
+
+
+// ── Finansieringsgapet: tre termer, en population ─────────────────────────
+{
+  // `financingGap` drar tre tal från varandra. Räknas de på olika populationer
+  // blir gapet fel utan att någon enskild siffra ser konstig ut — och det var
+  // precis vad som hände: finansieringen summerades rakt av medan kostnaderna
+  // gruppdedupades. Centerpartiets skattefria grundlön är sex formuleringar av
+  // samma reform, och partiets uppgift om 45 000 räknades sex gånger.
+  const g = "g-fin";
+  const data = [
+    p("p-1", 1000, ["c"], g),
+    p("p-2", 900, ["c"], g),
+    p("p-3", 100, ["s"]),
+  ] as unknown as PromisePost[];
+  for (const x of data.slice(0, 2)) {
+    (x as unknown as { financing_claimed: unknown }).financing_claimed = {
+      described: true,
+      summary: "Partiet uppger 500 miljoner kronor per år",
+      msek: 500,
+      period: "per_ar",
+    };
+  }
+  (data[2] as unknown as { financing_claimed: unknown }).financing_claimed = {
+    described: false,
+    summary: null,
+    msek: null,
+  };
+
+  check(
+    "gruppens finansiering räknas en gång, inte en gång per medlem",
+    totalFinancingClaimed(data) === 2000,
+    `fick ${totalFinancingClaimed(data)}`,
+  );
+  check(
+    "finansiering per år räknas upp till mandatperioden",
+    financingClaimedMsek(data[0]!) === 2000,
+    `fick ${financingClaimedMsek(data[0]!)}`,
+  );
+
+  const engang = p("p-4", 10, ["v"]) as unknown as PromisePost;
+  (engang as unknown as { financing_claimed: unknown }).financing_claimed = {
+    described: true,
+    summary: "Engångsintäkt",
+    msek: 300,
+    period: "engang",
+  };
+  check("engångsfinansiering räknas en gång", financingClaimedMsek(engang) === 300);
+
+  const draget = p("p-5", 10, ["v"], null, "tillbakadragen") as unknown as PromisePost;
+  (draget as unknown as { financing_claimed: unknown }).financing_claimed = {
+    described: true,
+    summary: "x",
+    msek: 999,
+    period: "per_ar",
+  };
+  check(
+    "tillbakadraget löftes finansiering räknas inte",
+    totalFinancingClaimed([...data, draget]) === 2000,
+    `fick ${totalFinancingClaimed([...data, draget])}`,
+  );
+
+  // Kärnan: de tre termerna i gapet ska vila på SAMMA population. Mot verkliga
+  // datat betyder det att koalitionsvyn över alla åtta partier måste ge exakt
+  // samma tal som startsidan — den räknade förut i en egen loop.
+  const parties = getParties();
+  const koalition = coalitionAggregates(alla, parties, parties.map((x) => x.code));
+  for (const [namn, a, b] of [
+    ["flasket", totalFlasket(alla), koalition.totalFlasket],
+    ["besparingarna", totalBesparingar(alla), koalition.totalBesparingar],
+    ["finansieringen", totalFinancingClaimed(alla), koalition.totalFinancingClaimed],
+    ["gapet", financingGap(alla), koalition.financingGap],
+  ] as [string, number, number][]) {
+    check(
+      `koalitionsvyn och startsidan räknar ${namn} lika`,
+      Math.abs(a - b) < 1e-6,
+      `${Math.round(a)} mot ${Math.round(b)}`,
+    );
+  }
+
+  // Och i datat: ett belopp i finansieringsfältet utan beskriven finansiering
+  // är motsägelsefullt. Tre löften bar en siffra ur sitt eget citat där.
+  const osammanhangande = alla.filter(
+    (x) => x.financing_claimed?.described === false && typeof x.financing_claimed.msek === "number",
+  );
+  check(
+    "inget löfte bär ett finansieringsbelopp utan beskriven finansiering",
+    osammanhangande.length === 0,
+    osammanhangande.map((x) => x.id).join(" "),
+  );
+  const utanPeriod = alla.filter(
+    (x) => typeof x.financing_claimed?.msek === "number" && !x.financing_claimed.period,
+  );
+  check(
+    "varje finansieringsbelopp bär en period",
+    utanPeriod.length === 0,
+    utanPeriod.map((x) => x.id).join(" "),
   );
 }
 
