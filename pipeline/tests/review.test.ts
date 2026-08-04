@@ -98,6 +98,28 @@ describe("parseReviewCommand — issue-kommentar till beslut", () => {
     });
   });
 
+  // En kö-post utan färdig kostnad hade ingen kostnadstyp att ärva och föll
+  // tillbaka på "utgift". Två skattesänkningar publicerades därför som utgifter
+  // (p-2026-0592, p-2026-0593). Typen ska kunna anges i samma kommando.
+  it("/godkänn med --typ (kostnadstyp när posten saknar egen)", () => {
+    assert.deepEqual(parseReviewCommand("/godkänn 2000 4500 9000 --typ intäktsminskning"), {
+      action: "approve",
+      amounts: [2000, 4500, 9000],
+      costType: "intäktsminskning",
+    });
+    assert.deepEqual(parseReviewCommand("/godkänn 1 2 3 --typ=besparing --group p-2026-0001"), {
+      action: "approve",
+      amounts: [1, 2, 3],
+      group: "p-2026-0001",
+      costType: "besparing",
+    });
+  });
+
+  it("okänd kostnadstyp ⇒ null (blir aldrig tyst en utgift)", () => {
+    assert.equal(parseReviewCommand("/godkänn 1 2 3 --typ intaktsminskning"), null);
+    assert.equal(parseReviewCommand("/godkänn 1 2 3 --typ skattesänkning"), null);
+  });
+
   it("fel antal belopp ⇒ null (be om förtydligande, gissa aldrig)", () => {
     assert.equal(parseReviewCommand("/godkänn 500 1000"), null);
     assert.equal(parseReviewCommand("/godkänn femhundra"), null);

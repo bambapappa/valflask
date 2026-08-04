@@ -23,8 +23,22 @@ export function findIndexByReviewId(items: ReviewCandidate[], id: string): numbe
   return items.findIndex((e) => reviewId(e) === id);
 }
 
+export const KOSTNADSTYPER = [
+  "utgift",
+  "intäktsminskning",
+  "besparing",
+  "intäktsökning",
+] as const;
+export type Kostnadstyp = (typeof KOSTNADSTYPER)[number];
+
 export type ReviewCommand =
-  | { action: "approve"; amounts?: [number, number, number]; group?: string; calculation?: string }
+  | {
+      action: "approve";
+      amounts?: [number, number, number];
+      group?: string;
+      calculation?: string;
+      costType?: Kostnadstyp;
+    }
   | { action: "reject"; reason: string };
 
 /**
@@ -32,6 +46,7 @@ export type ReviewCommand =
  *  /godkänn                       → ja (föreslagen kostnad tas som den är)
  *  /godkänn 500 1000 2000         → ja med ändrade belopp (msek: low base high)
  *  /godkänn --group p-2026-0123   → ja, länka som dublett (delad group_id)
+ *  /godkänn 0 4500 9000 --typ intäktsminskning → ja, med angiven kostnadstyp
  *  /avvisa <skäl>                 → nej
  * Engelska alias: /approve, /reject. Endast FÖRSTA raden tolkas som kommando.
  * En rad som börjar "Uträkning:" blir uträkningen bakom beloppet och visas
@@ -58,14 +73,26 @@ export function parseReviewCommand(body: string): ReviewCommand | null {
   if (approve) {
     const rest = approve[1]!.trim();
     const groupMatch = rest.match(/--group[= ]+(\S+)/u);
+    // En kö-post utan färdig kostnad hade ingen typ att ärva och föll tillbaka
+    // på "utgift". Ett skattesänkningslöfte publicerades då som en utgift
+    // (rättat på p-2026-0592 och p-2026-0593) — därför kan typen anges här.
+    const typMatch = rest.match(/--typ[= ]+(\S+)/u);
     const numbers = rest
       .replace(/--group[= ]+\S+/u, "")
+      .replace(/--typ[= ]+\S+/u, "")
       .trim()
       .split(/\s+/u)
       .filter((s) => s !== "")
       .map((s) => Number(s.replace(",", ".")));
     const cmd: ReviewCommand = { action: "approve" };
     if (groupMatch) cmd.group = groupMatch[1]!;
+    if (typMatch) {
+      const typ = typMatch[1]!.toLowerCase();
+      // En felstavad typ får inte tyst bli "utgift" — det var just tystnaden
+      // som gjorde det förra felet osynligt. Oklart kommando ⇒ hjälptext.
+      if (!(KOSTNADSTYPER as readonly string[]).includes(typ)) return null;
+      cmd.costType = typ as Kostnadstyp;
+    }
     if (numbers.length === 3 && numbers.every((n) => Number.isFinite(n) && n >= 0)) {
       cmd.amounts = [numbers[0]!, numbers[1]!, numbers[2]!];
     } else if (numbers.length > 0) {
@@ -232,10 +259,12 @@ export function approve(
   rawArgs: string[],
   dataDir: string = DATA_DIR,
 ): { id: string; title: string; msekBase: number } {
-  // Plocka ut --group <id> / --group=<id> (länkning av dublett) och
-  // --calc <text> (uträkningen bakom ett belopp satt för hand) ur argumenten.
+  // Plocka ut --group <id> / --group=<id> (länkning av dublett), --calc <text>
+  // (uträkningen bakom ett belopp satt för hand) och --typ <kostnadstyp> ur
+  // argumenten.
   let linkTo: string | undefined;
   let calculationFlag: string | undefined;
+  let typFlag: string | undefined;
   const args: string[] = [];
   for (let i = 0; i < rawArgs.length; i++) {
     const a = rawArgs[i]!;
@@ -255,6 +284,15 @@ export function approve(
     }
     if (a.startsWith("--calc=")) {
       calculationFlag = a.slice("--calc=".length).slice(0, MAX_CALCULATION);
+      continue;
+    }
+    if (a === "--typ") {
+      typFlag = rawArgs[i + 1];
+      i++;
+      continue;
+    }
+    if (a.startsWith("--typ=")) {
+      typFlag = a.slice("--typ=".length);
       continue;
     }
     args.push(a);
@@ -285,8 +323,23 @@ export function approve(
     // med ett nytt — då visar löftessidan en räkning som inte ger summan intill.
     // Granskaren anger en ny med --calc; utan den står löftet utan uträkning.
     const calculation = calculationFlag ?? undefined;
+    if (typFlag !== undefined && !(KOSTNADSTYPER as readonly string[]).includes(typFlag)) {
+      console.error(
+        `Okänd kostnadstyp: ${typFlag}. Giltiga: ${KOSTNADSTYPER.join(", ")}.`,
+      );
+      process.exit(1);
+    }
+    // Utan angiven typ ärvs postens egen, och saknas den blir det "utgift".
+    // Ett skattesänkningslöfte utan färdig kostnad blev då en utgift — därför
+    // varnar vi när granskaren sätter belopp på en post som ingen typ har.
+    if (typFlag === undefined && !cost) {
+      console.warn(
+        "Varning: posten saknar kostnadstyp och publiceras som utgift. Sänker löftet\n" +
+          `         en skatt eller en utgift: ange --typ (${KOSTNADSTYPER.join(", ")}).`,
+      );
+    }
     cost = {
-      type: cost?.type ?? "utgift",
+      type: typFlag ?? cost?.type ?? "utgift",
       period: cost?.period ?? "per_ar",
       msek_low: Math.round(low),
       msek_base: Math.round(base),

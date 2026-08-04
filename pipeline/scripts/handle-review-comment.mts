@@ -44,7 +44,7 @@ const cmd = parseReviewCommand(body);
 if (!cmd) {
   output(
     "error",
-    "Oklart kommando. Använd `/godkänn`, `/godkänn <low> <base> <high>` (tre tal i msek), `/godkänn --group p-2026-XXXX` eller `/avvisa <skäl>`. Skriver du ett eget belopp: lägg till en rad som börjar `Uträkning:` med resonemanget bakom det, så visas det på löftessidan.",
+    "Oklart kommando. Använd `/godkänn`, `/godkänn <low> <base> <high>` (tre tal i msek), `/godkänn --group p-2026-XXXX`, `/godkänn ... --typ <utgift|intäktsminskning|besparing|intäktsökning>` eller `/avvisa <skäl>`. Skriver du ett eget belopp: lägg till en rad som börjar `Uträkning:` med resonemanget bakom det, så visas det på löftessidan.",
   );
   process.exit(0);
 }
@@ -84,6 +84,7 @@ if (cmd.group) {
 const cliArgs: string[] = [String(index)];
 if (cmd.amounts) cliArgs.push(...cmd.amounts.map(String));
 if (cmd.group) cliArgs.push("--group", cmd.group);
+if (cmd.costType) cliArgs.push("--typ", cmd.costType);
 // Texten efter kommandoraden blir uträkningen bakom beloppet och visas publikt.
 if (cmd.calculation) cliArgs.push("--calc", cmd.calculation);
 
