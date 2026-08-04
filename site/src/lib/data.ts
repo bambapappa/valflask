@@ -46,6 +46,8 @@ export interface PromisePost {
     described: boolean;
     summary: string | null;
     msek: number | null;
+    /** Avser beloppet ett år eller hela perioden? Krävs när msek är satt. */
+    period?: "per_ar" | "engang";
   };
   comparisons: string[];
   quip: string | null;

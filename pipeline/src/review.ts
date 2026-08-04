@@ -410,10 +410,16 @@ export function approve(
     },
     category: cand.category ?? "övrigt",
     cost: { ...cost },
+    // Beloppet i citatet är INTE en finansieringsuppgift. Fältet fylldes förut
+    // med `amount_in_text_msek`, och då hamnade ISK-gränsen på 500 000 kronor,
+    // barnavdragets 10 000 per barn och ett anslag på 16 miljoner i fältet för
+    // vad partiet säger att löftet finansieras med — och drogs av från vad
+    // partiernas löften kostar. Beskriver löftet ingen finansiering är fältet
+    // tomt (rättat på p-2026-0463, p-2026-0465 och p-2026-0571).
     financing_claimed: {
       described: false,
       summary: null,
-      msek: cand.amount_in_text_msek ?? null,
+      msek: null,
     },
     comparisons: [],
     quip: null,

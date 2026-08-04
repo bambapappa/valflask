@@ -256,8 +256,41 @@
               "null"
             ],
             "minimum": 0
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "per_ar",
+              "engang"
+            ],
+            "description": "Avser finansieringsbeloppet ett år eller hela mandatperioden? Krävs när msek är ett tal, för beloppet dras från kostnader räknade för perioden."
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "msek": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "msek"
+              ]
+            },
+            "then": {
+              "required": [
+                "described",
+                "period"
+              ],
+              "properties": {
+                "described": {
+                  "const": true
+                }
+              }
+            }
+          }
+        ]
       },
       "comparisons": {
         "type": "array",

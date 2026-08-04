@@ -1940,3 +1940,58 @@ underhålla i stället för en, och nya undersidor hade missats).
 `pipeline/scripts/quality-scan.mts`, `site/src/lib/aggregates.ts`,
 `site/src/pages/parti/[kod].astro`, `handlingsvagen/data/loften-index.json`.
 355 tester i pipelinen, 13 nya grindar i `site/scripts/test-grupplista.mts`.
+
+---
+
+## 2026-08-04 — Finansieringsgapet: en uträkning i stället för tre, och en period på finansieringsuppgiften
+
+**Beslut (mänskligt beslut 2026-08-04):** Finansieringsgapet räknas om.
+
+1. `totalFinancingClaimed` kör nu `dedupeByGroup(promises.filter(isActive))`,
+   samma population som `totalFlasket` och `totalBesparingar`.
+2. `financing_claimed` får fältet **`period`** (`per_ar` eller `engang`), och
+   schemat kräver det när `msek` är ett tal. Schemat kräver dessutom
+   `described: true` för att ett belopp ska få stå där.
+3. `coalitionAggregates` och klientens `computeCoalition` räknar med samma
+   representant och samma finansieringsfunktion som resten av sajten.
+4. Granskningssteget slutar skriva `amount_in_text_msek` i finansieringsfältet.
+
+**Motiv:** `financingGap` drar tre tal från varandra, och de vilade på olika
+underlag. Kostnaderna räknade en grupp EN gång; finansieringen räknade den en
+gång per medlem. Centerpartiets skattefria grundlön är sex formuleringar av
+samma reform, och partiets uppgift om 45 000 miljoner kronor räknades sex gånger
+— 270 000 i stället för 45 000.
+
+Åt andra hållet drogs samma uppgift av som **ett** år från kostnader räknade för
+**fyra**. Partiet säger själv "per år", men fältet hade ingen period, så koden
+kunde inte veta det. De två felen tog delvis ut varandra, vilket är den farliga
+sorten: totalen såg rimlig ut.
+
+Tre av Liberalernas löften bar dessutom ett belopp i fältet utan att beskriva
+någon finansiering — siffror ur deras egna citat (ISK-gränsen 500 000 kronor,
+barnavdragets 10 000 per barn, ett anslag på 16 miljoner) som granskningssteget
+skrev in där. Ett belopp utan beskriven finansiering är motsägelsefullt, och
+schemat vägrar det nu.
+
+**Sajten räknade på tre ställen med tre resultat.** Startsidan och partisidorna
+summerade rakt av (270 017), koalitionsvyn dedupade i en egen loop (45 016), och
+kombinatorn i webbläsaren hade en tredje kopia. En läsare som klickade mellan
+vyerna såg olika tal för samma data. De tre delar nu en och samma funktion.
+
+**Följden på siffrorna:** gapet går från 2 326 039 till **2 416 056** miljoner
+kronor för mandatperioden. Finansieringen går från 270 017 till 180 000.
+
+**Förkastade alternativ:** ärva perioden från `cost.period` utan schemaändring
+(fungerar på dagens nio poster men gissar, och gissningen hade blivit permanent);
+låta koalitionsvyn behålla sin egen loop och bara laga finansieringen (då hade
+representanten fortfarande skilt sig, 2 720 miljoner kronor isär); nolla
+`described` på de tre felfyllda i stället för att tömma beloppet (de beskriver
+verkligen ingen finansiering — det är beloppet som är fel, inte flaggan).
+
+**Påverkan:** `pipeline/schemas/promises.schema.json`, `pipeline/src/review.ts`,
+`site/src/lib/aggregates.ts`, `site/src/lib/data.ts`,
+`site/src/scripts/kombinator.ts` + ombyggd `site/public/kombinator.js`,
+`data/promises.json` (nio löften, egen historikpost på vardera),
+`data/changelog.json`, `data/rattelser.json`. Tolv nya grindar i
+`site/scripts/test-grupplista.mts`, varav fyra jämför koalitionsvyn mot
+startsidan term för term.

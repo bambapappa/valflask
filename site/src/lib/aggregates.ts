@@ -163,8 +163,30 @@ function zForLevel(level: number): number {
   return table[level.toString()] ?? 1.2816;
 }
 
+/**
+ * Ett partis egen finansieringsuppgift, räknad för mandatperioden precis som
+ * kostnaderna. Fältet anger perioden själv sedan 2026-08-04; saknas den bär
+ * posten inget belopp och funktionen ger noll.
+ */
+export function financingClaimedMsek(p: PromisePost): number {
+  const msek = p.financing_claimed?.msek ?? 0;
+  if (msek === 0) return 0;
+  return msek * (p.financing_claimed.period === "per_ar" ? 4 : 1);
+}
+
+/**
+ * Summan av vad partierna själva säger att löftena finansieras med.
+ *
+ * Populationen MÅSTE vara densamma som i `totalFlasket` och
+ * `totalBesparingar` — de tre termerna dras från varandra i `financingGap`.
+ * Fram till 2026-08-04 summerade den här varje löfte rakt av: Centerpartiets
+ * skattefria grundlön är sex formuleringar av samma reform, och partiets
+ * finansieringsuppgift räknades sex gånger. Koalitionsvyn dedupade redan, så
+ * sajten visade två olika finansieringssummor beroende på vilken sida läsaren
+ * stod på (270 017 mot 45 016).
+ */
 export function totalFinancingClaimed(promises: PromisePost[]): number {
-  return promises.reduce((s, p) => s + (p.financing_claimed.msek ?? 0), 0);
+  return dedupeByGroup(promises.filter(isActive)).reduce((s, p) => s + financingClaimedMsek(p), 0);
 }
 
 export function financingGap(promises: PromisePost[]): number {
@@ -291,44 +313,37 @@ export function coalitionAggregates(
     (p) => isActive(p) && p.parties.some((c) => partySet.has(c))
   );
 
+  // Gruppnoterna behöver ALLA medlemmar: spannet mellan partiernas prislappar
+  // på samma politik är just skillnaden mellan dem.
   const seenGroups = new Map<string, { min: number; max: number; parties: Set<string> }>();
+  for (const p of relevant) {
+    if (!p.group_id) continue;
+    const t = promiseTotalMsek(p);
+    const existing = seenGroups.get(p.group_id);
+    if (existing) {
+      existing.min = Math.min(existing.min, t);
+      existing.max = Math.max(existing.max, t);
+      for (const c of p.parties) existing.parties.add(c);
+    } else {
+      seenGroups.set(p.group_id, { min: t, max: t, parties: new Set(p.parties) });
+    }
+  }
+
+  // Summorna räknas på samma representant som resten av sajten. Loopen valde
+  // förut gruppens FÖRST påträffade medlem medan `dedupeByGroup` väljer den med
+  // högst belopp, så koalitionsvyn och startsidan kunde visa olika tal för
+  // samma grupp (2 720 miljoner kronor isär, mätt 2026-08-04).
   let totalFlasketVal = 0;
   let totalBesparingVal = 0;
   let totalFinancingVal = 0;
   let promisesCount = 0;
-  const countedIds = new Set<string>();
 
-  for (const p of relevant) {
+  for (const p of dedupeByGroup(relevant)) {
     const t = promiseTotalMsek(p);
-
-    if (p.group_id) {
-      const existing = seenGroups.get(p.group_id);
-      if (existing) {
-        existing.min = Math.min(existing.min, t);
-        existing.max = Math.max(existing.max, t);
-        for (const c of p.parties) existing.parties.add(c);
-      } else {
-        seenGroups.set(p.group_id, {
-          min: t,
-          max: t,
-          parties: new Set(p.parties),
-        });
-      }
-    }
-
-    if (p.group_id && countedIds.has(p.group_id)) continue;
-
     if (isCostType(p)) totalFlasketVal += t;
     else if (isBesparing(p)) totalBesparingVal += t;
-
-    totalFinancingVal += p.financing_claimed.msek ?? 0;
+    totalFinancingVal += financingClaimedMsek(p);
     promisesCount += 1;
-
-    if (p.group_id) {
-      countedIds.add(p.group_id);
-    } else {
-      countedIds.add(p.id);
-    }
   }
 
   const groupNotes: GroupNote[] = Array.from(seenGroups.entries())

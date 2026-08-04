@@ -28,7 +28,7 @@ interface PromiseItem {
   group_id: string | null;
   parties: string[];
   cost: { type: string; period: string; msek_base: number };
-  financing_claimed: { msek: number | null };
+  financing_claimed: { msek: number | null; period?: "per_ar" | "engang" };
   status: string;
 }
 
@@ -66,6 +66,17 @@ function isBesparing(p: PromiseItem): boolean {
   return p.cost.type === "besparing" || p.cost.type === "intäktsökning";
 }
 
+/**
+ * Finansieringsuppgiften räknad för mandatperioden, precis som kostnaderna.
+ * Speglar `financingClaimedMsek` i lib/aggregates.ts — samma regel måste gälla
+ * i klienten som på de byggda sidorna.
+ */
+function financingClaimed(p: PromiseItem): number {
+  const msek = p.financing_claimed?.msek ?? 0;
+  if (msek === 0) return 0;
+  return msek * (p.financing_claimed.period === "per_ar" ? 4 : 1);
+}
+
 function computeCoalition(promises: PromiseItem[], partyCodes: string[]): CoalitionResult {
   const partySet = new Set(partyCodes);
   const relevant = promises.filter((p) => isActive(p) && p.parties.some((c) => partySet.has(c)));
@@ -76,27 +87,47 @@ function computeCoalition(promises: PromiseItem[], partyCodes: string[]): Coalit
   let count = 0;
   const counted = new Set<string>();
 
+  // Gruppnoterna behöver ALLA medlemmar: spannet är skillnaden mellan dem.
   for (const p of relevant) {
+    if (!p.group_id) continue;
     const t = promiseTotal(p);
-
-    if (p.group_id) {
-      const existing = seenGroups.get(p.group_id);
-      if (existing) {
-        existing.min = Math.min(existing.min, t);
-        existing.max = Math.max(existing.max, t);
-        for (const c of p.parties) existing.parties.add(c);
-      } else {
-        seenGroups.set(p.group_id, { min: t, max: t, parties: new Set(p.parties) });
-      }
+    const existing = seenGroups.get(p.group_id);
+    if (existing) {
+      existing.min = Math.min(existing.min, t);
+      existing.max = Math.max(existing.max, t);
+      for (const c of p.parties) existing.parties.add(c);
+    } else {
+      seenGroups.set(p.group_id, { min: t, max: t, parties: new Set(p.parties) });
     }
+  }
 
-    if (p.group_id && counted.has(p.group_id)) continue;
+  // Gruppen representeras av medlemmen med HÖGST belopp, samma regel som
+  // dedupeByGroup på de byggda sidorna. Loopen tog förut den först påträffade,
+  // och då kunde kombinatorn visa ett annat tal än partisidan för samma grupp.
+  const rep = new Map<string, PromiseItem>();
+  for (const p of relevant) {
+    if (!p.group_id) continue;
+    const cur = rep.get(p.group_id);
+    if (cur === undefined || promiseTotal(p) > promiseTotal(cur) || (promiseTotal(p) === promiseTotal(cur) && p.id < cur.id)) {
+      rep.set(p.group_id, p);
+    }
+  }
 
-    if (isCostType(p)) totalFlasket += t;
-    else if (isBesparing(p)) totalBesparingar += t;
-    totalFinancing += p.financing_claimed.msek ?? 0;
+  for (const p of relevant) {
+    if (p.group_id) {
+      if (counted.has(p.group_id)) continue;
+      counted.add(p.group_id);
+      const b = rep.get(p.group_id)!;
+      if (isCostType(b)) totalFlasket += promiseTotal(b);
+      else if (isBesparing(b)) totalBesparingar += promiseTotal(b);
+      totalFinancing += financingClaimed(b);
+      count++;
+      continue;
+    }
+    if (isCostType(p)) totalFlasket += promiseTotal(p);
+    else if (isBesparing(p)) totalBesparingar += promiseTotal(p);
+    totalFinancing += financingClaimed(p);
     count++;
-    counted.add(p.group_id ?? p.id);
   }
 
   const groupNotes: GroupNote[] = Array.from(seenGroups.entries())
