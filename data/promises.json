@@ -24232,5 +24232,50 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-04T08"
     }
+  },
+  {
+    "id": "p-2026-0594",
+    "group_id": null,
+    "title": "Realtidsövervakning av förövare vid kontaktförbud",
+    "slug": "realtidsovervakning-av-forovare-vid-kontaktforbud",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Förövare bör kunna övervakas och positioneras i realtid av polisen för att skapa ökad trygghet och ge polisen bättre möjlighet att ingripa i tid, innan det är för sent.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/det-ska-inte-vara-livsfarligt-att-vara-kvinna-i-sverige/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T11:47:32.875Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar att 5-15% av utfärdade kontaktförbud (~10 000/år) blir föremål för fotboja med GPS-övervakning, med dygnskostnad 800-1200 kr.",
+      "confidence": 0.4,
+      "calculation": "~10 000 kontaktförbud/år, 5-15 % bedöms få fotboja → 500-1500 personer. Dygnskostnad fotboja med aktiv GPS-övervakning antas 800-1200 kr → årskostnad 292-438 tkr/person. Totalt 146-657 mkr/år, avrundat till 100-600 mkr, bas 300 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-04T11"
+    }
   }
 ]
