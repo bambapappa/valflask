@@ -21,6 +21,7 @@ import {
   datumUrAdress,
   datumUrHtml,
   harForegaendeValsAr,
+  arRegionEllerKommundokument,
   MAX_INDEX_ARTICLES,
   joinPdfLines,
   parsePdfDate,
@@ -823,6 +824,44 @@ describe("LiveSource med mock-HTTP", () => {
       findManifestPdfLinks(html, "https://testpartiet.se/valmanifest/"),
       ["https://testpartiet.se/wp-content/uploads/2026/06/valmanifest-2026.pdf"],
       "bara valårets manifest följs",
+    );
+  });
+
+  test("findManifestPdfLinks: regionmanifest följs inte", () => {
+    // Sverigedemokraternas regionmanifest låg länkat från politiksidan och togs
+    // in 2026-08-04 — det enda regionala dokumentet i registret. Sajten
+    // granskar riksdagsvalet, och ett regionmanifest lovar vad regionerna ska
+    // göra med sin egen kassa.
+    for (const regionalt of [
+      "/wp-content/uploads/2026/08/sd-region-valmanifest-2026.pdf",
+      "/wp-content/uploads/2026/kommunalt-valmanifest.pdf",
+      "/dokument/regionala-valplattformen-2026.pdf",
+      "/uploads/landstingsprogram-2026.pdf",
+    ]) {
+      assert.equal(arRegionEllerKommundokument(regionalt), true, `borde spärras: ${regionalt}`);
+    }
+
+    // Riksdokumenten får inte fastna. "Regeringen" och "kommunikation" bär
+    // samma bokstäver i början som "region" respektive "kommun" — ordgränsen
+    // är det som skiljer dem åt.
+    for (const riks of [
+      "/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      "/wp-content/uploads/2026/07/valplattform-2026.pdf",
+      "/wp-content/uploads/2026/04/politiskt-handlingsprogram-2026-2030.pdf",
+      "/dokument/regeringens-valmanifest-2026.pdf",
+      "/dokument/kommunikationspolitiskt-handlingsprogram-2026.pdf",
+    ]) {
+      assert.equal(arRegionEllerKommundokument(riks), false, `borde släppas: ${riks}`);
+    }
+
+    // Hela vägen genom länkletaren.
+    const html =
+      '<a href="/wp-content/uploads/2026/08/sd-region-valmanifest-2026.pdf">Regionmanifest</a>' +
+      '<a href="/wp-content/uploads/2026/07/valplattform-2026.pdf">Valplattform</a>';
+    assert.deepEqual(
+      findManifestPdfLinks(html, "https://testpartiet.se/vad-vi-vill/"),
+      ["https://testpartiet.se/wp-content/uploads/2026/07/valplattform-2026.pdf"],
+      "bara riksdokumentet följs",
     );
   });
 

@@ -469,6 +469,26 @@ export function harForegaendeValsAr(pathname: string): boolean {
 }
 
 /**
+ * Sant om dokumentets adress pekar ut region-, kommun- eller landstingspolitik.
+ *
+ * Sajten granskar riksdagsvalet och prissätter statens nya nettokostnad. Ett
+ * regionmanifest lovar vad regionerna ska göra, och regionerna har en egen
+ * kassa — löftena hör inte hemma i samma summa. Vi tog in Sverigedemokraternas
+ * regionmanifest 2026-08-04 utan att märka det, och det var det enda regionala
+ * dokumentet i hela registret. Att döma dokument för dokument är dessutom
+ * lättare att förklara för en läsare än att döma löfte för löfte: samma
+ * sakfråga kan avgöras både nationellt och regionalt.
+ */
+export function arRegionEllerKommundokument(pathname: string): boolean {
+  // Stammen måste stå först i ett ord — "interregional" och "rekommunalisera"
+  // är inte träffar — men får fortsätta i en sammansättning, för så heter
+  // dokumenten: "landstingsprogram", "kommunalt-valmanifest", "regionpolitik".
+  // Undantaget efter "kommun" håller kommunikation, kommuniké och kommunicera
+  // utanför; de delar sina sex första bokstäver med kommunen och ingenting mer.
+  return /(^|[^a-zåäöé])(region|kommun(?!ika|iké|ice)|landsting)/iu.test(pathname);
+}
+
+/**
  * Hittar länkar till manifest-PDF:er i en HTML-sida: href som pekar på .pdf
  * på SAMMA kanoniska domän och vars sökväg ser ut som ett valdokument.
  * Detta är B:s "automatisk täckning": partier länkar sina manifest som PDF
@@ -499,6 +519,8 @@ export function findManifestPdfLinks(html: string, baseUrl: string): string[] {
     if (canonicalHost(abs.hostname) !== baseHost) continue;
     // Ett manifest från ett tidigare val är inte ett vallöfte 2026.
     if (harForegaendeValsAr(abs.pathname)) continue;
+    // Ett regionmanifest lovar vad regionerna ska göra, inte staten.
+    if (arRegionEllerKommundokument(abs.pathname)) continue;
     abs.hash = "";
     links.add(abs.href);
     if (links.size >= MAX_FOLLOWED_PDFS) break;
