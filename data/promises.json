@@ -24412,5 +24412,50 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-04T11"
     }
+  },
+  {
+    "id": "p-2026-0598",
+    "group_id": null,
+    "title": "Förstärkt jobbskatteavdrag",
+    "slug": "forstarkt-jobbskatteavdrag",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "Bland förslagen finns ett förstärkt jobbskatteavdrag, ett nytt barnavdrag för arbetande föräldrar och ett utbyggt småbarns-RUT.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/5-000-kronor-mer-i-manaden-for-barnfamiljer-med-liberalerna",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T11:48:07.898Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 11000,
+      "msek_high": 15000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ankrat på den senaste permanenta höjningen av jobbskatteavdraget (BP24, ~11 mdkr/år). Stort spann då löftet saknar nivå.",
+      "confidence": 0.5,
+      "calculation": "Senaste förstärkningen av jobbskatteavdraget (Budgetpropositionen för 2024) kostade runt 11 mdkr per år. Antar att nytt förstärkt avdrag kan ligga i samma storleksordning, med spann 5–15 mdkr pga osäkerhet om ambitionsnivå."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-04T11"
+    }
   }
 ]
