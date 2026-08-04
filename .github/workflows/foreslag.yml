@@ -58,10 +58,25 @@ on:
         type: boolean
         default: false
   schedule:
-    # Veckovis matchning av det skörden hämtat sedan sist (se skord.yml,
-    # som är schemalagd tre timmar tidigare samma dag). Kör alltid mot
-    # opencode Go — se stycket om primar ovan för varför.
-    - cron: "0 7 * * 1"
+    # DAGLIGEN sedan 2026-08-04, efter ett mänskligt beslut inför valet.
+    # Skälet: löften skördas tre gånger om dygnet, men matchningen gick en
+    # gång i veckan. Ett löfte som kom in på en tisdag fick sina
+    # kopplingsförslag först påföljande måndag, och med drygt fyrtio dagar
+    # kvar till valet hann de sista veckornas löften få förslag en eller två
+    # gånger.
+    #
+    # Det kostar lite, för körningen är inkrementell: `provade-par.json`
+    # bockar av vilka par som redan prövats, så bara nya löften och nya
+    # dokument matchas. Mätt på de två första körningarna — 34 minuter när
+    # allt var nytt, 8 minuter dagen efter.
+    #
+    # Klockslaget är valt: 07:00 UTC ligger mellan pipelinekörningarna
+    # (03:10, 09:10, 15:10 UTC), som tar 73–87 minuter, så de två pushar
+    # aldrig mot main samtidigt. Dokumentskörden (skord.yml) går fortfarande
+    # veckovis på måndagar 04:00 — nya riksdagsdokument kommer sällan under
+    # sommaruppehållet, och matchningen har ändå alltid hela det skördade
+    # beståndet att arbeta mot.
+    - cron: "0 7 * * *"
 permissions:
   contents: write
   issues: write

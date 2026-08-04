@@ -16,6 +16,10 @@ Regler:
    samma ord, samma skiljetecken, samma ordföljd. Lägg ALDRIG till egna ord (t.ex. "vi lovar att")
    om de inte står ordagrant i texten. Slå ALDRIG ihop olika meningar. Välj helst EN mening.
    Sikta på ≤ 35 ord (absolut max 40), minst 5 ord. Parafrasera aldrig. Hitta aldrig på.
+   UNDANTAG från femordsgolvet: står löftet som en punkt i en lista på partiets EGEN sida, och
+   utgör hela punkten färre än fem ord ("Skrota enprocentsregeln"), får du citera hela punkten —
+   men bara om du citerar den HELT och ORDAGRANT. Klipp aldrig ut några ord ur en längre mening
+   för att få ett kort citat: ett kort citat måste vara en hel punkt, aldrig ett utplock.
 4. "parties": ange ENDAST partikod i GEMENER ur denna lista (översätt partinamn → kod):
    s = Socialdemokraterna, m = Moderaterna, sd = Sverigedemokraterna, c = Centerpartiet,
    v = Vänsterpartiet, kd = Kristdemokraterna, l = Liberalerna, mp = Miljöpartiet.

@@ -36,6 +36,8 @@ export interface PipelineContext {
   outputDir: string;
   dataDir: string;
   allowlist: readonly string[];
+  /** Partiernas egna domäner — styr det lägre citatgolvet i G3. */
+  partiDomaner?: readonly string[];
   mode: "auto" | "review";
   /** Max antal NYA (osedda) artiklar att bearbeta per körning. Odefinierat = alla. */
   maxNewArticles?: number;
@@ -178,6 +180,7 @@ export async function runPipeline(
 
       const gateReport = runGates(article, candidates, {
         allowlist: ctx.allowlist,
+        partiDomaner: ctx.partiDomaner ?? [],
         now: ctx.now,
       });
 

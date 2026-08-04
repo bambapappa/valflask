@@ -24162,14 +24162,14 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 2000,
       "msek_base": 4500,
       "msek_high": 9000,
       "basis": "granskare",
       "basis_url": null,
-      "method_note": "(belopp satt av granskare)",
+      "method_note": "Skattefritt sparande upp till partiets egen gräns på 500 000 kronor. Samma politik som Liberalernas löfte om samma gräns, räknas en gång. (belopp satt av granskare)",
       "calculation": "Partiet anger själv gränsen: sparande på investeringssparkonto blir skattefritt upp till 500 000 kronor. Staten förlorar den schablonskatt som i dag betalas på kapitalet under gränsen. Med omkring 3–4 miljoner sparare och i genomsnitt 200 000–400 000 kronor på kontot ligger merparten av kapitalet under gränsen, vilket ger ett bortfall kring 4,5 miljarder kronor per år. Samma politik som Liberalernas löfte om skattefritt ISK-sparande upp till 500 000 kronor, och beloppet vilar därför på samma grund. Löftet länkas till det, så att politiken räknas en gång även om två partier lovar den.",
       "confidence": 0.9
     },
@@ -24181,7 +24181,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-04",
+        "change": "Kostnadstypen rättad från utgift till intäktsminskning. Löftet sänker en skatt, det är ingen ny utgift, och sidan skrev därför fel sorts belopp. Beloppet och uträkningen är oförändrade. Typen blev fel när beloppet sattes för hand vid godkännandet: kommandot kunde ange belopp men inte kostnadstyp, och föll då tillbaka på utgift.",
+        "commit": "15705e1962b8501d96a6cda4b33281a1792910dc"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -24207,14 +24213,14 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 500,
       "msek_base": 1000,
       "msek_high": 2500,
       "basis": "granskare",
       "basis_url": null,
-      "method_note": "(belopp satt av granskare)",
+      "method_note": "Lägre skatt på arbetsinkomst efter pensionsåldern. Partiet anger ingen nivå; antagandena bakom beloppet står i uträkningen. (belopp satt av granskare)",
       "calculation": "Löftet pekar ut en bestämd åtgärd — lägre skatt på arbete efter pensionsåldern — men anger ingen nivå, så beloppet ankras i vad åtgärden rimligen omfattar och antagandena redovisas öppet. Ungefär 350 000 personer som fyllt 66 år har arbetsinkomst under ett år. En sänkning i samma storleksordning som ett steg i det förhöjda jobbskatteavdraget för äldre, några tusen kronor per person och år, ger 350 000 × 3 000 kronor ≈ 1 000 miljoner kronor per år. Spannet 500–2 500 speglar att både antalet arbetande seniorer och sänkningens storlek är våra uppskattningar, inte partiets siffror. Beloppet avser skatt på arbetsinkomst; lägre skatt på utbetald pension är en annan åtgärd och prissätts för sig, så de två inte dubbelräknas.",
       "confidence": 0.9
     },
@@ -24226,7 +24232,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-04",
+        "change": "Kostnadstypen rättad från utgift till intäktsminskning. Löftet sänker en skatt, det är ingen ny utgift, och sidan skrev därför fel sorts belopp. Beloppet och uträkningen är oförändrade. Typen blev fel när beloppet sattes för hand vid godkännandet: kommandot kunde ange belopp men inte kostnadstyp, och föll då tillbaka på utgift.",
+        "commit": "15705e1962b8501d96a6cda4b33281a1792910dc"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
