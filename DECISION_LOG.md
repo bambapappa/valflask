@@ -1869,3 +1869,74 @@ En ny grind i `tests/fetch.test.ts`, 350 tester gröna.
 granskningskön 2026-08-04 på citatgolvet, stannar därmed ute oavsett golvets nya
 undantag. Undantaget gäller partiernas riksdokument och riksdokumentens
 punktlistor, och gör fortfarande nytta där.
+
+---
+
+## 2026-08-04 — Paketlöftet prissätts som summan av sina egna åtgärder, och underlaget skrivs ut
+
+**Beslut (mänskligt beslut 2026-08-04):** Fyra ändringar ur balansgenomgången
+mellan partierna.
+
+1. **`p-2026-0039` räknas om från 3 000 till 130 miljoner kronor per år.**
+   Beloppet är nu summan av de fyra åtgärder citatet räknar upp, var och en
+   prissatt för sig med utskrivna antaganden.
+2. **Kristdemokraternas politikundersidor blir en källa** (`kd-politik-index`).
+3. **Kvalitetssökningen får `findZeroWithCalculatedSum`** — nollor vars
+   uträkning ändå räknar fram en summa.
+4. **Partisidan skriver ut vad siffran vilar på**: antal källor, hur stor andel
+   som kommer från partiets egna kanaler, senaste löftets datum, och en varning
+   när tre löften bär över sjuttio procent av summan.
+
+**Motiv, punkt 1:** Partiets enskilda åtgärder i samma område ligger numera
+publicerade som egna löften (`p-2026-0594`–`0596`). Ett samlat områdesbelopp
+bredvid dem räknar samma följdkostnader två gånger. Den gamla uppskattningen sa
+dessutom i sin egen not att den till största delen vilade på grova antaganden,
+och den enda säkra posten i den — avskaffad patientavgift efter våldtäkt — låg
+under en miljon kronor.
+
+**Grupplänkning valdes bort, och det är värt att veta varför.** Det första
+förslaget var att länka de tre enskilda åtgärderna till paketlöftet så att
+området räknas en gång. Men en grupp betyder i dag "samma politik, räknas EN
+gång, representerad av det HÖGSTA beloppet". Hade de tre lagts i gruppen med
+paketet hade 300, 10 och 70 fallit ur summan helt och bara det högsta räknats —
+mekanismen tar bort pengar, den summerar dem inte. Att bygga en andra sorts
+grupp, där summan är delarnas summa, hade krävt ett nytt fält och en ändring i
+kärnan av varje sammanräkning — och behövs inte här, för de tre åtgärderna är
+INTE de fyra som paketet räknar upp. De är olika åtgärder, och då är summan av
+dem redan summan av delarna, utan grupp. Kravet "summan för gruppen ska bli
+summan av delarna" är alltså uppfyllt genom att varje del är sitt eget löfte.
+
+**Motiv, punkt 2:** KD:s `/var-politik` är en meny på 4 670 tecken, hämtad fyra
+gånger utan att ge en enda kandidat. Politiken ligger på undersidorna. Utan dem
+kom 18 av KD:s 24 löften ur ett enda tv-sänt tal, och bara 21 % från partiets
+egen kanal mot 61–100 % för övriga partier — vi lät i praktiken ett
+nyhetsredaktionellt urval bestämma hur ett parti framstod.
+
+**Motiv, punkt 3:** `findAmountMismatches` hoppar över nollor, för en nolla är
+ett beslut. Det stämmer om nollan men inte om texten bredvid: `p-2026-0062` stod
+en vecka med en uträkning som räknade fram 285–950 miljoner kronor under ett
+belopp på noll. Den nya sökningen läser slutsatsmeningarna direkt i stället för
+via `statedBaseMsek`, som avstår vid spann — och det var just ett spann.
+Nollor vars text själv namnger basbeloppet som noll är undantagna.
+
+**Motiv, punkt 4:** Antalet löften per parti styrs till stor del av
+källmaterialets form och av våra egna tak: varje tiosidig bit av en manifest-PDF
+ger högst fem löften, så C:s manifest på tio bitar gav exakt 50 och MP:s elva
+bitar gav 50 — båda ligger på taket, vilket betyder att vi vet att det finns mer
+i dem. Ett parti utan manifest får i stället det nyhetsflödet råkar bära. Den
+skillnaden går inte att räkna bort, men den går att skriva ut. Hos tre partier
+bär dessutom tre löften över 70 % av summan (KD 91 %, S 76 %, V 73 %), och ett
+enskilt estimat väger då tungt i en rangordning.
+
+**Förkastade alternativ:** höja taket per artikel (försvagar spärren mot
+skräpsidor); jämna ut antalet löften mellan partierna (att lägga till eller
+utelämna löften efter kvot är precis vad sajten lovar att inte göra); färga
+varningen om koncentration röd (formen ska bära betydelsen, så den syns i
+svartvitt); ta KD:s undersidor som enskilda `page`-källor (tolv rader att
+underhålla i stället för en, och nya undersidor hade missats).
+
+**Påverkan:** `data/promises.json`, `data/changelog.json`, `data/rattelser.json`,
+`data/sources.yaml`, `pipeline/src/quality-scan.ts`,
+`pipeline/scripts/quality-scan.mts`, `site/src/lib/aggregates.ts`,
+`site/src/pages/parti/[kod].astro`, `handlingsvagen/data/loften-index.json`.
+355 tester i pipelinen, 13 nya grindar i `site/scripts/test-grupplista.mts`.

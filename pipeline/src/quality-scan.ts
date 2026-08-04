@@ -252,6 +252,61 @@ export function findAmountMismatches(
   return out.sort((a, b) => b.base - a.base);
 }
 
+/**
+ * Nollade löften vars uträkning ändå räknar fram en summa.
+ *
+ * `findAmountMismatches` hoppar över nollor med motiveringen att en nolla är
+ * ett beslut, inte ett räknefel. Det stämmer om nollan — men inte om texten
+ * bredvid. När ett belopp nollas måste uträkningen skrivas om så att den
+ * förklarar nollan; görs det inte står en räkning kvar och motsäger beloppet
+ * intill, publikt. `p-2026-0062` gjorde precis det: beloppet nollades
+ * 2026-07-28 eftersom betygsreformen redan var beslutad, men texten räknade
+ * vidare "Summan blir 285–950 miljoner kronor" i ytterligare en vecka utan att
+ * någon sökning sa ifrån.
+ *
+ * Sökningen läser slutsatsmeningarna själv i stället för att gå via
+ * `statedBaseMsek`. Den funktionen letar ETT entydigt basbelopp och avstår vid
+ * spann — och just spannet var fallet här: "Summan blir 285–950 miljoner
+ * kronor" har inget basbelopp att läsa ut. För en nolla är frågan enklare och
+ * trubbigare: räknar texten fram några pengar alls? Då rapporteras det högsta
+ * beloppet i slutsatsen.
+ */
+const FORKLARAR_NOLLAN =
+  /(beloppet är noll|sätts till noll|prissätts inte|prissätts till noll|räknas inte här|ingen ny (statlig )?(kostnad|utgift|nettokostnad)|ingen mätbar|redan beslutad|redan besluta|försumbar|utanför statens budget|omfördelning|räknas på (partiets|sina) egna|ligger på (partiets|sina) egna|på sina egna löften|dubbelräkn)/i;
+
+export function findZeroWithCalculatedSum(
+  promises: readonly ScanPromise[],
+): MismatchFinding[] {
+  const out: MismatchFinding[] = [];
+  for (const p of promises) {
+    if (p.status === "tillbakadragen") continue;
+    if (p.cost.msek_base !== 0) continue;
+    const calc = p.cost.calculation;
+    if (!calc) continue;
+    if (FORKLARAR_NOLLAN.test(calc)) continue;
+    // Säger texten själv att basbeloppet är noll är nollan förklarad, även om
+    // uträkningen räknar upp delar på vägen dit: "Totalt 2–5 miljoner kronor
+    // per år om nya medel tillförs; basfall 0 (inryms i befintlig verksamhet)".
+    if (statedBaseMsek(calc) === 0) continue;
+    const belopp = splitSentences(calc)
+      .filter((s) => CONCLUSION.test(s) && !REJECTED.test(s))
+      .flatMap((s) => parseAmountsMsek(s).map((n) => n * sentenceScale(s)));
+    const stated = belopp.length === 0 ? 0 : Math.max(...belopp);
+    if (stated === 0) continue;
+    out.push({
+      id: p.id,
+      parties: p.parties,
+      base: 0,
+      stated,
+      direction: "för lågt",
+      detail:
+        `beloppet är 0 men uträkningen räknar fram upp till ${stated} msek och ` +
+        `förklarar aldrig nollan — ${p.title.slice(0, 60)}`,
+    });
+  }
+  return out.sort((a, b) => b.stated - a.stated);
+}
+
 const STOPWORDS = new Set([
   "och","att","för","med","som","till","den","det","vill","ska","vi","en","ett","av","på",
   "i","är","har","kan","om","så","de","alla","mer","fler","ökad","ökat","nya","ny","hela",

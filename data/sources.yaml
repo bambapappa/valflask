@@ -131,6 +131,21 @@ feeds:
     url: "https://kristdemokraterna.se/"
     verified: "2026-08-03 — 200, 3 daterade artiklar"
 
+  # KD:s "Vår politik" är en MENY, inte en politiksida: 4 670 tecken, nästan
+  # bara länketiketter. Den har hämtats fyra gånger och gett noll kandidater —
+  # inte ens en avvisad. Politiken ligger på undersidorna, och utan dem kom 18
+  # av KD:s 24 löften ur ett enda SVT-program medan bara 21 % kom från partiets
+  # egen kanal (mätt 2026-08-04; övriga partier låg på 61–100 %).
+  #
+  # Mönstret utesluter fyra undersidor som inte bär politik: teckenspråk,
+  # lättläst och andra språk är samma innehåll i annan form, och
+  # rapporter-och-dokument är en länklista.
+  - id: kd-politik-index
+    type: index
+    url: "https://kristdemokraterna.se/var-politik"
+    article_pattern: "^/var-politik/(?!teckensprak|lattlast|kd-pa-andra-sprak|rapporter-och-dokument)"
+    verified: "2026-08-04 — 200, 12 undersidor varav 8 efter mönstret; politikomraden 11 336 tecken, politik-a-till-o 17 166, en-budget-for-familjen 4 951"
+
   # --- Nyhetslistor för partier SOM HAR flöde (andra vägen in) ---
   # Efter att MP:s flöde visade sig servera en fem veckor gammal cache utan att
   # något syntes är en enda väg in per parti inte betryggande. De här källorna

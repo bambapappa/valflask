@@ -615,3 +615,86 @@ export function formatComparison(r: ComparisonResult): string {
   }
   return `${val.toFixed(1).replace(".", ",")} ${r.unit}`;
 }
+
+/* ─────────────────────────────────────── Underlaget bakom ett partis siffra ── */
+
+/**
+ * Partiernas egna domäner. En källa som inte står här är ett medium, riksdagen
+ * eller en videoplattform — någon annan har alltså valt vad vi fick se.
+ * Listan speglar `parti_domaner` i `data/sources.yaml`.
+ */
+const PARTIDOMANER = [
+  "socialdemokraterna.se",
+  "moderaterna.se",
+  "sd.se",
+  "centerpartiet.se",
+  "vansterpartiet.se",
+  "kristdemokraterna.se",
+  "liberalerna.se",
+  "mp.se",
+];
+
+export function arPartiegenKalla(url: string): boolean {
+  const host = (() => {
+    try {
+      return new URL(url).hostname.replace(/^www\./u, "");
+    } catch {
+      return "";
+    }
+  })();
+  if (host === "") return false;
+  // Underdomäner räknas till partiet: press.kristdemokraterna.se och
+  // val2026.centerpartiet.se är partiets egna rum.
+  return PARTIDOMANER.some((d) => host === d || host.endsWith(`.${d}`));
+}
+
+export interface PartyCoverage {
+  /** Antal aktiva löften. */
+  antal: number;
+  /** Hur många av dem som kommer från partiets egna kanaler. */
+  egna: number;
+  /** Antal skilda källadresser bakom löftena. */
+  kallor: number;
+  /** Senaste datum ett löfte uttalades, ISO-format. */
+  senaste: string | null;
+  /** De tre största löftenas andel av partiets summa, 0–1. */
+  topp3Andel: number;
+  /** Största enskilda löftets andel av summan, 0–1. */
+  storstaAndel: number;
+}
+
+/**
+ * Vad ett partis siffra vilar på. Talen på sajten säger vad ett parti lovar,
+ * men inte hur brett underlaget är — och det skiljer sig kraftigt. Mätt
+ * 2026-08-04 kom 21 % av Kristdemokraternas löften från partiets egen kanal
+ * (resten mest ur ett enda tv-sänt tal) mot 100 % för Moderaterna och
+ * Liberalerna, och hos tre partier bar de tre största löftena över 70 % av
+ * summan. Det syns inte i ett totalbelopp, så det skrivs ut i stället.
+ */
+export function partyCoverage(promises: PromisePost[], code: string): PartyCoverage {
+  const egnaLoften = promises.filter((p) => isActive(p) && p.parties.includes(code));
+  const antal = egnaLoften.length;
+  if (antal === 0) {
+    return { antal: 0, egna: 0, kallor: 0, senaste: null, topp3Andel: 0, storstaAndel: 0 };
+  }
+  const egna = egnaLoften.filter((p) => arPartiegenKalla(p.source?.url ?? "")).length;
+  const kallor = new Set(egnaLoften.map((p) => (p.source?.url ?? "").split(/[?#]/u)[0])).size;
+  const datum = egnaLoften.map((p) => p.date_stated).filter(Boolean).sort();
+
+  // Andelarna mäts mot samma tal som rubriken visar: gruppdedupade belopp med
+  // tecken. Utan dedupen hade en grupp räknats flera gånger i nämnaren.
+  const total = Math.abs(partyTotalMsek(promises, code));
+  const belopp = dedupeByGroup(egnaLoften)
+    .map((p) => Math.abs(promiseNetMsek(p)))
+    .sort((a, b) => b - a);
+  const topp3 = (belopp[0] ?? 0) + (belopp[1] ?? 0) + (belopp[2] ?? 0);
+
+  return {
+    antal,
+    egna,
+    kallor,
+    senaste: datum[datum.length - 1] ?? null,
+    topp3Andel: total > 0 ? topp3 / total : 0,
+    storstaAndel: total > 0 ? (belopp[0] ?? 0) / total : 0,
+  };
+}
