@@ -714,8 +714,25 @@ const andel = (kod: string, vikt: number): number =>
   .trend h3 { margin: 0 0 0.7rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; font-size: 1rem; }
   .trend h3 .antal { color: var(--text-svag); font-weight: 400; font-size: 0.85rem; margin-left: auto; }
   .ordlista { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.3rem; }
-  .ordlista li { display: grid; grid-template-columns: minmax(5rem, auto) 1fr auto; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
-  .ordlista .ord { font-weight: 600; overflow-wrap: anywhere; }
+  /* Etikettkolumnen har FAST bredd. Med `auto` mättes den per rad — varje li
+     är sitt eget rutnät — så ett långt ord kortade sitt eget spår: mätt på en
+     telefon varierade spåret mellan 169 och 221 pixlar bara efter ordlängd.
+     Stapelns längd blev därmed en funktion av ordet, inte av talet, och två
+     rader gick inte att jämföra med ögat. Nu är spåret lika brett på varje
+     rad, så längden betyder samma sak överallt i listan. Talkolumnen är fast
+     av samma skäl: med `auto` växte den med siffrans bredd och kortade spåret
+     för de rader som råkade ha ett tresiffrigt tal. */
+  .ordlista li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr 4ch;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  /* min-width: 0 krävs för att ordet ska få brytas: ett rutnätselement
+     krymper annars aldrig under sitt innehåll, och ett långt ord som
+     "klimatförändringarna" spillde ut över stapelns början. */
+  .ordlista .ord { font-weight: 600; overflow-wrap: anywhere; min-width: 0; }
   /* Stapeln följer diagramregeln: fylld svärta mot en svag hårlinjeyta.
      Den ritas som en gradient på ETT element i stället för med ett barn som
      får procentbredd. Skälet är mätt: i drift 2026-08-04 visades varje stapel
@@ -732,5 +749,5 @@ const andel = (kod: string, vikt: number): number =>
       var(--linje-svag) var(--andel, 0%) 100%
     );
   }
-  .ordlista .ordtal { color: var(--text-svag); font-variant-numeric: tabular-nums; font-size: 0.8rem; }
+  .ordlista .ordtal { color: var(--text-svag); font-variant-numeric: tabular-nums; font-size: 0.8rem; text-align: right; }
 </style>
