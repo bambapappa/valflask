@@ -24879,5 +24879,50 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-04T20"
     }
+  },
+  {
+    "id": "p-2026-0606",
+    "group_id": null,
+    "title": "Underlättad pendling med kollektivtrafik – ger barnfamilj 30 000 kronor per år",
+    "slug": "underlattad-pendling-med-kollektivtrafik-ger-barnfamilj-30-000-kronor-per-ar",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Vi underlättar för alla som arbetar att pendla med kollektivtrafik. En barnfamilj kan få 30 000 kronor per år (15 000 kronor till vardera föräldern).",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/expressen-synar-socialdemokraternas-logn/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T20:31:48.243Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 8000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antal kollektivtrafikpendlare uppskattas till ca 800 000. Utnyttjandegrad 70%, genomsnittlig effektiv skattereduktion ca 14 000 kr/år (15 000 max). (belopp satt av granskare)",
+      "calculation": "Moderaterna anger själva nivån: 15 000 kronor per förälder och år, 30 000 för en barnfamilj. Den siffran är partiets och byts inte ut. Det vi uppskattar är hur många som tar del. Omkring 800 000 personer arbetspendlar med kollektivtrafik. Alla utnyttjar inte avdraget fullt ut, och med en utnyttjandegrad på cirka 70 procent och en genomsnittlig skattelättnad på 14 000 kronor blir det 800 000 × 0,7 × 14 000 kronor ≈ 7 800 miljoner kronor per år, avrundat till 8 000. Den låga änden, 5 000 miljoner, motsvarar färre pendlare och lägre utnyttjande; den höga, 12 000 miljoner, en miljon pendlare som utnyttjar avdraget nästan fullt ut.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-04T20"
+    }
   }
 ]
