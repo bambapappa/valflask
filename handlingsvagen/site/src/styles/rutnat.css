@@ -517,10 +517,68 @@ a.vy-titel { text-decoration: underline; text-underline-offset: 2px; }
 .rattelsenot .datum { font-family: var(--font-mono); color: var(--dis); }
 .rattelsenot .mer { margin: 0.4rem 0 0; font-size: var(--steg--1); font-family: var(--font-mono); }
 
+/* Noten om att gå in på ett löfte hör bara till listvyn, och måste stå FÖRE
+   mediafrågan: samma specificitet gör att den sista regeln vinner, och låg
+   den efter slog display:none ut listvyns display:block — noten syntes då
+   aldrig, vilket är precis den vägledning läsaren behöver mest på mobil. */
+.rutnat-listnot {
+  display: none;
+  max-width: var(--matt-prosa);
+  margin: 0 0 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--linje);
+  font-size: var(--steg--1);
+}
+
 @media (max-width: 640px) {
   .topp-inner, main, .botten p, .botten-inner { padding: 0.9rem; }
   .marke { font-size: var(--steg-2); }
   .vy-lista .status, .vy-lista .markorer { margin-left: 0; }
   .summa { gap: 0.75rem var(--mellanrum); }
   .summa b { font-size: var(--steg-2); }
+
+  /* ── Rutnätet blir en LISTA på smal skärm ──────────────────────────────
+     Tabellen är 1 078 pixlar bred. I ett 364 pixlar brett fönster syns två
+     av nio kolumner: löftet och Socialdemokraterna. Resten kräver att man
+     drar i sidled, och den som inte gör det ser ETT parti av åtta. För en
+     sajt vars hela poäng är att behandla alla partier lika är det inte ett
+     layoutproblem utan ett neutralitetsproblem — mätt 2026-08-04.
+
+     Lösningen är inte att krympa rutnätet: statusorden ("i linje", "emot")
+     ryms inte på trettio pixlar, och att byta dem mot symboler hade krävt en
+     teckenförklaring som ingen läser. I stället listas löftena, och partierna
+     visas när man går in på ett löfte — samma panel som rutnätet redan
+     öppnar, så ingen ny väg och ingen ny kod.
+
+     Raderna behåller sina data-attribut, så filtren fungerar oförändrat.
+     Filtret sätter display till tom sträng, vilket faller tillbaka hit. */
+  .rutnat-hölje { overflow-x: visible; }
+  table.rutnat { min-width: 0; width: 100%; display: block; border-top: none; }
+  table.rutnat thead { display: none; }
+  table.rutnat tbody { display: block; }
+  table.rutnat tr {
+    display: block;
+    border-top: 1px solid var(--linje);
+  }
+  table.rutnat td.cell { display: none; }
+  table.rutnat td.lofte-cell {
+    display: block;
+    position: static;
+    min-width: 0;
+    width: auto;
+    padding: 0.75rem 0;
+    border: none;
+  }
+  table.rutnat td.lofte-cell .lofte-titel {
+    white-space: normal;
+    text-align: left;
+  }
+  /* Pilen säger att raden leder vidare. Den ligger i CSS och inte i mallen,
+     för den gäller bara den här bredden. */
+  table.rutnat td.lofte-cell .lofte-titel::after {
+    content: " →";
+    color: var(--dis);
+  }
+  .rutnat-listnot { display: block; }
 }
+

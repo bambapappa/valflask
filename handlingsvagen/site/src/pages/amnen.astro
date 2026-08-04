@@ -22,7 +22,17 @@ const partier = getParties()
   .filter((p) => PARTIBITAR.includes(p.code))
   .sort((a, b) => a.code.localeCompare(b.code, "sv"));
 const forkortningar = finns && forkortningarIIndexet();
-const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vikt)));
+// Skalan är PARTIETS EGEN, inte en global. Med ett gemensamt tak satte ett
+// enda partis extremord skalan för alla åtta: Liberalernas arton staplar låg
+// mellan 2 % och 4 % av bredden och gick inte att skilja åt, Miljöpartiets
+// mellan 5 % och 20 %. Bara det parti som råkade äga toppvärdet fick använda
+// hela bredden. Nu spänner varje lista över sin egen bredd, och staplarna
+// jämförs därför INOM ett parti — aldrig mellan två. Det står i noten intill.
+const partiMax = new Map(
+  trender.map((t) => [t.kod, Math.max(0.0001, ...t.ord.map((o) => o.vikt))]),
+);
+const andel = (kod: string, vikt: number): number =>
+  Math.max(2, Math.round((vikt / (partiMax.get(kod) ?? 1)) * 100));
 ---
 <Layout title="Ämnen och ord — Handlingsvågen" canonicalPath="/amnen">
   <div class="prosa">
@@ -130,11 +140,14 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
           om nästan ingen annan skriver det.
         </p>
         <p class="hjalp">
-          <b>Stapeln</b> visar hur stor den skillnaden är, jämfört med det
-          mest utmärkande ordet på hela sidan. <b>Talet till höger</b> är
-          något annat: antalet av partiets egna dokument där ordet faktiskt
-          står. Ett kort streck och ett högt tal betyder ett ord partiet
-          skriver ofta men som de andra också gör.
+          <b>Stapeln</b> visar hur stor den skillnaden är, jämfört med
+          <b>partiets eget mest utmärkande ord</b>. Den längsta stapeln i varje
+          lista är alltså full — jämför staplar inom ett parti, aldrig mellan
+          två. Måttet i sig står i stapelns beskrivning: hur många gånger
+          oftare partiet skriver ordet än de andra tillsammans.
+          <b>Talet till höger</b> är något annat: antalet av partiets egna
+          dokument där ordet faktiskt står. Ett kort streck och ett högt tal
+          betyder ett ord partiet skriver ofta men som de andra också gör.
         </p>
         <p class="hjalp">
           Det här är räknat, inte tolkat. Att ett ord står högt säger vad
@@ -169,9 +182,8 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
                         class="stapel"
                         aria-hidden="true"
                         title={`Använder ordet ${o.vikt.toFixed(1)} gånger så ofta som de andra partierna, räknat på andel av dokumenten`}
-                      >
-                        <span class="fyll" style={`width:${Math.round((o.vikt / maxVikt) * 100)}%`}></span>
-                      </span>
+                        style={`--andel:${andel(t.kod, o.vikt)}%`}
+                      ></span>
                       <span class="ordtal" title="Antal av partiets egna dokument där ordet står">
                         {o.antal.toLocaleString("sv-SE")}
                         <span class="hoppa"> dokument</span>
@@ -702,10 +714,40 @@ const maxVikt = Math.max(0.0001, ...trender.flatMap((t) => t.ord.map((o) => o.vi
   .trend h3 { margin: 0 0 0.7rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; font-size: 1rem; }
   .trend h3 .antal { color: var(--text-svag); font-weight: 400; font-size: 0.85rem; margin-left: auto; }
   .ordlista { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.3rem; }
-  .ordlista li { display: grid; grid-template-columns: minmax(5rem, auto) 1fr auto; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
-  .ordlista .ord { font-weight: 600; overflow-wrap: anywhere; }
-  /* Stapeln följer diagramregeln: fylld svärta mot en svag hårlinjeyta. */
-  .ordlista .stapel { height: 0.5rem; background: var(--linje-svag); overflow: hidden; }
-  .ordlista .fyll { display: block; height: 100%; background: var(--svarta); }
-  .ordlista .ordtal { color: var(--text-svag); font-variant-numeric: tabular-nums; font-size: 0.8rem; }
+  /* Etikettkolumnen har FAST bredd. Med `auto` mättes den per rad — varje li
+     är sitt eget rutnät — så ett långt ord kortade sitt eget spår: mätt på en
+     telefon varierade spåret mellan 169 och 221 pixlar bara efter ordlängd.
+     Stapelns längd blev därmed en funktion av ordet, inte av talet, och två
+     rader gick inte att jämföra med ögat. Nu är spåret lika brett på varje
+     rad, så längden betyder samma sak överallt i listan. Talkolumnen är fast
+     av samma skäl: med `auto` växte den med siffrans bredd och kortade spåret
+     för de rader som råkade ha ett tresiffrigt tal. */
+  .ordlista li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr 4ch;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  /* min-width: 0 krävs för att ordet ska få brytas: ett rutnätselement
+     krymper annars aldrig under sitt innehåll, och ett långt ord som
+     "klimatförändringarna" spillde ut över stapelns början. */
+  .ordlista .ord { font-weight: 600; overflow-wrap: anywhere; min-width: 0; }
+  /* Stapeln följer diagramregeln: fylld svärta mot en svag hårlinjeyta.
+     Den ritas som en gradient på ETT element i stället för med ett barn som
+     får procentbredd. Skälet är mätt: i drift 2026-08-04 visades varje stapel
+     full på en iPhone trots att sidan bar rätt tal (Miljöpartiets låg på
+     5–20 %). En procentbredd måste lösas mot en förälder med bestämd bredd,
+     och den kedjan bar inte i alla motorer. En gradient målas mot elementets
+     egen målade yta och kan inte falla tillbaka på full bredd. */
+  .ordlista .stapel {
+    display: block;
+    height: 0.5rem;
+    background: linear-gradient(
+      to right,
+      var(--svarta) 0 var(--andel, 0%),
+      var(--linje-svag) var(--andel, 0%) 100%
+    );
+  }
+  .ordlista .ordtal { color: var(--text-svag); font-variant-numeric: tabular-nums; font-size: 0.8rem; text-align: right; }
 </style>
