@@ -47,6 +47,8 @@ export interface SourceFeed {
 
 export interface SourceConfig {
   allowlist_domains: string[];
+  /** Partiernas egna domäner — styr det lägre citatgolvet i G3. */
+  parti_domaner?: string[];
   feeds: SourceFeed[];
   limits: {
     max_articles_per_run: number;

@@ -116,6 +116,113 @@ test("G3 avvisar för korta och för långa citat", () => {
   assert.ok(report.review[1]!.failures.some((f) => f.gate === "G3" && f.reason.includes("max")));
 });
 
+/* ── Kort citat som är en hel punkt på partiets egen sida (2026-08-04) ── */
+
+const PARTI_CTX: GateContext = {
+  allowlist: ["sd.se", "dn.se"],
+  partiDomaner: ["sd.se"],
+  now: NOW,
+};
+
+/** En "Vad vi vill"-sida: löftena står som punkter, en per rad. */
+const PARTISIDA: NormalizedArticle = {
+  url: "https://sd.se/vad-vi-vill/",
+  domain: "sd.se",
+  title: "Vad vi vill",
+  text: [
+    "Vad vi vill",
+    "Skrota enprocentsregeln",
+    "Införa prostatacancerscreening",
+    "Vi vill att sjukvården ska prioriteras framför enprocentsregeln.",
+    "Läs mer om vår politik",
+  ].join("\n"),
+  published: "2026-05-12T15:10:00Z",
+};
+
+test("kort citat som är en hel, unik punkt på partiets egen sida passerar", () => {
+  const report = runGates(
+    PARTISIDA,
+    [candidate({ quote: "Skrota enprocentsregeln", amount_in_text_msek: null })],
+    PARTI_CTX,
+  );
+  assert.equal(report.accepted.length, 1, JSON.stringify(report.review, null, 2));
+});
+
+test("samma korta citat på en nyhetssida faller fortfarande på citatgolvet", () => {
+  // Identisk text, men domänen är inte partiets egen. Där är en kort rad en
+  // rubrik eller en bildtext — inte ett löfte.
+  const nyhetssida: NormalizedArticle = { ...PARTISIDA, url: "https://www.dn.se/vad-de-vill/", domain: "dn.se" };
+  const report = runGates(
+    nyhetssida,
+    [candidate({ quote: "Skrota enprocentsregeln", amount_in_text_msek: null })],
+    PARTI_CTX,
+  );
+  assert.equal(report.accepted.length, 0);
+  assert.ok(report.review[0]!.failures.some((f) => f.gate === "G3" && f.reason.includes("minst")));
+});
+
+test("kort citat som bara är ett utplock ur en längre mening släpps aldrig igenom", () => {
+  // "sjukvården ska prioriteras" står i texten, men inte som en egen punkt.
+  const report = runGates(
+    PARTISIDA,
+    [candidate({ quote: "sjukvården ska prioriteras", amount_in_text_msek: null })],
+    PARTI_CTX,
+  );
+  assert.equal(report.accepted.length, 0);
+  assert.ok(report.review[0]!.failures.some((f) => f.gate === "G3" && f.reason.includes("minst")));
+});
+
+test("punkt som upprepas i källan är inte unik och släpps inte igenom", () => {
+  const upprepad: NormalizedArticle = {
+    ...PARTISIDA,
+    text: `${PARTISIDA.text}\nSkrota enprocentsregeln`,
+  };
+  const report = runGates(
+    upprepad,
+    [candidate({ quote: "Skrota enprocentsregeln", amount_in_text_msek: null })],
+    PARTI_CTX,
+  );
+  assert.equal(report.accepted.length, 0);
+});
+
+test("ett enda ord är aldrig ett löfte, ens som egen punkt", () => {
+  // Ordet är långt nog att ta sig förbi schemats teckengolv, så det är
+  // citatgolvet som måste fälla det — inte schemat.
+  const enOrdssida: NormalizedArticle = {
+    ...PARTISIDA,
+    text: "Vad vi vill\nBeredskapslagring\nLäs mer",
+  };
+  const report = runGates(
+    enOrdssida,
+    [candidate({ quote: "Beredskapslagring", amount_in_text_msek: null })],
+    PARTI_CTX,
+  );
+  assert.equal(report.accepted.length, 0);
+  assert.ok(report.review[0]!.failures.some((f) => f.gate === "G3" && f.reason.includes("minst")));
+});
+
+test("undantaget gäller inte utan lista på partiernas domäner", () => {
+  const utanPartiDomaner: GateContext = { allowlist: ["sd.se"], now: NOW };
+  const report = runGates(
+    PARTISIDA,
+    [candidate({ quote: "Skrota enprocentsregeln", amount_in_text_msek: null })],
+    utanPartiDomaner,
+  );
+  assert.equal(report.accepted.length, 0);
+});
+
+test("fabricerad punkt faller på att citatet inte står i källan", () => {
+  const report = runGates(
+    PARTISIDA,
+    [candidate({ quote: "Avskaffa fastighetsskatten", amount_in_text_msek: null })],
+    PARTI_CTX,
+  );
+  assert.equal(report.accepted.length, 0);
+  assert.ok(
+    report.review[0]!.failures.some((f) => f.gate === "G3" && f.reason.includes("ordagrant")),
+  );
+});
+
 test("normalizeForVerbatim: NFC, bidi-/zero-width-borttag, whitespace-kollaps", () => {
   assert.equal(
     normalizeForVerbatim("A‮dold‬  text​ här\t\nslut"),

@@ -189,6 +189,7 @@ export function buildContextFromEnv(
     outputDir: dataDir,
     dataDir,
     allowlist: config.allowlist_domains,
+    partiDomaner: config.parti_domaner ?? [],
     mode,
     stancesEnabled,
     stancesMode,

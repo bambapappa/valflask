@@ -1713,3 +1713,49 @@ gröna, typecheck rent.
 kronor i ökade skatteintäkter varje år" — samma slags följdpåstående, men det
 är grupplänkat (`g-c-skattefri-grundlon`) och används för att visa partiets egen
 finansiering av skattereformen. Det är en egen fråga och rörs inte här.
+
+---
+
+## 2026-08-04 — Citatgolvet: kort citat tillåts när det är en hel, unik punkt på partiets egen sida
+
+**Beslut (mänskligt beslut 2026-08-04):** Golvet på fem ord i citatgrinden
+kompletteras med ett undantag. Ett citat på 2–4 ord passerar om ALLA fyra
+villkoren håller: (1) källan ligger på en av partiernas egna domäner
+(`parti_domaner` i `data/sources.yaml`, kanoniserad med samma domänregel som
+allowlisten); (2) citatet utgör en HEL rad i källtexten — raderna kommer ur
+`stripHtml`, som bryter rad på `</li>`, `</p>`, `</div>` och `<br>`, så en punkt
+i en lista blir en egen rad; (3) den raden förekommer exakt en gång; (4) citatet
+ryms inte inuti någon annan rad. Ett ensamt ord passerar aldrig. På alla andra
+domäner gäller femordsgolvet oförändrat, och kravet att citatet ska stå
+ordagrant i källan gäller alltid.
+
+**Motiv:** Golvet infördes 2026-06-12 för att kontrollen "står citatet ordagrant
+i källan?" inte bevisar något på ett tvåordscitat — två ord i rad står i nästan
+vilken text som helst. Men på partiernas egna sidor står löftena i punktlistor
+där hela punkten är två–fyra ord: "Skrota enprocentsregeln", "Införa
+prostatacancerscreening". Sådana kompletta löften föll, och 2026-08-04 avvisades
+fem av dem ur granskningskön (SD 4, KD 1) enbart på längden. Undantaget sänker
+inte kravet på ordagrannhet. Det byter ut ett trubbigt mått — antal ord — mot ett
+skarpare: att citatet är en hel, unik punkt. Då bevisar träffen precis det som
+golvet ville skydda, att texten står där som ett eget åtagande på partiets egen
+sida. Kravet på partiets egen domän finns för att en kort rad i en nyhetsartikel
+är en rubrik eller en bildtext, inte ett löfte.
+
+**Förkastade alternativ:** sänka golvet generellt till två ord (urholkar
+kontrollen överallt, exakt det 2026-06-12 avvisade); låta LLM:en avgöra om ett
+kort citat är ett komplett löfte (grindar ska vara deterministisk kod);
+tillåta korta citat som substrängar var som helst i texten (då kan ett fragment
+plockas ur en längre mening och betyda något annat än originalet); låta
+undantaget gälla alla allowlist-domäner (medier sätter korta rubriker som ser ut
+som löften).
+
+**Påverkan:** `pipeline/src/gates.ts` (`QUOTE_MIN_WORDS_PARTY_LINE`,
+`arEgenRadIKallan`, `GateContext.partiDomaner`), `pipeline/src/index.ts`,
+`pipeline/src/cli-run.ts`, `pipeline/src/fetch.ts` (`SourceConfig`),
+`data/sources.yaml` (`parti_domaner`, 10 domäner),
+`pipeline/prompts/A1-extract.md` (extraktionen får citera hela punkten).
+7 nya grindar i `tests/gates.test.ts`, 349 tester gröna, typecheck rent.
+
+**Kvar att göra:** de fem löften som avvisades på längden ligger inte kvar i kön
+och kommer inte tillbaka av sig själva förrän källsidan skördas om. De tas in på
+nytt vid nästa körning av respektive partisida.

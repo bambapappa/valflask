@@ -90,6 +90,12 @@ export interface GateReport {
 export interface GateContext {
   /** Exakta domäner ur data/sources.yaml (§6.1). Anroparen läser filen. */
   allowlist: readonly string[];
+  /**
+   * Partiernas egna domäner ur data/sources.yaml. Enda effekten: ett kort
+   * citat som utgör en HEL, unik rad på partiets egen sida får passera
+   * citatgolvet (se QUOTE_MIN_WORDS_PARTY_LINE). Utelämnad ⇒ inget undantag.
+   */
+  partiDomaner?: readonly string[];
   /** Injicerad klocka för determinism i test (T4). */
   now: Date;
 }
@@ -105,6 +111,25 @@ export const DATE_WINDOW_DAYS = 548;
 /** G3: citatgolv/-tak i ord (tak per §5.1; golv per DECISION_LOG 2026-06-12). */
 export const QUOTE_MIN_WORDS = 5;
 export const QUOTE_MAX_WORDS = 40;
+
+/**
+ * Lägre golv för ett citat som utgör en HEL, unik rad på partiets egen sida
+ * (DECISION_LOG 2026-08-04).
+ *
+ * Golvet på fem ord finns för att kontrollen "står citatet ordagrant i
+ * källan?" inte bevisar något på ett tvåordscitat — två ord i rad står i
+ * nästan vilken text som helst. Men på partiernas egna sidor står löften i
+ * punktlistor där hela punkten ÄR två–fyra ord: "Skrota enprocentsregeln",
+ * "Införa prostatacancerscreening". Där tappade vi kompletta löften.
+ *
+ * Undantaget sänker inte kravet på ordagrannhet — det byter ut ett trubbigt
+ * mått (antal ord) mot ett skarpare: citatet måste vara en hel rad, den raden
+ * får förekomma exakt en gång, och den får inte rymmas i någon annan rad.
+ * Då bevisar träffen precis det golvet ville skydda: att texten står där, som
+ * en egen punkt, på partiets egen sida. Gäller bara partiernas domäner —
+ * i en nyhetsartikel är en tvåordsrad en rubrik eller en bildtext.
+ */
+export const QUOTE_MIN_WORDS_PARTY_LINE = 2;
 
 /** G5 (§7): max nya löften per artikel — fler ⇒ hela artikeln till review. */
 export const MAX_PROMISES_PER_ARTICLE = 5;
@@ -217,13 +242,47 @@ export function countWords(normalized: string): number {
   return normalized === "" ? 0 : normalized.split(" ").length;
 }
 
-function gateG3(candidate: ExtractionCandidate, articleText: string): GateFailure[] {
+/**
+ * Är citatet en HEL, unik rad i källtexten? Kravet bakom det lägre citatgolvet.
+ *
+ * Raderna kommer ur `stripHtml`, som bryter rad på `</li>`, `</p>`, `</div>`
+ * och `<br>` — en punkt i en lista blir alltså en egen rad. Tre villkor, alla
+ * måste hålla: citatet ÄR en hel rad (inte ett utplock ur en längre mening),
+ * den raden står exakt en gång, och citatet ryms inte inuti någon annan rad.
+ * Faller något av dem gäller det vanliga golvet och posten går till granskning.
+ */
+export function arEgenRadIKallan(quote: string, articleText: string): boolean {
+  const q = normalizeForVerbatim(quote);
+  if (q === "") return false;
+  const rader = articleText
+    .split(/\r?\n/u)
+    .map((r) => normalizeForVerbatim(r))
+    .filter((r) => r !== "");
+  if (rader.filter((r) => r === q).length !== 1) return false;
+  return !rader.some((r) => r !== q && r.includes(q));
+}
+
+function gateG3(
+  candidate: ExtractionCandidate,
+  articleText: string,
+  arPartiegenSida: boolean,
+): GateFailure[] {
   const failures: GateFailure[] = [];
   const quote = normalizeForVerbatim(candidate.quote);
   const words = countWords(quote);
 
-  if (words < QUOTE_MIN_WORDS) {
-    failures.push({ gate: "G3", reason: `Citatet har ${words} ord — minst ${QUOTE_MIN_WORDS} krävs` });
+  const kortMenEgenPunkt =
+    arPartiegenSida &&
+    words >= QUOTE_MIN_WORDS_PARTY_LINE &&
+    arEgenRadIKallan(candidate.quote, articleText);
+
+  if (words < QUOTE_MIN_WORDS && !kortMenEgenPunkt) {
+    failures.push({
+      gate: "G3",
+      reason: arPartiegenSida
+        ? `Citatet har ${words} ord — minst ${QUOTE_MIN_WORDS} krävs (kortare tillåts bara om citatet är en hel, unik punkt på partiets egen sida)`
+        : `Citatet har ${words} ord — minst ${QUOTE_MIN_WORDS} krävs`,
+    });
   }
   if (words > QUOTE_MAX_WORDS) {
     failures.push({ gate: "G3", reason: `Citatet har ${words} ord — max ${QUOTE_MAX_WORDS} tillåts (§5.1)` });
@@ -309,7 +368,18 @@ export function runGates(
     });
   }
 
-  // 3. Per kandidat.
+  // 3. Per kandidat. Domänen är redan kanoniserad och godkänd av G2 ovan —
+  //    samma kanon används här, så "www." inte gör en partisida till en
+  //    främmande domän.
+  const domanResultat = canonicalDomain(article.url);
+  const artikelDoman = "domain" in domanResultat ? domanResultat.domain : null;
+  const arPartiegenSida =
+    artikelDoman !== null &&
+    (ctx.partiDomaner ?? []).some((d) => {
+      const r = canonicalDomain(`https://${d}`);
+      return "domain" in r && r.domain === artikelDoman;
+    });
+
   const accepted: ExtractionCandidate[] = [];
   const review: ReviewedCandidate[] = [];
 
@@ -321,7 +391,10 @@ export function runGates(
       continue;
     }
     const candidate = raw as ExtractionCandidate;
-    const failures = [...gateG3(candidate, article.text), ...gateG4(candidate, article, ctx.now)];
+    const failures = [
+      ...gateG3(candidate, article.text, arPartiegenSida),
+      ...gateG4(candidate, article, ctx.now),
+    ];
     if (failures.length > 0) {
       review.push({ candidate: raw, failures });
     } else {

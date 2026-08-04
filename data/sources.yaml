@@ -24,6 +24,22 @@ allowlist_domains:
   - gp.se
   - di.se
 
+# Partiernas egna domäner. Enda effekten: ett citat som är en HEL, unik punkt
+# på partiets egen sida får vara kortare än fem ord ("Skrota enprocentsregeln").
+# På en nyhetssida gäller alltid femordsgolvet — där är en kort rad en rubrik
+# eller en bildtext, inte ett löfte.
+parti_domaner:
+  - socialdemokraterna.se
+  - moderaterna.se
+  - sd.se
+  - centerpartiet.se
+  - val2026.centerpartiet.se
+  - vansterpartiet.se
+  - kristdemokraterna.se
+  - press.kristdemokraterna.se
+  - liberalerna.se
+  - mp.se
+
 feeds:
   # --- Partier (verifierade 2026-06-12 via live HTTP) ---
   - id: moderaterna
