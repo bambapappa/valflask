@@ -8404,7 +8404,7 @@
   },
   {
     "id": "p-2026-0163",
-    "group_id": null,
+    "group_id": "g-p-2026-0163",
     "title": "För 20 år sedan gick vi i Moderaterna till val på jobbskatteavdraget",
     "slug": "for-20-ar-sedan-gick-vi-i-moderaterna-till-val-pa-jobbskatteavdraget",
     "parties": [
@@ -24352,6 +24352,51 @@
       "method_note": "Straffskärpning medför fler och längre fängelsestraff för överträdelse av kontaktförbud. Uppskattning utifrån antal anmälda brott och antaganden om påverkan på domstolspraxis. Kostnad för…",
       "confidence": 0.4,
       "calculation": "~7 000 anmälda överträdelser per år (Brå). Anta att straffskärpning leder till fler fängelsestraff och längre tid. Uppskattningsvis 50–100 extra personer i fängelse per år med en genomsnittlig straffökning på 2–4 månader. Kostnad per fängelsedygn ~3 500 kr. Extra ~4 500–12 000 fängelsedygn per år => 15–42 mkr. Lägg till vissa fler dygn för dem som redan döms => totalt 30–150 mkr, bas 70 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-04T11"
+    }
+  },
+  {
+    "id": "p-2026-0597",
+    "group_id": "g-p-2026-0163",
+    "title": "Ytterligare 5 000 kr till barnfamiljer under nästa mandatperiod",
+    "slug": "ytterligare-5-000-kr-till-barnfamiljer-under-nasta-mandatperiod",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Ett av våra viktigaste vallöften är att se till att en barnfamilj får ytterligare 5 000 kronor i plånboken under nästa mandatperiod.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/manniskor-ser-allt-ljusare-pa-svensk-ekonomi/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T11:48:00.840Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "engang",
+      "msek_low": 800,
+      "msek_base": 1400,
+      "msek_high": 2200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet tolkas som en skattesänkning om totalt 5 000 kr per barnfamilj under mandatperioden, vilket ger 1 250 kr/år. Antal barnfamiljer uppskattas till ca 1,1 miljoner. Intervallet speglar osäkerhet… [period satt till engang: engångssignal…",
+      "confidence": 0.4,
+      "calculation": "~1 100 000 barnfamiljer × (5 000 kr / 4 år) ≈ 1 375 mn kr/år. Base rundas till 1 400. Lågt scenario: färre familjer eller lägre utnyttjande (800 mn kr). Högt scenario: fler familjer eller högre utnyttjande (2 200 mn kr)."
     },
     "financing_claimed": {
       "described": false,
