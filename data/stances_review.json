@@ -300,5 +300,33 @@
       }
     ],
     "verifyReason": "Citatet uttrycker önskan om nationellt ansvar för vården, men det är tveksamt om detta innebär att staten ska ta över huvudansvaret från regionerna eller endast avse nationell samordning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-huvudman",
+      "party": "kd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Det är därför vi kristdemokrater så envist talar om ett samlat nationellt ansvar för sjukvården.",
+      "person": {
+        "name": "Ebba Busch",
+        "role": "partiledare Kristdemokraterna"
+      }
+    },
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "articleTitle": "Se Ebba Busch tal i Almedalen | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "archiveUrl": null,
+    "dateStated": "2026-06-23",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-04-16-59",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet talar om ett 'samlat nationellt ansvar' för sjukvården men anger inte att staten ska ta över huvudansvaret från regionerna, så det besvarar inte avgränsningen och kräver tolkning för att bli ett ja."
+      }
+    ],
+    "verifyReason": "Citatet talar om ett 'samlat nationellt ansvar' för sjukvården men anger inte att staten ska ta över huvudansvaret från regionerna, så det besvarar inte avgränsningen och kräver tolkning för att bli ett ja."
   }
 ]
