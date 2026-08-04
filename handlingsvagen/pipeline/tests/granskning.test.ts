@@ -12,6 +12,7 @@ import {
   nastaKopplingsId,
   nyaKoPoster,
   parseGranskningsKommando,
+  provaNyttBevis,
   type KopplingPost,
   type KoPost,
 } from "../src/granskning.ts";
@@ -70,6 +71,67 @@ test("parseGranskningsKommando: godkänn, motionstyp, avvisa, alias, grumligt", 
   assert.equal(parseGranskningsKommando("/godkänn gärna"), null);
   assert.equal(parseGranskningsKommando("/godkänn --motionstyp partibok"), null);
   assert.equal(parseGranskningsKommando("ser bra ut!"), null);
+});
+
+test("issuetexten berättar att beviset går att byta", () => {
+  // Kommandot finns bara i praktiken om den som beslutar vet om det.
+  const b = byggIssueBody(koPost(), "abc123def456", handling());
+  assert.ok(b.includes("Bevis: <citatet>"), b.slice(-400));
+  assert.ok(b.includes("prövas ord för ord mot källdokumentet"));
+});
+
+test("parseGranskningsKommando: Bevis-raden byter citat", () => {
+  // Bakgrunden: genomgången 2026-08-02 lade 28 förslag i högen "citatet bär
+  // inte, men dokumentet bär sannolikt ett bättre" — och det fanns ingen väg
+  // att lägga in det bättre citatet. Nu finns den.
+  assert.deepEqual(
+    parseGranskningsKommando("/godkänn\nBevis: Riksdagen ställer sig bakom det som anförs i motionen om X."),
+    { action: "approve", bevis: "Riksdagen ställer sig bakom det som anförs i motionen om X." },
+  );
+  assert.deepEqual(
+    parseGranskningsKommando("/godkänn --motionstyp parti\nBevis: Ett annat citat ur samma dokument."),
+    { action: "approve", motionstyp: "parti", bevis: "Ett annat citat ur samma dokument." },
+  );
+  // Fritext utan märkning blir aldrig ett bevis — annars hade vilken kommentar
+  // som helst under kommandot kunnat hamna i ett publicerat citat.
+  assert.deepEqual(parseGranskningsKommando("/godkänn\nser bra ut, håller med"), { action: "approve" });
+  // En signatur under vågrät linje kapas, precis som i granskningskön.
+  assert.deepEqual(
+    parseGranskningsKommando("/godkänn\nBevis: Citatet står här.\n\n---\nBevis: signaturens text"),
+    { action: "approve", bevis: "Citatet står här." },
+  );
+});
+
+test("provaNyttBevis: samma krav som när förslaget skapades", () => {
+  const kalla =
+    "Inledning. Riksdagen ställer sig bakom det som anförs i motionen om att bygga fler skolor " +
+    "och tillkännager detta för regeringen. Avslutning.";
+  assert.deepEqual(
+    provaNyttBevis("Riksdagen ställer sig bakom det som anförs i motionen om att bygga fler skolor", kalla),
+    { ok: true },
+  );
+  // Typografi neutraliseras på båda sidor — men innehåll aldrig.
+  assert.deepEqual(
+    provaNyttBevis("Riksdagen  ställer sig bakom det som anförs i\nmotionen om att bygga fler skolor", kalla),
+    { ok: true },
+  );
+  const fabricerat = provaNyttBevis("Riksdagen ställer sig bakom att bygga fler sjukhus i landet", kalla);
+  assert.equal(fabricerat.ok, false);
+  assert.match((fabricerat as { skal: string }).skal, /ordagrant/);
+  const kort = provaNyttBevis("För kort", kalla);
+  assert.equal(kort.ok, false);
+  assert.match((kort as { skal: string }).skal, /tecken/);
+});
+
+test("godkannForslag: utbytt bevis hamnar i kopplingen och syns i motiveringen", () => {
+  const nytt = "Riksdagen ställer sig bakom det som anförs i motionen om något helt annat.";
+  const res = godkannForslag([koPost()], 0, [], [handling()], { year: 2026, bevis: nytt });
+  assert.equal(res.koppling.bevis.citat, nytt);
+  assert.match(res.koppling.method_note, /utbytt av granskaren/);
+  // Utan utbyte står postens eget citat kvar och motiveringen är orörd.
+  const utan = godkannForslag([koPost()], 0, [], [handling()], { year: 2026 });
+  assert.equal(utan.koppling.bevis.citat, koPost().bevis.citat);
+  assert.doesNotMatch(utan.koppling.method_note, /utbytt/);
 });
 
 test("nastaKopplingsId räknar vidare från högsta", () => {
