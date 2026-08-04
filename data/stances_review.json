@@ -193,5 +193,112 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-huvudman",
+      "party": "kd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Det är därför vi kristdemokrater så envist talar om ett samlat nationellt ansvar för sjukvården. Först då kommer vi kunna göra nödvändiga investeringar.",
+      "person": {
+        "name": "Ebba Busch",
+        "role": "Partiledare"
+      }
+    },
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "articleTitle": "Se Ebba Busch tal i Almedalen | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "archiveUrl": "https://web.archive.org/web/20260804071252/https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "dateStated": "2026-06-23",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-04-07-05",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet talar om ett 'samlat nationellt ansvar' för sjukvården, men inte konkret om att staten ska ta över huvudmannaskapet från regionerna, vilket är delfrågans avgränsning."
+      }
+    ],
+    "verifyReason": "Citatet talar om ett 'samlat nationellt ansvar' för sjukvården, men inte konkret om att staten ska ta över huvudmannaskapet från regionerna, vilket är delfrågans avgränsning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "kd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Därför kräver vi språkkrav i hemtjänsten och rätten för en äldre kvinna att kunna välja en kvinna som vårdare för att duscha och klä på sig.",
+      "person": {
+        "name": "Ebba Busch",
+        "role": "Partiledare"
+      }
+    },
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "articleTitle": "Se Ebba Busch tal i Almedalen | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "archiveUrl": null,
+    "dateStated": "2026-06-23",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-04-07-05",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "kd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Staten måste alltså fortsätta investera i infrastruktur som möjliggör tillväxt och nya jobb samtidigt som vi fullföljer det svenska kärnkraftsprogrammet.",
+      "person": {
+        "name": "Ebba Busch",
+        "role": "Partiledare"
+      }
+    },
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "articleTitle": "Se Ebba Busch tal i Almedalen | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-06-23-se-ebba-busch-tal-i-almedalen",
+    "archiveUrl": null,
+    "dateStated": "2026-06-23",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-04-07-05",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-huvudman",
+      "party": "kd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Kristdemokraterna vill se ett nationellt ansvar för vården",
+      "person": null
+    },
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-07-28-sverigedrommen---4-hornstenar-for-ett-starkare-sverige",
+    "articleTitle": "Sverigedrömmen - 4 hörnstenar för ett starkare Sverige | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-07-28-sverigedrommen---4-hornstenar-for-ett-starkare-sverige",
+    "archiveUrl": null,
+    "dateStated": "2026-07-28",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-04-07-05",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet uttrycker önskan om nationellt ansvar för vården, men det är tveksamt om detta innebär att staten ska ta över huvudansvaret från regionerna eller endast avse nationell samordning."
+      }
+    ],
+    "verifyReason": "Citatet uttrycker önskan om nationellt ansvar för vården, men det är tveksamt om detta innebär att staten ska ta över huvudansvaret från regionerna eller endast avse nationell samordning."
   }
 ]
