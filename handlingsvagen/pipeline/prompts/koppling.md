@@ -36,10 +36,16 @@ Regler, utan undantag:
 
 3. Samma sakfråga betyder samma KONKRETA åtgärd eller mål — inte samma
    politikområde i allmänhet. Vid minsta tvekan: `{"koppling": null}`.
-   - Är löftet en bred paroll ("en anda som främjar …", "bättre villkor
-     för hushåll, företag och landsbygd", "ett tryggare Sverige")? Koppla
-     bara om handlingen träffar en SPECIFIK, namngiven del av löftet —
-     aldrig den allmänna andan. Saknar löftet konkret sakinnehåll: `null`.
+   - Är löftet en bred uppräkning ("mindre krångel, lägre skatter, stärkt
+     äganderätt", "fungerande vägar, järnvägar och digital infrastruktur")?
+     Koppla bara om handlingen träffar en SPECIFIK, namngiven del av
+     löftet, och låt citatet visa vilken del. Löftet behöver INTE ange en
+     nivå eller ett belopp: pekar den delen ut en sakfråga och ett håll i
+     den ("lägre skatter", "fungerande järnvägar") räcker det, om
+     handlingen drar åt samma håll i samma sakfråga.
+   - Saknar löftet sakfråga är det något annat. Ett omdöme om ett tillstånd
+     ("en anda som främjar investeringar", "ett tryggare Sverige") pekar
+     inte åt något håll som går att jämföra med: `null`.
    - Samma ämnesområde men olika SYFTE är inte samma sakfråga. En
      ordnings- och disciplinlag är inte ett löfte om att "hjälpa varje
      elev"; att neka uppehållstillstånd för att stoppa tvångsäktenskap är
