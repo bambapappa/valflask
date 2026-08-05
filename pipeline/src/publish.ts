@@ -252,6 +252,8 @@ export function publish(input: PublishInput): PublishResult {
     `${outputDir}/promises.json`,
     JSON.stringify(allPromises, null, 2) + "\n",
   );
+  const utanSkiljetecken = (s: string): string =>
+    s.toLowerCase().normalize("NFC").replace(/[^a-z0-9åäöéèü]+/giu, "");
   // Slå ihop med befintlig review-kö i stället för att skriva över den. Annars
   // raderar en efterföljande (ofta tom) körning poster som väntar på mänsklig
   // granskning innan någon hunnit titta på dem (datatapp: 22→0 sågs i drift).
@@ -260,6 +262,18 @@ export function publish(input: PublishInput): PublishResult {
   // (nollställd seen) inte dubblerar samma kandidat.
   const reviewKey = (r: NeedsReviewEntry): string =>
     `${r.articleUrl ?? ""}::${(r.candidate as { title?: string } | null | undefined)?.title ?? ""}`;
+  // Rubriken ensam räcker inte — av samma skäl som städningen nedan redan tar
+  // höjd för: utvinningen HÄRLEDER rubriken och sätter ofta en annan vid en
+  // omskörd av samma mening. Mätt 2026-08-05 stod sex poster två gånger i kön,
+  // alla med samma citat ur samma artikel men olika rubrik ("Korta vårdgarantin
+  // från 90 till 30 dagar" mot "Ingen ska vänta mer än 30 dagar på att få vård").
+  // Citatet är det som är yttrandet; rubriken är vår etikett på det.
+  const reviewCitatNyckel = (r: NeedsReviewEntry): string | null => {
+    const c = utanSkiljetecken(
+      (r.candidate as { quote?: string } | null | undefined)?.quote ?? "",
+    );
+    return c.length >= 30 ? `${r.articleUrl ?? ""}::${c}` : null;
+  };
   const existingReview: NeedsReviewEntry[] = (() => {
     try {
       return JSON.parse(
@@ -271,12 +285,16 @@ export function publish(input: PublishInput): PublishResult {
   })();
   const mergedReview = [...existingReview];
   const existingKeys = new Set(existingReview.map(reviewKey));
+  const existingCitat = new Set(
+    existingReview.map(reviewCitatNyckel).filter((k): k is string => k !== null),
+  );
   for (const r of reviewItems) {
     const k = reviewKey(r);
-    if (!existingKeys.has(k)) {
-      mergedReview.push(r);
-      existingKeys.add(k);
-    }
+    const c = reviewCitatNyckel(r);
+    if (existingKeys.has(k) || (c !== null && existingCitat.has(c))) continue;
+    mergedReview.push(r);
+    existingKeys.add(k);
+    if (c !== null) existingCitat.add(c);
   }
   // Ett löfte som redan ligger publicerat har ett beslut bakom sig, och det
   // beslutet är verkställt. Ligger posten ändå kvar i kön kan den godkännas en
@@ -294,8 +312,6 @@ export function publish(input: PublishInput): PublishResult {
   // förbjuda religiösa friskolor" som publicerat löfte. Därför prövas också
   // källans adress plus citatet ord för ord; är båda lika är det samma yttrande
   // ur samma text, och beslutet är redan fattat.
-  const utanSkiljetecken = (s: string): string =>
-    s.toLowerCase().normalize("NFC").replace(/[^a-z0-9åäöéèü]+/giu, "");
   const publiceradeNycklar = new Set<string>();
   const publiceradeCitat = new Set<string>();
   for (const p of allPromises) {

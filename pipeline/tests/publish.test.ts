@@ -5,9 +5,9 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { publish, type NeedsReviewEntry } from "../src/publish.ts";
 
-function reviewItem(url: string, title: string): NeedsReviewEntry {
+function reviewItem(url: string, title: string, quote?: string): NeedsReviewEntry {
   return {
-    candidate: { title },
+    candidate: { title, quote },
     failures: [],
     articleUrl: url,
     articleTitle: title,
@@ -49,6 +49,34 @@ describe("publish: needs_review är en beständig kö (merge, inte överskrivnin
         items.map((r) => r.articleUrl).sort(),
         ["https://a.se/1", "https://b.se/2", "https://c.se/3"],
       );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("samma citat ur samma artikel är EN post, även när rubriken ändrats", () => {
+    // Rubriken härleds av utvinningen och blir ofta en annan vid en omskörd av
+    // samma mening. Kön dedupade bara på artikel + rubrik, så sex poster stod
+    // två gånger i skarp drift 2026-08-05 — bland dem Moderaternas vårdgaranti
+    // som "Korta vårdgarantin från 90 till 30 dagar" och "Ingen ska vänta mer
+    // än 30 dagar på att få vård", med ordagrant samma citat.
+    const dir = mkdtempSync(join(tmpdir(), "publish-citat-"));
+    try {
+      const citat = "Moderaternas vallofte ar att korta vardgarantin fran 90 till 30 dagar.";
+      run(dir, [reviewItem("https://m.se/vard", "Korta vårdgarantin från 90 till 30 dagar", citat)]);
+      assert.equal(readReview(dir).length, 1);
+
+      // Omskörd: samma artikel, samma citat, ANNAN rubrik.
+      run(dir, [reviewItem("https://m.se/vard", "Ingen ska vänta mer än 30 dagar på att få vård", citat)]);
+      assert.equal(readReview(dir).length, 1, "samma citat ur samma artikel ska inte dubbleras");
+
+      // Ett ANNAT citat ur samma artikel är en egen post.
+      run(dir, [reviewItem("https://m.se/vard", "Fritt vårdval", "Patienten ska fa valja vard i hela landet oavsett region.")]);
+      assert.equal(readReview(dir).length, 2, "annat citat ur samma artikel är en egen post");
+
+      // Ett kort citat kan inte bära identiteten — då gäller rubriken.
+      run(dir, [reviewItem("https://m.se/vard", "Kort A", "kort"), reviewItem("https://m.se/vard", "Kort B", "kort")]);
+      assert.equal(readReview(dir).length, 4, "korta citat dedupas på rubrik, inte på citat");
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
