@@ -2,7 +2,7 @@ import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 /**
  * Delningsbilderna räknar och skriver INGENTING själva.
@@ -31,6 +31,63 @@ import type { PromisePost } from "../src/lib/data";
  */
 function ogBelopp(msek: number, basis?: string): string {
   return formatMsek(msek, basis).toUpperCase();
+}
+
+/*
+ * Rubriken skalas så att hela löftet får plats — den kapas aldrig.
+ *
+ * Bilden bar tidigare `WebkitLineClamp: 2`, men satori (0.29) struntar i
+ * klampen: en rubrik på 137 tecken renderades på FYRA rader och svämmade ut
+ * över fotraden. En begränsning som inte gör något är värre än ingen, för den
+ * ser ut att vara löst. Här räknas höjden i stället ut i förväg.
+ *
+ * Att kapa rubriken vore fel väg: löftets rubrik är det bilden handlar om,
+ * och en trepunkt mitt i en mening säger läsaren mindre än en mindre stil gör.
+ * Rubrikerna är 62 tecken i median men 144 som längst (mätt 2026-08-05), så
+ * spannet måste rymma båda.
+ */
+const RUBRIK_BREDD = 1088;
+const RAD_HOJD = 1.2;
+/** Anton är smal: ett versalt tecken tar ungefär 0,452 × teckengraden i bredd.
+ *  Kalibrerat mot en 137-teckens rubrik som bröts på 43 tecken vid grad 56. */
+const TECKENBREDD = 0.452;
+
+/** Höjden rubriken har till sitt förfogande, givet hur stort beloppet är. */
+export function rubrikUtrymme(bigNumber: string): number {
+  const inre = 630 - 48 * 2; // höjd minus lodrät marginal
+  const toppRad = 28 * 1.2;
+  const fotRad = 2 + 12 + 24 * 1.2; // linje + luft + text
+  const beloppsGrad = bigNumber.length > 9 ? 128 : 176;
+  return inre - toppRad - fotRad - beloppsGrad * 1.1;
+}
+
+/** Största teckengraden som får hela rubriken att rymmas ovanför fotraden. */
+export function rubrikStorlek(title: string, bigNumber: string): number {
+  const utrymme = rubrikUtrymme(bigNumber);
+  for (const grad of [56, 50, 44, 38, 34, 30]) {
+    const teckenPerRad = Math.max(1, Math.floor(RUBRIK_BREDD / (TECKENBREDD * grad)));
+    const rader = Math.ceil(title.length / teckenPerRad);
+    if (rader * grad * RAD_HOJD <= utrymme) return grad;
+  }
+  return 30;
+}
+
+/*
+ * Fotraden har två texter som ska stå i var sin kant. Blir den vänstra för
+ * lång skriver de över varandra — mätt 2026-08-05 hände det på 8 av 490
+ * löftesbilder, alla med den långa grunden "Satt för hand vid granskningen".
+ * IBM Plex Mono är fast bredd: varje tecken tar 0,6 × teckengraden.
+ */
+const MONO_TECKENBREDD = 0.6;
+const FOT_LUFT = 24;
+
+/** Största teckengraden där fotradens två texter inte krockar. */
+export function fotStorlek(vanster: string, hoger: string): number {
+  const tecken = vanster.length + hoger.length;
+  for (const grad of [24, 22, 20, 18]) {
+    if (tecken * MONO_TECKENBREDD * grad + FOT_LUFT <= RUBRIK_BREDD) return grad;
+  }
+  return 18;
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -107,16 +164,13 @@ async function generateOgImage(opts: {
                     style: {
                       color: "#F6F3EC",
                       fontFamily: "Anton",
-                      fontSize: 56,
+                      fontSize: rubrikStorlek(title, bigNumber),
                       textTransform: "uppercase",
                       letterSpacing: "0.01em",
-                      lineHeight: 1.1,
-                      maxWidth: 1088,
+                      // 1.1 klämmer de svenska prickarna mot raden ovanför.
+                      lineHeight: RAD_HOJD,
+                      maxWidth: RUBRIK_BREDD,
                       textAlign: "center",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
                     },
                     children: title,
                   },
@@ -132,7 +186,7 @@ async function generateOgImage(opts: {
                 paddingTop: 12,
                 color: "#6e6a61",
                 fontFamily: "IBM Plex Mono",
-                fontSize: 24,
+                fontSize: fotStorlek(bottomLine, "CC BY 4.0"),
                 display: "flex",
                 justifyContent: "space-between",
               },
@@ -222,7 +276,11 @@ async function main() {
   console.log(`OG: ${promises.length} promise images`);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// Kör bara när filen startas direkt. Utan vakten skulle grinden i test-og.mts
+// generera alla 490 bilderna bara genom att importera måtten den ska pröva.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

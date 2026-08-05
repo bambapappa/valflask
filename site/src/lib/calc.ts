@@ -36,7 +36,7 @@ export type {
   ComparisonResult,
   CategoryBreakdown,
   SummaryData,
-} from "./aggregates";
+} from "./aggregates.ts";
 
 export function formatMsek(msek: number, basis?: string): string {
   // Negativa tal (besparingar i en summa) skrivs med minus framför beloppet,

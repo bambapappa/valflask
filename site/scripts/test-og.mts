@@ -26,6 +26,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { partyTotalMsek, promiseTotalMsek, totalFlasket } from "../src/lib/aggregates.ts";
 import { formatMsek } from "../src/lib/calc.ts";
+import { rubrikStorlek, rubrikUtrymme, fotStorlek } from "./generate-og.mts";
 import { getPromises, getParties } from "../src/lib/data.ts";
 import type { PromisePost } from "../src/lib/data";
 
@@ -140,6 +141,75 @@ check(
   "rikssumman utesluter tillbakadragna löften",
   totalFlasket(promises) < ofiltrerat,
   `totalFlasket (${totalFlasket(promises)}) skiljer sig inte från den ofiltrerade summan (${ofiltrerat})`,
+);
+
+console.log("\n--- Texten ryms i bilden ---");
+// Klampen såg ut att lösa det men gjorde ingenting: satori 0.29 struntar i
+// -webkit-line-clamp, så en rubrik på 137 tecken renderades på fyra rader och
+// svämmade ut över fotraden. Kommer den tillbaka ska grinden säga ifrån.
+check(
+  "ingen -webkit-line-clamp (satori struntar i den)",
+  !/WebkitLineClamp/.test(kod),
+  "klampen ser ut att begränsa rubriken men gör det inte — skala graden i stället",
+);
+
+// Grindarna nedan prövar måtten. Men de anropar funktionerna direkt, så de
+// märker inte om LAYOUTEN slutar använda dem — därför läses källan också.
+// (Upptäckt genom att sätta tillbaka fasta grader: bara klamp-grinden föll.)
+check(
+  "rubrikens grad kommer ur rubrikStorlek",
+  /fontSize:\s*rubrikStorlek\(/.test(kod),
+  "layouten har en fast teckengrad igen — långa rubriker svämmar över",
+);
+check(
+  "fotradens grad kommer ur fotStorlek",
+  /fontSize:\s*fotStorlek\(/.test(kod),
+  "layouten har en fast teckengrad igen — långa källrader krockar med licensraden",
+);
+
+const RUBRIK_BREDD = 1088;
+const TECKENBREDD = 0.452;
+const RAD_HOJD = 1.2;
+
+function rubrikHojd(title: string, bigNumber: string): number {
+  const grad = rubrikStorlek(title, bigNumber);
+  const teckenPerRad = Math.max(1, Math.floor(RUBRIK_BREDD / (TECKENBREDD * grad)));
+  return Math.ceil(title.length / teckenPerRad) * grad * RAD_HOJD;
+}
+
+const forLanga = promises.filter((p) => {
+  const belopp = formatMsek(promiseTotalMsek(p), p.cost.basis).toUpperCase();
+  return rubrikHojd(p.title, belopp) > rubrikUtrymme(belopp);
+});
+check(
+  "varje löftesrubrik ryms ovanför fotraden",
+  forLanga.length === 0,
+  `${forLanga.length} rubriker svämmar över, längst: ${forLanga[0]?.id} (${forLanga[0]?.title.length} tecken)`,
+);
+
+const ETIKETT: Record<string, string> = {
+  rut: "Riksdagens utredningstjänst",
+  myndighet: "Myndighet",
+  parti: "Partiets egen siffra",
+  media: "Nyhetsmedier",
+  llm_estimat: "Datoruppskattning",
+  granskare: "Satt för hand vid granskningen",
+};
+const krockande = promises.filter((p) => {
+  const fot = `Källa: ${ETIKETT[p.cost.basis] ?? p.cost.basis} · Hämtad ${p.source.fetched_at.slice(0, 10)} · utlovat.se`;
+  const grad = fotStorlek(fot, "CC BY 4.0");
+  return (fot.length + "CC BY 4.0".length) * 0.6 * grad + 24 > RUBRIK_BREDD;
+});
+check(
+  "fotradens två texter krockar aldrig",
+  krockande.length === 0,
+  `${krockande.length} bilder där källraden skriver över licensraden`,
+);
+
+check(
+  "en lång rubrik får en mindre grad än en kort",
+  rubrikStorlek("x".repeat(140), "25 MDKR") < rubrikStorlek("x".repeat(30), "25 MDKR"),
+  "skalningen gör ingen skillnad — då är den inte inkopplad",
 );
 
 if (errors > 0) {
