@@ -16,6 +16,7 @@ import {
   getKopplingar,
   getHandlingMap,
   getPersoner,
+  getSoktaLoften,
   malId,
   type DomStatus,
   type PartiDom,
@@ -82,6 +83,10 @@ export interface PartiSida {
     bade_och: number;
     avstod: number;
     ingen_handling: number;
+    /** Utan utslag DÄRFÖR ATT vi sökt igenom löftet utan att hitta något. */
+    sokt_utan_traff: number;
+    /** Utan utslag DÄRFÖR ATT vi ännu inte sökt på löftet. */
+    ej_sokt: number;
     /** Utslag partiets handlingar gett MOT ANDRA PARTIERS löften. */
     emot_andras: number;
   };
@@ -160,6 +165,8 @@ export function buildPartiSida(code: string): PartiSida | null {
   const andras = handlingar_ut.filter((h) => !h.eget_lofte);
 
   const vagda = loften.filter((l) => l.n_i_linje + l.n_emot + l.n_avstod > 0);
+  const utanUtslag = loften.filter((l) => l.n_i_linje + l.n_emot + l.n_avstod === 0);
+  const sokta = getSoktaLoften();
   const summa = {
     total_loften: loften.length,
     vagda: vagda.length,
@@ -172,6 +179,12 @@ export function buildPartiSida(code: string): PartiSida | null {
       (l) => l.status !== "agerat_i_linje" && l.status !== "agerat_emot" && l.status !== "bade_och",
     ).length,
     ingen_handling: loften.length - vagda.length,
+    // "Utan handling ännu" var ETT tal som dolde två helt olika påståenden:
+    // att vi letat och inte funnit något, och att vi inte letat. Skillnaden
+    // följer parti — för S är nästan varje tomt löfte genomsökt, för L bara
+    // ungefär hälften — så samma ord sa olika saker om olika partier.
+    sokt_utan_traff: utanUtslag.filter((l) => sokta.has(l.id)).length,
+    ej_sokt: utanUtslag.filter((l) => !sokta.has(l.id)).length,
     emot_andras: andras.filter((h) => h.utslag === "emot").length,
   };
 

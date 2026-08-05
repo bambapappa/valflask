@@ -21,6 +21,15 @@ for (const kod of koder) {
   }
   assert.strictEqual(s!.summa.total_loften, s!.loften.length, `summan stämmer för ${kod}`);
   assert.strictEqual(s!.summa.ingen_handling, s!.loften.length - s!.summa.vagda, `utan-handling stämmer för ${kod}`);
+  // De två talen ERSÄTTER "utan handling ännu" på sidan, så de måste summera
+  // till det. Faller den här grinden visar partisidan ett tal som inte går
+  // ihop — och just den uppdelningen är hela poängen: den ena hälften betyder
+  // "vi har letat", den andra "vi har inte letat".
+  assert.strictEqual(
+    s!.summa.sokt_utan_traff + s!.summa.ej_sokt,
+    s!.summa.ingen_handling,
+    `genomsökt + ej genomsökt = utan handling för ${kod}`,
+  );
 
   // Talen högst upp måste täcka VARJE vägt löfte. Utan den här grinden kunde
   // ett utfall räknas fram utan att visas — "både och" gjorde precis det, och

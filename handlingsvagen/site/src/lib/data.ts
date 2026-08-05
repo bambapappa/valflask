@@ -119,6 +119,7 @@ let _parties: Party[] | undefined;
 let _kopplingar: Koppling[] | undefined;
 let _handlingar: Map<string, Handling> | undefined;
 let _personer: Person[] | undefined;
+let _sokta: Set<string> | undefined;
 
 export function getDomar(): Domar {
   return (_domar ??= las<Domar>("domar.json"));
@@ -131,6 +132,24 @@ export function getParties(): Party[] {
 }
 export function getKopplingar(): Koppling[] {
   return (_kopplingar ??= las<Koppling[]>("kopplingar.json"));
+}
+
+/**
+ * Löftes-id:n som sökningen faktiskt har letat efter handlingar till.
+ *
+ * Behövs för att skilja de två helt olika saker som annars gömmer sig i
+ * samma tal på partisidan: ett löfte vi sökt igenom utan att hitta något,
+ * och ett löfte vi ännu inte sökt på. Skillnaden följer parti — för
+ * Socialdemokraterna är nästan varje tomt löfte genomsökt, för Liberalerna
+ * bara ungefär hälften — och utan uppdelningen läser samma ord på sidan
+ * som två olika påståenden beroende på vilket parti man tittar på.
+ */
+export function getSoktaLoften(): Set<string> {
+  if (!_sokta) {
+    const rader = las<string[]>("provade-par.json");
+    _sokta = new Set(rader.map((r) => r.slice(0, r.indexOf("::"))));
+  }
+  return _sokta;
 }
 export function getHandlingMap(): Map<string, Handling> {
   if (!_handlingar) {
