@@ -17940,7 +17940,7 @@
       "s"
     ],
     "person": null,
-    "quote": "Det handlar om flera tusen kronor varje år för en polis, undersköterska eller lärare. Den orättvisan vill vi ta bort.",
+    "quote": "Den orättvisa karensen ska bort.",
     "date_stated": "2026-07-04",
     "source": {
       "url": "https://www.socialdemokraterna.se/val-2026",
@@ -17979,6 +17979,11 @@
         "date": "2026-07-28",
         "change": "Beloppet oförändrat, 5 000 miljoner kronor per år, men grunden utbytt: det vilar nu på partiets egen siffra för vad förslaget kostar statskassan i stället för på en efterhandsberäkning av antal sjukfall gånger en dagsersättning. Uträkningen skriver också ut varför arbetsgivarnas ökade sjuklönekostnader inte ligger i statens nota.",
         "commit": "89f3c3cc6f4cd1fe5c37095210baf4eb00a2ee30"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Citatet byttes mot en tydligare formulering ur samma valmanifest. Det gamla löd «Det handlar om flera tusen kronor varje år för en polis, undersköterska eller lärare. Den orättvisan vill vi ta bort.» och krävde sammanhanget för att gå att förstå — «den orättvisan» säger inte vilken. Det nya, «Den orättvisa karensen ska bort.», namnger karensen och står för sig självt. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -25938,6 +25943,516 @@
       "model": "deepseek-v4-pro",
       "verified_by": "granskare",
       "run_id": "manuell-granskning-2026-08-05-barnbidrag"
+    }
+  },
+  {
+    "id": "p-2026-0621",
+    "group_id": null,
+    "title": "Stärk Industriklivet och Klimatklivet",
+    "slug": "stark-industriklivet-och-klimatklivet",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "2. Stärk Industriklivet och Klimatklivet",
+    "date_stated": "2026-05-18",
+    "source": {
+      "url": "https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
+      "domain": "mp.se",
+      "archive_url": "https://web.archive.org/web/20260804120002/https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
+      "fetched_at": "2026-05-18T10:04:12.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 3400,
+      "msek_high": 8000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förankrat i de senaste faktiska höjningarna: Industriklivet ökades med 900 mkr/år (prop 2022/23) och Klimatklivet höjdes 2022 permanent med 2,5 mdkr/år. Ett nytt 'stärkande' bedöms ligga i samma…",
+      "confidence": 0.4,
+      "calculation": "Industriklivets senaste höjning: ~900 mkr/år. Klimatklivets senaste höjning: ~2 500 mkr/år. Summa bas = 3 400 mkr/år. Lågt vid symbolisk ökning (500), högt vid fördubbling (8 000)."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0622",
+    "group_id": null,
+    "title": "Införa riskdelning mellan staten och industrin",
+    "slug": "infora-riskdelning-mellan-staten-och-industrin",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "5. Riskdelning mellan staten och industrin",
+    "date_stated": "2026-05-18",
+    "source": {
+      "url": "https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
+      "domain": "mp.se",
+      "archive_url": "https://web.archive.org/web/20260804120002/https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
+      "fetched_at": "2026-05-18T10:04:12.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Riskdelning utan specificerat belopp; antar ett årligt anslag för förväntade förluster i ett nytt program, liknande gröna kreditgarantier (10–100 mkr/år).",
+      "confidence": 0.4,
+      "calculation": "Förväntad årlig kostnad för förluster: 10 mkr vid lågt utnyttjande, bas 30 mkr, högt 100 mkr. Bygger på antagande om garantivolym ~1–2 mdkr/år och förlustreserv 1–5 %."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0623",
+    "group_id": null,
+    "title": "Krav på långsiktigt underhåll av fastigheter",
+    "slug": "krav-pa-langsiktigt-underhall-av-fastigheter",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "ställa krav på långsiktigt underhåll av fastigheterna",
+    "date_stated": "2026-06-27",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+      "domain": "vansterpartiet.se",
+      "archive_url": "https://web.archive.org/web/20260709051254/https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+      "fetched_at": "2026-06-27"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en reglering, inte en subvention. Statens direkta kostnad är enbart tillsyn och administration, vilken är försumbar.",
+      "confidence": 0.65,
+      "calculation": "Krav på fastighetsägare medför inga direkta utbetalningar från staten. Eventuell tillsynsverksamhet ryms inom befintliga myndighetsanslag, därför 0 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0624",
+    "group_id": null,
+    "title": "Återinföra skattefria avsättningar för renovering",
+    "slug": "aterinfora-skattefria-avsattningar-for-renovering",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "återinföra möjligheten till skattefria avsättningar för renovering och underhåll, så att fler fastighetsägare investerar långsiktigt i sina hus",
+    "date_stated": "2026-06-27",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+      "domain": "vansterpartiet.se",
+      "archive_url": "https://web.archive.org/web/20260709051254/https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+      "fetched_at": "2026-06-27"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 2400,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Skattereduktion för avsättning till renoveringskonto. Antagande om antal deltagande fastighetsägare, genomsnittligt sparat belopp och marginalskatt, med stor osäkerhet om utformning och…",
+      "confidence": 0.3,
+      "calculation": "~200 000 fastighetsägare × 40 000 kr/år × 30 % marginalskatt = 2 400 mkr. Spann: 50 000–500 000 användare, 20 000–60 000 kr/år, 25–35 % skatt → 500–5 000 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0625",
+    "group_id": null,
+    "title": "Allmännyttan ska få förköpsrätt till misskötta fastigheter",
+    "slug": "allmannyttan-ska-fa-forkopsratt-till-misskotta-fastigheter",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Därför vill vi att allmännyttan ska få förköpsrätt att ta över misskötta fastigheter.",
+    "date_stated": "2026-06-27",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+      "domain": "vansterpartiet.se",
+      "archive_url": "https://web.archive.org/web/20260709051254/https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+      "fetched_at": "2026-06-27"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering som ger allmännyttan förköpsrätt – en lagändring utan direkt statsfinansiell kostnad. Eventuell administration försumbar.",
+      "confidence": 0.65,
+      "calculation": "Ingen ny statlig utgift; kostnaden för själva regleringen antas vara 0. Marginella handläggningskostnader ingår i befintliga anslag."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0626",
+    "group_id": null,
+    "title": "Återinfört tilläggsbidrag i bostadsbidraget",
+    "slug": "aterinfort-tillaggsbidrag-i-bostadsbidraget",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "att Sverige återinför tilläggsbidraget i bostadsbidraget",
+    "date_stated": "2026-06-26",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 700,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Återinför tilläggsbidraget som avskaffades 2011 (dåvarande kostnad ca 700 mkr/år). Beloppet uppskattas i samma storleksordning, justerat för pris- och volymförändringar.",
+      "confidence": 0.6,
+      "calculation": "Tilläggsbidraget i bostadsbidraget gällde fram till 2011 och kostade då ~700 mkr årligen. Återinförande antas ha liknande kostnad; låg 400 mkr om anpassat till dagens regler, hög 1200 mkr vid utökad grupp barnfamiljer. Intervallet är asymmetriskt för att spegla osäkerhet kring mottagarantal och nivå."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0627",
+    "group_id": null,
+    "title": "Höjt bostadstillägg för pensionärer och sjuka",
+    "slug": "hojt-bostadstillagg-for-pensionarer-och-sjuka",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "att bostadstillägget höjs för ålderspensionärer och för de som får sjuk- och aktivitetsersättning",
+    "date_stated": "2026-06-26",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 3000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ankrat till senaste höjningen av bostadstillägget (ca 1,5 mdkr årlig kostnad) för motsvarande grupper. Löftet saknar nivå, så en liknande höjning antas. Osäkerheten reflekteras i spannet.",
+      "confidence": 0.5,
+      "calculation": "Statens nuvarande utgifter för bostadstillägg till pensionärer och sjuk-/aktivitetsersättning är ca 15 mdkr/år. Den senaste genomförda höjningen uppskattas till ca 10 % ökning, ~1,5 mdkr/år. Base skattas till denna nivå, med lågt scenario 0,5 mdkr (liten höjning) och högt scenario 3 mdkr (dubblerad höjning)."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0628",
+    "group_id": null,
+    "title": "Tillfälligt drivmedelsstöd till bilägare med låga och medelinkomster",
+    "slug": "tillfalligt-drivmedelsstod-till-bilagare-med-laga-och-medelinkomster",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "ett tillfälligt stöd till bilägare med låga och medelinkomster som drabbats av höga drivmedelspriser till följd av kriget i Mellanöstern",
+    "date_stated": "2026-06-26",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 2000,
+      "msek_base": 4000,
+      "msek_high": 6000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämförbar tillfällig drivmedelskompensation 2022 kostade ~4 mdkr. Antagandet är att liknande stöd utformas.",
+      "confidence": 0.6,
+      "calculation": "Senaste liknande stöd (2022): 1 500 kr per bilägare med inkomst under en viss gräns. Enligt dåvarande budgetproposition beräknades totalkostnaden till cirka 3,8 mdkr, vilket här avrundas till 4 000 mkr. Spannet 2 000–6 000 mkr speglar osäkerhet om exakta inkomstgränser, beloppsnivå och antal mottagare."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0629",
+    "group_id": null,
+    "title": "Asyl i Sverige ska primärt ske via kvotflyktingsystem",
+    "slug": "asyl-i-sverige-ska-primart-ske-via-kvotflyktingsystem",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Säkra och lagliga vägar för att söka asyl i Sverige ska primärt ske genom ett kvotflyktingsystem.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politikomraden",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T20:31:46.107Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte om att styra om asylsystemet mot kvotflyktingar. Inga konkreta åtgärder eller kostnadsdrivande nivåer specificeras. Direkta statsfinansiella effekter bedöms som 0.",
+      "confidence": 0.65,
+      "calculation": "Löftet är ett principiellt inriktningsmål utan angivna belopp eller mätbara åtaganden. Eventuella kostnader (t.ex. förändrad kvot) kräver separata beslut och prissätts därmed inte här."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0630",
+    "group_id": null,
+    "title": "Minskat regelkrångel och bättre ekonomiska förutsättningar för bönder",
+    "slug": "minskat-regelkrangel-och-battre-ekonomiska-forutsattningar-for-bonder",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill ge bönderna minskat regelkrångel och bättre ekonomiska förutsättningar.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politikomraden",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-04T20:31:46.107Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret ekonomiskt åtagande (minskad regelbörda, bättre förutsättningar). Prisätts enligt regel 13 som 0. Jämförbart löfte avser specifikt anslag till annat område och är…",
+      "confidence": 0.1,
+      "calculation": "Inget konkret belopp; löftet är en inriktning. Base=0 enligt regel 13."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-koesvep"
     }
   }
 ]
