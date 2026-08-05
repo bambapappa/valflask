@@ -6891,7 +6891,7 @@
   },
   {
     "id": "p-2026-0131",
-    "group_id": "g-v-familjepaket-16",
+    "group_id": null,
     "title": "höja barnbidraget rejält, bygga ut öppna förskolan och stoppa regeringens förslag om att sänka föräldrapenningen kraftigt",
     "slug": "hoja-barnbidraget-rejalt-bygga-ut-oppna-forskolan-och-stoppa-regeringens-forslag-om-att-sanka-foraldrapenningen-kraftigt",
     "parties": [
@@ -6929,7 +6929,7 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-27",
@@ -6945,6 +6945,11 @@
         "date": "2026-08-05",
         "change": "Löftet lades i gruppen för Vänsterpartiets familjepaket. Paketet och dess delar var publicerade var för sig och räknades därför flera gånger: partiet anger själv 16 miljarder kronor per år för hela paketet, medan delarna tillsammans räknades till 22 575 miljoner. Gruppen räknas en gång och representeras av partiets egen siffra. Beloppet på den här posten är oförändrat och syns fortfarande på löftessidan.",
         "commit": "254ec23d3c7fe2f738baccf4bf8010b048e898f2"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Tillbakadraget som dubblett. Posten bar tre delar: höjt barnbidrag, utbyggd öppen förskola och ett stopp för sänkt föräldrapenning. Barnbidragsdelen var samma löfte som p-2026-0619, där partiet dessutom anger nivån 500 kronor i månaden — den här posten byggde på ankaret 200 kronor just för att nivån saknades. De två andra delarna står kvar var för sig: öppna förskolan på p-2026-0617 och föräldrapenningen på p-2026-0620. Ingen del av löftet försvinner."
       }
     ],
     "extraction": {
@@ -25677,7 +25682,7 @@
   },
   {
     "id": "p-2026-0616",
-    "group_id": "g-v-familjepaket-16",
+    "group_id": null,
     "title": "Höja barnbidraget med 500 kronor per månad",
     "slug": "hoja-barnbidraget-med-500-kronor-per-manad",
     "parties": [
@@ -25712,12 +25717,17 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-08-05",
         "change": "Löftet publicerades ur granskningskön som en del av Vänsterpartiets familjepaket, och lades direkt i paketets grupp. Delen syns för läsaren men kostnaden räknas en gång, på partiets egen siffra för hela paketet.",
         "commit": "254ec23d3c7fe2f738baccf4bf8010b048e898f2"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Tillbakadraget som dubblett. Vänsterpartiet uttalade samma löfte om höjt barnbidrag i fyra varianter under samma vecka. Citatet här är en bisats ur familjepaketets artikel; löftet bärs nu av p-2026-0619, som har partiets fullständiga formulering med både nivån och prisindexeringen. Ett parti som upprepar sig är en dubblett, inte ett delat löfte."
       }
     ],
     "extraction": {
@@ -25826,6 +25836,108 @@
       "model": "deepseek-v4-pro",
       "verified_by": "granskare",
       "run_id": "manuell-granskning-2026-08-05-familjepaket"
+    }
+  },
+  {
+    "id": "p-2026-0619",
+    "group_id": "g-v-familjepaket-16",
+    "title": "Höjt barnbidrag med 500 kr och prisindexering",
+    "slug": "hojt-barnbidrag-med-500-kr-och-prisindexering",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Vänsterpartiet vill höja barnbidraget med 500 kronor i månaden och att bidraget prisindexeras för att skydda mot framtida inflation.",
+    "date_stated": "2026-06-26",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/pa-hushallens-sida-genom-kostnadskrisen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 12000,
+      "msek_high": 15000,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Nivån är partiets egen. Bara antalet mottagare är vår uppskattning. Prisindexeringen bevarar realvärdet och kostar inget utöver höjningen.",
+      "confidence": 0.7,
+      "calculation": "Vänsterpartiet anger själva nivån: 500 kronor i månaden. Den siffran är partiets och byts inte ut. Det vi uppskattar är antalet mottagare — omkring 2 miljoner barn. 2 miljoner × 500 kronor × 12 månader = 12 000 miljoner kronor per år. Spannet 10 000–15 000 speglar osäkerheten i mottagarantalet; med Försäkringskassans utbetalningsstatistik, omkring 1,95 miljoner barn, blir beloppet 11 700. Eftersom partiet anger en nivå gäller inte ankaret på 200 kronor, som används där ett löfte bara säger att barnbidraget ska höjas."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "change": "Publicerat ur granskningskön som Vänsterpartiets löfte om höjt barnbidrag. Partiet hade uttalat samma löfte i fyra varianter; den här bär det fullständiga citatet med partiets egen nivå och prisindexeringen. De tre övriga är tillbakadragna eller avvisade som dubbletter.",
+        "commit": "0000000"
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-barnbidrag"
+    }
+  },
+  {
+    "id": "p-2026-0620",
+    "group_id": null,
+    "title": "Stoppa sänkning av föräldrapenningen",
+    "slug": "stoppa-sankning-av-foraldrapenningen",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Vänsterpartiet vill stoppa regeringens förslag om att sänka föräldrapenningen kraftigt",
+    "date_stated": "2026-06-27",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostar-i-almedalen-adjo-tido/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Att stoppa en sänkning behåller dagens nivå och kostar inget nytt.",
+      "confidence": 0.8,
+      "calculation": "Löftet stoppar en föreslagen sänkning av föräldrapenningen. Att behålla en nivå som redan gäller är ingen ny utgift för staten jämfört med i dag. Samma bedömning som gjordes för delen i p-2026-0131, som nu är tillbakadraget."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "change": "Publicerat ur granskningskön som ett eget löfte. Det låg tidigare som en av tre delar i p-2026-0131, som dragits tillbaka som dubblett av barnbidragslöftet. Utan den här posten hade löftet försvunnit ur registret.",
+        "commit": "0000000"
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-barnbidrag"
     }
   }
 ]
