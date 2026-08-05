@@ -160,16 +160,43 @@ export function rankaKandidater(
  *   term i 1 dokument     ≈ 10,1     term i 1 000 dokument ≈ 3,2
  *   term i 100 dokument   ≈  5,5     term i 5 000 dokument ≈ 1,6
  *
- * Tröskeln 12 kräver därmed ETT AV: två utpräglat ovanliga gemensamma
- * termer, eller fyra måttligt vanliga. En enstaka sällsynt term räcker
- * inte. Det speglar avsiktligt titelregelns krav på minst två
+ * Tröskeln 9 möts av en utpräglat ovanlig gemensam term plus en måttligt
+ * vanlig (5,5 + 3,2), eller av tre måttligt vanliga. En enstaka sällsynt
+ * term räcker inte. Det speglar avsiktligt titelregelns krav på minst två
  * gemensamma ord — samma tanke, tillämpad på dokumentets text.
  *
- * Lägre tröskel fångar fler äkta kopplingar men kostar modellkvot på
- * fler par; högre missar fall som #174. Kandidatlistan kapas ändå av
- * `max` per löfte, så tröskeln styr bredden, inte taket.
+ * **Sänkt från 12 till 9 (mänskligt beslut 2026-08-05.)** Vid 12 hade 79 av
+ * 467 aktiva löften aldrig prövats mot en enda handling. Orsaken var inte
+ * att partierna saknade handlingar — vart och ett av de löftena hade mellan
+ * 477 och 3 675 egna att pröva, och aktörsgränsen fällde inte ett enda av
+ * dem. De låg strax under den här tröskeln: median 9,0 mot 12.
+ *
+ * Hela kurvan mättes torrt (inga modellanrop) över alla aktiva löften:
+ *
+ *   tröskel  fångar av de 80  nya par att pröva   par per fångat löfte
+ *      12           1                  8                    —
+ *      11          13                328                   27
+ *      10          24                659                   30
+ *       9          39               1034                   25
+ *       8          49               1374                   34
+ *       7          62               1723                   27
+ *       6          73               2036                   28
+ *       5          77               2236                   50
+ *
+ * Marginalkostnaden är påfallande jämn (25–34 par per räddat löfte) hela
+ * vägen ner till 6, och skenar först vid 5. Valet av 9 styrs därför inte av
+ * kurvan utan av två andra saker: den håller kvar principen om två
+ * gemensamma ord (ett utmärkande plus ett vanligare), och de 1 034 nya
+ * paren ryms i EN körning inom takets 300 minuter vid uppmätta ~4 par per
+ * minut. Lägre trösklar spiller över flera dygn och släpper dessutom in par
+ * som vilar på två ganska vanliga ord — och varje förslag som tar sig
+ * igenom kostar en människas granskningstid, inte bara modellkvot.
+ *
+ * Kandidatlistan kapas ändå av `max` per löfte, så tröskeln styr bredden,
+ * inte taket. Ska den omprövas: mät om kurvan först — den flyttar sig när
+ * korpusen växer.
  */
-export const TEXT_TROSKEL = 12;
+export const TEXT_TROSKEL = 9;
 
 /** En voteringskandidat: voteringen plus betänkandet vars text är källan. */
 export interface VoteringsKandidat {
