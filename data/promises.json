@@ -24859,7 +24859,7 @@
   },
   {
     "id": "p-2026-0598",
-    "group_id": null,
+    "group_id": "g-l-barnfamiljer-5000",
     "title": "Förstärkt jobbskatteavdrag",
     "slug": "forstarkt-jobbskatteavdrag",
     "parties": [
@@ -24895,7 +24895,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Lagt i grupp med p-2026-0631. Posten bär reformens delar — förstärkt jobbskatteavdrag, nytt barnavdrag och utbyggt småbarns-RUT — medan p-2026-0631 bär partiets utfästelse om vad hela reformen ger en barnfamilj. Delarna och helheten räknas en gång. Beloppet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -26453,6 +26459,57 @@
       "model": "deepseek-v4-pro",
       "verified_by": "granskare",
       "run_id": "manuell-granskning-2026-08-05-koesvep"
+    }
+  },
+  {
+    "id": "p-2026-0631",
+    "group_id": "g-l-barnfamiljer-5000",
+    "title": "Ytterligare 5 000 kronor i månaden för barnfamiljer",
+    "slug": "ytterligare-5-000-kronor-i-manaden-for-barnfamiljer",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "Om vi får förnyat förtroende ska vi återigen se till att en barnfamiljs ekonomi förstärks med ytterligare 5 000 kronor per månad.",
+    "date_stated": "2026-08-04",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/5-000-kronor-mer-i-manaden-for-barnfamiljer-med-liberalerna",
+      "domain": "liberalerna.se",
+      "archive_url": "https://web.archive.org/web/20260804061854/https://www.liberalerna.se/nyheter/5-000-kronor-mer-i-manaden-for-barnfamiljer-med-liberalerna",
+      "fetched_at": "2026-08-04T11:48:07.898Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 11000,
+      "msek_base": 11000,
+      "msek_high": 66000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Partiets 5 000 kronor är vad en familj får, inte vad staten betalar. Basbeloppet vilar på reformens egna instrument; spannet bär den universella läsningen.",
+      "confidence": 0.4,
+      "calculation": "Liberalerna anger själva 5 000 kronor i månaden. Den siffran är partiets, men den säger vad en barnfamilj FÅR — inte vad staten betalar, och de två är inte samma sak. Läst som att varje barnfamilj får beloppet blir kostnaden 1,1 miljoner familjer × 5 000 kronor × 12 månader = 66 000 miljoner kronor per år. Reformens egna delar — förstärkt jobbskatteavdrag, nytt barnavdrag och utbyggt småbarns-RUT — är samtidigt ankrade till 11 000 miljoner kronor per år, byggt på vad den senaste förstärkningen av jobbskatteavdraget faktiskt kostade (budgetpropositionen för 2024). Skillnaden på en faktor sex betyder att 5 000 kronor är vad en familj i partiets räkneexempel kan få som mest — två arbetande föräldrar med små barn som utnyttjar avdragen fullt ut — inte ett belopp varje barnfamilj får. Basbeloppet sätts därför vid vad instrumenten är ankrade till, och spannet bär osäkerheten hela vägen upp till den universella läsningen."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Publicerat ur granskningskön som Liberalernas löfte om 5 000 kronor mer i månaden för barnfamiljer, i grupp med p-2026-0598 som bär reformens delar. Kön föreslog 16 800 miljoner kronor per år. Den siffran publiceras inte: den byggde på Moderaternas löfte p-2026-0597 utan att lånet skrevs ut, och den läste dessutom det löftets uträkning fel — 1 400 miljoner delades med 5 000 kronor och gav 280 000 barnfamiljer, medan källan själv räknar med 1,1 miljoner familjer och 5 000 kronor fördelat över fyra år. Uträkningen är omgjord från partiets eget citat."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-l-paket"
     }
   }
 ]
