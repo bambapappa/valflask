@@ -32,7 +32,13 @@ name: foreslag
 # körningen återuppstår aldrig. Slutar nyckeln svara, tar krediten slut
 # eller slår leverantören i kvottaket bryter körningen efter tre löften i
 # rad utan framsteg — klienten tar då endpointen ur spel, så ett dött läge
-# kostar sekunder i stället för minuter. Salvage-committen sist är ett always()-steg
+# kostar sekunder i stället för minuter. Botens token lever en timme medan
+# körningen får hålla på i fem, så både pushloopen och salvagen mintar om den
+# själva direkt mot API:et — ett steg som mintar i förväg räcker bara den
+# första timmen. Mintningen står inline och inte i ett hjälpskript med flit:
+# checkouten nedan hämtar DEFAULTGRENEN, så en fil på den gren körningen
+# startades från skulle inte finnas i arbetsträdet.
+# Salvage-committen sist är ett always()-steg
 # som flushar det sista löftets delta ÄVEN om jobbet avbryts eller slår i
 # timeout-taket (300 min). När committen lyckats synkas kön till issues;
 # hoppas det steget över (kort avbrottsfönster) tar koppling-sync.yml det i
@@ -183,6 +189,11 @@ jobs:
           MODEL_KOPPLING: ${{ env.PRIMAR == 'zai-glm' && vars.MODEL_KOPPLING_ZAI || vars.MODEL_KOPPLING }}
           MODEL_KOPPLING_FALLBACK: ${{ env.PRIMAR == 'zai-glm' && '' || vars.MODEL_KOPPLING_FALLBACK }}
           LOFTE: ${{ inputs.lofte }}
+          # Pushloopen mintar om tokenen själv under körningen (se
+          # minta-bot-token.sh) — ett steg som mintar EN gång i förväg räcker
+          # inte när jobbet får hålla på i timmar.
+          BOT_APP_ID: ${{ secrets.BOT_APP_ID }}
+          BOT_APP_KEY: ${{ secrets.BOT_APP_KEY }}
           # Number("") === 0 i foreslag.mts — utan fallbacken skulle en
           # schema-triggad körning (tomma inputs) tysta kapa kandidatlistan
           # till noll och aldrig pröva ett enda par.
@@ -204,6 +215,62 @@ jobs:
           # vara utgångna vid det här laget.
           git remote set-url origin \
             "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          # Botens installationstoken lever EN timme, och det här steget får
+          # hålla på i fem. Tokenen som mintades i steget före är alltså död
+          # långt innan sista löftet är klart — och eftersom pushen sker inuti
+          # det här skriptet går den inte att förnya med ännu ett steg.
+          # Utan detta dog körning 30990404973 efter 63 minuter: allt före
+          # 09:45 pushades, allt efter föll på "Invalid username or token".
+          # base64url utan utfyllnad — det JWT kräver.
+          b64url() { openssl base64 -A | tr '+/' '-_' | tr -d '='; }
+          minta_bot_token() {
+            local nu huvud kropp osignerat nyckel signatur jwt inst tok
+            nu=$(date +%s)
+            huvud='{"alg":"RS256","typ":"JWT"}'
+            # iat backdateras en minut (GitHub avvisar en JWT från framtiden,
+            # och runnerns klocka behöver inte gå exakt som deras); exp ligger
+            # på 8 min, tryggt under deras tak på 10.
+            kropp=$(printf '{"iat":%d,"exp":%d,"iss":"%s"}' \
+              $((nu - 60)) $((nu + 480)) "$BOT_APP_ID")
+            osignerat="$(printf '%s' "$huvud" | b64url).$(printf '%s' "$kropp" | b64url)"
+            nyckel=$(mktemp)
+            printf '%s\n' "$BOT_APP_KEY" >"$nyckel"
+            signatur=$(printf '%s' "$osignerat" | openssl dgst -sha256 -sign "$nyckel" | b64url)
+            rm -f "$nyckel"
+            jwt="$osignerat.$signatur"
+            inst=$(curl -sS -H "Authorization: Bearer $jwt" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/installation" | jq -r '.id')
+            [ -n "$inst" ] && [ "$inst" != "null" ] || return 1
+            tok=$(curl -sS -X POST -H "Authorization: Bearer $jwt" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/app/installations/$inst/access_tokens" | jq -r '.token')
+            [ -n "$tok" ] && [ "$tok" != "null" ] || return 1
+            printf '%s' "$tok"
+          }
+          TOKEN_MINTAD=$(date +%s)
+          fornya_token() {
+            ny="$(minta_bot_token)" || return 1
+            echo "::add-mask::$ny"
+            PUSH_TOKEN="$ny"
+            TOKEN_MINTAD=$(date +%s)
+            git remote set-url origin \
+              "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            return 0
+          }
+          # 40 min: rejäl marginal till timmen, även om ett löfte tar länge.
+          # TOKEN_MINTAD=0 tvingar fram en förnyelse (sätts efter en fallen push).
+          fornya_token_vid_behov() {
+            if [ $(( $(date +%s) - TOKEN_MINTAD )) -lt 2400 ]; then return 0; fi
+            if fornya_token; then
+              echo "  botens token förnyad"
+            else
+              # Inte dödligt i sig — den gamla kan ha tid kvar, och pushen får
+              # ändå fem försök. Men det ska synas i loggen.
+              echo "  VARNING: kunde inte förnya botens token"
+            fi
+          }
           set +e
           echo "primär endpoint: $PRIMAR"
           git config user.name "github-actions[bot]"
@@ -226,6 +293,7 @@ jobs:
           push_delta() {
             cp data/kopplingsforslag.json /tmp/ko-resultat.json
             cp data/provade-par.json /tmp/provade-resultat.json
+            fornya_token_vid_behov
             for attempt in 1 2 3 4 5; do
               # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
               # gammalt träd, och då blir allt efteråt fel — en misslyckad push
@@ -250,6 +318,11 @@ jobs:
                 return 0
               fi
               echo "  push-försök $attempt misslyckades — gör om från färsk defaultgren..."
+              # En fallen push är själva symtomet på en död token. Tvinga fram
+              # en förnyelse inför nästa försök i stället för att bränna alla
+              # fem på samma döda uppgifter.
+              TOKEN_MINTAD=0
+              fornya_token_vid_behov
               sleep $((attempt * 5))
             done
             echo "  push misslyckades efter 5 försök"
@@ -300,8 +373,39 @@ jobs:
         if: ${{ always() && !inputs.dry_run }}
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
-          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
+          BOT_APP_ID: ${{ secrets.BOT_APP_ID }}
+          BOT_APP_KEY: ${{ secrets.BOT_APP_KEY }}
         run: |
+          set -uo pipefail
+          # Samma fälla som i körsteget: tokenen från "Förnya botens token
+          # inför push" är död så fort körningen tagit mer än en timme, och
+          # det är just då den här salvagen behövs som mest. Minta en helt ny.
+          # (Samma mintning som i körsteget — steg delar inte skalminne, och
+          # ett hjälpskript skulle inte finnas i det utcheckade trädet.)
+          b64url() { openssl base64 -A | tr '+/' '-_' | tr -d '='; }
+          NU=$(date +%s)
+          HUVUD='{"alg":"RS256","typ":"JWT"}'
+          KROPP=$(printf '{"iat":%d,"exp":%d,"iss":"%s"}' \
+            $((NU - 60)) $((NU + 480)) "$BOT_APP_ID")
+          OSIGNERAT="$(printf '%s' "$HUVUD" | b64url).$(printf '%s' "$KROPP" | b64url)"
+          NYCKEL=$(mktemp)
+          printf '%s\n' "$BOT_APP_KEY" >"$NYCKEL"
+          SIGNATUR=$(printf '%s' "$OSIGNERAT" | openssl dgst -sha256 -sign "$NYCKEL" | b64url)
+          rm -f "$NYCKEL"
+          JWT="$OSIGNERAT.$SIGNATUR"
+          INST=$(curl -sS -H "Authorization: Bearer $JWT" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/installation" | jq -r '.id')
+          PUSH_TOKEN=$(curl -sS -X POST -H "Authorization: Bearer $JWT" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/app/installations/$INST/access_tokens" | jq -r '.token')
+          if [ -z "$PUSH_TOKEN" ] || [ "$PUSH_TOKEN" = "null" ]; then
+            echo "Kunde inte minta botens token — salvagen kan inte pusha."
+            exit 1
+          fi
+          echo "::add-mask::$PUSH_TOKEN"
+          git remote set-url origin \
+            "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cp data/kopplingsforslag.json /tmp/ko-resultat.json
