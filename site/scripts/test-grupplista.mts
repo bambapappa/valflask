@@ -23,6 +23,7 @@ import {
   totalFinancingClaimed,
   financingClaimedMsek,
   financingGap,
+  isActive,
   totalFlasket,
   totalBesparingar,
   coalitionAggregates,
@@ -425,6 +426,72 @@ const alla = getPromises();
     "varje finansieringsbelopp bär en period",
     utanPeriod.length === 0,
     utanPeriod.map((x) => x.id).join(" "),
+  );
+}
+
+// ── Gruppens finansieringsuppgift står i flera kopior ─────────────────────
+{
+  // Dedupen från 2026-08-04 stoppade dubbelräkningen, men den löste inte att
+  // uppgiften står i sex likalydande kopior. Bara REPRESENTANTENS kopia
+  // publiceras, och representanten är den med högst belopp — mellan
+  // `p-2026-0141` och `p-2026-0142`, båda 78 000, avgörs det på id.
+  //
+  // Följden är mätt (2026-08-05): rättas siffran på en medlem som inte råkar
+  // vara representant ändras ingenting i det publicerade talet, och den som
+  // rättade får inget besked om det. Rättas representanten rör sig hela
+  // totalen. Det är en tyst rättelse i praktiken — förbjudet i det här
+  // projektet — och därför ska kopiorna vara låsta till varandra.
+  //
+  // Alternativet vore att flytta fältet till gruppen. Det avvisades: grupper
+  // är i dag bara en `group_id`-sträng, fältet ligger per löfte i schemat och
+  // i det öppna API:et, och varje löftessida visar sin egen uppgift. Grinden
+  // löser den verkliga risken utan att bygga en ny datamodell.
+  const g = "g-kopior";
+  const bar = (x: unknown, msek: number | null) => {
+    (x as { financing_claimed: unknown }).financing_claimed =
+      msek === null
+        ? { described: false, summary: null, msek: null }
+        : { described: true, summary: `Partiet uppger ${msek}`, msek, period: "per_ar" };
+    return x as PromisePost;
+  };
+
+  const eniga = [
+    bar(p("k-1", 1000, ["c"], g), 500),
+    bar(p("k-2", 900, ["c"], g), 500),
+  ] as PromisePost[];
+  const oeniga = [
+    bar(p("k-1", 1000, ["c"], g), 500),
+    bar(p("k-2", 900, ["c"], g), 900),
+  ] as PromisePost[];
+
+  function oeniga_grupper(list: PromisePost[]): string[] {
+    const perGrupp = new Map<string, Set<number>>();
+    for (const x of list) {
+      if (!x.group_id || !isActive(x)) continue;
+      const msek = x.financing_claimed?.msek;
+      if (typeof msek !== "number") continue;
+      // Perioden hör ihop med beloppet: 45 000 per år och 45 000 en gång är
+      // inte samma uppgift, så båda måste stämma.
+      const jamfor = financingClaimedMsek(x);
+      if (!perGrupp.has(x.group_id)) perGrupp.set(x.group_id, new Set());
+      perGrupp.get(x.group_id)!.add(jamfor);
+    }
+    return [...perGrupp.entries()].filter(([, v]) => v.size > 1).map(([k]) => k);
+  }
+
+  check("eniga kopior i en grupp går igenom", oeniga_grupper(eniga).length === 0);
+  check(
+    "grinden faller när en kopia glider isär",
+    oeniga_grupper(oeniga).length === 1,
+    "en avvikande kopia i gruppen upptäcks inte",
+  );
+
+  const trasiga = oeniga_grupper(alla);
+  check(
+    "varje grupp uppger samma finansiering på alla sina medlemmar",
+    trasiga.length === 0,
+    `${trasiga.join(" ")} — bara representantens siffra publiceras, ` +
+      "så en avvikande kopia ändrar antingen ingenting eller allt",
   );
 }
 

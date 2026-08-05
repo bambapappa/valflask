@@ -114,6 +114,12 @@ jobs:
       - name: Grindar för importvägarna
         run: node --experimental-strip-types scripts/test-importer.mts
         working-directory: site
+      # Invarianterna R1/R3/R4 (SPEC §5.3). Låg tidigare i pipeline/tests och
+      # prövade egna kopior av summorna — den gav grönt även med gapfelet
+      # återinfört. Mäter nu sajtens skarpa aggregates.ts.
+      - name: Grindar för invarianterna
+        run: node --experimental-strip-types --test scripts/test-invarianter.mts
+        working-directory: site
       - name: Build site + OG images
         run: pnpm build
         working-directory: site
