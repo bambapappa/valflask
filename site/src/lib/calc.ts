@@ -1,6 +1,11 @@
 import type { PromisePost } from "./data";
 
-export { canonicalStringify, computeDataHash } from "./canonical";
+// Filändelsen är inte kosmetisk: utan den går calc.ts att importera från
+// Astro men INTE från ett fristående node-skript (--experimental-strip-types
+// resolverar inte ändelselösa relativa sökvägar). Det var tröskeln som fick
+// generate-og.mts att bära egna kopior av formateringen i stället för att
+// importera den — och kopiorna gled isär. Behåll ändelsen.
+export { canonicalStringify, computeDataHash } from "./canonical.ts";
 
 export {
   promiseTotalMsek,
@@ -23,7 +28,7 @@ export {
   isBesparing,
   promiseTotalLowMsek,
   promiseTotalHighMsek,
-} from "./aggregates";
+} from "./aggregates.ts";
 
 export type {
   CoalitionResult,
