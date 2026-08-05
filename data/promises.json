@@ -8837,7 +8837,7 @@
   },
   {
     "id": "p-2026-0166",
-    "group_id": null,
+    "group_id": "g-sankt-forskoleavgift",
     "title": "Och nu sänker vi avgifterna för förskola och fritids",
     "slug": "och-nu-sanker-vi-avgifterna-for-forskola-och-fritids",
     "parties": [
@@ -8881,6 +8881,11 @@
         "date": "2026-07-24",
         "change": "Kostnadsestimat ändrat från 3 000 miljoner kronor per år (spann 1 500-4 500) till 800 (spann 400-1 500) vid den manuella genomgången. Det gamla beloppet antog en hög snittavgift och stor sänkning; det nya justerar för maxtaxa och syskonrabatt (som gör faktiska avgifter mycket lägre) och räknar in både förskola och fritids.",
         "commit": "57503ab2c01fc70fcffdbaffa7a8837fe6e6b7fe"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
+        "change": "Lagt i grupp med Kristdemokraternas löfte om sänkt avgift för förskola och fritids. Samma politik hos olika partier räknas en gång. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -19218,7 +19223,7 @@
   },
   {
     "id": "p-2026-0485",
-    "group_id": null,
+    "group_id": "g-sankt-matmoms",
     "title": "Permanent nedsatt moms på mat",
     "slug": "permanent-nedsatt-moms-pa-mat",
     "parties": [
@@ -19264,6 +19269,11 @@
         "date": "2026-07-27",
         "change": "Omräknat från 10 000 till 12 000 miljoner kronor per år, men framför allt satt på en riktig grund. Den tidigare uträkningen antog att livsmedelsmomsen ger omkring 35 miljarder kronor per år vid 12 procent. Regeringen anger själv skattebortfallet för den tillfälliga sänkningen till 37,2 miljarder kronor för perioden april 2026 till december 2027, alltså omkring 21 miljarder per år, och sänkningen är redan beslutad till och med 2027.",
         "commit": "8d5c8bae614c285985bb95523525b4fef58f095d"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
+        "change": "Lagt i grupp med Kristdemokraternas löfte om sänkt matmoms. Samma åtgärd räknas en gång; Sverigedemokraternas variant är permanent och bär därför gruppens belopp. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -27684,6 +27694,363 @@
       "model": "deepseek-v4-pro",
       "verified_by": "granskare",
       "run_id": "manuell-granskning-2026-08-05-rena"
+    }
+  },
+  {
+    "id": "p-2026-0655",
+    "group_id": null,
+    "title": "Utreda grundlagsskydd för etablerade rättigheter som könsneutrala äktenskap",
+    "slug": "utreda-grundlagsskydd-for-etablerade-rattigheter-som-konsneutrala-aktenskap",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Partiet vill även utreda ett grundlagsskydd för redan etablerade rättigheter, såsom könsneutrala äktenskap, samkönade pars föräldraskap och rätten att ändra juridiskt kön.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/pride-ar-over-nu-fortsatter-kampen-for-hbtqi-personers-rattigheter/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet är att utreda ett grundlagsskydd. En utredning prissätts som försumbar — det är den politik utredningen kan leda till som skulle kosta något, och den är inte utlovad här. Ett litet löfte är ändå ett löfte.",
+      "confidence": 0.8,
+      "calculation": "Löftet är att utreda ett grundlagsskydd. En utredning prissätts som försumbar — det är den politik utredningen kan leda till som skulle kosta något, och den är inte utlovad här. Ett litet löfte är ändå ett löfte."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
+        "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-andrade"
+    }
+  },
+  {
+    "id": "p-2026-0656",
+    "group_id": null,
+    "title": "Nationell modell för ungdomsbostäder",
+    "slug": "nationell-modell-for-ungdomsbostader",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Socialdemokraterna vill att fler små och prisvärda hyresrätter ska reserveras för unga. Boverket ska få i uppdrag att ta fram en nationell modell som gör det lättare för unga att få ett förstahandskontrakt",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-socialdemokraterna-gar-till-val-pa-en-nationell-modell-for-ungdomsbostader",
+      "domain": "www.socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet är att ge Boverket i uppdrag att ta fram en nationell modell. Ett uppdrag att ta fram en modell är ett utredningsuppdrag och prissätts som försumbart; själva modellen är inte en utgift förrän den genomförs, och något genomförande är inte utlovat här.",
+      "confidence": 0.8,
+      "calculation": "Löftet är att ge Boverket i uppdrag att ta fram en nationell modell. Ett uppdrag att ta fram en modell är ett utredningsuppdrag och prissätts som försumbart; själva modellen är inte en utgift förrän den genomförs, och något genomförande är inte utlovat här."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
+        "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-andrade"
+    }
+  },
+  {
+    "id": "p-2026-0657",
+    "group_id": null,
+    "title": "Ta fram vägledning för hybrid- och distansarbete för personer med funktionsnedsättning",
+    "slug": "ta-fram-vagledning-for-hybrid-och-distansarbete-for-personer-med-funktionsnedsattning",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "Nu tar vi nästa steg genom att ta fram en vägledning hur hybrid- och distansarbete kan användas för att fler i den gruppen kan komma i arbete",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/liberalerna-vill-gora-arbetsmarknaden-mer-tillganglig-for-personer-med-funktionsnedsattning",
+      "domain": "www.liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet är att ta fram en vägledning. Det är ett utrednings- och kunskapsuppdrag inom befintlig förvaltning och prissätts som försumbart.",
+      "confidence": 0.8,
+      "calculation": "Löftet är att ta fram en vägledning. Det är ett utrednings- och kunskapsuppdrag inom befintlig förvaltning och prissätts som försumbart."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
+        "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-andrade"
+    }
+  },
+  {
+    "id": "p-2026-0658",
+    "group_id": "g-sankt-matmoms",
+    "title": "KD sänker matmomsen tillfälligt",
+    "slug": "kd-sanker-matmomsen-tillfalligt",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi ser till att sänka matpriserna tillfälligt, så att fler hushåll kan få matpengarna att räcka hela månaden.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/en-budget-for-familjen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "engang",
+      "msek_low": 6000,
+      "msek_base": 12000,
+      "msek_high": 24000,
+      "basis": "myndighet",
+      "basis_url": null,
+      "method_note": "Harmoniserat med Sverigedemokraternas löfte om samma åtgärd. Perioden är engång eftersom löftet säger 'tillfälligt' utan att ange hur länge.",
+      "confidence": 0.5,
+      "calculation": "Samma åtgärd som Sverigedemokraternas löfte om nedsatt matmoms och prissätts därför lika. Regeringen anger skattebortfallet för den pågående sänkningen från 12 till 6 procent till 37,2 miljarder kronor för perioden april 2026 till december 2027, alltså omkring 12 000 miljoner kronor per år. Löftet säger 'tillfälligt' men inte hur länge, så beloppet räknas som ett år. Spannet 6 000–24 000 motsvarar ett halvår till två år."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
+        "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-andrade"
+    }
+  },
+  {
+    "id": "p-2026-0659",
+    "group_id": null,
+    "title": "KD sänker elskatten",
+    "slug": "kd-sanker-elskatten",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi gör nu det som krävs för att sänka svenskarnas utgifter och nu sänker vi skatten på el.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/en-budget-for-familjen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 6000,
+      "msek_high": 12000,
+      "basis": "myndighet",
+      "basis_url": null,
+      "method_note": "Ankrat i vad den senast genomförda sänkningen av elskatten faktiskt kostade. Löftet anger ingen nivå.",
+      "confidence": 0.5,
+      "calculation": "Löftet pekar ut en åtgärd — sänkt skatt på el — men anger ingen nivå, så beloppet ankras i vad samma åtgärd senast kostade. Energiskatten på el sänktes vid årsskiftet till 2022 års nivå, 36 öre per kilowattimme, och den sänkningen kostade staten drygt 6 000 miljoner kronor per år. Spannet rymmer en halv till dubbel sådan sänkning. Ett fullständigt avskaffande skulle kosta omkring 25 000 miljoner, men det är inte vad löftet säger."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
+        "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-andrade"
+    }
+  },
+  {
+    "id": "p-2026-0660",
+    "group_id": null,
+    "title": "KD höjer jobbskatteavdraget",
+    "slug": "kd-hojer-jobbskatteavdraget",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Höjt jobbskatteavdrag, du får behålla mer pengar av det du tjänar på ditt arbete.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/en-budget-for-familjen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 11000,
+      "msek_high": 15000,
+      "basis": "myndighet",
+      "basis_url": null,
+      "method_note": "Ankrat i vad den senaste förstärkningen av jobbskatteavdraget kostade, samma grund som Liberalernas löfte om samma åtgärd.",
+      "confidence": 0.5,
+      "calculation": "Löftet pekar ut en åtgärd — höjt jobbskatteavdrag — utan att ange nivå, så beloppet ankras i vad samma åtgärd senast kostade. Den senaste förstärkningen, i budgetpropositionen för 2024, kostade omkring 11 000 miljoner kronor per år. Samma ankare används på Liberalernas löfte om ett förstärkt jobbskatteavdrag, så samma politik kostar lika."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
+        "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-andrade"
+    }
+  },
+  {
+    "id": "p-2026-0661",
+    "group_id": "g-sankt-forskoleavgift",
+    "title": "KD sänker avgiften på förskola och fritidshem",
+    "slug": "kd-sanker-avgiften-pa-forskola-och-fritidshem",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Sänkt avgift på förskola och fritidshem.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/en-budget-for-familjen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 800,
+      "msek_high": 1600,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Harmoniserat med Moderaternas löfte om samma åtgärd; de delar grupp och räknas en gång.",
+      "confidence": 0.5,
+      "calculation": "Samma åtgärd som Moderaternas löfte om sänkt avgift för förskola och fritids, och prissätts därför lika. Omkring 900 000 barn går i förskola och fritids. Avgifterna är redan låga efter maxtaxan — taket är omkring 1 645 kronor i månaden för första barnet, inkomstavtrappat, och med syskonrabatt landar snittet kring 1 000 kronor. En sänkning på 10 till 20 procent ger omkring 800 miljoner kronor per år."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
+        "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-andrade"
     }
   }
 ]
