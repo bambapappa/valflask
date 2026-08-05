@@ -467,7 +467,7 @@ Bygg i ordning; M0–M2 kräver varken API-nycklar eller nätverksåtkomst till 
 - **T5** Fixtur med påhittat citat (finns ej i källtexten) ⇒ stoppas av G3, hamnar i `needs_review`, publiceras ej.
 - **T6** Injektionsfixtures (≥ 5 varianter) ⇒ **noll** publicerade löften; körningen slutför utan krasch.
 - **T7** Skarp körning: varje publicerat löfte har `archive_url` eller retry-flagga; ingen fulltext förekommer i git-diffen.
-- **T8** Invarianter: Σ(partitotaler) = Σ(löften); koalition med alla 8 partier räknar varje `group_id` exakt en gång; R1-normalisering korrekt i enhetstest med kända tal; R4-gapet stämmer.
+- **T8** Invarianter (`site/scripts/test-invarianter.mts`): Σ(partitotaler) = Σ(löften, netto); koalition med alla 8 partier räknar varje `group_id` exakt en gång; R1-normalisering korrekt i enhetstest med kända tal; R4-gapets tre termer vilar på samma population. Provet importerar sajtens `aggregates.ts` — det låg fram till 2026-08-05 i `pipeline/tests/` med egna kopior av summorna och gav då grönt även med gapfelet återinfört.
 - **T9** `/api/v1/summary.json`: CORS `*`, schema-valid, `data_hash` = sha256 av kanonisk `promises.json`; `/llms.txt` svarar 200; sitemap valid; JSON-LD passerar schemavalidator.
 - **T10** Återställningsdrill från tom katalog till verifierad spegel-deploy, tidtagen i RUNBOOK, < 15 min.
 
