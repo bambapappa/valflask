@@ -2196,5 +2196,507 @@
       "calculation": "~1,5 miljoner barn/ungdomar 6–19 år, antag 30–50 % nyttjar kortet under 2 sommarmånader, värde ~400 kr/person + admin. Ger 180–500 mkr, avrundat."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Skarp ersättningsskyldighet för regioner som inte uppfyller vårdgarantin",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "vi föreslår att den som behöver vänta mer än 30 dagar på vård ska få behandling i en annan region – på bekostnad av hemregionen.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/nyhet/vallofte-ingen-ska-vanta-mer-an-30-dagar-pa-att-fa-vard/",
+    "articleTitle": "Vallöfte: Ingen ska vänta mer än 30 dagar på att få vård | Moderaterna"
+  },
+  {
+    "candidate": {
+      "title": "Ingen ska vänta mer än 30 dagar på att få vård",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaternas vallöfte är att korta vårdgarantin från 90 till 30 dagar.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/vallofte-ingen-ska-vanta-mer-an-30-dagar-pa-att-fa-vard/",
+    "articleTitle": "Vallöfte: Ingen ska vänta mer än 30 dagar på att få vård | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en lagändring av vårdgarantins tidsgräns. Den direkta kostnaden för staten är enbart en mindre administrativ insats för att ändra regelverket, vilket är försumbart. Eventuella framtida…",
+      "confidence": 0.65,
+      "calculation": "Administrativ kostnad för att utarbeta och besluta om förkortad tidsfrist i vårdgaranti, t.ex. departements- och riksdagsarbete, bedöms till 0-5 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Patientens rätt att välja vård i hela landet införs",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Därför föreslår vi att en tydlig rätt för patienten att välja vård i hela landet ska införas.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/vallofte-ingen-ska-vanta-mer-an-30-dagar-pa-att-fa-vard/",
+    "articleTitle": "Vallöfte: Ingen ska vänta mer än 30 dagar på att få vård | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagförslag om patientens rätt att välja vård i hela landet är en reglering utan angiven budgetpåverkan. Direkt statlig kostnad försumbar, i linje med jämförbart löfte p-2026-0136 (0 mkr).",
+      "confidence": 0.65,
+      "calculation": "Ingen ny statlig utgift; införande av en ny rättighet sker genom lagstiftning som inte medför några betydande direkta kostnader (0 mkr)."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0136 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Ytterligare 5 000 kronor i månaden för barnfamiljer",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare"
+      },
+      "quote": "Om vi får förnyat förtroende ska vi återigen se till att en barnfamiljs ekonomi förstärks med ytterligare 5 000 kronor per månad.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/5-000-kronor-mer-i-manaden-for-barnfamiljer-med-liberalerna",
+    "articleTitle": "5.000 kronor mer i månaden för barnfamiljer med Liberalerna – Liberalerna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 16800,
+      "msek_high": 25000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Anknyter till jämförbart M‑löfte (p‑2026‑0597) där 5 000 kr som engångsbelopp kostade 1 400 msek (ca 280 000 hushåll). Antar att samma målgrupp får 5 000 kr/månad (60 000 kr/år) -> 16 800 msek/år…",
+      "confidence": 0.4,
+      "calculation": "Jämförbar engångskostnad 5 000 kr (p-2026-0597) = 1 400 msek ⇒ ~280 000 barnfamiljer. Årsbelopp per familj = 5 000 × 12 = 60 000 kr. Total årskostnad = 280 000 × 60 000 = 16 800 msek. Låg/hög tar höjd för smalare/bredare målgrupp."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0597 (1400), p-2026-0606 (8000), p-2026-0592 (4500), p-2026-0254 (0) ⚠ AVVIKER: 16800 avviker 5.7× från jämförbara (median 2950)"
+  },
+  {
+    "candidate": {
+      "title": "Återinföra läx-RUT",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill också återinföra läx-RUT för att ge fler elever bättre möjligheter att lyckas i skolan.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/5-000-kronor-mer-i-manaden-for-barnfamiljer-med-liberalerna",
+    "articleTitle": "5.000 kronor mer i månaden för barnfamiljer med Liberalerna – Liberalerna",
+    "duplicateOf": "p-2026-0574"
+  },
+  {
+    "candidate": {
+      "title": "Mer generöst RUT-avdrag för personer över 70 år",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "ett mer generöst RUT-avdrag för personer över 70 år",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+    "articleTitle": "Liberalerna stärker barnfamiljerna med nytt vallöfte om läxhjälp – Liberalerna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 2500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar specificerad nivå. Antar liknande utformning som småbarns-RUT (70 % avdrag, högre tak) för målgruppen 70+, vilket bedöms likna den kostnad om ~1 500 mkr/år som nyligen angivits för…",
+      "confidence": 0.4,
+      "calculation": "Antal personer ≥ 70 år: ~1,3 milj. Jämförbar reform för barnfamiljer kostade ~1 500 mkr/år. Samma storleksordning antas för äldre; intervall 500–2 500 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0467 (1500)"
+  },
+  {
+    "candidate": {
+      "title": "Liberalerna vill ta fram vägledning för hybridarbete för personer med funktionsnedsättning",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Johan Britz",
+        "role": "arbetsmarknadsminister"
+      },
+      "quote": "Nu tar vi nästa steg genom att ta fram en vägledning hur hybrid- och distansarbete kan användas för att fler i den gruppen kan komma i arbete",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-gora-arbetsmarknaden-mer-tillganglig-for-personer-med-funktionsnedsattning",
+    "articleTitle": "Liberalerna vill göra arbetsmarknaden mer tillgänglig för personer med funktionsnedsättning – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 2,
+      "msek_base": 5,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden avser framtagandet av själva vägledningen, inte effekterna av den. Jämförs med mindre statliga utredningar/rapporter.",
+      "confidence": 0.65,
+      "calculation": "Uppskattas till en engångskostnad som en liten utredning: arbetsinsatser, eventuell extern expertis, publicering och spridning, cirka 2–10 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Nationell plan för datacenter med klimat- och samhällsnytta",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "tar fram en nationell plan för datacenter där etableringar bedöms utifrån klimat- och samhällsnytta,",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/126583/",
+    "articleTitle": "Miljöpartiet: Ställ krav på nya datacenter i Sverige",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Att ta fram en nationell plan är en utredningsuppgift. Kostnaden uppskattas till storleksordningen av en mindre statlig utredning.",
+      "confidence": 0.5,
+      "calculation": "Typisk SOU/plan kostar 5–30 mkr. Antar en medelstor planeringsprocess, engångskostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Krav på datacenter att investera i ny förnybar elproduktion",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "ställer krav på att datacenter investerar i ny förnybar elproduktion motsvarande sin elanvändning,",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/126583/",
+    "articleTitle": "Miljöpartiet: Ställ krav på nya datacenter i Sverige",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringen innebär krav på privata investeringar, ingen direkt statlig utgift. Endast eventuella tillsynskostnader.",
+      "confidence": 0.65,
+      "calculation": "Ingen statlig utbetalning; privata aktörer bär kostnaden. Administration och tillsyn antas rymmas inom myndigheters befintliga ramar, maximalt ~0–10 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Krav på förnybar reservkraft i datacenter",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "säkerställer att reservkraften är förnybar och kan bidra till ett stabilt elsystem,",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/126583/",
+    "articleTitle": "Miljöpartiet: Ställ krav på nya datacenter i Sverige",
+    "duplicateOf": "(denna körning)"
+  },
+  {
+    "candidate": {
+      "title": "Krav på tillvaratagande av spillvärme från datacenter",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "inför krav på att spillvärme från datacenter tas tillvara, exempelvis i fjärrvärmenät.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/126583/",
+    "articleTitle": "Miljöpartiet: Ställ krav på nya datacenter i Sverige",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kravet är en reglering; direkta statsfinansiella kostnader är försumbara. Basen sätts till 0, med ett litet spann för tillsynsadministration.",
+      "confidence": 0.65,
+      "calculation": "Inga direkta utgifter förutom marginell tillsyn. Uppskattning: 0–5 mkr/år för myndighetskostnader."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa överfisket, skydda naturskogar och genomför EU:s naturplan",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Amanda Palmstierna och Katarina Luhr",
+        "role": "riksdagsledamöter"
+      },
+      "quote": "Stoppa överfisket, skydda de sista naturskogarna, stärka naturnära skogsbruk och genomföra EU:s räddningsplan för naturen.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/earth-overshoot-day-naturkrisen-ar-en-sakerhetsfraga/",
+    "articleTitle": "Earth Overshoot Day: Naturkrisen är en säkerhetsfråga | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret enskilt åtagande; prissätts till 0 enligt regel 13.",
+      "confidence": 0.65,
+      "calculation": "Löftet är en allmän beskrivning av miljöpolitisk inriktning utan specificerad åtgärd eller kostnad. Ingen statlig merutgift kan uppskattas utifrån texten."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Avsluta oljeberoendet med investeringar i tåg, elbilar och förnybar energi",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Amanda Palmstierna och Katarina Luhr",
+        "role": "riksdagsledamöter"
+      },
+      "quote": "Göra slut med oljeberoendet genom att investera i tågen, göra det billigare att byta till elbil, bygga ut den förnybara energin och spara energi i byggnader och industri",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/earth-overshoot-day-naturkrisen-ar-en-sakerhetsfraga/",
+    "articleTitle": "Earth Overshoot Day: Naturkrisen är en säkerhetsfråga | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred inriktningsförklaring utan konkret åtagande eller belopp; prissätts till 0 enligt regel 13.",
+      "confidence": 0.65,
+      "calculation": "Inget specifikt åtagande med prislapp, därför 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Genomför rätt att reparera, klimatkrav på byggsektorn och industriell återvinning",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Amanda Palmstierna och Katarina Luhr",
+        "role": "riksdagsledamöter"
+      },
+      "quote": "Genomföra EU:s lagstiftning om rätt till reparation som syftar till att göra det enklare och billigare att laga produkter istället för att köpa nytt, införa skarpa klimatkrav på byggsektorn och skapa en ny industrigren med återvinning av metaller och mineral",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/earth-overshoot-day-naturkrisen-ar-en-sakerhetsfraga/",
+    "articleTitle": "Earth Overshoot Day: Naturkrisen är en säkerhetsfråga | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 800,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Återvinningsdelen motsvarar investeringsstöd liknande p-2026-0469 (800 mkr/år). Rätt att reparera och klimatkrav är regleringar med försumbara kostnader.",
+      "confidence": 0.65,
+      "calculation": "Återvinningsindustri: liknande investeringsstöd som MP:s p-2026-0469, ~800 msek/år. Implementering av EU:s reparationsrätt: marginell engångsutgift (SOU etc.). Klimatkrav bygg: myndighetsarbete, marginell. Total årlig nettokostnad ~800 msek/år, spann 400–1200."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0469 (800) ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-0611 (100000), p-2026-0322 (8500), p-2026-0333 (2000), p-2026-0612 (1600), p-2026-0415 (1000). Är delarna redan prissatta ska detta löfte sättas till 0."
+  },
+  {
+    "candidate": {
+      "title": "Fler lärare och mindre klasser i skolan",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill satsa på fler lärare och mindre klasser.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa den orättvisa karensen",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Den orättvisa karensen ska bort.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0488"
+  },
+  {
+    "candidate": {
+      "title": "Omfattande upprustning och fler värnpliktiga i försvaret",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill se en omfattande upprustning och fler värnpliktiga.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0021"
+  },
+  {
+    "candidate": {
+      "title": "Studieskuldsavskrivning för offentliganställda i glesbygd",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Ett av förslagen är att skriva av en femtedel av studieskulden per år under fem års tid för personer som bor eller flyttar till glesa eller mycket glesa landsbygdskommuner och arbetar inom offentlig sektor.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/presskonferens-nu-prioriterar-vi-landsbygden/",
+    "articleTitle": "Presskonferens: Nu prioriterar vi landsbygden",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 960,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattat antal offentliganställda med studieskuld i glesbygdskommuner ~24 000, snittskuld ~200 tkr, årlig avskrivning 1/5 ger ~960 mkr/år. Stora osäkerheter om antal, skuldbelopp och utnyttjande.",
+      "confidence": 0.4,
+      "calculation": "Glesbygdskommuner ~250 000 inv → ~80 000 offentliganställda (hög andel) → ~60% har högskoleutb → ~50% av dessa har kvar studieskuld ≈ 24 000 pers. Snittskuld per låntagare ~200 000 kr (CSN-nivå). Total studieskuld i gruppen ~4,8 mdkr. Avskrivning 1/5 per år i fem år ger årlig kostnad ~960 mkr. Lågt scenario: färre berörda (15 000), lägre snittskuld (150 tkr) → ~450 mkr, högt fler (30 000), högre skuld (250 tkr) → ~1 500 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0366 (500)"
+  },
+  {
+    "candidate": {
+      "title": "Slopad allmän löneavgift för arbetsgivare i glesbygd",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna föreslår även att den allmänna löneavgiften slopas för alla arbetsgivare i glesa och mycket glesa landsbygdskommuner, för att stärka företagens konkurrenskraft och skapa bättre förutsättningar för jobb i hela landet.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/presskonferens-nu-prioriterar-vi-landsbygden/",
+    "articleTitle": "Presskonferens: Nu prioriterar vi landsbygden",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 2500,
+      "msek_high": 4000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning baseras på antagande om andel av rikets totala lönesumma i glesa och mycket glesa landsbygdskommuner (ca 1–2%). Total allmän löneavgift uppskattas till cirka 220 miljarder kronor…",
+      "confidence": 0.4,
+      "calculation": "Total allmän löneavgift i riket ≈ 220 000 mkr. Antagande: berörda glesbygdskommuner står för 0,7–1,8 % av den totala lönesumman. 0,7 % × 220 000 ≈ 1 540 mkr, 1,8 % ≈ 3 960 mkr. Avrundat till låg 1 500, bas 2 500 och hög 4 000 mkr för att spegla lägre lönenivåer och äldre befolkning i områdena."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   }
 ]
