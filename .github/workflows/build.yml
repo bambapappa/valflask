@@ -102,6 +102,12 @@ jobs:
       - name: Grindar för delningsbilderna
         run: node --experimental-strip-types scripts/test-og.mts
         working-directory: site
+      # Delningsknapparna: bara kanaler med en dokumenterad delningsadress, och
+      # inga tredjepartsskript. Faller om någon lägger in en knapp som ser ut
+      # att dela men inte gör det (TikTok saknar adress för webblänkar).
+      - name: Grindar för delningsknapparna
+        run: node --experimental-strip-types scripts/test-dela.mts
+        working-directory: site
       - name: Build site + OG images
         run: pnpm build
         working-directory: site

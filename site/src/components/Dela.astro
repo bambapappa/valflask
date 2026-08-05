@@ -1,12 +1,26 @@
 ---
 /**
  * Dela — neutral delningsknapp för sociala medier. Progressiv förbättring:
- *  - "Dela"-knappen använder OS:ets delningsark (navigator.share) på mobil,
- *    döljs där API:t saknas (visas via JS).
+ *  - "Fler appar"-knappen använder OS:ets delningsark (navigator.share) på
+ *    mobil, döljs där API:t saknas (visas via JS). Det är den vägen till appar
+ *    som saknar delningsadress — TikTok, Signal, WhatsApp och alla andra
+ *    användaren har installerat.
  *  - Kopiera länk (clipboard) med JS.
- *  - X / Facebook / Bluesky är vanliga länkar (share-intents) — fungerar helt
- *    utan JS, ingen extern skriptladdning, inga spårningspixlar (§17: ingen
- *    tredjepartsspårning). Förifylld text är faktabaserad, aldrig värderande.
+ *  - X / Facebook / Bluesky / Snapchat är vanliga länkar (share-intents) —
+ *    fungerar helt utan JS, ingen extern skriptladdning, inga spårningspixlar
+ *    (§17: ingen tredjepartsspårning). Förifylld text är faktabaserad, aldrig
+ *    värderande.
+ *
+ * INGEN TIKTOK-KNAPP, och det är avsiktligt. Kontrollerat mot TikToks egen
+ * utvecklardokumentation 2026-08-05: deras delning omfattar bara video och
+ * bilder, antingen via app-intents på mobilen eller ett uppladdnings-API som
+ * kräver inloggning och registrerad app. Det finns ingen adress som delar en
+ * webblänk, så en TikTok-knapp här hade varit en knapp som inte gör något.
+ * TikTok nås i stället genom delningsarket ("Fler appar"). Lägg inte till en
+ * länk till tiktok.com i tron att den delar sidan — det gör den inte.
+ *
+ * Snapchats adress är däremot dokumenterad och kräver varken SDK eller
+ * klient-id: https://www.snapchat.com/share?link=<kodad url>
  *
  * `path` är sидрот-relativ (t.ex. "/lofte/p-2026-0340/slug"); komponenten
  * bygger den absoluta URL:en mot sajtens origin.
@@ -25,12 +39,13 @@ const enc = encodeURIComponent;
 const xUrl = `https://twitter.com/intent/tweet?text=${enc(shareText)}&url=${enc(url)}`;
 const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}`;
 const bskyUrl = `https://bsky.app/intent/compose?text=${enc(`${shareText} ${url}`)}`;
+const snapUrl = `https://www.snapchat.com/share?link=${enc(url)}`;
 ---
 <div class="dela" data-dela data-url={url} data-title={title} data-text={shareText}>
   <span class="dela__rubrik etikett">Dela</span>
   <div class="dela__knappar">
-    <button type="button" class="dela__knapp dela__native" data-dela-native hidden aria-label="Dela via enheten">
-      Dela …
+    <button type="button" class="dela__knapp dela__native" data-dela-native hidden aria-label="Dela via enhetens appar, till exempel TikTok">
+      Fler appar …
     </button>
     <button type="button" class="dela__knapp dela__kopiera" data-dela-copy aria-label="Kopiera länk">
       Kopiera länk
@@ -38,6 +53,7 @@ const bskyUrl = `https://bsky.app/intent/compose?text=${enc(`${shareText} ${url}
     <a class="dela__knapp" href={xUrl} target="_blank" rel="noopener noreferrer" aria-label="Dela på X">X</a>
     <a class="dela__knapp" href={fbUrl} target="_blank" rel="noopener noreferrer" aria-label="Dela på Facebook">Facebook</a>
     <a class="dela__knapp" href={bskyUrl} target="_blank" rel="noopener noreferrer" aria-label="Dela på Bluesky">Bluesky</a>
+    <a class="dela__knapp" href={snapUrl} target="_blank" rel="noopener noreferrer" aria-label="Dela på Snapchat">Snapchat</a>
   </div>
 </div>
 
