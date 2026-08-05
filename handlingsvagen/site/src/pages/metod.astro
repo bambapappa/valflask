@@ -1,9 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Rattelsenot from "../components/Rattelsenot.astro";
+import { rattelserForPath } from "../lib/data.ts";
 ---
 <Layout title="Så görs vägningen — Handlingsvågen" canonicalPath="/metod">
   <div class="prosa">
     <h1>Så görs vägningen</h1>
+    <Rattelsenot rattelser={rattelserForPath("/metod")} />
     <p class="ingress">
       Vi ställer partiernas löften inför valet 2026 bredvid det de faktiskt
       gjorde i riksdagen åren innan, 2022–2026. Alltså: vad gjorde de i frågan
@@ -107,11 +110,24 @@ import Layout from "../layouts/Layout.astro";
         vi letat minst på.
       </li>
       <li>
-        <b>Vi väger bara det ett parti självt skrivit under.</b> För nästan en
-        femtedel av löftena hittar sökningen inget dokument alls från det
-        partiet att ens pröva. Det slår hårdast mot de minsta och mot dem som
-        sitter i regering — för Liberalerna gällde det nästan hälften av
-        löftena, för Socialdemokraterna en tiondel.
+        <b>Vi väger bara det ett parti självt skrivit under.</b> En handling
+        räknas mot ett löfte bara om partiet bakom löftet också står bakom
+        handlingen. Det är en medveten gräns: annars vore det inte partiets
+        eget agerande vi vägde.
+      </li>
+      <li>
+        <b>Sökningen hittar inte fram till alla löften.</b> För att vi ska
+        läsa igenom en handling måste den likna löftet tillräckligt mycket i
+        ordval. För knappt en femtedel av löftena — i augusti 2026 var det 79
+        av 467 — liknar ingen enda handling löftet tillräckligt, och då blir
+        det aldrig prövat mot någonting. Det beror nästan aldrig på att
+        partiet saknar handlingar; de partierna har hundratals eller tusentals
+        egna i registret. Det beror på att löftet är kort och allmänt hållet.
+        "Vi ska satsa på vårdpersonalen" delar för få utmärkande ord med något
+        enskilt dokument för att peka ut vilket som borde läsas. Det slår
+        ojämnt: för Liberalerna gällde det en tredjedel av löftena, för
+        Socialdemokraterna en tiondel. Nästan alla de här löftena ligger strax
+        under gränsen, inte långt ifrån den — var den bör gå är inte avgjort.
       </li>
       <li>
         <b>Partier arbetar olika mycket med motioner.</b> Under
