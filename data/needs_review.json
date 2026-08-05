@@ -1,1 +1,1384 @@
-[]
+[
+  {
+    "candidate": {
+      "title": "Stoppa orimliga återkrav från Försäkringskassan",
+      "parties": [
+        "l",
+        "sd"
+      ],
+      "person": null,
+      "quote": "orimliga återkrav från Försäkringskassan stoppas, samtidigt som arbetet mot välfärdsbrott fortsätter,",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-starka-den-personliga-assistansen",
+    "articleTitle": "Liberalerna vill stärka den personliga assistansen – Liberalerna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 50,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Stoppet av orimliga återkrav bedöms minska Försäkringskassans återkravsintäkter med en mindre del av de totala återkraven.",
+      "confidence": 0.4,
+      "calculation": "Totala återkrav Försäkringskassan uppskattas till ca 2–3 mdkr/år. Orimliga andelen antas 0,5–5 % => 10–150 mkr. Bas 50 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet lovar permanent Sverigekort för billig kollektivtrafik i hela landet",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Amanda Lind",
+        "role": "språkrör"
+      },
+      "quote": "När Miljöpartiet sitter i regering kommer vi att permanenta prissänkningen i form av ett Sverigekort.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/amanda-linds-sprakrorstal-pa-jarvaveckan/",
+    "articleTitle": "En ny berättelse om Sverige – Tal av Amanda Lind på Järvaveckan",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 5000,
+      "msek_high": 8000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattar statsbidrag för ett rikstäckande lågpriskort liknande Tysklands Deutschlandticket. Ingen preciserad biljettnivå i löftet; spannet bygger på jämförbara europeiska modeller.",
+      "confidence": 0.3,
+      "calculation": "Antag 2–3 miljoner månadsanvändare med subvention på 2 000–4 000 kr per användare och år (skillnad mellan lågt pris och ordinarie taxa). Det ger ett bruttobortfall på 4–12 mdkr. Efter samfinansiering med regioner skattas nettobehovet till 3–8 mdkr. Basen 5 mdkr motsvarar 2,5 miljoner användare à 2 800 kr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0416 (800), p-2026-0417 (800), p-2026-0415 (1000), p-2026-0469 (800), p-2026-0332 (15) ⚠ AVVIKER: 5000 avviker 6.3× från jämförbara (median 800)"
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet vill införa skatt på superrika",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Amanda Lind",
+        "role": "språkrör"
+      },
+      "quote": "Därför vill vi införa en skatt på superrika!",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/amanda-linds-sprakrorstal-pa-jarvaveckan/",
+    "articleTitle": "En ny berättelse om Sverige – Tal av Amanda Lind på Järvaveckan",
+    "cost": {
+      "type": "intäktsökning",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 800,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämförbar med miljardärsskatt i p-2026-0324 (800 msek/år). Osäkerhet om utformning och skattebas motiverar spannet.",
+      "confidence": 0.5,
+      "calculation": "Ankare: liknande löfte p-2026-0324 estimerat till 800 mkr/år. Intäkten kan variera beroende på brytpunkt, skattesats och beteendeeffekter; låg 400, hög 1200 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0341 (9000), p-2026-0324 (800) ⚠ AVVIKER: 800 avviker 6.1× från jämförbara (median 4900)"
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet lovar höjt barnbidrag och ensamförsörjartillägg",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Amanda Lind",
+        "role": "språkrör"
+      },
+      "quote": "Vi vill satsa på ett höjt barnbidrag och ett ensamförsörjartillägg – inte en bidragsreform som gör fattiga ännu fattigare!",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/amanda-linds-sprakrorstal-pa-jarvaveckan/",
+    "articleTitle": "En ny berättelse om Sverige – Tal av Amanda Lind på Järvaveckan",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4000,
+      "msek_base": 8100,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "MP har tidigare lovat samma åtgärd (p-2026-0325, estimat 8 100 msek). Osäkerhet kring nivå på höjning och tillägg motiverar brett intervall.",
+      "confidence": 0.4,
+      "calculation": "Barnbidragshöjning: en engångshöjning liknande 2018 (från 1050 till 1250 kr/mån) kostade ca 2 100 msek/år. Ensamförsörjartillägg: Centerpartiets liknande förslag estimerades till ca 3 500 msek/år. Summa ca 5 600. Tidigare MP-estimat på 8 100 msek tyder på högre ambition. Intervall 4 000–12 000 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0468 (5600), p-2026-0325 (8100), p-2026-0131 (5000), p-2026-0100 (17000), p-2026-0348 (3500)"
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet vill införa kulturell allemansrätt för barn",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Amanda Lind",
+        "role": "språkrör"
+      },
+      "quote": "Vi vill satsa på en kulturell allemansrätt för barn så att alla barn får tillgång till kultur, inte ett krångligt och dyrt fritidskort som inte träffar rätt.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/amanda-linds-sprakrorstal-pa-jarvaveckan/",
+    "articleTitle": "En ny berättelse om Sverige – Tal av Amanda Lind på Järvaveckan",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämförbart med MP:s statliga kulturgaranti för barn (skattad till 400 mkr/år). Ingen detaljnivå ges; osäkerhet om satsningens storlek.",
+      "confidence": 0.4,
+      "calculation": "Ankare: MP:s löfte om statlig kulturgaranti för barn och unga (p-2026-0427) ~400 mkr/år. Lågt scenario 200 mkr (halv omfattning), högt 800 mkr (dubbelt). Ingen explicit siffra, så spannet fångar osäkerhet."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0427 (400), p-2026-0557 (0), p-2026-0587 (0) ⚠ AVVIKER: belopp 400 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet vill förstärka resurser till elevhälsan och psykiatrin",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Amanda Lind",
+        "role": "språkrör"
+      },
+      "quote": "Miljöpartiet vill se förstärkta resurser till elevhälsan, BUP, vuxenpsykiatrin och primärvården.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/amanda-linds-sprakrorstal-pa-jarvaveckan/",
+    "articleTitle": "En ny berättelse om Sverige – Tal av Amanda Lind på Järvaveckan",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret belopp eller enskilt åtagande. Sådana uppräkningar prissätts som 0 enligt riktlinjen för önskelöften; specifika åtgärder kostnadsberäknas separat.",
+      "confidence": 0.65,
+      "calculation": "Löftet räknar upp flera områden (elevhälsa, BUP, vuxenpsykiatri, primärvård) utan angiven nivå. Behandlas som ett inriktningslöfte (regel 13) för att undvika dubbelräkning med eventuella senare konkreta satsningar. Jämförbara breda löften (p-2026-0473, p-2026-0474) har skattats till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0012 (0), p-2026-0053 (15), p-2026-0474 (0), p-2026-0536 (500), p-2026-0473 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa överfisket och skydda naturskogar",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Stoppa överfisket, skydda de sista naturskogarna, stärka naturnära skogsbruk och genomföra EU:s räddningsplan för naturen.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/earth-overshoot-day-naturkrisen-ar-en-sakerhetsfraga/",
+    "articleTitle": "Earth Overshoot Day: Naturkrisen är en säkerhetsfråga | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan specificerad nivå. De kostsamma delarna prissätts på partiets specifika löften; detta löfte anges som noll för att undvika dubbelräkning.",
+      "confidence": 0.2,
+      "calculation": "Löftet är en bred uppräkning av flera områden (stoppa överfiske, skydda naturskogar, stärka naturnära skogsbruk, genomföra EU:s naturrestaureringsplan) utan konkret utförande eller belopp. Regel 13: inriktningslöfte, base 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Avveckla oljeberoendet och investera i tåg, elbil och förnybart",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Göra slut med oljeberoendet genom att investera i tågen, göra det billigare att byta till elbil, bygga ut den förnybara energin och spara energi i byggnader och industri",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/earth-overshoot-day-naturkrisen-ar-en-sakerhetsfraga/",
+    "articleTitle": "Earth Overshoot Day: Naturkrisen är en säkerhetsfråga | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred uppräkning av flera politikområden utan konkret åtagande; prissätts enligt regel 13 som inriktningslöfte med kostnad 0.",
+      "confidence": 0.1,
+      "calculation": "Löftet listar investeringsområden men specificerar inga belopp eller enskilda åtgärder, därför bedöms den direkta kostnaden som 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Inför rätt till reparation, klimatkrav på byggsektorn och återvinningsindustri",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Genomföra EU:s lagstiftning om rätt till reparation som syftar till att göra det enklare och billigare att laga produkter istället för att köpa nytt, införa skarpa klimatkrav på byggsektorn och skapa en ny industrigren med återvinning av metaller och mineral",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/earth-overshoot-day-naturkrisen-ar-en-sakerhetsfraga/",
+    "articleTitle": "Earth Overshoot Day: Naturkrisen är en säkerhetsfråga | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet består uteslutande av regleringar och en vag ambition ('skapa en ny industrigren'). Inga statsfinansiella åtgärder specificeras; direkta kostnader för lagstiftningsarbete och…",
+      "confidence": 0.65,
+      "calculation": "Införande av reparationrätt (EU-implementering), klimatkrav på byggsektorn och ambition om återvinningsindustri medför endast marginella administrativa kostnader för myndigheter (t.ex. utarbetande av föreskrifter). Inga utbetalningar, subventioner eller skattesänkningar anges, varför den statsfinansiella nettokostnaden bedöms som 0 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Bakom alla reformer Djurens Rätt efterfrågar",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Inför nästa mandatperiod ställer sig Miljöpartiet bakom samtliga reformer som organisationen efterfrågar.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-far-hogst-betyg-i-djurens-ratts-valguide/",
+    "articleTitle": "Miljöpartiet får högst betyg i Djurens Rätts valguide",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är ett brett inriktningslöfte utan preciserade reformer eller belopp. Enligt regel 13 behandlas det som ett önskelöfte med basbelopp 0.",
+      "confidence": 0.65,
+      "calculation": "Inga konkreta åtgärder specificeras, därav ingen kvantifierbar kostnad. Eventuella faktiska reformer skulle prissättas på partiets specifika löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Större plats för djurens välfärd och starkare djurskydd i Sverige och EU",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Rebecka Le Moine",
+        "role": "Miljöpartiets talesperson för djurrätt"
+      },
+      "quote": "Djurens välfärd måste få större plats i politiken, och vi kommer att fortsätta driva på för ett starkare djurskydd i Sverige och EU",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-far-hogst-betyg-i-djurens-ratts-valguide/",
+    "articleTitle": "Miljöpartiet får högst betyg i Djurens Rätts valguide",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtagande; prissätts som 0 enligt regel 13 (inriktningslöfte). Eventuella specifika djurskyddsreformer prissätts på sina egna löften.",
+      "confidence": 0.65,
+      "calculation": "Löftet innehåller inget konkret styrmedel, nivå eller belopp. Direkta statliga kostnader för att driva opinion och förhandla är försumbara. Inga nya utgifter antas."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0335 (0), p-2026-0551 (2000), p-2026-0087 (0), p-2026-0082 (2000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1000"
+  },
+  {
+    "candidate": {
+      "title": "Inför ett naturpolitiskt ramverk",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Just därför vill Miljöpartiet införa ett naturpolitiskt ramverk.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/mp-infor-ett-naturpolitiskt-ramverk/",
+    "articleTitle": "Biologiska mångfaldens dag: Miljöpartiet vill införa ett naturpolitiskt ramverk",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagar och ramverk har försumbar direkt kostnad. Jämförbart med havsmiljölag (0 mkr).",
+      "confidence": 0.65,
+      "calculation": "Ramverket är en lagstiftningsåtgärd. Ingen ny myndighet eller stora resurser krävs utöver sedvanligt utredningsarbete. Enligt regel 9 är kostnaden försumbar."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0418 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Skydda minst 30 procent av land och hav",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "skydda minst 30 procent av land och hav,",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/mp-infor-ett-naturpolitiskt-ramverk/",
+    "articleTitle": "Biologiska mångfaldens dag: Miljöpartiet vill införa ett naturpolitiskt ramverk",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden är mycket osäker och beror på val av instrument (frivilliga avtal, intrångsersättning, markköp, förvaltning). Estimatet bygger på antaganden om ytterligare areal som behöver skyddas och…",
+      "confidence": 0.4,
+      "calculation": "Nuvarande formellt skydd: ca 12 % land, 15 % hav. För att nå 30 % krävs ytterligare ~7,4 Mha land (18 % av 41 Mha) och ~2,3 Mha hav (15 % av 15,5 Mha). Totalt ~9,7 Mha. Kostnad per ha: vid inköp/intrång 5 000–20 000 kr (engångs) samt årlig förvaltning 100–500 kr/ha. Om åtagandet fördelas över tio år ger det en årlig statlig kostnad i spannet 0,5–10 mdkr, med 2 mdkr som ett mittenvärde. Osäkerheten motiverar ett brett intervall."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Restaurera skogar, våtmarker och vattendrag",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "restaurera skogar, våtmarker och vattendrag,",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/mp-infor-ett-naturpolitiskt-ramverk/",
+    "articleTitle": "Biologiska mångfaldens dag: Miljöpartiet vill införa ett naturpolitiskt ramverk",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 350,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett löfte utan belopp; utgår från nuvarande statliga anslag för restaurering av våtmarker (~200 mkr), skog (~90 mkr) och vattendrag (~60 mkr). Osäkerhet stor.",
+      "confidence": 0.3,
+      "calculation": "Bas: våtmarksrestaurering (NV) ~200 mkr, skogsrestaurering (Skogsstyrelsen) ~90 mkr, vattendragsrestaurering (HaV/länsstyrelser) uppskattningsvis ~60 mkr -> ~350 mkr/år. Bredd ger spann 150–600 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0162 (0) ⚠ AVVIKER: belopp 350 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa rovdrift på skog och fiskbestånd",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "stoppa rovdrift på skog och fiskbestånd,",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/mp-infor-ett-naturpolitiskt-ramverk/",
+    "articleTitle": "Biologiska mångfaldens dag: Miljöpartiet vill införa ett naturpolitiskt ramverk",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Skärpt tillsyn och regelverk för skog och fiske. Direkt kostnad för myndigheter, inte samhällsföljder.",
+      "confidence": 0.3,
+      "calculation": "Ökade tillsynsresurser: uppskattningsvis 5–50 heltidstjänster (Skogsstyrelsen, HaV m.fl.) à 0,8–1,2 mkr + overhead = ca 5–200 msek/år. Base 20 msek motsvarar ca 20 tjänster."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Skapa långsiktiga villkor för markägare och lokalsamhällen för levande natur",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "och skapa långsiktiga villkor för markägare och lokalsamhällen som vill bidra till levande natur.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/mp-infor-ett-naturpolitiskt-ramverk/",
+    "articleTitle": "Biologiska mångfaldens dag: Miljöpartiet vill införa ett naturpolitiskt ramverk",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; ingen kostnad kan uppskattas (regel 13).",
+      "confidence": 0.2,
+      "calculation": "Ingen specifik åtgärd angiven, därför ingen kostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Stärk Industriklivet och Klimatklivet",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "2. Stärk Industriklivet och Klimatklivet",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
+    "articleTitle": "MP: Industripaket för hållbar konkurrenskraft",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 3400,
+      "msek_high": 8000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förankrat i de senaste faktiska höjningarna: Industriklivet ökades med 900 mkr/år (prop 2022/23) och Klimatklivet höjdes 2022 permanent med 2,5 mdkr/år. Ett nytt 'stärkande' bedöms ligga i samma…",
+      "confidence": 0.4,
+      "calculation": "Industriklivets senaste höjning: ~900 mkr/år. Klimatklivets senaste höjning: ~2 500 mkr/år. Summa bas = 3 400 mkr/år. Lågt vid symbolisk ökning (500), högt vid fördubbling (8 000)."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Införa ett nytt återvinningskliv",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "4. Ett nytt återvinningskliv",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
+    "articleTitle": "MP: Industripaket för hållbar konkurrenskraft",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte om stärkt återvinning; inga konkreta åtgärder eller belopp anges. Behandlas som önskelöfte (regel 13).",
+      "confidence": 0.1,
+      "calculation": "Löftet specificerar ingen åtgärd, nivå eller investering. Därför ingen siffersatt kostnad, i linje med regeln för breda inriktningslöften."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Införa riskdelning mellan staten och industrin",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "5. Riskdelning mellan staten och industrin",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
+    "articleTitle": "MP: Industripaket för hållbar konkurrenskraft",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Riskdelning utan specificerat belopp; antar ett årligt anslag för förväntade förluster i ett nytt program, liknande gröna kreditgarantier (10–100 mkr/år).",
+      "confidence": 0.4,
+      "calculation": "Förväntad årlig kostnad för förluster: 10 mkr vid lågt utnyttjande, bas 30 mkr, högt 100 mkr. Bygger på antagande om garantivolym ~1–2 mdkr/år och förlustreserv 1–5 %."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0409 (15)"
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet vill stärka skyddet av värdefull natur och återställa ekosystem",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill stärka skyddet av värdefull natur, återställa förstörda ekosystem och stå upp för ambitiösa miljölagar både i Sverige och EU.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/ny-rapport-regeringen-sviker-naturen-miljopartiet-far-hogst-betyg/",
+    "articleTitle": "Ny rapport: Regeringen sviker naturen – Miljöpartiet får högst betyg",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred inriktningsmarkering utan konkret åtgärd eller belopp. Ev. kostnader prissätts på partiets specifika löften.",
+      "confidence": 0.1,
+      "calculation": "Ingen konkret åtgärd specificeras; löftet är en bred målsättning. Enligt regel 13 prissätts det till 0 för att undvika dubbelräkning."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0469 (800), p-2026-0332 (15), p-2026-0333 (2000), p-2026-0415 (1000), p-2026-0416 (800) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~800"
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet föreslår 14–25 miljarder kronor mer till miljöbudgeten än regeringen",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "föreslagit de största miljöbudgetarna av oppositionspartierna – mellan 14 och 25 miljarder kronor större än regeringens budgetar.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/ny-rapport-regeringen-sviker-naturen-miljopartiet-far-hogst-betyg/",
+    "articleTitle": "Ny rapport: Regeringen sviker naturen – Miljöpartiet får högst betyg",
+    "verifyReason": "Källtexten beskriver att Miljöpartiet har föreslagit större miljöbudgetar under mandatperioden, inte ett framåtsyftande vallöfte om framtida budget."
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet står fast vid målet att biståndet ska uppgå till en procent av BNP",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "biståndet ska uppgå till en procent av BNP",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/ny-rapport-regeringen-sviker-naturen-miljopartiet-far-hogst-betyg/",
+    "articleTitle": "Ny rapport: Regeringen sviker naturen – Miljöpartiet får högst betyg",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 9000,
+      "msek_base": 13000,
+      "msek_high": 18000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning av gapet mellan nuvarande biståndsram (ca 0,8 % BNI) och 1 % BNI, baserat på BNI-prognos ca 6 500 mdkr.",
+      "confidence": 0.6,
+      "calculation": "Nuvarande biståndsbudget beräknas till ~0,8 % av BNI. 1 % av BNI med BNI på ~6 500 mdkr = 65 mdkr. Antag nuvarande ~52 mdkr (0,8 %), gap ca 13 mdkr. Lägre BNI eller lägre bas kan ge nedåtvariation, men sannolikt 9–18 mdkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0410 (13000), p-2026-0388 (13000)"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta en hbtqi-ambassadör för globala rättigheter",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "För att Sverige åter ska bli en stark internationell röst för hbtqi-personers rättigheter vill Miljöpartiet bland annat inrätta en hbtqi-ambassadör med uppdrag att stärka hbtqi-personers mänskliga rättigheter globalt.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/pride-ar-over-nu-fortsatter-kampen-for-hbtqi-personers-rattigheter/",
+    "articleTitle": "Miljöpartiet vill stärka hbtqi-personers rättigheter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3,
+      "msek_base": 8,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämför med kostnad för en effektiviseringsminister (10 mkr/år). En specialambassadör med mindre stab och resebudget antas kosta 5-15 mkr/år, base 8.",
+      "confidence": 0.6,
+      "calculation": "En hbtqi-ambassadör liknar en specialutsänd med uppdrag, troligen placerad på UD eller ambassad. Lönekostnad (ambassadör + ev. handläggare): ~3-6 mkr/år. Resor, evenemang, projektstöd: 2-9 mkr/år. Totalt 5-15 mkr/år (base 8). Spann vidgas för osäkerhet om stabens storlek och verksamhet."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0422 (0), p-2026-0567 (10)"
+  },
+  {
+    "candidate": {
+      "title": "Återställ enprocentsmålet för bistånd och prioritera SRHR och hbtqi-rättigheter",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "MP vill också återställa enprocentsmålet för biståndet och prioritera insatser för sexuell och reproduktiv hälsa samt kvinnors, flickors och hbtqi-personers rättigheter.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/pride-ar-over-nu-fortsatter-kampen-for-hbtqi-personers-rattigheter/",
+    "articleTitle": "Miljöpartiet vill stärka hbtqi-personers rättigheter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 11000,
+      "msek_base": 13000,
+      "msek_high": 18000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden är att återställa biståndsramen till 1% av BNI, vilket i jämförbara löften beräknats till ca 13 mdkr/år. Prioritering av SRHR och hbtqi är en inriktning inom ramen, utan extra kostnad.",
+      "confidence": 0.65,
+      "calculation": "Bas: jämförbara löften (p-2026-0388, p-2026-0410) anger 13 000 msek/år för att återgå till 1 % av BNI. Låg: 11 000, hög: 18 000 för att spegla osäkerhet i BNI-utveckling och basnivå."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0388 (13000), p-2026-0422 (0), p-2026-0410 (13000)"
+  },
+  {
+    "candidate": {
+      "title": "Föra in könsidentitet och könsuttryck i grundlagen",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "På hemmaplan vill Miljöpartiet stärka skyddet mot diskriminering genom att föra in könsidentitet och könsuttryck i grundlagen.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/pride-ar-over-nu-fortsatter-kampen-for-hbtqi-personers-rattigheter/",
+    "articleTitle": "Miljöpartiet vill stärka hbtqi-personers rättigheter",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En grundlagsändring är en lagstiftningsåtgärd. Den direkta kostnaden för själva riksdagsbeslutet och utskottsbehandlingen är försumbar. Beloppet speglar den administrativa åtgärden, inte…",
+      "confidence": 0.65,
+      "calculation": "Åtgärden är ett grundlagstillägg. Arbetet sker inom ramen för riksdagens och regeringskansliets ordinarie verksamhet. Inga nya anslag krävs för textändringen. Osäkerhetsspannet upp till 5 mkr är en marginal för eventuell extra utredningstid."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Utreda grundlagsskydd för etablerade rättigheter som könsneutrala äktenskap",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Partiet vill även utreda ett grundlagsskydd för redan etablerade rättigheter, såsom könsneutrala äktenskap, samkönade pars föräldraskap och rätten att ändra juridiskt kön.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/pride-ar-over-nu-fortsatter-kampen-for-hbtqi-personers-rattigheter/",
+    "articleTitle": "Miljöpartiet vill stärka hbtqi-personers rättigheter",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser att utreda grundlagsskydd. Prissätter själva utredningen (SOU-storlek) enligt regel 10, inte följderna.",
+      "confidence": 0.5,
+      "calculation": "En statlig utredning om grundlagsfrågor kostar vanligen 5–30 mkr för sekretariat, experter och remissarbete. Base 15 mkr motsvarar en medelstor utredning."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0422 (0) ⚠ AVVIKER: belopp 15 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Modernisera familjepolitiken och stärk hatbrottsarbete och psykisk hälsa för hbtqi-personer",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill dessutom modernisera familjepolitiken så att fler får möjlighet att bilda familj, värna en inkluderande sexualundervisning, stärka arbetet mot hatbrott och förbättra insatserna för hbtqi-personers psykiska hälsa.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/pride-ar-over-nu-fortsatter-kampen-for-hbtqi-personers-rattigheter/",
+    "articleTitle": "Miljöpartiet vill stärka hbtqi-personers rättigheter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brede inriktningslöfte enligt regel 13 – flera områden utan konkret åtagande eller belopp. Kostnaden för detta övergripande löfte är 0; specifika förslag prissätts var för sig.",
+      "confidence": 0.65,
+      "calculation": "Inriktningslöfte, ingen uträkning."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet vill införa en miljardärsskatt",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Janine Alm Ericson",
+        "role": "ekonomiskpolitisk talesperson"
+      },
+      "quote": "Därför vill vi se en miljardärsskatt där de allra rikaste bidrar mer till det samhälle som gjort deras framgång möjligt.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/just-nu/sverige-behover-farre-fattiga-barn-inte-fler-miljardarer/",
+    "articleTitle": "Sverige behöver färre fattiga barn – inte fler miljardärer"
+  },
+  {
+    "candidate": {
+      "title": "Uppdrag till Justitiedepartementet att samordna hatbrottsarbetet",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Daniel Vencu Öhrlund Castro",
+        "role": ""
+      },
+      "quote": "Därför vill Socialdemokraterna ge Justitiedepartementet ett särskilt uppdrag att följa utvecklingen av hatbrott, identifiera brister i rättsväsendets arbete och ta fram förslag på nya åtgärder och lagändringar.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: /person must be null; /person/role must NOT have fewer than 2 characters; /person must match exactly one schema in oneOf"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-07-31-socialdemokraterna-vill-starka-skyddet-for-hbtqi-personer",
+    "articleTitle": "Socialdemokraterna vill stärka skyddet för hbtqi-personer\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta hbtqi-sändebud vid Utrikesdepartementet",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Daniel Vencu Öhrlund Castro",
+        "role": ""
+      },
+      "quote": "utse ett särskilt hbtqi-sändebud vid Utrikesdepartementet som ska stärka och samordna Sveriges internationella arbete för hbtqi-personers rättigheter, bygga internationella samarbeten och driva på mot länder där rättigheterna inskränks.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: /person must be null; /person/role must NOT have fewer than 2 characters; /person must match exactly one schema in oneOf"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-07-31-socialdemokraterna-vill-starka-skyddet-for-hbtqi-personer",
+    "articleTitle": "Socialdemokraterna vill stärka skyddet för hbtqi-personer\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Starta arbetet med ett statligt hbtqi-museum",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Daniel Vencu Öhrlund Castro",
+        "role": ""
+      },
+      "quote": "påbörja arbetet med ett statligt hbtqi-museum. Museet ska både bevara och lyfta den svenska hbtqi-historien och arbeta med utbildning och kunskapsspridning i hela landet för att motverka fördomar och desinformation.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: /person must be null; /person/role must NOT have fewer than 2 characters; /person must match exactly one schema in oneOf"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-07-31-socialdemokraterna-vill-starka-skyddet-for-hbtqi-personer",
+    "articleTitle": "Socialdemokraterna vill stärka skyddet för hbtqi-personer\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Stärka sammanhållningen och stoppa diskriminering",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "Partiledare"
+      },
+      "quote": "Vi vägrar acceptera att vårt land splittras och att det görs skillnad på människor utifrån ursprung, religion eller kön.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-magdalena-andersson-inleder-valturnen---presenterar-tre-principer-for-en-regering-ledd-av-henne",
+    "articleTitle": "Magdalena Andersson inleder valturnén – presenterar tre principer för en regering ledd av henne\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Sveriges yttre och inre säkerhet ska stärkas",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "Partiledare"
+      },
+      "quote": "Sveriges yttre och inre säkerhet ska stärkas",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-magdalena-andersson-inleder-valturnen---presenterar-tre-principer-for-en-regering-ledd-av-henne",
+    "articleTitle": "Magdalena Andersson inleder valturnén – presenterar tre principer för en regering ledd av henne\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd; kostnaden prissätts på partiets specifika säkerhetssatsningar. Sätts till 0.",
+      "confidence": 0.1,
+      "calculation": "Ingen konkret åtgärd specificerad; bedöms som inriktningslöfte enligt regel 13. Eventuella kostnader fångas upp av specifika löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0020 (0), p-2026-0334 (300) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
+  },
+  {
+    "candidate": {
+      "title": "Införa en svensk maffialag",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "Partiledare"
+      },
+      "quote": "Partiet vill också införa en svensk maffialag.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-magdalena-andersson-inleder-valturnen---presenterar-tre-principer-for-en-regering-ledd-av-henne",
+    "articleTitle": "Magdalena Andersson inleder valturnén – presenterar tre principer för en regering ledd av henne\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0472"
+  },
+  {
+    "candidate": {
+      "title": "Sveriges välstånd ska växa och märkas i plånboken",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "Partiledare"
+      },
+      "quote": "Sveriges välstånd ska växa, och det ska märkas i din plånbok och din vardag",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-magdalena-andersson-inleder-valturnen---presenterar-tre-principer-for-en-regering-ledd-av-henne",
+    "articleTitle": "Magdalena Andersson inleder valturnén – presenterar tre principer för en regering ledd av henne\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd; ingen statlig kostnad (regel 13).",
+      "confidence": 0.1,
+      "calculation": "Inget konkret åtagande att prissätta."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Bättre pensioner för dem som arbetat ett långt yrkesliv",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "Partiledare"
+      },
+      "quote": "pensionerna ska bli bättre, särskilt för dem som arbetat ett långt yrkesliv.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-magdalena-andersson-inleder-valturnen---presenterar-tre-principer-for-en-regering-ledd-av-henne",
+    "articleTitle": "Magdalena Andersson inleder valturnén – presenterar tre principer för en regering ledd av henne\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd, prissätts 0 enligt regel 13.",
+      "confidence": 0.65,
+      "calculation": "Inriktningslöfte, ingen uträkning."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0003 (0), p-2026-0279 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Nationell modell för ungdomsbostäder",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "partiledare"
+      },
+      "quote": "Socialdemokraterna vill att fler små och prisvärda hyresrätter ska reserveras för unga. Boverket ska få i uppdrag att ta fram en nationell modell som gör det lättare för unga att få ett förstahandskontrakt",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-socialdemokraterna-gar-till-val-pa-en-nationell-modell-for-ungdomsbostader",
+    "articleTitle": "Socialdemokraterna går till val på en nationell modell för ungdomsbostäder\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppdrag till Boverket att ta fram en nationell modell. Kostnaden avser själva utredningen, inte genomförandet. Engångskostnad, typisk SOU-storlek.",
+      "confidence": 0.4,
+      "calculation": "Skattning av utredningskostnad: ett regeringsuppdrag eller en SOU kostar vanligen 5–30 mkr engångsvis. Bas 15 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Investeringsstöd för student- och ungdomsbostäder",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "partiledare"
+      },
+      "quote": "Socialdemokraterna vill även att staten kliver fram med investeringsstöd för bostäder för studenter och unga.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-socialdemokraterna-gar-till-val-pa-en-nationell-modell-for-ungdomsbostader",
+    "articleTitle": "Socialdemokraterna går till val på en nationell modell för ungdomsbostäder\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet anger inget belopp eller antal bostäder. Som jämförelse var det tidigare statliga investeringsstödet för hyresrätter cirka 3 miljarder kr/år, varav student- och ungdomsbostäder utgjorde en…",
+      "confidence": 0.4,
+      "calculation": "Tidigare investeringsstöd för alla hyresrätter uppgick till ~3 000 mkr/år. Student- och ungdomsbostäder antas motsvara 10–25 % av detta, med bas 15 %. Det ger: 3 000 × 0,10 = 300 mkr (low), ×0,15 ≈ 450 mkr (base), ×0,25 = 750 mkr (high). Avrundat till 200–800 mkr för att täcka osäkerhet i programmets omfattning."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0466 (1200) ⚠ AVVIKER: 400 avviker 3.0× från jämförbara (median 1200)"
+  },
+  {
+    "candidate": {
+      "title": "NABY – ny nationell bostadspolitik som strukturreform",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "Partiledare, Vänsterpartiet"
+      },
+      "quote": "Vänsterpartiet föreslår en historisk strukturreform – en ny nationell bostadspolitik (NABY-modellen).",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ett brett löfte om en ny nationell bostadspolitisk strukturreform utan konkreta åtgärder eller belopp, behandlas som inriktningslöfte enligt regel 13.",
+      "confidence": 0.65,
+      "calculation": "Löftet innehåller inget konkret enskilt åtagande eller belopp. Det är en bred inriktning; eventuella kostnader prissätts på partiets specifika löften. Basen sätts därför till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0381 (400) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~400"
+  },
+  {
+    "candidate": {
+      "title": "Omkring 20 000 nya hyresrätter per år",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Målet är att skapa förutsättningar för omkring 20 000 nya hyresrätter om året med hyror som vanliga låg- och medelinkomsttagare har råd att betala.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Citatet är ett övergripande mål om byggande utan specificerad statlig åtgärd eller prislapp. Klassas som inriktningslöfte enligt regel 13; ingen direkt statsfinansiell kostnad kan prissättas.",
+      "confidence": 0.1,
+      "calculation": "Ingen konkret ny utgift kan kalkyleras då endast ett mål om förutsättningar anges, inte en specifik åtgärd."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0433 (3000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~3000"
+  },
+  {
+    "candidate": {
+      "title": "Reglerade markkostnader med kompensation till kommuner",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Reglerade markkostnader med kompensation till kommuner",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret belopp eller precisering; enligt regel 13 prissätts ej.",
+      "confidence": 0.65,
+      "calculation": "Ingen kvantifierbar åtgärd; kostnaden bärs av eventuella senare specifika löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Statligt garanterade krediter för bostadsbyggande",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Tillgång till statligt garanterade krediter",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statliga kreditgarantier är oftast avgiftsfinansierade och självbärande; nettokostnad består av administration och eventuell riskavsättning. Intervallet speglar osäkerhet om omfattning och om…",
+      "confidence": 0.2,
+      "calculation": "Antagande: ett mindre garantiprogram, administration ~5-10 mkr/år. Eventuell subventionering av riskpremien (om staten tar lägre avgift) kan tillkomma. Osäkerhet ger 0-50 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Nationell bostadsplanering med utpekade byggbehov",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Nationell bostadsplanering med utpekade byggbehov",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för en statlig utredning/plan liknande en SOU, inklusive expertstöd och analys. Avser framtagandet av en plan, inte byggande.",
+      "confidence": 0.6,
+      "calculation": "En typisk SOU-utredning kostar 5–30 miljoner kronor. Löftet gäller en planeringsinsats, inte en byggsatsning, och prissätts därefter."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0381 (400) ⚠ AVVIKER: 15 avviker 26.7× från jämförbara (median 400)"
+  },
+  {
+    "candidate": {
+      "title": "Bygga ut öppna förskolan",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "partiledare"
+      },
+      "quote": "Vänsterpartiet vill bygga ut öppna förskolan",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostar-i-almedalen-adjo-tido/",
+    "articleTitle": "Nooshi Dadgostar i Almedalen: Adjö Tidö! – Vänsterpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa sänkning av föräldrapenningen",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "partiledare"
+      },
+      "quote": "Vänsterpartiet vill stoppa regeringens förslag om att sänka föräldrapenningen kraftigt",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostar-i-almedalen-adjo-tido/",
+    "articleTitle": "Nooshi Dadgostar i Almedalen: Adjö Tidö! – Vänsterpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Höja barnbidraget rejält",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "partiledare"
+      },
+      "quote": "Vänsterpartiet vill höja barnbidraget rejält",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostar-i-almedalen-adjo-tido/",
+    "articleTitle": "Nooshi Dadgostar i Almedalen: Adjö Tidö! – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2500,
+      "msek_base": 4500,
+      "msek_high": 7500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning utifrån jämförbara löften: enbart barnbidragshöjning (utan tillägg) kostar ofta 4-6 mdkr/år. En rejäl höjning antas minst motsvara 200 kr/mån per barn.",
+      "confidence": 0.5,
+      "calculation": "Antal barn ~1,9 milj. Varje 100 kr/mån höjning kostar 100*12*1,9M ≈ 2,28 mdkr/år. Höjning 200 kr/mån ger 4,56 mdkr/år ≈ bas 4500. Spann 110–330 kr/mån (2,5–7,5 mdkr)."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0468 (5600), p-2026-0131 (5000), p-2026-0279 (0), p-2026-0325 (8100), p-2026-0348 (3500)"
+  },
+  {
+    "candidate": {
+      "title": "Nooshi Dadgostars vallöfte: Höj kvinnors löner",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "partiledare"
+      },
+      "quote": "Idag på första maj har vi ett nytt politiskt förslag: höj kvinnors löner! Det är vårt vallöfte!",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostars-forsta-maj-tal/",
+    "articleTitle": "Nooshi Dadgostars första maj-tal  – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är ett brett inriktningslöfte utan preciserad mekanism. Som reglering eller politisk inriktning är den direkta statsfinansiella kostnaden för åtgärden försumbar.",
+      "confidence": 0.65,
+      "calculation": "Ingen direkt statlig kostnad identifierad; löftet innebär förbud/lagstiftning eller politisk inriktning, där följder inte prissätts."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Vänsterpartiet föreslår tillståndsplikt för hyresvärdar",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "partiledare"
+      },
+      "quote": "Därför föreslår Vänsterpartiet en tillståndsplikt för hyresvärdar, som kan återkallas om det missköts, för att minska risken för oseriösa och oansvariga slumvärdar tillåts ta över fler hyresrätter.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostars-tal-pa-jarvaveckan/",
+    "articleTitle": "Nooshi Dadgostars tal på Järvaveckan – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering: direkt kostnad för myndighetsadministration (ansökningar, register, tillsyn) antas försumbar. Osäkerhet motiverar ett litet övre intervall.",
+      "confidence": 0.4,
+      "calculation": "Ingen uttalad nivå. Enligt regel 9 prissätts endast den direkta statliga kostnaden för själva regleringen, vilken bedöms ligga nära noll. Ett övre spann sätts till 30 mkr/år för att täcka ev. uppstart och löpande handläggning om verksamheten inte fullt ut avgiftsfinansieras."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  }
+]
