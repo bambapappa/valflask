@@ -26,7 +26,7 @@ import { OpenRouterClient } from "../src/llm.ts";
 import { rankaKandidater, rankaVoteringsKandidater, skapaForslag, type Lofte, type TermIndex } from "../src/foreslag.ts";
 import { dokumentfrekvenser, slaIhopSkarvor, type Skarva } from "../src/nyckelord.ts";
 import { LAGE_A_FONSTER, type KopplingsForslag } from "../src/grindar.ts";
-import { laddaProvade, parNyckel, serialiseraProvade } from "../src/provade.ts";
+import { laddaProvade, parNyckel, serialiseraProvade, tackningsordning } from "../src/provade.ts";
 
 interface KoPost extends KopplingsForslag {
   skapad: string;
@@ -120,6 +120,19 @@ async function main() {
   const provade = laddaProvade(existsSync(provadePath) ? JSON.parse(readFileSync(provadePath, "utf8")) : []);
   for (const k of ko) provade.add(parNyckel(k.promise_id ?? k.stance_id ?? "", k.handling_id));
   const sedd = provade; // samma mängd bär både skip-koll och beständigt minne
+
+  // MINST TÄCKTA LÖFTET FÖRST (b-0038). Kördes listan i filordning betalade
+  // alltid samma löften först, och en körning som slår i tids- eller
+  // budgettaket stannade alltid på samma ställe — löftena sist i filen
+  // prövades aldrig. Det slår inte slumpmässigt: promises.json ligger grupperad
+  // per parti, så filordningen svälter systematiskt de partier som råkar ligga
+  // sist. Vid mätningen 2026-08-05 hade 35 av Liberalernas 71 löften och 12 av
+  // Kristdemokraternas 26 aldrig prövats mot ett enda riksdagsdokument, medan
+  // resten av partierna låg på 8–9 prövade par per löfte och L och KD på 3,5.
+  // Sorteringen gör att varje körning lägger sin budget där täckningen är
+  // tunnast, så skillnaden krymper i stället för att växa. Id:t som andra
+  // nyckel håller ordningen deterministisk vid lika täckning.
+  loften.sort(tackningsordning(provade));
 
   let llm: OpenRouterClient | undefined;
   let model = "";

@@ -30,6 +30,34 @@ export function serialiseraProvade(provade: Provade): string[] {
 }
 
 /**
+ * Antal prövade par per mål (löfte eller ståndpunkt) — täckningsmåttet.
+ * Används för att köra det MINST täckta löftet först, så att en körning som
+ * slår i budget- eller tidstaket inte alltid stannar på samma ställe i
+ * löfteslistan.
+ */
+export function antalProvadePerMal(provade: Provade): Map<string, number> {
+  const per = new Map<string, number>();
+  for (const nyckel of provade) {
+    const mal = nyckel.slice(0, nyckel.indexOf("::"));
+    if (mal) per.set(mal, (per.get(mal) ?? 0) + 1);
+  }
+  return per;
+}
+
+/**
+ * Ordnar mål efter täckning: minst prövade först, id:t som andra nyckel så
+ * att lika täckning alltid ger samma ordning. Bor här och inte i skriptet
+ * för att testet ska pröva den ordning körningen faktiskt använder.
+ */
+export function tackningsordning(provade: Provade): (a: { id: string }, b: { id: string }) => number {
+  const per = antalProvadePerMal(provade);
+  return (a, b) => {
+    const diff = (per.get(a.id) ?? 0) - (per.get(b.id) ?? 0);
+    return diff !== 0 ? diff : a.id.localeCompare(b.id);
+  };
+}
+
+/**
  * Union-merge av en färsk fil (från defaultgrenen) med körningens egna nya
  * nycklar. Append-only, så unionen kan aldrig tappa ett prövat par vid race.
  */
