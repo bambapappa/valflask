@@ -4,78 +4,33 @@ import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-interface PromisePost {
-  cost: {
-    type: string;
-    period: string;
-    msek_base: number;
-    basis: string;
-  };
-  status: string;
-  parties: string[];
-  group_id: string | null;
-  id: string;
-  slug: string;
-  title: string;
-  source: { domain: string; fetched_at: string };
-}
+/**
+ * Delningsbilderna räknar och skriver INGENTING själva.
+ *
+ * Fram till 2026-08-05 bar den här filen egna kopior av dedupeByGroup,
+ * totalFlasket, partyTotalMsek, beloppsformateringen och etiketterna. Kopiorna
+ * hann glida isär från sajten på fem punkter — värst att belopp under
+ * 1 000 mkr skrevs ut med enheten MDKR, alltså tusen gånger för mycket, på 92
+ * löftesbilder. Ett faktum har en plats: allt nedan kommer nu ur samma moduler
+ * som sidorna använder, och scripts/test-og.mts faller om någon återinför en
+ * kopia.
+ */
+import {
+  getPromisesForParty,
+  partyTotalMsek,
+  promiseTotalMsek,
+  totalFlasket,
+} from "../src/lib/aggregates.ts";
+import { formatBasisLabel, formatMsek } from "../src/lib/calc.ts";
+import type { PromisePost } from "../src/lib/data";
 
-function promiseTotalMsek(p: PromisePost): number {
-  return p.cost.msek_base * (p.cost.period === "per_ar" ? 4 : 1);
-}
-
-// R3: samma politik (delat group_id) räknas EN gång. MÅSTE spegla
-// src/lib/aggregates.ts — annars visar OG-bilderna en icke-deduperad
-// (uppblåst) total medan sajtsidorna visar den rätta.
-function dedupeByGroup(promises: PromisePost[]): PromisePost[] {
-  const seen = new Set<string>();
-  const out: PromisePost[] = [];
-  for (const p of promises) {
-    if (p.group_id) {
-      if (seen.has(p.group_id)) continue;
-      seen.add(p.group_id);
-    }
-    out.push(p);
-  }
-  return out;
-}
-
-function totalFlasket(promises: PromisePost[]): number {
-  return dedupeByGroup(promises)
-    .filter((p) => p.cost.type === "utgift" || p.cost.type === "intäktsminskning")
-    .reduce((sum, p) => sum + promiseTotalMsek(p), 0);
-}
-
-function partyTotalMsek(promises: PromisePost[], code: string): number {
-  return dedupeByGroup(
-    promises.filter((p) => p.parties.includes(code) && p.status !== "tillbakadragen"),
-  ).reduce((sum, p) => sum + promiseTotalMsek(p), 0);
-}
-
-function formatMsekBare(msek: number): string {
-  if (msek >= 1000) {
-    const mdkr = msek / 1000;
-    return mdkr >= 10
-      ? `${mdkr.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00A0")}`
-      : `${mdkr.toFixed(1).replace(".", ",")}`;
-  }
-  return `${msek.toLocaleString("sv-SE")}`;
-}
-
-function formatMsekOg(msek: number, basis?: string): string {
-  const prefix = basis === "llm_estimat" ? "≈ " : "";
-  return `${prefix}${formatMsekBare(msek)}`;
-}
-
-function formatBasisLabel(basis: string): string {
-  const labels: Record<string, string> = {
-    rut: "RUT/utredning",
-    myndighet: "Myndighet",
-    parti: "Partiets beräkning",
-    media: "Media",
-    llm_estimat: "LLM-estimat",
-  };
-  return labels[basis] ?? basis;
+/**
+ * Beloppet så som det står på bilden. `formatMsek` bär enheten själv — mkr
+ * eller mdkr efter storlek — plus minustecken och "≈" vid datoruppskattning.
+ * Bilden versaliserar bara; den väljer aldrig enhet på egen hand.
+ */
+function ogBelopp(msek: number, basis?: string): string {
+  return formatMsek(msek, basis).toUpperCase();
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -208,20 +163,20 @@ async function main() {
 
   const startPng = await generateOgImage({
     topLabel: "UTLOVAT.SE · FLÄSKVÅGEN",
-    bigNumber: `${formatMsekOg(flasket)} MDKR`,
+    bigNumber: ogBelopp(flasket),
     title: "RIKSDAGSPARTIERNAS VALLÖFTEN 2026",
     bottomLine: "utlovat.se · Uppskattningar enligt öppen metod",
   });
   writeFileSync(resolve(ogDir, "start.png"), startPng);
-  console.log(`OG: start.png (${formatMsekOg(flasket)} MDKR)`);
+  console.log(`OG: start.png (${ogBelopp(flasket)})`);
 
   for (const party of parties) {
     const partyTotal = partyTotalMsek(promises, party.code);
-    const partyCount = promises.filter((p) => p.parties.includes(party.code) && p.status !== "tillbakadragen").length;
+    const partyCount = getPromisesForParty(promises, party.code).length;
 
     const png = await generateOgImage({
       topLabel: `UTLOVAT.SE · PARTI`,
-      bigNumber: `${formatMsekOg(partyTotal)} MDKR`,
+      bigNumber: ogBelopp(partyTotal),
       title: `VAD KOSTAR ${party.name.toUpperCase()}S VALLÖFTEN?`,
       bottomLine: `${partyCount} löften · utlovat.se`,
     });
@@ -256,7 +211,7 @@ async function main() {
 
     const png = await generateOgImage({
       topLabel: `UTLOVAT.SE · ÄRENDE ${p.id} · ${p.source.domain}`,
-      bigNumber: `${formatMsekOg(total, p.cost.basis)} MDKR`,
+      bigNumber: ogBelopp(total, p.cost.basis),
       title: p.title.toUpperCase(),
       bottomLine: `Källa: ${formatBasisLabel(p.cost.basis)} · Hämtad ${p.source.fetched_at.slice(0, 10)} · utlovat.se`,
     });

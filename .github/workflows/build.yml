@@ -95,6 +95,13 @@ jobs:
       - name: Grindar för grupperade listor
         run: node --experimental-strip-types scripts/test-grupplista.mts
         working-directory: site
+      # Också före bygget: delningsbilderna genereras i byggsteget, och en bild
+      # som visar ett annat tal än sidan är det som syns när sajten delas.
+      # Grinden läser skriptets källa och faller om det återinför egna kopior
+      # av summorna eller formateringen.
+      - name: Grindar för delningsbilderna
+        run: node --experimental-strip-types scripts/test-og.mts
+        working-directory: site
       - name: Build site + OG images
         run: pnpm build
         working-directory: site
