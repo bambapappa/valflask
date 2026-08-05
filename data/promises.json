@@ -74,14 +74,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
+      "msek_low": 3500,
+      "msek_base": 6200,
+      "msek_high": 12000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "method_note": "Tre av delarna pekar ut en bestämd förmån utan att ange nivå och prissätts som samma åtgärd senast kostade. Övriga delar är riktningar eller regleringar och kostar staten inget nytt.",
       "confidence": 0.3,
-      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
+      "calculation": "Löftet räknar upp sex delar, varav tre pekar ut en bestämd förmån. Höjt barnbidrag: ingen nivå anges, så vi räknar med samma steg som den senaste faktiska höjningen — 200 kronor i månaden, 2018. Försäkringskassan betalade ut 2,65 miljarder kronor i barnbidrag i december 2025, vilket efter avdrag för flerbarnstillägg motsvarar omkring 1,9 miljoner barn: 1,9 miljoner × 200 kronor × 12 månader ≈ 4 600 miljoner kronor per år. Höjt studiebidrag: samma steg för omkring 300 000 gymnasieelever, utbetalt tio månader om året ≈ 600 miljoner. Avgiftsfri tandvård för unga: samma nivå som Vänsterpartiets löfte om samma sak, 1 000 miljoner. Billigare mediciner, press på banker och matkedjor och skydd mot elpriser pekar inte ut någon åtgärd och prissätts inte. Summa 6 200 miljoner kronor per år."
     },
     "financing_claimed": {
       "described": false,
@@ -96,6 +96,11 @@
         "date": "2026-07-27",
         "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
         "commit": "5ad91d4b9f9efbad2e7af7ef689b1cc863b755cd"
+      },
+      {
+        "date": "2026-08-05",
+        "change": "Beloppet ändrat från 0 till 6 200 miljoner kronor per år. Nollningen 2026-07-27 motiverades med att de konkreta åtagandena redan låg på partiets specifika löften — men det stämde inte. Socialdemokraterna har inget prissatt löfte om barnbidrag, studiebidrag, mediciner eller tandvård, så det fanns ingenting att dubbelräkna, och nollningen sköt kostnaden vidare till löften som inte finns. Löftet pekar ut tre bestämda förmåner utan att ange nivå och prissätts nu som samma åtgärder senast kostade. Barnbidraget vilar på exakt samma grund som Vänsterpartiets och Miljöpartiets löften om samma sak. Se rättelseloggen.",
+        "commit": "48fcc5b8bfc9fcbcc9df49f9c359e0f5c8b85564"
       }
     ],
     "extraction": {
@@ -133,9 +138,9 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Riktningslöfte utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets konkreta pensionslöften.",
+      "method_note": "Citatet säger att pensionen ska bli bättre men inte vilken pension eller med hur mycket. Partiet har inget annat prissatt pensionslöfte — nollan beror på att nivån saknas, inte på att kostnaden ligger någon annanstans.",
       "confidence": 0.3,
-      "calculation": "Löftet säger att pensionen ska bli bättre, men inte för vem, med hur mycket eller på vilket sätt. Det tidigare beloppet byggde på en gissad höjning på 400 kronor i månaden — en siffra som inte står någonstans i löftet. Utan angiven nivå prissätts löftet inte. Noll betyder inte att politiken är gratis: en konkret pensionshöjning prissätts när partiet anger den."
+      "calculation": "Löftet säger att pensionen ska bli bättre för den som slitit ett helt arbetsliv. \"Bättre\" är ett värdeord och ingen nivå, och citatet pekar inte ut vilken del av pensionen som ska höjas — garantipension, inkomstpension eller något annat. Ett värdeord översätts aldrig till en siffra. Den tidigare texten sade att kostnaden låg på partiets konkreta pensionslöften; något sådant löfte finns inte, och den uppgiften är därför borttagen. Noll betyder att löftet inte går att prissätta på det som står i citatet — inte att en bättre pension är gratis."
     },
     "financing_claimed": {
       "described": false,
@@ -150,6 +155,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 8 000 till 0 miljoner kronor per år. Löftet anger ingen nivå, och det tidigare beloppet vilade på en antagen höjning som inte finns i citatet. Riktningslöften prissätts inte; kostnaden ligger på partiets konkreta pensionslöften.",
         "commit": "6ee8ea3d320bb864a0217b79ca242054272224da"
+      },
+      {
+        "date": "2026-08-05",
+        "change": "Beloppet står kvar på 0, men motiveringen är rättad. Den gamla texten sköt kostnaden vidare till \"partiets konkreta pensionslöften\" — Socialdemokraterna har inget sådant löfte, så uppgiften var fel. Nollan vilar i stället på att citatet varken pekar ut vilken pension som ska höjas eller med hur mycket. Se rättelseloggen.",
+        "commit": "48fcc5b8bfc9fcbcc9df49f9c359e0f5c8b85564"
       }
     ],
     "extraction": {
@@ -6575,9 +6585,9 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "method_note": "De delar som pekar ut en åtgärd är redan prissatta på partiets egna löften om tandvård och a-kassa. Övriga delar anger varken åtgärd eller nivå.",
       "confidence": 0.3,
-      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
+      "calculation": "Löftet räknar upp fem delar. Billigare tandvård är redan prissatt på partiets egna löften om högkostnadsskydd och rabatt i tandvården. Bättre skydd vid sjukdom och arbetslöshet är redan prissatt på löftet om en allmän och skattefinansierad a-kassa. Att räkna dem här skulle räkna samma politik två gånger. Kortare vårdköer, trygg äldreomsorg och en skola präglad av ordning och kunskap pekar inte ut någon bestämd åtgärd och anger ingen nivå — de prissätts inte. Noll betyder alltså inte att politiken är gratis: kostnaden ligger på de enskilda löftena, och de går att räkna."
     },
     "financing_claimed": {
       "described": false,
@@ -6592,6 +6602,11 @@
         "date": "2026-07-27",
         "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
         "commit": "5ad91d4b9f9efbad2e7af7ef689b1cc863b755cd"
+      },
+      {
+        "date": "2026-08-05",
+        "change": "Beloppet står kvar på 0, men motiveringen är rättad. Den gamla texten sade allmänt att kostnaden låg på partiets specifika löften utan att säga vilka. Vid genomgången av de tre nollade uppräkningslöftena kontrollerades det påståendet: tandvården ligger på partiets löften om högkostnadsskydd och tandvårdsrabatt, skyddet vid arbetslöshet på löftet om allmän a-kassa. Övriga delar pekar inte ut någon åtgärd. Nollan är alltså riktig och vilar nu på en uppräkning läsaren kan kontrollera.",
+        "commit": "48fcc5b8bfc9fcbcc9df49f9c359e0f5c8b85564"
       }
     ],
     "extraction": {
@@ -6780,14 +6795,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
+      "msek_low": 6000,
+      "msek_base": 10000,
+      "msek_high": 16000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Brett löfte över flera områden utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets specifika löften.",
+      "method_note": "Halverade priser i kollektivtrafiken är en nivå partiet självt anger och saknas på partiets övriga löften; den prissätts. Löftets sju andra delar är antingen redan prissatta eller anger ingen nivå.",
       "confidence": 0.3,
-      "calculation": "Löftet räknar upp flera politikområden utan att ange någon nivå. Ett sådant brett löfte prissätts inte: de konkreta åtagandena finns på partiets egna specifika löften och skulle annars räknas två gånger. Noll betyder alltså inte att politiken är gratis — kostnaden ligger på de enskilda löftena."
+      "calculation": "Löftet räknar upp åtta delar, och sju av dem prissätts inte här: höjda pensioner ligger på partiets löfte om garantipensionen, höjda löner i kvinnodominerade yrken på Kvinnolönelyftet, avgiftsfri tandvård på partiets två tandvårdslöften, och frysta hyror är en reglering som inte kostar staten något. Billigare bostäder, lägre priser på mat och el samt kortare arbetstid pekar inte ut någon åtgärd. Kvar står halverade priser i kollektivtrafiken — en nivå partiet självt anger, och den finns inte på något annat av partiets löften. Miljöpartiets Sverigekort halverar ungefär vad resenären betalar och kostar 8 000 miljoner per år; det här löftet gäller alla biljetter och inte bara ett kort, vilket ger omkring 10 000 miljoner kronor per år. Staten antas täcka bortfallet."
     },
     "financing_claimed": {
       "described": false,
@@ -6802,6 +6817,11 @@
         "date": "2026-07-27",
         "change": "Kostnadsestimatet ändrat till 0 kronor. Löftet räknar upp flera politikområden utan att ange nivå för något av dem, och de konkreta åtagandena finns redan på partiets specifika löften — det tidigare beloppet dubbelräknade dem. Uträkningen är nu offentlig. Se rättelseloggen.",
         "commit": "5ad91d4b9f9efbad2e7af7ef689b1cc863b755cd"
+      },
+      {
+        "date": "2026-08-05",
+        "change": "Beloppet ändrat från 0 till 10 000 miljoner kronor per år. Löftet nollades 2026-07-27 som ett brett uppräkningslöfte, men en av de åtta delarna — halverade priser i kollektivtrafiken — bär en nivå partiet självt anger och saknas på partiets övriga löften. Ett löfte som bär partiets egen siffra är inget inriktningslöfte och ska prissättas. De sju övriga delarna är antingen redan prissatta på partiets specifika löften eller anger ingen nivå, och står kvar på noll här. Beloppet vilar på samma grund som Miljöpartiets löfte om halverat pris för resenären. Se rättelseloggen.",
+        "commit": "48fcc5b8bfc9fcbcc9df49f9c359e0f5c8b85564"
       }
     ],
     "extraction": {
@@ -10036,9 +10056,9 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Sammanfattande uppräkning av S:s plånbokslöfte (höjda löner och barnbidrag, billigare mediciner, bättre pensioner, slopat karensavdrag). Varje del är redan prissatt på ett eget löfte — barnbidrag/mediciner i p-2026-0002 och p-2026-0481, pension i p-2026-0003, karensavdraget i p-2026-0461 och p-2026-0488 — så denna sammanfattning sätts till 0 för att undvika dubbelräkning (belopp satt av granskare).",
+      "method_note": "Sammanfattande uppräkning av partiets plånbokslöfte. Delarna är prissatta på partiets egna löften, så en prissättning här skulle räkna dem två gånger.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Bred sammanfattning => 0 miljoner kronor."
+      "calculation": "Löftet räknar upp fem delar och prissätts inte här, eftersom delarna ligger på partiets egna löften: höjt barnbidrag och billigare mediciner på plånbokslöftet, slopat karensavdrag på löftet om det. Bättre pensioner anger ingen nivå och prissätts inte någonstans. Höjda löner sätts i avtal mellan arbetsmarknadens parter och är ingen statlig utgift. Den tidigare texten pekade också på ett löfte som sedan dess är tillbakadraget som dubblett; hänvisningen är borttagen."
     },
     "financing_claimed": {
       "described": false,
@@ -10053,6 +10073,11 @@
         "date": "2026-07-24",
         "change": "Kostnadsestimat ändrat från 5 000 miljoner kronor per år (spann 2 500-7 500) till 0 vid den manuella genomgången. Löftet är en sammanfattande uppräkning vars komponenter redan är prissatta på egna S-löften (p-2026-0002/0481 barnbidrag+mediciner, p-2026-0003 pension, p-2026-0461/0488 karensavdrag); att prissätta sammanfattningen skulle dubbelräkna. En efterhandsberäkning på 23 000 (som summerade komponenterna) avvisades av samma skäl.",
         "commit": "1b5605e88df013781a27762bd8560bc83e1c2103"
+      },
+      {
+        "date": "2026-08-05",
+        "change": "Beloppet står kvar på 0, men texten är rättad. Den pekade på ett sedan dess tillbakadraget löfte och på ett plånbokslöfte som då bar noll kronor — delarna sades vara prissatta någon annanstans utan att vara det. Sedan plånbokslöftet fått ett belopp samma dag stämmer motiveringen, och hänvisningarna pekar nu på de löften som faktiskt bär kostnaden.",
+        "commit": "48fcc5b8bfc9fcbcc9df49f9c359e0f5c8b85564"
       }
     ],
     "extraction": {
