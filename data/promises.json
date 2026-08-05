@@ -1031,7 +1031,7 @@
   },
   {
     "id": "p-2026-0020",
-    "group_id": null,
+    "group_id": "g-s-militar-upprustning",
     "title": "Sveriges militära förmåga ska snabbt byggas upp",
     "slug": "sveriges-militara-formaga-ska-snabbt-byggas-upp",
     "parties": [
@@ -1080,6 +1080,11 @@
         "date": "2026-07-27",
         "change": "Grupplänkningen borttagen. Löftet står på 0 som riktningslöfte, men råkade vara gruppens representant i summeringen och drog därmed ned partiets konkreta upprustningslöfte (50 000 miljoner kronor per år) till noll i totaler och koalitioner. Ett löfte på noll kan inte dubbelräkna något, så grupperingen fyllde ingen funktion.",
         "commit": "39d71630ac88f5459ef1f7f8035288c14b34f0f2"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Lagt i partiets egen grupp för militär upprustning. Posten är den övergripande formuleringen av samma löfte som p-2026-0021 bär med belopp; utan grupp riskerade de att räknas var för sig. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -11009,7 +11014,7 @@
   },
   {
     "id": "p-2026-0326",
-    "group_id": null,
+    "group_id": "g-slopad-karens",
     "title": "Sverige vinner på slopad karensdag och kortare arbetstid",
     "slug": "sverige-vinner-pa-slopad-karensdag-och-kortare-arbetstid",
     "parties": [
@@ -11058,6 +11063,11 @@
         "date": "2026-07-27",
         "change": "Nollat, från 8 000 miljoner kronor per år. Citatet sammanfattar två åtgärder som partiet lovar i egna löften — slopad karensdag och kortare arbetstid — och båda är redan prissatta där.",
         "commit": "8d5c8bae614c285985bb95523525b4fef58f095d"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Lagt i gruppen för slopat karensavdrag. Partiets eget löfte om samma åtgärd, p-2026-0445, ligger redan där med belopp; den här posten är en andra formulering. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -19376,6 +19386,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 5 000 till 0 miljoner kronor per år. Citatet är en uppräkning av flera av partiets egna löften, som var och en är prissatta separat; det tidigare beloppet dubbelräknade dem.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Bär nu löftet ensam. p-2026-0537 hade ordagrant samma citat ur samma källa och är tillbakadraget som dubblett. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -21433,14 +21448,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 2000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet är att en översyn ska kompletteras med förslag. Utredningen prissätts, inte den politik den kan leda till.",
-      "confidence": 0.55,
-      "calculation": "Löftet är att en översyn av friskolesektorn ska kompletteras med förslag om hur skolor ska ersättas för sitt utbudsansvar. Det som lovas är alltså ett utredningsuppdrag, inte en reform med en nivå — hur stor ersättningen skulle bli, och om den ska betalas av staten eller flyttas mellan skolor inom kommunens skolpeng, är just det utredningen ska svara på. Ett utredningsuppdrag prissätts efter vad utredningen kostar, vilket är försumbart i sammanhanget, inte efter den politik den kan leda till. Noll betyder alltså inte att politiken är gratis: den prissätts när partiet anger vad förslaget ska innehålla."
+      "method_note": "Ankrat mot Centerpartiets löfte om att reformera skolpengen, samma åtgärd hos ett annat parti.",
+      "confidence": 0.4,
+      "calculation": "Löftet pekar ut en åtgärd — att ersätta skolor för det samhällsuppdrag de bär — men anger ingen nivå, så beloppet harmoniseras med samma politik hos ett annat parti. Centerpartiets löfte om att reformera skolpengen så att den premierar ansvarstagande är prissatt till 1 000 miljoner kronor per år, och Centerpartiets löfte om en mer rättvis skolpeng för små skolor till 500. Samma politik ska kosta lika och vila på samma grund. Spannet 500–2 000 rymmer skillnaden mellan en riktad och en bred omläggning."
     },
     "financing_claimed": {
       "described": false,
@@ -21455,6 +21470,11 @@
         "date": "2026-07-28",
         "change": "Beloppet nollat, från 4 500 miljoner kronor per år. Löftet lovar att en översyn av friskolesektorn ska kompletteras med förslag — alltså ett utredningsuppdrag, inte en reform med en angiven nivå. Den tidigare uträkningen prissatte en tänkt ersättning på 2 000–6 000 kronor per elev, en nivå som varken står i löftet eller är avgjord. Samma bedömning som redan gäller för andra utrednings- och planlöften.",
         "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Beloppet ändrat från noll till 1 000 miljoner kronor per år. Posten nollades i svepet 2026-07-27 som ett inriktningslöfte, en vecka innan regeln om att en utpekad åtgärd utan nivå ska ankras. Löftet pekar ut en åtgärd — att kompensera skolor för deras samhällsuppdrag — och är nu harmoniserat med samma politik hos Centerpartiet."
       }
     ],
     "extraction": {
@@ -22025,7 +22045,7 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-27",
@@ -22036,6 +22056,11 @@
         "date": "2026-07-27",
         "change": "Nollat, från 1 500 miljoner kronor per år. Citatet är en uppräkning över flera politikområden utan angiven nivå, och delarna prissätts på partiets egna konkreta löften. Den tidigare uträkningen lånade dessutom ett belopp från ett annat partis löfte som sedan dess har räknats om.",
         "commit": "8d5c8bae614c285985bb95523525b4fef58f095d"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Tillbakadraget som dubblett. Posten bar ordagrant samma citat, ur samma källa och från samma parti, som p-2026-0487 — en enda mening delades i två löften. Meningen är en uppräkning av vad liberal politik omfattar, 'alltifrån sänkt skatt för den som utbildar sig till en personlig husläkare', och den bär inget eget åtagande med nivå. Den står kvar på p-2026-0487, prissatt till noll. Båda var noll, så ingen summa ändras."
       }
     ],
     "extraction": {
@@ -23197,7 +23222,7 @@
   },
   {
     "id": "p-2026-0562",
-    "group_id": null,
+    "group_id": "g-aldersgrans-sociala-medier",
     "title": "15-årsgräns för sociala medier",
     "slug": "15-arsgrans-for-sociala-medier",
     "parties": [
@@ -23233,7 +23258,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Lagt i grupp med Centerpartiets löfte om samma åldersgräns. Samma politik hos olika partier räknas en gång; en åldersgräns kan bara införas en gång. Beloppet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -24353,7 +24384,7 @@
   },
   {
     "id": "p-2026-0587",
-    "group_id": null,
+    "group_id": "g-aldersgrans-sociala-medier",
     "title": "Införa åldersgräns på 15 år för sociala medier",
     "slug": "infora-aldersgrans-pa-15-ar-for-sociala-medier",
     "parties": [
@@ -24392,7 +24423,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Lagt i grupp med Liberalernas löfte om samma åldersgräns. Samma politik hos olika partier räknas en gång. Beloppet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
