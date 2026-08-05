@@ -56,13 +56,22 @@ function statusToken(l: PartiLofteRad): string {
     <div><b>{sida.summa.emot}</b><span>emot egna löften</span></div>
     {sida.summa.bade_och > 0 && <div><b>{sida.summa.bade_och}</b><span>både och</span></div>}
     {sida.summa.avstod > 0 && <div><b>{sida.summa.avstod}</b><span>avstod</span></div>}
-    <div><b>{sida.summa.ingen_handling}</b><span>utan handling ännu</span></div>
+    <div><b>{sida.summa.sokt_utan_traff}</b><span>genomsökta utan träff</span></div>
+    <div><b>{sida.summa.ej_sokt}</b><span>ännu inte genomsökta</span></div>
   </div>
   <p class="summanot">
     Talen ovan gäller <b>partiets egna löften</b>. Vad partiet gjort när andra
     partier lovat något står längre ner och räknas för sig — det är där
     <b>emot</b> nästan alltid hamnar, eftersom ett parti sällan handlar mot sitt
     eget löfte.
+  </p>
+  <p class="summanot">
+    De två sista talen betyder olika saker.
+    <b>Genomsökta utan träff</b> är löften vi letat efter handlingar till utan
+    att hitta något som håller. <b>Ännu inte genomsökta</b> är löften vi inte
+    hunnit leta på — där säger tomheten ingenting alls, varken om partiet eller
+    om riksdagen. Hur långt vi hunnit skiljer sig mellan partierna, så jämför
+    inte partier på de här talen.
   </p>
 
   <div class="vy-verktyg">
