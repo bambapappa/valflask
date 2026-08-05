@@ -380,5 +380,27 @@
       }
     ],
     "verifyReason": "Citatet tar ställning mot skattesänkningar för de rikaste i allmänhet, men nämner inte den statliga inkomstskatten och ger därmed inget besked på den avgränsade delfrågan."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Stoppa vinstjakten i välfärden. Bland annat genom att förbjuda vinster i skolan",
+      "person": {
+        "name": "Mikael Damberg",
+        "role": null
+      }
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: /person/role must be string"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-05-socialdemokraterna-gar-till-val-pa-att-stoppa-sloseriet-med-skattepengar",
+    "articleTitle": "Socialdemokraterna går till val på att stoppa slöseriet med skattepengar\n| Socialdemokraterna",
+    "runId": "run-2026-08-05-11-26"
   }
 ]
