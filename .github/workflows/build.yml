@@ -108,6 +108,12 @@ jobs:
       - name: Grindar för delningsknapparna
         run: node --experimental-strip-types scripts/test-dela.mts
         working-directory: site
+      # src/lib ska gå att importera från ett fristående skript, inte bara från
+      # Astro. Det var den tröskeln som fick delningsbilderna att bära egna
+      # kopior av sajtens summor i stället för att importera dem.
+      - name: Grindar för importvägarna
+        run: node --experimental-strip-types scripts/test-importer.mts
+        working-directory: site
       - name: Build site + OG images
         run: pnpm build
         working-directory: site

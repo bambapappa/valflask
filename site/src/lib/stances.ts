@@ -5,7 +5,12 @@
  * svängregister) ligger här så att den kan enhetstestas mot fixtures
  * och garanterat är identisk för alla åtta partier (§2.4).
  */
-import { loadData } from "./data";
+// Filändelsen är inte kosmetisk — se kommentaren i calc.ts. Utan den går
+// filen att importera från Astro men inte från ett fristående node-skript,
+// och det var den tröskeln som fick delningsbilderna att bära egna kopior i
+// stället för att importera. Grinden i scripts/test-importer.mts håller
+// regeln på plats.
+import { loadData } from "./data.ts";
 
 export type StatementPosition = "ja" | "nej" | "villkorat";
 export type CurrentPosition = StatementPosition | "inget_tydligt_besked";
