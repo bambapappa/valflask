@@ -93,6 +93,49 @@ test("H2 fäller för kort citat", () => {
   assert.ok(fel.some((f) => f.grind === "H2"));
 });
 
+test("H2 fäller ett citat ur brödtexten när motionens yrkanden är kända", () => {
+  // Brödtexten argumenterar för yrkandet — den är inte handlingen.
+  const brodtext =
+    "Arbetslöshetsförsäkringen har urholkats under lång tid. " + kalltext;
+  const yrkandeCtx = ctx({
+    kalltext: brodtext,
+    handlingstext: { sort: "yrkanden", delar: [kalltext] },
+  });
+  const argumenterande = forslag({
+    bevis: { citat: "Arbetslöshetsförsäkringen har urholkats under lång tid." },
+  });
+  const fel = provaGrindarna(argumenterande, yrkandeCtx);
+  assert.deepEqual(fel.map((f) => f.grind), ["H2"]);
+  assert.match(fel[0]!.reason, /yrkanden/u);
+  // Samma citat passerar när yrkandena inte gick att hämta — grinden kan då
+  // inte veta var i dokumentet citatet står och ska inte gissa.
+  assert.deepEqual(provaGrindarna(argumenterande, ctx({ kalltext: brodtext })), []);
+  // Och yrkandet självt passerar förstås.
+  assert.deepEqual(provaGrindarna(forslag(), yrkandeCtx), []);
+});
+
+test("H2 fäller ett voteringscitat som beskriver ärendet i stället för beslutet", () => {
+  const betankandetext =
+    "Förslagen innebär att möjligheterna att använda preventiva tvångsmedel utökas. " +
+    "Riksdagen avslår motion 2023/24:2865 av Gudrun Nordborg m.fl. (V) yrkande 1.";
+  const punktCtx = ctx({
+    handling: votering,
+    malPartier: ["m"],
+    kalltext: betankandetext,
+    handlingstext: {
+      sort: "beslutspunkt",
+      delar: ["Riksdagen avslår motion 2023/24:2865 av Gudrun Nordborg m.fl. (V) yrkande 1."],
+    },
+  });
+  const { motionstyp: _utan, ...beskrivning } = forslag({
+    handling_id: "h-2026-0002",
+    bevis: { citat: "Förslagen innebär att möjligheterna att använda preventiva tvångsmedel utökas." },
+  });
+  const fel = provaGrindarna(beskrivning, punktCtx);
+  assert.deepEqual(fel.map((f) => f.grind), ["H2"]);
+  assert.match(fel[0]!.reason, /beslutstext/u);
+});
+
 test("H3 fäller fel parti och tom partiuppgift", () => {
   assert.ok(provaGrindarna(forslag(), ctx({ malPartier: ["sd"] })).some((f) => f.grind === "H3"));
   const tomHandling = { ...motion, parties: [] };

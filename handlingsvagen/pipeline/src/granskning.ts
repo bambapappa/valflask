@@ -256,6 +256,41 @@ export function laggTillNyaKoPoster(farsk: KoPost[], start: KoPost[], resultat: 
   return [...farsk, ...nyaKoPoster(start, resultat).filter((p) => !iFarsk.has(kopplingId(p)))];
 }
 
+/**
+ * Städar bort kö-poster vars mål inte längre kan bära en koppling.
+ *
+ * Ett löfte som dragits tillbaka har ett mänskligt beslut bakom sig, och det
+ * beslutet är verkställt. Ligger ett förslag kvar mot det kan kopplingen
+ * godkännas — och då pekar rutnätet på ett löfte som inte finns.
+ *
+ * Granskningskön i valflask har haft den här städningen sedan tidigare
+ * (publish.ts). Kopplingskön saknade den: vid genomgången 2026-08-06 hängde
+ * ett förslag på p-2026-0131, som dragits tillbaka dagen innan.
+ *
+ * `aktivaLoften` är id:na på de löften som får bära en koppling — de som finns
+ * OCH inte är tillbakadragna. Ett löfte som försvunnit ur registret helt kan
+ * lika lite bära en koppling och städas på samma grund.
+ *
+ * Bara löften prövas. Ett förslag som pekar på en ståndpunkt lämnas orört:
+ * ståndpunkternas id-form är ännu inte fastställd i specen, och en gissad form
+ * hade tömt hela den sidan av kön tyst. Fastställs formen hör prövningen hemma
+ * här, med sitt eget test.
+ */
+export function stadaAvgjorda(ko: KoPost[], aktivaLoften: Set<string>): {
+  kvar: KoPost[];
+  bortstadade: KoPost[];
+} {
+  const kvar: KoPost[] = [];
+  const bortstadade: KoPost[] = [];
+  for (const post of ko) {
+    // Bär posten inget löfte är den antingen en ståndpunktskoppling eller
+    // trasig på ett annat sätt. Båda felen ska synas där de hör hemma.
+    if (post.promise_id === undefined || aktivaLoften.has(post.promise_id)) kvar.push(post);
+    else bortstadade.push(post);
+  }
+  return { kvar, bortstadade };
+}
+
 export interface AvvisaResultat {
   ko: KoPost[];
   post: KoPost;

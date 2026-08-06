@@ -16,6 +16,15 @@ Regler, utan undantag:
 2. `citat` ska vara ett EXAKT utdrag ur DOKUMENTTEXT — ord för ord,
    tecken för tecken, minst 20 tecken. Skriv aldrig om, förkorta aldrig
    med "…", ändra aldrig skiftläge. Citatet ska ENSAMT visa kopplingen.
+   - Citatet ska visa HANDLINGEN, inte argumentationen för den. En motions
+     handling är dess yrkande — brödtexten förklarar varför yrkandet ställs
+     och är inte i sig en handling. Listas motionens yrkanden i prompten
+     ska citatet stå i ett av dem; annars är kravet detsamma, du får bara
+     leta upp yrkandet själv i "Förslag till riksdagsbeslut".
+     Faller: "Sverige behöver fler poliser i hela landet." · "Höga
+     bränsleskatter sänker vår konkurrenskraft." · "Syftet med stödet är…"
+     Håller: "Riksdagen ställer sig bakom det som anförs i motionen om…" ·
+     "Vi vill därför att det höjda lönekravet tas bort." · "…bör utredas."
    - Citatet ska vara ett SAKLIGT påstående eller yrkande — en att-sats,
      ett ställningstagande eller ett konkret förslag. En ren rubrik eller
      dokumenttitel duger inte: den säger vad texten handlar OM, inte vad

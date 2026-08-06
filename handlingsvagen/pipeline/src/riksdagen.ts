@@ -223,6 +223,14 @@ export function htmlTillText(html: string): string {
   return html
     .replace(/<(script|style)[\s\S]*?<\/\1>/giu, " ")
     .replace(/<!--[\s\S]*?-->/gu, " ")
+    // Inline-taggar tas bort UTAN mellanrum. Riksdagens dokument sätts med
+    // ett <span> per teckenformat, och ett avstavat ord kan därför ligga som
+    // "ut</span><span>&shy;</span><span>reda". Ersattes varje tagg med ett
+    // blanksteg blev texten "ut reda", och citatet "…att utreda en tydlig
+    // bortre gräns…" stod plötsligt inte ordagrant i sitt eget dokument —
+    // trots att det gör det. Upptäckt 2026-08-06 när ett yrkande ur
+    // riksdagens egen yrkandelista föll mot dokumentet det är hämtat ur.
+    .replace(/<\/?(?:span|b|i|em|strong|a|u|s|sub|sup|small|big|font|abbr|cite|q|mark|time|bdi|bdo|wbr)(?:\s[^>]*)?\/?>/giu, "")
     .replace(/<[^>]+>/gu, " ")
     .replace(/&#x([0-9a-f]+);/giu, (_, h: string) => String.fromCodePoint(parseInt(h, 16)))
     .replace(/&#(\d+);/gu, (_, d: string) => String.fromCodePoint(Number(d)))
@@ -246,6 +254,43 @@ export async function fetchDokumentText(fetcher: HttpFetch, dokId: string): Prom
     throw new Error(`dokumentstatus ${dokId}: ingen dokumenttext`);
   }
   return htmlTillText(html);
+}
+
+/** Ett yrkande i en motion — det motionären faktiskt begär. */
+export interface Yrkande {
+  /** Yrkandenumret som det står i motionen ("1", "2", …). */
+  nummer: string;
+  /** Yrkandets lydelse: "Riksdagen ställer sig bakom det som anförs…". */
+  lydelse: string;
+}
+
+/**
+ * Motionens yrkanden — själva handlingen, skild från brödtexten.
+ *
+ * En motions handling är dess yrkande. Brödtexten argumenterar FÖR yrkandet;
+ * den är inte handlingen. Utan den här listan får modellen bara dokumentets
+ * löpande text och belägger gärna kopplingen med en problembeskrivning
+ * ("Sverige behöver fler poliser i hela landet") i stället för med det
+ * motionären begär. Vid genomgången av kopplingskön 2026-08-06 var det skälet
+ * till att vart tredje förslag behövde vägas om.
+ *
+ * Lydelserna står ordagrant i dokumentets egen text ("Förslag till
+ * riksdagsbeslut"), så ett citat ur ett yrkande passerar den ordagranna
+ * kontrollen mot källtexten.
+ */
+export async function fetchYrkanden(fetcher: HttpFetch, dokId: string): Promise<Yrkande[]> {
+  const payload = (await getJson(fetcher, `${BASE}/dokumentstatus/${dokId}.json`)) as {
+    dokumentstatus?: { dokforslag?: { forslag?: unknown } };
+  };
+  const lista = asArray(payload.dokumentstatus?.dokforslag?.forslag as unknown);
+  const ut: Yrkande[] = [];
+  for (const y of lista as Array<Record<string, unknown>>) {
+    // Vissa yrkanden bär sin text i lydelse2 (lagförslag med två led).
+    const lydelse = htmlTillText(String(y["lydelse"] ?? "")) || htmlTillText(String(y["lydelse2"] ?? ""));
+    if (lydelse === "") continue;
+    ut.push({ nummer: String(y["nummer"] ?? ""), lydelse });
+  }
+  return ut;
 }
 
 /** En förslagspunkt i ett betänkande — det kammaren faktiskt röstade om. */

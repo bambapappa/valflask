@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { fetchUtskottspunkter, parseDokumentLista, parseVotering, parseVoteringLista, type HttpFetch } from "../src/riksdagen.ts";
+import { fetchUtskottspunkter, fetchYrkanden, htmlTillText, parseDokumentLista, parseVotering, parseVoteringLista, type HttpFetch } from "../src/riksdagen.ts";
+import { normalizeForVerbatim } from "../src/grindar.ts";
 import {
   berikaPartier,
   motionstypAvSubtyp,
@@ -201,4 +202,54 @@ test("fetchUtskottspunkter: tomt svar ger tom lista, inget kast", async () => {
   const fetcher: HttpFetch = async () =>
     new Response(JSON.stringify({ utskottsforslag: {} }), { status: 200 }) as unknown as Awaited<ReturnType<HttpFetch>>;
   assert.deepEqual(await fetchUtskottspunkter(fetcher, "X"), []);
+});
+
+/** Formad som ett riktigt dokumentstatus-svar för en motion (HA022, 2026-08-06). */
+const yrkandePayload = {
+  dokumentstatus: {
+    dokforslag: {
+      forslag: [
+        {
+          nummer: "1",
+          lydelse:
+            "Riksdagen st&auml;ller sig bakom det som anf&ouml;rs i motionen om att h&ouml;ja taket i a-kassan och tillk&auml;nnager detta f&ouml;r regeringen.",
+          lydelse2: "",
+        },
+        { nummer: "2", lydelse: "", lydelse2: "Riksdagen antar regeringens f&ouml;rslag till lag om &auml;ndring." },
+        { nummer: "3", lydelse: "", lydelse2: "" },
+      ],
+    },
+  },
+};
+
+test("fetchYrkanden: lydelserna plockas ut, lydelse2 tar vid, tomma hoppas över", async () => {
+  const fetcher: HttpFetch = async () =>
+    new Response(JSON.stringify(yrkandePayload), { status: 200 }) as unknown as Awaited<ReturnType<HttpFetch>>;
+  const yrkanden = await fetchYrkanden(fetcher, "HA022");
+  assert.equal(yrkanden.length, 2);
+  assert.deepEqual(yrkanden[0], {
+    nummer: "1",
+    lydelse:
+      "Riksdagen ställer sig bakom det som anförs i motionen om att höja taket i a-kassan och tillkännager detta för regeringen.",
+  });
+  assert.equal(yrkanden[1]!.lydelse, "Riksdagen antar regeringens förslag till lag om ändring.");
+});
+
+test("fetchYrkanden: ensamt yrkande kommer som objekt, och en motion utan lista ger tomt", async () => {
+  const ett = { dokumentstatus: { dokforslag: { forslag: { nummer: "1", lydelse: "Riksdagen avslår." } } } };
+  const svar = (p: unknown): HttpFetch => async () =>
+    new Response(JSON.stringify(p), { status: 200 }) as unknown as Awaited<ReturnType<HttpFetch>>;
+  assert.equal((await fetchYrkanden(svar(ett), "X"))[0]!.lydelse, "Riksdagen avslår.");
+  assert.deepEqual(await fetchYrkanden(svar({ dokumentstatus: {} }), "X"), []);
+});
+
+test("htmlTillText: ett ord som avstavats över inline-taggar hålls ihop", () => {
+  // Riksdagen sätter ett <span> per teckenformat. Ett mjukt bindestreck mitt
+  // i ett ord ligger då i ett eget span, och ordet får inte falla isär.
+  const html =
+    '<p><span style="x">…möjligheten att ut</span><span style="x">&#xad;</span>' +
+    '<span style="x">reda en tydlig bortre gräns</span></p>';
+  assert.match(normalizeForVerbatim(htmlTillText(html)), /att utreda en tydlig bortre gräns/u);
+  // Blocktaggar skiljer fortfarande ord åt.
+  assert.equal(htmlTillText("<p>ett</p><p>två</p>").trim(), "ett två");
 });
