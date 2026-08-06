@@ -6646,14 +6646,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Riktningslöfte utan angiven nivå. Prissätts inte här; kostnaden ligger på partiets konkreta försvars- och beredskapslöften.",
+      "msek_low": 6500,
+      "msek_base": 13000,
+      "msek_high": 32500,
+      "basis": "granskare",
+      "basis_url": "https://www.regeringen.se/regeringens-politik/forsvarsbudget/",
+      "method_note": "Totalförsvaret utan angiven nivå. Ankrat i de tillskott budgeten för 2026 faktiskt beslutade: 10 miljarder kronor till det militära försvaret och 3 miljarder till det civila. Samma ankare som Socialdemokraternas löfte om upprustning bär för den militära delen.",
       "confidence": 0.4,
-      "calculation": "Löftet säger att totalförsvaret ska byggas upp, utan att ange nivå eller årtal. Partiets konkreta försvars- och beredskapslöften prissätts var för sig, så ett belopp här skulle räkna samma pengar två gånger. Samma bedömning har gjorts för motsvarande breda försvarslöften hos andra partier."
+      "calculation": "Löftet pekar ut en åtgärd — totalförsvaret ska återuppbyggas, militärt och civilt — men anger ingen nivå. Beloppet ankras därför i vad åtgärden senast faktiskt kostade, och de två delarna har var sitt tillskott i budgeten för 2026: anslagen till det militära försvaret \"tillförs 10 miljarder kronor 2026\" utöver uppräkningar och tidigare beslut, och det civila försvaret \"tillförs 3 miljarder kronor under 2026\". Tillsammans 13 miljarder kronor per år, och det är basbeloppet. Det låga alternativet gäller om tillskottet trappas upp och når full nivå först sista året, i genomsnitt ungefär hälften. Det höga gäller om ett lika stort tillskott läggs till i varje budget 2027–2030, i snitt 32,5. Socialdemokraterna lovar samma sak för den militära delen, på samma ankare."
     },
     "financing_claimed": {
       "described": false,
@@ -6668,6 +6668,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 15 000 till 0 miljoner kronor per år. Löftet anger ingen nivå och inget årtal; kostnaden ligger på partiets konkreta försvars- och beredskapslöften. Samma bedömning som för motsvarande breda försvarslöften hos övriga partier.",
         "commit": "6ee8ea3d320bb864a0217b79ca242054272224da"
+      },
+      {
+        "date": "2026-08-06",
+        "change": "Prissatt från 0 till 13 000 miljoner kronor per år. Nollan sattes den 27 juli med motiveringen att kostnaden låg på partiets konkreta försvarslöften — men Sverigedemokraterna har inga andra prissatta försvarslöften, så partiets försvarspolitik saknade prislapp helt medan varje annat parti som lovar upprustning bär en. Löftet pekar ut en åtgärd utan att ange en nivå, och ska då prissättas som åtgärden senast faktiskt kostade. Ankaret är de tillskott budgeten för 2026 beslutade: 10 miljarder kronor till det militära försvaret och 3 miljarder till det civila. Osäkerheten ligger i spannet, 6 500 till 32 500 miljoner kronor per år.",
+        "commit": "8e4b3c99ebe4bc651643b2f98f61c8a785d73435"
       }
     ],
     "extraction": {
