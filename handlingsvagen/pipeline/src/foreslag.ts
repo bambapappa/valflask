@@ -360,16 +360,51 @@ export interface ForslagResultat {
 }
 
 /**
+ * Betänkandets sammanfattning — utskottets egen redogörelse för vad det
+ * föreslår, mellan rubrikerna "Sammanfattning" och "Utskottets förslag till
+ * riksdagsbeslut". Hittas den inte blir svaret undefined.
+ */
+export function sammanfattning(kalltext: string): string | undefined {
+  const m = /\bSammanfattning\b([\s\S]*?)\bUtskottets förslag till riksdagsbeslut\b/u.exec(kalltext);
+  return m?.[1]?.trim() || undefined;
+}
+
+/** Antar punkten något, eller avslår den bara motioner? */
+function punktenAntarNagot(punkt: Utskottspunkt): boolean {
+  return /\bRiksdagen\s+(?:antar|godkänner|bifaller|anvisar|bemyndigar|fastställer|beslutar)\b/iu.test(punkt.forslag);
+}
+
+/**
  * Vilken del av dokumentet som ÄR handlingen, i den form H2 prövar mot.
  *
  * Voteringen går före: gäller paret en votering är källtexten betänkandets,
  * och då är punktens beslutstext handlingen — inte några yrkanden.
+ *
+ * **Punktens beslutstext räcker inte alltid.** En punkt som antar en
+ * proposition lyder ofta bara "Riksdagen antar regeringens förslag till 1. lag
+ * om ändring i lagen (1994:1776) om skatt på energi" — den visar att lagen
+ * ändrades, inte åt vilket håll. Riktningen står i utskottets egen
+ * sammanfattning: "Det innebär att energiskatten på bensin och diesel
+ * tillfälligt sänks med 82 öre per liter." Propositionen ÄR underlaget till
+ * voteringen, och sammanfattningen är utskottets redogörelse för vad punkten
+ * antar — inte en beskrivning av något annat i ärendet.
+ *
+ * Därför öppnas sammanfattningen bara för en punkt som ANTAR något. Avslår
+ * punkten bara motioner får sammanfattningen inte användas — då beskriver den
+ * lagförslagen i en annan punkt, och det var precis det felet grinden kom
+ * till för att stoppa (mänskligt beslut 2026-08-06).
  */
 export function byggHandlingstext(
   punkt?: Utskottspunkt,
   yrkanden?: Yrkande[],
+  kalltext?: string,
 ): GrindKontext["handlingstext"] {
-  if (punkt) return { sort: "beslutspunkt", delar: [punkt.forslag] };
+  if (punkt) {
+    const delar = [punkt.forslag];
+    const s = punktenAntarNagot(punkt) && kalltext ? sammanfattning(kalltext) : undefined;
+    if (s) delar.push(s);
+    return { sort: "beslutspunkt", delar };
+  }
   if (yrkanden && yrkanden.length > 0) {
     return { sort: "yrkanden", delar: yrkanden.map((y) => y.lydelse) };
   }
@@ -417,7 +452,7 @@ export async function skapaForslag(
   // Handlingens egen text, när vi har den: yrkandena för en motion, punktens
   // beslutstext för en votering. H2 prövar att citatet står där och inte i
   // brödtexten. Saknas den prövas bara det ordagranna.
-  const handlingstext = byggHandlingstext(punkt, yrkanden);
+  const handlingstext = byggHandlingstext(punkt, yrkanden, kalltext);
   const grindfel = provaGrindarna(forslag, {
     handling,
     kalltext,

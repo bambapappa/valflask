@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { htmlTillText } from "../src/riksdagen.ts";
 import {
+  byggHandlingstext,
   byggPrompt,
   motionstypAvHandling,
   nyckelord,
@@ -9,6 +10,7 @@ import {
   lofteskallaDokId,
   rankaKandidater,
   rankaVoteringsKandidater,
+  sammanfattning,
   skapaForslag,
   type Lofte,
 } from "../src/foreslag.ts";
@@ -375,4 +377,38 @@ test("rankaVoteringsKandidater: votering vars betänkande ÄR löftets källa ut
   const franBetankandet: Lofte = { ...lofte, source: { url: "https://data.riksdagen.se/dokument/HA01AU10" } };
   assert.equal(rankaVoteringsKandidater(lofte, [v], [betankande], 5).length, 1);
   assert.deepEqual(rankaVoteringsKandidater(franBetankandet, [v], [betankande], 5), []);
+});
+
+test("byggHandlingstext: sammanfattningen öppnas för en punkt som antar, inte för en som bara avslår", () => {
+  const kalltext =
+    "Justitieutskottets betänkande 2022/23:JuU31 Sammanfattning Utskottet ställer sig bakom " +
+    "regeringens förslag. Förslagen syftar till att ge de brottsbekämpande myndigheterna " +
+    "effektivare verktyg. Utskottets förslag till riksdagsbeslut Lagförslagen …";
+
+  // En punkt som ANTAR: punktens egen text säger bara VILKA lagar som ändras,
+  // inte åt vilket håll. Riktningen står i utskottets sammanfattning, och
+  // propositionen är underlaget till voteringen.
+  const antar = {
+    punkt: 1,
+    rubrik: "Lagförslagen",
+    forslag: "Riksdagen antar regeringens förslag till lag om ändring i rättegångsbalken.",
+  };
+  const medSammanfattning = byggHandlingstext(antar, undefined, kalltext);
+  assert.equal(medSammanfattning?.sort, "beslutspunkt");
+  assert.equal(medSammanfattning?.delar.length, 2);
+  assert.match(medSammanfattning!.delar[1]!, /effektivare verktyg/u);
+
+  // En punkt som bara AVSLÅR en motion får inte belägga sig med
+  // sammanfattningens beskrivning av lagförslagen i en annan punkt.
+  const avslar = {
+    punkt: 3,
+    rubrik: "Brottskatalogen",
+    forslag: "Riksdagen avslår motion 2023/24:2879 av Ulrika Liljeberg m.fl. (C) yrkande 4.",
+  };
+  assert.deepEqual(byggHandlingstext(avslar, undefined, kalltext)?.delar, [avslar.forslag]);
+});
+
+test("sammanfattning: hittas mellan rubrikerna, annars undefined", () => {
+  assert.equal(sammanfattning("Sammanfattning Utskottet ställer sig bakom. Utskottets förslag till riksdagsbeslut X"), "Utskottet ställer sig bakom.");
+  assert.equal(sammanfattning("Ett betänkande utan de rubrikerna."), undefined);
 });
