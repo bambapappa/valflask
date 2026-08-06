@@ -145,7 +145,7 @@ function grindH2(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
         reason:
           ht.sort === "yrkanden"
             ? `Citatet står inte i något av motionens ${ht.delar.length} yrkanden — det är brödtext, och brödtexten argumenterar för handlingen i stället för att vara den`
-            : "Citatet står inte i voteringspunktens egen beslutstext — det visar vad ärendet innehöll, inte vad punkten avgjorde",
+            : "Citatet står varken i voteringspunktens beslutstext eller i utskottets sammanfattning av det punkten antar — det visar vad ärendet innehöll, inte vad punkten avgjorde",
       });
     }
   }
