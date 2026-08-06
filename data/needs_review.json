@@ -1,35 +1,6 @@
 [
   {
     "candidate": {
-      "title": "Införa ett nytt återvinningskliv",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "4. Ett nytt återvinningskliv",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
-    "articleTitle": "MP: Industripaket för hållbar konkurrenskraft",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Brett inriktningslöfte om stärkt återvinning; inga konkreta åtgärder eller belopp anges. Behandlas som önskelöfte (regel 13).",
-      "confidence": 0.1,
-      "calculation": "Löftet specificerar ingen åtgärd, nivå eller investering. Därför ingen siffersatt kostnad, i linje med regeln för breda inriktningslöften."
-    },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Reglerade markkostnader med kompensation till kommuner",
       "parties": [
         "v"
@@ -56,92 +27,5 @@
       "calculation": "Ingen kvantifierbar åtgärd; kostnaden bärs av eventuella senare specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "KD inför högkostnadsskydd mot höga elpriser",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Högkostnadsskydd mot höga elpriser införs.",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/en-budget-for-familjen",
-    "articleTitle": "En budget för familjen | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 25000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Kostnaden beror helt på tröskelvärde, ersättningsgrad och faktiska elpriser. Jämförbart med det tillfälliga elstödet på ca 17 mdkr för en enskild period. Permanent skydd bedöms kunna kosta 5–25 mdkr…",
-      "confidence": 0.3,
-      "calculation": "Hushållens elanvändning ~45 TWh/år. Antag att 10–20 % av volymen passerar en högpriströskel och ersätts med 1–2 kr/kWh. 45 TWh × 10 % × 1 kr = 4,5 mdkr; 45 TWh × 20 % × 2 kr = 18 mdkr. Avrundats till 5–25 mdkr för att täcka olika modeller och år med extrempriser."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Korta vårdgarantin från 90 till 30 dagar",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Moderaternas vallöfte är att korta vårdgarantin från 90 till 30 dagar.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/vallofte-ingen-ska-vanta-mer-an-30-dagar-pa-att-fa-vard/",
-    "articleTitle": "Vallöfte: Ingen ska vänta mer än 30 dagar på att få vård | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Enbart en lagändring om kortare tidsgräns; inga nya statsbidrag utlovas. Direkt statlig kostnad för regelverket är försumbar (regel 9).",
-      "confidence": 0.65,
-      "calculation": "Åtgärden är en lagändring av vårdgarantins tidsgräns. Kostnad för lagstiftningsarbete (SOU, proposition) är minimal, uppskattas till 0 mkr. Inga nya transfereringar till regionerna specificeras."
-    },
-    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0045 (0)"
-  },
-  {
-    "candidate": {
-      "title": "Statligt stöd för kommunala bostadsbolag att rädda förfallna områden",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Vi vill också införa statligt stöd så att kommunala bostadsbolag har möjlighet att rädda områden som fått förfalla.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
-    "articleTitle": "Slumhyresvärdar ska bort från bostadsmarknaden – Vänsterpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan belopp, antal områden eller stödnivå; kan inte prissättas.",
-      "confidence": 0.1,
-      "calculation": "Inga konkreta parametrar anges, därför bedöms kostnaden som 0."
-    },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
   }
 ]
