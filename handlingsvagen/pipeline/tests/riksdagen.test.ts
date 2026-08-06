@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { fetchUtskottspunkter, fetchYrkanden, parseDokumentLista, parseVotering, parseVoteringLista, type HttpFetch } from "../src/riksdagen.ts";
+import { fetchUtskottspunkter, fetchYrkanden, htmlTillText, parseDokumentLista, parseVotering, parseVoteringLista, type HttpFetch } from "../src/riksdagen.ts";
+import { normalizeForVerbatim } from "../src/grindar.ts";
 import {
   berikaPartier,
   motionstypAvSubtyp,
@@ -240,4 +241,15 @@ test("fetchYrkanden: ensamt yrkande kommer som objekt, och en motion utan lista 
     new Response(JSON.stringify(p), { status: 200 }) as unknown as Awaited<ReturnType<HttpFetch>>;
   assert.equal((await fetchYrkanden(svar(ett), "X"))[0]!.lydelse, "Riksdagen avslår.");
   assert.deepEqual(await fetchYrkanden(svar({ dokumentstatus: {} }), "X"), []);
+});
+
+test("htmlTillText: ett ord som avstavats över inline-taggar hålls ihop", () => {
+  // Riksdagen sätter ett <span> per teckenformat. Ett mjukt bindestreck mitt
+  // i ett ord ligger då i ett eget span, och ordet får inte falla isär.
+  const html =
+    '<p><span style="x">…möjligheten att ut</span><span style="x">&#xad;</span>' +
+    '<span style="x">reda en tydlig bortre gräns</span></p>';
+  assert.match(normalizeForVerbatim(htmlTillText(html)), /att utreda en tydlig bortre gräns/u);
+  // Blocktaggar skiljer fortfarande ord åt.
+  assert.equal(htmlTillText("<p>ett</p><p>två</p>").trim(), "ett två");
 });

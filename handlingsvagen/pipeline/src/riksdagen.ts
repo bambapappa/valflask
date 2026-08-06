@@ -223,6 +223,14 @@ export function htmlTillText(html: string): string {
   return html
     .replace(/<(script|style)[\s\S]*?<\/\1>/giu, " ")
     .replace(/<!--[\s\S]*?-->/gu, " ")
+    // Inline-taggar tas bort UTAN mellanrum. Riksdagens dokument sätts med
+    // ett <span> per teckenformat, och ett avstavat ord kan därför ligga som
+    // "ut</span><span>&shy;</span><span>reda". Ersattes varje tagg med ett
+    // blanksteg blev texten "ut reda", och citatet "…att utreda en tydlig
+    // bortre gräns…" stod plötsligt inte ordagrant i sitt eget dokument —
+    // trots att det gör det. Upptäckt 2026-08-06 när ett yrkande ur
+    // riksdagens egen yrkandelista föll mot dokumentet det är hämtat ur.
+    .replace(/<\/?(?:span|b|i|em|strong|a|u|s|sub|sup|small|big|font|abbr|cite|q|mark|time|bdi|bdo|wbr)(?:\s[^>]*)?\/?>/giu, "")
     .replace(/<[^>]+>/gu, " ")
     .replace(/&#x([0-9a-f]+);/giu, (_, h: string) => String.fromCodePoint(parseInt(h, 16)))
     .replace(/&#(\d+);/gu, (_, d: string) => String.fromCodePoint(Number(d)))

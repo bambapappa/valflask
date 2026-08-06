@@ -14,7 +14,9 @@
     "domar": "node --import tsx/esm scripts/domar.mts",
     "organ-backfill": "node --import tsx/esm scripts/organ-backfill.mts",
     "motionstyp-backfill": "node --import tsx/esm scripts/motionstyp-backfill.mts",
-    "nyckelord": "node --import tsx/esm scripts/nyckelord-index.mts"
+    "nyckelord": "node --import tsx/esm scripts/nyckelord-index.mts",
+    "ko-kontrollera": "node --import tsx/esm scripts/ko-kontrollera.mts",
+    "godkann-lista": "node --import tsx/esm scripts/koppling-godkann-lista.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1"
