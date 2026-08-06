@@ -1031,7 +1031,7 @@
   },
   {
     "id": "p-2026-0020",
-    "group_id": null,
+    "group_id": "g-s-militar-upprustning",
     "title": "Sveriges militära förmåga ska snabbt byggas upp",
     "slug": "sveriges-militara-formaga-ska-snabbt-byggas-upp",
     "parties": [
@@ -1080,6 +1080,11 @@
         "date": "2026-07-27",
         "change": "Grupplänkningen borttagen. Löftet står på 0 som riktningslöfte, men råkade vara gruppens representant i summeringen och drog därmed ned partiets konkreta upprustningslöfte (50 000 miljoner kronor per år) till noll i totaler och koalitioner. Ett löfte på noll kan inte dubbelräkna något, så grupperingen fyllde ingen funktion.",
         "commit": "39d71630ac88f5459ef1f7f8035288c14b34f0f2"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "82f56108a6df33587d12dd2f659a493c0510b719",
+        "change": "Lagt i partiets egen grupp för militär upprustning. Posten är den övergripande formuleringen av samma löfte som p-2026-0021 bär med belopp; utan grupp riskerade de att räknas var för sig. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -9454,8 +9459,9 @@
       "msek_high": 0,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Ej kvantifierbart från transkriptet.",
-      "confidence": 0.2
+      "method_note": "Nollan följer av vad höjningen gör, inte av att nivån saknas: pengarna stannar inom pensionssystemet, utanför statsbudgeten.",
+      "confidence": 0.2,
+      "calculation": "Vänsterpartiet anger en nivå: pensionsavgiften ska höjas till 18,5 procent. Men citatet säger också vad höjningen gör — 'en större del av de sociala avgifterna går till pensionerna'. Pengarna byter alltså plats inom de avgifter som redan tas ut, och de går in i pensionssystemet, som ligger utanför statsbudgeten. Höjningen finansierar den högre pensionen med sig själv, så statens egen nya kostnad är noll. Samma bedömning gjordes för Miljöpartiets löfte om en höjd pensionsavgift, p-2026-0428, och samma politik ska vila på samma grund. Det som skulle kosta staten pengar är den del av avgiften som i dag går till statskassan som allmän löneavgift, och den delen anger löftet ingen nivå för."
     },
     "financing_claimed": {
       "described": false,
@@ -9465,7 +9471,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "a65e0ec928a749e91530ce6740f8d1d1691225f3",
+        "change": "Den offentliga uträkningen fylldes i. Posten bar ett belopp på noll utan att säga varför, och nollan såg vid en genomgång ut som ett fel eftersom citatet anger en nivå. Den är riktig: en höjd pensionsavgift finansierar den högre pensionen med sig själv och pensionssystemet ligger utanför statsbudgeten. Beloppet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -11009,7 +11021,7 @@
   },
   {
     "id": "p-2026-0326",
-    "group_id": null,
+    "group_id": "g-slopad-karens",
     "title": "Sverige vinner på slopad karensdag och kortare arbetstid",
     "slug": "sverige-vinner-pa-slopad-karensdag-och-kortare-arbetstid",
     "parties": [
@@ -11058,6 +11070,11 @@
         "date": "2026-07-27",
         "change": "Nollat, från 8 000 miljoner kronor per år. Citatet sammanfattar två åtgärder som partiet lovar i egna löften — slopad karensdag och kortare arbetstid — och båda är redan prissatta där.",
         "commit": "8d5c8bae614c285985bb95523525b4fef58f095d"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "82f56108a6df33587d12dd2f659a493c0510b719",
+        "change": "Lagt i gruppen för slopat karensavdrag. Partiets eget löfte om samma åtgärd, p-2026-0445, ligger redan där med belopp; den här posten är en andra formulering. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -18844,7 +18861,7 @@
   },
   {
     "id": "p-2026-0478",
-    "group_id": null,
+    "group_id": "g-ideburna-sarredovisning",
     "title": "Undanta idéburna skolor från krav på särredovisning",
     "slug": "undanta-id-burna-skolor-fran-krav-pa-sarredovisning",
     "parties": [
@@ -18883,7 +18900,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "a65e0ec928a749e91530ce6740f8d1d1691225f3",
+        "change": "Lagt i grupp med Miljöpartiets löfte om att undanta idéburna skolor från kravet på särredovisning. Samma politik hos olika partier räknas en gång — undantaget kan bara införas en gång. Beloppet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -19376,6 +19399,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 5 000 till 0 miljoner kronor per år. Citatet är en uppräkning av flera av partiets egna löften, som var och en är prissatta separat; det tidigare beloppet dubbelräknade dem.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "82f56108a6df33587d12dd2f659a493c0510b719",
+        "change": "Bär nu löftet ensam. p-2026-0537 hade ordagrant samma citat ur samma källa och är tillbakadraget som dubblett. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -21357,7 +21385,7 @@
   },
   {
     "id": "p-2026-0525",
-    "group_id": null,
+    "group_id": "g-ideburna-sarredovisning",
     "title": "Undanta idéburna skolenheter från krav på särredovisning",
     "slug": "undanta-id-burna-skolenheter-fran-krav-pa-sarredovisning",
     "parties": [
@@ -21401,6 +21429,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "a65e0ec928a749e91530ce6740f8d1d1691225f3",
+        "change": "Lagt i grupp med Centerpartiets löfte om att undanta idéburna skolor från kravet på särredovisning. Samma politik hos olika partier räknas en gång — undantaget kan bara införas en gång. Beloppet är oförändrat."
       }
     ],
     "extraction": {
@@ -21433,14 +21466,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 2000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet är att en översyn ska kompletteras med förslag. Utredningen prissätts, inte den politik den kan leda till.",
-      "confidence": 0.55,
-      "calculation": "Löftet är att en översyn av friskolesektorn ska kompletteras med förslag om hur skolor ska ersättas för sitt utbudsansvar. Det som lovas är alltså ett utredningsuppdrag, inte en reform med en nivå — hur stor ersättningen skulle bli, och om den ska betalas av staten eller flyttas mellan skolor inom kommunens skolpeng, är just det utredningen ska svara på. Ett utredningsuppdrag prissätts efter vad utredningen kostar, vilket är försumbart i sammanhanget, inte efter den politik den kan leda till. Noll betyder alltså inte att politiken är gratis: den prissätts när partiet anger vad förslaget ska innehålla."
+      "method_note": "Ankrat mot Centerpartiets löfte om att reformera skolpengen, samma åtgärd hos ett annat parti.",
+      "confidence": 0.4,
+      "calculation": "Löftet pekar ut en åtgärd — att ersätta skolor för det samhällsuppdrag de bär — men anger ingen nivå, så beloppet harmoniseras med samma politik hos ett annat parti. Centerpartiets löfte om att reformera skolpengen så att den premierar ansvarstagande är prissatt till 1 000 miljoner kronor per år, och Centerpartiets löfte om en mer rättvis skolpeng för små skolor till 500. Samma politik ska kosta lika och vila på samma grund. Spannet 500–2 000 rymmer skillnaden mellan en riktad och en bred omläggning."
     },
     "financing_claimed": {
       "described": false,
@@ -21455,6 +21488,11 @@
         "date": "2026-07-28",
         "change": "Beloppet nollat, från 4 500 miljoner kronor per år. Löftet lovar att en översyn av friskolesektorn ska kompletteras med förslag — alltså ett utredningsuppdrag, inte en reform med en angiven nivå. Den tidigare uträkningen prissatte en tänkt ersättning på 2 000–6 000 kronor per elev, en nivå som varken står i löftet eller är avgjord. Samma bedömning som redan gäller för andra utrednings- och planlöften.",
         "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "82f56108a6df33587d12dd2f659a493c0510b719",
+        "change": "Beloppet ändrat från noll till 1 000 miljoner kronor per år. Posten nollades i svepet 2026-07-27 som ett inriktningslöfte, en vecka innan regeln om att en utpekad åtgärd utan nivå ska ankras. Löftet pekar ut en åtgärd — att kompensera skolor för deras samhällsuppdrag — och är nu harmoniserat med samma politik hos Centerpartiet."
       }
     ],
     "extraction": {
@@ -22025,7 +22063,7 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-27",
@@ -22036,6 +22074,11 @@
         "date": "2026-07-27",
         "change": "Nollat, från 1 500 miljoner kronor per år. Citatet är en uppräkning över flera politikområden utan angiven nivå, och delarna prissätts på partiets egna konkreta löften. Den tidigare uträkningen lånade dessutom ett belopp från ett annat partis löfte som sedan dess har räknats om.",
         "commit": "8d5c8bae614c285985bb95523525b4fef58f095d"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "82f56108a6df33587d12dd2f659a493c0510b719",
+        "change": "Tillbakadraget som dubblett. Posten bar ordagrant samma citat, ur samma källa och från samma parti, som p-2026-0487 — en enda mening delades i två löften. Meningen är en uppräkning av vad liberal politik omfattar, 'alltifrån sänkt skatt för den som utbildar sig till en personlig husläkare', och den bär inget eget åtagande med nivå. Den står kvar på p-2026-0487, prissatt till noll. Båda var noll, så ingen summa ändras."
       }
     ],
     "extraction": {
@@ -23197,7 +23240,7 @@
   },
   {
     "id": "p-2026-0562",
-    "group_id": null,
+    "group_id": "g-aldersgrans-sociala-medier",
     "title": "15-årsgräns för sociala medier",
     "slug": "15-arsgrans-for-sociala-medier",
     "parties": [
@@ -23233,7 +23276,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "82f56108a6df33587d12dd2f659a493c0510b719",
+        "change": "Lagt i grupp med Centerpartiets löfte om samma åldersgräns. Samma politik hos olika partier räknas en gång; en åldersgräns kan bara införas en gång. Beloppet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -24353,7 +24402,7 @@
   },
   {
     "id": "p-2026-0587",
-    "group_id": null,
+    "group_id": "g-aldersgrans-sociala-medier",
     "title": "Införa åldersgräns på 15 år för sociala medier",
     "slug": "infora-aldersgrans-pa-15-ar-for-sociala-medier",
     "parties": [
@@ -24392,7 +24441,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "82f56108a6df33587d12dd2f659a493c0510b719",
+        "change": "Lagt i grupp med Liberalernas löfte om samma åldersgräns. Samma politik hos olika partier räknas en gång. Beloppet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -28051,6 +28106,924 @@
       "model": "deepseek-v4-pro",
       "verified_by": "granskare",
       "run_id": "manuell-granskning-2026-08-05-andrade"
+    }
+  },
+  {
+    "id": "p-2026-0662",
+    "group_id": null,
+    "title": "Skydda minst 30 procent av land och hav",
+    "slug": "skydda-minst-30-procent-av-land-och-hav",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "skydda minst 30 procent av land och hav,",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/mp-infor-ett-naturpolitiskt-ramverk/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden är mycket osäker och beror på val av instrument (frivilliga avtal, intrångsersättning, markköp, förvaltning). Estimatet bygger på antaganden om ytterligare areal som behöver skyddas och…",
+      "confidence": 0.4,
+      "calculation": "Nuvarande formellt skydd: ca 12 % land, 15 % hav. För att nå 30 % krävs ytterligare ~7,4 Mha land (18 % av 41 Mha) och ~2,3 Mha hav (15 % av 15,5 Mha). Totalt ~9,7 Mha. Kostnad per ha: vid inköp/intrång 5 000–20 000 kr (engångs) samt årlig förvaltning 100–500 kr/ha. Om åtagandet fördelas över tio år ger det en årlig statlig kostnad i spannet 0,5–10 mdkr, med 2 mdkr som ett mittenvärde. Osäkerheten motiverar ett brett intervall."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d3228cfe5d25d93c0d94b44ca0948dae875f7395",
+        "change": "Publicerat ur granskningskön. Citatet är en sats ur en uppräkning, men den namnger en egen åtgärd och går att läsa för sig. Löftet om ramverket eller planen som satserna hör till är prissatt till noll, så ingenting räknas två gånger."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-fragment"
+    }
+  },
+  {
+    "id": "p-2026-0663",
+    "group_id": null,
+    "title": "Restaurera skogar, våtmarker och vattendrag",
+    "slug": "restaurera-skogar-vatmarker-och-vattendrag",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "restaurera skogar, våtmarker och vattendrag,",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/mp-infor-ett-naturpolitiskt-ramverk/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 350,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett löfte utan belopp; utgår från nuvarande statliga anslag för restaurering av våtmarker (~200 mkr), skog (~90 mkr) och vattendrag (~60 mkr). Osäkerhet stor.",
+      "confidence": 0.3,
+      "calculation": "Bas: våtmarksrestaurering (NV) ~200 mkr, skogsrestaurering (Skogsstyrelsen) ~90 mkr, vattendragsrestaurering (HaV/länsstyrelser) uppskattningsvis ~60 mkr -> ~350 mkr/år. Bredd ger spann 150–600 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d3228cfe5d25d93c0d94b44ca0948dae875f7395",
+        "change": "Publicerat ur granskningskön. Citatet är en sats ur en uppräkning, men den namnger en egen åtgärd och går att läsa för sig. Löftet om ramverket eller planen som satserna hör till är prissatt till noll, så ingenting räknas två gånger."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-fragment"
+    }
+  },
+  {
+    "id": "p-2026-0664",
+    "group_id": null,
+    "title": "Stoppa rovdrift på skog och fiskbestånd",
+    "slug": "stoppa-rovdrift-pa-skog-och-fiskbestand",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "stoppa rovdrift på skog och fiskbestånd,",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/mp-infor-ett-naturpolitiskt-ramverk/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Att stoppa rovdrift på skog och fiskbestånd görs med regler och kvoter, inte med anslag. En reglering kostar staten försumbart att införa; beloppet avser åtgärden, inte dess följder för näringarna.",
+      "confidence": 0.8,
+      "calculation": "Att stoppa rovdrift på skog och fiskbestånd görs med regler och kvoter, inte med anslag. En reglering kostar staten försumbart att införa; beloppet avser åtgärden, inte dess följder för näringarna."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d3228cfe5d25d93c0d94b44ca0948dae875f7395",
+        "change": "Publicerat ur granskningskön. Citatet är en sats ur en uppräkning, men den namnger en egen åtgärd och går att läsa för sig. Löftet om ramverket eller planen som satserna hör till är prissatt till noll, så ingenting räknas två gånger."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-fragment"
+    }
+  },
+  {
+    "id": "p-2026-0665",
+    "group_id": null,
+    "title": "Starta arbetet med ett statligt hbtqi-museum",
+    "slug": "starta-arbetet-med-ett-statligt-hbtqi-museum",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "påbörja arbetet med ett statligt hbtqi-museum. Museet ska både bevara och lyfta den svenska hbtqi-historien och arbeta med utbildning och kunskapsspridning i hela landet för att motverka fördomar och desinformation.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-07-31-socialdemokraterna-vill-starka-skyddet-for-hbtqi-personer",
+      "domain": "www.socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet är att PÅBÖRJA arbetet med ett museum, inte att driva ett. Ett förberedande arbete — utredning, samlingsplan, lokalfrågan — prissätts som försumbart, på samma grund som utredningslöften. Museets drift är inte utlovad här och prissätts därför inte.",
+      "confidence": 0.8,
+      "calculation": "Löftet är att PÅBÖRJA arbetet med ett museum, inte att driva ett. Ett förberedande arbete — utredning, samlingsplan, lokalfrågan — prissätts som försumbart, på samma grund som utredningslöften. Museets drift är inte utlovad här och prissätts därför inte."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d3228cfe5d25d93c0d94b44ca0948dae875f7395",
+        "change": "Publicerat ur granskningskön. Citatet är en sats ur en uppräkning, men den namnger en egen åtgärd och går att läsa för sig. Löftet om ramverket eller planen som satserna hör till är prissatt till noll, så ingenting räknas två gånger."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-fragment"
+    }
+  },
+  {
+    "id": "p-2026-0666",
+    "group_id": null,
+    "title": "Nationell plan för datacenter med klimat- och samhällsnytta",
+    "slug": "nationell-plan-for-datacenter-med-klimat-och-samhallsnytta",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "tar fram en nationell plan för datacenter där etableringar bedöms utifrån klimat- och samhällsnytta,",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/126583/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet är att ta fram en nationell plan. Ett planarbete prissätts som försumbart — det är den politik planen kan leda till som skulle kosta, och den är inte utlovad här.",
+      "confidence": 0.8,
+      "calculation": "Löftet är att ta fram en nationell plan. Ett planarbete prissätts som försumbart — det är den politik planen kan leda till som skulle kosta, och den är inte utlovad här."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d3228cfe5d25d93c0d94b44ca0948dae875f7395",
+        "change": "Publicerat ur granskningskön. Citatet är en sats ur en uppräkning, men den namnger en egen åtgärd och går att läsa för sig. Löftet om ramverket eller planen som satserna hör till är prissatt till noll, så ingenting räknas två gånger."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-fragment"
+    }
+  },
+  {
+    "id": "p-2026-0667",
+    "group_id": null,
+    "title": "Krav på datacenter att investera i ny förnybar elproduktion",
+    "slug": "krav-pa-datacenter-att-investera-i-ny-fornybar-elproduktion",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "ställer krav på att datacenter investerar i ny förnybar elproduktion motsvarande sin elanvändning,",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/126583/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Ett krav på att datacenter själva investerar i förnybar elproduktion är en reglering. Kostnaden bärs av den som etablerar datacentret, inte av staten.",
+      "confidence": 0.8,
+      "calculation": "Ett krav på att datacenter själva investerar i förnybar elproduktion är en reglering. Kostnaden bärs av den som etablerar datacentret, inte av staten."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d3228cfe5d25d93c0d94b44ca0948dae875f7395",
+        "change": "Publicerat ur granskningskön. Citatet är en sats ur en uppräkning, men den namnger en egen åtgärd och går att läsa för sig. Löftet om ramverket eller planen som satserna hör till är prissatt till noll, så ingenting räknas två gånger."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-fragment"
+    }
+  },
+  {
+    "id": "p-2026-0668",
+    "group_id": null,
+    "title": "Krav på förnybar reservkraft i datacenter",
+    "slug": "krav-pa-fornybar-reservkraft-i-datacenter",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "säkerställer att reservkraften är förnybar och kan bidra till ett stabilt elsystem,",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/126583/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Ett krav på att reservkraften ska vara förnybar är en reglering som riktas mot anläggningsägaren. Statens direkta kostnad är försumbar.",
+      "confidence": 0.8,
+      "calculation": "Ett krav på att reservkraften ska vara förnybar är en reglering som riktas mot anläggningsägaren. Statens direkta kostnad är försumbar."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d3228cfe5d25d93c0d94b44ca0948dae875f7395",
+        "change": "Publicerat ur granskningskön. Citatet är en sats ur en uppräkning, men den namnger en egen åtgärd och går att läsa för sig. Löftet om ramverket eller planen som satserna hör till är prissatt till noll, så ingenting räknas två gånger."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-fragment"
+    }
+  },
+  {
+    "id": "p-2026-0669",
+    "group_id": null,
+    "title": "Krav på tillvaratagande av spillvärme från datacenter",
+    "slug": "krav-pa-tillvaratagande-av-spillvarme-fran-datacenter",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "inför krav på att spillvärme från datacenter tas tillvara, exempelvis i fjärrvärmenät.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/126583/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Ett krav på att spillvärme tas tillvara är en reglering. Investeringen görs av datacentret och fjärrvärmebolaget; staten betalar inte för den.",
+      "confidence": 0.8,
+      "calculation": "Ett krav på att spillvärme tas tillvara är en reglering. Investeringen görs av datacentret och fjärrvärmebolaget; staten betalar inte för den."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d3228cfe5d25d93c0d94b44ca0948dae875f7395",
+        "change": "Publicerat ur granskningskön. Citatet är en sats ur en uppräkning, men den namnger en egen åtgärd och går att läsa för sig. Löftet om ramverket eller planen som satserna hör till är prissatt till noll, så ingenting räknas två gånger."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-fragment"
+    }
+  },
+  {
+    "id": "p-2026-0670",
+    "group_id": null,
+    "title": "Miljöpartiet vill förstärka resurser till elevhälsan och psykiatrin",
+    "slug": "miljopartiet-vill-forstarka-resurser-till-elevhalsan-och-psykiatrin",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Miljöpartiet vill se förstärkta resurser till elevhälsan, BUP, vuxenpsykiatrin och primärvården.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/amanda-linds-sprakrorstal-pa-jarvaveckan/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet räknar upp fyra verksamheter — elevhälsan, barn- och ungdomspsykiatrin, vuxenpsykiatrin och primärvården — och säger att resurserna ska förstärkas, men anger ingen nivå för någon av dem. Det är en övergripande formulering vars delar partiet prissätter var för sig: satsningen på elevhälsan ligger på p-2026-0443 med 800 miljoner kronor per år. Att sätta ett belopp här skulle räkna samma politik två gånger.",
+      "confidence": 0.75,
+      "calculation": "Löftet räknar upp fyra verksamheter — elevhälsan, barn- och ungdomspsykiatrin, vuxenpsykiatrin och primärvården — och säger att resurserna ska förstärkas, men anger ingen nivå för någon av dem. Det är en övergripande formulering vars delar partiet prissätter var för sig: satsningen på elevhälsan ligger på p-2026-0443 med 800 miljoner kronor per år. Att sätta ett belopp här skulle räkna samma politik två gånger."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d6e3810539dda1402e6a69adcef5fa025f89f28e",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös, men beloppet följer av vad löftet FAKTISKT åtar sig — inte av ett ankare som saknas."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-ankarlosa"
+    }
+  },
+  {
+    "id": "p-2026-0671",
+    "group_id": null,
+    "title": "Avveckla oljeberoendet och investera i tåg, elbil och förnybart",
+    "slug": "avveckla-oljeberoendet-och-investera-i-tag-elbil-och-fornybart",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Göra slut med oljeberoendet genom att investera i tågen, göra det billigare att byta till elbil, bygga ut den förnybara energin och spara energi i byggnader och industri",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.mp.se/just-nu/earth-overshoot-day-naturkrisen-ar-en-sakerhetsfraga/",
+      "domain": "www.mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet räknar upp fyra åtgärder — investera i tågen, göra det billigare att byta till elbil, bygga ut den förnybara energin och spara energi — utan att ange nivå för någon av dem. En uppräkning över flera politikområden utan konkret åtagande prissätts inte; delarna ligger på partiets specifika löften och får inte dubbelräknas.",
+      "confidence": 0.75,
+      "calculation": "Löftet räknar upp fyra åtgärder — investera i tågen, göra det billigare att byta till elbil, bygga ut den förnybara energin och spara energi — utan att ange nivå för någon av dem. En uppräkning över flera politikområden utan konkret åtagande prissätts inte; delarna ligger på partiets specifika löften och får inte dubbelräknas."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d6e3810539dda1402e6a69adcef5fa025f89f28e",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös, men beloppet följer av vad löftet FAKTISKT åtar sig — inte av ett ankare som saknas."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-ankarlosa"
+    }
+  },
+  {
+    "id": "p-2026-0672",
+    "group_id": null,
+    "title": "NABY – ny nationell bostadspolitik som strukturreform",
+    "slug": "naby-ny-nationell-bostadspolitik-som-strukturreform",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Vänsterpartiet föreslår en historisk strukturreform – en ny nationell bostadspolitik (NABY-modellen).",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+      "domain": "www.vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet namnger en reform men anger ingen nivå — 'historisk' är ett värdeord och ingen siffra. Det är reformens övergripande formulering; dess delar är egna löften som prissätts var för sig. Beloppet noll här hindrar att modellen räknas både som helhet och som delar.",
+      "confidence": 0.75,
+      "calculation": "Löftet namnger en reform men anger ingen nivå — 'historisk' är ett värdeord och ingen siffra. Det är reformens övergripande formulering; dess delar är egna löften som prissätts var för sig. Beloppet noll här hindrar att modellen räknas både som helhet och som delar."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d6e3810539dda1402e6a69adcef5fa025f89f28e",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös, men beloppet följer av vad löftet FAKTISKT åtar sig — inte av ett ankare som saknas."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-ankarlosa"
+    }
+  },
+  {
+    "id": "p-2026-0673",
+    "group_id": null,
+    "title": "Omkring 20 000 nya hyresrätter per år",
+    "slug": "omkring-20-000-nya-hyresratter-per-ar",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Målet är att skapa förutsättningar för omkring 20 000 nya hyresrätter om året med hyror som vanliga låg- och medelinkomsttagare har råd att betala.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+      "domain": "www.vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet anger ett mål — omkring 20 000 nya hyresrätter om året — men åtagandet är att skapa FÖRUTSÄTTNINGAR för dem, inte att betala för dem. Förutsättningarna är reformens egna delar: reglerade markkostnader, statliga kreditgarantier och nationell bostadsplanering. De prissätts var för sig, och målet självt är ingen egen utgift.",
+      "confidence": 0.75,
+      "calculation": "Löftet anger ett mål — omkring 20 000 nya hyresrätter om året — men åtagandet är att skapa FÖRUTSÄTTNINGAR för dem, inte att betala för dem. Förutsättningarna är reformens egna delar: reglerade markkostnader, statliga kreditgarantier och nationell bostadsplanering. De prissätts var för sig, och målet självt är ingen egen utgift."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d6e3810539dda1402e6a69adcef5fa025f89f28e",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös, men beloppet följer av vad löftet FAKTISKT åtar sig — inte av ett ankare som saknas."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-ankarlosa"
+    }
+  },
+  {
+    "id": "p-2026-0674",
+    "group_id": null,
+    "title": "Statligt garanterade krediter för bostadsbyggande",
+    "slug": "statligt-garanterade-krediter-for-bostadsbyggande",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Tillgång till statligt garanterade krediter",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+      "domain": "www.vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 100,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "En kreditgaranti kostar staten bara de förluster som faktiskt inträffar, inte garantins belopp.",
+      "confidence": 0.4,
+      "calculation": "En statlig kreditgaranti är inte en utbetalning. Staten betalar bara när en låntagare fallerar, och tar samtidigt ut en avgift som ska täcka den förväntade förlusten. Nettokostnaden är därför liten och består av skillnaden mellan avgifter och faktiska förluster, plus administration. Löftet anger ingen garantivolym, så beloppet sätts lågt med ett brett spann uppåt om utfallet blir sämre än avgifterna täcker."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d6e3810539dda1402e6a69adcef5fa025f89f28e",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös, men beloppet följer av vad löftet FAKTISKT åtar sig — inte av ett ankare som saknas."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-ankarlosa"
+    }
+  },
+  {
+    "id": "p-2026-0675",
+    "group_id": null,
+    "title": "Nationell bostadsplanering med utpekade byggbehov",
+    "slug": "nationell-bostadsplanering-med-utpekade-byggbehov",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Nationell bostadsplanering med utpekade byggbehov",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+      "domain": "www.vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 40,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "En planeringsfunktion inom befintlig förvaltning: några tjänster och underlagsarbete.",
+      "confidence": 0.5,
+      "calculation": "Löftet är en löpande planeringsfunktion som pekar ut byggbehov nationellt, inte ett stöd eller en subvention. Kostnaden är några tjänster med underlagsarbete inom befintlig myndighetsstruktur — i storleksordningen tio till tjugo tjänster à omkring en miljon kronor per år inklusive omkostnader. Spannet rymmer allt från ett litet kansli till en egen enhet."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "d6e3810539dda1402e6a69adcef5fa025f89f28e",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös, men beloppet följer av vad löftet FAKTISKT åtar sig — inte av ett ankare som saknas."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-ankarlosa"
+    }
+  },
+  {
+    "id": "p-2026-0676",
+    "group_id": null,
+    "title": "Införa ett nytt återvinningskliv",
+    "slug": "infora-ett-nytt-atervinningskliv",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "4. Ett nytt återvinningskliv",
+    "date_stated": "2026-05-18",
+    "source": {
+      "url": "https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
+      "domain": "mp.se",
+      "archive_url": "https://web.archive.org/web/20260804120002/https://www.mp.se/just-nu/mp-presenterar-industripaket-for-hallbar-konkurrenskraft/",
+      "fetched_at": "2026-05-18T10:04:12.000Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 1000,
+      "msek_high": 5400,
+      "basis": "myndighet",
+      "basis_url": "https://www.naturvardsverket.se/amnesomraden/klimatomstallningen/klimatklivet/",
+      "method_note": "Ankrat i vad statens befintliga investeringskliv faktiskt kostar. Löftet anger ingen nivå.",
+      "confidence": 0.35,
+      "calculation": "Löftet pekar ut en åtgärd — ett nytt kliv för återvinning — men anger ingen nivå. Beloppet ankras därför i vad ett befintligt kliv kostar: Klimatklivet beviljade 5 400 miljoner kronor i stöd under 2024 (anslag 1:16 Klimatinvesteringar). Klimatklivet är dock brett och täcker alla klimatinvesteringar, medan ett återvinningskliv riktas mot en sektor. Basbeloppet sätts därför till en femtedel, 1 000 miljoner per år, och spannet sträcker sig från ett litet riktat program upp till Klimatklivets egen nivå."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "93ec57b97d16d3cfafbbc9d8d7c734e6e16d088a",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös; ankaret hämtades från en offentlig källa och står nu utskrivet i den publika uträkningen, med adress."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-kallor"
+    }
+  },
+  {
+    "id": "p-2026-0677",
+    "group_id": null,
+    "title": "KD inför högkostnadsskydd mot höga elpriser",
+    "slug": "kd-infor-hogkostnadsskydd-mot-hoga-elpriser",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Högkostnadsskydd mot höga elpriser införs.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/en-budget-for-familjen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 3400,
+      "msek_high": 17000,
+      "basis": "myndighet",
+      "basis_url": "https://www.regeringen.se/pressmeddelanden/2026/03/stod-till-hushall-till-foljd-av-okade-energipriser/",
+      "method_note": "Ankrat i vad statens senaste elstöd faktiskt kostade. Utfallet beror helt på elpriserna.",
+      "confidence": 0.3,
+      "calculation": "Löftet pekar ut en åtgärd — ett högkostnadsskydd mot höga elpriser — utan att ange nivå, så beloppet ankras i vad staten senast faktiskt betalat för samma sak. Det elstöd till hushållen som regeringen beslutade 2026 kostar omkring 3 400 miljoner kronor. Ett högkostnadsskydd är en stående konstruktion vars utfall helt beror på elpriserna: ett år med normala priser kostar det nära noll, medan krisåret 2023 kostade elstödet till södra och mellersta Sverige omkring 17 000 miljoner. Spannet speglar det."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "93ec57b97d16d3cfafbbc9d8d7c734e6e16d088a",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös; ankaret hämtades från en offentlig källa och står nu utskrivet i den publika uträkningen, med adress."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-kallor"
+    }
+  },
+  {
+    "id": "p-2026-0678",
+    "group_id": null,
+    "title": "Korta vårdgarantin från 90 till 30 dagar",
+    "slug": "korta-vardgarantin-fran-90-till-30-dagar",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Moderaternas vallöfte är att korta vårdgarantin från 90 till 30 dagar.",
+    "date_stated": "2026-08-05",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/vallofte-ingen-ska-vanta-mer-an-30-dagar-pa-att-fa-vard/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-05T12:01:00.000Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 6600,
+      "msek_high": 15000,
+      "basis": "myndighet",
+      "basis_url": "https://www.regeringen.se/pressmeddelanden/2025/09/miljardsatsning-mot-vardkoer-och-andra-riktade-satsningar-till-halso--och-sjukvarden/",
+      "method_note": "Ankrat i vad staten i dag betalar för att korta köerna. Själva garantin är en regeländring; kostnaden är vården som krävs för att klara den.",
+      "confidence": 0.35,
+      "calculation": "Att korta vårdgarantin från 90 till 30 dagar är i sig en regeländring, men den kräver att vård faktiskt utförs snabbare, och det är den kostnaden som prissätts. Ankaret är vad staten i dag betalar för samma syfte: 6 600 miljoner kronor avsätts 2026 i prestationsbaserade medel till regionerna för kortare köer och ökad tillgänglighet. Att tredubbla kravet på hur snabbt vården ska ges kräver minst en fortsatt sådan satsning. Spannet rymmer allt från halva dagens nivå till mer än en dubblering."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "93ec57b97d16d3cfafbbc9d8d7c734e6e16d088a",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös; ankaret hämtades från en offentlig källa och står nu utskrivet i den publika uträkningen, med adress."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-kallor"
+    }
+  },
+  {
+    "id": "p-2026-0679",
+    "group_id": null,
+    "title": "Statligt stöd för kommunala bostadsbolag att rädda förfallna områden",
+    "slug": "statligt-stod-for-kommunala-bostadsbolag-att-radda-forfallna-omraden",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Vi vill också införa statligt stöd så att kommunala bostadsbolag har möjlighet att rädda områden som fått förfalla.",
+    "date_stated": "2026-06-27",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+      "domain": "vansterpartiet.se",
+      "archive_url": "https://web.archive.org/web/20260709051254/https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+      "fetched_at": "2026-06-27"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 3000,
+      "basis": "myndighet",
+      "basis_url": "https://www.boverket.se/sv/bidrag--garantier/stod-for-hyresbostader-och-bostader-for-studerande/",
+      "method_note": "Ankrat i statens senaste investeringsstöd för hyresbostäder, nedskalat eftersom löftet riktas mot ett smalare ändamål.",
+      "confidence": 0.35,
+      "calculation": "Löftet pekar ut ett statligt stöd men anger ingen nivå. Ankaret är statens senaste stöd av samma slag: investeringsstödet för hyresbostäder låg på omkring 3 000 miljoner kronor per år från 2021 och är under avveckling. Det stödet gällde all nyproduktion av hyresrätter, medan löftet riktas mot att rädda eftersatta områden — ett smalare ändamål. Basbeloppet sätts därför till en tredjedel, och spannet sträcker sig upp till hela det tidigare stödets nivå."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "93ec57b97d16d3cfafbbc9d8d7c734e6e16d088a",
+        "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös; ankaret hämtades från en offentlig källa och står nu utskrivet i den publika uträkningen, med adress."
+      }
+    ],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "granskare",
+      "run_id": "manuell-granskning-2026-08-05-kallor"
     }
   }
 ]
