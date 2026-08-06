@@ -21,9 +21,10 @@
  * riksdagen om samma dokument igen.
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { fetchDokumentText, fetchUtskottspunkter, fetchYrkanden, type HttpFetch, type Yrkande } from "../src/riksdagen.ts";
+import { fetchDokumentText, fetchUtskottspunkter, fetchYrkanden, type Yrkande } from "../src/riksdagen.ts";
+import { cachat, politeFetch } from "./kallcache.mts";
 import { normalizeForVerbatim } from "../src/grindar.ts";
 import { nyckelord, type Lofte } from "../src/foreslag.ts";
 import type { Handling } from "../src/handlingar.ts";
@@ -31,27 +32,6 @@ import type { KoPost } from "../src/granskning.ts";
 import { kopplingId } from "../src/granskning.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
-const cacheDir = resolve(rot, "data/.kallcache");
-
-const politeFetch: HttpFetch = async (url) => {
-  await new Promise((r) => setTimeout(r, 200));
-  return fetch(url);
-};
-
-/** Hämtar en gång per dokument och nyckel, sedan ur cachen. */
-async function cachat<T>(nyckel: string, hamta: () => Promise<T>): Promise<T | null> {
-  if (!existsSync(cacheDir)) mkdirSync(cacheDir, { recursive: true });
-  const fil = resolve(cacheDir, `${nyckel.replace(/[^A-Za-z0-9_.-]/gu, "_")}.json`);
-  if (existsSync(fil)) return JSON.parse(readFileSync(fil, "utf8")) as T;
-  try {
-    const v = await hamta();
-    writeFileSync(fil, JSON.stringify(v));
-    return v;
-  } catch (e) {
-    console.error(`  hämtning misslyckades (${nyckel}): ${e instanceof Error ? e.message : String(e)}`);
-    return null;
-  }
-}
 
 export interface Utfall {
   koppling_id: string;
