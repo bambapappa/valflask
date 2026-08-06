@@ -6,7 +6,18 @@
  * sagt ja till en genomgången hög inte ska behöva köra 175 kommandon; det
  * fattar inga egna beslut och godkänner ingenting som inte står i listan.
  *
- *   npm run godkann-lista -- <fil med ett koppling-id per rad> [--skriv]
+ *   npm run godkann-lista -- <fil med en rad per koppling> [--skriv]
+ *
+ * En rad är antingen bara ett koppling-id, eller id och ett nytt bevis
+ * åtskilda av tabb:
+ *
+ *   7c56af6fd555
+ *   4e1d9fd1407a<TAB>Riksdagen ställer sig bakom det som anförs i motionen om…
+ *
+ * Anges ett nytt bevis hämtas källdokumentet och citatet prövas ordagrant
+ * mot det innan godkännandet — samma kontroll som när en granskare byter
+ * bevis en post i taget. Skriptet väljer aldrig citat själv; det prövar
+ * bara det som står i listan.
  *
  * Utan --skriv görs allt utom skrivningen — kör alltid så först.
  * Rader som börjar med # är kommentarer.
@@ -15,10 +26,13 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
+import { fetchDokumentText } from "../src/riksdagen.ts";
+import { cachat, politeFetch } from "./kallcache.mts";
 import {
   findIndexByKopplingId,
   godkannForslag,
   GranskningsFel,
+  provaNyttBevis,
   type KopplingPost,
   type KoPost,
 } from "../src/granskning.ts";
@@ -34,10 +48,13 @@ if (!listfil) {
   process.exit(1);
 }
 
-const idn = readFileSync(resolve(listfil), "utf8")
+const rader = readFileSync(resolve(listfil), "utf8")
   .split("\n")
-  .map((r) => r.trim())
-  .filter((r) => r !== "" && !r.startsWith("#"));
+  .filter((r) => r.trim() !== "" && !r.trimStart().startsWith("#"))
+  .map((r) => {
+    const [id, bevis] = r.split("\t");
+    return { id: id!.trim(), bevis: bevis?.trim() || undefined };
+  });
 
 let ko: KoPost[] = JSON.parse(readFileSync(koPath, "utf8"));
 let kopplingar: KopplingPost[] = existsSync(kopplingarPath)
@@ -47,14 +64,43 @@ const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handli
 
 const fore = kopplingar.length;
 const fel: string[] = [];
-for (const id of idn) {
+let bytta = 0;
+for (const { id, bevis } of rader) {
   const index = findIndexByKopplingId(ko, id);
   if (index === -1) {
     fel.push(`${id}: finns inte i kön (redan avgjord?)`);
     continue;
   }
+  const post = ko[index]!;
+
+  // Ett utbytt bevis prövas mot källdokumentet FÖRE godkännandet. Går texten
+  // inte att hämta godkänns posten inte — en kontroll som tyst uteblir är
+  // värre än ingen kontroll alls.
+  if (bevis !== undefined) {
+    const handling = handlingar.find((h) => h.id === post.handling_id);
+    const kallDok = post.bevis.kalla_dok_id ?? handling?.dok_id;
+    if (!kallDok) {
+      fel.push(`${id}: handlingen saknar dokument-id — det nya beviset går inte att pröva`);
+      continue;
+    }
+    const text = await cachat(`text-${kallDok}`, () => fetchDokumentText(politeFetch, kallDok));
+    if (text === null) {
+      fel.push(`${id}: källdokumentet ${kallDok} gick inte att hämta — beviset oprövat`);
+      continue;
+    }
+    const prov = provaNyttBevis(bevis, text);
+    if (!prov.ok) {
+      fel.push(`${id}: ${prov.skal}`);
+      continue;
+    }
+    bytta += 1;
+  }
+
   try {
-    const res = godkannForslag(ko, index, kopplingar, handlingar, { year: 2026 });
+    const res = godkannForslag(ko, index, kopplingar, handlingar, {
+      year: 2026,
+      ...(bevis !== undefined ? { bevis } : {}),
+    });
     kopplingar = res.kopplingar;
     ko = res.ko;
   } catch (e) {
@@ -62,7 +108,10 @@ for (const id of idn) {
   }
 }
 
-console.log(`${idn.length} id i listan — ${kopplingar.length - fore} godkända, ${fel.length} föll`);
+console.log(
+  `${rader.length} rader i listan — ${kopplingar.length - fore} godkända ` +
+    `(${bytta} med bevis utbytt och prövat ordagrant), ${fel.length} föll`,
+);
 for (const f of fel) console.log(`  ${f}`);
 console.log(`kön: ${ko.length} kvar`);
 
