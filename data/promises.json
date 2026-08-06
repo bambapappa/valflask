@@ -1117,14 +1117,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10000,
-      "msek_base": 25000,
-      "msek_high": 50000,
-      "basis": "llm_estimat",
+      "msek_low": 5000,
+      "msek_base": 10000,
+      "msek_high": 25000,
+      "basis": "granskare",
       "basis_url": "https://www.regeringen.se/regeringens-politik/forsvarsbudget/",
-      "method_note": "Omfattande upprustning utan angiven nivå. Prissatt på samma grund som andra partiers försvarslöften, mellan den beslutade banan och femprocentsmålet.",
-      "confidence": 0.35,
-      "calculation": "Löftet anger ingen nivå — varken andel av BNP, årtal eller antal värnpliktiga — så det prissätts på samma grund som andra partiers försvarslöften. Försvarsanslagen är 175 miljarder kronor 2026, och beslutade planer tar dem till 3,1 procent av BNP från 2028. En omfattande upprustning utöver den banan, men utan det femprocentsmål som andra partier skrivit ut, ligger rimligen mellan de två: basbeloppet är 25 miljarder kronor per år. Det tidigare beloppet, 60 miljarder, motsvarade halva försvarsbudgeten och vilade bara på ordet omfattande."
+      "method_note": "Upprustning utan angiven nivå. Ankrad i det senast beslutade tillskottet till försvarsanslaget, 10 miljarder kronor i budgeten för 2026. Femprocentsmålet är andra partiers nivå och sätter inte beloppet.",
+      "confidence": 0.4,
+      "calculation": "Löftet pekar ut en åtgärd — upprustning av försvaret och fler värnpliktiga — men anger ingen nivå: varken andel av BNP, årtal eller antal. Beloppet ankras därför i vad samma åtgärd senast faktiskt kostade. Regeringen skriver att anslagen till det militära försvaret \"tillförs 10 miljarder kronor 2026\", utöver uppräkningar och tidigare beslut. Det tillskottet är basbeloppet: 10 miljarder kronor per år. Det låga alternativet gäller om ett sådant tillskott trappas upp och når full nivå först sista året, vilket i genomsnitt kostar ungefär hälften. Det höga gäller om ett lika stort tillskott läggs till i varje budget 2027–2030 — 10, 20, 30 och 40 miljarder, i snitt 25. Värnpliktens utbyggnad betalas ur samma anslag och räknas inte en gång till."
     },
     "financing_claimed": {
       "described": false,
@@ -1144,6 +1144,11 @@
         "date": "2026-07-27",
         "change": "Omräknat från 60 000 till 25 000 miljoner kronor per år. Det gamla basbeloppet var en tolkning av ordet omfattande — halva försvarsbudgeten — utan annan grund. Beloppet ligger nu mellan den beslutade banan och det femprocentsmål andra partier satt ut, och uträkningen skriver ut att löftet inte anger någon nivå.",
         "commit": "dca6173ccf4dace78ee3557397b923dd8d58cf8c"
+      },
+      {
+        "date": "2026-08-06",
+        "change": "Omräknat från 25 000 till 10 000 miljoner kronor per år. Det gamla basbeloppet var mitten mellan den försvarsbana som redan är beslutad och det mål om fem procent av BNP som Moderaterna, Liberalerna och Centerpartiet satt ut — en nivå Socialdemokraterna inte ställt sig bakom, och en siffra ingen har sagt. Beloppet vilar nu på vad den senast beslutade höjningen av försvarsanslaget faktiskt kostade: tio miljarder kronor i budgeten för 2026, utöver uppräkningar och tidigare beslut. Osäkerheten om hur omfattande en upprustning blir ligger i spannet, 5 000 till 25 000 miljoner kronor per år, i stället för i basbeloppet.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
