@@ -27,5 +27,122 @@
       "calculation": "Ingen kvantifierbar åtgärd; kostnaden bärs av eventuella senare specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Haverikommission ska tillsättas varje gång en kvinna mördas",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi föreslår att en haverikommission ska tillsättas varje gång en kvinna mördas, vi lovar att skärpa uppföljningen av de åtgärdsförslag som haverikommissionerna lämnar och att analysera hur vi snabbare kan få åtgärder på plats på nationell, regional och lokal nivå.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/ingen-kvinna-ska-mordas-av-en-man/",
+    "articleTitle": "Ingen kvinna ska mördas av en man | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 60,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad per tillsatt haverikommission uppskattad till 1,5–5 mkr. Antagande om ~20 fall av mord på kvinnor per år. Osäkerhet kring utredningsomfattning och antal fall.",
+      "confidence": 0.5,
+      "calculation": "~20 mord/år × 1,5–5 mkr per utredning = 30–100 mkr/år. Base satt till 60 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Liberalerna vill fortsätta driva en borgerlig skolpolitik",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi vill fortsätta att driva en borgerlig skolpolitik.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/liberalernas-valmanifest-2026",
+    "articleTitle": "Vår politik valet 2026 – Liberalerna",
+    "verifyReason": "Citatet beskriver en allmän ideologisk inriktning ('borgerlig skolpolitik') snarare än ett konkret och mätbart vallöfte med specifika åtgärder."
+  },
+  {
+    "candidate": {
+      "title": "Liberalerna vill sänka skatten för den som utbildar sig",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "sänkt skatt för den som utbildar sig",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/liberalernas-valmanifest-2026",
+    "articleTitle": "Vår politik valet 2026 – Liberalerna",
+    "duplicateOf": "p-2026-0537"
+  },
+  {
+    "candidate": {
+      "title": "Liberalerna vill införa en personlig husläkare för den som blir sjuk",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "en personlig husläkare för den som blir sjuk",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/liberalernas-valmanifest-2026",
+    "articleTitle": "Vår politik valet 2026 – Liberalerna",
+    "duplicateOf": "p-2026-0487"
+  },
+  {
+    "candidate": {
+      "title": "Återinföra läxhjälps-RUT för barnfamiljer",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill återinföra läxhjälps-RUT som en del av partiets nya satsning på livspusselfeminism.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-barnfamiljerna-med-nytt-vallofte-om-laxhjalp",
+    "articleTitle": "Liberalerna stärker barnfamiljerna med nytt vallöfte om läxhjälp – Liberalerna",
+    "duplicateOf": "p-2026-0574"
+  },
+  {
+    "candidate": {
+      "title": "Klassa synagogor och judiska skolor som skyddsobjekt",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare för Liberalerna"
+      },
+      "quote": "Liberalerna vill därför att synagogor och judiska skolor ska kunna klassas som skyddsobjekt. Det skulle ge ett permanent och rättsligt förankrat skydd, där staten också tar ansvar för säkerheten och kostnaderna.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-skyddet-for-judiskt-liv-i-sverige",
+    "articleTitle": "Liberalerna stärker skyddet för judiskt liv i Sverige – Liberalerna",
+    "duplicateOf": "p-2026-0555"
   }
 ]
