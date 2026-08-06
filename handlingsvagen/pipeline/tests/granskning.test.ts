@@ -13,6 +13,7 @@ import {
   nyaKoPoster,
   parseGranskningsKommando,
   provaNyttBevis,
+  stadaAvgjorda,
   type KopplingPost,
   type KoPost,
 } from "../src/granskning.ts";
@@ -280,4 +281,43 @@ test("kopplingar sorteras på id vid godkännande", () => {
   ];
   const res = godkannForslag([koPost()], 0, befintliga, [handling()], { year: 2026 });
   assert.deepEqual(res.kopplingar.map((k) => k.id), ["k-2026-0002", "k-2026-0003"]);
+});
+
+/** En köpost som pekar på en ståndpunkt, eller på ingenting alls. */
+function utanLofte(post: KoPost): KoPost {
+  const { promise_id: _bort, ...rest } = post;
+  return rest;
+}
+
+test("stadaAvgjorda: förslag mot tillbakadragna och försvunna löften städas bort", () => {
+  const ko = [
+    koPost({ promise_id: "p-2026-0042", handling_id: "h-2026-0001" }), // aktivt
+    koPost({ promise_id: "p-2026-0131", handling_id: "h-2026-0002" }), // tillbakadraget
+    koPost({ promise_id: "p-2026-9999", handling_id: "h-2026-0003" }), // finns inte
+    utanLofte(koPost({ stance_id: "sq-1::v", handling_id: "h-2026-0004" })),
+  ];
+  const { kvar, bortstadade } = stadaAvgjorda(ko, new Set(["p-2026-0042"]));
+  assert.deepEqual(
+    kvar.map((p) => p.handling_id),
+    ["h-2026-0001", "h-2026-0004"],
+  );
+  assert.deepEqual(
+    bortstadade.map((p) => p.promise_id),
+    ["p-2026-0131", "p-2026-9999"],
+  );
+});
+
+test("stadaAvgjorda: en ståndpunktskoppling rörs inte", () => {
+  // Ståndpunkternas id-form är inte fastställd — en gissning hade tömt kön.
+  const post = utanLofte(koPost({ stance_id: "sq-9::m", handling_id: "h-2026-0005" }));
+  const { kvar, bortstadade } = stadaAvgjorda([post], new Set(["p-2026-0042"]));
+  assert.equal(kvar.length, 1);
+  assert.equal(bortstadade.length, 0);
+});
+
+test("stadaAvgjorda: en post utan mål alls tystas inte bort", () => {
+  const trasig = utanLofte(koPost({ handling_id: "h-2026-0006" }));
+  const { kvar, bortstadade } = stadaAvgjorda([trasig], new Set());
+  assert.equal(kvar.length, 1);
+  assert.equal(bortstadade.length, 0);
 });

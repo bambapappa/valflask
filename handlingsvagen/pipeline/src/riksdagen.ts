@@ -248,6 +248,43 @@ export async function fetchDokumentText(fetcher: HttpFetch, dokId: string): Prom
   return htmlTillText(html);
 }
 
+/** Ett yrkande i en motion — det motionären faktiskt begär. */
+export interface Yrkande {
+  /** Yrkandenumret som det står i motionen ("1", "2", …). */
+  nummer: string;
+  /** Yrkandets lydelse: "Riksdagen ställer sig bakom det som anförs…". */
+  lydelse: string;
+}
+
+/**
+ * Motionens yrkanden — själva handlingen, skild från brödtexten.
+ *
+ * En motions handling är dess yrkande. Brödtexten argumenterar FÖR yrkandet;
+ * den är inte handlingen. Utan den här listan får modellen bara dokumentets
+ * löpande text och belägger gärna kopplingen med en problembeskrivning
+ * ("Sverige behöver fler poliser i hela landet") i stället för med det
+ * motionären begär. Vid genomgången av kopplingskön 2026-08-06 var det skälet
+ * till att vart tredje förslag behövde vägas om.
+ *
+ * Lydelserna står ordagrant i dokumentets egen text ("Förslag till
+ * riksdagsbeslut"), så ett citat ur ett yrkande passerar den ordagranna
+ * kontrollen mot källtexten.
+ */
+export async function fetchYrkanden(fetcher: HttpFetch, dokId: string): Promise<Yrkande[]> {
+  const payload = (await getJson(fetcher, `${BASE}/dokumentstatus/${dokId}.json`)) as {
+    dokumentstatus?: { dokforslag?: { forslag?: unknown } };
+  };
+  const lista = asArray(payload.dokumentstatus?.dokforslag?.forslag as unknown);
+  const ut: Yrkande[] = [];
+  for (const y of lista as Array<Record<string, unknown>>) {
+    // Vissa yrkanden bär sin text i lydelse2 (lagförslag med två led).
+    const lydelse = htmlTillText(String(y["lydelse"] ?? "")) || htmlTillText(String(y["lydelse2"] ?? ""));
+    if (lydelse === "") continue;
+    ut.push({ nummer: String(y["nummer"] ?? ""), lydelse });
+  }
+  return ut;
+}
+
 /** En förslagspunkt i ett betänkande — det kammaren faktiskt röstade om. */
 export interface Utskottspunkt {
   /** Punktnumret, som en voterings `punkt`. */

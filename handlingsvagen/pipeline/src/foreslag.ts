@@ -14,7 +14,7 @@ import { aktorsPartier, type Handling } from "./handlingar.ts";
 import { taOrd, termPoang, type DokumentTermer } from "./nyckelord.ts";
 import { stamma } from "./stam.ts";
 import type { LlmClient } from "./llm.ts";
-import type { Utskottspunkt } from "./riksdagen.ts";
+import type { Utskottspunkt, Yrkande } from "./riksdagen.ts";
 import { provaGrindarna, type GrindFel, type GrindKontext, type KopplingsForslag } from "./grindar.ts";
 
 /** Löftesfälten förslagssteget behöver (delmängd av valflask promises.json). */
@@ -304,6 +304,7 @@ export function byggPrompt(
   kalltext: string,
   betankande?: Betankande,
   punkt?: Utskottspunkt,
+  yrkanden?: Yrkande[],
 ): string {
   return [
     `LÖFTE (${lofte.parties.join(", ").toUpperCase()}): ${lofte.title}`,
@@ -333,6 +334,20 @@ export function byggPrompt(
             "sak för att belägga löftet: svara att ingen koppling finns.",
         ]
       : []),
+    // Motionens yrkanden — själva handlingen. Brödtexten argumenterar för
+    // yrkandet; den är inte handlingen. Utan listan citerades gärna en
+    // problembeskrivning ur brödtexten som bevis.
+    ...(yrkanden && yrkanden.length > 0
+      ? [
+          "",
+          `MOTIONENS YRKANDEN — DET HÄR ÄR HANDLINGEN (${yrkanden.length} st):`,
+          ...yrkanden.map((y) => `  ${y.nummer}. ${y.lydelse}`),
+          "VIKTIGT: citatet ska stå i ETT av yrkandena ovan. Brödtexten under " +
+            "DOKUMENTTEXT argumenterar för yrkandena — den är inte handlingen, " +
+            "och ett citat därifrån duger inte som bevis. Träffar inget yrkande " +
+            "löftets sakfråga: svara att ingen koppling finns.",
+        ]
+      : []),
     "",
     "DOKUMENTTEXT:",
     kalltext,
@@ -342,6 +357,23 @@ export function byggPrompt(
 export interface ForslagResultat {
   forslag: KopplingsForslag | null;
   grindfel: GrindFel[];
+}
+
+/**
+ * Vilken del av dokumentet som ÄR handlingen, i den form H2 prövar mot.
+ *
+ * Voteringen går före: gäller paret en votering är källtexten betänkandets,
+ * och då är punktens beslutstext handlingen — inte några yrkanden.
+ */
+export function byggHandlingstext(
+  punkt?: Utskottspunkt,
+  yrkanden?: Yrkande[],
+): GrindKontext["handlingstext"] {
+  if (punkt) return { sort: "beslutspunkt", delar: [punkt.forslag] };
+  if (yrkanden && yrkanden.length > 0) {
+    return { sort: "yrkanden", delar: yrkanden.map((y) => y.lydelse) };
+  }
+  return undefined;
 }
 
 /**
@@ -360,9 +392,10 @@ export async function skapaForslag(
   fonster: GrindKontext["fonster"],
   betankande?: Betankande,
   punkt?: Utskottspunkt,
+  yrkanden?: Yrkande[],
 ): Promise<ForslagResultat> {
   const svar = parseForslagSvar(
-    await llm.complete(byggPrompt(lofte, handling, kalltext, betankande, punkt), {
+    await llm.complete(byggPrompt(lofte, handling, kalltext, betankande, punkt, yrkanden), {
       systemPrompt,
       model,
       temperature: 0,
@@ -381,11 +414,16 @@ export async function skapaForslag(
     method_note: svar.motivering,
     confidence: svar.confidence,
   };
+  // Handlingens egen text, när vi har den: yrkandena för en motion, punktens
+  // beslutstext för en votering. H2 prövar att citatet står där och inte i
+  // brödtexten. Saknas den prövas bara det ordagranna.
+  const handlingstext = byggHandlingstext(punkt, yrkanden);
   const grindfel = provaGrindarna(forslag, {
     handling,
     kalltext,
     malPartier: lofte.parties,
     fonster,
+    ...(handlingstext ? { handlingstext } : {}),
   });
   return { forslag, grindfel };
 }

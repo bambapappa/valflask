@@ -19,7 +19,7 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
-import { fetchDokumentText, fetchUtskottspunkter, type HttpFetch, type Utskottspunkt } from "../src/riksdagen.ts";
+import { fetchDokumentText, fetchUtskottspunkter, fetchYrkanden, type HttpFetch, type Utskottspunkt, type Yrkande } from "../src/riksdagen.ts";
 import type { Betankande } from "../src/betankanden.ts";
 import type { Handling } from "../src/handlingar.ts";
 import { OpenRouterClient } from "../src/llm.ts";
@@ -79,6 +79,24 @@ async function hamtaPunkt(betDokId: string, punkt: number | null | undefined): P
     }
   }
   return punktCache.get(betDokId)!.find((p) => p.punkt === punkt);
+}
+
+/**
+ * Motionens yrkanden — handlingen, skild från brödtexten som argumenterar
+ * för den. Faller hämtningen körs paret ändå, men då prövar H2 bara att
+ * citatet står ordagrant någonstans i dokumentet. Det skrivs ut: en grind
+ * som tyst uteblir är värre än ingen grind alls.
+ */
+async function hamtaYrkanden(handling: Handling): Promise<Yrkande[] | undefined> {
+  if (handling.kind !== "motion") return undefined;
+  try {
+    const y = await fetchYrkanden(politeFetch, handling.dok_id);
+    if (y.length === 0) console.log(`  obs: ${handling.id} saknar yrkandelista — citatets plats prövas inte`);
+    return y;
+  } catch (e) {
+    console.log(`  obs: kunde inte hämta yrkandena för ${handling.dok_id} (${e instanceof Error ? e.message : String(e)}) — citatets plats prövas inte`);
+    return undefined;
+  }
 }
 
 async function main() {
@@ -189,7 +207,12 @@ async function main() {
         // körs paret ändå — utan punkttexten blir prompten den gamla, aldrig
         // ett stopp.
         const punkt = betankande ? await hamtaPunkt(betankande.dok_id, handling.punkt) : undefined;
-        const { forslag, grindfel } = await skapaForslag(llm!, systemPrompt, model, lofte, handling, kalltext, LAGE_A_FONSTER, betankande, punkt);
+        if (betankande && !punkt) {
+          console.log(`  obs: punkt ${handling.punkt ?? "?"} saknas i ${betankande.dok_id} — citatets plats prövas inte`);
+        }
+        // Motionens yrkanden: handlingen själv, som citatet ska stå i.
+        const yrkanden = betankande ? undefined : await hamtaYrkanden(handling);
+        const { forslag, grindfel } = await skapaForslag(llm!, systemPrompt, model, lofte, handling, kalltext, LAGE_A_FONSTER, betankande, punkt, yrkanden);
         // Paret är prövat klart — registreras oavsett utfall (förslag, nej
         // eller grindfel) så en omkörning aldrig frågar om det igen.
         provade.add(parNyckel(lofte.id, handling.id));

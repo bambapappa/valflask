@@ -12,7 +12,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { laggTillNyaKoPoster, nyaKoPoster, type KoPost } from "../src/granskning.ts";
+import { laggTillNyaKoPoster, nyaKoPoster, stadaAvgjorda, type KoPost } from "../src/granskning.ts";
 
 const [startfil, resultatfil] = process.argv.slice(2);
 if (!startfil || !resultatfil) {
@@ -27,5 +27,22 @@ const resultat = JSON.parse(readFileSync(resolve(resultatfil), "utf8")) as KoPos
 
 const nya = nyaKoPoster(start, resultat);
 const uppdaterad = laggTillNyaKoPoster(farsk, start, resultat);
-writeFileSync(koPath, JSON.stringify(uppdaterad, null, 2) + "\n");
-console.log(`kö: ${farsk.length} före, ${nya.length} nya ur körningen, ${uppdaterad.length} efter`);
+
+// Ett tillbakadraget löfte har ett mänskligt beslut bakom sig. Ligger ett
+// förslag kvar mot det kan kopplingen godkännas mot ett löfte som inte finns.
+const loften = JSON.parse(
+  readFileSync(resolve(import.meta.dirname, "../../../data/promises.json"), "utf8"),
+) as Array<{ id: string; status?: string }>;
+const aktivaLoften = new Set<string>(
+  loften.filter((p) => p.status !== "tillbakadragen").map((p) => p.id),
+);
+const { kvar, bortstadade } = stadaAvgjorda(uppdaterad, aktivaLoften);
+if (bortstadade.length > 0) {
+  console.log(
+    `Städade ${bortstadade.length} förslag mot tillbakadragna löften:\n  ` +
+      bortstadade.map((p) => `${p.promise_id} ↔ ${p.handling_id}`).join("\n  "),
+  );
+}
+
+writeFileSync(koPath, JSON.stringify(kvar, null, 2) + "\n");
+console.log(`kö: ${farsk.length} före, ${nya.length} nya ur körningen, ${kvar.length} efter`);

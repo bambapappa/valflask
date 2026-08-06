@@ -89,7 +89,11 @@ Ingen koppling publiceras om inte samtliga passeras:
   med dokument- eller voterings-id, och länken ska gå att öppna.
 - **H2 — Ordagrant bevis.** Kopplingen kräver ett exakt citat ur
   riksdagsdokumentet; citatet verifieras tecken för tecken mot källtexten
-  med samma normalisering som dagens citatgrind.
+  med samma normalisering som dagens citatgrind. Citatet ska dessutom stå i
+  den del av dokumentet som ÄR handlingen — motionens yrkanden, eller
+  voteringspunktens egen beslutstext. Brödtexten argumenterar för
+  handlingen och duger inte som bevis för den. Gick handlingens egen text
+  inte att hämta prövas bara det ordagranna, och det skrivs ut i körningen.
 - **H3 — Rätt aktör.** Parti (och person där det är relevant) i
   handlingen ska stämma med löftets parti/person.
 - **H4 — Rätt fönster.** Handlingens datum ska ligga i lägets

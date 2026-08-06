@@ -49,6 +49,16 @@ export interface GrindKontext {
   malPartier: string[];
   /** Datumfönster för aktuellt läge. */
   fonster: { fran: string; till: string };
+  /**
+   * Handlingens EGEN text — det som är själva handlingen, skilt från
+   * dokumentets brödtext: motionens yrkanden, eller voteringspunktens
+   * beslutstext. Citatet ska stå i någon av dessa (H2).
+   *
+   * Utelämnad när texten inte gick att hämta. Grinden prövar då inte var i
+   * dokumentet citatet står — den kan inte veta det — och anroparen ska
+   * skriva ut att kontrollen uteblev.
+   */
+  handlingstext?: { sort: "yrkanden" | "beslutspunkt"; delar: string[] };
 }
 
 /**
@@ -103,7 +113,17 @@ function grindH1(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
   return fel;
 }
 
-/** H2 — Ordagrant bevis: citatet ska stå tecken för tecken i källtexten. */
+/**
+ * H2 — Ordagrant bevis: citatet ska stå tecken för tecken i källtexten, och
+ * i den del av dokumentet som ÄR handlingen.
+ *
+ * Den andra halvan tillkom 2026-08-06. Att citatet stod någonstans i
+ * dokumentet räckte förut, och då belades kopplingarna gärna med brödtext:
+ * en motions problembeskrivning i stället för dess yrkande, eller en
+ * propositionssammanfattning i stället för det voteringspunkten avgjorde. Vid
+ * genomgången av kopplingskön behövde vart tredje förslag vägas om av just
+ * det skälet, och samtliga fyra voteringar.
+ */
 function grindH2(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
   const fel: GrindFel[] = [];
   const citat = normalizeForVerbatim(f.bevis.citat);
@@ -115,6 +135,19 @@ function grindH2(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
       grind: "H2",
       reason: "Citatet återfinns inte ordagrant i riksdagsdokumentet (normaliserad jämförelse)",
     });
+  }
+  const ht = ctx.handlingstext;
+  if (citat !== "" && ht && ht.delar.length > 0) {
+    const iHandlingen = ht.delar.some((del) => normalizeForVerbatim(del).includes(citat));
+    if (!iHandlingen) {
+      fel.push({
+        grind: "H2",
+        reason:
+          ht.sort === "yrkanden"
+            ? `Citatet står inte i något av motionens ${ht.delar.length} yrkanden — det är brödtext, och brödtexten argumenterar för handlingen i stället för att vara den`
+            : "Citatet står inte i voteringspunktens egen beslutstext — det visar vad ärendet innehöll, inte vad punkten avgjorde",
+      });
+    }
   }
   return fel;
 }
