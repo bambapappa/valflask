@@ -9459,8 +9459,9 @@
       "msek_high": 0,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Ej kvantifierbart från transkriptet.",
-      "confidence": 0.2
+      "method_note": "Nollan följer av vad höjningen gör, inte av att nivån saknas: pengarna stannar inom pensionssystemet, utanför statsbudgeten.",
+      "confidence": 0.2,
+      "calculation": "Vänsterpartiet anger en nivå: pensionsavgiften ska höjas till 18,5 procent. Men citatet säger också vad höjningen gör — 'en större del av de sociala avgifterna går till pensionerna'. Pengarna byter alltså plats inom de avgifter som redan tas ut, och de går in i pensionssystemet, som ligger utanför statsbudgeten. Höjningen finansierar den högre pensionen med sig själv, så statens egen nya kostnad är noll. Samma bedömning gjordes för Miljöpartiets löfte om en höjd pensionsavgift, p-2026-0428, och samma politik ska vila på samma grund. Det som skulle kosta staten pengar är den del av avgiften som i dag går till statskassan som allmän löneavgift, och den delen anger löftet ingen nivå för."
     },
     "financing_claimed": {
       "described": false,
@@ -9470,7 +9471,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Den offentliga uträkningen fylldes i. Posten bar ett belopp på noll utan att säga varför, och nollan såg vid en genomgång ut som ett fel eftersom citatet anger en nivå. Den är riktig: en höjd pensionsavgift finansierar den högre pensionen med sig själv och pensionssystemet ligger utanför statsbudgeten. Beloppet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -18854,7 +18861,7 @@
   },
   {
     "id": "p-2026-0478",
-    "group_id": null,
+    "group_id": "g-ideburna-sarredovisning",
     "title": "Undanta idéburna skolor från krav på särredovisning",
     "slug": "undanta-id-burna-skolor-fran-krav-pa-sarredovisning",
     "parties": [
@@ -18893,7 +18900,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Lagt i grupp med Miljöpartiets löfte om att undanta idéburna skolor från kravet på särredovisning. Samma politik hos olika partier räknas en gång — undantaget kan bara införas en gång. Beloppet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -21372,7 +21385,7 @@
   },
   {
     "id": "p-2026-0525",
-    "group_id": null,
+    "group_id": "g-ideburna-sarredovisning",
     "title": "Undanta idéburna skolenheter från krav på särredovisning",
     "slug": "undanta-id-burna-skolenheter-fran-krav-pa-sarredovisning",
     "parties": [
@@ -21416,6 +21429,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-08-05",
+        "commit": "0000000",
+        "change": "Lagt i grupp med Centerpartiets löfte om att undanta idéburna skolor från kravet på särredovisning. Samma politik hos olika partier räknas en gång — undantaget kan bara införas en gång. Beloppet är oförändrat."
       }
     ],
     "extraction": {
