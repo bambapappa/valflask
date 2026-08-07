@@ -1,0 +1,94 @@
+{
+  "_om": "Genererad av logg.py. Räkna om: se pipeline/tests/provningar.test.ts.",
+  "kanon": [
+    {
+      "slag": "lofte",
+      "obj": {
+        "quote": "Vi ska höja garantipensionen med 1 000 kronor i månaden",
+        "title": "Höjd garantipension",
+        "parties": [
+          "s"
+        ],
+        "status": "aktiv",
+        "group_id": null,
+        "source": {
+          "url": "https://example.se/a?b=1&c=2"
+        },
+        "cost": {
+          "type": "utgift",
+          "period": "per_ar",
+          "msek_low": 5000,
+          "msek_base": 10000,
+          "msek_high": 25000,
+          "basis": "granskare",
+          "calculation": "10 mdkr enligt budgeten för 2026"
+        }
+      },
+      "hash": "319abc2c481cc842"
+    },
+    {
+      "slag": "lofte",
+      "obj": {
+        "quote": "Tecken som bråkar: \" \\ \n \t åäö — ”citat” 100 %",
+        "title": "Kant­fall",
+        "parties": [],
+        "status": "tillbakadragen",
+        "group_id": "g-p-2026-0001",
+        "source": {},
+        "cost": {}
+      },
+      "hash": "3000dd37528571ba"
+    },
+    {
+      "slag": "koppling",
+      "obj": {
+        "promise_id": "p-2026-0021",
+        "handling_id": "h-2026-6887",
+        "riktning": "for",
+        "citat": "Riksdagen ställer sig bakom det som anförs i motionen",
+        "bevis": {
+          "citat": "Riksdagen ställer sig bakom det som anförs i motionen"
+        }
+      },
+      "hash": "5424f52c175ebc4c"
+    },
+    {
+      "slag": "standpunkt",
+      "obj": {
+        "subquestion_id": "sq-01",
+        "party": "mp",
+        "current": {
+          "position": "ja",
+          "statement_id": "st-9"
+        }
+      },
+      "hash": "79e0016e73fe6cb0"
+    }
+  ],
+  "konyckel": [
+    {
+      "url": "https://example.se/a",
+      "citat": "Ett citat",
+      "nyckel": "ko:b94e6bac22af"
+    },
+    {
+      "url": "  https://example.se/b  ",
+      "citat": "  mellanslag runt  ",
+      "nyckel": "ko:9f8faf83e267"
+    },
+    {
+      "url": null,
+      "citat": null,
+      "nyckel": "ko:01ba4719c80b"
+    }
+  ],
+  "koforslag_id": [
+    {
+      "post": {
+        "promise_id": "p-2026-0021",
+        "handling_id": "h-2026-6887"
+      },
+      "id": "9e4abba7b4da"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { computeDataHash, type ChangelogEntry } from "./publish.ts";
+import { konyckel, lasProvningar, provningsGrind } from "./provningar.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -431,6 +432,22 @@ export function approve(
       run_id: `review-${new Date().toISOString().slice(0, 13)}`,
     },
   };
+
+  // Kvalitetsfiltret, som grind. Hashen räknas på löftet som det FAKTISKT
+  // kommer att publiceras — inte på kö-posten — så ett belopp satt för hand
+  // vid godkännandet kräver att just det beloppet är prövat. Prövningen kan
+  // stå under kö-postens issue-id, under den innehållshärledda kö-nyckeln
+  // eller under löftets id om det redan funnits. Se `provningar.ts`.
+  const grind = provningsGrind(
+    lasProvningar(dataDir),
+    [`ko:${reviewId(item)}`, konyckel(item.articleUrl, cand.quote), newId],
+    "lofte",
+    newPromise as unknown as Record<string, unknown>,
+  );
+  if (!grind.ok) {
+    console.error(`Godkännandet stoppades: posten ${grind.skal}`);
+    process.exit(1);
+  }
 
   promises.push(newPromise);
   promises.sort((a, b) => a.id.localeCompare(b.id));

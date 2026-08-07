@@ -21,8 +21,12 @@ import {
   type KoPost,
 } from "../src/granskning.ts";
 import { fetchDokumentText } from "../src/riksdagen.ts";
+import { lasProvningar } from "../../../pipeline/src/provningar.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
+// Kvalitetsfiltrets index ligger i valflasks rot-data — en logg för alla tre
+// vågorna, ett index.
+const ROT_DATA = join(import.meta.dirname, "../../../data");
 
 function output(result: "approved" | "rejected" | "error", message: string): void {
   const out = process.env["GITHUB_OUTPUT"];
@@ -116,6 +120,7 @@ try {
       ...(cmd.motionstyp ? { motionstyp: cmd.motionstyp } : {}),
       ...(cmd.bevis ? { bevis: cmd.bevis } : {}),
     },
+    lasProvningar(ROT_DATA),
   );
   skrivJson(kopplingarPath, res.kopplingar);
   skrivJson(koPath, res.ko);

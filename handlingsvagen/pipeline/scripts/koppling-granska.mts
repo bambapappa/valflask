@@ -23,8 +23,12 @@ import {
   type KopplingPost,
   type KoPost,
 } from "../src/granskning.ts";
+import { lasProvningar } from "../../../pipeline/src/provningar.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
+// Kvalitetsfiltrets index ligger i valflasks rot-data, inte Handlingsvågens —
+// en logg för alla tre vågorna, ett index.
+const rotData = resolve(rot, "../data");
 const koPath = resolve(rot, "data/kopplingsforslag.json");
 const kopplingarPath = resolve(rot, "data/kopplingar.json");
 
@@ -91,7 +95,14 @@ try {
         } else rest.push(args[i]!);
       }
       const index = resolveIndex(ko, rest[0]);
-      const res = godkannForslag(ko, index, kopplingar, handlingar, motionstyp ? { motionstyp } : {});
+      const res = godkannForslag(
+        ko,
+        index,
+        kopplingar,
+        handlingar,
+        motionstyp ? { motionstyp } : {},
+        lasProvningar(rotData),
+      );
       skrivJson(kopplingarPath, res.kopplingar);
       skrivJson(koPath, res.ko);
       console.log(`Godkänd: ${res.koppling.id} — ${res.koppling.promise_id ?? res.koppling.stance_id} ↔ ${res.koppling.handling_id} (${res.koppling.riktning})`);

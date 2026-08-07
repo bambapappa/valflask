@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtempSync, writeFileSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { spawnSync } from "node:child_process";
 import {
   parseReviewCommand,
   reviewId,
@@ -11,6 +12,7 @@ import {
   type ReviewCandidate,
 } from "../src/review.ts";
 import { computeDataHash } from "../src/publish.ts";
+import { kanon, konyckel, type Provning } from "../src/provningar.ts";
 
 describe("parseReviewCommand — issue-kommentar till beslut", () => {
   it("/godkänn utan argument", () => {
@@ -181,6 +183,35 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
     cost: { type: "utgift", period: "per_ar", msek_low: 100, msek_base: 200, msek_high: 300, basis: "llm_estimat", basis_url: null, method_note: "note", confidence: 0.5 },
   };
 
+  /**
+   * Kö-posten prövad, med hashen räknad på löftet som faktiskt publiceras.
+   *
+   * `approve()` sätter `basis: "llm_estimat"` från kö-posten, `status: "aktiv"`
+   * och `group_id: null` — samma form som `kopost_som_lofte()` i `logg.py`
+   * bygger. Räknas hashen på något annat blir prövningen gammal i samma stund
+   * beslutet verkställs.
+   */
+  function skrivProvning(dir: string, over: Partial<Provning> = {}): void {
+    const somPublicerat = {
+      quote: queueItem.candidate!.quote,
+      title: queueItem.candidate!.title,
+      parties: queueItem.candidate!.parties,
+      status: "aktiv",
+      group_id: null,
+      source: { url: queueItem.articleUrl },
+      cost: queueItem.cost,
+    };
+    const post: Provning = {
+      id: konyckel(queueItem.articleUrl, queueItem.candidate!.quote),
+      slag: "lofte",
+      datum: "2026-08-07",
+      utfall: "haller",
+      underlag_hash: kanon("lofte", somPublicerat),
+      ...over,
+    };
+    writeFileSync(join(dir, "provningar.json"), JSON.stringify({ poster: [post] }));
+  }
+
   it("appendar en changelog-post vars data_hash matchar de faktiska löftena", () => {
     const dir = mkdtempSync(join(tmpdir(), "review-approve-"));
     try {
@@ -189,6 +220,7 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
       writeFileSync(join(dir, "changelog.json"), JSON.stringify([
         { run_id: "seed", added: [], updated: [], retracted: [], data_hash: "old", timestamp: "2026-01-01T00:00:00Z" },
       ]));
+      skrivProvning(dir);
 
       const res = approve(["0"], dir);
 
@@ -206,6 +238,93 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
       assert.equal(last.data_hash, computeDataHash(promises), "hashen matchar promises.json");
       assert.match(last.run_id, /^review-p-2026-\d{4}$/);
       assert.ok(last.timestamp, "timestamp satt (matar 'senast uppdaterad')");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  // Grinden måste sitta i själva godkännandevägen. Att `provningsGrind` svarar
+  // rätt för sig (provningar.test.ts) säger ingenting om att någon frågar den.
+  function godkannIEgenProcess(dir: string): { kod: number | null; ut: string } {
+    const r = spawnSync(
+      process.execPath,
+      ["--import", "tsx/esm", join(import.meta.dirname, "fixtures/godkann-en.mts"), dir],
+      { encoding: "utf8" },
+    );
+    return { kod: r.status, ut: (r.stdout ?? "") + (r.stderr ?? "") };
+  }
+
+  function baddat(over?: Partial<Provning> | null): string {
+    const dir = mkdtempSync(join(tmpdir(), "review-grind-"));
+    writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+    writeFileSync(join(dir, "needs_review.json"), JSON.stringify([queueItem]));
+    writeFileSync(join(dir, "changelog.json"), JSON.stringify([
+      { run_id: "seed", added: [], updated: [], retracted: [], data_hash: "old", timestamp: "2026-01-01T00:00:00Z" },
+    ]));
+    if (over !== null) skrivProvning(dir, over ?? {});
+    return dir;
+  }
+
+  it("vägrar godkänna en kö-post som inte gått genom kvalitetsfiltret", () => {
+    const dir = baddat(null);
+    try {
+      const { kod, ut } = godkannIEgenProcess(dir);
+      assert.notEqual(kod, 0, "godkännandet ska falla");
+      assert.match(ut, /kvalitetsfiltret/);
+      const promises = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8"));
+      assert.equal(promises.length, 1, "ingenting fick skrivas");
+      assert.equal(
+        JSON.parse(readFileSync(join(dir, "needs_review.json"), "utf8")).length,
+        1,
+        "kö-posten ligger kvar",
+      );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("vägrar godkänna en post vars prövning slutade att den inte höll", () => {
+    const dir = baddat({ utfall: "haller-inte" });
+    try {
+      const { kod, ut } = godkannIEgenProcess(dir);
+      assert.notEqual(kod, 0);
+      assert.match(ut, /höll inte/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  // Sätts beloppet för hand vid godkännandet är det inte längre den sak som
+  // prövades. Att släppa igenom det hade gjort grinden till en formalitet:
+  // pröva nollposten, godkänn med tjugo miljarder.
+  it("vägrar godkänna med ett annat belopp än det prövade", () => {
+    const dir = baddat();
+    try {
+      const r = spawnSync(
+        process.execPath,
+        ["--import", "tsx/esm", join(import.meta.dirname, "fixtures/godkann-en.mts"), dir],
+        { encoding: "utf8" },
+      );
+      assert.equal(r.status, 0, "det prövade beloppet går igenom");
+
+      const dir2 = baddat({ underlag_hash: "0000000000000000" });
+      try {
+        const { kod, ut } = godkannIEgenProcess(dir2);
+        assert.notEqual(kod, 0);
+        assert.match(ut, /ändrats/);
+      } finally {
+        rmSync(dir2, { recursive: true, force: true });
+      }
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("släpper igenom ett löfte som håller med förbehåll", () => {
+    const dir = baddat({ utfall: "haller-med-forbehall" });
+    try {
+      const { kod } = godkannIEgenProcess(dir);
+      assert.equal(kod, 0, "förbehåll är inget hinder — det skrivs ut, inte stoppas");
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

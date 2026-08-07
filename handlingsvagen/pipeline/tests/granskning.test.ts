@@ -18,6 +18,37 @@ import {
   type KoPost,
 } from "../src/granskning.ts";
 import type { Handling } from "../src/handlingar.ts";
+import { kanon, type Provning } from "../../../pipeline/src/provningar.ts";
+
+/**
+ * Kö-posten prövad, i den form den godkända kopplingen får.
+ *
+ * Grinden hashar kopplingen som faktiskt skrivs, så testet måste räkna på
+ * samma sak: kö-postens fält plus status "aktiv". `citat` skiljer sig när
+ * testet byter bevis — och att bytet gör prövningen gammal är avsiktligt,
+ * ett nytt citat har aldrig prövats.
+ */
+function provad(post: KoPost, over: Partial<Provning> & { citat?: string } = {}): Map<string, Provning> {
+  const { citat, ...rest } = over;
+  const somGodkand = {
+    promise_id: post.promise_id,
+    handling_id: post.handling_id,
+    riktning: post.riktning,
+    status: "aktiv",
+    bevis: { citat: citat ?? post.bevis.citat },
+  };
+  const id = `ko:${kopplingId(post)}`;
+  const p: Provning = {
+    id,
+    slag: "koppling",
+    datum: "2026-08-07",
+    utfall: "haller",
+    underlag_hash: kanon("koppling", somGodkand),
+    ...rest,
+  };
+  return new Map([[id, p]]);
+}
+
 
 function handling(over: Partial<Handling> = {}): Handling {
   return {
@@ -126,11 +157,11 @@ test("provaNyttBevis: samma krav som när förslaget skapades", () => {
 
 test("godkannForslag: utbytt bevis hamnar i kopplingen och syns i motiveringen", () => {
   const nytt = "Riksdagen ställer sig bakom det som anförs i motionen om något helt annat.";
-  const res = godkannForslag([koPost()], 0, [], [handling()], { year: 2026, bevis: nytt });
+  const res = godkannForslag([koPost()], 0, [], [handling()], { year: 2026, bevis: nytt }, provad(koPost(), { citat: nytt }));
   assert.equal(res.koppling.bevis.citat, nytt);
   assert.match(res.koppling.method_note, /utbytt av granskaren/);
   // Utan utbyte står postens eget citat kvar och motiveringen är orörd.
-  const utan = godkannForslag([koPost()], 0, [], [handling()], { year: 2026 });
+  const utan = godkannForslag([koPost()], 0, [], [handling()], { year: 2026 }, provad(koPost()));
   assert.equal(utan.koppling.bevis.citat, koPost().bevis.citat);
   assert.doesNotMatch(utan.koppling.method_note, /utbytt/);
 });
@@ -142,7 +173,7 @@ test("nastaKopplingsId räknar vidare från högsta", () => {
 
 test("godkannForslag: posten flyttas ur kön, kopplingen aktiv med verified_by owner", () => {
   const ko = [koPost()];
-  const res = godkannForslag(ko, 0, [], [handling()], { year: 2026 });
+  const res = godkannForslag(ko, 0, [], [handling()], { year: 2026 }, provad(ko[0]!));
   assert.equal(res.ko.length, 0);
   assert.equal(res.kopplingar.length, 1);
   const k = res.koppling;
@@ -154,14 +185,14 @@ test("godkannForslag: posten flyttas ur kön, kopplingen aktiv med verified_by o
 });
 
 test("godkannForslag: granskarens motionstyp vinner (b-0007)", () => {
-  const res = godkannForslag([koPost()], 0, [], [handling()], { motionstyp: "parti", year: 2026 });
+  const res = godkannForslag([koPost()], 0, [], [handling()], { motionstyp: "parti", year: 2026 }, provad(koPost()));
   assert.equal(res.koppling.motionstyp, "parti");
 });
 
 test("godkannForslag: motion utan motionstyp stoppas", () => {
   const utanTyp = koPost();
   delete utanTyp.motionstyp;
-  assert.throws(() => godkannForslag([utanTyp], 0, [], [handling()], { year: 2026 }), GranskningsFel);
+  assert.throws(() => godkannForslag([utanTyp], 0, [], [handling()], { year: 2026 }, provad(utanTyp)), GranskningsFel);
 });
 
 test("godkannForslag: motionstyp på icke-motion stoppas", () => {
@@ -169,18 +200,18 @@ test("godkannForslag: motionstyp på icke-motion stoppas", () => {
   const post = koPost({ handling_id: "h-2026-0005" });
   delete post.motionstyp;
   assert.throws(
-    () => godkannForslag([post], 0, [], [vot], { motionstyp: "parti", year: 2026 }),
+    () => godkannForslag([post], 0, [], [vot], { motionstyp: "parti", year: 2026 }, provad(post)),
     GranskningsFel,
   );
-  const res = godkannForslag([post], 0, [], [vot], { year: 2026 });
+  const res = godkannForslag([post], 0, [], [vot], { year: 2026 }, provad(post));
   assert.equal(res.koppling.motionstyp, undefined); // voteringar har aldrig motionstyp
 });
 
 test("godkannForslag: okänd handling, kort citat och tom motivering stoppas", () => {
-  assert.throws(() => godkannForslag([koPost({ handling_id: "h-9999-0001" })], 0, [], [handling()], {}), GranskningsFel);
-  assert.throws(() => godkannForslag([koPost({ bevis: { citat: "för kort" } })], 0, [], [handling()], {}), GranskningsFel);
-  assert.throws(() => godkannForslag([koPost({ method_note: "  " })], 0, [], [handling()], {}), GranskningsFel);
-  assert.throws(() => godkannForslag([], 3, [], [handling()], {}), GranskningsFel);
+  assert.throws(() => godkannForslag([koPost({ handling_id: "h-9999-0001" })], 0, [], [handling()], {}, provad(koPost({ handling_id: "h-9999-0001" }))), GranskningsFel);
+  assert.throws(() => godkannForslag([koPost({ bevis: { citat: "för kort" } })], 0, [], [handling()], {}, new Map()), GranskningsFel);
+  assert.throws(() => godkannForslag([koPost({ method_note: "  " })], 0, [], [handling()], {}, new Map()), GranskningsFel);
+  assert.throws(() => godkannForslag([], 3, [], [handling()], {}, new Map()), GranskningsFel);
 });
 
 test("godkannForslag: bevisets kalla_dok_id (betänkandet) följer med", () => {
@@ -190,7 +221,7 @@ test("godkannForslag: bevisets kalla_dok_id (betänkandet) följer med", () => {
     bevis: { citat: "taket i arbetslöshetsförsäkringen bör höjas", kalla_dok_id: "HA01AU10" },
   });
   delete post.motionstyp;
-  const res = godkannForslag([post], 0, [], [vot], { year: 2026 });
+  const res = godkannForslag([post], 0, [], [vot], { year: 2026 }, provad(post));
   assert.equal(res.koppling.bevis.kalla_dok_id, "HA01AU10");
 });
 
@@ -279,7 +310,7 @@ test("kopplingar sorteras på id vid godkännande", () => {
       status: "aktiv",
     },
   ];
-  const res = godkannForslag([koPost()], 0, befintliga, [handling()], { year: 2026 });
+  const res = godkannForslag([koPost()], 0, befintliga, [handling()], { year: 2026 }, provad(koPost()));
   assert.deepEqual(res.kopplingar.map((k) => k.id), ["k-2026-0002", "k-2026-0003"]);
 });
 
@@ -320,4 +351,44 @@ test("stadaAvgjorda: en post utan mål alls tystas inte bort", () => {
   const { kvar, bortstadade } = stadaAvgjorda([trasig], new Set());
   assert.equal(kvar.length, 1);
   assert.equal(bortstadade.length, 0);
+});
+
+// ── Kvalitetsfiltret som grind ────────────────────────────────────────
+//
+// Filtret fanns som text i skillarna men inte i koden: mätt 2026-08-07 hade
+// fyra av 1 382 publicerade saker gått genom det. En vana som ingenting mäter
+// blir inte gjord, så godkännandet frågar nu efter prövningen.
+
+test("godkannForslag: vägrar godkänna en koppling som inte gått genom kvalitetsfiltret", () => {
+  assert.throws(
+    () => godkannForslag([koPost()], 0, [], [handling()], { year: 2026 }, new Map()),
+    (e: unknown) => e instanceof GranskningsFel && /kvalitetsfiltret/.test(e.message),
+  );
+});
+
+test("godkannForslag: vägrar när prövningen slutade att kopplingen inte höll", () => {
+  assert.throws(
+    () =>
+      godkannForslag([koPost()], 0, [], [handling()], { year: 2026 },
+        provad(koPost(), { utfall: "haller-inte" })),
+    (e: unknown) => e instanceof GranskningsFel && /höll inte/.test(e.message),
+  );
+});
+
+// Ett utbytt bevis är ett citat som aldrig prövats. Släpps det igenom på den
+// gamla prövningen kan vem som helst byta ut det bevis en människa godkände.
+test("godkannForslag: ett bevis utbytt efter prövningen stoppas", () => {
+  const nytt = "Riksdagen ställer sig bakom det som anförs i motionen om något helt annat.";
+  assert.throws(
+    () =>
+      godkannForslag([koPost()], 0, [], [handling()], { year: 2026, bevis: nytt },
+        provad(koPost())),
+    (e: unknown) => e instanceof GranskningsFel && /ändrats/.test(e.message),
+  );
+});
+
+test("godkannForslag: håller med förbehåll släpps igenom", () => {
+  const res = godkannForslag([koPost()], 0, [], [handling()], { year: 2026 },
+    provad(koPost(), { utfall: "haller-med-forbehall" }));
+  assert.equal(res.koppling.status, "aktiv");
 });
