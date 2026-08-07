@@ -122,8 +122,26 @@ export function bytBevis(koppling: KopplingPost, byte: Byte, datum: string): Kop
   return {
     ...koppling,
     bevis: { ...koppling.bevis, citat: byte.citat },
-    method_note: `${koppling.method_note} ${bytesnot(byte, datum)}`.trim(),
+    method_note: `${utanTidigareBytesnot(koppling.method_note)} ${bytesnot(byte, datum)}`.trim(),
   };
+}
+
+/**
+ * Motiveringen utan noten från ett TIDIGARE byte.
+ *
+ * Ett bevis kan bytas mer än en gång, och då får den gamla noten inte stå
+ * kvar. Skälet är inte bara att texten växer: bar det förra bytet ett
+ * utskrivet undantag ("citatet står inte bland handlingens egna lydelser,
+ * och togs in på ett mänskligt beslut: …") beskriver det undantaget ett citat
+ * som inte längre står där. Noten skulle då säga motsatsen till vad posten
+ * visar, och det är värre än ingen not.
+ *
+ * Historiken tappas inte: varje byte har sin egen post i `rattelser.json`,
+ * och den offentliga rättelseloggen är platsen där ordningen står.
+ */
+export function utanTidigareBytesnot(motivering: string): string {
+  const i = motivering.indexOf("Beviset byttes ");
+  return (i === -1 ? motivering : motivering.slice(0, i)).trim();
 }
 
 /** En rad i genomgången: kopplingen, bytet, och vad som var fel med det gamla citatet. */
