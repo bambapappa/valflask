@@ -19610,14 +19610,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Kostnad för statlig utredning inklusive sekretariat, experter och remissförfarande. Baserat på typiska kostnader för liknande utredningar.",
-      "confidence": 0.65,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. En statlig utredning har en typisk totalkostnad på 5–30 miljoner kronor. Basantagandet 15 miljoner kronor bygger på en medelstor utredning med kansli, extern expertis och viss remisshantering. Låg och hög speglar variation i omfattning och tid."
+      "method_note": "Utrednings- och planlöften prissätts till noll — mänskligt beslut 2026-08-07.",
+      "confidence": 0.9,
+      "calculation": "Löftet är att tillsätta en utredning som analyserar hur ett vinstförbud ska genomföras och lägger skarpa lagförslag — ett utrednings- och planlöfte. Regeln är att sådana löften prissätts till noll: det är det framtida vinstförbudet som skulle kosta något (eller, om det är en marknadsåtgärd, inget alls), inte utredningen som föregår det, och lagförslagen är inte lovade som konkret politik ännu. Samma mänskliga beslut 2026-08-07 som avgjorde utredningsfrågan för sju andra löften."
     },
     "financing_claimed": {
       "described": false,
@@ -19632,6 +19632,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet ändrat från 15 till 0 miljoner kronor. Utredningsfrågans mänskliga beslut (strikt nollning) gäller även det här löftet, som missades i den ursprungliga genomgången.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -24897,14 +24902,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 3,
-      "msek_base": 10,
-      "msek_high": 30,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet avser en översyn av en ny typ av kontaktförbud. Enligt regel 10 prissätts endast utredningen, inte den framtida reformen. Statliga utredningar (SOU) kostar normalt 5–30 mkr.",
-      "confidence": 0.6,
-      "calculation": "Kostnaden för en statlig utredning av denna storlek uppskattas till ca 10 mkr baserat på typisk omfattning (personal, kansli, remissarbete). Spannet 3–30 mkr fångar enklare respektive mer omfattande översyner."
+      "method_note": "Utrednings- och planlöften prissätts till noll — mänskligt beslut 2026-08-07.",
+      "confidence": 0.9,
+      "calculation": "Löftet är att se över möjligheten att införa en ny typ av kontaktförbud — ett utrednings- och planlöfte. Regeln är att sådana löften prissätts till noll: det är en eventuell framtida reform av kontaktförbudet som skulle kosta något, och den är inte lovad ännu. Samma mänskliga beslut 2026-08-07 som avgjorde utredningsfrågan för sju andra löften."
     },
     "financing_claimed": {
       "described": false,
@@ -24914,7 +24919,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet ändrat från 10 till 0 miljoner kronor. Utredningsfrågans mänskliga beslut (strikt nollning) gäller även det här löftet, som missades i den ursprungliga genomgången.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
