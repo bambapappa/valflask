@@ -2818,14 +2818,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet hålls av en översyn och nationella riktlinjer; det är utredningsarbetet som prissätts.",
-      "confidence": 0.55,
-      "calculation": "Löftet hålls av en översyn och framtagna riktlinjer. Ett till två års utredningsarbete med 5–10 personer — projektledning, experter och administration — kostar 0,8–1,2 miljoner kronor per årsanställd, plus 20–30 procent för lokaler, konsulter och remissarbete. Det ger 5–30 miljoner kronor som engångskostnad, i nivå med vad statliga utredningar brukar kosta. Den vård riktlinjerna kan leda till prissätts inte här."
+      "method_note": "Utrednings- och planlöften prissätts till noll — mänskligt beslut 2026-08-07.",
+      "confidence": 0.9,
+      "calculation": "Löftet hålls av en översyn och framtagna riktlinjer — ett utrednings- och planlöfte. Regeln är att sådana löften prissätts till noll: det är den politik utredningen kan leda till som skulle kosta något, och den är inte lovad. Frågan om utredningar i stället borde bära en schablon (5–30 miljoner kronor) restes tre gånger (2026-07-27, 2026-08-04, 2026-08-07) och avgjordes med ett mänskligt beslut 2026-08-07: strikt nollning för samtliga sju löften i samma läge."
     },
     "financing_claimed": {
       "described": false,
@@ -2840,6 +2840,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 200 till 15 miljoner kronor, och perioden från per år till engångskostnad. Löftet är att se över rutiner och ta fram riktlinjer — det är utredningen som prissätts, inte den vård den kan leda till.",
         "commit": "09a70ae94bdcb20df891022dc12bc4070bc1b9ea"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet ändrat från 15 till 0 miljoner kronor. Utredningsfrågan avgjord genom mänskligt beslut: utrednings- och planlöften prissätts strikt till noll, inte till en schablon.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -5796,14 +5801,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet hålls av en översyn; det är utredningen som prissätts, inte de förändringar den kan leda till.",
-      "confidence": 0.4,
-      "calculation": "Löftet hålls av en översyn. En statlig utredning med kommitté, sekretariat och remissförfarande kostar 5–30 miljoner kronor som engångsanslag. Översynens bredd talar för en större utredning, så basbeloppet sätts till 15 miljoner. De förändringar av myndigheterna som översynen kan leda till prissätts inte här — de är ännu inte lovade."
+      "method_note": "Utrednings- och planlöften prissätts till noll — mänskligt beslut 2026-08-07.",
+      "confidence": 0.9,
+      "calculation": "Löftet hålls av en översyn — ett utrednings- och planlöfte. Regeln är att sådana löften prissätts till noll: det är de förändringar översynen kan leda till som skulle kosta något, och de är inte lovade. Frågan om utredningar i stället borde bära en schablon (5–30 miljoner kronor) restes tre gånger (2026-07-27, 2026-08-04, 2026-08-07) och avgjordes med ett mänskligt beslut 2026-08-07: strikt nollning för samtliga sju löften i samma läge."
     },
     "financing_claimed": {
       "described": false,
@@ -5818,6 +5823,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 500 till 15 miljoner kronor, och perioden från per år till engångskostnad. Ett löfte om en översyn prissätter utredningen, inte den politik den kan leda till.",
         "commit": "09a70ae94bdcb20df891022dc12bc4070bc1b9ea"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet ändrat från 15 till 0 miljoner kronor. Utredningsfrågan avgjord genom mänskligt beslut: utrednings- och planlöften prissätts strikt till noll, inte till en schablon.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -11407,14 +11417,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet är att ta fram en handlingsplan; det är framtagningen som prissätts, inte de mål den ska leda till.",
-      "confidence": 0.3,
-      "calculation": "Löftet är att ta fram en handlingsplan. En statlig utredning eller ett planarbete av den här storleken kostar 5–30 miljoner kronor som engångskostnad, med 15 miljoner som basbelopp. De mål planen ska leda till — minskat importberoende och fossilfri gödsel — prissätts inte här; de är ännu inte lovade som konkreta åtgärder."
+      "method_note": "Utrednings- och planlöften prissätts till noll — mänskligt beslut 2026-08-07.",
+      "confidence": 0.9,
+      "calculation": "Löftet är att ta fram en handlingsplan — ett utrednings- och planlöfte. Regeln är att sådana löften prissätts till noll: det är målen planen ska leda till — minskat importberoende och fossilfri gödsel — som skulle kosta något, och de är inte lovade som konkreta åtgärder. Frågan om utredningar i stället borde bära en schablon (5–30 miljoner kronor) restes tre gånger (2026-07-27, 2026-08-04, 2026-08-07) och avgjordes med ett mänskligt beslut 2026-08-07: strikt nollning för samtliga sju löften i samma läge."
     },
     "financing_claimed": {
       "described": false,
@@ -11434,6 +11444,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 0 till 15 miljoner kronor som engångskostnad. Ett löfte om att ta fram en handlingsplan prissätter framtagningen, som kostar något — inte noll. Ett litet löfte är ändå ett löfte.",
         "commit": "47cad146d8308cba538ddfe666187dde05766ac8"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet ändrat från 15 till 0 miljoner kronor. Utredningsfrågan avgjord genom mänskligt beslut: utrednings- och planlöften prissätts strikt till noll, inte till en schablon.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -13773,14 +13788,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet är att tillsätta en grundlig utredning; det är utredningen som prissätts.",
-      "confidence": 0.3,
-      "calculation": "Det konkreta löftet är att tillsätta en grundlig utredning om hur en rätt till aktiv dödshjälp skulle utformas. En statlig utredning kostar vanligen 5–30 miljoner kronor beroende på omfattning och längd, med 15 miljoner som basbelopp. Vad en eventuell framtida lagstiftning skulle kosta prissätts inte här — den är inte lovad."
+      "method_note": "Utrednings- och planlöften prissätts till noll — mänskligt beslut 2026-08-07.",
+      "confidence": 0.9,
+      "calculation": "Det konkreta löftet är att tillsätta en grundlig utredning om hur en rätt till aktiv dödshjälp skulle utformas — ett utrednings- och planlöfte. Regeln är att sådana löften prissätts till noll: det är en eventuell framtida lagstiftning som skulle kosta något, och den är inte lovad. Frågan om utredningar i stället borde bära en schablon (5–30 miljoner kronor) restes tre gånger (2026-07-27, 2026-08-04, 2026-08-07) och avgjordes med ett mänskligt beslut 2026-08-07: strikt nollning för samtliga sju löften i samma läge."
     },
     "financing_claimed": {
       "described": false,
@@ -13800,6 +13815,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 0 till 15 miljoner kronor som engångskostnad. Ett löfte om att tillsätta en utredning prissätter utredningen, som kostar något — inte noll. Ett litet löfte är ändå ett löfte.",
         "commit": "47cad146d8308cba538ddfe666187dde05766ac8"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet ändrat från 15 till 0 miljoner kronor. Utredningsfrågan avgjord genom mänskligt beslut: utrednings- och planlöften prissätts strikt till noll, inte till en schablon.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -19919,14 +19939,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 3,
-      "msek_base": 7,
-      "msek_high": 15,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Statliga utredningar kostar vanligtvis 5–15 msek. Löftet avser en utredning om stödinsatser för vårdnadshavare, vilket bedöms rymmas inom det intervallet.",
-      "confidence": 0.5,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antaganden: Utredningstid 1–2 år, kansli med 3–5 personer, externa experter, resor och tryck. Lägsta: mindre snabbutredning ~4 miljoner kronor. Bas: normalstor statlig utredning ~8 miljoner kronor (likt partiets eget löfte om en översyn av tvångsbefogenheter). Hög: större parlamentarisk utredning ~18 miljoner kronor. Inga löpande kostnader efter utredningen."
+      "method_note": "Utrednings- och planlöften prissätts till noll — mänskligt beslut 2026-08-07.",
+      "confidence": 0.9,
+      "calculation": "Löftet avser en utredning om forskningsbaserade stödinsatser för vårdnadshavare — ett utrednings- och planlöfte. Regeln är att sådana löften prissätts till noll: det är de stödinsatser utredningen kan leda till som skulle kosta något, och de är inte lovade. Frågan om utredningar i stället borde bära en schablon (5–30 miljoner kronor) restes tre gånger (2026-07-27, 2026-08-04, 2026-08-07) och avgjordes med ett mänskligt beslut 2026-08-07: strikt nollning för samtliga sju löften i samma läge."
     },
     "financing_claimed": {
       "described": false,
@@ -19941,6 +19961,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet ändrat från 7 till 0 miljoner kronor. Utredningsfrågan avgjord genom mänskligt beslut: utrednings- och planlöften prissätts strikt till noll, inte till en schablon.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -22469,14 +22494,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2,
-      "msek_base": 5,
-      "msek_high": 15,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "granskare",
       "basis_url": null,
-      "method_note": "Beloppet avser att ta fram planen, inte den politik den kan leda till.",
+      "method_note": "Utrednings- och planlöften prissätts till noll — mänskligt beslut 2026-08-07.",
       "confidence": 0.9,
-      "calculation": "Löftet är att ta fram en plan för att korta tillståndsprocesserna för tandvårdsverksamheter. Ett plan- eller utredningslöfte prissätts till vad det kostar att ta fram planen — en myndighets arbete under en begränsad tid — inte till den politik planen kan leda till. Beloppet är satt i granskning som en sådan arbetsinsats, och spannet rymmer att arbetet blir mindre eller större."
+      "calculation": "Löftet är att ta fram en plan för att korta tillståndsprocesserna för tandvårdsverksamheter — ett plan- och utredningslöfte. Regeln är att sådana löften prissätts till noll: det är den politik planen kan leda till som skulle kosta något, inte framtagningen. Frågan restes i samma uträkning 2026-08-07 och avgjordes samma dag med ett mänskligt beslut: strikt nollning för samtliga sju löften i samma läge."
     },
     "financing_claimed": {
       "described": false,
@@ -22491,6 +22516,11 @@
         "date": "2026-08-07",
         "change": "Uträkningen saknades och är skriven, och grunden är rättad från media till granskning eftersom beloppet är satt för hand. Beloppet är oförändrat. Om plan- och utredningslöften ska prissättas så här eller sättas till noll är en fråga som väntar på ett svar, och den gäller flera löften på samma sätt.",
         "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet ändrat från 5 till 0 miljoner kronor per år. Utredningsfrågan avgjord genom mänskligt beslut: utrednings- och planlöften prissätts strikt till noll, inte till en schablon.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -22523,14 +22553,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 20,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "granskare",
       "basis_url": null,
-      "method_note": "Beloppet avser att ta fram utvärderingen, inte den politik den kan leda till.",
+      "method_note": "Utrednings- och planlöften prissätts till noll — mänskligt beslut 2026-08-07.",
       "confidence": 0.9,
-      "calculation": "Löftet är att lagens konsekvenser för marknadsstrukturen ska utvärderas två år efter att den trätt i kraft. Ett utrednings- eller utvärderingslöfte prissätts till vad utvärderingen kostar — en avgränsad utredningsinsats — inte till den politik den kan leda till. Beloppet är satt i granskning som en sådan insats, och spannet rymmer att den blir mindre eller större."
+      "calculation": "Löftet är att lagens konsekvenser för marknadsstrukturen ska utvärderas två år efter att den trätt i kraft — ett utrednings- och utvärderingslöfte. Regeln är att sådana löften prissätts till noll: det är den politik utvärderingen kan leda till som skulle kosta något, inte utvärderingen själv. Frågan restes i samma uträkning 2026-08-07 och avgjordes samma dag med ett mänskligt beslut: strikt nollning för samtliga sju löften i samma läge."
     },
     "financing_claimed": {
       "described": false,
@@ -22545,6 +22575,11 @@
         "date": "2026-08-07",
         "change": "Uträkningen saknades och är skriven, och grunden är rättad från media till granskning eftersom beloppet är satt för hand. Beloppet är oförändrat. Om plan- och utredningslöften ska prissättas så här eller sättas till noll är en fråga som väntar på ett svar, och den gäller flera löften på samma sätt.",
         "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet ändrat från 10 till 0 miljoner kronor per år. Utredningsfrågan avgjord genom mänskligt beslut: utrednings- och planlöften prissätts strikt till noll, inte till en schablon.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -25053,19 +25088,19 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 37500,
-      "msek_base": 50000,
-      "msek_high": 67500,
-      "basis": "parti",
+      "msek_low": 1000,
+      "msek_base": 1250,
+      "msek_high": 1750,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7,
-      "calculation": "Partiet anger själv siffran: ett årligt underskott på 0,5 procent av BNP skulle frigöra omkring 50 miljarder kronor per år. Basbeloppet är den siffran. Den säger dock vad som frigörs att använda, inte vad en åtgärd kostar — löftet är att lämna överskottsmålet och höja skuldankaret, alltså en ändring av det finanspolitiska ramverket. Om det utrymmet ska räknas som en kostnad för staten eller som finansiering av andra löften är inte avgjort, och beloppet står kvar orört tills det är det."
+      "method_note": "De 50 000 mkr är lånat finansieringsutrymme, inte statens kostnad — kostnaden är räntan på det upptagna lånet.",
+      "confidence": 0.5,
+      "calculation": "Löftet är att lämna överskottsmålet och höja skuldankaret så att ett årligt underskott på 0,5 procent av BNP — omkring 50 000 miljoner kronor — blir tillåtet. De 50 000 miljonerna är inte statens nya kostnad: de är lånat utrymme som frigörs för att finansiera andra åtgärder, och läggs därför i `financing_claimed` i stället för att räknas som en utgift här (mänskligt beslut 2026-08-07). Vad löftet i sig kostar staten är räntan på det lån som tas upp. Med en statslåneränta på 2–3,5 procent (nuvarande nivå för svensk statsskuld, mittpunkt 2,5 procent) blir räntekostnaden på 50 000 miljoner kronor i ny upplåning 1 000–1 750 miljoner kronor per år, med 1 250 som basbelopp. Räntan är den enda posten som är statens egen, nya nettokostnad; själva underskottet är inte det."
     },
     "financing_claimed": {
       "described": true,
-      "summary": null,
-      "msek": null
+      "summary": "Ett höjt skuldankare tillåter ett årligt underskott på 0,5 procent av BNP, vilket partiet självt anger frigör omkring 50 000 miljoner kronor per år i lånat utrymme.",
+      "msek": 50000
     },
     "comparisons": [],
     "quip": "De 50 miljarder årligen frigörs genom att höja skuldankaret — ett ankare som uppenbarligen flyter.",
@@ -25075,6 +25110,11 @@
         "date": "2026-08-07",
         "change": "Uträkningen saknades och är skriven. Beloppet är oförändrat. Uträkningen skriver nu ut att siffran är utrymme som frigörs och inte kostnaden för en åtgärd, och att frågan om var den hör hemma inte är avgjord.",
         "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Frågan om var beloppet hör hemma avgjord genom mänskligt beslut: de 50 000 miljonerna är lånat finansieringsutrymme, inte en utgift, och flyttas till financing_claimed (50 000 mkr/år). Löftets egen kostnad sätts till räntan på det upptagna lånet: 50 000 till 1 250 miljoner kronor per år (spann 1 000–1 750, statslåneränta 2–3,5 procent).",
+        "commit": "0000000"
       }
     ],
     "extraction": {
