@@ -206,3 +206,20 @@ test("skillnad bara i typografi räknas också som samma citat", () => {
   assert.equal(p.ok, false);
   assert.match(p.skal.join(" "), /ingenting att rätta/);
 });
+
+test("ett andra byte ersätter den förra bytesnoten i stället för att lägga till en", () => {
+  const forsta = bytBevis(koppling(), byte({ brodtextSkal: "yrkandet nämner inte saken" }), "2026-08-06");
+  assert.match(forsta.method_note, /togs in på ett mänskligt beslut: yrkandet nämner inte saken/);
+
+  const andra = bytBevis(forsta, byte({ citat: YRKANDE }), "2026-08-07");
+  assert.equal(andra.method_note.match(/Beviset byttes/g)?.length, 1);
+  assert.doesNotMatch(andra.method_note, /mänskligt beslut/);
+  assert.match(andra.method_note, /Beviset byttes 2026-08-07/);
+  assert.match(andra.method_note, /^Motionen/);
+});
+
+test("motiveringen behålls oförändrad när den aldrig burit en bytesnot", () => {
+  const efter = bytBevis(koppling(), byte({ citat: YRKANDE }), "2026-08-07");
+  assert.match(efter.method_note, /^Motionen/);
+  assert.equal(efter.method_note.match(/Beviset byttes/g)?.length, 1);
+});
