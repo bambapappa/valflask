@@ -133,9 +133,30 @@ export function upsertChronicle(
 }
 
 /**
+ * Genereringen av veckokrönikor är PAUSAD — mänskligt beslut 2026-08-06.
+ *
+ * En krönika är en ögonblicksbild: rättas den ska beloppen räknas om ur datat
+ * som gällde när den skrevs, inte ur dagens. **Ingen kod gör den omräkningen**,
+ * och ingen skill äger frågan. Samtidigt flyttade två rättelser samma dag
+ * rikssumman med 60 respektive 52 miljarder kronor. Nya krönikor skulle alltså
+ * skrivas mot siffror som ändras under fötterna, utan något sätt att rätta dem
+ * efteråt — och en krönika som säger fel belopp går inte att tyst justera.
+ *
+ * Redan publicerade krönikor rörs inte av pausen; de ligger kvar som de står.
+ * Att kontrollera om någon av dem bär de gamla talen är en egen uppgift.
+ *
+ * Sätt till `false` när omräkningen finns. Bakgrunden ligger som lucka C under
+ * "Nästa steg" i handoff-repots `projekt/utlovat/HANDOFF.md`.
+ */
+export const KRONIKOR_PAUSADE = true;
+
+/**
  * Genererar veckans krönika om det finns nya löften denna ISO-vecka OCH ingen
  * krönika ännu finns för veckan (eller force). Returnerar uppdaterad lista, eller
  * den oförändrade om inget genererades. Kräver LLM C; transienta fel sväljs.
+ *
+ * Är `KRONIKOR_PAUSADE` satt returnerar den alltid oförändrat, även med `force`
+ * — pausen ska inte gå att råka runda.
  */
 export async function maybeGenerateWeekly(opts: {
   now: Date;
@@ -149,6 +170,10 @@ export async function maybeGenerateWeekly(opts: {
   reformBudgetMsek: number;
   force?: boolean;
 }): Promise<{ chronicles: ChronicleEntry[]; generated: ChronicleEntry | null }> {
+  if (KRONIKOR_PAUSADE) {
+    console.log("Veckans fläsk: genereringen är pausad — ingen ny krönika skrivs.");
+    return { chronicles: opts.existing, generated: null };
+  }
   const { now, allPromises, changelog, existing, llm, copyModel, runId, reformBudgetMsek, force } = opts;
   const { year, week } = isoWeek(now);
   const slug = weekSlug(year, week);

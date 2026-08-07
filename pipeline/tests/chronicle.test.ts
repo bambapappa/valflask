@@ -8,6 +8,7 @@ import {
   promiseIdsAddedInWeek,
   upsertChronicle,
   maybeGenerateWeekly,
+  KRONIKOR_PAUSADE,
   totalFlasket,
   type ChronicleEntry,
 } from "../src/chronicle.ts";
@@ -118,7 +119,24 @@ const changelog: ChangelogEntry[] = [
 ];
 const promises = [promise("p-2026-0001", 1000), promise("p-2026-0002", 2000)];
 
-test("maybeGenerateWeekly: genererar krönika för veckan ur nya löften", async () => {
+// Genereringen är pausad (mänskligt beslut 2026-08-06). Testet prövar det som
+// gäller nu — att pausen håller även mot force — och de gamla påståendena står
+// kvar i den andra grenen så att de vaknar av sig själva när flaggan fälls.
+test("maybeGenerateWeekly: pausad — ingen krönika skrivs, inte ens med force", async (t) => {
+  if (!KRONIKOR_PAUSADE) return t.skip("genereringen är igång; se testet nedan");
+  for (const force of [false, true]) {
+    const { chronicles, generated } = await maybeGenerateWeekly({
+      now: NOW, allPromises: promises, changelog, existing: [],
+      llm: mockLlm({ headline: "Rubrik", body_md: "Brödtext [p-2026-0001]." }),
+      copyModel: "copy-model", runId: "run-x", reformBudgetMsek: 2000, force,
+    });
+    assert.equal(generated, null, `force: ${force} ska inte runda pausen`);
+    assert.deepEqual(chronicles, [], "befintliga krönikor returneras oförändrade");
+  }
+});
+
+test("maybeGenerateWeekly: genererar krönika för veckan ur nya löften", async (t) => {
+  if (KRONIKOR_PAUSADE) return t.skip("genereringen är pausad — se testet ovan");
   const { chronicles, generated } = await maybeGenerateWeekly({
     now: NOW, allPromises: promises, changelog, existing: [],
     llm: mockLlm({ headline: "Rubrik", body_md: "Brödtext [p-2026-0001]." }),
