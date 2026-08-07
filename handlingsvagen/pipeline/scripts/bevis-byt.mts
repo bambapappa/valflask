@@ -204,7 +204,23 @@ const rattelser: unknown[] = existsSync(rattelserPath)
   : [];
 const post = rattelsePost(gjorda, datum);
 
+// Bär motiveringen spår av att NUVARANDE citat valdes av en människa, med
+// skälet utskrivet, då river bytet ett fattat beslut. Det kan vara rätt — ny
+// uppgift kan ha kommit fram — men det får aldrig ske av misstag, och listan
+// säger inte i sig om den som skrev den kände till beslutet.
+const overkorda = gjorda
+  .filter(({ koppling }) => (koppling.method_note ?? "").includes("togs in på ett mänskligt beslut"))
+  .map(({ koppling }) => koppling.id);
+
 console.log(`\nRättelsepost som skrivs:\n  ${post.affects}`);
+if (overkorda.length > 0) {
+  console.log(
+    `\n⚠ ${overkorda.length} koppling(ar) bär ett citat som en människa valt med skälet\n` +
+      "  utskrivet i motiveringen. Bytet river det beslutet. Läs skälet först och\n" +
+      "  skriv i PR-texten vad som ändrats sedan det fattades:\n" +
+      `  ${overkorda.join(", ")}`,
+  );
+}
 if (inaktuella.length > 0) {
   console.log(
     `\n⚠ ${inaktuella.length} koppling(ar) har en prövning i kvalitetsfiltret som blir\n` +
