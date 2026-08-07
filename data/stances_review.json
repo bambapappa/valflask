@@ -494,5 +494,72 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi vill förstatliga de kommunala skolorna så att alla elever får en bra utbildning, oavsett var i landet de bor. Därför vill vi flytta ansvaret från kommunerna till staten.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/prioriterade-fragor/skolan-forst",
+    "articleTitle": "Skolan först",
+    "runId": "run-2026-08-07-16-04"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-inkomstskatt",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Därför vill vi sänka den statliga inkomstskatten på högre inkomster, med målet att på sikt halvera den.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/prioriterade-fragor/en-starkare-ekonomi",
+    "articleTitle": "En starkare ekonomi",
+    "sourceUrl": "https://www.liberalerna.se/prioriterade-fragor/en-starkare-ekonomi",
+    "archiveUrl": "https://web.archive.org/web/20260807164522/https://www.liberalerna.se/prioriterade-fragor/en-starkare-ekonomi",
+    "dateStated": "2026-08-07",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-07-16-04",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Valfriheten i skolan ska finnas kvar, men barnens rätt till en bra utbildning måste alltid gå före koncernbolagens rätt till vinst. Vi gillar vanligtvis konkurrens men i skolan vill vi fasa ut vinstintresset",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/prioriterade-fragor/skolan-forst",
+    "articleTitle": "Skolan först",
+    "sourceUrl": "https://www.liberalerna.se/prioriterade-fragor/skolan-forst",
+    "archiveUrl": "https://web.archive.org/web/20260807165055/https://www.liberalerna.se/prioriterade-fragor/skolan-forst",
+    "dateStated": "2026-08-07",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-07-16-04",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
