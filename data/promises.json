@@ -7095,7 +7095,7 @@
     "source": {
       "url": "https://www.vansterpartiet.se/nyheter/norrland-i-centrum/",
       "domain": "vansterpartiet.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260801125655/https://www.vansterpartiet.se/nyheter/norrland-i-centrum-30-forslag-och-6-miljarder-kronor-till-norrland/",
       "fetched_at": "2026-06-27"
     },
     "category": "infrastruktur",
@@ -7118,7 +7118,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Arkivkopia tillagd. Ögonblicksbilden är från den 1 augusti 2026 och citatet står ordagrant i den; den sparade adressen är sidans egen, dit den publicerade länken leder.",
+        "commit": "30b768717895c5b5a87f91588aa0d57ccca43ac3"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (G3 mot snapshot)",
@@ -7139,7 +7145,7 @@
     "source": {
       "url": "https://www.vansterpartiet.se/nyheter/norrland-i-centrum/",
       "domain": "vansterpartiet.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260801125655/https://www.vansterpartiet.se/nyheter/norrland-i-centrum-30-forslag-och-6-miljarder-kronor-till-norrland/",
       "fetched_at": "2026-06-27"
     },
     "category": "klimat-miljö",
@@ -7167,6 +7173,11 @@
         "date": "2026-07-24",
         "change": "Kostnadstyp rättad från intäktsminskning till intäktsökning - noten säger själv att det är en skattehöjning (ökad statsintäkt), inte en minskad. Beloppet (0 kr) oförändrat.",
         "commit": "70629e381abd4cdaad25606a02777237a55e5fc9"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Arkivkopia tillagd. Ögonblicksbilden är från den 1 augusti 2026 och citatet står ordagrant i den; den sparade adressen är sidans egen, dit den publicerade länken leder.",
+        "commit": "30b768717895c5b5a87f91588aa0d57ccca43ac3"
       }
     ],
     "extraction": {
@@ -7189,7 +7200,7 @@
     "source": {
       "url": "https://www.vansterpartiet.se/nyheter/norrland-i-centrum/",
       "domain": "vansterpartiet.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260801125655/https://www.vansterpartiet.se/nyheter/norrland-i-centrum-30-forslag-och-6-miljarder-kronor-till-norrland/",
       "fetched_at": "2026-06-27"
     },
     "category": "välfärd",
@@ -7218,6 +7229,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 5 000 till 0 miljoner kronor per år. Löftet anger varken sjukhus, volym eller stödform. Noterat i uträkningen att akutsjukvården drivs och betalas av regionerna, så kostnaden uppstår där och inte i statsbudgeten.",
         "commit": "6ee8ea3d320bb864a0217b79ca242054272224da"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Arkivkopia tillagd. Ögonblicksbilden är från den 1 augusti 2026 och citatet står ordagrant i den; den sparade adressen är sidans egen, dit den publicerade länken leder.",
+        "commit": "30b768717895c5b5a87f91588aa0d57ccca43ac3"
       }
     ],
     "extraction": {
@@ -9574,13 +9590,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 540,
+      "msek_base": 2160,
+      "msek_high": 2700,
       "basis": "parti",
-      "basis_url": null,
-      "method_note": "Ej kvantifierbart från transkriptet.",
-      "confidence": 0.2
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/motion/en-ny-regering--for-ett-starkare-och-tryggare_HD022792/",
+      "method_note": "Partiets egen siffra för samma åtgärd, hämtad ur partiets budgetmotion för 2026.",
+      "confidence": 0.2,
+      "calculation": "Löftet pekar ut en åtgärd — sänkt avgift för att hämta ut läkemedel — utan att säga hur mycket. Partiet anger nivån själv på annan plats: i sin budgetmotion för 2026 föreslår partiet att höjningen av högkostnadsskyddet för läkemedel dras tillbaka och avsätter 2 160 miljoner kronor för ändamålet. Samma motion återger regeringens beräkning av vad höjningen tar in från patienterna: omkring 540 miljoner kronor 2025, 2 160 miljoner 2026 och 2 700 miljoner 2027. Basbeloppet är partiets egen siffra; spannets nedre ände är den halvårseffekt beräkningen anger för 2025 och den övre 2027 års nivå."
     },
     "financing_claimed": {
       "described": false,
@@ -9590,7 +9607,13 @@
     "comparisons": [],
     "quip": "",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet har gått från 0 till 2 160 miljoner kronor per år. Nollan motiverades med att beloppet inte gick att räkna fram ur det talade citatet. Partiet anger emellertid nivån själv i sin budgetmotion för 2026, där samma åtgärd — att dra tillbaka höjningen av högkostnadsskyddet för läkemedel — är prissatt. Uträkningen är skriven och arkivkopia saknas fortfarande, eftersom källan är ett videoklipp.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      }
+    ],
     "extraction": {
       "model": "import:vallen-2026",
       "verified_by": "import:vallen-2026 (transkript)",
@@ -11698,7 +11721,8 @@
       "basis": "parti",
       "basis_url": null,
       "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "confidence": 0.7,
+      "calculation": "Partiet anger själv nivån: de 100 miljoner kronor som i dag går till inrikesflyget ska i stället kunna sökas för samtliga trafikslag. Basbeloppet är den siffran, 100 miljoner kronor per år. Löftet flyttar ett befintligt stöd snarare än att skapa ett nytt, men breddningen gör att fler kan söka, och beloppet står kvar som den nivå partiet själv pekar ut. Spannet rymmer att stödet blir något mindre eller något större än dagens."
     },
     "financing_claimed": {
       "described": true,
@@ -11708,7 +11732,13 @@
     "comparisons": [],
     "quip": "Trafikavtalsstödet till samtliga trafikslag breddas med 100 miljoner kronor, varvid prislappen torde klassas som en blygsam aptitretare bland valfläsket.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Uträkningen saknades och är skriven. Beloppet är oförändrat och är partiets eget.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      }
+    ],
     "extraction": {
       "model": "deepseek/deepseek-v4-pro",
       "verified_by": "moonshotai/kimi-k2.7-code",
@@ -22442,10 +22472,11 @@
       "msek_low": 2,
       "msek_base": 5,
       "msek_high": 15,
-      "basis": "media",
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "(belopp satt av granskare)",
-      "confidence": 0.9
+      "method_note": "Beloppet avser att ta fram planen, inte den politik den kan leda till.",
+      "confidence": 0.9,
+      "calculation": "Löftet är att ta fram en plan för att korta tillståndsprocesserna för tandvårdsverksamheter. Ett plan- eller utredningslöfte prissätts till vad det kostar att ta fram planen — en myndighets arbete under en begränsad tid — inte till den politik planen kan leda till. Beloppet är satt i granskning som en sådan arbetsinsats, och spannet rymmer att arbetet blir mindre eller större."
     },
     "financing_claimed": {
       "described": false,
@@ -22455,7 +22486,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Uträkningen saknades och är skriven, och grunden är rättad från media till granskning eftersom beloppet är satt för hand. Beloppet är oförändrat. Om plan- och utredningslöften ska prissättas så här eller sättas till noll är en fråga som väntar på ett svar, och den gäller flera löften på samma sätt.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -22489,10 +22526,11 @@
       "msek_low": 5,
       "msek_base": 10,
       "msek_high": 20,
-      "basis": "media",
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "(belopp satt av granskare)",
-      "confidence": 0.9
+      "method_note": "Beloppet avser att ta fram utvärderingen, inte den politik den kan leda till.",
+      "confidence": 0.9,
+      "calculation": "Löftet är att lagens konsekvenser för marknadsstrukturen ska utvärderas två år efter att den trätt i kraft. Ett utrednings- eller utvärderingslöfte prissätts till vad utvärderingen kostar — en avgränsad utredningsinsats — inte till den politik den kan leda till. Beloppet är satt i granskning som en sådan insats, och spannet rymmer att den blir mindre eller större."
     },
     "financing_claimed": {
       "described": false,
@@ -22502,7 +22540,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Uträkningen saknades och är skriven, och grunden är rättad från media till granskning eftersom beloppet är satt för hand. Beloppet är oförändrat. Om plan- och utredningslöften ska prissättas så här eller sättas till noll är en fråga som väntar på ett svar, och den gäller flera löften på samma sätt.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -24953,14 +24997,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 11000,
-      "msek_high": 15000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Ankrat på den senaste permanenta höjningen av jobbskatteavdraget (BP24, ~11 mdkr/år). Stort spann då löftet saknar nivå.",
+      "msek_low": 8000,
+      "msek_base": 17000,
+      "msek_high": 35000,
+      "basis": "myndighet",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/sankt-skatt-pa-arbetsinkomster-pension-och-sjuk-_hd0332/html/",
+      "method_note": "Ankrat i vad den senaste förstärkningen av jobbskatteavdraget kostar, samma grund som de andra partiernas löften om samma åtgärd.",
       "confidence": 0.5,
-      "calculation": "Senaste förstärkningen av jobbskatteavdraget (Budgetpropositionen för 2024) kostade runt 11 mdkr per år. Antar att nytt förstärkt avdrag kan ligga i samma storleksordning, med spann 5–15 mdkr pga osäkerhet om ambitionsnivå."
+      "calculation": "Löftet pekar ut en åtgärd — ett förstärkt jobbskatteavdrag — utan att ange nivå, så beloppet ankras i vad samma åtgärd senast faktiskt kostade. Den senaste förstärkningen av det ordinarie jobbskatteavdraget gäller från januari 2026 och kostar 17,36 miljarder kronor per år; riksdagen antog den med budgeten för 2026. Basbeloppet är därför 17 000 miljoner kronor per år. Spannet motsvarar ett halvt till ett dubbelt så stort steg. Samma ankare bär de andra partiernas löften om samma åtgärd, så samma politik kostar lika."
     },
     "financing_claimed": {
       "described": false,
@@ -24975,6 +25019,11 @@
         "date": "2026-08-05",
         "commit": "b63fce403a7ab3327a5d3f731d83c4b8f95f50df",
         "change": "Lagt i grupp med p-2026-0631. Posten bär reformens delar — förstärkt jobbskatteavdrag, nytt barnavdrag och utbyggt småbarns-RUT — medan p-2026-0631 bär partiets utfästelse om vad hela reformen ger en barnfamilj. Delarna och helheten räknas en gång. Beloppet är oförändrat."
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet har gått från 11 000 till 17 000 miljoner kronor per år. Ankaret var den förstärkning av jobbskatteavdraget som gjordes i budgeten för 2024. Den är inte längre den senaste: en ny förstärkning gäller från januari 2026 och kostar 17,36 miljarder kronor per år. Tre andra löften om samma åtgärd var redan ankrade i den nyare siffran, så samma politik var prissatt olika beroende på vilket parti som lovade den.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
       }
     ],
     "extraction": {
@@ -25010,7 +25059,8 @@
       "basis": "parti",
       "basis_url": null,
       "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "confidence": 0.7,
+      "calculation": "Partiet anger själv siffran: ett årligt underskott på 0,5 procent av BNP skulle frigöra omkring 50 miljarder kronor per år. Basbeloppet är den siffran. Den säger dock vad som frigörs att använda, inte vad en åtgärd kostar — löftet är att lämna överskottsmålet och höja skuldankaret, alltså en ändring av det finanspolitiska ramverket. Om det utrymmet ska räknas som en kostnad för staten eller som finansiering av andra löften är inte avgjort, och beloppet står kvar orört tills det är det."
     },
     "financing_claimed": {
       "described": true,
@@ -25020,7 +25070,13 @@
     "comparisons": [],
     "quip": "De 50 miljarder årligen frigörs genom att höja skuldankaret — ett ankare som uppenbarligen flyter.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Uträkningen saknades och är skriven. Beloppet är oförändrat. Uträkningen skriver nu ut att siffran är utrymme som frigörs och inte kostnaden för en åtgärd, och att frågan om var den hör hemma inte är avgjord.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -25051,13 +25107,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 150,
-      "msek_base": 200,
-      "msek_high": 270,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": "https://www.centerpartiet.se/nyheter/arkiv-2026/2026-08-04-centerpartiet-sasongsarbetare-ska-kunna-folkbokfora-sig-tillfalligt-i-kommunen-de-vistas",
+      "method_note": "Omfördelning mellan kommuner, inte en ny statlig kostnad. Beloppet i källan är vad som flyttas, inte vad staten betalar.",
+      "confidence": 0.7,
+      "calculation": "Löftet är att säsongsarbetare ska kunna registrera sig tillfälligt i arbetskommunen, så att kommunalskatten under arbetsperioden tillfaller den kommunen i stället för hemkommunen. Källan anger 200 miljoner kronor per år, men det är vad som flyttas mellan kommuner — partiledaren skriver ut det själv: \"Det handlar inte om en ny skatt, utan om att flytta räkningen till rätt ställe.\" Staten får varken en ny utgift eller en minskad intäkt; skattenivån för den enskilde är densamma. Kostnaden för åtgärden är regeländringen och Skatteverkets hantering, som är försumbar."
     },
     "financing_claimed": {
       "described": false,
@@ -25067,7 +25124,13 @@
     "comparisons": [],
     "quip": "Tvåhundra miljoner för att flytta en folkbokföringspost över en kommungräns, vilket torde vara historiens dyraste postgång.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet har gått från 200 till 0 miljoner kronor per år. De 200 miljonerna är den kommunalskatt som flyttas från hemkommun till arbetskommun, inte en ny kostnad för staten, och en omfördelning prissätts inte som en statlig utgift. Källans egen formulering säger samma sak: det är inte en ny skatt utan en flytt av räkningen. Att löftet är litet gör det inte mindre till ett löfte — det står kvar, med noll.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -25557,7 +25620,8 @@
       "basis": "parti",
       "basis_url": null,
       "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "confidence": 0.7,
+      "calculation": "Partiet anger själv nivån: en klimatfond på 100 miljarder kronor per år för investeringar i förnybar energi, elnät, järnväg och gröna industrisatsningar. Basbeloppet är alltså partiets eget, 100 000 miljoner kronor per år. Spannet rymmer att fonden byggs upp långsammare eller snabbare än utlovat under mandatperioden. Löftet är ett av tio i partiets industripaket; paketet anger ingen egen totalsumma, så det här beloppet står för sig självt och överlappar inte de andra nio."
     },
     "financing_claimed": {
       "described": true,
@@ -25565,9 +25629,15 @@
       "msek": null
     },
     "comparisons": [],
-    "quip": "Hundra miljoner per år låter mycket tills man noterar att det är kronor och inte ören.",
+    "quip": "Hundra miljarder om året i en fond vars namn antyder att den ska rädda klimatet, och vars storlek antyder att den först ska rädda budgetens sista sida.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Uträkningen saknades och är skriven. Beloppet är oförändrat och är partiets eget. Den publicerade kommentaren sade \"hundra miljoner\" om ett löfte på hundra miljarder och är utbytt.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -25598,10 +25668,11 @@
       "msek_low": 1200,
       "msek_base": 1600,
       "msek_high": 2160,
-      "basis": "parti",
+      "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "method_note": "Källans 1,6 miljarder är ett tak per investering, inte reformens kostnad. Antalet investeringar är vår uppskattning.",
+      "confidence": 0.7,
+      "calculation": "Löftet är gröna skattekrediter för investeringar i fossilfri industri. Källan anger en siffra, men den säger något annat än vad reformen kostar: \"För stora investeringar kan det handla om upp till 1,6 miljarder i skattekredit\" — alltså ett tak för en enskild stor investering. Vad reformen kostar staten beror på hur många investeringar som får krediten, och det säger partiet inte. Basbeloppet motsvarar därför en enda sådan stor investering per år och är ett golv, inte en uppskattning av hela reformen. Den delen är vår, inte partiets, och en riktig prissättning kräver ett ankare för antalet investeringar."
     },
     "financing_claimed": {
       "described": false,
@@ -25611,7 +25682,13 @@
     "comparisons": [],
     "quip": "För 1600 msek utlovas gröna skattekrediter, en prislapp som finansieras med traditionellt valfläsk.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Uträkningen saknades och är skriven, och grunden för beloppet är rättad från partiets egen siffra till en uppskattning. Beloppet är oförändrat, men källans 1,6 miljarder är ett tak för en enskild stor investering och inte vad reformen kostar staten. Det stod tidigare att beloppet var angivet i källtexten, vilket det inte var.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -25642,13 +25719,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 22500,
-      "msek_base": 30000,
-      "msek_high": 40500,
+      "msek_low": 2250,
+      "msek_base": 3000,
+      "msek_high": 4050,
       "basis": "parti",
-      "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "basis_url": "https://www.vansterpartiet.se/nyheter/kvinnolonelyftet-dags-att-ge-valfardens-kvinnor-ratt-lon/",
+      "method_note": "Partiets egen siffra. Källan anger både helheten och årstakten; årstakten är den som gäller för ett år.",
+      "confidence": 0.7,
+      "calculation": "Partiet anger själv nivån: satsningen är 30 miljarder kronor över tio år, och källan skriver ut vad det blir per år — \"tre miljarder kronor per år i 10 år avsätts i en särskild jämställdhetspott\". Beloppet för ett år är alltså 3 000 miljoner kronor, och för mandatperiodens fyra år 12 000 miljoner. Spannet motsvarar tre fjärdedelar till en och en tredjedels årstakt, eftersom potten fördelas av arbetsmarknadens parter och utfallet per år kan variera."
     },
     "financing_claimed": {
       "described": false,
@@ -25658,7 +25736,13 @@
     "comparisons": [],
     "quip": "Trettio miljarder över tio år är en ansenlig prislapp, finansieringen förbehållen kommande mandatperioders kreativa bokföring.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet har gått från 30 000 till 3 000 miljoner kronor per år. Löftet var prissatt till hela satsningens storlek — 30 miljarder kronor — som om den betalades varje år, trots att partiet anger att de 30 miljarderna gäller över tio år och att årstakten är tre miljarder. Ingen ny bedömning ligger bakom ändringen; det är partiets egen siffra, läst rätt.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -25692,7 +25776,8 @@
       "basis": "parti",
       "basis_url": null,
       "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "confidence": 0.7,
+      "calculation": "Partiet anger själv vad hela paketet är värt: 16 miljarder kronor för att stärka barnfamiljernas ekonomi. Basbeloppet är den siffran, 16 000 miljoner kronor per år. Paketets egna delar — barnbidrag, bostadsbidrag och underhållsstöd — är publicerade var för sig och ligger i samma grupp, så paketet och dess delar räknas en gång och på partiets egen siffra. Spannet rymmer att delarna genomförs i olika takt."
     },
     "financing_claimed": {
       "described": false,
@@ -25707,6 +25792,11 @@
         "date": "2026-08-05",
         "change": "Löftet lades i gruppen för Vänsterpartiets familjepaket. Paketet och dess delar var publicerade var för sig och räknades därför flera gånger: partiet anger själv 16 miljarder kronor per år för hela paketet, medan delarna tillsammans räknades till 22 575 miljoner. Gruppen räknas en gång och representeras av partiets egen siffra. Beloppet på den här posten är oförändrat och syns fortfarande på löftessidan.",
         "commit": "254ec23d3c7fe2f738baccf4bf8010b048e898f2"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Uträkningen saknades och är skriven. Beloppet är oförändrat och är partiets eget.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
       }
     ],
     "extraction": {
@@ -25984,12 +26074,12 @@
       "v"
     ],
     "person": null,
-    "quote": "Vänsterpartiet vill stoppa regeringens förslag om att sänka föräldrapenningen kraftigt",
+    "quote": "Dadgostar lyfte också att Vänsterpartiet vill höja barnbidraget rejält, bygga ut öppna förskolan och stoppa regeringens förslag om att sänka föräldrapenningen kraftigt.",
     "date_stated": "2026-06-27",
     "source": {
       "url": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostar-i-almedalen-adjo-tido/",
       "domain": "vansterpartiet.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260709065517/https://www.vansterpartiet.se/nyheter/nooshi-dadgostar-i-almedalen-adjo-tido/",
       "fetched_at": "2026-08-05T12:01:00.000Z"
     },
     "category": "välfärd",
@@ -26018,6 +26108,11 @@
         "date": "2026-08-05",
         "change": "Publicerat ur granskningskön som ett eget löfte. Det låg tidigare som en av tre delar i p-2026-0131, som dragits tillbaka som dubblett av barnbidragslöftet. Utan den här posten hade löftet försvunnit ur registret.",
         "commit": "c35e2a653137f3044994d00da90452ec287b3945"
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Citatet är utbytt mot källans egen lydelse och arkivkopia tillagd. Det publicerade citatet stod inte ordagrant i källan — orden fanns där, men hopfogade till en mening som ingen hade skrivit. Källans mening bär tre saker, och den här posten gäller den sista av dem. Beloppet är oförändrat.",
+        "commit": "30b768717895c5b5a87f91588aa0d57ccca43ac3"
       }
     ],
     "extraction": {
@@ -26557,14 +26652,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 11000,
-      "msek_base": 11000,
+      "msek_low": 17000,
+      "msek_base": 17000,
       "msek_high": 66000,
       "basis": "llm_estimat",
-      "basis_url": null,
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/sankt-skatt-pa-arbetsinkomster-pension-och-sjuk-_hd0332/html/",
       "method_note": "Partiets 5 000 kronor är vad en familj får, inte vad staten betalar. Basbeloppet vilar på reformens egna instrument; spannet bär den universella läsningen.",
       "confidence": 0.4,
-      "calculation": "Liberalerna anger själva 5 000 kronor i månaden. Den siffran är partiets, men den säger vad en barnfamilj FÅR — inte vad staten betalar. Läst som att varje barnfamilj får beloppet blir kostnaden 1,1 miljoner familjer × 5 000 kronor × 12 månader = 66 000 miljoner kronor per år. Reformens egna delar — förstärkt jobbskatteavdrag, nytt barnavdrag och utbyggt småbarns-RUT — är samtidigt ankrade till 11 000 miljoner per år, byggt på vad den senaste förstärkningen av jobbskatteavdraget kostade. Skillnaden på en faktor sex betyder att 5 000 kronor är vad en familj i partiets räkneexempel kan få som mest, inte vad varje barnfamilj får. Basbeloppet sätts vid instrumentens ankare; spannet bär osäkerheten upp till den universella läsningen."
+      "calculation": "Liberalerna anger själva 5 000 kronor i månaden. Den siffran är partiets, men den säger vad en barnfamilj FÅR — inte vad staten betalar. Läst som att varje barnfamilj får beloppet blir kostnaden 1,1 miljoner familjer × 5 000 kronor × 12 månader = 66 000 miljoner kronor per år. Reformens egna delar — förstärkt jobbskatteavdrag, nytt barnavdrag och utbyggt småbarns-RUT — är samtidigt ankrade till 17 000 miljoner per år, byggt på vad den senaste förstärkningen av jobbskatteavdraget kostar. Skillnaden på nästan en faktor fyra betyder att 5 000 kronor är vad en familj i partiets räkneexempel kan få som mest, inte vad varje barnfamilj får. Basbeloppet sätts vid instrumentens ankare; spannet bär osäkerheten upp till den universella läsningen."
     },
     "financing_claimed": {
       "described": false,
@@ -26579,6 +26674,11 @@
         "date": "2026-08-05",
         "commit": "b63fce403a7ab3327a5d3f731d83c4b8f95f50df",
         "change": "Publicerat ur granskningskön som Liberalernas löfte om 5 000 kronor mer i månaden för barnfamiljer, i grupp med p-2026-0598 som bär reformens delar. Kön föreslog 16 800 miljoner kronor per år. Den siffran publiceras inte: den byggde på Moderaternas löfte p-2026-0597 utan att lånet skrevs ut, och den läste dessutom det löftets uträkning fel — 1 400 miljoner delades med 5 000 kronor och gav 280 000 barnfamiljer, medan källan själv räknar med 1,1 miljoner familjer och 5 000 kronor fördelat över fyra år. Uträkningen är omgjord från partiets eget citat."
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Basbeloppet har gått från 11 000 till 17 000 miljoner kronor per år. Beloppet vilar på vad reformens egna instrument är ankrade till, och ankaret för det förstärkta jobbskatteavdraget har rättats till den senaste förstärkningen. Löftet delar grupp med partiets löfte om samma reform och räknas fortfarande en gång.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
       }
     ],
     "extraction": {
@@ -27935,14 +28035,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "engang",
-      "msek_low": 6000,
-      "msek_base": 12000,
-      "msek_high": 24000,
+      "msek_low": 10600,
+      "msek_base": 21250,
+      "msek_high": 42500,
       "basis": "myndighet",
-      "basis_url": null,
-      "method_note": "Harmoniserat med Sverigedemokraternas löfte om samma åtgärd. Perioden är engång eftersom löftet säger 'tillfälligt' utan att ange hur länge.",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/tillfalligt-sankt-mervardesskatt-pa-livsmedel_hd0355/html/",
+      "method_note": "Regeringens egen siffra för samma åtgärd. Perioden är engång eftersom löftet säger \"tillfälligt\" utan att ange hur länge.",
       "confidence": 0.5,
-      "calculation": "Samma åtgärd som Sverigedemokraternas löfte om nedsatt matmoms och prissätts därför lika. Regeringen anger skattebortfallet för den pågående sänkningen från 12 till 6 procent till 37,2 miljarder kronor för perioden april 2026 till december 2027, alltså omkring 12 000 miljoner kronor per år. Löftet säger 'tillfälligt' men inte hur länge, så beloppet räknas som ett år. Spannet 6 000–24 000 motsvarar ett halvår till två år."
+      "calculation": "Samma åtgärd som ett annat partis löfte om nedsatt matmoms och prissätts på samma grund. Regeringen anger skattebortfallet för den pågående sänkningen från 12 till 6 procent till 37,19 miljarder kronor för hela perioden april 2026 till december 2027, fördelat på 15,94 miljarder 2026 och 21,25 miljarder 2027. Ett helt år av åtgärden kostar alltså omkring 21 250 miljoner kronor. Löftet säger \"tillfälligt\" men inte hur länge, så beloppet räknas som ett år. Spannet motsvarar ett halvår till två år."
     },
     "financing_claimed": {
       "described": false,
@@ -27957,6 +28057,11 @@
         "date": "2026-08-05",
         "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
         "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet har gått från 12 000 till 21 250 miljoner kronor. Uträkningen angav regeringens siffra för skattebortfallet rätt — 37,2 miljarder kronor — men räknade om den till fel årstakt. Åtgärden löper 21 månader, så ett helt år av den kostar omkring 21 miljarder kronor, inte 12. Regeringens egna årssiffror står nu utskrivna i uträkningen. Löftet delar grupp med ett annat partis löfte om samma åtgärd och räknas fortfarande en gång.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
       }
     ],
     "extraction": {
@@ -27990,10 +28095,10 @@
       "msek_base": 6000,
       "msek_high": 12000,
       "basis": "myndighet",
-      "basis_url": null,
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/yttrande/skattefragor-i-budgetpropositionen-for-2026_hd05sku1y/html/",
       "method_note": "Ankrat i vad den senast genomförda sänkningen av elskatten faktiskt kostade. Löftet anger ingen nivå.",
       "confidence": 0.5,
-      "calculation": "Löftet pekar ut en åtgärd — sänkt skatt på el — men anger ingen nivå, så beloppet ankras i vad samma åtgärd senast kostade. Energiskatten på el sänktes vid årsskiftet till 2022 års nivå, 36 öre per kilowattimme, och den sänkningen kostade staten drygt 6 000 miljoner kronor per år. Spannet rymmer en halv till dubbel sådan sänkning. Ett fullständigt avskaffande skulle kosta omkring 25 000 miljoner, men det är inte vad löftet säger."
+      "calculation": "Löftet pekar ut en åtgärd — sänkt skatt på el — men anger ingen nivå, så beloppet ankras i vad samma åtgärd senast kostade. Energiskatten på el sänktes vid årsskiftet till 2022 års nivå, 36,0 öre per kilowattimme, vilket är 8,2 öre lägre än den nivå som annars hade gällt efter årets uppräkning. Hushåll och tjänster förbrukar omkring 75 terawattimmar el som beskattas med normalskattesatsen, och 8,2 öre på den volymen är drygt 6 000 miljoner kronor per år. Spannet rymmer en halv till dubbel sådan sänkning. Ett fullständigt avskaffande skulle kosta omkring 25 000 miljoner, men det är inte vad löftet säger."
     },
     "financing_claimed": {
       "described": false,
@@ -28008,6 +28113,11 @@
         "date": "2026-08-05",
         "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
         "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Uträkningen har fått sin källa och sina antaganden utskrivna. Beloppet är oförändrat: sänkningen av energiskatten på el uppgavs kosta drygt 6 000 miljoner kronor per år utan att det gick att följa var siffran kom ifrån. Nu står skattesatsen, sänkningen per kilowattimme och den förbrukning beloppet vilar på.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
       }
     ],
     "extraction": {
@@ -28037,14 +28147,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 11000,
-      "msek_high": 15000,
+      "msek_low": 8000,
+      "msek_base": 17000,
+      "msek_high": 35000,
       "basis": "myndighet",
-      "basis_url": null,
-      "method_note": "Ankrat i vad den senaste förstärkningen av jobbskatteavdraget kostade, samma grund som Liberalernas löfte om samma åtgärd.",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/sankt-skatt-pa-arbetsinkomster-pension-och-sjuk-_hd0332/html/",
+      "method_note": "Ankrat i vad den senaste förstärkningen av jobbskatteavdraget kostar, samma grund som de andra partiernas löften om samma åtgärd.",
       "confidence": 0.5,
-      "calculation": "Löftet pekar ut en åtgärd — höjt jobbskatteavdrag — utan att ange nivå, så beloppet ankras i vad samma åtgärd senast kostade. Den senaste förstärkningen, i budgetpropositionen för 2024, kostade omkring 11 000 miljoner kronor per år. Samma ankare används på Liberalernas löfte om ett förstärkt jobbskatteavdrag, så samma politik kostar lika."
+      "calculation": "Löftet pekar ut en åtgärd — ett förstärkt jobbskatteavdrag — utan att ange nivå, så beloppet ankras i vad samma åtgärd senast faktiskt kostade. Den senaste förstärkningen av det ordinarie jobbskatteavdraget gäller från januari 2026 och kostar 17,36 miljarder kronor per år; riksdagen antog den med budgeten för 2026. Basbeloppet är därför 17 000 miljoner kronor per år. Spannet motsvarar ett halvt till ett dubbelt så stort steg. Samma ankare bär de andra partiernas löften om samma åtgärd, så samma politik kostar lika."
     },
     "financing_claimed": {
       "described": false,
@@ -28059,6 +28169,11 @@
         "date": "2026-08-05",
         "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
         "change": "Publicerat ur granskningskön med rättat belopp. Kön föreslog en siffra som varken var ankrad eller harmoniserad; uträkningen är gjord om mot vad samma åtgärd senast kostade eller mot vad ett annat parti betalar för samma politik."
+      },
+      {
+        "date": "2026-08-07",
+        "change": "Beloppet har gått från 11 000 till 17 000 miljoner kronor per år. Ankaret var den förstärkning av jobbskatteavdraget som gjordes i budgeten för 2024. Den är inte längre den senaste: en ny förstärkning gäller från januari 2026 och kostar 17,36 miljarder kronor per år. Tre andra löften om samma åtgärd var redan ankrade i den nyare siffran, så samma politik var prissatt olika beroende på vilket parti som lovade den.",
+        "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
       }
     ],
     "extraction": {
