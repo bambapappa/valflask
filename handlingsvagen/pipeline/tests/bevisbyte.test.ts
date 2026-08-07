@@ -167,6 +167,34 @@ test("samma löfte namnges en gång även med flera kopplingar", () => {
 // En "rättelse" som inte rättar något skriver ändå en post i rättelseloggen
 // och en not i motiveringen. En logg full av sådana är svårare att lita på
 // än en kort. Fyndet kom ur en skarp körning mot riktigt data.
+// Genomgången 2026-08-07 fann tolv publicerade citat som INTE stod ord för ord
+// i sin källa: textutvinningen hade skjutit in mellanrum mitt i avstavade ord.
+// Bytet är då en reparation av avskriften, och rättelseposten får inte påstå
+// att det gamla citatet stod ordagrant i dokumentet — det gjorde det inte.
+test("en reparerad avskrift beskrivs som trasig, inte som flyttad", () => {
+  const post = rattelsePost(
+    [{ koppling: koppling(), byte: byte(), gammaltCitatSaknasIKallan: true }],
+    "2026-08-07",
+  );
+  assert.doesNotMatch(post.what, /stod ordagrant i dokumentet/);
+  assert.match(post.what, /trasig/);
+  assert.match(post.what, /mellanrum/);
+  assert.match(post.why, /inte går att hitta i sin källa/);
+});
+
+test("en genomgång med båda sorterna beskriver dem var för sig", () => {
+  const post = rattelsePost(
+    [
+      { koppling: koppling(), byte: byte() },
+      { koppling: koppling({ id: "k-2026-0020" }), byte: byte({ id: "k-2026-0020" }), gammaltCitatSaknasIKallan: true },
+    ],
+    "2026-08-07",
+  );
+  assert.match(post.what, /belägg för 1 koppling mellan/);
+  assert.match(post.what, /För 1 koppling var den sparade citattexten trasig/);
+  assert.match(post.affects, /2 bevis utbytta/);
+});
+
 test("ett byte till samma citat faller", () => {
   const p = provaByte(byte({ citat: YRKANDE }), YRKANDE, BRODTEXT, YRKANDEN);
   assert.equal(p.ok, false);

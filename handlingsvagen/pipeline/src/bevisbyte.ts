@@ -126,24 +126,73 @@ export function bytBevis(koppling: KopplingPost, byte: Byte, datum: string): Kop
   };
 }
 
+/** En rad i genomgången: kopplingen, bytet, och vad som var fel med det gamla citatet. */
+export interface Bytesrad {
+  koppling: KopplingPost;
+  byte: Byte;
+  /**
+   * Sant när det GAMLA citatet inte stod ord för ord i sin källa.
+   *
+   * Då är bytet en **reparation av en trasig avskrift**, inte ett byte av
+   * vilken del av dokumentet som citeras — och rättelseposten får inte påstå
+   * att det gamla citatet stod ordagrant i dokumentet, för det gjorde det
+   * inte. Utelämnas fältet beskrivs raden som ett vanligt byte.
+   */
+  gammaltCitatSaknasIKallan?: boolean;
+}
+
 /**
  * En rättelsepost för hela genomgången — inte en per koppling.
  *
  * "Rättelser samlas": en systematisk kvalitetshöjning blir EN post. `affects`
  * måste namnge varje berört löfte, för rättelsenoten på löftessidan väljs
  * genom att söka löftets id i just det fältet.
+ *
+ * Posten beskriver de två sorters rättelser var för sig. En genomgång kan
+ * bära båda, och en läsare ska inte behöva gissa vilken sort som gällde
+ * vilken koppling.
  */
 export function rattelsePost(
-  byten: { koppling: KopplingPost; byte: Byte }[],
+  byten: Bytesrad[],
   datum: string,
 ): { date: string; affects: string; what: string; why: string; commit: string } {
   const loften = [...new Set(byten.map((b) => b.koppling.promise_id).filter((x): x is string => !!x))].sort();
   const undantag = byten.filter((b) => b.byte.brodtextSkal).length;
+  const reparerade = byten.filter((b) => b.gammaltCitatSaknasIKallan).length;
+  const flyttade = byten.length - reparerade;
+
+  const flyttadText =
+    flyttade > 0
+      ? `Vi visar nu en annan del av samma riksdagsdokument som belägg för ${flyttade} ` +
+        `${flyttade === 1 ? "koppling" : "kopplingar"} mellan ett löfte och en handling. ` +
+        "Det gamla citatet stod ordagrant i dokumentet, men det visade argumenten för handlingen " +
+        "i stället för handlingen själv — motionens brödtext i stället för dess yrkande, frågans " +
+        "bakgrund i stället för frågan."
+      : "";
+
+  const reparadText =
+    reparerade > 0
+      ? `För ${reparerade} ${reparerade === 1 ? "koppling" : "kopplingar"} var den sparade ` +
+        "citattexten trasig: när texten en gång hämtades ur riksdagens dokument sköts mellanrum " +
+        "in mitt i ord, så att citatet inte längre stod ord för ord i sin källa. Meningen är " +
+        "densamma — det är avskriften som är lagad, hämtad på nytt ur dokumentet."
+      : "";
 
   const påUndantagText =
     undantag > 0
       ? ` ${undantag} av dem står inte bland handlingens egna lydelser och togs in på ett ` +
         "mänskligt beslut, med skälet utskrivet i varje enskild motivering."
+      : "";
+
+  const varförFlyttad =
+    flyttade > 0
+      ? "Ett belägg ska visa vad ledamoten eller partiet faktiskt gjorde. En motions handling är " +
+        "dess yrkande; brödtexten argumenterar för yrkandet och är inte i sig en handling. "
+      : "";
+  const varförReparad =
+    reparerade > 0
+      ? "Ett citat som inte går att hitta i sin källa går inte heller att kontrollera, och då är " +
+        "det inte längre ett belägg. "
       : "";
 
   return {
@@ -152,15 +201,12 @@ export function rattelsePost(
       `Handlingsvågens rutnät och löftessidorna för ${loften.join(", ")} — ` +
       `${byten.length} ${byten.length === 1 ? "bevis" : "bevis"} utbytta`,
     what:
-      `Vi visar nu en annan del av samma riksdagsdokument som belägg för ${byten.length} ` +
-      `${byten.length === 1 ? "koppling" : "kopplingar"} mellan ett löfte och en handling. ` +
-      "Det gamla citatet stod ordagrant i dokumentet, men det visade argumenten för handlingen " +
-      "i stället för handlingen själv — motionens brödtext i stället för dess yrkande, frågans " +
-      "bakgrund i stället för frågan. Varje nytt citat är hämtat ur riksdagens egna data och " +
-      `kontrollerat ord för ord mot källan.${påUndantagText}`,
+      [flyttadText, reparadText].filter(Boolean).join(" ") +
+      " Varje nytt citat är hämtat ur riksdagens egna data och kontrollerat ord för ord mot " +
+      `källan.${påUndantagText}`,
     why:
-      "Ett belägg ska visa vad ledamoten eller partiet faktiskt gjorde. En motions handling är " +
-      "dess yrkande; brödtexten argumenterar för yrkandet och är inte i sig en handling. " +
+      varförFlyttad +
+      varförReparad +
       "Bedömningen av kopplingen är oförändrad — det är belägget som bytt stycke, inte domen.",
     // Backfillas i en andra commit, samma mönster som övriga dataändringar.
     commit: "0000000",
