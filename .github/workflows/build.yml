@@ -42,6 +42,13 @@ jobs:
       - name: Typecheck pipeline
         run: pnpm typecheck
         working-directory: pipeline
+      # Kvalitetsfiltrets täckning. Faller när något publicerats utan att gå
+      # genom filtret — antalet oprövade får bli färre, aldrig fler. Utan det
+      # här måttet är filtret en vana: det fanns ett dygn som text i skillarna
+      # och täckningen stod på fyra av 1 382.
+      - name: Kvalitetsfiltrets täckning
+        run: pnpm provningar:status --tak
+        working-directory: pipeline
 
   # Handlingsvågens egen pipeline har eget beroendeträd (npm, inte pnpm) och
   # egna grindar. Den körs som eget jobb tills avdubbleringen slår ihop dem

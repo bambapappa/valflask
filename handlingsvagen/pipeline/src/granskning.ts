@@ -19,6 +19,11 @@ import type { Handling } from "./handlingar.ts";
 import type { KopplingsForslag } from "./grindar.ts";
 import { avslagsbeslut, CITAT_MIN_TECKEN, normalizeForVerbatim } from "./grindar.ts";
 import { dokumentUrl } from "./riksdagen.ts";
+// Delad med Fläskvågens pipeline med flit. Hashen som avgör om en sak ändrats
+// sedan den prövades räknas på tre ställen — här, i valflasks review och i
+// logg.py — och två kopior av den formeln hade glidit isär utan att något
+// syntes förrän grinden började stoppa allt.
+import { provningsGrind, type Provning } from "../../../pipeline/src/provningar.ts";
 
 /** En köpost i data/kopplingsforslag.json (skriven av scripts/foreslag.mts). */
 export interface KoPost extends KopplingsForslag {
@@ -211,7 +216,17 @@ export function godkannForslag(
      * modulen når inte nätet.
      */
     avslaget?: Avslag[];
-  } = {},
+  },
+  /**
+   * Kvalitetsfiltrets prövningar, lästa ur `data/provningar.json` av
+   * anroparen (den här modulen rör inte filsystemet).
+   *
+   * Obligatorisk med flit. Vore den valfri hade varje anropare som glömde den
+   * fått en tyst väg runt grinden, och det är precis så filtret blev en vana i
+   * stället för en regel. En anropare som inte har indexet lämnar en tom karta
+   * — och då släpps ingenting igenom, vilket är rätt svar.
+   */
+  provningar: Map<string, Provning>,
 ): GodkannResultat {
   const post = ko[index];
   if (!post) throw new GranskningsFel(`Ogiltigt kö-index ${index} — kön har ${ko.length} poster.`);
@@ -266,6 +281,19 @@ export function godkannForslag(
     extraction: { ...post.extraction, verified_by: "owner" },
     status: "aktiv",
   };
+  // Kvalitetsfiltret, som grind. Hashen räknas på kopplingen som FAKTISKT
+  // publiceras, så ett bevis utbytt vid godkännandet kräver att just det
+  // citatet är prövat — ett nytt citat har aldrig gått genom filtret.
+  const grind = provningsGrind(
+    provningar,
+    [`ko:${kopplingId(post)}`, koppling.id],
+    "koppling",
+    koppling as unknown as Record<string, unknown>,
+  );
+  if (!grind.ok) {
+    throw new GranskningsFel(`Posten ${grind.skal}`);
+  }
+
   return {
     kopplingar: [...kopplingar, koppling].sort((a, b) => a.id.localeCompare(b.id)),
     ko: ko.filter((_, i) => i !== index),

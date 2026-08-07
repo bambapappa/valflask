@@ -36,8 +36,11 @@ import {
   type KopplingPost,
   type KoPost,
 } from "../src/granskning.ts";
+import { lasProvningar } from "../../../pipeline/src/provningar.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
+const rotData = resolve(rot, "../data");
+const provningar = lasProvningar(rotData);
 const koPath = resolve(rot, "data/kopplingsforslag.json");
 const kopplingarPath = resolve(rot, "data/kopplingar.json");
 
@@ -97,10 +100,14 @@ for (const { id, bevis } of rader) {
   }
 
   try {
-    const res = godkannForslag(ko, index, kopplingar, handlingar, {
-      year: 2026,
-      ...(bevis !== undefined ? { bevis } : {}),
-    });
+    const res = godkannForslag(
+      ko,
+      index,
+      kopplingar,
+      handlingar,
+      { year: 2026, ...(bevis !== undefined ? { bevis } : {}) },
+      provningar,
+    );
     kopplingar = res.kopplingar;
     ko = res.ko;
   } catch (e) {
