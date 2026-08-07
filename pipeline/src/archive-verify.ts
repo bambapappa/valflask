@@ -40,7 +40,13 @@ export async function snapshotText(
   let res: Response;
   try {
     res = await httpFetch(archiveUrl.split("#")[0]!, {
-      headers: { "User-Agent": UA, Accept: "text/html,application/xhtml+xml,application/pdf" },
+      // Accept MÅSTE vara */*. Listas text/html först svarar Wayback med sin
+      // egen omslagssida i stället för den arkiverade filen — den innehåller
+      // förstås inte citatet, och kontrollen underkände då VARJE PDF-källa.
+      // Mätt 2026-08-07: 125 av 125 PDF:er föll, 0 av 343 HTML-sidor. Samma
+      // ögonblicksbild ger 9 721 byte HTML med det gamla huvudet och 2 619 329
+      // byte PDF utan det.
+      headers: { "User-Agent": UA, Accept: "*/*" },
       redirect: "follow",
       signal: AbortSignal.timeout(60_000),
     });

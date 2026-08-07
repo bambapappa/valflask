@@ -93,3 +93,22 @@ test("snapshotBacksQuote ger samma svar som de två delarna var för sig", async
   const text = await snapshotText("https://web.archive.org/web/2026/x", hamtar(sida));
   assert.equal(helhet, quoteInSnapshotText(text!, "ett till"));
 });
+
+/* ───────────────────────── begäran mot Wayback ── */
+
+test("hämtningen ber INTE om text/html först — då svarar Wayback med sin omslagssida", async () => {
+  // Det här är inte en stilfråga. Wayback innehållsförhandlar: listas
+  // text/html först serverar den sin egen visningssida i stället för den
+  // arkiverade filen. Kontrollen jämförde då citatet mot omslaget och
+  // underkände varje PDF-källa — 125 av 125, medan 343 HTML-sidor gick
+  // igenom. Provet låser huvudet eftersom beteendet ligger hos servern och
+  // inte går att fånga med ett vanligt enhetsprov.
+  let sett: Headers | undefined;
+  const spion: HttpFetch = (async (_u: string, init?: RequestInit) => {
+    sett = new Headers(init?.headers);
+    return svar("<p>vad som helst</p>");
+  }) as HttpFetch;
+
+  await snapshotText("https://web.archive.org/web/2026/https://exempel.se/fil.pdf", spion);
+  assert.equal(sett?.get("accept"), "*/*");
+});
