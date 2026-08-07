@@ -1,0 +1,90 @@
+# Larm när en körning faller.
+#
+# Bakgrunden står i handoff-repots DRIFT.md och kostade en hel dags
+# driftsättning 2026-08-03: build.yml kör testerna före bygget, ett test föll,
+# och sajten byggdes inte om medan 62 beslut committades till main. Ingenting sa
+# ifrån. Samma lucka fanns i pipelinen — sex schemalagda körningar i rad föll på
+# pushen 31 juli–2 augusti utan att någon märkte det.
+#
+# En körning som ingen tittar på och som inte larmar är en körning som kan vara
+# död i dagar. Det här är den ENDA implementationen; varje workflow anropar den
+# i stället för att bära sin egen kopia. Skälet är mätt i det här repot flera
+# gånger: en kopia ärver inte buggfixar, den ärver bara det den kopierades från.
+name: larm
+on:
+  workflow_call:
+    inputs:
+      rubrik:
+        description: "Vad som föll, i klartext — hamnar i ärendets titel"
+        required: true
+        type: string
+      atgard:
+        description: "Vad den som läser larmet ska göra härnäst"
+        required: true
+        type: string
+      etikett:
+        description: "Etikett som håller ihop larmen för samma körning"
+        required: true
+        type: string
+jobs:
+  larma:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Öppna eller uppdatera larmärendet
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v9.0.0
+        env:
+          RUBRIK: ${{ inputs.rubrik }}
+          ATGARD: ${{ inputs.atgard }}
+          ETIKETT: ${{ inputs.etikett }}
+        with:
+          script: |
+            const { RUBRIK, ATGARD, ETIKETT } = process.env;
+            const dag = new Date().toISOString().slice(0, 10);
+            const korning = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+
+            const kropp = [
+              `**${RUBRIK}** föll ${dag}.`,
+              "",
+              `- Körning: ${korning}`,
+              `- Commit: ${context.sha}`,
+              "",
+              "Åtgärd:",
+              ATGARD,
+              "",
+              "Ärendet stängs för hand när körningen gått igenom igen. Så länge det",
+              "står öppet är det här larmet tyst — nya fall kommenteras i stället för",
+              "att öppna ett nytt ärende.",
+            ].join("\n");
+
+            // En trasig schemalagd körning faller om och om igen. Ett ärende per
+            // fall hade begravt larmet i sitt eget brus, så vi kommenterar på det
+            // öppna i stället — samma mönster som ai-atkomst-bevakningen.
+            const oppna = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              labels: ETIKETT,
+              per_page: 1,
+            });
+
+            if (oppna.data.length > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: oppna.data[0].number,
+                body: `Kvarstår ${dag}.\n\n${kropp}`,
+              });
+              core.notice(`Larmet kommenterades på öppet ärende #${oppna.data[0].number}.`);
+            } else {
+              const skapat = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `LARM: ${RUBRIK} föll (${dag})`,
+                labels: [ETIKETT, "larm"],
+                body: kropp,
+              });
+              core.notice(`Larmärende #${skapat.data.number} öppnat.`);
+            }

@@ -5,6 +5,26 @@
 
 ---
 
+## Så får du veta att något fallit
+
+Varje körning som startas av ett schema — och bygget vid push till `main` —
+öppnar ett ärende när den faller. Ärendena bär etiketten `larm` plus en egen
+etikett per körning (`larm-pipeline`, `larm-build`, `larm-skord` …).
+
+- **Öppna larm ser du på** `is:issue is:open label:larm`.
+- **Ett larm per problem, inte per fall.** Står ärendet öppet kommenteras nya
+  fall på det i stället för att öppna ett nytt. **Stäng det för hand när
+  körningen gått igenom igen** — annars är nästa fel tyst.
+- Larmet är en enda implementation, `.github/workflows/larm.yml`. Lägg aldrig
+  en egen kopia i en workflow; grinden `pipeline/tests/larm-grind.test.ts`
+  faller på det, och den faller också om en ny schemalagd körning saknar larm.
+
+Bakgrunden: sex schemalagda pipelinekörningar föll i rad 31 juli–2 augusti 2026
+utan att någon märkte det, och 2026-08-03 stoppade ett rött test hela
+driftsättningen medan `main` tog emot 62 beslut som vanligt.
+
+---
+
 ## Förebyggande & återkommande rutiner
 
 ### Nyckelrotation (kvartalsvis)

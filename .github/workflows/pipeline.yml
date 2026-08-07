@@ -159,3 +159,22 @@ jobs:
           name: run-report
           path: pipeline/.report/
           if-no-files-found: ignore
+
+  # Larmet är hela skälet till att ett fel i den här körningen syns för en
+  # människa. Delad implementation i larm.yml — lägg aldrig en kopia här.
+  larm:
+    needs: [run]
+    if: failure()
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/larm.yml
+    with:
+      rubrik: "Pipelinekörningen"
+      etikett: "larm-pipeline"
+      atgard: |
+            Läs körningens logg. De två orsaker som redan inträffat är att
+            pushen föll på en utgången token (körningen hann bli längre än
+            timmen) och att ett steg föll på nätverket hos en leverantör.
+            Datat kan vara halvskrivet: kontrollera `data/changelog.json` mot
+            `computeDataHash(promises.json)` innan nästa körning startas om.
