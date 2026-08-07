@@ -144,5 +144,288 @@
     "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-starker-skyddet-for-judiskt-liv-i-sverige",
     "articleTitle": "Liberalerna stärker skyddet för judiskt liv i Sverige – Liberalerna",
     "duplicateOf": "p-2026-0555"
+  },
+  {
+    "candidate": {
+      "title": "Prioritera fast läkarkontakt, skärpt vårdgaranti, stärkt kvinnosjukvård, psykiatrisk reform och nationell digital infrastruktur",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Utöver ansvarsfrågan kommer vi under nästa mandatperiod att prioritera att fler ska ha en fast läkarkontakt i primärvården, skärpt vårdgaranti, stärkt kvinnosjukvård, reform av den psykiatriska vården och nationell digital infrastruktur.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-08-06-nu-maste-alla-partier-inse-att-varden-ar-valets-stora-fraga",
+    "articleTitle": "Nu måste alla partier inse att vården är valets stora fråga | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred uppräkning av prioriteringar (fast läkarkontakt, vårdgaranti, kvinnosjukvård, psykiatri, digital infrastruktur) utan konkret åtagande eller belopp. Bedöms som inriktningslöfte enligt regel 13… [period satt till engang: engångssignal…",
+      "confidence": 0.1,
+      "calculation": "Enligt regel om breda önskelöften: inget konkret enskilt åtagande, därför ingen prissättning (0 kr)."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0357 (3000), p-2026-0052 (150), p-2026-0046 (0), p-2026-0442 (800), p-2026-0444 (15) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
+  },
+  {
+    "candidate": {
+      "title": "Alla lärare i svensk skola ska vara behöriga inom tio år",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Centerpartiet presenterar idag ett konkret vallöfte för skolan: inom tio år ska alla lärare i svensk skola vara behöriga.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.centerpartiet.se/nyheter/arkiv-2026/2026-08-06-centerpartiet-lovar-behoriga-larare-i-varje-klassrum",
+    "articleTitle": "Centerpartiet lovar behöriga lärare i varje klassrum | Centerpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Obehöriga lärare anställs på max sex månaders kontrakt",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Obehöriga lärare ska som huvudregel endast kunna anställas på tidsbegränsade kontrakt om högst ett halvår, för att sätta press på huvudmännen att prioritera behöriga.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/nyheter/arkiv-2026/2026-08-06-centerpartiet-lovar-behoriga-larare-i-varje-klassrum",
+    "articleTitle": "Centerpartiet lovar behöriga lärare i varje klassrum | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering av anställningsform; den direkta statliga kostnaden för lagändringen är försumbar (0 mkr). Följdkostnader för kommuner kvantifieras ej.",
+      "confidence": 0.65,
+      "calculation": "Åtgärden är en lagregel utan direkta budgetkonsekvenser för staten. Kostnad för riksdagsbeslut bedöms försumbar."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Bygg ut kompletterande pedagogisk utbildning (KPU)",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Staten måste bygga ut den kompletterande pedagogiska utbildningen (KPU) för att fler akademiker snabbt ska kunna bli lärare.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/nyheter/arkiv-2026/2026-08-06-centerpartiet-lovar-behoriga-larare-i-varje-klassrum",
+    "articleTitle": "Centerpartiet lovar behöriga lärare i varje klassrum | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 25,
+      "msek_base": 75,
+      "msek_high": 160,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ingen nivå angiven. Uppskattning baserad på antagande om utökning av KPU-platser (500–2000) till en styckkostnad på 50 000–80 000 kr per plats, i linje med tidigare utbyggnader av högskoleutbildning.",
+      "confidence": 0.2,
+      "calculation": "Antag: 500–2000 nya platser × 50 000–80 000 kr/plats. Låg: 500 × 50 tkr = 25 mkr. Bas: 1000 × 75 tkr = 75 mkr. Hög: 2000 × 80 tkr = 160 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Reformera skolans finansiering för att premiera behöriga lärare",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Skolans finansieringssystem ska reformeras för att ekonomiskt premiera de huvudmän som anställer behöriga lärare.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/nyheter/arkiv-2026/2026-08-06-centerpartiet-lovar-behoriga-larare-i-varje-klassrum",
+    "articleTitle": "Centerpartiet lovar behöriga lärare i varje klassrum | Centerpartiet",
+    "duplicateOf": "p-2026-0500"
+  },
+  {
+    "candidate": {
+      "title": "Inför stort sektorsbidrag för att stoppa läraruppsägningar och skärp tillsyn",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Centerpartiet vill också införa ett stort sektorsbidrag för att stoppa de pågående uppsägningarna av lärare och skärpa tillsynen så att oseriösa aktörer som systematiskt väljer att anställa obehöriga lärare framför behöriga får kännbara konsekvenser.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/nyheter/arkiv-2026/2026-08-06-centerpartiet-lovar-behoriga-larare-i-varje-klassrum",
+    "articleTitle": "Centerpartiet lovar behöriga lärare i varje klassrum | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0344 (0), p-2026-0547 (300), p-2026-0500 (1000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~300"
+  },
+  {
+    "candidate": {
+      "title": "Den som döms för grova sexuella övergrepp mot barn ska förlora vårdnaden",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Teresa Carvalho",
+        "role": ""
+      },
+      "quote": "Den som döms för grova sexuella övergrepp mot barn ska förlora vårdnaden av och rätten till oövervakat umgänge med sina barn, oavsett om det rör egna barn eller andras.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: /person must be null; /person/role must NOT have fewer than 2 characters; /person must match exactly one schema in oneOf"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-06-s-sverige-behover-ta-krafttag-mot-sexuella-overgrepp-och-exploatering-av-barn",
+    "articleTitle": "S: Sverige behöver ta krafttag mot sexuella övergrepp och exploatering av barn\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Dom för barnpornografibrott ska leda till utredning av vårdnad",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Teresa Carvalho",
+        "role": ""
+      },
+      "quote": "En dom för barnpornografibrott ska leda till att vårdnaden utreds.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: /person must be null; /person/role must NOT have fewer than 2 characters; /person must match exactly one schema in oneOf"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-06-s-sverige-behover-ta-krafttag-mot-sexuella-overgrepp-och-exploatering-av-barn",
+    "articleTitle": "S: Sverige behöver ta krafttag mot sexuella övergrepp och exploatering av barn\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Fängelse ska bli huvudregel för barnpornografibrott",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Teresa Carvalho",
+        "role": ""
+      },
+      "quote": "Straffet för barnpornografibrott ska skärpas så att fängelse blir huvudregeln.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: /person must be null; /person/role must NOT have fewer than 2 characters; /person must match exactly one schema in oneOf"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-06-s-sverige-behover-ta-krafttag-mot-sexuella-overgrepp-och-exploatering-av-barn",
+    "articleTitle": "S: Sverige behöver ta krafttag mot sexuella övergrepp och exploatering av barn\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Polisen ska informera verksamheter där barn vistas om sexualbrottsmisstänkta",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "polisen ska kunna informera alla typer av verksamheter där barn vistas, t.ex. lekland och idrottsklubb, om en person som misstänks för sexualbrott mot barn arbetar där.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-06-s-sverige-behover-ta-krafttag-mot-sexuella-overgrepp-och-exploatering-av-barn",
+    "articleTitle": "S: Sverige behöver ta krafttag mot sexuella övergrepp och exploatering av barn\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering: införandet av en lagstadgad informationsskyldighet har en försumbar direkt statlig kostnad. Eventuell administrativ implementering bedöms till 0–5 mkr.",
+      "confidence": 0.65,
+      "calculation": "Antag 0,5–5 mkr i engångskostnad för utredning, IT-anpassning och rutiner hos Polismyndigheten."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Kemisk kastrering ska erbjudas som villkor för villkorlig frigivning",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "kemisk kastrering ska erbjudas som krav för villkorlig frigivning",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-06-s-sverige-behover-ta-krafttag-mot-sexuella-overgrepp-och-exploatering-av-barn",
+    "articleTitle": "S: Sverige behöver ta krafttag mot sexuella övergrepp och exploatering av barn\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 1,
+      "msek_high": 3,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden avser läkemedel och administration för kemisk kastrering som villkor vid villkorlig frigivning, med lågt antagande om berörda personer.",
+      "confidence": 0.3,
+      "calculation": "~10–30 villkorligt frigivna sexualbrottslingar per år × läkemedelskostnad ~20 000–50 000 kr/person ≈ 0,2–1,5 mkr. Högre spann för administration och osäkerhet om faktisk användning."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0583 (0) ⚠ AVVIKER: belopp 1 men jämförbara ligger på 0"
   }
 ]

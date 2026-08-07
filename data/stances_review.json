@@ -426,5 +426,30 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-huvudman",
+      "party": "kd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Valet står mellan status quo i svensk sjukvård eller ett statligt ansvar för sjukvården.",
+      "person": null
+    },
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-08-06-nu-maste-alla-partier-inse-att-varden-ar-valets-stora-fraga",
+    "articleTitle": "Nu måste alla partier inse att vården är valets stora fråga | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-08-06-nu-maste-alla-partier-inse-att-varden-ar-valets-stora-fraga",
+    "archiveUrl": "https://web.archive.org/web/20260807050529/https://kristdemokraterna.se/arkiv/nyheter/2026/2026-08-06-nu-maste-alla-partier-inse-att-varden-ar-valets-stora-fraga",
+    "dateStated": "2026-08-06",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-07-05-00",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet ramar in valet som ett val mellan status quo och statligt ansvar, men uttrycker inte uttryckligen KD:s ståndpunkt i sig; partiets stöd för statligt ansvar framgår först av den omedelbart följande texten i källan."
+      }
+    ],
+    "verifyReason": "Citatet ramar in valet som ett val mellan status quo och statligt ansvar, men uttrycker inte uttryckligen KD:s ståndpunkt i sig; partiets stöd för statligt ansvar framgår först av den omedelbart följande texten i källan."
   }
 ]
