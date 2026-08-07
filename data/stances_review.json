@@ -451,5 +451,48 @@
       }
     ],
     "verifyReason": "Citatet ramar in valet som ett val mellan status quo och statligt ansvar, men uttrycker inte uttryckligen KD:s ståndpunkt i sig; partiets stöd för statligt ansvar framgår först av den omedelbart följande texten i källan."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vinstförbud i skola och förskola. Dina skattepengar ska stanna i skolan. Inte till bolag som skär ner för att plocka ut vinst.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "runId": "run-2026-08-07-10-07"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Bland annat genom att förbjuda vinster i skolan och stoppa överkompensationen till fristående skolor.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-05-socialdemokraterna-gar-till-val-pa-att-stoppa-sloseriet-med-skattepengar",
+    "articleTitle": "Socialdemokraterna går till val på att stoppa slöseriet med skattepengar\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-05-socialdemokraterna-gar-till-val-pa-att-stoppa-sloseriet-med-skattepengar",
+    "archiveUrl": null,
+    "dateStated": "2026-08-05",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-07-10-07",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
