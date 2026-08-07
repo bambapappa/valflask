@@ -456,6 +456,13 @@ dialog.panel::backdrop { background: rgba(17, 17, 17, 0.55); }
   font-size: var(--steg-0);
 }
 .koppling .metodnot { font-size: var(--steg-0); color: var(--grafit); margin: 0.4rem 0; }
+/* Vad punkten avslog. Står bredvid beviset, för ett avslag utan innehåll är
+   bara en lista på nummer. */
+.koppling .avslaget { margin: 0.4rem 0; font-size: var(--steg-0); }
+.koppling .avslaget-rubrik { color: var(--grafit); }
+.koppling .avslaget ul { margin: 0.2rem 0 0; padding-left: 1.1rem; }
+.koppling .avslaget li { margin-bottom: 0.3rem; }
+.koppling .avslaget-kalla { font-family: var(--font-mono); font-size: var(--steg--1); }
 .koppling .lankar {
   display: flex; flex-wrap: wrap; gap: 0.3rem var(--mellanrum);
   font-family: var(--font-mono);

@@ -17,7 +17,7 @@
 import { createHash } from "node:crypto";
 import type { Handling } from "./handlingar.ts";
 import type { KopplingsForslag } from "./grindar.ts";
-import { CITAT_MIN_TECKEN, normalizeForVerbatim } from "./grindar.ts";
+import { avslagsbeslut, CITAT_MIN_TECKEN, normalizeForVerbatim } from "./grindar.ts";
 import { dokumentUrl } from "./riksdagen.ts";
 
 /** En köpost i data/kopplingsforslag.json (skriven av scripts/foreslag.mts). */
@@ -34,11 +34,32 @@ export interface KopplingPost {
   handling_id: string;
   riktning: "stodjer" | "motverkar";
   bevis: { citat: string; sida?: number | null; kalla_dok_id?: string };
+  /**
+   * Vad punkten avslog, när beviset bara är en lista på avslagna motioner.
+   * Yrkandenas egna lydelser, hämtade ur motionerna punkten pekar ut — aldrig
+   * skrivna för hand. Fylls av `npm run avslag-backfill`.
+   */
+  avslaget?: Avslag[];
   motionstyp?: "parti" | "kommitte" | "enskild";
   method_note: string;
   confidence: number;
   extraction: { model: string; verified_by: string | null; run_id: string };
   status: "aktiv" | "indragen";
+  indragen?: { datum: string; skal: string };
+}
+
+/** Ett avslaget yrkande: adressen punkten ger, och lydelsen den pekar på. */
+export interface Avslag {
+  /** Motionens beteckning, som den står i punkten: "2024/25:3435". */
+  motion: string;
+  /** Motionärens parti i gemener; tom sträng för partilös. */
+  parti: string;
+  /** Yrkandenumret, eller undefined när punkten avslår hela motionen. */
+  yrkande?: string;
+  /** Motionens dok-id hos riksdagen — så lydelsen går att slå upp. */
+  dok_id: string;
+  /** Yrkandets egen lydelse, ordagrant ur riksdagens yrkandelista. */
+  lydelse: string;
 }
 
 /**
@@ -184,6 +205,12 @@ export function godkannForslag(
      * därför inte pröva det själv — därav kravet.
      */
     bevis?: string;
+    /**
+     * Vad punkten avslog, hämtat av anroparen ur motionernas yrkandelistor.
+     * Krävs när beviset bara avslår motioner; samma skäl som ovan — den här
+     * modulen når inte nätet.
+     */
+    avslaget?: Avslag[];
   } = {},
 ): GodkannResultat {
   const post = ko[index];
@@ -205,6 +232,15 @@ export function godkannForslag(
   if ((post.method_note ?? "").trim() === "") {
     throw new GranskningsFel("Posten saknar motivering (method_note).");
   }
+  // Ett bevis som bara räknar upp avslagna motioner visar inte vad som
+  // avslogs. Punkten pekar ut yrkandena, så uppgiften FINNS — den ska hämtas,
+  // inte utelämnas. Utan den ser läsaren en lista på nummer.
+  if (avslagsbeslut(citat) && (opts.avslaget ?? []).length === 0) {
+    throw new GranskningsFel(
+      "Beviset är en punkt som bara avslår motioner. Vad som avslogs måste stå i fältet " +
+        "avslaget — kör `npm run avslag-backfill -- --koppling <id>` och godkänn sedan om.",
+    );
+  }
   if (opts.motionstyp && handling.kind !== "motion") {
     throw new GranskningsFel(`--motionstyp gäller bara motioner — ${post.handling_id} är ${handling.kind}.`);
   }
@@ -221,6 +257,7 @@ export function godkannForslag(
     handling_id: post.handling_id,
     riktning: post.riktning,
     bevis: { ...post.bevis, citat },
+    ...((opts.avslaget ?? []).length > 0 ? { avslaget: opts.avslaget } : {}),
     ...(motionstyp ? { motionstyp } : {}),
     method_note: opts.bevis
       ? `${post.method_note} (beviset utbytt av granskaren mot ett annat citat ur samma dokument)`

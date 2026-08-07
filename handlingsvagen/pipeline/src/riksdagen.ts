@@ -336,3 +336,75 @@ export async function fetchUtskottspunkter(fetcher: HttpFetch, dokId: string): P
 export function dokumentUrl(dokId: string): string {
   return `https://data.riksdagen.se/dokument/${dokId}`;
 }
+
+/** En motion som en voteringspunkt avslår — adressen, inte innehållet. */
+export interface Avslagsreferens {
+  /** Riksmötet, t.ex. "2024/25". */
+  rm: string;
+  /** Motionens beteckning inom riksmötet, t.ex. "3435". */
+  beteckning: string;
+  /** Motionärens parti i gemener; tom sträng för partilös. */
+  parti: string;
+  /** Yrkandenumren punkten avslår. Tom lista = hela motionen. */
+  yrkanden: string[];
+}
+
+/**
+ * Motionerna en avslå-punkt pekar ut, lästa ur punktens egen beslutstext.
+ *
+ * En punkt som bara avslår motioner säger inte VAD som avslogs — men den
+ * säger exakt VILKA yrkanden det gäller: "Riksdagen avslår motionerna
+ * 2024/25:3435 av Vasiliki Tsouplaki m.fl. (V) yrkandena 3 och 4, …". Det är
+ * en adress, och lydelsen ligger ett uppslag bort i motionens egen
+ * yrkandelista. Utan det steget står beviset som en lista på avslagna
+ * nummer, och läsaren kan inte se vad kammaren sa nej till.
+ */
+export function parseAvslagsreferenser(text: string): Avslagsreferens[] {
+  const ut: Avslagsreferens[] = [];
+  const ref = /(20\d\d\/\d\d):(\d+)/gu;
+  const traffar = [...text.matchAll(ref)];
+  for (let i = 0; i < traffar.length; i += 1) {
+    const m = traffar[i]!;
+    const start = m.index ?? 0;
+    const slut = i + 1 < traffar.length ? (traffar[i + 1]!.index ?? text.length) : text.length;
+    const bit = text.slice(start, slut);
+    const parti = /\(([^)]*)\)/u.exec(bit)?.[1] ?? "";
+    ut.push({
+      rm: m[1]!,
+      beteckning: m[2]!,
+      parti: parti === "-" ? "" : parti.toLowerCase(),
+      // "yrkande 1", "yrkanden 4 och 5", "yrkandena 1, 8-13 och 21" — alla tre
+      // formerna förekommer, och singularformen är den lätta att missa.
+      yrkanden: parseYrkandenummer(/yrkanden?a?\s+([^()]*?)(?=\s+(?:och|samt)\s+20\d\d\/|,\s*20\d\d\/|$)/u.exec(bit)?.[1] ?? ""),
+    });
+  }
+  return ut;
+}
+
+/** "52-54 och 74" → ["52","53","54","74"]. Tom sträng → tom lista. */
+function parseYrkandenummer(s: string): string[] {
+  const ut = new Set<string>();
+  const rest = s.replace(/(\d+)\s*[-–—]\s*(\d+)/gu, (_, a: string, b: string) => {
+    for (let n = Number(a); n <= Number(b); n += 1) ut.add(String(n));
+    return " ";
+  });
+  for (const n of rest.match(/\d+/gu) ?? []) ut.add(n);
+  return [...ut].sort((a, b) => Number(a) - Number(b));
+}
+
+/**
+ * Motionens dok-id ur riksmöte och beteckning.
+ *
+ * Punktens beslutstext bär beteckningen ("2024/25:3435"), inte dok-id:t som
+ * dokumentstatus behöver. Sökparametern heter `bet`; `beteckning` finns också
+ * men matchar på annat och ger fel dokument — sett ge 3 449 träffar för en
+ * beteckning som har exakt en.
+ */
+export async function fetchMotionDokId(fetcher: HttpFetch, rm: string, beteckning: string): Promise<string | null> {
+  const url = `${BASE}/dokumentlista/?doktyp=mot&bet=${encodeURIComponent(beteckning)}&rm=${encodeURIComponent(rm)}&utformat=json&sz=5`;
+  const payload = (await getJson(fetcher, url)) as { dokumentlista?: { dokument?: unknown } };
+  for (const d of asArray(payload.dokumentlista?.dokument as unknown) as Array<Record<string, unknown>>) {
+    if (String(d["rm"]) === rm && String(d["beteckning"]) === beteckning) return String(d["dok_id"]);
+  }
+  return null;
+}

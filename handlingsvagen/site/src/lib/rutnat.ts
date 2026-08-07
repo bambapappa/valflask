@@ -168,6 +168,12 @@ export interface KopplingVy {
   motionstyp: string | null;
   confidence: number | null;
   citat: string;
+  /**
+   * Vad punkten avslog. En beslutstext som bara avslår motioner säger att
+   * några yrkanden föll, inte vad de begärde — utan det här ser läsaren en
+   * lista på nummer.
+   */
+  avslaget: Array<{ motion: string; parti: string; yrkande?: string; dok_id: string; lydelse: string }>;
   method_note: string | null;
   granskad_av_manniska: boolean;
   provad_datum: string | null;
@@ -225,6 +231,7 @@ export function buildLofteDetalj(id: string): LofteDetalj | null {
       motionstyp: k.motionstyp ?? h?.motionstyp ?? null,
       confidence: typeof k.confidence === "number" ? k.confidence : null,
       citat: k.bevis?.citat ?? "",
+      avslaget: k.avslaget ?? [],
       method_note: k.method_note ?? null,
       granskad_av_manniska: k.extraction?.verified_by === "owner",
       provad_datum: datumUrRunId(k.extraction?.run_id),

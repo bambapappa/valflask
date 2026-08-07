@@ -96,6 +96,21 @@ export function normalizeForVerbatim(input: string): string {
   );
 }
 
+/**
+ * Är beviset en punkt som BARA avslår motioner?
+ *
+ * En sådan beslutstext är handlingens egen — den passerar citatgrinden — men
+ * den säger bara att några yrkanden föll, inte vad de begärde. Läsaren ser en
+ * lista på nummer. Därför krävs fältet `avslaget` bredvid beviset: yrkandenas
+ * egna lydelser, hämtade ur motionerna punkten pekar ut.
+ *
+ * Punkter som antar något och därtill avslår motioner ("Riksdagen antar …
+ * samt avslår motionerna …") visar vad som beslutades och omfattas inte.
+ */
+export function avslagsbeslut(citat: string): boolean {
+  return /^Riksdagen avslår motion(?:erna)?\b/iu.test(normalizeForVerbatim(citat));
+}
+
 /** H1 — Källan finns: känd handling med id hos riksdagen och öppningsbar länk. */
 function grindH1(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
   const fel: GrindFel[] = [];
