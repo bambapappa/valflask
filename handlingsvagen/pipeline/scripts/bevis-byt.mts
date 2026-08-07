@@ -37,7 +37,8 @@ import {
 } from "../src/riksdagen.ts";
 import { byggHandlingstext } from "../src/foreslag.ts";
 import type { KopplingPost } from "../src/granskning.ts";
-import { bytBevis, provaByte, rattelsePost, type Byte } from "../src/bevisbyte.ts";
+import { bytBevis, provaByte, rattelsePost, type Byte, type Bytesrad } from "../src/bevisbyte.ts";
+import { normalizeForVerbatim } from "../src/grindar.ts";
 import { cachat, politeFetch } from "./kallcache.mts";
 import { kanon, lasProvningar } from "../../../pipeline/src/provningar.ts";
 
@@ -83,7 +84,7 @@ async function hamtaPunkter(betDokId: string): Promise<Utskottspunkt[] | undefin
 }
 
 const fel: string[] = [];
-const gjorda: { koppling: KopplingPost; byte: Byte }[] = [];
+const gjorda: Bytesrad[] = [];
 let paUndantag = 0;
 const uppdaterade = new Map<string, KopplingPost>();
 
@@ -157,8 +158,16 @@ for (const byte of byten) {
   }
   if (prov.paUndantag) paUndantag += 1;
 
+  // Stod det GAMLA citatet ord för ord i sin källa? Gjorde det inte det är
+  // bytet en reparation av en trasig avskrift, inte ett byte av vilken del
+  // som citeras — och rättelseposten ska säga det. Skriptet läser det ur
+  // källan självt; det är inget listan får påstå.
+  const gammaltCitatSaknasIKallan = !normalizeForVerbatim(kalltext).includes(
+    normalizeForVerbatim(koppling.bevis.citat),
+  );
+
   uppdaterade.set(byte.id, bytBevis(koppling, byte, datum));
-  gjorda.push({ koppling, byte });
+  gjorda.push({ koppling, byte, ...(gammaltCitatSaknasIKallan ? { gammaltCitatSaknasIKallan } : {}) });
 }
 
 console.log(
