@@ -67,6 +67,8 @@ export interface Koppling {
   riktning: "stodjer" | "motverkar";
   motionstyp?: "parti" | "kommitte" | "enskild";
   bevis: { citat: string };
+  /** Vad punkten avslog, när beviset bara är en lista på avslagna motioner. */
+  avslaget?: Array<{ motion: string; parti: string; yrkande?: string; dok_id: string; lydelse: string }>;
   method_note?: string;
   confidence?: number;
   extraction?: { model?: string; verified_by?: string | null; run_id?: string };

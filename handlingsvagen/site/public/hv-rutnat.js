@@ -69,6 +69,29 @@
       var q = el("blockquote", null, "”" + k.citat + "”");
       box.appendChild(q);
     }
+
+    // En punkt som bara avslår motioner säger att några yrkanden föll, inte
+    // vad de begärde. Punkten pekar ut dem, så lydelserna hämtas ur
+    // motionerna och visas här — annars läser man en lista på nummer.
+    if (k.avslaget && k.avslaget.length) {
+      var av = el("div", "avslaget");
+      av.appendChild(el("div", "avslaget-rubrik", "Detta röstades ned:"));
+      var lista = el("ul", null, null);
+      for (var i = 0; i < k.avslaget.length; i++) {
+        var a = k.avslaget[i];
+        var li = el("li", null, null);
+        var kalla = a.motion + (a.yrkande ? " yrkande " + a.yrkande : "") + (a.parti ? " (" + a.parti.toUpperCase() + ")" : "");
+        var lank = el("a", "avslaget-kalla", kalla);
+        lank.href = "https://data.riksdagen.se/dokument/" + a.dok_id;
+        lank.rel = "noopener";
+        lank.target = "_blank";
+        li.appendChild(lank);
+        li.appendChild(document.createTextNode(" " + a.lydelse));
+        lista.appendChild(li);
+      }
+      av.appendChild(lista);
+      box.appendChild(av);
+    }
     if (k.method_note) box.appendChild(el("p", "metodnot", k.method_note));
 
     var lankar = el("div", "lankar");

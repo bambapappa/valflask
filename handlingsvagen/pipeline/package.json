@@ -17,7 +17,8 @@
     "nyckelord": "node --import tsx/esm scripts/nyckelord-index.mts",
     "ko-kontrollera": "node --import tsx/esm scripts/ko-kontrollera.mts",
     "godkann-lista": "node --import tsx/esm scripts/koppling-godkann-lista.mts",
-    "avvisa-lista": "node --import tsx/esm scripts/koppling-avvisa-lista.mts"
+    "avvisa-lista": "node --import tsx/esm scripts/koppling-avvisa-lista.mts",
+    "avslag-backfill": "node --import tsx/esm scripts/avslag-backfill.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1"
