@@ -210,3 +210,28 @@ jobs:
       - name: Submit changed URLs to IndexNow
         run: node --experimental-strip-types scripts/indexnow-submit.mts
         working-directory: site
+
+  # Ett rött test här stoppar hela driftsättningen tyst: main tar emot data som
+  # vanligt medan sajten inte byggs om. Det hände 2026-08-03 och kostade en dag.
+  # Bara push till main larmar — en röd PR-körning har redan en människa som
+  # tittar på den. Delad implementation i larm.yml; lägg aldrig en kopia här.
+  larm:
+    needs: [test-pipeline, test-handlingsvagen, build-and-test, deploy-pages]
+    if: failure() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/larm.yml
+    with:
+      rubrik: "Bygget av sajten"
+      etikett: "larm-build"
+      atgard: |
+        Sajten är INTE ombyggd, och det syns inte på utlovat.se — den visar
+        förra bygget. Läs vilket jobb som föll:
+
+        - `test-pipeline` / `test-handlingsvagen`: ett test föll. Kör
+          `pnpm test` i `pipeline/` respektive `npm test` i
+          `handlingsvagen/pipeline/` och laga felet — sänk aldrig grinden.
+        - `build-and-test`: bygget eller en av sajtens grindar föll.
+        - `deploy-pages`: bygget gick men driftsättningen inte. Se
+          `ops/RUNBOOK.md`.

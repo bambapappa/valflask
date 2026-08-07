@@ -47,3 +47,21 @@ jobs:
           git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
           git add data/stances.json && git diff --cached --quiet || git commit -m "data: källröta-kontroll $(date -u +%F) (run ${{ github.run_id }})"
           git push
+
+  # Larmet är hela skälet till att ett fel i den här körningen syns för en
+  # människa. Delad implementation i larm.yml — lägg aldrig en kopia här.
+  larm:
+    needs: [check]
+    if: failure()
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/larm.yml
+    with:
+      rubrik: "Källrötebevakningen"
+      etikett: "larm-rot-watch"
+      atgard: |
+            Bevakningen stämplar källor som ändrats eller försvunnit. Faller
+            den syns en borttagen källa inte på sajten. Kör
+            `pnpm stances:rot-check --dry-run` i `pipeline/` och läs vad som
+            brister innan något skrivs.

@@ -22,14 +22,19 @@ jobs:
       - name: Run drill
         run: bash ops/drill.sh
         timeout-minutes: 15
-      - name: Create issue on failure
-        if: failure()
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v9.0.0
-        with:
-          script: |
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `ALERT: Månadsdrill misslyckades (${new Date().toISOString().slice(0,10)})`,
-              body: `Drill-workflow misslyckades. Se Actions-logg för detaljer.\n\n- Workflow: ${context.workflow}\n- Run: ${context.runId}\n- Commit: ${context.sha}\n\nÅtgärd: kör \\"bash ops/drill.sh\\" lokalt och undersök felet.`
-            });
+
+  # Larmet låg förut som ett eget steg här. Delad implementation i larm.yml.
+  larm:
+    needs: [drill]
+    if: failure()
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/larm.yml
+    with:
+      rubrik: "Månadsdrillen"
+      etikett: "larm-drill"
+      atgard: |
+        Drillen bygger sajten från en ren klon. Faller den vet vi inte längre
+        att repot går att bygga från noll — vilket är hela poängen med den.
+        Kör `bash ops/drill.sh` lokalt och läs var det brister.

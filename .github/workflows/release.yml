@@ -42,3 +42,20 @@ jobs:
           else
             echo "No secondary remote configured — ägarsteg (se RUNBOOK)."
           fi
+
+  # Larmet är hela skälet till att ett fel i den här körningen syns för en
+  # människa. Delad implementation i larm.yml — lägg aldrig en kopia här.
+  larm:
+    needs: [tag]
+    if: failure()
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/larm.yml
+    with:
+      rubrik: "Veckotaggningen"
+      etikett: "larm-release"
+      atgard: |
+            Taggen är återställningspunkten. Utan den finns ingen märkt punkt
+            att rulla tillbaka till den vecka något går sönder — se
+            `ops/RUNBOOK.md`.

@@ -120,3 +120,21 @@ jobs:
         run: |
           echo "Arkivsteget föll — delresultat är committade, omkörning fortsätter där det slutade."
           exit 1
+
+  # Larmet är hela skälet till att ett fel i den här körningen syns för en
+  # människa. Delad implementation i larm.yml — lägg aldrig en kopia här.
+  larm:
+    needs: [arkivera]
+    if: failure()
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/larm.yml
+    with:
+      rubrik: "Arkiveringen av källor"
+      etikett: "larm-arkiv"
+      atgard: |
+            Delresultat är committade. En källa utan arkivkopia är inte ett
+            fel i sig — men faller hela steget hämtas inga nya kopior alls, och
+            då står principen om att arkivlänken ska bära citatet utan
+            underlag. Läs loggen och pröva Wayback för hand.
