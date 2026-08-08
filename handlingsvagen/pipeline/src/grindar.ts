@@ -58,7 +58,17 @@ export interface GrindKontext {
    * dokumentet citatet står — den kan inte veta det — och anroparen ska
    * skriva ut att kontrollen uteblev.
    */
-  handlingstext?: { sort: "yrkanden" | "beslutspunkt"; delar: string[] };
+  handlingstext?: {
+    sort: "yrkanden" | "beslutspunkt";
+    delar: string[];
+    /**
+     * Sant när motionens brödtext är öppnad därför att yrkandena **bara**
+     * anvisar medel enligt en tabell (mänskligt beslut 2026-08-09). Flaggan
+     * finns för att undantaget ska synas där beviset motiveras — ett undantag
+     * som inte behöver skrivas ut blir ett undantag man tar av vana.
+     */
+    brodtextOppen?: boolean;
+  };
 }
 
 /**

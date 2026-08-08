@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { computeDataHash, type ChangelogEntry } from "./publish.ts";
 import { konyckel, lasProvningar, provningsGrind } from "./provningar.ts";
+import { avvisa, hav, slaUpp, type Avvisning } from "./avvisningar.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -490,8 +491,67 @@ export function reject(
   const title = item.candidate?.title ?? item.articleTitle ?? "(okänd)";
   const remaining = items.filter((_, i) => i !== index);
   saveJson(join(dataDir, "needs_review.json"), remaining);
+
+  // Avvisningen ska lämna spår. Utan minnet hittar nästa skörd samma mening i
+  // samma dokument och lägger in den på nytt — det hände tre gånger i rad i
+  // början av augusti. Mänskligt beslut 2026-08-09; se `avvisningar.ts`.
+  const url = item.articleUrl ?? "";
+  const citat = item.candidate?.quote ?? "";
+  if (url !== "" && citat !== "") {
+    const minne = lasAvvisade(dataDir);
+    saveJson(
+      join(dataDir, "avvisade.json"),
+      avvisa(minne, url, citat, reason, new Date().toISOString().slice(0, 10)),
+    );
+  }
   console.log(`Avvisad: "${title}" — ${reason}`);
   return { title };
+}
+
+/** Avvisningsminnet, eller en tom lista när filen ännu inte finns. */
+export function lasAvvisade(dataDir: string = DATA_DIR): Avvisning[] {
+  try {
+    return loadJson<Avvisning[]>(join(dataDir, "avvisade.json"));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Häver en avvisning, så att kandidaten kan komma tillbaka i kön.
+ *
+ * Mänskligt beslut 2026-08-09: en avvisning ska gå att häva. Ett löfte som
+ * upprepas i valmanifestet väger tyngre än samma mening i ett tal. Det gamla
+ * skälet står kvar — historik skrivs inte om.
+ */
+export function havAvvisning(nyckel: string, skal: string, dataDir: string = DATA_DIR): void {
+  const minne = lasAvvisade(dataDir);
+  const ut = hav(minne, nyckel, skal, new Date().toISOString().slice(0, 10));
+  if (!ut) {
+    console.error(`Ingen avvisning med nyckeln ${nyckel}. Kör \`pnpm review avvisade\` för att se dem.`);
+    process.exit(1);
+  }
+  saveJson(join(dataDir, "avvisade.json"), ut);
+  const post = ut.find((a) => a.nyckel === nyckel)!;
+  console.log(`Hävd: ${nyckel}\n  avvisades ${post.datum}: ${post.skal}\n  hävs ${post.havd!.datum}: ${skal}`);
+}
+
+/** Listar avvisningsminnet, så att en nyckel går att hitta utan att räknas fram. */
+export function listaAvvisade(dataDir: string = DATA_DIR): void {
+  const minne = lasAvvisade(dataDir);
+  if (minne.length === 0) {
+    console.log("Avvisningsminnet är tomt.");
+    return;
+  }
+  console.log(`${minne.length} avvisning(ar), varav ${minne.filter((a) => a.havd).length} hävda:\n`);
+  for (const a of minne) {
+    console.log(`${a.nyckel}  ${a.havd ? "HÄVD" : "gäller"}  ${a.datum}`);
+    console.log(`   ${a.citat.slice(0, 96)}`);
+    console.log(`   ${a.url}`);
+    console.log(`   skäl: ${a.skal}`);
+    if (a.havd) console.log(`   hävd ${a.havd.datum}: ${a.havd.skal}`);
+    console.log("");
+  }
 }
 
 /**
@@ -614,6 +674,17 @@ switch (command) {
     }
     approve(args);
     break;
+  case "avvisade":
+    listaAvvisade();
+    break;
+  case "hav": {
+    if (args.length < 2) {
+      console.error("Användning: pnpm review hav <nyckel> <skäl>");
+      process.exit(1);
+    }
+    havAvvisning(args[0]!, args.slice(1).join(" "));
+    break;
+  }
   case "reject":
     if (!args[0] || !args[1]) {
       console.error("Användning: pnpm review reject <index> <orsak>");
@@ -629,6 +700,8 @@ switch (command) {
     console.log("  list                         Visa poster i needs_review");
     console.log("  approve <index> [low base high] [--group p-XXXX]  Godkänn; kostnad; länka dublett");
     console.log("  reject <index> <orsak>       Avvisa post");
+    console.log("  avvisade                     Visa avvisningsminnet");
+    console.log("  hav <nyckel> <skäl>          Häv en avvisning så posten kan komma tillbaka");
     console.log("  add <fil.json>               Lägg in ett manuellt inrapporterat löfte för granskning");
     process.exit(command ? 1 : 0);
 }

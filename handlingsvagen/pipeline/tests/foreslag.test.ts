@@ -412,3 +412,35 @@ test("sammanfattning: hittas mellan rubrikerna, annars undefined", () => {
   assert.equal(sammanfattning("Sammanfattning Utskottet ställer sig bakom. Utskottets förslag till riksdagsbeslut X"), "Utskottet ställer sig bakom.");
   assert.equal(sammanfattning("Ett betänkande utan de rubrikerna."), undefined);
 });
+
+/**
+ * Brödtextsundantaget för anslagsmotioner — mänskligt beslut 2026-08-09.
+ *
+ * Ett anslagsyrkande lyder «anvisar anslagen inom utgiftsområde N enligt
+ * förslaget i tabell X» och godtar därför inget citat alls. Grinden godkände
+ * ingenting ur de motionerna, vilket inte gjorde beläggen bättre — det gjorde
+ * att de goda kopplingarna i brödtexten aldrig skapades.
+ */
+const ANSLAG = "Riksdagen anvisar anslagen för 2026 inom utgiftsområde 6 enligt förslaget i tabell 1.";
+const RAMVERK = "Riksdagen godkänner riktlinjerna för den ekonomiska politiken.";
+const SAK = "Riksdagen ställer sig bakom det som anförs i motionen om fler poliser och tillkännager detta för regeringen.";
+const BRODTEXT = "Vi föreslår att polisen tillförs 2 000 nya tjänster under mandatperioden.";
+
+test("brödtexten öppnas när yrkandena bara anvisar medel", () => {
+  const ht = byggHandlingstext(undefined, [{ lydelse: ANSLAG }] as never, BRODTEXT);
+  assert.equal(ht?.sort, "yrkanden");
+  assert.equal(ht?.brodtextOppen, true);
+  assert.ok(ht!.delar.includes(BRODTEXT), "brödtexten ska ligga bland delarna");
+});
+
+test("brödtexten öppnas INTE när motionen har ett sakyrkande", () => {
+  const ht = byggHandlingstext(undefined, [{ lydelse: ANSLAG }, { lydelse: SAK }] as never, BRODTEXT);
+  assert.equal(ht?.brodtextOppen, undefined);
+  assert.deepEqual(ht?.delar, [ANSLAG, SAK]);
+});
+
+test("brödtexten öppnas INTE för en motion med bara ramverksyrkanden", () => {
+  const ht = byggHandlingstext(undefined, [{ lydelse: RAMVERK }] as never, BRODTEXT);
+  assert.equal(ht?.brodtextOppen, undefined);
+  assert.deepEqual(ht?.delar, [RAMVERK]);
+});
