@@ -3100,7 +3100,7 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 750,
       "msek_base": 1500,
@@ -3129,6 +3129,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-08-08",
+        "change": "Kostnadstypen ändrad från utgift till intäktsminskning. Löftet är en skatteåtgärd — ett avdrag, en kredit eller en nivå som görs skattefri — och det betyder att staten får in mindre pengar, inte att staten betalar ut mer. Inget publicerat tal rör sig: rikssumman och de redovisade besparingarna räknar utgift och intäktsminskning på samma sida, mätt med sajtens egen aggregates.ts. Det som ändras är den rad som möter läsaren och det fält som ligger i det publika API:et — de beskrev åtgärden fel.",
+        "commit": "2f24528335a200270f0b8e4ca930d56d91abfdeb"
       }
     ],
     "extraction": {
@@ -7501,7 +7506,7 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 55000,
       "msek_base": 78000,
@@ -7531,6 +7536,11 @@
         "date": "2026-08-04",
         "change": "Finansieringsuppgiften har fått en period: per år, precis som partiet självt anger den. Fältet saknade period och beloppet drogs från kostnader räknade för hela mandatperioden, alltså ett år mot fyra.",
         "commit": "54d0bd7aa62dccd0388540aa4cd46276486101a3"
+      },
+      {
+        "date": "2026-08-08",
+        "change": "Kostnadstypen ändrad från utgift till intäktsminskning. Löftet är en skatteåtgärd — ett avdrag, en kredit eller en nivå som görs skattefri — och det betyder att staten får in mindre pengar, inte att staten betalar ut mer. Inget publicerat tal rör sig: rikssumman och de redovisade besparingarna räknar utgift och intäktsminskning på samma sida, mätt med sajtens egen aggregates.ts. Det som ändras är den rad som möter läsaren och det fält som ligger i det publika API:et — de beskrev åtgärden fel.",
+        "commit": "2f24528335a200270f0b8e4ca930d56d91abfdeb"
       }
     ],
     "extraction": {
@@ -7561,7 +7571,7 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 55000,
       "msek_base": 78000,
@@ -7591,6 +7601,11 @@
         "date": "2026-08-04",
         "change": "Finansieringsuppgiften har fått en period: per år, precis som partiet självt anger den. Fältet saknade period och beloppet drogs från kostnader räknade för hela mandatperioden, alltså ett år mot fyra.",
         "commit": "54d0bd7aa62dccd0388540aa4cd46276486101a3"
+      },
+      {
+        "date": "2026-08-08",
+        "change": "Kostnadstypen ändrad från utgift till intäktsminskning. Löftet är en skatteåtgärd — ett avdrag, en kredit eller en nivå som görs skattefri — och det betyder att staten får in mindre pengar, inte att staten betalar ut mer. Inget publicerat tal rör sig: rikssumman och de redovisade besparingarna räknar utgift och intäktsminskning på samma sida, mätt med sajtens egen aggregates.ts. Det som ändras är den rad som möter läsaren och det fält som ligger i det publika API:et — de beskrev åtgärden fel.",
+        "commit": "2f24528335a200270f0b8e4ca930d56d91abfdeb"
       }
     ],
     "extraction": {
@@ -9139,7 +9154,7 @@
     },
     "category": "skatter",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 55000,
       "msek_base": 78000,
@@ -9169,6 +9184,11 @@
         "date": "2026-08-04",
         "change": "Finansieringsuppgiften har fått en period: per år, precis som partiet självt anger den. Fältet saknade period och beloppet drogs från kostnader räknade för hela mandatperioden, alltså ett år mot fyra.",
         "commit": "54d0bd7aa62dccd0388540aa4cd46276486101a3"
+      },
+      {
+        "date": "2026-08-08",
+        "change": "Kostnadstypen ändrad från utgift till intäktsminskning. Löftet är en skatteåtgärd — ett avdrag, en kredit eller en nivå som görs skattefri — och det betyder att staten får in mindre pengar, inte att staten betalar ut mer. Inget publicerat tal rör sig: rikssumman och de redovisade besparingarna räknar utgift och intäktsminskning på samma sida, mätt med sajtens egen aggregates.ts. Det som ändras är den rad som möter läsaren och det fält som ligger i det publika API:et — de beskrev åtgärden fel.",
+        "commit": "2f24528335a200270f0b8e4ca930d56d91abfdeb"
       }
     ],
     "extraction": {
@@ -25843,7 +25863,7 @@
     },
     "category": "klimat-miljö",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 1200,
       "msek_base": 1600,
@@ -25867,6 +25887,11 @@
         "date": "2026-08-07",
         "change": "Uträkningen saknades och är skriven, och grunden för beloppet är rättad från partiets egen siffra till en uppskattning. Beloppet är oförändrat, men källans 1,6 miljarder är ett tak för en enskild stor investering och inte vad reformen kostar staten. Det stod tidigare att beloppet var angivet i källtexten, vilket det inte var.",
         "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      },
+      {
+        "date": "2026-08-08",
+        "change": "Kostnadstypen ändrad från utgift till intäktsminskning. Löftet är en skatteåtgärd — ett avdrag, en kredit eller en nivå som görs skattefri — och det betyder att staten får in mindre pengar, inte att staten betalar ut mer. Inget publicerat tal rör sig: rikssumman och de redovisade besparingarna räknar utgift och intäktsminskning på samma sida, mätt med sajtens egen aggregates.ts. Det som ändras är den rad som möter läsaren och det fält som ligger i det publika API:et — de beskrev åtgärden fel.",
+        "commit": "2f24528335a200270f0b8e4ca930d56d91abfdeb"
       }
     ],
     "extraction": {

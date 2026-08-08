@@ -32,6 +32,7 @@ import type { KopplingPost } from "../src/granskning.ts";
 import { normalizeForVerbatim } from "../src/citatgrind.ts";
 import { fetchYrkanden, fetchDokumentText, fetchUtskottspunkter } from "../src/riksdagen.ts";
 import { fragansLydelser } from "../src/fragans-lydelse.ts";
+import { punktensEgnaOrd, punktenAntarNagot } from "../src/beslutspunkten.ts";
 import {
   motionensSlag,
   bindandeInkomstberakning,
@@ -74,6 +75,11 @@ interface Kartpost {
   motionsslag?: Motionsslag;
   /** Binder ett inkomstberäkningsyrkande regeringen att lagstifta? */
   bindande_inkomstberakning?: boolean;
+  /**
+   * Antar voteringspunkten något, eller avslår den bara motioner? Avgör om
+   * utskottets sammanfattning får räknas som handlingens egna ord.
+   */
+  punkten_antar?: boolean;
 }
 
 const kartan: Kartpost[] = [];
@@ -138,7 +144,13 @@ for (const k of aktiva) {
     const traff = punkter.filter((p) => p.punkt === punkt);
     post.lydelsernas_sort = "beslutspunkt";
     post.lydelser = traff.length;
-    if (traff.length > 0) post.i_handlingen = iNagon(traff.map((p) => `${p.rubrik} ${p.forslag}`));
+    if (traff.length > 0) {
+      // Sammanfattningen räknas med när punkten antar något — punktens egen
+      // beslutstext säger vilka lagar som ändrades, inte åt vilket håll.
+      const lydelser = traff.flatMap((p) => punktensEgnaOrd(p, text));
+      post.i_handlingen = iNagon(lydelser);
+      post.punkten_antar = traff.some((p) => punktenAntarNagot(p.forslag));
+    }
   }
   kartan.push(post);
 }
