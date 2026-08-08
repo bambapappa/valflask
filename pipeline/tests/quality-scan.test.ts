@@ -32,6 +32,24 @@ describe("parseAmountsMsek — kräver penningenhet", () => {
     assert.deepEqual(parseAmountsMsek("omkring 2,65 miljarder kronor"), [2650]);
   });
 
+  /**
+   * Förkortningarna datat faktiskt använder. Saknades de i enhetslistan lästes
+   * en riktig uträkning som att den inte namngav något belopp, och svepet
+   * 2026-08-08 gav tre falsklarm av just det skälet.
+   */
+  it("läser förkortningarna uträkningarna skriver: mnkr, mn kr, msek, mkr, mdkr", () => {
+    // Bara talet som bär enheten räknas: i "16 - 8 = 8 mnkr" är det svaret.
+    assert.deepEqual(parseAmountsMsek("Ökning = 16 - 8 = 8 mnkr/år"), [8]);
+    assert.deepEqual(
+      parseAmountsMsek("Nuvarande anslag: 8 mnkr/år, föreslagen nivå: 16 mnkr/år."),
+      [8, 16],
+    );
+    assert.deepEqual(parseAmountsMsek("≈ 1 375 mn kr/år"), [1375]);
+    assert.deepEqual(parseAmountsMsek("anger 13 000 msek/år"), [13000]);
+    assert.deepEqual(parseAmountsMsek("grovt 0–5 mkr"), [5]);
+    assert.deepEqual(parseAmountsMsek("2,5 mdkr"), [2500]);
+  });
+
   it("tar INTE tal utan penningenhet — det var den gamla sökningens fel", () => {
     // "Bas 2 500 kr per förlossning" lästes förut som basbeloppet 2 500.
     assert.deepEqual(parseAmountsMsek("Bas 2 500 kr per förlossning"), []);

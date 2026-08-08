@@ -20,7 +20,7 @@
  * tusental kronor. Den skrivs ut som den står och räknas inte om.
  */
 
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
 import type { KopplingPost } from "../src/granskning.ts";
@@ -57,9 +57,29 @@ function skrivRad(r: Anslagsrad): string {
   return `    ${r.anslag.padEnd(7)}${tal.padStart(9)}   ${r.namn.slice(0, 62)}`;
 }
 
-const valda = klassA
-  ? kopplingar.filter((k) => k.status !== "indragen" && k.motionstyp !== undefined).map((k) => k.id)
-  : idn;
+/**
+ * Klass A: kopplingar vars citat står i motionens brödtext och vars motion
+ * **bara** har anslagsyrkanden. Urvalet kommer ur `data/handlingsklass.json`,
+ * som `npm run handlingsklass` skriver ur riksdagens yrkandelistor.
+ *
+ * Fältet `motionstyp` går inte att använda här. Det säger vem som väckte
+ * motionen — parti, kommitté eller enskild ledamot — inte vad den yrkar, och
+ * ett urval på det plockar 670 kopplingar i stället för 99.
+ */
+function klassAIdn(): string[] {
+  const fil = resolve(rot, "data/handlingsklass.json");
+  if (!existsSync(fil)) {
+    console.error("data/handlingsklass.json saknas. Kör: npm run handlingsklass -- --skriv");
+    process.exit(1);
+  }
+  const karta: Array<{ koppling: string; motionsslag?: string; i_handlingen?: boolean | null }> =
+    JSON.parse(readFileSync(fil, "utf8"));
+  return karta
+    .filter((p) => p.motionsslag === "bara_anslag" && p.i_handlingen !== true)
+    .map((p) => p.koppling);
+}
+
+const valda = klassA ? klassAIdn() : idn;
 
 if (valda.length === 0) {
   console.error("Ange koppling-id, eller --klass-a. Se b-0039 för vad tabellen avgör.");
