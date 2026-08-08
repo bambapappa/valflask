@@ -61,13 +61,13 @@ const NIVA =
  * Residualen — nollor som inte namnger något skäl alls — är det som ska läsas.
  */
 const NOLLSKAL: Array<[string, RegExp]> = [
-  ["lag, förbud eller reglering", /lagändring|lagstift|förbud|förbjud|avreglering|regeländring|regelförändring|regeljusterin|reglering|förordningsändring|villkor för mottagare|hålls av lagen/iu],
+  ["lag, förbud eller reglering", /lagändring|lagstift|förbud|förbjud|avreglering|regeländring|regelförändring|regeljusterin|reglering|förordningsändring|villkor för mottagare|hålls av lagen|administrativa skyldigheter/iu],
   ["utredning eller plan", /utredning|utreda|handlingsplan|tillsätta|kartlägg|översyn|planarbete|nationell plan|förhandlingsarbete/iu],
-  ["omfördelning, inte ny kostnad", /omfördel\w*|nettokostnad|redan betalas|redan finansier|redan beslutad|inom befintlig|ordinarie (?:anslag|budget|förvaltningsanslag)|behålls|står kvar|redan gäller|tillförs? (?:eller|inte)/iu],
+  ["omfördelning, inte ny kostnad", /omfördel\w*|nettokostnad|netto 0|redan betalas|redan finansier|redan beslutad|redan bestämt|inom befintlig|inryms i befintlig|ordinarie (?:anslag|budget|förvaltningsanslag)|behålls|står kvar|redan gäller|åtagande, inte en utbetalning/iu],
   ["bred uppräkning", /uppräkning|önskelista|inriktning|flera politikområden|utan konkret|räknar upp|önskat utfall|mål(?:et)? (?:i sig|har ing)/iu],
-  ["prissatt en gång på ett annat löfte", /dubbelräkn|räkna samma politik|prissätts (?:en gång|på ett annat|som egna|som eget|var för sig|på de löftena)|ligger på ett annat|eget(?:s|na)? löfte|egna löften|egna specifika|reformens egna delar/iu],
-  ["varken åtgärd eller nivå anges", /ingen nivå|inget belopp|ingen åtgärd|anger (?:varken|ingen|inget)|utan att ange|värdeord|inte en åtgärd|går inte att (?:veta|räkna|prissätta)|saknar angiven|inte specificeras|utan specificerad/iu],
-  ["försumbar direkt kostnad", /försumbar\w*|marginell\w*|obetydlig\w*|bärs av|betalar inte|kostar (?:staten )?(?:ingenting|inget)|ingen ny statlig utgift|inga nya (?:anslag|statliga)/iu],
+  ["prissatt en gång på ett annat löfte", /dubbelräkn|räkna samma politik|prissätts (?:en gång|på ett annat|som egna|som eget|var för sig|på de löftena)|ligger på (?:ett annat|partiets)|eget(?:s|na)? löfte|egna löften|egna specifika|konkreta \w+löften|reformens egna delar|jämförbart med p-\d/iu],
+  ["varken åtgärd eller nivå anges", /ing(?:en|et) (?:nivå|belopp|åtgärd)|anger (?:varken|ingen|inget)|utan (?:att ange|angiven)|utan specificerad|saknar angiven|värdeord|inte en åtgärd|går inte att (?:veta|räkna|prissätta)|ingenting att räkna på|inte specificeras|pekar inte ut (?:någon|något)|prissätts (?:därför )?inte\b/iu],
+  ["försumbar direkt kostnad", /försumbar\w*|marginell\w*|obetydlig\w*|bärs av|betalar inte|kostar (?:staten|statskassan)? ?(?:ingenting|inget)|ing(?:en|a) nya? (?:statlig|offentlig|myndighets)\w*|inga nya (?:anslag|utgifter|investeringar)|inga löpande statliga utgifter/iu],
 ];
 
 /** Namnger uträkningen ett skäl som en nollning får vila på? */

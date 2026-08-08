@@ -88,8 +88,19 @@ const RANGE = /\d\s*[–—-]\s*(?:[a-zà-öø-ÿ]+\s+)?\d/;
  * "1,9 miljoner barn" och "2 500 kr per förlossning" i nätet, vilket var precis
  * det som gjorde den gamla sökningen obrukbar.
  */
+/**
+ * Enheterna datat faktiskt använder — och det är fler än de tre uppenbara.
+ *
+ * Mätt 2026-08-08 genom att svepa uträkningarna: `mnkr` («8 mnkr/år»), `mn kr`
+ * («≈ 1 375 mn kr/år») och `msek` («anger 13 000 msek/år») saknades alla i
+ * listan, och varje uträkning som räknade i dem lästes som att den inte namngav
+ * något belopp. Det gav tre falsklarm på uträkningar som var riktiga. Listan är
+ * därför byggd ur datat, inte ur vad som verkar rimligt att skriva.
+ */
+const UNITS = "miljarder kronor|miljoner kronor|mdkr|mnkr|mn kr|msek|mkr";
+
 export function parseAmountsMsek(text: string): number[] {
-  const re = new RegExp(`(${NUM_SRC})\\s*(miljarder kronor|miljoner kronor|mdkr|mkr)`, "gi");
+  const re = new RegExp(`(${NUM_SRC})\\s*(${UNITS})`, "gi");
   const out: number[] = [];
   for (const m of text.matchAll(re)) {
     const raw = m[1];

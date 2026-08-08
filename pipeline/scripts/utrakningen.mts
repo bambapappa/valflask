@@ -19,6 +19,7 @@ import {
   type UtrakningsLofte,
   type Invandning,
 } from "../src/utrakningen.ts";
+import { statedBaseMsek } from "../src/quality-scan.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const loften: UtrakningsLofte[] = JSON.parse(readFileSync(resolve(rot, "data/promises.json"), "utf8"));
@@ -39,6 +40,9 @@ interface Rad {
   title: string;
   quote: string;
   cost: UtrakningsLofte["cost"];
+  /** Beloppet som uträkningen själv drar som slutsats, eller null. */
+  angivet_belopp: number | null;
+  group_id?: string | null;
   invandningar: Invandning[];
   anmarkningar: ReturnType<typeof anmarkningar>;
 }
@@ -51,6 +55,8 @@ const rader: Rad[] = aktiva
     title: p.title,
     quote: p.quote,
     cost: p.cost,
+    angivet_belopp: statedBaseMsek(p.cost.calculation ?? ""),
+    group_id: p.group_id ?? null,
     invandningar: provaUtrakningen(p),
     anmarkningar: anmarkningar(p),
   }));
