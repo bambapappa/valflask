@@ -51,6 +51,12 @@ export interface KopplingPost {
   extraction: { model: string; verified_by: string | null; run_id: string };
   status: "aktiv" | "indragen";
   indragen?: { datum: string; skal: string };
+  /**
+   * Spåret efter en flytt till ett annat löfte i samma grupp — se
+   * `ompekning.ts`. Beviset, handlingen och riktningen står stilla; det är bara
+   * vilken post kopplingen bokförs på som ändrats.
+   */
+  ompekad?: { datum: string; fran: string; till: string; skal: string };
 }
 
 /** Ett avslaget yrkande: adressen punkten ger, och lydelsen den pekar på. */
