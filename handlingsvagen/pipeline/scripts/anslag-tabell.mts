@@ -35,7 +35,7 @@ import {
   type Anslagsrad,
   type Radtraff,
 } from "../src/anslagstabell.ts";
-import { cachat, politeFetch } from "./kallcache.mts";
+import { cachat, hamtaJson } from "./kallcache.mts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const kopplingar: KopplingPost[] = JSON.parse(readFileSync(resolve(rot, "data/kopplingar.json"), "utf8"));
@@ -93,8 +93,9 @@ const loftePerId = new Map(loften.map((p) => [p.id, p]));
 /** Dokumentets rå-HTML — tabellen finns bara där, den utplattade texten tappar den. */
 async function hamtaHtml(dokId: string): Promise<string> {
   const payload = (await cachat(`dokstatus-${dokId}`, () =>
-    politeFetch(`https://data.riksdagen.se/dokumentstatus/${dokId}.json`),
-  )) as { dokumentstatus?: { dokument?: { html?: unknown } } };
+    hamtaJson(`https://data.riksdagen.se/dokumentstatus/${dokId}.json`),
+  )) as { dokumentstatus?: { dokument?: { html?: unknown } } } | null;
+  if (payload === null) throw new Error(`${dokId}: hämtningen gick inte fram`);
   const html = payload.dokumentstatus?.dokument?.html;
   if (typeof html !== "string" || html === "") throw new Error(`${dokId}: ingen dokumenttext`);
   return html;

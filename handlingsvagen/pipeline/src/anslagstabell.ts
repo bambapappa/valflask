@@ -16,6 +16,7 @@
  * tabellen som riktig `<table>`, så den läses som rader och celler och inte som
  * text — en utplattad tabell tappar vilken siffra som hör till vilket anslag.
  */
+import { overlapp } from "./sakord.ts";
 
 /** En rad i motionens anslagstabell. */
 export interface Anslagsrad {
@@ -168,9 +169,8 @@ export interface Radtraff {
  * regional kulturverksamhet" delar två ord med varandra men avgör olika saker.
  */
 export function narmastLoftetMedPoang(rader: Anslagsrad[], loftetext: string): Radtraff[] {
-  const ord = nyckelord(loftetext);
   return rader
-    .map((rad) => ({ rad, poang: delarSakord(nyckelord(rad.namn), ord) }))
+    .map((rad) => ({ rad, poang: overlapp(rad.namn, loftetext) }))
     .filter((x) => x.poang > 0)
     .sort((a, b) => b.poang - a.poang);
 }
@@ -180,48 +180,3 @@ export function narmastLoftet(rader: Anslagsrad[], loftetext: string): Anslagsra
   return narmastLoftetMedPoang(rader, loftetext).map((x) => x.rad);
 }
 
-/**
- * Hur många av löftets sakord som återkommer i anslagsnamnet.
- *
- * Svenska både sätter samman och böjer, så samma sak stavas olika: löftet säger
- * "idrottsanläggningar", ett anslag heter "Stöd till plats för idrott" och ett
- * annat "Stöd till idrotten". Ingen av dem är en delsträng av de andra —
- * "idrotten" ryms inte i "idrottsanläggningar" på grund av ändelsen. Därför
- * jämförs orden på sin **gemensamma början**: delar två ord sina första fem
- * tecken räknas de som samma sak.
- *
- * Mätt: utan det missade rangordningen anslaget med 225 miljoner kronor för
- * idrotten och föreslog indragning på ett löfte om idrottsanläggningar.
- */
-function delarSakord(a: Set<string>, b: Set<string>): number {
-  let n = 0;
-  for (const x of a) {
-    for (const y of b) {
-      if (gemensamBorjan(x, y) >= 5) {
-        n++;
-        break;
-      }
-    }
-  }
-  return n;
-}
-
-/** Antalet tecken två ord delar från början. */
-function gemensamBorjan(a: string, b: string): number {
-  const n = Math.min(a.length, b.length);
-  let i = 0;
-  while (i < n && a[i] === b[i]) i++;
-  return i;
-}
-
-/** Ord värda att matcha på: gemena, minst fyra tecken, utan de vanligaste fyllnadsorden. */
-function nyckelord(text: string): Set<string> {
-  const stopp = new Set([
-    "till", "vissa", "övrigt", "andra", "samt", "inom", "statens", "genom",
-    "detta", "eller", "kronor", "miljoner", "miljarder", "anslag", "hela",
-    "landet", "särskilt", "nationell", "verksamhet", "insatser", "åtgärder",
-  ]);
-  return new Set(
-    (text.toLowerCase().match(/[a-zåäöéü]{4,}/g) ?? []).filter((o) => !stopp.has(o)),
-  );
-}
