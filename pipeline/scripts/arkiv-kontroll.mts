@@ -36,6 +36,7 @@
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { quoteInSnapshotText, snapshotText } from "../src/archive-verify.ts";
+import { arTaladKalla, provaTaladKalla, tidpunktISekunder, tidpunktSomText } from "../src/talad-kalla.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const DATA = join(ROOT, "data");
@@ -55,7 +56,21 @@ const max = Number(varde("--max") ?? "0") || Infinity;
 const paus = Number(varde("--paus") ?? "1200");
 const sov = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-type Utfall = "bar" | "bar-inte" | "saknas" | "oavgjort" | "ej-provad";
+/**
+ * `talad-med-tid` och `talad-utan-tid` gäller källor som är sändningar. En
+ * arkiverad spelarsida kan aldrig bära talade ord som text, så för dem prövas i
+ * stället det mänskliga beslutet 2026-08-08: citatet beläggs med hänvisning till
+ * sändningen och tidpunkten i den. Utan de två utfallen rapporterades 18 riktiga
+ * citat som «bär inte», vilket är ett svar på en fråga sidan inte kan besvara.
+ */
+type Utfall =
+  | "bar"
+  | "bar-inte"
+  | "saknas"
+  | "oavgjort"
+  | "ej-provad"
+  | "talad-med-tid"
+  | "talad-utan-tid";
 type Post = { id: string; slag: "löfte" | "ståndpunkt"; quote: string; kalla: string; arkiv: string | null };
 type Rad = Post & { utfall: Utfall };
 
@@ -122,8 +137,12 @@ if (poster.length === 0) {
 // prövas mot den hämtningen.
 const perArkiv = new Map<string, Post[]>();
 const utanArkiv: Post[] = [];
+// Talade källor tas ur ögonblicksbildskön helt. Att hämta spelarsidan och
+// konstatera att orden inte står där kostar en hämtning och lär oss ingenting.
+const talade: Post[] = [];
 for (const p of poster) {
-  if (!p.arkiv) utanArkiv.push(p);
+  if (arTaladKalla(p.kalla)) talade.push(p);
+  else if (!p.arkiv) utanArkiv.push(p);
   else perArkiv.set(p.arkiv, [...(perArkiv.get(p.arkiv) ?? []), p]);
 }
 
@@ -131,11 +150,21 @@ const arkivlankar = [...perArkiv.keys()].slice(0, max);
 if (!somJson) {
   console.log(
     `Prövar ${poster.length} publicerade poster: ${arkivlankar.length} ögonblicksbilder att öppna, ` +
-      `${utanArkiv.length} utan arkivkopia.`,
+      `${utanArkiv.length} utan arkivkopia, ${talade.length} talade källor som prövas på tidpunkten.`,
   );
 }
 
 const rader: Rad[] = utanArkiv.map((p) => ({ ...p, utfall: "saknas" as const }));
+
+for (const p of talade) {
+  const utfall = provaTaladKalla(p.kalla);
+  rader.push({ ...p, utfall });
+  if (!somJson && (!baraFel || utfall === "talad-utan-tid")) {
+    const sek = tidpunktISekunder(p.kalla);
+    const var_ = sek === null ? "INGEN TIDPUNKT" : `vid ${tidpunktSomText(sek)}`;
+    console.log(`${(utfall === "talad-med-tid" ? "talad" : "TALAD").padEnd(9)} ${p.id.padEnd(24)} ${p.slag.padEnd(11)} ${var_}  ${p.kalla}`);
+  }
+}
 
 let hamtade = 0;
 for (const lank of arkivlankar) {
@@ -152,6 +181,8 @@ for (const lank of arkivlankar) {
         saknas: "saknar",
         oavgjort: "oavgjort",
         "ej-provad": "ej prövad",
+        "talad-med-tid": "talad",
+        "talad-utan-tid": "TALAD",
       };
       console.log(`${märke[utfall].padEnd(9)} ${p.id.padEnd(24)} ${p.slag.padEnd(11)} ${lank}`);
     }
@@ -167,6 +198,7 @@ for (const [lank, grupp] of perArkiv) {
 
 const rakna = (u: Utfall) => rader.filter((r) => r.utfall === u).length;
 const barInte = rader.filter((r) => r.utfall === "bar-inte");
+const utanTid = rader.filter((r) => r.utfall === "talad-utan-tid");
 
 if (somJson) {
   console.log(JSON.stringify({ prövade: rader.length, rader }, null, 2));
@@ -176,6 +208,8 @@ if (somJson) {
   console.log(`BÄR INTE citatet:       ${barInte.length}`);
   console.log(`Saknar arkivkopia:      ${rakna("saknas")}`);
   console.log(`Gick inte att avgöra:   ${rakna("oavgjort")}   (nätet — säger inget om kopian)`);
+  console.log(`Talad källa med tid:    ${rakna("talad-med-tid")}   (belagd enligt beslutet 2026-08-08)`);
+  console.log(`Talad källa UTAN tid:   ${utanTid.length}   (tidpunkten måste slås upp i sändningen)`);
   if (rakna("ej-provad") > 0) {
     console.log(`Kom aldrig till:        ${rakna("ej-provad")}   (--max ${max} — körningen är inte fullständig)`);
   }
@@ -184,6 +218,13 @@ if (somJson) {
     console.log("Dessa arkivkopior bär inte sitt citat och måste hämtas om eller tömmas:");
     for (const r of barInte) console.log(`  ${r.id}  ${r.arkiv}`);
   }
+  if (utanTid.length > 0) {
+    console.log("");
+    console.log("Dessa talade citat saknar tidpunkt. Slå upp den i sändningen — gissa aldrig:");
+    for (const r of utanTid) console.log(`  ${r.id}  ${r.kalla}`);
+  }
 }
 
-process.exit(barInte.length > 0 ? 1 : 0);
+// Ett talat citat utan tidpunkt är lika ofullständigt belagt som en arkivkopia
+// som inte bär sitt citat, så det sätter också utfallskoden.
+process.exit(barInte.length + utanTid.length > 0 ? 1 : 0);

@@ -21,7 +21,8 @@
     "stances:archive-backfill": "node --import tsx/esm scripts/stances-archive-backfill.mts",
     "provningar:status": "node --import tsx/esm scripts/provningar-status.mts",
     "arkiv:kontroll": "node --import tsx/esm scripts/arkiv-kontroll.mts",
-    "utrakningen": "node --import tsx/esm scripts/utrakningen.mts"
+    "utrakningen": "node --import tsx/esm scripts/utrakningen.mts",
+    "gruppharledning": "node --import tsx/esm scripts/gruppharledning.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1",

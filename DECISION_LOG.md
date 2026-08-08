@@ -1995,3 +1995,53 @@ verkligen ingen finansiering — det är beloppet som är fel, inte flaggan).
 `data/changelog.json`, `data/rattelser.json`. Tolv nya grindar i
 `site/scripts/test-grupplista.mts`, varav fyra jämför koalitionsvyn mot
 startsidan term för term.
+
+## 2026-08-08 — Ett talat citat beläggs med sändningen och tidpunkten, inte med en ögonblicksbild
+
+**Beslut (mänskligt beslut 2026-08-08):** ett citat ur en sändning — rörlig bild
+eller ljud — beläggs med **hänvisning till sändningen och tidpunkten i den**. En
+annan, arkiverbar källa som säger samma sak är **andra bästa**.
+
+Kravet på ordagrann återgivning ändras inte. Det som ändras är var beläggningen
+finns: kärnprincipen om att arkivkopian ska bära citatet gäller texter, och för
+en sändning gäller tidpunkten i stället.
+
+**Motiv:** arkivkontrollen öppnade hela beståndets ögonblicksbilder för första
+gången 2026-08-08. 494 av 527 bar sitt citat ordagrant. Alla 33 som inte gjorde
+det var **samma sorts källa**: 18 hade en arkivkopia av en spelarsida, och 14
+hade ingen kopia alls. Ingen av dem hade ett fel i citatet.
+
+En arkiverad spelarsida kan aldrig innehålla talade ord som text. Kontrollen
+ställde alltså en fråga sidan inte kan svara på, och svaret «bär inte» beskrev
+vårt eget verktyg och inte partiets ord. Att lämna posterna underkända hade
+inneburit att 33 riktiga citat såg falska ut; att släppa dem utan krav hade
+inneburit att talade löften belades sämre än skrivna.
+
+**Tidpunkten är det som går att kräva och att uppfylla.** Den pekar ut var i
+sändningen orden står, den ändras inte när en sida görs om, och den går att
+kontrollera mekaniskt. 31 av de 32 talade källorna i beståndet bar redan en —
+`?position=377` hos SVT Play, `?t=1180s` hos YouTube.
+
+**Kontrollen är kodad, inte en vana.** `pipeline/src/talad-kalla.ts` känner igen
+sändningsvärdar och läser tidpunkten i de former värdarna faktiskt skriver
+(sekunder, `1h2m3s`, `2:35`). `pnpm arkiv:kontroll` tar talade källor ur
+ögonblicksbildskön och svarar `talad-med-tid` eller `talad-utan-tid` i stället,
+och en post utan tidpunkt sätter utfallskod 1 precis som en arkivkopia som inte
+bär sitt citat. Noll är en giltig tidpunkt och skiljs från ingen tidpunkt.
+
+**En post uppfyller inte kravet:** `p-2026-0100` (KD, barnbidraget till 2 000
+kronor) pekar på partiledartalet utan tidpunkt. Tidpunkten ska slås upp i
+sändningen, eller en arkiverbar källa hos partiet användas i stället.
+**Gissa den aldrig** — grannposternas tider går inte i löftesnumrens ordning, så
+den går inte att härleda ur beståndet.
+
+**Förkastade alternativ:** låta kontrollen tiga om spelarsidor (då kan ett
+textcitat som råkar ligga på en videovärd aldrig prövas, och luckan blir dold);
+kräva en avskrift av hela sändningen (vi skulle skriva den själva, och då
+belägger vi citatet med vår egen text); godta enbart sekundangivelse i ett eget
+fält (tidpunkten finns redan i länken partiet och läsaren använder, och två
+sanningar om samma sak går isär).
+
+**Påverkan:** `pipeline/src/talad-kalla.ts` (ny), `pipeline/tests/talad-kalla.test.ts`
+(ny), `pipeline/scripts/arkiv-kontroll.mts`. Ingen ändring i `data/promises.json`
+— de 31 posterna uppfyllde kravet redan innan det skrevs ut.
