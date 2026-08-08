@@ -95,11 +95,16 @@ test("utgiftstaket känns igen oavsett vilken form verbet står i", () => {
  * Böjningen får inte dra med sig allt som nämner ett tak. Ett yrkande som
  * *säger något om* utgiftstaket utan att fastställa det är fortfarande ett
  * sakyrkande, och ska läsas.
+ *
+ * Lydelsen står ordagrant i motion HA021121 och är den enda i beståndets
+ * 44 353 yrkanden som bär ramverkets ord utan att vara ramverk. Den vill skärpa
+ * *reglerna för* taket — ett tillkännagivande, alltså något ett parti kan lova
+ * och en läsare kan hålla det till.
  */
 test("att nämna utgiftstaket räcker inte — mönstret kräver att taket sätts", () => {
   assert.equal(
     yrkandeslag(
-      "Riksdagen ställer sig bakom det som anförs i motionen om att utgiftstaket bör ses över och tillkännager detta för regeringen.",
+      "Riksdagen ställer sig bakom det som anförs i motionen om att skärpa lagstiftningen för ändring av utgiftstaket och tillkännager detta för regeringen.",
     ),
     "sak",
   );

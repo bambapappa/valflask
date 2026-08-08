@@ -54,7 +54,12 @@ const kopplade = new Set(kopplingar.map((k) => k.handling_id));
 
 let motioner = handlingar.filter((h) => h.kind === "motion");
 if (motionstyp !== undefined) {
-  motioner = motioner.filter((h) => (h as { motionstyp?: string }).motionstyp === motionstyp);
+  const finns = new Set(motioner.map((h) => h.motionstyp));
+  if (!finns.has(motionstyp as Handling["motionstyp"])) {
+    console.error(`Okänd motionstyp «${motionstyp}». Beståndet har: ${[...finns].join(", ")}`);
+    process.exit(1);
+  }
+  motioner = motioner.filter((h) => h.motionstyp === motionstyp);
 }
 if (baraKopplade) motioner = motioner.filter((h) => kopplade.has(h.id));
 
@@ -62,10 +67,18 @@ const dokIds = [...new Set(motioner.map((h) => h.dok_id))].filter((d) => d !== "
 console.error(`${dokIds.length} motionsdokument att svepa.`);
 
 const perDok = new Map<string, string[]>();
+/**
+ * Dokumenten som inte gick att hämta hålls skilda från dem som saknar
+ * yrkandelista. En fallen hämtning ger `null`, och lades den bland de tomma
+ * skulle ett nätfel se ut som en motion utan yrkanden — samma förväxling som
+ * en gång gjorde ett verktyg obrukbart utan att någon märkte det.
+ */
+const foll: string[] = [];
 let n = 0;
 for (const dokId of dokIds) {
-  const y = (await cachat(`yrkanden-${dokId}`, () => fetchYrkanden(politeFetch, dokId))) ?? [];
-  perDok.set(dokId, y.map((x) => x.lydelse));
+  const y = await cachat(`yrkanden-${dokId}`, () => fetchYrkanden(politeFetch, dokId));
+  if (y === null) foll.push(dokId);
+  else perDok.set(dokId, y.map((x) => x.lydelse));
   if (++n % 500 === 0) console.error(`  ${n}/${dokIds.length}`);
 }
 
@@ -76,6 +89,12 @@ const unika = [...new Set(allaLydelser)];
 console.log(
   `\n${perDok.size} motioner · ${allaLydelser.length} yrkanden · ${unika.length} skilda lydelser`,
 );
+if (foll.length > 0) {
+  console.log(
+    `\n⚠ ${foll.length} dokument gick inte att hämta och är inte med i något tal nedan: ` +
+      `${foll.join(" ")}\n  Kör om — cachen sparar inte en fallen hämtning.`,
+  );
+}
 
 console.log("\nYrkandena per slag:");
 for (const slag of ["anslag", "ramverk", "inkomstberakning", "sak"] as const) {
