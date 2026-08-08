@@ -10,6 +10,9 @@
  * - **Ramverksyrkandet** godkänner riktlinjer, fastställer utgiftstaket eller
  *   fördelar utgifter per utgiftsområde. Den enskilda reformen ligger inne i en
  *   områdessumma och pekas inte ut — ett sådant yrkande bär inget enskilt löfte.
+ *   Ett **avslag** på regeringens ramverk är också ett ramverksyrkande: att
+ *   säga nej till regeringens utgiftstak är att ta ställning till taket, inte
+ *   till någon enskild reform.
  * - **Inkomstberäkningsyrkandet** godkänner beräkningen av statens inkomster.
  *   Bär det också ledet om att regeringen ska återkomma med lagförslag i
  *   överensstämmelse med beräkningen kan det bära ett skatte- eller
@@ -19,7 +22,21 @@
  *   Det säger vad partiet vill i sak och kan bära ett löfte direkt.
  *
  * Lydelserna är hämtade ur riksdagens egna yrkandelistor, aldrig skrivna för
- * hand. Mönstren nedan är byggda ur 7 152 lydelser i beståndet, inte ur minnet.
+ * hand. Mönstren nedan är prövade mot beståndets 13 010 motioner och 44 353
+ * yrkanden, inte byggda ur minnet.
+ *
+ * **Ett mönster som binder verbet går sönder på nästa böjning.** Verbformen
+ * varierar med vem som talar — den som föreslår skriver «fastställer», den som
+ * yrkar avslag «att fastställa» — medan saken står still. Två av mönstren
+ * nedan binder ändå ett verb (`anvisar`, `godkänner`), och det är avsiktligt:
+ * de formerna är de enda beståndet rymmer, och att bredda ett mönster på
+ * gissning vore att bygga det ur minnet igen. `npm run yrkandeslag-svep`
+ * letar efter nästa lucka genom att ställa frågan omvänt — vilka lydelser
+ * hamnar bland sakyrkandena fast de bär ramverkets ord?
+ *
+ * Missar ett mönster något går felet åt det försiktiga hållet: motionen ser ut
+ * att ha ett sakyrkande och går till en **läsning** i stället för att avgöras
+ * mekaniskt. En för trång indelning kostar arbete, inte riktighet.
  */
 
 /** Yrkandets slag, i den ordning b-0039 skiljer dem. */
@@ -33,9 +50,18 @@ export type Yrkandeslag = "anslag" | "ramverk" | "inkomstberakning" | "sak";
  */
 const ANSLAG = /anvisar\s+anslagen/iu;
 
-/** Ramverket: riktlinjerna, utgiftstaket, fördelningen per utgiftsområde. */
+/**
+ * Ramverket: riktlinjerna, utgiftstaket, fördelningen per utgiftsområde.
+ *
+ * Tre av de fyra leden namnger bara saken och tål därför vilket verb som helst.
+ * Utgiftstaket gjorde det inte, och det kostade: mönstret band `fastställer`,
+ * formen partiet använder när det föreslår sitt eget tak. Yrkar partiet i
+ * stället **avslag** på regeringens heter det *«avslår regeringens förslag att
+ * fastställa utgiftstaket …»*, och den lydelsen räknades som ett sakyrkande.
+ * `fastställ\w*` tar alla former av samma verb.
+ */
 const RAMVERK =
-  /riktlinjer för den ekonomiska politiken|fastställer utgiftstaket|fördelning(?:en)? av utgifter på utgiftsområden|preliminära beräkningen av inkomster/iu;
+  /riktlinjer för den ekonomiska politiken|fastställ\w*\s+utgiftstaket|fördelning(?:en)? av utgifter på utgiftsområden|preliminära beräkningen av inkomster/iu;
 
 /** Inkomstberäkningen, som bär ett skattelöfte bara med lagförslagsledet. */
 const INKOMSTBERAKNING = /godkänner beräkningen av inkomsterna/iu;
