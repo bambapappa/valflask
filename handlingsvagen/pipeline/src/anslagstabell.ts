@@ -144,22 +144,40 @@ function avvikelsekolumnFranSlutet(rader: string[][]): number | null {
   return null;
 }
 
+/** En kandidatrad med hur många av löftets sakord den delar. */
+export interface Radtraff {
+  rad: Anslagsrad;
+  /** Antal av löftets sakord som återkommer i anslagsnamnet. Alltid minst 1. */
+  poang: number;
+}
+
 /**
- * Raderna som kan tänkas bära ett löfte, rangordnade efter ordöverlapp mot
- * löftets text.
+ * Raderna som kan tänkas bära ett löfte, rangordnade efter ordöverlapp, **med
+ * överlappet utskrivet som ett tal**.
+ *
+ * Talet är inte pynt. Ett enda gemensamt ordled är ofta ett sammanträffande:
+ * anslaget "Kriminalvården" delar ordstammen "kriminal" med löftet om stöd till
+ * barn i riskzon för kriminalitet, och den raden avgör ingenting om det löftet.
+ * Skulle en sådan rad skrivas in i en publicerad motivering som den rad som bär
+ * löftet vore det ett påstående vi inte kan stå för. Den som väljer rad behöver
+ * därför se hur starkt överlappet är, inte bara att det finns.
  *
  * **Rangordningen väljer inte rad.** Den lägger fram kandidaterna så att en
  * människa kan avgöra, precis som lydelserna i `handlingens-egna-ord`. Ett
  * ordöverlapp är ingen sakbedömning: "Bidrag till litteratur" och "Bidrag till
  * regional kulturverksamhet" delar två ord med varandra men avgör olika saker.
  */
-export function narmastLoftet(rader: Anslagsrad[], loftetext: string): Anslagsrad[] {
+export function narmastLoftetMedPoang(rader: Anslagsrad[], loftetext: string): Radtraff[] {
   const ord = nyckelord(loftetext);
   return rader
-    .map((r) => ({ r, poang: delarSakord(nyckelord(r.namn), ord) }))
+    .map((rad) => ({ rad, poang: delarSakord(nyckelord(rad.namn), ord) }))
     .filter((x) => x.poang > 0)
-    .sort((a, b) => b.poang - a.poang)
-    .map((x) => x.r);
+    .sort((a, b) => b.poang - a.poang);
+}
+
+/** Samma rangordning utan talen, för den som bara vill skriva ut kandidaterna. */
+export function narmastLoftet(rader: Anslagsrad[], loftetext: string): Anslagsrad[] {
+  return narmastLoftetMedPoang(rader, loftetext).map((x) => x.rad);
 }
 
 /**
