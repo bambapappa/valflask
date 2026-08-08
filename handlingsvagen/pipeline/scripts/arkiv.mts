@@ -104,6 +104,13 @@ function kallUrl(k: Koppling, h: Handling): string | null {
  * En post utan kopia får `saknas`, vilket är ett svar och inte en lucka i
  * mätningen.
  */
+/** Slog uppslaget fel, eller finns det verkligen ingen kopia? */
+class ArkivetSvaradeInte extends Error {
+  constructor(readonly status: number) {
+    super(`arkivet svarade HTTP ${status} — säger ingenting om kopian`);
+  }
+}
+
 async function waybackSnapshot(
   fetcher: HttpFetch,
   url: string,
@@ -111,7 +118,12 @@ async function waybackSnapshot(
 ): Promise<string | null> {
   const kolla = async (): Promise<string | null> => {
     const res = await fetcher(`https://archive.org/wayback/available?url=${encodeURIComponent(url)}`);
-    if (res.status !== 200) return null;
+    // 429 är ett svar om OSS, inte om kopian. Mätt 2026-08-08: efter ett svep
+    // över 527 ögonblicksbilder började archive.org svara 429, och eftersom
+    // varje status utom 200 lästes som «ingen kopia finns» skrev skriptet
+    // `saknas` på post efter post som mycket väl kan vara arkiverad. Ett
+    // takfel får aldrig se ut som en saknad arkivkopia.
+    if (res.status !== 200) throw new ArkivetSvaradeInte(res.status);
     const data = JSON.parse(await res.text()) as { archived_snapshots?: { closest?: { available?: boolean; url?: string } } };
     const c = data.archived_snapshots?.closest;
     return c?.available && c.url ? c.url.replace(/^http:/, "https:") : null;
@@ -200,9 +212,26 @@ async function main() {
         }
       }
     } catch (e) {
-      // Nätet, inte beviset. Posten får `oavgjort` så att en omkörning tar den
-      // igen och ingen läser den som en arkivkopia vi underkänt.
-      post = { ...bas, arkiv_url: null, verifierad: false, utfall: "oavgjort", skal: `nätet nådde inte fram: ${e instanceof Error ? e.message : String(e)}` };
+      // Nätet eller arkivets tak, inte beviset. Posten får `oavgjort` så att en
+      // omkörning tar den igen och ingen läser den som en arkivkopia vi
+      // underkänt eller som en kopia som inte finns.
+      const skal =
+        e instanceof ArkivetSvaradeInte
+          ? e.message
+          : `nätet nådde inte fram: ${e instanceof Error ? e.message : String(e)}`;
+      post = { ...bas, arkiv_url: null, verifierad: false, utfall: "oavgjort", skal };
+      if (e instanceof ArkivetSvaradeInte && e.status === 429) {
+        console.error(
+          "\narchive.org svarar 429 — vi frågar för fort. Körningen avbryts hellre än att\n" +
+            "skriva obesvarade poster i beståndet. Vänta och kör om; det som redan är\n" +
+            "avgjort hoppas över.",
+        );
+        const i = arkiv.findIndex((a) => a.handling_id === h.id);
+        if (i >= 0) arkiv[i] = post;
+        else arkiv.push(post);
+        writeFileSync(arkivPath, JSON.stringify(arkiv, null, 2) + "\n");
+        break;
+      }
     }
     const i = arkiv.findIndex((a) => a.handling_id === h.id);
     if (i >= 0) arkiv[i] = post;
