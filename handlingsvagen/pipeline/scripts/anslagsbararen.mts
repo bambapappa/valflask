@@ -30,6 +30,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { KopplingPost } from "../src/granskning.ts";
+import type { Anslagsrad } from "../src/anslagstabell.ts";
 import {
   provaAnslagsbararen,
   motiveringsnot,
@@ -110,25 +111,69 @@ interface Utfallsrad {
 }
 
 const utfall: Utfallsrad[] = [];
+/** Raden läsningen pekade ut, per koppling — den ska i motiveringen. */
+const radPerId = new Map<string, Anslagsrad>();
+/** Läsningens skäl, per koppling — det ska stå efter raden i motiveringen. */
+const skalPerId = new Map<string, string>();
 let antagna = 0;
 let lasta = 0;
+
+/**
+ * Utfall där läsningen får avgöra.
+ *
+ * Alla tre är fall där svepet **inte** kunde avgöra saken och sa så: ett enda
+ * gemensamt ordled, en rad som rör sig åt andra hållet, eller ingen rad alls med
+ * ett gemensamt ordled. Att en regel eller en skatt inte kan bäras av ett
+ * anslagsyrkande, eller att raderna för saken står stilla, är däremot avgjort av
+ * beslutet — där gäller läsningen inte.
+ */
+const AVGORS_AV_LASNING: Anslagsutfall[] = [
+  "svag_traff",
+  "raden_gar_andra_vagen",
+  "ingen_rad_delar_sakord",
+];
 
 for (const m of matningar) {
   const { slag, last } = loftetsSlag(m.promise_id);
   if (!last && slag === "pengar") antagna++;
   let p = provaAnslagsbararen(m, slag);
 
-  // Läsningen slår tröskeln, men bara där tröskeln var det som avgjorde. En
-  // regel, en skatt, en stillastående rad eller en rad som går andra vägen
-  // står kvar: läsningen gäller frågan om raden handlar om löftets sak, inte
-  // om beslutet tillåter att den bär.
+  // Läsningen slår svepet, men bara där svepet självt sa att det inte kunde
+  // avgöra. En regel, en skatt eller en stillastående rad står kvar: läsningen
+  // gäller frågan om raden handlar om löftets sak, inte om beslutet tillåter
+  // att den bär.
   const l = radPerKoppling.get(m.koppling);
-  if (l && p.utfall === "svag_traff") {
+  if (l && AVGORS_AV_LASNING.includes(p.utfall)) {
     lasta++;
-    p = l.bar
-      ? { ...p, utfall: "bar", innebord: `${p.rad === null ? "" : `Raden ${l.rad} bär löftet. `}${l.skal}`, kraverLasning: false }
-      : { ...p, utfall: "raden_handlar_om_annat", innebord: l.skal, drasIn: true, kraverLasning: false };
+    // Läsningen får peka ut vilken rad som helst i tabellen. Ordöverlappet
+    // hittar inte alltid den rad som bär — «Ekokrim – inrättande av ny
+    // myndighet» delar inget ordled med löftet om att ersätta
+    // Ekobrottsmyndigheten — så en läsning som bara kunde bekräfta svepets egen
+    // rad hade inte räckt för att avgöra de posterna.
+    const utpekad = (m.rader ?? []).find((r) => r.anslag === l.rad || `${r.anslag} ${r.namn}` === l.rad);
+    if (l.bar && utpekad === undefined && p.rad === null) {
+      p = {
+        utfall: "oavgjort",
+        rad: null,
+        innebord: `Läsningen pekar ut raden ${l.rad}, men den finns inte i den hämtade tabellen.`,
+        drasIn: false,
+        kraverLasning: true,
+      };
+    } else if (l.bar) {
+      p = { utfall: "bar", rad: utpekad ?? p.rad, innebord: l.skal, drasIn: false, kraverLasning: false };
+    } else {
+      p = {
+        utfall: "raden_handlar_om_annat",
+        rad: utpekad ?? p.rad,
+        innebord: l.skal,
+        drasIn: true,
+        kraverLasning: false,
+      };
+    }
+    if (p.utfall === "bar") skalPerId.set(m.koppling, l.skal);
   }
+
+  if (p.utfall === "bar" && p.rad) radPerId.set(m.koppling, p.rad);
 
   utfall.push({
     koppling: m.koppling,
@@ -189,10 +234,22 @@ const berordaLoften = new Set<string>();
 
 for (const r of barLoftet) {
   const k = perId.get(r.koppling);
-  const m = matningar.find((x) => x.koppling === r.koppling);
-  const rad = m?.andrade[0]?.rad;
+  const rad = radPerId.get(r.koppling);
   if (!k || !rad) continue;
-  k.method_note = `${utanTidigareAnslagsnot(k.method_note ?? "")} ${motiveringsnot(rad, datum)}`.trim();
+  // Läsningens skäl följer med in i motiveringen när det finns ett. Utan det
+  // ser läsaren bara ett belopp: att raden 1:1 Polismyndigheten står på −261 000
+  // säger ingenting om att motionen omfördelar 500 miljoner inom just det
+  // anslaget till löftets sak, och ett minustecken utan den förklaringen läses
+  // som en nedskärning.
+  const skal = skalPerId.get(r.koppling);
+  k.method_note = [
+    utanTidigareAnslagsnot(k.method_note ?? ""),
+    motiveringsnot(rad, datum),
+    skal ?? "",
+  ]
+    .filter((d) => d !== "")
+    .join(" ")
+    .trim();
   rorda.push(k.id);
   if (k.promise_id) berordaLoften.add(k.promise_id);
 }
@@ -225,7 +282,9 @@ rattelser.push({
     "hänvisningen. Vi har hämtat tabellen ur varje sådan motion och lagt raderna bredvid löftet. " +
     `För ${barLoftet.length} kopplingar finns en rad för just det löftet gäller, och den raden står nu ` +
     "utskriven i motiveringen med anslagets nummer, dess namn och vad motionen begär mot regeringens " +
-    `förslag. För ${drasIn.length} kopplingar bär motionen inte löftet: antingen står tabellens rader ` +
+    "förslag — och där en läsning har avgjort vilken rad som bär står också skälet för den läsningen, " +
+    "eftersom ett belopp utan sin förklaring kan läsas som motsatsen till vad motionen begär. " +
+    `För ${drasIn.length} kopplingar bär motionen inte löftet: antingen står tabellens rader ` +
     "för saken oförändrade, eller så är löftet inte ett löfte om pengar utan om en lag, en modell, ett " +
     "villkor eller en skatt — och då kan ett belopp inte uttrycka det, hur nära anslaget än ligger. De " +
     "kopplingarna är tillbakadragna med skälet skrivet på var och en.",
