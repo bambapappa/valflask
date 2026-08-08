@@ -1370,5 +1370,63 @@
     ],
     "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-07-socialdemokraterna-gar-till-val-pa-tre-reformer-for-ett-starkare-rattsvasende",
     "articleTitle": "Socialdemokraterna går till val på tre reformer för ett starkare rättsväsende\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Mammabonus i pensionssystemet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi föreslår vi vad vi kallar för en mammabonus i pensionssystemet. Ett förslag som innebär att den som föder ett barn ska få en bonus direkt in på pensionskontot.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-08-08-mammabonus-i-pensionen",
+    "articleTitle": "Mammabonus i pensionen | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 1000,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Saknar belopp. Kostnad uppskattad utifrån antal födslar per år (~100 000) och en antagen bonus mellan 1 000 och 50 000 kr per barn. Baseras på jämförbara internationella bonusar och rimlig nivå.",
+      "confidence": 0.3,
+      "calculation": "~100 000 födslar/år × (1 000–50 000) kr/bonus = 100–5 000 mnkr. Bas 10 000 kr => 1 000 mnkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Riva bullerbyråkratin – för mer kultur och mer uteliv",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Nu river vi bullerbyråkratin – för mer kultur och mer uteliv.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/ett-friare-kultur-och-nojesliv/",
+    "articleTitle": "Ett friare kultur- och nöjesliv",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avregleringslöfte där den direkta kostnaden för att ta bort regler är försumbar. Eventuellt utrednings- och administrationsarbete i storleksordningen ett par miljoner.",
+      "confidence": 0.3,
+      "calculation": "Antar att själva rivandet av regler (proposition, förordningsändring) är en försumbar engångskostnad, men att visst utredningsstöd kan kosta 0–5 mkr. Ingen återkommande utgift."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   }
 ]
