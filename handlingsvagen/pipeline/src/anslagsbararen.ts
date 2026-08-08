@@ -48,6 +48,13 @@ export interface Anslagsmatning {
   promise_id: string | null;
   /** Antal rader i motionens anslagstabell. 0 = ingen tabell hittades. */
   tabellrader: number;
+  /**
+   * Hela tabellen. Finns för att läsningen ska kunna peka ut en rad som
+   * ordöverlappet aldrig hittade — raden «Ekokrim – inrättande av ny myndighet»
+   * bär löftet om att ersätta Ekobrottsmyndigheten utan att dela ett enda ordled
+   * med löftets citat.
+   */
+  rader?: Anslagsrad[];
   /** Rader som delar ett sakord med löftet, närmast först, med överlappet som tal. */
   traffar: Radtraff[];
   /** Träffar vars avvikelse är läsbar och skild från noll. */

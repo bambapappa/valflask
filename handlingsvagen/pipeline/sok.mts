@@ -10,7 +10,7 @@ for (const o of ord) {
   let m; let n = 0;
   console.log(`\n### "${o}"`);
   while ((m = re.exec(text)) && n < 6) { n++;
-    console.log("  …" + text.slice(Math.max(0, m.index - 260), m.index + 300) + "…\n");
+    console.log("  …" + text.slice(Math.max(0, m.index - Number(process.env.FORE ?? 260)), m.index + Number(process.env.EFTER ?? 300)) + "…\n");
   }
   if (n === 0) console.log("  (ingen träff)");
 }

@@ -75,6 +75,14 @@ interface Matning {
   /** Antal rader i motionens anslagstabell. 0 = ingen tabell hittad. */
   tabellrader: number;
   /**
+   * Hela tabellen, inte bara träffarna. Ordöverlappet hittar inte alltid den rad
+   * som bär: ett löfte om att ersätta Ekobrottsmyndigheten med ett Ekokrim bärs
+   * av raden «Ekokrim – inrättande av ny myndighet», som delar noll ordled med
+   * löftets citat. Läsningen måste kunna peka ut vilken rad som helst, och då
+   * måste alla finnas att peka på.
+   */
+  rader: Anslagsrad[];
+  /**
    * Raderna som delar ett sakord med löftet, närmast först, med överlappet som
    * ett tal. Talet skiljer en verklig träff från ett sammanträffande i en
    * ordstam, och utan det kan en fel rad skrivas in som löftets bärare.
@@ -157,6 +165,7 @@ for (const id of valda) {
     dok_id: h?.dok_id ?? null,
     lofte_msek: p?.cost?.msek_base ?? null,
     tabellrader: 0,
+    rader: [],
     traffar: [],
     andrade: [],
     fel: null,
@@ -184,6 +193,7 @@ for (const id of valda) {
     continue;
   }
   matning.tabellrader = rader.length;
+  matning.rader = rader;
 
   if (rader.length === 0) {
     console.log("  ⚠ INGEN ANSLAGSTABELL i dokumentet — då kan yrkandet inte bära ett belopp");
