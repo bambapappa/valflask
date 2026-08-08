@@ -23,6 +23,8 @@ import {
   type StanceVerifyResult,
 } from "../src/stance-pipeline.ts";
 import { validateStanceInvariants, type IssuesFile, type StanceCell } from "../src/stances.ts";
+import { avvisa, type Avvisning } from "../src/avvisningar.ts";
+import { lasProvningar, provningsGrind } from "../src/provningar.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const DATA = join(ROOT, "data");
@@ -80,6 +82,26 @@ if (action === "reject") {
   const reason = rest.join(" ") || "avvisad via stances:review";
   queue.splice(idx, 1);
   writeFileSync(join(DATA, "stances_review.json"), JSON.stringify(queue, null, 2) + "\n");
+
+  // Avvisningen lämnar spår, precis som i löftesflödet. Utan minnet hittar
+  // nästa skörd samma besked i samma källa och lägger in det på nytt.
+  // Mänskligt beslut 2026-08-09; se `src/avvisningar.ts`.
+  const kandidat = entry.candidate as { quote?: string; source?: { url?: string } };
+  const url = kandidat.source?.url ?? "";
+  const citat = kandidat.quote ?? "";
+  if (url !== "" && citat !== "") {
+    const fil = join(DATA, "avvisade.json");
+    let minne: Avvisning[] = [];
+    try {
+      minne = JSON.parse(readFileSync(fil, "utf8")) as Avvisning[];
+    } catch {
+      minne = [];
+    }
+    writeFileSync(
+      fil,
+      JSON.stringify(avvisa(minne, url, citat, reason, new Date().toISOString().slice(0, 10)), null, 2) + "\n",
+    );
+  }
   console.log(`Avvisad ${id}: ${reason}`);
   process.exit(0);
 }
@@ -92,6 +114,35 @@ if (hardFailures.length > 0) {
       "Verbatimkedjan är inte förhandlingsbar — avvisa posten och invänta en källa där citatet faktiskt står.",
   );
   process.exit(1);
+}
+
+// Kvalitetsfiltret, som grind. Den satt i Fläskvågens och Handlingsvågens
+// godkännanden sedan 2026-08-07 men inte i Frågevågens — och `logg.py` kunde
+// dessutom inte slå upp en kö-post här, så en ståndpunkt gick inte att pröva
+// förrän efter beslutet. Båda är lagade 2026-08-09. Hashen räknas på beskedet
+// som det FAKTISKT publiceras, så ett ändrat citat eller en ändrad position
+// vid godkännandet gör prövningen inaktuell.
+{
+  const kandidat = entry.candidate as StanceCandidate & { condition_note?: string | null };
+  const grind = provningsGrind(
+    lasProvningar(DATA),
+    [`ko:${id}`, `${kandidat.subquestion_id}/${kandidat.party}`],
+    "standpunkt",
+    {
+      id: `${kandidat.subquestion_id}/${kandidat.party}`,
+      subquestion_id: kandidat.subquestion_id,
+      party: kandidat.party,
+      position: kandidat.position,
+      quote: kandidat.quote,
+      condition_note: kandidat.condition_note ?? null,
+      source: { url: entry.sourceUrl, archive_url: entry.archiveUrl },
+      date_stated: entry.dateStated,
+    } as unknown as Record<string, unknown>,
+  );
+  if (!grind.ok) {
+    console.error(`Godkännandet stoppades: posten ${grind.skal}`);
+    process.exit(1);
+  }
 }
 
 const candidate = entry.candidate as StanceCandidate;
