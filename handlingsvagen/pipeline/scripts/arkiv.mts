@@ -32,6 +32,7 @@
  *   --limit N      bryt efter N handlingar
  *   --utan-save    be aldrig Wayback fånga en ny sida; mät bara vad som finns
  *   --om-saknas    ta om posterna som står `saknas` (annars hoppas de över)
+ *   --bara-uppslag slå upp om en kopia finns, öppna den inte (halva svaret)
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
@@ -58,7 +59,15 @@ interface Handling {
  * så en congesterad Wayback såg ut som dåliga bevis. Sex poster i beståndet var
  * av det slaget.
  */
-type Utfall = "bar" | "bar-inte" | "saknas" | "oavgjort";
+/**
+ * `finns-ogranskad` är avsiktligt skilt från `bar`. Tillgänglighets-API:et hos
+ * archive.org och innehållet på web.archive.org är två olika värdar, och de kan
+ * svara olika: mätt 2026-08-08 svarade uppslaget 200 medan hämtningen av själva
+ * ögonblicksbilden avvisades. Då **vet vi att en kopia finns** men inte om den
+ * bär citatet, och det är halva svaret — inte hela. Att skriva `bar` där vore att
+ * hävda mer än vi kontrollerat.
+ */
+type Utfall = "bar" | "bar-inte" | "saknas" | "oavgjort" | "finns-ogranskad";
 
 interface ArkivPost {
   handling_id: string;
@@ -161,6 +170,10 @@ async function main() {
   let limit = Infinity;
   for (let i = 0; i < argv.length; i += 1) if (argv[i] === "--limit") limit = Number(argv[++i]);
   const bergaNya = !argv.includes("--utan-save");
+  // Slå bara upp om en kopia finns; öppna den inte. Halva svaret, men det halva
+  // svaret går att få när web.archive.org avvisar innehållshämtningar och
+  // tillgänglighets-API:et ändå svarar. Posten får `finns-ogranskad`, aldrig `bar`.
+  const baraUppslag = argv.includes("--bara-uppslag");
   // En omkörning ska ta de obesvarade igen. Utan det här hoppar `--utan-save`
   // över allt den nyss skrev `saknas` på, och den andra fasen får inget att göra.
   const taOmSaknas = argv.includes("--om-saknas");
@@ -178,7 +191,15 @@ async function main() {
   // eftersom en ny availability-fråga sällan ger ett annat svar.
   const klara = new Set(
     arkiv
-      .filter((a) => a.verifierad || a.utfall === "bar-inte" || (a.utfall === "saknas" && !taOmSaknas))
+      .filter(
+        (a) =>
+          a.verifierad ||
+          a.utfall === "bar-inte" ||
+          (a.utfall === "saknas" && !taOmSaknas) ||
+          // Ett uppslag utan öppnad kopia är inte avgjort. Under --bara-uppslag
+          // hoppas den över (svaret finns redan); annars tas den om och prövas.
+          (a.utfall === "finns-ogranskad" && baraUppslag),
+      )
       .map((a) => a.handling_id),
   );
 
@@ -200,6 +221,14 @@ async function main() {
       const snapshot = await waybackSnapshot(fetcher, url, bergaNya);
       if (!snapshot) {
         post = { ...bas, arkiv_url: null, verifierad: false, utfall: "saknas", skal: "ingen arkivögonblicksbild kunde skapas" };
+      } else if (baraUppslag) {
+        post = {
+          ...bas,
+          arkiv_url: snapshot,
+          verifierad: false,
+          utfall: "finns-ogranskad",
+          skal: "ögonblicksbilden finns men är inte öppnad — citatet är inte prövat mot den",
+        };
       } else {
         const bar = await barCitatet(fetcher, snapshot, k.bevis.citat);
         if (bar === null) {
@@ -241,6 +270,7 @@ async function main() {
   const rakna = (u: Utfall) => arkiv.filter((a) => a.utfall === u).length;
   console.log(`klart: ${nya} prövade i den här körningen, ${bekraftade} nya verifierade → ${arkivPath}`);
   console.log(`hela beståndet: ${arkiv.length} poster · ${rakna("bar")} bär citatet · ${rakna("bar-inte")} bär inte`);
+  console.log(`  ${rakna("finns-ogranskad")} har en kopia som inte är öppnad — halva svaret`);
   console.log(`  ${rakna("saknas")} utan ögonblicksbild · ${rakna("oavgjort")} nådde inte fram (kör om — säger inget om kopian)`);
 }
 
