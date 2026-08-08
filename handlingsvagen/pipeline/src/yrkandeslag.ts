@@ -10,6 +10,9 @@
  * - **Ramverksyrkandet** godkänner riktlinjer, fastställer utgiftstaket eller
  *   fördelar utgifter per utgiftsområde. Den enskilda reformen ligger inne i en
  *   områdessumma och pekas inte ut — ett sådant yrkande bär inget enskilt löfte.
+ *   Ett **avslag** på regeringens ramverk är också ett ramverksyrkande: att
+ *   säga nej till regeringens utgiftstak är att ta ställning till taket, inte
+ *   till någon enskild reform.
  * - **Inkomstberäkningsyrkandet** godkänner beräkningen av statens inkomster.
  *   Bär det också ledet om att regeringen ska återkomma med lagförslag i
  *   överensstämmelse med beräkningen kan det bära ett skatte- eller
@@ -33,11 +36,33 @@ export type Yrkandeslag = "anslag" | "ramverk" | "inkomstberakning" | "sak";
  */
 const ANSLAG = /anvisar\s+anslagen/iu;
 
-/** Ramverket: riktlinjerna, utgiftstaket, fördelningen per utgiftsområde. */
+/**
+ * Ramverket: riktlinjerna, utgiftstaket, fördelningen per utgiftsområde.
+ *
+ * Tre av de fyra leden namnger bara saken och tål därför vilket verb som helst.
+ * Utgiftstaket gjorde det inte, och det kostade: mönstret band verbformen
+ * `fastställer`, som är den form partiet använder när det föreslår sitt eget
+ * tak. Yrkar partiet i stället **avslag** på regeringens tak heter det
+ * *«avslår regeringens förslag att fastställa utgiftstaket …»* — samma sak,
+ * annan böjning, och lydelsen räknades som ett sakyrkande.
+ *
+ * Därför `fastställ\w*`: alla former av samma verb, för det är verbet som
+ * varierar och saken som avgör. Formerna är belagda i beståndet — se
+ * `npm run yrkandeslag-svep`, som letar efter nästa lucka av samma slag.
+ */
 const RAMVERK =
-  /riktlinjer för den ekonomiska politiken|fastställer utgiftstaket|fördelning(?:en)? av utgifter på utgiftsområden|preliminära beräkningen av inkomster/iu;
+  /riktlinjer för den ekonomiska politiken|fastställ\w*\s+utgiftstaket|fördelning(?:en)? av utgifter på utgiftsområden|preliminära beräkningen av inkomster/iu;
 
-/** Inkomstberäkningen, som bär ett skattelöfte bara med lagförslagsledet. */
+/**
+ * Inkomstberäkningen, som bär ett skattelöfte bara med lagförslagsledet.
+ *
+ * Mönstret binder verbformen `godkänner` och bär alltså samma risk som
+ * utgiftstaket bar. Det är avsiktligt kvar: någon lydelse med en annan böjning
+ * finns inte i beståndet, och att bredda ett mönster på gissning är att bygga
+ * det ur minnet i stället för ur riksdagens ord. Missar mönstret något går
+ * felet åt det försiktiga hållet — motionen ser ut att ha ett sakyrkande och
+ * går till en läsning i stället för att avgöras mekaniskt.
+ */
 const INKOMSTBERAKNING = /godkänner beräkningen av inkomsterna/iu;
 
 /**
