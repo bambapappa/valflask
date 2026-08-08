@@ -288,15 +288,36 @@ export function provaAnslagsbararen(matning: Anslagsmatning, slag: Loftetsslag):
  */
 export function motiveringsnot(rad: Anslagsrad, datum: string): string {
   return (
-    `Motionens enda yrkande anvisar anslagen enligt tabellen i motionen, och tabellen ingår i ` +
+    `${NOTENS_INLEDNING}, och tabellen ingår i ` +
     `yrkandet genom hänvisningen. Raden som bär löftet är ${rad.anslag} ${rad.namn}, där motionen ` +
     `begär ${radensBelopp(rad)} mot regeringens förslag (tabellens egen enhet, normalt tusental ` +
     `kronor). Raden hämtades ur motionen ${datum}.`
   );
 }
 
-/** Motiveringen utan noten från en tidigare anslagsläsning, så att den inte dubbleras. */
+/**
+ * Notens inledning.
+ *
+ * Stod «Motionens **enda** yrkande» till 2026-08-08, och det var sant så länge
+ * regeln bara kördes på motioner som saknade sakyrkanden. Sedan raden också
+ * skrivs ut för motioner som har egna sakyrkanden vid sidan av anslagsyrkandet
+ * var ordet fel — och det stod i publicerad text, där en läsare kan räkna
+ * yrkandena själv och se att de är fyra.
+ */
+const NOTENS_INLEDNING = "Motionens anslagsyrkande anvisar anslagen enligt tabellen i motionen";
+
+/**
+ * Motiveringen utan noten från en tidigare anslagsläsning, så att den inte dubbleras.
+ *
+ * Känner igen både dagens inledning och den som gällde till 2026-08-08. En
+ * omkörning över redan skrivna motiveringar måste kunna städa bort den gamla
+ * noten; gör den inte det växer motiveringen med en nästan identisk mening för
+ * varje körning, och läsaren ser två påståenden om samma rad.
+ */
 export function utanTidigareAnslagsnot(motivering: string): string {
-  const i = motivering.indexOf("Motionens enda yrkande anvisar anslagen enligt tabellen");
-  return (i === -1 ? motivering : motivering.slice(0, i)).trim();
+  const i = [NOTENS_INLEDNING, "Motionens enda yrkande anvisar anslagen enligt tabellen"]
+    .map((inledning) => motivering.indexOf(inledning))
+    .filter((n) => n !== -1)
+    .sort((a, b) => a - b)[0];
+  return (i === undefined ? motivering : motivering.slice(0, i)).trim();
 }

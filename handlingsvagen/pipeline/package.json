@@ -24,7 +24,8 @@
     "handlingsklass": "node --import tsx/esm scripts/handlingsklass.mts",
     "anslagsbararen": "node --import tsx/esm scripts/anslagsbararen.mts",
     "inkomst-tabell": "node --import tsx/esm scripts/inkomst-tabell.mts",
-    "inkomstbararen": "node --import tsx/esm scripts/inkomstbararen.mts"
+    "inkomstbararen": "node --import tsx/esm scripts/inkomstbararen.mts",
+    "dra-in": "node --import tsx/esm scripts/koppling-dra-in.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1"

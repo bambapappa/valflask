@@ -144,3 +144,29 @@ test("en tidigare anslagsnot skrivs inte in två gånger", () => {
   assert.equal(utanTidigareAnslagsnot(forsta), "Motionen stöder löftet.");
   assert.equal(utanTidigareAnslagsnot("Bara en motivering."), "Bara en motivering.");
 });
+
+/**
+ * Noten sa «Motionens enda yrkande» till 2026-08-08. Sedan raden också skrivs
+ * ut för motioner som har egna sakyrkanden vid sidan av anslagsyrkandet är det
+ * ordet fel, och det står i publicerad text där en läsare kan räkna yrkandena
+ * själv. Städningen måste ändå känna igen den gamla lydelsen, annars växer
+ * motiveringen med en nästan identisk mening för varje omkörning.
+ */
+test("noten påstår inte att anslagsyrkandet är motionens enda", () => {
+  const rad = { anslag: "99:5", namn: "Investeringsstöd grön baskraft", avvikelse: 6000000 };
+  const not = motiveringsnot(rad, "2026-08-08");
+  assert.ok(!not.includes("enda yrkande"));
+  assert.ok(not.includes("Motionens anslagsyrkande anvisar anslagen"));
+});
+
+test("städningen känner igen både dagens och den gamla inledningen", () => {
+  const rad = { anslag: "2:4", namn: "Krisberedskap", avvikelse: 252000 };
+  const gammal =
+    "Motionen stärker krisberedskapen. Motionens enda yrkande anvisar anslagen enligt tabellen i " +
+    "motionen, och tabellen ingår i yrkandet genom hänvisningen.";
+  assert.equal(utanTidigareAnslagsnot(gammal), "Motionen stärker krisberedskapen.");
+  assert.equal(
+    utanTidigareAnslagsnot(`Motionen stärker krisberedskapen. ${motiveringsnot(rad, "2026-08-08")}`),
+    "Motionen stärker krisberedskapen.",
+  );
+});
