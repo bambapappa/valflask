@@ -59,24 +59,23 @@ function skrivRad(r: Anslagsrad): string {
 
 /**
  * Klass A: kopplingar vars citat står i motionens brödtext och vars motion
- * **bara** har anslagsyrkanden. Urvalet kommer ur `data/motionsklass.json`,
- * som `npm run motionsklass` skriver ur riksdagens yrkandelistor.
+ * **bara** har anslagsyrkanden. Urvalet kommer ur `data/handlingsklass.json`,
+ * som `npm run handlingsklass` skriver ur riksdagens yrkandelistor.
  *
  * Fältet `motionstyp` går inte att använda här. Det säger vem som väckte
  * motionen — parti, kommitté eller enskild ledamot — inte vad den yrkar, och
  * ett urval på det plockar 670 kopplingar i stället för 99.
  */
 function klassAIdn(): string[] {
-  const fil = resolve(rot, "data/motionsklass.json");
+  const fil = resolve(rot, "data/handlingsklass.json");
   if (!existsSync(fil)) {
-    console.error("data/motionsklass.json saknas. Kör: npm run motionsklass -- --skriv");
+    console.error("data/handlingsklass.json saknas. Kör: npm run handlingsklass -- --skriv");
     process.exit(1);
   }
-  const karta: Array<{ koppling: string; motionsslag?: string; i_yrkande?: boolean }> = JSON.parse(
-    readFileSync(fil, "utf8"),
-  );
+  const karta: Array<{ koppling: string; motionsslag?: string; i_handlingen?: boolean | null }> =
+    JSON.parse(readFileSync(fil, "utf8"));
   return karta
-    .filter((p) => p.motionsslag === "bara_anslag" && p.i_yrkande !== true)
+    .filter((p) => p.motionsslag === "bara_anslag" && p.i_handlingen !== true)
     .map((p) => p.koppling);
 }
 

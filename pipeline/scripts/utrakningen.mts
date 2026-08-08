@@ -19,7 +19,12 @@ import {
   type UtrakningsLofte,
   type Invandning,
 } from "../src/utrakningen.ts";
-import { statedBaseMsek } from "../src/quality-scan.ts";
+import {
+  statedBaseMsek,
+  findAmountMismatches,
+  findUngroupedTwins,
+  findCompletedPolicyQuotes,
+} from "../src/quality-scan.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const loften: UtrakningsLofte[] = JSON.parse(readFileSync(resolve(rot, "data/promises.json"), "utf8"));
@@ -45,7 +50,28 @@ interface Rad {
   group_id?: string | null;
   invandningar: Invandning[];
   anmarkningar: ReturnType<typeof anmarkningar>;
+  /**
+   * Utfallet ur `quality-scan`, per post. Svepen har hittills körts var för sig
+   * och lästs som text, vilket gör att en prövning måste slå upp tre utskrifter
+   * för en enda post. Här ligger de bredvid varandra.
+   */
+  kvalitetssok: {
+    /** Beloppsfältet mot uträkningens egen slutsumma, när de går isär. */
+    belopp_avviker?: { angivet: number; riktning: string; detalj: string };
+    /** Grupp posten kan höra hemma i, med hur starkt ordöverlappet är. */
+    grupp_kandidat?: { group_id: string; poang: number; delar: string[] };
+    /** Citatet ser ut att beskriva genomförd politik utan åtagande framåt. */
+    genomford_politik?: boolean;
+  };
 }
+
+const avvikelser = new Map(findAmountMismatches(loften).map((f) => [f.id, f]));
+const tvillingar = new Map(
+  findUngroupedTwins(loften)
+    .filter((f) => f.score >= 0.25)
+    .map((f) => [f.id, f]),
+);
+const genomford = new Set(findCompletedPolicyQuotes(loften).map((f) => f.id));
 
 const rader: Rad[] = aktiva
   .filter((p) => baraId === undefined || p.id === baraId)
@@ -59,6 +85,27 @@ const rader: Rad[] = aktiva
     group_id: p.group_id ?? null,
     invandningar: provaUtrakningen(p),
     anmarkningar: anmarkningar(p),
+    kvalitetssok: {
+      ...(avvikelser.has(p.id)
+        ? {
+            belopp_avviker: {
+              angivet: avvikelser.get(p.id)!.stated,
+              riktning: avvikelser.get(p.id)!.direction,
+              detalj: avvikelser.get(p.id)!.detail,
+            },
+          }
+        : {}),
+      ...(tvillingar.has(p.id)
+        ? {
+            grupp_kandidat: {
+              group_id: tvillingar.get(p.id)!.groupId,
+              poang: tvillingar.get(p.id)!.score,
+              delar: tvillingar.get(p.id)!.overlap,
+            },
+          }
+        : {}),
+      ...(genomford.has(p.id) ? { genomford_politik: true } : {}),
+    },
   }));
 
 // ─────────────────────────────────────────────────────────────── utskrift ──
