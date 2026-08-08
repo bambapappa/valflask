@@ -145,8 +145,23 @@ export function upsertChronicle(
  * Redan publicerade krönikor rörs inte av pausen; de ligger kvar som de står.
  * Att kontrollera om någon av dem bär de gamla talen är en egen uppgift.
  *
- * Sätt till `false` när omräkningen finns. Bakgrunden ligger som lucka C under
- * "Nästa steg" i handoff-repots `projekt/utlovat/HANDOFF.md`.
+ * **Vägen ur pausen är beslutad 2026-08-09:** texten och redogörelsen är
+ * statiska, talen dynamiska. Mekanismen finns i `kronikans-tal.ts` — summor,
+ * gap, antal och enskilda belopp skrivs som platshållare och slås upp när
+ * sidan byggs, så att en rättad siffra följer med i varje krönika utan en
+ * rättelsepost per krönika.
+ *
+ * **Två steg återstår innan flaggan får fällas**, och de måste tas i den här
+ * ordningen — annars publiceras en krönika med sina platshållare synliga:
+ *
+ *   1. Krönikesidan i `site/` ska köra `losUpp()` på `body_md` innan den
+ *      renderar, och «Då och nu»-rutan ska läsa de sparade talen som *då*.
+ *   2. Prompten som skriver krönikan ska instrueras att skriva `{total}`,
+ *      `{gap}`, `{antal}` och `{belopp:<id>}` i stället för siffror.
+ *      `skrivnaBelopp()` finns för att granska att den gör det.
+ *
+ * De sex redan publicerade krönikorna bär sina tal i löptexten och skrivs inte
+ * om — deras «Då och nu»-ruta gör redan skillnaden synlig för läsaren.
  */
 export const KRONIKOR_PAUSADE = true;
 

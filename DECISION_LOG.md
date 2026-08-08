@@ -5,6 +5,68 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 ---
 
+## 2026-08-09 — Krönikorna: statisk text, dynamiska tal
+
+**Beslut:** En veckokrönikas *redogörelse* — vad veckan handlade om, vilka
+partier som lovade vad, och hur vi såg på det — är statisk och skrivs aldrig om.
+Dess *tal* — totalsumma, gap, antal löften och enskilda belopp — är dynamiska och
+slås upp mot dagens data när sidan byggs. Talen skrivs därför som platshållare i
+krönikans text, aldrig som siffror. Ett stycke om detta står på metodsidan under
+«Veckokrönikorna». Ersätter beslutet att en krönika är en ögonblicksbild vars
+belopp räknas om ur datat som gällde när den skrevs.
+
+**Motiv:** Ett rättat belopp flyttar rikssumman, och rikssumman står i varje
+krönika. Med ögonblicksregeln blev följden antingen en rättelsepost per krönika
+för varje rättad siffra någon annanstans — en logg full av poster som inte
+rättar något läsaren letar efter, vilket gör loggen svårare att lita på — eller
+krönikor som tyst blev osanna. Genereringen pausades 2026-08-06 därför att ingen
+väg ur det fanns. Skillnaden som löser det är att en summa är ett påstående om
+*datat*, inte om veckan: veckan var som den var, men summan ska vara sann nu. En
+krönika behåller därmed sitt värde för läsaren i stället för att bli ett
+museiföremål, och rättelseloggen behåller sin relevans.
+
+**Förkastade alternativ:**
+- *Räkna om ur historiskt data* (den gamla regeln). Kräver ett verktyg som ingen
+  byggt, gör varje krönika beroende av en datarekonstruktion, och svarar ändå
+  läsaren med en siffra som inte gäller i dag.
+- *Frysa krönikorna helt och skriva ut att talen är historiska.* Ärligt men
+  värdelöst: en läsare som vill veta vad löftena kostar får ett gammalt tal med
+  en brasklapp.
+- *Rättelsepost per krönika och rättelse.* Det var vad regeln faktiskt krävde,
+  och det urvattnar rättelseloggen — de poster som rör något läsaren bryr sig om
+  drunknar i poster som bara följer en summa.
+- *Skriva om redogörelsen när fakta ändras.* Förkastat utan tvekan: det är att
+  skriva om historien.
+
+**Kvar att göra innan genereringen får slås på:** krönikesidan i `site/` ska köra
+`losUpp()` innan den renderar, och prompten ska skriva platshållare i stället för
+siffror. Flaggan `KRONIKOR_PAUSADE` står kvar tills båda är gjorda — annars
+publiceras en krönika med sina platshållare synliga. De sex redan publicerade
+krönikorna bär sina tal i löptexten och skrivs inte om; deras «Då och nu»-ruta
+gör redan skillnaden synlig.
+
+## 2026-08-09 — Citatgolvets undantag bortser från avslutande skiljetecken
+
+**Beslut:** Kravet «citatet är en hel, unik rad i källan», som ger korta citat på
+partiets egen sida ett lägre golv, jämför nu utan avslutande skiljetecken.
+
+**Motiv:** Undantaget påstods inte nå partiernas punktlistor, med förklaringen
+att punkterna inte hamnade på var sin rad när sidan lästes in. Mätt 2026-08-09
+mot Liberalernas alkoholsida stämde det inte: raderna bryts som de ska, och fyra
+av fem korta citat klarade regeln. Det femte föll på att källan lyder «tillåta
+takeaway-försäljning av alkohol**,**» medan citatet saknade kommat. Två
+grannpunkter i samma lista behandlades alltså olika beroende på om utvinningen
+råkat ta med tecknet — en skillnad som inte finns i vad partiet lovar. Effekten
+är mätt och liten: **en** publicerad post, och noll i dagens kö.
+
+**Förkastade alternativ:**
+- *Sänka citatgolvet.* Citatgrindarna lossas aldrig, och golvet är inte felet.
+- *Ändra radbrytningen i inläsningen.* Den var aldrig trasig — diagnosen var fel,
+  och en ändring där hade rört allt annat som läser artikeltext.
+
+**Notera:** kravet att citatet står ordagrant i källan prövas separat och är
+oförändrat. Det enda som avgörs här är om posten får använda det lägre golvet.
+
 ## 2026-06-11 — Repo initierat
 
 **Beslut:** Repo initierat i befintlig katalog (val/) utan att byta namn på rotmappen.
