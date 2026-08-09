@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro build && node --experimental-strip-types scripts/sitemap.mts",
     "preview": "astro preview",
-    "test": "node --experimental-strip-types scripts/test-budget.mts && node --experimental-strip-types scripts/test-rutnat.mts && node --experimental-strip-types scripts/test-vyer.mts && node --experimental-strip-types scripts/test-amne.mts"
+    "test": "node --experimental-strip-types scripts/test-budget.mts && node --experimental-strip-types scripts/test-rutnat.mts && node --experimental-strip-types scripts/test-vyer.mts && node --experimental-strip-types scripts/test-amne.mts && node --experimental-strip-types scripts/test-stil.mts"
   },
   "dependencies": {
     "astro": "^7.1.6"

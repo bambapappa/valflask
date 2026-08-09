@@ -1,12 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getPromises, getParties, getPeople } from "../lib/data";
+import { getPromises, getParties } from "../lib/data";
 import { formatMsek } from "../lib/calc";
 import { promiseNetMsek, partyTotalMsek, getPromisesForParty, flasketPerRost, categoryBreakdown, groupedPromises } from "../lib/aggregates";
 
 const promises = getPromises();
 const parties = getParties();
-const people = getPeople();
 const active = promises.filter((p) => p.status !== 'tillbakadragen');
 
 // En post per politik, inte en per formulering: ett delat löfte tar en plats
@@ -22,14 +21,15 @@ const partyTotals = parties.map((p) => ({
 
 const partyPerVote = [...partyTotals].sort((a, b) => b.perVote - a.perVote);
 
-const personTotals = people
-  .map((person) => ({
-    ...person,
-    total: promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen').reduce((s, p) => s + promiseNetMsek(p), 0),
-    count: promises.filter((p) => p.person?.name === person.name && p.status !== 'tillbakadragen').length,
-  }))
-  .filter((p) => p.count > 0)
-  .sort((a, b) => b.total - a.total);
+// Listan över frikostigaste politiker är NEDSLÄCKT (mänskligt beslut
+// 2026-08-09). Den rangordnade bara de personer som råkade stå i
+// data/people.json — sju stycken, varav två utan ett enda aktivt löfte —
+// medan 26 namngivna politiker bär minst ett. Tre av dem som saknades låg
+// högre än den som stod överst, störst på 693 mdkr mot tabellens 207. En
+// topplista som utelämnar sin egen etta är missvisande, och rätt botten är
+// ett fyllt personregister, inte en fotnot. Tabellen kommer tillbaka när
+// registret finns; tills dess visar vi hellre ingenting. Ingen uppgift är
+// ändrad — en maskinell tabell är släckt, och därför ingen rättelsenot.
 
 const categories = categoryBreakdown(active);
 const categorySorted = categories.map((c) => [c.category, c.totalMsek] as [string, number]);
@@ -108,34 +108,6 @@ const jsonLd = [
                 <td class="radnr">{i + 1}</td>
                 <td><a href={`/parti/${p.code}`}>{p.name}</a></td>
                 <td class="num">{Math.round(p.perVote).toLocaleString('sv-SE')} kr</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="sektion sektion--lg">
-      <h2>Frikostigaste politikern</h2>
-      <div class="datavy datavy--scroll">
-        <table>
-          <thead>
-            <tr>
-              <th class="radnr">#</th>
-              <th>Politiker</th>
-              <th>Parti</th>
-              <th class="num">Totalt (mdkr)</th>
-              <th class="num">Löften</th>
-            </tr>
-          </thead>
-          <tbody>
-            {personTotals.map((p, i) => (
-              <tr>
-                <td class="radnr">{i + 1}</td>
-                <td><a href={`/ledamot/${p.slug}`}>{p.name}</a></td>
-                <td>{parties.find((pp) => pp.code === p.party)?.name}</td>
-                <td class="num belopp">{formatMsek(p.total)}</td>
-                <td class="num">{p.count}</td>
               </tr>
             ))}
           </tbody>

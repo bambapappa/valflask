@@ -105,6 +105,13 @@ main,
   max-width: var(--matt-prosa);
   font-size: var(--steg-1);
 }
+/* Ingressen som står EFTER rutnätet behöver luft ovanför. Marginalen låg
+ * tidigare i ett style-attribut på elementet, och sajtens
+ * Content-Security-Policy (style-src 'self') kastar bort varje sådant —
+ * regeln fanns alltså i källan men verkade aldrig i drift. */
+.ingress--efter {
+  margin-top: 1rem;
+}
 
 /* ── Sammanfattningen: tre tal i monon på en hårlinjeram ──
  * Talen är produkten och sätts därför i monon, inte i serifen. */

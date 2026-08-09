@@ -2,6 +2,23 @@
 import Layout from "../layouts/Layout.astro";
 import Rattelsenot from "../components/Rattelsenot.astro";
 import { rattelserForPath } from "../lib/data.ts";
+import { metodTal } from "../lib/metodtal.ts";
+
+// Talen nedan är påståenden om datat, inte om metoden, och slås därför upp
+// vid varje bygge. Skrivna som siffror i texten blev de tysta osanningar.
+const tal = metodTal();
+const [flest1, flest2] = tal.partier;
+const [farrest1, farrest2] = [...tal.partier].reverse();
+// Meningen byggs i frontmatter, inte i mallen: ett radbryte intill ett
+// {uttryck} äter mellanslaget i bygget, och «medanLiberalernas» gick i drift.
+const ojamnheten =
+  `${flest1!.namn}s löften bär ${flest1!.kopplingar} kopplingar och ` +
+  `${flest2!.namn}s ${flest2!.kopplingar}, medan ${farrest1!.namn}s bär ` +
+  `${farrest1!.kopplingar} och ${farrest2!.namn}s ${farrest2!.kopplingar}`;
+const andelOprovade = (p: (typeof tal.partier)[number]): number =>
+  p.loften === 0 ? 0 : Math.round((p.oprovade / p.loften) * 100);
+const oprovadeMest = [...tal.partier].sort((a, b) => andelOprovade(b) - andelOprovade(a))[0]!;
+const oprovadeMinst = [...tal.partier].sort((a, b) => andelOprovade(a) - andelOprovade(b))[0]!;
 ---
 <Layout title="Så görs vägningen — Handlingsvågen" canonicalPath="/metod">
   <div class="prosa">
@@ -95,11 +112,9 @@ import { rattelserForPath } from "../lib/data.ts";
 
     <h2>Vi har hunnit olika långt med olika partier</h2>
     <p>
-      Registret är inte lika fullt för alla åtta partierna. I augusti 2026 var
-      det som vägts mycket ojämnt fördelat: Miljöpartiets löften bar 155
-      kopplingar och Centerpartiets 131, medan Kristdemokraternas bar 8 och
-      Liberalernas 6. <b>Det är inget mått på partierna.</b> Så här ser det ut
-      bakom siffran:
+      Registret är inte lika fullt för alla åtta partierna. Just nu är det som
+      vägts ojämnt fördelat: {ojamnheten}.
+      <b>Det är inget mått på partierna.</b> Så här ser det ut bakom siffran:
     </p>
     <ul>
       <li>
@@ -118,15 +133,16 @@ import { rattelserForPath } from "../lib/data.ts";
       <li>
         <b>Sökningen hittar inte fram till alla löften.</b> För att vi ska
         läsa igenom en handling måste den likna löftet tillräckligt mycket i
-        ordval. För knappt en femtedel av löftena — i augusti 2026 var det 79
-        av 467 — liknar ingen enda handling löftet tillräckligt, och då blir
+        ordval. För {tal.oprovade} av {tal.loften} löften — {tal.oprovadeProcent} procent —
+        liknar ingen enda handling löftet tillräckligt, och då blir
         det aldrig prövat mot någonting. Det beror nästan aldrig på att
         partiet saknar handlingar; de partierna har hundratals eller tusentals
         egna i registret. Det beror på att löftet är kort och allmänt hållet.
         "Vi ska satsa på vårdpersonalen" delar för få utmärkande ord med något
         enskilt dokument för att peka ut vilket som borde läsas. Det slår
-        ojämnt: för Liberalerna gällde det en tredjedel av löftena, för
-        Socialdemokraterna en tiondel. Nästan alla de här löftena låg strax
+        ojämnt: för {oprovadeMest.namn} gäller det {andelOprovade(oprovadeMest)} procent
+        av löftena, för {oprovadeMinst.namn} {andelOprovade(oprovadeMinst)} procent.
+        Nästan alla de här löftena låg strax
         under gränsen, inte långt ifrån den, och <b>gränsen är därför
         vidgad</b> — ungefär hälften av dem kommer att prövas efterhand som
         sökningarna körs. Att vidga den sänker inga krav på beläggen: varje
