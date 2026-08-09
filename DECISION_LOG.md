@@ -5,6 +5,35 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 ---
 
+## 2026-08-09 — Topplistan över politiker släcks tills personregistret är fyllt
+
+**Beslut:** Avsnittet «Frikostigaste politikern» på `/topplistor` tas bort. Det
+kommer tillbaka först när `data/people.json` rymmer de politiker som faktiskt
+bär löften. Ingen rättelsenot och ingen post i rättelseloggen: ingen uppgift är
+ändrad och inget belopp rättat — en maskinell tabell är släckt.
+
+**Motiv:** Tabellen kunde bara ta med den som har en egen personsida, och en
+sida finns bara för den som står i personregistret. Registret rymmer sju
+personer, varav två utan ett enda aktivt löfte, medan **26 namngivna politiker**
+bär minst ett. Tre av de saknade låg högre än den som stod överst: Elisabeth
+Thand Ringqvist 693 mdkr, Martin Ådahl 312 och Daniel Helldén 227, mot
+tabellens topp på 207. En topplista som utelämnar sin egen etta pekar ut fel
+person, och den pekar ut en namngiven människa. Att inte visa något är ärligare
+än att visa en rangordning som inte är en rangordning — samma regel som tomma
+celler.
+
+**Förkastade alternativ:** *Behålla tabellen med ändrad rubrik och en fotnot om
+vilka som saknas* — provat och byggt, men en läsare som ser en numrerad lista
+läser den som en rangordning oavsett vad som står ovanför, och etta-platsen
+fortsätter peka på fel namn. *Fylla registret i samma vända* — vem som ska
+följas var för sig, med vilken roll och vilken källa, är ett mänskligt beslut
+och inte något en körning avgör; registret är dessutom inaktuellt på partiledarnivå.
+*Härleda listan ur löftena i stället för ur registret* — raderna länkar till en
+personsida som då inte finns, och `promises.json` bär i dag minst ett
+personfält med två personer i sig («Elisabeth Thand Ringqvist + Martin Ådahl»).
+
+---
+
 ## 2026-08-09 — Källor som ändrats får en egen del på sajten, med tre villkor
 
 **Beslut:** Fall där en källa ändrats efter att vi citerat den samlas på
