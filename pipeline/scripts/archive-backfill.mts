@@ -18,7 +18,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { snapshotBacksQuote } from "../src/archive-verify.ts";
+import { quoteInSnapshotText, snapshotText } from "../src/archive-verify.ts";
 import { GRUNDPAUS_MS, hamtaFranArkivet } from "../src/wayback-takt.ts";
 
 /** Hur många begäranden arkivet strypte under körningen. Skrivs ut till sist. */
@@ -149,26 +149,31 @@ if (saved.length > 0) {
 // --- applicera (behåll ev. #fragment för PDF-sidhänvisning) ---
 // Kärnprincipen: en arkivkopia duger bara om citatet står ordagrant i den.
 // Wayback ger NÄRMASTE snapshot, som kan vara äldre än sidinnehållet — en
-// extern granskning hittade att 4 av 25 arkiv saknade sitt citat. Verifieras
-// per käll-URL: bär snapshotten inte ett av citaten är den fel version av
-// sidan för alla som väntar på den.
-const verified = new Map<string, boolean>();
-for (const [url, snap] of resolved) {
-  const probe = promises.find((p) => !p.source.archive_url && stripFrag(p.source.url) === url);
-  if (!probe) continue;
-  const backs = await snapshotBacksQuote(snap, probe.quote);
-  verified.set(url, backs === true);
-  if (backs !== true) {
-    console.log(`  ✗ snapshot bär inte citatet (${backs === null ? "gick ej att avgöra" : "citat saknas"}): ${url}`);
-  }
-}
-
+// extern granskning hittade att 4 av 25 arkiv saknade sitt citat.
+//
+// **Prövas per LÖFTE, inte per källsida** (mätt 2026-08-09). Steget prövade
+// förut ett citat per sida och skrev sedan länken till alla löften som delade
+// sidan. `p-2026-0704` fick på det viset en kopia som inte bär dess citat: fem
+// centerpartistiska löften delar samma artikel, kopian bar det första citatet
+// och inte det fjärde. Ögonblicksbilden hämtas fortfarande en gång per sida —
+// det är prövningen som ska ske en gång per citat, för det är citatet som är
+// löftets belägg.
+const sidtext = new Map<string, string | null>();
 const changed: string[] = [];
+const vagrade: string[] = [];
 for (const p of promises) {
   if (p.source.archive_url) continue;
   const key = stripFrag(p.source.url);
   const snap = resolved.get(key);
-  if (!snap || verified.get(key) !== true) continue;
+  if (!snap) continue;
+  if (!sidtext.has(snap)) sidtext.set(snap, await snapshotText(snap));
+  const text = sidtext.get(snap) ?? null;
+  if (text === null) { console.log(`  ✗ gick ej att avgöra (nätet): ${p.id}`); continue; }
+  if (!quoteInSnapshotText(text, p.quote)) {
+    vagrade.push(p.id);
+    console.log(`  ✗ kopian bär inte citatet: ${p.id}  ${key}`);
+    continue;
+  }
   const frag = p.source.url.includes("#") ? "#" + p.source.url.split("#")[1] : "";
   p.source.archive_url = snap + frag;
   changed.push(p.id);
@@ -190,6 +195,9 @@ if (changed.length > 0) {
   console.log("\nInga archive_url uppdaterade.");
 }
 console.log(`Kvar utan arkiv: ${promises.filter((p) => !p.source.archive_url).length} löften.`);
+if (vagrade.length > 0) {
+  console.log(`Vägrade kopia (bär inte citatet): ${vagrade.join(", ")}`);
+}
 if (strypta > 0) {
   // Skrivs ut för att en strypt körning annars ser fullständig ut: «kvar utan
   // arkiv» blir samma tal oavsett om arkivet svarade nej eller inte hade något.
