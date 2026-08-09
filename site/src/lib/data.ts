@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import type { Kallstatus } from "./source-link.ts";
+import type { Kallandring, Kallstatus } from "./source-link.ts";
 import { resolve } from "node:path";
 
 function getDataDir(): string {
@@ -32,6 +32,8 @@ export interface PromisePost {
     /** Satt av `pnpm promises:rot-check`. Saknas på källor som aldrig öppnats igen. */
     source_status?: Kallstatus;
     source_checked_at?: string;
+    /** Vad som ändrats — se `andrade-kallor.ts`. Bara på källor som inte är `ok`. */
+    source_change?: Kallandring;
   };
   category: string;
   cost: {

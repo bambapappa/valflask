@@ -20,6 +20,12 @@
  *   pnpm promises:rot-check --dry-run    rapportera bara
  *   pnpm promises:rot-check --max 40     bryt efter N källsidor
  *   pnpm promises:rot-check --paus 2000  takten mellan hämtningar (ms)
+ *   pnpm promises:rot-check --id p-1,p-2  pröva om enstaka löften
+ *
+ * En flaggad källa får dessutom `source_change` — vad som står där i dag,
+ * ordagrant ur sidan. Statusen räcker för stämpeln på löftessidan; för att
+ * lägga fram fallet på `/andrade-kallor` krävs både en arkivkopia som bär
+ * citatet och att en människa kontrollerat båda länkarna (`reviewed_at`).
  *
  * Utfallskod 1 när något är `andrad` eller `borttagen` — de kräver en
  * människa. Ett nätfel sätter aldrig koden; det vore att låta vårt eget
@@ -28,7 +34,15 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { extractPdfText, looksLikePdf, stripHtml } from "../src/fetch.ts";
-import { skaSkrivas, utfallAvStatus, utfallAvText, type Rotutfall } from "../src/kallrota.ts";
+import {
+  andringsslag,
+  hittaPassage,
+  skaSkrivas,
+  utfallAvStatus,
+  utfallAvText,
+  type Andringsslag,
+  type Rotutfall,
+} from "../src/kallrota.ts";
 import { arTaladKalla } from "../src/talad-kalla.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
@@ -40,15 +54,45 @@ const varde = (f: string) => (args.indexOf(f) >= 0 ? args[args.indexOf(f) + 1] :
 const torr = har("--dry-run");
 const max = Number(varde("--max") ?? "0") || Infinity;
 const paus = Number(varde("--paus") ?? "1200");
+// Ett enskilt fall ska gå att pröva om utan att öppna hela beståndets källor.
+// Ett flaggat löfte kontrolleras alltid mot källan igen innan det läggs fram.
+const bara = new Set((varde("--id") ?? "").split(",").map((s) => s.trim()).filter(Boolean));
 const sov = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const idag = new Date().toISOString().slice(0, 10);
+
+/**
+ * Vad som ändrats, inte bara att något ändrats.
+ *
+ * Statusen `andrad` räcker för en stämpel på löftessidan men inte för att
+ * lägga fram fallet offentligt — då måste läsaren se båda leden. Fälten här
+ * är mätvärden, hämtade ur sidan som den ser ut i dag, aldrig omskrivna.
+ * `reviewed_at` sätts av en människa och är det som avgör om fallet visas.
+ */
+interface Kallandring {
+  kind: Andringsslag;
+  observed_at: string;
+  /** Meningen som står där i dag, ordagrant ur källan. Saknas när sidan är utbytt. */
+  now_reads?: string;
+  /** Dit adressen leder nu, när den inte längre stannar på sig själv. */
+  redirects_to?: string;
+  /** Datum då fallet kontrollerats mot båda länkarna. Sätts aldrig här. */
+  reviewed_at?: string;
+  /** Anmärkning för hand, när mätvärdena behöver sammanhang. */
+  note?: string;
+}
 
 interface Promise_ {
   id: string;
   party?: string;
   status?: string;
   quote: string;
-  source: { url: string; source_status?: Rotutfall; source_checked_at?: string };
+  source: {
+    url: string;
+    archive_url?: string;
+    source_status?: Rotutfall;
+    source_checked_at?: string;
+    source_change?: Kallandring;
+  };
 }
 
 const promises = JSON.parse(readFileSync(PROMISES, "utf8")) as Promise_[];
@@ -57,7 +101,7 @@ const promises = JSON.parse(readFileSync(PROMISES, "utf8")) as Promise_[];
 // där» — en anklagelse mot källan för en fråga sidan inte kan besvara. Samma
 // undantag som arkivsvepet gör, och av samma skäl: talade citat beläggs med
 // avskrift och tidsstämpel (mänskligt beslut 2026-08-09).
-const alla = promises.filter((p) => p.status === "aktiv");
+const alla = promises.filter((p) => p.status === "aktiv" && (bara.size === 0 || bara.has(p.id)));
 const talade = alla.filter((p) => arTaladKalla(p.source.url));
 const aktiva = alla.filter((p) => !arTaladKalla(p.source.url));
 
@@ -77,7 +121,7 @@ console.log(
 );
 
 /** Hämtar sidans text. `null` = gick inte att avgöra, aldrig "citatet saknas". */
-async function hamta(url: string): Promise<{ utfall: Rotutfall } | { text: string }> {
+async function hamta(url: string): Promise<{ utfall: Rotutfall } | { text: string; slutlig: string }> {
   let res: Response;
   try {
     res = await fetch(url, {
@@ -96,10 +140,45 @@ async function hamta(url: string): Promise<{ utfall: Rotutfall } | { text: strin
       text: looksLikePdf(res.headers.get("content-type"), bytes)
         ? (await extractPdfText(bytes)).pages.join("\n")
         : stripHtml(new TextDecoder("utf-8").decode(bytes)),
+      // Vart adressen faktiskt ledde. `p-2026-0487` svarar 200 — men på en
+      // annan sida, för valmanifestets adress skickar numera vidare till en
+      // översiktssida. Utan detta ser fallet ut som ett omskrivet stycke.
+      slutlig: res.url || url,
     };
   } catch {
     return { utfall: "obestamd" };
   }
+}
+
+/**
+ * Skriver ned VAD som ändrats, inte bara att något ändrats.
+ *
+ * Två regler bär den här funktionen:
+ *
+ * 1. **En lagad källa lämnar inget spår.** Går statusen tillbaka till `ok`
+ *    försvinner beviset, för då finns ingen ändring att lägga fram.
+ * 2. **Människans godkännande följer inte med en ny mätning.** Ändrar sig
+ *    slaget — en omskriven mening blir en utbytt sida — nollas `reviewed_at`.
+ *    Godkännandet gällde det som prövades då, inte det som står nu.
+ */
+function skrivAndring(p: Promise_, utfall: Rotutfall, svar: { text: string; slutlig: string } | null): void {
+  if (utfall === "ok") {
+    delete p.source.source_change;
+    return;
+  }
+  const nu = svar ? hittaPassage(svar.text, p.quote) : null;
+  const slag = andringsslag(utfall, nu);
+  if (!slag) return;
+
+  const forra = p.source.source_change;
+  const andring: Kallandring = { kind: slag, observed_at: idag };
+  if (nu) andring.now_reads = nu;
+  if (svar && stripFrag(svar.slutlig) !== stripFrag(p.source.url)) andring.redirects_to = svar.slutlig;
+  if (forra?.kind === slag) {
+    if (forra.reviewed_at) andring.reviewed_at = forra.reviewed_at;
+    if (forra.note) andring.note = forra.note;
+  }
+  p.source.source_change = andring;
 }
 
 let oppnade = 0;
@@ -121,6 +200,7 @@ for (const url of urler) {
     if (!torr) {
       p.source.source_status = utfall;
       p.source.source_checked_at = idag;
+      skrivAndring(p, utfall, "text" in svar ? svar : null);
     }
     if (utfall !== "ok") trasiga.push(p);
   }

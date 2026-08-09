@@ -31,7 +31,10 @@ const sourceLabel = isTal ? "se i talet" : sourceLinkLabel(sourceUrl);
   {' '}· <a href={sourceUrl}>{sourceLabel}<span aria-hidden="true"> ↗</span></a>
   {archiveUrl && <> · <a href={archiveUrl}>{archiveLinkLabel(archiveUrl)}<span aria-hidden="true"> ↗</span></a></>}
 </div>
-{kallstatus && <div class="etikett etikett--sub kallstatus">{kallstatus}</div>}
+{/* Stämpeln pekar vidare: den som ser att en källa ändrats ska kunna se VAD som
+    ändrats, inte bara att något gjort det. Fallet står på /andrade-kallor när
+    det har en arkivkopia och en människa öppnat båda länkarna. */}
+{kallstatus && <div class="etikett etikett--sub kallstatus"><a href="/andrade-kallor">{kallstatus}</a></div>}
 
 <style>
   .citat-attribution {
