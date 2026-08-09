@@ -1,5 +1,5 @@
 ---
-import { sourceLinkLabel, archiveLinkLabel } from "../lib/source-link";
+import { sourceLinkLabel, archiveLinkLabel, KALLSTATUS_ETIKETT, type Kallstatus } from "../lib/source-link";
 
 interface Props {
   quote: string;
@@ -10,9 +10,15 @@ interface Props {
   sourceUrl: string;
   archiveUrl: string | null;
   kind?: "webb" | "tal";
+  /** Källans skick vid senaste rötkontrollen. Odefinierad = aldrig kontrollerad. */
+  sourceStatus?: Kallstatus;
 }
-const { quote, person, party, domain, date, sourceUrl, archiveUrl, kind } = Astro.props;
+const { quote, person, party, domain, date, sourceUrl, archiveUrl, kind, sourceStatus } = Astro.props;
 const isTal = kind === "tal";
+// En källa som ändrats eller tagits bort ska synas där citatet står, inte i en
+// logg. Läsaren som klickar på källänken ska veta innan hen klickar att det är
+// arkivkopian som bär citatet.
+const kallstatus = sourceStatus ? KALLSTATUS_ETIKETT[sourceStatus] : null;
 // Talat löfte länkar till filmen (tidsstämpel); webb/PDF får "källa (PDF, s. N)".
 const sourceLabel = isTal ? "se i talet" : sourceLinkLabel(sourceUrl);
 ---
@@ -25,6 +31,7 @@ const sourceLabel = isTal ? "se i talet" : sourceLinkLabel(sourceUrl);
   {' '}· <a href={sourceUrl}>{sourceLabel}<span aria-hidden="true"> ↗</span></a>
   {archiveUrl && <> · <a href={archiveUrl}>{archiveLinkLabel(archiveUrl)}<span aria-hidden="true"> ↗</span></a></>}
 </div>
+{kallstatus && <div class="etikett etikett--sub kallstatus">{kallstatus}</div>}
 
 <style>
   .citat-attribution {

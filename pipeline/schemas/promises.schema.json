@@ -145,6 +145,18 @@
               "webb",
               "tal"
             ]
+          },
+          "source_status": {
+            "enum": [
+              "ok",
+              "andrad",
+              "borttagen"
+            ],
+            "description": "Satt av pnpm promises:rot-check. 'andrad'/'borttagen' renderas med synlig stämpel på löftessidan — arkivkopian gäller. Frivilligt: en källa som aldrig öppnats igen saknar fältet."
+          },
+          "source_checked_at": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
           }
         }
       },

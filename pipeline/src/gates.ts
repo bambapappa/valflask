@@ -250,7 +250,7 @@ export function countWords(normalized: string): number {
  * inte avgörs av utvinningen, inte av partiet — och det är ingen skillnad i vad
  * som utlovas.
  */
-function utanAvslutandeSkiljetecken(rad: string): string {
+export function utanAvslutandeSkiljetecken(rad: string): string {
   return rad.replace(/[.,;:!?]+$/u, "").trim();
 }
 

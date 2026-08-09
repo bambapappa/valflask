@@ -5,6 +5,58 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 ---
 
+## 2026-08-09 — Citatets sista skiljetecken avgör inte om en arkivkopia duger
+
+**Beslut:** När vi prövar att ett citat står ordagrant i en arkivkopia bortser
+jämförelsen från citatets **avslutande** skiljetecken. Skiljetecken inne i
+citatet jämförs oförändrat. Samma regel gällde sedan tidigare vilken rad
+citatgolvet får räkna som en egen punkt; den gäller nu även arkivprövningen.
+
+**Motiv:** Ett citat kapas nästan alltid vid en meningsgräns, och källan
+fortsätter ofta med ett komma där citatet sätter punkt. `p-2026-0709` slutar
+«…redan under nästa mandatperiod.» medan Socialdemokraternas artikel skriver
+«…redan under nästa mandatperiod, säger Teresa Carvalho.» Orden är desamma ord
+för ord. Det enda som skilde var tecknet vi själva satte dit när vi slutade
+citera — det är vår redigering, inte partiets ord, och en kopia ska inte fällas
+för den. Det är orden som bär citatet.
+
+**Förkastade alternativ:**
+- *Bortse från alla skiljetecken i citatet.* Ett komma mitt i en mening kan
+  flytta vad som utlovas, och att jämföra bara orden vore att lossa citatgrinden
+  på riktigt. Lättnaden gäller därför bara sista tecknet.
+- *Rätta citatet i stället, så att det slutar där källan slutar.* Skulle ge
+  citat som slutar «…mandatperiod, säger Teresa Carvalho» — attributionen är
+  inte en del av löftet, och läsaren blir inte hjälpt.
+- *Låta kopian stå osatt.* Det var läget före beslutet: ett belagt löfte såg ut
+  att sakna arkivkopia, fast kopian fanns och bar orden.
+
+**Fattat av:** mänskligt beslut.
+
+---
+
+## 2026-08-09 — Takten mot web.archive.org är kodad, inte gissad
+
+**Beslut:** Allt vi ber arkivet om går genom `pipeline/src/wayback-takt.ts`.
+Svarar arkivet 429 eller 503 väntas `Retry-After` ut; saknas huvudet fördubblas
+pausen. En strypt begäran räknas **inte** som ett utfall: den räknas inte av mot
+sparbudgeten, den skrivs aldrig som «ingen kopia finns», och antalet strypta
+begäranden skrivs ut när körningen är slut.
+
+**Motiv:** 429 kom i tre pass i rad — uppslagstjänsten 8 augusti,
+innehållshämtningen 9 augusti, sparfunktionen efter fem kopior i rad samma
+kväll. Varje gång skrevs strypningen in som ett mätvärde: först «48 av 48
+saknar arkivkopia», sedan «45 av 48 oavgjort». Arkivet är gratis, delat och
+strypt, och den som kör på gör både sig själv och alla andra en otjänst.
+
+**Förkastade alternativ:**
+- *Höja pausen tills det slutar hända.* En fast paus som är för lång kostar
+  timmar i varje svep och är ändå fel så snart arkivet ändrar sig; `Retry-After`
+  är arkivets eget svar på frågan.
+- *Skaffa en API-nyckel till Save Page Now.* Kan bli rätt senare, men löser inte
+  att en strypt begäran skrevs ned som ett utfall — det var det egentliga felet.
+
+**Fattat av:** mänskligt beslut.
+
 ## 2026-08-09 — Krönikorna: statisk text, dynamiska tal
 
 **Beslut:** En veckokrönikas *redogörelse* — vad veckan handlade om, vilka

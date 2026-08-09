@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import type { Kallstatus } from "./source-link.ts";
 import { resolve } from "node:path";
 
 function getDataDir(): string {
@@ -28,6 +29,9 @@ export interface PromisePost {
     archive_url: string | null;
     fetched_at: string;
     kind?: "webb" | "tal";
+    /** Satt av `pnpm promises:rot-check`. Saknas på källor som aldrig öppnats igen. */
+    source_status?: Kallstatus;
+    source_checked_at?: string;
   };
   category: string;
   cost: {

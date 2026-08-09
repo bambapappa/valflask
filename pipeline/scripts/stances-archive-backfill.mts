@@ -22,7 +22,7 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { snapshotBacksQuote } from "../src/archive-verify.ts";
+import { quoteInSnapshotText, snapshotText } from "../src/archive-verify.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const args = process.argv.slice(2);
@@ -103,6 +103,7 @@ async function requestSave(url: string): Promise<void> {
   }
 }
 
+/** Nyckel: beskedets id — arkivlänken hör till citatet, inte till sidan. */
 const resolved = new Map<string, string>();
 let saves = 0;
 
@@ -125,27 +126,31 @@ for (const url of urls) {
     continue;
   }
 
-  // Kärnprincipen: arkivet duger bara om citatet står ordagrant i det. Ett
-  // besked per URL räcker att pröva på — bär snapshotten inte det citatet är
-  // den fel version av sidan för alla som väntar på den.
-  const probe = waiting[0]!;
-  const backs = await snapshotBacksQuote(snap, probe.quote);
-  if (backs !== true) {
-    console.log(
-      `  ✗ snapshot bär inte citatet (${backs === null ? "gick ej att avgöra" : "citat saknas"}): ${url}`,
-    );
+  // Kärnprincipen: arkivet duger bara om citatet står ordagrant i det.
+  //
+  // **Prövas per BESKED, inte per källsida** (mätt 2026-08-09). Steget prövade
+  // förut det första beskedet på sidan och skrev sedan länken till alla som
+  // delade den. Löftesflödets motsvarighet gjorde samma sak, och där gav det
+  // `p-2026-0704` en kopia som inte bär dess citat — fem löften ur samma
+  // artikel, kopian bar det första citatet och inte det fjärde. Sidan hämtas
+  // fortfarande en gång; det är prövningen som hör till citatet.
+  const text = await snapshotText(snap);
+  if (text === null) {
+    console.log(`  ✗ gick ej att avgöra (nätet): ${url}`);
     await sleep(1500);
     continue;
   }
-
-  resolved.set(url, snap);
+  for (const s of waiting) {
+    if (quoteInSnapshotText(text, s.quote)) resolved.set(s.id, snap);
+    else console.log(`  ✗ kopian bär inte citatet: ${s.id}  ${url}`);
+  }
   console.log(`  ✓ ${url}`);
   await sleep(1500);
 }
 
 const changed: string[] = [];
 for (const s of missing) {
-  const snap = resolved.get(stripFrag(s.source.url));
+  const snap = resolved.get(s.id);
   if (!snap) continue;
   const frag = s.source.url.includes("#") ? "#" + s.source.url.split("#")[1] : "";
   if (!DRY) s.source.archive_url = snap + frag;

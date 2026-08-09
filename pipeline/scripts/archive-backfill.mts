@@ -18,7 +18,11 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { snapshotBacksQuote } from "../src/archive-verify.ts";
+import { quoteInSnapshotText, snapshotText } from "../src/archive-verify.ts";
+import { GRUNDPAUS_MS, hamtaFranArkivet } from "../src/wayback-takt.ts";
+
+/** Hur många begäranden arkivet strypte under körningen. Skrivs ut till sist. */
+let strypta = 0;
 
 const DATA = join(import.meta.dirname, "../../data");
 const MODE = process.argv[2] ?? "avail";
@@ -54,22 +58,22 @@ for (const p of promises) {
 const urls = [...groups.keys()].slice(0, LIMIT);
 console.log(`Null-arkiv: ${promises.filter((p) => !p.source.archive_url).length} löften över ${groups.size} käll-URL:er. Läge=${MODE} maxSaves=${MAX_SAVES} behandlar=${urls.length}.`);
 
-// Availability med retry+backoff (archive.org rate-limitar under snabb eld).
+// Availability med retry+backoff. Arkivet stryper under snabb eld, och en
+// strypt begäran är inte samma sak som «ingen kopia finns» — se wayback-takt.ts.
 async function availabilityOnce(url: string, ts: string): Promise<string | null> {
   const api = `https://archive.org/wayback/available?url=${encodeURIComponent(url)}${ts ? `&timestamp=${ts}` : ""}`;
-  for (let attempt = 0; attempt < 3; attempt++) {
-    try {
-      const res = await fetch(api, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(20000) });
-      if (res.ok) {
-        const j = await res.json() as { archived_snapshots?: { closest?: { url?: string; available?: boolean } } };
-        const c = j.archived_snapshots?.closest;
-        if (c?.available && c.url) return c.url.replace(/^http:/, "https:");
-        return null; // giltigt svar, ingen snapshot
-      }
-    } catch { /* timeout/nät → backoff */ }
-    await sleep(2500 * (attempt + 1));
-  }
-  return null;
+  const svar = await hamtaFranArkivet(api, undefined, {
+    headers: { "User-Agent": UA },
+    signal: AbortSignal.timeout(20000),
+  });
+  if (svar.slag === "strypt") { strypta++; return null; }
+  if (svar.slag === "nat" || !svar.res.ok) return null;
+  try {
+    const j = await svar.res.json() as { archived_snapshots?: { closest?: { url?: string; available?: boolean } } };
+    const c = j.archived_snapshots?.closest;
+    if (c?.available && c.url) return c.url.replace(/^http:/, "https:");
+  } catch { /* trasigt svar → som ingen snapshot */ }
+  return null; // giltigt svar, ingen snapshot
 }
 // Prova nära fetched_at (datumtrohet), fall tillbaka på valfri snapshot (träffsäkerhet).
 async function availability(url: string, ts: string): Promise<string | null> {
@@ -78,10 +82,19 @@ async function availability(url: string, ts: string): Promise<string | null> {
   await sleep(1000);
   return availabilityOnce(url, "");
 }
-async function requestSave(url: string): Promise<void> {
-  try {
-    await fetch(`https://web.archive.org/save/${url}`, { headers: { "User-Agent": UA }, redirect: "follow", signal: AbortSignal.timeout(60000) });
-  } catch { /* best-effort; fas C avgör utfallet */ }
+/**
+ * Begär en ny kopia. Returnerar false när arkivet strypte begäran — då är
+ * ingenting sparat, och budgeten ska inte räkna av för ett nej. Mätt
+ * 2026-08-09: fem kopior i rad räcker för att nästa ska svara 429.
+ */
+async function requestSave(url: string): Promise<boolean> {
+  const svar = await hamtaFranArkivet(`https://web.archive.org/save/${url}`, undefined, {
+    headers: { "User-Agent": UA },
+    redirect: "follow",
+    signal: AbortSignal.timeout(60000),
+  });
+  if (svar.slag === "strypt") { strypta++; return false; }
+  return svar.slag === "svar";
 }
 
 const resolved = new Map<string, string>(); // key(url utan frag) -> snapshot-URL
@@ -93,7 +106,7 @@ for (const key of urls) {
   const snap = await availability(key, groups.get(key)!.ts);
   if (snap) { resolved.set(key, snap); console.log(`  ✓ ${key} -> ${snap.slice(0, 60)}`); }
   else { needSave.push(key); console.log(`  – saknas: ${key}`); }
-  await sleep(3000);
+  await sleep(GRUNDPAUS_MS);
 }
 
 // --- Fas B: begär saves (bunden) ---
@@ -101,14 +114,23 @@ const saved: string[] = [];
 if (MODE === "save") {
   let saves = 0;
   console.log(`Fas B: begär saves (budget ${MAX_SAVES}) för ${needSave.length} saknade...`);
+  let iRad = 0;
   for (const key of needSave) {
     if (saves >= MAX_SAVES) break;
     if (/youtube\.com|youtu\.be/.test(key)) { console.log(`  (hoppar youtube) ${key}`); continue; }
-    saves++;
-    console.log(`  save (${saves}/${MAX_SAVES}): ${key}`);
-    await requestSave(key);
-    saved.push(key);
-    await sleep(6000);
+    console.log(`  save (${saves + 1}/${MAX_SAVES}): ${key}`);
+    if (await requestSave(key)) {
+      saves++;
+      iRad = 0;
+      saved.push(key);
+    } else {
+      // Strypt: ingenting sparades, så budgeten räknas inte av. Två nej i rad
+      // betyder att arkivet vill ha en paus, inte att vi ska tjata.
+      iRad++;
+      console.log(`  – arkivet strypte begäran, inget sparat: ${key}`);
+      if (iRad >= 2) { console.log("  Två strypta i rad — avbryter sparandet och lämnar resten till nästa körning."); break; }
+    }
+    await sleep(GRUNDPAUS_MS);
   }
 }
 
@@ -120,33 +142,38 @@ if (saved.length > 0) {
     const snap = await availability(key, "");
     if (snap) { resolved.set(key, snap); console.log(`  ✓ (efter save) ${key}`); }
     else console.log(`  – ännu ej indexerad: ${key}`);
-    await sleep(3000);
+    await sleep(GRUNDPAUS_MS);
   }
 }
 
 // --- applicera (behåll ev. #fragment för PDF-sidhänvisning) ---
 // Kärnprincipen: en arkivkopia duger bara om citatet står ordagrant i den.
 // Wayback ger NÄRMASTE snapshot, som kan vara äldre än sidinnehållet — en
-// extern granskning hittade att 4 av 25 arkiv saknade sitt citat. Verifieras
-// per käll-URL: bär snapshotten inte ett av citaten är den fel version av
-// sidan för alla som väntar på den.
-const verified = new Map<string, boolean>();
-for (const [url, snap] of resolved) {
-  const probe = promises.find((p) => !p.source.archive_url && stripFrag(p.source.url) === url);
-  if (!probe) continue;
-  const backs = await snapshotBacksQuote(snap, probe.quote);
-  verified.set(url, backs === true);
-  if (backs !== true) {
-    console.log(`  ✗ snapshot bär inte citatet (${backs === null ? "gick ej att avgöra" : "citat saknas"}): ${url}`);
-  }
-}
-
+// extern granskning hittade att 4 av 25 arkiv saknade sitt citat.
+//
+// **Prövas per LÖFTE, inte per källsida** (mätt 2026-08-09). Steget prövade
+// förut ett citat per sida och skrev sedan länken till alla löften som delade
+// sidan. `p-2026-0704` fick på det viset en kopia som inte bär dess citat: fem
+// centerpartistiska löften delar samma artikel, kopian bar det första citatet
+// och inte det fjärde. Ögonblicksbilden hämtas fortfarande en gång per sida —
+// det är prövningen som ska ske en gång per citat, för det är citatet som är
+// löftets belägg.
+const sidtext = new Map<string, string | null>();
 const changed: string[] = [];
+const vagrade: string[] = [];
 for (const p of promises) {
   if (p.source.archive_url) continue;
   const key = stripFrag(p.source.url);
   const snap = resolved.get(key);
-  if (!snap || verified.get(key) !== true) continue;
+  if (!snap) continue;
+  if (!sidtext.has(snap)) sidtext.set(snap, await snapshotText(snap));
+  const text = sidtext.get(snap) ?? null;
+  if (text === null) { console.log(`  ✗ gick ej att avgöra (nätet): ${p.id}`); continue; }
+  if (!quoteInSnapshotText(text, p.quote)) {
+    vagrade.push(p.id);
+    console.log(`  ✗ kopian bär inte citatet: ${p.id}  ${key}`);
+    continue;
+  }
   const frag = p.source.url.includes("#") ? "#" + p.source.url.split("#")[1] : "";
   p.source.archive_url = snap + frag;
   changed.push(p.id);
@@ -168,3 +195,11 @@ if (changed.length > 0) {
   console.log("\nInga archive_url uppdaterade.");
 }
 console.log(`Kvar utan arkiv: ${promises.filter((p) => !p.source.archive_url).length} löften.`);
+if (vagrade.length > 0) {
+  console.log(`Vägrade kopia (bär inte citatet): ${vagrade.join(", ")}`);
+}
+if (strypta > 0) {
+  // Skrivs ut för att en strypt körning annars ser fullständig ut: «kvar utan
+  // arkiv» blir samma tal oavsett om arkivet svarade nej eller inte hade något.
+  console.log(`Arkivet strypte ${strypta} begäranden — kör igen senare innan du drar slutsatser om det som står kvar.`);
+}
