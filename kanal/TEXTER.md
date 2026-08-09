@@ -3,7 +3,7 @@
 Skriven av `site/scripts/generate-kanalbilder.mts`. **Ändra inte för hand** —
 kör om skriptet i stället, annars säger filen och bilderna olika saker.
 
-Talen är mätta ur datat den 2026-08-09 (akt `d7490ea2`).
+Talen är mätta ur datat den 2026-08-09 (akt `70e108a2`).
 
 Bilderna säger "över" och "mer än" med flit: en bild ligger kvar i ett flöde
 långt efter att den lagts upp, och beståndet växer varje vecka. Golvet är det
@@ -62,7 +62,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - 400+ — LEDAMÖTER VARS RIKSDAGSARBETE VÄGS MOT LÖFTENA
 - 10 — SAKFRÅGOR, UPPDELADE I 22 RAKA DELFRÅGOR
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
 
 **Förslag på bildtext**
 
@@ -150,7 +150,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## b1-vad-loftena-kostar.png
 
-*DAGENS SIFFROR 1/6 — lodrät 1080×1920*
+*DAGENS SIFFROR 1/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -159,7 +159,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Text: Summan av vad partiernas löften skulle kosta staten under nästa mandatperiod. Varje krona är räknad öppet, löfte för löfte.
 - Faktarad: ÖVER 500 LÖFTEN · 8 PARTIER
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
 
 **Förslag på bildtext**
 
@@ -169,12 +169,12 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 | Står på bilden | Mätt värde |
 | --- | --- |
-| över 3 500 miljarder kronor | 3 816,8 miljarder kronor |
-| över 500 löften | 554 aktiva löften |
+| över 3 500 miljarder kronor | 3 816,5 miljarder kronor |
+| över 500 löften | 553 aktiva löften |
 
 ## b2-mot-reformbudgeten.png
 
-*DAGENS SIFFROR 2/6 — lodrät 1080×1920*
+*DAGENS SIFFROR 2/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -185,7 +185,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Not: Utrymmet = regeringens reformvolym i budgeten för 2026, gånger fyra år.
 - Text: Allt kommer inte att genomföras — det är inte heller påståendet. Bilden visar hur mycket större önskelistan är än pengarna som brukar finnas.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
 
 **Förslag på bildtext**
 
@@ -196,11 +196,11 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 | Står på bilden | Mätt värde |
 | --- | --- |
 | mer än 10 gånger | 11,9 gånger reformutrymmet |
-| över 3 500 mdkr | 3 816,8 mdkr |
+| över 3 500 mdkr | 3 816,5 mdkr |
 
 ## b3-vem-lovar-mest.png
 
-*DAGENS SIFFROR 3/6 — lodrät 1080×1920*
+*DAGENS SIFFROR 3/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -217,7 +217,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Not: Miljarder kronor för hela mandatperioden 2027–2030. Besparingar dras av.
 - Text: Ett stort tal är inte samma sak som en dålig politik — och ett litet är inte samma sak som en billig. Ett parti som lovat färre saker har en kortare lista, inte en snålare.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
 
 **Förslag på bildtext**
 
@@ -234,11 +234,11 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 | Sverigedemokraterna: över 350 mdkr | 395,2 mdkr |
 | Kristdemokraterna: över 300 mdkr | 346,5 mdkr |
 | Vänsterpartiet: över 250 mdkr | 269,5 mdkr |
-| Socialdemokraterna: över 190 mdkr | 195,9 mdkr |
+| Socialdemokraterna: över 190 mdkr | 195,6 mdkr |
 
 ## b4-tomma-rutor.png
 
-*DAGENS SIFFROR 4/6 — lodrät 1080×1920*
+*DAGENS SIFFROR 4/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -247,7 +247,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Rutnät: 22 delfrågor × 8 partier. Fylld ruta = partiet har gett ett rent besked.
 - Text: Så här mycket vet vi alltså inte — och vi låtsas inte annat. Rutan fylls först när partiet sagt något tydligt som går att citera.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
 
 **Förslag på bildtext**
 
@@ -261,7 +261,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## b5-handlingsvagen.png
 
-*DAGENS SIFFROR 5/6 — lodrät 1080×1920*
+*DAGENS SIFFROR 5/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -272,7 +272,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - 800+ — KOPPLINGAR MELLAN LÖFTE OCH HANDLING, EN OCH EN GODKÄNDA
 - Text: Motioner, frågor, interpellationer och voteringar från hela mandatperioden. Ingen koppling publiceras utan att en människa sagt ja.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
 
 **Förslag på bildtext**
 
@@ -288,7 +288,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## b6-kvittot.png
 
-*DAGENS SIFFROR 6/6 — lodrät 1080×1920*
+*DAGENS SIFFROR 6/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -296,9 +296,9 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Rubrik: **MER ÄN 9 AV 10 LÖFTEN HAR EN ARKIVKOPIA**
 - Text: En arkivkopia är ett fruset ögonblick av sidan där löftet stod. Tas sidan bort finns citatet kvar — och citatet måste stå ordagrant i kopian.
 - 200+ — SKILDA KÄLLOR BAKOM LÖFTENA
-- 60+ — RÄTTELSER VI PUBLICERAT OM OSS SJÄLVA
+- 70+ — RÄTTELSER VI PUBLICERAT OM OSS SJÄLVA
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
 
 **Förslag på bildtext**
 
@@ -308,13 +308,38 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 | Står på bilden | Mätt värde |
 | --- | --- |
-| mer än 9 av 10 med arkivkopia | 96,6 % har arkivkopia |
-| över 200 källor | 216 skilda källadresser |
-| över 60 rättelser | 68 rättelseposter |
+| mer än 9 av 10 med arkivkopia | 97,1 % har arkivkopia |
+| över 200 källor | 215 skilda källadresser |
+| över 70 rättelser | 71 rättelseposter |
+
+## b7-sok-ett-ord.png
+
+*DAGENS SIFFROR 7/7 — lodrät 1080×1920*
+
+**Skärmtext**
+
+- Överrad: ÄMNEN OCH ORD
+- Rubrik: **ETT ORD IN. FYRA ÅRS RIKSDAG UT.**
+- Jättetal: ÖVER 90 HANDLINGAR OM CSN — av över 20 000 sökbara handlingar
+- Text: Sök på csn, hyresrätt, klimat — vad du vill. Du får varje motion, interpellation och skriftlig fråga där ordet står, med länk till dokumentet.
+- Text: Att ordet står i en motion säger inte om partiet är för eller emot. Söket letar — det dömer aldrig.
+
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
+
+**Förslag på bildtext**
+
+> Undrar du vad riksdagen faktiskt gjort i en fråga du bryr dig om? Sök på ordet — csn, hyresrätt, vad som helst — och få varje motion, interpellation och skriftlig fråga från hela mandatperioden på ett ställe, med länk till dokumentet. utlovat.se/handlingsvagen
+
+**Golven och mätningen bakom dem**
+
+| Står på bilden | Mätt värde |
+| --- | --- |
+| över 90 handlingar om csn | 93 handlingar innehåller "csn" (53 motioner, 19 skriftliga frågor, 13 interpellationer, 8 propositioner) |
+| över 20 000 sökbara handlingar | 21 068 sökbara handlingar, 2022-09-30 till 2026-07-27 |
 
 ## l1-handlingsvagen-artikelbild.png
 
-*ARTIKELBILD 1/1 — liggande 1920×1080*
+*ARTIKELBILD 1/3 — liggande 1920×1080*
 
 > Den här bilden skriver talen **exakt**, inte som golv: den hör till en
 > daterad text, och en läsare som klickar sig vidare ska hitta samma tal i
@@ -336,9 +361,68 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
   - "npf" — ger 23 handlingar: 12 interpellationer, 8 motioner, 3 skriftliga frågor
   - Not: Söket dömer aldrig — riktningen kommer ur granskade utslag.
 
-**Källrad på bilden:** Källa: utlovat.se/handlingsvagen · registret mätt 2026-08-09 · akt d7490ea2 · data CC BY 4.0
+**Källrad på bilden:** Källa: utlovat.se/handlingsvagen · registret mätt 2026-08-09 · akt 70e108a2 · data CC BY 4.0
 
 **Förslag på bildtext**
 
 > Inför valet är alla partier överens om att de bryr sig. Frågan är sedan när. Handlingsvågen på utlovat.se väger varje vallöfte mot partiets faktiska riksdagsarbete 2022–2026 — motion för motion, fråga för fråga — och låter utslaget stå tomt när det inte finns någon handling att väga mot. Där finns också ett fritextsök över hela mandatperiodens handlingar: skriv ett ord, till exempel npf, och få allt partierna skrivit i frågan samlat på ett ställe.
+
+## l2-vad-utlovat-gor.png
+
+*ARTIKELBILD 2/3 — liggande 1920×1080*
+
+> Den här bilden skriver talen **exakt**, inte som golv: den hör till en
+> daterad text, och en läsare som klickar sig vidare ska hitta samma tal i
+> registret. Bygg om den när talen rört sig och texten ska återanvändas.
+
+**Skärmtext**
+
+- Överrad: SÅ FUNGERAR UTLOVAT.SE
+- Rubrik: **VI RÄKNAR. DU KAN KONTROLLERA.**
+- Text: Utlovat.se samlar alla åtta riksdagspartiers vallöften inför den 13 september 2026 och gör tre saker med dem: prissätter dem, ställer dem mot varandra i sakfrågorna, och väger dem mot riksdagsarbetet.
+- Text: Varje påstående bär partiets egna ord, en källa och en arkivkopia där citatet måste stå kvar. Ingen summa publiceras utan att en människa godkänt den, och fel rättas synligt i en öppen logg.
+- Faktarad: 8 PARTIER · 349 MANDAT · 3 VÅGOR
+- Panel *FLÄSKVÅGEN* — **VAD LÖFTENA KOSTAR**
+  - 553 — löften, vart och ett med exakt citat, källa och en öppen uträkning
+- Panel *FRÅGEVÅGEN* — **VAR PARTIERNA STÅR**
+  - 10 × 8 — sakfrågor mot partier, cell för cell. Saknas ett rent citat står cellen tom.
+- Panel *HANDLINGSVÅGEN* — **HÅLLER DE VAD DE LOVAR?**
+  - 826 — granskade kopplingar mellan ett löfte och en riksdagshandling
+
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2 · data CC BY 4.0
+
+**Förslag på bildtext**
+
+> Utlovat.se granskar alla åtta riksdagspartiers vallöften inför valet den 13 september 2026: vad de kostar, var partierna står i sakfrågorna, och vad de faktiskt gjort i riksdagen under mandatperioden. Varje påstående bär partiets egna ord, en källa och en arkivkopia — och uträkningen bakom varje belopp ligger öppen. Hela datat är fritt att ladda ner (CC BY 4.0).
+
+## l3-siffrorna-just-nu.png
+
+*ARTIKELBILD 3/3 — liggande 1920×1080*
+
+> Den här bilden skriver talen **exakt**, inte som golv: den hör till en
+> daterad text, och en läsare som klickar sig vidare ska hitta samma tal i
+> registret. Bygg om den när talen rört sig och texten ska återanvändas.
+
+**Skärmtext**
+
+- Överrad: GRANSKNINGEN I TAL
+- Rubrik: **SIFFRORNA JUST NU**
+- 3 816,5 — MILJARDER KRONOR — VAD ALLA PARTIERS LÖFTEN KOSTAR TILLSAMMANS 2027–2030
+- 11,9 × — SÅ MYCKET STÖRRE ÄN REFORMUTRYMMET I EN FYRAÅRSBUDGET
+- 553 — AKTIVA LÖFTEN MED CITAT, KÄLLA OCH ÖPPEN UTRÄKNING
+- Text: 97,1 % av löftena har en arkivkopia där citatet står kvar ordagrant. 215 skilda källor, 71 publicerade rättelser om oss själva.
+- Panel *FRÅGEVÅGEN* — **TIO SAKFRÅGOR, CELL FÖR CELL**
+  - 22 — raka delfrågor, ställda till alla åtta partierna
+  - 48 — av 176 rutor har ett rent besked. Resten står tomma.
+  - Not: En tom ruta betyder att vi inte hittat ett rent citat — inte att partiet saknar åsikt.
+- Panel *HANDLINGSVÅGEN* — **FYRA ÅR I RIKSDAGEN**
+  - 23 645 — riksdagshandlingar 2022–2026, varav 2 576 voteringar
+  - 826 — granskade kopplingar; 159 löften har fått ett utslag
+  - Not: Ämnessöket Ämnen och ord når 21 068 av dem — voteringar bär ingen egen text att söka i.
+
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2 · data CC BY 4.0
+
+**Förslag på bildtext**
+
+> Så här ser granskningen ut den 2026-08-09: partiernas vallöften för 2027–2030 kostar tillsammans 3 816,5 miljarder kronor, 11,9 gånger mer än reformutrymmet i en fyraårsbudget. Varje belopp har en uträkning som ligger öppen, och nästan varje löfte en arkivkopia där citatet står kvar. utlovat.se
 
