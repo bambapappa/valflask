@@ -12,7 +12,7 @@ Ingenting här laddas upp automatiskt någonstans. Bilderna läggs upp för hand
 och [`TEXTER.md`](TEXTER.md) bär skärmtexten, ett förslag på bildtext och —
 viktigast — vilket mätt tal varje avrundning vilar på.
 
-## Två serier
+## Tre serier
 
 - **`a1`–`a7` — så funkar det.** Vad sajten är, de tre vågorna, hur ett löfte
   kontrolleras, varför rutor får stå tomma, hur fel rättas, vad man kan göra
@@ -21,6 +21,11 @@ viktigast — vilket mätt tal varje avrundning vilar på.
 - **`b1`–`b6` — dagens siffror.** Summan, jämförelsen mot reformutrymmet,
   partiernas summor, Frågevågens rutnät, Handlingsvågens omfattning och
   arkivtäckningen.
+
+- **`l1` — artikelbild, liggande 1920×1080.** Omslag till en längre text, med
+  Handlingsvågen i fokus: vad partierna gjort i riksdagen under mandatperioden,
+  och ämnessöket *Ämnen och ord*. Skriven för vuxna läsare, med mer text och
+  fler tal än de lodräta.
 
 ## Varför det står "över" och inte det exakta talet
 
@@ -34,6 +39,11 @@ med mätdatum, och varje bild bär en källrad med datum och akt-hash. En grind 
 `test-kanalbilder.mts` faller om ett golv någon gång skulle hamna över sin egen
 mätning, eller om ett avrundat tal skrivs in på en bild utan att mätningen bakom
 det registreras.
+
+**Artikelbilden (`l1`) är undantaget: den skriver talen exakt.** Den hör till en
+daterad text som någon valt att öppna, och en läsare som klickar sig vidare ska
+hitta samma tal i registret — ett golv hade där sett ut som slarv. Ska en gammal
+artikel återanvändas: bygg om bilden först.
 
 **Bygg om bilderna när ett golv passerats** — alltså när ett mätt tal vuxit så
 att nästa runda tal ligger under det, eller sjunkit under sitt eget golv.

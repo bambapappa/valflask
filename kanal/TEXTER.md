@@ -3,7 +3,7 @@
 Skriven av `site/scripts/generate-kanalbilder.mts`. **Ändra inte för hand** —
 kör om skriptet i stället, annars säger filen och bilderna olika saker.
 
-Talen är mätta ur datat den 2026-08-09 (akt `d4e31e64`).
+Talen är mätta ur datat den 2026-08-09 (akt `d7490ea2`).
 
 Bilderna säger "över" och "mer än" med flit: en bild ligger kvar i ett flöde
 långt efter att den lagts upp, och beståndet växer varje vecka. Golvet är det
@@ -15,7 +15,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## a1-vad-ar-utlovat.png
 
-*SÅ FUNKAR DET 1/7*
+*SÅ FUNKAR DET 1/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -33,7 +33,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## a2-tre-vagor.png
 
-*SÅ FUNKAR DET 2/7*
+*SÅ FUNKAR DET 2/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -51,7 +51,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## a3-omfattningen.png
 
-*SÅ FUNKAR DET 3/7*
+*SÅ FUNKAR DET 3/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -62,7 +62,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - 400+ — LEDAMÖTER VARS RIKSDAGSARBETE VÄGS MOT LÖFTENA
 - 10 — SAKFRÅGOR, UPPDELADE I 22 RAKA DELFRÅGOR
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d4e31e64
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
 
 **Förslag på bildtext**
 
@@ -76,7 +76,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## a4-sa-kontrolleras-ett-lofte.png
 
-*SÅ FUNKAR DET 4/7*
+*SÅ FUNKAR DET 4/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -95,7 +95,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## a5-tomma-celler.png
 
-*SÅ FUNKAR DET 5/7*
+*SÅ FUNKAR DET 5/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -113,7 +113,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## a6-vi-rattar-synligt.png
 
-*SÅ FUNKAR DET 6/7*
+*SÅ FUNKAR DET 6/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -131,7 +131,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## a7-gor-det-sjalv.png
 
-*SÅ FUNKAR DET 7/7*
+*SÅ FUNKAR DET 7/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -150,7 +150,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## b1-vad-loftena-kostar.png
 
-*DAGENS SIFFROR 1/6*
+*DAGENS SIFFROR 1/6 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -159,7 +159,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Text: Summan av vad partiernas löften skulle kosta staten under nästa mandatperiod. Varje krona är räknad öppet, löfte för löfte.
 - Faktarad: ÖVER 500 LÖFTEN · 8 PARTIER
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d4e31e64
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
 
 **Förslag på bildtext**
 
@@ -174,7 +174,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## b2-mot-reformbudgeten.png
 
-*DAGENS SIFFROR 2/6*
+*DAGENS SIFFROR 2/6 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -185,7 +185,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Not: Utrymmet = regeringens reformvolym i budgeten för 2026, gånger fyra år.
 - Text: Allt kommer inte att genomföras — det är inte heller påståendet. Bilden visar hur mycket större önskelistan är än pengarna som brukar finnas.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d4e31e64
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
 
 **Förslag på bildtext**
 
@@ -200,7 +200,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## b3-vem-lovar-mest.png
 
-*DAGENS SIFFROR 3/6*
+*DAGENS SIFFROR 3/6 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -217,7 +217,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Not: Miljarder kronor för hela mandatperioden 2027–2030. Besparingar dras av.
 - Text: Ett stort tal är inte samma sak som en dålig politik — och ett litet är inte samma sak som en billig. Ett parti som lovat färre saker har en kortare lista, inte en snålare.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d4e31e64
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
 
 **Förslag på bildtext**
 
@@ -238,7 +238,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## b4-tomma-rutor.png
 
-*DAGENS SIFFROR 4/6*
+*DAGENS SIFFROR 4/6 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -247,7 +247,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Rutnät: 22 delfrågor × 8 partier. Fylld ruta = partiet har gett ett rent besked.
 - Text: Så här mycket vet vi alltså inte — och vi låtsas inte annat. Rutan fylls först när partiet sagt något tydligt som går att citera.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d4e31e64
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
 
 **Förslag på bildtext**
 
@@ -261,7 +261,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## b5-handlingsvagen.png
 
-*DAGENS SIFFROR 5/6*
+*DAGENS SIFFROR 5/6 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -272,7 +272,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - 800+ — KOPPLINGAR MELLAN LÖFTE OCH HANDLING, EN OCH EN GODKÄNDA
 - Text: Motioner, frågor, interpellationer och voteringar från hela mandatperioden. Ingen koppling publiceras utan att en människa sagt ja.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d4e31e64
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
 
 **Förslag på bildtext**
 
@@ -288,7 +288,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 ## b6-kvittot.png
 
-*DAGENS SIFFROR 6/6*
+*DAGENS SIFFROR 6/6 — lodrät 1080×1920*
 
 **Skärmtext**
 
@@ -298,7 +298,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - 200+ — SKILDA KÄLLOR BAKOM LÖFTENA
 - 60+ — RÄTTELSER VI PUBLICERAT OM OSS SJÄLVA
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d4e31e64
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt d7490ea2
 
 **Förslag på bildtext**
 
@@ -308,7 +308,37 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 | Står på bilden | Mätt värde |
 | --- | --- |
-| mer än 9 av 10 med arkivkopia | 95,3 % har arkivkopia |
+| mer än 9 av 10 med arkivkopia | 96,6 % har arkivkopia |
 | över 200 källor | 216 skilda källadresser |
 | över 60 rättelser | 68 rättelseposter |
+
+## l1-handlingsvagen-artikelbild.png
+
+*ARTIKELBILD 1/1 — liggande 1920×1080*
+
+> Den här bilden skriver talen **exakt**, inte som golv: den hör till en
+> daterad text, och en läsare som klickar sig vidare ska hitta samma tal i
+> registret. Bygg om den när talen rört sig och texten ska återanvändas.
+
+**Skärmtext**
+
+- Överrad: HANDLINGSVÅGEN · UTLOVAT.SE
+- Rubrik: **LÖFTET ÄR NYTT. ÄR POLITIKEN DET?**
+- Text: Inför valet 2026 lovar partierna mycket. Handlingsvågen väger löftena mot vad partierna och deras ledamöter faktiskt har gjort i riksdagen under mandatperioden 2022–2026 — och gör därmed skillnad på det som drivits i fyra år och det som dök upp i valrörelsen.
+- Text: Varje koppling mellan ett löfte och en handling är granskad en och en, med handlingens egen lydelse som bevis, och godkänd av en människa innan den publiceras.
+- Faktarad: 8 PARTIER · 349 MANDAT · 425 LEDAMÖTER
+- Panel *VAD HAR DE GJORT ÅT DET?* — **LÖFTE MOT HANDLING**
+  - 826 — granskade kopplingar mellan ett löfte och en riksdagshandling
+  - 159 — löften har ett utslag — 236 gånger i linje, 51 gånger emot, 7 gånger både och
+  - Not: Finns ingen handling bakom löftet står utslaget tomt. Ingen dom utan bevis.
+- Panel *ÄMNEN OCH ORD* — **SÖK HELA MANDATPERIODEN**
+  - 21 068 — motioner, interpellationer, skriftliga frågor och propositioner, 2022-09-30 till 2026-07-27
+  - "npf" — ger 23 handlingar: 12 interpellationer, 8 motioner, 3 skriftliga frågor
+  - Not: Söket dömer aldrig — riktningen kommer ur granskade utslag.
+
+**Källrad på bilden:** Källa: utlovat.se/handlingsvagen · registret mätt 2026-08-09 · akt d7490ea2 · data CC BY 4.0
+
+**Förslag på bildtext**
+
+> Inför valet är alla partier överens om att de bryr sig. Frågan är sedan när. Handlingsvågen på utlovat.se väger varje vallöfte mot partiets faktiska riksdagsarbete 2022–2026 — motion för motion, fråga för fråga — och låter utslaget stå tomt när det inte finns någon handling att väga mot. Där finns också ett fritextsök över hela mandatperiodens handlingar: skriv ett ord, till exempel npf, och få allt partierna skrivit i frågan samlat på ett ställe.
 

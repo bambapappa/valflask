@@ -132,12 +132,36 @@ for (const bild of bilder) {
 check('varje tal skrivet som "N+" har en mätning bakom sig', allaPlusBelagda);
 
 console.log("\n--- Ramen ---");
-const { ritaEnBild } = await import("./generate-kanalbilder.mts");
-const png = await ritaEnBild(bilder[0]);
-// PNG:ns IHDR: bredd och höjd ligger som 32-bitars heltal från byte 16.
-const bredd = png.readUInt32BE(16);
-const hojd = png.readUInt32BE(20);
-check("bilden är 1080×1920", bredd === 1080 && hojd === 1920, `blev ${bredd}×${hojd}`);
+const { ritaEnBild, L_DELAR, L_RAM } = await import("./generate-kanalbilder.mts");
+
+/**
+ * Artikelbildens ram är fyra staplade delar med låsta höjder. Summerar de till
+ * mer än bildens höjd trycks den understa delen ut ur bilden och innehållet
+ * klipps längst ned — utan felmeddelande, och utan att det syns någon
+ * annanstans än i själva bilden. Det hände under bygget: delarna gick ihop till
+ * 1 088 och panelens sista rad försvann.
+ */
+const summa = L_DELAR.reduce((s, d) => s + d, 0);
+check(
+  `artikelbildens delar summerar till ${L_RAM.hojd}`,
+  summa === L_RAM.hojd,
+  `delarna ${L_DELAR.join(" + ")} = ${summa}`,
+);
+
+/** PNG:ns IHDR: bredd och höjd ligger som 32-bitars heltal från byte 16. */
+async function matt(bild: Bild): Promise<{ bredd: number; hojd: number }> {
+  const png = await ritaEnBild(bild);
+  return { bredd: png.readUInt32BE(16), hojd: png.readUInt32BE(20) };
+}
+
+const lodrat = bilder.find((b) => (b.format ?? "lodrat") === "lodrat");
+const liggande = bilder.find((b) => b.format === "liggande");
+check("det finns bilder i båda formaten", Boolean(lodrat) && Boolean(liggande));
+
+const l = await matt(lodrat!);
+check("den lodräta bilden är 1080×1920", l.bredd === 1080 && l.hojd === 1920, `blev ${l.bredd}×${l.hojd}`);
+const g = await matt(liggande!);
+check("artikelbilden är 1920×1080", g.bredd === 1920 && g.hojd === 1080, `blev ${g.bredd}×${g.hojd}`);
 
 if (errors > 0) {
   console.error(`\ntest-kanalbilder: ${errors} grind(ar) föll`);

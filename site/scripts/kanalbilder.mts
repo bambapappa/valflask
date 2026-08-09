@@ -36,7 +36,7 @@ import {
   isActive,
   dataHash,
 } from "../src/lib/calc.ts";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
 /* ───────────────────────────────────────────────────────── golvet under talet ── */
@@ -111,11 +111,31 @@ export type Block =
       not: string;
     }
   | { typ: "rutnat"; kolumner: string[]; celler: boolean[]; not: string }
+  | {
+      typ: "panel";
+      etikett: string;
+      rubrik: string;
+      rader: Array<{ tal?: string; text: string }>;
+      not?: string;
+    }
   | { typ: "luft"; hojd: number };
+
+/**
+ * Formatet avgör ramen, inte bara måtten.
+ *
+ * `lodrat` (1080×1920) är gjort för att skrollas förbi: en tanke per bild,
+ * stora tal, och underkanten tom eftersom appens knappar ligger där.
+ * `liggande` (1920×1080) är gjort för att *läsas* — som omslag till en text
+ * någon redan valt att öppna. Där får bilden bära flera påståenden bredvid
+ * varandra, och talen skrivs exakt i stället för som golv: en artikel är
+ * daterad, och en läsare som klickar sig vidare vill kunna kontrollera talet.
+ */
+export type Format = "lodrat" | "liggande";
 
 export interface Bild {
   /** Filnamnet utan ändelse, också bildens namn i `TEXTER.md`. */
   fil: string;
+  format?: Format;
   serie: string;
   nr: number;
   antal: number;
@@ -157,6 +177,56 @@ export interface Underlag {
   handlingsvagenLedamoter: number;
   partisummor: Array<{ kod: string; namn: string; mdkr: number }>;
   rutnat: { kolumner: string[]; celler: boolean[] };
+  /** Handlingsvågens utslag: hur många löften som fått ett, och hur de föll. */
+  utslag: { loften: number; iLinje: number; emot: number; badeOch: number };
+  /** Fritextsöket "Ämnen och ord": vad som går att söka i, och över vilken tid. */
+  amnesindex: {
+    handlingar: number;
+    motioner: number;
+    interpellationer: number;
+    fragor: number;
+    propositioner: number;
+    fran: string;
+    till: string;
+  };
+  /** Ett verkligt sökexempel, räknat ur samma index som sajten söker i. */
+  sokexempel: {
+    ord: string;
+    traffar: number;
+    motioner: number;
+    interpellationer: number;
+    fragor: number;
+  };
+}
+
+/**
+ * Ett sökord räknat mot ämnesindexet — samma register som sidan *Ämnen och ord*
+ * söker i. Filerna är 36 MB tillsammans, så de läses en i taget och släpps:
+ * bilden behöver antalet, inte indexet.
+ */
+function sokTraffar(ord: string, kindPerId: Map<string, string>): {
+  traffar: number;
+  motioner: number;
+  interpellationer: number;
+  fragor: number;
+} {
+  const kvar = { traffar: 0, motioner: 0, interpellationer: 0, fragor: 0 };
+  for (const fil of readdirSync(resolve(process.cwd(), "../handlingsvagen/data/nyckelord")).sort()) {
+    if (!fil.endsWith(".json")) continue;
+    const del = läsHandlingsvagen<{ handlingar: Record<string, { t?: string[]; y?: string[] }> }>(
+      `nyckelord/${fil}`,
+    );
+    for (const [id, termer] of Object.entries(del.handlingar)) {
+      const alla = new Set([...(termer.t ?? []), ...(termer.y ?? [])]);
+      if (!alla.has(ord)) continue;
+      kvar.traffar += 1;
+      const kind = kindPerId.get(id);
+      if (kind === "motion") kvar.motioner += 1;
+      else if (kind === "interpellation") kvar.interpellationer += 1;
+      else if (kind === "skriftlig_fraga") kvar.fragor += 1;
+    }
+  }
+  return kvar;
 }
 
 /** Handlingsvågens data ligger utanför site/ och läses rakt av — inga härledda tal. */
@@ -194,9 +264,32 @@ export function mätUnderlaget(): Underlag {
   const reformutrymme = constants.reformutrymme_msek_per_ar.value;
   const reformTotalMsek = reformutrymme === "VERIFIERA" ? 0 : (reformutrymme as number) * 4;
 
-  const handlingar = läsHandlingsvagen<Array<{ kind: string }>>("handlingar.json");
+  const handlingar = läsHandlingsvagen<Array<{ id: string; kind: string; datum: string }>>("handlingar.json");
   const kopplingar = läsHandlingsvagen<unknown[]>("kopplingar.json");
   const personer = läsHandlingsvagen<unknown[]>("personer.json");
+  const domar = läsHandlingsvagen<{
+    partidomar: Array<{ target_id: string; status: string }>;
+  }>("domar.json");
+
+  // Utslagen: bara de som faktiskt föll ut. "Ingen handling ännu" är inget
+  // utslag — det är just det tomma som sajten vägrar fylla i.
+  const avgjorda = domar.partidomar.filter((d) => d.status !== "ingen_handling_annu");
+
+  // Ämnesindexet täcker inte hela registret: voteringarna ligger utanför, för
+  // de bär ingen egen text att söka i. Talet på bilden ska vara det sökbara,
+  // inte det totala.
+  const kindPerId = new Map(handlingar.map((h) => [h.id, h.kind]));
+  const indexerade = new Set<string>();
+  for (const fil of readdirSync(resolve(process.cwd(), "../handlingsvagen/data/nyckelord")).sort()) {
+    if (!fil.endsWith(".json")) continue;
+    const del = läsHandlingsvagen<{ handlingar: Record<string, unknown> }>(`nyckelord/${fil}`);
+    for (const id of Object.keys(del.handlingar)) indexerade.add(id);
+  }
+  const iIndex = handlingar.filter((h) => indexerade.has(h.id));
+  const indexDatum = iIndex.map((h) => h.datum).filter(Boolean).sort();
+  const antalAv = (kind: string): number => iIndex.filter((h) => h.kind === kind).length;
+  const sokord = "npf";
+  const traff = sokTraffar(sokord, kindPerId);
 
   return {
     datum,
@@ -223,6 +316,22 @@ export function mätUnderlaget(): Underlag {
       .map((p) => ({ kod: p.code.toUpperCase(), namn: p.name, mdkr: partyTotalMsek(promises, p.code) / 1000 }))
       .sort((a, b) => b.mdkr - a.mdkr),
     rutnat: { kolumner: partikoder.map((k) => k.toUpperCase()), celler },
+    utslag: {
+      loften: new Set(avgjorda.map((d) => d.target_id)).size,
+      iLinje: avgjorda.filter((d) => d.status === "agerat_i_linje").length,
+      emot: avgjorda.filter((d) => d.status === "agerat_emot").length,
+      badeOch: avgjorda.filter((d) => d.status === "bade_och").length,
+    },
+    amnesindex: {
+      handlingar: iIndex.length,
+      motioner: antalAv("motion"),
+      interpellationer: antalAv("interpellation"),
+      fragor: antalAv("skriftlig_fraga"),
+      propositioner: antalAv("proposition"),
+      fran: indexDatum[0] ?? "",
+      till: indexDatum[indexDatum.length - 1] ?? "",
+    },
+    sokexempel: { ord: sokord, ...traff },
   };
 }
 
@@ -597,5 +706,75 @@ export function byggBilder(u: Underlag): Bild[] {
     },
   ];
 
-  return [...a, ...b];
+  /**
+   * Artikelbilden. Ett annat format, en annan läsare och därför andra regler:
+   * talen står exakt, inte som golv. Den här bilden hamnar överst i en text
+   * någon skrivit och daterat, och en läsare som klickar sig vidare till
+   * registret ska hitta samma tal där — ett golv hade sett ut som slarv.
+   * Källraden bär mätdatum, som överallt annars.
+   */
+  const i: Bild[] = [
+    {
+      fil: "l1-handlingsvagen-artikelbild",
+      format: "liggande",
+      serie: "ARTIKELBILD",
+      nr: 1,
+      antal: 1,
+      block: [
+        { typ: "kicker", text: "HANDLINGSVÅGEN · UTLOVAT.SE" },
+        { typ: "rubrik", text: "LÖFTET ÄR NYTT. ÄR POLITIKEN DET?", grad: 96 },
+        {
+          typ: "brodtext",
+          text:
+            "Inför valet 2026 lovar partierna mycket. Handlingsvågen väger löftena mot vad partierna och deras ledamöter faktiskt har gjort i riksdagen under mandatperioden 2022–2026 — och gör därmed skillnad på det som drivits i fyra år och det som dök upp i valrörelsen.",
+          grad: 27,
+        },
+        {
+          typ: "brodtext",
+          text:
+            "Varje koppling mellan ett löfte och en handling är granskad en och en, med handlingens egen lydelse som bevis, och godkänd av en människa innan den publiceras.",
+          grad: 27,
+        },
+        {
+          typ: "faktarad",
+          delar: [`${u.partier} PARTIER`, `${u.mandat} MANDAT`, `${tal(u.handlingsvagenLedamoter)} LEDAMÖTER`],
+        },
+        {
+          typ: "panel",
+          etikett: "VAD HAR DE GJORT ÅT DET?",
+          rubrik: "LÖFTE MOT HANDLING",
+          rader: [
+            { tal: tal(u.kopplingar), text: "granskade kopplingar mellan ett löfte och en riksdagshandling" },
+            {
+              tal: tal(u.utslag.loften),
+              text: `löften har ett utslag — ${tal(u.utslag.iLinje)} gånger i linje, ${tal(u.utslag.emot)} gånger emot, ${tal(u.utslag.badeOch)} gånger både och`,
+            },
+          ],
+          not: "Finns ingen handling bakom löftet står utslaget tomt. Ingen dom utan bevis.",
+        },
+        {
+          typ: "panel",
+          etikett: "ÄMNEN OCH ORD",
+          rubrik: "SÖK HELA MANDATPERIODEN",
+          rader: [
+            {
+              tal: tal(u.amnesindex.handlingar),
+              text: `motioner, interpellationer, skriftliga frågor och propositioner, ${u.amnesindex.fran} till ${u.amnesindex.till}`,
+            },
+            {
+              tal: `"${u.sokexempel.ord}"`,
+              text: `ger ${tal(u.sokexempel.traffar)} handlingar: ${tal(u.sokexempel.interpellationer)} interpellationer, ${tal(u.sokexempel.motioner)} motioner, ${tal(u.sokexempel.fragor)} skriftliga frågor`,
+            },
+          ],
+          not: "Söket dömer aldrig — riktningen kommer ur granskade utslag.",
+        },
+      ],
+      kallrad: `Källa: utlovat.se/handlingsvagen · registret mätt ${u.datum} · akt ${u.akt} · data CC BY 4.0`,
+      bildtext:
+        "Inför valet är alla partier överens om att de bryr sig. Frågan är sedan när. Handlingsvågen på utlovat.se väger varje vallöfte mot partiets faktiska riksdagsarbete 2022–2026 — motion för motion, fråga för fråga — och låter utslaget stå tomt när det inte finns någon handling att väga mot. Där finns också ett fritextsök över hela mandatperiodens handlingar: skriv ett ord, till exempel npf, och få allt partierna skrivit i frågan samlat på ett ställe.",
+      matningar: [],
+    },
+  ];
+
+  return [...a, ...b, ...i];
 }
