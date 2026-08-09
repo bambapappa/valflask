@@ -11,6 +11,7 @@
 // stället för att importera. Grinden i scripts/test-importer.mts håller
 // regeln på plats.
 import { loadData } from "./data.ts";
+import { KALLSTATUS_ETIKETT } from "./source-link.ts";
 
 export type StatementPosition = "ja" | "nej" | "villkorat";
 export type CurrentPosition = StatementPosition | "inget_tydligt_besked";
@@ -106,11 +107,13 @@ export const KIND_LABEL: Record<ChangeKind, string> = {
   villkorsandring: "VILLKORSÄNDRING",
 };
 
-export const SOURCE_STATUS_LABEL: Record<StanceStatement["source_status"], string | null> = {
-  ok: null,
-  andrad: "KÄLLAN HAR ÄNDRATS — ARKIVKOPIAN GÄLLER",
-  borttagen: "KÄLLAN HAR TAGITS BORT — ARKIVKOPIAN GÄLLER",
-};
+/**
+ * Etiketten bor i `source-link.ts` sedan 2026-08-09 — båda vågorna visar den
+ * nu, och ett faktum har en plats. Namnet står kvar så att Frågevågens sidor
+ * inte behöver röras.
+ */
+export const SOURCE_STATUS_LABEL: Record<StanceStatement["source_status"], string | null> =
+  KALLSTATUS_ETIKETT;
 
 /**
  * Tomcells-copy — BYTE-IDENTISK för alla partier (§2.4, testas i T14).

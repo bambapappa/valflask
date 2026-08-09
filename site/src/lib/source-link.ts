@@ -25,3 +25,23 @@ export function sourceLinkLabel(url: string, base = "källa"): string {
 export function archiveLinkLabel(url: string): string {
   return sourceLinkLabel(url, "arkiv");
 }
+
+/**
+ * Källans skick, som läsaren ser det.
+ *
+ * `ok` säger ingenting — en fungerande källa behöver ingen stämpel. De två
+ * andra gör det, och de säger samma sak till läsaren: *gå till arkivkopian*.
+ * Frågevågen har visat den här etiketten sedan lanseringen; Fläskvågen fick
+ * den 2026-08-09, när den första rötsvepningen över löftenas källor visade att
+ * tre publicerade citat inte längre står i sin levande källa.
+ *
+ * Etiketten hör hemma här och inte i `stances.ts`, för nu läser båda vågorna
+ * den. Ett faktum har en plats.
+ */
+export type Kallstatus = "ok" | "andrad" | "borttagen";
+
+export const KALLSTATUS_ETIKETT: Record<Kallstatus, string | null> = {
+  ok: null,
+  andrad: "KÄLLAN HAR ÄNDRATS — ARKIVKOPIAN GÄLLER",
+  borttagen: "KÄLLAN HAR TAGITS BORT — ARKIVKOPIAN GÄLLER",
+};
