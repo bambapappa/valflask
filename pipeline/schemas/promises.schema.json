@@ -157,6 +157,30 @@
           "source_checked_at": {
             "type": "string",
             "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "source_change": {
+            "type": "object",
+            "description": "Vad som ändrats, inte bara att något ändrats. Mätvärden ur källan som den ser ut i dag, satta av pnpm promises:rot-check. Fallet visas på /andrade-kallor först när det har en arkivkopia OCH reviewed_at, som en människa sätter.",
+            "additionalProperties": false,
+            "required": ["kind", "observed_at"],
+            "properties": {
+              "kind": {
+                "enum": ["ordalydelse", "sidan-utbytt", "sidan-borttagen"],
+                "description": "'ordalydelse' = citatets ord är omskrivna men sidan är kvar. 'sidan-utbytt' = inget av citatet står kvar. 'sidan-borttagen' = adressen svarar 404/410."
+              },
+              "observed_at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+              "now_reads": {
+                "type": "string",
+                "description": "Meningen som står där i dag, ordagrant ur källan. Aldrig omskriven. Saknas när sidan är utbytt eller borta."
+              },
+              "redirects_to": { "type": "string", "format": "uri" },
+              "reviewed_at": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                "description": "Datum då fallet kontrollerats mot BÅDA länkarna — den levande källan och arkivkopian — av någon som faktiskt öppnat dem. Sätts aldrig av svepet: det är hela poängen. Utan detta publiceras fallet inte, och sammanslagningen till main är därutöver en människas beslut."
+              },
+              "note": { "type": "string" }
+            }
           }
         }
       },

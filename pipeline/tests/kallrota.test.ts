@@ -1,6 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { skaSkrivas, utfallAvStatus, utfallAvText } from "../src/kallrota.ts";
+import {
+  andringsslag,
+  hittaPassage,
+  langstaKvarvarandeOrdfoljd,
+  skaSkrivas,
+  utfallAvStatus,
+  utfallAvText,
+} from "../src/kallrota.ts";
 
 /* ─────────────────────────────────────── utfallAvStatus ── */
 
@@ -66,4 +73,74 @@ test("en källa som gått sönder skrivs", () => {
 test("en källa som lagats skrivs också — statusen går tillbaka till ok", () => {
   // Ett tillfälligt CMS-fel ska inte lämna en permanent stämpel på sidan.
   assert.equal(skaSkrivas("borttagen", "ok"), true);
+});
+
+/* ─────────────────────────────────────── langstaKvarvarandeOrdfoljd ── */
+
+test("ordföljden före den ändrade delen hittas", () => {
+  // p-2026-0517: riksdagen skrev om «idag» till «i dag».
+  const sida = "<p>Miljöpartiet anser att ungdomsreduktionen bör vara oförändrad jämfört med i dag.</p>";
+  const citat = "Miljöpartiet anser att ungdomsreduktionen bör vara oförändrad jämfört med idag.";
+  assert.equal(langstaKvarvarandeOrdfoljd(sida, citat), "Miljöpartiet anser att ungdomsreduktionen bör vara oförändrad jämfört med");
+});
+
+test("den längsta ordföljden vinner, även när den ligger efter ändringen", () => {
+  // Ändringen sitter tidigt: svansen är längre än huvudet och ska väljas.
+  const sida = "<p>Vi anser att staten bör bygga fler bostäder åt unga i hela landet.</p>";
+  const citat = "Vi tycker att staten bör bygga fler bostäder åt unga i hela landet.";
+  assert.equal(langstaKvarvarandeOrdfoljd(sida, citat), "att staten bör bygga fler bostäder åt unga i hela landet.");
+});
+
+test("en sida utan något av citatet ger ingen ordföljd alls", () => {
+  assert.equal(langstaKvarvarandeOrdfoljd("<p>Helt annan text om helt annat.</p>", "Vi vill höja garantipensionen kraftigt under nästa mandatperiod."), "");
+});
+
+test("några enstaka gemensamma ord räknas inte som en träff", () => {
+  // "att staten bör" står i var och varannan text. Ett ankare måste bära vikt,
+  // annars byggs ett offentligt påstående på en slump.
+  const sida = "<p>Det är rimligt att staten bör göra något helt annat än detta.</p>";
+  assert.equal(langstaKvarvarandeOrdfoljd(sida, "Vi menar att staten bör höja garantipensionen."), "");
+});
+
+/* ─────────────────────────────────────── hittaPassage ── */
+
+test("passagen är hela meningen som står där i dag", () => {
+  const sida = "<p>Ett stycke före. Miljöpartiet anser att ungdomsreduktionen bör vara oförändrad jämfört med i dag. Ett stycke efter.</p>";
+  const citat = "Miljöpartiet anser att ungdomsreduktionen bör vara oförändrad jämfört med idag.";
+  assert.equal(
+    hittaPassage(sida, citat),
+    "Miljöpartiet anser att ungdomsreduktionen bör vara oförändrad jämfört med i dag.",
+  );
+});
+
+test("en sida utan något av citatet ger ingen passage", () => {
+  // Det är skillnaden mellan «de skrev om meningen» och «sidan är en annan
+  // sida». Bara det första går att lägga fram med citatet i handen.
+  assert.equal(hittaPassage("<p>Helt annan text om helt annat.</p>", "Vi vill höja garantipensionen kraftigt."), null);
+});
+
+test("passagen tas ur sidan ordagrant — vi skriver aldrig om källans ord", () => {
+  const sida = "<p>Vi vill höja garantipensionen med 1 000 kronor i månaden.</p>";
+  const passage = hittaPassage(sida, "Vi vill höja garantipensionen med 800 kronor i månaden.");
+  assert.ok(passage !== null);
+  assert.ok(sida.includes(passage), `passagen ska stå ordagrant i källan: ${passage}`);
+});
+
+/* ─────────────────────────────────────── andringsslag ── */
+
+test("citatet omskrivet men sidan kvar är en ordalydelse", () => {
+  assert.equal(andringsslag("andrad", "det som står nu"), "ordalydelse");
+});
+
+test("inget av citatet kvar betyder att sidan är utbytt", () => {
+  assert.equal(andringsslag("andrad", null), "sidan-utbytt");
+});
+
+test("404 är sin egen sak, oavsett vad som gick att läsa", () => {
+  assert.equal(andringsslag("borttagen", null), "sidan-borttagen");
+});
+
+test("en fungerande eller obestämd källa är inget fall att lägga fram", () => {
+  assert.equal(andringsslag("ok", null), null);
+  assert.equal(andringsslag("obestamd", null), null);
 });
