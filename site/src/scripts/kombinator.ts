@@ -237,7 +237,9 @@ async function init() {
     html += '</tfoot></table>';
 
     if (coalition.groupNotes.length > 0) {
-      html += '<div class="etikett" style="margin-top:0.75rem">LÖFTEN SOM FLERA PARTIER DELAR</div>';
+      // Marginalen ligger i en klass, aldrig i ett style-attribut: sajtens
+      // Content-Security-Policy (style-src 'self') kastar bort inline-stil.
+      html += '<div class="etikett etikett--grupper">LÖFTEN SOM FLERA PARTIER DELAR</div>';
       for (const gn of coalition.groupNotes) {
         html += `<p class="resultat__fotnot">${escapeHtml(groupLabel(gn.group_id))}: partierna har olika prislapp, mellan ${formatMsek(gn.minMsek)} och ${formatMsek(gn.maxMsek)} (${gn.parties.join(", ")}). Räknas en gång.</p>`;
       }

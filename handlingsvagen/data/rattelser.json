@@ -137,5 +137,26 @@
     "what": "Tre centerpartistiska löften har dragits tillbaka som partiets egna dubbletter. Deras belägg är inte borttagna: fyra kopplingar är flyttade till det löfte som står kvar i respektive grupp, med skälet skrivet på var och en. Den femte, k-2026-0680, är tillbakadragen därför att samma riksdagshandling redan var belagd på det kvarvarande löftet — att flytta även den hade visat samma handling två gånger på samma löfte. Sexton bedömningar försvinner ur rutnätet, och alla sexton är «ingen handling ännu» på de tillbakadragna posterna. Ingen bedömning om att ett parti agerat i linje eller emot har fallit.",
     "why": "En handling som visar att ett parti agerat på sin egen politik blir inte mindre sann av att posten den bokförts på var en dubblett. Hade vi dragit in beläggen i stället för att flytta dem hade fyra riktiga riksdagshandlingar slutat räknas, och sajten hade visat Centerpartiet som mindre aktivt än partiet är — en följd av vår städning, inte av partiets handlande. Ett belägg flyttas bara mellan löften som redan är sammanlänkade som samma politik.",
     "commit": "98de06a361c0b9109e72d5538d9363f35c3ccb52"
+  },
+  {
+    "date": "2026-08-09",
+    "affects": "Ledamotslistan /ledamoter",
+    "what": "Ledamotslistan sa «De 425 som sitter i riksdagen i dag». Riksdagen har 349 platser, så det talet kunde aldrig stämma. Listan är ett register över alla som röstat i riksdagen någon gång under mandatperioden 2022–2026 — också ersättare och ledamöter som hunnit lämna sin plats. Ingressen säger nu det, och att 349 är antalet platser. Antalen per parti står kvar oförändrade och betyder samma sak som förut: hur många personer som röstat för partiet under perioden. Ingen röst, ingen merit och ingen sida om en enskild ledamot är ändrad.",
+    "why": "Registret byggs ur riksdagens egna voteringsprotokoll och samlar varje person som lagt en röst. Över fyra år blir de fler än platserna: bara riksmötet 2025/26 har 373 röstande, och tillsammans blir de fyra åren 425. Talet var alltså rätt räknat men fel beskrivet, och beskrivningen gjorde varje partisiffra till ett mandattal den inte var — 126 för Socialdemokraterna mot partiets 107 platser i valet 2022.",
+    "commit": "0000000"
+  },
+  {
+    "date": "2026-08-09",
+    "affects": "Metodsidan /metod",
+    "what": "Metodsidan bar fyra tal som skrivits in som siffror och därmed stannat i den dag de mättes. Det stod att Miljöpartiets löften bar 155 kopplingar och Centerpartiets 131, medan Kristdemokraternas bar 8 och Liberalernas 6 — i dag är talen 211, 128, 28 och 12. Det stod också att sökningen inte hittar fram till «knappt en femtedel» av löftena, «79 av 467», och att det gav en tredjedel för Liberalerna och en tiondel för Socialdemokraterna. Rätt tal är 55 av 553, alltså tio procent. Alla fyra slås nu upp ur datat när sidan byggs och kan inte åldras igen. Ingen koppling och inget utslag är ändrat.",
+    "why": "Talen är påståenden om vad vi hunnit med, inte om metoden, och de ändras varje gång en kö betas av. Skrivna som siffror i en text som börjar «i augusti 2026» läser de som dagens läge även när de inte längre är det. Samma regel gäller nu här som för krönikorna: texten är statisk, talen slås upp.",
+    "commit": "0000000"
+  },
+  {
+    "date": "2026-08-09",
+    "affects": "Ämnen och ord /amnen",
+    "what": "På Ämnen och ord ritades alla staplar i «Ord som skiljer partierna åt» lika långa, oavsett vilket tal de skulle visa. Talet till höger om varje stapel och beskrivningen i stapelns egen text var hela tiden rätt — det var streckets längd som inte följde dem. Staplarna ritas nu i sin rätta längd. Inget tal, ingen sökträff och ingen röstsammanställning är ändrad.",
+    "why": "Stapelns längd låg i ett stilattribut på elementet, och sajtens säkerhetsregler kastar bort varje sådant attribut — i alla webbläsare, inte bara någon. Längden nådde därför aldrig fram, och stapeln föll tillbaka på samma reservvärde överallt. Felet har visat sig två gånger med olika symtom: först som staplar som såg fulla ut, sedan som staplar som såg tomma ut. Längden ligger nu i en svg:s bredd, som är geometri och inte stil, och en grind i bygget faller om ett stilattribut smyger tillbaka.",
+    "commit": "0000000"
   }
 ]

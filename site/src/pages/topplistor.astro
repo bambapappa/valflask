@@ -31,6 +31,22 @@ const personTotals = people
   .filter((p) => p.count > 0)
   .sort((a, b) => b.total - a.total);
 
+// Tabellen kan bara ta med den som har en egen sida, och en sida finns bara
+// för den som står i personregistret. Registret är mindre än verkligheten:
+// långt fler politiker står namngivna på ett löfte. Utan det här talet läste
+// tabellen som en rangordning av alla politiker, och toppplatsen var i så
+// fall fel — den största summan utanför registret är i dag STÖRRE än den
+// största inuti. Talen räknas fram vid varje bygge, aldrig för hand.
+const namnda = new Map<string, number>();
+for (const p of active) {
+  const namn = p.person?.name;
+  if (!namn) continue;
+  namnda.set(namn, (namnda.get(namn) ?? 0) + promiseNetMsek(p));
+}
+const iRegistret = new Set(people.map((p) => p.name));
+const utanSida = [...namnda.entries()].filter(([namn]) => !iRegistret.has(namn));
+const storstUtanSida = utanSida.reduce((max, [, summa]) => Math.max(max, summa), 0);
+
 const categories = categoryBreakdown(active);
 const categorySorted = categories.map((c) => [c.category, c.totalMsek] as [string, number]);
 
@@ -116,7 +132,23 @@ const jsonLd = [
     </section>
 
     <section class="sektion sektion--lg">
-      <h2>Frikostigaste politikern</h2>
+      <h2>Frikostigast av politikerna med egen sida</h2>
+      <p class="listnot">
+        Ett löfte skrivs oftast i partiets namn. Står en person utskriven
+        räknar vi löftet på hen också — men bara de {personTotals.length} politiker
+        som har en egen sida hos oss kan hamna i tabellen.
+        {utanSida.length > 0 && (
+          <>
+            {" "}Ytterligare {utanSida.length} namngivna politiker bär löften
+            utan att ha en sida, och den största summan bland dem är
+            {" "}<span class="num belopp">{formatMsek(storstUtanSida)}</span> —
+            {storstUtanSida > (personTotals[0]?.total ?? 0)
+              ? " mer än någon i tabellen nedan."
+              : " mindre än den som står överst nedan."}
+          </>
+        )}
+        {" "}Tabellen är alltså ingen rangordning av alla politiker.
+      </p>
       <div class="datavy datavy--scroll">
         <table>
           <thead>

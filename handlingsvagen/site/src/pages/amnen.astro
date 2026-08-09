@@ -9,8 +9,9 @@
  *     egna ord, räknade — ingen tolkning.
  */
 import Layout from "../layouts/Layout.astro";
+import Rattelsenot from "../components/Rattelsenot.astro";
 import { byggPartiTrender, forkortningarIIndexet, indexFinns, ordSkarvor, voteringSkarvor } from "../lib/amne.ts";
-import { getParties } from "../lib/data.ts";
+import { getParties, rattelserForPath } from "../lib/data.ts";
 import { PARTIBITAR } from "../lib/delat.ts";
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
@@ -31,12 +32,15 @@ const forkortningar = finns && forkortningarIIndexet();
 const partiMax = new Map(
   trender.map((t) => [t.kod, Math.max(0.0001, ...t.ord.map((o) => o.vikt))]),
 );
+// Talet är både procent och x-koordinat: stapeln ritas i en svg vars viewBox
+// är hundra enheter bred, så "36" betyder 36 % av spåret utan omräkning.
 const andel = (kod: string, vikt: number): number =>
-  Math.max(2, Math.round((vikt / (partiMax.get(kod) ?? 1)) * 100));
+  Math.max(2, Math.min(100, Math.round((vikt / (partiMax.get(kod) ?? 1)) * 100)));
 ---
 <Layout title="Ämnen och ord — Handlingsvågen" canonicalPath="/amnen">
   <div class="prosa">
     <h1>Ämnen och ord</h1>
+    <Rattelsenot rattelser={rattelserForPath("/amnen")} />
     <p class="ingress">
       Sök bland allt partierna skrivit i riksdagen: förslag de lämnat in,
       frågor de ställt till ministrarna, och regeringens egna lagförslag.
@@ -180,10 +184,13 @@ const andel = (kod: string, vikt: number): number =>
                       <span class="ord">{o.ord}</span>
                       <span
                         class="stapel"
-                        aria-hidden="true"
                         title={`Använder ordet ${o.vikt.toFixed(1)} gånger så ofta som de andra partierna, räknat på andel av dokumenten`}
-                        style={`--andel:${andel(t.kod, o.vikt)}%`}
-                      ></span>
+                      >
+                        <svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                          <rect class="spar" width="100" height="8"></rect>
+                          <rect class="fyll" width={andel(t.kod, o.vikt)} height="8"></rect>
+                        </svg>
+                      </span>
                       <span class="ordtal" title="Antal av partiets egna dokument där ordet står">
                         {o.antal.toLocaleString("sv-SE")}
                         <span class="hoppa"> dokument</span>
@@ -734,20 +741,30 @@ const andel = (kod: string, vikt: number): number =>
      "klimatförändringarna" spillde ut över stapelns början. */
   .ordlista .ord { font-weight: 600; overflow-wrap: anywhere; min-width: 0; }
   /* Stapeln följer diagramregeln: fylld svärta mot en svag hårlinjeyta.
-     Den ritas som en gradient på ETT element i stället för med ett barn som
-     får procentbredd. Skälet är mätt: i drift 2026-08-04 visades varje stapel
-     full på en iPhone trots att sidan bar rätt tal (Miljöpartiets låg på
-     5–20 %). En procentbredd måste lösas mot en förälder med bestämd bredd,
-     och den kedjan bar inte i alla motorer. En gradient målas mot elementets
-     egen målade yta och kan inte falla tillbaka på full bredd. */
-  .ordlista .stapel {
-    display: block;
-    height: 0.5rem;
-    background: linear-gradient(
-      to right,
-      var(--svarta) 0 var(--andel, 0%),
-      var(--linje-svag) var(--andel, 0%) 100%
-    );
-  }
+     Längden ligger i svg:ns egen BREDD-ATTRIBUT, inte i någon stil på
+     elementet. Det är hela poängen, och skälet är mätt:
+
+     sajten skickar Content-Security-Policy med style-src 'self' och utan
+     'unsafe-inline'. Den regeln kastar bort varje stilattribut i sidan — i
+     alla webbläsare, inte bara någon. Båda de tidigare försöken bar längden
+     just där, och båda föll utan att säga ifrån: ett barn som fick sin bredd
+     i procent fick ingen bredd alls och sträckte sig till full bredd (varje
+     stapel såg full ut, iPhone 2026-08-04), och en gradient som läste
+     längden ur en egen variabel fick i stället tillbaka sitt reservvärde
+     noll och ritade varenda stapel tom (Safari på dator 2026-08-09).
+     Symtomen var olika, orsaken densamma.
+
+     En svg:s width är geometri, inte stil, och når därför fram. Ett viewBox
+     på hundra enheter gör talet till sin egen procent. Grinden
+     `test-stil.mts` faller om ett stilattribut smyger tillbaka.
+
+     Svg:n och dess två rektanglar formas med `:global` inifrån den scopade
+     `.stapel`, av samma skäl som träfflistan nedan: reglerna ska hålla
+     oavsett om byggets scopning når in i svg-trädet eller stannar utanför.
+     Behållaren står i mallen och avgränsar var de globala reglerna verkar. */
+  .ordlista .stapel { display: block; min-width: 0; }
+  .ordlista .stapel :global(svg) { display: block; width: 100%; height: 0.5rem; }
+  .ordlista .stapel :global(.spar) { fill: var(--linje-svag); }
+  .ordlista .stapel :global(.fyll) { fill: var(--svarta); }
   .ordlista .ordtal { color: var(--text-svag); font-variant-numeric: tabular-nums; font-size: 0.8rem; text-align: right; }
 </style>
