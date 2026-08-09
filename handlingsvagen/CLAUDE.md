@@ -48,6 +48,13 @@ under "Pågår just nu" före start, skörda aldrig parallellt. Fullständiga re
   rättelseregeln fortfarande** — det är ett fel i texten.
 - **Arkivlänkar måste bära citatet.** En arkivkopia accepteras bara om
   citatet står ordagrant i själva ögonblicksbilden.
+- **Prosan påstår inget om koden som inte mäts.** Gäller Handlingsvågens
+  metodsida och neutralitetskontraktet lika mycket som Fläskvågens sidor: en
+  mening om vad koden eller registret gör ska bära ett ankare i
+  `site/src/lib/prosans-ankare.ts`, med meningen ord för ord, ett prov och ett
+  `fallprov`. Grinden är `pnpm test:prosan` i `site/`. Talen på metodsidan slås
+  redan upp vid bygget (`metodtal.ts`) — skriv aldrig in en siffra om registret
+  i texten, den blir en tyst osanning. Mänskligt beslut 2026-08-09.
 
 ## Överlämningen ligger inte här
 

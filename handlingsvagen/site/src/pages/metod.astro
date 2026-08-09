@@ -15,6 +15,14 @@ const ojamnheten =
   `${flest1!.namn}s löften bär ${flest1!.kopplingar} kopplingar och ` +
   `${flest2!.namn}s ${flest2!.kopplingar}, medan ${farrest1!.namn}s bär ` +
   `${farrest1!.kopplingar} och ${farrest2!.namn}s ${farrest2!.kopplingar}`;
+// Byggs här av samma skäl som `ojamnheten` ovan: ett radbryte intill ett
+// {uttryck} äter mellanslaget i bygget. Första utkastet hade uttrycket sist på
+// raden och «48egna förslag» gick igenom bygget grönt — samma fälla som
+// «medanLiberalernas», en andra gång.
+const motionsflitet =
+  `Under mandatperioden skrev en centerpartistisk riksdagsledamot ` +
+  `${tal.motionerPerLedamot.get("c")} egna förslag, en liberal ` +
+  `${tal.motionerPerLedamot.get("l")} — räknat som medianen per ledamot.`;
 const andelOprovade = (p: (typeof tal.partier)[number]): number =>
   p.loften === 0 ? 0 : Math.round((p.oprovade / p.loften) * 100);
 const oprovadeMest = [...tal.partier].sort((a, b) => andelOprovade(b) - andelOprovade(a))[0]!;
@@ -151,9 +159,7 @@ const oprovadeMinst = [...tal.partier].sort((a, b) => andelOprovade(a) - andelOp
         att hitta dem.
       </li>
       <li>
-        <b>Partier arbetar olika mycket med motioner.</b> Under
-        mandatperioden skrev en centerpartistisk riksdagsledamot ungefär 50
-        egna förslag, en liberal ungefär 15. Motioner är den vanligaste
+        <b>Partier arbetar olika mycket med motioner.</b> {motionsflitet} Motioner är den vanligaste
         handlingen vi kan väga, så ett parti som arbetar på andra sätt syns
         mindre här — utan att för den skull ha gjort mindre.
       </li>

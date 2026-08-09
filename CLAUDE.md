@@ -89,6 +89,18 @@ människas beslut.
   rättelseregeln fortfarande** — det är ett fel i texten.
 - **Arkivlänkar måste bära citatet.** En arkivkopia accepteras bara om
   citatet står ordagrant i själva ögonblicksbilden.
+- **Prosan påstår inget om koden som inte mäts.** Skriver du en mening på
+  metod-, om-, press-, api- eller neutralitetssidan som säger vad koden eller
+  datat gör, ska den bära ett ankare i `site/src/lib/prosans-ankare.ts` — med
+  meningen ord för ord, ett prov som mäter det koden faktiskt gör, och ett
+  `fallprov` som säger vilket infört fel som fäller provet. Grinden
+  `pnpm test:prosan` kräver dessutom att varje prov faller mot ett blänkt repo:
+  ett prov som svarar ja utan att få läsa något mäter ingenting. **Provet ska
+  mäta undantaget prosan inte nämner** — det var de nio modellskrivna
+  vikt-raderna som gjorde «samma belopp ger ordagrant samma rad» osann, och
+  ingen grind såg det. Går en mening inte att mäta ska den inte påstå mer än
+  den bär: skärp prosan hellre än klassa den som omätbar. Mänskligt beslut
+  2026-08-09.
 
 ## Vad ett kostnadsestimat ska prissätta
 

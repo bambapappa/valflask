@@ -21,6 +21,7 @@
  *   pnpm promises:rot-check --max 40     bryt efter N källsidor
  *   pnpm promises:rot-check --paus 2000  takten mellan hämtningar (ms)
  *   pnpm promises:rot-check --id p-1,p-2  pröva om enstaka löften
+ *   pnpm promises:rot-check --fynd-ar-data  utfallskod 0 även vid fynd
  *
  * En flaggad källa får dessutom `source_change` — vad som står där i dag,
  * ordagrant ur sidan. Statusen räcker för stämpeln på löftessidan; för att
@@ -30,9 +31,20 @@
  * Utfallskod 1 när något är `andrad` eller `borttagen` — de kräver en
  * människa. Ett nätfel sätter aldrig koden; det vore att låta vårt eget
  * nätstrul se ut som en död källa.
+ *
+ * `--fynd-ar-data` vänder just det: koden blir 0 även när något flaggas.
+ * Flaggan finns för `rot-watch.yml` och ska inte användas för hand. En
+ * schemalagd körning som faller betyder «bevakningen är trasig», och den
+ * skillnaden går förlorad om ett väntat fynd fäller jobbet: beståndet bär
+ * redan tre `andrad`, så körningen hade larmat varje måndag för ett läge som
+ * står utskrivet på `/andrade-kallor`. Värre än så — steget som committar
+ * stämplarna ligger efter kontrollen och hade hoppats över, så bevakningen
+ * hade mätt varje vecka och kastat mätningen. Frågevågens motsvarighet gör
+ * redan så här: en ändrad källa är data, inte ett fel.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { computeDataHash } from "../src/publish.ts";
 import { extractPdfText, looksLikePdf, stripHtml } from "../src/fetch.ts";
 import {
   andringsslag,
@@ -52,6 +64,7 @@ const args = process.argv.slice(2);
 const har = (f: string) => args.includes(f);
 const varde = (f: string) => (args.indexOf(f) >= 0 ? args[args.indexOf(f) + 1] : undefined);
 const torr = har("--dry-run");
+const fyndArData = har("--fynd-ar-data");
 const max = Number(varde("--max") ?? "0") || Infinity;
 const paus = Number(varde("--paus") ?? "1200");
 // Ett enskilt fall ska gå att pröva om utan att öppna hela beståndets källor.
@@ -220,9 +233,26 @@ if (trasiga.length > 0) {
 
 if (!torr && oppnade > 0) {
   writeFileSync(PROMISES, JSON.stringify(promises, null, 2) + "\n");
-  console.log(`\nSkrev ${PROMISES}. data_hash måste räknas om i changelog.`);
+  // Changelog-posten skrivs här och inte för hand. Sedan bevakningen ligger i
+  // rot-watch.yml committar en robot promises.json varje måndag, och kravet
+  // att sista postens data_hash matchar computeDataHash(promises.json) hade
+  // brutits tyst varje gång. Samma postform som publish.ts och review.ts.
+  // Inget löfte är tillagt, ändrat eller tillbakadraget — bara stämplarna —
+  // så de tre listorna är tomma med flit.
+  const CHANGELOG = join(ROOT, "data", "changelog.json");
+  const logg = JSON.parse(readFileSync(CHANGELOG, "utf8")) as unknown[];
+  logg.push({
+    run_id: `rot-check-${idag}`,
+    added: [],
+    updated: [],
+    retracted: [],
+    data_hash: computeDataHash(promises),
+    timestamp: new Date().toISOString(),
+  });
+  writeFileSync(CHANGELOG, JSON.stringify(logg, null, 2) + "\n");
+  console.log(`\nSkrev ${PROMISES} och en changelog-post med omräknad data_hash.`);
 }
 
 // Ett nätfel sätter aldrig koden. Att låta vårt eget nätstrul se ut som en
 // död källa är samma fel som arkivsvepets `oavgjort` finns för att undvika.
-process.exit(trasiga.length > 0 ? 1 : 0);
+process.exit(trasiga.length > 0 && !fyndArData ? 1 : 0);
