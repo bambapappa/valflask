@@ -60,9 +60,63 @@
         "current": {
           "position": "ja",
           "statement_id": "st-9"
-        }
+        },
+        "statements": [
+          {
+            "id": "st-8",
+            "position": "nej",
+            "condition_note": null,
+            "quote": "Ett gammalt besked",
+            "source": {
+              "url": "https://example.se/gammal"
+            }
+          },
+          {
+            "id": "st-9",
+            "position": "ja",
+            "condition_note": "gäller från 2027",
+            "quote": "Vi vill införa det",
+            "source": {
+              "url": "https://example.se/ny#page=3"
+            }
+          }
+        ]
       },
-      "hash": "79e0016e73fe6cb0"
+      "hash": "982674deb43762e4"
+    },
+    {
+      "slag": "standpunkt",
+      "obj": {
+        "id": "sq-01/mp",
+        "subquestion_id": "sq-01",
+        "party": "mp",
+        "position": "ja",
+        "quote": "Vi vill införa det",
+        "condition_note": "gäller från 2027",
+        "source": {
+          "url": "https://example.se/ny#page=3",
+          "archive_url": "https://web.archive.org/x"
+        },
+        "date_stated": "2026-05-01"
+      },
+      "hash": "982674deb43762e4"
+    },
+    {
+      "slag": "standpunkt",
+      "obj": {
+        "id": "sq-01/mp",
+        "subquestion_id": "sq-01",
+        "party": "mp",
+        "position": "ja",
+        "quote": "Vi vill utreda det",
+        "condition_note": "gäller från 2027",
+        "source": {
+          "url": "https://example.se/ny#page=3",
+          "archive_url": "https://web.archive.org/x"
+        },
+        "date_stated": "2026-05-01"
+      },
+      "hash": "e087b00beaf46e2b"
     }
   ],
   "konyckel": [
@@ -89,6 +143,29 @@
         "handling_id": "h-2026-6887"
       },
       "id": "9e4abba7b4da"
+    }
+  ],
+  "standpunkt_nyckel": [
+    {
+      "url": "https://example.se/ny#page=3",
+      "sq": "sq-01",
+      "parti": "mp",
+      "citat": "Vi vill införa det",
+      "nyckel": "ko:ed4f24a4788c"
+    },
+    {
+      "url": null,
+      "sq": null,
+      "parti": null,
+      "citat": null,
+      "nyckel": "ko:4d616ebf4fd1"
+    },
+    {
+      "url": "https://example.se/a?b=1&c=2",
+      "sq": "sq-02",
+      "parti": "kd",
+      "citat": "Tecken som bråkar: \" \\ \n åäö — ”citat”",
+      "nyckel": "ko:a83f0947eb64"
     }
   ]
 }
