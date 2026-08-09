@@ -1,5 +1,5 @@
 /**
- * Ritar kanalbilderna (1080×1920) och skriver `kanal/` i repotoppen.
+ * Ritar kanalbilderna och skriver `kanal/` i repotoppen.
  *
  * Kör: `pnpm kanalbilder` från `site/`. Bilderna är INTE en del av sajtbygget —
  * de laddas upp för hand i ett flöde och byggs om när talen rört sig tillräckligt
@@ -7,9 +7,17 @@
  *
  * Kostymen är sajtens egen (DESIGN.md): papper, svärta, EN signalfärg, inga
  * rundade hörn, inga skuggor, inga emoji, Anton för rubriker och IBM Plex Mono
- * för allt annat. Det lodräta formatet lägger till en enda regel: allt som bär
- * betydelse ligger ovanför y≈1450, eftersom appens egna knappar och bildtext
- * täcker underkanten. Nedre fjärdedelen är därför medvetet tom.
+ * för allt annat.
+ *
+ * Två ramar, av två skäl:
+ *
+ * - **Lodrätt (1080×1920)** för flöden. Allt som bär betydelse ligger ovanför
+ *   y≈1450, eftersom appens egna knappar och bildtext täcker underkanten —
+ *   nedre fjärdedelen är därför medvetet tom.
+ * - **Liggande (1920×1080)** som omslag till en artikel. Där visas hela bilden,
+ *   så ytan används fullt ut: rubrik och resonemang till vänster, paneler till
+ *   höger. Ramens fyra delar har låsta höjder som MÅSTE summera till 1 080 —
+ *   annars trycks den understa ut ur bilden och innehållet klipps tyst.
  */
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
@@ -35,6 +43,26 @@ const HOJD = 1920;
 const MARGINAL = 64;
 const SPALT = BREDD - MARGINAL * 2;
 
+/* Artikelbildens mått. Liggande 16:9 duger både som omslag till en text och
+   som förhandsbild när länken delas. */
+const L_BREDD = 1920;
+const L_HOJD = 1080;
+const L_MARGINAL = 72;
+/** Vänsterspalten bär rubriken och resonemanget, högerspalten panelerna. */
+const L_TEXT = 900;
+/**
+ * Ramens fyra delar. De MÅSTE summera till `L_HOJD` — gör de inte det trycks
+ * den understa delen ut ur bilden och innehållet klipps längst ned utan att
+ * något säger ifrån. Grinden i test-kanalbilder.mts räknar summan.
+ */
+const L_HUVUD = 108;
+const L_INNEHALL = 830;
+const L_KALLRAD = 58;
+const L_FOT = 84;
+export const L_DELAR = [L_HUVUD, L_INNEHALL, L_KALLRAD, L_FOT];
+export const L_RAM = { bredd: L_BREDD, hojd: L_HOJD };
+const L_PANEL = L_BREDD - L_MARGINAL * 2 - L_TEXT - 56;
+
 const fonts = [
   { name: "Anton", data: readFileSync(resolve(FONTS_DIR, "anton-latin-400-normal.ttf")), weight: 400 as const, style: "normal" as const },
   { name: "IBM Plex Mono", data: readFileSync(resolve(FONTS_DIR, "ibm-plex-mono-latin-400-normal.ttf")), weight: 400 as const, style: "normal" as const },
@@ -53,7 +81,7 @@ function text(innehall: string, style: Record<string, unknown>): El {
 
 /* ─────────────────────────────────────────────────────────────── blockritare ── */
 
-function ritaBlock(block: Block): El {
+function ritaBlock(block: Block, bredd: number = SPALT): El {
   switch (block.typ) {
     case "kicker":
       return ruta(
@@ -81,7 +109,7 @@ function ritaBlock(block: Block): El {
         lineHeight: 1.04,
         letterSpacing: "0.01em",
         color: SVARTA,
-        width: `${SPALT}px`,
+        width: `${bredd}px`,
         marginBottom: "36px",
       });
 
@@ -91,7 +119,7 @@ function ritaBlock(block: Block): El {
         fontSize: `${block.grad ?? 32}px`,
         lineHeight: 1.5,
         color: GRAFIT,
-        width: `${SPALT}px`,
+        width: `${bredd}px`,
         marginBottom: "28px",
       });
 
@@ -101,7 +129,7 @@ function ritaBlock(block: Block): El {
           flexDirection: "column",
           backgroundColor: SVARTA,
           padding: "36px 40px 40px",
-          width: `${SPALT}px`,
+          width: `${bredd}px`,
           marginBottom: "36px",
         },
         [
@@ -137,7 +165,7 @@ function ritaBlock(block: Block): El {
 
     case "punkter":
       return ruta(
-        { flexDirection: "column", width: `${SPALT}px` },
+        { flexDirection: "column", width: `${bredd}px` },
         block.poster.map((post) =>
           ruta({ marginBottom: "34px", alignItems: "flex-start" }, [
             ruta(
@@ -152,7 +180,7 @@ function ritaBlock(block: Block): El {
               },
               text(post.etikett, { fontFamily: "Anton", fontSize: "44px", color: GUL }),
             ),
-            ruta({ flexDirection: "column", width: `${SPALT - 106}px` }, [
+            ruta({ flexDirection: "column", width: `${bredd - 106}px` }, [
               text(post.rubrik, {
                 fontFamily: "Anton",
                 fontSize: "50px",
@@ -174,7 +202,7 @@ function ritaBlock(block: Block): El {
 
     case "faktarad":
       return ruta(
-        { flexWrap: "wrap", width: `${SPALT}px`, marginTop: "8px" },
+        { flexWrap: "wrap", width: `${bredd}px`, marginTop: "8px" },
         block.delar.map((del) =>
           ruta({ backgroundColor: SVARTA, padding: "12px 20px", marginRight: "16px", marginBottom: "16px" },
             text(del, {
@@ -190,7 +218,7 @@ function ritaBlock(block: Block): El {
 
     case "statrader":
       return ruta(
-        { flexDirection: "column", width: `${SPALT}px` },
+        { flexDirection: "column", width: `${bredd}px` },
         block.poster.map((post) =>
           ruta({ alignItems: "center", marginBottom: "26px" }, [
             ruta(
@@ -215,7 +243,7 @@ function ritaBlock(block: Block): El {
               lineHeight: 1.35,
               letterSpacing: "0.04em",
               color: SVARTA,
-              width: `${SPALT - 374}px`,
+              width: `${bredd - 374}px`,
             }),
           ]),
         ),
@@ -224,8 +252,8 @@ function ritaBlock(block: Block): El {
     case "staplar": {
       const ETIKETT = 200;
       const VARDE = 270;
-      const BANA = SPALT - ETIKETT - VARDE;
-      return ruta({ flexDirection: "column", width: `${SPALT}px` }, [
+      const BANA = bredd - ETIKETT - VARDE;
+      return ruta({ flexDirection: "column", width: `${bredd}px` }, [
         ...block.rader.map((rad) =>
           ruta({ alignItems: "center", marginBottom: "18px" }, [
             text(rad.etikett, {
@@ -260,7 +288,7 @@ function ritaBlock(block: Block): El {
           fontSize: "22px",
           lineHeight: 1.4,
           color: DIS,
-          width: `${SPALT}px`,
+          width: `${bredd}px`,
           marginTop: "10px",
           marginBottom: "24px",
         }),
@@ -289,7 +317,7 @@ function ritaBlock(block: Block): El {
           ),
         );
       }
-      return ruta({ flexDirection: "column", width: `${SPALT}px` }, [
+      return ruta({ flexDirection: "column", width: `${bredd}px` }, [
         ruta(
           { marginBottom: "10px" },
           block.kolumner.map((kod) =>
@@ -304,11 +332,83 @@ function ritaBlock(block: Block): El {
           fontSize: "22px",
           lineHeight: 1.4,
           color: DIS,
-          width: `${SPALT}px`,
+          width: `${bredd}px`,
           marginTop: "12px",
           marginBottom: "22px",
         }),
       ]);
+    }
+
+    /**
+     * Panelen är artikelbildens byggsten: en inramad ruta med en etikett, en
+     * rubrik och ett par tal med sin förklaring bredvid. Ramen är en hårlinje,
+     * inte ett kort — ytor görs med linjer i den här kostymen.
+     */
+    case "panel": {
+      const inre = bredd - 4 - 52;
+      return ruta(
+        {
+          flexDirection: "column",
+          width: `${bredd}px`,
+          border: `2px solid ${SVARTA}`,
+          padding: "18px 24px 20px",
+          marginBottom: "22px",
+        },
+        [
+          ruta({ alignSelf: "flex-start", backgroundColor: SVARTA, padding: "6px 12px", marginBottom: "14px" },
+            text(block.etikett, {
+              fontFamily: "IBM Plex Mono",
+              fontWeight: 700,
+              fontSize: "20px",
+              letterSpacing: "0.07em",
+              color: GUL,
+            }),
+          ),
+          text(block.rubrik, {
+            fontFamily: "Anton",
+            fontSize: "34px",
+            letterSpacing: "0.01em",
+            lineHeight: 1.08,
+            color: SVARTA,
+            width: `${inre}px`,
+            marginBottom: "14px",
+          }),
+          ...block.rader.map((rad) =>
+            ruta({ alignItems: "flex-start", marginBottom: "14px", width: `${inre}px` }, [
+              rad.tal
+                ? text(rad.tal, {
+                    fontFamily: "IBM Plex Mono",
+                    fontWeight: 700,
+                    fontSize: "34px",
+                    lineHeight: 1.2,
+                    color: SVARTA,
+                    width: "158px",
+                    flexShrink: 0,
+                  })
+                : ruta({ width: "0px" }),
+              text(rad.text, {
+                fontFamily: "IBM Plex Mono",
+                fontSize: "22px",
+                lineHeight: 1.35,
+                color: GRAFIT,
+                width: `${inre - (rad.tal ? 158 : 0)}px`,
+                paddingTop: "6px",
+              }),
+            ]),
+          ),
+          block.not
+            ? ruta({ borderTop: `1px solid ${LINJE_SVAG}`, paddingTop: "12px", marginTop: "4px", width: `${inre}px` },
+                text(block.not, {
+                  fontFamily: "IBM Plex Mono",
+                  fontSize: "20px",
+                  lineHeight: 1.35,
+                  color: DIS,
+                  width: `${inre}px`,
+                }),
+              )
+            : ruta({}),
+        ],
+      );
     }
 
     case "luft":
@@ -318,7 +418,7 @@ function ritaBlock(block: Block): El {
 
 /* ───────────────────────────────────────────────────────────────── hela ramen ── */
 
-function ritaBild(bild: Bild): El {
+function ritaLodrat(bild: Bild): El {
   return ruta({ flexDirection: "column", width: `${BREDD}px`, height: `${HOJD}px`, backgroundColor: PAPPER }, [
     // Sidhuvud: sajtens namn till vänster, seriens plats i följden till höger.
     ruta(
@@ -349,7 +449,7 @@ function ritaBild(bild: Bild): El {
 
     // Innehållet. Höjden är låst så att bilden aldrig kan växa in i underkanten.
     ruta({ flexDirection: "column", height: "1220px", padding: `52px ${MARGINAL}px 0`, overflow: "hidden" },
-      bild.block.map(ritaBlock),
+      bild.block.map((block) => ritaBlock(block)),
     ),
 
     // Källraden — obligatorisk under varje diagram, också här.
@@ -384,10 +484,90 @@ function ritaBild(bild: Bild): El {
 
 /* ─────────────────────────────────────────────────────────────────── körningen ── */
 
+
+/**
+ * Artikelbildens ram: rubrik och resonemang till vänster, panelerna till höger.
+ *
+ * Här finns ingen död zon att spara — en artikelbild visas hel. Därför bär den
+ * också mer text än de lodräta, och talen står exakt.
+ */
+function ritaLiggande(bild: Bild): El {
+  const vanster = bild.block.filter((b) => b.typ !== "panel");
+  const hoger = bild.block.filter((b) => b.typ === "panel");
+  return ruta({ flexDirection: "column", width: `${L_BREDD}px`, height: `${L_HOJD}px`, backgroundColor: PAPPER }, [
+    ruta(
+      {
+        height: `${L_HUVUD}px`,
+        backgroundColor: SVARTA,
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: `0 ${L_MARGINAL}px`,
+        flexShrink: 0,
+      },
+      [
+        ruta({ alignItems: "center" }, [
+          text("UTLOVAT", { fontFamily: "Anton", fontSize: "46px", color: PAPPER, letterSpacing: "0.01em" }),
+          ruta({ backgroundColor: GUL, padding: "2px 9px", marginLeft: "4px" },
+            text(".SE", { fontFamily: "Anton", fontSize: "46px", color: SVARTA, letterSpacing: "0.01em" }),
+          ),
+        ]),
+        text("GRANSKNING INFÖR RIKSDAGSVALET 13 SEPTEMBER 2026", {
+          fontFamily: "IBM Plex Mono",
+          fontWeight: 700,
+          fontSize: "22px",
+          letterSpacing: "0.07em",
+          color: GUL,
+        }),
+      ],
+    ),
+
+    ruta({ height: `${L_INNEHALL}px`, padding: `36px ${L_MARGINAL}px 0`, overflow: "hidden" }, [
+      ruta({ flexDirection: "column", width: `${L_TEXT}px`, marginRight: "56px" },
+        vanster.map((block) => ritaBlock(block, L_TEXT)),
+      ),
+      ruta({ flexDirection: "column", width: `${L_PANEL}px` },
+        hoger.map((block) => ritaBlock(block, L_PANEL)),
+      ),
+    ]),
+
+    ruta({ padding: `0 ${L_MARGINAL}px`, height: `${L_KALLRAD}px`, alignItems: "center", flexShrink: 0 },
+      ruta({ width: `${L_BREDD - L_MARGINAL * 2}px`, borderTop: `2px solid ${SVARTA}`, paddingTop: "12px" },
+        text(bild.kallrad, { fontFamily: "IBM Plex Mono", fontSize: "21px", color: DIS }),
+      ),
+    ),
+
+    ruta(
+      {
+        height: `${L_FOT}px`,
+        backgroundColor: SVARTA,
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: `0 ${L_MARGINAL}px`,
+        flexShrink: 0,
+      },
+      [
+        text("UTLOVAT.SE/HANDLINGSVAGEN", { fontFamily: "Anton", fontSize: "40px", color: GUL, letterSpacing: "0.01em" }),
+        text("hela granskningen, med källor och arkivkopior", {
+          fontFamily: "IBM Plex Mono",
+          fontSize: "24px",
+          color: PAPPER,
+        }),
+      ],
+    ),
+  ]);
+}
+
+/** Måtten som gäller för bildens format. */
+function matt(bild: Bild): { bredd: number; hojd: number } {
+  return bild.format === "liggande" ? { bredd: L_BREDD, hojd: L_HOJD } : { bredd: BREDD, hojd: HOJD };
+}
+
 /** En färdig PNG. Exporterad så att grinden kan mäta ramen utan att skriva filer. */
 export async function ritaEnBild(bild: Bild): Promise<Buffer> {
-  const svg = await satori(ritaBild(bild) as never, { width: BREDD, height: HOJD, fonts });
-  return Buffer.from(new Resvg(svg, { fitTo: { mode: "width", value: BREDD } }).render().asPng());
+  const { bredd, hojd } = matt(bild);
+  const ram = bild.format === "liggande" ? ritaLiggande(bild) : ritaLodrat(bild);
+  const svg = await satori(ram as never, { width: bredd, height: hojd, fonts });
+  return Buffer.from(new Resvg(svg, { fitTo: { mode: "width", value: bredd } }).render().asPng());
 }
 
 function skrivTexter(bilder: Bild[], datum: string, akt: string): string {
@@ -410,7 +590,18 @@ function skrivTexter(bilder: Bild[], datum: string, akt: string): string {
   ];
   for (const bild of bilder) {
     rader.push(`## ${bild.fil}.png`, "");
-    rader.push(`*${bild.serie} ${bild.nr}/${bild.antal}*`, "");
+    rader.push(
+      `*${bild.serie} ${bild.nr}/${bild.antal} — ${bild.format === "liggande" ? "liggande 1920×1080" : "lodrät 1080×1920"}*`,
+      "",
+    );
+    if (bild.format === "liggande") {
+      rader.push(
+        "> Den här bilden skriver talen **exakt**, inte som golv: den hör till en",
+        "> daterad text, och en läsare som klickar sig vidare ska hitta samma tal i",
+        "> registret. Bygg om den när talen rört sig och texten ska återanvändas.",
+        "",
+      );
+    }
     rader.push("**Skärmtext**", "");
     for (const block of bild.block) {
       if (block.typ === "kicker") rader.push(`- Överrad: ${block.text}`);
@@ -428,6 +619,11 @@ function skrivTexter(bilder: Bild[], datum: string, akt: string): string {
         rader.push(`- Not: ${block.not}`);
       }
       if (block.typ === "rutnat") rader.push(`- Rutnät: ${block.not}`);
+      if (block.typ === "panel") {
+        rader.push(`- Panel *${block.etikett}* — **${block.rubrik}**`);
+        for (const r of block.rader) rader.push(`  - ${r.tal ? `${r.tal} — ` : ""}${r.text}`);
+        if (block.not) rader.push(`  - Not: ${block.not}`);
+      }
     }
     rader.push("", `**Källrad på bilden:** ${bild.kallrad}`, "");
     rader.push("**Förslag på bildtext**", "", `> ${bild.bildtext}`, "");
