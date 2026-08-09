@@ -5,6 +5,44 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 ---
 
+## 2026-08-09 — Källor som ändrats får en egen del på sajten, med tre villkor
+
+**Beslut:** Fall där en källa ändrats efter att vi citerat den samlas på
+`/andrade-kallor`. Ett fall läggs fram bara om **alla tre** villkoren är
+uppfyllda: arkivkopian bär citatet ordagrant, båda länkarna har öppnats och
+jämförts för hand (`source_change.reviewed_at`), och slaget är känt —
+`ordalydelse`, `sidan-utbytt` eller `sidan-borttagen` hålls isär och skrivs
+aldrig ihop. Sidan redovisar vad som står och vem som äger sidan, aldrig varför
+något ändrats.
+
+**Motiv:** Stämpeln «KÄLLAN HAR ÄNDRATS» fanns redan vid citatet men pekade
+ingenstans, och sa bara att något ändrats — inte vad. Utan det andra ledet ber
+vi läsaren ta vårt ord för att någon annan ändrat sig, och det är precis den
+sortens anspråk som ska bäras av belägg. Rötkontrollen sparar därför också
+meningen som står på sidan i dag, ordagrant.
+
+Villkoren är inte formaliteter. Mätningen av de tre första fallen visade att två
+av dem är **riksdagens** språkgranskning av motioner — «idag» blev «i dag», «då
+barn» blev «då ett barn» — alltså inte partiets verk. Hade fallen lagts fram
+utan att ägaren skrevs ut hade sidan anklagat fel part. Och en samtyckesruta,
+en betalvägg eller en javascriptritad sida ser för kontrollen ut precis som en
+utbytt sida; därför publicerar granskningen fallet, inte mätningen.
+
+**Förkastade alternativ:**
+- *Publicera allt kontrollen flaggar.* Ett falskt utslag hade blivit ett
+  offentligt påstående om att ett parti ändrat sin text. Kostnaden för ett fel
+  är här mycket högre än kostnaden för att vänta.
+- *Utelämna riksdagens språkrättelser som obetydliga.* De är obetydliga i sak,
+  men det är en bedömning läsaren ska kunna göra själv — och en läsare som
+  klickar på källänken och ser andra ord ska hitta förklaringen hos oss.
+- *Lägga fallen i rättelseloggen.* Rättelser är fel hos **oss**. Att blanda in
+  ändringar hos andra hade gjort loggen till en anklagelseskrift.
+- *Bara länka stämpeln till metodsidan.* Förklarar regeln men visar inget fall.
+
+**Fattat av:** mänskligt beslut.
+
+---
+
 ## 2026-08-09 — Citatets sista skiljetecken avgör inte om en arkivkopia duger
 
 **Beslut:** När vi prövar att ett citat står ordagrant i en arkivkopia bortser
