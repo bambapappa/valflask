@@ -243,6 +243,18 @@ export function countWords(normalized: string): number {
 }
 
 /**
+ * Avslutande skiljetecken, som inte skiljer två punkter i en lista åt.
+ *
+ * Partier skriver ofta sina punktlistor som en löpande mening: varje punkt
+ * slutar med komma och den sista med punkt. Om citatet råkar bära kommat eller
+ * inte avgörs av utvinningen, inte av partiet — och det är ingen skillnad i vad
+ * som utlovas.
+ */
+function utanAvslutandeSkiljetecken(rad: string): string {
+  return rad.replace(/[.,;:!?]+$/u, "").trim();
+}
+
+/**
  * Är citatet en HEL, unik rad i källtexten? Kravet bakom det lägre citatgolvet.
  *
  * Raderna kommer ur `stripHtml`, som bryter rad på `</li>`, `</p>`, `</div>`
@@ -250,13 +262,26 @@ export function countWords(normalized: string): number {
  * måste hålla: citatet ÄR en hel rad (inte ett utplock ur en längre mening),
  * den raden står exakt en gång, och citatet ryms inte inuti någon annan rad.
  * Faller något av dem gäller det vanliga golvet och posten går till granskning.
+ *
+ * **Jämförelsen bortser från avslutande skiljetecken** (mätt 2026-08-09). Det
+ * här undantaget påstods tidigare inte nå partiernas punktlistor alls, med
+ * förklaringen att punkterna inte hamnade på var sin rad. Mätt mot Liberalernas
+ * alkoholsida stämde det inte: punkterna får var sin rad, och fyra av fem korta
+ * citat klarade regeln. Det femte föll på att källan lyder «tillåta
+ * takeaway-försäljning av alkohol**,**» medan citatet saknade kommat — två
+ * grannpunkter i samma lista behandlades alltså olika beroende på om
+ * utvinningen råkat ta med tecknet.
+ *
+ * **Citatkravet lossas inte av det här.** Att citatet står ordagrant i
+ * källtexten prövas separat och med oförändrad stränghet; det enda som avgörs
+ * här är om posten får använda det lägre golvet.
  */
 export function arEgenRadIKallan(quote: string, articleText: string): boolean {
-  const q = normalizeForVerbatim(quote);
+  const q = utanAvslutandeSkiljetecken(normalizeForVerbatim(quote));
   if (q === "") return false;
   const rader = articleText
     .split(/\r?\n/u)
-    .map((r) => normalizeForVerbatim(r))
+    .map((r) => utanAvslutandeSkiljetecken(normalizeForVerbatim(r)))
     .filter((r) => r !== "");
   if (rader.filter((r) => r === q).length !== 1) return false;
   return !rader.some((r) => r !== q && r.includes(q));

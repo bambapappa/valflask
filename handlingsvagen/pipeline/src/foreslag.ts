@@ -16,6 +16,7 @@ import { stamma } from "./stam.ts";
 import type { LlmClient } from "./llm.ts";
 import type { Utskottspunkt, Yrkande } from "./riksdagen.ts";
 import { provaGrindarna, type GrindFel, type GrindKontext, type KopplingsForslag } from "./grindar.ts";
+import { motionensSlag } from "./yrkandeslag.ts";
 
 /** Löftesfälten förslagssteget behöver (delmängd av valflask promises.json). */
 export interface Lofte {
@@ -406,7 +407,25 @@ export function byggHandlingstext(
     return { sort: "beslutspunkt", delar };
   }
   if (yrkanden && yrkanden.length > 0) {
-    return { sort: "yrkanden", delar: yrkanden.map((y) => y.lydelse) };
+    const lydelser = yrkanden.map((y) => y.lydelse);
+    // Brödtexten öppnas för en motion vars yrkanden bara anvisar medel enligt
+    // en tabell — mänskligt beslut 2026-08-09, och samma form som
+    // sammanfattningen ovan. Ett anslagsyrkande lyder «anvisar anslagen inom
+    // utgiftsområde N enligt förslaget i tabell X» och godtar därför inget
+    // citat alls: partiet skriver vad det faktiskt föreslår i brödtexten, och
+    // hänvisningen till tabellen är just hur en budgetmotion begär det.
+    // Grinden godkände förut ingenting ur de motionerna, vilket inte gjorde
+    // beläggen bättre — det gjorde att de goda kopplingarna aldrig skapades.
+    //
+    // Villkoret är lika snävt som sammanfattningens: **bara** när yrkandena
+    // uteslutande anvisar medel. Finns ett sakyrkande är det handlingen och
+    // brödtexten är fortfarande argumentation för den; bär motionen bara
+    // ramverksyrkanden pekas ingen enskild reform ut alls, och då öppnas
+    // ingenting.
+    if (motionensSlag(lydelser) === "bara_anslag" && kalltext) {
+      return { sort: "yrkanden", delar: [...lydelser, kalltext], brodtextOppen: true };
+    }
+    return { sort: "yrkanden", delar: lydelser };
   }
   return undefined;
 }

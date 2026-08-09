@@ -11,6 +11,7 @@ import {
   MAX_PROMISES_PER_ARTICLE,
   QUOTE_MAX_WORDS,
   R5_CAP_MSEK,
+  arEgenRadIKallan,
   canonicalDomain,
   countWords,
   normalizeForVerbatim,
@@ -411,4 +412,40 @@ test("withPageAnchor: sätter/byter #page och rör inte bas-URL:en", () => {
   assert.equal(withPageAnchor("https://x.se/a.pdf", 7), "https://x.se/a.pdf#page=7");
   assert.equal(withPageAnchor("https://x.se/a.pdf#page=1", 7), "https://x.se/a.pdf#page=7");
   assert.equal(withPageAnchor("https://web.archive.org/web/2026/https://x.se/a.pdf#page=1", 7), "https://web.archive.org/web/2026/https://x.se/a.pdf#page=7");
+});
+
+/**
+ * Punktlistornas avslutande skiljetecken — mätt 2026-08-09.
+ *
+ * Undantaget påstods inte nå partiernas punktlistor, med förklaringen att
+ * punkterna inte hamnade på var sin rad. Mätt mot Liberalernas alkoholsida
+ * stämde det inte: raderna bryts, och det som fällde var ett komma.
+ */
+const LISTA = [
+  "Liberalerna vill:",
+  "tillåta takeaway-försäljning av alkohol,",
+  "ge foodtrucks möjlighet att sälja öppnad öl,",
+  "låta Systembolaget ha öppet till klockan 20.00 alla dagar i veckan.",
+].join("\n");
+
+test("citatet är en egen punkt även när källans rad slutar med komma", () => {
+  assert.equal(arEgenRadIKallan("tillåta takeaway-försäljning av alkohol", LISTA), true);
+});
+
+test("citatet är en egen punkt även när citatet bär kommat och raden inte", () => {
+  assert.equal(arEgenRadIKallan("Liberalerna vill:", LISTA), true);
+  assert.equal(
+    arEgenRadIKallan("låta Systembolaget ha öppet till klockan 20.00 alla dagar i veckan", LISTA),
+    true,
+  );
+});
+
+test("toleransen gäller bara radens slut — ett utplock ur en punkt är fortfarande inget citat", () => {
+  assert.equal(arEgenRadIKallan("takeaway-försäljning av alkohol", LISTA), false);
+  assert.equal(arEgenRadIKallan("ge foodtrucks möjlighet", LISTA), false);
+});
+
+test("en punkt som står två gånger i listan klarar fortfarande inte kravet", () => {
+  const tva = `${LISTA}\ntillåta takeaway-försäljning av alkohol.`;
+  assert.equal(arEgenRadIKallan("tillåta takeaway-försäljning av alkohol", tva), false);
 });

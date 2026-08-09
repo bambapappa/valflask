@@ -9,6 +9,7 @@ import {
   type GateFailure,
   type NormalizedArticle,
 } from "./gates.ts";
+import { arAvvisad, type Avvisning } from "./avvisningar.ts";
 import type { CostEstimate } from "./cost.ts";
 import type { VerifyResult } from "./verify.ts";
 
@@ -327,8 +328,36 @@ export function publish(input: PublishInput): PublishResult {
     );
     return c.length >= 30 && publiceradeCitat.has(`${r.articleUrl ?? ""}::${c}`);
   };
+  // Avvisningsminnet håller ute det vi redan sagt nej till. Utan det hittar
+  // varje skörd samma mening i samma dokument och lägger in den på nytt; tre
+  // kandidater kom tillbaka i kön dagen efter att de avvisats, två av dem för
+  // tredje gången. En **hävd** avvisning håller ingen ute — mänskligt beslut
+  // 2026-08-09, se `avvisningar.ts`.
+  const avvisningsminne = (() => {
+    try {
+      return JSON.parse(readFileSync(`${outputDir}/avvisade.json`, "utf8")) as Avvisning[];
+    } catch {
+      return [] as Avvisning[];
+    }
+  })();
+  const redanAvvisad = (r: NeedsReviewEntry): boolean =>
+    arAvvisad(
+      avvisningsminne,
+      r.articleUrl ?? "",
+      (r.candidate as { quote?: string } | null | undefined)?.quote ?? "",
+    );
+
   const kvarglomda = mergedReview.filter(redanAvgjord);
-  const stadadReview = mergedReview.filter((r) => !redanAvgjord(r));
+  const aterkomna = mergedReview.filter((r) => !redanAvgjord(r) && redanAvvisad(r));
+  const stadadReview = mergedReview.filter((r) => !redanAvgjord(r) && !redanAvvisad(r));
+  if (aterkomna.length > 0) {
+    console.log(
+      `Höll ute ${aterkomna.length} kandidat(er) som redan avvisats:\n  ` +
+        aterkomna
+          .map((r) => (r.candidate as { title?: string } | null)?.title ?? r.articleTitle)
+          .join("\n  "),
+    );
+  }
   if (kvarglomda.length > 0) {
     console.log(
       `Städade ${kvarglomda.length} kö-post(er) vars löfte redan är publicerat:\n  ` +

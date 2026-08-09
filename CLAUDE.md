@@ -76,8 +76,17 @@ människas beslut.
   eller formulera om frågan — sänk aldrig kravet på exakt återgivning.
 - **Tyst rättelse är förbjuden.** Fel rättas synligt: rättelsenot på
   berörd sida plus post i `data/rattelser.json`.
-- **Krönikor är ögonblicksbilder.** Rättas en krönika ska beloppen räknas
-  om från datat som gällde när den genererades — inte från dagens siffror.
+- **Krönikor: texten är statisk, talen dynamiska.** Redogörelsen — vad
+  veckan handlade om och hur vi såg på den — skrivs aldrig om; det vore att
+  skriva om historien. Summor, gap och antal är däremot påståenden om datat
+  och slås upp mot dagens siffror när sidan byggs. Talen skrivs därför som
+  platshållare i krönikans text, aldrig som siffror (se
+  `pipeline/src/kronikans-tal.ts`). Mänskligt beslut 2026-08-09, som ersätter
+  den tidigare regeln att en krönika är en ögonblicksbild vars belopp räknas
+  om ur datat som gällde när den skrevs. Den regeln gav antingen en
+  rättelsepost per krönika för varje rättad siffra någon annanstans, eller
+  krönikor som tyst blev osanna. **Är redogörelsen fel gäller
+  rättelseregeln fortfarande** — det är ett fel i texten.
 - **Arkivlänkar måste bära citatet.** En arkivkopia accepteras bara om
   citatet står ordagrant i själva ögonblicksbilden.
 

@@ -5,6 +5,7 @@ import {
   tidpunktISekunder,
   tidpunktSomText,
   provaTaladKalla,
+  avskriftensAdress,
 } from "../src/talad-kalla.ts";
 
 test("spelarsidor känns igen som talade källor", () => {
@@ -49,19 +50,37 @@ test("tidpunkten skrivs som en läsare läser den", () => {
   assert.equal(tidpunktSomText(0), "0.00");
 });
 
+const SANDNING = "https://www.svtplay.se/video/KnDABAQ/almedalen-partiledartal/ebba-busch-kd";
+
 /**
- * Beslutet, prövat på de två verkliga fallen: `p-2026-0118` bär `?position=377`
- * och uppfyller kravet; `p-2026-0100` saknar tidpunkt och gör det inte.
+ * Beslutet 2026-08-09: **avskrift och tidsstämpel**, eller en alternativ källa.
+ *
+ * Det skärper beslutet från 2026-08-08, som lät tidsstämpeln ensam räcka. En
+ * tidsstämpel säger var i sändningen orden finns, aldrig att de finns — den som
+ * vill kontrollera måste fortfarande lyssna. Avskriften är text och går att
+ * pröva ord för ord.
  */
-test("beslutet avgör på tidpunkten, inte på ögonblicksbilden", () => {
-  assert.equal(
-    provaTaladKalla(
-      "https://www.svtplay.se/video/KnDABAQ/almedalen-partiledartal/ebba-busch-kd?position=377",
-    ),
-    "talad-med-tid",
-  );
-  assert.equal(
-    provaTaladKalla("https://www.svtplay.se/video/KnDABAQ/almedalen-partiledartal/ebba-busch-kd"),
-    "talad-utan-tid",
-  );
+test("tidsstämpeln ensam räcker inte längre — avskriften är det som gör citatet kontrollerbart", () => {
+  assert.equal(provaTaladKalla(`${SANDNING}?position=377`, true), "talad-belagd");
+  assert.equal(provaTaladKalla(`${SANDNING}?position=377`, false), "talad-utan-avskrift");
+  assert.equal(provaTaladKalla(`${SANDNING}?position=377`), "talad-utan-avskrift");
+});
+
+test("utan tidsstämpel faller posten på tidpunkten, oavsett avskrift", () => {
+  assert.equal(provaTaladKalla(SANDNING), "talad-utan-tid");
+  assert.equal(provaTaladKalla(SANDNING, true), "talad-utan-tid");
+});
+
+test("en avskrift som inte bär citatet skiljs från ingen avskrift alls", () => {
+  // `undefined` betyder att ingen avskrift är angiven, `false` att den hämtades
+  // och inte bar citatet. Båda faller, men skälen är olika och åtgärden också.
+  assert.equal(provaTaladKalla(`${SANDNING}?position=377`, undefined), "talad-utan-avskrift");
+  assert.equal(provaTaladKalla(`${SANDNING}?position=377`, false), "talad-utan-avskrift");
+});
+
+test("avskriftens adress läses bara när den finns och inte är tom", () => {
+  assert.equal(avskriftensAdress({ transcript_url: "https://exempel.se/avskrift" }), "https://exempel.se/avskrift");
+  assert.equal(avskriftensAdress({ transcript_url: "   " }), null);
+  assert.equal(avskriftensAdress({ transcript_url: null }), null);
+  assert.equal(avskriftensAdress(undefined), null);
 });

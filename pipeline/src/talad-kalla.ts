@@ -88,14 +88,51 @@ export function tidpunktSomText(sekunder: number): string {
 }
 
 /** Vad kontrollen av en talad källa kan svara. */
-export type TaladUtfall = "talad-med-tid" | "talad-utan-tid";
+export type TaladUtfall = "talad-belagd" | "talad-utan-avskrift" | "talad-utan-tid";
 
 /**
  * Beläggs det talade citatet så som beslutet kräver?
  *
- * Frågan är inte om ögonblicksbilden bär orden — den kan aldrig göra det — utan
- * om posten pekar ut **var i sändningen** citatet står.
+ * **Mänskligt beslut 2026-08-09**, som skärper beslutet från 2026-08-08: ett
+ * talat citat beläggs med **avskrift och tidsstämpel** — eller med en
+ * **alternativ källa** som bär orden som text, vilket är vad de nitton löftena
+ * ur Kristdemokraternas Almedalstal fick när de flyttades till partiets egen
+ * publicerade text.
+ *
+ * Tidsstämpeln ensam räckte förut, och den svarar bara på *var* i sändningen
+ * orden finns. Den säger ingenting om *att* de finns — den som vill kontrollera
+ * måste fortfarande lyssna. En avskrift är text, och text går att pröva ord för
+ * ord med precis samma maskineri som en arkivkopia. Därför är avskriften det
+ * som gör citatet kontrollerbart, och tidsstämpeln det som gör det
+ * återfinningsbart. Beslutet kräver båda.
+ *
+ * Den alternativa källan syns inte här: byter posten till en text är källan
+ * inte längre en sändning, och prövningen går den vanliga vägen genom
+ * arkivkontrollen. Det är avsiktligt — den vägen är starkare, och en post som
+ * kan gå den bör göra det.
+ *
+ * `avskriftBarCitatet` är resultatet av att hämta avskriften och pröva citatet
+ * mot den. `undefined` betyder att ingen avskrift är angiven; att skilja det
+ * från `false` är samma regel som skiljer «kom aldrig till» från «gick inte att
+ * avgöra» — en post utan avskrift är inte en post med en dålig avskrift.
  */
-export function provaTaladKalla(url: string | null | undefined): TaladUtfall {
-  return tidpunktISekunder(url) === null ? "talad-utan-tid" : "talad-med-tid";
+export function provaTaladKalla(
+  url: string | null | undefined,
+  avskriftBarCitatet?: boolean,
+): TaladUtfall {
+  if (tidpunktISekunder(url) === null) return "talad-utan-tid";
+  return avskriftBarCitatet === true ? "talad-belagd" : "talad-utan-avskrift";
+}
+
+/**
+ * Adressen till avskriften, när posten anger en.
+ *
+ * Fältet ligger bredvid källan och inte i stället för den: sändningen är
+ * fortfarande det citatet kommer ur, avskriften är hur det går att kontrollera.
+ */
+export function avskriftensAdress(
+  kalla: { transcript_url?: string | null } | null | undefined,
+): string | null {
+  const u = kalla?.transcript_url;
+  return typeof u === "string" && u.trim() !== "" ? u : null;
 }
