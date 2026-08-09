@@ -7,7 +7,7 @@
  * eller lämnas fältet tomt (rot-watchen försöker igen veckovis).
  */
 import { extractPdfText, looksLikePdf, stripHtml } from "./fetch.ts";
-import { normalizeForVerbatim } from "./gates.ts";
+import { normalizeForVerbatim, utanAvslutandeSkiljetecken } from "./gates.ts";
 import type { HttpFetch } from "./archive.ts";
 
 const UA = "UtlovatBot/1.0 (+https://utlovat.se/om)";
@@ -67,7 +67,24 @@ export async function snapshotText(
   return text;
 }
 
-/** Samma kanon som citatgrinden: ordagrant, men okänsligt för vitrum. */
+/**
+ * Samma kanon som citatgrinden: ordagrant, men okänsligt för vitrum.
+ *
+ * **Citatets sista skiljetecken avgör ingenting** (mänskligt beslut
+ * 2026-08-09). Ett citat kapas nästan alltid vid en meningsgräns, och källan
+ * fortsätter ofta med ett komma i stället för en punkt: `p-2026-0709` slutar
+ * «…redan under nästa mandatperiod.» där källan skriver «…redan under nästa
+ * mandatperiod, säger Teresa Carvalho.» Orden är desamma ord för ord; det enda
+ * som skilde var tecknet vi själva satte dit när vi slutade citera. Kopian
+ * vägrades för det, och det var mätaren som hade fel, inte kopian.
+ *
+ * Lättnaden gäller **bara citatets sista tecken**. Skiljetecken inne i citatet
+ * jämförs oförändrat — ett komma mitt i en mening kan flytta vad som utlovas,
+ * och det är just vad grinden finns för. Samma regel gäller redan vilken rad
+ * citatgolvet får räkna som egen punkt (`utanAvslutandeSkiljetecken`).
+ */
 export function quoteInSnapshotText(snapshotText: string, quote: string): boolean {
-  return normalizeForVerbatim(snapshotText).includes(normalizeForVerbatim(quote));
+  const needle = utanAvslutandeSkiljetecken(normalizeForVerbatim(quote));
+  if (needle === "") return false;
+  return normalizeForVerbatim(snapshotText).includes(needle);
 }

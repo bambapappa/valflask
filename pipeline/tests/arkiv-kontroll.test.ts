@@ -41,6 +41,24 @@ test("ett citat som inte står i sidan räknas inte som funnet", () => {
   assert.equal(quoteInSnapshotText("<p>Vi vill sänka skatten.</p>", "Vi vill höja skatten."), false);
 });
 
+test("citatets egen slutpunkt fäller inte en kopia som bär orden", () => {
+  // p-2026-0709: källan fortsätter med komma där citatet sätter punkt.
+  // Mänskligt beslut 2026-08-09 — det är orden som bär citatet.
+  const sida = "<p>– Vi vill att flerfaldig brottslighet ska straffa sig hårdare än idag, säger Teresa Carvalho.</p>";
+  assert.equal(quoteInSnapshotText(sida, "Vi vill att flerfaldig brottslighet ska straffa sig hårdare än idag."), true);
+});
+
+test("ett skiljetecken INNE i citatet jämförs oförändrat", () => {
+  // Lättnaden gäller sista tecknet, inte alla. Ett komma mitt i en mening
+  // kan flytta vad som utlovas, och då ska grinden fälla.
+  const sida = "<p>Vi vill sänka skatten för alla som arbetar.</p>";
+  assert.equal(quoteInSnapshotText(sida, "Vi vill sänka skatten, för alla som arbetar."), false);
+});
+
+test("ett citat som bara är skiljetecken räknas aldrig som funnet", () => {
+  assert.equal(quoteInSnapshotText("<p>Vi vill sänka skatten.</p>", "..."), false);
+});
+
 test("mellanrum inskjutet mitt i ett ord är INTE samma citat", () => {
   // Textutvinningsfelet från 2026-08-06: riksdagen sätter ett span per
   // teckenformat, så "lönebidragens" kunde bli "löne bidragens". Kontrollen
