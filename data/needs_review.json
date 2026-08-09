@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "candidate": {
+      "title": "Avskaffa mängdrabatten för sexualbrott under nästa mandatperiod",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Teresa Carvalho",
+        "role": null
+      },
+      "quote": "Mitt mycket tydliga besked här idag är att vi socialdemokrater går till val på löftet om att börja med att avskaffa mängdrabatten för sexualbrotten, redan under nästa mandatperiod",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: /person must be null; /person/role must be string; /person must match exactly one schema in oneOf"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-07-socialdemokraterna-gar-till-val-pa-tre-reformer-for-ett-starkare-rattsvasende",
+    "articleTitle": "Socialdemokraterna går till val på tre reformer för ett starkare rättsväsende\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Höja maxstraff för grov kvinnofridskränkning från sex till åtta år",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Partiet vill höja maxstraffet för grov kvinnofridskränkning från sex till åtta år.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-07-socialdemokraterna-gar-till-val-pa-tre-reformer-for-ett-starkare-rattsvasende",
+    "articleTitle": "Socialdemokraterna går till val på tre reformer för ett starkare rättsväsende\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring; direkt kostnad för framtagande av proposition är försumbar. Följdeffekter på fängelseväsendet (längre strafftider) är svårbedömda och lämnas okvantifierade enligt regel 9. Avviker från…",
+      "confidence": 0.2,
+      "calculation": "Lagstiftningsarbete (proposition, beredning) uppskattas till 0–5 mkr i engångskostnad. Inga antaganden om ökat antal fängelseår görs då löftet endast rör maxstraff och nyttjandet är osäkert."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0708 (130) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~130"
+  },
+  {
+    "candidate": {
+      "title": "Ge statlig aktör uppdrag att påskynda utbyggnaden av fängelseplatser",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Socialdemokraterna vill ge en statlig aktör ett tydligt samhällsuppdrag att påskynda utbyggnaden av fängelseplatser runt om i landet.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-07-socialdemokraterna-gar-till-val-pa-tre-reformer-for-ett-starkare-rattsvasende",
+    "articleTitle": "Socialdemokraterna går till val på tre reformer för ett starkare rättsväsende\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-0690"
+  }
+]
