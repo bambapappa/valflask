@@ -128,7 +128,9 @@ const jsonLd = [
                           <div class="etikett etikett--sub">Villkor: {st.condition_note}</div>
                         )}
                         {SOURCE_STATUS_LABEL[st.source_status] && (
-                          <div class="etikett etikett--sub kallstatus">{SOURCE_STATUS_LABEL[st.source_status]}</div>
+                          <div class="etikett etikett--sub kallstatus">
+                            <a href="/andrade-kallor">{SOURCE_STATUS_LABEL[st.source_status]}</a>
+                          </div>
                         )}
                       </td>
                     ) : (
@@ -172,7 +174,9 @@ const jsonLd = [
                     <div class="tidslinje__post">
                       <div class="etikett num">
                         {st.date_stated} · {POSITION_LABEL[st.position]}
-                        {SOURCE_STATUS_LABEL[st.source_status] && <> · {SOURCE_STATUS_LABEL[st.source_status]}</>}
+                        {SOURCE_STATUS_LABEL[st.source_status] && (
+                          <> · <a href="/andrade-kallor">{SOURCE_STATUS_LABEL[st.source_status]}</a></>
+                        )}
                       </div>
                       <Citat
                         quote={st.quote}

@@ -68,5 +68,34 @@
     "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-07-socialdemokraterna-gar-till-val-pa-tre-reformer-for-ett-starkare-rattsvasende",
     "articleTitle": "Socialdemokraterna går till val på tre reformer för ett starkare rättsväsende\n| Socialdemokraterna",
     "duplicateOf": "p-2026-0690"
+  },
+  {
+    "candidate": {
+      "title": "S lovar dubbla barnbidrag inför jul och sommarlov",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Socialdemokraterna går till val på att dubbla barn- och studiebidraget inför varje jul- och sommarlov.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.svt.se/nyheter/inrikes/s-lovar-extra-barnbidrag-infor-jul-och-sommarlov",
+    "articleTitle": "S lovar extra barnbidrag inför jul- och sommarlov",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 6300,
+      "msek_high": 7500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Dubbla barn- och studiebidraget inför jul och sommarlov innebär två extra månadsutbetalningar per år. Kostnaden beräknas som 2/12 av barnbidragets totalkostnad (~32 mdkr) och 2/10 av studiebidragets…",
+      "confidence": 0.6,
+      "calculation": "Barnbidraget: årskostnad ca 32 000 mkr, extra 2/12 = 5 333 mkr. Studiebidraget: årskostnad ca 5 000 mkr (10 mån), extra 2/10 = 1 000 mkr. Summa ~6 333 mkr, avrundat till 6 300 mkr. Låg: 5 000 mkr, hög: 7 500 mkr (osäkerhet i antal mottagare och genomsnittsbelopp)."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0468 (5600), p-2026-0619 (12000), p-2026-0348 (3500), p-2026-0325 (8100), p-2026-0100 (17000)"
   }
 ]

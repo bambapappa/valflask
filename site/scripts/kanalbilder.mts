@@ -36,6 +36,7 @@ import {
   isActive,
   dataHash,
 } from "../src/lib/calc.ts";
+import { sokStammar, BETANKANDENYCKEL } from "../../handlingsvagen/pipeline/src/nyckelord.ts";
 import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -142,6 +143,8 @@ export interface Bild {
   block: Block[];
   /** Källraden längst ned — obligatorisk, precis som under sajtens diagram. */
   kallrad: string;
+  /** Adressen i fotbaren. Utelämnad blir det sajtens egen. */
+  fot?: string;
   /** Förslag på bildtext när bilden läggs upp. */
   bildtext: string;
   /** Golven på bilden med mätningen bakom sig. */
@@ -189,41 +192,65 @@ export interface Underlag {
     fran: string;
     till: string;
   };
-  /** Ett verkligt sökexempel, räknat ur samma index som sajten söker i. */
-  sokexempel: {
-    ord: string;
-    traffar: number;
-    motioner: number;
-    interpellationer: number;
-    fragor: number;
-  };
+  /** Verkliga sökexempel, räknade ur samma index som sajten söker i. */
+  sokexempel: Record<string, Sokning>;
 }
 
-/**
- * Ett sökord räknat mot ämnesindexet — samma register som sidan *Ämnen och ord*
- * söker i. Filerna är 36 MB tillsammans, så de läses en i taget och släpps:
- * bilden behöver antalet, inte indexet.
- */
-function sokTraffar(ord: string, kindPerId: Map<string, string>): {
+/** Vad ett sökord ger på sidan *Ämnen och ord* — antalet och vad träffarna är. */
+export interface Sokning {
+  ord: string;
   traffar: number;
   motioner: number;
   interpellationer: number;
   fragor: number;
-} {
-  const kvar = { traffar: 0, motioner: 0, interpellationer: 0, fragor: 0 };
+  propositioner: number;
+}
+
+/**
+ * Sökorden bilderna visar upp. Ett ord per bild och målgrupp: `npf` i
+ * artikeltexten om Handlingsvågen, `csn` i flödet mot förstagångsväljare.
+ *
+ * Båda är valda för att de ger **ett** uppslag i indexet. Ord som "klimat"
+ * stammas till två former (`klim` och `klimat`), och då vet sajten själv bara
+ * ett undre tak för antalet — den skriver "minst". Ett tal på en bild som redan
+ * är avrundat nedåt ska inte dessutom vara ett tak för ett tak.
+ */
+const SOKORD = ["npf", "csn"] as const;
+
+/**
+ * Ett sökord räknat mot ämnesindexet — samma väg som sidan *Ämnen och ord*
+ * går, inte en egen tolkning av den:
+ *
+ * - **`sokStammar` avgör vad som slås upp.** Söker läsaren "csn" prövar sajten
+ *   både `csn` och `csnet`, för bestämd form och grundform hamnar inte alltid
+ *   på samma stam. Att jämföra mot det råa ordet i stället hade gett ett annat
+ *   tal än sidan visar.
+ * - **Bara `t` är sökbart.** `y` bär visningsformerna ("vårdplatser" för stammen
+ *   `vårdplat`) och ligger inte i det inverterade indexet.
+ * - **Betänkanden räknas inte.** De ligger i sin egen lista under voteringarna.
+ * - **Bara handlingar som finns i registret.** Söket hoppar över träffar det
+ *   inte har någon handling till, så en träff som inte går att visa är ingen
+ *   träff för läsaren heller.
+ *
+ * Filerna är 36 MB tillsammans, så de läses en i taget och släpps: bilden
+ * behöver antalet, inte indexet.
+ */
+function sokTraffar(ord: string, kindPerId: Map<string, string>): Sokning {
+  const stammar = sokStammar(ord);
+  const kvar: Sokning = { ord, traffar: 0, motioner: 0, interpellationer: 0, fragor: 0, propositioner: 0 };
   for (const fil of readdirSync(resolve(process.cwd(), "../handlingsvagen/data/nyckelord")).sort()) {
     if (!fil.endsWith(".json")) continue;
-    const del = läsHandlingsvagen<{ handlingar: Record<string, { t?: string[]; y?: string[] }> }>(
-      `nyckelord/${fil}`,
-    );
+    const del = läsHandlingsvagen<{ handlingar: Record<string, { t?: string[] }> }>(`nyckelord/${fil}`);
     for (const [id, termer] of Object.entries(del.handlingar)) {
-      const alla = new Set([...(termer.t ?? []), ...(termer.y ?? [])]);
-      if (!alla.has(ord)) continue;
-      kvar.traffar += 1;
+      if (BETANKANDENYCKEL.test(id)) continue;
+      if (!stammar.some((stam) => (termer.t ?? []).includes(stam))) continue;
       const kind = kindPerId.get(id);
+      if (kind === undefined) continue;
+      kvar.traffar += 1;
       if (kind === "motion") kvar.motioner += 1;
       else if (kind === "interpellation") kvar.interpellationer += 1;
       else if (kind === "skriftlig_fraga") kvar.fragor += 1;
+      else if (kind === "proposition") kvar.propositioner += 1;
     }
   }
   return kvar;
@@ -288,8 +315,8 @@ export function mätUnderlaget(): Underlag {
   const iIndex = handlingar.filter((h) => indexerade.has(h.id));
   const indexDatum = iIndex.map((h) => h.datum).filter(Boolean).sort();
   const antalAv = (kind: string): number => iIndex.filter((h) => h.kind === kind).length;
-  const sokord = "npf";
-  const traff = sokTraffar(sokord, kindPerId);
+  const sokexempel: Record<string, Sokning> = {};
+  for (const ord of SOKORD) sokexempel[ord] = sokTraffar(ord, kindPerId);
 
   return {
     datum,
@@ -331,7 +358,7 @@ export function mätUnderlaget(): Underlag {
       fran: indexDatum[0] ?? "",
       till: indexDatum[indexDatum.length - 1] ?? "",
     },
-    sokexempel: { ord: sokord, ...traff },
+    sokexempel,
   };
 }
 
@@ -355,6 +382,10 @@ export function byggBilder(u: Underlag): Bild[] {
   const gKallor = golvtal(u.kallor);
   const gRattelser = golvtal(u.rattelser);
   const gArkiv = avTio(u.arkivandel);
+  const gSokbara = golvtal(u.amnesindex.handlingar);
+  const npf = u.sokexempel.npf!;
+  const csn = u.sokexempel.csn!;
+  const gCsn = golvtal(csn.traffar);
   const tommaAndel = u.celler > 0 ? (u.celler - u.cellerIfyllda) / u.celler : 0;
   const gTomma = avTio(tommaAndel);
 
@@ -538,7 +569,7 @@ export function byggBilder(u: Underlag): Bild[] {
       fil: "b1-vad-loftena-kostar",
       serie: SERIE_B,
       nr: 1,
-      antal: 6,
+      antal: 7,
       block: [
         { typ: "kicker", text: "VALLÖFTENA FÖR 2027–2030" },
         { typ: "jattetal", over: "ÖVER", tal: tal(gFlask), enhet: "MILJARDER KRONOR", underrad: "hittills, från alla åtta partier" },
@@ -560,7 +591,7 @@ export function byggBilder(u: Underlag): Bild[] {
       fil: "b2-mot-reformbudgeten",
       serie: SERIE_B,
       nr: 2,
-      antal: 6,
+      antal: 7,
       block: [
         { typ: "kicker", text: "LÖFTENA MOT PENGARNA SOM FINNS" },
         // "För mycket" vore ett omdöme om politiken. Bilden säger hur mycket
@@ -591,7 +622,7 @@ export function byggBilder(u: Underlag): Bild[] {
       fil: "b3-vem-lovar-mest",
       serie: SERIE_B,
       nr: 3,
-      antal: 6,
+      antal: 7,
       block: [
         { typ: "kicker", text: "SUMMAN AV VARJE PARTIS LÖFTEN" },
         { typ: "rubrik", text: "VEM LOVAR MEST?", grad: 116 },
@@ -621,7 +652,7 @@ export function byggBilder(u: Underlag): Bild[] {
       fil: "b4-tomma-rutor",
       serie: SERIE_B,
       nr: 4,
-      antal: 6,
+      antal: 7,
       block: [
         { typ: "kicker", text: "FRÅGEVÅGEN JUST NU" },
         { typ: "rubrik", text: `MER ÄN ${gTomma} AV 10 RUTOR ÄR TOMMA`, grad: 96 },
@@ -648,7 +679,7 @@ export function byggBilder(u: Underlag): Bild[] {
       fil: "b5-handlingsvagen",
       serie: SERIE_B,
       nr: 5,
-      antal: 6,
+      antal: 7,
       block: [
         { typ: "kicker", text: "HÅLLER DE VAD DE LOVAR?" },
         { typ: "rubrik", text: "ORDEN VÄGS MOT HANDLINGARNA", grad: 96 },
@@ -679,7 +710,7 @@ export function byggBilder(u: Underlag): Bild[] {
       fil: "b6-kvittot",
       serie: SERIE_B,
       nr: 6,
-      antal: 6,
+      antal: 7,
       block: [
         { typ: "kicker", text: "VARFÖR DU KAN KONTROLLERA OSS" },
         { typ: "rubrik", text: `MER ÄN ${gArkiv} AV 10 LÖFTEN HAR EN ARKIVKOPIA`, grad: 88 },
@@ -704,6 +735,57 @@ export function byggBilder(u: Underlag): Bild[] {
         golvpåstående(`över ${tal(gRattelser)} rättelser`, u.rattelser, `${tal(u.rattelser)} rättelseposter`, gRattelser),
       ],
     },
+    {
+      /**
+       * Sökbilden i flödesformat. Sökordet är `csn` av två skäl: det är den
+       * fråga i registret som ligger närmast en förstagångsväljares vardag, och
+       * det ger **ett** uppslag i indexet — ord som "klimat" stammas till två
+       * former, och då känner sajten själv bara ett undre tak för antalet.
+       */
+      fil: "b7-sok-ett-ord",
+      serie: SERIE_B,
+      nr: 7,
+      antal: 7,
+      block: [
+        { typ: "kicker", text: "ÄMNEN OCH ORD" },
+        // Radbrytningen är vald, inte råkad: Anton bär höga ringar och prickar,
+        // och ett Å först på en bruten rad skär in i raden ovanför.
+        { typ: "rubrik", text: "ETT ORD IN. FYRA ÅRS RIKSDAG UT.", grad: 96 },
+        {
+          typ: "jattetal",
+          over: "ÖVER",
+          tal: tal(gCsn),
+          enhet: `HANDLINGAR OM ${csn.ord.toUpperCase()}`,
+          underrad: `av över ${tal(gSokbara)} sökbara handlingar`,
+        },
+        {
+          typ: "brodtext",
+          text: "Sök på csn, hyresrätt, klimat — vad du vill. Du får varje motion, interpellation och skriftlig fråga där ordet står, med länk till dokumentet.",
+        },
+        {
+          typ: "brodtext",
+          text: "Att ordet står i en motion säger inte om partiet är för eller emot. Söket letar — det dömer aldrig.",
+          grad: 28,
+        },
+      ],
+      kallrad: kallradB,
+      bildtext:
+        "Undrar du vad riksdagen faktiskt gjort i en fråga du bryr dig om? Sök på ordet — csn, hyresrätt, vad som helst — och få varje motion, interpellation och skriftlig fråga från hela mandatperioden på ett ställe, med länk till dokumentet. utlovat.se/handlingsvagen",
+      matningar: [
+        golvpåstående(
+          `över ${tal(gCsn)} handlingar om ${csn.ord}`,
+          csn.traffar,
+          `${tal(csn.traffar)} handlingar innehåller "${csn.ord}" (${tal(csn.motioner)} motioner, ${tal(csn.fragor)} skriftliga frågor, ${tal(csn.interpellationer)} interpellationer, ${tal(csn.propositioner)} propositioner)`,
+          gCsn,
+        ),
+        golvpåstående(
+          `över ${tal(gSokbara)} sökbara handlingar`,
+          u.amnesindex.handlingar,
+          `${tal(u.amnesindex.handlingar)} sökbara handlingar, ${u.amnesindex.fran} till ${u.amnesindex.till}`,
+          gSokbara,
+        ),
+      ],
+    },
   ];
 
   /**
@@ -719,7 +801,7 @@ export function byggBilder(u: Underlag): Bild[] {
       format: "liggande",
       serie: "ARTIKELBILD",
       nr: 1,
-      antal: 1,
+      antal: 3,
       block: [
         { typ: "kicker", text: "HANDLINGSVÅGEN · UTLOVAT.SE" },
         { typ: "rubrik", text: "LÖFTET ÄR NYTT. ÄR POLITIKEN DET?", grad: 96 },
@@ -762,16 +844,122 @@ export function byggBilder(u: Underlag): Bild[] {
               text: `motioner, interpellationer, skriftliga frågor och propositioner, ${u.amnesindex.fran} till ${u.amnesindex.till}`,
             },
             {
-              tal: `"${u.sokexempel.ord}"`,
-              text: `ger ${tal(u.sokexempel.traffar)} handlingar: ${tal(u.sokexempel.interpellationer)} interpellationer, ${tal(u.sokexempel.motioner)} motioner, ${tal(u.sokexempel.fragor)} skriftliga frågor`,
+              tal: `"${npf.ord}"`,
+              text: `ger ${tal(npf.traffar)} handlingar: ${tal(npf.interpellationer)} interpellationer, ${tal(npf.motioner)} motioner, ${tal(npf.fragor)} skriftliga frågor`,
             },
           ],
           not: "Söket dömer aldrig — riktningen kommer ur granskade utslag.",
         },
       ],
       kallrad: `Källa: utlovat.se/handlingsvagen · registret mätt ${u.datum} · akt ${u.akt} · data CC BY 4.0`,
+      fot: "UTLOVAT.SE/HANDLINGSVAGEN",
       bildtext:
         "Inför valet är alla partier överens om att de bryr sig. Frågan är sedan när. Handlingsvågen på utlovat.se väger varje vallöfte mot partiets faktiska riksdagsarbete 2022–2026 — motion för motion, fråga för fråga — och låter utslaget stå tomt när det inte finns någon handling att väga mot. Där finns också ett fritextsök över hela mandatperiodens handlingar: skriv ett ord, till exempel npf, och få allt partierna skrivit i frågan samlat på ett ställe.",
+      matningar: [],
+    },
+    {
+      fil: "l2-vad-utlovat-gor",
+      format: "liggande",
+      serie: "ARTIKELBILD",
+      nr: 2,
+      antal: 3,
+      block: [
+        { typ: "kicker", text: "SÅ FUNGERAR UTLOVAT.SE" },
+        // Andra raden bär med flit inga ringar eller prickar: Anton sätts med
+        // radavstånd 1,04, och ett Ä på rad två skär in i rad ett.
+        { typ: "rubrik", text: "VI RÄKNAR. DU KAN KONTROLLERA.", grad: 88 },
+        {
+          typ: "brodtext",
+          text:
+            "Utlovat.se samlar alla åtta riksdagspartiers vallöften inför den 13 september 2026 och gör tre saker med dem: prissätter dem, ställer dem mot varandra i sakfrågorna, och väger dem mot riksdagsarbetet.",
+          grad: 27,
+        },
+        {
+          typ: "brodtext",
+          text:
+            "Varje påstående bär partiets egna ord, en källa och en arkivkopia där citatet måste stå kvar. Ingen summa publiceras utan att en människa godkänt den, och fel rättas synligt i en öppen logg.",
+          grad: 27,
+        },
+        { typ: "faktarad", delar: [`${u.partier} PARTIER`, `${u.mandat} MANDAT`, "3 VÅGOR"] },
+        {
+          typ: "panel",
+          etikett: "FLÄSKVÅGEN",
+          rubrik: "VAD LÖFTENA KOSTAR",
+          rader: [
+            { tal: tal(u.loften), text: "löften, vart och ett med exakt citat, källa och en öppen uträkning" },
+          ],
+        },
+        {
+          typ: "panel",
+          etikett: "FRÅGEVÅGEN",
+          rubrik: "VAR PARTIERNA STÅR",
+          rader: [
+            {
+              tal: `${u.sakfragor} × ${u.partier}`,
+              text: "sakfrågor mot partier, cell för cell. Saknas ett rent citat står cellen tom.",
+            },
+          ],
+        },
+        {
+          typ: "panel",
+          etikett: "HANDLINGSVÅGEN",
+          rubrik: "HÅLLER DE VAD DE LOVAR?",
+          rader: [
+            { tal: tal(u.kopplingar), text: "granskade kopplingar mellan ett löfte och en riksdagshandling" },
+          ],
+        },
+      ],
+      kallrad: `Källa: utlovat.se · mätt ${u.datum} · akt ${u.akt} · data CC BY 4.0`,
+      bildtext:
+        "Utlovat.se granskar alla åtta riksdagspartiers vallöften inför valet den 13 september 2026: vad de kostar, var partierna står i sakfrågorna, och vad de faktiskt gjort i riksdagen under mandatperioden. Varje påstående bär partiets egna ord, en källa och en arkivkopia — och uträkningen bakom varje belopp ligger öppen. Hela datat är fritt att ladda ner (CC BY 4.0).",
+      matningar: [],
+    },
+    {
+      fil: "l3-siffrorna-just-nu",
+      format: "liggande",
+      serie: "ARTIKELBILD",
+      nr: 3,
+      antal: 3,
+      block: [
+        { typ: "kicker", text: "GRANSKNINGEN I TAL" },
+        { typ: "rubrik", text: "SIFFRORNA JUST NU", grad: 84 },
+        {
+          typ: "statrader",
+          poster: [
+            { tal: matt(u.flasketMdkr), etikett: "MILJARDER KRONOR — VAD ALLA PARTIERS LÖFTEN KOSTAR TILLSAMMANS 2027–2030" },
+            { tal: `${matt(u.gangerReformutrymmet)} ×`, etikett: "SÅ MYCKET STÖRRE ÄN REFORMUTRYMMET I EN FYRAÅRSBUDGET" },
+            { tal: tal(u.loften), etikett: "AKTIVA LÖFTEN MED CITAT, KÄLLA OCH ÖPPEN UTRÄKNING" },
+          ],
+        },
+        {
+          typ: "brodtext",
+          text: `${matt(u.arkivandel * 100)} % av löftena har en arkivkopia där citatet står kvar ordagrant. ${tal(u.kallor)} skilda källor, ${tal(u.rattelser)} publicerade rättelser om oss själva.`,
+          grad: 24,
+        },
+        {
+          typ: "panel",
+          etikett: "FRÅGEVÅGEN",
+          rubrik: "TIO SAKFRÅGOR, CELL FÖR CELL",
+          rader: [
+            { tal: tal(u.delfragor), text: "raka delfrågor, ställda till alla åtta partierna" },
+            { tal: tal(u.cellerIfyllda), text: `av ${tal(u.celler)} rutor har ett rent besked. Resten står tomma.` },
+          ],
+          not: "En tom ruta betyder att vi inte hittat ett rent citat — inte att partiet saknar åsikt.",
+        },
+        {
+          typ: "panel",
+          etikett: "HANDLINGSVÅGEN",
+          rubrik: "FYRA ÅR I RIKSDAGEN",
+          rader: [
+            { tal: tal(u.handlingar), text: `riksdagshandlingar 2022–2026, varav ${tal(u.voteringar)} voteringar` },
+            { tal: tal(u.kopplingar), text: `granskade kopplingar; ${tal(u.utslag.loften)} löften har fått ett utslag` },
+          ],
+          not: `Ämnessöket Ämnen och ord når ${tal(u.amnesindex.handlingar)} av dem — voteringar bär ingen egen text att söka i.`,
+        },
+      ],
+      kallrad: `Källa: utlovat.se · mätt ${u.datum} · akt ${u.akt} · data CC BY 4.0`,
+      bildtext:
+        `Så här ser granskningen ut den ${u.datum}: partiernas vallöften för 2027–2030 kostar tillsammans ${matt(u.flasketMdkr)} miljarder kronor, ${matt(u.gangerReformutrymmet)} gånger mer än reformutrymmet i en fyraårsbudget. Varje belopp har en uträkning som ligger öppen, och nästan varje löfte en arkivkopia där citatet står kvar. utlovat.se`,
       matningar: [],
     },
   ];

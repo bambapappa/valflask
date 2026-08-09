@@ -45,3 +45,28 @@ export const KALLSTATUS_ETIKETT: Record<Kallstatus, string | null> = {
   andrad: "KÄLLAN HAR ÄNDRATS — ARKIVKOPIAN GÄLLER",
   borttagen: "KÄLLAN HAR TAGITS BORT — ARKIVKOPIAN GÄLLER",
 };
+
+/**
+ * Vad som ändrats, som `pnpm promises:rot-check` mätte det.
+ *
+ * Stämpeln ovan säger att citatet inte längre står i källan. Den säger inte
+ * vad som står där i stället, och utan det ledet är fallet inget en läsare kan
+ * pröva — bara något vi påstår. Fälten här är därför mätvärden ur sidan som
+ * den ser ut i dag, aldrig omskrivna av oss.
+ *
+ * Typen bor här av samma skäl som etiketten: båda vågorna läser den, och ett
+ * faktum har en plats.
+ */
+export type Andringsslag = "ordalydelse" | "sidan-utbytt" | "sidan-borttagen";
+
+export interface Kallandring {
+  kind: Andringsslag;
+  observed_at: string;
+  /** Meningen som står där i dag, ordagrant ur källan. */
+  now_reads?: string;
+  /** Dit adressen leder nu, när den inte längre stannar på sig själv. */
+  redirects_to?: string;
+  /** Datum då fallet kontrollerats mot båda länkarna. Sätts aldrig av svepet. */
+  reviewed_at?: string;
+  note?: string;
+}

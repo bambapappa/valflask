@@ -132,7 +132,9 @@ for (const bild of bilder) {
 check('varje tal skrivet som "N+" har en mätning bakom sig', allaPlusBelagda);
 
 console.log("\n--- Ramen ---");
-const { ritaEnBild, L_DELAR, L_RAM } = await import("./generate-kanalbilder.mts");
+const { ritaEnBild, matInnehallshojd, innehallsutrymme, L_DELAR, L_RAM } = await import(
+  "./generate-kanalbilder.mts"
+);
 
 /**
  * Artikelbildens ram är fyra staplade delar med låsta höjder. Summerar de till
@@ -162,6 +164,31 @@ const l = await matt(lodrat!);
 check("den lodräta bilden är 1080×1920", l.bredd === 1080 && l.hojd === 1920, `blev ${l.bredd}×${l.hojd}`);
 const g = await matt(liggande!);
 check("artikelbilden är 1920×1080", g.bredd === 1920 && g.hojd === 1080, `blev ${g.bredd}×${g.hojd}`);
+
+/**
+ * Ingenting får klippas i innehållsytans nederkant.
+ *
+ * Ytan har låst höjd, så innehåll som växer förbi den försvinner tyst — samma
+ * fel som kostade artikelbilden en panels sista rad under bygget. Här mäts det
+ * på det enda stället där det går att veta: innehållet ritas i en alldeles för
+ * hög ram, och understa raden med bläck är dess verkliga höjd.
+ *
+ * Marginalen är ett krav i sig. En layout som slutar exakt på kanten är en
+ * layout som klipps så fort ett tal blir en siffra längre eller en mening ett
+ * ord — och de talen kommer ur data som ändras varje vecka.
+ */
+const KANTMARGINAL = 8;
+const forTrangt: string[] = [];
+for (const bild of bilder) {
+  const hojd = await matInnehallshojd(bild);
+  const utrymme = innehallsutrymme(bild);
+  if (hojd > utrymme - KANTMARGINAL) forTrangt.push(`${bild.fil}: ${hojd} px i ${utrymme} px`);
+}
+check(
+  `varje bilds innehåll ryms med ${KANTMARGINAL} px till godo`,
+  forTrangt.length === 0,
+  forTrangt.join("; "),
+);
 
 if (errors > 0) {
   console.error(`\ntest-kanalbilder: ${errors} grind(ar) föll`);
