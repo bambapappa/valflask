@@ -8,6 +8,7 @@ import {
   koforslagId,
   konyckel,
   provningsGrind,
+  standpunktNyckel,
   type Provning,
   type Slag,
 } from "../src/provningar.ts";
@@ -18,6 +19,13 @@ const FIXTUR = JSON.parse(
   kanon: { slag: Slag; obj: Record<string, unknown>; hash: string }[];
   konyckel: { url: string | null; citat: string | null; nyckel: string }[];
   koforslag_id: { post: { promise_id: string; handling_id: string }; id: string }[];
+  standpunkt_nyckel: {
+    url: string | null;
+    sq: string | null;
+    parti: string | null;
+    citat: string | null;
+    nyckel: string;
+  }[];
 };
 
 // ── Att de två språken räknar samma hash ──────────────────────────────
@@ -52,6 +60,75 @@ test("koforslagId ger samma id som logg.py", () => {
   for (const fall of FIXTUR.koforslag_id) {
     assert.equal(koforslagId(fall.post), fall.id);
   }
+});
+
+test("standpunktNyckel ger samma nyckel som logg.py", () => {
+  for (const fall of FIXTUR.standpunkt_nyckel) {
+    assert.equal(standpunktNyckel(fall.url, fall.sq, fall.parti, fall.citat), fall.nyckel);
+  }
+});
+
+// ── Att en ståndpunkts hash bär beskedet, inte bara cellens adress ─────
+//
+// Fram till 2026-08-09 läste hashen `current.position` och `current.statement_id`
+// medan både kö-posten och godkännandets objekt bar citatet platt. Följden var
+// två fel på en gång: hashen täckte i praktiken bara delfråga och parti, så
+// grinden släppte igenom vilket besked och vilket citat som helst — och
+// `statement_id` mintas i godkännandet, så prövningen blev gammal i samma stund
+// beslutet verkställdes. Fem godkända ståndpunkter stod som inaktuella dagen
+// efter att de publicerats.
+
+const STANDPUNKT_PUBLICERAD = {
+  subquestion_id: "sq-01",
+  party: "mp",
+  current: { position: "ja", statement_id: "st-9" },
+  statements: [
+    { id: "st-8", position: "nej", condition_note: null, quote: "Ett gammalt besked", source: { url: "https://example.se/gammal" } },
+    { id: "st-9", position: "ja", condition_note: "gäller från 2027", quote: "Vi vill införa det", source: { url: "https://example.se/ny#page=3" } },
+  ],
+};
+
+const STANDPUNKT_I_KO = {
+  id: "sq-01/mp",
+  subquestion_id: "sq-01",
+  party: "mp",
+  position: "ja",
+  quote: "Vi vill införa det",
+  condition_note: "gäller från 2027",
+  source: { url: "https://example.se/ny#page=3", archive_url: "https://web.archive.org/x" },
+  date_stated: "2026-05-01",
+};
+
+test("kö-postens hash överlever publiceringen", () => {
+  assert.equal(
+    kanon("standpunkt", STANDPUNKT_I_KO),
+    kanon("standpunkt", STANDPUNKT_PUBLICERAD),
+    "samma besked i kö-form och publicerad form måste ge samma hash — annars\n" +
+      "blir varje prövning gammal av själva godkännandet",
+  );
+});
+
+test("ett annat citat på samma cell ger en annan hash", () => {
+  assert.notEqual(
+    kanon("standpunkt", { ...STANDPUNKT_I_KO, quote: "Vi vill utreda det" }),
+    kanon("standpunkt", STANDPUNKT_I_KO),
+    "hashen måste bära citatet, annars vaktar grinden ingenting",
+  );
+});
+
+test("en annan riktning på samma cell ger en annan hash", () => {
+  assert.notEqual(
+    kanon("standpunkt", { ...STANDPUNKT_I_KO, position: "nej" }),
+    kanon("standpunkt", STANDPUNKT_I_KO),
+  );
+});
+
+test("ett bytt besked i cellen gör prövningen gammal", () => {
+  // Cellen pekas om till det äldre uttalandet: samma delfråga, samma parti,
+  // annan riktning och ett annat citat. En prövning av det nya beskedet får
+  // inte fortsätta gälla.
+  const ompekad = { ...STANDPUNKT_PUBLICERAD, current: { position: "nej", statement_id: "st-8" } };
+  assert.notEqual(kanon("standpunkt", ompekad), kanon("standpunkt", STANDPUNKT_PUBLICERAD));
 });
 
 // ── Grinden ───────────────────────────────────────────────────────────

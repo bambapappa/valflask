@@ -24,7 +24,7 @@ import {
 } from "../src/stance-pipeline.ts";
 import { validateStanceInvariants, type IssuesFile, type StanceCell } from "../src/stances.ts";
 import { avvisa, type Avvisning } from "../src/avvisningar.ts";
-import { lasProvningar, provningsGrind } from "../src/provningar.ts";
+import { lasProvningar, provningsGrind, standpunktNyckel } from "../src/provningar.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const DATA = join(ROOT, "data");
@@ -119,14 +119,26 @@ if (hardFailures.length > 0) {
 // Kvalitetsfiltret, som grind. Den satt i Fläskvågens och Handlingsvågens
 // godkännanden sedan 2026-08-07 men inte i Frågevågens — och `logg.py` kunde
 // dessutom inte slå upp en kö-post här, så en ståndpunkt gick inte att pröva
-// förrän efter beslutet. Båda är lagade 2026-08-09. Hashen räknas på beskedet
-// som det FAKTISKT publiceras, så ett ändrat citat eller en ändrad position
-// vid godkännandet gör prövningen inaktuell.
+// förrän efter beslutet. Båda är lagade 2026-08-09.
+//
+// Hashen räknas på beskedet som det FAKTISKT publiceras, så ett ändrat citat
+// eller en ändrad position vid godkännandet gör prövningen inaktuell. Den raden
+// stod här redan 2026-08-09 utan att stämma: objektet nedan bär citatet platt
+// medan hashen letade under `current`, så den täckte bara cellens adress —
+// samma hash oavsett besked och citat, och grinden vaktade ingenting. Rättat
+// samma dag i `standpunktensBesked()`; nu bär hashen det den utger sig för.
 {
   const kandidat = entry.candidate as StanceCandidate & { condition_note?: string | null };
   const grind = provningsGrind(
     lasProvningar(DATA),
-    [`ko:${id}`, `${kandidat.subquestion_id}/${kandidat.party}`],
+    // Kö-postens eget id, det innehållshärledda som överlever en omskörd, och
+    // den identitet loggen ger ett publicerat besked — en prövning kan vara
+    // skriven mot vilken som helst av dem.
+    [
+      `ko:${id}`,
+      standpunktNyckel(entry.sourceUrl, kandidat.subquestion_id, kandidat.party, kandidat.quote),
+      `${kandidat.subquestion_id}::${kandidat.party}`,
+    ],
     "standpunkt",
     {
       id: `${kandidat.subquestion_id}/${kandidat.party}`,

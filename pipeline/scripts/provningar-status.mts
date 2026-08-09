@@ -15,7 +15,7 @@
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { kanon, konyckel, koforslagId, lasProvningar, reviewNyckel, type Slag } from "../src/provningar.ts";
+import { identiteter, kanon, lasProvningar, type Slag } from "../src/provningar.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const HV_DATA = join(import.meta.dirname, "../../handlingsvagen/data");
@@ -28,29 +28,22 @@ function las<T>(sokvag: string): T[] {
 type Sak = { nycklar: string[]; slag: Slag; obj: Record<string, unknown> };
 
 const befolkning: Record<string, Sak[]> = {
+  // Identiteterna räknas av `identiteter()` i `provningar.ts` — samma lista som
+  // grinden godtar och som `logg.py` speglar. Räknades de här skulle de tre
+  // ställena glida isär, och det har de gjort en gång: mätningen i handoff såg
+  // 94,6 procent på löftena medan den här såg 100, och skillnaden var ingen
+  // lucka i arbetet utan i uppslagningen.
   lofte: las<Record<string, unknown>>(join(DATA, "promises.json"))
     .filter((p) => p["status"] !== "tillbakadragen")
-    .map((p) => {
-      const url = (p["source"] as { url?: string } | undefined)?.url;
-      return {
-        // Samma tre identiteter som grinden godtar: löftets id, den
-        // innehållshärledda kö-nyckeln, och kö-postens issue-id.
-        nycklar: [
-          String(p["id"]),
-          konyckel(url, p["quote"] as string),
-          reviewNyckel(url, p["title"] as string),
-        ],
-        slag: "lofte" as const,
-        obj: p,
-      };
-    }),
+    .map((p) => ({
+      nycklar: identiteter("lofte", String(p["id"]), p),
+      slag: "lofte" as const,
+      obj: p,
+    })),
   koppling: las<Record<string, unknown>>(join(HV_DATA, "kopplingar.json"))
     .filter((k) => k["status"] !== "indragen")
     .map((k) => ({
-      nycklar: [
-        String(k["id"]),
-        `ko:${koforslagId(k as unknown as { promise_id?: string; handling_id: string })}`,
-      ],
+      nycklar: identiteter("koppling", String(k["id"]), k),
       slag: "koppling" as const,
       obj: k,
     })),
@@ -60,7 +53,7 @@ const befolkning: Record<string, Sak[]> = {
       return pos !== undefined && pos !== null && pos !== "inget_tydligt_besked";
     })
     .map((s) => ({
-      nycklar: [`${s["subquestion_id"]}::${s["party"]}`],
+      nycklar: identiteter("standpunkt", `${s["subquestion_id"]}::${s["party"]}`, s),
       slag: "standpunkt" as const,
       obj: s,
     })),
