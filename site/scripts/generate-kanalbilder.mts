@@ -42,6 +42,9 @@ const BREDD = 1080;
 const HOJD = 1920;
 const MARGINAL = 64;
 const SPALT = BREDD - MARGINAL * 2;
+/** Sidhuvudets höjd, och innehållsytan under det. Låsta av samma skäl som L_*. */
+const HUVUD = 150;
+const INNEHALL = 1220;
 
 /* Artikelbildens mått. Liggande 16:9 duger både som omslag till en text och
    som förhandsbild när länken delas. */
@@ -55,8 +58,8 @@ const L_TEXT = 900;
  * den understa delen ut ur bilden och innehållet klipps längst ned utan att
  * något säger ifrån. Grinden i test-kanalbilder.mts räknar summan.
  */
-const L_HUVUD = 108;
-const L_INNEHALL = 830;
+const L_HUVUD = 96;
+const L_INNEHALL = 842;
 const L_KALLRAD = 58;
 const L_FOT = 84;
 export const L_DELAR = [L_HUVUD, L_INNEHALL, L_KALLRAD, L_FOT];
@@ -418,12 +421,35 @@ function ritaBlock(block: Block, bredd: number = SPALT): El {
 
 /* ───────────────────────────────────────────────────────────────── hela ramen ── */
 
+/**
+ * Innehållsytans barn, utan den låsta höjden.
+ *
+ * Ramen och mätningen MÅSTE bygga innehållet ur samma funktion. Ritade de var
+ * sitt vore mätningen ett påstående om en annan bild än den som blir PNG, och
+ * grinden hade vaktat fel sak.
+ */
+function innehallet(bild: Bild): El {
+  if (bild.format === "liggande") {
+    return ruta({ padding: `36px ${L_MARGINAL}px 0`, width: `${L_BREDD}px` }, [
+      ruta({ flexDirection: "column", width: `${L_TEXT}px`, marginRight: "56px" },
+        bild.block.filter((b) => b.typ !== "panel").map((block) => ritaBlock(block, L_TEXT)),
+      ),
+      ruta({ flexDirection: "column", width: `${L_PANEL}px` },
+        bild.block.filter((b) => b.typ === "panel").map((block) => ritaBlock(block, L_PANEL)),
+      ),
+    ]);
+  }
+  return ruta({ flexDirection: "column", padding: `52px ${MARGINAL}px 0`, width: `${BREDD}px` },
+    bild.block.map((block) => ritaBlock(block)),
+  );
+}
+
 function ritaLodrat(bild: Bild): El {
   return ruta({ flexDirection: "column", width: `${BREDD}px`, height: `${HOJD}px`, backgroundColor: PAPPER }, [
     // Sidhuvud: sajtens namn till vänster, seriens plats i följden till höger.
     ruta(
       {
-        height: "150px",
+        height: `${HUVUD}px`,
         backgroundColor: SVARTA,
         alignItems: "center",
         justifyContent: "space-between",
@@ -448,9 +474,7 @@ function ritaLodrat(bild: Bild): El {
     ),
 
     // Innehållet. Höjden är låst så att bilden aldrig kan växa in i underkanten.
-    ruta({ flexDirection: "column", height: "1220px", padding: `52px ${MARGINAL}px 0`, overflow: "hidden" },
-      bild.block.map((block) => ritaBlock(block)),
-    ),
+    ruta({ flexDirection: "column", height: `${INNEHALL}px`, overflow: "hidden" }, innehallet(bild)),
 
     // Källraden — obligatorisk under varje diagram, också här.
     ruta({ padding: `0 ${MARGINAL}px`, height: "80px", alignItems: "center", flexShrink: 0 },
@@ -470,7 +494,7 @@ function ritaLodrat(bild: Bild): El {
         flexShrink: 0,
       },
       ruta({ flexDirection: "column", alignItems: "center" }, [
-        text("UTLOVAT.SE", { fontFamily: "Anton", fontSize: "62px", color: GUL, letterSpacing: "0.01em" }),
+        text(bild.fot ?? "UTLOVAT.SE", { fontFamily: "Anton", fontSize: "62px", color: GUL, letterSpacing: "0.01em" }),
         text("hela granskningen, med källor", {
           fontFamily: "IBM Plex Mono",
           fontSize: "24px",
@@ -492,8 +516,6 @@ function ritaLodrat(bild: Bild): El {
  * också mer text än de lodräta, och talen står exakt.
  */
 function ritaLiggande(bild: Bild): El {
-  const vanster = bild.block.filter((b) => b.typ !== "panel");
-  const hoger = bild.block.filter((b) => b.typ === "panel");
   return ruta({ flexDirection: "column", width: `${L_BREDD}px`, height: `${L_HOJD}px`, backgroundColor: PAPPER }, [
     ruta(
       {
@@ -521,14 +543,7 @@ function ritaLiggande(bild: Bild): El {
       ],
     ),
 
-    ruta({ height: `${L_INNEHALL}px`, padding: `36px ${L_MARGINAL}px 0`, overflow: "hidden" }, [
-      ruta({ flexDirection: "column", width: `${L_TEXT}px`, marginRight: "56px" },
-        vanster.map((block) => ritaBlock(block, L_TEXT)),
-      ),
-      ruta({ flexDirection: "column", width: `${L_PANEL}px` },
-        hoger.map((block) => ritaBlock(block, L_PANEL)),
-      ),
-    ]),
+    ruta({ height: `${L_INNEHALL}px`, overflow: "hidden" }, innehallet(bild)),
 
     ruta({ padding: `0 ${L_MARGINAL}px`, height: `${L_KALLRAD}px`, alignItems: "center", flexShrink: 0 },
       ruta({ width: `${L_BREDD - L_MARGINAL * 2}px`, borderTop: `2px solid ${SVARTA}`, paddingTop: "12px" },
@@ -546,7 +561,7 @@ function ritaLiggande(bild: Bild): El {
         flexShrink: 0,
       },
       [
-        text("UTLOVAT.SE/HANDLINGSVAGEN", { fontFamily: "Anton", fontSize: "40px", color: GUL, letterSpacing: "0.01em" }),
+        text(bild.fot ?? "UTLOVAT.SE", { fontFamily: "Anton", fontSize: "40px", color: GUL, letterSpacing: "0.01em" }),
         text("hela granskningen, med källor och arkivkopior", {
           fontFamily: "IBM Plex Mono",
           fontSize: "24px",
@@ -560,6 +575,48 @@ function ritaLiggande(bild: Bild): El {
 /** Måtten som gäller för bildens format. */
 function matt(bild: Bild): { bredd: number; hojd: number } {
   return bild.format === "liggande" ? { bredd: L_BREDD, hojd: L_HOJD } : { bredd: BREDD, hojd: HOJD };
+}
+
+/** Utrymmet innehållet har på sig innan det klipps. */
+export function innehallsutrymme(bild: Bild): number {
+  return bild.format === "liggande" ? L_INNEHALL : INNEHALL;
+}
+
+/**
+ * Hur högt innehållet faktiskt blev, i pixlar.
+ *
+ * Innehållsytan i ramen har låst höjd och `overflow: hidden`. Växer innehållet
+ * förbi den klipps det bort, tyst — ingenting i bygget säger ifrån, och felet
+ * syns bara i själva bilden. Det hände under bygget av artikelbilden och kostade
+ * en panels sista rad.
+ *
+ * Räknade höjder duger inte som grind: radbrytningen beror på fonten, och en
+ * mening som växer med ett ord kan skjuta ut en hel panel. Därför ritas samma
+ * innehåll en gång till i en avsiktligt alldeles för hög ram och mäts där —
+ * understa raden med bläck ÄR innehållets höjd. Ingen uppskattning, ingen
+ * modell av satori, bara bilden.
+ */
+export async function matInnehallshojd(bild: Bild): Promise<number> {
+  const bredd = matt(bild).bredd;
+  const provhojd = 4000;
+  const ram = ruta(
+    { flexDirection: "column", width: `${bredd}px`, height: `${provhojd}px`, backgroundColor: PAPPER },
+    innehallet(bild),
+  );
+  const svg = await satori(ram as never, { width: bredd, height: provhojd, fonts });
+  const { pixels } = new Resvg(svg, { fitTo: { mode: "width", value: bredd } }).render();
+  const [pr, pg, pb] = [0xf6, 0xf3, 0xec];
+  for (let y = provhojd - 1; y >= 0; y--) {
+    for (let x = 0; x < bredd; x++) {
+      const p = (y * bredd + x) * 4;
+      // Tröskeln fångar kantutjämningens gråskala utan att fastna på
+      // avrundningsbrus i papperets egen yta.
+      if (Math.abs(pixels[p]! - pr) > 8 || Math.abs(pixels[p + 1]! - pg) > 8 || Math.abs(pixels[p + 2]! - pb) > 8) {
+        return y + 1;
+      }
+    }
+  }
+  return 0;
 }
 
 /** En färdig PNG. Exporterad så att grinden kan mäta ramen utan att skriva filer. */
