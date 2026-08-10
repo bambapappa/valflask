@@ -1,8 +1,17 @@
 # Säkerhetsheaders (inga tredjepartsskript, inga cookies). OBS: GitHub Pages
 # respekterar inte denna fil — headersen sätts i drift via en Cloudflare
 # Transform Rule (se ops/HANDOFF §12). Filen är källa för värdena.
+#
+# `connect-src` släpper igenom EN tredjepart: data.riksdagen.se. Ämnessöket
+# på /handlingsvagen/amnen kan fråga riksdagens egen söktjänst direkt, så att
+# en läsare kan få allt som nämner ordet under mandatperioden och inte bara
+# vårt eget urval. Anropet går från läsarens webbläsare, bara efter ett klick,
+# och hämtar offentliga dokumentlistor — inga skript körs, inga cookies sätts.
+# Fortfarande inga tredjepartsskript: `script-src` är orört.
+# Innan Transform Rule-regeln är utrullad faller sidan tillbaka på en vanlig
+# länk till samma sökning, så den ljuger aldrig om vad den kan visa.
 /*
-  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self' 'wasm-unsafe-eval'; font-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; connect-src 'self' https://data.riksdagen.se; img-src 'self' data:; style-src 'self'; script-src 'self' 'wasm-unsafe-eval'; font-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
