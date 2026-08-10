@@ -57,6 +57,22 @@ const DOKTYP_TILL_KIND: Record<string, HandlingKind> = {
 const MINISTER_I_NAMN = /minister|statsråd|statsrad|\btalman\b/iu;
 
 /**
+ * Personerna som faktiskt står bakom handlingen. Riksdagens fråga- och
+ * interpellationsdata listar även den tillfrågade ministern, ibland två
+ * gånger (ställd till och besvarad av). Den personen är mottagare, inte
+ * frågeställare, och får därför varken aktörsparti eller ledamotsmerit.
+ */
+export function aktorsPersoner(
+  h: Pick<Handling, "kind" | "persons">,
+): HandlingPerson[] {
+  const personer =
+    h.kind === "skriftlig_fraga" || h.kind === "interpellation"
+      ? h.persons.filter((p) => !MINISTER_I_NAMN.test(p.name))
+      : h.persons;
+  return [...new Map(personer.map((p) => [p.riksdagen_id ?? p.name, p])).values()];
+}
+
+/**
  * Aktörspartierna bakom en handling — de partier som faktiskt STÅR för
  * handlingen, till skillnad från `handling.parties` som för en fråga/
  * interpellation även rymmer den tillfrågade ministern. För frågor och
@@ -71,7 +87,7 @@ export function aktorsPartier(
     return h.rostfordelning ? Object.keys(h.rostfordelning) : h.parties;
   }
   if (h.kind === "skriftlig_fraga" || h.kind === "interpellation") {
-    const fragestallare = h.persons.filter((p) => !MINISTER_I_NAMN.test(p.name));
+    const fragestallare = aktorsPersoner(h);
     return [...new Set(fragestallare.map((p) => p.party).filter(Boolean))].sort();
   }
   return h.parties;

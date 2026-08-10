@@ -1,6 +1,34 @@
 
 ---
 
+## 2026-08-10 — Sju handlingar godkänns mot löftet om utbyggt totalförsvar
+
+**Beslut (mänskligt beslut 2026-08-10):** de sju genomgångna köförslagen mot
+`p-2026-0691` godkänns enligt det samlade underlaget i `bambapappa/handoff`.
+
+- `k-2026-0838`–`k-2026-0841` är fyra kommittémotioner från fyra riksmöten.
+  De är separata handlingar och räknas som partilinje.
+- `k-2026-0842`–`k-2026-0844` är två skriftliga frågor och en
+  interpellation. De är separata ledamotshandlingar och får aldrig fälla en
+  partidom.
+- `k-2026-0844` bär den ordagrant källprövade frågelydelsen ur `HB1119`, inte
+  köförslagets tidigare bakgrundsmening.
+
+**Motiv:** alla sju handlingarna stödjer samma breda riktning — att bygga ut
+totalförsvaret — men de är inte dubbletter. Motionerna upprepas i skilda
+riksmöten; ledamotshandlingarna gäller tre olika delar av utbyggnaden.
+
+**Påverkan:** sju köposter flyttas till `data/kopplingar.json`, kön går från
+33 till 26 och `data/domar.json` räknas om. Fyra nya kopplingar kan bära
+partilinje; de tre övriga syns enbart i ledamotsmeriterna.
+
+**Rättelse som verkställandet utlöste:** dommotorn gav också mottagande
+statsråd frågeställarens ledamotsmerit. Den avvikelsen blev synlig när de tre
+nya ledamotshandlingarna räknades om. Samma aktörsurval som redan gäller i
+förslagsgrinden används nu även i dommotorn; den tillfrågade ministern räknas
+inte, och dubbletter i Riksdagens intressentlista kan inte dubblera en merit.
+Den synliga rättelsen står i `data/rattelser.json`.
+
 ## 2026-08-04 — `Bevis:` byter citat i ett kopplingsbeslut
 
 **Beslut (mänskligt beslut 2026-08-04):** Kopplingskommandot får en fjärde

@@ -67,7 +67,11 @@ const interpellation: Handling = {
   kind: "interpellation",
   dok_id: "HD10111",
   titel: "Interpellation",
-  persons: [{ name: "Fragande M", party: "m", riksdagen_id: "333" }],
+  persons: [
+    { name: "Fragande M", party: "m", riksdagen_id: "333" },
+    { name: "Försvarsminister Mottagare", party: "s", riksdagen_id: "444" },
+    { name: "Försvarsminister Mottagare", party: "s", riksdagen_id: "444" },
+  ],
 };
 
 const handlingar = [votering, partimotion, enskildMotion, interpellation, proposition];
@@ -132,6 +136,13 @@ test("interpellation fäller aldrig partidom (b-0009) men syns i ledamotens meri
   assert.equal(meriter.length, 1);
   assert.equal(meriter[0]!.namn, "Fragande M");
   assert.deepEqual(meriter[0]!.i_linje, ["k-2026-0005"]);
+});
+
+test("frågans mottagande minister får aldrig frågeställarens merit", () => {
+  const kop = [k({ id: "k-2026-0012", handling_id: "h-2026-0004", riktning: "stodjer" })];
+  const meriter = computeLedamotMeriter(kop, handlingar, new Map());
+  assert.deepEqual(meriter.map((m) => m.namn), ["Fragande M"]);
+  assert.deepEqual(meriter[0]!.i_linje, ["k-2026-0012"]);
 });
 
 test("kopplingar åt båda hållen → bade_och", () => {
