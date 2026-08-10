@@ -287,7 +287,7 @@ export const ANKARE: Ankare[] = [
     },
     fallprov:
       "Ta bort Fläskvågens steg ur rot-watch.yml — provet faller, precis som det hade gjort 2026-08-09.",
-    matt: "båda vågorna, måndagar 04.40 UTC",
+    matt: "båda vågarna, måndagar 04.40 UTC",
   },
   {
     id: "metod-reformutrymmet",

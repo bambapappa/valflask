@@ -3,7 +3,7 @@
  * grindar (G1/G2/G3 ur samma kanon som löftena + G6/G7/G8), A7-verifiering
  * och publicering med mekanisk ändringsdetektering.
  *
- * Hårda publiceringsgrindar (ägarbeslut 2026-07-11 — "inget live innan
+ * Hårda publiceringsgrindar (mänskligt beslut 2026-07-11 — "inget live innan
  * dubbel- och trippelverifierat"):
  *   1. Passet körs ENDAST när STANCES_ENABLED=true (default av).
  *   2. En delfråga med formulation_status "utkast" kan aldrig autopubliceras
@@ -442,7 +442,7 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
       continue;
     }
 
-    // UTKAST — hård grind (ägarbeslut 2026-07-11): en delfråga vars formulering
+    // UTKAST — hård grind (mänskligt beslut 2026-07-11): en delfråga vars formulering
     // inte är verifierad och låst kan aldrig autopubliceras.
     const sq = subquestionById.get(candidate.subquestion_id);
     if (!sq || sq.formulation_status !== "verifierad") {

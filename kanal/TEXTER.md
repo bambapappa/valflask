@@ -3,7 +3,7 @@
 Skriven av `site/scripts/generate-kanalbilder.mts`. **Ändra inte för hand** —
 kör om skriptet i stället, annars säger filen och bilderna olika saker.
 
-Talen är mätta ur datat den 2026-08-09 (akt `70e108a2`).
+Talen är mätta ur datat den 2026-08-10 (akt `235c87c5`).
 
 Bilderna säger "över" och "mer än" med flit: en bild ligger kvar i ett flöde
 långt efter att den lagts upp, och beståndet växer varje vecka. Golvet är det
@@ -23,7 +23,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Rubrik: **VI LÄSER VALLÖFTENA. DU FÅR KVITTOT.**
 - Text: Alla åtta riksdagspartiers löften på ett ställe: vad de sa, ord för ord, vad det kostar, och vad de faktiskt har gjort i riksdagen.
 - Text: Ingen tyckare. Inga anonyma påståenden. Varje siffra går att följa tillbaka till källan.
-- Faktarad: 8 PARTIER · 3 VÅGOR · 1 VALDAG
+- Faktarad: 8 PARTIER · 3 SÄTT ATT VÄGA · 1 VALDAG
 
 **Källrad på bilden:** utlovat.se · granskning inför riksdagsvalet 13 september 2026
 
@@ -31,14 +31,14 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 > Vi läser alla åtta riksdagspartiers vallöften och visar vad de kostar, var partierna står och vad de faktiskt gjort i riksdagen. Med citat, källa och arkivkopia på varje påstående. utlovat.se
 
-## a2-tre-vagor.png
+## a2-tre-satt-att-vaga.png
 
 *SÅ FUNKAR DET 2/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
-- Överrad: TRE SÄTT ATT GRANSKA SAMMA PARTI
-- Rubrik: **TRE VÅGOR**
+- Överrad: SAMMA PARTI, TRE MÅTT
+- Rubrik: **TRE SÄTT ATT VÄGA**
 - 1. **FLÄSKVÅGEN** — Vad löftena kostar. Varje löfte har ett citat, en källa och en uträkning du kan följa steg för steg.
 - 2. **FRÅGEVÅGEN** — Var partierna står i 10 sakfrågor. Ruta för ruta, belagt med exakta citat.
 - 3. **HANDLINGSVÅGEN** — Håller de vad de lovar? Löftena vägs mot vad partierna och ledamöterna gjort i riksdagen.
@@ -47,7 +47,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 **Förslag på bildtext**
 
-> Tre vågor: vad löftena kostar (Fläskvågen), var partierna står (Frågevågen) och vad de faktiskt gjort i riksdagen (Handlingsvågen). Allt på utlovat.se
+> Tre sätt att väga: vad löftena kostar (Fläskvågen), var partierna står (Frågevågen) och vad de faktiskt gjort i riksdagen (Handlingsvågen). Allt på utlovat.se
 
 ## a3-omfattningen.png
 
@@ -62,7 +62,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - 400+ — LEDAMÖTER VARS RIKSDAGSARBETE VÄGS MOT LÖFTENA
 - 10 — SAKFRÅGOR, UPPDELADE I 22 RAKA DELFRÅGOR
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5
 
 **Förslag på bildtext**
 
@@ -159,7 +159,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Text: Summan av vad partiernas löften skulle kosta staten under nästa mandatperiod. Varje krona är räknad öppet, löfte för löfte.
 - Faktarad: ÖVER 500 LÖFTEN · 8 PARTIER
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5
 
 **Förslag på bildtext**
 
@@ -185,7 +185,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Not: Utrymmet = regeringens reformvolym i budgeten för 2026, gånger fyra år.
 - Text: Allt kommer inte att genomföras — det är inte heller påståendet. Bilden visar hur mycket större önskelistan är än pengarna som brukar finnas.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5
 
 **Förslag på bildtext**
 
@@ -217,7 +217,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Not: Miljarder kronor för hela mandatperioden 2027–2030. Besparingar dras av.
 - Text: Ett stort tal är inte samma sak som en dålig politik — och ett litet är inte samma sak som en billig. Ett parti som lovat färre saker har en kortare lista, inte en snålare.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5
 
 **Förslag på bildtext**
 
@@ -247,7 +247,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Rutnät: 22 delfrågor × 8 partier. Fylld ruta = partiet har gett ett rent besked.
 - Text: Så här mycket vet vi alltså inte — och vi låtsas inte annat. Rutan fylls först när partiet sagt något tydligt som går att citera.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5
 
 **Förslag på bildtext**
 
@@ -272,7 +272,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - 800+ — KOPPLINGAR MELLAN LÖFTE OCH HANDLING, EN OCH EN GODKÄNDA
 - Text: Motioner, frågor, interpellationer och voteringar från hela mandatperioden. Ingen koppling publiceras utan att en människa sagt ja.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5
 
 **Förslag på bildtext**
 
@@ -298,7 +298,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - 200+ — SKILDA KÄLLOR BAKOM LÖFTENA
 - 70+ — RÄTTELSER VI PUBLICERAT OM OSS SJÄLVA
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5
 
 **Förslag på bildtext**
 
@@ -324,7 +324,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Text: Sök på csn, hyresrätt, klimat — vad du vill. Du får varje motion, interpellation och skriftlig fråga där ordet står, med länk till dokumentet.
 - Text: Att ordet står i en motion säger inte om partiet är för eller emot. Söket letar — det dömer aldrig.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5
 
 **Förslag på bildtext**
 
@@ -361,7 +361,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
   - "npf" — ger 23 handlingar: 12 interpellationer, 8 motioner, 3 skriftliga frågor
   - Not: Söket dömer aldrig — riktningen kommer ur granskade utslag.
 
-**Källrad på bilden:** Källa: utlovat.se/handlingsvagen · registret mätt 2026-08-09 · akt 70e108a2 · data CC BY 4.0
+**Källrad på bilden:** Källa: utlovat.se/handlingsvagen · registret mätt 2026-08-10 · akt 235c87c5 · data CC BY 4.0
 
 **Förslag på bildtext**
 
@@ -381,7 +381,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Rubrik: **VI RÄKNAR. DU KAN KONTROLLERA.**
 - Text: Utlovat.se samlar alla åtta riksdagspartiers vallöften inför den 13 september 2026 och gör tre saker med dem: prissätter dem, ställer dem mot varandra i sakfrågorna, och väger dem mot riksdagsarbetet.
 - Text: Varje påstående bär partiets egna ord, en källa och en arkivkopia där citatet måste stå kvar. Ingen summa publiceras utan att en människa godkänt den, och fel rättas synligt i en öppen logg.
-- Faktarad: 8 PARTIER · 349 MANDAT · 3 VÅGOR
+- Faktarad: 8 PARTIER · 349 MANDAT · 3 SÄTT ATT VÄGA
 - Panel *FLÄSKVÅGEN* — **VAD LÖFTENA KOSTAR**
   - 553 — löften, vart och ett med exakt citat, källa och en öppen uträkning
 - Panel *FRÅGEVÅGEN* — **VAR PARTIERNA STÅR**
@@ -389,7 +389,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Panel *HANDLINGSVÅGEN* — **HÅLLER DE VAD DE LOVAR?**
   - 826 — granskade kopplingar mellan ett löfte och en riksdagshandling
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2 · data CC BY 4.0
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5 · data CC BY 4.0
 
 **Förslag på bildtext**
 
@@ -420,9 +420,9 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
   - 826 — granskade kopplingar; 159 löften har fått ett utslag
   - Not: Ämnessöket Ämnen och ord når 21 068 av dem — voteringar bär ingen egen text att söka i.
 
-**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-09 · akt 70e108a2 · data CC BY 4.0
+**Källrad på bilden:** Källa: utlovat.se · mätt 2026-08-10 · akt 235c87c5 · data CC BY 4.0
 
 **Förslag på bildtext**
 
-> Så här ser granskningen ut den 2026-08-09: partiernas vallöften för 2027–2030 kostar tillsammans 3 816,5 miljarder kronor, 11,9 gånger mer än reformutrymmet i en fyraårsbudget. Varje belopp har en uträkning som ligger öppen, och nästan varje löfte en arkivkopia där citatet står kvar. utlovat.se
+> Så här ser granskningen ut den 2026-08-10: partiernas vallöften för 2027–2030 kostar tillsammans 3 816,5 miljarder kronor, 11,9 gånger mer än reformutrymmet i en fyraårsbudget. Varje belopp har en uträkning som ligger öppen, och nästan varje löfte en arkivkopia där citatet står kvar. utlovat.se
 

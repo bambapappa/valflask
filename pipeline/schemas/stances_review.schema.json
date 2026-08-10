@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://utlovat.se/schemas/stances_review.schema.json",
   "title": "Frågevågen — behöver granskning",
-  "description": "Ståndpunktskandidater som inte passerat grindarna eller som kräver mänskligt beslut (riktningsbyten gör det ALLTID, ägarbeslut 2026-07-11). Publiceras ALDRIG på sajten. Egen kö skild från needs_review.json (löften) — flödena har olika beslutsdata.",
+  "description": "Ståndpunktskandidater som inte passerat grindarna eller som kräver mänskligt beslut (riktningsbyten gör det ALLTID, mänskligt beslut 2026-07-11). Publiceras ALDRIG på sajten. Egen kö skild från needs_review.json (löften) — flödena har olika beslutsdata.",
   "type": "array",
   "items": {
     "type": "object",

@@ -14,7 +14,7 @@ viktigast — vilket mätt tal varje avrundning vilar på.
 
 ## Tre serier
 
-- **`a1`–`a7` — så funkar det.** Vad sajten är, de tre vågorna, hur ett löfte
+- **`a1`–`a7` — så funkar det.** Vad sajten är, de tre vågarna, hur ett löfte
   kontrolleras, varför rutor får stå tomma, hur fel rättas, vad man kan göra
   själv. Talen på dessa bilder (partier, mandat, ledamöter, sakfrågor) rör sig
   knappt, så bilderna åldras långsamt.
@@ -25,7 +25,7 @@ viktigast — vilket mätt tal varje avrundning vilar på.
 - **`l1`–`l3` — artikelbilder, liggande 1920×1080.** Omslag till längre texter,
   skrivna för vuxna läsare med mer text och fler tal än de lodräta. `l1` har
   Handlingsvågen i fokus: vad partierna gjort i riksdagen under mandatperioden,
-  och ämnessöket *Ämnen och ord*. `l2` beskriver hela sajten och de tre vågorna.
+  och ämnessöket *Ämnen och ord*. `l2` beskriver hela sajten och de tre vågarna.
   `l3` är siffrorna just nu, samlade på ett ställe.
 
 ## Sökexemplen är räknade, inte hämtade från sidan

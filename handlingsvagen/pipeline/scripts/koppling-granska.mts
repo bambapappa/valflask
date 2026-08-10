@@ -27,7 +27,7 @@ import { lasProvningar } from "../../../pipeline/src/provningar.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 // Kvalitetsfiltrets index ligger i valflasks rot-data, inte Handlingsvågens —
-// en logg för alla tre vågorna, ett index.
+// en logg för alla tre vågarna, ett index.
 const rotData = resolve(rot, "../data");
 const koPath = resolve(rot, "data/kopplingsforslag.json");
 const kopplingarPath = resolve(rot, "data/kopplingar.json");

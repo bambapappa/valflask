@@ -50,7 +50,7 @@ export interface PipelineContext {
   /**
    * Frågevågen (SPEC-FRAGEVAGEN §5): ståndpunktspasset körs ENDAST när
    * detta är true (env STANCES_ENABLED). Default av — hård grind tills
-   * ägaren verifierat delfrågor och källor (ägarbeslut 2026-07-11).
+   * en människa verifierat delfrågor och källor (mänskligt beslut 2026-07-11).
    */
   stancesEnabled?: boolean;
   /** Frågevågens egen mode-ratt (STANCES_MODE). Default "review" — löftesflödets
@@ -266,7 +266,7 @@ export async function runPipeline(
           comparablePool,
         );
         const cost = await estimateCost(accepted, ctx.llm, ctx.models.extract, comparables);
-        // Hybrid (§8, ägarbeslut): LLM-estimat går ALLTID till review så människan
+        // Hybrid (§8, mänskligt beslut): LLM-estimat går ALLTID till review så människan
         // bekräftar/justerar beloppet; även låg confidence. Kostnaden bärs med.
         if (cost.basis === "llm_estimat" || cost.confidence < 0.6) {
           const comparablesNote =

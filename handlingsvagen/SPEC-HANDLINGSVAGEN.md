@@ -102,7 +102,7 @@ Ingen koppling publiceras om inte samtliga passeras:
 - **H5 — Riktningen står i texten.** "Stödjer" eller "motverkar" ska
   följa av dokumentets egen text, inte av tolkning. Vid tvekan: ingen
   koppling. Tomma celler är ärliga.
-- **H6 — Ägarbeslut.** Ingen koppling publiceras utan mänsklig
+- **H6 — Mänskligt beslut.** Ingen koppling publiceras utan mänsklig
   granskning via samma issue-flöde som dagens granskningskö
   (egen etikett, samma kommandon).
 

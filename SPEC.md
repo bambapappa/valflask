@@ -102,7 +102,7 @@ Modellstrategi: `MODEL_EXTRACT` = liten/billig modell med bra svenska och JSON-d
 ## 4. Repostruktur
 
 ```
-valflask/                        # ett repo, tre vågor
+valflask/                        # ett repo, tre vågar
 ├── SPEC.md                      # detta dokument
 ├── DECISION_LOG.md
 ├── site/                        # Astro-projekt
@@ -215,7 +215,7 @@ Alla filer i `data/` valideras mot JSON Schemas i `pipeline/schemas/` vid varje 
 ### 6.1 `sources.yaml` (struktur)
 
 ```yaml
-allowlist_domains:        # EXAKT domänmatch, https obligatoriskt. Ägarbeslut, se §21.
+allowlist_domains:        # EXAKT domänmatch, https obligatoriskt. Mänskligt beslut, se §21.
   - riksdagen.se
   - data.riksdagen.se
   - regeringen.se
@@ -486,7 +486,7 @@ Bygg i ordning; M0–M2 kräver varken API-nycklar eller nätverksåtkomst till 
 
 ---
 
-## 21. Öppna frågor (ägarbeslut; * = blockerande före M3)
+## 21. Öppna frågor (mänskligt beslut; * = blockerande före M3)
 
 - **\* Källallowlist v1:** bekräfta/justera domänlistan i §6.1.
 - **Review-läge:** rekommendation PÅ första skarpa veckan, därefter AV — bekräfta.

@@ -8,7 +8,7 @@
  * det: testet importerar härifrån, och bara den här raden skiljer sig.
  *
  * Kontraktet: `diff` mellan de två repons `tests/citatgrind.test.ts` ska vara
- * tom. Är den inte tom har vågorna olika krav på ordagrannhet, och då kan
+ * tom. Är den inte tom har vågarna olika krav på ordagrannhet, och då kan
  * Handlingsvågen godta ett citat som Fläskvågen hade avvisat — utan att någon
  * grind fäller. Släpps kopiorna ihop till en delad källa (se planen för
  * sammanslagningen) kan den här filen tas bort.

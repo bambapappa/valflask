@@ -6,7 +6,7 @@ commit-texter, PR-texter, sajtcopy, prompter och dokumentation.
 ## Vad utlovat.se är
 
 En granskningssajt inför valet 2026 som granskar partierna öppet och
-spårbart. Tjänsten består av tre vågor:
+spårbart. Tjänsten består av tre vågar:
 
 - **Fläskvågen** — vad partiernas löften kostar. Varje löfte har ett
   ordagrant citat med källa och arkivkopia, ett kostnadsestimat med spann
@@ -18,10 +18,10 @@ spårbart. Tjänsten består av tre vågor:
   ledamöternas faktiska riksdagshandlingar mot löftena och ståndpunkterna.
   Ligger under `handlingsvagen/` i det här repot och på sökvägen
   `utlovat.se/handlingsvagen` — samma bygge och samma domän som de andra
-  två vågorna. Har egen `HANDOFF.md`, egen spec och egen beslutslogg;
+  två vågarna. Har egen `HANDOFF.md`, egen spec och egen beslutslogg;
   läs dem innan du rör något där.
 
-Repot rymmer alla tre vågorna. Fläskvågens och Frågevågens data lever i
+Repot rymmer alla tre vågarna. Fläskvågens och Frågevågens data lever i
 `data/promises.json` (löften), `data/changelog.json` (körlogg med
 `data_hash`), `data/rattelser.json` (offentlig rättelselogg) och
 `data/needs_review.json` (granskningskö); Handlingsvågens ligger under
@@ -50,6 +50,20 @@ att håna ett parti eller en person.
   synas i text som möter läsare — de säger ingen utomstående något;
   skriv i stället vad som faktiskt sker ("citatet kontrolleras ord för
   ord", "en människa godkänner varje belopp").
+- **Pluralen är "vågar", aldrig "vågor".** En våg man surfar på blir vågor;
+  en våg man väger på blir vågar, och det är den betydelsen Fläskvågen,
+  Frågevågen och Handlingsvågen bär. Sammansättningar där ordet betyder
+  rörelse — "brottsvågor" i Handlingsvågens ordlistor — är rätt stavade och
+  rörs inte.
+- **De två orden ovan är grindade, inte påminda.** `pnpm test:ord` sveper
+  hela repot och faller på båda. Den första av reglerna stod skriven i mer än
+  en månad medan det förbjudna ordet levde kvar på ett trettiotal ställen, ett
+  av dem i `data/issues.json` som serveras publikt — en språkregel utan grind
+  är en påminnelse, och påminnelser åldras. Ska ett ord till förbjudas: lägg
+  det i `ORDEN` i `site/scripts/test-ord.mts`, med rader som ska fällas och
+  rader som ska passera. Skriver du *om* ett förbjudet ord: använd regelns
+  egen form, `aldrig "ordet"` — det är den enda rad grinden går förbi.
+  Mänskligt beslut 2026-08-10.
 
 ## Parallella sessioner
 

@@ -1,5 +1,5 @@
 /**
- * Frågevågen — källröta-bevakningen (SPEC-FRAGEVAGEN.md §6.3, ägarbeslut: veckovis).
+ * Frågevågen — källröta-bevakningen (SPEC-FRAGEVAGEN.md §6.3, mänskligt beslut: veckovis).
  *
  * Re-hämtar käll-URL:erna för alla publicerade statements och stämplar:
  *   - "borttagen": källan svarar 404/410 (eller domänen är död)

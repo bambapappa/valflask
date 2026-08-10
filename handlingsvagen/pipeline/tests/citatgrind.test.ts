@@ -13,7 +13,7 @@
  * VARFÖR: `normalizeForVerbatim` är regeln som avgör om ett citat räknas som
  * återgivet ord för ord, och den finns i två oberoende kopior — `gates.ts` i
  * valflask, `grindar.ts` i handlingsvagen. Skärper någon den ena (säg för ett
- * nytt sätt att gömma tecken i en text) och glömmer den andra, får vågorna
+ * nytt sätt att gömma tecken i en text) och glömmer den andra, får vågarna
  * tysta olika krav: Handlingsvågen godtar ett citat som Fläskvågen hade
  * avvisat. Ingen befintlig grind fäller på det, och ingen läsare kan se det.
  *
