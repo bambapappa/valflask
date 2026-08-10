@@ -135,9 +135,10 @@ jobs:
         run: node --experimental-strip-types scripts/test-prosan.mts
         working-directory: site
       # Ordgrinden: de förbjudna orden mäts i stället för att minnas. Regeln
-      # «mänskligt beslut, aldrig ägarbeslut» stod i CLAUDE.md medan ordet
-      # levde kvar på ett trettiotal ställen, ett av dem i data som serveras
-      # publikt. Sveper hela repot, inte bara sajten. Bakgrunden i test-ord.mts.
+      # om att skriva «mänskligt beslut» stod i CLAUDE.md medan det förbjudna
+      # ordet levde kvar på ett trettiotal ställen, ett av dem i data som
+      # serveras publikt — en språkregel utan grind är en påminnelse. Sveper
+      # hela repot, inte bara sajten. Bakgrunden i test-ord.mts.
       - name: Ordgrinden
         run: node --experimental-strip-types scripts/test-ord.mts
         working-directory: site

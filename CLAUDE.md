@@ -56,12 +56,14 @@ att håna ett parti eller en person.
   rörelse — "brottsvågor" i Handlingsvågens ordlistor — är rätt stavade och
   rörs inte.
 - **De två orden ovan är grindade, inte påminda.** `pnpm test:ord` sveper
-  hela repot och faller på båda. Regeln stod skriven om "ägarbeslut" i mer
-  än en månad medan ordet levde kvar på ett trettiotal ställen, ett av dem i
-  `data/issues.json` som serveras publikt — en språkregel utan grind är en
-  påminnelse, och påminnelser åldras. Ska ett ord till förbjudas: lägg det i
-  `ORDEN` i `site/scripts/test-ord.mts`, med rader som ska fällas och rader
-  som ska passera. Mänskligt beslut 2026-08-10.
+  hela repot och faller på båda. Den första av reglerna stod skriven i mer än
+  en månad medan det förbjudna ordet levde kvar på ett trettiotal ställen, ett
+  av dem i `data/issues.json` som serveras publikt — en språkregel utan grind
+  är en påminnelse, och påminnelser åldras. Ska ett ord till förbjudas: lägg
+  det i `ORDEN` i `site/scripts/test-ord.mts`, med rader som ska fällas och
+  rader som ska passera. Skriver du *om* ett förbjudet ord: använd regelns
+  egen form, `aldrig "ordet"` — det är den enda rad grinden går förbi.
+  Mänskligt beslut 2026-08-10.
 
 ## Parallella sessioner
 

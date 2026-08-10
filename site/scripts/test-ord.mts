@@ -94,11 +94,21 @@ const ANDELSER = [
 const LASES_INTE = new Set([
   "pnpm-lock.yaml",
   "package-lock.json",
-  // Reglerna själva måste få namnge ordet de förbjuder.
-  "CLAUDE.md",
-  // Den här filen bär varje förbjudet ord som exempel och facit.
+  // Den här filen bär varje förbjudet ord som mönster, exempel och facit.
   "test-ord.mts",
 ]);
+
+/**
+ * Regeln själv måste få namnge ordet den förbjuder.
+ *
+ * Undantaget är en RAD, inte en fil: hade `CLAUDE.md` lyfts ut i sin helhet
+ * hade all annan prosa där gått fri från grinden — och det är just den filen
+ * som ska föregå med gott exempel. Vill du skriva om det förbjudna ordet:
+ * skriv regelns form, «aldrig "ordet"». Både raka citattecken och citattecken
+ * duger — resten av repot blandar dem, och grinden ska fälla ordval, inte
+ * typografi.
+ */
+const REGELRAD = /aldrig [«"](ägarbeslut|vågor)[»"]/u;
 
 let fel = 0;
 function check(etikett: string, villkor: boolean, varfor?: string): void {
@@ -125,6 +135,25 @@ for (const ord of ORDEN) {
   for (const rad of ord.passerar) {
     check(`${ord.namn}: «${rad}» passerar`, !traffas(ord, rad), "mönstret fäller rätt ord");
   }
+}
+
+// Undantaget prövas som allt annat. Släpper det för mycket är grinden tandlös
+// på just de filer som ska föregå med gott exempel.
+const REGELRAD_FALL: Array<[string, boolean]> = [
+  ['**Skriv "mänskligt beslut", aldrig "ägarbeslut".** Gäller all text', true],
+  ["**Pluralen är «vågar», aldrig «vågor».** En våg man väger på", true],
+  ["Beslutet fattades genom ägarbeslut 2026-07-11", false],
+  ["Tjänsten består av tre vågor", false],
+  // Undantaget får inte gå att åberopa åt fel håll: raden ska säga att ordet
+  // är förbjudet, inte bara råka innehålla ett «aldrig» i närheten.
+  ["Ett ägarbeslut ändras aldrig i efterhand", false],
+];
+for (const [rad, undantas] of REGELRAD_FALL) {
+  check(
+    `regelrad: «${rad.slice(0, 44)}…» ${undantas ? "undantas" : "prövas"}`,
+    REGELRAD.test(rad) === undantas,
+    "undantaget släpper fel rader",
+  );
 }
 
 if (fel > 0) {
@@ -156,6 +185,7 @@ for (const fil of filer(ROT)) {
   lasta++;
   const rader = readFileSync(fil, "utf8").split("\n");
   for (const [nr, rad] of rader.entries()) {
+    if (REGELRAD.test(rad)) continue;
     for (const ord of ORDEN) {
       if (traffas(ord, rad)) {
         fynd.push(

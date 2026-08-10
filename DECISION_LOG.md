@@ -5,6 +5,60 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 ---
 
+## 2026-08-10 — Språkreglerna grindas, och två ord är ute ur projektet
+
+**Beslut:** Två ord är borta ur hela repot, och en grind
+(`site/scripts/test-ord.mts`, `pnpm test:ord`) sveper efter dem i varje bygge.
+
+1. **Skriv «mänskligt beslut», aldrig «ägarbeslut».** Regeln fanns redan i
+   `CLAUDE.md`, men ordet levde kvar på ett trettiotal ställen. Ett av dem stod
+   i `data/issues.json`, som serveras publikt på `/api/v1/issues.json`.
+2. **Pluralen är «vågar», aldrig «vågor».** En våg i havet böjs på ett sätt, en
+   våg man väger på ett annat, och det är den senare betydelsen Fläskvågen,
+   Frågevågen och Handlingsvågen bär. 35 ställen bytta. Sammansättningar där
+   ordet betyder rörelse — «brottsvågor», «flyktingvågor», «migrationsvågor» i
+   Handlingsvågens ordlistor under `data/nyckelord/` — är rätt stavade och
+   orörda; grindens mönster kräver att ordet står fritt.
+
+Kriterienoten och formuleringsnoten i `data/issues.json` är samtidigt omskrivna
+för en läsare utifrån: den interna specreferensen och «ägaren godkände
+frågorna» är borta, varje sakuppgift står kvar ordagrant. **Ingen rättelsepost**
+— ingen uppgift ändrades, bara orden den stod i.
+
+**Motiv:** En språkregel som bara står skriven är en påminnelse, och
+påminnelser åldras. Regeln om «mänskligt beslut» hade stått i `CLAUDE.md` i mer
+än en månad medan ordet den förbjuder fanns kvar i data som serveras publikt —
+den upptäcktes inte av att någon glömde den, utan av att ingenting mätte den.
+Det är samma slutsats som prosagrinden drog dagen innan, tillämpad på
+ordvalet i stället för på påståendena.
+
+Grinden prövar sina egna mönster mot rader med känt facit **innan** svepet
+körs, och kör inte svepet om självprovet faller. Ett mönster som slutat träffa
+sveper ett rent repo och ser ut precis som en grind som fungerar — det var det
+blänkta repot fångade i prosagrinden, och felet har samma form här.
+
+Undantaget för regeln själv är en **rad**, inte en fil: `CLAUDE.md` måste få
+namnge ordet den förbjuder, men lyfter man ut hela filen går all annan prosa
+där fri — och det är just den filen som ska föregå med gott exempel. Grinden
+går bara förbi rader på formen `aldrig "ordet"`.
+
+**Förkastade alternativ:** *Bara rätta `data/issues.json`, som frågan gällde* —
+hade lämnat ordet i specarna, beslutsloggarna och pipelinens kommentarer, där
+nästa session läser det och för det vidare. *Ta med «verbatim» i samma grind* —
+ordet är förbjudet i prosa men lever i ett hundratal kodnamn och fältnamn som
+`CLAUDE.md` uttryckligen tillåter (`normalizeForVerbatim`, `verbatim_quote`);
+en grind som inte kan skilja namnet från prosan skulle antingen falla på
+tillåten kod eller släppa igenom allt. De två orden här har inga sådana
+undantag. *Lämna de historiska posterna i beslutsloggarna orörda* — bytet
+ändrar inget sakförhållande, bara stavningen av det, och en logg som
+permanent lär ut fel ord är dyrare än en rättad rad. *Låta grinden vara en
+lista i `CLAUDE.md` i stället för kod* — det var precis vad som fanns, och det
+höll inte.
+
+**Fattat av:** mänskligt beslut 2026-08-10.
+
+---
+
 ## 2026-08-09 — Prosans påståenden om koden mäts, de läses inte
 
 **Beslut:** Ett ankarregister (`site/src/lib/prosans-ankare.ts`) binder varje
