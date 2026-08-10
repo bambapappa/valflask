@@ -32096,14 +32096,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 11000,
-      "msek_base": 15000,
-      "msek_high": 23000,
-      "basis": "granskare",
-      "basis_url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/reavinstskatt",
-      "method_note": "Partiets egen trappa: reavinstskatten ned med 2 procentenheter per år efter fem års ägande, noll efter 16 år. Skattebasen är vår uppskattning. Beloppet avser åtgärden, inte bostadsmarknadens följder.",
-      "confidence": 0.45,
-      "calculation": "Steg 1, uppskovstaket bort: uppskov skjuter upp skatten, det tar inte bort den, och uppskovsräntan är redan slopad. Statens kostnad är räntan på det uppskjutna beloppet — storleksordningen 0,1 mdkr/år. Steg 2 är trappan. Nivåerna är partiets egna: 2 procentenheter per år efter fem års ägande, noll efter 16 år. Vår del är skattebasen och innehavstiderna. Vinsten växer med innehavstiden, så skatten är koncentrerad till långa innehav — precis dem trappan nollar. Med 3–7 % prisökning per år och 7–12 års medelinnehav faller 58–89 % av basen bort vid linjär nedtrappning. På en bas om 18–26 mdkr/år ger det 11–23 mdkr/år, base 15. Antar att redan upparbetad ägartid räknas; gör den inte det är kostnaden nära noll under mandatperioden."
+      "msek_low": 12000,
+      "msek_base": 13500,
+      "msek_high": 20000,
+      "basis": "parti",
+      "basis_url": "https://kristdemokraterna.se/download/18.68b2ea4919ddcb7f16c41b0/1778058331927/Avskaffa%20den%20ora%CC%88ttvisa%20flyttskatten%201.pdf",
+      "method_note": "Partiets egen kostnadsbedömning i rapporten bakom löftet: 12–15 mdkr per år. Riksdagens utredningstjänst anger 13–20 mdkr. Beloppet avser åtgärden, inte bostadsmarknadens följder.",
+      "confidence": 0.6,
+      "calculation": "Partiet anger själv vad reformen kostar, och då är det den siffran som gäller. I rapporten bakom löftet står: «En bästa bedömning är att kostnaden över tid landar mellan 12–15 miljarder per år.» Samma sida återger en analys från Riksdagens utredningstjänst (Dnr 2025:1444) på 13–20 mdkr per år. Basbeloppet är mitten av partiets egen bedömning, 13,5 mdkr; spannet går från partiets undre gräns till utredningstjänstens övre. Trappan är partiets egen och linjär: två procentenheter per år efter fem års ägande, noll efter 16 år. Partiet skriver att takten beror på reformutrymmet och att ett vinsttak kan användas för att trappa in förslaget — under mandatperioden kan kostnaden därför bli lägre än full effekt."
     },
     "financing_claimed": {
       "described": false,
@@ -32118,12 +32118,17 @@
         "date": "2026-08-10",
         "change": "Löftet infört. KD gick 2026-05-07 till val på att stegvis avskaffa reavinstskatten på bostäder, och vi hade det inte — en läsare såg det på en valaffisch och frågade efter det. Två skäl: beskedet kom före vårt skördefönster, så nyheten låg aldrig i något flöde vi läser, och politiken som står kvar ligger på en undersida till KD:s A–Ö, en katalog vi hämtade fyra gånger utan att öppna en enda av dess 220 sidor. Djupet är åtgärdat i samma ändring; se rättelseloggen. Citatet står ordagrant i partiets egen nyhet. Nedtrappningens nivåer i uträkningen är partiets egna och hämtade från /var-politik/politik-a-till-o/reavinstskatt; skattebasen är vår. Arkivkopia saknas — Wayback tog inte emot en ny kopia vid införandet, och arkivsvepet får försöka igen.",
         "commit": "4e565ccc7bac783459b94e5f647978c64446338d"
+      },
+      {
+        "date": "2026-08-10",
+        "change": "Beloppet bytt till partiets eget: 13,5 mdkr per år (spann 12–20), tidigare 15 mdkr (spann 11–23). Den första siffran var vår egen uträkning på en skattebas vi själva uppskattat. Den behövdes inte. Rapporten som löftets källa länkar till bär partiets egen kostnadsbedömning — 12–15 mdkr per år — och en analys från Riksdagens utredningstjänst på 13–20 mdkr. Anger partiet själv vad reformen kostar är det den siffran som gäller, och rapporten var inte läst när löftet infördes. Nedtrappningen är oförändrad och bekräftad som partiets egen och linjär: två procentenheter per år efter fem års ägande. Se rättelseloggen.",
+        "commit": "dba0110743dfccc05c82054c9fd2359cb2584fb4"
       }
     ],
     "extraction": {
       "model": "review",
       "verified_by": "granskare",
-      "run_id": "review-2026-08-10-reavinst"
+      "run_id": "review-2026-08-10-reavinst-parti"
     }
   }
 ]
