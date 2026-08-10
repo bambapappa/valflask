@@ -23,7 +23,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Rubrik: **VI LÄSER VALLÖFTENA. DU FÅR KVITTOT.**
 - Text: Alla åtta riksdagspartiers löften på ett ställe: vad de sa, ord för ord, vad det kostar, och vad de faktiskt har gjort i riksdagen.
 - Text: Ingen tyckare. Inga anonyma påståenden. Varje siffra går att följa tillbaka till källan.
-- Faktarad: 8 PARTIER · 3 VÅGAR · 1 VALDAG
+- Faktarad: 8 PARTIER · 3 SÄTT ATT VÄGA · 1 VALDAG
 
 **Källrad på bilden:** utlovat.se · granskning inför riksdagsvalet 13 september 2026
 
@@ -31,14 +31,14 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 > Vi läser alla åtta riksdagspartiers vallöften och visar vad de kostar, var partierna står och vad de faktiskt gjort i riksdagen. Med citat, källa och arkivkopia på varje påstående. utlovat.se
 
-## a2-tre-vagar.png
+## a2-tre-satt-att-vaga.png
 
 *SÅ FUNKAR DET 2/7 — lodrät 1080×1920*
 
 **Skärmtext**
 
-- Överrad: TRE SÄTT ATT GRANSKA SAMMA PARTI
-- Rubrik: **TRE VÅGAR**
+- Överrad: SAMMA PARTI, TRE MÅTT
+- Rubrik: **TRE SÄTT ATT VÄGA**
 - 1. **FLÄSKVÅGEN** — Vad löftena kostar. Varje löfte har ett citat, en källa och en uträkning du kan följa steg för steg.
 - 2. **FRÅGEVÅGEN** — Var partierna står i 10 sakfrågor. Ruta för ruta, belagt med exakta citat.
 - 3. **HANDLINGSVÅGEN** — Håller de vad de lovar? Löftena vägs mot vad partierna och ledamöterna gjort i riksdagen.
@@ -47,7 +47,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 
 **Förslag på bildtext**
 
-> Tre vågar: vad löftena kostar (Fläskvågen), var partierna står (Frågevågen) och vad de faktiskt gjort i riksdagen (Handlingsvågen). Allt på utlovat.se
+> Tre sätt att väga: vad löftena kostar (Fläskvågen), var partierna står (Frågevågen) och vad de faktiskt gjort i riksdagen (Handlingsvågen). Allt på utlovat.se
 
 ## a3-omfattningen.png
 
@@ -381,7 +381,7 @@ mycket att nästa runda tal ligger under det, eller sjunkit under sitt eget golv
 - Rubrik: **VI RÄKNAR. DU KAN KONTROLLERA.**
 - Text: Utlovat.se samlar alla åtta riksdagspartiers vallöften inför den 13 september 2026 och gör tre saker med dem: prissätter dem, ställer dem mot varandra i sakfrågorna, och väger dem mot riksdagsarbetet.
 - Text: Varje påstående bär partiets egna ord, en källa och en arkivkopia där citatet måste stå kvar. Ingen summa publiceras utan att en människa godkänt den, och fel rättas synligt i en öppen logg.
-- Faktarad: 8 PARTIER · 349 MANDAT · 3 VÅGAR
+- Faktarad: 8 PARTIER · 349 MANDAT · 3 SÄTT ATT VÄGA
 - Panel *FLÄSKVÅGEN* — **VAD LÖFTENA KOSTAR**
   - 553 — löften, vart och ett med exakt citat, källa och en öppen uträkning
 - Panel *FRÅGEVÅGEN* — **VAR PARTIERNA STÅR**

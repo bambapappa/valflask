@@ -407,7 +407,7 @@ export function byggBilder(u: Underlag): Bild[] {
           typ: "brodtext",
           text: "Ingen tyckare. Inga anonyma påståenden. Varje siffra går att följa tillbaka till källan.",
         },
-        { typ: "faktarad", delar: [`${u.partier} PARTIER`, "3 VÅGAR", "1 VALDAG"] },
+        { typ: "faktarad", delar: [`${u.partier} PARTIER`, "3 SÄTT ATT VÄGA", "1 VALDAG"] },
       ],
       kallrad: kallradA,
       bildtext:
@@ -415,13 +415,16 @@ export function byggBilder(u: Underlag): Bild[] {
       matningar: [],
     },
     {
-      fil: "a2-tre-vagar",
+      fil: "a2-tre-satt-att-vaga",
       serie: SERIE_A,
       nr: 2,
       antal: 7,
       block: [
-        { typ: "kicker", text: "TRE SÄTT ATT GRANSKA SAMMA PARTI" },
-        { typ: "rubrik", text: "TRE VÅGAR", grad: 132 },
+        { typ: "kicker", text: "SAMMA PARTI, TRE MÅTT" },
+        // «TRE VÅGAR» i versaler läses lika gärna som verbet. Rubriken säger
+        // därför vad vågarna gör i stället för vad de heter — och kickern är
+        // omskriven för att inte upprepa «tre sätt».
+        { typ: "rubrik", text: "TRE SÄTT ATT VÄGA", grad: 132 },
         {
           typ: "punkter",
           poster: [
@@ -445,7 +448,7 @@ export function byggBilder(u: Underlag): Bild[] {
       ],
       kallrad: kallradA,
       bildtext:
-        "Tre vågar: vad löftena kostar (Fläskvågen), var partierna står (Frågevågen) och vad de faktiskt gjort i riksdagen (Handlingsvågen). Allt på utlovat.se",
+        "Tre sätt att väga: vad löftena kostar (Fläskvågen), var partierna står (Frågevågen) och vad de faktiskt gjort i riksdagen (Handlingsvågen). Allt på utlovat.se",
       matningar: [],
     },
     {
@@ -880,7 +883,7 @@ export function byggBilder(u: Underlag): Bild[] {
             "Varje påstående bär partiets egna ord, en källa och en arkivkopia där citatet måste stå kvar. Ingen summa publiceras utan att en människa godkänt den, och fel rättas synligt i en öppen logg.",
           grad: 27,
         },
-        { typ: "faktarad", delar: [`${u.partier} PARTIER`, `${u.mandat} MANDAT`, "3 VÅGAR"] },
+        { typ: "faktarad", delar: [`${u.partier} PARTIER`, `${u.mandat} MANDAT`, "3 SÄTT ATT VÄGA"] },
         {
           typ: "panel",
           etikett: "FLÄSKVÅGEN",
