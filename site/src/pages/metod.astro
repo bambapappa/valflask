@@ -1,7 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { taladeKallorTal } from "../lib/prosans-tal";
 
 const title = "Metod — utlovat.se";
+
+// Talen om de talade källorna är påståenden om datat, inte om metoden, och
+// slås därför upp vid varje bygge — samma skäl som Handlingsvågens metodsida
+// och krönikorna. Skrivna som siffror i texten blir de tysta osanningar den
+// dag ett löfte till skördas ur ett tal.
+const talade = taladeKallorTal();
 
 const jsonLd = [
   {
@@ -45,7 +52,7 @@ const jsonLd = [
         "name": "Använder ni AI, och vem ansvarar för det som publiceras?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Ja, och vi skriver ut exakt var. En språkmodell föreslår de flesta prislappar och skriver uträkningen under dem, skriver veckokrönikorna, och föreslår vilka besked och vilka riksdagshandlingar som hör till vilket löfte. En språkmodell rör aldrig citaten, summorna, domarna eller valet av frågor — de är antingen hämtade ordagrant ur källan eller uträknade efter fasta regler. Redaktionellt ansvarig är Martin Kronvall. Ingenting når sajten utan att en människa slagit ihop ändringen i det öppna kodförrådet; maskinen får föreslå, inte publicera.",
+          "text": "Ja, och vi skriver ut exakt var. En språkmodell föreslår fyra av fem prislappar och skriver uträkningen under dem, skriver veckokrönikorna, och föreslår vilka besked och vilka riksdagshandlingar som hör till vilket löfte. En språkmodell rör aldrig citaten, summorna, domarna eller valet av frågor — de är antingen hämtade ordagrant ur källan eller uträknade efter fasta regler. Redaktionellt ansvarig är Martin Kronvall. Inget nytt löfte och inget belopp når sajten utan att en människa godkänt det i en öppen granskningskö; maskinen får föreslå, inte publicera.",
         },
       },
       {
@@ -53,7 +60,7 @@ const jsonLd = [
         "name": "Hur hanterar ni löften som sägs i tal eller på video?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Löften ur text måste stå ordagrant i källan. Löften ur tal jämför vi mot en sparad textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken, eftersom en automatisk textversion ofta blir slarvig med det. Vi märker alltid ut löften som kommer från tal och länkar till filmen vid den tidpunkt orden sägs; textversionen sparas som internt underlag.",
+          "text": "Löften ur text måste stå ordagrant i källan. Löften ur tal jämför vi mot en textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken, eftersom en automatisk textversion ofta blir slarvig med det. Vi märker alltid ut löften som kommer från tal. Två svagheter skriver vi ut: textversionen sparas inte hos oss, och länken pekar bara på en tidpunkt i filmen där källan är en videolänk — är den en partisida får man leta själv.",
         },
       },
     ],
@@ -104,24 +111,26 @@ const jsonLd = [
 
       <h2>Jämförelser som alla förstår</h2>
       <p>Siffror i miljarder är svåra att känna. Därför får varje löfte en kort, torr rad som översätter prislappen till en helt opolitisk vikt-liknelse: <em>om varje krona vägde ett gram</em>, hur mycket väger då löftet? Svaret uttrycks i djur — blåvalar, elefanter, giraffar. Vi undviker med flit måttstockar som själva kan vara vallöften (som vårdplatser eller skolluncher), eftersom sådana inte är neutrala.</p>
-      <p>Raden skrivs av datorn efter en fast mall som är exakt likadan för alla åtta partier, och skämtar aldrig om sakfrågan, personen eller partiet — bara om storleken. Samma belopp ger ordagrant samma rad oavsett vilket parti som lovat. Vilket djur som används beror bara på ämnesområdet, enbart för omväxlings skull, så att inte allt jämförs med blåvalar.</p>
-      <p>Ett fåtal löften bär i stället en rad som en språkmodell skrivit och en människa godkänt. Samma regler gäller för den — bara storleken, aldrig sakfrågan — men den kommer inte ur mallen, och det är därför den står utskriven under <a href="#ai">AI-förordningen</a> nedan.</p>
+      <p>Raden skrivs av datorn efter en fast mall som är exakt likadan för alla åtta partier, och skämtar aldrig om sakfrågan, personen eller partiet — bara om storleken. <strong>Vilket parti som lovat påverkar aldrig raden.</strong> Tre andra saker gör det, och alla tre står i datat: beloppet, ämnesområdet — som bara avgör vilket djur det blir, för omväxlings skull, så att inte allt jämförs med blåvalar — och om partiet sagt hur löftet ska betalas, vilket avgör om raden slutar «Finansiering: angiven» eller «ej angiven».</p>
+      <p><strong>Ett par procent av löftena</strong> bär i stället en rad som en språkmodell skrivit och en människa godkänt. Samma regler gäller för den — bara storleken, aldrig sakfrågan — men den kommer inte ur mallen, och det är därför den står utskriven under <a href="#ai">AI-förordningen</a> nedan.</p>
       <p>Utöver vikt-raden finns bara en sorts jämförelse kvar, och den är rent fysisk: en trave enkronor jämförd med avståndet till månen eller Mars, redovisad som hur stor del av vägen traven räcker. Jämförelser i löner, vårdkostnader, skolmåltider, vägbyggen eller försvarsmateriel är borttagna — de kan alla själva vara vallöften, och en måttstock som är en stridsfråga är inget mått.</p>
 
       <h2>Vi kontrollerar varje citat</h2>
-      <p>Varje citat vi publicerar måste stå <strong>ordagrant</strong> i källan. Hittar vi inte exakt de orden stryker vi citatet. Det är vårt starkaste skydd mot påhitt — ingen kan smuggla in ett löfte som ingen faktiskt har sagt. När en dator föreslår ett belopp får dessutom en annan, oberoende dator dubbelkolla det. All kontroll sker automatiskt, och koden ligger öppen för den som vill granska den.</p>
+      <p>Varje citat vi publicerar måste stå <strong>ordagrant</strong> i källan. Hittar vi inte exakt de orden stryker vi citatet. Det är vårt starkaste skydd mot påhitt — ingen kan smuggla in ett löfte som ingen faktiskt har sagt.</p>
+      <p>Kontrollen görs i två led, av två olika sorters granskare. <strong>Citatet läses av en andra, oberoende dator</strong> — en annan modell än den som hittade löftet, och att de två måste vara olika är inskrivet i koden — som ställer citatet mot källtexten och svarar på om orden står där, om rätt parti sagt dem och om beloppet verkligen finns i texten. <strong>Själva prislappen kontrolleras inte av en dator alls.</strong> Är beloppet en egen uppskattning går löftet undantagslöst till en människa, oavsett hur säker modellen säger sig vara. En gissning granskas av en person, inte av ännu en gissare. Koden för båda leden ligger öppen för den som vill granska den.</p>
 
       <h3>Löften från tal och video</h3>
       <p>De flesta löften kommer från text — partiernas webbplatser, riksdagens dokument, nyhetsartiklar — och då kräver vi att citatet står exakt så i texten. Men en del löften sägs i tal, till exempel i Almedalen, där det enda som finns är talarens egna ord i en film.</p>
-      <p>Då jämför vi citatet mot en sparad textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken — eftersom en automatisk textversion av tal ofta blir slarvig med just det. Det är en medveten och liten uppmjukning som <strong>bara</strong> gäller tal; text behåller den strikta kontrollen. Vi märker alltid ut när ett löfte kommer från ett tal och länkar till filmen vid den tidpunkt orden sägs, så att vem som helst kan höra dem själv. Textversionen sparar vi som internt underlag — så att kontrollen finns kvar även om filmen senare tas bort.</p>
+      <p>Då jämför vi citatet mot en textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken — eftersom en automatisk textversion av tal ofta blir slarvig med just det. Det är en medveten och liten uppmjukning som <strong>bara</strong> gäller tal; text behåller den strikta kontrollen. Vi märker alltid ut när ett löfte kommer från ett tal.</p>
+      <p>Två saker om den här gruppen ska sägas rakt ut, för de är svagare än resten av materialet. <strong>Textversionen sparar vi inte.</strong> Den användes när citatet kontrollerades, men den ligger inte i vårt öppna kodförråd, så försvinner filmen finns bara vår anteckning om att kontrollen gjordes — inte underlaget att göra om den. Och <strong>länken pekar inte alltid på rätt tidpunkt i filmen.</strong> Där källan är en videolänk gör den det, så att vem som helst kan höra orden själv; där partiet i stället publicerat talet på sin egen sida länkar vi dit, och då får man leta själv. Av de {talade.totalt} löften som kommer ur tal har {talade.medTidpunkt} en tidpunkt. Vi skriver hellre ut det än låter det se jämnare ut än det är.</p>
 
       <h2 id="ai">AI-förordningen: var AI används, och vem som ansvarar</h2>
       <p>Sajten byggs med hjälp av AI, och det ska synas exakt var. Sedan den 2 augusti 2026 kräver EU:s AI-förordning att den som publicerar AI-skriven text i frågor av allmänintresse säger det öppet. Vallöften och prislappar är just sådana frågor, så här står det utskrivet — punkt för punkt, i stället för som en svepande brasklapp.</p>
 
       <h3>Det här skriver eller föreslår en språkmodell</h3>
       <ul>
-        <li><strong>De flesta prislappar, och texten som förklarar dem.</strong> Saknas en officiell siffra föreslår en språkmodell ett belopp och skriver uträkningen under det. Sådana belopp bär alltid ett ungefär-tecken (≈), ett spann och källnivån "egen uppskattning" på löftessidan — du ser alltså på siffran att den är gissad.</li>
-        <li><strong>Marginalanteckningen under ett fåtal löften.</strong> De allra flesta löften får i stället den fasta vikt-raden längre upp på den här sidan, som räknas fram utan språkmodell.</li>
+        <li><strong>Fyra av fem prislappar, och texten som förklarar dem.</strong> Saknas en officiell siffra föreslår en språkmodell ett belopp och skriver uträkningen under det. Sådana belopp bär alltid ett ungefär-tecken (≈), ett spann och källnivån "egen uppskattning" på löftessidan — du ser alltså på siffran att den är gissad.</li>
+        <li><strong>Marginalanteckningen under ett par procent av löftena.</strong> Alla övriga får i stället den fasta vikt-raden längre upp på den här sidan, som räknas fram utan språkmodell.</li>
         <li><strong>Veckokrönikorna.</strong> Texten skrivs av en språkmodell utifrån veckans löften. Genereringen är för närvarande pausad medan vi bygger om hur siffrorna i dem hålls färska.</li>
         <li><strong>Förslagen i granskningsköerna.</strong> Vilket besked ett citat ger i Frågevågen, och vilken riksdagshandling som hör ihop med vilket löfte i Handlingsvågen, föreslås av en språkmodell och kontrolleras av en annan, oberoende, innan en människa avgör saken.</li>
       </ul>
@@ -136,7 +145,8 @@ const jsonLd = [
 
       <h3>Vem som bär ansvaret</h3>
       <p>Redaktionellt ansvarig för utlovat.se är <strong>Martin Kronvall</strong>, som nås på <a href="mailto:hej@utlovat.se">hej@utlovat.se</a>.</p>
-      <p>Ansvaret är inte en formulering utan hur arbetet faktiskt går till: <strong>ingenting når sajten utan att en människa släppt igenom det.</strong> Varje ändring — ett nytt löfte, ett justerat belopp, en omskriven textrad — läggs först som ett förslag i det öppna kodförrådet, och bara den ansvariga människan kan slå ihop förslaget så att det publiceras. Maskinen får föreslå; den får inte publicera. Den spärren är inte ett löfte utan en inställning i kodförrådet, och varje sammanslagning ligger kvar i historiken med namn och tidpunkt — så vem som helst kan gå tillbaka och se vem som släppte igenom vad, och när. Hela kedjan är öppen på <a href="https://github.com/bambapappa/valflask" target="_blank" rel="noopener">GitHub<span aria-hidden="true"> ↗</span><span class="visually-hidden"> (öppnas i en ny flik)</span></a>.</p>
+      <p>Ansvaret är inte en formulering utan hur arbetet faktiskt går till: <strong>inget nytt löfte och inget belopp når sajten utan att en människa släppt igenom det.</strong> Föreslår en språkmodell en prislapp hamnar löftet i en öppen granskningskö, och där blir det liggande. Det enda som kan släppa ut det är att den ansvariga människan sätter ett godkännande på det — en åtgärd som kräver behörighet i kodförrådet och som ingen maskin kan utföra åt oss. Beslutet sparas med tidpunkt, och kön ligger öppen hela tiden, så vem som helst kan se vad som väntar på besked och vad som släpptes igenom.</p>
+      <p>Det ska sägas lika rakt vad spärren <em>inte</em> är: sajten byggs om automatiskt, och delar av arbetet skriver till kodförrådet utan att en människa trycker på något varje gång — källkontroller, arkivkopior, uppdaterade sammanräkningar. Det är maskinellt arbete på material som redan är godkänt, inte en väg förbi granskningen. Gränsen går vid <strong>vad som får bli ett publicerat påstående</strong>: den passeras bara av ett mänskligt godkännande. Varje ändring, också maskinernas, ligger kvar i kodförrådets historik med tidpunkt. Hela kedjan är öppen på <a href="https://github.com/bambapappa/valflask" target="_blank" rel="noopener">GitHub<span aria-hidden="true"> ↗</span><span class="visually-hidden"> (öppnas i en ny flik)</span></a>.</p>
 
       <h2 id="kronikor">Veckokrönikorna: texten står still, siffrorna hålls färska</h2>
       <p>Varje vecka sammanfattar vi veckans löften i en krönika. Sedan rättar vi ibland ett belopp — och då stämmer inte längre den summa som stod i krönikan när den skrevs.</p>
@@ -147,14 +157,14 @@ const jsonLd = [
       <h2 id="fragevagen">Frågevågen — så registrerar vi partiernas besked</h2>
       <p><a href="/fragor">Frågevågen</a> för register över vad partierna <strong>säger</strong> i valets stora frågor. Metoden i fem punkter:</p>
       <p><strong>1. Frågorna väljs av väljarna, inte av oss.</strong> En fråga tas in när den ligger bland de viktigaste i mätningar från två oberoende undersökningsinstitut — Novus ("Viktigaste politiska frågan", topp 10, någon av de två senaste mätningarna räknas) och den nationella SOM-undersökningen (topp 15). Källbeläggen står på varje frågesida. Frågor tas aldrig bort före valdagen.</p>
-      <p><strong>2. Vi frågar aldrig partierna.</strong> Ett besked finns för oss bara om det är publicerat: ordagrant citat ur en källa på vår öppna källista, med länk, arkivkopia och datum. Enkäter går att putsa i efterhand — publicerade ord går inte att putsa.</p>
+      <p><strong>2. Vi frågar aldrig partierna.</strong> Ett besked finns för oss bara om det är publicerat: ordagrant citat ur en källa på vår öppna källista, med länk och datum. Enkäter går att putsa i efterhand — publicerade ord går inte att putsa. Till nästan varje besked hör dessutom en arkivkopia av sidan; undantaget är de fall där kopian visade sig inte bära citatet, och då sätter vi hellre ingen kopia än en som inte styrker något.</p>
       <p><strong>3. Beskedet måste stå i citatet.</strong> Varje delfråga besvaras med ja, nej eller villkorat — och bara om citatet <em>ensamt</em> räcker som belägg. En dator föreslår, en annan oberoende dator måste hålla med; vid minsta tvekan visar vi "besked saknas" i stället för att gissa. Tystnad redovisas exakt likadant för alla åtta partier, och den kommenteras aldrig.</p>
       <p><strong>4. Ingen backar i tysthet.</strong> Publicerade besked raderas aldrig. Byter ett parti position visas det gamla och det nya beskedet sida vid sida i <a href="/svangningar">svängregistret</a>, båda med citat, källa och arkivkopia. Ett byte mellan ja och nej publiceras aldrig utan mänsklig granskning — regeln är densamma för alla partier. Och varje vecka kontrollerar vi att källorna finns kvar: en borttagen eller omskriven källsida stämplas synligt, och arkivkopian gäller. Fallen samlas under <a href="/andrade-kallor">ändrade källor</a>.</p>
       <p><strong>5. Ingen valkompass, ingen skala.</strong> Vi matchar inte dina åsikter mot partiernas, sätter inga betyg och placerar ingen på en axel. Vi visar beskeden bredvid varandra — slutsatserna är dina.</p>
 
       <h2 id="andrade-kallor">När källan ändrar sig</h2>
-      <p>Varje citat vi publicerar har en <strong>arkivkopia</strong> — en ögonblicksbild av sidan som den såg ut när vi hämtade citatet, sparad hos Internet Archive. Kopian godtas bara om citatet står ordagrant i själva ögonblicksbilden.</p>
-      <p>Sedan öppnar vi källorna igen, regelbundet, och jämför mot citatet. Svarar sidan inte längre, eller står citatet inte längre där, sätts en synlig stämpel vid citatet och arkivkopian gäller. Vi ändrar aldrig citatet i efterhand för att få det att stämma med hur sidan ser ut i dag.</p>
+      <p>Till nästan varje citat hör en <strong>arkivkopia</strong> — en ögonblicksbild av sidan som den såg ut när vi hämtade citatet, sparad hos Internet Archive. <strong>Kopian godtas bara om citatet står ordagrant i själva ögonblicksbilden</strong>, och bär den inte citatet sätter vi ingen kopia alls hellre än en som inte styrker något. De löften som saknar kopia är nästan alla hämtade ur filmer, som inte går att spara som text på det sättet.</p>
+      <p>Sedan öppnar vi källorna igen <strong>varje vecka</strong> — både löftenas och partibeskedens — och jämför mot citatet. Svarar sidan inte längre, eller står citatet inte längre där, sätts en synlig stämpel vid citatet och arkivkopian gäller. Vi ändrar aldrig citatet i efterhand för att få det att stämma med hur sidan ser ut i dag.</p>
       <p>Fallen samlas på <a href="/andrade-kallor">ändrade källor</a>, med vad vi citerade och vad sidan säger nu, sida vid sida. Där står också vem som äger sidan — när riksdagen språkgranskar en motion är det riksdagen som ändrat texten, inte partiet som skrev den. Vi redovisar vad som står, aldrig varför.</p>
       <p>Är det <em>vi</em> som haft fel — ett citat som aldrig stämde — är det ingen ändrad källa utan ett fel hos oss, och då hamnar det i <a href="/rattelser">rättelseloggen</a>.</p>
 

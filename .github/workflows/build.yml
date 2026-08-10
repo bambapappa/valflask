@@ -127,6 +127,13 @@ jobs:
       - name: Grindar för invarianterna
         run: node --experimental-strip-types --test scripts/test-invarianter.mts
         working-directory: site
+      # Prosagrinden: metod-, om-, press-, api- och neutralitetssidornas
+      # påståenden om koden mäts i stället för att läsas. Ligger FÖRE bygget,
+      # som de andra sajtgrindarna — en osann metodsida ska inte hinna
+      # driftsättas. Offline, inget nät. Bakgrunden i test-prosan.mts.
+      - name: Grindar för prosan
+        run: node --experimental-strip-types scripts/test-prosan.mts
+        working-directory: site
       - name: Build site + OG images
         run: pnpm build
         working-directory: site

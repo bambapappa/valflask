@@ -1,4 +1,10 @@
-# Frågevågen — källröta-bevakningen (SPEC-FRAGEVAGEN.md §6.3, veckovis).
+# Källröta-bevakningen — BÅDA vågorna, veckovis (SPEC-FRAGEVAGEN.md §6.3).
+#
+# Fläskvågens steg tillkom 2026-08-09. Verktyget fanns sedan femtonde passet
+# men låg i inget arbetsflöde, så metodsidans «sedan öppnar vi källorna igen,
+# regelbundet» gällde bara Frågevågen: 553 löftens källor öppnades en enda
+# gång, för hand. Nu gäller meningen båda. Ankaret som vaktar den ligger i
+# site/src/lib/prosans-ankare.ts.
 #
 # VILANDE TILLS LANSERING (ops/FRAGEVAGEN-LANSERING.md steg 4): jobbet kör bara
 # när repovariabeln STANCES_ENABLED är "true" — schemat kan alltså mergas utan
@@ -39,13 +45,21 @@ jobs:
       - name: Install pipeline deps
         run: pnpm install --frozen-lockfile
         working-directory: pipeline
-      - name: Källröta-kontroll
+      - name: Källröta-kontroll — Frågevågen
         run: pnpm stances:rot-check
+        working-directory: pipeline
+      # `--fynd-ar-data`: en ändrad källa är ett mätvärde, inte ett haveri.
+      # Utan flaggan hade jobbet fallit varje måndag på de tre löften som
+      # redan står `andrad`, larmet gått för ett känt läge, och committen
+      # nedan hoppats över — bevakningen hade mätt och kastat mätningen.
+      # Faller steget ändå är bevakningen verkligen trasig, och då ska larmet gå.
+      - name: Källröta-kontroll — Fläskvågen
+        run: pnpm promises:rot-check --fynd-ar-data
         working-directory: pipeline
       - name: Commit data if changed
         run: |
           git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
-          git add data/stances.json && git diff --cached --quiet || git commit -m "data: källröta-kontroll $(date -u +%F) (run ${{ github.run_id }})"
+          git add data/stances.json data/promises.json data/changelog.json && git diff --cached --quiet || git commit -m "data: källröta-kontroll $(date -u +%F) (run ${{ github.run_id }})"
           git push
 
   # Larmet är hela skälet till att ett fel i den här körningen syns för en
@@ -61,7 +75,9 @@ jobs:
       rubrik: "Källrötebevakningen"
       etikett: "larm-rot-watch"
       atgard: |
-            Bevakningen stämplar källor som ändrats eller försvunnit. Faller
-            den syns en borttagen källa inte på sajten. Kör
-            `pnpm stances:rot-check --dry-run` i `pipeline/` och läs vad som
-            brister innan något skrivs.
+            Bevakningen stämplar källor som ändrats eller försvunnit, i båda
+            vågorna. Faller den syns en borttagen källa inte på sajten. Kör
+            `pnpm stances:rot-check --dry-run` respektive
+            `pnpm promises:rot-check --dry-run` i `pipeline/` och läs vad som
+            brister innan något skrivs. **Ett fynd fäller inte jobbet** —
+            faller det är det bevakningen som är trasig, inte en källa.

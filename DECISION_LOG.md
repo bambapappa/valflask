@@ -5,6 +5,70 @@ Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
 
 ---
 
+## 2026-08-09 — Prosans påståenden om koden mäts, de läses inte
+
+**Beslut:** Ett ankarregister (`site/src/lib/prosans-ankare.ts`) binder varje
+kontrollerbart påstående på metod-, om-, press-, api- och neutralitetssidorna
+till en mätning av vad koden eller datat faktiskt gör. Grinden
+`site/scripts/test-prosan.mts` kräver att meningen står **ord för ord** i
+sidfilen och att mätningen håller, kör varje prov en gång till mot ett blänkt
+repo för att bevisa att det kan falla, och räknar varje stycke och listpunkt
+som antingen ankrat eller «bär ingen kontrollerbar utsaga om koden». Antalet
+oklassade har ett tak som bara får sjunka. Grinden ligger i `pnpm test` och som
+eget steg i `build.yml`, före bygget. Offline.
+
+**Motiv:** Vi har grindar för datats kvalitet och hade ingen alls för prosans.
+Metodsidan påstod att vikt-raden «skrivs av datorn efter en fast mall» och att
+«samma belopp ger ordagrant samma rad». Det var sant när det skrevs och blev
+osant den dag det nionde löftet fick en modellskriven rad godkänd. Ingenting
+mätte det — felet hittades för att en människa läste texten och koden bredvid
+varandra. En inventering av alla 95 block hittade **åtta påståenden till som
+inte höll**, bland dem att avskrifter sparas (0 av 553 bar en), att källorna
+öppnas regelbundet (bara Frågevågens gjorde det) och att en andra oberoende
+dator dubbelkollar beloppet (den läser citatet; beloppet går till en människa).
+Ett register räcker inte i sig: en lista över gammal prosa fångar inte ny
+prosa, och då är grinden ett dokument som också åldras. Därför täckningen med
+tak.
+
+**Förkastade alternativ:** *Bara ett register utan täckningsgrind* — billigare,
+men vaktar bara den text som fanns den dag registret skrevs, alltså exakt det
+åldrande den ska hindra. *Att låta grinden hämta sidorna över nätet och läsa
+den byggda HTML:en* — närmare läsarens verklighet, men grinden ska kunna köra
+i bygget innan något driftsatts, och en nätberoende grind faller på nätet i
+stället för på texten. *Att klassa oklassade block som «utan utsaga» i klump för
+att nå noll* — hade gett ett tak på noll och en klasslista som ljuger; taket
+står på 32 med utskrivet skäl i stället.
+
+## 2026-08-09 — Metodsidans spärr beskrivs som den är, utan rättelsepost
+
+**Beslut:** Stycket «bara den ansvariga människan kan slå ihop förslaget så att
+det publiceras / Maskinen får föreslå, den får inte publicera» skrivs om. Den
+nya lydelsen säger att inget nytt löfte och inget belopp når sajten utan ett
+mänskligt godkännande i granskningskön, och skriver dessutom ut vad spärren
+**inte** är: att sajten byggs om automatiskt och att delar av arbetet skriver
+till kodförrådet utan att en människa trycker på något varje gång. **Mänskligt
+beslut 2026-08-09: ingen post i rättelseloggen.**
+
+**Motiv:** Påståendet stämde inte med den inställning det uttryckligen åberopade.
+Mätt mot `main`: **2 013 av 2 661 commits utan sammanslagning sedan 2026-06-10
+är robotpushar**, elva arbetsflöden pushar direkt, regeluppsättningen på `main`
+ger en app `bypass_mode: "always"`, kravet på godkännande står på noll och
+`require_code_owner_review` är satt utan att repot har någon `CODEOWNERS`. Varje
+push till `main` driftsätter. Substansen höll däremot: innehållsbesluten är
+mänskliga, men grinden är etiketten i granskningskön, som bara en användare med
+triage-behörighet kan sätta och som `review-apply.yml` ensam verkställer. Det är
+den grinden texten nu beskriver, och den är ankrad i registret.
+
+**Förkastade alternativ:** *Rätta inställningen i stället för texten* — ta bort
+robotens undantag och lägga en `CODEOWNERS`, så att meningen blir sann. Då
+slutar elva arbetsflöden fungera samma dag, inklusive pipelinen som kör tre
+gånger om dygnet; frågan får tas som ett eget spår. *Rättelsepost i
+`data/rattelser.json`* — övervägt, för det är ett publicerat påstående om vår
+egen hederlighet. Samma gräns dras som i nionde och tjugonde passet:
+rättelseloggen är till för fel i det granskade materialet — belopp, citat,
+bedömningar — och det här var en metodbeskrivning som beskrev sin egen kod fel,
+inte ett fel om ett parti.
+
 ## 2026-08-09 — Topplistan över politiker släcks tills personregistret är fyllt
 
 **Beslut:** Avsnittet «Frikostigaste politikern» på `/topplistor` tas bort. Det
