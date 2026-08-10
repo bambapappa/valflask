@@ -56,7 +56,7 @@ test("ett publicerat löfte som saknas i kopian pekas ut", () => {
   const g = jamforKopia(omraknad.slice(0, 1), omraknad);
   assert.deepEqual(g.saknas, ["p-0002"]);
   assert.equal(arSamstammig(g), false);
-  assert.match(glidningstext(g), /löften partiet aldrig gett/u);
+  assert.match(glidningstext(g), /1 publicerade löften saknas i kopian: p-0002/u);
 });
 
 test("ett tillbakadraget löfte som ligger kvar i kopian pekas ut", () => {

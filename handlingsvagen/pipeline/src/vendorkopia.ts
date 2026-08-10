@@ -5,16 +5,24 @@
  * exakt samma kod. Står regeln på två ställen är den en regel man ändrar två
  * gånger — eller glömmer att ändra på det ena stället.
  *
- * Kopian har legat inaktuell två gånger. Den 7 augusti 2026 saknades 65
- * publicerade löften i rutnätet och två tillbakadragna låg kvar som om de
- * fanns; rättelsen skrev om kopian och slog fast att den ska skrivas om varje
- * gång Fläskvågens data ändras. Två dagar senare hade den glidit igen — 29
- * löften saknades och de tre centerpartistiska dubbletter som drogs in den 9
- * augusti stod kvar. Löftet att köra ett kommando är inte en kontroll, och
- * ingenting sade ifrån någon av gångerna.
+ * Kopian har legat inaktuell två gånger — 65 löften den 7 augusti 2026, 29 den
+ * 9 augusti — utan att något sade ifrån. Rättelsen båda gångerna var ett
+ * åtagande att köra om kommandot varje gång Fläskvågens data ändras, och båda
+ * gångerna glömdes det. Ett åtagande är inte en kontroll.
  *
- * Ett löfte som saknas i rutnätet ser för läsaren ut som ett löfte partiet
- * aldrig gett. Det är därför den här filen finns.
+ * **Det här är ordning i vårt eget material, inte en spärr mot fel hos
+ * läsaren.** Sajtbygget skriver om kopian ur `promises.json` innan
+ * Handlingsvågen byggs (steget "Läs in löftena ur samma träd" i `build.yml`,
+ * infört 6 augusti), så det som publiceras är alltid dagens löften hur gammal
+ * den incheckade filen än är. Skälet att ändå vakta den är att en fil i
+ * förrådet som inte stämmer med sin källa är en andra sanning: den läses av
+ * proven, av den som felsöker, och av nästa verktyg någon skriver mot den —
+ * och den dagen byggsteget flyttas eller tas bort blir glidningen synlig
+ * utåt utan att något ändrats i den här filen.
+ *
+ * Den 10 augusti skrevs en rättelsepost som sade att de 29 löftena saknats i
+ * rutnätet. Det var fel av just det skälet ovan, och posten är rättad i
+ * `data/rattelser.json`.
  */
 
 /** Ett löfte som det ser ut i Fläskvågens `promises.json`. */
@@ -99,8 +107,7 @@ export function glidningstext(g: Kopieglidning): string {
   const rader: string[] = [];
   if (g.saknas.length > 0) {
     rader.push(
-      `  ${g.saknas.length} publicerade löften saknas i kopian och syns inte i rutnätet — ` +
-        `för läsaren ser de ut som löften partiet aldrig gett: ${g.saknas.join(", ")}`,
+      `  ${g.saknas.length} publicerade löften saknas i kopian: ${g.saknas.join(", ")}`,
     );
   }
   if (g.kvarblivna.length > 0) {
@@ -121,7 +128,9 @@ export function glidningstext(g: Kopieglidning): string {
     "Skriv om den och committa resultatet:\n" +
     "  npm run vendor -- --promises ../../data/promises.json --parties ../../data/parties.json\n" +
     "  npm run domar  -- --promises ../../data/promises.json\n\n" +
-    "Ändrar omräkningen vad en läsare redan sett är det en synlig rättelse —\n" +
-    "rättelsenot och post i data/rattelser.json, aldrig en tyst omräkning."
+    "Sajten är inte fel så länge byggsteget står kvar — det skriver om kopian\n" +
+    "innan Handlingsvågen byggs. Ändrar omräkningen ändå något en läsare sett,\n" +
+    "till exempel ett utslag ur domar.json, är det en synlig rättelse: rättelsenot\n" +
+    "och post i data/rattelser.json, aldrig en tyst omräkning."
   );
 }

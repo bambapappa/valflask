@@ -102,6 +102,23 @@ jobs:
         continue-on-error: true
         run: node --import tsx/esm scripts/archive-backfill.mts save 12
         working-directory: pipeline
+      # Handlingsvågens läskopia av löftena, och utslagen som räknas ur den.
+      # Ändras promises.json utan att kopian skrivs om saknas de nya löftena i
+      # rutnätet — och för läsaren ser ett löfte som saknas ut som ett löfte
+      # partiet aldrig gett. Det hade hänt två gånger när steget lades till:
+      # den 7 augusti (65 löften) och den 9 augusti (29). Båda gångerna var
+      # rättelsen ett åtagande att köra kommandot, och båda gångerna glömdes
+      # det. Nu kör körningen det själv, och `vendorkopia.test.ts` fäller
+      # bygget om kopian ändå glider.
+      - name: Skriv om Handlingsvågens läskopia och räkna om utslagen
+        # Samma anrop som build.yml använder: --experimental-strip-types kör
+        # TypeScript direkt, så steget behöver inga installerade beroenden i
+        # handlingsvagen/pipeline och lägger inte en minut på pipelinekörningen.
+        run: |
+          node --experimental-strip-types scripts/bygg-vendor.mts \
+            --promises ../../data/promises.json --parties ../../data/parties.json
+          node --experimental-strip-types scripts/domar.mts --promises ../../data/promises.json
+        working-directory: handlingsvagen/pipeline
       # App-tokens lever 1 h. Pipelinesteget kan ta längre (första manifest-
       # körningen tog 71 min) — då är jobbstart-tokenen död vid push och datan
       # går förlorad (run 28673246764). Mynta därför en FÄRSK token efter
@@ -128,7 +145,7 @@ jobs:
           # och den rensningen rörde alltså ingenting. Att stänga av sparandet
           # i checkout-steget är det som faktiskt håller.
           git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
-          git add data/
+          git add data/ handlingsvagen/data/
           if git diff --cached --quiet; then
             echo "Inga dataändringar — inget att committa."
             exit 0
