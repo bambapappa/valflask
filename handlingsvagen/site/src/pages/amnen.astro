@@ -66,6 +66,15 @@ const andel = (kod: string, vikt: number): number =>
           )}
           Skriver du flera ord visas bara dokument som innehåller alla.
         </p>
+        <p class="hjalp">
+          <b>Vårt sök hittar vad ett dokument handlar om — inte allt som står
+          i det.</b> Vi sparar de fyrtio vanligaste orden ur varje dokument,
+          inte hela texten. Ett ord som nämns en enda gång i en lång motion
+          finns därför inte här, även om vi har motionen. Vill du ha allt som
+          nämner ordet finns knappen <i>Allt i riksdagen</i> vid träffarna:
+          den frågar riksdagen direkt och söker igenom hela texterna, även i
+          dokument vi själva aldrig hämtat hem.
+        </p>
 
         <div
           class="amnesok"
@@ -98,8 +107,31 @@ const andel = (kod: string, vikt: number): number =>
           </fieldset>
 
           <p id="amne-status" class="status" role="status" aria-live="polite"></p>
+
+          <div id="amne-lagen" class="lagen" hidden>
+            <button type="button" id="amne-lage-vart" class="lage" aria-pressed="true">
+              Vårt urval
+            </button>
+            <button type="button" id="amne-lage-allt" class="lage" aria-pressed="false">
+              Allt i riksdagen
+            </button>
+          </div>
+
           <ul id="amne-traffar" class="traffar"></ul>
           <p id="amne-mer" class="status"></p>
+
+          <section id="amne-brett" class="brett" hidden>
+            <p id="amne-brett-status" class="status" role="status" aria-live="polite"></p>
+            <ul id="amne-brett-traffar" class="traffar"></ul>
+            <p class="status">
+              <button type="button" id="amne-brett-fler" class="fler" hidden>Hämta fler</button>
+            </p>
+            <p class="hjalp brett-lank">
+              <a id="amne-brett-lank" href="https://data.riksdagen.se/" rel="noopener">
+                Öppna samma sökning hos riksdagen
+              </a>
+            </p>
+          </section>
 
           <section id="amne-roster" class="roster" hidden>
             <h3>Så röstade partierna i omröstningar om ämnet</h3>
@@ -217,6 +249,33 @@ const andel = (kod: string, vikt: number): number =>
           träffen. På övriga står ingenting, och då är det för att ingen vägt
           dem — inte för att svaret vore oklart.
         </p>
+
+        <h2>Varför två listor, och varför de inte visar samma tal</h2>
+        <p>
+          <b>Vårt urval</b> är de dokument vi hämtat hem och byggt ett eget
+          register över. Av varje dokument sparar vi de fyrtio vanligaste
+          orden — inte hela texten. Det gör registret bra på vad ett dokument
+          <i>handlar om</i>, och blint för allt annat som <i>står i</i> det.
+          Nämns ett ord en enda gång i en lång motion syns det inte här, trots
+          att vi har motionen.
+        </p>
+        <p>
+          <b>Allt i riksdagen</b> frågar riksdagens egen söktjänst i stället.
+          Den läser hela texterna, och den når dessutom sorter vi aldrig
+          hämtar hem: utskottens betänkanden, kammarens protokoll, statliga
+          utredningar och EU-handlingar. Därför är den listan nästan alltid
+          längre — ofta många gånger längre. Skillnaden mellan talen är alltså
+          inte ett fel i någon av dem; den säger vad de två listorna letar
+          efter.
+        </p>
+        <p>
+          Den breda listan är riksdagens svar, inte vårt. Vi har inte läst de
+          dokumenten, inte kontrollerat dem och inte vägt dem mot något löfte.
+          De få rader som bär en markering om att vi vägt dokumentet är just
+          de som också finns i vårt eget urval. Sökningen görs från din
+          webbläsare direkt mot riksdagen, och bara när du klickar — vi
+          skickar den aldrig i förväg.
+        </p>
       </>
     )}
   </div>
@@ -229,19 +288,33 @@ const andel = (kod: string, vikt: number): number =>
     import { sokStammar } from "../../../pipeline/src/nyckelord.ts";
     import { PARTIBITAR, partiStandpunkt, STANDPUNKT_TEXT } from "../lib/delat.ts";
     import type { Roster, Standpunkt } from "../lib/delat.ts";
+    import { byggFraga, byggSoksidaAdress, tolkaSvar } from "../lib/riksdagssok.ts";
+    import type { RiksdagsTraff } from "../lib/riksdagssok.ts";
 
     const rot = document.querySelector<HTMLElement>(".amnesok");
     const falt = document.querySelector<HTMLInputElement>("#amne-falt");
     const status = document.querySelector<HTMLElement>("#amne-status");
     const traffar = document.querySelector<HTMLElement>("#amne-traffar");
     const mer = document.querySelector<HTMLElement>("#amne-mer");
+    const lagen = document.querySelector<HTMLElement>("#amne-lagen");
+    const lageVart = document.querySelector<HTMLButtonElement>("#amne-lage-vart");
+    const lageAllt = document.querySelector<HTMLButtonElement>("#amne-lage-allt");
+    const brett = document.querySelector<HTMLElement>("#amne-brett");
+    const brettStatus = document.querySelector<HTMLElement>("#amne-brett-status");
+    const brettTraffar = document.querySelector<HTMLElement>("#amne-brett-traffar");
+    const brettFler = document.querySelector<HTMLButtonElement>("#amne-brett-fler");
+    const brettLank = document.querySelector<HTMLAnchorElement>("#amne-brett-lank");
     const rosterYta = document.querySelector<HTMLElement>("#amne-roster");
     const rosterOm = document.querySelector<HTMLElement>("#amne-roster-om");
     const rosterRader = document.querySelector<HTMLElement>("#amne-roster-rader");
     const voteringslista = document.querySelector<HTMLElement>("#amne-voteringar");
     const partikryss = [...document.querySelectorAll<HTMLInputElement>('input[name="parti"]')];
 
-    if (rot && falt && status && traffar && mer && rosterYta && rosterOm && rosterRader && voteringslista) {
+    if (
+      rot && falt && status && traffar && mer && rosterYta && rosterOm && rosterRader &&
+      voteringslista && lagen && lageVart && lageAllt && brett && brettStatus &&
+      brettTraffar && brettFler && brettLank
+    ) {
       const bas = rot.dataset.bas ?? "/";
       // Vilka skärvor som faktiskt finns — sparar en bomhämtning per okänt
       // sökord (och därmed ett 404 i konsolen).
@@ -252,6 +325,22 @@ const andel = (kod: string, vikt: number): number =>
       const cache = new Map<string, unknown>();
       let vagda: Record<string, { riktning: string; lofte: string }> | null = null;
       let korning = 0;
+
+      // Det breda läget: riksdagens egen träfflista. Egen uppsättning
+      // tillstånd, för den lever helt vid sidan av vårt register.
+      const BREDA_PER_SIDA = 20;
+      /** Vägda utslag nycklade på riksdagens dok_id — hämtas först i brett läge. */
+      let vagdaDokId: Record<string, { riktning: string; lofte: string }> | null = null;
+      /** Sökordens stammar som det breda läget gäller, satt när en sökning körts. */
+      let bredaOrden: string[][] = [];
+      /** Nästa sida hos riksdagen, eller null när listan är slut. */
+      let bredaNasta: string | null = null;
+      /** Hela antalet hos riksdagen — deras tal, inte vårt. */
+      let bredaAntalet = 0;
+      /** Hur många rader vi hunnit visa. */
+      let bredaVisade = 0;
+      /** Sant när frågan redan ställts för den sökning som står i rutan. */
+      let bredaStalld = false;
 
       interface OrdPost {
         n: number;
@@ -325,18 +414,98 @@ const andel = (kod: string, vikt: number): number =>
         return m ? String(Math.floor(Number(m[1]) / 1000)).padStart(2, "0") : "ovrigt";
       }
 
+      /**
+       * En träffrad. Delad av båda listorna med flit: vårt urval och
+       * riksdagens breda lista ska se likadana ut, för de är samma sorts
+       * uppgift — ett dokument, en länk dit. Det enda som skiljer är vad
+       * som står i `vagd`, och det är just skillnaden läsaren ska se.
+       */
+      function byggRad(d: {
+        url: string;
+        titel: string;
+        sort: string;
+        datum: string;
+        organ?: string | undefined;
+        partier: string[];
+        vagd?: { riktning: string; lofte: string } | undefined;
+      }): HTMLLIElement {
+        const li = document.createElement("li");
+        const rad = document.createElement("div");
+        rad.className = "rad1";
+
+        const a = document.createElement("a");
+        a.className = "titel";
+        a.href = d.url;
+        a.rel = "noopener";
+        a.textContent = d.titel;
+        rad.append(a);
+
+        const meta = document.createElement("span");
+        meta.className = "meta";
+        meta.textContent = `${d.sort} · ${d.datum}${d.organ ? " · " + d.organ : ""}`;
+        rad.append(meta);
+
+        if (d.partier.length > 0) {
+          const pw = document.createElement("span");
+          pw.className = "partier";
+          for (const kod of d.partier) {
+            const pk = document.createElement("span");
+            pk.className = "pk";
+            pk.textContent = kod;
+            pw.append(pk);
+          }
+          rad.append(pw);
+        }
+        li.append(rad);
+
+        // Riktning visas BARA där ett utslag faktiskt vägts. Att ordet står
+        // i texten säger ingenting om för eller emot.
+        if (d.vagd) {
+          const u = document.createElement("div");
+          u.className = "utslag";
+          u.textContent = d.vagd.riktning === "stodjer"
+            ? "Vägd: stödjer ett löfte"
+            : "Vägd: motverkar ett löfte";
+          li.append(u);
+        }
+        return li;
+      }
+
       function tomtResultat() {
         traffar.replaceChildren();
         mer.textContent = "";
         rosterYta.hidden = true;
         rosterRader.replaceChildren();
         voteringslista.replaceChildren();
+        // En ny sökning börjar alltid i vårt urval. Att låta det breda läget
+        // sitta kvar skulle skicka en fråga till riksdagen vid varje
+        // tangenttryckning — deras tjänst ska inte betala för vår sökruta.
+        valjLage(false);
+        lagen.hidden = true;
+        brettTraffar.replaceChildren();
+        brettStatus.textContent = "";
+        brettFler.hidden = true;
+        brettFler.disabled = false;
+        bredaNasta = null;
+        bredaAntalet = 0;
+        bredaVisade = 0;
+        bredaStalld = false;
+        lageAllt.textContent = "Allt i riksdagen";
       }
 
-      async function sok(fraga: string) {
+      /**
+       * `behallLage` sätts när det är partifiltret som ändrats, inte texten.
+       * Läsaren har då redan valt att fråga riksdagen om just den här
+       * sökningen, och att kasta tillbaka hen till vårt urval vid varje kryss
+       * vore att straffa den som filtrerar. Ny text börjar däremot alltid om
+       * i vårt urval — där är det en ny fråga, inte samma fråga smalare.
+       */
+      async function sok(fraga: string, behallLage = false) {
         const min = ++korning;
         const orden = sokord(fraga);
+        const varBrett = lageAllt.getAttribute("aria-pressed") === "true";
         tomtResultat();
+        bredaOrden = orden.map((o) => o.stammar);
         if (orden.length === 0) {
           status.textContent = "";
           return;
@@ -409,6 +578,15 @@ const andel = (kod: string, vikt: number): number =>
 
         void visaRoster(betIds ?? [], helaBetAntalet, betKapat, min);
 
+        // Den breda listan erbjuds så snart sökorden är kända — även när
+        // vårt eget urval är tomt. Det är just då den är värd mest: att vi
+        // inte har något att visa betyder inte att riksdagen saknar det.
+        lagen.hidden = false;
+        if (behallLage && varBrett) {
+          valjLage(true);
+          void hamtaBrett(false);
+        }
+
         if (alla.length === 0) {
           status.textContent = mask === 0
             ? `Inga handlingar innehåller ${flera}.`
@@ -453,53 +631,133 @@ const andel = (kod: string, vikt: number): number =>
           .sort((a, b) => String(b.k.d).localeCompare(String(a.k.d)));
 
         for (const { id, k } of poster) {
-          const li = document.createElement("li");
-          const rad = document.createElement("div");
-          rad.className = "rad1";
-
-          const a = document.createElement("a");
-          a.className = "titel";
-          a.href = k.u;
-          a.rel = "noopener";
-          a.textContent = k.t;
-          rad.append(a);
-
-          const meta = document.createElement("span");
-          meta.className = "meta";
-          meta.textContent = `${SORT[k.k] ?? k.k} · ${k.d}${k.o ? " · " + k.o : ""}`;
-          rad.append(meta);
-
-          if (Array.isArray(k.p) && k.p.length > 0) {
-            const pw = document.createElement("span");
-            pw.className = "partier";
-            for (const kod of k.p) {
-              const pk = document.createElement("span");
-              pk.className = "pk";
-              pk.textContent = kod;
-              pw.append(pk);
-            }
-            rad.append(pw);
-          }
-
-          li.append(rad);
-
-          // Riktning visas BARA där ett utslag faktiskt vägts. Att ordet
-          // står i texten säger ingenting om för eller emot.
-          const v = vagda?.[id];
-          if (v) {
-            const u = document.createElement("div");
-            u.className = "utslag";
-            u.textContent = v.riktning === "stodjer"
-              ? "Vägd: stödjer ett löfte"
-              : "Vägd: motverkar ett löfte";
-            li.append(u);
-          }
-          traffar.append(li);
+          traffar.append(byggRad({
+            url: k.u,
+            titel: k.t,
+            sort: SORT[k.k] ?? k.k,
+            datum: k.d,
+            organ: k.o,
+            partier: Array.isArray(k.p) ? k.p : [],
+            vagd: vagda?.[id],
+          }));
         }
         if (alla.length > visade.length) {
           mer.textContent = `Visar de ${visade.length} senaste av ${tal(alla.length)}.`;
         }
       }
+
+      /** Växlar mellan vårt urval och riksdagens breda lista. */
+      function valjLage(allt: boolean) {
+        lageVart.setAttribute("aria-pressed", String(!allt));
+        lageAllt.setAttribute("aria-pressed", String(allt));
+        traffar.hidden = allt;
+        mer.hidden = allt;
+        brett.hidden = !allt;
+        // Röstsammanställningen bygger på VÅRT register och hör ihop med
+        // vårt urval. Den får inte stå kvar under riksdagens lista och se
+        // ut som ett svar på den.
+        rosterYta.classList.toggle("undanskymd", allt);
+      }
+
+      /** Dagens datum, i läsarens egen tidszon. Fönstrets slut. */
+      function idag(): string {
+        return new Date().toLocaleDateString("sv-SE");
+      }
+
+      /**
+       * Riksdagens egen träfflista för samma ord.
+       *
+       * Frågan ställs från läsarens webbläsare, direkt mot data.riksdagen.se,
+       * och bara när läsaren klickat. Aldrig i förväg: det är ett anrop till
+       * en tredje part, och det ska vara läsarens val.
+       *
+       * Går den inte fram — nätet nere, riksdagen nere, eller sidans
+       * säkerhetspolicy ännu inte utrullad — står länken kvar och sidan säger
+       * vad som hände. En tom lista skulle läsas som "inga träffar", och det
+       * vore en osanning.
+       */
+      async function hamtaBrett(fortsattning: boolean) {
+        if (bredaOrden.length === 0) return;
+        const min = korning;
+        const partier = partikryss.filter((k) => k.checked).map((k) => k.value);
+        const adress = fortsattning && bredaNasta
+          ? bredaNasta
+          : byggFraga({ ord: bredaOrden, partier, tom: idag(), sz: BREDA_PER_SIDA });
+
+        brettLank.href = byggSoksidaAdress({ ord: bredaOrden, partier, tom: idag() });
+        brettFler.hidden = true;
+        brettFler.disabled = true;
+        if (!fortsattning) {
+          brettTraffar.replaceChildren();
+          bredaVisade = 0;
+        }
+        brettStatus.textContent = fortsattning ? "Hämtar fler …" : "Frågar riksdagen …";
+
+        const svar = await hamta<unknown>(adress);
+        if (min !== korning) return; // läsaren har hunnit söka på något annat
+        brettFler.disabled = false;
+
+        if (svar === null) {
+          brettStatus.textContent =
+            "Riksdagens söktjänst svarade inte. Vårt eget urval står kvar under " +
+            "”Vårt urval”, och länken nedan öppnar samma sökning hos dem.";
+          return;
+        }
+
+        let tolkat;
+        try {
+          tolkat = tolkaSvar(svar);
+        } catch {
+          brettStatus.textContent =
+            "Riksdagens svar gick inte att läsa. Länken nedan öppnar samma sökning hos dem.";
+          return;
+        }
+
+        vagdaDokId ??= (await hamta<Record<string, { riktning: string; lofte: string }>>(
+          `${bas}api/hv/vagda-dokid.json`,
+        )) ?? {};
+        if (min !== korning) return;
+
+        bredaAntalet = tolkat.traffar;
+        bredaNasta = tolkat.nastaUrl;
+        bredaStalld = true;
+        lageAllt.textContent = `Allt i riksdagen (${tal(bredaAntalet)})`;
+
+        for (const d of tolkat.dokument) {
+          brettTraffar.append(byggRad({
+            url: d.url,
+            titel: d.titel,
+            sort: d.sort,
+            datum: d.datum,
+            organ: d.organ,
+            partier: d.partier,
+            vagd: vagdaDokId?.[d.dok_id],
+          }));
+          bredaVisade += 1;
+        }
+
+        const vilka = partier.length > 0
+          ? ` Filtret på ${valdaNamn().join(", ")} gäller dokumentets avsändare, så betänkanden, protokoll och utredningar faller bort — de har ingen partiavsändare.`
+          : "";
+        if (bredaAntalet === 0) {
+          brettStatus.textContent = `Riksdagen har inga träffar på ${
+            bredaOrden.length > 1 ? "alla orden" : "ordet"
+          } under mandatperioden.${vilka}`;
+        } else {
+          brettStatus.textContent =
+            `Riksdagen har ${tal(bredaAntalet)} träffar under mandatperioden. ` +
+            `Visar ${tal(bredaVisade)}. Det här är riksdagens egen sökning i hela texterna — ` +
+            `vi har inte läst dokumenten.${vilka}`;
+        }
+        brettFler.hidden = bredaNasta === null || bredaVisade >= bredaAntalet;
+      }
+
+      lageVart.addEventListener("click", () => valjLage(false));
+      lageAllt.addEventListener("click", () => {
+        valjLage(true);
+        if (!bredaStalld) void hamtaBrett(false);
+      });
+      brettFler.addEventListener("click", () => void hamtaBrett(true));
 
       /**
        * Röstsammanställningen: hur partierna röstade i de omröstningar som
@@ -618,7 +876,7 @@ const andel = (kod: string, vikt: number): number =>
       // Filtret ska verka direkt — annars visar listan ett urval som inte
       // stämmer med kryssen.
       for (const kryss of partikryss) {
-        kryss.addEventListener("change", () => void sok(falt.value));
+        kryss.addEventListener("change", () => void sok(falt.value, true));
       }
     }
   </script>
@@ -660,6 +918,26 @@ const andel = (kod: string, vikt: number): number =>
   .partikryss:has(input:checked) { border-width: 2px; font-weight: 700; }
   .partikryss input { margin: 0; }
   .filterhjalp { font-size: 0.85rem; margin: 0.4rem 0 0; }
+
+  /* Lägesväxeln. Valt läge markeras med form, aldrig med färg — samma regel
+     som partikryssen följer. */
+  .lagen { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.9rem 0 0; }
+  .lage {
+    padding: 0.35rem 0.8rem; font-size: 0.85rem; cursor: pointer;
+    font-family: var(--font-mono); color: inherit;
+    background: var(--papper); border: 1px solid var(--svarta);
+  }
+  .lage[aria-pressed="true"] { border-width: 2px; font-weight: 700; }
+  .fler {
+    padding: 0.35rem 0.8rem; font-size: 0.85rem; cursor: pointer;
+    font-family: var(--font-mono); color: inherit;
+    background: var(--papper); border: 1px solid var(--svarta);
+  }
+  .fler[disabled] { cursor: progress; color: var(--text-svag); }
+  .brett-lank { margin: 0.8rem 0 0; }
+  /* Röstsammanställningen bygger på vårt eget register. I brett läge står
+     den kvar men dämpad, så den inte läses som ett svar på riksdagens lista. */
+  .roster.undanskymd { opacity: 0.45; }
 
   .roster { margin: 1.6rem 0 0; padding-top: 1rem; border-top: 1px solid var(--linje); }
   .roster h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }

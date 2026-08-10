@@ -405,6 +405,30 @@ export function byggVagda(): Record<string, { riktning: string; lofte: string }>
   return ut;
 }
 
+/**
+ * Samma vägda utslag, men nycklade på riksdagens egna dokument-id.
+ *
+ * Den breda träfflistan kommer från riksdagen och bär `dok_id` ("HD024041"),
+ * medan vårt register räknar i egna löpnummer ("h-2026-0868"). Utan den här
+ * vändningen kan en rad i den listan inte visa att vi redan vägt just det
+ * dokumentet, och läsaren ser aldrig var vårt urval möter riksdagens.
+ *
+ * Bara de vägda tas med — några hundra poster, inte hela registret. Att
+ * skicka hela dok_id-tabellen vore att lägga tjugotretusen rader i en
+ * nyttolast för att märka ut några hundra.
+ */
+export function byggVagdaDokId(): Record<string, { riktning: string; lofte: string }> {
+  const handlingar = getHandlingMap();
+  const ut: Record<string, { riktning: string; lofte: string }> = {};
+  for (const [id, vagd] of Object.entries(byggVagda())) {
+    const dokId = handlingar.get(id)?.dok_id;
+    // Saknas handlingen i registret vet vi inget dok_id, och då finns inget
+    // att märka. Att gissa ett id vore att märka FEL dokument som vägt.
+    if (dokId) ut[dokId] = vagd;
+  }
+  return ut;
+}
+
 /** En parti-term i ordtrenden. */
 export interface PartiOrd {
   stam: string;
