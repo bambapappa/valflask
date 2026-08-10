@@ -12,7 +12,7 @@
  *   Frånvarande → räknas aldrig (beslut b-0004)
  */
 
-import type { Handling } from "./handlingar.ts";
+import { aktorsPersoner, type Handling } from "./handlingar.ts";
 import type { RdVoteringRad } from "./riksdagen.ts";
 
 export type Riktning = "stodjer" | "motverkar";
@@ -191,7 +191,7 @@ export function computeLedamotMeriter(
         }
       }
     } else {
-      for (const p of h.persons) {
+      for (const p of aktorsPersoner(h)) {
         const m = merit(target, p.riksdagen_id ?? p.name, p.name, p.party);
         (k.riktning === "stodjer" ? m.i_linje : m.emot).push(k.id);
       }

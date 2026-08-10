@@ -179,5 +179,12 @@
     "what": "Posten ovanför sade att 29 publicerade löften saknades i Handlingsvågens rutnät, att tre tillbakadragna låg kvar som om de fanns och att 18 visade ett äldre citat. Det stämmer om filen som ligger i kodförrådet, men inte om sajten: bygget skriver om den filen ur Fläskvågens löften varje gång sajten byggs, sedan 6 augusti, och det steget ligger före Handlingsvågen byggs. Läsaren har alltså hela tiden fått dagens löften. Glidningen var verklig men syntes aldrig utåt, och posten ovanför beskriver en skada som inte inträffade.",
     "why": "Vi kräver av partierna att ett påstående ska stämma med vad som faktiskt hänt, och samma krav gäller det vi själva skriver — också när felet är att vi tagit på oss för mycket. En rättelselogg som överdriver blir lika oanvändbar som en som tiger: läser man den i efterhand går det inte att skilja de fel som drabbade någon från de som aldrig lämnade kodförrådet. Filen i förrådet ska ändå stämma med sin källa, och kontrollen som infördes står kvar — men den vaktar ordningen i vårt eget material, inte något läsaren sett.",
     "commit": "1cdb79f"
+  },
+  {
+    "date": "2026-08-10",
+    "affects": "Handlingsvågens ledamotsmeriter för skriftliga frågor och interpellationer — 83 redan publicerade meritposter tas bort från de statsråd som tog emot frågorna. Tre ytterligare felaktiga meritposter stoppas innan publicering i samband med k-2026-0842–k-2026-0844. Inga kopplingar eller partidomar ändras av rättelsen.",
+    "what": "Meritmotorn räknade varje person som Riksdagens dokumentdata listar på en fråga eller interpellation. Där finns både frågeställaren och den tillfrågade ministern, ofta med ministern dubblerad i rollerna «ställd till» och «besvarad av». Följden blev att mottagande statsråd felaktigt fick samma handling tillgodoräknad som den ledamot som faktiskt ställde frågan. Meritmotorn räknar nu bara frågeställaren och deduplicerar personer innan meriten skrivs. Den publicerade listan hade 9 043 poster; rättelsen tar bort 83 felaktiga och de sju nya kopplingarna tillför 12 riktiga, vilket ger 8 972 poster.",
+    "why": "En fråga är frågeställarens handling. Ministerns svar är en annan handling och kan inte bokföras som om ministern hade ställt frågan till sig själv. Samma aktörsregel användes redan när förslag skapades och när partiet bakom frågan bestämdes; dommotorn hade missat den och läste rålistan över dokumentets samtliga intressenter i stället.",
+    "commit": "0000000"
   }
 ]
