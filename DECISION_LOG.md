@@ -416,7 +416,7 @@ oförändrat. Det enda som avgörs här är om posten får använda det lägre g
 **Förkastade alternativ:** Dölj mätaren helt (förlorar Fläsket-viz); använd 0 (vilseledande).
 **Påverkan:** `site/src/components/GapMatare.astro`.
 
-## 2026-06-12 — Ägarbeslut §21 fattade (4 st)
+## 2026-06-12 — §21 avgjord: fyra mänskliga beslut
 
 **Beslut:** (1) Källallowlist v1 = specens 20 domäner i §6.1, oförändrad. (2) `PIPELINE_MODE=review` första skarpa veckan, därefter `auto`. (3) E3 AdSense AV vid lansering; omprövas augusti 2026. (4) Ledamotssidor P1 behålls (villkoret M0–M6 före 1 aug bedöms uppfyllas med god marginal).
 **Motiv:** Ägaren bekräftade arkitektens förslag 2026-06-12 (samtliga = specens rekommendationer). Allowlisten balanserar G1-målet mot källkvalitet; review-veckan kalibrerar grindarna mot verkligheten innan auto; E3-default skyddar trovärdighet/CSP/cookiefrihet; P1 är redan byggd som sidtyp och kostar endast people-spegling i M3.
@@ -558,15 +558,15 @@ oförändrat. Det enda som avgörs här är om posten får använda det lägre g
 
 **Beslut:** Två konstanter verifierade och källsatta mot auktoritativa primärkällor: `enkrona_tjocklek_m` = 0,00179 m ur **Riksbankens föreskrifter (2014:84)** (SFS-fulltext via riksdagen.se: valören en krona "diameter på 19,50 millimeter och en tjocklek på 1,79 millimeter") och `skolmaltid_elev_ar` = 6 800 kr ur **Skolverkets** studie "Vad kostar skolmaten?" (rapport 2023:6: "i genomsnitt 6 800 kronor per elev och år i grundskolan", kostnadsår 2021). Sex poster står kvar som "VERIFIERA" med skärpta per-post-noter. Detta ersätter de Wikipedia-härledda värdena från 2026-06-12-rundan (commit 03683f2 återställde dem till VERIFIERA — Wikipedia underkänd som auktoritativ för sajtens trovärdighetsvaluta); enkronan har nu sin egentliga primärkälla (författningstexten Wikipedia citerade), och Mars förblir VERIFIERA tills en stabil NASA-URL anger 54,6M km.
 
-**Motiv:** Spec §0 regel 2 ("hitta aldrig på siffror") + §9-trovärdighet. Författningstext och en statlig myndighets (Skolverket) officiella statistik är de starkaste tillgängliga källorna och slår både Wikipedia och marknadsföringssidor. Riksbankens egna myntsidor gav fortsatt 404, men föreskriften 2014:84 innehåller exakt samma specifikation och är primärkällan. För de sex kvarvarande: SCB publicerar månadslön (ej arbetskraftskostnad — multiplikatorn vore ett antagande), SKR:s KPP är per patient (ej per vårdplats/år), KI:s reformutrymme är en rörlig prognos (ägarbeslut om vintage), FMV publicerar inget JAS-styckpris, och NASA:s Mars-minimumsida redirectar numera till en faktasida utan siffran.
+**Motiv:** Spec §0 regel 2 ("hitta aldrig på siffror") + §9-trovärdighet. Författningstext och en statlig myndighets (Skolverket) officiella statistik är de starkaste tillgängliga källorna och slår både Wikipedia och marknadsföringssidor. Riksbankens egna myntsidor gav fortsatt 404, men föreskriften 2014:84 innehåller exakt samma specifikation och är primärkällan. För de sex kvarvarande: SCB publicerar månadslön (ej arbetskraftskostnad — multiplikatorn vore ett antagande), SKR:s KPP är per patient (ej per vårdplats/år), KI:s reformutrymme är en rörlig prognos (mänskligt beslut om vintage), FMV publicerar inget JAS-styckpris, och NASA:s Mars-minimumsida redirectar numera till en faktasida utan siffran.
 
-**Förkastade alternativ:** Behålla Wikipedia-värdena (underkänt 2026-06-12); härleda arbetskraftskostnad ur månadslön × egen avgiftsmultiplikator (påhittad precision); pinna ett reformutrymme ur sekundärrapportering (rörlig prognos, kräver ägarbeslut); citera en NASA-URL som 302-redirectar bort från siffran.
+**Förkastade alternativ:** Behålla Wikipedia-värdena (underkänt 2026-06-12); härleda arbetskraftskostnad ur månadslön × egen avgiftsmultiplikator (påhittad precision); pinna ett reformutrymme ur sekundärrapportering (rörlig prognos, kräver mänskligt beslut); citera en NASA-URL som 302-redirectar bort från siffran.
 
 **Påverkan:** `data/constants.json` (2 värden + 6 skärpta noter + generated_note), `DECISION_LOG.md`. T3/T9 gröna efter ändringen (verifierat i /tmp-klon).
 
-## 2026-06-13 — M7 Konstanter runda 4: tre konstanter omdefinierade till källsatta storheter + kosmisk jämförelsemotor fixad (ägarbeslut)
+## 2026-06-13 — M7 Konstanter runda 4: tre konstanter omdefinierade till källsatta storheter + kosmisk jämförelsemotor fixad (mänskligt beslut)
 
-**Beslut:** Fyra konstanter ändrade efter ägarbeslut, plus en motorfix:
+**Beslut:** Fyra konstanter ändrade efter mänskligt beslut, plus en motorfix:
 - `ssk_arskostnad` → **43 900 kr**, omdefinierad från "arbetskraftskostnad/år" till **sjuksköterskelöner (en månad)**, källa SCB lönestrukturstatistik (SSYK 2221, referensår 2024). Id behållet (refereras av ~10 löften).
 - `larare_arskostnad` → **40 200 kr**, omdefinierad till **lärarlöner (en månad)**, källa SCB (grundskollärare, 2024). Id behållet.
 - `vardplats_ar` → **32 353 kr**, omdefinierad från "kostnad per vårdplats/år" (ej publicerad) till **nettokostnad hälso- och sjukvård per invånare**, källa Vården i siffror (SKR), riket 2024. Id behållet.
@@ -645,11 +645,11 @@ Första skarpa batchen gav 4 kandidater, alla fällda på G3 (verbatim). Två or
 
 **Påverkan:** `pipeline/src/fetch.ts` (ingen global kapning), `pipeline/src/index.ts` (`maxNewArticles`, kapa toProcess, markera bara bearbetade sedda), `pipeline/src/cli-run.ts`, `data/sources.yaml` (20), tester `pipeline.test.ts`/`cli-run.test.ts`. /tmp-klon: typecheck rent, 99/99 tester, check-t7 OK.
 
-## 2026-06-24 — M3 Kostnadssteg (§8) + redigerbar review + manuell inrapportering (ägarbeslut)
+## 2026-06-24 — M3 Kostnadssteg (§8) + redigerbar review + manuell inrapportering (mänskligt beslut)
 
 Skarp körning med pro gav rena kandidater men tre kvarvarande hål: verify-steget small på samma JSON-staket som extract; löften utan belopp fastnade på en hårdkodad platshållare; och review bar aldrig med sig kostnaden (approve publicerade nollor).
 
-**Beslut (efter ägarbeslut: hybrid med mänsklig sista hand + redigerbarhet + manuell inrapportering):**
+**Beslut (efter mänskligt beslut: hybrid med mänsklig sista hand + redigerbarhet + manuell inrapportering):**
 - **verify-fix:** `verify.ts` använder nu `extractJsonPayload` (staket-rensning) — återställer "ogiltig JSON"-poster.
 - **LLM-kostnadsestimat (§8):** ny prompt `A5-cost.md`; `estimateCost` är async — har källtexten belopp härleds spann deterministiskt (basis "parti", conf 0,7), annars LLM-estimat (basis "llm_estimat", ≈ på sajten) med `extractJsonPayload`, tvingad ordning low ≤ base ≤ high, R2 (high ≥ 1,5×low), R5-tak, confidence kapad till 0,65 (under verifierat). Återanvänder extract-modellen — ingen ny variabel.
 - **Hybrid-routning:** alla LLM-estimat går ALLTID till review (även hög confidence); endast löften med explicit belopp kan auto-publiceras. Kostnaden bärs med i review-posten (`NeedsReviewEntry.cost`).
@@ -826,11 +826,11 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 
 **Beslut 1 — kodfix i cost.ts:** basis "parti" kräver nu att beloppet inte ser ut som per-enhetspris/tröskel: (a) `looksLikeUnitAmount(quote)` — "per barn/person/elev/…", "i månaden/veckan/timmen" osv. i citatet (medvetet EJ "per år": totalkostnader anges ofta så); (b) golv `PARTI_AMOUNT_FLOOR_MSEK = 50` — ett nationellt löfte under 50 msek är nästan alltid ett enhetspris eller tröskelvärde (300 000 kr på ISK, 1500 kr leasing). Faller något av villkoren går beloppet LLM-estimat-vägen, som per §8 ALLTID hamnar i review. 4 nya tester (156 gröna).
 
-**Beslut 2 — datarättning:** p-2026-0337 rättad i data (ägarbeslut i session): spann 500/1 000/2 000 msek/år, basis llm_estimat, confidence 0,9, method_note med uträkningen (~20–40 000 lika-delande föräldrapar/år × 30 000 kr + öronmärkt fjärde månad); quip omskriven (refererade gamla prislappen). Changelog-post `manual-cost-correction-2026-07-04` med omräknad data_hash (via publish.ts `computeDataHash`). T7 grönt.
+**Beslut 2 — datarättning:** p-2026-0337 rättad i data (mänskligt beslut i session): spann 500/1 000/2 000 msek/år, basis llm_estimat, confidence 0,9, method_note med uträkningen (~20–40 000 lika-delande föräldrapar/år × 30 000 kr + öronmärkt fjärde månad); quip omskriven (refererade gamla prislappen). Changelog-post `manual-cost-correction-2026-07-04` med omräknad data_hash (via publish.ts `computeDataHash`). T7 grönt.
 
 **Förkastade alternativ:** retracta löftet (löftet är äkta och verbatim — bara kostnaden var fel; rättning + audit-spår är ärligare än att ta bort); golv på 1 msek (för lågt — 30 msek-"totaler" är oftast också enhetsbelopp/deltrösklar, och review kostar bara en granskning); låta LLM:en avgöra om beloppet är per enhet (grindar ska vara deterministisk kod, §7).
 
-## 2026-07-04 — Review-kön granskas via GitHub-issues (ägarbeslut)
+## 2026-07-04 — Review-kön granskas via GitHub-issues (mänskligt beslut)
 
 **Beslut:** Kön (172 poster efter manifest-backloggen) blev ohanterlig via CLI-list. Nytt flöde: `sync-review-issues.mts` skapar ETT issue per kö-post (etikett `review-kö` + `parti:<x>`), med citat, källänk, flaggningsskäl och FÖRESLAGEN KOSTNAD inkl. uträkningen (method_note, spann, basis, confidence) synlig direkt i issuet — ägaren ska kunna rimlighetsbedöma utan att leta. Ägaren beslutar med en kommentar: `/godkänn` (ja), `/godkänn <low> <base> <high>` (ja med ändrade belopp), `/godkänn --group p-2026-XXXX` (ja, dublettlänkning), `/avvisa <skäl>` (nej). Ny workflow `review.yml` (issue_comment) exekverar beslutet via samma approve/reject som CLI:t, committar datan till main och stänger issuet (completed/not_planned) med svarskommentar. Spårbarheten ökar: varje beslut = issue + kommentar (vem/när) + datacommit + changelog, i stället för ett anonymt CLI-kommando.
 
@@ -872,7 +872,7 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 
 **Påverkan:** data/needs_review.json (−26), `pipeline/scripts/sync-review-issues.mts` (openIssues + vaktmästarfas). Typecheck rent, 164 tester gröna, T7 grönt.
 
-## 2026-07-05 — Bulkgranskning av review-kön exekverad (ägarbeslut): 128 publicerade, 55 avvisade
+## 2026-07-05 — Bulkgranskning av review-kön exekverad (mänskligt beslut): 128 publicerade, 55 avvisade
 
 **Beslut:** Ägaren beställde full granskning av kön (187 poster) med rekommendation per post, och beordrade därefter exekvering av hela listan. Granskningsgrund: G3-citatkvalitet, kostnadsbärande vallöfte eller ej, dubbletter (mot publicerat, internt i kön), paraplyformuleringar som dubbelräknar partiets specifika löften i totalen, samt estimatens storleksordning. Utfall: **128 godkända** (varav 2 med korrigerade belopp: L:s 5 %-BNP-försvar 350→200 mdkr/år — estimatet blandade total med MERkostnad; MP:s halverade matproduktionsavgift 20→9 mdkr/år — dubbelt för stor lönesumma), **55 avvisade** (16 G3-parafraser, 19 riksdagsmotioner/utrikespositioner — 'Riksdagen ställer sig bakom…' är inget vallöfte, 6 dubbletter mot publicerat, 5 köinterna dubbletter, 8 paraplyer, 1 skattehöjning felklassad som utgift), **4 kvar** för ägarens egen bedömning (intern dubbelflagg + barnbidrag/bostadsbidrag-överlapp mot p-2026-0325 + två engångskostnader som skulle publiceras som per-år). Fullständig rapport med skäl per post levererad till ägaren (rekommendationer.md).
 
@@ -948,9 +948,9 @@ De NUVARANDE variabelvärdena (Zen-namn) flyttas alltså oförändrade till `*_F
 - **Periodfel** (engångsbelopp felkodat per_ar → ×4): p-2026-0336 (C "investera 50 mdr under mandatperioden": 200→50 mdkr, period=engang) och p-2026-0043 (M Gripen-engångsgåva: 120→20 mdkr, engang base 20000). Fläsket 12 057 → 11 807 mdkr (−250).
 - **Skattesänkning felklassad som `utgift` → `intäktsminskning`** (SPEC §8: "Skattesänkningar = intäktsminskning = kostnad i Fläsket"): p-0026, 0027, 0056, 0101, 0127, 0157, 0166, 0254, 0256 (9 st). Total oförändrad (båda typerna adderas i R4) — korrekt semantik/neutralitet.
 
-**Kvar (kräver ägarbeslut, ej i denna batch):** recosting av kärnkraftstrion (0082/0109/0153, ~−900 mdkr) och övriga överskattningar (0264/0216/0112/0333/0321/0137/0371/0376); icke-löften (0310/0307/0308/0311/0309/0174 — nolla vs stryka); 25 dublett-kluster (R3-länkning, representant-kostnadsval); p-0428 (pensionsavgiftshöjning summerad som utgift). Changelog-post `audit-fix-spec-corrections-2026-07-09` (updated: 11).
+**Kvar (kräver mänskligt beslut, ej i denna batch):** recosting av kärnkraftstrion (0082/0109/0153, ~−900 mdkr) och övriga överskattningar (0264/0216/0112/0333/0321/0137/0371/0376); icke-löften (0310/0307/0308/0311/0309/0174 — nolla vs stryka); 25 dublett-kluster (R3-länkning, representant-kostnadsval); p-0428 (pensionsavgiftshöjning summerad som utgift). Changelog-post `audit-fix-spec-corrections-2026-07-09` (updated: 11).
 
-## 2026-07-09 — Audit-åtgärd batch 2 (icke-löften tillbakadragna) + batch 3 (recosting) — ägarbeslut
+## 2026-07-09 — Audit-åtgärd batch 2 (icke-löften tillbakadragna) + batch 3 (recosting) — mänskligt beslut
 
 **Batch 2 — 5 icke-löften tillbakadragna** (D-filter, ej vallöften utan refererat tyckande/invändningar): p-0310 (M:s invändning MOT höjt barnbidrag), p-0307 (Busch MOT stora skattesänkningar), p-0308/0311 (SVT-artikelns positionering), p-0174 (V "total översyn av migrationspolitiken", vagt). 355→350 löften.
 
@@ -1036,7 +1036,7 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 
 ## 2026-07-10 — Torra raden: apolitisk vikt-liknelse (djur) i stället för policy-måttstockar
 
-**Bakgrund (ägarbeslut, ersätter samma dags nurses-version):** Sjuksköterskelöner, vårdplatser och skolluncher är SJÄLVA saker partier lovar att finansiera — att mäta ett vårdlöfte i "sjuksköterskelöner" ramar tyst in kostnaden i policytermer och är därför inte helt neutralt. Bytt till en apolitisk fysisk liknelse: "om varje krona vägde ett gram" → löftets vikt uttryckt i djur. Ett djur kan aldrig vara ett vallöfte.
+**Bakgrund (mänskligt beslut, ersätter samma dags nurses-version):** Sjuksköterskelöner, vårdplatser och skolluncher är SJÄLVA saker partier lovar att finansiera — att mäta ett vårdlöfte i "sjuksköterskelöner" ramar tyst in kostnaden i policytermer och är därför inte helt neutralt. Bytt till en apolitisk fysisk liknelse: "om varje krona vägde ett gram" → löftets vikt uttryckt i djur. Ett djur kan aldrig vara ett vallöfte.
 
 **Beslut:** `dryLine(promise)` (inte längre beroende av constants): 1 kr = 1 g → total vikt → antal djur. Djuret väljs per ÄMNESOMRÅDE (kategori), aldrig per parti — samma belopp+kategori ger ordagrant identisk rad oavsett parti (§17); kategorin varierar djuret enbart för omväxling ("så inte allt blir blåvalar"). 9 djur, alla ≥1 ton (golv satt efter att en 300-kg brunbjörn gav "1 066 667 brunbjörnar"): blåval/kaskelot/knölval/elefant/späckhuggare/noshörning/flodhäst/giraff/valross. 0-kostnadslöften: "Ingen mätbar kostnad i kassan." De gamla auto-jämförelserna (sjuksköterskor/Förbifart/månen) togs bort ur `computeComparisons` → Jämförelser-sektionen visar nu bara kurerade (tom → dold); vikt-raden är enda glasyren. /metod omskriven att förklara konceptet.
 
@@ -1082,19 +1082,19 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 
 ## 2026-07-11 — Delspecifikation "Ståndpunktsregistret" (SPEC-STANDPUNKTER.md) — PLAN, ej implementation
 
-**Beslut:** Ny delfunktion planerad som delta-spec mot SPEC.md: register över partiernas besked i valets stora frågor, med samma citat-/käll-/arkivkrav som Fläskvågen. Bärande neutralitetsval: (1) frågeurval härlett ur publicerade väljarmätningar enligt öppet kriterium, aldrig redaktionellt tyckande; (2) delfrågor formuleras symmetriskt med dokumenterat rättvisetest; (3) klassificering (ja/nej/villkorat) kräver att beskedet följer ur det ordagranna citatet ensamt, bekräftat av oberoende LLM B — annars "inget tydligt besked"; (4) frånvaro av besked renderas identiskt för alla partier. "Ingen backar i tysthet" löses med append-only-historik (gammalt+nytt besked sida vid sida), publikt svängregister med RSS, och veckovis källröta-bevakning som stämplar borttagna/ändrade källor synligt (arkivkopian gäller). Ingen valkompass, ingen åsiktsskala, inga användarkonton. Riktningsbyten (ja↔nej) går alltid via review även i auto-läge. Implementering blockeras av ägarbeslut §11.1 (frågelista + kriterium).
+**Beslut:** Ny delfunktion planerad som delta-spec mot SPEC.md: register över partiernas besked i valets stora frågor, med samma citat-/käll-/arkivkrav som Fläskvågen. Bärande neutralitetsval: (1) frågeurval härlett ur publicerade väljarmätningar enligt öppet kriterium, aldrig redaktionellt tyckande; (2) delfrågor formuleras symmetriskt med dokumenterat rättvisetest; (3) klassificering (ja/nej/villkorat) kräver att beskedet följer ur det ordagranna citatet ensamt, bekräftat av oberoende LLM B — annars "inget tydligt besked"; (4) frånvaro av besked renderas identiskt för alla partier. "Ingen backar i tysthet" löses med append-only-historik (gammalt+nytt besked sida vid sida), publikt svängregister med RSS, och veckovis källröta-bevakning som stämplar borttagna/ändrade källor synligt (arkivkopian gäller). Ingen valkompass, ingen åsiktsskala, inga användarkonton. Riktningsbyten (ja↔nej) går alltid via review även i auto-läge. Implementering blockeras av ett mänskligt beslut i §11.1 (frågelista + kriterium).
 **Motiv:** Ståndpunkter har två neutralitetsrisker löften saknar — frågeurvalet och tolkningen — därför regleras båda hårdare än löftesflödet i stället för att ärvas rakt av. Maximal återanvändning av befintlig infrastruktur (fetch, grindkanon G2/G3, verify-arkitektur, review-flöde, sources.yaml) håller kostnad och attackyta nere.
 **Förkastade alternativ:** Valkompass-mekanik (ärvt absolut förbud, SPEC §1.4); åsiktsskalor/vänster-högeraxlar (tolkningsvärdering); fri LLM-klassificering utan sluten taxonomi (injektions- och driftrisk); redaktionellt frågeurval (neutralitetsbrott); separat insamlingskedja (dubblerad kostnad utan vinst).
 **Påverkan:** Endast `SPEC-STANDPUNKTER.md` + denna rad. Ingen kod, inga data- eller schemafiler ändrade.
 
-## 2026-07-11 — Namnbeslut: delfunktionen heter "Frågevågen" (ägarbeslut)
+## 2026-07-11 — Namnbeslut: delfunktionen heter "Frågevågen" (mänskligt beslut)
 
 **Beslut:** Ståndpunktsregistret (arbetsnamn) heter "Frågevågen". Spec-filen omdöpt till `SPEC-FRAGEVAGEN.md`; §11.2 stängd. URL:er oförändrade: `/fragor`, `/fraga/[slug]`, `/svangningar`.
 **Motiv:** Parallelliserar "Fläskvågen" (varumärkeskontinuitet) och pekar på det registret faktiskt innehåller: frågorna och partiernas besked. Vågmetaforen bärs som varumärke; metodtexten klargör att inget vägs eller värderas.
 **Förkastade alternativ:** "Åsiktsvågen" (ägarens andra kandidat) — att väga åsikter antyder värdering/skala, vilket icke-målen (§1.4) uttryckligen förbjuder, och registret innehåller besked, inte åsikter; namnet hade lovat något metodsidan måste dementera.
 **Påverkan:** `SPEC-FRAGEVAGEN.md` (fd. `SPEC-STANDPUNKTER.md`), denna rad. Ingen kod.
 
-## 2026-07-11 — Frågevågen §11.3–11.5 stängda (ägarbeslut)
+## 2026-07-11 — Frågevågen §11.3–11.5 stängda (mänskligt beslut)
 
 **Beslut:** (11.3) Topplistan "flest ändrade besked" AVVAKTAR — byggs ej i V0–V4, omprövas vid volym. (11.4) Review-regeln för riktningsbyten PÅ permanent: ja↔nej publiceras aldrig utan mänsklig granskning, även i auto-läge. (11.5) Källröta-bevakning veckovis.
 **Motiv:** Ägarens svar 2026-07-11. Riktningsbyten är sajtens mest laddade påståenden; regeln är identisk för alla partier och redovisas på /metod.
@@ -1147,7 +1147,7 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 ## 2026-07-11 — Frågevågen V4 klar: API, integritetskedja, sväng-RSS, källröta, llms.txt, /metod
 
 **Beslut:** V4 implementerad. (1) `/api/v1/issues.json` (frågor + urvalsbevis + kriterienot) och `/api/v1/stances.json` (alla celler, append-only-not, egen data_hash) — CORS via befintlig `_headers`. (2) `/api/v1/integrity.json` utökad bakåtkompatibelt: `files{}` med sha256 per fil (promises/stances/issues); gamla `data_hash` orörd. (3) `/svangningar.rss.xml`: ändrade besked som RSS med då/nu-citat i beskrivningen. (4) Källröta-bevakning: `pnpm stances:rot-check` re-hämtar käll-URL:er (HTML + PDF via befintlig extraktion), verbatimkontrollerar citaten mot levande sidan, stämplar andrad/borttagen; nätverksfel ändrar ALDRIG status (vi anklagar ingen för borttagning pga eget nätstrul); ny workflow `rot-watch.yml` måndagar 04:40 UTC, VILANDE bakom `vars.STANCES_ENABLED` — kan mergas utan effekt. (5) llms.txt + llms-full + /api-dokumentation: nya endpoints, citeringsmall för besked, uttrycklig anti-valkompass-instruktion till AI-agenter. (6) /metod: nytt avsnitt "Frågevågen — så registrerar vi partiernas besked" (fem punkter i klartext) + FAQ-post i JSON-LD. Nya CI-kontroller T15 (API-ytan + RSS ur byggd dist, cellantal beräknat ur issues.json). Hela sajtsviten grön.
-**Förkastade alternativ:** Källröta-status i separat fil (statusen ÄR en egenskap hos statementet och ska renderas med det); daglig rot-koll (ägarbeslut veckovis); hårt fel vid nätstrul i rot-kollen (falska "borttagen"-stämplar är värre än en missad vecka).
+**Förkastade alternativ:** Källröta-status i separat fil (statusen ÄR en egenskap hos statementet och ska renderas med det); daglig rot-koll (mänskligt beslut veckovis); hårt fel vid nätstrul i rot-kollen (falska "borttagen"-stämplar är värre än en missad vecka).
 **Påverkan:** `site/src/pages/api/v1/{issues,stances,integrity}.json.ts`, `site/src/pages/svangningar.rss.xml.ts`, `site/src/pages/{api,metod}.astro`, `site/src/pages/llms-full.txt.ts`, `site/public/llms.txt`, `site/scripts/test-t14.mts`, `pipeline/scripts/source-rot-check.mts`, `pipeline/package.json`, `.github/workflows/rot-watch.yml`.
 
 ## 2026-07-11 — Rättvisenoter omskrivna: designbedömning, inte intyg (ägaranmärkning)
@@ -1255,7 +1255,7 @@ Fyra kvarvarande felklass-/beloppsfynd rättade: **p-0428** (MP) — pensionsAVG
 ## 2026-07-16 — Rot-watchen backfillar arkiv-luckor veckovis (efterhandslogg för PR #400)
 
 **Beslut:** Källröta-scriptet fyller även archive_url för besked som saknar det: när en källa re-kontrolleras och fortfarande är "ok" arkiveras den via fallback-kedjan (Wayback → archive.today). Bara "ok"-källor; nätverksfel lämnar fältet orört; en förfrågan per bas-URL. Workflowen committar redan data/stances.json.
-**Motiv:** Ägarbeslut: luckor ska stängas av sig själv från Actions, där archive.today fungerar. (Posten loggas i efterhand — PR #400 levererades via GitHub-API:t när git-proxyns credential gått ut mitt i sessionen; beslutet var dokumenterat i PR-beskrivningen.)
+**Motiv:** Mänskligt beslut: luckor ska stängas av sig själv från Actions, där archive.today fungerar. (Posten loggas i efterhand — PR #400 levererades via GitHub-API:t när git-proxyns credential gått ut mitt i sessionen; beslutet var dokumenterat i PR-beskrivningen.)
 **Påverkan:** `pipeline/scripts/source-rot-check.mts`.
 
 ## 2026-07-16 — Extern granskning inför spridning: tre fynd åtgärdade + PDF-kraschbugg
@@ -1660,7 +1660,7 @@ platta för "i linje", heldragen kontur för "emot", streckad för "både och",
 prickad för "avstod", ingen ram alls för den tomma cellen — och ordet står
 alltid utskrivet, precis som förut.
 
-**Motiv:** Vågorna ligger på samma domän sedan lanseringen. En läsare som
+**Motiv:** Vågarna ligger på samma domän sedan lanseringen. En läsare som
 klickar från löftena till handlingarna ska inte behöva undra om hen bytt sajt.
 Två formspråk i ett bygge är dessutom två ställen att underhålla, och det
 andra hade uttryckligen platshållarkulörer i sin egen fil.

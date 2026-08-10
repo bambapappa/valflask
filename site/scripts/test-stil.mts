@@ -7,7 +7,7 @@
  * skrivs där verkar alltså aldrig i drift, och webbläsaren säger inte ifrån
  * på något läsaren märker.
  *
- * Det har hänt i båda vågorna. I Handlingsvågens ordtrender bar staplarnas
+ * Det har hänt i båda vågarna. I Handlingsvågens ordtrender bar staplarnas
  * längd stilattributet och föll två gånger, tyst, med olika symtom vardera
  * gången. I jämförelseverktyget bar etiketten över gruppnoterna sin
  * marginal där, och fick den aldrig. Regeln syns inte i webbläsaren och

@@ -127,7 +127,7 @@ function franBesked(
 }
 
 /**
- * Alla belagda fall ur båda vågorna, senast observerade först.
+ * Alla belagda fall ur båda vågarna, senast observerade först.
  *
  * Ordningen är medveten: det här är inte en lista att bläddra igenom utan en
  * logg att titta i, och det senaste är det som ännu ingen sett.

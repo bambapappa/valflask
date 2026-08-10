@@ -132,7 +132,7 @@ function* htmlFiles(dir: string): Generator<string> {
   check("alla <title> ≤ 80 tecken", offenders.length === 0, offenders.slice(0, 5).join("; "));
 }
 
-// ── PDF-djuplänkar (ägarbeslut 2026-07-15): en länk till …pdf#page=N måste
+// ── PDF-djuplänkar (mänskligt beslut 2026-07-15): en länk till …pdf#page=N måste
 // visa sidnumret i länktexten ("s. N"), annars vet mobilanvändaren (som alltid
 // hamnar på sida 1) inte vart hen ska bläddra för att verifiera citatet.
 console.log("\n--- PDF-djuplänkars sidnummer ---");

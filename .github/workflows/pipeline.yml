@@ -88,7 +88,7 @@ jobs:
           # variablerna. Tomt = vanlig ordning (primär → sekundär → extra).
           LLM_FORST: ${{ inputs.forst }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
-          # Frågevågen PÅ som default (ägarbeslut 2026-07-11); stäng av genom att
+          # Frågevågen PÅ som default (mänskligt beslut 2026-07-11); stäng av genom att
           # sätta repovariabeln STANCES_ENABLED=false. STANCES_MODE osatt = review
           # (torrkörning, steg 2) — växlas till auto först i steg 4.
           STANCES_ENABLED: ${{ vars.STANCES_ENABLED || 'true' }}

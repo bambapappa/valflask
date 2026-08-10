@@ -134,6 +134,13 @@ jobs:
       - name: Grindar för prosan
         run: node --experimental-strip-types scripts/test-prosan.mts
         working-directory: site
+      # Ordgrinden: de förbjudna orden mäts i stället för att minnas. Regeln
+      # «mänskligt beslut, aldrig ägarbeslut» stod i CLAUDE.md medan ordet
+      # levde kvar på ett trettiotal ställen, ett av dem i data som serveras
+      # publikt. Sveper hela repot, inte bara sajten. Bakgrunden i test-ord.mts.
+      - name: Ordgrinden
+        run: node --experimental-strip-types scripts/test-ord.mts
+        working-directory: site
       - name: Build site + OG images
         run: pnpm build
         working-directory: site
@@ -145,7 +152,7 @@ jobs:
         working-directory: site
       # Handlingsvågen byggs som egen Astro-sajt med basstigen /handlingsvagen
       # och läggs som katalog i samma utdata. Ett bygge, en domän, en
-      # driftsättning — det är hela skälet till att vågorna bor i ett repo
+      # driftsättning — det är hela skälet till att vågarna bor i ett repo
       # (SAMMANSLAGNING.md). Stegen ligger EFTER T1/T3, som mäter Fläskvågens
       # egen utdata och inte ska räkna med Handlingsvågens sidor.
       - name: Läs in löftena ur samma träd

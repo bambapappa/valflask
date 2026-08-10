@@ -35,7 +35,7 @@ export function archiveLinkLabel(url: string): string {
  * den 2026-08-09, när den första rötsvepningen över löftenas källor visade att
  * tre publicerade citat inte längre står i sin levande källa.
  *
- * Etiketten hör hemma här och inte i `stances.ts`, för nu läser båda vågorna
+ * Etiketten hör hemma här och inte i `stances.ts`, för nu läser båda vågarna
  * den. Ett faktum har en plats.
  */
 export type Kallstatus = "ok" | "andrad" | "borttagen";
@@ -54,7 +54,7 @@ export const KALLSTATUS_ETIKETT: Record<Kallstatus, string | null> = {
  * pröva — bara något vi påstår. Fälten här är därför mätvärden ur sidan som
  * den ser ut i dag, aldrig omskrivna av oss.
  *
- * Typen bor här av samma skäl som etiketten: båda vågorna läser den, och ett
+ * Typen bor här av samma skäl som etiketten: båda vågarna läser den, och ett
  * faktum har en plats.
  */
 export type Andringsslag = "ordalydelse" | "sidan-utbytt" | "sidan-borttagen";

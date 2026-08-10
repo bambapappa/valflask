@@ -19,6 +19,12 @@ commit-texter, PR-texter, sajtcopy, prompter och dokumentation.
   synas i text som möter läsare — de säger ingen utomstående något;
   skriv i stället vad som faktiskt sker ("citatet kontrolleras ord för
   ord", "en människa godkänner varje koppling").
+- **Pluralen är "vågar", aldrig "vågor".** En våg man väger på blir vågar.
+  Undantaget är ord där betydelsen verkligen är rörelse — "brottsvågor" i
+  ordlistorna under `data/nyckelord/` är rätt stavat och rörs inte.
+- **De två orden ovan är grindade.** `pnpm test:ord` i `site/` sveper hela
+  repot, det här trädet inräknat, och faller på båda. Bakgrunden och hur man
+  lägger till ett ord står i `site/scripts/test-ord.mts`.
 
 ## Parallella sessioner
 

@@ -1,6 +1,6 @@
 # UTLOVAT.SE — Delspecifikation: "Frågevågen"
 
-**Version 1.0 · 2026-07-11 · Status: REDO FÖR IMPLEMENTATION — samtliga §11-ägarbeslut fattade 2026-07-11 (namn, kriterium, frågelista, topplista avvaktar, review-regel PÅ, källröta veckovis)**
+**Version 1.0 · 2026-07-11 · Status: REDO FÖR IMPLEMENTATION — samtliga beslut i §11 fattade 2026-07-11 (namn, kriterium, frågelista, topplista avvaktar, review-regel PÅ, källröta veckovis)**
 **Relation till SPEC.md: detta dokument är ett DELTA. Allt som inte uttryckligen ändras här ärvs oförändrat från SPEC.md — arkitektur (§2), teknikval (§3), säkerhet (§14), drift (§15), juridik/etik/neutralitet (§17).**
 
 > Fläskvågen väger vad löftena kostar. Frågevågen för register över vad partierna **säger** i valets stora sakfrågor — och håller minnet. (Namnet bär vågmetaforen som varumärke; metoden väger ingenting: besked registreras, aldrig värderas.) Varje besked fångas med ordagrant citat, källa och arkivkopia. Byter ett parti fot syns det gamla och det nya beskedet sida vid sida, med datum. Ingen kan gömma sig, ingen kan backa i tysthet.
@@ -144,7 +144,7 @@ En post per (parti × delfråga). `current` pekar alltid på senaste publicerade
 
 Samma körning, samma artiklar, samma `seen.json` — ett andra extraktionspass läggs till efter löftespasset.
 
-### 5.0 Källprincip och riktad sidbevakning (tillägg 2026-07-11, ägarbeslut)
+### 5.0 Källprincip och riktad sidbevakning (tillägg 2026-07-11, mänskligt beslut)
 
 **Vi frågar aldrig partierna** — inga enkäter, inga mejl, inga formulär (den vägen kan ett parti putsa sitt svar; publicerade uttalanden kan det inte). Ett besked existerar för Frågevågen endast om det är **publicerat i en allowlist-källa, ordagrant citerbart och Wayback-arkiverat**. Beviskedjan för varje statement: citat (verbatimgrind, G3-kanon) → käll-URL (allowlist, G2-kanon) → arkivlänk (snapshot tagen av pipelinen; utan arkivlänk gäller samma retry-regel som för löften) → datum. Skriver ett parti om sin sida i efterhand raderas ingenting — källröta-bevakningen (§6.3) stämplar statementet synligt och arkivkopian gäller.
 
@@ -158,7 +158,7 @@ Nyhetsflödena räcker dock inte: partiers officiella ståndpunkter bor ofta på
    - **G8 — bombskydd:** max 3 ståndpunktskandidater per artikel och parti; fler ⇒ hela artikeln till review (ärvd G5-logik).
 3. **stance-verify (LLM B, annan modellfamilj, temperatur 0, prompt A7):** svarar `{quote_on_topic, position_follows_from_quote_alone, party_correct, verdict}`. Kärnfrågan: **följer beskedet ur citatet ensamt?** Nej eller tvekan ⇒ `verdict: "review"` eller nedgradering till `inget_tydligt_besked`. Oenighet med LLM A ⇒ review.
 4. **archive:** ärvd (Wayback + retry-flagga).
-5. **change detection (ren kod i `publish.ts`):** ny kandidat jämförs med cellens `current`. Samma position ⇒ statement läggs till som bekräftelse (uppdaterar "senast bekräftat"). Annan position ⇒ ändringspost enligt RS5. **Riktningsbyten (ja↔nej) går ALLTID via review, även i `PIPELINE_MODE=auto`** — de är sajtens mest laddade påståenden och förtjänar mänsklig blick; regeln är identisk för alla partier och publiceras på /metod. (Ägarbeslut §11.4 kan slå av detta.)
+5. **change detection (ren kod i `publish.ts`):** ny kandidat jämförs med cellens `current`. Samma position ⇒ statement läggs till som bekräftelse (uppdaterar "senast bekräftat"). Annan position ⇒ ändringspost enligt RS5. **Riktningsbyten (ja↔nej) går ALLTID via review, även i `PIPELINE_MODE=auto`** — de är sajtens mest laddade påståenden och förtjänar mänsklig blick; regeln är identisk för alla partier och publiceras på /metod. (Mänskligt beslut §11.4 kan slå av detta.)
 6. **copy (LLM C, prompt A8):** quip enligt §2:s tilläggsregler. Veckokrönikan (A4) får ett valfritt stycke "Veckans besked" med samma id-hänvisningskrav.
 7. **publish:** kanonisk JSON, hash, changelog, commit — ärvt.
 
@@ -174,7 +174,7 @@ Nyhetsflödena räcker dock inte: partiers officiella ståndpunkter bor ofta på
 Gamla besked raderas aldrig (RS2). Ståndpunktssidan visar hela tidslinjen; en ändring renderar gammalt och nytt citat **sida vid sida** med datum, källor och arkivlänkar. Git-historiken är dessutom publik revisionslogg — även ett hypotetiskt försök att manipulera datafilen är bevisbart.
 
 ### 6.2 Svängregistret (V4)
-`/svangningar` — alla ändringsposter, nyast först, ren datasortering (samma filosofi som /topplistor). Egen RSS-feed (`/svangningar.rss.xml`) — journalistens prenumerationsyta. OG-bild per ändring: gammalt besked, nytt besked, två datum, källrad. Ingen värdering, ingen räkning av "vem svänger mest" i grundutförandet (ägarbeslut §11.3 om topplista).
+`/svangningar` — alla ändringsposter, nyast först, ren datasortering (samma filosofi som /topplistor). Egen RSS-feed (`/svangningar.rss.xml`) — journalistens prenumerationsyta. OG-bild per ändring: gammalt besked, nytt besked, två datum, källrad. Ingen värdering, ingen räkning av "vem svänger mest" i grundutförandet (mänskligt beslut §11.3 om topplista).
 
 ### 6.3 Källröta-bevakningen (V4)
 Veckovis jobb (utökning av befintlig cron): re-hämta käll-URL:er för publicerade statements. Svar 404/410, redirect bort från artikeln, eller citat som inte längre passerar verbatimgrinden mot den levande sidan ⇒ `source_status: "andrad" | "borttagen"` + synlig stämpel på statementet: **"Ursprungskällan har ändrats eller tagits bort — arkivkopian gäller"** + post i ändringsflödet. Citatet och Wayback-länken finns kvar. Att tyst redigera sin pressida raderar alltså ingenting — det skapar tvärtom en ny, synlig händelse. (Respekterar robots.txt och villkorade anrop som ordinarie fetch; max 1 kontroll per URL och vecka.)
@@ -233,7 +233,7 @@ Förutsättning: §11.1 (frågelista + kriterium) beslutad av ägaren. V0–V2 k
 
 ---
 
-## 11. Öppna frågor (ägarbeslut; * = blockerande före V0)
+## 11. Öppna frågor (mänskligt beslut; * = blockerande före V0)
 
 1. ~~Frågelista v1 + urvalskriterium~~ **BESLUTAT 2026-07-11.** Kriterium: tröghetsregeln (§3). Frågelista v1 (10 frågor, samtliga uppfyller kriteriet): **sjukvården · skolan och utbildningen · lag och ordning · invandring och integration · äldreomsorgen · klimatet och miljön · jobben och arbetsmarknaden · ekonomin · energipolitiken · försvaret och säkerheten** (försvaret in via tröghetsregeln: Novus plats 8 i januari 2026, plats 11 i juni; SOM topp 15). Delfrågeformuleringarna är utkast i `data/issues.json` och `VERIFIERA`:s mot dagsaktuella källor före V3 (skarp drift). **Inga fler §11-frågor är öppna — implementering får starta.**
 2. ~~Namn och URL:er~~ **BESLUTAT 2026-07-11: "Frågevågen"**, med `/fragor` + `/svangningar`. ("Åsiktsvågen" förkastades: att väga åsikter antyder värdering/skala, vilket §1.4 förbjuder — registret innehåller besked, inte åsikter.)

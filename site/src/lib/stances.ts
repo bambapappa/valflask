@@ -108,7 +108,7 @@ export const KIND_LABEL: Record<ChangeKind, string> = {
 };
 
 /**
- * Etiketten bor i `source-link.ts` sedan 2026-08-09 — båda vågorna visar den
+ * Etiketten bor i `source-link.ts` sedan 2026-08-09 — båda vågarna visar den
  * nu, och ett faktum har en plats. Namnet står kvar så att Frågevågens sidor
  * inte behöver röras.
  */

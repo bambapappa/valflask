@@ -25,7 +25,7 @@ import { lasProvningar } from "../../../pipeline/src/provningar.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 // Kvalitetsfiltrets index ligger i valflasks rot-data — en logg för alla tre
-// vågorna, ett index.
+// vågarna, ett index.
 const ROT_DATA = join(import.meta.dirname, "../../../data");
 
 function output(result: "approved" | "rejected" | "error", message: string): void {

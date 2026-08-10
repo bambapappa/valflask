@@ -4,7 +4,7 @@
  *  T11: citat som inte ensamt stödjer klassificeringen publiceras aldrig som besked.
  *  T12: injektionsfixtures (≥ 5 varianter) ⇒ noll publicerade ståndpunkter.
  *  T13: riktningsbyte (ja→nej) ⇒ review även i auto-läge; gamla statementet orört.
- *  Dessutom: UTKAST-grinden (ägarbeslut 2026-07-11), MODE-grinden, dedup, determinism.
+ *  Dessutom: UTKAST-grinden (mänskligt beslut 2026-07-11), MODE-grinden, dedup, determinism.
  */
 import { test, describe } from "node:test";
 import assert from "node:assert/strict";
@@ -297,7 +297,7 @@ describe("PDF-källor ankras på citatets exakta sida", () => {
 
 /* ─────────────────────────────────────── hårda publiceringsgrindar ── */
 
-describe("hårda grindar (ägarbeslut 2026-07-11)", () => {
+describe("hårda grindar (mänskligt beslut 2026-07-11)", () => {
   test("UTKAST: delfråga som inte är verifierad kan aldrig autopubliceras", () => {
     const candidate = makeCandidate({ subquestion_id: "sq-energi-utkast", quote: QUOTE_JA });
     const result = publishWith([processed(candidate, VERIFY_OK)], skeleton());

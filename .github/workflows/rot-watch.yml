@@ -1,4 +1,4 @@
-# Källröta-bevakningen — BÅDA vågorna, veckovis (SPEC-FRAGEVAGEN.md §6.3).
+# Källröta-bevakningen — BÅDA vågarna, veckovis (SPEC-FRAGEVAGEN.md §6.3).
 #
 # Fläskvågens steg tillkom 2026-08-09. Verktyget fanns sedan femtonde passet
 # men låg i inget arbetsflöde, så metodsidans «sedan öppnar vi källorna igen,
@@ -76,7 +76,7 @@ jobs:
       etikett: "larm-rot-watch"
       atgard: |
             Bevakningen stämplar källor som ändrats eller försvunnit, i båda
-            vågorna. Faller den syns en borttagen källa inte på sajten. Kör
+            vågarna. Faller den syns en borttagen källa inte på sajten. Kör
             `pnpm stances:rot-check --dry-run` respektive
             `pnpm promises:rot-check --dry-run` i `pipeline/` och läs vad som
             brister innan något skrivs. **Ett fynd fäller inte jobbet** —
