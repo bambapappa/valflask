@@ -146,6 +146,31 @@ feeds:
     article_pattern: "^/var-politik/(?!teckensprak|lattlast|kd-pa-andra-sprak|rapporter-och-dokument)"
     verified: "2026-08-04 — 200, 12 undersidor varav 8 efter mönstret; politikomraden 11 336 tecken, politik-a-till-o 17 166, en-budget-for-familjen 4 951"
 
+  # KD:s A–Ö är en KATALOG, inte en nyhetslista: 220 undersidor, en per
+  # sakfråga, och det är där partiets faktiska ställningstaganden står.
+  # Källan ovan följer den bara som EN sida — själva registret, alltså
+  # länketiketter utan politik.
+  #
+  # Det kostade oss ett publicerat vallöfte, och det upptäcktes av en läsare
+  # och inte av oss: KD gick 2026-05-07 till val på att stegvis avskaffa
+  # reavinstskatten på bostäder. Beskedet kom före vårt skördefönster, så
+  # nyheten fanns aldrig i något flöde vi läser — men politiken står kvar på
+  # /var-politik/politik-a-till-o/reavinstskatt och har gjort det hela tiden.
+  # Vi hämtade registret som pekade dit fyra gånger utan att någon gång öppna
+  # sidan.
+  #
+  # max_articles finns för den här sortens källa. Tolvtaket är byggt för
+  # färskvara; mot en katalog i bokstavsordning blir det inte en fördröjning
+  # utan ett hårt tak vid "arbetsratt". 250 rymmer alla 220 med marginal för
+  # att KD lägger till fler. LLM-budgeten skyddas av maxNewArticles i
+  # runPipeline, inte av det här talet: oförändrade sidor faller på dedup.
+  - id: kd-politik-a-till-o
+    type: index
+    url: "https://kristdemokraterna.se/var-politik/politik-a-till-o"
+    article_pattern: "^/var-politik/politik-a-till-o/."
+    max_articles: 250
+    verified: "2026-08-10 — 200, 184 937 tecken, 220 undersidor efter mönstret; reavinstskatt 1 006 tecken text"
+
   # --- Nyhetslistor för partier SOM HAR flöde (andra vägen in) ---
   # Efter att MP:s flöde visade sig servera en fem veckor gammal cache utan att
   # något syntes är en enda väg in per parti inte betryggande. De här källorna
