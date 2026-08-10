@@ -834,5 +834,693 @@
       "calculation": "Jämförbart löfte p-2026-0324 (MP) skattades till 800 mkr/år. Antar liknande utformning här. Osäkerhet om faktiskt antal miljardärer, skattesats och anpassningar ger spann 400–1200 mkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0324 (800)"
+  },
+  {
+    "candidate": {
+      "title": "Konjunkturbaserade ersättningsnivåer i a-kassan",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Ersättningsnivåerna bör vara konjunkturbaserade.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs (kortare tillåts bara om citatet är en hel, unik punkt på partiets egen sida)"
+      }
+    ],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/a-kassa",
+    "articleTitle": "A-kassa | Kristdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Allmän och obligatorisk a-kassa",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill ha en allmän och obligatorisk a-kassa som omfattar fler än idag.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/a-kassa",
+    "articleTitle": "A-kassa | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 2500,
+      "msek_high": 4000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimatet följer storleksordningen för SD:s liknande förslag om allmän och skattefinansierad a-kassa (2500 msek/år). Obligatorisk anslutning antas öka kostnaden något jämfört med dagens frivilliga…",
+      "confidence": 0.5,
+      "calculation": "Baseras på jämförbart SD-löfte (p-2026-0483) där kostnaden skattats till 2 500 mkr/år. Antagandet är att en allmän obligatorisk a-kassa innebär att staten tar över finansieringen (skattefinansiering) med liknande ersättningsnivåer. Osäkerhetsintervall sätts till 1 500 – 4 000 mkr/år för att täcka variationer i utformning (t.ex. avgiftsnivåer eller ersättningsgrad)."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0483 (2500)"
+  },
+  {
+    "candidate": {
+      "title": "Kommuner och regioner ska satsa mer på förebyggande verksamhet som ungdomsmottagningar, subventionerade preventivmedel och elevhälsa",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill också att kommuner och regioner ska satsa mer på stödjande och förebyggande verksamhet, såsom ungdomsmottagningar, subventionerade preventivmedel och elevhälsa.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/abort",
+    "articleTitle": "Abort | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan direkt statlig kostnad. Kommuner och regioner förväntas satsa mer, men inga statliga medel utlovas.",
+      "confidence": 0.5,
+      "calculation": "Löftet är en viljeyttring riktad till kommuner och regioner, inte ett statsfinansiellt åtagande. Därför beräknas ingen statlig kostnad. Jämförbart med p-2026-0543 (0 msek/år)."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0431 (150), p-2026-0048 (200), p-2026-0543 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
+  },
+  {
+    "candidate": {
+      "title": "Markägare ska få ersättning vid statliga ingripanden",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Markägare ska få ersättning när staten gör olika ingripanden.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/aganderatt",
+    "articleTitle": "Äganderätt | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på jämförbart löfte om statlig ersättning vid brukanderestriktioner (p-2026-0572, 400 mkr/år). Löftet är bredare, vilket ger ett intervall 200–800 mkr/år.",
+      "confidence": 0.5,
+      "calculation": "Ankare: p-2026-0572 (\"Full statlig ersättning vid brukanderestriktioner\") uppskattades till ~400 msek/år. Detta löfte gäller 'olika ingripanden', vilket kan täcka fler åtgärder eller vara mer preciserat. Bas 400 msek; låg 200 (smalare tolkning/halv ersättning), hög 800 (full ersättning för fler typer av ingripanden)."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0572 (400), p-2026-0578 (15), p-2026-0433 (3000)"
+  },
+  {
+    "candidate": {
+      "title": "Göra det mer förmånligt att arbeta längre och anställa äldre",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Arbetslivet behöver bli bättre på att ta tillvara äldres kompentens, förbättra arbetsmiljön så att fler orkar och vill arbeta längre, samt göra det mer förmånligt att arbeta längre och anställa äldre.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/aldre",
+    "articleTitle": "Äldre | Kristdemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet pekar ut åtgärden men saknar nivå. Ankar på senaste utvidgningen av nedsatt arbetsgivaravgift för äldre (66-åringar, budgetproposition 2023/24:1) som kostade ca 500 mkr/år. Osäkerheten fångar…",
+      "confidence": 0.4,
+      "calculation": "Ca 30 000 personer fyllde 66 år och omfattades av sänkningen från 31,42 % till 10,21 % arbetsgivaravgift. Vid genomsnittslön ~32 000 kr/mån blir årskostnaden ca 30 000 × (0,312-0,102) × 32 000 × 12 ≈ 500 mkr. Beroende på om även andra lättnader (t.ex. ytterligare jobbskatteavdrag för äldre) inkluderas kan kostnaden bli högre."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0257 (2000), p-2026-0256 (15000), p-2026-0143 (0), p-2026-0030 (0), p-2026-0031 (0) ⚠ AVVIKER: belopp 500 men jämförbara ligger på 0 ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-0658 (21250), p-2026-0101 (17000), p-2026-0660 (17000), p-2026-0711 (15000), p-2026-0659 (6000). Är delarna redan prissatta ska detta löfte sättas till 0."
+  },
+  {
+    "candidate": {
+      "title": "Värdigt bemötande, tryggt boende och nära läkarkontakter i äldreomsorgen",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Alla ska få ett värdigt bemötande, ett tryggt boende och nära till läkarkontakter inom äldreomsorgen.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/aldre",
+    "articleTitle": "Äldre | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan specificerad reform; inga direkta kostnader.",
+      "confidence": 0.65,
+      "calculation": "Löftet är en målbild om värdigt bemötande, tryggt boende och läkarkontakter utan konkret åtgärd eller belopp. Eventuella framtida satsningar prissätts på separata löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0362 (800), p-2026-0016 (3000), p-2026-0682 (0), p-2026-0357 (3000), p-2026-0125 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~800"
+  },
+  {
+    "candidate": {
+      "title": "Äldreboendegaranti för personer över 85 år",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill införa en äldreboendegaranti som innebär att personer över 85 år får en lagstadgad rätt att flytta till ett trygghets- eller äldreboende när de själva bedömer att behovet finns.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/aldreboendegaranti",
+    "articleTitle": "Äldreboendegaranti | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en lagstadgad rättighet. Direkt statlig kostnad för själva lagstiftningen (utredning, proposition, administration) är försumbar i statsbudgeten. Indirekta kostnader för kommunerna…",
+      "confidence": 0.65,
+      "calculation": "Inget nytt anslag. Lagstiftningsprocessen kan innebära en engångsutredning på ~0–10 mkr, men detta är försumbart och sätts till 0 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0048 (200), p-2026-0447 (250), p-2026-0613 (3000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~250"
+  },
+  {
+    "candidate": {
+      "title": "Införa Startlån för unga och låginkomsttagare till ägt boende",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill även införa så kallade ”Startlån”, som finns i flera länder, med syfte att yngre hushåll, och personer med låga men stabila inkomster, kan ta steget till det ägda boendet.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/amorteringskrav",
+    "articleTitle": "Amorteringskrav | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämför med MP:s startlån (p-2026-0434, 1500 msek/år) exklusive bostadsbidragsdelen. Antagit en subvention/kreditförlust per lån. Högre osäkerhet pga vagt löfte.",
+      "confidence": 0.5,
+      "calculation": "~10 000 lån/år i målgruppen, statlig subvention eller framtida kreditförlust 50 000–150 000 kr per lån ger 500–1500 msek/år. Bas 1000 msek motsvarar ~100 000 kr/lån."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0434 (1500), p-2026-0047 (500), p-2026-0435 (500), p-2026-0494 (1000), p-2026-0012 (0) ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-0100 (17000), p-2026-0702 (1000), p-2026-0661 (800), p-2026-0102 (0), p-2026-0103 (0). Är delarna redan prissatta ska detta löfte sättas till 0."
+  },
+  {
+    "candidate": {
+      "title": "Alla nya bilar ska utrustas med alkoholavslöjande teknik",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi anser att alla nya bilar ska vara utrustade med teknik som avslöjar förarens alkoholpåverkan.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/andts",
+    "articleTitle": "ANDTS | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 1,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för myndighetsarbete, föreskrifter och tillsyn. Regleringens kostnad bärs av tillverkare och konsumenter.",
+      "confidence": 0.65,
+      "calculation": "Löpande arbete för Transportstyrelsen och eventuellt EU-samordning: uppskattningsvis 1-10 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Snabb familjeåterförening för ensamkommande barn",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Ensamkommande barn ska så snart som möjligt återförenas med sina föräldrar.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/anhoriginvandring",
+    "articleTitle": "Anhöriginvandring | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uttalandet är en inriktningsförklaring utan konkret ny rättighet. Kostnaden bedöms främst avse eventuellt resurstillskott för snabbare handläggning hos Migrationsverket, vilket antas ligga i tiotals…",
+      "confidence": 0.3,
+      "calculation": "Antagande: Migrationsverket kan behöva tillföras 20–100 mkr/år för att korta handläggningstider för denna grupp. Med osäkerhet sätts intervallet 0–50 mkr/år (high satt konservativt)."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0509 (0), p-2026-0504 (500) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~250"
+  },
+  {
+    "candidate": {
+      "title": "Begränsa anhöriginvandring till anhöriga uppgivna vid ankomst",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Rätten till anhöriginvandring ska gälla för de anhöriga som den asylsökande informerat om vid ankomsttillfället.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/anhoriginvandring",
+    "articleTitle": "Anhöriginvandring | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en lagreglering utan direkt budgetpåverkan. Eventuella indirekta effekter (minskade kostnader för anhöriginvandring) är svåröverskådliga och kvantifieras inte enligt regel 9.",
+      "confidence": 0.65,
+      "calculation": "Lagändring i sig medför försumbara administrativa kostnader (under 10 mkr) vilka avrundas till 0 då de är försumbara i sammanhanget."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0505 (40), p-2026-0529 (400), p-2026-0124 (0), p-2026-0497 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~20"
+  },
+  {
+    "candidate": {
+      "title": "Utreda införande av stöd för anhöriga till äldre (VAF)",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill också utreda möjligheten att införa ett stöd för nära anhöriga till äldre, så kallat VAF.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/anhorigvard",
+    "articleTitle": "Anhörigvård | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avser kostnad för att tillsätta en statlig utredning (SOU) om anhörigstöd, ca 5–30 mkr i engångskostnad. Utredningens eventuella förslag prissätts inte.",
+      "confidence": 0.6,
+      "calculation": "Standardkostnad för en SOU-utredning är mellan 5 och 30 miljoner kronor, beroende på omfattning och tid. Använder 15 mkr som bas."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0541 (2) ⚠ AVVIKER: 15 avviker 7.5× från jämförbara (median 2)"
+  },
+  {
+    "candidate": {
+      "title": "Säkerställa tillgång till äldre och nya antibiotika samt stärka vårdhygienen",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill säkerställa att det finns både äldre och nya antibiotika tillgängliga, stärka arbetet med vårdhygien inom vård och omsorg för att minska antalet vårdrelaterade infektioner.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/antibiotika",
+    "articleTitle": "Antibiotika | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 300,
+      "msek_high": 700,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning av statliga kostnader för åtgärder för tillgång till äldre och nya antibiotika samt förstärkt vårdhygien. Löftet är vagt och saknar konkreta nivåer.",
+      "confidence": 0.3,
+      "calculation": "~50-300 mkr/år för att säkerställa tillgång till äldre och nya antibiotika (t.ex. lagerhållning, ersättning till tillverkare). ~100-400 mkr/år för att stärka vårdhygienen (riktade statsbidrag till regioner för hygienpersonal och utbildning). Totalt 150-700 mkr/år, bas 300 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0536 (500)"
+  },
+  {
+    "candidate": {
+      "title": "Öka nordiskt och internationellt samarbete för att minska antibiotikaanvändningen",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill även öka samarbetet i Norden och internationellt för att förebygga infektioner och minska antibiotikaanvändningen globalt.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/antibiotika",
+    "articleTitle": "Antibiotika | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan specificerad budget. Eventuella direkta kostnader för internationella möten eller samarbetsinsatser är försumbara och prissätts inte här enligt regel 13.",
+      "confidence": 0.1,
+      "calculation": "Löftet saknar konkret åtgärd eller belopp. Bedöms som ett inriktningslöfte med försumbar direkt statlig kostnad (0 msek)."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Verka för EU-förbud mot förebyggande antibiotikaanvändning till djur",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna har länge velat få till ett tydligt förbud inom EU mot all förebyggande antibiotikaanvändning, vilket är förbjudet i Sverige sedan länge.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/antibiotika",
+    "articleTitle": "Antibiotika | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Enbart förhandlingsarbete; ingen ny statlig utgift utöver ordinarie EU-diplomati.",
+      "confidence": 0.65,
+      "calculation": "Direkt kostnad för att driva frågan i EU ≈ 0 msek/år, i linje med jämförbart löfte."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0543 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa Arbetsförmedlingen och kommunalisera arbetsmarknadspolitiken",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill avskaffa Arbetsförmedlingen och kommunalisera arbetsmarknadspolitiken.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/arbetsformedlingen",
+    "articleTitle": "Arbetsförmedlingen | Kristdemokraterna",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 6000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning av AF:s förvaltningskostnad ca 8 mdkr. Kommunalisering innebär att staten måste överföra medel till kommuner; nettoeffekten beror på kompensationsgrad och effektivisering. Därför brett…",
+      "confidence": 0.3,
+      "calculation": "AF:s förvaltningsanslag ~8 000 mkr/år. Vid nedläggning sparas detta, men kommunalisering kräver statsbidrag till kommuner för arbetsmarknadsinsatser. Antagen kompensationsgrad 30–90 % leder till en nettoeffekt på ca 500–6 000 mkr, med base 1 500 mkr (antagande om ~80 % kompensation)."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa arbetsmarknadsutbildningar till förmån för yrkesvux och reguljär utbildning",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Arbetsmarknadsutbildningarna bör avskaffas, till förmån för ytterligare platser i yrkesvux och reguljär utbildning.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/arbetsformedlingen",
+    "articleTitle": "Arbetsförmedlingen | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Åtgärden är en omfördelning av medel; avskaffandet av arbetsmarknadsutbildningar frigör resurser som används till yrkesvux och reguljär utbildning. Nettoförändringen för staten antas vara noll, med…",
+      "confidence": 0.65,
+      "calculation": "Statens kostnad för arbetsmarknadsutbildning är några miljarder årligen (ex. 2–4 mdkr). Om dessa medel helt överförs till yrkesvux/reguljär utbildning blir nettokostnaden 0. Om den nya utbildningen är marginellt dyrare kan nettokostnaden öka något, därav ett försiktigt tak på 100 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0499 (0), p-2026-0516 (2200), p-2026-0060 (5000), p-2026-0070 (3), p-2026-0470 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~3"
+  },
+  {
+    "candidate": {
+      "title": "Införa statlig dagpenning för arbetslösa i försörjningsstödet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill införa en statlig dagpenning för arbetslösa i försörjningsstödet.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/arbetsformedlingen",
+    "articleTitle": "Arbetsförmedlingen | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 800,
+      "msek_base": 2000,
+      "msek_high": 4500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar att statlig dagpenning ersätter kommunalt försörjningsstöd för arbetslösa med en något högre schablon. Nettokostnad efter omfördelning.",
+      "confidence": 0.4,
+      "calculation": "Antal arbetslösa i försörjningsstöd uppskattas 80 000–150 000. Höjning per månad 1 000–2 500 kr jämfört med dagens norm. Årskostnad: 80k × 12 × 1k = 960 mkr, 150k × 12 × 2,5k = 4 500 mkr. Bas: 120k mottagare × 1 500 kr/mån × 12 ≈ 2 160 mkr, avrundat till 2 000 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0697 (7000), p-2026-0493 (7), p-2026-0441 (300) ⚠ AVVIKER: 2000 avviker 6.7× från jämförbara (median 300)"
+  },
+  {
+    "candidate": {
+      "title": "Värna, stärka och utveckla LSS och personlig assistans",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "LSS och den personliga assistansen ska värnas, stärkas och utvecklas.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/assistans",
+    "articleTitle": "Assistans | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts enligt regel 13 som 0.",
+      "confidence": 0.65,
+      "calculation": "Inga specifika kostnadsdrivande delar anges; partiets konkreta LSS/assistans-löften prissätts separat."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0569 (10), p-2026-0487 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~5"
+  },
+  {
+    "candidate": {
+      "title": "Bekämpa fusk inom assistansen utan att begränsa rätten för de med verkliga behov",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Fusk ska bekämpas kraftfullt och effektivt, utan att rätten till personlig assistans för personer med verkliga behov begränsas.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/assistans",
+    "articleTitle": "Assistans | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för ökade kontrollinsatser (personal, IT, utredningar) inom personlig assistans. Jämförbart med administrativa kostnader för förstatligande, 10 mkr/år enligt liknande estimat.",
+      "confidence": 0.5,
+      "calculation": "Antag 10–30 extra utredar-/granskningstjänster à ca 1 mkr/st inkl. kringkostnader, plus mindre systemkostnader. Det ger 10–30 mkr. Jämför med löfte p-2026-0569 (10 mkr/år för förstatligande), vilket antyder en liknande storleksordning."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0569 (10)"
+  },
+  {
+    "candidate": {
+      "title": "Återinför humanitär skyddsgrund för de mest utsatta",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill återinföra en humanitär skyddsgrund liknande regeln om synnerligen och särskilt ömmande omständigheter som möjliggör skydd för de allra mest utsatta.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asyl",
+    "articleTitle": "Asyl | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Återinförande av humanitär skyddsgrund, liknande särskilt ömmande omständigheter. Jämför med kostnadsestimat för liknande förslag från MP, V, C (1000 mkr/år). Osäkerhet kring exakt omfattning då KD…",
+      "confidence": 0.5,
+      "calculation": "Tar avstamp i llm-estimat för liknande reformer: 1000 mkr/år. Med tanke på den skärpta formuleringen sätts ett spann på 500–1500 mkr/år, vilket motsvarar 50–150 % av jämförelsebeloppet."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0524 (1000), p-2026-0491 (1000), p-2026-0503 (1000)"
+  },
+  {
+    "candidate": {
+      "title": "Tillfälligt uppehållstillstånd tre år med familjeåterförening",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Den som beviljas asyl ska få ett tillfälligt uppehållstillstånd under tre år med rätt till familjeåterförening.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asyl",
+    "articleTitle": "Asyl | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ren lagändring som slår fast uppehållstillståndets längd och rätt till familjeåterförening. Direkt statsfinansiell kostnad för själva regeländringen är försumbar.",
+      "confidence": 0.65,
+      "calculation": "Ändring av lagtext och rutiner hos Migrationsverket; engångskostnad i storleksordning < 1 mkr, avrundas till 0 mkr. Eventuella framtida volymförändringar i anhöriginvandring prissätts inte som en direkt kostnad för denna regelpost."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0524 (1000), p-2026-0492 (0), p-2026-0498 (100), p-2026-0506 (400), p-2026-0509 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~100"
+  },
+  {
+    "candidate": {
+      "title": "Asylansökningsområden nära gränsövergångar",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Alla som söker asyl i Sverige ska hänvisas till asylansökningsområden nära våra stora gränsövergångar.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asyl",
+    "articleTitle": "Asyl | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande om 3–5 nya asylansökningsområden med driftkostnad 50–150 mkr/år per plats. Osäkerhet om befintliga resurser kan omprioriteras.",
+      "confidence": 0.4,
+      "calculation": "3–5 center × 50–150 mkr/år = 150–750 mkr. Bas 250 mkr (3 center, 80 mkr styck). Kostnaden avser enbart statlig drift av center nära gränsövergångar."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Asylprogram med svenska, samhällsorientering och arbete",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Den som söker asyl ska delta i ett asylprogram med svenskundervisning, samhällsorientering och arbete.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asyl",
+    "articleTitle": "Asyl | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 300,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar cirka 15 000 asylsökande per år, 80 % deltagande och en kostnad på 25–50 kkr per person för undervisning, orientering och arbetsliknande insatser. Spannet fångar osäkerhet om volym, upplägg…",
+      "confidence": 0.4,
+      "calculation": "~15 000 asylsökande/år × 80 % deltagande = 12 000 personer × 25–50 tkr/person = 300–600 mkr. Mittpunkt 300 mkr. Lågvariant 150 mkr vid lägre volym (10 000) och kostnad (15 tkr)."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0076 (200), p-2026-0124 (0) ⚠ AVVIKER: 300 avviker 3.0× från jämförbara (median 100)"
   }
 ]
