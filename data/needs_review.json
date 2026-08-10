@@ -97,5 +97,87 @@
       "calculation": "Barnbidraget: årskostnad ca 32 000 mkr, extra 2/12 = 5 333 mkr. Studiebidraget: årskostnad ca 5 000 mkr (10 mån), extra 2/10 = 1 000 mkr. Summa ~6 333 mkr, avrundat till 6 300 mkr. Låg: 5 000 mkr, hög: 7 500 mkr (osäkerhet i antal mottagare och genomsnittsbelopp)."
     },
     "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0468 (5600), p-2026-0619 (12000), p-2026-0348 (3500), p-2026-0325 (8100), p-2026-0100 (17000)"
+  },
+  {
+    "candidate": {
+      "title": "Skärpta straff för kvinnofridskränkning, barnpornografi och ekobrott",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Socialdemokraterna vill höja maxstraffet för grov kvinnofridskränkning från sex till åtta år. Och se över straffskalan för barnpornografibrott så att fängelse blir det normala straffet. Socialdemokraterna vill även införa en ny nivå i straffskalan för ekonomisk brottslighet: synnerligen grova ekobrott.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-07-socialdemokraterna-gar-till-val-pa-tre-reformer-for-ett-starkare-rattsvasende",
+    "articleTitle": "Socialdemokraterna går till val på tre reformer för ett starkare rättsväsende\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "S lovar dubbla barn- och studiebidrag inför jul- och sommarlov",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "Partiledare"
+      },
+      "quote": "Vår reform skulle ge Sveriges tvåbarnsfamiljer 5000 kr mer i plånboken varje år.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-09-s-gar-till-val-pa-dubbla-barnbidrag-infor-varje-jul-och-sommarlov",
+    "articleTitle": "S går till val på dubbla barnbidrag inför varje jul-och sommarlov\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3500,
+      "msek_base": 4000,
+      "msek_high": 5500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reformen dubblar barn- och studiebidraget vid jul och sommarlov, vilket ger en extra månadsersättning (1 250 kr) per tillfälle och barn – 2 500 kr mer per barn och år. Antalet barn bygger på SCB:s…",
+      "confidence": 0.65,
+      "calculation": "Ca 1,55 miljoner barn/ungdomar (1,2 mn barnbidragsberättigade 0–15 år + 0,35 mn studiebidragsberättigade i gymnasiet) × 2 500 kr = 3 875 mkr, avrundat 4 000 mkr. Osäkerhet i antal och utnyttjandegrad ger spannet 3 500–5 500 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0538 (0) ⚠ AVVIKER: belopp 4000 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa karensen",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Den orättvisan vill vi ta bort.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 3800,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden för slopad karensdag har utretts flera gånger, bl.a. i DS 2018:5 som angav 3,8 mdkr/år. Reformen innebär sjukpenning från dag 1 och ökade korta sjukskrivningar.",
+      "confidence": 0.65,
+      "calculation": "Utgår från tidigare offentliga beräkningar: helårskostnad cirka 3,8 mdkr i 2018 års priser. Spannet 3–5 mdkr fångar variation i antal nya sjukfall och indexering."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
   }
 ]
