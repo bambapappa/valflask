@@ -19,6 +19,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { byggKopia, type RaLoftesuppgift } from "../src/vendorkopia.ts";
 
 function parseArgs(argv: string[]) {
   let promisesPath = process.env.PROMISES_PATH ?? "/home/user/valflask/data/promises.json";
@@ -28,17 +29,6 @@ function parseArgs(argv: string[]) {
     else if (argv[i] === "--parties") partiesPath = resolve(argv[++i]!);
   }
   return { promisesPath, partiesPath };
-}
-
-interface RawPromise {
-  id: string;
-  title: string;
-  parties: string[];
-  category: string;
-  quote: string;
-  date_stated: string;
-  source: { url: string; archive_url: string | null };
-  status?: string;
 }
 
 interface RawParty {
@@ -51,20 +41,8 @@ function main() {
   const { promisesPath, partiesPath } = parseArgs(process.argv.slice(2));
   const rot = resolve(import.meta.dirname, "../..");
 
-  const promises: RawPromise[] = JSON.parse(readFileSync(promisesPath, "utf8"));
-  const loften = promises
-    .filter((p) => (p.status ?? "aktiv") === "aktiv")
-    .map((p) => ({
-      id: p.id,
-      titel: p.title,
-      kategori: p.category ?? "",
-      parties: p.parties ?? [],
-      citat: p.quote ?? "",
-      datum: p.date_stated ?? "",
-      kalla_url: p.source?.url ?? "",
-      arkiv_url: p.source?.archive_url ?? null,
-    }))
-    .sort((a, b) => a.id.localeCompare(b.id));
+  const promises: RaLoftesuppgift[] = JSON.parse(readFileSync(promisesPath, "utf8"));
+  const loften = byggKopia(promises);
 
   const parties: RawParty[] = JSON.parse(readFileSync(partiesPath, "utf8"));
   const partier = parties.map((p) => ({ code: p.code, namn: p.name, block: p.block }));
