@@ -7,8 +7,8 @@ import assert from "node:assert";
 import { buildSummary, lofteIds, buildLofteDetalj } from "../src/lib/rutnat.ts";
 import { buildSokIndex } from "../src/lib/sok.ts";
 import {
-  byggHandlingSkarva, byggOrdSkarva, byggPartiTrender, byggVagda, byggVoteringSkarva,
-  handlingSkarvor, indexFinns, ordSkarvor, voteringSkarvor,
+  byggHandlingSkarva, byggOrdSkarva, byggPartiTrender, byggVagda, byggVagdaDokId,
+  byggVoteringSkarva, handlingSkarvor, indexFinns, ordSkarvor, voteringSkarvor,
 } from "../src/lib/amne.ts";
 import { partiKoder, buildPartiSida, ledamotIds, buildLedamotSida } from "../src/lib/vyer.ts";
 
@@ -25,6 +25,9 @@ function storlek(v: unknown): number {
 
 grind("summary.json", storlek(buildSummary()), 100 * KB);
 grind("sok-index.json", storlek(buildSokIndex()), 400 * KB);
+// Märkningen av den breda träfflistan. Hänger på kopplingarna, inte på
+// nyckelordsindexet, och mäts därför utanför blocket längre ner.
+grind("vagda-dokid.json", storlek(byggVagdaDokId()), 100 * KB);
 
 let störst = 0;
 let störstId = "";
