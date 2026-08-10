@@ -726,6 +726,34 @@ describe("LiveSource med mock-HTTP", () => {
     );
   });
 
+  test("findArticleLinks: en katalog i bokstavsordning når förbi tolvtaket", () => {
+    // KD:s A–Ö har 220 undersidor, en per sakfråga, och sorteras på adress
+    // eftersom den saknar datum. Med tolvtaket följdes bara "a-kassa" …
+    // "arbetsratt" — varje körning, för alltid. Det var inte en fördröjning
+    // utan ett tak på hur långt in i alfabetet vi kunde se, och det kostade
+    // oss KD:s löfte om reavinstskatten. Höjt tak per källa är fixen.
+    const prefix = "/var-politik/politik-a-till-o";
+    const sidor = ["a-kassa", "abort", "adoption", "aganderatt", "ai", "aktenskap",
+      "aldre", "aldreboendegaranti", "amorteringskrav", "andts", "anhoriginvandring",
+      "anhorigvard", "arbetsratt", "reavinstskatt", "vardnad"];
+    const html = sidor.map((s) => `<a href="${prefix}/${s}">${s}</a>`).join("") +
+      `<a href="${prefix}">Registret självt</a>`;
+    const bas = `https://kristdemokraterna.se${prefix}`;
+    const mönster = "^/var-politik/politik-a-till-o/.";
+
+    const utanTak = findArticleLinks(html, bas, mönster);
+    assert.equal(utanTak.length, MAX_INDEX_ARTICLES, "standardtaket gäller fortfarande");
+    assert.ok(
+      !utanTak.some((u) => u.endsWith("/reavinstskatt")),
+      "utan eget tak nås aldrig bokstaven R — det är felet testet vaktar",
+    );
+
+    const medTak = findArticleLinks(html, bas, mönster, 250);
+    assert.equal(medTak.length, sidor.length, "alla undersidor följs");
+    assert.ok(medTak.some((u) => u.endsWith("/reavinstskatt")), "reavinstskatt nås");
+    assert.ok(!medTak.includes(bas), "registret självt är aldrig en artikel");
+  });
+
   test("findArticleLinks: adresser byggda i JavaScript är inte länkar", () => {
     // MP:s sida bär `href="` inne i skriptsträngar. Utan filtret följde vi
     // adresser som /just-nu/'+a[s][2]+' och fick skräp varje körning.

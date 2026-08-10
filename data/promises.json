@@ -32072,5 +32072,58 @@
       "verified_by": "kimi-k2.7-code",
       "run_id": "run-2026-08-10-10-33"
     }
+  },
+  {
+    "id": "p-2026-0711",
+    "group_id": null,
+    "title": "Stegvis avskaffad reavinstskatt på bostäder — uppskovstaket bort och nedtrappning till noll",
+    "slug": "stegvis-avskaffad-reavinstskatt-pa-bostader-uppskovstaket-bort-och-nedtrappning-till-noll",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill stegvis avskaffa flyttskatten där vi som första steg vill ta bort uppskovstaket och därefter trappa ned reavinstskatten vid längre innehav, ner till 0 procent.",
+    "date_stated": "2026-05-07",
+    "source": {
+      "url": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-05-07-avskaffa-den-orattvisa-flyttskatten",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-10",
+      "source_status": "ok",
+      "source_checked_at": "2026-08-10"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 11000,
+      "msek_base": 15000,
+      "msek_high": 23000,
+      "basis": "granskare",
+      "basis_url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/reavinstskatt",
+      "method_note": "Partiets egen trappa: reavinstskatten ned med 2 procentenheter per år efter fem års ägande, noll efter 16 år. Skattebasen är vår uppskattning. Beloppet avser åtgärden, inte bostadsmarknadens följder.",
+      "confidence": 0.45,
+      "calculation": "Steg 1, uppskovstaket bort: uppskov skjuter upp skatten, det tar inte bort den, och uppskovsräntan är redan slopad. Statens kostnad är räntan på det uppskjutna beloppet — storleksordningen 0,1 mdkr/år. Steg 2 är trappan. Nivåerna är partiets egna: 2 procentenheter per år efter fem års ägande, noll efter 16 år. Vår del är skattebasen och innehavstiderna. Vinsten växer med innehavstiden, så skatten är koncentrerad till långa innehav — precis dem trappan nollar. Med 3–7 % prisökning per år och 7–12 års medelinnehav faller 58–89 % av basen bort vid linjär nedtrappning. På en bas om 18–26 mdkr/år ger det 11–23 mdkr/år, base 15. Antar att redan upparbetad ägartid räknas; gör den inte det är kostnaden nära noll under mandatperioden."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-10",
+        "change": "Löftet infört. KD gick 2026-05-07 till val på att stegvis avskaffa reavinstskatten på bostäder, och vi hade det inte — en läsare såg det på en valaffisch och frågade efter det. Två skäl: beskedet kom före vårt skördefönster, så nyheten låg aldrig i något flöde vi läser, och politiken som står kvar ligger på en undersida till KD:s A–Ö, en katalog vi hämtade fyra gånger utan att öppna en enda av dess 220 sidor. Djupet är åtgärdat i samma ändring; se rättelseloggen. Citatet står ordagrant i partiets egen nyhet. Nedtrappningens nivåer i uträkningen är partiets egna och hämtade från /var-politik/politik-a-till-o/reavinstskatt; skattebasen är vår. Arkivkopia saknas — Wayback tog inte emot en ny kopia vid införandet, och arkivsvepet får försöka igen.",
+        "commit": "0000000"
+      }
+    ],
+    "extraction": {
+      "model": "review",
+      "verified_by": "granskare",
+      "run_id": "review-2026-08-10-reavinst"
+    }
   }
 ]

@@ -42,6 +42,22 @@ export interface SourceFeed {
    * `/nyhet/`, `/nyheter/`, `/just-nu/` — och det är precisare än att gissa.
    */
   article_pattern?: string;
+  /**
+   * Bara för "index": eget tak på antalet följda adresser, i stället för
+   * MAX_INDEX_ARTICLES. Finns för KATALOGER, inte för nyhetslistor.
+   *
+   * En nyhetslista är färskvara: tolv poster räcker, och det som inte hann med
+   * i dag är gammalt i morgon. En A–Ö-katalog är motsatsen — den är stabil,
+   * står kvar och har 220 poster hos KD. Med tolvtaket följs bara de tolv
+   * första i bokstavsordning ("a-kassa" … "arbetsratt") varje körning, och
+   * "reavinstskatt" nås aldrig, hur många gånger vi än hämtar. Taket blev alltså
+   * inte en fördröjning utan ett hårt tak på hur långt in i alfabetet vi kan se.
+   *
+   * Höjt tak kostar inte en LLM-körning per sida: budgeten på NYA artiklar
+   * ligger i runPipeline, dedup fäller det som är oförändrat, och bara det som
+   * faktiskt behandlats markeras sett. Överskottet tas nästa körning.
+   */
+  max_articles?: number;
   verified?: string;
 }
 
@@ -348,6 +364,9 @@ export const VALAR = 2026;
  * pressrum, och sidorna pekar inte ut något flöde. Samtidigt hade S publicerat
  * minst tre nyheter och C fem sedan vårt nyaste löfte från dem. De två
  * partierna utan flöde var alltså precis de två med äldst täckning.
+ *
+ * Taket gäller nyhetslistor. En katalogsida sätter sitt eget via
+ * `max_articles` i sources.yaml — se fältets kommentar ovan.
  */
 export const MAX_INDEX_ARTICLES = 12;
 
@@ -366,6 +385,7 @@ export function findArticleLinks(
   html: string,
   baseUrl: string,
   articlePattern?: string,
+  maxArticles: number = MAX_INDEX_ARTICLES,
 ): string[] {
   let mönster: RegExp | null = null;
   if (articlePattern) {
@@ -419,7 +439,7 @@ export function findArticleLinks(
   }
   return [...funna.entries()]
     .sort((a, b) => b[1].localeCompare(a[1]) || a[0].localeCompare(b[0]))
-    .slice(0, MAX_INDEX_ARTICLES)
+    .slice(0, Math.max(0, maxArticles))
     .map(([url]) => url);
 }
 
@@ -920,7 +940,7 @@ export class LiveSource implements ArticleSource {
     if (!listResult) return [];
 
     const listHtml = new TextDecoder("utf-8").decode(listResult.bytes);
-    const lankar = findArticleLinks(listHtml, feed.url, feed.article_pattern);
+    const lankar = findArticleLinks(listHtml, feed.url, feed.article_pattern, feed.max_articles);
     if (lankar.length === 0) {
       console.log(`[fetch] ${feed.id}: nyhetslistan gav inga daterade artikellänkar`);
       return [];
