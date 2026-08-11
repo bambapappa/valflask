@@ -37,10 +37,11 @@ driftsättningen medan `main` tog emot 62 beslut som vanligt.
 
 **Nästa rotation: 2026-09-01**
 
-### Daglig AI-atkomstkontroll (automatiskt, 05:20 UTC)
+### Daglig extern atkomstkontroll (automatiskt, 05:20 UTC)
 Workflow `.github/workflows/ai-atkomst.yml` kör `node ops/ai-atkomst.mjs` mot
 skarp adress och kontrollerar att de AI-agenter sajten välkomnar faktiskt
-släpps in. Brister det öppnas ett ärende med etiketten `ai-atkomst`. Se S8.
+släpps in samt att ämnessidan kan anropa Riksdagens söktjänst. Brister det
+öppnas ett ärende med etiketten `ai-atkomst`. Se S8 och S9.
 
 ### Veckovis release-taggning (automatiskt, måndagar)
 Workflow `.github/workflows/release.yml` skapar tagg `release/vYYYY-MM-DD` + GitHub Release.
@@ -200,6 +201,35 @@ sajten nej; innehållet är CC BY 4.0 och ska spridas.
 
 **Stoppur:** upptäckt 2026-08-01 (rapporterad av en Gemini-agent), kontroll och
 larm på plats samma dag. Panelsteget ej övat — kräver ägarens konto.
+
+---
+
+## S9 — ”Allt i riksdagen” svarar inte
+
+**Symptom:** det lokala ämnessöket visar träffar, men när läsaren väljer
+**Allt i riksdagen** visas att Riksdagens söktjänst inte svarade. Ett direkt
+anrop till `data.riksdagen.se` kan samtidigt fungera.
+
+**Orsak att kontrollera först:** webbläsaren följer den Content-Security-Policy
+som Cloudflare faktiskt levererar, inte bara `site/public/_headers`. Om
+`connect-src` där saknar `https://data.riksdagen.se` stoppas anropet innan det
+når Riksdagen. GitHub Pages tolkar inte `_headers`; Cloudflares Transform Rule
+för säkerhetsheaders måste därför hållas i takt med filen.
+
+**Åtgärd:**
+
+1. Logga in på Cloudflare, välj zonen `utlovat.se`.
+2. Öppna **Rules → Transform Rules → Modify Response Header** och regeln för
+   säkerhetsheaders.
+3. Låt regelns `Content-Security-Policy` spegla `site/public/_headers`. Framför
+   allt ska den innehålla
+   `connect-src 'self' https://data.riksdagen.se`.
+4. Spara regeln och kör `node ops/ai-atkomst.mjs https://utlovat.se`.
+5. Sök exempelvis efter `NPF` på `/handlingsvagen/amnen/`, välj **Allt i
+   riksdagen** och bekräfta att Riksdagens större lista visas.
+
+Kontrollen provar också Riksdagens CORS-svar. Om CSP-raden är grön men CORS är
+röd ligger felet hos `data.riksdagen.se` eller i den Origin sajten skickar.
 
 ---
 

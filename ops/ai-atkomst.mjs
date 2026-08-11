@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ai-atkomst.mjs — kontrollerar att sajten släpper in AI-agenterna.
+// ai-atkomst.mjs — kontrollerar att sajten och dess externa sökning kan nås.
 //
 // Bakgrund: 2026-08-01 nekades en Gemini-agent att läsa utlovat.se. Sajtens
 // egen robots.txt välkomnade agenten, men Cloudflares "managed robots.txt"
@@ -9,7 +9,8 @@
 // levererades. Därför kontrolleras den LEVERERADE filen, inte källfilen.
 //
 // Körs: node ops/ai-atkomst.mjs [bas-url]
-// Avslutar med 0 om allt är öppet, 1 om någon agent stängs ute.
+// Avslutar med 0 om allt är öppet, 1 om någon agent eller Riksdagens sökning
+// stängs ute av en levererad driftinställning.
 
 const BAS = (process.argv[2] ?? "https://utlovat.se").replace(/\/+$/, "");
 
@@ -106,7 +107,7 @@ function slapperIn(regler, vag = "/") {
 
 async function hamta(url, headers = {}) {
   const svar = await fetch(url, { headers, redirect: "follow" });
-  return { status: svar.status, text: await svar.text() };
+  return { status: svar.status, text: await svar.text(), headers: svar.headers };
 }
 
 const fel = [];
@@ -175,7 +176,44 @@ for (const [vag, vad] of SIDOR) {
   }
 }
 
-// 3. Bär förstasidan sitt innehåll utan att JavaScript körs? En agent som inte
+// 3. Kan ämnessidan anropa Riksdagens söktjänst? `_headers` är bara repots
+//    avsikt; Cloudflare kan leverera en annan policy. Därför prövas både den
+//    levererade CSP:n och Riksdagens CORS-svar från den skarpa adressen.
+try {
+  const sida = await hamta(`${BAS}/handlingsvagen/amnen/`);
+  const csp = sida.headers.get("content-security-policy") ?? "";
+  const connectSrc = csp
+    .split(";")
+    .map((del) => del.trim())
+    .find((del) => del.toLowerCase().startsWith("connect-src "));
+  const cspOppen = Boolean(connectSrc?.split(/\s+/).includes("https://data.riksdagen.se"));
+
+  const origin = new URL(BAS).origin;
+  const prov = new URL("https://data.riksdagen.se/dokumentlista/");
+  prov.searchParams.set("sok", "skola");
+  prov.searchParams.set("utformat", "json");
+  prov.searchParams.set("sz", "1");
+  const riksdagen = await hamta(prov.href, { Origin: origin });
+  const tillatenOrigin = riksdagen.headers.get("access-control-allow-origin");
+  const corsOppen = riksdagen.status === 200 && (tillatenOrigin === "*" || tillatenOrigin === origin);
+
+  console.log("\nÄmnessökning mot Riksdagen:");
+  console.log(`  ${cspOppen ? "OK  " : "FEL "} levererad CSP tillåter data.riksdagen.se`);
+  console.log(`  ${corsOppen ? "OK  " : "FEL "} Riksdagen tillåter anrop från ${origin}`);
+  if (!cspOppen) {
+    fel.push("levererad CSP för /handlingsvagen/amnen/ saknar data.riksdagen.se i connect-src");
+  }
+  if (!corsOppen) {
+    fel.push(
+      `Riksdagens söktjänst svarade ${riksdagen.status} med Access-Control-Allow-Origin: ${tillatenOrigin ?? "saknas"}`,
+    );
+  }
+} catch (e) {
+  console.log(`\nÄmnessökning mot Riksdagen:\n  FEL  ${e.message}`);
+  fel.push(`ämnessökningens externa åtkomst gick inte att kontrollera: ${e.message}`);
+}
+
+// 4. Bär förstasidan sitt innehåll utan att JavaScript körs? En agent som inte
 //    kör skript ska ändå se siffrorna.
 try {
   const { text } = await hamta(BAS, { "User-Agent": BOT_UA });
@@ -193,7 +231,7 @@ console.log("");
 if (fel.length > 0) {
   console.log("=== AI-ATKOMST BRUTEN ===");
   for (const f of fel) console.log(`  - ${f}`);
-  console.log("\nÅtgärd: se ops/RUNBOOK.md, avsnittet om AI-atkomst.");
+  console.log("\nÅtgärd: se ops/RUNBOOK.md, avsnitten om AI-atkomst och ämnessökning.");
   process.exit(1);
 }
 console.log("=== AI-ATKOMST OK ===");

@@ -2344,3 +2344,33 @@ sanningar om samma sak går isär).
 **Påverkan:** `pipeline/src/talad-kalla.ts` (ny), `pipeline/tests/talad-kalla.test.ts`
 (ny), `pipeline/scripts/arkiv-kontroll.mts`. Ingen ändring i `data/promises.json`
 — de 31 posterna uppfyllde kravet redan innan det skrevs ut.
+
+## 2026-08-11 — Ämnessökets externa åtkomst bevakas i levererad drift
+
+**Bakgrund:** sökordet `NPF` gav 23 träffar i Handlingsvågens lokala urval,
+men **Allt i riksdagen** svarade att Riksdagens söktjänst inte gick att nå.
+Riksdagens API svarade samtidigt 200 och tillät anrop från
+`https://utlovat.se`. Felet låg i den Content-Security-Policy Cloudflare
+levererade: den saknade `connect-src` och stoppade webbläsarens anrop innan det
+nådde Riksdagen. Repots `site/public/_headers` hade redan rätt regel, men
+GitHub Pages tolkar inte filen och Cloudflares separata Transform Rule hade
+inte följt med.
+
+**Beslut:** den dagliga kontrollen `ops/ai-atkomst.mjs` provar nu även den
+levererade CSP:n på `/handlingsvagen/amnen/` och Riksdagens CORS-svar. Den
+larmar om `https://data.riksdagen.se` saknas i `connect-src` eller om Riksdagen
+inte längre tillåter sajtens origin. Runbook S9 beskriver panelsteget. Som en
+separat läsarändring flyttas rättelsenoten på ämnessidan längst ned och tonas
+ned, medan båda sidfötterna visar ansvarig utgivare och länkar till metodsidans
+AI-avsnitt.
+
+**Motiv:** en konfigurationsfil som värdplattformen inte läser är avsikt, inte
+bevis på driftläget. Samma typ av glapp stängde tidigare ute AI-agenter via en
+levererad `robots.txt`. Kontrollen måste därför stå på den sida om Cloudflare
+där läsarens webbläsare står.
+
+**Förkastat alternativ:** nöja sig med den statiska T9-kontrollen av
+`site/public/_headers`. Den var grön medan funktionen var trasig och kan därför
+inte ensam skydda detta kontrakt. Att proxyköra sökningen genom utlovat.se hade
+undvikit CORS och CSP men lagt till en serverdel för ett problem som bara kräver
+att den beslutade säkerhetspolicyn faktiskt levereras.
