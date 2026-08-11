@@ -1,4 +1,4 @@
-# AI-atkomst — bevakar att sajten släpper in AI-agenterna.
+# Atkomst — bevakar AI-agenter och ämnessökningens anrop till Riksdagen.
 #
 # Kontrollen läser den LEVERERADE robots.txt:en, inte repots. Skälet står i
 # ops/ai-atkomst.mjs: 2026-08-01 stängdes Gemini, Claude och GPTBot ute av ett
@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
         with:
           node-version: 22
-      - name: Kontrollera AI-atkomst
+      - name: Kontrollera extern atkomst
         run: node ops/ai-atkomst.mjs https://utlovat.se
         timeout-minutes: 5
 
@@ -36,11 +36,12 @@ jobs:
       issues: write
     uses: ./.github/workflows/larm.yml
     with:
-      rubrik: "AI-atkomstkontrollen"
+      rubrik: "Den externa atkomstkontrollen"
       etikett: "larm-ai-atkomst"
       atgard: |
-        Sajten kan ha slutat vara läsbar för AI-agenter. Det märks inte på
-        sajten och inte i repot — bara här.
+        Sajten kan ha slutat vara läsbar för AI-agenter, eller ämnessökningen
+        kan ha förlorat åtkomsten till Riksdagens söktjänst. Det kan bero på
+        en levererad Cloudflare-inställning som inte syns i repot.
 
         Vanligaste orsaken är att Cloudflares *managed robots.txt* har slagits
         på igen på zonen. Den lägger ett eget block överst i robots.txt som
@@ -48,4 +49,5 @@ jobs:
         skriver i `site/public/robots.txt`.
 
         Kör `node ops/ai-atkomst.mjs https://utlovat.se` för att se exakt vad
-        som brister, och se avsnittet om AI-atkomst i `ops/RUNBOOK.md`.
+        som brister, och se avsnitten om AI-atkomst och ämnessökning i
+        `ops/RUNBOOK.md`.

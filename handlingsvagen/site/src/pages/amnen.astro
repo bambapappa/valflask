@@ -40,7 +40,6 @@ const andel = (kod: string, vikt: number): number =>
 <Layout title="Ämnen och ord — Handlingsvågen" canonicalPath="/amnen">
   <div class="prosa">
     <h1>Ämnen och ord</h1>
-    <Rattelsenot rattelser={rattelserForPath("/amnen")} />
     <p class="ingress">
       Sök bland allt partierna skrivit i riksdagen: förslag de lämnat in,
       frågor de ställt till ministrarna, och regeringens egna lagförslag.
@@ -278,6 +277,10 @@ const andel = (kod: string, vikt: number): number =>
         </p>
       </>
     )}
+
+    <div class="amnen-rattelse">
+      <Rattelsenot rattelser={rattelserForPath("/amnen")} />
+    </div>
   </div>
 </Layout>
 
@@ -883,6 +886,17 @@ const andel = (kod: string, vikt: number): number =>
 )}
 
 <style>
+  .amnen-rattelse {
+    max-width: var(--matt-prosa);
+    margin-top: 3rem;
+  }
+  .amnen-rattelse :global(.rattelsenot) {
+    border: 0;
+    border-top: 1px solid var(--linje);
+    padding: 0.75rem 0 0;
+    color: var(--text-svag);
+    font-size: var(--steg--1);
+  }
   /* Sidan är en datavy, inte en text. Prosabredden ur den delade kostymen
      gäller därför bara de löpande styckena — söket, partifiltret,
      rösttabellerna och ordlistorna får hela spaltbredden. */
