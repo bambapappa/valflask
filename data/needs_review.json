@@ -1522,5 +1522,694 @@
       "calculation": "~15 000 asylsökande/år × 80 % deltagande = 12 000 personer × 25–50 tkr/person = 300–600 mkr. Mittpunkt 300 mkr. Lågvariant 150 mkr vid lägre volym (10 000) och kostnad (15 tkr)."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0076 (200), p-2026-0124 (0) ⚠ AVVIKER: 300 avviker 3.0× från jämförbara (median 100)"
+  },
+  {
+    "candidate": {
+      "title": "Införa krav på 15 timmar språkutbildning och 9 timmar samhällsorientering per vecka för asylsökande",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "vill vi införa krav på att asylsökande erhåller och ska delta i 15 timmar språkutbildning och nio timmar samhällsorientering per vecka.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asylprogram",
+    "articleTitle": "Asylprogram | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för att tillhandahålla 24 timmar/vecka obligatorisk utbildning för asylsökande under hela väntetiden. Uppskattat antal samtidiga deltagare utifrån cirka 10 000 nya asylsökande per år och…",
+      "confidence": 0.5,
+      "calculation": "Asylsökande i systemet: ~10 000 (baserat på 10 000/år * 1 års väntetid). Kostnad per person och vecka: 24 timmar × lärar- och lokalkostnad ≈ 1 000 kr/vecka. Årskostnad: 10 000 * 1 000 * 52 = 520 mkr/år, avrundat till 500 mkr. Spannet speglar osäkerhet i antal asylsökande och enhetskostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0079 (1000), p-2026-0115 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Införa arbetskrav om 16 timmar per vecka vid asylboendet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Asylsökande ska också ha ett arbetskrav på sig om 16 timmar per vecka vid det egna asylboendet.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asylprogram",
+    "articleTitle": "Asylprogram | Kristdemokraterna",
+    "duplicateOf": "(denna körning)"
+  },
+  {
+    "candidate": {
+      "title": "Sänka dagersättning för asylsökande som inte deltar i utbildning eller arbete",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Den som inte deltar i utbildningen eller uppfyller arbetskravet kan få sin dagersättning nedsatt.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asylprogram",
+    "articleTitle": "Asylprogram | Kristdemokraterna",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattad besparing på dagersättning för de som inte deltar. Exakt andel sänkning och andel som träffas är okänd.",
+      "confidence": 0.5,
+      "calculation": "Total dagersättning till asylsökande ~1 mdkr/år. Antas 20–40 % berörs, nedsättning 25–50 % → 50–300 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0115 (0), p-2026-0079 (1000) ⚠ AVVIKER: 150 avviker 3.3× från jämförbara (median 500)"
+  },
+  {
+    "candidate": {
+      "title": "Införa omedelbar återförandeorder vid misstanke om bortförande av barn för tvångsäktenskap",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vid misstanke om bortförande ska en domstol kunna utfärda en omedelbar återförandeorder, där barnet ska återföras eller påbörja hemresa inom en fast tidsram (ofta 48 timmar).",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/barnaktenskap",
+    "articleTitle": "Barnäktenskap | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring med ny typ av domstolsorder; direkt kostnad för utredning och implementering är försumbar, maximalt några miljoner kronor.",
+      "confidence": 0.65,
+      "calculation": "Lagstiftningsarbete (enklare utredning, proposition) ~1–2 mkr, utbildning och IT-anpassning hos domstolar ~0–3 mkr. Total engångskostnad 0–5 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Höjt barnbidrag till 2 000 kr per månad",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna föreslår därför en kraftig höjning av barnbidraget till 2 000 kr per månad.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/barnbidrag",
+    "articleTitle": "Barnbidrag | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 14000,
+      "msek_base": 17000,
+      "msek_high": 22000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattas utifrån +750 kr/mån för ~2 miljoner barn = 18 mdkr. Partiets egen beräkning är 17 mdkr, vilket används som bas. Osäkerhet om förlängt bidrag och demografi.",
+      "confidence": 0.65,
+      "calculation": "Nuvarande barnbidrag 1 250 kr/mån, höjning till 2 000 kr ger +750 kr/mån per barn. Per år: 750 × 12 = 9 000 kr. Med ca 2 miljoner barn (0–15 år, cirka 2023) blir bruttoökning 18 000 mkr. Kristdemokraterna har i annan kontext angett en kostnad på 17 000 mkr för samma reform, vilket används som basskattning. Spannet 14–22 mdkr motiveras av variation i antal mottagare samt om förlängt barnbidrag (studerande 16–20 år) inkluderas."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0619 (12000), p-2026-0348 (3500), p-2026-0100 (17000), p-2026-0468 (5600), p-2026-0279 (0) ⚠ AVVIKER: 17000 avviker 3.0× från jämförbara (median 5600)"
+  },
+  {
+    "candidate": {
+      "title": "Bekämpa barnfattigdom genom att få föräldrar i arbete och riktade insatser",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill bekämpa barnfattigdom genom att fler föräldrar kommer i arbete, men också genom riktade insatser till ekonomiskt utsatta barnfamiljer.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/barnfattigdom",
+    "articleTitle": "Barnfattigdom | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret utpekad åtgärd eller belopp. Prissätts till 0 enligt regel 13.",
+      "confidence": 0.65,
+      "calculation": "Inga specificerade belopp eller åtgärder anges. Löftet är ett allmänt mål om att få föräldrar i arbete och riktade insatser, men saknar beslutad nivå eller mekanism. Därmed ingen beräkningsbar statlig kostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0325 (8100), p-2026-0507 (0), p-2026-0501 (80), p-2026-0348 (3500) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1790"
+  },
+  {
+    "candidate": {
+      "title": "Tak på 12 barn i småbarnsgrupper i förskolan",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna föreslår ett tak på 12 barn i småbarnsgrupperna i förskolan.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/barnomsorg",
+    "articleTitle": "Barnomsorg | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en reglering (lagkrav på maxtak). Den direkta statliga kostnaden för att besluta om och införa en sådan regel är försumbar. Eventuella kommunala merkostnader prissätts inte eftersom löftet…",
+      "confidence": 0.65,
+      "calculation": "0 – endast administrativ kostnad för lagstiftning; inga statliga medel avsatta för kommunal kompensation nämns."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Kommuner ska vara skyldiga att tillhandahålla familjedaghem",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kommunerna ska vara skyldiga att tillhandhålla familjedaghem för de föräldrar som önskar det.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/barnomsorg",
+    "articleTitle": "Barnomsorg | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en lagreglering; direkta kostnaden för att ta fram lagen är försumbar. Eventuella framtida statsbidrag ingår inte.",
+      "confidence": 0.65,
+      "calculation": "Engångskostnad för utredning, lagrådsremiss och riksdagsbehandling uppskattas till 0–5 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Föräldrar som driver familjedaghem ska kunna få barnomsorgspeng",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Föräldrar som driver familjedaghem och själva ansvarar för barnomsorgen av sina egna barn ska kunna få del av barnomsorgspengen.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/barnomsorg",
+    "articleTitle": "Barnomsorg | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 50,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden beror på antalet familjedaghemsföräldrar som ansöker om barnomsorgspeng för egna barn. Uppgifter om målgruppens storlek är osäkra, vilket ger ett brett intervall.",
+      "confidence": 0.3,
+      "calculation": "Antag: ca 3 000–4 000 familjedaghem i Sverige. Uppskattningsvis 15–30 % av dessa drivs av föräldrar med egna förskolebarn (1–5 år), vilket ger 450–1 200 berörda hem. Snitt 1–2 egna barn per hem = 450–2 400 barn. Genomsnittlig barnomsorgspeng ~3 000 kr/månad (36 000 kr/år). Totalkostnad: 16–86 mkr. Avrundat spann 0–150 mkr för att täcka variation i ersättningsnivåer och utnyttjandegrad."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0348 (3500), p-2026-0507 (0), p-2026-0501 (80), p-2026-0325 (8100) ⚠ AVVIKER: 50 avviker 35.8× från jämförbara (median 1790)"
+  },
+  {
+    "candidate": {
+      "title": "Införa betyg från årskurs 6",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Betyg ska ges första gången i årskurs 6.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/betyg",
+    "articleTitle": "Betyg | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering: redan gällande regel, ingen ny statlig utgift.",
+      "confidence": 0.65,
+      "calculation": "Betyg i årskurs 6 är redan infört i dagens system. Löftet innebär ingen förändring och därmed ingen ny kostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Reformera betygssystemet: ersätta F-betyg med ny skala och utreda ordningsbetyg",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "KD vill också reformera betygssystemet genom att ersätta dagens F-betyg med en mer nyanserad betygsskala och har föreslagit att utreda ordningsbetyg där exempelvis närvaro, regelefterlevnad och respekt för andra kan vägas in.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/betyg",
+    "articleTitle": "Betyg | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reformen av betygsskalan är en reglering utan direkt statlig kostnad (jfr p-2026-0062, 0 mkr). Utredning om ordningsbetyg är en typisk SOU-kostnad, uppskattad till 10 mkr.",
+      "confidence": 0.6,
+      "calculation": "Betygsskalereformen: reglering → 0 mkr (jfr p-2026-0062). Ordningsbetygsutredning: statlig utredning (SOU) kostar normalt 5–30 mkr. Antaget 10 mkr bas, spann 0–30 mkr. Total engångskostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0070 (3), p-2026-0062 (0), p-2026-0067 (5), p-2026-0500 (1000), p-2026-0071 (0) ⚠ AVVIKER: 10 avviker 3.3× från jämförbara (median 3)"
+  },
+  {
+    "candidate": {
+      "title": "Förbättrad ersättning till markägare vid prioritering av skyddsvärda områden",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill att staten på ett bättre sätt prioriterar det skyddsvärda vilket gör att vi kan förbättra ersättningen till markägaren.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/biologisk-mangfald",
+    "articleTitle": "Biologisk mångfald | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en administrativ omprioritering som enligt texten möjliggör högre ersättningar utan höjd totalbudget. Direkta statsfinansiella kostnaden är försumbar och begränsas till eventuella…",
+      "confidence": 0.2,
+      "calculation": "Omprioriteringsprocess: administrativt arbete, eventuella analyser eller uppdrag, uppskattat till 0–5 mkr engång. Ersättningsnivåerna i sig ska rymmas inom befintlig ram genom bättre urval; ingen ny ersättningsbudget antas."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Nya vägar att kompensera lantbruket för miljötjänster som biologisk mångfald och minskad klimatpåverkan",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Det är också viktigt att finna nya vägar att kompensera lantbruket för miljötjänster, till exempel bevarande av biologisk mångfald och minskad klimatpåverkan.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/biologisk-mangfald",
+    "articleTitle": "Biologisk mångfald | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet att 'finna nya vägar' tolkas som ett utrednings- eller planuppdrag. Kostnaden uppskattas till en normal offentlig utredning (SOU). Något direkt ersättningssystem anges inte.",
+      "confidence": 0.3,
+      "calculation": "En statlig utredning med sekretariat, experter och remissförfarande kostar typiskt 5–30 mkr. Basantagande 10 mkr, låg 5 mkr, hög 30 mkr. Löftet innehåller inga belopp eller konkreta ersättningsnivåer."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0406 (800) ⚠ AVVIKER: 10 avviker 80.0× från jämförbara (median 800)"
+  },
+  {
+    "candidate": {
+      "title": "Minst 1 % av BNI till bistånd",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna stödjer målet att minst 1 % av BNI ska avsättas för bistånd i statens budget.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/bistand-och-utvecklingssamarbete",
+    "articleTitle": "Bistånd och utvecklingssamarbete | Kristdemokraterna",
+    "duplicateOf": "p-2026-0410"
+  },
+  {
+    "candidate": {
+      "title": "Skapa långsiktiga villkor för byggande och ägande samt öka tillgången på byggbar mark",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill skapa långsiktiga villkor för byggande, förvaltning och ägande samt öka tillgången på byggbar mark och sänka trösklarna in på bostadsmarknaden.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/bostad",
+    "articleTitle": "Bostad | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan specifik åtgärd eller belopp; prissätts till 0 enligt regel 13 om breda önskelöften.",
+      "confidence": 0.1,
+      "calculation": "Ingen konkret åtgärd, nivå eller utfästelse specificeras i citatet, därmed ingen direkt statsfinansiell kostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Tillåta ägarlägenheter bildas ur befintligt hyresbestånd",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill även förändra lagstiftningen kring ägarlägenheter, så att de kan bildas ur befintligt hyresbestånd.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/bostad",
+    "articleTitle": "Bostad | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring för att tillåta bildande av ägarlägenheter ur befintligt hyresbestånd. Den direkta statliga kostnaden för själva regelförändringen är försumbar.",
+      "confidence": 0.65,
+      "calculation": "Proposition och riksdagsbeslut innebär endast marginella beredningskostnader; inga nya statsutgifter. 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Höja bostadsbidraget, förbättra bostadstillägget och höja inkomsttaket",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill ytterligare höja bostadsbidraget för barnfamiljer med svag ekonomi, förbättra bostadstillägget för pensionärer samt höja inkomsttaket så att flerkan ta del av bidraget.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/bostadsbidrag",
+    "articleTitle": "Bostadsbidrag | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 3000,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kombinerar höjt bostadsbidrag för barnfamiljer, förbättrat bostadstillägg för pensionärer och höjt inkomsttak. Spannet bygger på jämförbara löftesestimats storleksordning.",
+      "confidence": 0.4,
+      "calculation": "Höjt bostadsbidrag barnfamiljer: uppskattat ca 1000 Mkr/år (jfr V-löfte). Förbättrat bostadstillägg pensionärer: ca 1500 Mkr/år (jfr V-löfte). Höjt inkomsttak gör att fler får del av bidragen, uppskattat ca 500 Mkr/år. Summa bas: 3000 Mkr/år, med stor osäkerhet (1500–5000)."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0428 (4000), p-2026-0468 (5600), p-2026-0218 (1000), p-2026-0434 (1500), p-2026-0627 (1500) ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-0100 (17000), p-2026-0702 (1000), p-2026-0661 (800), p-2026-0102 (0), p-2026-0103 (0). Är delarna redan prissatta ska detta löfte sättas till 0."
+  },
+  {
+    "candidate": {
+      "title": "Staten ska bidra till bredbandsutbyggnad där marknaden inte räcker till",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Där marknaden inte räcker till ska staten bidra till utbyggnad av bredband och mobil uppkoppling, särskilt i landsbygden.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/bredband",
+    "articleTitle": "Bredband | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1150,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på senaste befintliga anslag för statligt bredbandsstöd (PTS, 2024) om ca 1 150 mkr/år. Löftet innebär en fortsättning på nuvarande stödmodell för utbyggnad där marknaden inte bär sig.",
+      "confidence": 0.4,
+      "calculation": "Statligt bredbandsstöd 2024: PTS-anslaget för bredbandsutbyggnad där kommersiell utbyggnad saknas uppgick till ~1 150 mkr. Detta antas vara den nivå löftet avser bibehålla. Osäkerhet intervallet 500–2 000 mkr speglar möjliga förändringar i ambitionsnivå och anslagsstorlek över tid."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ingen ska lämnas utan fungerande uppkoppling vid nedmontering av kopparnätet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Ingen ska lämnas utan fungerande uppkoppling i samband med nedmontering av kopparnätet.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/bredband",
+    "articleTitle": "Bredband | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en reglering eller ett krav på telekomoperatörer att säkerställa alternativ uppkoppling innan kopparnätet demonteras. Direkt statlig kostnad är försumbar (administration, tillsyn)…",
+      "confidence": 0.4,
+      "calculation": "Åtgärden prissätts som en lag / reglering utan direkta statliga utgifter utöver marginell administration, i likhet med det jämförbara breda löftet p-2026-0317 (0 msek/år)."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0317 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa dagens generösa mängdrabatter",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "dagens generösa mängdrabatter ska avskaffas",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/brottsbekampning",
+    "articleTitle": "Brottsbekämpning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 650,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnadsuppskattning baserad på jämförbara, redan prissatta löften om avskaffad mängdrabatt.",
+      "confidence": 0.65,
+      "calculation": "Jämförbara löften (p-2026-0313, p-2026-0709, p-2026-0462) anger alla ca 650 mkr/år i ökade kostnader för Kriminalvården. Osäkerhet kring reformens slutgiltiga utformning och strafflängder ger ett spann på 400–1000 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0313 (650), p-2026-0709 (650), p-2026-0462 (650)"
+  },
+  {
+    "candidate": {
+      "title": "Införa utvisning som huvudregel för utländska medborgare vid fängelsestraff över sex månader",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Utvisning ska vara huvudregel för den som inte är svensk medborgare och får mer än sex månaders fängelse.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/brottsbekampning",
+    "articleTitle": "Brottsbekämpning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Direkt kostnad för lagändringen är försumbar; bredare konsekvenser kvantifieras ej enligt regel 9.",
+      "confidence": 0.65,
+      "calculation": "Enligt regel 9 prissätts endast själva lagändringen, inte följder. Jämförbart löfte p-2026-0077 uppskattades till 1000 mkr/år men då inkluderat implementation; här avgränsar vi till den lagstiftande processen, vilken bedöms kosta 0-5 mkr som engångskostnad för utredning/justeringar."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0077 (1000), p-2026-0055 (100) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~550"
+  },
+  {
+    "candidate": {
+      "title": "Intensifiera brottsförebyggande arbete med fokus på föräldrastöd, skola och socialtjänst",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Det brottsförebyggande arbetet ska intensifieras med fokus på föräldrastöd, värderingar, skola och socialtjänst.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/brottsbekampning",
+    "articleTitle": "Brottsbekämpning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret enskilt åtagande — prissätts till 0 enligt regel 13.",
+      "confidence": 0.65,
+      "calculation": "Ingen specifik åtgärd med prislapp; avser ett övergripande arbete."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0037 (5), p-2026-0455 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~2.5"
+  },
+  {
+    "candidate": {
+      "title": "Stärka familjernas roll genom utbyggda föräldrastödsprogram, skärpt föräldraansvar och ny socialtjänstlag",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna arbetar aktivt för att stärka familjernas roll och barnperspektivet genom utbyggda föräldrastödsprogram, skärpt föräldraansvar och en ny socialtjänstlag.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/brottsforebyggande-atgarder",
+    "articleTitle": "Brottsförebyggande åtgärder | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inga konkreta belopp eller nivåer. Paketet består av breda inriktningar (utbyggda program, skärpt ansvar, ny lag). Jämförbart C-löfte om föräldrastöd estimerades till 500 mkr/år, men KD:s löfte är…",
+      "confidence": 0.2,
+      "calculation": "Löftet anger inget eget belopp och är en bred uppräkning av politikområden enligt regel 13. Base sätts till 0. Spannet 0–500 mkr/år speglar jämförelse med ett mer konkret C-löfte (p-2026-0536) som värderades till 500 mkr/år, men osäkerheten är stor då KD inte preciserar omfattning."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0536 (500), p-2026-0130 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~250"
+  },
+  {
+    "candidate": {
+      "title": "Förbjuda burka och niqab på allmänna platser",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi menar att det är oacceptabelt i en demokrati och att burka och niqab därför borde förbjudas på allmänna platser.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/burka-och-niqab",
+    "articleTitle": "Burka och niqab | Kristdemokraterna",
+    "duplicateOf": "p-2026-0584"
+  },
+  {
+    "candidate": {
+      "title": "Bygga nationell försörjningsberedskap, inrätta cybersäkerhetsmyndighet och 1,5% av BNP till försvar till 2030",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Dessa åtgärder handlar bland annat om att bygga upp en nationell försörjningsberedskap för livsmedel, drivmedel och mediciner, inrätta en särskild cybersäkerhetsmyndighet samt att 1,5% av BNP ska gå till försvarsrelaterade utgifter tom 2030.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/civilt-forsvar-och-beredskap",
+    "articleTitle": "Civilt försvar och beredskap | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en bred uppräkning av flera politikområden utan konkret enskilt åtagande eller belopp. Behandlas som inriktningslöfte enligt regel 13.",
+      "confidence": 0.2,
+      "calculation": "Ingen direkt kvantifierbar reform; 1,5% av BNP är ett mål utan specificerad baslinjeökning, övriga åtgärder är vagt beskrivna."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
   }
 ]
