@@ -23,6 +23,7 @@ const jsonLd = [
       { "@type": "DataDownload", "name": "parties.json", "contentUrl": "https://utlovat.se/api/v1/parties.json", "encodingFormat": "application/json" },
       { "@type": "DataDownload", "name": "issues.json", "contentUrl": "https://utlovat.se/api/v1/issues.json", "encodingFormat": "application/json" },
       { "@type": "DataDownload", "name": "stances.json", "contentUrl": "https://utlovat.se/api/v1/stances.json", "encodingFormat": "application/json" },
+      { "@type": "DataDownload", "name": "constants.json", "contentUrl": "https://utlovat.se/api/v1/constants.json", "encodingFormat": "application/json" },
     ],
   },
   {
@@ -66,6 +67,10 @@ const jsonLd = [
             <tr>
               <td><code>/api/v1/comparisons.json</code></td>
               <td>Jämförelsetal per löfte (enbart fysiska: myntstapel mot avstånd)</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/constants.json</code></td>
+              <td>Jämförelsekonstanter: myntets tjocklek, avstånd (månen, Mars), reformutrymme</td>
             </tr>
             <tr>
               <td><code>/api/v1/changelog.json</code></td>
