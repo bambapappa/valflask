@@ -10,6 +10,8 @@
 import { appendFileSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
+import { hamtaAvslagsunderlag } from "../src/avslagsunderlag.ts";
+import { avslagsbeslut } from "../src/grindar.ts";
 import {
   avvisaForslag,
   findIndexByKopplingId,
@@ -20,7 +22,12 @@ import {
   type KopplingPost,
   type KoPost,
 } from "../src/granskning.ts";
-import { fetchDokumentText } from "../src/riksdagen.ts";
+import {
+  fetchDokumentText,
+  fetchMotionDokId,
+  fetchUtskottspunkter,
+  fetchYrkanden,
+} from "../src/riksdagen.ts";
 import { lasProvningar } from "../../../pipeline/src/provningar.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
@@ -86,9 +93,9 @@ if (cmd.action === "reject") {
 // Ett utbytt bevis prövas mot dokumentet som det ser ut NU, före allt annat.
 // Håller det inte sker ingen ändring alls — varken i kön eller i kopplingarna.
 const handlingar = lasJson<Handling[]>(join(DATA_DIR, "handlingar.json"), []);
+const post = ko[index]!;
+const handling = handlingar.find((h) => h.id === post.handling_id);
 if (cmd.bevis) {
-  const post = ko[index]!;
-  const handling = handlingar.find((h) => h.id === post.handling_id);
   if (!handling?.dok_id) {
     output("error", `Handlingen ${post.handling_id} saknar dokument-id — det går inte att pröva ett nytt citat mot källan.`);
     process.exit(0);
@@ -109,6 +116,21 @@ if (cmd.bevis) {
   }
 }
 
+let avslaget;
+if (avslagsbeslut(cmd.bevis ?? post.bevis.citat)) {
+  const kallDok = post.bevis.kalla_dok_id ?? handling?.dok_id;
+  try {
+    avslaget = (await hamtaAvslagsunderlag(id, handling?.punkt, kallDok, {
+      punkter: (dokId) => fetchUtskottspunkter((url) => fetch(url), dokId),
+      motionDokId: (rm, beteckning) => fetchMotionDokId((url) => fetch(url), rm, beteckning),
+      yrkanden: (dokId) => fetchYrkanden((url) => fetch(url), dokId),
+    })).avslaget;
+  } catch (e) {
+    output("error", `Kunde inte hämta vad beslutspunkten avslog: ${e instanceof Error ? e.message : e}. Inget beslut är fattat.`);
+    process.exit(0);
+  }
+}
+
 const kopplingarPath = join(DATA_DIR, "kopplingar.json");
 try {
   const res = godkannForslag(
@@ -119,6 +141,7 @@ try {
     {
       ...(cmd.motionstyp ? { motionstyp: cmd.motionstyp } : {}),
       ...(cmd.bevis ? { bevis: cmd.bevis } : {}),
+      ...(avslaget ? { avslaget } : {}),
     },
     lasProvningar(ROT_DATA),
   );

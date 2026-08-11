@@ -65,7 +65,7 @@ export interface Avslag {
   motion: string;
   /** Motionärens parti i gemener; tom sträng för partilös. */
   parti: string;
-  /** Yrkandenumret, eller undefined när punkten avslår hela motionen. */
+  /** Yrkandenumret; delyrkanden märks med sitt entydiga moder-yrkande. */
   yrkande?: string;
   /** Motionens dok-id hos riksdagen — så lydelsen går att slå upp. */
   dok_id: string;
@@ -259,7 +259,7 @@ export function godkannForslag(
   if (avslagsbeslut(citat) && (opts.avslaget ?? []).length === 0) {
     throw new GranskningsFel(
       "Beviset är en punkt som bara avslår motioner. Vad som avslogs måste stå i fältet " +
-        "avslaget — kör `npm run avslag-backfill -- --koppling <id>` och godkänn sedan om.",
+        "avslaget — godkännandets anropare måste hämta yrkandena innan kopplingen skapas.",
     );
   }
   if (opts.motionstyp && handling.kind !== "motion") {

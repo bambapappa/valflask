@@ -14,6 +14,10 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
+import { hamtaAvslagsunderlag } from "../src/avslagsunderlag.ts";
+import { avslagsbeslut } from "../src/grindar.ts";
+import { fetchMotionDokId, fetchUtskottspunkter, fetchYrkanden } from "../src/riksdagen.ts";
+import { cachat, politeFetch } from "./kallcache.mts";
 import {
   avvisaForslag,
   findIndexByKopplingId,
@@ -95,12 +99,27 @@ try {
         } else rest.push(args[i]!);
       }
       const index = resolveIndex(ko, rest[0]);
+      const post = ko[index]!;
+      const handling = handlingar.find((h) => h.id === post.handling_id);
+      let avslaget;
+      if (avslagsbeslut(post.bevis.citat)) {
+        const kallDok = post.bevis.kalla_dok_id ?? handling?.dok_id;
+        avslaget = (await hamtaAvslagsunderlag(rest[0] ?? String(index), handling?.punkt, kallDok, {
+          punkter: (dokId) => cachat(`punkter-${dokId}`, () => fetchUtskottspunkter(politeFetch, dokId)),
+          motionDokId: (rm, beteckning) => cachat(`motdok-${rm.replace("/", "-")}-${beteckning}`, () =>
+            fetchMotionDokId(politeFetch, rm, beteckning)),
+          yrkanden: (dokId) => cachat(`yrkanden-${dokId}`, () => fetchYrkanden(politeFetch, dokId)),
+        })).avslaget;
+      }
       const res = godkannForslag(
         ko,
         index,
         kopplingar,
         handlingar,
-        motionstyp ? { motionstyp } : {},
+        {
+          ...(motionstyp ? { motionstyp } : {}),
+          ...(avslaget ? { avslaget } : {}),
+        },
         lasProvningar(rotData),
       );
       skrivJson(kopplingarPath, res.kopplingar);

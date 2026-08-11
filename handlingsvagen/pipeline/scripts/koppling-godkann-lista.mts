@@ -26,7 +26,14 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
-import { fetchDokumentText } from "../src/riksdagen.ts";
+import { hamtaAvslagsunderlag } from "../src/avslagsunderlag.ts";
+import { avslagsbeslut } from "../src/grindar.ts";
+import {
+  fetchDokumentText,
+  fetchMotionDokId,
+  fetchUtskottspunkter,
+  fetchYrkanden,
+} from "../src/riksdagen.ts";
 import { cachat, politeFetch } from "./kallcache.mts";
 import {
   findIndexByKopplingId,
@@ -75,12 +82,12 @@ for (const { id, bevis } of rader) {
     continue;
   }
   const post = ko[index]!;
+  const handling = handlingar.find((h) => h.id === post.handling_id);
 
   // Ett utbytt bevis prövas mot källdokumentet FÖRE godkännandet. Går texten
   // inte att hämta godkänns posten inte — en kontroll som tyst uteblir är
   // värre än ingen kontroll alls.
   if (bevis !== undefined) {
-    const handling = handlingar.find((h) => h.id === post.handling_id);
     const kallDok = post.bevis.kalla_dok_id ?? handling?.dok_id;
     if (!kallDok) {
       fel.push(`${id}: handlingen saknar dokument-id — det nya beviset går inte att pröva`);
@@ -99,13 +106,33 @@ for (const { id, bevis } of rader) {
     bytta += 1;
   }
 
+  let avslaget;
+  if (avslagsbeslut(bevis ?? post.bevis.citat)) {
+    const kallDok = post.bevis.kalla_dok_id ?? handling?.dok_id;
+    try {
+      avslaget = (await hamtaAvslagsunderlag(id, handling?.punkt, kallDok, {
+        punkter: (dokId) => cachat(`punkter-${dokId}`, () => fetchUtskottspunkter(politeFetch, dokId)),
+        motionDokId: (rm, beteckning) => cachat(`motdok-${rm.replace("/", "-")}-${beteckning}`, () =>
+          fetchMotionDokId(politeFetch, rm, beteckning)),
+        yrkanden: (dokId) => cachat(`yrkanden-${dokId}`, () => fetchYrkanden(politeFetch, dokId)),
+      })).avslaget;
+    } catch (e) {
+      fel.push(e instanceof Error ? e.message : String(e));
+      continue;
+    }
+  }
+
   try {
     const res = godkannForslag(
       ko,
       index,
       kopplingar,
       handlingar,
-      { year: 2026, ...(bevis !== undefined ? { bevis } : {}) },
+      {
+        year: 2026,
+        ...(bevis !== undefined ? { bevis } : {}),
+        ...(avslaget ? { avslaget } : {}),
+      },
       provningar,
     );
     kopplingar = res.kopplingar;

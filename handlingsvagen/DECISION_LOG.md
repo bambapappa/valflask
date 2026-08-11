@@ -1,6 +1,44 @@
 
 ---
 
+## 2026-08-11 — Den återstående kopplingskön avgörs 24/2
+
+**Beslut (mänskligt beslut 2026-08-11):** den samlade rekommendationen för de
+26 återstående kopplingsförslagen verkställs: 24 godkänns och 2 avvisas.
+Underlaget post för post ligger i `bambapappa/handoff`,
+`KOPPLINGSKO-REST-26-2026-08-11.md`.
+
+- `k-2026-0845`–`k-2026-0868` är de 24 nya kopplingarna: 7 partilinjer och
+  17 ledamotshandlingar.
+- Fyra frågor/interpellationer bär den faktiska frågelydelsen, ordagrant
+  omprövad mot Riksdagens dokument, i stället för köförslagets bakgrundstext.
+- Två förslag avvisas. KD:s ja till att avslå V:s psykiatriyrkande visar inte
+  KD:s eget agerande för det ospecificerade psykiatrilöftet. Ett allmänt nytt
+  resursfördelningssystem för skolan säger inte att huvudmän som anställer
+  behöriga lärare ska premieras ekonomiskt.
+- Sakgrupperna är en granskningshjälp, inte en datagrupp. Återkommande
+  likalydande motioner från skilda riksmöten står därför kvar som separata
+  handlingar.
+
+**Påverkan:** kopplingskön går från 26 till 0. C får partidomen
+`agerat_i_linje` på `p-2026-0704` och `p-2026-0705`. På `p-2026-0708` får S
+`agerat_i_linje` genom kommittémotionen och sin nej-röst till att avslå det
+egna yrkandet; M, KD, L, SD och MP får `agerat_emot` genom sina ja-röster till
+avslaget. Enskilda motioner, frågor och interpellationer syns bara som
+ledamotshandlingar.
+
+**Tekniskt fynd under verkställandet:** voteringskopplingen kunde först inte
+skapas. Grinden krävde de avslagna yrkandenas lydelser före skapandet, medan
+`avslag-backfill` bara nådde redan skapade kopplingar. `b-0041` gör vägen
+sammanhängande: alla godkännandekanaler hämtar hela avslagsunderlaget först och
+stoppar om en enda lydelse saknas. Två hänvisningar i JuU42 punkt 3 gäller
+delyrkanden som Riksdagens öppna data endast publicerar inuti ett enda
+sammansatt moder-yrkande. Hela den enda officiella lydelsen visas då med både
+moder- och delhänvisningen; finns flera möjliga moder-yrkanden stoppas
+godkännandet i stället för att gissa.
+
+---
+
 ## 2026-08-10 — Sju handlingar godkänns mot löftet om utbyggt totalförsvar
 
 **Beslut (mänskligt beslut 2026-08-10):** de sju genomgångna köförslagen mot
