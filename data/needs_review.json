@@ -2211,5 +2211,515 @@
       "calculation": "Ingen direkt kvantifierbar reform; 1,5% av BNP är ett mål utan specificerad baslinjeökning, övriga åtgärder är vagt beskrivna."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Säkerställa bredband i hela landet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill säkerställa att bredband finns i hela landet så att människor kan kommunicera, driva företag samt arbeta och studera på distans.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/digitalisering",
+    "articleTitle": "Digitalisering | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet tolkas som en årlig satsning på bredbandsstöd, i linje med nuvarande anslag till Post- och telestyrelsen för bredbandsutbyggnad (~500 mkr/år). Avviker från det jämförbara engångslöftet…",
+      "confidence": 0.3,
+      "calculation": "Bas: befintligt statligt bredbandsstöd (PTS) ca 500 mkr/år. Löftet ger ingen ny nivå, varför basen är dagens. Spann: 200–1000 mkr/år utifrån variation i anslag och eventuell förstärkning. Årlig utgift."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0471 (10000) ⚠ AVVIKER: 500 avviker 20.0× från jämförbara (median 10000)"
+  },
+  {
+    "candidate": {
+      "title": "Stärk EU:s djurskyddslagstiftning och investeringar i djurskydd",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill att EU ska stärka djurskyddslagstiftningen och främja investeringar för förbättrat djurskydd samt att EU ska motarbeta plågsamma men även långa djurtransporter.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/djurskydd",
+    "articleTitle": "Djurskydd | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagstiftningsdelen bedöms ge försumbar direkt statlig kostnad. Investeringsstödet beräknas utifrån tidigare nationellt stöd för djurskydd inom landsbygdsprogrammet (ca 100 mkr/år).",
+      "confidence": 0.4,
+      "calculation": "~500–1000 djurhållare × 100 000–300 000 kr i stöd per år → 50–300 mkr/år; baserat på tidigare stöd för djurvälfärd inom landsbygdsprogrammet (statlig medfinansiering ca 100 mkr/år)."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0621 (3400) ⚠ AVVIKER: 100 avviker 34.0× från jämförbara (median 3400)"
+  },
+  {
+    "candidate": {
+      "title": "Utveckla metoder för slakt på gård och mobila slakterier",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Sverige bör utnyttja möjligheten att utveckla metoder för slakt på gård eller genom mobila och gårdsnära slakterier.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/djurskydd",
+    "articleTitle": "Djurskydd | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtagande; ingen kostnad kan prissättas.",
+      "confidence": 0.1,
+      "calculation": "Vagt formulerad önskan om att utveckla metoder, utan angivna medel eller specifika insatser. Bedöms enligt regel 13 som inriktningslöfte med kostnad 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Gemensam standard för journalsystem i hela landet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill se en gemensam standard för journalsystem i hela landet för att underlätta för patienten när vården sker i olika regioner.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/e-halsa",
+    "articleTitle": "E-hälsa | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Utredning och framtagning av gemensam standard via myndighetsuppdrag. Ingen kostnad för regionernas implementering antas belasta staten.",
+      "confidence": 0.5,
+      "calculation": "Ett regeringsuppdrag att utreda och fastställa en nationell standard kostar typiskt 5–30 mkr i statlig utrednings- och myndighetsinsats (jfr SOU eller E-hälsomyndighetens arbete)."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0136 (0), p-2026-0646 (0) ⚠ AVVIKER: belopp 15 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Ge regionerna samlat uppdrag för barn- och ungdomshälsovården",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill ge regionerna ett samlat uppdrag för hela barn- och ungdomshälsovården.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/elevhalsa",
+    "articleTitle": "Elevhälsa | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En ren reglering eller lagändring utan nya statliga anslag. Eventuell utredningskostnad (SOU-storlek) max 10 mkr.",
+      "confidence": 0.65,
+      "calculation": "Åtgärden är ett samlat uppdrag, dvs. en administrativ/regulatorisk reform. Statens direkta kostnad är för sagd utredning/styrning, typiskt 0–10 mkr engångsvis. Inga löpande statsbidrag antas."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0519 (500), p-2026-0012 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~250"
+  },
+  {
+    "candidate": {
+      "title": "Införa elevhälsogaranti för kontakt inom ett dygn",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill även införa en elevhälsogaranti som innebär att en elev ska kunna komma i kontakt med elevhälsan inom ett dygn.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/elevhalsa",
+    "articleTitle": "Elevhälsa | Kristdemokraterna",
+    "duplicateOf": "p-2026-0356"
+  },
+  {
+    "candidate": {
+      "title": "Förutsättningslös utredning om euron",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna ser det inte som aktuellt inom överskådlig tid men vill se en förutsättningslös utredning.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/emu-och-euron",
+    "articleTitle": "EMU och Euron | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En SOU-utredning om euron: sekretariat, experter, resor, betänkande. Typisk engångskostnad 5–30 mkr.",
+      "confidence": 0.65,
+      "calculation": "Utredning med kansli (10–20 personmånader), externa experter, resor, betänkande och remiss. Engångskostnad i spannet 5–30 mkr, med bas 15 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "God man inom 24 timmar för ensamkommande barn",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "ensamkommande barn bör förordnas en god man inom 24 timmar från barnets ankomst.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ensamkommande-barn",
+    "articleTitle": "Ensamkommande barn | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Administrativ marginalkostnad för att med jour och övertid garantera förordnande inom 24 timmar. Cirka 1 000 ensamkommande barn/år, extrakostnad 0–10 000 kr per barn.",
+      "confidence": 0.3,
+      "calculation": "Antagande: ~1 000 ensamkommande barn per år (baserat på Migrationsverkets statistik 2023). Marginalkostnad per barn för skyndsam handläggning (jour, övertid, administration) uppskattas till 0–10 000 kr. 1 000 × 0 kr = 0 msek, 1 000 × 10 000 kr = 10 msek. Bas 5 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ensamkommande barn ska placeras i familjehem i första hand",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "ensamkommande barn och ungdomar i första hand ska placeras i familjehem.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ensamkommande-barn",
+    "articleTitle": "Ensamkommande barn | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En riktlinjeförändring; den direkta kostnaden är försumbar. Eventuella besparingar är en följd och kvantifieras inte enligt regel 9.",
+      "confidence": 0.5,
+      "calculation": "Ingen direkt statlig utgift krävs för beslut om ny placeringsprincip."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fler familjehem ska rekryteras och utbildas för ensamkommande",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna har föreslagit att fler familjehem med beredskap att ta hand om dessa barn och unga ska rekryteras och utbildas.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ensamkommande-barn",
+    "articleTitle": "Ensamkommande barn | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 45,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för att utöka rekrytering och utbildning av familjehem specifikt för ensamkommande. Ingen specificerad nivå; uppskattat antal nya hem och utbildningskostnad.",
+      "confidence": 0.4,
+      "calculation": "Antagande: 50–200 nya familjehem per år × 100 000–200 000 kr/hem i utbildning och rekrytering. 50×100 000=5 mkr; 200×200 000=40 mkr. Bas 15 mkr (ca 100 hem à 150 000 kr)."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta en nationell krissocialjour för extra stöd till kommuner",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi anser därför att en nationell krissocialjour bör inrättas som kan ge extra hjälp när kommunerna bedömer att de behöver extra hjälp.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ensamkommande-barn",
+    "articleTitle": "Ensamkommande barn | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är vagt; kostnaden beror på organisationens storlek. Uppskattning utgår från en nationell jourfunktion med specialistpersonal inom socialtjänst/migration. Inga jämförbara myndigheter anges.",
+      "confidence": 0.4,
+      "calculation": "Antag 10–50 årsarbetskrafter (handläggare, samordnare, chefer) med årskostnad 1–2 mkr per person inklusive lokaler och administration. Base 30 mkr motsvarar cirka 20 medarbetare inklusive drift. Intervallet speglar osäkerhet om ambitionsnivå och behovsbedömning."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ingen tvångsanslutning till kommunalt avlopp om miljökrav uppfylls",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna anser att den som har ett enskilt avlopp som uppfyller gällande miljö- och hälsokrav ska i normalfallet inte tvingas ansluta till kommunalt avlopp.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/enskilda-avlopp",
+    "articleTitle": "Enskilda avlopp | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring för att ändra tvångsanslutningsregler är i sig en försumbar statlig kostnad. Eventuellt en mindre utredning/proposition.",
+      "confidence": 0.65,
+      "calculation": "Det rör sig om en regelförändring utan nya åtaganden för staten. Den direkta kostnaden för att ta fram och fatta beslut om ändringen är marginell, uppskattad till 0–5 mkr för utredningsarbete."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Omvänd bevisbörda för utsläpp från enskilda avlopp",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Myndigheter ska ha omvänd bevisbörda, det vill säga visa att utsläpp sker i otillåten omfattning.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/enskilda-avlopp",
+    "articleTitle": "Enskilda avlopp | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring med försumbar direkt statlig kostnad (regel 9).",
+      "confidence": 0.65,
+      "calculation": "Ingen direkt utgift; endast ändrad bevisbörderegel i befintliga tillsynsprocesser."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0087 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Statliga lånegarantier för uppgradering av äldre enskilda avlopp",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill även införa statliga lånegarantier för fastighetsägare med begränsad ekonomi som behöver uppgradera äldre avlopp.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/enskilda-avlopp",
+    "articleTitle": "Enskilda avlopp | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lånegarantier belastar statsbudgeten med nettokostnaden för subventionerade avgifter, förväntade kreditförluster och administration. Osäkerheten är stor då programmets utformning inte specificerats.",
+      "confidence": 0.35,
+      "calculation": "Antar ett fåtal tusen berörda fastigheter per år (ca 2 000–5 000) med genomsnittligt lånebehov ~150 tkr. Staten subventionerar en del av garantiavgiften eller står för förluster. Om den årliga subventionskostnaden är 1–5 tkr per lån blir utgiften 2–25 mnkr, plus en mindre administrationskostnad. Spannet fångar olika scenarier."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ökat stöd och medfinansiering till enskilda vägar",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill se regelverk som säkerställer tillräckliga resurser för investeringar och underhåll samt att staten utökar sin medfinansiering.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/enskilda-vagar",
+    "articleTitle": "Enskilda vägar | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 140,
+      "msek_base": 300,
+      "msek_high": 700,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar ökning av nuvarande statligt bidrag till enskilda vägar (ca 1,4 mdkr/år) med 10–50 %, utifrån typiska reformambitioner.",
+      "confidence": 0.4,
+      "calculation": "Dagens anslag till drift/underhåll och investeringar i enskilda vägar uppskattas till cirka 1 400 mkr/år. En höjning med 10 % (140 mkr) till 50 % (700 mkr) speglar osäkerheten. Basestimatet 300 mkr motsvarar en måttlig förstärkning."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Asylinvandringen primärt via kvotflyktingsystem och asylprocess i tredje land",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Asylinvandringen ska primärt hanteras genom kvotflyktingsystem, samt en möjlighet att förlägga asylprocessen till tredje land.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/eus-migrationspakt",
+    "articleTitle": "EU:s migrationspakt | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Åtgärden är en inriktningsändring av asylsystemet, jämförbar med kd-löfte (p-2026-0629) som prissattes till 0. Direkta kostnader för en regeländring är försumbara.",
+      "confidence": 0.5,
+      "calculation": "Jämför med jämförbart löfte p-2026-0629: 0 msek/år. Ingen ny utbetalning eller intäktsförändring följer av själva omläggningen."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0629 (0), p-2026-0074 (0), p-2026-0079 (1000)"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa utländsk finansiering till extremistiska organisationer",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill stoppa utländsk finansiering från extremister till svenska stiftelser, föreningar och församlingar.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/extremism",
+    "articleTitle": "Extremism | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Direkt kostnad för lagstiftning och eventuell tillsyn. Regel 9: förbudskostnad oftast försumbar; samhällsföljder okvantifierade.",
+      "confidence": 0.65,
+      "calculation": "Utredning och initialt systemstöd ~5 mkr, mindre myndighetsenhet ~10-15 mkr. Sammanlagd engångskostnad uppskattas till 0–20 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa utbetalning av svenska skattemedel till extremistorganisationer",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi måste också stoppa utbetalning av svenska skattemedel till extremistiska organisationer.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/extremism",
+    "articleTitle": "Extremism | Kristdemokraterna",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Mycket osäkert – okänt hur mycket offentliga bidrag som går till extremistorganisationer; besparingen kan vara liten.",
+      "confidence": 0.3,
+      "calculation": "Uppskattning av befintliga årsbidrag som skulle kunna stoppas. Antaget att mellan 0 och 50 miljoner kronor per år kan beröras i form av statsbidrag, föreningsstöd eller bistånd."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   }
 ]
