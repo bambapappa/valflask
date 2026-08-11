@@ -21,13 +21,13 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { avslagsbeslut } from "../src/grindar.ts";
-import type { Avslag, KopplingPost } from "../src/granskning.ts";
+import { hamtaAvslagsunderlag } from "../src/avslagsunderlag.ts";
+import type { KopplingPost } from "../src/granskning.ts";
 import type { Handling } from "../src/handlingar.ts";
 import {
   fetchMotionDokId,
   fetchUtskottspunkter,
   fetchYrkanden,
-  parseAvslagsreferenser,
 } from "../src/riksdagen.ts";
 import { cachat, politeFetch } from "./kallcache.mts";
 
@@ -62,54 +62,22 @@ for (const k of behover) {
     continue;
   }
 
-  // Referenserna läses ur punktens EGEN beslutstext hos riksdagen, inte ur
-  // det sparade citatet — så att en avkortning i citatet inte tappar en
-  // motion på vägen.
-  const punkter = await cachat(`punkter-${dok}`, () => fetchUtskottspunkter(politeFetch, dok));
-  const punkt = (punkter ?? []).find((p) => p.punkt === h.punkt);
-  if (!punkt) {
-    fel.push(`${k.id}: punkt ${h.punkt ?? "?"} finns inte i ${dok}`);
+  let underlag;
+  try {
+    underlag = await hamtaAvslagsunderlag(k.id, h.punkt, dok, {
+      punkter: (id) => cachat(`punkter-${id}`, () => fetchUtskottspunkter(politeFetch, id)),
+      motionDokId: (rm, beteckning) => cachat(`motdok-${rm.replace("/", "-")}-${beteckning}`, () =>
+        fetchMotionDokId(politeFetch, rm, beteckning)),
+      yrkanden: (id) => cachat(`yrkanden-${id}`, () => fetchYrkanden(politeFetch, id)),
+    });
+  } catch (e) {
+    fel.push(e instanceof Error ? e.message : String(e));
     continue;
   }
-
-  const avslaget: Avslag[] = [];
-  for (const ref of parseAvslagsreferenser(punkt.forslag)) {
-    const dokId = await cachat(`motdok-${ref.rm.replace("/", "-")}-${ref.beteckning}`, () =>
-      fetchMotionDokId(politeFetch, ref.rm, ref.beteckning),
-    );
-    if (!dokId) {
-      fel.push(`${k.id}: hittar inte motion ${ref.rm}:${ref.beteckning} hos riksdagen`);
-      continue;
-    }
-    const yrkanden = await cachat(`yrkanden-${dokId}`, () => fetchYrkanden(politeFetch, dokId));
-    if (!yrkanden || yrkanden.length === 0) {
-      fel.push(`${k.id}: motion ${ref.rm}:${ref.beteckning} (${dokId}) saknar yrkandelista`);
-      continue;
-    }
-    const valda = ref.yrkanden.length > 0 ? yrkanden.filter((y) => ref.yrkanden.includes(y.nummer)) : yrkanden;
-    if (valda.length === 0) {
-      fel.push(`${k.id}: yrkande ${ref.yrkanden.join(", ")} finns inte i ${ref.rm}:${ref.beteckning}`);
-      continue;
-    }
-    for (const y of valda) {
-      avslaget.push({
-        motion: `${ref.rm}:${ref.beteckning}`,
-        parti: ref.parti,
-        ...(ref.yrkanden.length > 0 ? { yrkande: y.nummer } : {}),
-        dok_id: dokId,
-        lydelse: y.lydelse,
-      });
-    }
-  }
-
-  if (avslaget.length === 0) {
-    fel.push(`${k.id}: inga yrkanden gick att hämta — fältet lämnas tomt`);
-    continue;
-  }
-  k.avslaget = avslaget;
+  k.avslaget = underlag.avslaget;
   fyllda += 1;
-  console.log(`\n${k.id} — ${punkt.rubrik} (punkt ${punkt.punkt})`);
-  for (const a of avslaget) {
+  console.log(`\n${k.id} — ${underlag.punkt.rubrik} (punkt ${underlag.punkt.punkt})`);
+  for (const a of underlag.avslaget) {
     console.log(`  ${a.motion}${a.yrkande ? ` yrkande ${a.yrkande}` : ""} (${a.parti || "-"}): ${a.lydelse.slice(0, 140)}`);
   }
 }

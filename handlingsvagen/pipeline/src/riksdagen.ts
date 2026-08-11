@@ -347,6 +347,8 @@ export interface Avslagsreferens {
   parti: string;
   /** Yrkandenumren punkten avslår. Tom lista = hela motionen. */
   yrkanden: string[];
+  /** Punkten avser en del av ett sammansatt yrkande, inte ett eget dokforslag. */
+  delyrkande?: true;
 }
 
 /**
@@ -369,6 +371,7 @@ export function parseAvslagsreferenser(text: string): Avslagsreferens[] {
     const slut = i + 1 < traffar.length ? (traffar[i + 1]!.index ?? text.length) : text.length;
     const bit = text.slice(start, slut);
     const parti = /\(([^)]*)\)/u.exec(bit)?.[1] ?? "";
+    const delyrkande = /\bdelyrkanden?\b/u.test(bit);
     ut.push({
       rm: m[1]!,
       beteckning: m[2]!,
@@ -376,6 +379,7 @@ export function parseAvslagsreferenser(text: string): Avslagsreferens[] {
       // "yrkande 1", "yrkanden 4 och 5", "yrkandena 1, 8-13 och 21" — alla tre
       // formerna förekommer, och singularformen är den lätta att missa.
       yrkanden: parseYrkandenummer(/yrkanden?a?\s+([^()]*?)(?=\s+(?:och|samt)\s+20\d\d\/|,\s*20\d\d\/|$)/u.exec(bit)?.[1] ?? ""),
+      ...(delyrkande ? { delyrkande: true as const } : {}),
     });
   }
   return ut;
