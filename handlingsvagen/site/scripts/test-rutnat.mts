@@ -5,11 +5,29 @@
  * varje status har ett utskrivet ord (färg aldrig ensam bärare). Kör: npm test.
  */
 import assert from "node:assert";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { buildSummary, lofteIds, buildLofteDetalj, riksmoteAvDatum } from "../src/lib/rutnat.ts";
 import { getLoften } from "../src/lib/data.ts";
 
 const summary = buildSummary();
 const loftenIds = new Set(getLoften().map((l) => l.id));
+const rutnatSida = readFileSync(resolve(import.meta.dirname, "../src/pages/index.astro"), "utf8");
+
+// Ett streck är frånvaro av en godkänd koppling, inte politisk oenighet.
+// Rutnätsformen lockar annars läsaren att behandla "okänt" som "falskt".
+assert.ok(
+  rutnatSida.includes("Rutnätet jämför inte partiernas löften med varandra."),
+  "rutnätet måste säga vilken jämförelse det inte gör",
+);
+assert.ok(
+  rutnatSida.includes("det betyder inte att partiet tycker annorlunda eller saknar politik i frågan"),
+  "tomma celler måste skiljas från oenighet och frånvaro av politik",
+);
+assert.ok(
+  rutnatSida.includes("Besläktade löften kan därför stå på flera olika rader."),
+  "besläktade löften på skilda rader måste förklaras",
+);
 
 // Filterfasetter (SKISS §3): varje rad bär härledda fasetter, och unionen
 // samlas i summary.fasetter för filterbarens val.
