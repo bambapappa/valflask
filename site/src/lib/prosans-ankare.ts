@@ -579,7 +579,7 @@ export const ANKARE: Ankare[] = [
       const dir = "site/src/pages/api/v1";
       const filer = [
         "summary", "promises", "parties", "comparisons",
-        "changelog", "issues", "stances", "integrity",
+        "changelog", "issues", "stances", "integrity", "constants",
       ];
       return filer.every((f) => {
         const kod = repofil(`${dir}/${f}.json.ts`);
@@ -588,7 +588,7 @@ export const ANKARE: Ankare[] = [
     },
     fallprov:
       "Ta bort data_hash ur issues.json.ts — provet faller, precis som det gjorde 2026-08-09.",
-    matt: "8 av 8 bär båda efter rättelsen",
+    matt: "9 av 9 bär båda efter rättelsen",
   },
 
   {

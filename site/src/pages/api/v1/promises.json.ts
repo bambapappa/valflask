@@ -17,7 +17,7 @@ export async function GET() {
     date_stated: p.date_stated,
     source: { url: p.source.url, domain: p.source.domain, archive_url: p.source.archive_url },
     category: p.category,
-    cost: { type: p.cost.type, period: p.cost.period, msek_low: p.cost.msek_low, msek_base: p.cost.msek_base, msek_high: p.cost.msek_high, basis: p.cost.basis },
+    cost: { type: p.cost.type, period: p.cost.period, msek_low: p.cost.msek_low, msek_base: p.cost.msek_base, msek_high: p.cost.msek_high, basis: p.cost.basis, basis_url: p.cost.basis_url, method_note: p.cost.method_note, calculation: p.cost.calculation, confidence: p.cost.confidence },
     financing_claimed: { described: p.financing_claimed.described, summary: p.financing_claimed.summary, msek: p.financing_claimed.msek },
     comparisons: p.comparisons,
     quip: p.quip,
