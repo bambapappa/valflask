@@ -1,6 +1,38 @@
 
 ---
 
+## 2026-08-11 — Tom cell skiljs från oenighet och besläktning blir ett eget granskat lager
+
+**Beslut (mänskligt beslut 2026-08-11):** Rutnätet ska säga direkt att det
+inte jämför partiernas löften med varandra. Den tomma statusen benämns
+"ingen godkänd koppling" och förklaras som frånvaro av en koppling på just
+den raden, inte som politisk oenighet eller avsaknad av politik.
+
+Möjliga relationer av typen "liknande riktning, olika åtaganden" tas fram i
+ett separat förslagsskikt. Automatik får göra grovurval ur löften och nya
+handlingar, men resultatet är oprövat tills en människa läst båda löftenas
+egna ord. En sådan relation får senare komplettera detaljvyn med text och
+referenser; den får aldrig fylla en cell eller ändra en dom.
+
+**Motiv:** Rutnätsformen lockar läsaren att tolka ett streck som "partiet
+håller inte med", trots att kopplingspipelinen besvarar den smalare frågan om
+en godkänd handling finns på just löftesraden. Samtidigt skulle ett mjukare
+cellutfall blanda granskat handlingsbevis med en bredare politisk tolkning.
+Två lager behåller den hårda beviskedjan och ger plats för den nyans läsaren
+saknar.
+
+**Förkastade alternativ:** lägga till "nästan i linje" som cellstatus — det
+gör en semantisk närhet till ett handlingsbevis; fylla andra partiers celler
+genom automatisk likhetsmatchning — det publicerar en politisk tolkning utan
+mänskligt beslut; bara förklara strecket och aldrig visa besläktade löften —
+det förebygger feltolkningen men lämnar den sakliga likheten osynlig.
+
+**Påverkan:** `site/src/pages/index.astro`, rutnätsgrinden och den privata
+skillen `gruppera-beslaktade-loften` i `bambapappa/handoff`. Ingen koppling,
+dom eller publicerad löftespost ändras i detta steg.
+
+---
+
 ## 2026-08-11 — Den återstående kopplingskön avgörs 24/2
 
 **Beslut (mänskligt beslut 2026-08-11):** den samlade rekommendationen för de

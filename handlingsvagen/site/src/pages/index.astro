@@ -9,12 +9,12 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/"); // alltid exakt en a
 const PARTINAMN = new Map(summary.partier.map((p) => [p.code, p.namn]));
 
 function cellVy(c: Cell | undefined): { klass: string; ord: string; aria: string } {
-  if (!c) return { klass: "status--tom", ord: "–", aria: "inget kontrollerat ännu" };
+  if (!c) return { klass: "status--tom", ord: "–", aria: "ingen godkänd koppling i vårt underlag" };
   if (c.status === "bade_och") return { klass: "status--bade", ord: "både och", aria: "både i linje och emot, vid olika tillfällen" };
   if (c.status === "agerat_i_linje") return { klass: "status--linje", ord: "i linje", aria: "har agerat i linje med löftet" };
   if (c.status === "agerat_emot") return { klass: "status--emot", ord: "emot", aria: "har agerat emot löftet" };
   if (c.n_avstod > 0) return { klass: "status--avstod", ord: "avstod", aria: "lade ner sin röst" };
-  return { klass: "status--tom", ord: "–", aria: "inget kontrollerat ännu" };
+  return { klass: "status--tom", ord: "–", aria: "ingen godkänd koppling i vårt underlag" };
 }
 
 // Filtrens etiketter (SKISS §3). Statusnycklarna matchar URL-parametrarna.
@@ -41,11 +41,12 @@ function statusTokens(celler: Record<string, Cell>): string[] {
   <div data-api-base={base} id="rutnat-rot">
     <h1>Rutnätet</h1>
     <p class="ingress">
-      En rad per löfte, en kolumn per parti. En cell fylls när partiet gjort
-      något i riksdagen som hör ihop med löftet — röstat om det, lämnat in ett
-      förslag, ställt en fråga. Varje sådan cell är kontrollerad av en
-      människa, ord för ord mot riksdagens eget dokument. Klicka på ett löfte
-      för att läsa bevisen.
+      Rutnätet jämför inte partiernas löften med varandra. Varje rad gäller
+      just det löftet, med en kolumn per parti. En cell fylls när partiet gjort
+      något i riksdagen som har kopplats till löftet — röstat om det, lämnat in
+      ett förslag eller ställt en fråga. Varje sådan koppling är kontrollerad
+      av en människa, ord för ord mot riksdagens eget dokument. Klicka på ett
+      löfte för att läsa bevisen.
     </p>
 
     <div class="summa" role="group" aria-label="Sammanfattning">
@@ -120,8 +121,9 @@ function statusTokens(celler: Record<string, Cell>): string[] {
         <li><span class="status status--emot">emot</span> partiet har gjort något som drar åt motsatt håll</li>
         <li><span class="status status--bade">både och</span> partiet har gjort båda delarna, vid olika tillfällen</li>
         <li><span class="status status--avstod">avstod</span> partiet lade ner sin röst i en omröstning om saken</li>
-        <li><span class="status status--tom">tomt</span> ingen har hittat och kontrollerat något ännu — det är inget betyg</li>
+        <li><span class="status status--tom">ingen godkänd koppling</span> för partiet på just den raden — det betyder inte att partiet tycker annorlunda eller saknar politik i frågan</li>
       </ul>
+      <p>Besläktade löften kan därför stå på flera olika rader.</p>
     </section>
 
     <p class="rutnat-listnot">
