@@ -5,10 +5,20 @@
  *   pnpm utrakningen -- --kontroll nollan_utan_skal
  *   pnpm utrakningen -- --id p-2026-0428  # en post, allt som mätts
  *   pnpm utrakningen -- --json fil.json   # underlag för prövningar
+ *   pnpm utrakningen -- --ko              # mät granskningskön i stället
  *
  * Svepet ersätter ingen läsning. Det lägger fram vad som är mätt per post, så
  * att en prövning i filtret kan skrivas ur postens egna data i stället för ur
  * ett intryck av citatet — vilket är felet det finns för att hindra.
+ *
+ * **`--ko` mäter kön, och det är hela skälet till att flaggan finns.**
+ * Godkännandet vägrar sedan 2026-08-07 släppa igenom en post utan aktuell
+ * prövning, men mätningarna som en prövning skrivs ur lästes bara ur
+ * `promises.json` — alltså först efter godkännandet. Ordningen gick inte ihop:
+ * filtret ligger före beslutet, mätningen låg efter. Kontrollerna är rena
+ * funktioner över löftesformen, så kö-posten läses i den form den kommer att
+ * publiceras (samma fält som `review.ts` sätter) och mäts med exakt samma
+ * kontroller. Id:t blir kö-nyckeln `ko:<review-id>`, den prövningen skrivs mot.
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
@@ -25,10 +35,11 @@ import {
   findUngroupedTwins,
   findCompletedPolicyQuotes,
 } from "../src/quality-scan.ts";
+import { reviewNyckel } from "../src/provningar.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const loften: UtrakningsLofte[] = JSON.parse(readFileSync(resolve(rot, "data/promises.json"), "utf8"));
-const aktiva = loften.filter((p) => p.status === "aktiv");
+const publicerade = loften.filter((p) => p.status === "aktiv");
 
 const argv = process.argv.slice(2);
 const arg = (namn: string): string | undefined => {
@@ -38,6 +49,52 @@ const arg = (namn: string): string | undefined => {
 const baraKontroll = arg("--kontroll");
 const baraId = arg("--id");
 const jsonUt = arg("--json");
+const koLage = argv.includes("--ko");
+
+/**
+ * Kö-posten läst i den form den kommer att publiceras.
+ *
+ * Speglar `kopost_som_lofte()` i `logg.py` och de fält `review.ts` faktiskt
+ * sätter vid ett godkännande. Läses kö-posten i någon annan form mäter svepet
+ * något annat än det som publiceras, och prövningen skriven ur mätningen blir
+ * gammal i samma stund beslutet verkställs.
+ */
+function koSomLofte(item: {
+  candidate?: Record<string, unknown> | null;
+  articleUrl?: string | null;
+  articleTitle?: string | null;
+  cost?: UtrakningsLofte["cost"] | null;
+}): UtrakningsLofte {
+  const cand = (item.candidate ?? {}) as Record<string, unknown>;
+  const title = (cand["title"] as string) ?? item.articleTitle ?? "Okänt löfte";
+  return {
+    id: reviewNyckel(item.articleUrl, title),
+    title,
+    quote: (cand["quote"] as string) ?? "",
+    parties: (cand["parties"] as string[]) ?? [],
+    category: (cand["category"] as string) ?? "övrigt",
+    status: "aktiv",
+    group_id: null,
+    cost: (item.cost ?? {}) as UtrakningsLofte["cost"],
+  };
+}
+
+const koposter: UtrakningsLofte[] = koLage
+  ? (
+      JSON.parse(readFileSync(resolve(rot, "data/needs_review.json"), "utf8")) as Parameters<
+        typeof koSomLofte
+      >[0][]
+    )
+      // En post utan kostnad kan inte publiceras och kan inte mätas mot sin egen
+      // uträkning. Den ska synas som en lucka, inte tyst falla bort.
+      .map(koSomLofte)
+  : [];
+
+// Kontrollerna som jämför poster mot varandra — dubbletter, tvillinggrupper —
+// ska se HELA beståndet, annars kan en kö-post aldrig matcha ett publicerat
+// löfte. Raderna filtreras efteråt till det som faktiskt mäts.
+const bestand = koLage ? [...loften, ...koposter] : loften;
+const aktiva = koLage ? koposter : publicerade;
 
 interface Rad {
   id: string;
@@ -65,13 +122,13 @@ interface Rad {
   };
 }
 
-const avvikelser = new Map(findAmountMismatches(loften).map((f) => [f.id, f]));
+const avvikelser = new Map(findAmountMismatches(bestand).map((f) => [f.id, f]));
 const tvillingar = new Map(
-  findUngroupedTwins(loften)
+  findUngroupedTwins(bestand)
     .filter((f) => f.score >= 0.25)
     .map((f) => [f.id, f]),
 );
-const genomford = new Set(findCompletedPolicyQuotes(loften).map((f) => f.id));
+const genomford = new Set(findCompletedPolicyQuotes(bestand).map((f) => f.id));
 
 const rader: Rad[] = aktiva
   .filter((p) => baraId === undefined || p.id === baraId)
@@ -139,7 +196,9 @@ if (baraId !== undefined) {
     }
   }
 
-  console.log(`\n${rader.length} aktiva löften prövade mot sin egen uträkning.\n`);
+  console.log(
+    `\n${rader.length} ${koLage ? "kö-poster" : "aktiva löften"} prövade mot sin egen uträkning.\n`,
+  );
   const utan = rader.filter((r) => r.invandningar.length === 0).length;
   console.log(`${utan} gav ingen invändning i någon kontroll.`);
   console.log(`${rader.length - utan} gav minst en.\n`);

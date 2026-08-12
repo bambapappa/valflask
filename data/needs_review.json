@@ -17,14 +17,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet tolkas som en årlig satsning på bredbandsstöd, i linje med nuvarande anslag till Post- och telestyrelsen för bredbandsutbyggnad (~500 mkr/år). Avviker från det jämförbara engångslöftet…",
       "confidence": 0.3,
-      "calculation": "Bas: befintligt statligt bredbandsstöd (PTS) ca 500 mkr/år. Löftet ger ingen ny nivå, varför basen är dagens. Spann: 200–1000 mkr/år utifrån variation i anslag och eventuell förstärkning. Årlig utgift."
+      "calculation": "Löftet pekar inte ut någon ny åtgärd och anger ingen nivå. Det statliga bredbandsstödet via Post- och telestyrelsen finns redan och är budgeterat; att staten fortsätter betala en utgift som redan betalas är ingen ny kostnad. Netto, inte brutto. Utan utpekad ny åtgärd och utan angiven nivå prissätts löftet till 0. Beloppet avser åtgärden, inte bredbandsutbyggnadens samhällsvärde."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0471 (10000) ⚠ AVVIKER: 500 avviker 20.0× från jämförbara (median 10000)"
   },
@@ -104,14 +104,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Utredning och framtagning av gemensam standard via myndighetsuppdrag. Ingen kostnad för regionernas implementering antas belasta staten.",
       "confidence": 0.5,
-      "calculation": "Ett regeringsuppdrag att utreda och fastställa en nationell standard kostar typiskt 5–30 mkr i statlig utrednings- och myndighetsinsats (jfr SOU eller E-hälsomyndighetens arbete)."
+      "calculation": "Löftet är att en gemensam standard ska tas fram. Att ta fram en standard är ett utrednings- och planeringsuppdrag, vars direkta kostnad för staten är försumbar. Den vård- och it-politik standarden kan leda till prissätts inte här. Ett litet löfte är ändå ett löfte, och det prissätts till 0."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0136 (0), p-2026-0646 (0) ⚠ AVVIKER: belopp 15 men jämförbara ligger på 0"
   },
@@ -197,7 +197,7 @@
         "kd"
       ],
       "person": null,
-      "quote": "ensamkommande barn bör förordnas en god man inom 24 timmar från barnets ankomst.",
+      "quote": "Kristdemokraterna anser att ensamkommande barn bör förordnas en god man inom 24 timmar från barnets ankomst.",
       "category": "migration",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -226,7 +226,7 @@
         "kd"
       ],
       "person": null,
-      "quote": "ensamkommande barn och ungdomar i första hand ska placeras i familjehem.",
+      "quote": "Vidare anser vi att ensamkommande barn och ungdomar i första hand ska placeras i familjehem.",
       "category": "migration",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -806,7 +806,7 @@
         "kd"
       ],
       "person": null,
-      "quote": "Ska detta åtgärdas behöver en folkföring genomföras.",
+      "quote": "Den bristande folkbokföring medför också att vi inte har kontroll över trångboddheten i landet. Ska detta åtgärdas behöver en folkföring genomföras.",
       "category": "migration",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -1034,7 +1034,19 @@
     "failures": [],
     "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foretagande",
     "articleTitle": "Företagande | Kristdemokraterna",
-    "duplicateOf": "p-2026-0630"
+    "duplicateOf": "p-2026-0630",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Belopp satt vid granskningen.",
+      "confidence": 0.6,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "calculation": "Löftet räknar upp flera åtgärder på skilda områden — skatter, regelkrångel och trösklar för att starta företag — utan att ange nivå för någon av dem. En bred uppräkning utan konkret åtagande prissätts inte: delarna ligger redan på partiets specifika skatte- och regelförenklingslöften och får inte dubbelräknas."
+    }
   },
   {
     "candidate": {
@@ -1130,7 +1142,7 @@
         "kd"
       ],
       "person": null,
-      "quote": "Den ska inte återinföras i någon form.",
+      "quote": "Kristdemokraterna var med och avvecklade förmögenhetsskatten. Det var en godtycklig och omoralisk skatt som drev stora mängder kapital ut ur landet. Den ska inte återinföras i någon form.",
       "category": "skatter",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -1188,7 +1200,7 @@
         "kd"
       ],
       "person": null,
-      "quote": "Kristdemokraterna och regeringen har aviserat kraftigt utökade försvarssatsningar som sammanlagt kommer uppgå till 5% av BNP – 3,5% till militära utgifter och 1,5% till försvarsrelaterade utgifter.",
+      "quote": "Kristdemokraterna och regeringen har aviserat kraftigt utökade försvarssatsningar som sammanlagt kommer uppgå till 5% av BNP – 3,5% till militära utgifter och 1,5% till försvarsrelaterade utgifter. Detta är nödvändigt för att vi ska kunna ha förmåga att försvara hela Sverige och samtidigt uppfylla våra alliansförpliktelser som Natomedlemmar.",
       "category": "försvar",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -1199,14 +1211,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100000,
-      "msek_base": 170000,
-      "msek_high": 250000,
+      "msek_low": 25000,
+      "msek_base": 50000,
+      "msek_high": 120000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Ökning till 5 % av BNP (3,5 militärt + 1,5 försvarsrelaterat) från dagens ca 2,2 % av BNP, antagen BNP cirka 6 200 mdkr. Tidigare estimat på 50 mdkr för liknande löfte bedöms vara en underskattning.",
       "confidence": 0.6,
-      "calculation": "Antag dagens BNP ~6 200 mdkr. Dagens försvarsanslag inkl. civila är ca 139 mdkr (2,2 % av BNP). För att nå 5 % krävs ytterligare 2,8 %-enheter av BNP: 0,028 * 6 200 mdkr ≈ 174 mdkr = 174 000 msek. Med osäkerhet om framtida BNP och startnivå sätts intervallet 100 000–250 000 msek/år."
+      "calculation": "Försvarsanslagen är 175 miljarder kronor 2026, vilket motsvarar 2,8 procent av BNP enligt Natos sätt att räkna, och beslutade planer tar dem till 3,1 procent från 2028. Fem procent av en BNP kring 6 250 miljarder är 312 miljarder kronor per år, alltså omkring 118 miljarder över den beslutade banan när målet väl är nått. Men det nås inte första året: nås det 2030, sista året i mandatperioden, blir det som faktiskt betalas ut under 2027–2030 i genomsnitt omkring 50 miljarder kronor per år. Det låga alternativet gäller om den del av målet som avser civilt försvar och infrastruktur, 1,5 av de fem procenten, till stor del fylls av utgifter som redan finns. Det höga gäller om hela nivån nås tidigt i perioden."
     },
     "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0340 (50000), p-2026-0384 (50000) ⚠ AVVIKER: 170000 avviker 3.4× från jämförbara (median 50000)"
   },
@@ -1304,7 +1316,7 @@
         "kd"
       ],
       "person": null,
-      "quote": "Detta innebär bland annat att EU:s gemensamma gränsövervakning succesivt ska stärkas och antalet gränspoliser växa till 30 000 på sikt.",
+      "quote": "För att Frontex ska kunna lösa sina uppgifter i framtiden krävs ett tydligare mandat och en utvecklad förmåga. Detta innebär bland annat att EU:s gemensamma gränsövervakning succesivt ska stärkas och antalet gränspoliser växa till 30 000 på sikt.",
       "category": "migration",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -1508,14 +1520,26 @@
       ],
       "person": null,
       "quote": "Vi vill stärka gruvindustrin genom åtgärder som förenklade tillståndsprocesser och ökade anslag till forskning.",
-      "category": "utbildning",
+      "category": "övrigt",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
     "failures": [],
     "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gruvor",
     "articleTitle": "Gruvor | Kristdemokraterna",
-    "verifyReason": "Citatet och partiet (kd) stämmer exakt överens med källtexten och utgör ett tydligt vallöfte. Dock är kategorin 'utbildning' uppenbart felaktig för ett löfte som primärt handlar om gruvindustri och näringsliv. Enligt instruktionerna om stränghet vid tveksamhet bör vallöftet gå till granskning för att kategorin ska korrigeras."
+    "verifyReason": "Citatet och partiet (kd) stämmer exakt överens med källtexten och utgör ett tydligt vallöfte. Dock är kategorin 'utbildning' uppenbart felaktig för ett löfte som primärt handlar om gruvindustri och näringsliv. Enligt instruktionerna om stränghet vid tveksamhet bör vallöftet gå till granskning för att kategorin ska korrigeras.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Belopp satt vid granskningen.",
+      "confidence": 0.6,
+      "msek_low": 15,
+      "msek_base": 40,
+      "msek_high": 100,
+      "calculation": "Citatet bär två delar. Förenklade tillståndsprocesser är en regeländring, vars direkta kostnad för staten är försumbar: 0. Ökade anslag till forskning pekar ut en åtgärd utan att ange nivå och ankras därför i vad åtgärden kostar i dag. Statens gruv- och metallforskning har gått genom innovationsprogrammet Swedish Mining Innovation, som löpte 2013–2025 och nu är avslutat. Efterföljaren Swedish Metals & Minerals utlyser cirka 30 miljoner kronor, och Vinnova fördelade 195 miljoner 2022, beskrivet som mer än fyra gånger föregående år, vilket ger ett normalår kring 45 miljoner. Basen är 30–45 miljoner per år; en ökning på den basen sätts till 40 miljoner per år. Spannet 15–100 rymmer allt från en marginell förstärkning till ett toppår."
+    }
   },
   {
     "candidate": {
@@ -2057,14 +2081,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 40000,
+      "msek_low": 15000,
+      "msek_base": 22000,
+      "msek_high": 30000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Brett löfte utan angiven nivå. Skattesänkning för alla förvärvsarbetare; kostnaden varierar enormt med utförmandet.",
       "confidence": 0.2,
-      "calculation": "~5 miljoner förvärvsarbetare i Sverige. En blygsam sänkning på ~1 000 kr/person/år ≈ 5 000 msek. En medelhög på ~3 000 kr/person ≈ 15 000 msek. En större reform på ~8 000 kr/person ≈ 40 000 msek. Riktade sänkningar till personer långt från arbetsmarknaden tillkommer men berör betydligt färre. Ingen specifik nivå anges i löftet, därför mycket låg tillförlitlighet och brett intervall."
+      "calculation": "Löftet pekar ut två åtgärder utan att ange nivå. Den breda delen ankras i den senast genomförda motsvarande åtgärden: budgetpropositionen för 2026 års förstärkta jobbskatteavdrag, omkring 17 000 miljoner kronor. Regeringens eget pressmeddelande anger 21 400 miljoner för jobbskatteavdraget och det förhöjda grundavdraget tillsammans, men grundavdraget avser pensionärer och ligger utanför löftets «alla som arbetar» — därför den snävare avgränsningen. Den riktade delen till grupper långt från arbetsmarknaden uppskattas till 5 000 miljoner. Summa 22 000 miljoner kronor per år; spannet 15 000–30 000 rymmer osäkerheten i båda delarna."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
   },
@@ -2463,7 +2487,7 @@
         "kd"
       ],
       "person": null,
-      "quote": "vi vill omedelbart fasa ut kol ur EU:s elproduktion och införa tullar som riktas mot länders kolkraftsanvändning utanför EU",
+      "quote": "För att nå målet om klimatneutralitet vill vi omedelbart fasa ut kol ur EU:s elproduktion och införa tullar som riktas mot länders kolkraftsanvändning utanför EU.",
       "category": "klimat-miljö",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -2475,7 +2499,19 @@
       }
     ],
     "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/klimat",
-    "articleTitle": "Klimat | Kristdemokraterna"
+    "articleTitle": "Klimat | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Belopp satt vid granskningen.",
+      "confidence": 0.6,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "calculation": "Åtgärderna ligger på EU-nivå: att fasa ut kol ur EU:s elproduktion och att införa tullar mot kolkraftsanvändning utanför unionen. Båda hålls av regler och handelspolitik, inte av svenska statliga utgifter. Beloppet avser åtgärden, inte dess följder för elpriser eller utsläpp."
+    }
   },
   {
     "candidate": {
