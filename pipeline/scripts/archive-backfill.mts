@@ -2,9 +2,12 @@
  * Arkiv-backfill / retry-steg (SPEC §6.2: "Vid fel: archive_url = null +
  * automatiskt nytt försök nästa run tills satt"). Seed-import och review-
  * godkännanden sätter archive_url=null och pipelinens live-arkivering är skör,
- * så publicerade löften saknar arkivbevis. Detta steg fyller nullen i tre faser:
+ * så publicerade löften saknar arkivbevis. Detta steg fyller nullen i fyra faser:
  *   A) Wayback availability-API — befintlig snapshot (nära fetched_at, annars valfri)
- *   B) SAVE-läge: begär Wayback-save för URL:er utan snapshot (bunden budget)
+ *   A2) SAVE-läge: pröva de lösta kopiorna mot sina citat — en kopia som är
+ *       äldre än sidinnehållet bär dem inte, och ska sparas om
+ *   B) SAVE-läge: begär Wayback-save för URL:er utan snapshot OCH för de
+ *      föråldrade (bunden budget)
  *   C) vänta på indexering, kolla availability igen för de sparade
  * Robust mot rate-limits (retry+backoff, generös throttle). Idempotent: bara
  * archive_url===null behandlas; dedup på käll-URL utan #fragment. Uppdaterar
@@ -47,12 +50,15 @@ const promises = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) a
 const stripFrag = (u: string) => u.split("#")[0]!;
 const tsDigits = (iso?: string) => (iso ? iso.replace(/[^0-9]/g, "").slice(0, 14) : "");
 
-const groups = new Map<string, { ids: string[]; ts: string }>();
+// Citaten bärs med, inte bara id:na: föråldringskontrollen nedan behöver veta
+// vilka citat en ögonblicksbild ska kunna backa för att avgöra om den duger.
+const groups = new Map<string, { ids: string[]; citat: string[]; ts: string }>();
 for (const p of promises) {
   if (p.source.archive_url) continue;
   const key = stripFrag(p.source.url);
-  const g = groups.get(key) ?? { ids: [], ts: tsDigits(p.source.fetched_at) };
+  const g = groups.get(key) ?? { ids: [], citat: [], ts: tsDigits(p.source.fetched_at) };
   g.ids.push(p.id);
+  g.citat.push(p.quote);
   groups.set(key, g);
 }
 const urls = [...groups.keys()].slice(0, LIMIT);
@@ -109,13 +115,61 @@ for (const key of urls) {
   await sleep(GRUNDPAUS_MS);
 }
 
+/**
+ * Ögonblicksbildens text, hämtad en gång per snapshot-URL.
+ *
+ * Prövningen sker per citat, men hämtningen per sida — flera löften delar ofta
+ * artikel. Kartan delas av föråldringskontrollen nedan och av appliceringen.
+ */
+const sidtext = new Map<string, string | null>();
+async function text(snap: string): Promise<string | null> {
+  if (!sidtext.has(snap)) sidtext.set(snap, await snapshotText(snap));
+  return sidtext.get(snap) ?? null;
+}
+
+// --- Fas A2: vilka lösta kopior är för gamla för sitt citat? ---
+//
+// Wayback ger NÄRMASTE ögonblicksbild, som mycket väl kan vara äldre än
+// sidinnehållet. Fas B letade förut bara adresser som HELT saknade kopia, så
+// en adress med en för gammal kopia fastnade: appliceringen vägrade den, och
+// nästa körning gjorde om exakt samma sak. Mätt 2026-08-12 på de 86 nya
+// KD-löftena — 29 vägrades, ingen av dem stod i kön för en ny kopia, och de
+// hade stått kvar körning efter körning tills någon begärde kopiorna för hand.
+//
+// Nu prövas varje löst kopia mot citaten den ska bära. Bär den inte alla
+// hamnar adressen i sparkön — men **den gamla kopian kastas aldrig**: den kan
+// bära citat som den färska missar, och en fungerande arkivlänk får aldrig
+// falla bort för att vi bad om en nyare.
+const foraldrade: string[] = [];
+if (MODE === "save") {
+  for (const key of [...resolved.keys()]) {
+    const snap = resolved.get(key)!;
+    const t = await text(snap);
+    if (t === null) continue; // nätfel säger inget om kopian — anklaga den inte
+    const citat = groups.get(key)!.citat;
+    const missar = citat.filter((q) => !quoteInSnapshotText(t, q)).length;
+    if (missar > 0) {
+      foraldrade.push(key);
+      console.log(`  ⧗ kopian bär ${citat.length - missar}/${citat.length} citat — begär en färsk: ${key}`);
+    }
+  }
+  if (foraldrade.length > 0) {
+    console.log(`Fas A2: ${foraldrade.length} lösta kopior är för gamla för minst ett citat.`);
+  }
+}
+
 // --- Fas B: begär saves (bunden) ---
 const saved: string[] = [];
+/** Adresser vars färska kopia bara får användas där den gamla inte räcker. */
+const farska = new Map<string, string>();
 if (MODE === "save") {
   let saves = 0;
-  console.log(`Fas B: begär saves (budget ${MAX_SAVES}) för ${needSave.length} saknade...`);
+  console.log(
+    `Fas B: begär saves (budget ${MAX_SAVES}) för ${needSave.length} saknade` +
+      `${foraldrade.length > 0 ? ` och ${foraldrade.length} föråldrade` : ""}...`,
+  );
   let iRad = 0;
-  for (const key of needSave) {
+  for (const key of [...needSave, ...foraldrade]) {
     if (saves >= MAX_SAVES) break;
     if (/youtube\.com|youtu\.be/.test(key)) { console.log(`  (hoppar youtube) ${key}`); continue; }
     console.log(`  save (${saves + 1}/${MAX_SAVES}): ${key}`);
@@ -138,10 +192,15 @@ if (MODE === "save") {
 if (saved.length > 0) {
   console.log(`Fas C: väntar 90s på indexering, sedan omkoll av ${saved.length} sparade...`);
   await sleep(90000);
+  const varForaldrad = new Set(foraldrade);
   for (const key of saved) {
     const snap = await availability(key, "");
-    if (snap) { resolved.set(key, snap); console.log(`  ✓ (efter save) ${key}`); }
-    else console.log(`  – ännu ej indexerad: ${key}`);
+    if (!snap) { console.log(`  – ännu ej indexerad: ${key}`); await sleep(GRUNDPAUS_MS); continue; }
+    // En adress som redan hade en kopia behåller den. Den färska läggs vid
+    // sidan om och används bara för de citat den gamla inte bär — annars
+    // kunde en nyare ögonblicksbild ta bort en fungerande arkivlänk.
+    if (varForaldrad.has(key)) { farska.set(key, snap); console.log(`  ✓ (färsk, som komplement) ${key}`); }
+    else { resolved.set(key, snap); console.log(`  ✓ (efter save) ${key}`); }
     await sleep(GRUNDPAUS_MS);
   }
 }
@@ -158,24 +217,30 @@ if (saved.length > 0) {
 // och inte det fjärde. Ögonblicksbilden hämtas fortfarande en gång per sida —
 // det är prövningen som ska ske en gång per citat, för det är citatet som är
 // löftets belägg.
-const sidtext = new Map<string, string | null>();
 const changed: string[] = [];
 const vagrade: string[] = [];
+let ejAvgjort = 0;
 for (const p of promises) {
   if (p.source.archive_url) continue;
   const key = stripFrag(p.source.url);
-  const snap = resolved.get(key);
-  if (!snap) continue;
-  if (!sidtext.has(snap)) sidtext.set(snap, await snapshotText(snap));
-  const text = sidtext.get(snap) ?? null;
-  if (text === null) { console.log(`  ✗ gick ej att avgöra (nätet): ${p.id}`); continue; }
-  if (!quoteInSnapshotText(text, p.quote)) {
-    vagrade.push(p.id);
-    console.log(`  ✗ kopian bär inte citatet: ${p.id}  ${key}`);
+  // Den gamla kopian först, den färska bara som komplement — se fas C.
+  const kandidater = [resolved.get(key), farska.get(key)].filter((s): s is string => Boolean(s));
+  if (kandidater.length === 0) continue;
+  let traff: string | undefined;
+  let avgjord = false;
+  for (const snap of kandidater) {
+    const t = await text(snap);
+    if (t === null) continue; // nätfel: säger inget om kopian
+    avgjord = true;
+    if (quoteInSnapshotText(t, p.quote)) { traff = snap; break; }
+  }
+  if (traff === undefined) {
+    if (!avgjord) { ejAvgjort++; console.log(`  ✗ gick ej att avgöra (nätet): ${p.id}`); }
+    else { vagrade.push(p.id); console.log(`  ✗ kopian bär inte citatet: ${p.id}  ${key}`); }
     continue;
   }
   const frag = p.source.url.includes("#") ? "#" + p.source.url.split("#")[1] : "";
-  p.source.archive_url = snap + frag;
+  p.source.archive_url = traff + frag;
   changed.push(p.id);
 }
 
@@ -197,6 +262,17 @@ if (changed.length > 0) {
 console.log(`Kvar utan arkiv: ${promises.filter((p) => !p.source.archive_url).length} löften.`);
 if (vagrade.length > 0) {
   console.log(`Vägrade kopia (bär inte citatet): ${vagrade.join(", ")}`);
+}
+if (ejAvgjort > 0) {
+  // Skiljs från «bär inte citatet» med flit. Att kopian inte gick att hämta
+  // säger ingenting om kopian — och när något står mellan oss och arkivet
+  // gäller det ALLA poster, vilket får en körning att se ut som ett
+  // arkivproblem fast inget nådde fram. Mätt 2026-08-12: 110 av 110 föll så,
+  // och orsaken var att Nodes fetch inte gick genom miljöns proxy.
+  console.log(
+    `${ejAvgjort} löften gick inte att avgöra — kopian kunde inte hämtas. Det är inte ` +
+      "ett besked om kopian. Faller alla på det står något mellan dig och arkivet.",
+  );
 }
 if (strypta > 0) {
   // Skrivs ut för att en strypt körning annars ser fullständig ut: «kvar utan
