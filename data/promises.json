@@ -13224,7 +13224,7 @@
   },
   {
     "id": "p-2026-0356",
-    "group_id": null,
+    "group_id": "g-p-2026-0356",
     "title": "Införa elevhälsogaranti inom 24 timmar",
     "slug": "infora-elevhalsogaranti-inom-24-timmar",
     "parties": [
@@ -13262,7 +13262,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-12",
+        "change": "Löftet delar nu grupp med Kristdemokraternas elevhälsogaranti (p-2026-0827), som lovar samma sak. Samma politik hos olika partier räknas en gång, så gruppen läggs ihop till ett belopp i rikssumman. Beloppet, citatet och källan är oförändrade.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -15162,7 +15168,7 @@
   },
   {
     "id": "p-2026-0392",
-    "group_id": null,
+    "group_id": "g-p-2026-0392",
     "title": "Införa maxtak för barngrupper i förskolan",
     "slug": "infora-maxtak-for-barngrupper-i-forskolan",
     "parties": [
@@ -15205,6 +15211,11 @@
         "date": "2026-07-24",
         "change": "Kostnadsestimat ändrat från 5 000 miljoner kronor per år (spann 2 000-12 000) till 3 000 (spann 1 500-6 000) vid den manuella genomgången. Det gamla beloppet antog +20 000 anställda vilket var i ambitiösaste laget; en efterhandsberäkning på 800 avvisades som för låg (den lånade skol-löftets siffra och missade förskolans personalintensitet).",
         "commit": "08773e409ec5a947d1e1259155e9ecfc197aa87f"
+      },
+      {
+        "date": "2026-08-12",
+        "change": "Löftet delar nu grupp med Kristdemokraternas maxtak för barngrupper (p-2026-0828), som lovar samma sak till samma belopp. Samma politik hos olika partier räknas en gång. Beloppet, citatet och källan är oförändrade.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -33628,6 +33639,3882 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-08-11T11"
+    }
+  },
+  {
+    "id": "p-2026-0745",
+    "group_id": null,
+    "title": "Säkerställa bredband i hela landet",
+    "slug": "sakerstalla-bredband-i-hela-landet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill säkerställa att bredband finns i hela landet så att människor kan kommunicera, driva företag samt arbeta och studera på distans.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/digitalisering",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:29.153Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet tolkas som en årlig satsning på bredbandsstöd, i linje med nuvarande anslag till Post- och telestyrelsen för bredbandsutbyggnad (~500 mkr/år). Avviker från det jämförbara engångslöftet…",
+      "confidence": 0.3,
+      "calculation": "Löftet pekar inte ut någon ny åtgärd och anger ingen nivå. Det statliga bredbandsstödet via Post- och telestyrelsen finns redan och är budgeterat; att staten fortsätter betala en utgift som redan betalas är ingen ny kostnad. Netto, inte brutto. Utan utpekad ny åtgärd och utan angiven nivå prissätts löftet till 0. Beloppet avser åtgärden, inte bredbandsutbyggnadens samhällsvärde."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0746",
+    "group_id": null,
+    "title": "Stärk EU:s djurskyddslagstiftning och investeringar i djurskydd",
+    "slug": "stark-eu-s-djurskyddslagstiftning-och-investeringar-i-djurskydd",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill att EU ska stärka djurskyddslagstiftningen och främja investeringar för förbättrat djurskydd samt att EU ska motarbeta plågsamma men även långa djurtransporter.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/djurskydd",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:36.167Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagstiftningsdelen bedöms ge försumbar direkt statlig kostnad. Investeringsstödet beräknas utifrån tidigare nationellt stöd för djurskydd inom landsbygdsprogrammet (ca 100 mkr/år).",
+      "confidence": 0.4,
+      "calculation": "~500–1000 djurhållare × 100 000–300 000 kr i stöd per år → 50–300 mkr/år; baserat på tidigare stöd för djurvälfärd inom landsbygdsprogrammet (statlig medfinansiering ca 100 mkr/år)."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0747",
+    "group_id": null,
+    "title": "Utveckla metoder för slakt på gård och mobila slakterier",
+    "slug": "utveckla-metoder-for-slakt-pa-gard-och-mobila-slakterier",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Sverige bör utnyttja möjligheten att utveckla metoder för slakt på gård eller genom mobila och gårdsnära slakterier.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/djurskydd",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:37.368Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtagande; ingen kostnad kan prissättas.",
+      "confidence": 0.1,
+      "calculation": "Vagt formulerad önskan om att utveckla metoder, utan angivna medel eller specifika insatser. Bedöms enligt regel 13 som inriktningslöfte med kostnad 0."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0748",
+    "group_id": null,
+    "title": "Gemensam standard för journalsystem i hela landet",
+    "slug": "gemensam-standard-for-journalsystem-i-hela-landet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill se en gemensam standard för journalsystem i hela landet för att underlätta för patienten när vården sker i olika regioner.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/e-halsa",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:38.294Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Utredning och framtagning av gemensam standard via myndighetsuppdrag. Ingen kostnad för regionernas implementering antas belasta staten.",
+      "confidence": 0.5,
+      "calculation": "Löftet är att en gemensam standard ska tas fram. Att ta fram en standard är ett utrednings- och planeringsuppdrag, vars direkta kostnad för staten är försumbar. Den vård- och it-politik standarden kan leda till prissätts inte här. Ett litet löfte är ändå ett löfte, och det prissätts till 0."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0749",
+    "group_id": null,
+    "title": "Ge regionerna samlat uppdrag för barn- och ungdomshälsovården",
+    "slug": "ge-regionerna-samlat-uppdrag-for-barn-och-ungdomshalsovarden",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill ge regionerna ett samlat uppdrag för hela barn- och ungdomshälsovården.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/elevhalsa",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:39.153Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En ren reglering eller lagändring utan nya statliga anslag. Eventuell utredningskostnad (SOU-storlek) max 10 mkr.",
+      "confidence": 0.65,
+      "calculation": "Åtgärden är ett samlat uppdrag, dvs. en administrativ/regulatorisk reform. Statens direkta kostnad är för sagd utredning/styrning, typiskt 0–10 mkr engångsvis. Inga löpande statsbidrag antas."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0750",
+    "group_id": null,
+    "title": "Förutsättningslös utredning om euron",
+    "slug": "forutsattningslos-utredning-om-euron",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna ser det inte som aktuellt inom överskådlig tid men vill se en förutsättningslös utredning.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/emu-och-euron",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:40.256Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En SOU-utredning om euron: sekretariat, experter, resor, betänkande. Typisk engångskostnad 5–30 mkr.",
+      "confidence": 0.65,
+      "calculation": "Utredning med kansli (10–20 personmånader), externa experter, resor, betänkande och remiss. Engångskostnad i spannet 5–30 mkr, med bas 15 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0751",
+    "group_id": null,
+    "title": "God man inom 24 timmar för ensamkommande barn",
+    "slug": "god-man-inom-24-timmar-for-ensamkommande-barn",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna anser att ensamkommande barn bör förordnas en god man inom 24 timmar från barnets ankomst.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ensamkommande-barn",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:41.102Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Administrativ marginalkostnad för att med jour och övertid garantera förordnande inom 24 timmar. Cirka 1 000 ensamkommande barn/år, extrakostnad 0–10 000 kr per barn.",
+      "confidence": 0.3,
+      "calculation": "Antagande: ~1 000 ensamkommande barn per år (baserat på Migrationsverkets statistik 2023). Marginalkostnad per barn för skyndsam handläggning (jour, övertid, administration) uppskattas till 0–10 000 kr. 1 000 × 0 kr = 0 msek, 1 000 × 10 000 kr = 10 msek. Bas 5 msek."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0752",
+    "group_id": null,
+    "title": "Ensamkommande barn ska placeras i familjehem i första hand",
+    "slug": "ensamkommande-barn-ska-placeras-i-familjehem-i-forsta-hand",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vidare anser vi att ensamkommande barn och ungdomar i första hand ska placeras i familjehem.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ensamkommande-barn",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:41.881Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En riktlinjeförändring; den direkta kostnaden är försumbar. Eventuella besparingar är en följd och kvantifieras inte enligt regel 9.",
+      "confidence": 0.5,
+      "calculation": "Att i första hand placera i familjehem är en ändrad placeringsprincip — en regeländring inom socialtjänstens befintliga uppdrag. Familjehem är dessutom billigare än institutionsplacering, så förändringen är en omfördelning mellan placeringsformer och inte en ny statlig utgift."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0753",
+    "group_id": null,
+    "title": "Inrätta en nationell krissocialjour för extra stöd till kommuner",
+    "slug": "inratta-en-nationell-krissocialjour-for-extra-stod-till-kommuner",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi anser därför att en nationell krissocialjour bör inrättas som kan ge extra hjälp när kommunerna bedömer att de behöver extra hjälp.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ensamkommande-barn",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:42.641Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är vagt; kostnaden beror på organisationens storlek. Uppskattning utgår från en nationell jourfunktion med specialistpersonal inom socialtjänst/migration. Inga jämförbara myndigheter anges.",
+      "confidence": 0.4,
+      "calculation": "Antag 10–50 årsarbetskrafter (handläggare, samordnare, chefer) med årskostnad 1–2 mkr per person inklusive lokaler och administration. Base 30 mkr motsvarar cirka 20 medarbetare inklusive drift. Intervallet speglar osäkerhet om ambitionsnivå och behovsbedömning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0754",
+    "group_id": null,
+    "title": "Ingen tvångsanslutning till kommunalt avlopp om miljökrav uppfylls",
+    "slug": "ingen-tvangsanslutning-till-kommunalt-avlopp-om-miljokrav-uppfylls",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna anser att den som har ett enskilt avlopp som uppfyller gällande miljö- och hälsokrav ska i normalfallet inte tvingas ansluta till kommunalt avlopp.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/enskilda-avlopp",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:43.424Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring för att ändra tvångsanslutningsregler är i sig en försumbar statlig kostnad. Eventuellt en mindre utredning/proposition.",
+      "confidence": 0.65,
+      "calculation": "Det rör sig om en regelförändring utan nya åtaganden för staten. Den direkta kostnaden för att ta fram och fatta beslut om ändringen är marginell, uppskattad till 0–5 mkr för utredningsarbete."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0755",
+    "group_id": null,
+    "title": "Omvänd bevisbörda för utsläpp från enskilda avlopp",
+    "slug": "omvand-bevisborda-for-utslapp-fran-enskilda-avlopp",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Myndigheter ska ha omvänd bevisbörda, det vill säga visa att utsläpp sker i otillåten omfattning.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/enskilda-avlopp",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:44.211Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring med försumbar direkt statlig kostnad (regel 9).",
+      "confidence": 0.65,
+      "calculation": "Omvänd bevisbörda är en regeländring: den flyttar vem som ska visa vad inom tillsyn som redan bedrivs. Ingen ny myndighetsuppgift tillkommer, och kostnaden ryms i ordinarie förvaltningsanslag."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0756",
+    "group_id": null,
+    "title": "Statliga lånegarantier för uppgradering av äldre enskilda avlopp",
+    "slug": "statliga-lanegarantier-for-uppgradering-av-aldre-enskilda-avlopp",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill även införa statliga lånegarantier för fastighetsägare med begränsad ekonomi som behöver uppgradera äldre avlopp.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/enskilda-avlopp",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:44.977Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lånegarantier belastar statsbudgeten med nettokostnaden för subventionerade avgifter, förväntade kreditförluster och administration. Osäkerheten är stor då programmets utformning inte specificerats.",
+      "confidence": 0.35,
+      "calculation": "Antar ett fåtal tusen berörda fastigheter per år (ca 2 000–5 000) med genomsnittligt lånebehov ~150 tkr. Staten subventionerar en del av garantiavgiften eller står för förluster. Om den årliga subventionskostnaden är 1–5 tkr per lån blir utgiften 2–25 mnkr, plus en mindre administrationskostnad. Spannet fångar olika scenarier."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0757",
+    "group_id": null,
+    "title": "Ökat stöd och medfinansiering till enskilda vägar",
+    "slug": "okat-stod-och-medfinansiering-till-enskilda-vagar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill se regelverk som säkerställer tillräckliga resurser för investeringar och underhåll samt att staten utökar sin medfinansiering.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/enskilda-vagar",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:45.725Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 140,
+      "msek_base": 300,
+      "msek_high": 700,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar ökning av nuvarande statligt bidrag till enskilda vägar (ca 1,4 mdkr/år) med 10–50 %, utifrån typiska reformambitioner.",
+      "confidence": 0.4,
+      "calculation": "Dagens anslag till drift/underhåll och investeringar i enskilda vägar uppskattas till cirka 1 400 mkr/år. En höjning med 10 % (140 mkr) till 50 % (700 mkr) speglar osäkerheten. Basestimatet 300 mkr motsvarar en måttlig förstärkning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0758",
+    "group_id": null,
+    "title": "Stoppa utländsk finansiering till extremistiska organisationer",
+    "slug": "stoppa-utlandsk-finansiering-till-extremistiska-organisationer",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill stoppa utländsk finansiering från extremister till svenska stiftelser, föreningar och församlingar.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/extremism",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:46.497Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Direkt kostnad för lagstiftning och eventuell tillsyn. Regel 9: förbudskostnad oftast försumbar; samhällsföljder okvantifierade.",
+      "confidence": 0.65,
+      "calculation": "Utredning och initialt systemstöd ~5 mkr, mindre myndighetsenhet ~10-15 mkr. Sammanlagd engångskostnad uppskattas till 0–20 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0759",
+    "group_id": null,
+    "title": "Stoppa utbetalning av svenska skattemedel till extremistorganisationer",
+    "slug": "stoppa-utbetalning-av-svenska-skattemedel-till-extremistorganisationer",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi måste också stoppa utbetalning av svenska skattemedel till extremistiska organisationer.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/extremism",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:47.257Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Mycket osäkert – okänt hur mycket offentliga bidrag som går till extremistorganisationer; besparingen kan vara liten.",
+      "confidence": 0.3,
+      "calculation": "Uppskattning av befintliga årsbidrag som skulle kunna stoppas. Antaget att mellan 0 och 50 miljoner kronor per år kan beröras i form av statsbidrag, föreningsstöd eller bistånd."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0760",
+    "group_id": null,
+    "title": "Avskaffa fastighetstaxeringen av boende",
+    "slug": "avskaffa-fastighetstaxeringen-av-boende",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "För att undanröja hotet om framtida ny statlig fastighetsskatt vill vi även avskaffa fastighetstaxeringen av boende.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/fastighetsskatt",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:48.027Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Att avskaffa fastighetstaxeringen av boende innebär att Skatteverket inte längre gör värderingar av bostäder. Besparingen är den direkta administrationskostnad som bortfaller. Uppskattas utifrån…",
+      "confidence": 0.4,
+      "calculation": "Skatteverket genomför allmän fastighetstaxering för småhus vart tredje år och för övriga bostäder vart sjätte år. Den årliga kostnaden för all fastighetstaxering uppgick 2016 till drygt 250 mkr. Antar att ~60 % av kostnaden avser bostäder, dvs. ~150 mkr/år. Digitalisering och effektiviseringar kan ha sänkt kostnaden något, så bas 100 mkr/år. Vid ett avskaffande sparas denna summa, med intervall 50–300 mkr för att fånga osäkerhet om överlapp och indirekta effekter."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0761",
+    "group_id": null,
+    "title": "Minska byråkratin för yrkesfiskare och värna kustnära fiske",
+    "slug": "minska-byrakratin-for-yrkesfiskare-och-varna-kustnara-fiske",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill minska byråkratin och regelkrånglet för yrkesfiskarna och värna det kustnära fisket.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/fiske",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:48.818Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred formulering om minskad byråkrati och kustfiske utan konkret åtgärdsnivå; behandlas som inriktningslöfte enligt regel 13.",
+      "confidence": 0.65,
+      "calculation": "Löftet pekar inte ut någon åtgärd och anger ingen nivå — «minska byråkratin och regelkrånglet» är en inriktning. Regelförenkling är dessutom en regeländring, vars direkta kostnad för staten är försumbar. Prissätts därför inte."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0762",
+    "group_id": null,
+    "title": "Fiskekvoter i lägsta spannet enligt ICES rekommendationer",
+    "slug": "fiskekvoter-i-lagsta-spannet-enligt-ices-rekommendationer",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill att kvoternas storlek ska ligga i det lägsta spannet enligt de rekommendationer som det vetenskapliga rådet ICES anger. Enbart kvoter som med marginal bidrar till tillväxt i bestånden ska vara tillåtna att sätta.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/fiske",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:49.621Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En reglering av fiskekvoternas nivå enligt ICES lägsta intervall medför inga direkta statsfinansiella kostnader; kvotförvaltning och kontroll är redan budgeterad verksamhet.",
+      "confidence": 0.65,
+      "calculation": "Att sätta kvoterna i ICES lägsta spann är ett beslut om hur en befintlig kvot bestäms — en regeländring inom en förvaltning som redan finns. Ingen ny anslagspost krävs. Mindre fångst kan påverka fiskerinäringens intäkter, men det är en följd av åtgärden, inte en statlig utgift."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0763",
+    "group_id": null,
+    "title": "Flyget klimatneutralt till 2040",
+    "slug": "flyget-klimatneutralt-till-2040",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Flyget i Sverige bör ses som en del av kollektivtrafiken och ska vara klimatneutralt senast 2040.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/flygtrafik",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:50.387Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred målsättning utan specificerat åtgärdspaket; prissätts ej här.",
+      "confidence": 0.2,
+      "calculation": "Inriktningslöfte enligt regel 13; eventuella kostnader prissätts på partiets konkreta löften."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0764",
+    "group_id": null,
+    "title": "Satsning på biobränsle och elflyg",
+    "slug": "satsning-pa-biobransle-och-elflyg",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill satsa på biobränsle för flyget och på elflyg.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/flygtrafik",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:51.128Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred uppräkning av tekniksatsningar utan konkret åtagande eller belopp; inriktningslöfte enligt regel 13.",
+      "confidence": 0.1,
+      "calculation": "Inget konkret belopp anges. Löftet är en uppräkning av två politikområden (biobränsle, elflyg) utan specificerad satsning. Behandlas som inriktningslöfte, base 0."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0765",
+    "group_id": null,
+    "title": "Införande av klimatstyrande start- och landningsavgifter",
+    "slug": "inforande-av-klimatstyrande-start-och-landningsavgifter",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Klimatstyrande start- och landningsavgifter ska införas.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/flygtrafik",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:51.875Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en reglering av start- och landningsavgifter. Statens direkta kostnad är begränsad till myndighetsadministration (föreskrifter, tillsyn). Inga nya intäkter förväntas.",
+      "confidence": 0.4,
+      "calculation": "Klimatstyrande start- och landningsavgifter är en regeländring: avgifterna betalas av flygbolagen till flygplatshållaren, inte av staten. Att differentiera dem kräver ändrade föreskrifter, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder för biljettpriser."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0766",
+    "group_id": null,
+    "title": "Sverige ska leda omförhandling för flygbränslebeskattning",
+    "slug": "sverige-ska-leda-omforhandling-for-flygbranslebeskattning",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Sverige ska ta ledartröjan för att omförhandla de internationella avtal och konventioner som sätter stopp för beskattning av flygbränsle.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/flygtrafik",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:52.604Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Diplomatiskt initiativ; inga nya anslag anges och kostnader ryms inom befintliga ramar. Liknande breda löften värderas till 0.",
+      "confidence": 0.65,
+      "calculation": "Ingen ny utgift. Eventuella personalkostnader för förhandlingar täcks av ordinarie anslag."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0767",
+    "group_id": null,
+    "title": "Regionala flygplatser ska värnas",
+    "slug": "regionala-flygplatser-ska-varnas",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "De regionala flygplatserna ska värnas.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/flygtrafik",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:53.326Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller finansiering. Innebär status quo, ingen ny statlig kostnad.",
+      "confidence": 0.1,
+      "calculation": "Löftet anger varken åtgärd eller nivå — «värnas» är ett värdeord. Utan utpekad åtgärd och utan angiven nivå prissätts löftet inte. Det befintliga driftstödet till regionala flygplatser står kvar och är redan finansierat."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0768",
+    "group_id": null,
+    "title": "Säkra och lagliga vägar ska bli huvudsaklig asylmetod",
+    "slug": "sakra-och-lagliga-vagar-ska-bli-huvudsaklig-asylmetod",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "För att motverka irreguljär migration och människosmuggling samt skydda de allra mest utsatta, vill Kristdemokraterna att olika system för säkra och lagliga vägar blir den huvudsakliga metoden att söka asyl i Sverige.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/flyktingar",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:54.056Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Direkta statliga kostnader ej möjliga att kvantifiera utan specificering. (Regel 13)",
+      "confidence": 0.1,
+      "calculation": "Löftet saknar specificerad åtgärd eller finansiering; kostnaden är odefinierad. Klassas som ett inriktningslöfte med bas 0."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0769",
+    "group_id": null,
+    "title": "Goda ekonomiska förutsättningar för folkhögskolor",
+    "slug": "goda-ekonomiska-forutsattningar-for-folkhogskolor",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Därför fortsätter vi att bevaka folkhögskolornas intressen och verkar för att de ekonomiska förutsättningarna för folkhögskolornas verksamhet ska vara goda.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/folkhogskolor",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:54.857Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts till 0 enligt regel 13.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger varken åtgärd eller nivå — att «bevaka intressen» och «verka för» goda förutsättningar är en inriktning. Statsbidraget till folkhögskolorna är redan beslutat och står kvar. Prissätts därför inte."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0770",
+    "group_id": null,
+    "title": "Kristdemokraterna: Folkräkning behövs för att åtgärda folkbokföringsproblem",
+    "slug": "kristdemokraterna-folkrakning-behovs-for-att-atgarda-folkbokforingsproblem",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Den bristande folkbokföring medför också att vi inte har kontroll över trångboddheten i landet. Ska detta åtgärdas behöver en folkföring genomföras.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/folkrakning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:55.638Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 150,
+      "msek_base": 300,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämförbart moderatlöfte (p-2026-0079) omfattar både folkräkning och asylboenden, estimerat till 1000 msek/år. Här enbart en folkräkning, engångskostnad.",
+      "confidence": 0.4,
+      "calculation": "~10,5 milj inv. × 15–50 kr/inv. = ~160–530 mkr. Bas 300 mkr. Engångsprojekt, inkl. planering, fältarbete och IT."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0771",
+    "group_id": null,
+    "title": "Fri överlåtelse av föräldrapenningdagar till närstående",
+    "slug": "fri-overlatelse-av-foraldrapenningdagar-till-narstaende",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Föräldrar ska fritt kunna överlåta föräldrapenningdagar till varandra eller till andra närstående som exempelvis mor-, farföräldrar eller en bonuspappa.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foraldraforsakring",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:56.409Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 80,
+      "msek_base": 145,
+      "msek_high": 250,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnadsestimat lånat från Moderaternas liknande förslag 2022 (145 mkr). Osäkerhet kring utnyttjandegrad och ersättningsnivå för närstående.",
+      "confidence": 0.4,
+      "calculation": "~2 milj. barn i åldersgrupp med outnyttjade dagar. 5–10 % av dessa tas ut av närstående, oftast till lägstanivå (180 kr/dag) → 90–360 mkr. Tidigare M-förslag 145 mkr används som bas. Spann 80–250 mkr speglar lägre/högre utnyttjande."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0772",
+    "group_id": null,
+    "title": "SGI-skydd i tre år och rätt till föräldraledighet på heltid i tre år",
+    "slug": "sgi-skydd-i-tre-ar-och-ratt-till-foraldraledighet-pa-heltid-i-tre-ar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Föräldraledigas SGI-grundade inkomst ska skyddas under tre år och rätten till föräldraledighet på heltid utvidgas till tre år.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foraldraforsakring",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:57.138Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering av SGI-skydd och rätt till föräldraledighet är en lagändring utan direkta statliga utbetalningar. Endast smärre engångskostnader för administration.",
+      "confidence": 0.65,
+      "calculation": "Lagändring och anpassning av it-system hos Försäkringskassan: ~0–20 mnkr engång."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0773",
+    "group_id": null,
+    "title": "Utöka barnrättsåren i pensionssystemet till fem år",
+    "slug": "utoka-barnrattsaren-i-pensionssystemet-till-fem-ar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill utöka med ytterligare ett barnrättsår till totalt fem år.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foraldraforsakring",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:57.876Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 700,
+      "msek_base": 1100,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnadsankare: utökningen av barnåren från 3 till 4 år (2012) värderades av regeringen till ca 1,1 mdkr/år. Justering för inflation (ca 15 %) och förändrat barnantal ger ett intervall.",
+      "confidence": 0.5,
+      "calculation": "Senaste jämförbara reform: fjärde barnåret 2012 kostade ~1,1 mdkr/år (regeringens prop.). Uppräknat med KPI ~15 % => ~1,3 mdkr. Antal barn per årskull ~100 000–120 000, statlig pensionsavgift 18,5 % på subventionsgrundande inkomst i snitt ~50 000–80 000 kr ger 0,9–1,8 mdkr. Sammanvägt: låg 700, bas 1100, hög 1500 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0774",
+    "group_id": null,
+    "title": "Familjerådgivningscheck till förstagångsföräldrar",
+    "slug": "familjeradgivningscheck-till-forstagangsforaldrar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill att förstagångsföräldrar ska få en familjerådgivningscheck för två besök som de kan nyttja om de vill.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foraldrastod",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:58.597Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 50,
+      "msek_high": 120,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattar antal förstagångsföräldrar per år till ~45 000, två besök à 1 500 kr/st, utnyttjandegrad 30 % (bas).",
+      "confidence": 0.4,
+      "calculation": "~45 000 förstagångsfödande × 2 besök × 1 500 kr/besök = 135 mkr vid fullt utnyttjande. Antaget 30 % utnyttjande: 40,5 mkr, avrundat till 50 mkr base. Spann: 20–120 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0775",
+    "group_id": null,
+    "title": "Obligatoriska föräldrautbildningar i kommunerna och utökat utbud",
+    "slug": "obligatoriska-foraldrautbildningar-i-kommunerna-och-utokat-utbud",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill utöka utbudet av föräldrautbildningar och göra det obligatorisk för kommunerna att erbjuda föräldrautbildningar, när barnen är små och under tonårstiden.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foraldrastod",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:57:59.334Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagstiftning som gör föräldrautbildning obligatorisk för kommuner; löftet saknar uppgift om statlig finansiering. Direkt statlig kostnad är marginell. Hög: eventuell engångsutredning och framtagande…",
+      "confidence": 0.3,
+      "calculation": "Baseras på att åtgärden är en reglering utan specificerad statlig finansiering (kommunerna bär driftskostnaden). Statens direkta nya nettokostnad sätts till 0. Osäkerhetsintervall upp till 30 mkr täcker möjlig engångsutredning och administrationskostnad för att ta fram och införa lagkravet."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0776",
+    "group_id": null,
+    "title": "Konkurrenskraftiga skatter och minskat regelkrångel för företag",
+    "slug": "konkurrenskraftiga-skatter-och-minskat-regelkrangel-for-foretag",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill förbättra företagsklimatet bland annat genom konkurrenskraftiga katter, minskat regelkrångel och lägre trösklar för att starta och driva företag.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foretagande",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:00.073Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Belopp satt vid granskningen.",
+      "confidence": 0.6,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "calculation": "Löftet räknar upp flera åtgärder på skilda områden — skatter, regelkrångel och trösklar för att starta företag — utan att ange nivå för någon av dem. En bred uppräkning utan konkret åtagande prissätts inte: delarna ligger redan på partiets specifika skatte- och regelförenklingslöften och får inte dubbelräknas."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0777",
+    "group_id": null,
+    "title": "Enklare att växa och anställa som företagare",
+    "slug": "enklare-att-vaxa-och-anstalla-som-foretagare",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Det ska vara enklare att växa, anställa och ta ansvar som företagare i hela landet.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foretagande",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:00.793Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred inriktningssatsning utan konkreta åtgärder eller kostnadsangivelser; jämförbara löften prissätts till 0.",
+      "confidence": 0.65,
+      "calculation": "Inga konkreta statsfinansiella åtgärder specificeras, därför ingen nettokostnad."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0778",
+    "group_id": null,
+    "title": "Införa nationella mål och kompetenscentrum för förlossningsvård",
+    "slug": "infora-nationella-mal-och-kompetenscentrum-for-forlossningsvard",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi föreslår nationella mål och ett kompetenscentrum för förlossnings- och eftervården.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/forlossning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:01.520Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 80,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden för ett nationellt kompetenscentrum uppskattas med analogi till liknande mindre myndigheter/enheter, med personal, lokaler och verksamhetsprojekt.",
+      "confidence": 0.4,
+      "calculation": "~8–30 årsarbetskrafter × 1–1,3 mkr/st (inkl. OH) → 8–39 mkr; projektmedel, datainsamling, spridning ~2–40 mkr; totalt årligen 10–80 mkr. Spannet fångar en liten samordningsfunktion till en mer resursstark institution."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0779",
+    "group_id": null,
+    "title": "Öppna fler förlossningskliniker och inför fast barnmorska med team",
+    "slug": "oppna-fler-forlossningskliniker-och-infor-fast-barnmorska-med-team",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill också att det ska öppnas fler förlossningskliniker och arbetar för att varje födande kvinna ska kunna få en fast barnmorska, med ett team som följer kvinnan genom graviditet, förlossning och eftervård.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/forlossning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:02.293Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 500,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning av den årliga merkostnaden för att införa kontinuitetsmodell med fast barnmorska och team för samtliga födslar samt öppna fler förlossningskliniker. Kostnaden baseras på antagandet om…",
+      "confidence": 0.4,
+      "calculation": "Antal födslar per år ≈ 100 000. Kontinuitetsmodell med team kräver lägre barnmorskekvot, uppskattad merkostnad 3 000–8 000 kr/födsel (bemanning, lokaler). Multiplicerat ger 300–800 mkr/år. Base sätts till 500 mkr som medelskattning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0780",
+    "group_id": null,
+    "title": "Förmögenhetsskatten ska inte återinföras",
+    "slug": "formogenhetsskatten-ska-inte-aterinforas",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna var med och avvecklade förmögenhetsskatten. Det var en godtycklig och omoralisk skatt som drev stora mängder kapital ut ur landet. Den ska inte återinföras i någon form.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/formogenhetsskatt",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:03.029Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förmögenhetsskatten har varit avskaffad sedan 2007. Löftet att inte återinföra den innebär inget nytt skattebortfall – budgeten påverkas inte jämfört med gällande rätt.",
+      "confidence": 0.65,
+      "calculation": "Förmögenhetsskatten är avskaffad sedan 2007. Att inte återinföra den är att behålla det som redan gäller: dagens skatteintäkt är noll och löftet ändrar den inte. Ingen intäktsminskning uppstår."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0781",
+    "group_id": null,
+    "title": "Motverka tullar och exportsubventioner",
+    "slug": "motverka-tullar-och-exportsubventioner",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Handelshinder som tullar och exportsubventioner ska motverkas.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/frihandel",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:03.781Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser diplomatiskt och handelspolitiskt påverkansarbete, vilket normalt ryms inom befintliga myndighetsanslag. Direkta budgetkostnader är därför försumbara eller högst marginella.",
+      "confidence": 0.2,
+      "calculation": "Att motverka handelshinder är förhandlingsarbete inom EU:s handelspolitik, som redan bedrivs inom Utrikesdepartementets och Kommerskollegiums ordinarie anslag. Löftet anger ingen nivå och pekar inte ut någon ny åtgärd."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0782",
+    "group_id": null,
+    "title": "Driva på för fler globala frihandelsavtal inom EU",
+    "slug": "driva-pa-for-fler-globala-frihandelsavtal-inom-eu",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Sverige skall vara en aktiv röst inom EU och i världen för att driva på för fler och mer omfattande globala frihandelsavtal.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/frihandel",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:04.570Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en politisk inriktning utan specificerade nya resurser; ryms inom befintliga anslag för utrikes- och handelspolitik.",
+      "confidence": 0.65,
+      "calculation": "Att vara en aktiv röst för frihandelsavtal är förhandlingsarbete inom EU-samarbetet, och det ryms i befintliga förvaltningsanslag. Löftet pekar inte ut någon åtgärd med en egen kostnad."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0783",
+    "group_id": null,
+    "title": "Oseriösa aktörer ska inte kunna prioritera vinst före kvalitet",
+    "slug": "oseriosa-aktorer-ska-inte-kunna-prioritera-vinst-fore-kvalitet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Oseriösa aktörer ska inte kunna skära ner på kvaliteten för att ta ut mer vinst.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/friskolor",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:05.371Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en principdeklaration utan angiven konkret åtgärd; direkta statsfinansiella kostnader för att ta fram eller upprätthålla en sådan reglering bedöms som försumbara. Det höga värdet speglar…",
+      "confidence": 0.2,
+      "calculation": "Ingen preciserad åtgärd med kostnad. Löftet prissätts som ett inriktningslöfte (base 0). Som yttersta osäkerhet antas att uppföljning/kontroll skulle kunna kosta upp till 5 mkr årligen, men detta är ett hypotetiskt tak, inte en skattning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0784",
+    "group_id": null,
+    "title": "EU:s gemensamma gränsövervakning ska stärkas och antalet gränspoliser växa till 30 000",
+    "slug": "eu-s-gemensamma-gransovervakning-ska-starkas-och-antalet-granspoliser-vaxa-till-30-000",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "För att Frontex ska kunna lösa sina uppgifter i framtiden krävs ett tydligare mandat och en utvecklad förmåga. Detta innebär bland annat att EU:s gemensamma gränsövervakning succesivt ska stärkas och antalet gränspoliser växa till 30 000 på sikt.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/frontex",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:06.103Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 600,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Sveriges andel av EU:s kostnad för ytterligare gränspoliser. Osäker finansieringsmodell och exakta enhetskostnader.",
+      "confidence": 0.4,
+      "calculation": "~20 000 extra gränspoliser (till 30 000) × 750–1 200 tkr/år per person (lön, utrustning, administration) → 15–24 mdkr/år totalt. Sveriges EU-avgiftsandel ca 2,5 % → 375–600 mkr/år. Spannet breddas för att fånga osäkerheter."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0785",
+    "group_id": null,
+    "title": "Bättre möjlighet till jobb och studier för personer med funktionsnedsättning",
+    "slug": "battre-mojlighet-till-jobb-och-studier-for-personer-med-funktionsnedsattning",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Personer med funktionsnedsättning ska ges bättre möjlighet till jobb och studier.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/funktionsnedsattning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:06.878Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkreta åtgärder eller belopp. Kostnader prissätts på partiets specifika reformer.",
+      "confidence": 0.2,
+      "calculation": "Löftet anger varken åtgärd eller nivå — «bättre möjlighet till jobb och studier» är ett önskat utfall, inte en åtgärd. De konkreta åtagandena på området ligger på partiets egna specifika löften och får inte dubbelräknas här."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0786",
+    "group_id": null,
+    "title": "Kriminalisera deltagande i kriminella nätverk",
+    "slug": "kriminalisera-deltagande-i-kriminella-natverk",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna arbetar intensivt med skärpta insatser mot gängkriminella och vill kriminalisera deltagandet i kriminella nätverk.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gangkriminalitet",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:07.649Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en ny kriminalisering (förbud/lag), vars direkta statliga kostnad är försumbar enligt regel 9. Eventuella följdkostnader för rättsväsendet är inte prissatta här.",
+      "confidence": 0.65,
+      "calculation": "Själva lagstiftningsarbetet (proposition etc.) är marginellt. Ingen ny myndighetsstruktur utlovas, endast en brottsrubricering."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0787",
+    "group_id": null,
+    "title": "Sverige världens första fossilfria välfärdsnation",
+    "slug": "sverige-varldens-forsta-fossilfria-valfardsnation",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill att Sverige ska bli världens första fossilfria och industrialiserade välfärdsnation.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gron-omstallning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:08.465Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett visionsmål utan konkreta åtgärder eller kostnadsangivelser. Inriktningslöfte; prissätts därför som 0.",
+      "confidence": 0.65,
+      "calculation": "Ingen kostnad beräknas; löftet är ett inriktningslöfte utan specificerade reformer att kostnadsuppskatta."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0788",
+    "group_id": null,
+    "title": "Säkra trygg elproduktion och korta tillståndsledtider",
+    "slug": "sakra-trygg-elproduktion-och-korta-tillstandsledtider",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Politikens ansvar är att säkra förutsättningarna för en trygg och prisvärd elproduktion och att korta ledtider för tillståndsgivning.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gron-omstallning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:09.276Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtagande (regel 13); ingen kvantifierbar kostnad för staten.",
+      "confidence": 0,
+      "calculation": "Inget specifikt åtagande eller budgetpost anges; löftet är en bred politisk inriktning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0789",
+    "group_id": null,
+    "title": "Inga skattemedel till enskilda företags affärsidéer",
+    "slug": "inga-skattemedel-till-enskilda-foretags-affarsid-er",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Däremot ska inte skattemedel gå till att stödja enskilda företag som vill utveckla en affärsidé.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gron-omstallning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:10.066Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "besparing",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en principförklaring om att inte använda skattemedel. Själva åtgärden (en regeländring) har en försumbar direkt kostnad; eventuella besparingar från uteblivna subventioner är en indirekt…",
+      "confidence": 0.65,
+      "calculation": "Att inte ge stöd till enskilda företags affärsidéer är ett principbeslut om vad pengar inte ska gå till. Löftet anger ingen nivå och pekar inte ut vilket stöd som ska bort, så besparingen går inte att räkna. Prissätts därför inte."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0790",
+    "group_id": null,
+    "title": "Införa en författningsdomstol för att pröva lagars grundlagsenlighet",
+    "slug": "infora-en-forfattningsdomstol-for-att-prova-lagars-grundlagsenlighet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna har länge hävdat att vi behöver en författningsdomstol som ska pröva nya lagar mot de grundläggande fri- och rättigheterna.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/grundlagen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:10.842Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 80,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämförbar reform (författningsdomstol) har tidigare uppskattats till 80 msek/år. Spannet täcker mindre/större domstolsorganisation.",
+      "confidence": 0.6,
+      "calculation": "Utgår från jämförbart löfte p-2026-0403 om 80 msek/år. Antaganden: antal domare och administrativ personal ger årlig kostnad. Osäkerhet ger spann 50–150 msek/år."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0791",
+    "group_id": null,
+    "title": "Stärka gruvindustrin med förenklade tillståndsprocesser och ökad forskning",
+    "slug": "starka-gruvindustrin-med-forenklade-tillstandsprocesser-och-okad-forskning",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill stärka gruvindustrin genom åtgärder som förenklade tillståndsprocesser och ökade anslag till forskning.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gruvor",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:11.604Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Belopp satt vid granskningen.",
+      "confidence": 0.6,
+      "msek_low": 15,
+      "msek_base": 40,
+      "msek_high": 100,
+      "calculation": "Citatet bär två delar. Förenklade tillståndsprocesser är en regeländring, vars direkta kostnad för staten är försumbar: 0. Ökade anslag till forskning pekar ut en åtgärd utan att ange nivå och ankras därför i vad åtgärden kostar i dag. Statens gruv- och metallforskning har gått genom innovationsprogrammet Swedish Mining Innovation, som löpte 2013–2025 och nu är avslutat. Efterföljaren Swedish Metals & Minerals utlyser omkring 30 miljoner, och Vinnova fördelade 195 miljoner 2022, beskrivet som mer än fyra gånger föregående år, vilket ger ett normalår kring 45 miljoner. Dagens nivå ligger alltså mellan de talen, och en ökning på den nivån sätts till 40 miljoner kronor per år."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0792",
+    "group_id": null,
+    "title": "Se över mineralavgiften och öka kommunernas andel av statlig skatt",
+    "slug": "se-over-mineralavgiften-och-oka-kommunernas-andel-av-statlig-skatt",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Mineralavgiftens nivå ska ses över samt fördelningen av den skatt som tillfaller staten i syfte att föra en större andel till kommunerna.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gruvor",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:12.380Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en översyn (utredning) av mineralavgiften och en omfördelning av befintlig skatt. Statens nya nettokostnad är utredningskostnaden; omfördelningen är en transferering utan nettoutgift.",
+      "confidence": 0.65,
+      "calculation": "En statlig utredning (SOU) kostar i typfallet 5–30 mkr som engångsanslag. Omfördelning av redan uppburen skatt från stat till kommun är en intern överföring och skapar ingen ny kostnad för staten som helhet. Base satt till 15 mkr som en typisk utredningskostnad."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0793",
+    "group_id": null,
+    "title": "Införa kommunalt veto mot brytning i alunskiffer",
+    "slug": "infora-kommunalt-veto-mot-brytning-i-alunskiffer",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill även stärka kommunernas inflytande genom att införa ett kommunalt veto mot brytning i alunskiffer.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gruvor",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:13.153Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Direkt kostnad för lagstiftningsåtgärden är försumbar (~0 mkr). Svåröverskådliga följder kvantifieras inte, enligt regel 9.",
+      "confidence": 0.65,
+      "calculation": "Ingen ny offentligfinansiell kostnad uppstår för staten. Arbete med proposition och remiss ryms inom ordinarie anslag för Regeringskansliet, därmed 0 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0794",
+    "group_id": null,
+    "title": "Tydligare regler för häktning och obligatorisk häktning i fler fall",
+    "slug": "tydligare-regler-for-haktning-och-obligatorisk-haktning-i-fler-fall",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill se tydligare regler för häktning och s.k. obligatorisk häktning i fler fall.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/haktning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:13.908Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagförslag om häktningsregler – direkt kostnad för utredning och lagstiftningsarbete. Eventuella följdkostnader för Kriminalvården bedöms enligt regel 9 ej.",
+      "confidence": 0.2,
+      "calculation": "Antas kräva en SOU-utredning (~10 mkr). Om endast departementspromemoria lägre; intervall 0–30 mkr engång."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0795",
+    "group_id": null,
+    "title": "Sänk gräns för obligatorisk häktning till ett års fängelse",
+    "slug": "sank-grans-for-obligatorisk-haktning-till-ett-ars-fangelse",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Gränsen för s.k. obligatorisk häktning bör sänkas till ett straffvärde på ett års fängelse.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/haktning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:14.712Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändringen i sig medför ingen direkt statlig kostnad. Eventuella kostnader från ökat antal häktade är en indirekt följd och kvantifieras inte här.",
+      "confidence": 0.65,
+      "calculation": "Åtgärden är en regeländring; inga myndighetsutgifter krävs för att genomföra den. Jämför med liknande regelreform p-2026-0583 som bedömts till 0 msek."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0796",
+    "group_id": null,
+    "title": "Utreda skadestånd vid felaktig häktning kopplat till misstänkts medverkan",
+    "slug": "utreda-skadestand-vid-felaktig-haktning-kopplat-till-misstankts-medverkan",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill även utreda hur storleken på skadestånd vid felaktig häktning ska kunna kopplas till om den misstänkte har medverkat i förundersökningen.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/haktning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:15.452Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en utredning. Kostnad för en statlig utredning (SOU) är typiskt en engångsutgift på 5–30 mkr. Inga direkta effekter av själva utredningen prissätts.",
+      "confidence": 0.65,
+      "calculation": "En utredning av SOU-typ (ledamöter, sekretariat, utfrågningar, tryck) kostar erfarenhetsmässigt cirka 5–30 mkr som engångsbelopp. Osäkerhet p.g.a. omfattning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0797",
+    "group_id": null,
+    "title": "Korta häktningstider genom mer resurser till rättsväsendet",
+    "slug": "korta-haktningstider-genom-mer-resurser-till-rattsvasendet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Häktningstiderna ska dock hållas så korta som möjligt och det möjliggör vi genom att tillföra rättsväsendet mer resurser så handläggningen inte blir onödigt utdragen.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/haktning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:16.201Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Priset avser ökade resurser till åklagare och domstolar för att korta handläggningstider. Uppskattas utifrån kostnad för fler tjänster. Spannet är brett då löftet saknar belopp och omfattning.",
+      "confidence": 0.4,
+      "calculation": "Antag ~50–150 extra årsarbetskrafter (åklagare, domare, administratörer) à 1–1,5 mkr/st inklusive overhead → 50–225 mkr/år, avrundat till 30–200 mkr/år med bas 100 mkr. Uppskattningen är schablonmässig."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0798",
+    "group_id": null,
+    "title": "Införa specialenhet mot tvångsäktenskap hos polisen",
+    "slug": "infora-specialenhet-mot-tvangsaktenskap-hos-polisen",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill införa en specialenhet mot tvångsäktenskap hos polisen.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hedersrelaterat-vald",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:16.964Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 20,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för en specialenhet med 10–20 anställda (poliser, utredare, samordnare) inkl. löner, lokaler, utrustning och kompetensutveckling. Liknar befintliga insatser mot hedersrelaterat våld.",
+      "confidence": 0.4,
+      "calculation": "Antar 10–20 anställda × genomsnittlig personalkostnad inkl. overhead ~1,2 mkr/år = 12–24 mkr. Lägger till utrustning, resor och extern expertis. Högre spann medger större enhet eller förstärkt mandat."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0799",
+    "group_id": null,
+    "title": "Fler skyddade boenden för hedersutsatta",
+    "slug": "fler-skyddade-boenden-for-hedersutsatta",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Det behövs fler skyddade boenden och mer resurser till utbildning kring våld och hedersrelaterat våld bland personal inom stat, kommun och landsting.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hedersrelaterat-vald",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:17.714Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar belopp och är brett. Jämförbart löfte om generella skyddade boenden och flyttpeng (p-2026-0446) kostar 650 mkr/år. Här smalare (hedersrelaterat) men även utbildning. Estimatet vilar på…",
+      "confidence": 0.4,
+      "calculation": "Antagande: hedersrelaterade platser utgör 20–40 % av behovet från löfte p-2026-0446, dvs 130–260 mkr. Utbildningsinsatser för personal inom stat, kommun och landsting skattas till 50–200 mkr/år (nationell utbildningssatsning). Totalt intervall 180–460 mkr, avrundat till 50–500 mkr med bas 200 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0800",
+    "group_id": null,
+    "title": "Kristdemokraterna anser att alla kommuner ska använda Bostad först",
+    "slug": "kristdemokraterna-anser-att-alla-kommuner-ska-anvanda-bostad-forst",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "\"Bostad först\" är en metod som visat goda resultat och bör därför användas av alla kommuner.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hemloshet",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:18.471Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en inriktningsmarkering utan specificerad åtgärd eller finansiering, varför den offentligfinansiella kostnaden bedöms som noll.",
+      "confidence": 0.3,
+      "calculation": "Ingen konkret åtgärd med prislapp anges; enbart ett önskemål om att kommuner ska använda metoden. Baseras på principen om inriktningslöften enligt regel 13."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0801",
+    "group_id": null,
+    "title": "Hemtagningssteam i alla kommuner",
+    "slug": "hemtagningssteam-i-alla-kommuner",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill att hemtagningsteam ska finnas i alla kommuner med exempelvis sjuksköterskor, undersköterskor, arbetsterapeuter och fysioterapeuter.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hemsjukvard",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:19.242Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 435,
+      "msek_base": 580,
+      "msek_high": 870,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar ett team per kommun med årlig driftkostnad 1,5–3 mnkr per team (sjukvårdspersonal, handledning, material). 290 kommuner ger 435–870 mnkr.",
+      "confidence": 0.4,
+      "calculation": "290 kommuner × 1 team á 2 mnkr (ex. ssk, usk, arbetsterapeut, fysioterapeut; snittlöner, overhead) = 580 mnkr/år. Låg: 1,5 mnkr (290×1,5=435), hög: 3 mnkr (290×3=870)."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0802",
+    "group_id": null,
+    "title": "Nationellt ramverk för patientavgifter och sammanställning av hjälpmedel",
+    "slug": "nationellt-ramverk-for-patientavgifter-och-sammanstallning-av-hjalpmedel",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna anser att det behövs ett nationellt ramverk angående patientavgifterna samt att det införs en nationell sammanställning över de hjälpmedel/medicintekniska produkter som är godkända och kvalitetssäkrade i de olika regionerna för att förbättra tillgängligheten oavsett var i landet man bor.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hjalpmedel",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:20.021Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Administrativ åtgärd: framtagande av ramverk och nationell sammanställning. Kostnaden avser utredning, samordning och ett enklare IT-stöd, inte förändrade patientavgifter. Låg statlig utgift.",
+      "confidence": 0.6,
+      "calculation": "Utredning/ramverk: ~2–5 mkr. Sammanställning/databas: ~1–5 mkr. Eventuell pilot/uppföljning adderar upp till ~15 mkr. Högt scenario 30 mkr om bredare systemintegration krävs. Inga löpande personalkostnader för vård."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0803",
+    "group_id": null,
+    "title": "Inga höghastighetståg – prioritera upprustning av befintlig järnväg",
+    "slug": "inga-hoghastighetstag-prioritera-upprustning-av-befintlig-jarnvag",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna anser att banor för höghastighetståg inte ska byggas. I stället vill vi prioritera en fortsatt upprustning av befintliga järnvägar, samt utbyggnad av nya sträckor som behövs för att öka kapaciteten och funktionaliteten i det svenska järnvägsnätet.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hoghastighetstag",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:20.764Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "besparing",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en inriktning utan nya medel. Att inte bygga höghastighetsbanor sparar framtida anslag, men prioriteringen av befintlig järnväg ryms inom redan beslutade ramar. Nettokostnaden för staten…",
+      "confidence": 0.3,
+      "calculation": "Inga konkreta belopp anges. Löftet innebär att medel som kunde gått till höghastighetståg istället används för upprustning, men eftersom ingen nivå utlovas förblir nettoförändringen 0. Eventuella förändringar i anslag för planering (stopp) och upprustning tar ut varandra eller sker inom befintlig budget. Därför sätts estimatet till 0."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0804",
+    "group_id": null,
+    "title": "Stärka kvaliteten i högre utbildning genom långsiktigt hållbar resurstilldelning",
+    "slug": "starka-kvaliteten-i-hogre-utbildning-genom-langsiktigt-hallbar-resurstilldelning",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill stärka kvaliteten i högre utbildning genom en långsiktigt hållbar resurstilldelning som premierar ökad lärarledd tid, stark forskningsanknytning och hög akademisk kvalitet.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hogre-utbildning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:21.566Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte om en ny resurstilldelningsmodell för högre utbildning utan konkret belopp eller åtgärd. Prissätts till 0 i enlighet med regel 13.",
+      "confidence": 0.2,
+      "calculation": "Löftet anger ingen nivå — «långsiktigt hållbar resurstilldelning» är en princip för hur medel fördelas, inte ett belopp. Utan angiven nivå och utan utpekad åtgärd prissätts löftet inte."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0805",
+    "group_id": null,
+    "title": "Utöka RUT-avdraget till fler tjänster som hundpassning och gravvård",
+    "slug": "utoka-rut-avdraget-till-fler-tjanster-som-hundpassning-och-gravvard",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill utveckla RUT-avdraget och utöka det till fler tjänster, exempelvis hundpassning och gravvård.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hushallstjanster",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:22.355Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 125,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden uppskattas från antaganden om marknadsstorlek för hundpassning och gravvård, med 50 % avdrag. Inga officiella siffror finns.",
+      "confidence": 0.4,
+      "calculation": "Antag: ~1 miljon hundar, varav 10 % får betald passning 10 h/år á 200 kr/h → 2 000 kr/passning. Avdrag 50 % → 1 000 kr per hund → 100 mkr. Gravvård: ~100 000 gravar med privat vård, snitt 500 kr/år, avdrag 250 kr → 25 mkr. Summa ~125 mkr som bas, spann 50–200 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0806",
+    "group_id": null,
+    "title": "Friare hyressättning i nyproduktion av hyresrätter",
+    "slug": "friare-hyressattning-i-nyproduktion-av-hyresratter",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill att nyproduktion ges friare hyressättning i avtal mellan hyresgäst och fastighetsägare under förutsättning att besittningsskyddet är starkt och indexeringen av hyran är förutsägbar över tid.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hyresratt",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:23.135Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avreglering utan direkt statsfinansiell kostnad; enbart lagändring.",
+      "confidence": 0.65,
+      "calculation": "Åtgärden är en regeländring (friare hyressättning i nyproduktion). Inga statliga utgifter, intäktsminskningar eller besparingar uppstår av själva lagändringen."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0807",
+    "group_id": null,
+    "title": "Införa offentlig hyresstatistik",
+    "slug": "infora-offentlig-hyresstatistik",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Till det krävs också en offentlig hyresstatistik som ger parterna kunskap till vad som är rimlig hyresnivå.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hyresratt",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:23.967Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 45,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ny statistikproduktion hos SCB eller annan myndighet. Uppskattning baserad på kostnadsintervallet för att utveckla och driva en specialstatistik, med stor osäkerhet då löftet saknar detaljer.",
+      "confidence": 0.3,
+      "calculation": "Antagande: drift av en löpande hyresstatistik (enkät- eller registerbaserad) kostar årligen mellan 5 och 45 miljoner kronor beroende på datainsamlingsmetod och urvalsstorlek. Basvärdet 15 mkr motsvarar en medelstor specialundersökning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0808",
+    "group_id": null,
+    "title": "Införa hyrköp för att underlätta bostadsägande",
+    "slug": "infora-hyrkop-for-att-underlatta-bostadsagande",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill därför införa hyrköp, som innebär att en del av hyran går till att köpa lägenheten.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hyrkop",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:24.809Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringen i sig medför ingen direkt statsfinansiell kostnad. Eventuell engångskostnad för administration eller utredning kan vara <5 mkr.",
+      "confidence": 0.3,
+      "calculation": "Antar att staten inte går in med några subventioner, endast möjliggör avtalsformen genom lag. Engångskostnad för framtagande av regelverk bedöms som försumbar, men sätts till högst 5 mkr för att inkludera eventuella mindre administrationskostnader."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0809",
+    "group_id": null,
+    "title": "Mål om högst 50 procent i marginalskatt",
+    "slug": "mal-om-hogst-50-procent-i-marginalskatt",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vårt mål är; hälften kvar, att ingen ska behöva betala mer än 50 procent i högsta marginalskatt samt att inte fler än 15 procent av inkomsttagarna ska betala statlig inkomstskatt.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/inkomstskatter",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:25.646Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 15000,
+      "msek_base": 20000,
+      "msek_high": 30000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimatet utgår från jämförbara löften (M, SD). Kostnaden är statens minskade skatteintäkter från färre skattebetalare och marginalskatetak.",
+      "confidence": 0.65,
+      "calculation": "Sänkning till 15% skattebetalare berör ca 250 000 pers. Statlig skatt 20% på ca 100 000 kr => ~5 mdkr. Tak på 50% marginalskatt för höginkomsttagare (ca 500 000 pers) kräver sänkt övre skikt med i snitt 30 000 kr => ~15 mdkr. Totalt ca 20 mdkr (20 000 msek)."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0810",
+    "group_id": null,
+    "title": "Breda och riktade skattesänkningar",
+    "slug": "breda-och-riktade-skattesankningar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi föreslår breda skattesänkningar, där alla som arbetar får sänkt skatt, och riktade skattesänkningar till särskilda grupper som står långt ifrån arbetsmarknaden.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/inkomstskatter",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:26.502Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 15000,
+      "msek_base": 22000,
+      "msek_high": 30000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett löfte utan angiven nivå. Skattesänkning för alla förvärvsarbetare; kostnaden varierar enormt med utförmandet.",
+      "confidence": 0.2,
+      "calculation": "Löftet pekar ut två åtgärder utan att ange nivå. Den breda delen ankras i den senast genomförda motsvarande åtgärden: budgetpropositionen för 2026 års förstärkta jobbskatteavdrag, omkring 17 000 miljoner kronor. Regeringens eget pressmeddelande anger 21 400 miljoner för jobbskatteavdraget och det förhöjda grundavdraget tillsammans, men grundavdraget avser pensionärer och ligger utanför löftets «alla som arbetar» — därför den snävare avgränsningen. Den riktade delen till grupper långt från arbetsmarknaden uppskattas till 5 000 miljoner. Summa 22 000 miljoner kronor per år; spannet 15 000–30 000 rymmer osäkerheten i båda delarna."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0811",
+    "group_id": null,
+    "title": "Stärka samverkan mellan universitet och näringsliv för innovation",
+    "slug": "starka-samverkan-mellan-universitet-och-naringsliv-for-innovation",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill stärka samverkan mellan universitet, forskningsinstitut och näringsliv och utveckla gemensamma forskningsprogram som återspeglar näringslivets behov och där staten deltar som betydande finansiär.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/innovation",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:27.377Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Kostnaden beror på vilka program som skapas; saknas specifics sätts base till 0.",
+      "confidence": 0.2,
+      "calculation": "Löftet anger ingen nivå, inget antal program och ingen finansieringsgrad. 'Betydande finansiär' kan innebära allt från marginella bidrag till miljardinvesteringar. Enligt regel 13 behandlas detta som inriktningslöfte (base 0). Spannet 0–150 msek speglar osäkerheten om löftet skulle konkretiseras till t.ex. några nya samverkansprogram i måttlig skala."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0812",
+    "group_id": null,
+    "title": "Stram migrationspolitik på nordiska nivåer",
+    "slug": "stram-migrationspolitik-pa-nordiska-nivaer",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill därför ha en fortsatt stram migrationspolitik med målsättningen att den ska ligga på nordiska nivåer.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/invandring",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:28.176Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1,
+      "calculation": "Löftet anger varken åtgärd eller nivå: en «fortsatt stram» politik på nordiska nivåer är en inriktning som beskriver riktningen på regler som redan gäller. Migrationspolitikens stramhet styrs av lagstiftning, vars direkta kostnad för staten är försumbar."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0813",
+    "group_id": null,
+    "title": "Motverka irreguljär migration och hjälpa flyktingar i närområdet",
+    "slug": "motverka-irreguljar-migration-och-hjalpa-flyktingar-i-naromradet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill motverka irreguljär migration, motverka människosmuggling och ha ett större fokus på att hjälpa flyktingar i närområdet.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/invandring",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:29.011Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1,
+      "calculation": "Att motverka irreguljär migration och människosmuggling sker inom befintlig myndighetsutövning, och löftet anger ingen nivå för det ökade fokuset på närområdet. Utan angiven nivå prissätts löftet inte; biståndets storlek ligger på partiets egna specifika löften."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0814",
+    "group_id": null,
+    "title": "Decentralisera viltförvaltningen",
+    "slug": "decentralisera-viltforvaltningen",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Viltförvaltningen behöver decentraliseras ytterligare – från europeisk nivå till nationell nivå och från nationell nivå till regional nivå.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/jakt",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:29.786Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1,
+      "calculation": "Decentralisering av viltförvaltningen är en regeländring: den flyttar beslut mellan nivåer som redan finns. Ingen ny myndighet inrättas och ingen ny uppgift tillkommer, så kostnaden är en omfördelning inom befintlig förvaltning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0815",
+    "group_id": null,
+    "title": "Utöka jakt på överetablerade arter",
+    "slug": "utoka-jakt-pa-overetablerade-arter",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Jakten på överetablerade arter, inte minst vildsvin, säl och skarv, bör utökas liksom möjligheterna att låta köttet komma till nytta inom t ex offentlig verksamhet som skolor och äldreomsorg.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/jakt",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:30.605Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1,
+      "calculation": "Utökad jakt är en regeländring — jakttider och villkor bestäms i föreskrifter, och jakten utförs av jägare, inte av staten. Att låta köttet komma till nytta i offentlig verksamhet anger ingen nivå. Direkta statliga utgifter är försumbara."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0816",
+    "group_id": null,
+    "title": "Höja förhöjt jobbskatteavdrag från 69 års ålder",
+    "slug": "hoja-forhojt-jobbskatteavdrag-fran-69-ars-alder",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill dessutom att det förhöjda jobbskatteavdraget höjs från 69 års ålder.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/jobbskatteavdraget",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:31.370Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 800,
+      "msek_high": 1800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Smalare åtgärd än allmän förstärkt jobbskatteavdrag; endast gruppen 69+ som förvärvsarbetar. Beror starkt på hur stor höjningen är, vilket inte anges.",
+      "confidence": 0.45,
+      "calculation": "Gruppen 69+ i förvärvsarbete uppskattas till ~80 000–120 000 personer i Sverige. En höjning av det förhöjda jobbskatteavdraget för denna grroup kan tänkas ge ca 5 000–15 000 kr lägre skatt per person och år. Lägre: 80 000 × 5 000 = 400 msek. Mittemål: ~100 000 × 8 000 = 800 msek. Högre: 120 000 × 15 000 = 1 800 msek. Osäkerhet kring både antal förvärsarbetande 69+ och höjningens storlek då löftet inte anger någon nivå."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0817",
+    "group_id": null,
+    "title": "Fler kameror på strategiskt viktiga platser",
+    "slug": "fler-kameror-pa-strategiskt-viktiga-platser",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill se fler kameror och på fler platser som är strategiskt viktiga för kriminella.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kamerabevakning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:32.178Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1,
+      "calculation": "Löftet anger ingen nivå: «fler kameror och på fler platser» säger inte hur många. Kamerabevakningens omfattning styrs dessutom av tillståndsregler, och en regeländring har försumbar direkt kostnad. Utan angiven nivå prissätts löftet inte."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0818",
+    "group_id": null,
+    "title": "Slopa tillståndskravet för offentlig kamerabevakning",
+    "slug": "slopa-tillstandskravet-for-offentlig-kamerabevakning",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Tillståndskravet för det offentliga ska slopas så att det blir enklare att snabbt sätta upp kameror.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kamerabevakning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:32.955Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring som slopar tillståndskrav. Direkt statlig kostnad är nära noll; viss administrativ besparing för Länsstyrelsen som slippar handlägga tillstånd. Konsekvenser för kommunernas…",
+      "confidence": 0.55,
+      "calculation": "Slopande av tillståndskrav är primärt en lagändring. Direkt kostnad: remissarbete, lagtext, IT-justeringar ≈ engångs 2–5 mkr. Pågående besparing: Länsstyrelsen handlägger idag några tusen ärenden/år; minskad handläggning ≈ 5–10 mkr/år. Netto för staten nära noll eller lätt besparing. Konsekvenser (fler kameror, integritetsfrågor) lämnas okvantifierade enligt regel 9."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0819",
+    "group_id": null,
+    "title": "Polisen ska kunna använda drönare i fler fall",
+    "slug": "polisen-ska-kunna-anvanda-dronare-i-fler-fall",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Ny teknik ska tas tillvara och polisen bör ges möjlighet att använda drönare i fler fall.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kamerabevakning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:33.735Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1,
+      "calculation": "Löftet är att ge polisen möjlighet att använda drönare i fler fall — en regeländring om vad som är tillåtet, inte ett anslag. Ingen nivå anges för hur många drönare som ska köpas in, så beloppet avser regeländringen och inte en framtida upphandling."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0820",
+    "group_id": null,
+    "title": "Investera i ny kärnkraft",
+    "slug": "investera-i-ny-karnkraft",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Därför behöver vi investera i ny kärnkraft.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/karnkraft",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:34.541Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 2000,
+      "msek_high": 4000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett löfte om kärnkraftsinvestering utan specifik statlig insatsnivå. I linje med jämförbara kärnkraftslöften (~2000 msek). Statens verkliga kostnad är stöd/ garantier, inte hela byggkostnaden.",
+      "confidence": 0.35,
+      "calculation": "Ny kärnkraft kräver statligt risktagande: investeringsstöd, lånegarantier eller kreditgarantier. En reaktor kostar ~100–300 mdkr privat, men statens årliga nettokostnad utgörs av administrerat stöd och krediter. Jämförbara löften landar på ~2000 msek/år. Spannet speglar osäkerhet om mekanism (garantier ~0 i kontant kostnad vs direkta subventioner flera mdkr). Low 1000–High 4000 täcker rimliga scenarier för årligen återkommande statligt stöd."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0821",
+    "group_id": null,
+    "title": "Fasa ut kol ur EU:s elproduktion och införa kolkrafttullar",
+    "slug": "fasa-ut-kol-ur-eu-s-elproduktion-och-infora-kolkrafttullar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "För att nå målet om klimatneutralitet vill vi omedelbart fasa ut kol ur EU:s elproduktion och införa tullar som riktas mot länders kolkraftsanvändning utanför EU.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/klimat",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:35.378Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Belopp satt vid granskningen.",
+      "confidence": 0.6,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "calculation": "Åtgärderna ligger på EU-nivå: att fasa ut kol ur unionens elproduktion och att införa tullar mot kolkraftsanvändning utanför den. Båda hålls av lagen och av handelspolitiken, inte av svenska statliga utgifter — det är en marknadsåtgärd, och sådana prissätts till 0. Beloppet avser åtgärden, inte dess följder för elpriser eller utsläpp."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0822",
+    "group_id": null,
+    "title": "Öka satsningar på biobränsle, ny kärnkraft och koldioxidlagring",
+    "slug": "oka-satsningar-pa-biobransle-ny-karnkraft-och-koldioxidlagring",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill öka satsningarna på biobränsle, bygga ny kärnkraft, utveckla utsläppshandeln, elektrifiera fordonsflottan, samt utveckla infångning och lagring av koldioxid.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/klimat",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:36.141Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred uppräkning av flera politikområden (biobränsle, kärnkraft, utsläppshandel, elektrifiering, CCS) utan konkret åtagande eller belopp. Inriktningslöfte enligt regel 13; de kostsamma delarna…",
+      "confidence": 0.2,
+      "calculation": "Regel 13: bred sammanfattning av flera områden utan enskilt åtagande. Base sätts till 0. Ett litet spann upp mot ~10 mkr för eventuella förstudier/utredningar som kan följa av inriktningen, men ingen konkret åtgärd är utpekad med nivå."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0823",
+    "group_id": null,
+    "title": "Utbyggd kollektivtrafik för mindre orter",
+    "slug": "utbyggd-kollektivtrafik-for-mindre-orter",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill se en utbyggd kollektivtrafik som möjliggör att fler invånare i mindre orter kan utnyttja den.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kollektivtrafik",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:36.904Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Saknar specifik nivå för utbyggnad.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger endast riktning ('vill se en utbyggd kollektivtrafik') utan specifik åtgärd, nivå eller belopp. Behandlas som inriktningslöfte enligt regel 13. Jämförbart kd-löfte p-2026-0605 prissattes till 0."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0824",
+    "group_id": null,
+    "title": "Bygga fler fängelser",
+    "slug": "bygga-fler-fangelser",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Dagens platsbrist i Kriminalvården kräver att vi bygger fler fängelser.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kriminalvarden",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:37.685Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Byggkostnad för nya anstalter att täcka platsbrist. Endast konstruktion, ej drift. Löftet anger inte antal platser, vilket ger stor osäkerhet.",
+      "confidence": 0.4,
+      "calculation": "Platsbrist i Kriminalvården uppskattas till ~1 000–3 000 platser utöver pågående expansion. Byggkostnad per plats ~2–4 mkr baserat på tidigare svensk fängelsebyggande. Low: 1 000 platser × 2 mkr = 2 000 mkr. Base: ~2 000 platser × ~2,5 mkr = 5 000 mkr. High: 3 000 platser × 4 mkr = 12 000 mkr. Avser enbart investeringskostnad, inte årlig drift."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0825",
+    "group_id": null,
+    "title": "Hyra fängelseplatser utomlands och avtjäna straff i hemländer",
+    "slug": "hyra-fangelseplatser-utomlands-och-avtjana-straff-i-hemlander",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill även hyra fängelseplatser utomlands och att fler svenska fängelsestraff ska avtjänas i dömda utlänningars hemländer.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kriminalvarden",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:58:38.487Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 250,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Hyra fängelseplatser utomlands: direkt utgift för 100–300 platser. Överföring till hemländer är huvudsakligen regelverks- och avtalsfråga; eventualbesparingar ej kvantifierade här.",
+      "confidence": 0.35,
+      "calculation": "Av ca 8 000 svenska fångar är ca 2 000–2 500 utländska medborgare. Löftet avser hyra platser utomlands för del av dessa. Antag 100–300 hyrda platser till ca 1 000–2 500 kr/dag (jämförbart med tidigare nordiska hyrlösningar i NL). Låg: 100 × 365 × 1 000 ≈ 37 mkr. Hög: 300 × 365 × 2 500 ≈ 274 mkr. Bas ca 250 platser × 365 × 1 100 ≈ 100 mkr. Komponenten att straff avtjänas i hemland är regelverksförändring; ev. besparing på svensk plats (~3 000 kr/dag) osäker och ej inräknad i nettokostnad här."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0826",
+    "group_id": "g-p-2026-0826",
+    "title": "Förlänga föräldraförsäkringen med 6 månader till 19 månader",
+    "slug": "forlanga-foraldraforsakringen-med-6-manader-till-19-manader",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vårt mål är att förlänga dagens föräldraförsäkring med 6 månader - från 13 till 19 månader.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foraldraforsakring",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:59:25.321Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 8000,
+      "msek_base": 12000,
+      "msek_high": 18000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för 180 extra SGI-dagar per barn. Antagande: ~110 000 barn/år, snittdagpenning 900 kr, 80% utnyttjande ger ~14,3 mdkr/år. Spann viktat för osäkerhet om utnyttjande, dagpenning och huruvida…",
+      "confidence": 0.5,
+      "calculation": "Extra dagar per barn: 6 månader × 30 dagar = 180 dagar. Födslar per år ~110 000. Totalt extra dagar per årskull: 110 000 × 180 = 19,8 miljoner dagar. Genomsnittlig föräldrapenning per dag (SGI-nivå, inklusive tak): uppskattningsvis 900 kr. Bruttokostnad: 19,8 M × 900 = 17,8 mdkr. Med 80% utnyttjande (vissa dagar förfaller): ~14,3 mdkr/år. Osäkerhet: 8–18 mdkr för variation i utnyttjandegrad och ersättningsnivå."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-12",
+        "change": "Löftet delar grupp med sitt eget första steg (p-2026-0830), 30 dagar av de sex månader målet omfattar. Reformen räknas en gång, så steget läggs inte ovanpå sitt eget mål. Beloppet, citatet och källan är oförändrade.",
+        "commit": "0000000"
+      }
+    ],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0827",
+    "group_id": "g-p-2026-0356",
+    "title": "Införa elevhälsogaranti för kontakt inom ett dygn",
+    "slug": "infora-elevhalsogaranti-for-kontakt-inom-ett-dygn",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill även införa en elevhälsogaranti som innebär att en elev ska kunna komma i kontakt med elevhälsan inom ett dygn.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/elevhalsa",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:59:30.587Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 4000,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Belopp satt vid granskningen; posten delar grupp och räknas en gång.",
+      "confidence": 0.6,
+      "calculation": "Samma åtgärd som Centerpartiets elevhälsogaranti, och samma politik ska kosta lika. Beloppet är därför grundbeloppet i den gruppen: 1 500 miljoner kronor per år, spann 500–4 000. Posten delar grupp med det löftet och räknas en gång, så den lägger inget till rikssumman."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0828",
+    "group_id": "g-p-2026-0392",
+    "title": "Lag om max 12 barn i småbarnsgrupper och max 15 i storbarnsgrupper i förskolan",
+    "slug": "lag-om-max-12-barn-i-smabarnsgrupper-och-max-15-i-storbarnsgrupper-i-forskolan",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill införa en lag om max 12 barn i småbarnsgrupperna, och max 15 barn i storbarnsgrupperna i förskolan.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/forskola",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:59:31.332Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 3000,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden för att införa lag om mindre barngrupper är i huvudsak ökade personalkostnader i kommunerna. Estimatet baseras på jämförbart löfte (p-2026-0392) som anger 3000 mkr/år. Osäkerheten är stor…",
+      "confidence": 0.5,
+      "calculation": "Omkring 500 000 barn går i förskola, i dag ofta 15–18 barn per grupp. En minskning till 12 respektive 15 barn per grupp kräver omkring 30 procent fler personaltimmar. Med en genomsnittlig årsarbetarkostnad kring 600 000 kronor blir bruttokostnaden omkring 15 000 miljoner kronor per år. Staten står för en del av det genom ökat statsbidrag, uppskattat till 3 000 miljoner kronor per år. Spannet 1 000–6 000 speglar olika antaganden om hur snabbt taket faktiskt nås."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0829",
+    "group_id": "g-forsvar-fem-procent-bnp",
+    "title": "Kraftigt utökade försvarssatsningar till 5% av BNP",
+    "slug": "kraftigt-utokade-forsvarssatsningar-till-5-av-bnp",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna och regeringen har aviserat kraftigt utökade försvarssatsningar som sammanlagt kommer uppgå till 5% av BNP – 3,5% till militära utgifter och 1,5% till försvarsrelaterade utgifter. Detta är nödvändigt för att vi ska kunna ha förmåga att försvara hela Sverige och samtidigt uppfylla våra alliansförpliktelser som Natomedlemmar.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/forsvar",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:59:32.072Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 25000,
+      "msek_base": 50000,
+      "msek_high": 120000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ökning till 5 % av BNP (3,5 militärt + 1,5 försvarsrelaterat) från dagens ca 2,2 % av BNP, antagen BNP cirka 6 200 mdkr. Tidigare estimat på 50 mdkr för liknande löfte bedöms vara en underskattning.",
+      "confidence": 0.6,
+      "calculation": "Försvarsanslagen är 175 miljarder kronor 2026, vilket motsvarar 2,8 procent av BNP enligt Natos sätt att räkna, och beslutade planer tar dem till 3,1 procent från 2028. Fem procent av en BNP kring 6 250 miljarder är 312 miljarder kronor per år, alltså omkring 118 miljarder över den beslutade banan när målet väl är nått. Men det nås inte första året: nås det 2030, sista året i mandatperioden, blir det som faktiskt betalas ut under 2027–2030 i genomsnitt omkring 50 miljarder kronor per år. Det låga alternativet gäller om den del av målet som avser civilt försvar och infrastruktur, 1,5 av de fem procenten, till stor del fylls av utgifter som redan finns. Det höga gäller om hela nivån nås tidigt i perioden."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0830",
+    "group_id": "g-p-2026-0826",
+    "title": "Första steget: förlänga föräldraförsäkringen med 30 dagar",
+    "slug": "forsta-steget-forlanga-foraldraforsakringen-med-30-dagar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Ett första steg är att förlänga föräldraförsäkringen med 30 dagar.",
+    "date_stated": "2026-08-12",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foraldraforsakring",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-12T16:59:47.722Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 3000,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Belopp satt vid granskningen; posten delar grupp och räknas en gång.",
+      "confidence": 0.6,
+      "calculation": "Första steget i samma reform som målet om 19 månader, och de delar grupp — reformen räknas en gång, så det här steget lägger inget ovanpå sitt eget mål. 30 dagar av de 180 som målet omfattar ger, på målets 12 000 miljoner kronor per år, omkring 2 000 miljoner per år. Spannet 500–3 000 speglar att uttagstakten för nya dagar inte är känd."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-12T16"
     }
   }
 ]
