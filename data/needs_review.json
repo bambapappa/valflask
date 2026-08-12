@@ -2009,5 +2009,588 @@
       "calculation": "Antar att staten inte går in med några subventioner, endast möjliggör avtalsformen genom lag. Engångskostnad för framtagande av regelverk bedöms som försumbar, men sätts till högst 5 mkr för att inkludera eventuella mindre administrationskostnader."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0367 (150), p-2026-0557 (0), p-2026-0587 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Mål om högst 50 procent i marginalskatt",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vårt mål är; hälften kvar, att ingen ska behöva betala mer än 50 procent i högsta marginalskatt samt att inte fler än 15 procent av inkomsttagarna ska betala statlig inkomstskatt.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/inkomstskatter",
+    "articleTitle": "Inkomstskatter | Kristdemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 15000,
+      "msek_base": 20000,
+      "msek_high": 30000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimatet utgår från jämförbara löften (M, SD). Kostnaden är statens minskade skatteintäkter från färre skattebetalare och marginalskatetak.",
+      "confidence": 0.65,
+      "calculation": "Sänkning till 15% skattebetalare berör ca 250 000 pers. Statlig skatt 20% på ca 100 000 kr => ~5 mdkr. Tak på 50% marginalskatt för höginkomsttagare (ca 500 000 pers) kräver sänkt övre skikt med i snitt 30 000 kr => ~15 mdkr. Totalt ca 20 mdkr (20 000 msek)."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0289 (20000), p-2026-0028 (20000)"
+  },
+  {
+    "candidate": {
+      "title": "Breda och riktade skattesänkningar",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi föreslår breda skattesänkningar, där alla som arbetar får sänkt skatt, och riktade skattesänkningar till särskilda grupper som står långt ifrån arbetsmarknaden.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/inkomstskatter",
+    "articleTitle": "Inkomstskatter | Kristdemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 15000,
+      "msek_high": 40000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett löfte utan angiven nivå. Skattesänkning för alla förvärvsarbetare; kostnaden varierar enormt med utförmandet.",
+      "confidence": 0.2,
+      "calculation": "~5 miljoner förvärvsarbetare i Sverige. En blygsam sänkning på ~1 000 kr/person/år ≈ 5 000 msek. En medelhög på ~3 000 kr/person ≈ 15 000 msek. En större reform på ~8 000 kr/person ≈ 40 000 msek. Riktade sänkningar till personer långt från arbetsmarknaden tillkommer men berör betydligt färre. Ingen specifik nivå anges i löftet, därför mycket låg tillförlitlighet och brett intervall."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Förstärkt jobbskatteavdrag för äldre",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill dessutom se ett ytterligare förstärkt jobbskatteavdrag för personer som är 69 år eller äldre, med syfte att det ska bli mer lönsamt för den som vill arbeta längre.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/inkomstskatter",
+    "articleTitle": "Inkomstskatter | Kristdemokraterna",
+    "duplicateOf": "p-2026-0598"
+  },
+  {
+    "candidate": {
+      "title": "Stärka samverkan mellan universitet och näringsliv för innovation",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill stärka samverkan mellan universitet, forskningsinstitut och näringsliv och utveckla gemensamma forskningsprogram som återspeglar näringslivets behov och där staten deltar som betydande finansiär.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/innovation",
+    "articleTitle": "Innovation | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Kostnaden beror på vilka program som skapas; saknas specifics sätts base till 0.",
+      "confidence": 0.2,
+      "calculation": "Löftet anger ingen nivå, inget antal program och ingen finansieringsgrad. 'Betydande finansiär' kan innebära allt från marginella bidrag till miljardinvesteringar. Enligt regel 13 behandlas detta som inriktningslöfte (base 0). Spannet 0–150 msek speglar osäkerheten om löftet skulle konkretiseras till t.ex. några nya samverkansprogram i måttlig skala."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Stram migrationspolitik på nordiska nivåer",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill därför ha en fortsatt stram migrationspolitik med målsättningen att den ska ligga på nordiska nivåer.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/invandring",
+    "articleTitle": "Invandring | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0328 (0), p-2026-0115 (0), p-2026-0114 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Motverka irreguljär migration och hjälpa flyktingar i närområdet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill motverka irreguljär migration, motverka människosmuggling och ha ett större fokus på att hjälpa flyktingar i närområdet.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/invandring",
+    "articleTitle": "Invandring | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0124 (0), p-2026-0504 (500) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~250"
+  },
+  {
+    "candidate": {
+      "title": "Decentralisera viltförvaltningen",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Viltförvaltningen behöver decentraliseras ytterligare – från europeisk nivå till nationell nivå och från nationell nivå till regional nivå.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/jakt",
+    "articleTitle": "Jakt | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Utöka jakt på överetablerade arter",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Jakten på överetablerade arter, inte minst vildsvin, säl och skarv, bör utökas liksom möjligheterna att låta köttet komma till nytta inom t ex offentlig verksamhet som skolor och äldreomsorg.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/jakt",
+    "articleTitle": "Jakt | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Upprustning och utbyggnad av järnvägar",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill prioritera en fortsatt upprustning av befintliga järnvägar, samt utbyggnad av nya sträckor som behövs för att öka kapaciteten och funktionaliteten.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/jarnvag",
+    "articleTitle": "Järnväg | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred inriktningsfråga utan specifikt projekt, belopp eller åtgärd. Särskilda järnvägsprojekt prissätts i separata löften.",
+      "confidence": 0.2,
+      "calculation": "Inriktningslöfte enligt regel 13. Ingen specifik sträcka, ingen nivå, inget belopp anges. Jämförbara löften (p-2026-0605, p-2026-0317) prissätts till 0 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0605 (0), p-2026-0317 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Dubbelt jobbskatteavdrag för svaga grupper på arbetsmarknaden",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna har även föreslagit dubbelt jobbskatteavdrag för dem som har svårare att ta sig in på arbetsmarknaden",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/jobbskatteavdraget",
+    "articleTitle": "Jobbskatteavdraget | Kristdemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Riktat till mindre grupp med svag ställning; bredare osäkerhet då målgrupp och avdragets utformning ej specificerats.",
+      "confidence": 0.4,
+      "calculation": "\"Dubbelt JSA\" = extra skattelättnad utöver befintligt JSA för svaga grupper. Målgrupp uppskattas 100 000–300 000 personer (langtidsarbetslösa, nyanlända, unga, funktionsnedsatta). Extra skattereduktion ca 15 000–35 000 kr/person utöver befintligt JSA. Låg: 100 000 × 15 000 kr ≈ 1 500 mkr. Hög: 300 000 × 35 000 kr ≈ 10 500 mkr. Ej alla berörda är i arbete, utnyttjandegrad ca 70–85 %. Bas ~5 000 msek i linje med jämförbara riktade JSA-förstärkningar."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0163 (5000), p-2026-0598 (17000), p-2026-0660 (17000), p-2026-0172 (0), p-2026-0252 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Höja förhöjt jobbskatteavdrag från 69 års ålder",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill dessutom att det förhöjda jobbskatteavdraget höjs från 69 års ålder.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/jobbskatteavdraget",
+    "articleTitle": "Jobbskatteavdraget | Kristdemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 800,
+      "msek_high": 1800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Smalare åtgärd än allmän förstärkt jobbskatteavdrag; endast gruppen 69+ som förvärvsarbetar. Beror starkt på hur stor höjningen är, vilket inte anges.",
+      "confidence": 0.45,
+      "calculation": "Gruppen 69+ i förvärvsarbete uppskattas till ~80 000–120 000 personer i Sverige. En höjning av det förhöjda jobbskatteavdraget för denna grroup kan tänkas ge ca 5 000–15 000 kr lägre skatt per person och år. Lägre: 80 000 × 5 000 = 400 msek. Mittemål: ~100 000 × 8 000 = 800 msek. Högre: 120 000 × 15 000 = 1 800 msek. Osäkerhet kring både antal förvärsarbetande 69+ och höjningens storlek då löftet inte anger någon nivå."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0598 (17000), p-2026-0660 (17000), p-2026-0163 (5000), p-2026-0252 (0), p-2026-0172 (0) ⚠ AVVIKER: 800 avviker 6.3× från jämförbara (median 5000)"
+  },
+  {
+    "candidate": {
+      "title": "Fler kameror på strategiskt viktiga platser",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill se fler kameror och på fler platser som är strategiskt viktiga för kriminella.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kamerabevakning",
+    "articleTitle": "Kamerabevakning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Slopa tillståndskravet för offentlig kamerabevakning",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Tillståndskravet för det offentliga ska slopas så att det blir enklare att snabbt sätta upp kameror.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kamerabevakning",
+    "articleTitle": "Kamerabevakning | Kristdemokraterna",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring som slopar tillståndskrav. Direkt statlig kostnad är nära noll; viss administrativ besparing för Länsstyrelsen som slippar handlägga tillstånd. Konsekvenser för kommunernas…",
+      "confidence": 0.55,
+      "calculation": "Slopande av tillståndskrav är primärt en lagändring. Direkt kostnad: remissarbete, lagtext, IT-justeringar ≈ engångs 2–5 mkr. Pågående besparing: Länsstyrelsen handlägger idag några tusen ärenden/år; minskad handläggning ≈ 5–10 mkr/år. Netto för staten nära noll eller lätt besparing. Konsekvenser (fler kameror, integritetsfrågor) lämnas okvantifierade enligt regel 9."
+    },
+    "costReason": "LLM-estimat (confidence 0.55) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Polisen ska kunna använda drönare i fler fall",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Ny teknik ska tas tillvara och polisen bör ges möjlighet att använda drönare i fler fall.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kamerabevakning",
+    "articleTitle": "Kamerabevakning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Investera i ny kärnkraft",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Därför behöver vi investera i ny kärnkraft.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/karnkraft",
+    "articleTitle": "Kärnkraft | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 2000,
+      "msek_high": 4000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett löfte om kärnkraftsinvestering utan specifik statlig insatsnivå. I linje med jämförbara kärnkraftslöften (~2000 msek). Statens verkliga kostnad är stöd/ garantier, inte hela byggkostnaden.",
+      "confidence": 0.35,
+      "calculation": "Ny kärnkraft kräver statligt risktagande: investeringsstöd, lånegarantier eller kreditgarantier. En reaktor kostar ~100–300 mdkr privat, men statens årliga nettokostnad utgörs av administrerat stöd och krediter. Jämförbara löften landar på ~2000 msek/år. Spannet speglar osäkerhet om mekanism (garantier ~0 i kontant kostnad vs direkta subventioner flera mdkr). Low 1000–High 4000 täcker rimliga scenarier för årligen återkommande statligt stöd."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0551 (2000), p-2026-0667 (0), p-2026-0671 (0), p-2026-0153 (2000), p-2026-0109 (2000)"
+  },
+  {
+    "candidate": {
+      "title": "Öka stödet till kärnkraftsforskning",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi ökar stödet till forskning inom kärnkraftsområdet och har tagit fram en svensk färdplan för framtidens kärnkraft, den så kallade fjärde generationens kärnkraft.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/karnkraft",
+    "articleTitle": "Kärnkraft | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 100,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löfte om ökat forskningsstöd till kärnkraft utan angivet belopp. Osäkert; bygger på rimlig storleksordning för riktad energiforskningssatsning i Sverige.",
+      "confidence": 0.35,
+      "calculation": "Sveriges totala energiforskning uppgår till storleksordningen 1–2 mdkr/år. Kärnkraftsforskning är en delmängd. En 'ökning' av stödet för 4:e generationens kärnkraft torde motsvara ett tillskott på ca 50–200 mkr/år. Låg: 50 (blygsam höjning av befintliga anslag). Bas: 100 (måttlig riktad satsning). Hög: 200 (större forskningsprogram med medel till universitet, institut och industrisamarbeten). Ingen exakt nivå anges i löftet, varför spannet är brett."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fasa ut kol ur EU:s elproduktion och införa kolkrafttullar",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "vi vill omedelbart fasa ut kol ur EU:s elproduktion och införa tullar som riktas mot länders kolkraftsanvändning utanför EU",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/klimat",
+    "articleTitle": "Klimat | Kristdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Öka satsningar på biobränsle, ny kärnkraft och koldioxidlagring",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill öka satsningarna på biobränsle, bygga ny kärnkraft, utveckla utsläppshandeln, elektrifiera fordonsflottan, samt utveckla infångning och lagring av koldioxid.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/klimat",
+    "articleTitle": "Klimat | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred uppräkning av flera politikområden (biobränsle, kärnkraft, utsläppshandel, elektrifiering, CCS) utan konkret åtagande eller belopp. Inriktningslöfte enligt regel 13; de kostsamma delarna…",
+      "confidence": 0.2,
+      "calculation": "Regel 13: bred sammanfattning av flera områden utan enskilt åtagande. Base sätts till 0. Ett litet spann upp mot ~10 mkr för eventuella förstudier/utredningar som kan följa av inriktningen, men ingen konkret åtgärd är utpekad med nivå."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0153 (2000), p-2026-0551 (2000), p-2026-0083 (2000), p-2026-0109 (2000), p-2026-0082 (2000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~2000"
+  },
+  {
+    "candidate": {
+      "title": "Utbyggd kollektivtrafik för mindre orter",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill se en utbyggd kollektivtrafik som möjliggör att fler invånare i mindre orter kan utnyttja den.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kollektivtrafik",
+    "articleTitle": "Kollektivtrafik | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Saknar specifik nivå för utbyggnad.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger endast riktning ('vill se en utbyggd kollektivtrafik') utan specifik åtgärd, nivå eller belopp. Behandlas som inriktningslöfte enligt regel 13. Jämförbart kd-löfte p-2026-0605 prissattes till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0439 (1000), p-2026-0466 (1200), p-2026-0605 (0), p-2026-0321 (8000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1100"
+  },
+  {
+    "candidate": {
+      "title": "Bygga fler fängelser",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Dagens platsbrist i Kriminalvården kräver att vi bygger fler fängelser.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kriminalvarden",
+    "articleTitle": "Kriminalvården | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Byggkostnad för nya anstalter att täcka platsbrist. Endast konstruktion, ej drift. Löftet anger inte antal platser, vilket ger stor osäkerhet.",
+      "confidence": 0.4,
+      "calculation": "Platsbrist i Kriminalvården uppskattas till ~1 000–3 000 platser utöver pågående expansion. Byggkostnad per plats ~2–4 mkr baserat på tidigare svensk fängelsebyggande. Low: 1 000 platser × 2 mkr = 2 000 mkr. Base: ~2 000 platser × ~2,5 mkr = 5 000 mkr. High: 3 000 platser × 4 mkr = 12 000 mkr. Avser enbart investeringskostnad, inte årlig drift."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Hyra fängelseplatser utomlands och avtjäna straff i hemländer",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill även hyra fängelseplatser utomlands och att fler svenska fängelsestraff ska avtjänas i dömda utlänningars hemländer.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kriminalvarden",
+    "articleTitle": "Kriminalvården | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 250,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Hyra fängelseplatser utomlands: direkt utgift för 100–300 platser. Överföring till hemländer är huvudsakligen regelverks- och avtalsfråga; eventualbesparingar ej kvantifierade här.",
+      "confidence": 0.35,
+      "calculation": "Av ca 8 000 svenska fångar är ca 2 000–2 500 utländska medborgare. Löftet avser hyra platser utomlands för del av dessa. Antag 100–300 hyrda platser till ca 1 000–2 500 kr/dag (jämförbart med tidigare nordiska hyrlösningar i NL). Låg: 100 × 365 × 1 000 ≈ 37 mkr. Hög: 300 × 365 × 2 500 ≈ 274 mkr. Bas ca 250 platser × 365 × 1 100 ≈ 100 mkr. Komponenten att straff avtjänas i hemland är regelverksförändring; ev. besparing på svensk plats (~3 000 kr/dag) osäker och ej inräknad i nettokostnad här."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
   }
 ]

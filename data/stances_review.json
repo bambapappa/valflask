@@ -48,5 +48,55 @@
       }
     ],
     "verifyReason": "Citatet säger att oseriösa aktörer inte ska kunna skära ner på kvaliteten för att ta ut mer vinst, men tar inte ställning till om vinstutdelning från friskolekoncerner ska förbjudas eller begränsas i lag."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-inkomstskatt",
+      "party": "kd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vårt mål är; hälften kvar, att ingen ska behöva betala mer än 50 procent i högsta marginalskatt samt att inte fler än 15 procent av inkomsttagarna ska betala statlig inkomstskatt.",
+      "person": null
+    },
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/inkomstskatter",
+    "articleTitle": "Inkomstskatter | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/inkomstskatter",
+    "archiveUrl": null,
+    "dateStated": "2026-08-12",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-12-10-16",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet anger ett långsiktigt mål om att färre ska betala statlig inkomstskatt, men saknar ett tydligt löfte om sänkning specifikt under mandatperioden, vilket gör att 'ja'-beskedet inte följer ur citatet ensamt."
+      }
+    ],
+    "verifyReason": "Citatet anger ett långsiktigt mål om att färre ska betala statlig inkomstskatt, men saknar ett tydligt löfte om sänkning specifikt under mandatperioden, vilket gör att 'ja'-beskedet inte följer ur citatet ensamt."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "kd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Därför behöver vi investera i ny kärnkraft. Morgondagens kärnkraft har potential att vara både säkrare och mer effektiv än dagens.",
+      "person": null
+    },
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/karnkraft",
+    "articleTitle": "Kärnkraft | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/karnkraft",
+    "archiveUrl": null,
+    "dateStated": "2026-08-12",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-12-10-16",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet handlar generellt om att investera i ny kärnkraft, men besvarar inte den specifika avgränsningen om statlig finansiering av en redan beslutad ordning."
+      }
+    ],
+    "verifyReason": "Citatet handlar generellt om att investera i ny kärnkraft, men besvarar inte den specifika avgränsningen om statlig finansiering av en redan beslutad ordning."
   }
 ]
