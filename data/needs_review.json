@@ -1296,5 +1296,718 @@
       "calculation": "Ingen preciserad åtgärd med kostnad. Löftet prissätts som ett inriktningslöfte (base 0). Som yttersta osäkerhet antas att uppföljning/kontroll skulle kunna kosta upp till 5 mkr årligen, men detta är ett hypotetiskt tak, inte en skattning."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "EU:s gemensamma gränsövervakning ska stärkas och antalet gränspoliser växa till 30 000",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Detta innebär bland annat att EU:s gemensamma gränsövervakning succesivt ska stärkas och antalet gränspoliser växa till 30 000 på sikt.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/frontex",
+    "articleTitle": "Frontex | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 600,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Sveriges andel av EU:s kostnad för ytterligare gränspoliser. Osäker finansieringsmodell och exakta enhetskostnader.",
+      "confidence": 0.4,
+      "calculation": "~20 000 extra gränspoliser (till 30 000) × 750–1 200 tkr/år per person (lön, utrustning, administration) → 15–24 mdkr/år totalt. Sveriges EU-avgiftsandel ca 2,5 % → 375–600 mkr/år. Spannet breddas för att fånga osäkerheter."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0414 (2500) ⚠ AVVIKER: 600 avviker 4.2× från jämförbara (median 2500)"
+  },
+  {
+    "candidate": {
+      "title": "Bättre möjlighet till jobb och studier för personer med funktionsnedsättning",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Personer med funktionsnedsättning ska ges bättre möjlighet till jobb och studier.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/funktionsnedsattning",
+    "articleTitle": "Funktionsnedsättning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkreta åtgärder eller belopp. Kostnader prissätts på partiets specifika reformer.",
+      "confidence": 0.2,
+      "calculation": "Ingen beräkning — löftet saknar konkret åtgärd. Kostnad satt till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0447 (250), p-2026-0378 (0), p-2026-0602 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Kriminalisera deltagande i kriminella nätverk",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna arbetar intensivt med skärpta insatser mot gängkriminella och vill kriminalisera deltagandet i kriminella nätverk.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gangkriminalitet",
+    "articleTitle": "Gängkriminalitet | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en ny kriminalisering (förbud/lag), vars direkta statliga kostnad är försumbar enligt regel 9. Eventuella följdkostnader för rättsväsendet är inte prissatta här.",
+      "confidence": 0.65,
+      "calculation": "Själva lagstiftningsarbetet (proposition etc.) är marginellt. Ingen ny myndighetsstruktur utlovas, endast en brottsrubricering."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0534 (150), p-2026-0314 (20), p-2026-0039 (130), p-2026-0034 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~75"
+  },
+  {
+    "candidate": {
+      "title": "Sverige världens första fossilfria välfärdsnation",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill att Sverige ska bli världens första fossilfria och industrialiserade välfärdsnation.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gron-omstallning",
+    "articleTitle": "Grön omställning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett visionsmål utan konkreta åtgärder eller kostnadsangivelser. Inriktningslöfte; prissätts därför som 0.",
+      "confidence": 0.65,
+      "calculation": "Ingen kostnad beräknas; löftet är ett inriktningslöfte utan specificerade reformer att kostnadsuppskatta."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0551 (2000), p-2026-0335 (0), p-2026-0087 (0), p-2026-0082 (2000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1000"
+  },
+  {
+    "candidate": {
+      "title": "Säkra trygg elproduktion och korta tillståndsledtider",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Politikens ansvar är att säkra förutsättningarna för en trygg och prisvärd elproduktion och att korta ledtider för tillståndsgivning.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gron-omstallning",
+    "articleTitle": "Grön omställning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtagande (regel 13); ingen kvantifierbar kostnad för staten.",
+      "confidence": 0,
+      "calculation": "Inget specifikt åtagande eller budgetpost anges; löftet är en bred politisk inriktning."
+    },
+    "costReason": "LLM-estimat (confidence 0) — bekräfta/justera belopp — jämförbara: p-2026-0667 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Inga skattemedel till enskilda företags affärsidéer",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Däremot ska inte skattemedel gå till att stödja enskilda företag som vill utveckla en affärsidé.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gron-omstallning",
+    "articleTitle": "Grön omställning | Kristdemokraterna",
+    "cost": {
+      "type": "besparing",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en principförklaring om att inte använda skattemedel. Själva åtgärden (en regeländring) har en försumbar direkt kostnad; eventuella besparingar från uteblivna subventioner är en indirekt…",
+      "confidence": 0.65,
+      "calculation": "Direkt kostnad = 0. Principbeslut utan eget anslag."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Införa en författningsdomstol för att pröva lagars grundlagsenlighet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna har länge hävdat att vi behöver en författningsdomstol som ska pröva nya lagar mot de grundläggande fri- och rättigheterna.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/grundlagen",
+    "articleTitle": "Grundlagen | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 80,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämförbar reform (författningsdomstol) har tidigare uppskattats till 80 msek/år. Spannet täcker mindre/större domstolsorganisation.",
+      "confidence": 0.6,
+      "calculation": "Utgår från jämförbart löfte p-2026-0403 om 80 msek/år. Antaganden: antal domare och administrativ personal ger årlig kostnad. Osäkerhet ger spann 50–150 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0403 (80)"
+  },
+  {
+    "candidate": {
+      "title": "Stärka gruvindustrin med förenklade tillståndsprocesser och ökad forskning",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill stärka gruvindustrin genom åtgärder som förenklade tillståndsprocesser och ökade anslag till forskning.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gruvor",
+    "articleTitle": "Gruvor | Kristdemokraterna",
+    "verifyReason": "Citatet och partiet (kd) stämmer exakt överens med källtexten och utgör ett tydligt vallöfte. Dock är kategorin 'utbildning' uppenbart felaktig för ett löfte som primärt handlar om gruvindustri och näringsliv. Enligt instruktionerna om stränghet vid tveksamhet bör vallöftet gå till granskning för att kategorin ska korrigeras."
+  },
+  {
+    "candidate": {
+      "title": "Se över mineralavgiften och öka kommunernas andel av statlig skatt",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Mineralavgiftens nivå ska ses över samt fördelningen av den skatt som tillfaller staten i syfte att föra en större andel till kommunerna.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gruvor",
+    "articleTitle": "Gruvor | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en översyn (utredning) av mineralavgiften och en omfördelning av befintlig skatt. Statens nya nettokostnad är utredningskostnaden; omfördelningen är en transferering utan nettoutgift.",
+      "confidence": 0.65,
+      "calculation": "En statlig utredning (SOU) kostar i typfallet 5–30 mkr som engångsanslag. Omfördelning av redan uppburen skatt från stat till kommun är en intern överföring och skapar ingen ny kostnad för staten som helhet. Base satt till 15 mkr som en typisk utredningskostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0092 (4500) ⚠ AVVIKER: 15 avviker 300.0× från jämförbara (median 4500)"
+  },
+  {
+    "candidate": {
+      "title": "Införa kommunalt veto mot brytning i alunskiffer",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill även stärka kommunernas inflytande genom att införa ett kommunalt veto mot brytning i alunskiffer.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/gruvor",
+    "articleTitle": "Gruvor | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Direkt kostnad för lagstiftningsåtgärden är försumbar (~0 mkr). Svåröverskådliga följder kvantifieras inte, enligt regel 9.",
+      "confidence": 0.65,
+      "calculation": "Ingen ny offentligfinansiell kostnad uppstår för staten. Arbete med proposition och remiss ryms inom ordinarie anslag för Regeringskansliet, därmed 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Tydligare regler för häktning och obligatorisk häktning i fler fall",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill se tydligare regler för häktning och s.k. obligatorisk häktning i fler fall.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/haktning",
+    "articleTitle": "Häktning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagförslag om häktningsregler – direkt kostnad för utredning och lagstiftningsarbete. Eventuella följdkostnader för Kriminalvården bedöms enligt regel 9 ej.",
+      "confidence": 0.2,
+      "calculation": "Antas kräva en SOU-utredning (~10 mkr). Om endast departementspromemoria lägre; intervall 0–30 mkr engång."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0380 (100) ⚠ AVVIKER: 10 avviker 10.0× från jämförbara (median 100)"
+  },
+  {
+    "candidate": {
+      "title": "Sänk gräns för obligatorisk häktning till ett års fängelse",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Gränsen för s.k. obligatorisk häktning bör sänkas till ett straffvärde på ett års fängelse.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/haktning",
+    "articleTitle": "Häktning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändringen i sig medför ingen direkt statlig kostnad. Eventuella kostnader från ökat antal häktade är en indirekt följd och kvantifieras inte här.",
+      "confidence": 0.65,
+      "calculation": "Åtgärden är en regeländring; inga myndighetsutgifter krävs för att genomföra den. Jämför med liknande regelreform p-2026-0583 som bedömts till 0 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0583 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Utreda skadestånd vid felaktig häktning kopplat till misstänkts medverkan",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill även utreda hur storleken på skadestånd vid felaktig häktning ska kunna kopplas till om den misstänkte har medverkat i förundersökningen.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/haktning",
+    "articleTitle": "Häktning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en utredning. Kostnad för en statlig utredning (SOU) är typiskt en engångsutgift på 5–30 mkr. Inga direkta effekter av själva utredningen prissätts.",
+      "confidence": 0.65,
+      "calculation": "En utredning av SOU-typ (ledamöter, sekretariat, utfrågningar, tryck) kostar erfarenhetsmässigt cirka 5–30 mkr som engångsbelopp. Osäkerhet p.g.a. omfattning."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0380 (100) ⚠ AVVIKER: 15 avviker 6.7× från jämförbara (median 100)"
+  },
+  {
+    "candidate": {
+      "title": "Korta häktningstider genom mer resurser till rättsväsendet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Häktningstiderna ska dock hållas så korta som möjligt och det möjliggör vi genom att tillföra rättsväsendet mer resurser så handläggningen inte blir onödigt utdragen.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/haktning",
+    "articleTitle": "Häktning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Priset avser ökade resurser till åklagare och domstolar för att korta handläggningstider. Uppskattas utifrån kostnad för fler tjänster. Spannet är brett då löftet saknar belopp och omfattning.",
+      "confidence": 0.4,
+      "calculation": "Antag ~50–150 extra årsarbetskrafter (åklagare, domare, administratörer) à 1–1,5 mkr/st inklusive overhead → 50–225 mkr/år, avrundat till 30–200 mkr/år med bas 100 mkr. Uppskattningen är schablonmässig."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0374 (10) ⚠ AVVIKER: 100 avviker 10.0× från jämförbara (median 10)"
+  },
+  {
+    "candidate": {
+      "title": "Införa specialenhet mot tvångsäktenskap hos polisen",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill införa en specialenhet mot tvångsäktenskap hos polisen.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hedersrelaterat-vald",
+    "articleTitle": "Hedersrelaterat våld | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 20,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för en specialenhet med 10–20 anställda (poliser, utredare, samordnare) inkl. löner, lokaler, utrustning och kompetensutveckling. Liknar befintliga insatser mot hedersrelaterat våld.",
+      "confidence": 0.4,
+      "calculation": "Antar 10–20 anställda × genomsnittlig personalkostnad inkl. overhead ~1,2 mkr/år = 12–24 mkr. Lägger till utrustning, resor och extern expertis. Högre spann medger större enhet eller förstärkt mandat."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0734 (0), p-2026-0472 (300) ⚠ AVVIKER: 20 avviker 7.5× från jämförbara (median 150)"
+  },
+  {
+    "candidate": {
+      "title": "Fler skyddade boenden för hedersutsatta",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Det behövs fler skyddade boenden och mer resurser till utbildning kring våld och hedersrelaterat våld bland personal inom stat, kommun och landsting.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hedersrelaterat-vald",
+    "articleTitle": "Hedersrelaterat våld | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar belopp och är brett. Jämförbart löfte om generella skyddade boenden och flyttpeng (p-2026-0446) kostar 650 mkr/år. Här smalare (hedersrelaterat) men även utbildning. Estimatet vilar på…",
+      "confidence": 0.4,
+      "calculation": "Antagande: hedersrelaterade platser utgör 20–40 % av behovet från löfte p-2026-0446, dvs 130–260 mkr. Utbildningsinsatser för personal inom stat, kommun och landsting skattas till 50–200 mkr/år (nationell utbildningssatsning). Totalt intervall 180–460 mkr, avrundat till 50–500 mkr med bas 200 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0446 (650), p-2026-0568 (20)"
+  },
+  {
+    "candidate": {
+      "title": "Kristdemokraterna anser att alla kommuner ska använda Bostad först",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "\"Bostad först\" är en metod som visat goda resultat och bör därför användas av alla kommuner.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hemloshet",
+    "articleTitle": "Hemlöshet | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en inriktningsmarkering utan specificerad åtgärd eller finansiering, varför den offentligfinansiella kostnaden bedöms som noll.",
+      "confidence": 0.3,
+      "calculation": "Ingen konkret åtgärd med prislapp anges; enbart ett önskemål om att kommuner ska använda metoden. Baseras på principen om inriktningslöften enligt regel 13."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0102 (0), p-2026-0100 (17000), p-2026-0119 (0), p-2026-0650 (0), p-2026-0105 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Hemtagningssteam i alla kommuner",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill att hemtagningsteam ska finnas i alla kommuner med exempelvis sjuksköterskor, undersköterskor, arbetsterapeuter och fysioterapeuter.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hemsjukvard",
+    "articleTitle": "Hemsjukvård | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 435,
+      "msek_base": 580,
+      "msek_high": 870,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar ett team per kommun med årlig driftkostnad 1,5–3 mnkr per team (sjukvårdspersonal, handledning, material). 290 kommuner ger 435–870 mnkr.",
+      "confidence": 0.4,
+      "calculation": "290 kommuner × 1 team á 2 mnkr (ex. ssk, usk, arbetsterapeut, fysioterapeut; snittlöner, overhead) = 580 mnkr/år. Låg: 1,5 mnkr (290×1,5=435), hög: 3 mnkr (290×3=870)."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Nationellt ramverk för patientavgifter och sammanställning av hjälpmedel",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna anser att det behövs ett nationellt ramverk angående patientavgifterna samt att det införs en nationell sammanställning över de hjälpmedel/medicintekniska produkter som är godkända och kvalitetssäkrade i de olika regionerna för att förbättra tillgängligheten oavsett var i landet man bor.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hjalpmedel",
+    "articleTitle": "Hjälpmedel | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Administrativ åtgärd: framtagande av ramverk och nationell sammanställning. Kostnaden avser utredning, samordning och ett enklare IT-stöd, inte förändrade patientavgifter. Låg statlig utgift.",
+      "confidence": 0.6,
+      "calculation": "Utredning/ramverk: ~2–5 mkr. Sammanställning/databas: ~1–5 mkr. Eventuell pilot/uppföljning adderar upp till ~15 mkr. Högt scenario 30 mkr om bredare systemintegration krävs. Inga löpande personalkostnader för vård."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0050 (250), p-2026-0105 (0) ⚠ AVVIKER: 5 avviker 25.0× från jämförbara (median 125)"
+  },
+  {
+    "candidate": {
+      "title": "Inga höghastighetståg – prioritera upprustning av befintlig järnväg",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna anser att banor för höghastighetståg inte ska byggas. I stället vill vi prioritera en fortsatt upprustning av befintliga järnvägar, samt utbyggnad av nya sträckor som behövs för att öka kapaciteten och funktionaliteten i det svenska järnvägsnätet.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hoghastighetstag",
+    "articleTitle": "Höghastighetståg | Kristdemokraterna",
+    "cost": {
+      "type": "besparing",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en inriktning utan nya medel. Att inte bygga höghastighetsbanor sparar framtida anslag, men prioriteringen av befintlig järnväg ryms inom redan beslutade ramar. Nettokostnaden för staten…",
+      "confidence": 0.3,
+      "calculation": "Inga konkreta belopp anges. Löftet innebär att medel som kunde gått till höghastighetståg istället används för upprustning, men eftersom ingen nivå utlovas förblir nettoförändringen 0. Eventuella förändringar i anslag för planering (stopp) och upprustning tar ut varandra eller sker inom befintlig budget. Därför sätts estimatet till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0605 (0), p-2026-0317 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stärka kvaliteten i högre utbildning genom långsiktigt hållbar resurstilldelning",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill stärka kvaliteten i högre utbildning genom en långsiktigt hållbar resurstilldelning som premierar ökad lärarledd tid, stark forskningsanknytning och hög akademisk kvalitet.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hogre-utbildning",
+    "articleTitle": "Högre utbildning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte om en ny resurstilldelningsmodell för högre utbildning utan konkret belopp eller åtgärd. Prissätts till 0 i enlighet med regel 13.",
+      "confidence": 0.2,
+      "calculation": "Ingen kvantifierbar åtgärd specificeras; endast en princip om resurstilldelning."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0684 (75), p-2026-0726 (0), p-2026-0093 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Utöka RUT-avdraget till fler tjänster som hundpassning och gravvård",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill utveckla RUT-avdraget och utöka det till fler tjänster, exempelvis hundpassning och gravvård.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hushallstjanster",
+    "articleTitle": "Hushållstjänster | Kristdemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 125,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden uppskattas från antaganden om marknadsstorlek för hundpassning och gravvård, med 50 % avdrag. Inga officiella siffror finns.",
+      "confidence": 0.4,
+      "calculation": "Antag: ~1 miljon hundar, varav 10 % får betald passning 10 h/år á 200 kr/h → 2 000 kr/passning. Avdrag 50 % → 1 000 kr per hund → 100 mkr. Gravvård: ~100 000 gravar med privat vård, snitt 500 kr/år, avdrag 250 kr → 25 mkr. Summa ~125 mkr som bas, spann 50–200 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Friare hyressättning i nyproduktion av hyresrätter",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill att nyproduktion ges friare hyressättning i avtal mellan hyresgäst och fastighetsägare under förutsättning att besittningsskyddet är starkt och indexeringen av hyran är förutsägbar över tid.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hyresratt",
+    "articleTitle": "Hyresrätt | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avreglering utan direkt statsfinansiell kostnad; enbart lagändring.",
+      "confidence": 0.65,
+      "calculation": "Åtgärden är en regeländring (friare hyressättning i nyproduktion). Inga statliga utgifter, intäktsminskningar eller besparingar uppstår av själva lagändringen."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0433 (3000), p-2026-0673 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1500"
+  },
+  {
+    "candidate": {
+      "title": "Införa offentlig hyresstatistik",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Till det krävs också en offentlig hyresstatistik som ger parterna kunskap till vad som är rimlig hyresnivå.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hyresratt",
+    "articleTitle": "Hyresrätt | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 45,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ny statistikproduktion hos SCB eller annan myndighet. Uppskattning baserad på kostnadsintervallet för att utveckla och driva en specialstatistik, med stor osäkerhet då löftet saknar detaljer.",
+      "confidence": 0.3,
+      "calculation": "Antagande: drift av en löpande hyresstatistik (enkät- eller registerbaserad) kostar årligen mellan 5 och 45 miljoner kronor beroende på datainsamlingsmetod och urvalsstorlek. Basvärdet 15 mkr motsvarar en medelstor specialundersökning."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0426 (250), p-2026-0649 (0), p-2026-0339 (150) ⚠ AVVIKER: 15 avviker 10.0× från jämförbara (median 150)"
+  },
+  {
+    "candidate": {
+      "title": "Införa hyrköp för att underlätta bostadsägande",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill därför införa hyrköp, som innebär att en del av hyran går till att köpa lägenheten.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/hyrkop",
+    "articleTitle": "Hyrköp | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringen i sig medför ingen direkt statsfinansiell kostnad. Eventuell engångskostnad för administration eller utredning kan vara <5 mkr.",
+      "confidence": 0.3,
+      "calculation": "Antar att staten inte går in med några subventioner, endast möjliggör avtalsformen genom lag. Engångskostnad för framtagande av regelverk bedöms som försumbar, men sätts till högst 5 mkr för att inkludera eventuella mindre administrationskostnader."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0367 (150), p-2026-0557 (0), p-2026-0587 (0)"
   }
 ]
