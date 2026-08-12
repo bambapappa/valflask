@@ -368,6 +368,12 @@ export const ANKARE: Ankare[] = [
     // Provet vaktar det som texten faktiskt säger: att den sammanlagda luckan
     // förblir under fem procent. Vanliga webbsidor utan bärande kopia skrivs
     // nu uttryckligen ut som undantag i stället för att döljas bakom filmerna.
+    //
+    // Ommätt 2026-08-12 efter de 86 godkännandena ur löfteskön: luckan var som
+    // störst 110 av 674 (16,3 %) innan kopiorna hämtades, och grinden föll —
+    // rätt, för meningen var då osann. Två omgångar backfill tog den till 24 av
+    // 674. Kvar är 14 filmer och 10 webbsidor vars kopia finns men inte bär
+    // citatet ordagrant; de får ingen länk hellre än en som inte styrker något.
     prov: () => {
       const a = aktiva();
       const utan = a.filter((p) => !p.source.archive_url);
@@ -375,7 +381,7 @@ export const ANKARE: Ankare[] = [
     },
     fallprov:
       "Nolla archive_url på tio webbkällor — provet faller när arkivtäckningen går under 95 procent.",
-    matt: "26 av 620 utan kopia, varav 15 filmer, 2026-08-11",
+    matt: "24 av 674 utan kopia, varav 14 filmer, 2026-08-12",
   },
   {
     id: "metod-uppskattning-bar-ungefartecken",
