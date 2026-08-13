@@ -15194,14 +15194,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 6000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Maxtak för barngrupper i förskolan kräver fler pedagoger. Förskolan är personalintensiv (~1 vuxen per 5–6 barn), så en minskad gruppstorlek för ~500 000 barn kräver flera tusen nya anställda à ~550 tkr/år. Bas 3 000, spann 1 500–6 000 miljoner kronor per år.",
-      "calculation": "Förskolan har ~500 000 barn och ~110 000 anställda. Ett bindande maxtak som pressar ner gruppstorlekarna kräver fler pedagoger; personaltätheten är hög (~1 vuxen per 5–6 barn), så åtgärden är mer personalintensiv per barn än en minskning av klasstorlek i skolan. Antag ~3–11 % fler anställda (3 000–11 000) à ~550 000 kronor per år → ~1 500–6 000 miljoner kronor per år, bas 3 000. Den tidigare uppskattningen (5 000, spann upp till 12 000) antog +20 000 anställda vilket är i ambitiösaste laget; en efterhandsberäkning på 800 miljoner kronor lånade i stället skol-löftets siffra och underskattade förskolans personalintensitet.",
-      "confidence": 0.4
+      "msek_low": 900,
+      "msek_base": 2200,
+      "msek_high": 5700,
+      "basis": "granskare",
+      "basis_url": "https://www.skolverket.se/download/18.338b7ccc19d8ac2fb50b56e/1776321721245/pdf13405.pdf",
+      "method_note": "Beloppet räknas fram ur Skolverkets statistik för hösten 2025 genom att räkna grupperna, inte personaltimmarna. Ledet om reglerad personaltäthet är inte prissatt eftersom citatet inte anger någon nivå.",
+      "calculation": "Skolverket, hösten 2025: drygt 468 000 barn i förskolan i omkring 30 600 grupper, i snitt 15,3 barn per grupp — 12,5 i småbarnsgrupperna och 16,2 i grupperna för fyra- till femåringar. Ett tak på 12 respektive 15 barn kräver då omkring 33 700 grupper, alltså cirka 3 100 fler. Varje ny grupp kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år — samma räknesätt som maxtaket på tjugo elever per klass. Det ger omkring 2 200 miljoner kronor per år. Talet förutsätter att barnen går att fördela jämnt mellan grupperna. Går det inte krävs fler grupper än så, eftersom drygt nio procent av grupperna har 22 barn eller fler och varje sådan grupp måste delas. Det är den osäkerheten spannet upp till 5 700 bär. Ledet om reglerad personaltäthet är inte prissatt — citatet anger ingen nivå.",
+      "confidence": 0.6
     },
     "financing_claimed": {
       "described": false,
@@ -15221,6 +15221,11 @@
         "date": "2026-08-12",
         "change": "Löftet delar nu grupp med Kristdemokraternas maxtak för barngrupper (p-2026-0828), som lovar samma sak till samma belopp. Samma politik hos olika partier räknas en gång. Beloppet, citatet och källan är oförändrade.",
         "commit": "ef9e0aa5b61ba4f4a373be212091c5214b263345"
+      },
+      {
+        "date": "2026-08-13",
+        "change": "Beloppet ändrat från 3 000 miljoner kronor per år till 2 200 (spann 900–5 700). För mandatperioden går löftet från 12 000 till 8 800 miljoner. Den gamla uträkningen räknade personaltimmar och byggde på att omkring 500 000 barn gick i grupper om 15–18. Skolverkets statistik för hösten 2025 säger drygt 468 000 barn och 12,5 barn i småbarnsgrupperna, där tolvtaket biter — avståndet till taket är omkring fyra procent, inte trettio. Antalet barn per anställd har dessutom legat på 5,1–5,2 varje år sedan 2016 oberoende av gruppstorlek, så ett tak skapar fler grupper snarare än fler barn per anställd. Det nya beloppet räknar grupperna, på samma sätt som maxtaket på tjugo elever per klass redan gjorde.",
+        "commit": "295bfa07edf8f5be12f089954dac6bb63e25c3cd"
       }
     ],
     "extraction": {
@@ -33233,8 +33238,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-13",
+        "change": "Tillbakadraget som Kristdemokraternas egen dubblett av p-2026-0828. Samma politik står på två sidor i partiets A–Ö-serie, båda uppdaterade 3 juli 2026: här «Kristdemokraterna föreslår ett tak på 12 barn i småbarnsgrupperna i förskolan», och på förskolesidan «Vi vill införa en lag om max 12 barn i småbarnsgrupperna, och max 15 barn i storbarnsgrupperna i förskolan». Citatet här är helt inneslutet i det andra, som dessutom bär femtontalet för de större grupperna. p-2026-0828 står därför kvar och den här posten dras tillbaka. Beloppet var noll, så ingen summa ändras. Nollan var dessutom motiverad med att ingen statlig finansiering utlovas, vilket inte stämmer: staten betalar 3 086 miljoner kronor per år i statsbidrag vars syfte bland annat är att nå Skolverkets riktmärke för barngruppernas storlek, som är just 6–12 och 9–15 barn.",
+        "commit": "295bfa07edf8f5be12f089954dac6bb63e25c3cd"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -37408,14 +37419,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 5000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Kostnaden för att införa lag om mindre barngrupper är i huvudsak ökade personalkostnader i kommunerna. Estimatet baseras på jämförbart löfte (p-2026-0392) som anger 3000 mkr/år. Osäkerheten är stor…",
-      "confidence": 0.5,
-      "calculation": "Omkring 500 000 barn går i förskola, i dag ofta 15–18 barn per grupp. En minskning till 12 respektive 15 barn per grupp kräver omkring 30 procent fler personaltimmar. Med en genomsnittlig årsarbetarkostnad kring 600 000 kronor blir bruttokostnaden omkring 15 000 miljoner kronor per år. Staten står för en del av det genom ökat statsbidrag, uppskattat till 3 000 miljoner kronor per år. Spannet 1 000–6 000 speglar olika antaganden om hur snabbt taket faktiskt nås."
+      "msek_low": 900,
+      "msek_base": 2200,
+      "msek_high": 5700,
+      "basis": "granskare",
+      "basis_url": "https://www.skolverket.se/download/18.338b7ccc19d8ac2fb50b56e/1776321721245/pdf13405.pdf",
+      "method_note": "Beloppet räknas fram ur Skolverkets statistik för hösten 2025 genom att räkna grupperna, inte personaltimmarna. Åtgärden är en lag; beloppet avser vad taket kräver i fler barngrupper, inte politikens övriga följder.",
+      "confidence": 0.6,
+      "calculation": "Skolverket, hösten 2025: drygt 468 000 barn i förskolan i omkring 30 600 grupper, i snitt 15,3 barn per grupp — 12,5 i småbarnsgrupperna och 16,2 i grupperna för fyra- till femåringar. Ett tak på 12 respektive 15 barn kräver då omkring 33 700 grupper, alltså cirka 3 100 fler. Varje ny grupp kostar en heltidstjänst plus lokaler, omkring 700 000 kronor per år — samma räknesätt som maxtaket på tjugo elever per klass. Det ger omkring 2 200 miljoner kronor per år. Talet förutsätter att barnen går att fördela jämnt mellan grupperna. Går det inte krävs fler grupper än så, eftersom drygt nio procent av grupperna har 22 barn eller fler och varje sådan grupp måste delas. Det är den osäkerheten spannet upp till 5 700 bär. Beloppet är vårt; partiet anger ingen kostnad."
     },
     "financing_claimed": {
       "described": false,
@@ -37425,7 +37436,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-13",
+        "change": "Beloppet ändrat från 3 000 miljoner kronor per år till 2 200 (spann 900–5 700). För mandatperioden går löftet från 12 000 till 8 800 miljoner. Den gamla uträkningen räknade personaltimmar och byggde på att omkring 500 000 barn gick i grupper om 15–18. Skolverkets statistik för hösten 2025 säger drygt 468 000 barn och 12,5 barn i småbarnsgrupperna, där tolvtaket biter — avståndet till taket är omkring fyra procent, inte trettio. Antalet barn per anställd har dessutom legat på 5,1–5,2 varje år sedan 2016 oberoende av gruppstorlek, så ett tak skapar fler grupper snarare än fler barn per anställd. Det nya beloppet räknar grupperna, på samma sätt som maxtaket på tjugo elever per klass redan gjorde.",
+        "commit": "295bfa07edf8f5be12f089954dac6bb63e25c3cd"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
