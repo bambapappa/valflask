@@ -2645,8 +2645,8 @@
     "subquestion_id": "sq-energi-karnkraft",
     "party": "s",
     "current": {
-      "position": "ja",
-      "statement_id": "st-2026-0046"
+      "position": "villkorat",
+      "statement_id": "st-2026-0060"
     },
     "statements": [
       {
@@ -2670,9 +2670,39 @@
           "verified_by": "mänsklig granskning",
           "run_id": "manual-stances-2026-07-15"
         }
+      },
+      {
+        "id": "st-2026-0060",
+        "position": "villkorat",
+        "condition_note": "Stödet ska enligt partiet vara teknikneutralt och omfatta alla storskaliga fossilfria kraftslag, inte enbart kärnkraft.",
+        "quote": "Vad som nu krävs är ett teknikneutralt stöd till alla storskaliga fossilfria kraftslag.",
+        "person": null,
+        "date_stated": "2026-08-13",
+        "source": {
+          "url": "https://valkompass.svt.se/2026/parti/socialdemokraterna",
+          "domain": "valkompass.svt.se",
+          "archive_url": null,
+          "fetched_at": "2026-08-13T18:00:55.435019Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": "2026-08-13",
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "manuell (SVT:s valkompass 2026)",
+          "verified_by": "mänsklig granskning",
+          "run_id": "karnkraft-valkompass-2026-08-13"
+        }
       }
     ],
-    "changes": [],
+    "changes": [
+      {
+        "date": "2026-08-13",
+        "from_statement": "st-2026-0046",
+        "to_statement": "st-2026-0060",
+        "kind": "villkorsandring",
+        "commit": "47a83fb"
+      }
+    ],
     "last_searched": "2026-08-13"
   },
   {
@@ -2680,7 +2710,7 @@
     "party": "m",
     "current": {
       "position": "ja",
-      "statement_id": "st-2026-0032"
+      "statement_id": "st-2026-0058"
     },
     "statements": [
       {
@@ -2703,6 +2733,28 @@
           "model": "manuell (skarpare källa)",
           "verified_by": "mänsklig granskning",
           "run_id": "manual-stances-2026-07-15"
+        }
+      },
+      {
+        "id": "st-2026-0058",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Stödet är begränsat och planeras omfatta investeringar upp till en nivå motsvarande fyra storskaliga reaktorer.",
+        "person": null,
+        "date_stated": "2026-08-13",
+        "source": {
+          "url": "https://valkompass.svt.se/2026/parti/moderaterna",
+          "domain": "valkompass.svt.se",
+          "archive_url": null,
+          "fetched_at": "2026-08-13T18:00:55.435019Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": "2026-08-13",
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "manuell (SVT:s valkompass 2026)",
+          "verified_by": "mänsklig granskning",
+          "run_id": "karnkraft-valkompass-2026-08-13"
         }
       }
     ],
@@ -2816,7 +2868,7 @@
     "party": "kd",
     "current": {
       "position": "ja",
-      "statement_id": "st-2026-0037"
+      "statement_id": "st-2026-0059"
     },
     "statements": [
       {
@@ -2839,6 +2891,28 @@
           "model": "manuell (skarpare källa)",
           "verified_by": "mänsklig granskning",
           "run_id": "manual-stances-2026-07-15"
+        }
+      },
+      {
+        "id": "st-2026-0059",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "Staten bör riskdela vid byggandet av ny kärnkraft och kunna erbjuda kreditgarantier som på sikt betalas tillbaka.",
+        "person": null,
+        "date_stated": "2026-08-13",
+        "source": {
+          "url": "https://valkompass.svt.se/2026/parti/kristdemokraterna",
+          "domain": "valkompass.svt.se",
+          "archive_url": null,
+          "fetched_at": "2026-08-13T18:00:55.435019Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": "2026-08-13",
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "manuell (SVT:s valkompass 2026)",
+          "verified_by": "mänsklig granskning",
+          "run_id": "karnkraft-valkompass-2026-08-13"
         }
       }
     ],

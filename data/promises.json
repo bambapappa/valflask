@@ -20661,14 +20661,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 7,
-      "msek_high": 15,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Kostnad för en statlig utredning varierar; baserat på typiska utredningsbudgetar för liknande översyner.",
-      "confidence": 0.5,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. En typisk statlig utredning kostar 5–15 miljoner kronor. Jämförbart löfte partiets eget löfte om en utredning av stöd till vårdnadshavare: 7 miljoner kronor. Särskild översyn kan vara något mindre eller större, därav spann 5–15, bas 7."
+      "method_note": "Åtagandet är utredningen, inte den politik den kan leda till. Projektet sätter inte en påhittad standardkostnad på en utredning — ett sådant tal blir alltid vårt eget, och vad utredningen kan leda fram till har ingen lovat. Löftet står därför på noll. Det är fortfarande ett besked och räknas som ett löfte, men det belastar inte statens utgifter. Det tidigare beloppet, 7 miljoner kronor, var dessutom ankrat i partiets eget löfte om en utredning av stöd till vårdnadshavare — ett löfte som i dag står på noll. Ankaret pekade på ett tal som inte längre finns.",
+      "confidence": 0.9,
+      "calculation": "Åtagandet är utredningen, inte den politik den kan leda till. Projektet sätter inte en påhittad standardkostnad på en utredning — ett sådant tal blir alltid vårt eget, och vad utredningen kan leda fram till har ingen lovat. Löftet står därför på noll. Det är fortfarande ett besked och räknas som ett löfte, men det belastar inte statens utgifter. Det tidigare beloppet, 7 miljoner kronor, var dessutom ankrat i partiets eget löfte om en utredning av stöd till vårdnadshavare — ett löfte som i dag står på noll. Ankaret pekade på ett tal som inte längre finns."
     },
     "financing_claimed": {
       "described": false,
@@ -20688,6 +20688,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-08-13",
+        "change": "Beloppet ändrat från 7 till 0 miljoner kronor. Åtagandet är att regeringen bör tillsätta en översyn, och en utredning prissätts inte med en antagen standardkostnad. Det gamla beloppet var hämtat ur partiets eget löfte om en utredning av stöd till vårdnadshavare, som sedan dess står på noll — ankaret pekade alltså på ett tal som inte längre finns.",
+        "commit": "35e93a74d052854339e6dd0dbc9b51650a067a39"
       }
     ],
     "extraction": {
@@ -22364,14 +22369,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Kostnad för en statlig utredning med sekretariat och experter. Baserat på typiska utredningskostnader.",
-      "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. En statlig utredning kostar vanligen 5–30 miljoner kronor beroende på omfattning och tid. En juridisk översyn av brottsbalken antas vara en medelstor utredning med en kostnad på cirka 15 miljoner kronor."
+      "method_note": "Åtagandet är utredningen, inte den politik den kan leda till. Projektet sätter inte en påhittad standardkostnad på en utredning — ett sådant tal blir alltid vårt eget, och vad utredningen kan leda fram till har ingen lovat. Löftet står därför på noll. Det är fortfarande ett besked och räknas som ett löfte, men det belastar inte statens utgifter. Även straffskärpningarna ligger inuti uppdraget: citatet säger att översynen bör få i uppdrag att föreslå dem. Vad de skulle kosta om de genomfördes prissätts inte här.",
+      "confidence": 0.9,
+      "calculation": "Åtagandet är utredningen, inte den politik den kan leda till. Projektet sätter inte en påhittad standardkostnad på en utredning — ett sådant tal blir alltid vårt eget, och vad utredningen kan leda fram till har ingen lovat. Löftet står därför på noll. Det är fortfarande ett besked och räknas som ett löfte, men det belastar inte statens utgifter. Även straffskärpningarna ligger inuti uppdraget: citatet säger att översynen bör få i uppdrag att föreslå dem. Vad de skulle kosta om de genomfördes prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -22386,6 +22391,11 @@
         "date": "2026-08-07",
         "change": "Citatet är utbytt mot källans egen lydelse — källan har ett \"och\" som citatet saknade. Den tidigare formuleringen stod inte ordagrant i källan och kunde därför inte kontrolleras mot den. Beloppet är oförändrat. Se rättelseloggen.",
         "commit": "9133e3306d17421ddc4c89af28386776395cde02"
+      },
+      {
+        "date": "2026-08-13",
+        "change": "Beloppet ändrat från 15 till 0 miljoner kronor. Åtagandet är en översyn av brottsbalken, och de straffskärpningar citatet nämner är något översynen ska föreslå — inte något partiet lovar att genomföra. Den gamla uträkningen byggde på ett antaget typvärde för en statlig utredning och skrev själv ut att det ursprungliga resonemanget inte hade sparats.",
+        "commit": "35e93a74d052854339e6dd0dbc9b51650a067a39"
       }
     ],
     "extraction": {
@@ -22551,15 +22561,15 @@
     "category": "utbildning",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 2000,
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "granskare",
       "basis_url": null,
-      "method_note": "Ankrat mot Centerpartiets löfte om att reformera skolpengen, samma åtgärd hos ett annat parti.",
-      "confidence": 0.4,
-      "calculation": "Löftet pekar ut en åtgärd — att ersätta skolor för det samhällsuppdrag de bär — men anger ingen nivå, så beloppet harmoniseras med samma politik hos ett annat parti. Centerpartiets löfte om att reformera skolpengen så att den premierar ansvarstagande är prissatt till 1 000 miljoner kronor per år, och Centerpartiets löfte om en mer rättvis skolpeng för små skolor till 500. Samma politik ska kosta lika och vila på samma grund. Spannet 500–2 000 rymmer skillnaden mellan en riktad och en bred omläggning."
+      "method_note": "Åtagandet i citatet är att en översyn av friskolesektorn ska kompletteras med förslag — inte att partiet självt ersätter skolorna. Vad en utredning kan föreslå prissätts inte. Det tidigare beloppet, 1 000 miljoner kronor per år, var hämtat ur Centerpartiets löften om skolpengen. De lovar reformen rakt av; det här löftet gäller vad en utredning ska föreslå, så lånet gick över en skillnad i vad som faktiskt utlovas. Löftet står kvar publicerat och prissätts till noll.",
+      "confidence": 0.9,
+      "calculation": "Åtagandet i citatet är att en översyn av friskolesektorn ska kompletteras med förslag — inte att partiet självt ersätter skolorna. Vad en utredning kan föreslå prissätts inte. Det tidigare beloppet, 1 000 miljoner kronor per år, var hämtat ur Centerpartiets löften om skolpengen. De lovar reformen rakt av; det här löftet gäller vad en utredning ska föreslå, så lånet gick över en skillnad i vad som faktiskt utlovas. Löftet står kvar publicerat och prissätts till noll."
     },
     "financing_claimed": {
       "described": false,
@@ -22579,6 +22589,11 @@
         "date": "2026-08-05",
         "commit": "82f56108a6df33587d12dd2f659a493c0510b719",
         "change": "Beloppet ändrat från noll till 1 000 miljoner kronor per år. Posten nollades i svepet 2026-07-27 som ett inriktningslöfte, en vecka innan regeln om att en utpekad åtgärd utan nivå ska ankras. Löftet pekar ut en åtgärd — att kompensera skolor för deras samhällsuppdrag — och är nu harmoniserat med samma politik hos Centerpartiet."
+      },
+      {
+        "date": "2026-08-13",
+        "change": "Beloppet ändrat från 1 000 miljoner kronor per år till 0. För mandatperioden går löftet från 4 000 till 0 miljoner. Citatet lovar att en översyn av friskolesektorn ska kompletteras med förslag som ser till att skolor ersätts — åtagandet gäller alltså vad en utredning ska föreslå, inte vad partiet ska genomföra. Det gamla beloppet var ankrat i Centerpartiets två löften om skolpengen, men de lovar reformen rakt av. Regeln att samma politik ska kosta lika gäller samma åtagande, och här var åtagandena olika: beloppet hade lånats över den skillnaden.",
+        "commit": "35e93a74d052854339e6dd0dbc9b51650a067a39"
       }
     ],
     "extraction": {
@@ -33903,14 +33918,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "En SOU-utredning om euron: sekretariat, experter, resor, betänkande. Typisk engångskostnad 5–30 mkr.",
-      "confidence": 0.65,
-      "calculation": "Utredning med kansli (10–20 personmånader), externa experter, resor, betänkande och remiss. Engångskostnad i spannet 5–30 mkr, med bas 15 mkr."
+      "method_note": "Åtagandet är utredningen, inte den politik den kan leda till. Projektet sätter inte en påhittad standardkostnad på en utredning — ett sådant tal blir alltid vårt eget, och vad utredningen kan leda fram till har ingen lovat. Löftet står därför på noll. Det är fortfarande ett besked och räknas som ett löfte, men det belastar inte statens utgifter. Citatet reserverar sig dessutom uttryckligen: partiet ser inte euron som aktuell inom överskådlig tid. Det som utlovas är enbart utredningen.",
+      "confidence": 0.9,
+      "calculation": "Åtagandet är utredningen, inte den politik den kan leda till. Projektet sätter inte en påhittad standardkostnad på en utredning — ett sådant tal blir alltid vårt eget, och vad utredningen kan leda fram till har ingen lovat. Löftet står därför på noll. Det är fortfarande ett besked och räknas som ett löfte, men det belastar inte statens utgifter. Citatet reserverar sig dessutom uttryckligen: partiet ser inte euron som aktuell inom överskådlig tid. Det som utlovas är enbart utredningen."
     },
     "financing_claimed": {
       "described": false,
@@ -33920,7 +33935,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-13",
+        "change": "Beloppet ändrat från 15 till 0 miljoner kronor. Åtagandet är en förutsättningslös utredning om euron, och citatet säger uttryckligen att frågan inte är aktuell inom överskådlig tid. Den gamla uträkningen räknade upp kansli, experter, resor och remiss och landade på ett typvärde för en utredning i allmänhet — precis den standardkostnad regeln säger att vi inte ska sätta.",
+        "commit": "35e93a74d052854339e6dd0dbc9b51650a067a39"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -35973,14 +35994,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet avser en utredning. Kostnad för en statlig utredning (SOU) är typiskt en engångsutgift på 5–30 mkr. Inga direkta effekter av själva utredningen prissätts.",
-      "confidence": 0.65,
-      "calculation": "En utredning av SOU-typ (ledamöter, sekretariat, utfrågningar, tryck) kostar erfarenhetsmässigt cirka 5–30 mkr som engångsbelopp. Osäkerhet p.g.a. omfattning."
+      "method_note": "Åtagandet är utredningen, inte den politik den kan leda till. Projektet sätter inte en påhittad standardkostnad på en utredning — ett sådant tal blir alltid vårt eget, och vad utredningen kan leda fram till har ingen lovat. Löftet står därför på noll. Det är fortfarande ett besked och räknas som ett löfte, men det belastar inte statens utgifter. Vad utredningen kan leda till — högre eller lägre skadestånd — prissätts inte, och partiet har inte lovat någon riktning.",
+      "confidence": 0.9,
+      "calculation": "Åtagandet är utredningen, inte den politik den kan leda till. Projektet sätter inte en påhittad standardkostnad på en utredning — ett sådant tal blir alltid vårt eget, och vad utredningen kan leda fram till har ingen lovat. Löftet står därför på noll. Det är fortfarande ett besked och räknas som ett löfte, men det belastar inte statens utgifter. Vad utredningen kan leda till — högre eller lägre skadestånd — prissätts inte, och partiet har inte lovat någon riktning."
     },
     "financing_claimed": {
       "described": false,
@@ -35990,7 +36011,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-13",
+        "change": "Beloppet ändrat från 15 till 0 miljoner kronor. Åtagandet är att utreda hur skadestånd vid felaktig häktning kan kopplas till den misstänktes medverkan. Den gamla uträkningen angav 5–30 miljoner som en erfarenhetsmässig kostnad utan att peka på någon källa. Samma svar gäller nu partiets alla tre utredningslöften.",
+        "commit": "35e93a74d052854339e6dd0dbc9b51650a067a39"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
