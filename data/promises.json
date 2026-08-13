@@ -3685,7 +3685,7 @@
   },
   {
     "id": "p-2026-0067",
-    "group_id": null,
+    "group_id": "g-p-2026-0067",
     "title": "Reformera lärarutbildningen genom nytt innehåll och höjda antagningsgränser",
     "slug": "reformera-lararutbildningen-genom-nytt-innehall-och-hojda-antagningsgranser",
     "parties": [
@@ -3728,6 +3728,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 1 000 till 5 miljoner kronor, och perioden från per år till engångskostnad. Utbildningsplatserna finns redan; det som tillkommer är utredning och omställning.",
         "commit": "09a70ae94bdcb20df891022dc12bc4070bc1b9ea"
+      },
+      {
+        "date": "2026-08-13",
+        "change": "Löftet fick en delad grupp med Kristdemokraternas p-2026-0834, som lovar samma politik: höjda krav och höjd kvalitet i lärarutbildningen. Samma politik hos olika partier räknas en gång. Beloppet är oförändrat, och gruppen ändrar varken det här löftets summa eller summan av alla partiers löften.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -37515,6 +37520,771 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-08-12T16"
+    }
+  },
+  {
+    "id": "p-2026-0831",
+    "group_id": null,
+    "title": "Bevara kulturarv, mer kultur i skolan och stärkt civilt samhälle",
+    "slug": "bevara-kulturarv-mer-kultur-i-skolan-och-starkt-civilt-samhalle",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill bevara det materiella och immateriella kulturarvet, verka för mer kulturverksamhet i skolan och stärka det civila samhället – till exempel föreningar, organisationer och trossamfund.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kultur-och-media",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:03.333Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Enligt regel 13 prissätts som inriktningslöfte; kostsamma delar hanteras i specifika löften.",
+      "confidence": 0.4,
+      "calculation": "Löftet räknar upp flera politikområden (kulturarv, kultur i skolan, civilt samhälle) utan enskilt åtagande eller nivå. Base = 0. Eventuella specifika åtgärder prissätts separat på partiets andra löften för att undvika dubbelräkning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0832",
+    "group_id": null,
+    "title": "Kvotflyktingssystem på EU-nivå",
+    "slug": "kvotflyktingssystem-pa-eu-niva",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna förordar ett kvotflyktingsystem på EU-nivå.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/kvotflyktingsystem",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:04.246Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte om EU-nivå på kvotflyktingssystem. Ingen konkret åtgärd eller nivå angiven. Direkt statlig kostnad i närtid är försumbar; eventuella framtida kostnader beror på EU-förhandling.",
+      "confidence": 0.2,
+      "calculation": "Löftet anger endast stöd för principen om ett kvotflyktingssystem på EU-nivå. Ingen nivå, inget antal flyktingar, ingen tidsram. Sverige har redan ett nationellt kvotflyktingssystem, så detta är snarare en samordningsfråga än en ny utgift. Direkt kostnad ≈ 0. Eventuell framtida merkostnad vid ett infört EU-system är högst osäker och beroende av förhandling — spannet inkluderar marginell administration/omställning men ingen faktisk mottagning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0833",
+    "group_id": null,
+    "title": "Höjda löner och minskad administration för lärare",
+    "slug": "hojda-loner-och-minskad-administration-for-larare",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill stärka lärarnas status bland annat genom höjda löner, via till exempel karriärlärartjänsterna, och minskad administrativ börda.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/larare",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:05.051Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 900,
+      "msek_base": 1852,
+      "msek_high": 3000,
+      "basis": "granskare",
+      "basis_url": "https://www.skolverket.se/styrning-och-ansvar/statsbidrag/hitta-statsbidrag/statsbidrag-for-karriartjanster-2025-26",
+      "method_note": "Riktat statsbidrag för höjda lärarlöner. Lönerna sätts av huvudmännen, så statens del är bidraget — ankrat i statsbidraget för karriärtjänster, som löftet själv namnger. (belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Lärarlöner sätts av kommunerna och de andra skolhuvudmännen, inte av staten, så det staten kan lova är ett riktat bidrag. Löftet namnger karriärlärartjänsterna men ingen nivå, så beloppet ankras i vad det bidraget kostar i dag: statsbidraget för karriärtjänster uppgår enligt Skolverket till 1 852 miljoner kronor per år. En ny satsning i samma storlek som den befintliga ger 1 852 miljoner kronor per år. Det låga alternativet, 900 miljoner, motsvarar en satsning på halva det beloppet. Det höga, 3 000 miljoner, motsvarar Lärarlönelyftets nuvarande anslag, som är statens största pågående lönesatsning på lärare. Beloppet är vår uppskattning; partiet anger ingen egen siffra."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0834",
+    "group_id": "g-p-2026-0067",
+    "title": "Höjda behörighetskrav och kvalitet för lärarutbildningen",
+    "slug": "hojda-behorighetskrav-och-kvalitet-for-lararutbildningen",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Därför vill vi höja behörighetskraven till lärarutbildningen, men också höja kvaliteten på utbildningarna, samt möjliggöra rätt till fortbildning för lärare.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/larare",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:05.828Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 50,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Engångskostnad för utredning och omställningsstöd till lärosätena. Delar grupp med Moderaternas p-2026-0067, som är samma politik. (belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Höjda behörighetskrav och höjd kvalitet i lärarutbildningen är samma åtgärd som Moderaterna lovar på p-2026-0067, och samma politik ska kosta lika: en statlig utredning på 5–15 miljoner kronor plus omställningsstöd till lärosätena på 0–35 miljoner, sammanlagt 0–50 miljoner som engångskostnad med 5 miljoner som basbelopp. Höjda antagningskrav kostar inte i sig — utbildningsplatserna finns redan och betalas oavsett. Löftets tredje led, rätt till fortbildning för lärare, anger ingen nivå och prissätts inte här; vi har inte hittat något statsbidrag för lärarfortbildning att ankra det i, och en siffra utan ankare vore en gissning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0835",
+    "group_id": null,
+    "title": "Förenkla för idéburna företag i välfärden",
+    "slug": "forenkla-for-id-burna-foretag-i-valfarden",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill förenkla för idéburna företag och organisationer att verka i välfärden.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/lov",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:06.599Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Prissätts till 0; eventuella kostnader för specifika reformer hanteras separat. Eventuell admin för upphandlingsomställning kan tillkomma.",
+      "confidence": 0.65,
+      "calculation": "Löftet anger ingen specifik åtgärd, nivå eller belopp — endast en inriktning om att förenkla för idéburna aktörer. Enligt regel 13 behandlas detta som inriktningslöfte (base 0). Om det senare konkretiseras till t.ex. ändrade upphandlingsregler kan en engångskostnad för administration tillkomma, men det prissätts inte här."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0836",
+    "group_id": null,
+    "title": "Översyn av maxtaxan för att minska barngrupper",
+    "slug": "oversyn-av-maxtaxan-for-att-minska-barngrupper",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill se över maxtaxans utformning, inte minst i syfte att minska barngruppernas storlek.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/maxtaxan",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:07.354Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Utredningslöfte. Kostnaden avser översynen, inte den politik den kan leda till. (belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Löftet är att se över maxtaxans utformning, alltså att utreda — inte att ändra avgiften. Projektet prissätter en utredning till noll och sätter ingen påhittad standardkostnad på den, på samma grund som Kristdemokraternas eget löfte om att utreda stöd till anhöriga, p-2026-0722. Leder översynen till en förändrad maxtaxa prissätts den förändringen som ett eget löfte, annars räknas samma politik två gånger."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0837",
+    "group_id": null,
+    "title": "Språk- och samhällsorienteringsprov för medborgarskap",
+    "slug": "sprak-och-samhallsorienteringsprov-for-medborgarskap",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Godkänt prov i svenska och samhällsorientering ska vara ett krav.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/medborgarskap",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:08.157Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 30,
+      "msek_high": 60,
+      "basis": "granskare",
+      "basis_url": "https://www.migrationsverket.se/om-migrationsverket/statistik/svenskt-medborgarskap.html",
+      "method_note": "Provadministration för dem som ansöker om medborgarskap genom naturalisation. Antalet ansökningar är Migrationsverkets, kostnaden per sökande är vår uppskattning. (belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Migrationsverket tog 2025 emot 41 000 ansökningar om naturalisation, den väg där ett språk- och samhällskrav skulle gälla. Anmälningsvägen, 15 212 ärenden, gäller bland andra nordiska medborgare och barn och bär inget sådant krav. Statens kostnad per sökande för att utveckla, genomföra och rätta ett prov uppskattas till 500–1 000 kronor, vilket ger 20–41 miljoner kronor per år. Basbeloppet 30 miljoner motsvarar omkring 730 kronor per sökande. Det höga alternativet, 60 miljoner, rymmer löpande omarbetning av provet och en utbyggd provorganisation. Antalet är Migrationsverkets; kostnaden per sökande är vår."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0838",
+    "group_id": null,
+    "title": "Förlängd bosättningstid för medborgarskap från fem till åtta år",
+    "slug": "forlangd-bosattningstid-for-medborgarskap-fran-fem-till-atta-ar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Tiden man ska ha bott i Sverige för att kunna ansöka om medborgarskap ska utökas från fem till åtta år.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/medborgarskap",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:08.885Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Ren lag- och regeländring. Löftet hålls av lagändringen, vars direkta kostnad är försumbar. (belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Löftet hålls genom att medborgarskapslagens tidsgräns ändras från fem till åtta år. En lagändring kostar staten i praktiken ingenting: samma antal ärenden prövas, bara mot en annan tidsgräns, och ingen ny kontroll tillkommer per ärende. Samma grund som partiets egna löften om utvisning som huvudregel och tillfälliga uppehållstillstånd, p-2026-0744 och p-2026-0729, som båda står på noll. Vad en senare medborgarskapsprövning betyder för den enskilde eller för samhället är en följd av politiken, inte en statlig utgift."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0839",
+    "group_id": null,
+    "title": "Försörjningskrav och skärpt hederligt leverne vid medborgarskap",
+    "slug": "forsorjningskrav-och-skarpt-hederligt-leverne-vid-medborgarskap",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi föreslår också att ett försörjningskrav införs och att kravet på ett hederligt leverne skärps.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/medborgarskap",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:09.630Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 12,
+      "msek_base": 20,
+      "msek_high": 33,
+      "basis": "granskare",
+      "basis_url": "https://www.migrationsverket.se/om-migrationsverket/statistik/svenskt-medborgarskap.html",
+      "method_note": "Ny kontroll per ärende, till skillnad från en ren lagändring. Antalet ärenden är Migrationsverkets, kostnaden per ärende är vår. (belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Ett försörjningskrav och ett skärpt krav på hederligt leverne innebär att varje ansökan måste kontrolleras mot inkomstuppgifter och belastningsregister — en ny kontroll per ärende, inte en engångsändring av en regel. Migrationsverket tog 2025 emot 41 000 ansökningar om naturalisation. En extra handläggning på 300–800 kronor per ansökan ger 12–33 miljoner kronor per år, med 20 miljoner som basbelopp. Antalet är Migrationsverkets; kostnaden per ansökan är vår uppskattning, och osäkerheten beror på hur omfattande kontrollerna görs."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0840",
+    "group_id": null,
+    "title": "Hindra medborgarskap för personer med allvarliga brott",
+    "slug": "hindra-medborgarskap-for-personer-med-allvarliga-brott",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Personer med permanent uppehållstillstånd ska kunna hindras att få svenskt medborgarskap om de begått allvarliga eller upprepade brott.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/medborgarskap",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:10.387Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 3,
+      "msek_high": 15,
+      "basis": "granskare",
+      "basis_url": "https://www.migrationsverket.se/om-migrationsverket/statistik/svenskt-medborgarskap.html",
+      "method_note": "Reglering vars direkta kostnad är en rutinmässig registerkontroll per ärende. (belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Löftet är en regel som utestänger dömda från medborgarskap. Den direkta kostnaden är en rutinmässig kontroll mot belastningsregistret i naturalisationsärenden. Migrationsverket tog 2025 emot 41 000 sådana ansökningar; en kontroll som kostar omkring 70 kronor per ärende ger ungefär 3 miljoner kronor per år. Det höga alternativet, 15 miljoner, rymmer systemstöd och rättslig prövning när beslut överklagas. Antalet ärenden är Migrationsverkets; kostnaden per kontroll är vår."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0841",
+    "group_id": null,
+    "title": "Återkalla medborgarskap vid terrorbrott eller grov gängbrottslighet",
+    "slug": "aterkalla-medborgarskap-vid-terrorbrott-eller-grov-gangbrottslighet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Det ska kunna ske för dem med dubbelt medborgarskap som begått exempelvis terroristbrott eller systemhotande brottslighet såsom grova brott i gängmiljö, eller vars medborgarskap beviljats till följd av oriktiga uppgifter.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/medborgarskap",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:11.211Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Administrativ och rättslig handläggning av medborgarskapsåterkallelser. Lagen är en reglering; beloppet avser statens processkostnad, inte samhällsföljder.",
+      "confidence": 0.35,
+      "calculation": "Återkallande av medborgarskap kräver utredning per fall (Migrationsverket + domstol). Antag ~20–100 fall/år (dubbelt medborgarskap + grov brottslighet är liten grupp). Kostnad per fall ~0,2–0,5 mkr inklusive rättsprocess. 20 × 0,2 ≈ 4 mkr i lågända; 100 × 0,3 ≈ 30 mkr i högända. Base ~50 fall × 0,2 mkr ≈ 10 msek."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0842",
+    "group_id": null,
+    "title": "Stoppa kompetensutvisningar och skärpa regler för arbetskraftsinvandring",
+    "slug": "stoppa-kompetensutvisningar-och-skarpa-regler-for-arbetskraftsinvandring",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill stoppa kompetensutvisningarna och samtidigt skärpa reglerna för arbetskraftsinvandring för att motverka fusk/utnyttjande och undanträngning av invånare i utanförskap.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/migration",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:11.968Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 45,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring avseende kompetensutvisningar och skärpt arbetskraftsinvandring. Direkt statlig kostnad är främst administrativ (Migrationsverket, handläggning, eventuellt mer kontroll). Avser…",
+      "confidence": 0.35,
+      "calculation": "Löftet är huvudsakligen ett regel- och förbudspolitiskt ingripande (regel 9). Direkt kostnad: ändrade föreskrifter, eventuellt utökad handläggning/kontroll vid Migrationsverket och Arbetsförmedlingen. Jämförbar åtgärd p-2026-0081 landar på ~15 msek/år för liknande administrativa reformer. Låg: ~5 msek (enbart regeländring). Bas: ~15 msek (i linje med jämförbart löfte). Hög: ~45 msek (vid behov av betydligt skärpt kontroll och mer resurser till handläggning). Osäkerheten är stor eftersom konkreta nivåer saknas."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0843",
+    "group_id": null,
+    "title": "Främja kvalificerad arbetskraftsinvandring",
+    "slug": "framja-kvalificerad-arbetskraftsinvandring",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill främja kvalificerad arbetskraftsinvandring.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/migration",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:12.728Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 40,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte om att främja arbetskraftsinvandring; kostnad avser administrativa åtgärder snarare än samhällseffekter. I linje med jämförbart löfte.",
+      "confidence": 0.35,
+      "calculation": "Ingen specifik åtgärd angiven. Kostnad avser statlig administration: resurser till Migrationsverket för snabbare handläggning av arbetstillstånd samt eventuella marknadsföringsinsatser. ~10–20 handläggartjänster × 0,5–0,7 mkr/tjänst ≈ 5–15 mkr; med utökade främjande åtgärder upp mot 40 mkr. Jämförbart löfte p-2026-0081 anger 15 msek/år."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0844",
+    "group_id": null,
+    "title": "Vetenskapliga metoder mot mobbning i skolorna",
+    "slug": "vetenskapliga-metoder-mot-mobbning-i-skolorna",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Därför ska skolor använda metoder mot mobbning och kränkande behandling som bygger på vetenskap och beprövad erfarenhet.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/mobbning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:13.489Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: krav på vetenskapliga metoder mot mobbning. Direkt statlig kostnad förmodligen begränsad till vägledning/stöd från Skolverket, inte själva implementeringen som är skolans ansvar.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ingen nivå, belopp eller specifikt program. Kostnad utgörs i så fall av Skolverkets arbete med kriterier, vägledning och eventuellt stödmaterial — i storleksordningen 0–50 msek/år beroende på ambitionsnivå. Själva anti-mobbningsarbetet finansieras inom skolans ordinarie resurser och är inte en ny statlig utgift."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0845",
+    "group_id": null,
+    "title": "Stärka elevhälsan för att förebygga mobbning",
+    "slug": "starka-elevhalsan-for-att-forebygga-mobbning",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill fortsätta stärka elevhälsan, eftersom en väl fungerande elevhälsa är en viktig del i det förebyggande arbetet mot mobbning och psykisk ohälsa.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/mobbning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:14.266Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Övergripande formulering vars konkreta del partiet prissätter separat. (belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Löftet säger att elevhälsan ska fortsätta stärkas men anger ingen nivå, inget antal tjänster och inget anslag. Partiets konkreta åtagande på området är elevhälsogarantin, som prissätts på p-2026-0827 med 1 500 miljoner kronor per år. Att sätta ett belopp här skulle räkna samma politik två gånger. Elevhälsan drivs dessutom av skolhuvudmännen. Samma grund som p-2026-0670 och p-2026-0715, som båda står på noll."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0846",
+    "group_id": null,
+    "title": "Se över hur nämndemän utses",
+    "slug": "se-over-hur-namndeman-utses",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill se över systemet för hur nämndemän utses i syfte att säkerställa att nämndemännen inte tar politisk eller annan ovidkommande hänsyn.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/namndeman",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:15.054Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Utredningslöfte. Kostnaden avser översynen, inte den politik den kan leda till. (belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Löftet är att se över hur nämndemän utses, alltså att tillsätta en utredning — inte att ändra systemet. Projektet prissätter en utredning till noll och sätter ingen påhittad standardkostnad på den, på samma grund som partiets eget löfte om att utreda stöd till anhöriga, p-2026-0722. Leder översynen till ett förändrat sätt att utse nämndemän prissätts den förändringen som ett eget löfte."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0847",
+    "group_id": null,
+    "title": "Narkotikafritt samhälle och stopp för drogliberalisering",
+    "slug": "narkotikafritt-samhalle-och-stopp-for-drogliberalisering",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill ha ett narkotikafritt samhälle och arbetar för att stoppa alla tendenser till drogliberalisering.",
+    "date_stated": "2026-08-13",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/narkotika",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-13T12:47:15.841Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte om att bibehålla nuvarande narkotikapolitik och motverka liberalisering. Ingen ny konkret åtgärd eller utgift specificerades.",
+      "confidence": 0.2,
+      "calculation": "Löftet avser politisk inriktning: bibehålla rådande narkotikapolitik och stoppa liberalisering. Ingen ny statlig utgift identifieras; existerande insatser ligger redan i basbudgeten. Base = 0."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-13T12"
     }
   }
 ]
