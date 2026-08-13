@@ -16,6 +16,12 @@ allowlist_domains:
   - dn.se
   - svd.se
   - svt.se
+  # Underdomän: G2 kräver exakt domänmatch. Valkompassen är partiernas egna
+  # svar och egna motiveringstexter på frågor SVT ställt likadant till alla
+  # åtta — inte SVT:s referat av vad partierna tycker. Den bär därför besked
+  # som partiernas egna sidor kan sakna, och den är likformig över partierna.
+  # Mänskligt beslut 2026-08-13.
+  - valkompass.svt.se
   - sverigesradio.se
   - tt.se
   - altinget.se
