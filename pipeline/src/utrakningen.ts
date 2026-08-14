@@ -28,6 +28,13 @@ export interface UtrakningsLofte extends ScanPromise {
     msek_low?: number;
     msek_high?: number;
     type?: string;
+    /**
+     * Kö-posten bär ofta sitt skäl här och inte i `calculation` — så gjorde
+     * facit, som skrev «regel 13» i noten och lämnade uträkningen tom på det
+     * ledet. Ankarkontrollen läser båda fälten, annars mäter den kön och det
+     * publicerade beståndet på olika grunder.
+     */
+    method_note?: string;
   };
 }
 
@@ -74,6 +81,85 @@ const NOLLSKAL: Array<[string, RegExp]> = [
 export function nollskal(calculation: string): string | null {
   for (const [namn, re] of NOLLSKAL) if (re.test(calculation)) return namn;
   return null;
+}
+
+/**
+ * Alla skäl uträkningen namnger, inte bara det första.
+ *
+ * Skillnaden avgör en av kontrollerna nedan. En uträkning som säger både
+ * «löftet räknar upp fem delar» och «delarna ligger på partiets egna löften»
+ * bär två skäl, och bara det ena av dem överlever att citatet pekar ut en
+ * åtgärd. Läser man bara det första blir svaret slumpen i vilken ordning
+ * listan råkar stå.
+ */
+export function nollskalen(calculation: string): string[] {
+  return NOLLSKAL.filter(([, re]) => re.test(calculation)).map(([namn]) => namn);
+}
+
+/**
+ * Verb som gör citatet till ett åtagande om en åtgärd, inte en beskrivning av
+ * ett tillstånd. «Höja», «införa», «bygga ut» — någon ska göra något.
+ */
+const ATGARDSVERB =
+  /\b(höja|höjer|höjs|höjning|införa|inför|införs|bygga ut|bygger ut|utöka|utökar|förstärka|stärka|återinföra|återinför|avskaffa|avskaffar|slopa|slopar|dubblera|fördubbla)\b/iu;
+
+/**
+ * Ett namngivet statligt stöd i citatet — barnbidraget, garantipensionen,
+ * karriärlärartjänsterna. Sammansättningen i bestämd form är det som gör
+ * åtgärden identifierbar: det finns en befintlig post med en känd storlek att
+ * ankra beloppet i.
+ *
+ * Efterleden är valda mot mätning, inte gissade. Ett bredare mönster som också
+ * tog `tjänsten` löst gav falsklarm av ett enda slag — «hemtjänsten»,
+ * «socialtjänsten», «räddningstjänsten» är verksamheter, inte utbetalningar —
+ * och de faller bort när efterledet krävs tillsammans med ett åtgärdsverb.
+ */
+const NAMNGIVET_STOD =
+  /\b\p{L}{3,}(?:bidraget|bidragen|bidrag|ersättningen|avdraget|tillägget|pensionen|garantin|tjänsterna|lyftet|anslaget|premien|checken|pengen|stödet)\b/iu;
+
+/**
+ * Pekar citatet ut en bestämd, namngiven åtgärd? Ger ordet som bär den, så att
+ * en invändning kan skriva ut vad den läst.
+ */
+export function utpekadAtgard(quote: string): string | null {
+  if (!ATGARDSVERB.test(quote)) return null;
+  const m = NAMNGIVET_STOD.exec(quote);
+  return m ? m[0] : null;
+}
+
+/**
+ * De två nollskäl som ankarregeln kör över.
+ *
+ * Regeln är fastställd genom mänskligt beslut och står i `A5-cost.md`: pekar
+ * löftet ut en bestämd åtgärd utan att säga hur mycket, ankras beloppet i vad
+ * samma åtgärd senast kostade. Nollningsregeln gäller bara löften som **varken**
+ * pekar ut en åtgärd eller anger en nivå — så «bred uppräkning» och «varken
+ * åtgärd eller nivå anges» kan inte bära en nolla när åtgärden står i citatet.
+ *
+ * De övriga skälen överlever. Att åtgärden är prissatt på ett annat löfte, att
+ * den är omfördelning eller att den hålls av en lagändring är sant oavsett hur
+ * tydligt citatet pekar — och just därför tiger kontrollen om dem.
+ */
+const ANKARET_KOR_OVER = new Set(["bred uppräkning", "varken åtgärd eller nivå anges"]);
+
+/**
+ * Flaggan, som ett svar: vilken åtgärd citatet pekar ut när nollan inte håller.
+ * Null betyder tyst — antingen pekar citatet inte ut något, eller så bär
+ * nollningen ett skäl som överlever att den gör det.
+ *
+ * Samma funktion läses av två håll: kontroll 6 nedan, som går mot publicerat
+ * data, och `sync-review-issues.mts`, som skriver den i kö-postens issue innan
+ * en människa fattar beslutet. Det är avsiktligt en flagga och ingen grind —
+ * mätt mot de 313 nollade publicerade löftena 2026-08-14 föll två, och en av
+ * dem var ett verkligt fel. Ett prov som bara krävde ett åtgärdsverb hade
+ * fällt 82 och varit rött varje dag.
+ */
+export function ankarflagga(quote: string, cost: { msek_base: number; calculation?: string }): string | null {
+  if (cost.msek_base !== 0) return null;
+  const atgard = utpekadAtgard(quote);
+  if (atgard === null) return null;
+  const skalen = nollskalen(cost.calculation ?? "");
+  return skalen.every((s) => ANKARET_KOR_OVER.has(s)) ? atgard : null;
 }
 
 /**
@@ -149,7 +235,29 @@ export function provaUtrakningen(p: UtrakningsLofte): Invandning[] {
   const calc = (c.calculation ?? "").trim();
   const ut: Invandning[] = [];
 
-  // 1. Uträkningen är offentlig. Saknas den finns ingenting att följa.
+  // 1. Ankaret, före allt annat — det är den enda kontrollen som inte behöver
+  //    någon uträkning. En nolla vars citat namnger åtgärden ska synas även när
+  //    stegen saknas helt, och i kön saknas de ofta: femton av fyrtioåtta
+  //    kö-poster den 2026-08-14 bar ingen uträkning alls. Låg kontrollen efter
+  //    returen nedan hade den varit blind för precis de posterna.
+  {
+    const skaltext = [calc, (c.method_note ?? "").trim()].join(" ").trim();
+    const atgard = ankarflagga(p.quote, { msek_base: c.msek_base, calculation: skaltext });
+    if (atgard !== null) {
+      const skalen = nollskalen(skaltext);
+      ut.push({
+        kontroll: "nollan_utan_ankare",
+        roll: "sakkunnig",
+        invandning:
+          "Citatet namnger en åtgärd som redan finns och kostar pengar i dag. Att den inte anges i kronor gör den inte till en riktning — vad kostade den senast den gjordes?",
+        matt: `cost.msek_base är 0, citatet namnger "${atgard}", och nollningen vilar på ${
+          skalen.length === 0 ? "inget angivet skäl" : `«${skalen.join("», «")}»`
+        }.`,
+      });
+    }
+  }
+
+  // 2. Uträkningen är offentlig. Saknas den finns ingenting att följa.
   if (calc === "") {
     ut.push({
       kontroll: "utrakningen_saknas",
@@ -161,7 +269,7 @@ export function provaUtrakningen(p: UtrakningsLofte): Invandning[] {
     return ut; // Utan uträkning är de övriga kontrollerna meningslösa.
   }
 
-  // 2. Beloppet ska gå att följa ur stegen.
+  // 3. Beloppet ska gå att följa ur stegen.
   const angivet = statedBaseMsek(calc);
   if (c.msek_base > 0 && angivet === null && parseAmountsMsek(calc).length === 0) {
     ut.push({
@@ -173,7 +281,7 @@ export function provaUtrakningen(p: UtrakningsLofte): Invandning[] {
     });
   }
 
-  // 3. Partiets egen siffra gäller. Finns den i citatet ska den finnas i stegen.
+  // 4. Partiets egen siffra gäller. Finns den i citatet ska den finnas i stegen.
   const egna = partietsSiffror(p.quote);
   const iUtrakningen = new Set(parseAmountsMsek(calc));
   const forbigangna = egna.filter((n) => !iUtrakningen.has(n) && n !== c.msek_base);
@@ -190,7 +298,7 @@ export function provaUtrakningen(p: UtrakningsLofte): Invandning[] {
     });
   }
 
-  // 4. Ett värdeord är ingen nivå, och får aldrig bli partiets egen siffra.
+  // 5. Ett värdeord är ingen nivå, och får aldrig bli partiets egen siffra.
   if (
     c.msek_base > 0 &&
     c.basis === "parti" &&
@@ -206,7 +314,7 @@ export function provaUtrakningen(p: UtrakningsLofte): Invandning[] {
     });
   }
 
-  // 5. En nollning ska bära sitt skäl i uträkningen.
+  // 6. En nollning ska bära sitt skäl i uträkningen.
   if (c.msek_base === 0 && nollskal(calc) === null) {
     ut.push({
       kontroll: "nollan_utan_skal",
@@ -217,7 +325,7 @@ export function provaUtrakningen(p: UtrakningsLofte): Invandning[] {
     });
   }
 
-  // 6. Osäkerheten hör hemma i spannet, inte i basbeloppet.
+  // 7. Osäkerheten hör hemma i spannet, inte i basbeloppet.
   const low = c.msek_low;
   const high = c.msek_high;
   if (low !== undefined && high !== undefined) {
@@ -239,7 +347,7 @@ export function provaUtrakningen(p: UtrakningsLofte): Invandning[] {
     }
   }
 
-  // 7. Skatteord i citatet mot en utgiftstyp — men bara när uträkningen inte
+  // 8. Skatteord i citatet mot en utgiftstyp — men bara när uträkningen inte
   //    själv förklarar skillnaden. Det är den kontroll som skulle ha stoppat
   //    mina elva falska fynd, och villkoret är hela poängen med den.
   if (

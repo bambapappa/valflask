@@ -4,6 +4,8 @@ import {
   provaUtrakningen,
   anmarkningar,
   nollskal,
+  nollskalen,
+  ankarflagga,
   forklararSkillnaden,
   type UtrakningsLofte,
 } from "../src/utrakningen.ts";
@@ -75,6 +77,96 @@ test("en nollning som bär sitt skäl går fri, oavsett vilka ord den valt", () 
   ]) {
     assert.notEqual(nollskal(skal), null, `skälet borde kännas igen: ${skal}`);
   }
+});
+
+/**
+ * Ankaret. Facit är kö-post [2] från 2026-08-13, ordagrant som skörden lämnade
+ * den: nollad med hänvisning till regeln om breda inriktningslöften, fast
+ * citatet namnger karriärlärartjänsterna. Posten godkändes för hand till
+ * 1 852 miljoner kronor per år — statsbidragets faktiska storlek — och lever i
+ * dag som `p-2026-0833`. Ingen kontroll såg felet när det begicks.
+ */
+const FACIT_CITAT =
+  "Vi vill stärka lärarnas status bland annat genom höjda löner, via till exempel " +
+  "karriärlärartjänsterna, och minskad administrativ börda.";
+const FACIT_UTRAKNING =
+  "Citatet anger endast en målsättning ('stärka status... bland annat genom'). Utan konkret " +
+  "antal karriärlärartjänster eller lönehöjningar är det en riktning, inte en åtgärd att " +
+  "prissätta. Baseras på regel 13 för breda sammanfattningslöften.";
+
+test("facit: en nolla som vilar på inriktningsregeln faller när citatet namnger åtgärden", () => {
+  const p = lofte({
+    quote: FACIT_CITAT,
+    cost: { msek_low: 0, msek_base: 0, msek_high: 500, calculation: FACIT_UTRAKNING },
+  });
+  assert.ok(kontroller(p).includes("nollan_utan_ankare"));
+  assert.equal(ankarflagga(FACIT_CITAT, { msek_base: 0, calculation: FACIT_UTRAKNING }), "karriärlärartjänsterna");
+});
+
+test("samma post prissatt är ingen invändning — flaggan gäller nollan, inte citatet", () => {
+  assert.equal(ankarflagga(FACIT_CITAT, { msek_base: 1852, calculation: FACIT_UTRAKNING }), null);
+});
+
+/**
+ * Motprovet, och det som gör flaggan användbar: de fyra publicerade nollorna
+ * som citatledet också träffar men vars skäl överlever. Faller någon av dem är
+ * flaggan brus, inte en flagga.
+ */
+test("en nolla vars skäl överlever en utpekad åtgärd tiger", () => {
+  const tysta: Array<[string, string]> = [
+    [
+      "Det är därför dags att avskaffa jobbskatteavdraget och istället går Centerpartiet i val att ersätta det med en skattefri grundlön.",
+      "Reformen prissätts en gång, netto, genom de löften som bär beloppet. Att räkna den här också vore att räkna samma reform två gånger.",
+    ],
+    [
+      "Dadgostar lyfte också att Vänsterpartiet vill höja barnbidraget rejält, bygga ut öppna förskolan och stoppa regeringens förslag om att sänka föräldrapenningen kraftigt.",
+      "Att behålla en nivå som redan gäller är ingen ny utgift för staten jämfört med i dag.",
+    ],
+    [
+      "Vi vill införa en statlig dagpenning för arbetslösa i försörjningsstödet.",
+      "Statlig dagpenning ersätter kommunalt försörjningsstöd för samma målgrupp; utan nivå görs inget påstående om offentlig nettokostnad.",
+    ],
+    [
+      "Höja lönerna, höja barnbidragen, genomföra reformer för billigare mediciner, bättre pensioner, slopat karensavdrag.",
+      "Löftet räknar upp fem delar och prissätts inte här, eftersom delarna ligger på partiets egna löften.",
+    ],
+  ];
+  for (const [quote, calculation] of tysta) {
+    assert.equal(
+      ankarflagga(quote, { msek_base: 0, calculation }),
+      null,
+      `flaggan borde tiga om: ${quote.slice(0, 60)}…`,
+    );
+  }
+});
+
+/**
+ * Det sista fallet ovan är hela skälet till att `nollskalen` läser alla skäl
+ * och inte bara det första: uträkningen bär både «bred uppräkning» och
+ * «prissatt en gång på ett annat löfte», och bara det andra överlever.
+ */
+test("alla skäl läses, inte bara det första listan råkar matcha", () => {
+  const bada =
+    "Löftet räknar upp fem delar och prissätts inte här, eftersom delarna ligger på partiets egna löften.";
+  assert.equal(nollskal(bada), "bred uppräkning");
+  assert.ok(nollskalen(bada).includes("prissatt en gång på ett annat löfte"));
+  assert.ok(nollskalen(bada).length > 1, "uträkningen bär mer än ett skäl");
+});
+
+test("en verksamhet är inget namngivet stöd — hemtjänst och socialtjänst är inte utbetalningar", () => {
+  for (const quote of [
+    "Vi vill stärka polisen, socialtjänsten, elevhälsan och fritidsverksamheten.",
+    "Därför kräver vi att språkkravet i hemtjänsten införs.",
+  ]) {
+    assert.equal(ankarflagga(quote, { msek_base: 0, calculation: "" }), null, quote);
+  }
+});
+
+test("ett namngivet stöd utan åtgärdsverb är en beskrivning, inte ett åtagande", () => {
+  assert.equal(
+    ankarflagga("Barnbidraget är en av välfärdens grundbultar.", { msek_base: 0, calculation: "" }),
+    null,
+  );
 });
 
 test("ett spann som inte rymmer basbeloppet fastnar", () => {
