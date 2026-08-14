@@ -15701,14 +15701,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2500,
-      "msek_base": 5000,
-      "msek_high": 12000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Målet gäller privata och offentliga anslag tillsammans. Beloppet är statens del av ökningen, räknad som genomsnittet under upptrappningen till målet.",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": "https://www.scb.se/hitta-statistik/statistik-efter-amne/forskning-och-det-digitala-samhallet/forskning-och-utveckling/statliga-anslag-till-forskning-och-utveckling/",
+      "method_note": "Målet gäller all forskning, även näringslivets. Statens egen del prissätts på partiets löfte om en procent av BNP till statlig forskning, en gång.",
       "confidence": 0.35,
-      "calculation": "Sveriges samlade forskningssatsningar ligger på omkring 3,4 procent av bruttonationalprodukten, som är omkring 6 200 miljarder kronor. För att nå fyra procent krävs ungefär 0,6 procentenheter mer. Det offentliga står för omkring 27 procent av dagens forskning, och behåller staten sin andel blir dess del av ökningen omkring 0,16 procentenheter, alltså omkring 9 900 miljoner kronor per år vid målet. Löftet säger inte vilket år målet ska vara nått, och ett mål som nås i slutet av mandatperioden kostar i genomsnitt ungefär hälften under perioden: 5 000 miljoner kronor per år. Resten av ökningen ska komma från privata anslag, som staten inte bestämmer över."
+      "calculation": "Löftet är att forskningen i Sverige totalt ska nå fyra procent av BNP. Den summan är inte statens: fyra procent avser all forskning, och näringslivet står för den större delen. Företagens forskning är ingen statlig utgift, och staten kan bara lova sin egen del. Den delen lovar Liberalerna separat och med en egen siffra — att statens forskningsinvesteringar ska höjas med drygt 16 miljarder kronor per år till en procent av BNP. Där räknas kostnaden, en gång. Det tidigare beloppet, 5 000 miljoner kronor per år, var vår egen uppskattning, byggd på antagandet att statens andel redan låg på ungefär en procent av BNP. Det stämmer inte: statens forskningsanslag är 48,8 miljarder kronor 2025 enligt Statistiska centralbyrån."
     },
     "financing_claimed": {
       "described": false,
@@ -15723,6 +15723,11 @@
         "date": "2026-07-28",
         "change": "Beloppet omräknat från 10 000 till 5 000 miljoner kronor per år. Den tidigare uträkningen räknade målnivån som om den gällde från första dagen. Löftet anger inget år, och ett mål som nås i slutet av mandatperioden kostar genomsnittet av upptrappningen — samma regel som redan tillämpas på försvarsmålen. Uträkningen skriver också ut att större delen av ökningen ska komma från privata anslag, som staten inte bestämmer över.",
         "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      },
+      {
+        "date": "2026-08-14",
+        "change": "Beloppet gick från 5 000 till 0 miljoner kronor per år. Det gamla beloppet var vår egen uppskattning av statens del av målet om fyra procent av BNP, och den vilade på antagandet att statens andel redan låg på ungefär en procent — vilket den inte gör. Liberalerna anger själva vad statens del ska kosta, drygt 16 miljarder kronor per år, i sitt löfte om en procent av BNP till statlig forskning. Kostnaden räknas där, en gång. Det här löftet är manifestets formulering av samma mål och står därför på noll.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -27058,7 +27063,7 @@
       "basis_url": "https://www.vansterpartiet.se/nyheter/kvinnolonelyftet-dags-att-ge-valfardens-kvinnor-ratt-lon/",
       "method_note": "Partiets egen siffra. Källan anger både helheten och årstakten; årstakten är den som gäller för ett år.",
       "confidence": 0.7,
-      "calculation": "Partiet anger själv nivån: satsningen är 30 miljarder kronor över tio år, och källan skriver ut vad det blir per år — \"tre miljarder kronor per år i 10 år avsätts i en särskild jämställdhetspott\". Beloppet för ett år är alltså 3 000 miljoner kronor, och för mandatperiodens fyra år 12 000 miljoner. Spannet motsvarar tre fjärdedelar till en och en tredjedels årstakt, eftersom potten fördelas av arbetsmarknadens parter och utfallet per år kan variera."
+      "calculation": "Partiet anger själv nivån: satsningen är 30 miljarder kronor över tio år, och källan skriver ut vad det blir per år — \"tre miljarder kronor per år i 10 år avsätts i en särskild jämställdhetspott\". Beloppet för ett år är alltså 3 000 miljoner kronor, och för mandatperiodens fyra år 12 000 miljoner. Partiet skriver också att potten ligger utöver det så kallade märket, alltså ovanpå det arbetsmarknadens parter kommer överens om, och inte inom det. Spannet motsvarar tre fjärdedelar till en och en tredjedels årstakt, eftersom potten fördelas av arbetsmarknadens parter och utfallet per år kan variera."
     },
     "financing_claimed": {
       "described": false,
@@ -27073,6 +27078,11 @@
         "date": "2026-08-07",
         "change": "Beloppet har gått från 30 000 till 3 000 miljoner kronor per år. Löftet var prissatt till hela satsningens storlek — 30 miljarder kronor — som om den betalades varje år, trots att partiet anger att de 30 miljarderna gäller över tio år och att årstakten är tre miljarder. Ingen ny bedömning ligger bakom ändringen; det är partiets egen siffra, läst rätt.",
         "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      },
+      {
+        "date": "2026-08-14",
+        "change": "Uträkningen säger nu också att jämställdhetspotten ligger utöver det så kallade märket. Uppgiften stod i en andra post om samma sats, som samma dag drogs tillbaka som dubblett, och skulle annars ha försvunnit med den. Beloppet, citatet och källan är oförändrade.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -31423,14 +31433,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 5000,
-      "msek_high": 8000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Målet är en ambitionshöjning utan exakt finansiering. Partiets jämförbara löfte om fyra procent av BNP till forskning kostnadsberäknas till 5 000 msek/år. Avvikelser saknas, varför samma intervall används.",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": "https://www.scb.se/hitta-statistik/statistik-efter-amne/forskning-och-det-digitala-samhallet/forskning-och-utveckling/statliga-anslag-till-forskning-och-utveckling/",
+      "method_note": "Målet gäller all forskning, även näringslivets. Statens egen del prissätts på partiets löfte om en procent av BNP till statlig forskning, en gång.",
       "confidence": 0.5,
-      "calculation": "Sveriges BNP ≈ 6 000 mdkr; 4 % innebär total FoU ~240 mdkr. Offentlig FoU-andel ~1 % (60 mdkr). En ökning till 4 % totalt skulle kräva mer privat FoU, men statlig satsning uppskattas till ett politiskt rimligt tillskott om 3–8 mdkr/år, med basen 5 mdkr i linje med jämförbart löfte."
+      "calculation": "Löftet är att forskningen i Sverige totalt ska nå fyra procent av BNP. Den summan är inte statens: fyra procent avser all forskning, och näringslivet står för den större delen. Företagens forskning är ingen statlig utgift, och staten kan bara lova sin egen del. Den delen lovar Liberalerna separat och med en egen siffra — att statens forskningsinvesteringar ska höjas med drygt 16 miljarder kronor per år till en procent av BNP. Där räknas kostnaden, en gång. Det tidigare beloppet, 5 000 miljoner kronor per år, var vår egen uppskattning, byggd på antagandet att statens andel redan låg på ungefär en procent av BNP. Det stämmer inte: statens forskningsanslag är 48,8 miljarder kronor 2025 enligt Statistiska centralbyrån."
     },
     "financing_claimed": {
       "described": false,
@@ -31440,7 +31450,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-14",
+        "change": "Beloppet gick från 5 000 till 0 miljoner kronor per år. Det gamla beloppet var vår egen uppskattning av statens del av målet om fyra procent av BNP, och den vilade på antagandet att statens andel redan låg på ungefär en procent — vilket den inte gör. Liberalerna anger själva vad statens del ska kosta, drygt 16 miljarder kronor per år, i sitt löfte om en procent av BNP till statlig forskning. Kostnaden räknas där, en gång. Det här löftet är sakfrågesidans formulering av samma mål och står därför på noll.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -32124,8 +32140,14 @@
     },
     "comparisons": [],
     "quip": "Beloppet 1600 msek är anslaget för gröna skattekrediter, medan finansieringen får gro i framtiden.",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-14",
+        "change": "Tillbakadraget som Miljöpartiets egen dubblett av partiets andra löfte om gröna skattekrediter. Samma förslag står som två poster ur samma artikel samma dag, båda med 1 600 miljoner kronor per år, och ingen av dem låg i en delad grupp — så politiken räknades två gånger. Den kvarvarande posten står kvar av två skäl: den bokför krediten som en skattelättnad och inte som en utgift, vilket är rätt och räknas åt rätt håll i summan, och den har en offentlig uträkning som förklarar att källans 1,6 miljarder är ett tak per investering och inte vad reformen kostar. Den här posten saknade uträkning helt. Ingen riksdagshandling är kopplad till posten. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -38376,9 +38398,10 @@
       "msek_base": 16000,
       "msek_high": 21600,
       "basis": "parti",
-      "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "basis_url": "https://www.scb.se/hitta-statistik/statistik-efter-amne/forskning-och-det-digitala-samhallet/forskning-och-utveckling/statliga-anslag-till-forskning-och-utveckling/",
+      "method_note": "Beloppet är Liberalernas eget: drygt 16 miljarder kronor per år för att höja statens forskningsinvesteringar till en procent av BNP. Spannet är vårt.",
+      "confidence": 0.7,
+      "calculation": "Partiet anger själv beloppet: «drygt 16 miljarder kronor till 1 procent av BNP». Den siffran går att kontrollera mot vad staten anslår i dag. Statens budgetanslag till forskning och utveckling uppgår enligt Statistiska centralbyrån till 48,8 miljarder kronor 2025. En procent av en BNP kring 6 500 miljarder är omkring 65 miljarder, och skillnaden är alltså ungefär 16 miljarder kronor per år — vilket är det partiet säger. Partiets mål att forskningen totalt ska nå fyra procent av BNP räknas inte ovanpå. Fyra procent avser all forskning, även näringslivets, och företagens forskning är ingen statlig utgift. Staten kan bara lova sin egen del. Spannet är vårt: 12 000 miljoner om höjningen fasas in över mandatperioden, 21 600 om BNP växer snabbare än anslagen."
     },
     "financing_claimed": {
       "described": false,
@@ -38388,7 +38411,13 @@
     "comparisons": [],
     "quip": "Sexton miljarder markerade i kalkylen; finansieringskolumnen lämnas medvetet blank för vidare studier.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-14",
+        "change": "Löftet har fått en offentlig uträkning. Beloppet, 16 000 miljoner kronor per år, är oförändrat och är partiets eget, men det publicerades utan att visa några steg. Uträkningen kontrollerar nu partiets siffra mot statens faktiska forskningsanslag och skriver ut varför partiets mål om fyra procent av BNP inte räknas ovanpå. Samtidigt nollställs partiets två löften om fyra procent, som visade sig prissätta samma sak.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -38434,8 +38463,14 @@
     },
     "comparisons": [],
     "quip": "Tre miljarder utöver märket får anses vara en ganska fri tolkning av begreppet märke.",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-14",
+        "change": "Tillbakadraget som Vänsterpartiets egen dubblett av partiets löfte om Kvinnolönelyftet. Samma sats står som två poster ur samma artikel samma dag: där «en satsning på 30 miljarder kronor över tio år», här «tre miljarder kronor per år i 10 år» — samma tal sagt på två sätt. Båda bar 3 000 miljoner kronor per år, så satsningen räknades två gånger. Den kvarvarande posten står kvar därför att den bär det fylligare citatet, namnger satsningen och har en offentlig uträkning; den här postens enda egna uppgift, att potten ligger utöver det så kallade märket, är införd där innan indragningen. Ingen riksdagshandling är kopplad till posten. Se rättelseloggen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
