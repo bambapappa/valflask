@@ -1238,7 +1238,7 @@
     "party": "s",
     "current": {
       "position": "nej",
-      "statement_id": "st-2026-0048"
+      "statement_id": "st-2026-0061"
     },
     "statements": [
       {
@@ -1261,6 +1261,28 @@
           "model": "manuell (skarpare källa)",
           "verified_by": "mänsklig granskning",
           "run_id": "manual-stances-2026-07-15"
+        }
+      },
+      {
+        "id": "st-2026-0061",
+        "position": "nej",
+        "condition_note": null,
+        "quote": "Däremot anser vi att vi inte ska återgå till en ordning med permanenta uppehållstillstånd (PUT) som huvudregel.",
+        "person": null,
+        "date_stated": "2026-08-14",
+        "source": {
+          "url": "https://valkompass.svt.se/2026/parti/socialdemokraterna",
+          "domain": "valkompass.svt.se",
+          "archive_url": null,
+          "fetched_at": "2026-08-14T09:00:00.000000Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": "2026-08-14",
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "manuell (SVT:s valkompass 2026)",
+          "verified_by": "mänsklig granskning",
+          "run_id": "a3-uppehallstillstand-2026-08-14"
         }
       }
     ],
@@ -1305,7 +1327,7 @@
     "party": "v",
     "current": {
       "position": "ja",
-      "statement_id": "st-2026-0044"
+      "statement_id": "st-2026-0062"
     },
     "statements": [
       {
@@ -1328,6 +1350,28 @@
           "model": "manuell (skarpare källa)",
           "verified_by": "mänsklig granskning",
           "run_id": "manual-stances-2026-07-15"
+        }
+      },
+      {
+        "id": "st-2026-0062",
+        "position": "ja",
+        "condition_note": null,
+        "quote": "PUT som huvudregel ger bäst förutsättningar för snabb etablering och ett sammanhållet samhälle.",
+        "person": null,
+        "date_stated": "2026-08-14",
+        "source": {
+          "url": "https://valkompass.svt.se/2026/parti/vansterpartiet",
+          "domain": "valkompass.svt.se",
+          "archive_url": null,
+          "fetched_at": "2026-08-14T09:00:00.000000Z"
+        },
+        "source_status": "ok",
+        "source_checked_at": "2026-08-14",
+        "related_promise_ids": [],
+        "extraction": {
+          "model": "manuell (SVT:s valkompass 2026)",
+          "verified_by": "mänsklig granskning",
+          "run_id": "a3-uppehallstillstand-2026-08-14"
         }
       }
     ],
@@ -2544,33 +2588,10 @@
     "subquestion_id": "sq-ekonomi-inkomstskatt",
     "party": "kd",
     "current": {
-      "position": "ja",
-      "statement_id": "st-2026-0039"
+      "position": "inget_tydligt_besked",
+      "statement_id": null
     },
-    "statements": [
-      {
-        "id": "st-2026-0039",
-        "position": "ja",
-        "condition_note": null,
-        "quote": "Vårt mål är; hälften kvar, att ingen ska behöva betala mer än 50 procent i högsta marginalskatt samt att inte fler än 15 procent av inkomsttagarna ska betala statlig inkomstskatt.",
-        "person": null,
-        "date_stated": "2026-07-15",
-        "source": {
-          "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/inkomstskatter",
-          "domain": "kristdemokraterna.se",
-          "archive_url": "https://web.archive.org/web/20260414154844/https://kristdemokraterna.se/var-politik/politik-a-till-o/inkomstskatter",
-          "fetched_at": "2026-07-15T21:31:23.793Z"
-        },
-        "source_status": "ok",
-        "source_checked_at": "2026-08-03",
-        "related_promise_ids": [],
-        "extraction": {
-          "model": "manuell (skarpare källa)",
-          "verified_by": "mänsklig granskning",
-          "run_id": "manual-stances-2026-07-15"
-        }
-      }
-    ],
+    "statements": [],
     "changes": [],
     "last_searched": "2026-08-14"
   },
