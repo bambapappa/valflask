@@ -124,18 +124,45 @@ function issueBody(entry: ReviewCandidate, id: string): string {
   lines.push("");
   lines.push(`> ${(cand.quote ?? "(citat saknas)").replace(/\n/gu, "\n> ")}`);
   lines.push("");
-  if (entry.cost) {
+  // En post utan uträkning har inget föreslaget belopp, hur mycket siffror den
+  // än bär. Nollan i en havererad kostnadspost är ingen bedömning, och att
+  // visa den under rubriken «Föreslagen kostnad» säger motsatsen — därför får
+  // de posterna en egen rubrik som säger vad som faktiskt krävs.
+  const harUtrakning = ((entry.cost?.calculation ?? "").trim()) !== "";
+  if (entry.cost && harUtrakning) {
     const c = entry.cost;
     lines.push(`### Föreslagen kostnad: ${fmtMsek(c.msek_base)} per år`);
     lines.push(`Spann ${fmtMsek(c.msek_low)} – ${fmtMsek(c.msek_high)} · basis \`${c.basis}\` · confidence ${c.confidence}`);
     lines.push("");
-    lines.push(`**Uträkning/motivering:** ${c.method_note || "(saknas)"}`);
+    lines.push(`**Uträkning:** ${c.calculation}`);
+    lines.push(`**Motivering:** ${c.method_note || "(saknas)"}`);
     if (cand.amount_in_text_msek != null) {
       lines.push(`**Belopp i källtexten:** ${cand.amount_in_text_msek} msek`);
     }
   } else {
-    lines.push(`### Föreslagen kostnad saknas`);
-    lines.push(`Godkänn kräver belopp: \`/godkänn <low> <base> <high>\` (msek).`);
+    lines.push(`### ⚠️ Kräver belopp och uträkning för hand`);
+    lines.push(
+      entry.cost
+        ? "Kostnadssteget gick inte igenom för den här posten. Siffrorna nedan är " +
+            "platshållare och inte ett förslag."
+        : "Posten kom aldrig fram till kostnadssteget.",
+    );
+    if (entry.cost) {
+      const c = entry.cost;
+      lines.push("");
+      lines.push(`<sub>platshållare: ${fmtMsek(c.msek_low)} / ${fmtMsek(c.msek_base)} / ${fmtMsek(c.msek_high)} · ${c.method_note || ""}</sub>`);
+    }
+    lines.push("");
+    lines.push("Godkännandet kräver båda:");
+    lines.push("");
+    lines.push("```");
+    lines.push("/godkänn <low> <base> <high>");
+    lines.push("Uträkning: …");
+    lines.push("```");
+    if (cand.amount_in_text_msek != null) {
+      lines.push("");
+      lines.push(`**Belopp i källtexten:** ${cand.amount_in_text_msek} msek`);
+    }
   }
   lines.push("");
   if (reasons.length > 0) {
