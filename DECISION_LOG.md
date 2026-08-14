@@ -21,6 +21,49 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-14 — Veckokrönikorna avpubliceras och genereringen läggs ned
+
+**Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga krönikor, och
+inget i deras data eller bedömningar rörs.
+
+**Beslut (mänskligt beslut 2026-08-14):** De sex veckokrönikorna tas bort från
+sajten. Texterna ligger kvar i `data/chronicles.json`, samtliga märkta
+`archived`, och renderas inte av något. Genereringen läggs ned — ska en krönika
+publiceras igen skrivs den **för hand**, och då tas frågan om hur talen hålls
+färska på nytt. Rättelsepost skriven, och sidan de låg på säger vad som hänt.
+
+**Motiv:** Krönikorna bar sina summor inskrivna i löptexten — 42 tal i sex
+texter, varav 11 helhetstal och 28 enskilda löftesbelopp. Rättas ett belopp
+någon annanstans slutar en sådan mening stämma. Den äldsta krönikan sa 2 578
+miljarder kronor när summan var 4 195.
+
+Beslutet 2026-08-09 skulle lösa det genom att göra talen dynamiska, men
+mekanismen kopplades aldrig in, och när den kopplades in 2026-08-14 blev
+kvarvarande fråga vad man gör med de sex som redan var skrivna. Båda vägarna dit
+var dåliga: att byta talen mot platshållare ändrar vad vi sagt om en vecka som
+passerat, och att låta dem stå lämnar osanna siffror kvar. Rutan «Då och nu»
+visade båda talen, men löptexten sa fortfarande bara det ena.
+
+**Funktionen bar dessutom en kostnad som inte motsvarades av nyttan.** En
+genererad text som sammanfattar material som redan står på sajten kräver egen
+mekanik för att inte åldras, egna grindar för att den mekaniken ska vara
+inkopplad, och ett eget undantag i varje regel om vad som får skrivas om. En
+handskriven krönika vid behov har ingen av de kostnaderna.
+
+**Förkastade alternativ:** *Skriva om de sex texternas tal till platshållare* —
+ändrar publicerad text på sex sidor, och de 28 enskilda löftesbeloppen måste
+bindas till löften som sedan kan ha dragits tillbaka, vilket ger en synlig olöst
+platshållare mitt i en mening. *Skriva om bara de 11 helhetstalen* — bättre, men
+löser bara halva problemet och behåller hela funktionens underhåll för en text
+ingen efterfrågat. *Radera texterna* — historiken är värd något, och en
+avpublicering som inte går att kontrollera i efterhand är en tyst rättelse.
+*Låta dem ligga kvar orörda* — de blir osanna igen vid nästa beloppsrättelse.
+
+**Vad som inte ändras:** ingen summa, inget löfte, ingen bedömning. Krönikorna
+var en sammanfattning av material som ligger kvar.
+
+---
+
 ## 2026-08-14 — Ordgrinden sveper det som ligger i repot, inte det git ignorerar
 
 **Gäller:** alla tre vågarna — grinden sveper hela repot.

@@ -434,17 +434,33 @@ export const ANKARE: Ankare[] = [
     fallprov: "Ta bort ordagrannhetskontrollen ur gates.ts — provet faller.",
   },
   {
-    id: "metod-kronikorna-pausade",
+    id: "metod-kronikorna-avpublicerade",
     sida: METOD,
     pastaende:
-      "Genereringen är för närvarande pausad medan vi bygger om hur siffrorna i dem hålls färska.",
-    // Fälls flaggan utan att meningen skrivs om står det «pausad» om något
-    // som körs. Precis den sortens åldrande registret finns för.
-    prov: () =>
-      /export const KRONIKOR_PAUSADE = true;/u.test(
+      "De sex krönikorna är avpublicerade sedan den 14 augusti 2026.",
+    // Tre led, därför att meningen påstår tre saker: att de är sex, att de är
+    // borta från sajten, och att de finns kvar. Det sista ledet är det som
+    // gör påståendet ärligt — «avpublicerad» betyder inte «raderad».
+    //
+    // Undantaget prosan inte nämner, och som provet därför mäter: att ingen
+    // SIDA renderar dem. Ett prov som bara läste `archived`-flaggan hade
+    // svarat ja även den dag någon bygger en ny krönikesida som läser filen
+    // förbi flaggan — och det var precis så krönikornas platshållarmekanism
+    // kunde ligga oanvänd i fyra månader.
+    prov: () => {
+      const kronikor = JSON.parse(repofil("data/chronicles.json")) as Array<{ archived?: boolean }>;
+      const allaArkiverade = kronikor.length === 6 && kronikor.every((k) => k.archived === true);
+      const genereringenAv = /export const KRONIKOR_PAUSADE = true;/u.test(
         repofil("pipeline/src/chronicle.ts"),
-      ),
-    fallprov: "Sätt KRONIKOR_PAUSADE till false — provet faller, som det ska.",
+      );
+      const noten = repofil("site/src/pages/veckans-flask/index.astro");
+      const ingenRenderar =
+        !noten.includes("getChronicles") && noten.includes("Veckans fläsk är borttagen");
+      return allaArkiverade && genereringenAv && ingenRenderar;
+    },
+    fallprov:
+      "Ta bort archived på en krönika, eller låt sidan rendera dem igen — provet faller på båda.",
+    matt: "6 av 6 arkiverade, ingen sida renderar dem, 2026-08-14",
   },
   {
     id: "metod-fragorna-tva-oberoende-matningar",
