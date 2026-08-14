@@ -338,6 +338,12 @@ export interface StancePublishResult {
   stancesAdded: string[];
   /** Celler (subquestion_id × party) vars position ändrades denna körning. */
   stancesChanged: string[];
+  /**
+   * Omskördar som lades undan i stället för att gå till kön — «kandidatens
+   * citat» → «statementet det redan står i». Tomt är det normala; listan finns
+   * för att en tyst bortsortering aldrig ska vara osynlig i körloggen.
+   */
+  stancesOmskordade: string[];
 }
 
 function nextStatementId(cells: StanceCell[], year: number): () => string {
@@ -349,6 +355,42 @@ function nextStatementId(cells: StanceCell[], year: number): () => string {
     }
   }
   return () => `st-${year}-${String(++max).padStart(4, "0")}`;
+}
+
+/**
+ * Är kandidaten en omskörd av något cellen redan publicerat?
+ *
+ * Ståndpunktsskörden går om samma partisidor gång på gång, och partisidor ändras
+ * sällan. Två av fyra poster i kön 2026-08-13 var omskördar: den ena
+ * teckenidentisk med `st-2026-0039`, den andra `st-2026-0037`:s citat plus en
+ * mening till. Båda kostade en människa en läsning som inte gav något.
+ *
+ * **Delmängdsledet är det som avgör.** En ren likhetskontroll fångar bara den
+ * första. Löftessidans `findQuoteDuplicate` kräver dessutom att delen utgör
+ * merparten av helheten — men här är det publicerade citatet 43 tecken av 130,
+ * alltså en tredjedel, och posten är ändå samma yttrande. Kvoten går att
+ * släppa här därför att jämförelsen är hårt inramad på annat sätt: samma parti,
+ * samma delfråga, och samma besked. Står det publicerade citatet ord för ord
+ * inne i det nya har vi redan registrerat yttrandet.
+ *
+ * **Beskedet måste vara detsamma.** Skiljer det sig är det längre citatet inte
+ * en omskörd utan ny uppgift — ett förbehåll som tillkommit, en position som
+ * vänt — och då ska posten till kön som vanligt. Det är enda skälet till att
+ * kontrollen läser `position` och inte bara texten.
+ */
+export function omskordAv(
+  cell: Pick<StanceCell, "statements">,
+  candidate: Pick<StanceCandidate, "quote" | "position">,
+): Statement | null {
+  const nytt = normalizeForVerbatim(candidate.quote ?? "");
+  if (nytt === "") return null;
+  for (const st of cell.statements) {
+    if (st.position !== candidate.position) continue;
+    const publicerat = normalizeForVerbatim(st.quote ?? "");
+    if (publicerat === "") continue;
+    if (publicerat === nytt || nytt.includes(publicerat)) return st;
+  }
+  return null;
 }
 
 /** Kö-dedup: samma kandidat (delfråga+parti+citat) läggs aldrig två gånger. */
@@ -383,7 +425,26 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
     review.push(entry);
   };
 
+  const stancesOmskordade: string[] = [];
+
+  /**
+   * Kandidaten mot det cellen redan bär. Läses på båda vägarna in i kön — den
+   * som föll på en grind och den som gick hela vägen till VERIFY — eftersom en
+   * omskörd annars slinker in genom vilken dörr som helst utom den som vaktas.
+   */
+  const omskord = (raw: unknown): Statement | null => {
+    const c = raw as Partial<StanceCandidate> | null | undefined;
+    if (!c?.subquestion_id || !c.party || !c.quote || !c.position) return null;
+    const cell = cellByKey.get(`${c.subquestion_id} ${c.party}`);
+    return cell ? omskordAv(cell, { quote: c.quote, position: c.position }) : null;
+  };
+
   for (const g of input.gateReview) {
+    const redan = omskord(g.candidate);
+    if (redan) {
+      stancesOmskordade.push(`${g.article.url} → ${redan.id}`);
+      continue;
+    }
     pushReview({
       candidate: g.candidate,
       failures: g.failures,
@@ -418,6 +479,15 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
       runId: input.runId,
     };
 
+    // OMSKÖRD — före allt annat. En kandidat vars citat cellen redan bär är
+    // ingen ny uppgift, oavsett vad VERIFY tycker om den, och den ska varken
+    // publiceras igen eller kosta en människa en läsning i kön.
+    const redanPublicerat = omskord(candidate);
+    if (redanPublicerat) {
+      stancesOmskordade.push(`${candidate.subquestion_id} × ${candidate.party} → ${redanPublicerat.id}`);
+      continue;
+    }
+
     // VERIFY — LLM B måste bekräfta att beskedet följer ur citatet ensamt.
     if (
       !input.humanApproved &&
@@ -436,11 +506,8 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
       continue;
     }
 
-    // Dublettskydd: exakt samma citat i cellen är redan registrerat.
-    const normalizedQuote = normalizeForVerbatim(candidate.quote);
-    if (cell.statements.some((st) => normalizeForVerbatim(st.quote) === normalizedQuote)) {
-      continue;
-    }
+    // (Dublettskyddet ligger nu först i loopen, som OMSKÖRD ovan: det fångar
+    // både det identiska citatet och det som innehåller ett publicerat.)
 
     // UTKAST — hård grind (mänskligt beslut 2026-07-11): en delfråga vars formulering
     // inte är verifierad och låst kan aldrig autopubliceras.
@@ -506,5 +573,5 @@ export function publishStances(input: StancePublishInput): StancePublishResult {
     stancesAdded.push(statement.id);
   }
 
-  return { cells, review, stancesAdded, stancesChanged };
+  return { cells, review, stancesAdded, stancesChanged, stancesOmskordade };
 }

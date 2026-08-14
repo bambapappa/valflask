@@ -18,6 +18,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { reviewId, type ReviewCandidate } from "../src/review.ts";
+import { ankarflagga } from "../src/utrakningen.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 const LABEL = "review-kö";
@@ -92,6 +93,23 @@ function issueBody(entry: ReviewCandidate, id: string): string {
   if (entry.costReason) reasons.push(`**Kostnad**: ${entry.costReason}`);
   if (entry.manualReason) reasons.push(`**Manuell**: ${entry.manualReason}`);
   if (entry.duplicateOf) reasons.push(`**Möjlig dublett av** \`${entry.duplicateOf}\``);
+
+  // Ankaret: en nolla som citatet självt motsäger. Flaggan säger till den som
+  // ska besluta att beloppet troligen ska ankras i vad åtgärden kostar i dag —
+  // den ändrar ingenting och hindrar ingenting. Se `utrakningen.ts` kontroll 6.
+  if (entry.cost) {
+    // Kön bär ofta motiveringen i method_note och inte i calculation; ankaret
+    // ska läsa det som faktiskt står, oavsett vilket av fälten det står i.
+    const skal = [entry.cost.calculation ?? "", entry.cost.method_note ?? ""].join(" ").trim();
+    const atgard = ankarflagga(cand.quote ?? "", { msek_base: entry.cost.msek_base, calculation: skal });
+    if (atgard !== null) {
+      reasons.push(
+        `**Ankaret**: nollad, men citatet namnger \`${atgard}\` — en åtgärd som redan finns och ` +
+          `har en känd kostnad. Ankra beloppet i vad den senast kostade i stället för att nolla ` +
+          `den som inriktning.`,
+      );
+    }
+  }
 
   const lines: string[] = [];
   lines.push(`**Parti:** ${(cand.parties ?? []).map((p) => p.toUpperCase()).join(", ") || "?"}`);
