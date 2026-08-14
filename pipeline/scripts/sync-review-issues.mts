@@ -92,7 +92,12 @@ function issueBody(entry: ReviewCandidate, id: string): string {
   if (entry.verifyReason) reasons.push(`**Verify**: ${entry.verifyReason}`);
   if (entry.costReason) reasons.push(`**Kostnad**: ${entry.costReason}`);
   if (entry.manualReason) reasons.push(`**Manuell**: ${entry.manualReason}`);
-  if (entry.duplicateOf) reasons.push(`**Möjlig dublett av** \`${entry.duplicateOf}\``);
+  if (entry.duplicateOf) {
+    reasons.push(
+      `**Möjlig dublett av** \`${entry.duplicateOf}\`` +
+        (entry.duplicateReason ? ` — ${entry.duplicateReason}` : ""),
+    );
+  }
 
   // Ankaret: en nolla som citatet självt motsäger. Flaggan säger till den som
   // ska besluta att beloppet troligen ska ankras i vad åtgärden kostar i dag —

@@ -140,6 +140,13 @@ export interface ReviewCandidate {
   costReason?: string;
   manualReason?: string;
   duplicateOf?: string;
+  /**
+   * Vad dubblettflaggan läste, när den kom från politikkollen: samma tal eller
+   * samma uttryck. De andra dublettkollarna säger sig själva — samma citat,
+   * samma titel — men den här har läst något som inte syns när man lägger de
+   * två löftena bredvid varandra, och då ska skälet stå i granskningen.
+   */
+  duplicateReason?: string;
   cost?: CostShape;
 }
 
