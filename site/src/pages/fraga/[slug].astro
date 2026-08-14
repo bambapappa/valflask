@@ -6,7 +6,8 @@ import MetodLank from "../../components/MetodLank.astro";
 import TomcellsNot from "../../components/TomcellsNot.astro";
 import KallRad from "../../components/KallRad.astro";
 import Dela from "../../components/Dela.astro";
-import { getParties, getPromises } from "../../lib/data";
+import { getParties, getPromises, getRattelser } from "../../lib/data";
+import { rattelserForFraga } from "../../lib/rattelsenoter";
 import { formatMsek } from "../../lib/calc";
 import { promiseNetMsek } from "../../lib/aggregates";
 import {
@@ -50,6 +51,12 @@ function cell(sqId: string, party: string): StanceCell | undefined {
 const partiesWithStatements = parties.filter((p) =>
   issue.subquestions.some((sq) => (cell(sq.id, p.code)?.statements.length ?? 0) > 0),
 );
+
+/**
+ * Rättelser som gäller frågans celler. Regeln kräver en rättelsenot på berörd
+ * sida, och rutnätets celler hade ingen — bara loggen på /rattelser.
+ */
+const rattelser = rattelserForFraga(getRattelser(), issue, stances);
 
 /** Finns minst en tom cell på sidan? Då visas förklaringen om tomma rader. */
 const hasEmptyCell = issue.subquestions.some((sq) =>
@@ -95,6 +102,24 @@ const jsonLd = [
     <MetodLank />
 
     {hasEmptyCell && <TomcellsNot />}
+
+    {rattelser.length > 0 && (
+      <section class="sektion" id="rattelser">
+        <h2>Rättat i efterhand</h2>
+        <p class="rattelsenot__ingress">
+          {rattelser.length === 1 ? "En rättelse rör" : `${rattelser.length} rättelser rör`}
+          {" "}den här frågan. Fel rättas synligt, aldrig i tysthet — hela loggen står på
+          {" "}<a href="/rattelser">rättelsesidan</a>.
+        </p>
+        {rattelser.map((r) => (
+          <article class="rattelsenot">
+            <div class="etikett num">{r.date} · {r.affects}</div>
+            <p><strong>Vad:</strong> {r.what}</p>
+            <p><strong>Varför:</strong> {r.why}</p>
+          </article>
+        ))}
+      </section>
+    )}
 
     {issue.subquestions.map((sq) => (
       <section class="sektion" id={sq.id}>
@@ -256,6 +281,18 @@ const jsonLd = [
   }
   .citatcell {
     max-width: 34ch;
+  }
+  .rattelsenot__ingress {
+    margin: 0.5rem 0 0;
+  }
+  .rattelsenot {
+    border-top: 1px solid var(--svarta);
+    padding: 0.75rem 0 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .rattelsenot p {
+    margin: 0.4rem 0;
+    font-size: 0.95rem;
   }
   .tomcell {
     color: var(--dis);

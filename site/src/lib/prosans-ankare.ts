@@ -381,7 +381,11 @@ export const ANKARE: Ankare[] = [
     },
     fallprov:
       "Nolla archive_url på tio webbkällor — provet faller när arkivtäckningen går under 95 procent.",
-    matt: "24 av 674 utan kopia, varav 14 filmer, 2026-08-12",
+    // Ommätt 2026-08-14 (ATTGORA E1): luckan är 14 av 690 = 2,03 procent, och
+    // **samtliga fjorton är filmer**. Ingen vanlig webbsida saknar längre en
+    // kopia — de 20 som stod i kö när strypningen bet har fyllts. Kvar är bara
+    // de talade källorna, som väntar på avskrifter (E2) och inte på arkivet.
+    matt: "14 av 690 utan kopia, samtliga filmer, 2026-08-14",
   },
   {
     id: "metod-uppskattning-bar-ungefartecken",
