@@ -421,8 +421,11 @@ export async function runPipeline(
     writeFileSync(`${ctx.outputDir}/stances_review.json`, JSON.stringify(stanceResult.review, null, 2) + "\n");
     stanceSummary = { added: stanceResult.stancesAdded, changed: stanceResult.stancesChanged };
     console.error(
-      `[stances] publicerade=${stanceResult.stancesAdded.length} ändringar=${stanceResult.stancesChanged.length} review=${stanceResult.review.length - existingStanceReview.length} (nya)`,
+      `[stances] publicerade=${stanceResult.stancesAdded.length} ändringar=${stanceResult.stancesChanged.length} review=${stanceResult.review.length - existingStanceReview.length} (nya) omskördar=${stanceResult.stancesOmskordade.length}`,
     );
+    // Bortsorterade omskördar namnges, aldrig bara räknas: en tyst
+    // bortsortering är osynlig i kön och därför omöjlig att ifrågasätta.
+    for (const rad of stanceResult.stancesOmskordade) console.error(`[stances] omskörd: ${rad}`);
   }
 
   const publishResult = publish({

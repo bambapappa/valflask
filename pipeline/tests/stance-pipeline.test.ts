@@ -318,6 +318,66 @@ describe("hårda grindar (mänskligt beslut 2026-07-11)", () => {
     assert.ok(second.cells.every((c) => c.last_searched === "2026-07-11"));
   });
 
+  /**
+   * Omskördar. Facit är ståndpunktskön 2026-08-13: två av fyra poster var
+   * citat cellen redan bar — `st-2026-0039` teckenidentiskt, `st-2026-0037`
+   * som en tredjedel av ett citat med en mening till. Båda gick till kön via
+   * VERIFY, alltså före det dublettskydd som fanns, och båda kostade en
+   * människa en läsning som inte gav något.
+   */
+  test("facit: ett teckenidentiskt citat går varken till kön eller in i cellen", () => {
+    const publicerat = publishWith([processed(makeCandidate(), VERIFY_OK)], skeleton());
+    const omskord = publishWith(
+      [processed(makeCandidate(), { ...VERIFY_OK, verdict: "review", reason: "osäker" })],
+      publicerat.cells,
+      "review",
+    );
+    assert.equal(omskord.stancesAdded.length, 0);
+    assert.equal(omskord.review.length, 0, "omskörden ska inte kosta en läsning i kön");
+    assert.equal(omskord.stancesOmskordade.length, 1, "men den ska synas i körloggen");
+  });
+
+  test("facit: ett citat som innehåller ett publicerat är samma yttrande, hur liten delen än är", () => {
+    const publicerat = publishWith([processed(makeCandidate({ quote: "Vi säger ja till att bygga ny kärnkraft i Sverige." }), VERIFY_OK)], skeleton());
+    const langre = makeCandidate({
+      quote:
+        "Vi säger ja till att bygga ny kärnkraft i Sverige. Morgondagens kärnkraft har " +
+        "potential att vara både säkrare och mer effektiv än dagens, och det är därför vi " +
+        "vill se en utbyggnad redan under nästa mandatperiod.",
+    });
+    const resultat = publishWith([processed(langre, VERIFY_OK)], publicerat.cells);
+    assert.equal(resultat.stancesAdded.length, 0);
+    assert.equal(resultat.review.length, 0);
+  });
+
+  test("ett annat besked är ny uppgift, även när citatet innehåller det publicerade", () => {
+    const publicerat = publishWith([processed(makeCandidate({ quote: "Vi säger ja till att bygga ny kärnkraft i Sverige." }), VERIFY_OK)], skeleton());
+    const villkorat = makeCandidate({
+      position: "villkorat",
+      condition_note: "Endast om säkerhetskraven skärps.",
+      quote: "Vi säger ja till att bygga ny kärnkraft i Sverige. Men bara om säkerhetskraven skärps rejält.",
+    });
+    const resultat = publishWith([processed(villkorat, VERIFY_OK)], publicerat.cells);
+    assert.equal(resultat.stancesOmskordade.length, 0, "villkorsändringen får aldrig sorteras bort som omskörd");
+    assert.equal(resultat.stancesAdded.length, 1);
+  });
+
+  test("en omskörd som föll på en grind sorteras bort på samma sätt", () => {
+    const publicerat = publishWith([processed(makeCandidate(), VERIFY_OK)], skeleton());
+    const resultat = publishStances({
+      processed: [],
+      gateReview: [{ candidate: makeCandidate(), failures: [{ gate: "G3", reason: "testfall" }], article: makeArticle() }],
+      issuesFile,
+      cells: publicerat.cells,
+      existingReview: [],
+      runId: "test-run",
+      now: NOW,
+      mode: "review",
+    });
+    assert.equal(resultat.review.length, 0, "grindvägen in i kön ska vaktas den också");
+    assert.equal(resultat.stancesOmskordade.length, 1);
+  });
+
   test("publicering är deterministisk: samma indata ⇒ samma celler", () => {
     const a = publishWith([processed(makeCandidate(), VERIFY_OK)], skeleton());
     const b = publishWith([processed(makeCandidate(), VERIFY_OK)], skeleton());
