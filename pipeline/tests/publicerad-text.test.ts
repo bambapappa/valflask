@@ -18,12 +18,15 @@
  * hänvisningar med nummer, desto fler meningar som tyst slutar stämma när ett
  * belopp rör sig.
  *
- * VAD DET INTE FÅNGAR: `data/rattelser.json`. Sexton rättelseposter bär ett
- * löftesnummer i sin prosa och två bär ett gruppnamn. Rättelseloggen är den
- * offentliga redogörelsen för våra egna fel, och att skriva om den är ett
- * eget beslut — det ligger som en egen rad i åtgärdslistan. Fältet `affects`
- * SKA bära id:t: det är avsiktligt maskinläsbart, så att en post går att koppla
- * till sitt löfte, och det undantaget gäller bara det fältet.
+ * RÄTTELSELOGGEN GÅR SAMMA VÄG, med ett undantag som är avsiktligt. Fältet
+ * `affects` SKA bära id:t — det är maskinläsbart just för att en rättelse ska
+ * gå att koppla till sitt löfte, och det står ovanför prosan på rättelsesidan,
+ * så uppgiften går inte förlorad när den lyfts ur texten. Undantaget gäller
+ * bara det fältet; `what` och `why` är prosa och läses som prosa.
+ *
+ * VAD DET INTE FÅNGAR: annan intern jargong i samma fält. «4× outlier»,
+ * «cross-party» och hänvisningar till regelnummer städades bara där en mening
+ * ändå skrevs om, och det var ingen systematisk genomgång.
  */
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
@@ -32,8 +35,13 @@ import { resolve } from "node:path";
 
 const DATA = resolve(import.meta.dirname, "../../data");
 
-/** Ett löftesnummer eller ett gruppnamn — de två beteckningar datat använder internt. */
-const INTERN = /p-2026-\d{4}|g-[a-zåäö0-9-]{4,}/giu;
+/**
+ * Ett löftesnummer eller ett gruppnamn — de två beteckningar datat använder
+ * internt. Kortformen `p-0411` finns med därför att rättelseloggen använde
+ * den: en post räknade upp nio löften som «p-0411 600 mkr, p-0089 300 mkr …»,
+ * och ett mönster som bara tog den fullständiga formen hade gått förbi dem.
+ */
+const INTERN = /p-\d{4}-\d{4}|\bp-\d{4}\b|g-[a-zåäö0-9-]{4,}/giu;
 
 interface Lofte {
   id: string;
@@ -70,6 +78,27 @@ describe("text som möter läsaren", () => {
     );
   });
 
+  it("rättelseloggens prosa bär dem inte heller", () => {
+    const poster = JSON.parse(readFileSync(resolve(DATA, "rattelser.json"), "utf8")) as Array<{
+      date: string;
+      affects: string;
+      what?: string;
+      why?: string;
+    }>;
+    const fynd: string[] = [];
+    for (const post of poster) {
+      // `affects` är undantaget: id:t där är avsiktligt maskinläsbart och står
+      // ovanför prosan på rättelsesidan, så uppgiften finns kvar för den som
+      // vill slå upp exakt vilka löften en rättelse rörde.
+      for (const [falt, text] of [["what", post.what ?? ""], ["why", post.why ?? ""]] as const) {
+        for (const träff of text.match(INTERN) ?? []) {
+          fynd.push(`${post.date} ${falt}: «${träff}»`);
+        }
+      }
+    }
+    assert.deepEqual(fynd, [], `Skriv ut vilket löfte som avses.\n${fynd.join("\n")}`);
+  });
+
   /**
    * Provet ska falla mot ett fel som verkligen begåtts. Raderna nedan är
    * ordagrant sådana som stod i datat före svepet.
@@ -79,6 +108,7 @@ describe("text som möter läsaren", () => {
       "Ett brett inriktningslöfte vars prissättbara delar redan är egna C-löften (fler lärare p-2026-0358, rätt stöd p-2026-0360).",
       "Kopplad till gruppen g-c-skattereform-grundlon.",
       "Jämförbart löfte p-2026-0475 estimerat 0 msek/år.",
+      "Tidigare belopp per år: p-0411 600 mkr, p-0089 300 mkr.",
     ];
     for (const rad of skaFallas) {
       assert.notEqual(rad.match(INTERN), null, `borde fällas: ${rad}`);
