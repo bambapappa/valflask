@@ -463,6 +463,22 @@ export const ANKARE: Ankare[] = [
     matt: "6 av 6 arkiverade, ingen sida renderar dem, 2026-08-14",
   },
   {
+    id: "metod-kronikorna-finns-kvar",
+    sida: METOD,
+    pastaende:
+      "Texterna är inte raderade — de ligger kvar i kodförrådet tillsammans med all annan data",
+    // «Avpublicerad» är bara ärligt så länge texten faktiskt går att läsa
+    // någonstans. Provet kräver därför att alla sex ligger kvar MED sin text —
+    // en post som tömts på `body_md` är raderad i allt utom namnet, och då är
+    // meningen ovan osann utan att någon rört den.
+    prov: () => {
+      const k = JSON.parse(repofil("data/chronicles.json")) as Array<{ body_md?: string }>;
+      return k.length === 6 && k.every((x) => typeof x.body_md === "string" && x.body_md.trim().length > 200);
+    },
+    fallprov: "Töm body_md på en krönika — provet faller, för då är texten borta på riktigt.",
+    matt: "6 krönikor med sin text i behåll, 2026-08-14",
+  },
+  {
     id: "metod-fragorna-tva-oberoende-matningar",
     sida: METOD,
     pastaende:
