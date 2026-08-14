@@ -1,7 +1,68 @@
 # DECISION LOG — drygast.nu
 
 Format: `## ÅÅÅÅ-MM-DD — [Beslut]`
-Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
+Varje rad: **Gäller**, **Beslut**, **Motiv**, **Förkastade alternativ**.
+
+**Gäller** säger vilka av de tre vågarna beslutet omfattar — Fläskvågen,
+Frågevågen, Handlingsvågen, eller *alla tre*. Raden finns därför att ett beslut
+en gång tillämpades i ena halvan av huset utan att någon märkte det: regeln att
+ett citat om vad partiet redan gjort inte är något åtagande fattades 2026-08-12
+och tillämpades fyra gånger i löfteskön, men gällde aldrig i ståndpunkts-
+rutnätet — där två publicerade celler stod på just sådana citat, ett av dem
+hämtat från samma partisida där ett annat citat avvisats på exakt den grunden
+samma vecka. Regeln var varken glömd eller ifrågasatt. Den var skriven på ett
+ställe och tillämpad på ett ställe.
+
+Vågarna har skilda köer, skilda grindar och skilda genomgångar, och ett beslut
+vandrar inte av sig självt mellan dem. Frågan *«var gäller det här?»* är billig
+att ställa och dyr att låta bli — och innan posten stängs ska det publicerade
+beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
+`pnpm test:beslutsloggen` kräver raden av nya poster.
+
+---
+
+## 2026-08-14 — Ordgrinden sveper det som ligger i repot, inte det git ignorerar
+
+**Gäller:** alla tre vågarna — grinden sveper hela repot.
+
+**Beslut:** `pnpm test:ord` hoppar över filer som git ignorerar. Gränsen dras
+med `git check-ignore`, inte med en handskriven katalogslista, och grinden
+kräver att `CLAUDE.md` och `data/issues.json` ligger kvar i svepet.
+
+**Motiv:** Grinden föll på fem filer i `handlingsvagen/data/.kallcache/` —
+riksdagens egna dokumenttexter, cachade av varje körning som läser en handling.
+I en motion om samhällets krisberedskap står den plural grinden förbjuder, och
+där betyder ordet rörelser i vatten — alltså rätt stavat, i någon annans text.
+Katalogen är git-ignorerad, så texten kan aldrig nå en läsare, men svepet läste
+den ändå. Det gjorde grinden röd på ett **normalt tillstånd**: var och en som
+kört ett svep över kopplingarna får samma fem fynd, och en grind som är röd
+varje dag blir bortviftad.
+
+Gränsen mot git är vald därför att den inte går att missbruka: en fil som göms
+undan från grinden måste också gömmas undan från repot, och då kan den inte
+publiceras. Mätt vid införandet: **noll spårade filer** hoppas över — samtliga
+1 256 ignorerade ligger i källcachen. `git check-ignore` läser dessutom indexet
+och rapporterar aldrig en spårad fil som ignorerad, så en gitignore-rad som
+pekar på något redan spårat gör ingenting.
+
+Kravet att två kända filer ska ligga kvar i svepet är bevisat falla: byts
+uppslaget mot `--no-index` börjar spårad text försvinna, och grinden säger
+ifrån. `data/issues.json` är vald därför att det var den fil där det förbjudna
+ordet levde kvar längst, publikt serverad.
+
+**Förkastade alternativ:** *Lägga `.kallcache` i grindens katalogslista, som
+`nyckelord`* — löser dagens fem fynd och inget mer; nästa cache eller
+byggkatalog ger samma röda grind, och listan växer tills någon lägger till en
+katalog som borde svepts. *Låta grinden vara röd och rensa cachen före varje
+körning* — gör ett normalt arbetsläge till ett fel och lär nästa session att
+grindens utskrift kan ignoreras. *Sopa bara spårade filer (`git ls-files`)* —
+hade släppt igenom ny text ända fram till att den committades, och det är
+före committen den ska prövas.
+
+**Fattat av:** Claude i passet 2026-08-14, som en följd av att grinden föll på
+ett normalt tillstånd. **Ändringen rör en grinds räckvidd och ska bekräftas
+eller rivas upp av en människa innan grenen slås ihop** — den är utskriven i
+PR-texten av det skälet.
 
 ---
 

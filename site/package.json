@@ -9,7 +9,7 @@
     "test:t3": "node --experimental-strip-types scripts/test-t3.mts",
     "test:t9": "node --experimental-strip-types scripts/test-t9.mts",
     "test:interval": "node --experimental-strip-types scripts/test-interval.mts",
-    "test": "node --experimental-strip-types scripts/test-t1.mts && node --experimental-strip-types scripts/test-t3.mts && node --experimental-strip-types scripts/test-t9.mts && node --experimental-strip-types scripts/test-t3-stale.mts && node --experimental-strip-types scripts/test-interval.mts && node --experimental-strip-types scripts/test-drylinje.mts && node --experimental-strip-types scripts/test-t14.mts && node --experimental-strip-types scripts/test-data-clean.mts && node --experimental-strip-types scripts/test-grupplista.mts && node --experimental-strip-types scripts/test-og.mts && node --experimental-strip-types scripts/test-kanalbilder.mts && node --experimental-strip-types scripts/test-dela.mts && node --experimental-strip-types scripts/test-importer.mts && node --experimental-strip-types --test scripts/test-invarianter.mts && node --experimental-strip-types --test scripts/test-andrade-kallor.mts && node --experimental-strip-types scripts/test-stil.mts && node --experimental-strip-types scripts/test-ord.mts && node --experimental-strip-types scripts/test-rattelsenoter.mts && node --experimental-strip-types scripts/test-kronikans-tal.mts && node --experimental-strip-types scripts/test-prosan.mts",
+    "test": "node --experimental-strip-types scripts/test-t1.mts && node --experimental-strip-types scripts/test-t3.mts && node --experimental-strip-types scripts/test-t9.mts && node --experimental-strip-types scripts/test-t3-stale.mts && node --experimental-strip-types scripts/test-interval.mts && node --experimental-strip-types scripts/test-drylinje.mts && node --experimental-strip-types scripts/test-t14.mts && node --experimental-strip-types scripts/test-data-clean.mts && node --experimental-strip-types scripts/test-grupplista.mts && node --experimental-strip-types scripts/test-og.mts && node --experimental-strip-types scripts/test-kanalbilder.mts && node --experimental-strip-types scripts/test-dela.mts && node --experimental-strip-types scripts/test-importer.mts && node --experimental-strip-types --test scripts/test-invarianter.mts && node --experimental-strip-types --test scripts/test-andrade-kallor.mts && node --experimental-strip-types scripts/test-stil.mts && node --experimental-strip-types scripts/test-ord.mts && node --experimental-strip-types scripts/test-rattelsenoter.mts && node --experimental-strip-types scripts/test-kronikans-tal.mts && node --experimental-strip-types scripts/test-beslutsloggen.mts && node --experimental-strip-types scripts/test-prosan.mts",
     "preview": "astro preview",
     "indexnow": "node --experimental-strip-types scripts/indexnow-submit.mts",
     "test:t14": "node --experimental-strip-types scripts/test-t14.mts",
@@ -25,7 +25,8 @@
     "test:ord": "node --experimental-strip-types scripts/test-ord.mts",
     "test:prosan": "node --experimental-strip-types scripts/test-prosan.mts",
     "test:rattelsenoter": "node --experimental-strip-types scripts/test-rattelsenoter.mts",
-    "test:kronikans-tal": "node --experimental-strip-types scripts/test-kronikans-tal.mts"
+    "test:kronikans-tal": "node --experimental-strip-types scripts/test-kronikans-tal.mts",
+    "test:beslutsloggen": "node --experimental-strip-types scripts/test-beslutsloggen.mts"
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
