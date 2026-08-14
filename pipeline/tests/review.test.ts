@@ -180,7 +180,21 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
   const queueItem: ReviewCandidate = {
     candidate: { title: "Nytt löfte", parties: ["m"], quote: "Vi vill X.", category: "skatter", person: null, amount_in_text_msek: null },
     failures: [], articleUrl: "https://y.se/a", articleTitle: "A",
-    cost: { type: "utgift", period: "per_ar", msek_low: 100, msek_base: 200, msek_high: 300, basis: "llm_estimat", basis_url: null, method_note: "note", confidence: 0.5 },
+    cost: { type: "utgift", period: "per_ar", msek_low: 100, msek_base: 200, msek_high: 300, basis: "llm_estimat", basis_url: null, method_note: "note", calculation: "200 000 mottagare × 1 000 kronor = 200 miljoner kronor per år.", confidence: 0.5 },
+  };
+
+  /**
+   * Samma kö-post, fast med kostnadsstegets haveri: siffror finns,
+   * uträkningen saknas, och noten bär maskinens felmeddelande. Det är i den
+   * formen posterna faktiskt ligger i kön — 39 av 110 den 2026-08-14.
+   */
+  const havereradKopost: ReviewCandidate = {
+    ...queueItem,
+    cost: {
+      type: "utgift", period: "per_ar", msek_low: 0, msek_base: 0, msek_high: 0,
+      basis: "llm_estimat", basis_url: null, confidence: 0.1,
+      method_note: "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+    },
   };
 
   /**
@@ -277,6 +291,29 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
         JSON.parse(readFileSync(join(dir, "needs_review.json"), "utf8")).length,
         1,
         "kö-posten ligger kvar",
+      );
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  /**
+   * Uträkningen är offentlig, och det måste gälla vid publiceringspunkten.
+   * Kontrollen låg tidigare som en varning i den gren som körs när granskaren
+   * sätter ett NYTT belopp — men de havererade posterna godkänns oftast som de
+   * står, och den vägen fanns ingen kontroll alls. Tre löften publicerades så.
+   */
+  it("vägrar godkänna en post vars uträkning saknas", () => {
+    const dir = baddat();
+    try {
+      writeFileSync(join(dir, "needs_review.json"), JSON.stringify([havereradKopost]));
+      const { kod, ut } = godkannIEgenProcess(dir);
+      assert.notEqual(kod, 0, "godkännandet ska falla");
+      assert.match(ut, /Uträkningen saknas/);
+      assert.equal(
+        JSON.parse(readFileSync(join(dir, "promises.json"), "utf8")).length,
+        1,
+        "ingenting fick publiceras",
       );
     } finally {
       rmSync(dir, { recursive: true, force: true });

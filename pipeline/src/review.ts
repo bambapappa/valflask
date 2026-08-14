@@ -11,6 +11,24 @@ const DATA_DIR = join(import.meta.dirname, "../../data");
 const MAX_CALCULATION = 800;
 
 /**
+ * Kostnadssteget skriver en platshållare i metodnoten när modellsvaret inte
+ * gick att använda: «LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE
+ * sättas manuellt». Det är ett meddelande till oss, inte till läsaren.
+ *
+ * Noten renderas på löftessidan och ligger i det publika API:et. Sex
+ * publicerade löften bar den här texten den 2026-08-14 — och den motsade
+ * dessutom sidan intill, eftersom beloppet vid det laget var satt. Skälet är
+ * att godkännandet la till «(belopp satt av granskare)» EFTER den gamla noten
+ * i stället för att ersätta den.
+ */
+const HAVERITEXT =
+  /\s*LLM-kostnadssvar\s+(?:saknade giltiga tal|ej tolkbart[^—]*?)\s*—\s*belopp MÅSTE sättas manuellt\.?/giu;
+
+export function utanHaveritext(note: string): string {
+  return note.replace(HAVERITEXT, "").trim();
+}
+
+/**
  * Stabilt id för en kö-post: hash av articleUrl + kandidattitel — samma nyckel
  * som publish.ts dedupar kön på. Beräknas on-the-fly (lagras inte i filen) och
  * används av GitHub-issueflödet: issue-titeln bär id:t, och /godkänn//avvisa
@@ -358,17 +376,10 @@ export function approve(
       // bakom siffran — `basis` är just det fält som säger hur förankrad den är.
       basis: cost?.basis ?? "granskare",
       basis_url: cost?.basis_url ?? null,
-      method_note: ((cost?.method_note ?? "") + " (belopp satt av granskare)").trim(),
+      method_note: (utanHaveritext(cost?.method_note ?? "") + " (belopp satt av granskare)").trim(),
       ...(calculation ? { calculation } : {}),
       confidence: 0.9,
     };
-    if (!calculation) {
-      console.warn(
-        "Varning: beloppet är satt för hand utan uträkning. Löftessidan visar då ingen\n" +
-          "         förklaring, och löftet kommer tillbaka i granskningskön. Ange en med\n" +
-          '         --calc "…" så syns resonemanget publikt.',
-      );
-    }
   } else if (calculationFlag) {
     cost = cost ? { ...cost, calculation: calculationFlag } : cost;
   }
@@ -376,6 +387,23 @@ export function approve(
   if (!cost) {
     console.error(
       "Posten saknar kostnad. Ange den: pnpm review approve " + index + " <low> <base> <high> (msek)",
+    );
+    process.exit(1);
+  }
+
+  // Uträkningen är offentlig, och det måste gälla vid den punkt där något blir
+  // publicerat — inte bara när granskaren råkar sätta ett nytt belopp. Kön bär
+  // poster vars kostnadssteg havererat: de har siffror, de ser färdiga ut, och
+  // godkänns de som de står publiceras ett belopp utan ett enda steg bakom sig.
+  // Tre löften gick den vägen, och alla tre visade sig vara fel när de lästes.
+  // Kontrollen låg tidigare som en varning i den ena grenen och missade därför
+  // just den väg posterna faktiskt tog.
+  if (((cost.calculation ?? "").trim()) === "") {
+    console.error(
+      "Uträkningen saknas, och den visas publikt på löftessidan — ett belopp\n" +
+        "utan steg bakom sig går inte att följa för den som läser.\n\n" +
+        `  pnpm review approve ${index} <low> <base> <high> --calc "…"\n\n` +
+        "I issue-flödet: skriv en rad som börjar «Uträkning:» under kommandot.",
     );
     process.exit(1);
   }
