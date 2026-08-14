@@ -8,7 +8,7 @@ import { runGates, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
 import type { ArchiveFn } from "./archive.ts";
 import { estimateCost, costDeviation } from "./cost.ts";
-import { findQuoteDuplicate, findPossibleDuplicate, findCrossPartyDuplicate, findComparableCosts, looksLikeUmbrella, findSamePartyInCategory, type ExistingPromiseLite, type ComparablePromiseLite } from "./similarity.ts";
+import { findQuoteDuplicate, findPossibleDuplicate, findCrossPartyDuplicate, findPolicyDuplicate, findComparableCosts, looksLikeUmbrella, findSamePartyInCategory, type ExistingPromiseLite, type ComparablePromiseLite } from "./similarity.ts";
 import { generateQuip } from "./copy.ts";
 import { maybeGenerateWeekly, type ChronicleEntry } from "./chronicle.ts";
 import {
@@ -235,10 +235,17 @@ export async function runPipeline(
         // samma yttrande, oavsett vilken titel utvinningen råkade sätta.
         // Titelkollarna nedan är heuristiker och missar just omskördar.
         const dupKey = { title: accepted.title, parties: accepted.parties, category: accepted.category };
+        // Politikkollen sist av dubblettkollarna: den letar inte efter samma
+        // text utan efter samma uppgift — samma tal eller samma uttryck hos
+        // samma parti, oavsett kategori. Kön 2026-08-13 gav noll på de tre
+        // ovan och bar ändå fyra dubbletter; den dyraste vägde 12 000 mkr.
+        const politikDup = findPolicyDuplicate(accepted, dedupPool);
         const dup =
           findQuoteDuplicate(accepted, dedupPool) ??
           findPossibleDuplicate(dupKey, dedupPool) ??
-          findCrossPartyDuplicate(dupKey, dedupPool);
+          findCrossPartyDuplicate(dupKey, dedupPool) ??
+          politikDup?.match ??
+          null;
         if (dup) {
           reviewItems.push({
             candidate: accepted,
@@ -246,6 +253,12 @@ export async function runPipeline(
             articleUrl: article.url,
             articleTitle: article.title,
             duplicateOf: dup.id,
+            // Skälet skrivs ut bara för politikkollen: de andra tre säger sig
+            // själva (samma citat, samma titel), medan den här har läst något
+            // som inte syns när man lägger de två löftena bredvid varandra.
+            ...(politikDup && dup.id === politikDup.match.id
+              ? { duplicateReason: politikDup.reason }
+              : {}),
           });
           continue;
         }

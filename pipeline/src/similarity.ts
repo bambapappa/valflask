@@ -337,3 +337,180 @@ export function findComparableCosts(
     basis: e.basis,
   }));
 }
+
+/* ─────────────────────────────────────────── samma politik, andra ord ── */
+
+/**
+ * SAMMA POLITIK hos samma parti, formulerad med andra ord.
+ *
+ * De tre kontrollerna ovan letar efter samma *text*. Löfteskön 2026-08-13 gav
+ * noll på alla tre — och fyra av 23 poster var ändå dubbletter av publicerade
+ * löften från samma parti. «Max 12 barn per grupp för treåringar i förskolan»
+ * mot «Lag om max 12 barn i småbarnsgrupperna, och max 15 barn i
+ * storbarnsgrupperna»: samma politik, inget delat citat, låg titellikhet. `[6]`
+ * ensam bar 12 000 miljoner kronor.
+ *
+ * Den här kontrollen letar efter samma *uppgift* i stället, och den letar
+ * **oavsett kategori och artikeladress** — dubbletterna låg ofta i olika
+ * kategorier, vilket är just varför `findPossibleDuplicate` inte såg dem.
+ *
+ * Två signaler, och båda är valda mot mätning:
+ *
+ * - **Samma tal med sin enhet.** En ovanlig nivå i två löften från samma parti
+ *   är nästan alltid samma nivå. Tröskeln gör jobbet: «12 barn» pekar rakt på
+ *   originalet, medan «15» ensamt står i fjorton citat och säger ingenting.
+ *   Enheten krävs — se `talen()` nedan, och de två felflaggor som gav den.
+ * - **Samma uttryck.** Två innehållsord i rad som knappt förekommer någon
+ *   annanstans — «säkra och lagliga vägar» ger «säkra laglig» och «laglig
+ *   vägar». Ordföljd krävs; lösa ordträffar är brus.
+ *
+ * **Den tredje signalen gick inte att bygga, och det är mätt.** Åtgärdslistan
+ * pekade också ut «samma måttstock» — «nordisk nivå» hos `[17]`. Ordstammen
+ * `nordis` står i tre publicerade citat, alltså *vanligare* än `godkän`,
+ * `kontro`, `vetens` och `riktas`, som står i ett var. En sällsynthetströskel
+ * som släpper in måttstocken släpper in allt förvaltningsspråk med den, och en
+ * flagga som fäller en tredjedel av kön är ingen flagga. Signalen finns, men
+ * den skiljer sig från bruset på betydelse och inte på frekvens — och betydelse
+ * mäter den här kontrollen inte.
+ *
+ * Kontrollen FÖRESLÅR. Den sätter `duplicateOf`, posten går till granskning med
+ * förslaget, och en människa avgör.
+ */
+
+/** Ord som bär innehåll, stympade så att böjningar möts. */
+function innehallsord(s: string): string[] {
+  return s
+    .toLowerCase()
+    .normalize("NFC")
+    .replace(/[^a-zåäöéèü0-9 ]/giu, " ")
+    .split(/\s+/)
+    .filter((w) => w.length >= 4 && !/^\d+$/.test(w) && !SMAORD.has(w))
+    .map((w) => w.slice(0, 6));
+}
+
+/**
+ * Ord som inte skiljer två löften åt. Listan är kort med flit: den ska fånga
+ * satsbindningen, inte politiken.
+ */
+const SMAORD = new Set(
+  ("och att det som en ett för med vill ska inte den de vi vår vårt våra av på till är kan " +
+    "bör måste också samt eller men om så där här detta denna dessa alla varje mer fler mest " +
+    "fram göra får har hade blir vara vid från under över mellan efter före genom utan andra " +
+    "annan annat man sig sitt sin sina all bland exempelvis").split(" "),
+);
+
+/**
+ * Ett tal räknas bara tillsammans med det det mäter. «12 barn» är en nivå;
+ * «12» är ett tecken.
+ *
+ * Skillnaden är mätt mot kön 2026-08-14. Ett blott tal gav två felflaggor av
+ * sex, och båda av samma slag: «85 procent» av ett bostadspris mot «personer
+ * över 85 år», och «16» i en nedtrappning mot «16 timmar per vecka». Talen var
+ * lika, sakerna hade ingenting med varandra att göra. Med enheten kvar faller
+ * båda, och «12 barn» står kvar.
+ */
+function talen(s: string): Set<string> {
+  const ord = s
+    .toLowerCase()
+    .normalize("NFC")
+    .replace(/[^a-zåäöéèü0-9 ]/giu, " ")
+    .split(/\s+/)
+    .filter((w) => w.length > 0);
+  const ut = new Set<string>();
+  for (let i = 0; i < ord.length; i++) {
+    if (!/^\d+$/.test(ord[i]!)) continue;
+    // Enheten är nästa ord som inte är ett tal. «30 000 gränspoliser» räknas
+    // alltså som «30 gränspoliser» och «000 gränspoliser» — båda pekar på
+    // samma sak, och det är pekningen som ska fånga dubbletten.
+    let j = i + 1;
+    while (j < ord.length && /^\d+$/.test(ord[j]!)) j++;
+    const enhet = ord[j];
+    if (enhet !== undefined && enhet.length >= 3) ut.add(`${ord[i]} ${enhet.slice(0, 6)}`);
+  }
+  return ut;
+}
+
+function bigramen(s: string): Set<string> {
+  const w = innehallsord(s);
+  const ut = new Set<string>();
+  for (let i = 0; i + 1 < w.length; i++) ut.add(`${w[i]} ${w[i + 1]}`);
+  return ut;
+}
+
+/**
+ * Ett tal får förekomma i så här många publicerade citat och ändå räknas som
+ * en nivå. Mätt: «12» står i 2, «15» i 14. Taket ligger mellan dem med marginal
+ * åt det håll som missar hellre än flaggar fel.
+ */
+const MAX_TALFOREKOMST = 3;
+
+/** Samma för ett uttryck. Två förekomster är fortfarande ett särdrag; fler är språk. */
+const MAX_BIGRAMFOREKOMST = 2;
+
+/**
+ * Ett delat tal väger tyngre än ett delat uttryck: talet ÄR nivån, medan ett
+ * uttryck kan vara en vändning partiet använder ofta. Tröskeln är satt så att
+ * ett ensamt sällsynt tal räcker, men ett ensamt uttryck inte gör det — mätt
+ * mot kön 2026-08-13 var det ensamma uttrycket «sverig kunna» kontrollens enda
+ * felflagg.
+ */
+const TAL_VIKT = 3;
+const UTTRYCK_VIKT = 2;
+const POANGGRANS = 3;
+
+export interface PolicyDuplicate {
+  /** Det publicerade löftet kandidaten troligen upprepar. */
+  match: ExistingPromiseLite;
+  /** Vad de delar, skrivet så att det går att läsa i granskningen. */
+  reason: string;
+}
+
+/**
+ * Frekvenserna över hela beståndet, beräknade en gång per körning.
+ * Utan dem betyder trösklarna ingenting.
+ */
+export function buildPolicyIndex(existing: ExistingPromiseLite[]): {
+  tal: Map<string, number>;
+  bigram: Map<string, number>;
+} {
+  const tal = new Map<string, number>();
+  const bigram = new Map<string, number>();
+  for (const e of existing) {
+    for (const t of talen(e.quote ?? "")) tal.set(t, (tal.get(t) ?? 0) + 1);
+    for (const b of bigramen(e.quote ?? "")) bigram.set(b, (bigram.get(b) ?? 0) + 1);
+  }
+  return { tal, bigram };
+}
+
+export function findPolicyDuplicate(
+  candidate: { quote: string; parties: string[] },
+  existing: ExistingPromiseLite[],
+  index = buildPolicyIndex(existing),
+): PolicyDuplicate | null {
+  const parter = new Set(candidate.parties);
+  const kTal = talen(candidate.quote ?? "");
+  const kBigram = bigramen(candidate.quote ?? "");
+  let bast: PolicyDuplicate | null = null;
+  let bastPoang = 0;
+
+  for (const e of existing) {
+    if (!e.parties.some((p) => parter.has(p))) continue;
+    const delatTal = [...talen(e.quote ?? "")].filter(
+      (t) => kTal.has(t) && (index.tal.get(t) ?? Infinity) <= MAX_TALFOREKOMST,
+    );
+    const delatUttryck = [...bigramen(e.quote ?? "")].filter(
+      (b) => kBigram.has(b) && (index.bigram.get(b) ?? Infinity) <= MAX_BIGRAMFOREKOMST,
+    );
+    const poang = delatTal.length * TAL_VIKT + delatUttryck.length * UTTRYCK_VIKT;
+    if (poang < POANGGRANS || poang <= bastPoang) continue;
+    const skal = [
+      delatTal.length > 0 ? `samma tal: ${delatTal.join(", ")}` : null,
+      delatUttryck.length > 0 ? `samma uttryck: «${delatUttryck.join("», «")}»` : null,
+    ]
+      .filter((x) => x !== null)
+      .join(" · ");
+    bastPoang = poang;
+    bast = { match: e, reason: skal };
+  }
+  return bast;
+}

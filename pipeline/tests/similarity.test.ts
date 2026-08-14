@@ -8,6 +8,7 @@ import {
   findComparableCosts,
   looksLikeUmbrella,
   findSamePartyInCategory,
+  findPolicyDuplicate,
   type ExistingPromiseLite,
   type ComparablePromiseLite,
 } from "../src/similarity.ts";
@@ -363,5 +364,156 @@ describe("findSamePartyInCategory — underlag för överlappskontroll", () => {
 
   it("respekterar maxN", () => {
     assert.equal(findSamePartyInCategory({ parties: ["c"], category: "rättsväsende" }, existing, 1).length, 1);
+  });
+});
+
+/**
+ * Samma politik, andra ord — facit är löfteskön 2026-08-13.
+ *
+ * De tre textkontrollerna gav noll på hela kön, och fyra av 23 poster var ändå
+ * dubbletter av publicerade löften från samma parti. `[6]` ensam bar 12 000
+ * miljoner kronor: köns «Målet bör vara att barn som är tre år inte ska behöva
+ * tillhöra grupper som är större än 12 barn» mot publicerade «Vi vill införa en
+ * lag om max 12 barn i småbarnsgrupperna». Inget delat citat, låg titellikhet,
+ * och dessutom olika kategori — vilket är just varför titelkollen inte såg dem.
+ */
+describe("findPolicyDuplicate — samma uppgift, inte samma text", () => {
+  const bestand: ExistingPromiseLite[] = [
+    {
+      id: "p-2026-0828",
+      title: "Lag om max 12 barn i småbarnsgrupper och max 15 i storbarnsgrupper i förskolan",
+      parties: ["kd"],
+      category: "utbildning",
+      group_id: null,
+      quote:
+        "Vi vill införa en lag om max 12 barn i småbarnsgrupperna, och max 15 barn i storbarnsgrupperna i förskolan.",
+    },
+    {
+      id: "p-2026-0768",
+      title: "Säkra och lagliga vägar ska bli huvudsaklig asylmetod",
+      parties: ["kd"],
+      category: "migration",
+      group_id: null,
+      quote:
+        "För att motverka irreguljär migration och människosmuggling samt skydda de allra mest utsatta, vill Kristdemokraterna att olika system för säkra och lagliga vägar blir den huvudsakliga metoden att söka asyl i Sverige.",
+    },
+    {
+      id: "p-2026-0784",
+      title: "EU:s gemensamma gränsövervakning ska stärkas och antalet gränspoliser växa till 30 000",
+      parties: ["kd"],
+      category: "migration",
+      group_id: null,
+      quote:
+        "För att Frontex ska kunna lösa sina uppgifter i framtiden krävs ett tydligare mandat och en utvecklad förmåga. Detta innebär bland annat att EU:s gemensamma gränsövervakning succesivt ska stärkas och antalet gränspoliser växa till 30 000 på sikt.",
+    },
+    {
+      id: "p-2026-0999",
+      title: "Annat partis löfte om samma tak",
+      parties: ["s"],
+      category: "utbildning",
+      group_id: null,
+      quote: "Vi vill se ett tak på 12 barn i småbarnsgrupperna i förskolan.",
+    },
+  ];
+
+  it("facit [6]: samma tal fäller, fast citaten inte delar en enda mening", () => {
+    const träff = findPolicyDuplicate(
+      {
+        quote:
+          "Målet bör vara att barn som är tre år inte ska behöva tillhöra grupper som är större än 12 barn, och bland de större barnen inte fler än 15.",
+        parties: ["kd"],
+      },
+      bestand,
+    );
+    assert.equal(träff?.match.id, "p-2026-0828");
+    assert.match(träff!.reason, /samma tal: .*12/u);
+  });
+
+  it("facit [14]: samma uttryck fäller — «säkra och lagliga vägar»", () => {
+    const träff = findPolicyDuplicate(
+      {
+        quote:
+          "Vi vill att säkra och lagliga vägar, så som kvotflyktingssystemet, ska vara den huvudsakliga metoden för utlänningar att söka asyl i Sverige.",
+        parties: ["kd"],
+      },
+      bestand,
+    );
+    assert.equal(träff?.match.id, "p-2026-0768");
+    assert.match(träff!.reason, /samma uttryck/u);
+  });
+
+  /**
+   * `[13]` är en verklig dubblett — den nivålösa versionen av `p-2026-0784` —
+   * men kontrollen når den inte, och det ska stå här i stället för att
+   * upptäckas som en överraskning. Den delar inget tal med originalet (nivån
+   * 30 000 finns bara i det publicerade) och inget uttryck i ordföljd.
+   */
+  it("[13] nås inte, och det är förväntat: ingen delad nivå, inget delat uttryck", () => {
+    const träff = findPolicyDuplicate(
+      {
+        quote:
+          "Vi vill värna öppenheten och den fria rörligheten inom EU genom stärkt kontroll av EU:s yttre gräns.",
+        parties: ["kd"],
+      },
+      bestand,
+    );
+    assert.equal(träff, null);
+  });
+
+  it("ett annat partis löfte är ingen dublett, hur lika talen än är", () => {
+    const träff = findPolicyDuplicate(
+      { quote: "Vi vill se ett tak på 12 barn i småbarnsgrupperna i förskolan.", parties: ["kd"] },
+      bestand.filter((p) => p.id === "p-2026-0999"),
+    );
+    assert.equal(träff, null);
+  });
+
+  /**
+   * Tröskeln är hela skillnaden mellan en flagga och brus. «12» står i två
+   * publicerade citat och pekar rakt på originalet; ett tal som står i många
+   * säger ingenting, och får inte fälla.
+   */
+  /**
+   * Två felflaggor mätta mot kön 2026-08-14, båda av samma slag: ett blott tal
+   * som råkade återkomma i något helt annat. Enheten är det som skiljer en nivå
+   * från ett tecken.
+   */
+  it("ett tal utan sin enhet är ingen nivå", () => {
+    const aldre: ExistingPromiseLite[] = [
+      {
+        id: "p-2026-0717",
+        title: "Äldreboendegaranti från 85 år",
+        parties: ["kd"],
+        category: "välfärd",
+        group_id: null,
+        quote:
+          "Kristdemokraterna vill införa en äldreboendegaranti som innebär att personer över 85 år får rätt till plats.",
+      },
+    ];
+    const träff = findPolicyDuplicate(
+      {
+        quote:
+          "För att underlätta för familjer att köpa sin första bostad vill vi att lånet ska kunna uppgå till 85 procent av köpeskillingen.",
+        parties: ["kd"],
+      },
+      aldre,
+    );
+    assert.equal(träff, null, "85 procent av ett pris och 85 år är inte samma nivå");
+  });
+
+  it("ett vanligt tal fäller inte", () => {
+    const vanligt: ExistingPromiseLite[] = Array.from({ length: 6 }, (_, i) => ({
+      id: `p-2026-09${i}0`,
+      title: `Löfte ${i}`,
+      parties: ["kd"],
+      category: "övrigt",
+      group_id: null,
+      quote: `Vi vill satsa 15 miljarder kronor på område nummer ${i} under mandatperioden.`,
+    }));
+    const träff = findPolicyDuplicate(
+      { quote: "Vi vill höja anslaget med 15 miljarder kronor till kulturen.", parties: ["kd"] },
+      vanligt,
+    );
+    assert.equal(träff, null, "15 står i sex citat och är ingen nivå som pekar ut något");
   });
 });

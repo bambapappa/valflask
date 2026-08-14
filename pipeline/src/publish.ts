@@ -61,6 +61,13 @@ export interface NeedsReviewEntry {
   cost?: CostEstimate;
   /** Id på troligt befintligt löfte detta är en dublett av (manuell länkning i review). */
   duplicateOf?: string;
+  /**
+   * Vad dubblettflaggan läste, när den kom från politikkollen: samma tal eller
+   * samma uttryck. De andra dublettkollarna säger sig själva — samma citat,
+   * samma titel — men den här har läst något som inte syns när man lägger de
+   * två löftena bredvid varandra, och då ska skälet stå i granskningen.
+   */
+  duplicateReason?: string;
 }
 
 export interface ChangelogEntry {
