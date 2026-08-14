@@ -9,6 +9,7 @@
 import type { PipelinePromise, ChangelogEntry } from "./publish.ts";
 import type { LlmClient } from "./llm.ts";
 import { generateWeekly } from "./copy.ts";
+import { skrivnaBelopp } from "./kronikans-tal.ts";
 
 export interface ChronicleEntry {
   year: number;
@@ -213,6 +214,25 @@ export async function maybeGenerateWeekly(opts: {
   try {
     chron = await generateWeekly(chronicleUnderlag(weekPromises), gapText, llm, copyModel);
   } catch {
+    return { chronicles: existing, generated: null };
+  }
+
+  // Steg 2 ur beslutet 2026-08-09: en NY krönika får inte födas med ett
+  // fastskrivet belopp. Talen ska stå som platshållare och slås upp när sidan
+  // byggs — annars fryser texten fast en siffra som rör sig, och då står vi
+  // åter inför valet mellan en rättelsepost per krönika och en text som tyst
+  // blir osann. Prompten instrueras att skriva platshållare; kontrollen här
+  // mäter att den gjorde det, i stället för att lita på att den gjorde det.
+  //
+  // De sex redan publicerade krönikorna rörs inte — de skrevs före beslutet,
+  // och deras «Då och nu»-ruta gör skillnaden synlig för läsaren.
+  const fastskrivna = skrivnaBelopp(chron.body_md);
+  if (fastskrivna.length > 0) {
+    console.error(
+      `Veckans fläsk: krönikan ${slug} bär ${fastskrivna.length} fastskrivna belopp ` +
+        `(${fastskrivna.join(", ")}) och skrivs INTE. Talen ska vara platshållare — ` +
+        "{total}, {gap}, {antal}, {belopp:<id>} — så att de slås upp när sidan byggs.",
+    );
     return { chronicles: existing, generated: null };
   }
 

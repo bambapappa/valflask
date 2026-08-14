@@ -5,6 +5,12 @@ import Dela from "../../components/Dela.astro";
 import { getChronicles, getPromises, getConstants } from "../../lib/data";
 import { totalFlasket, formatMsek } from "../../lib/calc";
 import { escapeHtml, maskeraBelopp, maskeraText } from "../../lib/mask";
+// Krönikornas platshållarmekanism bor i pipelinen och läses härifrån i
+// stället för att kopieras — ett faktum har en plats, och två kopior av den
+// här logiken skulle glida isär tyst. Modulen är ren textbehandling utan
+// beroenden, så den går att läsa av båda paketen.
+import { losUpp } from "../../../../pipeline/src/kronikans-tal.ts";
+import { promiseNetMsek, isActive } from "../../lib/aggregates";
 
 export function getStaticPaths() {
   const chronicles = getChronicles();
@@ -35,15 +41,48 @@ function renderBody(md: string): string {
     .join("\n");
 }
 
-const bodyHtml = renderBody(chronicle.body_md);
+/**
+ * Steg 1 ur beslutet 2026-08-09: talen slås upp när sidan byggs.
+ *
+ * Redogörelsen är statisk — vad veckan handlade om skrivs aldrig om. Summor,
+ * gap och antal är däremot påståenden om datat, och ett påstående om datat ska
+ * vara sant nu. De skrivs därför som platshållare i krönikans text och löses
+ * upp här.
+ *
+ * De sex krönikor som skrevs före beslutet bär sina tal i löptexten och har
+ * inga platshållare att lösa upp; för dem gör det här steget ingenting, och
+ * «Då och nu»-rutan nedan gör skillnaden synlig i stället.
+ */
+const reformutrymmePerArTal = getConstants().reformutrymme_msek_per_ar.value;
+const reformBudgetTal = typeof reformutrymmePerArTal === "number" ? reformutrymmePerArTal * 4 : 0;
+const aktivaLoften = getPromises().filter(isActive);
+const totaltNu = totalFlasket(aktivaLoften);
+const { text: bodyMd, olosta } = losUpp(chronicle.body_md, {
+  total_msek: totaltNu,
+  gap_msek: Math.max(0, totaltNu - reformBudgetTal),
+  antal_loften: aktivaLoften.length,
+  belopp: Object.fromEntries(aktivaLoften.map((p) => [p.id, promiseNetMsek(p)])),
+});
+// En platshållare som inte gick att slå upp lämnas synlig i texten av
+// `losUpp`, med flit. Bygget ska dessutom säga ifrån — en krönika som tappat
+// ett tal är ett fel någon ska se, inte en text som tyst saknar en siffra.
+for (const o of olosta) {
+  console.warn(`Veckans fläsk ${chronicle.slug}: ${o.platshallare} gick inte att slå upp — ${o.skal}`);
+}
+
+const bodyHtml = renderBody(bodyMd);
 
 /**
- * Då och nu. En krönika är en ögonblicksbild: siffrorna är de som gällde
- * veckan den skrevs. Sedan dess tillkommer löften och estimat ses över, så
- * krönikans total glider ifrån dagens. I stället för att skriva om historien
- * visar vi båda talen bredvid varandra — läsaren ser vad som stod då och vad
- * som gäller nu, utan att någon siffra behöver döljas eller räknas om.
- * Rutan visas bara när talen faktiskt skiljer sig.
+ * Då och nu — de sparade talen bredvid dagens.
+ *
+ * Regeln sedan 2026-08-09 är att redogörelsen är statisk och talen dynamiska:
+ * texten skrivs aldrig om, men summor och antal slås upp när sidan byggs.
+ * `total_msek` och `gap_msek` är vad som gällde veckan krönikan skrevs, och
+ * rutan visar dem bredvid dagens så att en läsare ser att en siffra rört sig
+ * — inte bara den nya. Rutan visas bara när talen faktiskt skiljer sig.
+ *
+ * För de sex krönikor som skrevs före beslutet bär löptexten fortfarande sina
+ * tal, och då är rutan det enda som visar skillnaden.
  */
 const promisesNu = getPromises();
 const reformutrymmePerAr = getConstants().reformutrymme_msek_per_ar.value;
@@ -92,8 +131,8 @@ const jsonLd = [
         <aside class="da-och-nu">
           <div class="etikett num">DÅ OCH NU</div>
           <p>
-            Krönikan är en ögonblicksbild av vecka {week}. Siffrorna nedan är de som
-            gällde när den skrevs — de räknas aldrig om i efterhand.
+            Redogörelsen ovan är den som skrevs vecka {week} och skrivs aldrig om.
+            Siffrorna nedan är de som gällde då, bredvid dem som gäller nu.
           </p>
           <table class="da-och-nu__tabell">
             <thead>

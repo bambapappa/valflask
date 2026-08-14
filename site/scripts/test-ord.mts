@@ -36,6 +36,7 @@
  *   pnpm test:ord
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { join, relative, resolve } from "node:path";
 
 const ROT = resolve(import.meta.dirname, "../..");
@@ -177,11 +178,77 @@ function filer(katalog: string): string[] {
   return ut;
 }
 
+/**
+ * Det git ignorerar hör inte till repot, och sveps därför inte.
+ *
+ * Skälet är mätt: `handlingsvagen/data/.kallcache/` fylls med riksdagens EGNA
+ * dokumenttexter av varje körning som läser en handling, och i en motion om
+ * krisberedskap betyder «vågor» vågor. Fem cachade motioner fällde grinden
+ * 2026-08-14 — ett normalt tillstånd för var och en som kört ett svep, och en
+ * grind som är röd på ett normalt tillstånd blir bortviftad.
+ *
+ * Gränsen dras vid **git**, inte vid en handskriven lista, och det är hela
+ * poängen: en fil som göms undan här måste också gömmas undan för repot, och
+ * då kan den inte nå en läsare. Vår egen prosa går alltså inte att smita
+ * förbi grinden med. Untracked filer som INTE är ignorerade sveps som förut —
+ * ny text ska prövas innan den committas, inte efter.
+ *
+ * Svarar git inte alls sveps allt, som förut. Ett verktyg som saknas ska göra
+ * grinden strängare, aldrig tystare.
+ */
+function ignoreradeAvGit(sokvagar: string[]): Set<string> {
+  if (sokvagar.length === 0) return new Set();
+  const svar = spawnSync("git", ["check-ignore", "--stdin", "-z"], {
+    cwd: ROT,
+    input: `${sokvagar.join("\0")}\0`,
+    encoding: "utf8",
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  // Utfallskod 0 = några ignoreras, 1 = inga ignoreras. Allt annat (git saknas,
+  // ingen arbetskopia) är ett trasigt verktyg, och då sveps allt.
+  if (svar.error || (svar.status !== 0 && svar.status !== 1)) {
+    console.warn("  (git check-ignore svarade inte — sveper allt, inklusive cachefiler)");
+    return new Set();
+  }
+  return new Set((svar.stdout ?? "").split("\0").filter(Boolean).map((p) => resolve(ROT, p)));
+}
+
 console.log("\n=== Ordgrinden: svepet över repot ===");
+
+const alla = filer(ROT);
+const ignorerade = ignoreradeAvGit(alla);
+const attSvepa = alla.filter((f) => !ignorerade.has(resolve(ROT, f)));
+if (ignorerade.size > 0) {
+  console.log(`  (${ignorerade.size} git-ignorerade filer sveps inte — de hör inte till repot)`);
+}
+
+// Gränsen får aldrig äta en fil som ligger i repot.
+//
+// `git check-ignore` läser indexet och rapporterar därför ALDRIG en spårad
+// fil som ignorerad — en gitignore-rad som pekar på något redan spårat gör
+// ingenting. Det är git som garanterar det, inte den här grinden, och därför
+// mäts inte den saken här: ett prov som inte kan falla mäter ingenting.
+//
+// Det som däremot kan gå sönder är gränsen själv — läggs `--no-index` till,
+// eller byts uppslaget mot en mönsterlista, börjar spårad text försvinna ur
+// svepet. Därför krävs att två kända filer faktiskt sveps: `CLAUDE.md`, som
+// bär språkreglerna, och `data/issues.json`, som serveras publikt och var det
+// stället där det förbjudna ordet levde kvar längst.
+const MASTE_SVEPAS = ["CLAUDE.md", "data/issues.json"];
+const svepta = new Set(attSvepa.map((f) => resolve(ROT, f)));
+const tappade = MASTE_SVEPAS.filter((f) => !svepta.has(resolve(ROT, f)));
+if (tappade.length > 0) {
+  console.error(
+    `FAIL: ${tappade.join(", ")} sveps inte längre — gränsen mot git har börjat ` +
+      "äta text som ligger i repot. Grinden är försvagad utan att någon rört mönstren.",
+  );
+  process.exit(1);
+}
+console.log(`  OK: ${MASTE_SVEPAS.join(" och ")} ligger kvar i svepet`);
 
 const fynd: string[] = [];
 let lasta = 0;
-for (const fil of filer(ROT)) {
+for (const fil of attSvepa) {
   lasta++;
   const rader = readFileSync(fil, "utf8").split("\n");
   for (const [nr, rad] of rader.entries()) {
