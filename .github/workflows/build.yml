@@ -142,6 +142,25 @@ jobs:
       - name: Ordgrinden
         run: node --experimental-strip-types scripts/test-ord.mts
         working-directory: site
+      # Rättelsenoten ska nå den sida rättelsen gäller. Frågevågens celler
+      # visade ingenting förrän 2026-08-14 — rättelserna fanns bara på
+      # /rattelser, inte där läsaren ser cellen. Mäter också hur många poster
+      # som INTE når fram, som ett tak: det får sjunka, aldrig stiga.
+      - name: Grindar för rättelsenoterna
+        run: node --experimental-strip-types scripts/test-rattelsenoter.mts
+        working-directory: site
+      # Krönikornas tal ska slås upp vid bygget, inte skrivas in i texten.
+      # Mekanismen fanns med egna prov i fyra månader utan att någon anropade
+      # den — grinden mäter därför INKOPPLINGEN, inte funktionen.
+      - name: Grindar för krönikornas tal
+        run: node --experimental-strip-types scripts/test-kronikans-tal.mts
+        working-directory: site
+      # Ett beslut ska säga vilka vågar det gäller. Dåtidsregeln tillämpades
+      # fyra gånger i löfteskön och gällde aldrig i ståndpunktsrutnätet, där
+      # två publicerade celler stod på just sådana citat.
+      - name: Grindar för beslutsloggen
+        run: node --experimental-strip-types scripts/test-beslutsloggen.mts
+        working-directory: site
       - name: Build site + OG images
         run: pnpm build
         working-directory: site
