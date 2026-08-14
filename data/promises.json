@@ -38165,7 +38165,7 @@
     "source": {
       "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/mobbning",
       "domain": "kristdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260814060240/https://kristdemokraterna.se/var-politik/politik-a-till-o/mobbning",
       "fetched_at": "2026-08-13T12:47:13.489Z"
     },
     "category": "utbildning",
@@ -38210,7 +38210,7 @@
     "source": {
       "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/mobbning",
       "domain": "kristdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260814060240/https://kristdemokraterna.se/var-politik/politik-a-till-o/mobbning",
       "fetched_at": "2026-08-13T12:47:14.266Z"
     },
     "category": "utbildning",
@@ -38329,6 +38329,100 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-08-13T12"
+    }
+  },
+  {
+    "id": "p-2026-0848",
+    "group_id": null,
+    "title": "Höja statens forskningsinvesteringar till 1 procent av BNP",
+    "slug": "hoja-statens-forskningsinvesteringar-till-1-procent-av-bnp",
+    "parties": [
+      "l"
+    ],
+    "person": {
+      "name": "Simona Mohamsson",
+      "role": "partiledare och utbildningsminister"
+    },
+    "quote": "Därför går Liberalerna till val på att staten ska höja investeringarna i forskning och utveckling med drygt 16 miljarder kronor till 1 procent av BNP.",
+    "date_stated": "2026-08-11",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/liberalerna-staten-ska-lagga-1-procent-av-bnp-pa-forskning",
+      "domain": "liberalerna.se",
+      "archive_url": "https://web.archive.org/web/20260812035115/https://www.liberalerna.se/nyheter/liberalerna-staten-ska-lagga-1-procent-av-bnp-pa-forskning",
+      "fetched_at": "2026-08-11T11:56:01.000Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 12000,
+      "msek_base": 16000,
+      "msek_high": 21600,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Belopp angivet i källtext.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": "Sexton miljarder markerade i kalkylen; finansieringskolumnen lämnas medvetet blank för vidare studier.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "kimi-k2.7-code",
+      "run_id": "run-2026-08-14-04-57"
+    }
+  },
+  {
+    "id": "p-2026-0849",
+    "group_id": null,
+    "title": "Jämställdhetspott om tre miljarder per år utöver märket",
+    "slug": "jamstalldhetspott-om-tre-miljarder-per-ar-utover-market",
+    "parties": [
+      "v"
+    ],
+    "person": {
+      "name": "Nooshi Dadgostar",
+      "role": "partiledare för Vänsterpartiet"
+    },
+    "quote": "Kvinnolönelyftet innebär att tre miljarder kronor per år i 10 år avsätts i en särskild jämställdhetspott, utöver det så kallade märket.",
+    "date_stated": "2026-05-01",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/kvinnolonelyftet-dags-att-ge-valfardens-kvinnor-ratt-lon/",
+      "domain": "vansterpartiet.se",
+      "archive_url": "https://web.archive.org/web/20260511215013/https://www.vansterpartiet.se/nyheter/kvinnolonelyftet-dags-att-ge-valfardens-kvinnor-ratt-lon/",
+      "fetched_at": "2026-05-01T08:40:14.000Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2250,
+      "msek_base": 3000,
+      "msek_high": 4050,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Belopp angivet i källtext.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": "Tre miljarder utöver märket får anses vara en ganska fri tolkning av begreppet märke.",
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "deepseek-v4-pro",
+      "verified_by": "kimi-k2.7-code",
+      "run_id": "run-2026-08-14-04-57"
     }
   }
 ]
