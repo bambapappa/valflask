@@ -12612,7 +12612,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett inriktningslöfte (önskelista: bättre studiero, mindre klasser, rätt stöd, uppvärdering av yrkesutbildning, fler behöriga lärare) utan konkreta belopp. De prissättbara delarna är redan egna C-löften — fler lärare i p-2026-0358 och rätt stöd i p-2026-0360 — så denna sammanfattning sätts till 0 för att undvika dubbelräkning; de kvarvarande delarna (mindre klasser, yrkesutbildning) är vaga önskningar utan konkret åtagande (belopp satt av granskare).",
+      "method_note": "Brett inriktningslöfte — en önskelista utan konkreta belopp. Delarna som går att prissätta ligger på partiets egna löften om ett sektorsbidrag för skolans personal och om rätt till stöd utan diagnoskrav, så den här sammanfattningen sätts till 0 för att inte räkna dem två gånger. De kvarvarande delarna — mindre klasser och uppvärderad yrkesutbildning — är önskningar utan konkret åtagande.",
       "confidence": 0.3,
       "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Löftet är en bred önskelista över flera politikområden utan något konkret åtagande. Ett sådant löfte prissätts inte: kostnaden ligger på partiets specifika löften och skulle annars räknas två gånger."
     },
@@ -12629,6 +12629,11 @@
         "date": "2026-07-24",
         "change": "Kostnadsestimat ändrat från 12 000 miljoner kronor per år (spann 5 000-30 000) till 0 vid den manuella genomgången. Ett brett inriktningslöfte vars prissättbara delar redan är egna C-löften (fler lärare p-2026-0358, rätt stöd p-2026-0360); att prissätta sammanfattningen skulle dubbelräkna, och resten (mindre klasser, yrkesutbildning) är vaga önskningar utan konkret åtagande.",
         "commit": "eb82470ce2efd60023b425e3543090e39b867ec1"
+      },
+      {
+        "date": "2026-08-14",
+        "change": "Motiveringstexten pekade ut vilka andra löften delarna prissätts på med deras interna nummer, som inte säger läsaren något, och ett av dem står sedan i dag på noll. Texten säger nu i klarspråk vilka löften som bär kostnaden. Beloppet är oförändrat.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -13361,14 +13366,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 2000,
-      "msek_high": 6000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Antar 1000-10000 nya lärartjänster à 0,7 msek/st för lön+overhead. Bas 3000 tjänster. Spannet är brett pga avsaknad av specificerat antal.",
-      "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antag 3 000–20 000 extra lärare/pedagoger. Årskostnad per tjänst ~700 000 kr inkl. arbetsgivaravgifter och overhead. Totalkostnad: 3 000 × 0,7 = 2 100 miljoner kronor; 20 000 × 0,7 = 14 000 miljoner kronor. Bas nära mitten av spannet. Jämförbart löfte om fler lärare och mindre klasser hos Socialdemokraterna kostar 12 000 miljoner kronor per år, så vårt högsta värde 15 000 är i linje med en ambitiös men ospecificerad satsning."
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/motion/ny-kraft-for-sverige-centerpartiets-budgetmotion_hc022962/html/",
+      "method_note": "Samma pengar som partiets löfte om ett sektorsbidrag för att rädda kvar skolans personal. Prissätts där, en gång.",
+      "confidence": 0.6,
+      "calculation": "Löftet lovar fler lärare och pedagoger utan att säga hur många. Det tidigare beloppet var vår egen uppskattning, byggd på ett antagande om mellan 3 000 och 20 000 nya tjänster. Centerpartiet har bara en post i sin budget som betalar för fler tjänster i skolan: sektorsbidraget som ska rädda kvar skolans personal, 4 000 miljoner kronor per år, som partiet skriver räcker till minst 7 000 fler tjänster. Någon egen post för fler lärare vid sidan av den finns inte. Det här löftet och löftet om sektorsbidraget är alltså två sätt att säga samma sak. Pengarna räknas en gång, på löftet om sektorsbidraget, eftersom det är det som namnger vad partiet faktiskt budgeterar."
     },
     "financing_claimed": {
       "described": false,
@@ -13383,6 +13388,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-08-14",
+        "change": "Beloppet gick från 2 000 till 0 miljoner kronor per år. Det gamla beloppet var vår egen uppskattning av vad fler lärare skulle kosta. Centerpartiet har en egen siffra för samma sak — sektorsbidraget som ska rädda kvar skolans personal, 4 000 miljoner kronor per år — och den räknas nu på det löftet i stället. Samma pengar räknas en gång.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -30881,13 +30891,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "msek_low": 2000,
+      "msek_base": 4000,
+      "msek_high": 4900,
+      "basis": "granskare",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/motion/ny-kraft-for-sverige-centerpartiets-budgetmotion_hc022962/html/",
+      "method_note": "Beloppet är Centerpartiets eget. Partiet budgeterar sitt sektorsbidrag för att rädda kvar skolans personal till 4 000 miljoner kronor per år. Spannet är vårt.",
+      "confidence": 0.6,
+      "calculation": "Löftet lovar ett sektorsbidrag utan att säga hur mycket. Centerpartiet har själva prissatt samma åtgärd: posten «Rädda kvar skolans personal – tillskott som sektorsbidrag» ligger på 4 000 miljoner kronor per år i partiets budget för 2025–2027. Partiet skriver att tillskottet räcker till minst 7 000 fler tjänster i skolan — omkring 570 000 kronor per tjänst, nära de 700 000 en tjänst kostar med avgifter och overhead. Samma budget vill slå ihop de riktade statsbidragen till skolan till ett sektorsbidrag på totalt 17 miljarder kronor. Den summan räknas inte: att lägga ihop pengar som redan betalas ut är omfördelning, inte ny kostnad. Spannet är vårt: 4 900 miljoner är vad 7 000 tjänster kostar till 700 000 styck, och 2 000 är halva tillskottet, om satsningen fasas in."
     },
     "financing_claimed": {
       "described": false,
@@ -30897,7 +30908,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-14",
+        "change": "Beloppet gick från 0 till 4 000 miljoner kronor per år. Nollan var inget avgjort belopp utan ett uteblivet: fältet för uträkningen stod tomt och noten sade att beloppet måste sättas för hand, vilket aldrig gjordes. Beloppet är nu Centerpartiets eget — partiets budget prissätter samma sektorsbidrag till 4 000 miljoner kronor per år. Samtidigt nollställs partiets löfte om fler lärare i skolan, som visade sig vara samma pengar.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
