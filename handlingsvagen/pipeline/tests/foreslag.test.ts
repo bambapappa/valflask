@@ -408,6 +408,46 @@ test("byggHandlingstext: sammanfattningen öppnas för en punkt som antar, inte 
   assert.deepEqual(byggHandlingstext(avslar, undefined, kalltext)?.delar, [avslar.forslag]);
 });
 
+/**
+ * Frågans egen lydelse — C3, byggd 2026-08-14 efter att B2 mätt beståndet.
+ *
+ * En interpellation har inga yrkanden, så `byggHandlingstext` svarade
+ * undefined och grinden prövade bara det ordagranna. Därmed hindrade
+ * ingenting att bakgrunden citerades i stället för frågan.
+ */
+test("byggHandlingstext: frågans lydelse är handlingen för en interpellation", () => {
+  const dokument =
+    "Interpellation 2022/23:173 En djurskyddsmyndighet av Rebecka Le Moine (MP). " +
+    "Därför vore det bra om en djurskyddsmyndighet inrättades. " +
+    "Med anledning av detta vill jag fråga landsbygdsminister Peter Kullgren: " +
+    "Hur ställer sig ministern sig till frågan om att inrätta en särskild myndighet " +
+    "med helhetsgrepp för djurens bästa?";
+
+  const ht = byggHandlingstext(undefined, undefined, dokument, "interpellation");
+  assert.equal(ht?.sort, "frågans lydelse");
+  assert.deepEqual(ht?.delar, [
+    "Hur ställer sig ministern sig till frågan om att inrätta en särskild myndighet " +
+      "med helhetsgrepp för djurens bästa?",
+  ]);
+  // Bakgrunden ligger INTE bland delarna — det är hela poängen.
+  assert.ok(!ht!.delar.some((d) => d.includes("Därför vore det bra")));
+
+  // Samma text utan slag ger undefined: en motion vars yrkandelista inte gick
+  // att hämta får inte tyst behandlas som en fråga.
+  assert.equal(byggHandlingstext(undefined, undefined, dokument), undefined);
+
+  // En skriftlig fråga prövas likadant.
+  assert.equal(byggHandlingstext(undefined, undefined, dokument, "skriftlig_fraga")?.sort, "frågans lydelse");
+
+  // Går frågedelen inte att läsa svarar den undefined i stället för en tom
+  // lista — grinden ska då inte pröva var citatet står, inte fälla allt.
+  assert.equal(byggHandlingstext(undefined, undefined, "Ett dokument utan frågeform.", "interpellation"), undefined);
+
+  // En votering går före: punkten är handlingen även när slaget är satt.
+  const punkt = { punkt: 1, rubrik: "Djurskydd", forslag: "Riksdagen avslår motion 2022/23:1234 yrkande 2." };
+  assert.equal(byggHandlingstext(punkt, undefined, dokument, "interpellation")?.sort, "beslutspunkt");
+});
+
 test("sammanfattning: hittas mellan rubrikerna, annars undefined", () => {
   assert.equal(sammanfattning("Sammanfattning Utskottet ställer sig bakom. Utskottets förslag till riksdagsbeslut X"), "Utskottet ställer sig bakom.");
   assert.equal(sammanfattning("Ett betänkande utan de rubrikerna."), undefined);

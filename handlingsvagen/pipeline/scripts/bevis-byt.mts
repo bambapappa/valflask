@@ -119,8 +119,10 @@ for (const byte of byten) {
   }
 
   // Handlingens EGNA lydelser: motionens yrkanden, voteringspunktens
-  // beslutstext. En fråga eller interpellation har ingen yrkandeform, och
-  // ska aldrig fällas för att den saknar en.
+  // beslutstext, frågans egen lydelse. En fråga har ingen yrkandeform och
+  // ska aldrig fällas för att den saknar en — men den har en egen lydelse,
+  // och sedan 2026-08-14 prövas citatet mot den. Lydelsen läses ur
+  // källtexten, så här behövs inget eget uppslag.
   let yrkanden: Yrkande[] | undefined;
   let punkt: Utskottspunkt | undefined;
   if (handling.kind === "motion") {
@@ -135,18 +137,28 @@ for (const byte of byten) {
     const punkter = await hamtaPunkter(koppling.bevis.kalla_dok_id);
     punkt = punkter?.find((p) => p.punkt === (handling as { punkt?: number }).punkt);
   }
-  const handlingstext = byggHandlingstext(punkt, yrkanden, kalltext);
+  const handlingstext = byggHandlingstext(punkt, yrkanden, kalltext, handling.kind);
 
   // Här skiljer sig skriptet medvetet från förslagsmotorn. Där får en
   // misslyckad hämtning av yrkandena passera — förslaget prövas ändå av en
   // människa efteråt. Här rättar vi PUBLICERAT data, och kontrollen av var
   // citatet står är hela skälet till att skriptet finns. Uteblir den tyst
   // har vi bytt ett belägg utan att veta om det nya är bättre.
-  const kravLydelser = handling.kind === "motion" || handling.kind === "votering";
+  const kravLydelser =
+    handling.kind === "motion" ||
+    handling.kind === "votering" ||
+    handling.kind === "interpellation" ||
+    handling.kind === "skriftlig_fraga";
   if (kravLydelser && !handlingstext) {
+    // Två olika orsaker, och de kräver olika saker av läsaren: ett uppslag som
+    // föll går att köra om, en frågedel som inte gick att hitta gör det inte.
+    const fraga = handling.kind === "interpellation" || handling.kind === "skriftlig_fraga";
     fel.push(
-      `${byte.id}: handlingens egna lydelser gick inte att hämta (${handling.kind} ${handling.dok_id}) — ` +
-        "kontrollen av var citatet står hade uteblivit tyst. Kör om när riksdagens api svarar.",
+      fraga
+        ? `${byte.id}: ingen frågelydelse gick att läsa ur ${handling.dok_id} — kontrollen av var ` +
+          "citatet står hade uteblivit tyst. Läs dokumentet självt och avgör för hand."
+        : `${byte.id}: handlingens egna lydelser gick inte att hämta (${handling.kind} ${handling.dok_id}) — ` +
+          "kontrollen av var citatet står hade uteblivit tyst. Kör om när riksdagens api svarar.",
     );
     continue;
   }

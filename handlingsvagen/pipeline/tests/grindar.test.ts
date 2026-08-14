@@ -136,6 +136,86 @@ test("H2 fäller ett voteringscitat som beskriver ärendet i stället för beslu
   assert.match(fel[0]!.reason, /beslutstext/u);
 });
 
+/**
+ * Facit: interpellation 2022/23:173 (HA10173), som den låg i kopplingskön
+ * 2026-08-13 — den enda frågan i kön, och den citerade bakgrunden.
+ *
+ * Texten är dokumentets egen, hämtad ur riksdagens öppna data med pipelinens
+ * `fetchDokumentText` och inklistrad ordagrant. En fixtur skriven ur samma
+ * antagande som koden hade stämt även om koden var fel; den här texten vet
+ * inget om vår grind.
+ */
+const HA10173 =
+  "Interpellation 2022/23:173 En djurskyddsmyndighet av Rebecka Le Moine (MP) till " +
+  "Landsbygdsminister Peter Kullgren (KD) Engagemanget för djurrätt och djurvälfärd är stort " +
+  "och därför är det med stor sorg och förskräckelse som många av oss reagerar på bristerna i " +
+  "efterlevnaden av den svenska djurskyddslagen, där det står att djur har rätt att utföra sina " +
+  "naturliga beteenden. Men verkligheten innebär i flera fall ett så stort lidande att döden kan " +
+  "betraktas som en befrielse. En förklaring till varför djur reduceras till ekonomiska enheter " +
+  "är att den ansvariga myndigheten för djurens välmående har som huvuduppgift att främja " +
+  "ekonomisk tillväxt. Denna grundläggande syn, där djur har reducerats till produktionsenheter, " +
+  "sätter sina spår i djurfabrikerna med ett enormt lidande till följd. Därför vore det bra om en " +
+  "djurskyddsmyndighet inrättades och en djurskyddsminister med särskilt ansvar för djurskydd, " +
+  "djurvälfärd och djurrätt tillsattes. Detta har också fått stort stöd bland det svenska folket, " +
+  "vilket inte minst yttrar sig i att Djurens Rätt har samlat in och överlämnat 35 198 " +
+  "namnunderskrifter till Ulf Kristersson, med vädjan om att tillsätta en djurskyddsminister. " +
+  "Med anledning av detta vill jag fråga landsbygdsminister Peter Kullgren: Hur ställer sig " +
+  "ministern sig till frågan om att inrätta en särskild myndighet med helhetsgrepp för djurens bästa?";
+
+/** Bakgrunden — det citat kön bar, och det som ser ordagrant rätt ut. */
+const BAKGRUNDEN =
+  "Därför vore det bra om en djurskyddsmyndighet inrättades och en djurskyddsminister med " +
+  "särskilt ansvar för djurskydd, djurvälfärd och djurrätt tillsattes.";
+
+/** Frågan — handlingen själv, och det citat granskaren bytte till för hand. */
+const FRAGAN =
+  "Hur ställer sig ministern sig till frågan om att inrätta en särskild myndighet med " +
+  "helhetsgrepp för djurens bästa?";
+
+const interpellation: Handling = {
+  id: "h-2026-2751",
+  kind: "interpellation",
+  dok_id: "HA10173",
+  datum: "2023-02-02",
+  parties: ["mp"],
+  persons: [{ name: "Rebecka Le Moine", party: "mp", riksdagen_id: "0546731406922" }],
+  titel: "En djurskyddsmyndighet",
+  url: "https://data.riksdagen.se/dokument/HA10173",
+  archive_url: null,
+};
+
+test("H2 fäller ett frågecitat ur bakgrunden i stället för ur frågan", () => {
+  const fragaCtx = (over: Partial<GrindKontext> = {}): GrindKontext =>
+    ctx({
+      handling: interpellation,
+      malPartier: ["mp"],
+      kalltext: HA10173,
+      handlingstext: { sort: "frågans lydelse", delar: [FRAGAN] },
+      ...over,
+    });
+  const utanMotionstyp = (citat: string): KopplingsForslag => {
+    const f = forslag({ handling_id: "h-2026-2751", bevis: { citat } });
+    delete f.motionstyp;
+    return f;
+  };
+
+  // Bakgrunden står ordagrant i dokumentet — det är hela problemet.
+  assert.ok(normalizeForVerbatim(HA10173).includes(normalizeForVerbatim(BAKGRUNDEN)));
+
+  const fel = provaGrindarna(utanMotionstyp(BAKGRUNDEN), fragaCtx());
+  assert.deepEqual(fel.map((f) => f.grind), ["H2"]);
+  assert.match(fel[0]!.reason, /bakgrunden/u);
+
+  // Frågan själv passerar.
+  assert.deepEqual(provaGrindarna(utanMotionstyp(FRAGAN), fragaCtx()), []);
+
+  // Och utan lydelser gissar grinden inte: samma citat passerar då, precis
+  // som en motion vars yrkanden inte gick att hämta.
+  const utanLydelser = fragaCtx();
+  delete utanLydelser.handlingstext;
+  assert.deepEqual(provaGrindarna(utanMotionstyp(BAKGRUNDEN), utanLydelser), []);
+});
+
 test("H3 fäller fel parti och tom partiuppgift", () => {
   assert.ok(provaGrindarna(forslag(), ctx({ malPartier: ["sd"] })).some((f) => f.grind === "H3"));
   const tomHandling = { ...motion, parties: [] };
