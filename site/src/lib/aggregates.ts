@@ -193,11 +193,44 @@ export function financingGap(promises: PromisePost[]): number {
   return totalFlasket(promises) - totalBesparingar(promises) - totalFinancingClaimed(promises);
 }
 
+/**
+ * Populationen partiets samtliga BELOPP räknas på: aktiva löften där partiet
+ * står som avsändare, med grupperade formuleringar räknade en gång.
+ *
+ * dedupeByGroup EFTER partifiltret: tvärparti-grupper behåller partiets egen
+ * medlem (fullt belopp i partijämförelsen), interna dubbletter räknas en gång.
+ *
+ * Ligger som en egen funktion just för att den ska vara svår att gå förbi. Fram
+ * till 2026-08-15 byggde `buildSummary` partiets finansieringsgap ur
+ * `getPromisesForParty` — samma löften, men OGRUPPERADE — medan `total_msek`
+ * på samma rad räknade grupperat. Ett delat löfte räknades då fullt ut hos
+ * varje parti, och gapet i det publika svaret blev för stort: 595 200 miljoner
+ * kronor för Centerpartiet och noll för Socialdemokraterna, alltså ett fel som
+ * inte träffar partierna lika.
+ */
+function partiPopulation(promises: PromisePost[], partyCode: string): PromisePost[] {
+  return dedupeByGroup(promises.filter((p) => isActive(p) && p.parties.includes(partyCode)));
+}
+
 export function partyTotalMsek(promises: PromisePost[], partyCode: string): number {
-  // dedupeByGroup EFTER partifiltret: tvärparti-grupper behåller partiets egen
-  // medlem (fullt belopp i partijämförelsen), interna dubbletter räknas en gång.
-  return dedupeByGroup(promises.filter((p) => isActive(p) && p.parties.includes(partyCode)))
-    .reduce((s, p) => s + promiseNetMsek(p), 0);
+  return partiPopulation(promises, partyCode).reduce((s, p) => s + promiseNetMsek(p), 0);
+}
+
+/**
+ * Vad partiet självt säger att sina löften finansieras med, räknat för
+ * mandatperioden precis som kostnaderna och på samma population som dem.
+ */
+export function partyFinancingClaimedMsek(promises: PromisePost[], partyCode: string): number {
+  return partiPopulation(promises, partyCode).reduce((s, p) => s + financingClaimedMsek(p), 0);
+}
+
+/**
+ * Partiets eget finansieringsgap — samma räkning som rikets `financingGap`,
+ * en nivå ned. `partyTotalMsek` är redan nettot (kostnader minus besparingar),
+ * så det som återstår är att dra av partiets egen finansieringsuppgift.
+ */
+export function partyFinancingGapMsek(promises: PromisePost[], partyCode: string): number {
+  return partyTotalMsek(promises, partyCode) - partyFinancingClaimedMsek(promises, partyCode);
 }
 
 export function getPromisesForParty(promises: PromisePost[], code: string): PromisePost[] {
@@ -534,11 +567,7 @@ export function buildSummary(
     reformutrymme_msek_per_ar: reformutrymme,
     reformutrymme_total_msek: refTotal,
     parties: parties.map((p) => {
-      const pp = getPromisesForParty(promises, p.code);
       const t = partyTotalMsek(promises, p.code);
-      const pf = pp.filter(isCostType).reduce((s, x) => s + promiseTotalMsek(x), 0);
-      const pb = pp.filter(isBesparing).reduce((s, x) => s + promiseTotalMsek(x), 0);
-      const pfc = pp.reduce((s, x) => s + (x.financing_claimed.msek ?? 0), 0);
       return {
         code: p.code,
         name: p.name,
@@ -546,8 +575,12 @@ export function buildSummary(
         mandates: p.mandate_2022,
         votes: p.votes_2022,
         per_vote: flasketPerRost(t, p.votes_2022),
-        promises_count: pp.length,
-        financing_gap_msek: pf - pb - pfc,
+        // Antalet räknar löftesPOSTER — samma lista partisidan visar — medan
+        // beloppen räknar politik och tar en grupp en gång. De två svarar på
+        // olika frågor och får därför skilja sig; det är beloppen som måste
+        // vila på samma population, och de gör det nu genom funktionerna nedan.
+        promises_count: getPromisesForParty(promises, p.code).length,
+        financing_gap_msek: partyFinancingGapMsek(promises, p.code),
       };
     }),
   };
