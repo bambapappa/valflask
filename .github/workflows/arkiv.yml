@@ -88,6 +88,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Peka om origin till den färska token. Checkouten kördes med
+          # persist-credentials: false, så origin bär INGA uppgifter alls —
+          # utan den här raden svarar git "could not read Username for
+          # https://github.com" på varje pushförsök. Körningen mintade token
+          # men använde den aldrig, och båda de schemalagda körningarna
+          # 3 och 10 augusti 2026 kastade sitt färdiga resultat av just det.
+          git remote set-url origin \
+            "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           cp data/arkiv.json /tmp/arkiv.json 2>/dev/null || true
           for attempt in 1 2 3 4 5; do
             # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett

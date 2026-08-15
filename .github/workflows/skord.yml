@@ -145,6 +145,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Peka om origin till den färska token. Checkouten kördes med
+          # persist-credentials: false, så origin bär INGA uppgifter alls —
+          # utan den här raden svarar git "could not read Username for
+          # https://github.com" på varje pushförsök. Körningen mintade token
+          # men använde den aldrig, och de 563 skördade raderna 10 augusti
+          # 2026 committades och kastades fem gånger om.
+          git remote set-url origin \
+            "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           mkdir -p /tmp/skord
           for p in data/roster data/personer.json data/betankanden.json data/handlingar.json; do
             [ -e "$p" ] && cp -r "$p" /tmp/skord/ || true
