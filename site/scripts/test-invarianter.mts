@@ -32,14 +32,17 @@ import {
   promiseTotalMsek,
   promiseNetMsek,
   partyTotalMsek,
+  partyFinancingClaimedMsek,
+  partyFinancingGapMsek,
   totalFlasket,
   totalBesparingar,
   totalFinancingClaimed,
   financingGap,
   coalitionAggregates,
+  buildSummary,
   isActive,
 } from "../src/lib/aggregates.ts";
-import type { PromisePost, Party } from "../src/lib/data.ts";
+import type { PromisePost, Party, Constants } from "../src/lib/data.ts";
 
 type TestPromise = PromisePost;
 type TestParty = Party;
@@ -254,5 +257,102 @@ describe("T8: Invariant tests", () => {
     assert.equal(result.financingGap, 0);
     assert.equal(result.promisesCount, 0);
     assert.equal(result.groupNotes.length, 0);
+  });
+});
+
+/*
+ * `buildSummary` bygger det som ligger på `api/v1/summary.json` — talen andra
+ * läser och citerar. Fram till 2026-08-15 prövades den inte alls, och partiernas
+ * rader räknade två fel i ett och samma uttryck: gapet summerades ur en
+ * OGRUPPERAD lista fast `total_msek` på samma objekt grupperar, och partiets
+ * egen finansieringsuppgift lästes utan sin period. Mätt mot skarpa data
+ * överdrev det Centerpartiets gap med 595 200 miljoner kronor och
+ * Socialdemokraternas med noll — ett fel som träffar partierna olika.
+ */
+const KONSTANTER: Constants = {
+  generated_note: "",
+  reformutrymme_msek_per_ar: { value: 100000, source_url: "https://exempel.test", source_date: "2026-01-01" },
+  items: [],
+};
+const LOGG = [{ data_hash: "0".repeat(64) }];
+const finansiering = (msek: number) => ({ described: true, summary: "x", msek, period: "per_ar" });
+
+describe("Summorna i det publika svaret", () => {
+  it("Ett publicerat belopp ändras inte av att samma politik sägs en gång till", () => {
+    // Invarianten hela grupperingen vilar på: ett delat löfte är EN politik,
+    // hur många formuleringar den än har. Sägs den en gång till ska varje
+    // belopp stå still — på riksnivå och på partiets egen rad.
+    const bas: TestPromise[] = [
+      mkPromise("p1", { msek_base: 1000, parties: ["a"], group_id: "g-delad", financing_claimed: finansiering(400) }),
+      mkPromise("p2", { msek_base: 900, parties: ["b"], group_id: "g-delad", financing_claimed: finansiering(400) }),
+      mkPromise("p3", { msek_base: 700, parties: ["a"] }),
+      mkPromise("p4", { msek_base: 300, parties: ["b"], cost: { type: "besparing", period: "per_ar", msek_low: 200, msek_high: 400, basis: "rut" } }),
+    ];
+    // Upprepningen får ett LÄGRE belopp än gruppens bärare. Annars byter
+    // gruppen representant, och då ska talen röra sig — provet skulle mäta
+    // fel sak och gå igenom av en slump.
+    const medUpprepning: TestPromise[] = [
+      ...bas,
+      mkPromise("p5", { msek_base: 800, parties: ["a"], group_id: "g-delad", financing_claimed: finansiering(400) }),
+    ];
+
+    const fore = buildSummary(bas, PARTIES, KONSTANTER, LOGG);
+    const efter = buildSummary(medUpprepning, PARTIES, KONSTANTER, LOGG);
+
+    for (const falt of [
+      "total_msek_flasket",
+      "total_msek_besparingar",
+      "total_financing_claimed_msek",
+      "financing_gap_msek",
+    ] as const) {
+      assert.equal(efter[falt], fore[falt], `${falt} ändrades av en upprepning av samma politik`);
+    }
+    for (const [i, parti] of efter.parties.entries()) {
+      const innan = fore.parties[i]!;
+      assert.equal(parti.total_msek, innan.total_msek, `${parti.code}: total_msek ändrades av en upprepning`);
+      assert.equal(parti.per_vote, innan.per_vote, `${parti.code}: per_vote ändrades av en upprepning`);
+      assert.equal(
+        parti.financing_gap_msek,
+        innan.financing_gap_msek,
+        `${parti.code}: finansieringsgapet ändrades av en upprepning — gapet räknas på en ` +
+          "annan population än partisumman på samma rad",
+      );
+    }
+    // ANTALEN är undantagna med flit: `promises_count` räknar löftesposter,
+    // och en formulering till ÄR en post till. Den siffran svarar på en annan
+    // fråga än beloppen och speglar det partisidan faktiskt listar.
+    assert.ok(efter.total_promises > fore.total_promises, "antalet poster ska däremot öka");
+  });
+
+  it("Partiets gap vilar på samma population och samma period som partisumman", () => {
+    const promises: TestPromise[] = [
+      mkPromise("p1", { msek_base: 1000, parties: ["a"], financing_claimed: finansiering(250) }),
+    ];
+    // Finansieringsuppgiften räknas upp till mandatperioden precis som
+    // kostnaden: 250 per år är 1 000, inte 250. Läses den rått blir gapet
+    // 3 750 — för stort, alltså till partiets nackdel.
+    assert.equal(partyTotalMsek(promises, "a"), 4000, "1 000 per år = 4 000");
+    assert.equal(partyFinancingClaimedMsek(promises, "a"), 1000, "250 per år = 1 000");
+    assert.equal(partyFinancingGapMsek(promises, "a"), 3000, "gap = 4 000 − 1 000");
+    assert.equal(
+      buildSummary(promises, PARTIES, KONSTANTER, LOGG).parties.find((p) => p.code === "a")!.financing_gap_msek,
+      3000,
+      "det publicerade gapet ska vara samma tal som funktionen ger",
+    );
+  });
+
+  it("Delas ingen politik mellan partier är rikets gap summan av partiernas", () => {
+    // Binder ihop de två nivåerna. Räknar de på olika populationer glider de
+    // isär utan att något enskilt tal ser fel ut.
+    const promises: TestPromise[] = [
+      mkPromise("p1", { msek_base: 1000, parties: ["a"], financing_claimed: finansiering(250) }),
+      mkPromise("p2", { msek_base: 600, parties: ["b"] }),
+      mkPromise("p3", { msek_base: 500, parties: ["b"], group_id: "g-egen" }),
+      mkPromise("p4", { msek_base: 400, parties: ["b"], group_id: "g-egen" }),
+      mkPromise("p5", { msek_base: 200, parties: ["c"], cost: { type: "intäktsökning", period: "per_ar", msek_low: 150, msek_high: 250, basis: "rut" } }),
+      mkPromise("p6", { msek_base: 900, parties: ["d"], status: "tillbakadragen" }),
+    ];
+    const summa = PARTIES.reduce((s, p) => s + partyFinancingGapMsek(promises, p.code), 0);
+    assert.equal(summa, financingGap(promises), "partiernas gap ska summera till rikets");
   });
 });
