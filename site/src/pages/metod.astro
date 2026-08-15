@@ -52,7 +52,7 @@ const jsonLd = [
         "name": "Använder ni AI, och vem ansvarar för det som publiceras?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Ja, och vi skriver ut exakt var. En språkmodell föreslår fyra av fem prislappar och skriver uträkningen under dem, skriver veckokrönikorna, och föreslår vilka besked och vilka riksdagshandlingar som hör till vilket löfte. En språkmodell rör aldrig citaten, summorna, domarna eller valet av frågor — de är antingen hämtade ordagrant ur källan eller uträknade efter fasta regler. Redaktionellt ansvarig är Martin Kronvall. Inget nytt löfte och inget belopp når sajten utan att en människa godkänt det i en öppen granskningskö; maskinen får föreslå, inte publicera.",
+          "text": "Ja, och vi skriver ut exakt var. En språkmodell föreslår fyra av fem prislappar och skriver uträkningen under dem, och föreslår vilka besked och vilka riksdagshandlingar som hör till vilket löfte. En språkmodell rör aldrig citaten, summorna, domarna eller valet av frågor — de är antingen hämtade ordagrant ur källan eller uträknade efter fasta regler. Redaktionellt ansvarig är Martin Kronvall. Inget nytt löfte och inget belopp når sajten utan att en människa godkänt det i en öppen granskningskö; maskinen får föreslå, inte publicera.",
         },
       },
       {
@@ -131,7 +131,6 @@ const jsonLd = [
       <ul>
         <li><strong>Fyra av fem prislappar, och texten som förklarar dem.</strong> Saknas en officiell siffra föreslår en språkmodell ett belopp och skriver uträkningen under det. Sådana belopp bär alltid ett ungefär-tecken (≈), ett spann och källnivån "egen uppskattning" på löftessidan — du ser alltså på siffran att den är gissad.</li>
         <li><strong>Marginalanteckningen under ett par procent av löftena.</strong> Alla övriga får i stället den fasta vikt-raden längre upp på den här sidan, som räknas fram utan språkmodell.</li>
-        <li><strong>Veckokrönikorna.</strong> Texten skrivs av en språkmodell utifrån veckans löften. Genereringen är för närvarande pausad medan vi bygger om hur siffrorna i dem hålls färska.</li>
         <li><strong>Förslagen i granskningsköerna.</strong> Vilket besked ett citat ger i Frågevågen, och vilken riksdagshandling som hör ihop med vilket löfte i Handlingsvågen, föreslås av en språkmodell och kontrolleras av en annan, oberoende, innan en människa avgör saken.</li>
       </ul>
 
@@ -148,11 +147,10 @@ const jsonLd = [
       <p>Ansvaret är inte en formulering utan hur arbetet faktiskt går till: <strong>inget nytt löfte och inget belopp når sajten utan att en människa släppt igenom det.</strong> Föreslår en språkmodell en prislapp hamnar löftet i en öppen granskningskö, och där blir det liggande. Det enda som kan släppa ut det är att den ansvariga människan sätter ett godkännande på det — en åtgärd som kräver behörighet i kodförrådet och som ingen maskin kan utföra åt oss. Beslutet sparas med tidpunkt, och kön ligger öppen hela tiden, så vem som helst kan se vad som väntar på besked och vad som släpptes igenom.</p>
       <p>Det ska sägas lika rakt vad spärren <em>inte</em> är: sajten byggs om automatiskt, och delar av arbetet skriver till kodförrådet utan att en människa trycker på något varje gång — källkontroller, arkivkopior, uppdaterade sammanräkningar. Det är maskinellt arbete på material som redan är godkänt, inte en väg förbi granskningen. Gränsen går vid <strong>vad som får bli ett publicerat påstående</strong>: den passeras bara av ett mänskligt godkännande. Varje ändring, också maskinernas, ligger kvar i kodförrådets historik med tidpunkt. Hela kedjan är öppen på <a href="https://github.com/bambapappa/valflask" target="_blank" rel="noopener">GitHub<span aria-hidden="true"> ↗</span><span class="visually-hidden"> (öppnas i en ny flik)</span></a>.</p>
 
-      <h2 id="kronikor">Veckokrönikorna: texten står still, siffrorna hålls färska</h2>
-      <p>Varje vecka sammanfattar vi veckans löften i en krönika. Sedan rättar vi ibland ett belopp — och då stämmer inte längre den summa som stod i krönikan när den skrevs.</p>
-      <p>Vi löser det genom att skilja på två saker i samma text. <strong>Redogörelsen</strong> — vad veckan handlade om, vilka partier som lovade vad, och hur vi såg på det — är skriven vid ett tillfälle och ändras aldrig. Den är en beskrivning av en vecka, och den får inte skrivas om i efterhand. <strong>Siffrorna</strong> — totalsumman, gapet, antalet löften och vad ett enskilt löfte kostar — är däremot påståenden om vårt data, inte om veckan. Dem slår vi upp på nytt varje gång sidan byggs, så att en krönika från juni visar det som gäller i dag.</p>
-      <p>Rättar vi ett belopp någonstans följer alltså varje krönika med automatiskt. Vill du se att en siffra rört sig finns rutan <strong>"Då och nu"</strong> på varje krönikesida, som ställer veckans ursprungliga tal bredvid dagens.</p>
-      <p>Det här gäller bara siffrorna. Har vi skrivit något felaktigt <em>om en vecka</em> — påstått att ett parti lovade något det inte lovade — är det ett fel i texten, och då rättar vi synligt och skriver in det i <a href="/rattelser">rättelseloggen</a> som vanligt.</p>
+      <h2 id="kronikor">Veckokrönikorna är borttagna</h2>
+      <p>Under juni till augusti 2026 publicerade vi en veckokrönika som sammanfattade veckans nya löften. <strong>De sex krönikorna är avpublicerade sedan den 14 augusti 2026.</strong></p>
+      <p>Skälet är att texterna bar sina summor inskrivna i löptexten. Rättar vi ett belopp någon annanstans blir en sådan mening tyst osann, och en krönika från juli hade fortsatt visa en totalsumma som inte längre stämde. Att i stället skriva om texten i efterhand vore att skriva om vad vi sagt. Vi valde att ta bort dem.</p>
+      <p>Texterna är inte raderade — de ligger kvar i kodförrådet tillsammans med all annan data, så att det går att se vad som stod där och när. Borttagningen står i <a href="/rattelser">rättelseloggen</a>, och <a href="/veckans-flask">sidan där de låg</a> säger detsamma. Ingen siffra på sajten påverkas.</p>
 
       <h2 id="fragevagen">Frågevågen — så registrerar vi partiernas besked</h2>
       <p><a href="/fragor">Frågevågen</a> för register över vad partierna <strong>säger</strong> i valets stora frågor. Metoden i fem punkter:</p>

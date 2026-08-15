@@ -1,12 +1,21 @@
 ---
+/**
+ * Veckans fläsk — avpublicerad.
+ *
+ * Krönikorna togs bort från sajten 2026-08-14 genom ett mänskligt beslut.
+ * Sidan står kvar med en enda uppgift: att säga att de funnits och var de
+ * finns nu. Att ta bort ett helt avsnitt utan spår vore en tyst rättelse, och
+ * tysta rättelser är förbjudna — därför den här noten och posten i
+ * rättelseloggen.
+ *
+ * Texterna ligger kvar i `data/chronicles.json` i kodförrådet, samtliga
+ * märkta `archived`, och renderas inte av något. Ska en krönika publiceras
+ * igen skrivs den för hand, och då tas frågan om hur talen hålls färska på
+ * nytt.
+ */
 import Layout from "../../layouts/Layout.astro";
-import { getChronicles } from "../../lib/data";
-import { formatMsek } from "../../lib/calc";
-import { maskeraText } from "../../lib/mask";
 
-// Nyast först (chronicles.json är redan sorterad så, men lita inte på det).
-const chronicles = [...getChronicles()].sort((a, b) => b.slug.localeCompare(a.slug));
-
+const canonicalPath = "/veckans-flask";
 const jsonLd = [
   {
     "@context": "https://schema.org",
@@ -19,75 +28,42 @@ const jsonLd = [
 ];
 ---
 <Layout
-  title="Veckans fläsk — alla veckokrönikor — utlovat.se"
-  description="Varje vecka väger vi in veckans nya vallöften: vad som lovades, vad det kostar och var totalen står. Alla krönikor i tidsordning."
+  title="Veckans fläsk — avpublicerad — utlovat.se"
+  description="Veckokrönikorna är borttagna från utlovat.se. Texterna finns kvar i kodförrådet."
   jsonLd={jsonLd}
-  canonicalPath="/veckans-flask"
+  canonicalPath={canonicalPath}
 >
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
-      <h1>Veckans fläsk</h1>
-      <p>
-        Varje vecka med nya löften vägs in: vad som lovades, vad det kostar och var totalen
-        står. Krönikorna är ögonblicksbilder — beloppen speglar vågens läge den veckan, och
-        rättas något i efterhand syns det öppet på krönikan och i <a href="/rattelser">rättelseloggen</a>.
-      </p>
-    </div>
+      <h1>Veckans fläsk är borttagen</h1>
 
-    <section class="sektion">
-      <p class="arkivnot">
-        Fyra tidigare krönikor är <strong>arkiverade</strong>. De byggde på summor som
-        senare visade sig vara tre till fem gånger för höga, och en krönika skrivs aldrig
-        om — därför är de borttagna från sajten i stället för rättade. De finns kvar i sin
-        helhet i projektets data på GitHub och går att läsa där. Se
+      <p>
+        Under juni till augusti 2026 publicerade vi en veckokrönika som
+        sammanfattade veckans nya vallöften. <strong>De sex krönikorna är
+        avpublicerade sedan den 14 augusti 2026</strong> och finns inte längre
+        på sajten.
+      </p>
+
+      <p>
+        Skälet är att texterna bar sina summor inskrivna i löptexten. Rättas ett
+        belopp någon annanstans blir en sådan mening tyst osann, och en krönika
+        från juli hade fortsatt visa en totalsumma som inte längre stämde. Vi
+        valde att ta bort dem hellre än att skriva om historisk text.
+      </p>
+
+      <p>
+        Texterna är inte raderade. De ligger kvar i sin helhet i
+        <a href="https://github.com/bambapappa/valflask/blob/main/data/chronicles.json" target="_blank" rel="noopener">kodförrådet<span aria-hidden="true"> ↗</span><span class="visually-hidden"> (öppnas i en ny flik)</span></a>
+        tillsammans med hela sajtens data, så att det går att se vad som stod
+        där och när. Borttagningen står också i
         <a href="/rattelser">rättelseloggen</a>.
       </p>
 
-      {chronicles.length === 0 ? (
-        <p class="prosa-content">Första krönikan publiceras när veckans första löften vägts in.</p>
-      ) : (
-        chronicles.map((c) => (
-          <article class="kronikarad">
-            <div class="etikett num">
-              VECKA {c.week} {c.year}
-              {c.correction_note && <> · RÄTTAD</>}
-            </div>
-            <h2><a href={`/veckans-flask/${c.slug}`} set:html={maskeraText(c.headline)}></a></h2>
-            <p class="etikett kronikarad__meta num">
-              {c.promise_ids.length} löften i veckan · fläsket då <span class="belopp">{formatMsek(c.total_msek)}</span>
-            </p>
-          </article>
-        ))
-      )}
-    </section>
+      <p>
+        Ingen siffra på sajten påverkas. Krönikorna var en sammanfattning av
+        material som ligger kvar: <a href="/">totalsumman</a>, de enskilda
+        löftena och <a href="/rattelser">rättelserna</a> står där de stod.
+      </p>
+    </div>
   </div>
 </Layout>
-
-<style>
-  .prosa-content--centered {
-    margin: 1.5rem auto;
-  }
-  .sektion {
-    margin-top: 2rem;
-  }
-  .kronikarad {
-    border-top: 2px solid var(--svarta);
-    padding: 1rem 0;
-  }
-  .kronikarad h2 {
-    margin: 0.35rem 0;
-  }
-  .kronikarad h2 a {
-    text-decoration: none;
-  }
-  .kronikarad__meta {
-    color: var(--grafit);
-  }
-  .arkivnot {
-    margin: 0 0 1.5rem;
-    padding: 0.9rem 1.1rem;
-    border-left: 3px solid var(--linje, #ccc);
-    background: var(--ruta, #f6f6f4);
-    font-size: 0.95rem;
-  }
-</style>

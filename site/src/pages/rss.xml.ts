@@ -1,4 +1,4 @@
-import { getPromises, getParties, getChronicles } from "../lib/data";
+import { getPromises, getParties } from "../lib/data";
 import { promiseNetMsek } from "../lib/aggregates";
 import { formatMsek } from "../lib/calc";
 
@@ -8,20 +8,6 @@ export async function GET() {
   const BASE = "https://utlovat.se";
   const promises = getPromises();
   const parties = getParties();
-
-  const chronicleItems = getChronicles()
-    .sort((a, b) => b.slug.localeCompare(a.slug))
-    .map((c) => {
-      const link = `${BASE}/veckans-flask/${c.slug}`;
-      return `    <item>
-      <title>${escapeXml(`Veckans fläsk v${c.week}: ${c.headline}`)}</title>
-      <link>${link}</link>
-      <guid>${link}</guid>
-      <description>${escapeXml(c.headline)}</description>
-      <pubDate>${new Date(c.generated_at).toUTCString()}</pubDate>
-    </item>`;
-    })
-    .join("\n");
 
   const promiseItems = promises
     .filter((p) => p.status !== "tillbakadragen")
@@ -50,7 +36,7 @@ export async function GET() {
     <description>Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför valet 2026.</description>
     <language>sv</language>
     <atom:link href="${BASE}/rss.xml" rel="self" type="application/rss+xml" />
-${[chronicleItems, promiseItems].filter(Boolean).join("\n")}
+${promiseItems}
   </channel>
 </rss>`;
 

@@ -17,6 +17,7 @@ import type { LlmClient } from "./llm.ts";
 import type { Utskottspunkt, Yrkande } from "./riksdagen.ts";
 import { provaGrindarna, type GrindFel, type GrindKontext, type KopplingsForslag } from "./grindar.ts";
 import { motionensSlag } from "./yrkandeslag.ts";
+import { fragansLydelser } from "./fragans-lydelse.ts";
 
 /** Löftesfälten förslagssteget behöver (delmängd av valflask promises.json). */
 export interface Lofte {
@@ -394,11 +395,19 @@ function punktenAntarNagot(punkt: Utskottspunkt): boolean {
  * punkten bara motioner får sammanfattningen inte användas — då beskriver den
  * lagförslagen i en annan punkt, och det var precis det felet grinden kom
  * till för att stoppa (mänskligt beslut 2026-08-06).
+ *
+ * **En fråga har inga yrkanden, och det gjorde den osynlig för grinden.**
+ * Handlingen är frågans egen lydelse — texten efter upptakten «…vill jag
+ * fråga X:» — och den går att läsa ur källtexten. Därför krävs `slag`: utan
+ * det går en interpellation inte att skilja från en motion vars yrkandelista
+ * inte gick att hämta, och de två ska behandlas olika. Saknas slaget prövas
+ * bara det ordagranna, som förut.
  */
 export function byggHandlingstext(
   punkt?: Utskottspunkt,
   yrkanden?: Yrkande[],
   kalltext?: string,
+  slag?: Handling["kind"],
 ): GrindKontext["handlingstext"] {
   if (punkt) {
     const delar = [punkt.forslag];
@@ -426,6 +435,13 @@ export function byggHandlingstext(
       return { sort: "yrkanden", delar: [...lydelser, kalltext], brodtextOppen: true };
     }
     return { sort: "yrkanden", delar: lydelser };
+  }
+  if ((slag === "interpellation" || slag === "skriftlig_fraga") && kalltext) {
+    const lydelser = fragansLydelser(kalltext).map((f) => f.lydelse);
+    // Hittas ingen frågelydelse vet vi inte var frågedelen börjar, och då ska
+    // grinden inte gissa. Tom lista betyder «oprövat», precis som en
+    // yrkandelista som inte gick att hämta — inte «citatet duger».
+    if (lydelser.length > 0) return { sort: "frågans lydelse", delar: lydelser };
   }
   return undefined;
 }
@@ -469,9 +485,10 @@ export async function skapaForslag(
     confidence: svar.confidence,
   };
   // Handlingens egen text, när vi har den: yrkandena för en motion, punktens
-  // beslutstext för en votering. H2 prövar att citatet står där och inte i
-  // brödtexten. Saknas den prövas bara det ordagranna.
-  const handlingstext = byggHandlingstext(punkt, yrkanden, kalltext);
+  // beslutstext för en votering, frågans lydelse för en interpellation eller
+  // skriftlig fråga. H2 prövar att citatet står där och inte i brödtexten.
+  // Saknas den prövas bara det ordagranna.
+  const handlingstext = byggHandlingstext(punkt, yrkanden, kalltext, handling.kind);
   const grindfel = provaGrindarna(forslag, {
     handling,
     kalltext,

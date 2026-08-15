@@ -1,7 +1,111 @@
 # DECISION LOG — drygast.nu
 
 Format: `## ÅÅÅÅ-MM-DD — [Beslut]`
-Varje rad: **Beslut**, **Motiv**, **Förkastade alternativ**.
+Varje rad: **Gäller**, **Beslut**, **Motiv**, **Förkastade alternativ**.
+
+**Gäller** säger vilka av de tre vågarna beslutet omfattar — Fläskvågen,
+Frågevågen, Handlingsvågen, eller *alla tre*. Raden finns därför att ett beslut
+en gång tillämpades i ena halvan av huset utan att någon märkte det: regeln att
+ett citat om vad partiet redan gjort inte är något åtagande fattades 2026-08-12
+och tillämpades fyra gånger i löfteskön, men gällde aldrig i ståndpunkts-
+rutnätet — där två publicerade celler stod på just sådana citat, ett av dem
+hämtat från samma partisida där ett annat citat avvisats på exakt den grunden
+samma vecka. Regeln var varken glömd eller ifrågasatt. Den var skriven på ett
+ställe och tillämpad på ett ställe.
+
+Vågarna har skilda köer, skilda grindar och skilda genomgångar, och ett beslut
+vandrar inte av sig självt mellan dem. Frågan *«var gäller det här?»* är billig
+att ställa och dyr att låta bli — och innan posten stängs ska det publicerade
+beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
+`pnpm test:beslutsloggen` kräver raden av nya poster.
+
+---
+
+## 2026-08-14 — Veckokrönikorna avpubliceras och genereringen läggs ned
+
+**Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga krönikor, och
+inget i deras data eller bedömningar rörs.
+
+**Beslut (mänskligt beslut 2026-08-14):** De sex veckokrönikorna tas bort från
+sajten. Texterna ligger kvar i `data/chronicles.json`, samtliga märkta
+`archived`, och renderas inte av något. Genereringen läggs ned — ska en krönika
+publiceras igen skrivs den **för hand**, och då tas frågan om hur talen hålls
+färska på nytt. Rättelsepost skriven, och sidan de låg på säger vad som hänt.
+
+**Motiv:** Krönikorna bar sina summor inskrivna i löptexten — 42 tal i sex
+texter, varav 11 helhetstal och 28 enskilda löftesbelopp. Rättas ett belopp
+någon annanstans slutar en sådan mening stämma. Den äldsta krönikan sa 2 578
+miljarder kronor när summan var 4 195.
+
+Beslutet 2026-08-09 skulle lösa det genom att göra talen dynamiska, men
+mekanismen kopplades aldrig in, och när den kopplades in 2026-08-14 blev
+kvarvarande fråga vad man gör med de sex som redan var skrivna. Båda vägarna dit
+var dåliga: att byta talen mot platshållare ändrar vad vi sagt om en vecka som
+passerat, och att låta dem stå lämnar osanna siffror kvar. Rutan «Då och nu»
+visade båda talen, men löptexten sa fortfarande bara det ena.
+
+**Funktionen bar dessutom en kostnad som inte motsvarades av nyttan.** En
+genererad text som sammanfattar material som redan står på sajten kräver egen
+mekanik för att inte åldras, egna grindar för att den mekaniken ska vara
+inkopplad, och ett eget undantag i varje regel om vad som får skrivas om. En
+handskriven krönika vid behov har ingen av de kostnaderna.
+
+**Förkastade alternativ:** *Skriva om de sex texternas tal till platshållare* —
+ändrar publicerad text på sex sidor, och de 28 enskilda löftesbeloppen måste
+bindas till löften som sedan kan ha dragits tillbaka, vilket ger en synlig olöst
+platshållare mitt i en mening. *Skriva om bara de 11 helhetstalen* — bättre, men
+löser bara halva problemet och behåller hela funktionens underhåll för en text
+ingen efterfrågat. *Radera texterna* — historiken är värd något, och en
+avpublicering som inte går att kontrollera i efterhand är en tyst rättelse.
+*Låta dem ligga kvar orörda* — de blir osanna igen vid nästa beloppsrättelse.
+
+**Vad som inte ändras:** ingen summa, inget löfte, ingen bedömning. Krönikorna
+var en sammanfattning av material som ligger kvar.
+
+---
+
+## 2026-08-14 — Ordgrinden sveper det som ligger i repot, inte det git ignorerar
+
+**Gäller:** alla tre vågarna — grinden sveper hela repot.
+
+**Beslut:** `pnpm test:ord` hoppar över filer som git ignorerar. Gränsen dras
+med `git check-ignore`, inte med en handskriven katalogslista, och grinden
+kräver att `CLAUDE.md` och `data/issues.json` ligger kvar i svepet.
+
+**Motiv:** Grinden föll på fem filer i `handlingsvagen/data/.kallcache/` —
+riksdagens egna dokumenttexter, cachade av varje körning som läser en handling.
+I en motion om samhällets krisberedskap står den plural grinden förbjuder, och
+där betyder ordet rörelser i vatten — alltså rätt stavat, i någon annans text.
+Katalogen är git-ignorerad, så texten kan aldrig nå en läsare, men svepet läste
+den ändå. Det gjorde grinden röd på ett **normalt tillstånd**: var och en som
+kört ett svep över kopplingarna får samma fem fynd, och en grind som är röd
+varje dag blir bortviftad.
+
+Gränsen mot git är vald därför att den inte går att missbruka: en fil som göms
+undan från grinden måste också gömmas undan från repot, och då kan den inte
+publiceras. Mätt vid införandet: **noll spårade filer** hoppas över — samtliga
+1 256 ignorerade ligger i källcachen. `git check-ignore` läser dessutom indexet
+och rapporterar aldrig en spårad fil som ignorerad, så en gitignore-rad som
+pekar på något redan spårat gör ingenting.
+
+Kravet att två kända filer ska ligga kvar i svepet är bevisat falla: byts
+uppslaget mot `--no-index` börjar spårad text försvinna, och grinden säger
+ifrån. `data/issues.json` är vald därför att det var den fil där det förbjudna
+ordet levde kvar längst, publikt serverad.
+
+**Förkastade alternativ:** *Lägga `.kallcache` i grindens katalogslista, som
+`nyckelord`* — löser dagens fem fynd och inget mer; nästa cache eller
+byggkatalog ger samma röda grind, och listan växer tills någon lägger till en
+katalog som borde svepts. *Låta grinden vara röd och rensa cachen före varje
+körning* — gör ett normalt arbetsläge till ett fel och lär nästa session att
+grindens utskrift kan ignoreras. *Sopa bara spårade filer (`git ls-files`)* —
+hade släppt igenom ny text ända fram till att den committades, och det är
+före committen den ska prövas.
+
+**Fattat av:** Claude i passet 2026-08-14, som en följd av att grinden föll på
+ett normalt tillstånd. **Ändringen rör en grinds räckvidd och ska bekräftas
+eller rivas upp av en människa innan grenen slås ihop** — den är utskriven i
+PR-texten av det skälet.
 
 ---
 

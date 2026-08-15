@@ -25,12 +25,10 @@ const load = <T>(f: string): T => JSON.parse(readFileSync(join(DATA, f), "utf8")
 
 interface Promise_ { id: string; slug: string; status: string }
 interface Party { code: string }
-interface Chronicle { slug: string }
 interface ChangelogEntry { added: string[]; updated: string[]; retracted: string[] }
 
 const promises = load<Promise_[]>("promises.json");
 const parties = load<Party[]>("parties.json");
-const chronicles = load<Chronicle[]>("chronicles.json");
 const changelog = load<ChangelogEntry[]>("changelog.json");
 
 const all = process.argv.includes("--all");
@@ -40,7 +38,6 @@ const urls = new Set<string>();
 // Aggregatsidor som ändras vid varje datauppdatering.
 for (const p of ["/", "/topplistor", "/regeringar", "/jamfor"]) urls.add(`${BASE}${p}`);
 for (const p of parties) urls.add(`${BASE}/parti/${p.code}`);
-if (chronicles[0]) urls.add(`${BASE}/veckans-flask/${chronicles[0].slug}`);
 
 if (all) {
   for (const p of promises) if (p.status === "aktiv") urls.add(`${BASE}/lofte/${p.id}/${p.slug}`);

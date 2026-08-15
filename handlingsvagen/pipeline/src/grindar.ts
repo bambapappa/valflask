@@ -51,15 +51,15 @@ export interface GrindKontext {
   fonster: { fran: string; till: string };
   /**
    * Handlingens EGEN text — det som är själva handlingen, skilt från
-   * dokumentets brödtext: motionens yrkanden, eller voteringspunktens
-   * beslutstext. Citatet ska stå i någon av dessa (H2).
+   * dokumentets brödtext: motionens yrkanden, voteringspunktens beslutstext,
+   * eller frågans egen lydelse. Citatet ska stå i någon av dessa (H2).
    *
    * Utelämnad när texten inte gick att hämta. Grinden prövar då inte var i
    * dokumentet citatet står — den kan inte veta det — och anroparen ska
    * skriva ut att kontrollen uteblev.
    */
   handlingstext?: {
-    sort: "yrkanden" | "beslutspunkt";
+    sort: "yrkanden" | "beslutspunkt" | "frågans lydelse";
     delar: string[];
     /**
      * Sant när motionens brödtext är öppnad därför att yrkandena **bara**
@@ -139,6 +139,28 @@ function grindH1(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
 }
 
 /**
+ * Varför ett citat utanför handlingens egen del inte duger — en text per sort.
+ *
+ * Ligger här och inte hos varje anropare därför att bevisbytet ska säga samma
+ * sak som grinden. Skiljer sig de två åt får granskaren två olika svar på
+ * samma fråga, och det var så frågorna kunde falla mellan stolarna i ett halvt
+ * år: yrkandegrinden talade bara om motioner.
+ */
+export function utanforHandlingen(
+  sort: NonNullable<GrindKontext["handlingstext"]>["sort"],
+  antalDelar: number,
+): string {
+  switch (sort) {
+    case "yrkanden":
+      return `Citatet står inte i något av motionens ${antalDelar} yrkanden — det är brödtext, och brödtexten argumenterar för handlingen i stället för att vara den`;
+    case "frågans lydelse":
+      return `Citatet står inte i någon av handlingens ${antalDelar} frågelydelser — det är bakgrunden, och bakgrunden argumenterar för frågan i stället för att vara den`;
+    case "beslutspunkt":
+      return "Citatet står varken i voteringspunktens beslutstext eller i utskottets sammanfattning av det punkten antar — det visar vad ärendet innehöll, inte vad punkten avgjorde";
+  }
+}
+
+/**
  * H2 — Ordagrant bevis: citatet ska stå tecken för tecken i källtexten, och
  * i den del av dokumentet som ÄR handlingen.
  *
@@ -148,6 +170,12 @@ function grindH1(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
  * propositionssammanfattning i stället för det voteringspunkten avgjorde. Vid
  * genomgången av kopplingskön behövde vart tredje förslag vägas om av just
  * det skälet, och samtliga fyra voteringar.
+ *
+ * Frågorna kom med 2026-08-14. De har inga yrkanden, så grinden rörde dem
+ * inte — och därmed hindrade ingenting att bakgrunden citerades i stället för
+ * frågan. En interpellations handling är vad den **frågar**; texten före
+ * upptakten argumenterar för frågan på samma sätt som en motions brödtext
+ * argumenterar för yrkandet.
  */
 function grindH2(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
   const fel: GrindFel[] = [];
@@ -165,13 +193,7 @@ function grindH2(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
   if (citat !== "" && ht && ht.delar.length > 0) {
     const iHandlingen = ht.delar.some((del) => normalizeForVerbatim(del).includes(citat));
     if (!iHandlingen) {
-      fel.push({
-        grind: "H2",
-        reason:
-          ht.sort === "yrkanden"
-            ? `Citatet står inte i något av motionens ${ht.delar.length} yrkanden — det är brödtext, och brödtexten argumenterar för handlingen i stället för att vara den`
-            : "Citatet står varken i voteringspunktens beslutstext eller i utskottets sammanfattning av det punkten antar — det visar vad ärendet innehöll, inte vad punkten avgjorde",
-      });
+      fel.push({ grind: "H2", reason: utanforHandlingen(ht.sort, ht.delar.length) });
     }
   }
   return fel;

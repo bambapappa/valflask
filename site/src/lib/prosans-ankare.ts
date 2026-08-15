@@ -381,7 +381,11 @@ export const ANKARE: Ankare[] = [
     },
     fallprov:
       "Nolla archive_url på tio webbkällor — provet faller när arkivtäckningen går under 95 procent.",
-    matt: "24 av 674 utan kopia, varav 14 filmer, 2026-08-12",
+    // Ommätt 2026-08-14 (ATTGORA E1): luckan är 14 av 690 = 2,03 procent, och
+    // **samtliga fjorton är filmer**. Ingen vanlig webbsida saknar längre en
+    // kopia — de 20 som stod i kö när strypningen bet har fyllts. Kvar är bara
+    // de talade källorna, som väntar på avskrifter (E2) och inte på arkivet.
+    matt: "14 av 690 utan kopia, samtliga filmer, 2026-08-14",
   },
   {
     id: "metod-uppskattning-bar-ungefartecken",
@@ -430,17 +434,49 @@ export const ANKARE: Ankare[] = [
     fallprov: "Ta bort ordagrannhetskontrollen ur gates.ts — provet faller.",
   },
   {
-    id: "metod-kronikorna-pausade",
+    id: "metod-kronikorna-avpublicerade",
     sida: METOD,
     pastaende:
-      "Genereringen är för närvarande pausad medan vi bygger om hur siffrorna i dem hålls färska.",
-    // Fälls flaggan utan att meningen skrivs om står det «pausad» om något
-    // som körs. Precis den sortens åldrande registret finns för.
-    prov: () =>
-      /export const KRONIKOR_PAUSADE = true;/u.test(
+      "De sex krönikorna är avpublicerade sedan den 14 augusti 2026.",
+    // Tre led, därför att meningen påstår tre saker: att de är sex, att de är
+    // borta från sajten, och att de finns kvar. Det sista ledet är det som
+    // gör påståendet ärligt — «avpublicerad» betyder inte «raderad».
+    //
+    // Undantaget prosan inte nämner, och som provet därför mäter: att ingen
+    // SIDA renderar dem. Ett prov som bara läste `archived`-flaggan hade
+    // svarat ja även den dag någon bygger en ny krönikesida som läser filen
+    // förbi flaggan — och det var precis så krönikornas platshållarmekanism
+    // kunde ligga oanvänd i fyra månader.
+    prov: () => {
+      const kronikor = JSON.parse(repofil("data/chronicles.json")) as Array<{ archived?: boolean }>;
+      const allaArkiverade = kronikor.length === 6 && kronikor.every((k) => k.archived === true);
+      const genereringenAv = /export const KRONIKOR_PAUSADE = true;/u.test(
         repofil("pipeline/src/chronicle.ts"),
-      ),
-    fallprov: "Sätt KRONIKOR_PAUSADE till false — provet faller, som det ska.",
+      );
+      const noten = repofil("site/src/pages/veckans-flask/index.astro");
+      const ingenRenderar =
+        !noten.includes("getChronicles") && noten.includes("Veckans fläsk är borttagen");
+      return allaArkiverade && genereringenAv && ingenRenderar;
+    },
+    fallprov:
+      "Ta bort archived på en krönika, eller låt sidan rendera dem igen — provet faller på båda.",
+    matt: "6 av 6 arkiverade, ingen sida renderar dem, 2026-08-14",
+  },
+  {
+    id: "metod-kronikorna-finns-kvar",
+    sida: METOD,
+    pastaende:
+      "Texterna är inte raderade — de ligger kvar i kodförrådet tillsammans med all annan data",
+    // «Avpublicerad» är bara ärligt så länge texten faktiskt går att läsa
+    // någonstans. Provet kräver därför att alla sex ligger kvar MED sin text —
+    // en post som tömts på `body_md` är raderad i allt utom namnet, och då är
+    // meningen ovan osann utan att någon rört den.
+    prov: () => {
+      const k = JSON.parse(repofil("data/chronicles.json")) as Array<{ body_md?: string }>;
+      return k.length === 6 && k.every((x) => typeof x.body_md === "string" && x.body_md.trim().length > 200);
+    },
+    fallprov: "Töm body_md på en krönika — provet faller, för då är texten borta på riktigt.",
+    matt: "6 krönikor med sin text i behåll, 2026-08-14",
   },
   {
     id: "metod-fragorna-tva-oberoende-matningar",

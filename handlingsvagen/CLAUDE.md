@@ -41,17 +41,17 @@ under "Pågår just nu" före start, skörda aldrig parallellt. Fullständiga re
   eller formulera om frågan — sänk aldrig kravet på exakt återgivning.
 - **Tyst rättelse är förbjuden.** Fel rättas synligt: rättelsenot på
   berörd sida plus post i `data/rattelser.json`.
-- **Krönikor: texten är statisk, talen dynamiska.** Redogörelsen — vad
-  veckan handlade om och hur vi såg på den — skrivs aldrig om; det vore att
-  skriva om historien. Summor, gap och antal är däremot påståenden om datat
-  och slås upp mot dagens siffror när sidan byggs. Talen skrivs därför som
-  platshållare i krönikans text, aldrig som siffror (se
-  `pipeline/src/kronikans-tal.ts`). Mänskligt beslut 2026-08-09, som ersätter
-  den tidigare regeln att en krönika är en ögonblicksbild vars belopp räknas
-  om ur datat som gällde när den skrevs. Den regeln gav antingen en
-  rättelsepost per krönika för varje rättad siffra någon annanstans, eller
-  krönikor som tyst blev osanna. **Är redogörelsen fel gäller
-  rättelseregeln fortfarande** — det är ett fel i texten.
+- **Krönikorna är avpublicerade.** Mänskligt beslut 2026-08-14: de sex
+  veckokrönikorna är borttagna från sajten och genereringen läggs ned. De
+  ligger kvar i `data/chronicles.json`, samtliga märkta `archived`, och
+  renderas inte av något. Skälet är att texterna bar sina summor inskrivna i
+  löptexten: en rättad siffra någon annanstans gjorde en krönika tyst osann,
+  och att skriva om texten i efterhand vore att skriva om vad vi sagt.
+  **Beslutet ersätter regeln från 2026-08-09** om att redogörelsen är statisk
+  och talen dynamiska — den regeln gällde en funktion som inte längre finns.
+  Ska en krönika publiceras igen skrivs den **för hand**, och då tas frågan om
+  hur talen hålls färska på nytt. Mekanismen finns kvar i
+  `pipeline/src/kronikans-tal.ts` för det fallet.
 - **Arkivlänkar måste bära citatet.** En arkivkopia accepteras bara om
   citatet står ordagrant i själva ögonblicksbilden.
 - **Prosan påstår inget om koden som inte mäts.** Gäller Handlingsvågens

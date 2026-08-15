@@ -13,7 +13,7 @@
  * Ren logik utan fil- och nätverksåtkomst — källtexten hämtas av anroparen
  * (scripts/bevis-byt.mts), precis som `provaNyttBevis` kräver.
  */
-import { CITAT_MIN_TECKEN, normalizeForVerbatim } from "./grindar.ts";
+import { CITAT_MIN_TECKEN, normalizeForVerbatim, utanforHandlingen } from "./grindar.ts";
 import type { GrindKontext } from "./grindar.ts";
 import type { KopplingPost } from "./granskning.ts";
 
@@ -87,12 +87,8 @@ export function provaByte(
         paUndantag = true;
       } else {
         skal.push(
-          handlingstext.sort === "yrkanden"
-            ? `citatet står inte i något av handlingens ${handlingstext.delar.length} yrkanden — ` +
-              "det är brödtext, och brödtexten argumenterar för handlingen i stället för att vara den. " +
-              "Visar yrkandet mindre än citatet gör: skriv skälet efter citatet, åtskilt med tabb"
-            : "citatet står varken i voteringspunktens beslutstext eller i utskottets sammanfattning " +
-              "av det punkten antar. Skriv skälet efter citatet, åtskilt med tabb, om bytet ändå ska göras",
+          `${utanforHandlingen(handlingstext.sort, handlingstext.delar.length)}. ` +
+            "Ska bytet ändå göras: skriv skälet efter citatet, åtskilt med tabb",
         );
       }
     }
