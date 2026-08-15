@@ -54,9 +54,10 @@ jobs:
               "Åtgärd:",
               ATGARD,
               "",
-              "Ärendet stängs för hand när körningen gått igenom igen. Så länge det",
-              "står öppet är det här larmet tyst — nya fall kommenteras i stället för",
-              "att öppna ett nytt ärende.",
+              "Så länge ärendet står öppet är det här larmet tyst — nya fall",
+              "kommenteras i stället för att öppna ett nytt ärende. Därför stänger",
+              "`larm-av.yml` ärendet av sig självt så snart samma körning gått",
+              "igenom på defaultgrenen igen.",
             ].join("\n");
 
             // En trasig schemalagd körning faller om och om igen. Ett ärende per

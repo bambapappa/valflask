@@ -1,0 +1,142 @@
+# Blåser av larmet när körningen gått igenom igen.
+#
+# `larm.yml` öppnar ett ärende när en körning faller och kommenterar på det
+# befintliga i stället för att öppna ett nytt. Det är rätt — annars begraver en
+# trasig schemalagd körning larmet i sitt eget brus. Priset står utskrivet i
+# larmets egen text: **så länge ärendet är öppet är larmet tyst.**
+#
+# Fram till 2026-08-15 fanns ingen motsvarighet åt andra hållet. Gick körningen
+# grön igen hände ingenting: ärendet låg kvar, larmet förblev tyst, och nästa
+# haveri blev en kommentar ingen läste. Kostnaden är mätt samma dag — av sju
+# öppna larm hade **fyra** återhämtat sig, ett av dem fem dygn tidigare, och
+# bygglarmet hade samlat arton kommentarer under tiden. Sju öppna ärenden var
+# alltså inte sju ärenden att städa; det var sju tystade varnare.
+#
+# ## Hur körningen kopplas till ärendet
+#
+# Inte med en lista som någon ska hålla uppdaterad. Larmärendet bär redan en
+# länk till körningen som föll, och den körningen vet själv vilken workflow den
+# tillhör. Avblåsningen slår upp det numret och jämför med den gröna körningens
+# — båda talen kommer från GitHub, ingen av dem är avskriven av en människa.
+# En avskriven tabell hade varit ett tredje ställe att glömma.
+#
+# ## Om avblåsningen själv faller
+#
+# Då står larmet kvar öppet, alltså precis som före den här filen — den kan
+# göra läget bättre men aldrig sämre. Något eget larm behöver den inte:
+# arbetet är idempotent och görs om vid varje grön körning av vilken som helst
+# av de bevakade workflowarna, så ett tillfälligt fel läker av sig självt.
+# Ett bestående fel syns som larm som hopar sig, och det är vad
+# efterdriftsmätarens larmkontroll finns till för.
+name: larm-av
+on:
+  workflow_run:
+    # Listan måste rymma varje workflow som anropar larm.yml, annars kan just
+    # den öppna ett larm som ingenting stänger. `workflow_run` tar inga
+    # jokertecken, så listan går inte att slippa — men den är grindad:
+    # pipeline/tests/larmgrind.test.ts jämför den mot repots faktiska anropare
+    # och faller på den som saknas.
+    workflows:
+      - ai-atkomst
+      - arkiv
+      - build
+      - drill
+      - foreslag
+      - ko-pass-pr
+      - pipeline
+      - release
+      - rot-watch
+      - skord
+    types: [completed]
+
+jobs:
+  avblas:
+    # Bara gröna körningar på defaultgrenen. En grön körning i en PR säger
+    # ingenting om att main är hel, och det är main larmet handlar om.
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Stäng larmärendet för den körning som gått igenom
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v9.0.0
+        with:
+          script: |
+            const gron = context.payload.workflow_run;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const oppna = await github.paginate(github.rest.issues.listForRepo, {
+              owner,
+              repo,
+              state: "open",
+              labels: "larm",
+              per_page: 100,
+            });
+
+            let stangda = 0;
+            for (const arende of oppna) {
+              // Larmtexten skriver alltid ut körningen som föll. Saknas den är
+              // ärendet öppnat för hand, och då är det inte vår sak att stänga
+              // det — en människa som skrivit ett larm själv har ett skäl.
+              const traff = /\/actions\/runs\/(\d+)/.exec(arende.body ?? "");
+              if (!traff) {
+                core.notice(`#${arende.number} saknar länk till en körning — lämnas öppet.`);
+                continue;
+              }
+
+              let fallen;
+              try {
+                fallen = await github.rest.actions.getWorkflowRun({
+                  owner,
+                  repo,
+                  run_id: Number(traff[1]),
+                });
+              } catch (fel) {
+                // Körningsloggar gallras efter en tid. Ett larm vars körning
+                // hunnit falla ur historiken går inte att koppla säkert, och
+                // då är det öppna ärendet det ärliga svaret.
+                core.notice(`#${arende.number}: körning ${traff[1]} går inte att slå upp (${fel.status ?? fel.message}).`);
+                continue;
+              }
+
+              if (fallen.data.workflow_id !== gron.workflow_id) continue;
+
+              const kropp = [
+                `**${gron.name}** har gått igenom igen — larmet blåses av.`,
+                "",
+                `- Grön körning: ${gron.html_url}`,
+                `- Commit: ${gron.head_sha}`,
+                `- Avslutad: ${gron.updated_at}`,
+                "",
+                "Stängt automatiskt av `larm-av.yml`. Skälet är inte att det ser",
+                "snyggare ut med tom lista: så länge ärendet står öppet är larmet",
+                "för den här körningen tyst, och nästa haveri hade blivit en",
+                "kommentar här i stället för ett larm någon ser.",
+                "",
+                "Faller körningen igen öppnas ett nytt ärende.",
+              ].join("\n");
+
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: arende.number,
+                body: kropp,
+              });
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: arende.number,
+                state: "closed",
+                state_reason: "completed",
+              });
+              core.notice(`Larmärende #${arende.number} stängt — ${gron.name} är grön igen.`);
+              stangda++;
+            }
+
+            if (stangda === 0) {
+              core.notice(`Inget öppet larm hörde till ${gron.name}.`);
+            }
