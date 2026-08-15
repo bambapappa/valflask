@@ -35569,7 +35569,7 @@
   },
   {
     "id": "p-2026-0786",
-    "group_id": null,
+    "group_id": "g-p-2026-0786",
     "title": "Kriminalisera deltagande i kriminella nätverk",
     "slug": "kriminalisera-deltagande-i-kriminella-natverk",
     "parties": [
@@ -35605,7 +35605,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-15",
+        "commit": "57015260165e86cc8ecabf845b1cf23b2057f2d6",
+        "change": "Lagt i grupp med Moderaternas löfte om att kriminalisera deltagande i gäng. Samma politik hos olika partier räknas en gång i summan, och båda partiernas löften syns kvar var för sig. Beloppet är oförändrat: noll kronor, eftersom löftet hålls av en lagändring."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -38062,7 +38068,7 @@
   },
   {
     "id": "p-2026-0841",
-    "group_id": null,
+    "group_id": "g-p-2026-0841",
     "title": "Återkalla medborgarskap vid terrorbrott eller grov gängbrottslighet",
     "slug": "aterkalla-medborgarskap-vid-terrorbrott-eller-grov-gangbrottslighet",
     "parties": [
@@ -38098,7 +38104,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-15",
+        "commit": "57015260165e86cc8ecabf845b1cf23b2057f2d6",
+        "change": "Lagt i grupp med Moderaternas löfte om att återkalla medborgarskap från gängkriminella. Samma politik hos olika partier räknas en gång i summan. Beloppet är oförändrat, tio miljoner kronor per år, och det är den här posten som bär gruppens belopp."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -38978,6 +38990,192 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0861",
+    "group_id": "g-aldersgrans-sociala-medier",
+    "title": "Lagstadgad åldersgräns 15 år för sociala medier",
+    "slug": "lagstadgad-aldersgrans-15-ar-for-sociala-medier",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "KD föreslagit att sociala medier ska ha en lagstadgad åldersgräns på 15 år för att skydda barn från skadligt innehåll, näthat och beroendeframkallande användning.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/skarmtid",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T12:40:53.572Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Löftet hålls av en lagändring: en åldersgräns skrivs in i lag, och kravet att kontrollera åldern läggs på plattformarna. Statens egen nya nettokostnad för själva åtgärden är därmed försumbar — lagstiftningsarbetet är en engångskostnad inom befintliga ramar, och kostnaden för att kontrollera åldern bärs av företagen, inte av staten. Centerpartiets löfte om samma åldersgräns står redan publicerat till 0 kronor; de två löftena delar grupp och räknas en gång, så beloppen är harmoniserade. Beloppet avser åtgärden, inte dess följder för plattformar eller användare.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T12"
+    }
+  },
+  {
+    "id": "p-2026-0862",
+    "group_id": "g-p-2026-0786",
+    "title": "Kriminalisera deltagande i gäng",
+    "slug": "kriminalisera-deltagande-i-gang",
+    "parties": [
+      "m"
+    ],
+    "person": {
+      "name": "Gunnar Strömmer",
+      "role": "justitieminister"
+    },
+    "quote": "Vi vill genomdriva nödvändiga förändringar för att kriminalisera deltagande i gäng.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/vallofte-vi-forlanger-ett-av-polisens-viktigaste-verktyg-mot-gangen/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T12:41:03.298Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Löftet hålls av en lagändring: deltagande i kriminella gäng görs straffbart. Själva åtgärden är att införa brottsrubriceringen, och statens direkta nya nettokostnad för det är försumbar — lagstiftningsarbetet ryms i befintliga ramar. Fler åtal, fler domar och fler anstaltsplatser är följder av att lagen tillämpas, inte kostnaden för att stifta den, och de prissätts inte här. Kristdemokraternas löfte om att kriminalisera deltagande i kriminella nätverk står redan publicerat till 0 kronor; de två löftena delar grupp och räknas en gång.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T12"
+    }
+  },
+  {
+    "id": "p-2026-0863",
+    "group_id": "g-p-2026-0841",
+    "title": "Återkalla medborgarskap från gängkriminella",
+    "slug": "aterkalla-medborgarskap-fran-gangkriminella",
+    "parties": [
+      "m"
+    ],
+    "person": {
+      "name": "Gunnar Strömmer",
+      "role": "justitieminister"
+    },
+    "quote": "Vi vill genomdriva nödvändiga förändringar för att kunna återkalla medborgarskap från gängkriminella.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/vallofte-vi-forlanger-ett-av-polisens-viktigaste-verktyg-mot-gangen/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T12:41:14.364Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3,
+      "msek_base": 10,
+      "msek_high": 25,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Lagändring för medborgarskapsåterkallelse. Direkt kostnad är administrativ hantering (Migrationsverket, domstolar). Få ärenden/år då endast naturaliserade medborgare kan beröras. I linje med… (belopp satt av granskare)",
+      "calculation": "Lagändringen i sig är försumbar; den nya statliga kostnaden är den löpande handläggningen — utredning vid Migrationsverket och prövning i domstol. Antalet ärenden begränsas av att återkallande bara kan gälla den som har ett annat medborgarskap kvar och som dömts för grov brottslighet: uppskattningsvis 20–100 ärenden per år, till 0,2–0,5 miljoner kronor per ärende, alltså 4–50 miljoner kronor per år. Basen sätts till 10 miljoner kronor, samma belopp som Kristdemokraternas publicerade löfte om att återkalla medborgarskap vid terrorbrott eller grov gängbrottslighet bär, eftersom samma politik ska kosta lika. De två löftena delar grupp och räknas en gång, så rikssumman ändras inte av godkännandet.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T12"
+    }
+  },
+  {
+    "id": "p-2026-0864",
+    "group_id": null,
+    "title": "Fler ska kunna beviljas skuldsanering",
+    "slug": "fler-ska-kunna-beviljas-skuldsanering",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill därför möjliggöra för fler att beviljas skuldsanering.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/skuldsanering",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T12:41:21.578Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 15,
+      "msek_base": 40,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring i skuldsaneringen; prissatt ökad administration hos Kronofogden vid fler beviljade ärenden. Avskrivna skulder träffar borgenärerna, ej staten. Löftet saknar nivå — stort osäkerhetsmått.",
+      "confidence": 0.35,
+      "calculation": "Själva lagändringen är nästan kostnadsfri; den direkta statliga kostnaden är ökad handläggning hos Kronofogden. Antagande: reformen ökar antalet beviljade skuldsaneringar med ca 1 000–4 000 per år (idag beviljas i storleksordningen 5 000–8 000/år). Handläggning per ärende inkl. uppföljning under betalningsperioden ~15–25 tkr ⇒ 1 000×15 tkr ≈ 15 mkr till 4 000×25 tkr ≈ 100 mkr/år. Bas: ~2 500 extra ärenden × ~16 tkr ≈ 40 mkr. Skuldavskrivningar bärs av borgenärer (inkl. statliga fordringar som ofta ändå är oindrivbara) och lämnas okvantifierade enligt reglerna för överföringar/följder."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T12"
     }
   }
 ]
