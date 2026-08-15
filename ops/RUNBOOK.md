@@ -13,15 +13,25 @@ etikett per körning (`larm-pipeline`, `larm-build`, `larm-skord` …).
 
 - **Öppna larm ser du på** `is:issue is:open label:larm`.
 - **Ett larm per problem, inte per fall.** Står ärendet öppet kommenteras nya
-  fall på det i stället för att öppna ett nytt. **Stäng det för hand när
-  körningen gått igenom igen** — annars är nästa fel tyst.
+  fall på det i stället för att öppna ett nytt. Priset är att **larmet är tyst
+  så länge ärendet står öppet**.
+- **Ärendet stänger sig självt när körningen gått grön igen.**
+  `.github/workflows/larm-av.yml` lyssnar efter gröna körningar på `main`,
+  slår upp vilken körning larmärendet handlade om, och stänger det med den
+  gröna körningen utskriven. Det behöver alltså inte göras för hand — men
+  **ett larm som ligger kvar betyder att körningen fortfarande är röd**, inte
+  att någon glömt städa.
 - Larmet är en enda implementation, `.github/workflows/larm.yml`. Lägg aldrig
   en egen kopia i en workflow; grinden `pipeline/tests/larm-grind.test.ts`
-  faller på det, och den faller också om en ny schemalagd körning saknar larm.
+  faller på det, den faller om en ny schemalagd körning saknar larm, och den
+  faller om en larmande körning inte finns med i avblåsningens lista.
 
 Bakgrunden: sex schemalagda pipelinekörningar föll i rad 31 juli–2 augusti 2026
 utan att någon märkte det, och 2026-08-03 stoppade ett rött test hela
-driftsättningen medan `main` tog emot 62 beslut som vanligt.
+driftsättningen medan `main` tog emot 62 beslut som vanligt. Avblåsningen kom
+till 2026-08-15 av motsatt skäl: av sju öppna larm hade fyra körningar gått
+gröna igen utan att någon stängt ärendet, så fyra av varnarna var tysta — och
+bygglarmet hade hunnit samla arton okommenterade kommentarer.
 
 ---
 
