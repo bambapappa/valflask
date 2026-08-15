@@ -95,5 +95,54 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-put",
+      "party": "kd",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Kristdemokraterna vill ha tidsbegränsande uppehållstillstånd som huvudregel för alla skyddskategorier förutom kvotflyktingar.",
+      "person": null
+    },
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/uppehallstillstand",
+    "articleTitle": "Uppehållstillstånd | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/uppehallstillstand",
+    "archiveUrl": null,
+    "dateStated": "2026-08-15",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-15-03-49",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "kd",
+      "position": "villkorat",
+      "condition_note": "KD värnar valfriheten och ser bara behov av tydliga regleringar riktade mot oseriösa aktörer som skär ner på kvaliteten för att ta ut mer vinst.",
+      "quote": "Samtidigt som vi värnar valfriheten så ser vi också behov av tydliga regleringar, i till exempel friskolesystemet, för att oseriösa aktörer inte ska kunna skära ner på kvaliteten för att ta ut mer vinst.",
+      "person": null
+    },
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/vinster-i-valfarden",
+    "articleTitle": "Vinster i välfärden | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/vinster-i-valfarden",
+    "archiveUrl": null,
+    "dateStated": "2026-08-15",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-15-03-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet förespråkar endast ospecificerade 'tydliga regleringar' mot kvalitetssänkningar i friskolesystemet och uttalar sig inte om att vinstutdelning ska förbjudas eller begränsas i lag, varför positionen 'villkorat' kräver välvillig tolkning och därmed är inget besked."
+      }
+    ],
+    "verifyReason": "Citatet förespråkar endast ospecificerade 'tydliga regleringar' mot kvalitetssänkningar i friskolesystemet och uttalar sig inte om att vinstutdelning ska förbjudas eller begränsas i lag, varför positionen 'villkorat' kräver välvillig tolkning och därmed är inget besked."
   }
 ]
