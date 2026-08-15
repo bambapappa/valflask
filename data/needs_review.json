@@ -85,34 +85,6 @@
   },
   {
     "candidate": {
-      "title": "Dela pensionsrätt lika mellan föräldrar",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Kristdemokraterna vill att intjänad pensionsrätt under småbarnsåren ska delas lika mellan barnets föräldrar för att undvika pensionsfällor beroende på olika uttag av föräldraledighet.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/pension",
-    "articleTitle": "Pension | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
-    },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0501 (80), p-2026-0348 (3500), p-2026-0737 (0), p-2026-0507 (0), p-2026-0325 (8100) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~80"
-  },
-  {
-    "candidate": {
       "title": "Höja jämförelseinkomsten",
       "parties": [
         "kd"
@@ -171,35 +143,6 @@
   },
   {
     "candidate": {
-      "title": "Utredning av kommunal polismyndighet",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Vi föreslår därför att man utreder en kommunal polismyndighet som avlastar vår redan hårt belastade polismyndighet.",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/polisen",
-    "articleTitle": "Polisen | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 10,
-      "msek_base": 20,
-      "msek_high": 30,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet avser en utredning, inte genomförandet. Prissatt som en större SOU-utredning om polisorganisationens struktur och kommunalt huvudmannaskap.",
-      "confidence": 0.6,
-      "calculation": "Utredning av kommunal polismyndighet berör konstitutionsfrågor, finansiering och organisation — sannolikt en fullskalig SOU med secretariat, expertgrupper och remissrunda. SOU-utredningar i denna storleksordning kostar normalt 10–30 mkr engångs. Base ~20 mkr mitt i spannet."
-    },
-    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0706 (0) ⚠ AVVIKER: belopp 20 men jämförbara ligger på 0"
-  },
-  {
-    "candidate": {
       "title": "Högre kränkningsersättning för poliser",
       "parties": [
         "kd"
@@ -225,35 +168,6 @@
       "confidence": 0.1
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Likafördelning av premiepension mellan makar med gemensamma barn",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Kristdemokraterna vill att den totala intjänade premiepensionen fördelas lika (om de inte begär något annat) mellan makar som har gemensamma barn.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/premiepension",
-    "articleTitle": "Premiepension | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Själva omfördelningen mellan makar är kostnadsneutral för staten. Kostnaden avser IT- och administration för Pensionsmyndigheten, inte omfördelningen.",
-      "confidence": 0.4,
-      "calculation": "Löftet ändrar default-fördelning av premiepension mellan makar med gemensamma barn. Det är en regeländring där pengar flyttas mellan individer — ingen ny statlig utgift (regel 11). Direkt kostnad är systemförändring hos Pensionsmyndigheten: IT-utveckling, testning, informationskampanj och nya rutiner. Liknande myndighetsomläggningar brukar kosta 5–30 mkr som engångsinsats. Antaget: låg ~5 mkr (enklare lösning), bas ~15 mkr (standardomfattning systemändring + information), hög ~30 mkr (komplex integration)."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -515,64 +429,6 @@
   },
   {
     "candidate": {
-      "title": "Begränsa antalet riksintressen",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Kristdemokraterna vill begränsa antalet riksintressen och deras omfattning.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/riksintressen",
-    "articleTitle": "Riksintressen | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Regel- och planändring; prissätter administrativ översyn av riksintressen, ej samhällsföljder.",
-      "confidence": 0.35,
-      "calculation": "Översyn av riksintressen kräver utredning + arbete på länsstyrelserna. ~21 län × granskning av befintliga riksintressen ≈ SOU-stor utredning (5–10 mkr) + länsstyrelsearbete (5–20 mkr) ≈ 5–30 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Förenkla regelverk för riksintressen",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Regelverket ska förenklas så att olika intressen inte skapar onödig byråkrati och hindrar byggande och utveckling.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/riksintressen",
-    "articleTitle": "Riksintressen | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 3,
-      "msek_base": 10,
-      "msek_high": 25,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Förenkling av regelverk för riksintressen — prissätter utredning och lagändring, inte samhällsföljder av ökat byggande.",
-      "confidence": 0.4,
-      "calculation": "Översyn av regelverk för riksintressen kräver sannolikt en SOU-liknande utredning med sekretariat och referensgrupper. Antagen omfattning motsvarande en medelstor regeringsutredning: ~5–15 mkr. Tillkommer kostnader för myndigheternas implementering (vägledningar, utbildning, IT-anpassningar): ~2–10 mkr. Totalt ~3–25 mkr, bas 10 mkr. Ej medräknat värdet av eventuellt ökat byggande eller minskad byråkrati för markaktörer — det är en följd, inte en statlig utgift."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Lokala behov ska väga tyngre vid riksintressen",
       "parties": [
         "kd"
@@ -657,35 +513,6 @@
       "calculation": "Löftet ändrar villkoren för hur befintligt statligt riskkapital (Almi, Industrifonden m.fl.) ska investeras — krav på saminvestering med privat kapital. Ingen ny statsutgift för själva investeringarna eftersom dessa redan finns i budgeten. Direkt kostnad utgörs av administrativ omställning: nya investeringspolicyer, granskningsrutiner och uppföljning. Snittar mot lägre ände av SOU-liknande policyöversyn (~5 msek) med osäkerhet uppåt vid systemändringar (~15 msek)."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0674 (10)"
-  },
-  {
-    "candidate": {
-      "title": "Förtydliga beskattning av carried interest",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Kristdemokraterna arbetar för att förtydliga reglerna kring ”Carried interest”, som handlar om hur riskkapitalbolagets eventuella vinst ska beskattas när de investerat i ett bolag.",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/riskkapital",
-    "articleTitle": "Riskkapital | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 1,
-      "msek_base": 5,
-      "msek_high": 15,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Förtydligande av befintliga skatteregler — prissatt som administrativ lagändring/eventuell utredning, inte intäktsförändringar.",
-      "confidence": 0.3,
-      "calculation": "Löftet avser förtydligande av regler kring carried interest, ingen ny skattesats anges. Kostnad utgörs av lagtekniskt arbete + eventuellt SOU-liknande utredning. Låg: 1 mkr (endast lagändring). Bas: 5 mkr (medelhög utredning). Hög: 15 mkr (större utredning + IT-uppdateringar hos Skatteverket). Intäktsförändringar av förtydligandet lämnas okvantifierade enligt regel 9."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1178,35 +1005,6 @@
   },
   {
     "candidate": {
-      "title": "Plan för utbyggnad av Kriminalvårdens anstalter",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "För att det ska kunna bli verklighet ska vi ta fram en plan för att minska belastningen på Kriminalvården och öka tempot i utbyggnaden av nya anstalter.",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/sa-avskaffar-vi-mangdrabatten-under-nasta-mandatperiod/",
-    "articleTitle": "Så avskaffar vi mängdrabatten under nästa mandatperiod | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet avser att ta fram en plan, inte själva utbyggnaden. Prissatt som SOU-stor utredning/handlingsplan enligt regel 10.",
-      "confidence": 0.6,
-      "calculation": "Löftet är att 'ta fram en plan' för utbyggnad och avlastning av Kriminalvården. Enligt regel 10 prissätts utredningen/planen, inte byggnationen. En större infrastrukturplan av SOU-storlek inom Kriminalvården kan kosta 5–30 mkr som engångskostnad. Base 15 msek speglar en medelstor samordnad utredning inklusive underlag från flera myndigheter."
-    },
-    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0521 (300), p-2026-0690 (20) ⚠ AVVIKER: 15 avviker 10.7× från jämförbara (median 160)"
-  },
-  {
-    "candidate": {
       "title": "Förlänga polisens preventiva tvångsmedel",
       "parties": [
         "m"
@@ -1354,38 +1152,6 @@
   },
   {
     "candidate": {
-      "title": "Flytta administration från Försäkringskassan till Arbetsförmedlingen",
-      "parties": [
-        "l"
-      ],
-      "person": {
-        "name": "Johan Britz",
-        "role": "arbetsmarknadsminister"
-      },
-      "quote": "Regeringen ska därför se över hur administrationen av ersättningen till deltagare i arbetsmarknadspolitiska program kan flyttas från Försäkringskassan till Arbetsförmedlingen.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-fler-atgarder-mot-felaktiga-utbetalningar",
-    "articleTitle": "Liberalerna: fler åtgärder mot felaktiga utbetalningar – Liberalerna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 50,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet är att 'se över' en administrativ flytt mellan myndigheter — prissätter själva utredningen/omställningen, inte framtida besparingar eller följd kostnader.",
-      "confidence": 0.45,
-      "calculation": "Löftet gäller en översyn ('se över hur administrationen kan flyttas'). Enligt regel 10 prissätts utredningen, inte politiken den leder till. En myndighetsöversyn av detta slag (kartlägga IT-system, processer, personal, lagstiftning) motsvarar en SOU-stor utredning: ca 5–15 mkr. Breddat spannet uppåt för att inkludera implementationsplanering och analys av IT-migration: ~5–50 mkr. Själva flytten av administrativt ansvar är en omfördelning mellan myndigheter (regel 11), inte en ny nettokostnad, och prissätts inte här."
-    },
-    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0632 (50), p-2026-0650 (0), p-2026-0678 (6600) ⚠ AVVIKER: 15 avviker 3.3× från jämförbara (median 50)"
-  },
-  {
-    "candidate": {
       "title": "Tidigarelägga forsknings- och innovationsproposition till 2027",
       "parties": [
         "l"
@@ -1441,35 +1207,6 @@
       "calculation": "Löftet handlar om att påverka EU:s budgetprioriteringar genom omfördelning från jordbruk/regionalstöd till forskning. Det är en nettonoll för EU-budgeten och innebär ingen ny svensk utgift. Eventuella kostnader avser endast svenskt förhandlingsarbete, vilket är försumbart. 0 mkr netto."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0791 (40), p-2026-0640 (13000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~6520"
-  },
-  {
-    "candidate": {
-      "title": "Höja lärarlönerna med 10 000 kronor i månaden",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Vi vill höja lönerna med 10 000 kronor i månaden för lärare i grund- och gymnasieskolan.",
-      "category": "utbildning",
-      "amount_in_text_msek": 7000,
-      "financing_mentioned": true
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-hoja-lararnas-loner-med-10-000-kronor-i-manaden",
-    "articleTitle": "Liberalerna vill höja lärarnas löner med 10 000 kronor i månaden – Liberalerna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 26000,
-      "msek_base": 34000,
-      "msek_high": 42000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Partiets egen siffra 10 000 kr/mån. ~200 000–260 000 lärare i grund- och gymnasieskolan. Arbetsgivaravgifter tillkommer. Större än jämförbart löfte pga mycket högre per-lärare-nivå.",
-      "confidence": 0.65,
-      "calculation": "Partiets siffra: 10 000 kr/månad × 12 = 120 000 kr/år per lärare. Antal lärare grund- och gymnasieskola uppskattat till 200 000–260 000 (osäkerhet kring deltider/obehöriga). Sociala avgifter ca 20–30 % på löneökningen. Låg: 200 000 × 120 000 × 1,2 ≈ 28 800 msek → avrundat 26 000 med smalare tolkning. Bas: 230 000 × 120 000 × 1,25 ≈ 34 500 msek. Hög: 260 000 × 120 000 × 1,3 ≈ 40 600 msek → 42 000 med marginal. Jämförbart löfte p-2026-0393 om 3 500 msek avspeglar en betydligt lägre per-lärare-höjning (ca 1 200 kr/mån), vilket bekräftar att 10 000 kr/mån är ~8× dyrare."
-    },
-    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0393 (3500) ⚠ AVVIKER: 34000 avviker 9.7× från jämförbara (median 3500)"
   },
   {
     "candidate": {
@@ -1591,35 +1328,6 @@
   },
   {
     "candidate": {
-      "title": "Höj skattereduktionen för solceller till 20 procent",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "höja skattereduktionen för installation av solceller från 15 till 20 procent",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/just-nu/folkel-gron-el-ska-vara-billigare-och-tillganglig-for-alla/",
-    "articleTitle": "Folkel – grön el för alla | Miljöpartiet",
-    "cost": {
-      "type": "intäktsminskning",
-      "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 400,
-      "msek_high": 700,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Skattereduktion för grön teknik (solceller) höjs från 15 till 20 %, d.v.s. +5 procentenheter. Beräknat på uppskattat antal solcellsinstallationer och genomsnittlig installationskostnad. Avser…",
-      "confidence": 0.45,
-      "calculation": "Grön teknik-skattereduktion för solceller idag 15 %. Antagande: ~40 000–60 000 installationer/år som utnyttjar avdraget. Snittkostnad installation ~150 000 kr. Extra reduktion vid höjning till 20 %: 5 % × 150 000 = 7 500 kr per installation. Kostnad: 40 000 × 7 500 = 300 mkr till 60 000 × 7 500 = 450 mkr. Beteendeeffekt (fler installationer vid högre avdrag) samt större system kan dra upp mot 700 mkr. Låg för extremt lågt utnyttjande: ~200 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0809 (20000), p-2026-0172 (0), p-2026-0028 (20000) ⚠ AVVIKER: 400 avviker 50.0× från jämförbara (median 20000)"
-  },
-  {
-    "candidate": {
       "title": "Obligatorisk laddinfrastruktur vid nyproduktion",
       "parties": [
         "mp"
@@ -1676,38 +1384,6 @@
       "confidence": 0.1
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0252 (0), p-2026-0121 (0)"
-  },
-  {
-    "candidate": {
-      "title": "Sänka normalarbetstiden till 35 timmar i veckan",
-      "parties": [
-        "mp"
-      ],
-      "person": {
-        "name": "Daniel",
-        "role": "språkrör"
-      },
-      "quote": "Miljöpartiet vill sänka normalarbetstiden, i ett första steg till 35 timmar i veckan.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/just-nu/sprakrorens-sommartal-2026/",
-    "articleTitle": "Språkrörens sommartal 2026 | Miljöpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 50,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Ändring av lagstadgad normalarbetstid – i sig en reglering. Direkt statlig kostnad avser administrativ anpassning. Indirekta effekter på staten som arbetsgivare lämnas okvantifierade enligt regel 9.",
-      "confidence": 0.3,
-      "calculation": "Löftet avser sänkning av normalarbetstid i lag (från 40 till 35 tim/vecka). Själva lagändringen kostar i princip ingenting. Den direkta statliga kostnaden är administrative implementering (uppdatering av avtalssystem, vägledning, tillsyn). Indirekta och svåröverskådliga effekter – staten som arbetsgivare med ~300 000 anställda kan behöva mer personal, skattebasen kan krympa – är följder av regleringen, inte direkta utgifter, och lämnas enligt regel 9. Engångs-/årlig administrativ kostnad uppskattas till 0–50 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -2707,64 +2383,6 @@
       "calculation": "Löftet är ett garantiprincip-uttalande utan nivå eller åtgärd. Direkt statlig kostnad ≈ 0: offentliga alternativ existerar redan som default i de flesta valfrihetssystem. Eventuella marginella kostnader (tilldelningssystem, garanti för platser där privata aktörer dominerar) uppskattas försiktigt till 0–100 mkr/år; följd kostnader av kapacitetsutbyggnad är okvantifierade och exkluderade."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0048 (200), p-2026-0377 (300), p-2026-0487 (0), p-2026-0651 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~100"
-  },
-  {
-    "candidate": {
-      "title": "Rösträtt det år man fyller 18",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Vi vill att man ska kunna rösta det år man fyller 18, istället för som idag när man måste ha fyllt 18 år för att få rösta.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/valsystem",
-    "articleTitle": "Valsystem | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 3,
-      "msek_base": 10,
-      "msek_high": 30,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Regel-/lagändring av rösträttsåldern; prissatt är själva åtgärdens direkta kostnad (systemanpassningar, röstlängd, information), inte samhällseffekter.",
-      "confidence": 0.4,
-      "calculation": "Utvidgad röstberättigad valåret: ~110 000 fyller 18/år, de med födelsedag efter valdagen (~30 000 valåret) tillkommer. Röster kostar marginellt; huvudkostnad är engångsvis: anpassning av röstlängdssystem och valsedelsunderlag (~2–10 mkr) samt informationskampanj till unga (~5–20 mkr). Totalt ~3–30 mkr; löpande merkostnad försumbar, därför engång."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Rullande mandatperioder istället för fasta",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Kristdemokraterna vill ändra valsystemet så att dagens fasta mandatperioder istället blir rullande.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/valsystem",
-    "articleTitle": "Valsystem | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Grundlagsändring av valsystemet; direkta kostnaden är utredning och omställning av valsadministration. Jämförelselöftet (landsbygdsinvestering) är orelaterat politik och avvikes från. Följder som…",
-      "confidence": 0.4,
-      "calculation": "Ändring av grundlagen kräver utredning (SOU-storlek ~10–20 mkr) plus genomförande/omställning hos Valmyndigheten och riksdagen ~5–10 mkr ≈ bas 15 mkr, spann 5–30 mkr engångskostnad. Ev. mer frekventa val som följd av rullande mandat är en konsekvens, inte åtgärdens direkta kostnad, och är inte prissatt."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0336 (50000) ⚠ AVVIKER: 15 avviker 3333.3× från jämförbara (median 50000)"
   },
   {
     "candidate": {

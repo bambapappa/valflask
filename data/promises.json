@@ -15247,19 +15247,19 @@
   {
     "id": "p-2026-0393",
     "group_id": null,
-    "title": "Höja lärarlönerna och avlasta mentorer",
+    "title": "Höja lärarlönerna med 10 000 kronor i månaden",
     "slug": "hoja-lararlonerna-och-avlasta-mentorer",
     "parties": [
       "l"
     ],
     "person": null,
-    "quote": "Nu vill vi gå vidare och höja lärarlönerna, göra lärare till en skyddad yrkestitel och att du som är lärare ska avlastas arbetet som mentor.",
+    "quote": "Vi vill höja lönerna med 10 000 kronor i månaden för lärare i grund- och gymnasieskolan.",
     "date_stated": "2026-06-02",
     "source": {
-      "url": "https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf#page=10",
+      "url": "https://www.liberalerna.se/nyheter/liberalerna-vill-hoja-lararnas-loner-med-10-000-kronor-i-manaden",
       "domain": "liberalerna.se",
-      "archive_url": "https://web.archive.org/web/20260703231312/https://www.liberalerna.se/wp-content/uploads/liberalernas-valmanifest-2026-40s-komprimerad.pdf#page=10",
-      "fetched_at": "2026-07-05T17:30:47.783Z",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:04:31.201865Z",
       "source_status": "ok",
       "source_checked_at": "2026-08-10"
     },
@@ -15267,14 +15267,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 3500,
-      "msek_high": 12000,
-      "basis": "llm_estimat",
-      "basis_url": "https://www.skolverket.se/styrning-och-ansvar/statsbidrag/hitta-statsbidrag/statsbidrag-for-lararlonelyftet-2025-26",
-      "method_note": "Statlig lönesatsning på lärare plus avlastning av mentorer. Lönerna sätts av kommunerna och de andra huvudmännen, så statens del är ett riktat bidrag.",
+      "msek_low": 6000,
+      "msek_base": 7000,
+      "msek_high": 8000,
+      "basis": "parti",
+      "basis_url": "https://www.liberalerna.se/nyheter/liberalerna-vill-hoja-lararnas-loner-med-10-000-kronor-i-manaden",
+      "method_note": "Statlig lönesatsning på lärare. Beloppet är partiets eget: partiet anger att statens del blir omkring 7 miljarder kronor per år, och den siffran gäller före vår egen uppskattning.",
       "confidence": 0.4,
-      "calculation": "Lärarlöner sätts av kommunerna och de andra skolhuvudmännen, inte av staten, så det staten kan lova är ett riktat bidrag. Löftet anger ingen nivå, så beloppet ankras i vad statens nuvarande lönesatsningar kostar: Lärarlönelyftet ligger på 3 000 miljoner kronor för läsåret 2025/26 och statsbidraget för karriärtjänster på 1 852 miljoner kronor per år. Ett nytt lyft i samma storlek som det befintliga ger 3 000 miljoner kronor per år. Avlastningen av mentorer, som kräver fler anställda i skolan, läggs på omkring 500 miljoner. Sammantaget 3 500 miljoner kronor per år. Det höga alternativet, 12 000, motsvarar ett påslag på flera tusen kronor i månaden till samtliga lärare."
+      "calculation": "Partiets egen siffra. Liberalerna anger att lönerna ska höjas med 10 000 kronor i månaden för lärare i grund- och gymnasieskolan, att det finansieras genom ett särskilt statsbidrag där staten och kommunerna delar på kostnaden, och att statens del blir omkring 7 miljarder kronor per år. Det är partiets belopp, inte vårt: hela summan kommer från källan. Spannet 6 000–8 000 speglar att partiet skriver «omkring». Den tidigare siffran räknade hela lönekostnaden inklusive kommunernas andel och sociala avgifter, alltså brutto — beloppet ska avse statens nya nettokostnad."
     },
     "financing_claimed": {
       "described": false,
@@ -15289,6 +15289,11 @@
         "date": "2026-07-28",
         "change": "Beloppet omräknat från 5 000 till 3 500 miljoner kronor per år. Den tidigare uträkningen byggde på ett eget antagande om 1 500–5 000 kronor i månaden till alla lärare. Löftet anger ingen nivå, så beloppet vilar nu på vad statens faktiska lönesatsningar kostar — Lärarlönelyftet 3 000 miljoner kronor och karriärtjänsterna 1 852 miljoner. Uträkningen skriver också ut att lönerna sätts av kommunerna och att statens del är ett riktat bidrag.",
         "commit": "cdd3cfd26c5eacf04ba18127b14a762845ed8fd3"
+      },
+      {
+        "date": "2026-08-15",
+        "change": "Citatet är utbytt mot partiets egen formulering, som bär både nivån — 10 000 kronor i månaden — och partiets egen uppgift om vad staten får betala. Beloppet är därmed höjt från 3 500 till 7 000 miljoner kronor per år och källnivån ändrad till partiets egen siffra. Det tidigare citatet lovade en höjning utan nivå, och beloppet vilade på vad statens tidigare lönesatsningar kostat. Titeln säger nu vad citatet visar; adressen till löftet är oförändrad. Den tidigare formuleringens led om att avlasta mentorer bärs inte av det nya citatet och står inte längre kvar som ett åtagande här.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -38475,6 +38480,504 @@
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
       "run_id": "run-2026-08-14-04-57"
+    }
+  },
+  {
+    "id": "p-2026-0850",
+    "group_id": null,
+    "title": "Utredning av kommunal polismyndighet",
+    "slug": "utredning-av-kommunal-polismyndighet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi föreslår därför att man utreder en kommunal polismyndighet som avlastar vår redan hårt belastade polismyndighet.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/polisen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:02.858Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet avser en utredning, inte genomförandet. Prissatt som en större SOU-utredning om polisorganisationens struktur och kommunalt huvudmannaskap. (belopp satt av granskare)",
+      "calculation": "Löftet är att utreda en kommunal polismyndighet. Utredningen i sig prissätts inte — det är den politik den kan leda till som skulle kosta, och den är inte utlovad. Beloppet är därför 0.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0851",
+    "group_id": null,
+    "title": "Plan för utbyggnad av Kriminalvårdens anstalter",
+    "slug": "plan-for-utbyggnad-av-kriminalvardens-anstalter",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "För att det ska kunna bli verklighet ska vi ta fram en plan för att minska belastningen på Kriminalvården och öka tempot i utbyggnaden av nya anstalter.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/sa-avskaffar-vi-mangdrabatten-under-nasta-mandatperiod/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:03.400Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet avser att ta fram en plan, inte själva utbyggnaden. Prissatt som SOU-stor utredning/handlingsplan enligt regel 10. (belopp satt av granskare)",
+      "calculation": "Löftet är att ta fram en plan för utbyggnaden. Planen prissätts inte; utbyggnaden den kan leda till är inte utlovad i citatet. Beloppet är därför 0.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0852",
+    "group_id": null,
+    "title": "Flytta administration från Försäkringskassan till Arbetsförmedlingen",
+    "slug": "flytta-administration-fran-forsakringskassan-till-arbetsformedlingen",
+    "parties": [
+      "l"
+    ],
+    "person": {
+      "name": "Johan Britz",
+      "role": "arbetsmarknadsminister"
+    },
+    "quote": "Regeringen ska därför se över hur administrationen av ersättningen till deltagare i arbetsmarknadspolitiska program kan flyttas från Försäkringskassan till Arbetsförmedlingen.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://www.liberalerna.se/nyheter/liberalerna-fler-atgarder-mot-felaktiga-utbetalningar",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:03.920Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet är att 'se över' en administrativ flytt mellan myndigheter — prissätter själva utredningen/omställningen, inte framtida besparingar eller följd kostnader. (belopp satt av granskare)",
+      "calculation": "Löftet är att se över hur administrationen kan flyttas mellan två myndigheter. En översyn prissätts inte — flytten den kan leda till är inte utlovad. Beloppet är därför 0.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0853",
+    "group_id": null,
+    "title": "Rullande mandatperioder istället för fasta",
+    "slug": "rullande-mandatperioder-istallet-for-fasta",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill ändra valsystemet så att dagens fasta mandatperioder istället blir rullande.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/valsystem",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:04.445Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Grundlagsändring av valsystemet; direkta kostnaden är utredning och omställning av valsadministration. Jämförelselöftet (landsbygdsinvestering) är orelaterat politik och avvikes från. Följder som… (belopp satt av granskare)",
+      "calculation": "Att ändra mandatperioderna kräver grundlagsändring och därmed en utredning. Utredningen prissätts inte, och citatet lovar ingen åtgärd utöver ändringen. Beloppet är därför 0.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0854",
+    "group_id": null,
+    "title": "Begränsa antalet riksintressen",
+    "slug": "begransa-antalet-riksintressen",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill begränsa antalet riksintressen och deras omfattning.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/riksintressen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:04.978Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Regel- och planändring; prissätter administrativ översyn av riksintressen, ej samhällsföljder. (belopp satt av granskare)",
+      "calculation": "Löftet är att begränsa antalet riksintressen och deras omfattning. Det görs genom ändrade regler, och en regeländring bär ingen egen statlig utgift. Beloppet avser åtgärden, inte dess följder för byggande eller markanvändning.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0855",
+    "group_id": null,
+    "title": "Förenkla regelverk för riksintressen",
+    "slug": "forenkla-regelverk-for-riksintressen",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Regelverket ska förenklas så att olika intressen inte skapar onödig byråkrati och hindrar byggande och utveckling.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/riksintressen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:05.520Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Förenkling av regelverk för riksintressen — prissätter utredning och lagändring, inte samhällsföljder av ökat byggande. (belopp satt av granskare)",
+      "calculation": "Löftet är att förenkla regelverket. Förenklingen genomförs med ändrade föreskrifter och bär ingen egen statlig utgift. Beloppet avser åtgärden, inte följderna för byggande.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0856",
+    "group_id": null,
+    "title": "Förtydliga beskattning av carried interest",
+    "slug": "fortydliga-beskattning-av-carried-interest",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna arbetar för att förtydliga reglerna kring ”Carried interest”, som handlar om hur riskkapitalbolagets eventuella vinst ska beskattas när de investerat i ett bolag.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/riskkapital",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:06.073Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Förtydligande av befintliga skatteregler — prissatt som administrativ lagändring/eventuell utredning, inte intäktsförändringar. (belopp satt av granskare)",
+      "calculation": "Löftet är att förtydliga hur riskkapitalbolagens vinst beskattas. Ett förtydligande av reglerna ändrar ingen skattesats och bär ingen egen statlig utgift. Vad ett förtydligande gör med skatteintäkterna är en följd, inte åtgärdens kostnad.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0857",
+    "group_id": null,
+    "title": "Rösträtt det år man fyller 18",
+    "slug": "rostratt-det-ar-man-fyller-18",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill att man ska kunna rösta det år man fyller 18, istället för som idag när man måste ha fyllt 18 år för att få rösta.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/valsystem",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:06.630Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Regel-/lagändring av rösträttsåldern; prissatt är själva åtgärdens direkta kostnad (systemanpassningar, röstlängd, information), inte samhällseffekter. (belopp satt av granskare)",
+      "calculation": "Löftet är att flytta rösträttsgränsen till det år man fyller 18. Det görs med en regeländring; anpassningen av röstlängden ryms i Valmyndighetens löpande arbete inför ett val som ändå hålls.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0858",
+    "group_id": null,
+    "title": "Likafördelning av premiepension mellan makar med gemensamma barn",
+    "slug": "likafordelning-av-premiepension-mellan-makar-med-gemensamma-barn",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill att den totala intjänade premiepensionen fördelas lika (om de inte begär något annat) mellan makar som har gemensamma barn.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/premiepension",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:07.156Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Själva omfördelningen mellan makar är kostnadsneutral för staten. Kostnaden avser IT- och administration för Pensionsmyndigheten, inte omfördelningen. (belopp satt av granskare)",
+      "calculation": "Löftet delar den intjänade premiepensionen lika mellan makar med gemensamma barn. Pengarna flyttas mellan två personer och statens utbetalning är oförändrad. Nettoförändringen för staten är noll.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0859",
+    "group_id": null,
+    "title": "Dela pensionsrätt lika mellan föräldrar",
+    "slug": "dela-pensionsratt-lika-mellan-foraldrar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill att intjänad pensionsrätt under småbarnsåren ska delas lika mellan barnets föräldrar för att undvika pensionsfällor beroende på olika uttag av föräldraledighet.",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/pension",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:03:07.709Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Löftet delar pensionsrätten under småbarnsåren lika mellan barnets föräldrar. Pensionsrätten flyttas mellan två personer och den sammanlagda intjänade rätten är oförändrad. Nettoförändringen för staten är noll.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
+    }
+  },
+  {
+    "id": "p-2026-0860",
+    "group_id": null,
+    "title": "Höj skattereduktionen för solceller till 20 procent",
+    "slug": "hoj-skattereduktionen-for-solceller-till-20-procent",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "höja skattereduktionen för installation av solceller från 15 till 20 procent",
+    "date_stated": "2026-08-15",
+    "source": {
+      "url": "https://www.mp.se/just-nu/folkel-gron-el-ska-vara-billigare-och-tillganglig-for-alla/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-15T11:05:47.660Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 700,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Skattereduktion för grön teknik (solceller) höjs från 15 till 20 %, d.v.s. +5 procentenheter. Beräknat på uppskattat antal solcellsinstallationer och genomsnittlig installationskostnad. Avser… (belopp satt av granskare)",
+      "calculation": "Partiets nivå, vår volym. Miljöpartiet anger själv steget: skattereduktionen för installation av solceller höjs från 15 till 20 procent, alltså fem procentenheter. Antalet installationer är vår uppskattning — omkring 40 000 till 60 000 per år som utnyttjar avdraget, med en genomsnittlig installationskostnad kring 150 000 kronor. Fem procentenheter på 150 000 kronor ger 7 500 kronor per installation: 40 000 installationer ger 300 miljoner kronor per år, 60 000 ger 450. Spannet 200–700 speglar att volymen är vår och inte partiets.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-15T11"
     }
   }
 ]
