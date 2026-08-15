@@ -659,35 +659,6 @@
   },
   {
     "candidate": {
-      "title": "Ytterligare straffskärpningar för sexualbrott",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "vi ser ett behov av ytterligare straffskärpningar för sexualbrott och i synnerhet för sexualbrott mot barn",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/sexualbrott",
-    "articleTitle": "Sexualbrott | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 300,
-      "msek_high": 800,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Straffskärpningar ger ökade kriminalvårdskostnader. Löftet är vagt (ingen specifik reform), men jämförbart löfte om mängdrabatt kostar ~650 msek. Sätt lägre bas pga oklarhet om omfattning.",
-      "confidence": 0.3,
-      "calculation": "Straffskärpningar för sexualbrott ökar antalet fängelsedomar och/eller strafftider → mer platser i kriminalvård. Jämförbart löfte (avskaffa mängdrabatt) uppskattas till ~650 msek/år. Detta löfte är bredare men anger ingen konkret åtgärd, så osäkerheten är stor. Low: marginell ökning av straff som påverkar få fall. High: flera reformer i linje med mängdrabatt-avskaffandet. Bas ~halva jämförbara siffran då löftet är inriktande snarare än specifikt."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0709 (650)"
-  },
-  {
-    "candidate": {
       "title": "Obligatorisk SFI för föräldralediga med små barn",
       "parties": [
         "kd"
@@ -875,38 +846,6 @@
       "confidence": 0.1
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0838 (0), p-2026-0837 (30), p-2026-0076 (200), p-2026-0124 (0), p-2026-0839 (20) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~20"
-  },
-  {
-    "candidate": {
-      "title": "Snabba på utbyggnaden av Kriminalvården",
-      "parties": [
-        "m"
-      ],
-      "person": {
-        "name": "Gunnar Strömmer",
-        "role": "justitieminister"
-      },
-      "quote": "Snabba på utbyggnaden av Kriminalvården i Sverige,",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/s-rostar-emot-slopad-mangdrabatt-ett-svek-mot-alla-brottsoffer/",
-    "articleTitle": "S röstar emot slopad mängdrabatt – ett svek mot alla brottsoffer | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 250,
-      "msek_high": 500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Snabbare utbyggnad innebär merkostnader för påskyndad byggprocess, tillfälliga lösningar och förtida bemanning. Redan budgeterad utbyggnad exkluderas; priset är marginalen för acceleration.",
-      "confidence": 0.4,
-      "calculation": "Kriminalvårdens pågående investeringsprogram är redan finansierat. Att snabba på det medför merkostnader: expediterade upphandlingar, extraskift på byggen, modulbyggnader som temporära lösningar och tidigare rekrytering. Grov uppskattning: 5–15 pågående projekt där acceleration kostar 10–30 mkr extra per projekt och år = ~50–450 mkr. Tillkommer kan vara administrativ övertid och konsultstöd (~20–50 mkr). Totalt ~100–500 mkr/år i ren accelerationsmerkostnad."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0690 (20), p-2026-0522 (800)"
   },
   {
     "candidate": {
@@ -2065,64 +2004,6 @@
       "confidence": 0.1
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Enhetliga och konkurrenskraftiga momsvillkor för besöksnäringen",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Vi vill verka för mer enhetliga och konkurrenskraftiga momsvillkor inom besöksnäringen",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/turism",
-    "articleTitle": "Turism | Kristdemokraterna",
-    "cost": {
-      "type": "intäktsminskning",
-      "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 6000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Vagt för-löfte utan nivå; smalare än jämförelselöftena (sektorspecifik moms). Ankrat i senaste faktiska reform: 25→12% för hotell/restaurang kostade samlat flera mdr/år. Spannet täcker utökad…",
-      "confidence": 0.35,
-      "calculation": "Senaste genomförda reform för samma åtgärd: sänkning 25→12% (hotell ~2 mdr, restaurang ~5,4 mdr/år) ⇒ sektorns momsbara bas ca 55–60 mdr. Alternativ A: 'enheltlig' 12%-moms även på evenemang, attraktioner, nöje (idag 25%): bas ~15–30 mdr × 13 procentenheter ≈ 2–4 mdr/år. Alternativ B: 'konkurrenskraftig' sänkning 12→6% för hela sektorn: 55–60 mdr × 6 p.e. ≈ 3–3,5 mdr/år. Kombination/överlapp ger low 1 500 – high 6 000; bas 3 000 msek/år. Ökad konsumtion (beteendeeffekt) dämpar statens nettoflöde något; 'verka för'-formulering gör osäkerheten stor och confidence låg. Beloppet = statens intäktsminskning, inte samhällseffekter."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0032 (20000), p-2026-0345 (20000) ⚠ AVVIKER: 3000 avviker 6.7× från jämförbara (median 20000)"
-  },
-  {
-    "candidate": {
-      "title": "Turismens behov ska beaktas i infrastruktursatsningar",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "säkerställa att turismens behov beaktas i satsningar på infrastruktur och tillgänglighet",
-      "category": "infrastruktur",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/turism",
-    "articleTitle": "Turism | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 10,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Inriktningslöfte utan konkret åtgärd: att beakta turismens behov i befintlig infrastrukturplanering är i princip kostnadsfritt. Reella infrastrukturkostnader prissätts på separata löften och…",
-      "confidence": 0.65,
-      "calculation": "Löftet anger ingen åtgärd, nivå eller belopp — endast hänsyn i planering. Direkt kostnad ≈ 0, med ev. marginalkostnad för analyser/samråd 0–10 mkr/år. Nya väg-/kollektivsatsningar som skulle gynna turismen är separata löften och ingår inte här."
-    },
-    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
   },
   {
     "candidate": {
