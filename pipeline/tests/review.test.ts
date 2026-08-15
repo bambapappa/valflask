@@ -257,6 +257,94 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
     }
   });
 
+  /**
+   * Källnivån ska beskriva det belopp som står bredvid den — inte det belopp
+   * kö-posten råkade bära.
+   *
+   * Mätt 2026-08-15: kö-postens `basis` ärvdes rakt av när granskaren satte ett
+   * eget belopp, så en handsatt siffra publicerades som `llm_estimat`. Följden
+   * syns i beståndet: 345 av 425 granskade löften bar den etiketten, och **noll
+   * av 134 kö-poster** vilade på partiets egen siffra — regeln att partiets
+   * egen siffra gäller gick helt enkelt inte att uttrycka i verktyget.
+   */
+  // Notera hur provet FALLER: `approve()` avslutar processen när grinden
+  // stoppar, så ett infört fel dödar hela filen i stället för att ge ett
+  // enskilt «not ok». Utfallskoden blir ändå 1 — bevisat mot två införda fel:
+  // att ärva kö-postens basis igen, och att sluta ta emot --basis.
+  it("källnivån följer beloppet, inte kö-posten", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-basis-"));
+    try {
+      /** Baddar om katalogen och prövar den FÖRESLAGNA formen, som grinden kräver. */
+      const badda = (cost: Record<string, unknown>) => {
+        writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+        writeFileSync(join(dir, "needs_review.json"), JSON.stringify([queueItem]));
+        writeFileSync(join(dir, "changelog.json"), JSON.stringify([
+          { run_id: "seed", added: [], updated: [], retracted: [], data_hash: "old", timestamp: "2026-01-01T00:00:00Z" },
+        ]));
+        const somPublicerat = {
+          quote: queueItem.candidate!.quote,
+          title: queueItem.candidate!.title,
+          parties: queueItem.candidate!.parties,
+          status: "aktiv",
+          group_id: null,
+          source: { url: queueItem.articleUrl },
+          cost,
+        };
+        writeFileSync(join(dir, "provningar.json"), JSON.stringify({
+          poster: [{
+            id: konyckel(queueItem.articleUrl, queueItem.candidate!.quote),
+            slag: "lofte", datum: "2026-08-15", utfall: "haller",
+            underlag_hash: kanon("lofte", somPublicerat),
+          }],
+        }));
+      };
+
+      // Utan --basis: en människa satte beloppet, och då säger fältet det.
+      // Kö-postens `llm_estimat` får INTE följa med — modellen står inte bakom
+      // siffran längre.
+      badda({ type: "utgift", period: "per_ar", msek_low: 50, msek_base: 60, msek_high: 70,
+              basis: "granskare", calculation: "60 mkr enligt regeln." });
+      approve(["0", "50", "60", "70", "--calc", "60 mkr enligt regeln."], dir);
+      let p = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8")) as Array<{ cost: { basis: string; basis_url: string | null; msek_base: number } }>;
+      assert.equal(p.find((x) => x.cost.msek_base === 60)!.cost.basis, "granskare",
+        "handsatt belopp märks som granskarens, inte som modellens");
+
+      // Med --basis parti: partiets egen siffra går att märka som partiets, och
+      // adressen till där den står följer med.
+      badda({ type: "utgift", period: "per_ar", msek_low: 7000, msek_base: 7000, msek_high: 7000,
+              basis: "parti", calculation: "Partiets egen siffra." });
+      approve(["0", "7000", "7000", "7000", "--calc", "Partiets egen siffra.",
+               "--basis", "parti", "--basis-url", "https://parti.se/loftet"], dir);
+      p = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8")) as Array<{ cost: { basis: string; basis_url: string | null; msek_base: number } }>;
+      const partipost = p.find((x) => x.cost.msek_base === 7000)!;
+      assert.equal(partipost.cost.basis, "parti");
+      assert.equal(partipost.cost.basis_url, "https://parti.se/loftet");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("en okänd källnivå stoppar godkännandet i stället för att tyst bli något annat", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-basis-fel-"));
+    try {
+      writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+      writeFileSync(join(dir, "needs_review.json"), JSON.stringify([queueItem]));
+      writeFileSync(join(dir, "changelog.json"), JSON.stringify([]));
+      writeFileSync(join(dir, "provningar.json"), JSON.stringify({ poster: [] }));
+      const r = spawnSync(
+        process.execPath,
+        ["--import", "tsx/esm", "-e",
+         `import {approve} from ${JSON.stringify(join(import.meta.dirname, "../src/review.ts"))};` +
+         `approve(["0","1","1","1","--calc","x","--basis","hittepa"], ${JSON.stringify(dir)});`],
+        { encoding: "utf8" },
+      );
+      assert.notEqual(r.status, 0, "okänd källnivå ska stoppa godkännandet");
+      assert.match((r.stdout ?? "") + (r.stderr ?? ""), /Okänd källnivå/u);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   // Grinden måste sitta i själva godkännandevägen. Att `provningsGrind` svarar
   // rätt för sig (provningar.test.ts) säger ingenting om att någon frågar den.
   function godkannIEgenProcess(dir: string): { kod: number | null; ut: string } {

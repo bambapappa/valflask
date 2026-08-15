@@ -51,6 +51,22 @@ export const KOSTNADSTYPER = [
 ] as const;
 export type Kostnadstyp = (typeof KOSTNADSTYPER)[number];
 
+/**
+ * Hur förankrat ett belopp är — samma lista som `promises.schema.json`.
+ *
+ * Ordningen är den metodsidan redovisar för läsaren, mest pålitlig först.
+ * `rut` finns i schemat sedan tidigare och står kvar; den betecknar Riksdagens
+ * utredningstjänst.
+ */
+export const BASISVARDEN = [
+  "rut",
+  "myndighet",
+  "parti",
+  "media",
+  "granskare",
+  "llm_estimat",
+] as const;
+
 export type ReviewCommand =
   | {
       action: "approve";
@@ -292,6 +308,8 @@ export function approve(
   let linkTo: string | undefined;
   let calculationFlag: string | undefined;
   let typFlag: string | undefined;
+  let basisFlag: string | undefined;
+  let basisUrlFlag: string | undefined;
   const args: string[] = [];
   for (let i = 0; i < rawArgs.length; i++) {
     const a = rawArgs[i]!;
@@ -320,6 +338,24 @@ export function approve(
     }
     if (a.startsWith("--typ=")) {
       typFlag = a.slice("--typ=".length);
+      continue;
+    }
+    if (a === "--basis") {
+      basisFlag = rawArgs[i + 1];
+      i++;
+      continue;
+    }
+    if (a.startsWith("--basis=")) {
+      basisFlag = a.slice("--basis=".length);
+      continue;
+    }
+    if (a === "--basis-url") {
+      basisUrlFlag = rawArgs[i + 1];
+      i++;
+      continue;
+    }
+    if (a.startsWith("--basis-url=")) {
+      basisUrlFlag = a.slice("--basis-url=".length);
       continue;
     }
     args.push(a);
@@ -365,17 +401,31 @@ export function approve(
           `         en skatt eller en utgift: ange --typ (${KOSTNADSTYPER.join(", ")}).`,
       );
     }
+    if (basisFlag !== undefined && !(BASISVARDEN as readonly string[]).includes(basisFlag)) {
+      console.error(`Okänd källnivå: ${basisFlag}. Giltiga: ${BASISVARDEN.join(", ")}.`);
+      process.exit(1);
+    }
     cost = {
       type: typFlag ?? cost?.type ?? "utgift",
       period: cost?.period ?? "per_ar",
       msek_low: Math.round(low),
       msek_base: Math.round(base),
       msek_high: Math.round(high),
-      // Saknade posten kostnad kommer beloppet från granskaren och ingen
-      // annanstans ifrån. "media" hade sagt läsaren att ett nyhetsmedium stod
-      // bakom siffran — `basis` är just det fält som säger hur förankrad den är.
-      basis: cost?.basis ?? "granskare",
-      basis_url: cost?.basis_url ?? null,
+      // `basis` säger hur förankrat beloppet är, och det fältet får aldrig
+      // beskriva ett annat belopp än det som står bredvid.
+      //
+      // Kö-postens basis ärvdes förut rakt av. Sätter granskaren ett NYTT
+      // belopp är den etiketten fel: den säger «en språkmodell uppskattade
+      // det här» om en siffra modellen inte längre står bakom. Mätt
+      // 2026-08-15: noll av 134 kö-poster vilade på partiets egen siffra,
+      // och 345 av 425 granskade löften bar `llm_estimat` — regeln att
+      // partiets egen siffra gäller gick inte att uttrycka i verktyget.
+      //
+      // Nu: den som sätter beloppet säger också var det kommer ifrån.
+      // Utan `--basis` blir det `granskare` — en människa satte det — och
+      // aldrig kö-postens gamla etikett.
+      basis: basisFlag ?? "granskare",
+      basis_url: basisUrlFlag ?? (basisFlag ? null : cost?.basis_url ?? null),
       method_note: (utanHaveritext(cost?.method_note ?? "") + " (belopp satt av granskare)").trim(),
       ...(calculation ? { calculation } : {}),
       confidence: 0.9,
@@ -703,7 +753,8 @@ switch (command) {
   case "approve":
     if (!args[0]) {
       console.error(
-        'Användning: pnpm review approve <index> [low base high] [--calc "uträkningen"]',
+        'Användning: pnpm review approve <index> [low base high] [--calc "uträkningen"]\n' +
+          '                    [--typ <kostnadstyp>] [--basis <källnivå>] [--basis-url <adress>]',
       );
       process.exit(1);
     }
