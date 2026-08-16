@@ -39177,5 +39177,596 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-15T12"
     }
+  },
+  {
+    "id": "p-2026-0865",
+    "group_id": null,
+    "title": "Kommuner ska kunna förbjuda tiggeri på särskilda platser",
+    "slug": "kommuner-ska-kunna-forbjuda-tiggeri-pa-sarskilda-platser",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna anser att kommuner via den kommunala ordningsstadgan ska kunna förbjuda tiggeri på särskilda platser.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/tiggeri",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:34:45.904Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en lagändring/reglering (kommunal möjlighet att förbjuda tiggeri). Enligt regel 9 prissätts endast den direkta åtgärden, som är försumbar för staten; samhällsföljder eller kommunala…",
+      "confidence": 0.65,
+      "calculation": "Reglering: ingen ny statlig utgift. Lagstiftningsarbete är redan finansierat/obetydligt. 0 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0866",
+    "group_id": null,
+    "title": "Skattefri solel till alla hushåll",
+    "slug": "skattefri-solel-till-alla-hushall",
+    "parties": [
+      "mp"
+    ],
+    "person": {
+      "name": "Daniel",
+      "role": "språkrör"
+    },
+    "quote": "Skattefri solel till alla hushåll oavsett boendeform.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://www.mp.se/just-nu/sprakrorens-sommartal-2026/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:34:47.000Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Skattebortfallet bedöms litet: de flesta småhus omfattas redan av skattefri ersättning upp till ca 30 000 kr/år och överskottselen är ofta liten. Avser inkomstskatt, inte energiskatt.",
+      "confidence": 0.3,
+      "calculation": "Antar ~50 000–100 000 mikroproducenter; bara en mindre del säljer överskott över skattefri gräns och beskattas med ~30 %. Exv. 2 000–5 000 hushåll × 2 000–10 000 kr beskattningsbar ersättning × 30 % ≈ 1–15 mkr; utvidgning till fler boendeformer ger spann uppåt."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0867",
+    "group_id": null,
+    "title": "Sänk skatten på el för laddning av elfordon",
+    "slug": "sank-skatten-pa-el-for-laddning-av-elfordon",
+    "parties": [
+      "mp"
+    ],
+    "person": {
+      "name": "Daniel Helldén",
+      "role": "Språkrör, Miljöpartiet"
+    },
+    "quote": "Miljöpartiet vill därför sänka skatten på el som används för att ladda elfordon till EU miniminivå.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://www.mp.se/just-nu/folkel-gron-el-ska-vara-billigare-och-tillganglig-for-alla/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:34:48.072Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 350,
+      "msek_base": 600,
+      "msek_high": 900,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Skattesänkning per kWh ≈ 0,43 kr (från ca 43 öre till EU:s miniminivå nära noll). Antar 0,8–2 TWh ladd-el per år för elbilar och laddhybrider.",
+      "confidence": 0.4,
+      "calculation": "Elskatt idag ca 43 öre/kWh; EU-minimum nära noll => sänkning ~0,43 kr/kWh. Ladd-el: ca 350 000 elbilar × 2 000 kWh + 250 000 laddhybrider × 1 000 kWh ≈ 0,95 TWh, med spann 0,8–2 TWh. 0,8–2 TWh × 0,43 kr/kWh ≈ 340–860 mkr/år, rundat 350–900."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0868",
+    "group_id": null,
+    "title": "Högre kränkningsersättning för poliser",
+    "slug": "hogre-krankningsersattning-for-poliser",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kränkningsersättning ska i högre utsträckning utbetalas till poliser som utsätts för våld och hot i tjänsten.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/polisen",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:34:49.153Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar statlig brottsskadeersättning när gärningsmannen saknar medel. Osäker ökning av antal beviljade ärenden för poliser, ingen exakt nivå i löftet.",
+      "confidence": 0.3,
+      "calculation": "Antag att ersättningen ökar för ~300–2 000 poliser per år (del av vålds-/hotärenden) och snittersättning ~8–15 tkr. 300×8 tkr≈2,4 mkr; 2 000×15 tkr=30 mkr. Avser fler beviljade kränkningsersättningar, inte ändrad ersättningsnivå per fall."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0869",
+    "group_id": null,
+    "title": "Parboendegaranti för äldre par",
+    "slug": "parboendegaranti-for-aldre-par",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill att alla kommuner aktivt säkerställer rätten att få bo tillsammans.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/parboendegaranti",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:34:50.145Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lag/reglering som ålägger kommuner en rättighet. Statens direkta kostnad för själva åtgärden är försumbar; kommunala kostnader och samhällsföljder räknas inte in.",
+      "confidence": 0.3,
+      "calculation": "Parboendegaranti är en lagstadgad rättighet utan specificerat statsbidrag. Statlig nettokostnad ≈ 0. Mindre utrednings- och tillsynsadministration uppskattas till 0–30 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0870",
+    "group_id": null,
+    "title": "Totalförbud mot utsläpp till vatten från fartygsskrubbrar",
+    "slug": "totalforbud-mot-utslapp-till-vatten-fran-fartygsskrubbrar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Fullfölj totalförbudet mot utsläpp till vatten från fartygsskrubbrar.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ostersjon",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:34:51.048Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förbud är en reglering; direkt statlig kostnad är marginell tillsyn. Inga överföringar eller nya utgifter.",
+      "confidence": 0.4,
+      "calculation": "Antar endast löpande tillsyn/kontroll av förbudet, 0–5 mkr/år. Ingen ny transferering; följdverkningar kvantifieras inte enligt regel 9."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0871",
+    "group_id": null,
+    "title": "Kommunerna ska säkra lokaler, skyddade boenden och handledare för frivilligorganisationer",
+    "slug": "kommunerna-ska-sakra-lokaler-skyddade-boenden-och-handledare-for-frivilligorganisationer",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill även uppmuntra frivilligorganisationernas arbete med utsatta personer genom att se till att kommunerna säkrar tillgången till lokaler, skyddade boenden och handledare.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/vald-i-nara-relationer",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:38:37.441Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet är en styrning/reglering av kommunerna, inte ett statsbidrag. Statens direkta kostnad för lagkrav/uppföljning bedöms försumbar; eventuella kommunala kostnader är inte statlig utgift. Beloppet… (belopp satt av granskare)",
+      "calculation": "Löftet lägger uppgiften på kommunerna: det är de som ska säkra lokaler, skyddade boenden och handledare. Staten tar inte över någon utgift som redan betalas av någon annan, och ingen ny statlig förmån eller statsbidrag utlovas. Enligt regeln om netto före brutto prissätts bara den marginella nettoförändringen för staten, och den är noll. Spannets topp, 5 mkr, avser enbart en tänkbar statlig samordningsinsats.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0872",
+    "group_id": null,
+    "title": "Obligatorisk laddinfrastruktur vid nyproduktion",
+    "slug": "obligatorisk-laddinfrastruktur-vid-nyproduktion",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Vid nyproduktion och ombyggnation ska laddinfrastruktur vara obligatorisk.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://www.mp.se/just-nu/folkel-gron-el-ska-vara-billigare-och-tillganglig-for-alla/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:38:38.402Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Reglering: statens direkta kostnad är att ändra byggregler och viss tillsyn/information, vilket är försumbar. Installationskostnaden bärs av byggherrar och räknas som följd, inte statlig utgift. (belopp satt av granskare)",
+      "calculation": "Löftet hålls av en ändring i byggreglerna: krav på laddinfrastruktur vid nyproduktion och ombyggnation. En reglering hålls av regeländringen själv, vars direkta statliga kostnad är försumbar — kostnaden bärs av byggherren, inte av staten, och en överföring till enskilda är ingen statlig utgift. Spannets topp, 10 mkr engång, avser föreskriftsarbete och information.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0873",
+    "group_id": null,
+    "title": "Utreda snabbspår till svenskt medborgarskap",
+    "slug": "utreda-snabbspar-till-svenskt-medborgarskap",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Vi vill därför utreda ett snabbspår till svenskt medborgarskap för den som arbetar, är välintegrerad och gör rätt för sig.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://moderaterna.se/nyhet/den-som-arbetar-och-gor-ratt-for-sig-ska-fa-medborgarskap-snabbare/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:38:39.333Z"
+    },
+    "category": "migration",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet gäller en utredning, inte själva snabbspåret. Kostnaden avser en statlig utredning (SOU-storlek) i fasta priser. (belopp satt av granskare)",
+      "calculation": "Löftet är att utreda ett snabbspår, inte att införa det. Enligt regeln om utrednings- och planlöften prissätts utredningen och inte den politik den kan leda till, och en utredning inom befintligt kommittéväsende bär ingen ny statlig nettokostnad av betydelse. Samtliga elva publicerade löften som utlovar en utredning bär noll, och samma politik ska kosta lika. Kostnaden för ett framtida snabbspår prissätts inte här.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0874",
+    "group_id": null,
+    "title": "EU-regler ska inte överimplementeras",
+    "slug": "eu-regler-ska-inte-overimplementeras",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "EU-regler ska inte överimplementeras, och en tydlig uppföljning av regelkostnaderna ska säkerställa att företagens villkor förbättras över tid.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/regelforenkling",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:38:40.289Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1,
+      "msek_base": 3,
+      "msek_high": 15,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Avser löpande administration/uppföljning. Icke-överimplementering i sig kostar inget; följdeffekter prissätts inte enligt regel 9. (belopp satt av granskare)",
+      "calculation": "Löftet bär två led. Att inte överimplementera EU-regler är en avreglering, och en avreglering hålls av regeländringen själv — dess direkta statliga kostnad är försumbar och prissätts till noll. Det som prissätts här är enbart det andra ledet: den uppföljning av regelkostnaderna som citatet utlovar. Antag 1–5 årsarbetskrafter à 1–2,5 mkr plus utvärderingar 0,5–2,5 mkr per år. Låg 1,5, bas 3, hög 15 mkr per år.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0875",
+    "group_id": null,
+    "title": "Behålla ränteavdrag för bolån på nuvarande nivå",
+    "slug": "behalla-ranteavdrag-for-bolan-pa-nuvarande-niva",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Hushållens ekonomi är nu hårt pressad och därför bör ränteavdragen för bolån för närvarande behållas på nuvarande nivå.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ranteavdrag",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:38:41.410Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Ingen lagändring görs; att behålla befintligt ränteavdrag medför ingen ny statsfinansiell kostnad. Beloppet avser åtgärden, inte följder av en framtida sänkning. (belopp satt av granskare)",
+      "calculation": "Löftet är att behålla ränteavdragen «på nuvarande nivå» — gällande rätt lämnas alltså oförändrad. Ingen skattesats ändras, inget avdrag införs eller avskaffas, och statens intäkter blir desamma som utan löftet. Noll följer av att ingenting förändras, inte av att kostnaden är okänd.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0876",
+    "group_id": null,
+    "title": "Värna public service och dess tillgänglighet",
+    "slug": "varna-public-service-och-dess-tillganglighet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna ska verka för att värna public service, som ska finnas tillgängligt brett i de kanaler som människor använder.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/public-service",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:38:42.389Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; eventuella kostsamma delar prissätts på specifika löften. (belopp satt av granskare)",
+      "calculation": "Citatet lovar att «verka för att värna» public service, men pekar inte ut någon åtgärd och anger ingen nivå — varken ett belopp, en anslagsförändring eller ett antal kanaler. Ett löfte som varken namnger en åtgärd eller en nivå prissätts inte, enligt regeln om inriktningslöften. Noll är därför en följd av regeln, inte en uppskattning.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
+  },
+  {
+    "id": "p-2026-0877",
+    "group_id": null,
+    "title": "Stöd till lantbruket för att minska näringsämnen i vattendrag och hav",
+    "slug": "stod-till-lantbruket-for-att-minska-naringsamnen-i-vattendrag-och-hav",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Ekonomiska stödinsatser bör även framåt riktas till lantbruket för att främja åtgärder som minskar tillförseln av näringsämnen till vattendrag och hav.",
+    "date_stated": "2026-08-16",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ostersjon",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-16T18:38:43.299Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan belopp eller konkret åtgärd; prissätts som 0 enligt regeln om inriktningslöften. (belopp satt av granskare)",
+      "calculation": "Citatet säger att stödinsatser bör riktas till lantbruket «även framåt» — alltså att befintligt stöd fortsätter. En fortsättning av ett stöd som redan betalas är ingen ny statlig nettokostnad. Enligt regeln om netto före brutto prissätts bara den marginella nettoförändringen, och den är noll. Beloppet avser åtgärden, inte dess följder för övergödningen.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-16T18"
+    }
   }
 ]
