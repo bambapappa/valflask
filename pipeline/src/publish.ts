@@ -189,6 +189,27 @@ export function publish(input: PublishInput): PublishResult {
       continue;
     }
 
+    // Ett belopp utan steg bakom sig är en siffra läsaren inte kan följa.
+    // Godkännandet i review.ts stoppar redan på detta; den här vägen gjorde
+    // det inte, och skillnaden syntes i drift: p-2026-0865 gick ut med fem
+    // miljarder kronor per år och tomt uträkningsfält. Kandidaten kastas
+    // inte — den går till kön, där en människa kan skriva uträkningen.
+    if (((pc.cost.calculation ?? "").trim()) === "") {
+      reviewItems.push({
+        candidate: pc.candidate,
+        failures: [
+          {
+            gate: "G4",
+            reason: "kostnadssteget lämnade ingen uträkning — beloppet kan inte publiceras utan steg",
+          },
+        ],
+        articleUrl: pc.article.url,
+        articleTitle: pc.article.title,
+        cost: pc.cost,
+      });
+      continue;
+    }
+
     const id = nextId(allPromises);
     const date = pc.article.published.slice(0, 10);
 

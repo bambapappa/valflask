@@ -45,6 +45,23 @@ export interface CostEstimate {
  * Ligger kvar en gräns alls för att noten är en sammanfattning; den fulla
  * beviskedjan finns i `calculation`, som kapas mildare.
  */
+/**
+ * Tusenavskiljare som mellanslag — «5 000», inte «5000». Skrivs för hand i
+ * stället för med toLocaleString, eftersom uträkningen är publik text som
+ * måste bli likadan i varje körning: toLocaleString hämtar sitt mellanslag ur
+ * körmiljöns ICU-data och kan ge ett annat tecken på en annan runner.
+ */
+export function tusental(n: number): string {
+  const neg = n < 0;
+  const siffror = Math.round(Math.abs(n)).toString();
+  let ut = "";
+  for (let i = 0; i < siffror.length; i += 1) {
+    if (i > 0 && (siffror.length - i) % 3 === 0) ut += " ";
+    ut += siffror[i];
+  }
+  return neg ? `−${ut}` : ut;
+}
+
 export function kapaNot(text: string, max: number): string {
   const t = text.trim();
   if (t.length <= max) return t;
@@ -247,15 +264,30 @@ export async function estimateCost(
     amount >= PARTI_AMOUNT_FLOOR_MSEK &&
     !looksLikeUnitAmount(candidate.quote)
   ) {
+    const low = Math.round(amount * 0.75);
+    const high = Math.round(amount * 1.35);
     return {
       type: "utgift",
       period: "per_ar",
-      msek_low: Math.round(amount * 0.75),
+      msek_low: low,
       msek_base: amount,
-      msek_high: Math.round(amount * 1.35),
+      msek_high: high,
       basis: "parti",
       basis_url: null,
       method_note: "Belopp angivet i källtext.",
+      // Stegen är korta här, men de finns: partiet anger sin egen siffra och
+      // vi behåller den. Fältet stod tomt fram till 2026-08-16, och i lägen
+      // där körningen publicerar utan mänsklig granskning nådde det läsaren
+      // som ett belopp utan något bakom sig — p-2026-0865 gick ut med fem
+      // miljarder kronor per år och tomt uträkningsfält. En granskare som
+      // godkänner löftet skriver en fylligare uträkning i stället för den här.
+      calculation:
+        `Partiet anger själv beloppet i källtexten: ${tusental(amount)} miljoner kronor. ` +
+        `Den siffran är partiets och byts inte ut mot en egen. ` +
+        `Spannet är vårt, inte partiets: ${tusental(low)}–${tusental(high)} miljoner kronor, ` +
+        `en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för ` +
+        `att källtexten anger en nivå utan att skriva ut hur den fasas in eller ` +
+        `fördelas över åren.`,
       confidence: 0.7,
     };
   }
