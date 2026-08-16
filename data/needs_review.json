@@ -1719,5 +1719,744 @@
       "calculation": "Antagande: staten betalar ~50 % av kostnad via ansökningsstöd. Vildsvinssäkra stängsel ~40–80 kr/m; berörd gård behöver ~1–3 km ≈ 50–250 tkr per gård, fällor tillkommer marginellt. Grovt 1 000–3 000 sökande/år (skånska/götaländska jordbruk med vildsvinsproblem) × 50–150 tkr statsandel ≈ 50–300 msek/år, med hög utbyggnadsfrekvens första åren sedan avtagande; bas 100 msek/år som återkommande program. Osäkerheten ligger i utnyttjandegrad och tak på stödet, inte i partiets egen siffra (saknas)."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0674 (10) ⚠ AVVIKER: 100 avviker 10.0× från jämförbara (median 10)"
+  },
+  {
+    "candidate": {
+      "title": "Införa ett offentligt och sökbart förövarregister",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna föreslår ett öppet förrövarregister för allvarliga brott: Vi vill se över möjligheterna att införa ett offentlig och sökbart förrövarregister så att allmänheten kan varnas för personer som begått allvarliga brott i nära relation.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/det-ska-inte-vara-farligt-att-dejta/",
+    "articleTitle": "Det ska inte vara farligt att dejta | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en översyn ('se över möjligheterna'), inte ett färdigt register. Prissätter utredningen/översynen, inte själva registerinförandet.",
+      "confidence": 0.5,
+      "calculation": "En statlig utredning/översyn i SOU-storlek: sekretariat, utredare, remisser och visst IT-stöd. Antagande: 5–30 mkr i engångskostnad; bas 15 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ge dejtingappar möjlighet till bakgrundskontroller",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill också ge dejtingappar bättre möjligheter att utföra bakgrundskontroller så att de kan skydda användarna från farliga män.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/det-ska-inte-vara-farligt-att-dejta/",
+    "articleTitle": "Det ska inte vara farligt att dejta | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring/reglering: prissätter den direkta statliga kostnaden för åtgärden, inte samhällsföljder. Försumbar.",
+      "confidence": 0.4,
+      "calculation": "Ingen ny statlig transferering eller myndighetsuppbyggnad; eventuell administrativ anpassning för registerutdrag avgiftsfinansierad eller försumbar. 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Se över rättsliga möjligheter för register över farliga män",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Om vi får förtroende att styra i fyra år till vill vi se över de rättsliga möjligheterna att införa ett register över farliga män i Sverige.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/det-ska-inte-vara-farligt-att-dejta/",
+    "articleTitle": "Det ska inte vara farligt att dejta | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en översyn av rättsliga möjligheter, inte införandet av ett register. Prissätts som en statlig utredning/översyn.",
+      "confidence": 0.5,
+      "calculation": "SOU-liknande översyn: sekretariat, experter, remissförfarande under 1–2 år. Engångskostnad 5–30 mkr, bas ca 15 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Moderaterna vill att du ska ha mer pengar kvar i plånboken",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill att du ska ha mer pengar kvar i plånboken.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/en-folkomrostning-om-hogre-skatter/",
+    "articleTitle": "”En folkomröstning om högre skatter” | Moderaterna",
+    "verifyReason": "Citatet återges ordagrant i källan ('Moderaterna är tydliga: Vi vill att du ska ha mer pengar kvar i plånboken') och partiet (m) stämmer. Men extraheringen är problematisk: (1) Citatet är i sig en vag, slagordsliknande riktningsmarkering utan mätbart innehåll, inte ett konkret vallöfte. (2) Kandidaten anger 'financing_mentioned: false', vilket är direkt felaktigt — artikeln beskriver explicit Moderaternas finansieringsplan: 'Vi finansierar våra vallöften genom minskat slöseri, mindre byråkrati, åtstramning av bidrag, och omprioriteringar inom biståndet. Det frigör totalt 71 miljarder kronor.' (3) Samma stycke innehåller det konkreta, verifierbara löftet '5 000 kronor mer i månaden för en vanlig barnfamilj', som borde ha extraherats i stället för (eller tillsammans med) den vaga formuleringen. Kräver manuell granskning: antingen förkasta som för vag, eller ersätta med barnfamiljslöftet med belopp (5 000 kr/mån) och finansiering (71 miljarder kr) korrekt angivet."
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa mängdrabatten under nästa mandatperiod",
+      "parties": [
+        "m"
+      ],
+      "person": {
+        "name": "Elisabeth Svantesson",
+        "role": "finansminister"
+      },
+      "quote": "Moderaternas besked är tydligt: vi kommer rösta för att slopa dagens mängdrabatt, och vi kommer göra allt för att förslagen genomförs under nästa mandatperiod",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/sa-avskaffar-vi-mangdrabatten-under-nasta-mandatperiod/",
+    "articleTitle": "Så avskaffar vi mängdrabatten under nästa mandatperiod | Moderaterna",
+    "duplicateOf": "(denna körning)"
+  },
+  {
+    "candidate": {
+      "title": "Fortsatt expansion av Kriminalvården med oförminskad kraft",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Först och främst måste den historiska expansionen av Kriminalvården som vi påbörjat att fortsätta med oförminskad kraft.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/sa-avskaffar-vi-mangdrabatten-under-nasta-mandatperiod/",
+    "articleTitle": "Så avskaffar vi mängdrabatten under nästa mandatperiod | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 1000,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte; jämför p-2026-0522 (800 mkr/år) men 'oförminskad kraft' tolkas som bibehållen anslagsökning. Bred osäkerhet.",
+      "confidence": 0.4,
+      "calculation": "Utgår från jämförbart löfte p-2026-0522 800 mkr/år. 'Fortsatt expansion' antas motsvara en årlig anslagsökning i samma storleksordning eller något högre: 500–2000 mkr/år, bas 1000 mkr. Inga exakta anslagssiffror."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0690 (20), p-2026-0522 (800), p-2026-0120 (0) ⚠ AVVIKER: 1000 avviker 50.0× från jämförbara (median 20)"
+  },
+  {
+    "candidate": {
+      "title": "Fortsatta investeringar i rättsväsendet, försvaret och infrastrukturen",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi moderater vill använda reformutrymmet för att säkra att investeringarna i rättsväsendet, försvaret och infrastrukturen kan fortsätta så att vi kan bygga ett rättvisare Sverige.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/sa-avskaffar-vi-mangdrabatten-under-nasta-mandatperiod/",
+    "articleTitle": "Så avskaffar vi mängdrabatten under nästa mandatperiod | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd, nivå eller belopp; prissätts till 0 enligt regel 13. Investeringarna prissätts på partiets specifika löften.",
+      "confidence": 0.1,
+      "calculation": "Ingen kvantifierbar enskild åtgärd; bas 0 enligt regel 13 för breda önskelöften."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Våldtäktsmän ska låsas in – inga kortare straff för flera brott",
+      "parties": [
+        "m"
+      ],
+      "person": {
+        "name": "Jeanette Höglund",
+        "role": "Moderat lokalpolitiker i Hudiksvall"
+      },
+      "quote": "Våldtäktsmän ska låsas in – inte få kortare straff för att de har begått flera brott.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/tunnelbane-nettan-att-vanstersidan-inte-vill-ta-bort-straffrabatten-ar-ett-svek-mot-alla-kvinnor/",
+    "articleTitle": "Tunnelbane-Nettan: ”Att vänstersidan inte vill ta bort straffrabatten är ett svek mot alla kvinnor” | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring/straffskärpning; direkta kostnaden för lagstiftningsåtgärden är försumbar. Följder som längre fängelsetider prissätts inte enligt regel 9.",
+      "confidence": 0.5,
+      "calculation": "Inga nya anslag; endast lagändring. Kostnad för utredning/lagstiftning bedöms ≈0. Följdkostnader för Kriminalvården inte medräknade."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Våldtäktsmän ska inte släppas ut i förtid – mäns våld mot kvinnor ska bekämpas som gängkriminalitet",
+      "parties": [
+        "m"
+      ],
+      "person": {
+        "name": "Jeanette Höglund",
+        "role": "Moderat lokalpolitiker i Hudiksvall"
+      },
+      "quote": "För att vi ser till att våldtäktsmän inte släpps ut i förtid och att mäns våld mot kvinnor bekämpas med samma handlingskraft som gängkriminaliteten.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/tunnelbane-nettan-att-vanstersidan-inte-vill-ta-bort-straffrabatten-ar-ett-svek-mot-alla-kvinnor/",
+    "articleTitle": "Tunnelbane-Nettan: ”Att vänstersidan inte vill ta bort straffrabatten är ett svek mot alla kvinnor” | Moderaterna",
+    "duplicateOf": "p-2026-0580",
+    "duplicateReason": "samma uttryck: «mäns våld», «kvinno bekämp», «bekämp samma»"
+  },
+  {
+    "candidate": {
+      "title": "Moderaterna vill förlänga polisens preventiva tvångsmedel",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill förlänga polisens möjlighet att använda preventiva tvångsmedel för att fortsätta bekämpa gängen.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/vallofte-vi-forlanger-ett-av-polisens-viktigaste-verktyg-mot-gangen/",
+    "articleTitle": "Vallöfte: Vi förlänger ett av polisens viktigaste verktyg mot gängen | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring/reglering; prissätter endast direkt åtgärd, inte följder. Liknande löfte om preventiva tvångsmedel har bedömts 0.",
+      "confidence": 0.5,
+      "calculation": "Förlängning av polisens möjlighet till preventiva tvångsmedel är en rättslig förändring. Ingen ny anslagspost anges; direkta kostnader för lagstiftning bedöms försumbara (0 mkr)."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0314 (20), p-2026-0603 (0), p-2026-0583 (0), p-2026-0033 (1500), p-2026-0580 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stärk värderingsarbetet inom SFI och samhällsorientering",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill därför stärka arbetet med värderingar inom SFI, samhällsintroduktion och samhällsorientering.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-ta-tag-i-varderingsgapet-som-migrationen-orsakat",
+    "articleTitle": "Liberalerna: ta tag i värderingsgapet som migrationen orsakat – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 60,
+      "msek_base": 100,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Smalare än p-2026-0731 (250 mkr/år för obligatoriska timmar). Avser förstärkt värderingsarbete inom befintlig SFI/samhällsorientering; uppskattar statsbidrag för lärarfortbildning, material och viss…",
+      "confidence": 0.4,
+      "calculation": "Ankrar till jämförbart löfte 250 mkr/år, men antar att denna åtgärd är en förstärkning inom befintliga spår snarare än nya obligatoriska veckotimmar: ca 30–60 % av den kostnaden = 75–150 mkr/år. Spannet vidgas till 60–150 pga vag formulering; bas 100."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0731 (250)"
+  },
+  {
+    "candidate": {
+      "title": "Nybyggd trea ska få överkomlig hyra",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "En nybyggd trea ska inte behöva kosta över 20 000 kronor i månaden, Målet är att hyran ska vara överkomlig för vanliga hushåll och riktlinjen är ca 20% av lönen.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Hyrestak är en reglering; statens direkta kostnad är försumbar. Eventuella samhällsföljder av pristaket kvantifieras inte.",
+      "confidence": 0.4,
+      "calculation": "Ingen utbetalning eller skattesänkning; endast regeländring. Direkt kostnad sätts till 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Hyrorna ska utgå från betalningsförmåga",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Ida Gabrielsson",
+        "role": "Företrädare för Vänsterpartiet"
+      },
+      "quote": "Med NABY vill vi skapa ett system där hyrorna utgår från människors betalningsförmåga och inte från fastighetsmarknadens avkastningskrav",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/naby-en-ny-nationell-bostadspolitik-for-lagre-hyror/",
+    "articleTitle": "NABY – En ny nationell bostadspolitik för lägre hyror – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en hyressättningsreglering utan angivna statsbidrag. Direkt statskostnad för själva åtgärden är försumbar (regel 9); hyrespåverkan är en överföring/följd och kvantifieras inte.",
+      "confidence": 0.5,
+      "calculation": "Reglering/prissättning: inga nya statsbidrag, ingen kompensation till fastighetsägare specificeras. Direkt kostnad för själva systemet ansätts till 0; eventuell administration antas rymmas i befintliga strukturer."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0591 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Återupprätta nattågstrafiken",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "Partiledare"
+      },
+      "quote": "Vi vill återupprätta nattågstrafiken igen.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nog-med-brutna-tagloften-bygg-nya-ostkustbanan-och-radda-nattagen/",
+    "articleTitle": "Nog med brutna tåglöften: Bygg Nya Ostkustbanan och rädda nattågen – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Saknar rutter och omfattning; kostnaden antas vara statlig upphandling av nattågsavgångar där biljettintäkter inte täcker driften.",
+      "confidence": 0.35,
+      "calculation": "Antag 1–3 dagliga nattågslinjer. En upphandlad nattågslinje kräver ofta 50–150 mkr/år i nettosubvention. Bas vid två linjer ≈ 150 mkr; spann 50–400 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Dubbelspår längs hela Nya Ostkustbanan",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Likaså vill Vänsterpartiet bygga Nya Ostkustbanan med dubbelspår hela vägen.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nog-med-brutna-tagloften-bygg-nya-ostkustbanan-och-radda-nattagen/",
+    "articleTitle": "Nog med brutna tåglöften: Bygg Nya Ostkustbanan och rädda nattågen – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 40000,
+      "msek_base": 60000,
+      "msek_high": 100000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnadsbedömd som ny dubbelspårsjärnväg utifrån jämförbara svenska projekt; bruttokostnad före finansiering, exkl. drift.",
+      "confidence": 0.4,
+      "calculation": "Antagen sträcka ~20–25 mil dubbelspår. 200 km × 200 mkr/km = 40 mdkr; 250 km × 400 mkr/km = 100 mdkr. Bas 60 mdkr motsvarar ~250 km × 240 mkr/km. Osäkerhet främst om sträckning, tunnlar och marklägen."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Långsiktig statlig finansiering av nattågen",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Långsiktig statlig finansiering av nattågen – så att nattågens framtid inte hänger i luften varje år.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nog-med-brutna-tagloften-bygg-nya-ostkustbanan-och-radda-nattagen/",
+    "articleTitle": "Nog med brutna tåglöften: Bygg Nya Ostkustbanan och rädda nattågen – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Priset avser statlig nettoersättning för upphandlad nattågstrafik efter biljettintäkter. Antal linjer, avgångar och biljettintäkter är osäkra.",
+      "confidence": 0.35,
+      "calculation": "Antar 2–5 nattågslinjer (Norrland och ev. kontinenten) med årlig nettoersättning ca 25–70 mkr per linje. Exempel: 2 linjer ×25=50; 4 linjer ×40–70=160–280. Spann: 50–300, bas 150."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Påskynda planeringsarbetet för byggstart",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Påskynda planeringsarbetet, så att samtliga etapper får tid för byggstart.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nog-med-brutna-tagloften-bygg-nya-ostkustbanan-och-radda-nattagen/",
+    "articleTitle": "Nog med brutna tåglöften: Bygg Nya Ostkustbanan och rädda nattågen – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt inriktningslöfte utan konkret belopp eller avgränsat projekt. Prissätts inte här; eventuella planeringskostnader ingår i specifika infrastrukturbeslut.",
+      "confidence": 0.5,
+      "calculation": "0 (inriktningslöfte, ingen särredovisad statlig kostnad enligt regel 13)."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Vänsterpartiets valprioriteringar: pensioner, löner, bostäder, tandvård, priser",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "partiledare"
+      },
+      "quote": "Hon presenterade också Vänsterpartiets prioriteringar inför valet: höjda pensioner, höjda löner i kvinnodominerade yrken, billigare bostäder, avgiftsfri tandvård, frysta hyror, lägre priser på mat och el, halverade priser i kollektivtrafiken och kortare arbetstid.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostar-i-almedalen-adjo-tido/",
+    "articleTitle": "Nooshi Dadgostar i Almedalen: Adjö Tidö! – Vänsterpartiet",
+    "duplicateOf": "p-2026-0129",
+    "duplicateReason": "samma uttryck: «höjda pensio», «pensio höjda», «höjda löner», «löner kvinno», «kvinno yrken», «yrken billig», «billig bostäd», «bostäd avgift», «tandvå frysta», «frysta hyror», «hyror lägre», «lägre priser», «priser halver», «halver priser», «priser kollek», «kollek kortar», «kortar arbets»"
+  },
+  {
+    "candidate": {
+      "title": "Vänsterpartiet lovar höja kvinnors löner",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "partiledare"
+      },
+      "quote": "Idag på första maj har vi ett nytt politiskt förslag: höj kvinnors löner! Det är vårt vallöfte!",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostars-forsta-maj-tal/",
+    "articleTitle": "Nooshi Dadgostars första maj-tal  – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts enligt regel 13 som 0.",
+      "confidence": 0.1,
+      "calculation": "Ingen konkret åtgärd, mekanism eller nivå anges → ingen statlig nettokostnad kan beräknas. Löftet fångas på partiets specifika förslag."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Höjda barnbidrag, vårdlöner och bättre skola och bostäder",
+      "parties": [
+        "v"
+      ],
+      "person": {
+        "name": "Nooshi Dadgostar",
+        "role": "Partiledare"
+      },
+      "quote": "Hon talade om hur Vänsterpartiets politik gör det bättre för svenska folket, bland annat genom höjda barnbidrag, höjda löner till vårdpersonal, bättre skola och bättre bostäder.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostars-tal-pa-jarvaveckan/",
+    "articleTitle": "Nooshi Dadgostars tal på Järvaveckan – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred uppräkning av flera politikområden utan belopp; behandlas som inriktningslöfte och prissätts ej här. Delarna prissätts på partiets specifika löften.",
+      "confidence": 0.2,
+      "calculation": "Ingen kvantifiering enligt regel 13; jämför p-2026-0279 som också bedömts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0468 (5600), p-2026-0619 (12000), p-2026-0279 (0), p-2026-0325 (8100), p-2026-0100 (17000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~8100"
+  },
+  {
+    "candidate": {
+      "title": "Tillståndsplikt för hyresvärdar",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Därför föreslår Vänsterpartiet en tillståndsplikt för hyresvärdar, som kan återkallas om det missköts, för att minska risken för oseriösa och oansvariga slumvärdar tillåts ta över fler hyresrätter.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/nooshi-dadgostars-tal-pa-jarvaveckan/",
+    "articleTitle": "Nooshi Dadgostars tal på Järvaveckan – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering/lagkrav. Direkt kostnad för själva tillståndsplikten är försumbar; osäkerheten fångar ett litet anslag för register/tillsyn.",
+      "confidence": 0.4,
+      "calculation": "Inget belopp i löftet. Regel 9: lag/reglering utan specificerad myndighetstilldelning prissätts med bas ≈ 0. Intervallet 0–10 mkr/år för eventuellt register/IT och tillsynsadministration."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Genomföra ett Kvinnolönelyft på 30 miljarder över tio år",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Satsningen omfattar 30 miljarder kronor över tio år och syftar till att höja lönerna i yrken som exempelvis undersköterska och barnmorska.",
+      "category": "välfärd",
+      "amount_in_text_msek": 30000,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/sa-far-vi-ordning-pa-sjukvarden/",
+    "articleTitle": "Så får vi ordning på sjukvården – Vänsterpartiet",
+    "duplicateOf": "p-2026-0613",
+    "duplicateReason": "samma tal: 30 miljar"
+  },
+  {
+    "candidate": {
+      "title": "Förkorta arbetstiden för vårdpersonal med bibehållen lön",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "För att förbättra arbetsmiljön och göra vårdyrken mer attraktiva vill Vänsterpartiet också förkorta arbetstiden med bibehållen lön.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/sa-far-vi-ordning-pa-sjukvarden/",
+    "articleTitle": "Så får vi ordning på sjukvården – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4000,
+      "msek_base": 9000,
+      "msek_high": 20000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Saknar angiven omfattning. Konkret åtgärd, till skillnad från breda p-2026-0010. Räknar på 5–10 % arbetstidsförkortning med bibehållen lön för ca 250 000–350 000 offentligt anställda i vård/omsorg.",
+      "confidence": 0.35,
+      "calculation": "~300 000 FTE × ~50 000 kr/mån i lön+avgifter × 12 mån × 5–10 % förkortning = 9 000–18 000 mkr/år. Spannet 4 000–20 000 mkr fångar snävare/bredare avgränsning och lägre/högre omkostnader."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0010 (0) ⚠ AVVIKER: belopp 9000 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Motsätta sig mer sjukvård i bolagsform",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Vänsterpartiet motsätter sig planer på att driva mer sjukvård i bolagsform.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/sa-far-vi-ordning-pa-sjukvarden/",
+    "articleTitle": "Så får vi ordning på sjukvården – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Politiskt ställningstagande att motsätta sig fler vårdbolag; ingen direkt statlig kostnad. Regel 9: prissätter åtgärden, inte följder.",
+      "confidence": 0.65,
+      "calculation": "0 mkr: att inte genomföra bolagisering är en reglering utan direkt budgetkostnad, i linje med jämförbart löfte p-2026-0013 (0 mkr/år)."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0105 (0), p-2026-0440 (7000), p-2026-0013 (0), p-2026-0139 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa ökad privatisering av vården",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Stoppa ökad privatisering",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/sa-far-vi-ordning-pa-sjukvarden/",
+    "articleTitle": "Så får vi ordning på sjukvården – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avser direkt kostnad för reglering/förbud, ej samhällsföljder. Jämförbart löfte p-2026-0013 bedöms till 0 mkr/år.",
+      "confidence": 0.4,
+      "calculation": "Ett stopp för ökad privatisering genom lag/reglering medför i sig ingen statlig utgift av betydelse. Eventuell administration och uppföljning uppskattas till 0–5 mkr/år; effekter på vårdmarknaden räknas inte in."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0013 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Införa tillståndsplikt för uthyrning av bostäder",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Därför kommer Vänsterpartiet att prioritera att införa en tillståndsplikt för att få hyra ut bostäder i regeringsförhandlingar efter valet.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+    "articleTitle": "Slumhyresvärdar ska bort från bostadsmarknaden – Vänsterpartiet",
+    "duplicateOf": "p-2026-0132",
+    "duplicateReason": "samma uttryck: «kommer vänste», «vänste priori», «priori införa», «införa tillst», «tillst hyra», «hyra bostäd», «bostäd regeri»"
+  },
+  {
+    "candidate": {
+      "title": "Misskötta hyresvärdar ska förlora tillstånd och tvingas sälja",
+      "parties": [
+        "v"
+      ],
+      "person": null,
+      "quote": "Men den som gång på gång missköter sina hus ska kunna förlora sitt tillstånd och tvingas sälja.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/slumhyresvardar-ska-bort-fran-bostadsmarknaden/",
+    "articleTitle": "Slumhyresvärdar ska bort från bostadsmarknaden – Vänsterpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering/förbud: direkt statlig kostnad för själva åtgärden är försumbar; eventuell tillsyn ej kvantifierad.",
+      "confidence": 0.5,
+      "calculation": "Åtgärden är en lagändring om tillståndsåterkallelse och tvångsförsäljning. Ingen ny statlig utgift utöver marginell administration, sätts till 0 enligt regel 9."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0609 (0)"
   }
 ]
