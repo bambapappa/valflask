@@ -242,3 +242,143 @@ describe("OpenRouterClient resiliens", () => {
     assert.ok(slept.some((ms) => ms >= 900), `förväntade throttle-väntan, fick ${slept}`);
   });
 });
+
+describe("OpenRouterClient avstängning av led", () => {
+  // Utan avstängning betalar VARJE anrop om hela omförsöksstegen mot ett led
+  // som redan sagt nej. Det syntes i drift: pipelinekörningen 31939465474 stod
+  // tre timmar i modellsteget, och kostnadsomkörningen 31946300185 tog 12,5
+  // minuter för en enda post mot en strypt leverantör.
+  const led = (namn: string, baseUrl: string, apiKey: string) => ({
+    namn,
+    baseUrl,
+    apiKey,
+  });
+
+  it("ett kvotspärrat led frågas inte om vid nästa anrop", async () => {
+    const anrop: string[] = [];
+    let nu = 1_000_000;
+    const c = new OpenRouterClient({
+      led: [
+        led("primär", "https://a.example/v1", "k1"),
+        led("reserv", "https://b.example/v1", "k2"),
+      ],
+      httpFetch: async (url) => {
+        anrop.push(url);
+        return url.startsWith("https://a.")
+          ? resp(429, "kvot", "3600")
+          : ok("reserven");
+      },
+      ...fast,
+      maxRetries: 1,
+      now: () => nu,
+      sleep: async (ms) => {
+        nu += ms;
+      },
+    });
+
+    assert.equal(await c.complete("ett", { model: "m" }), "reserven");
+    const efterForsta = anrop.length;
+    assert.equal(await c.complete("tva", { model: "m" }), "reserven");
+
+    // Andra anropet ska INTE röra primären igen.
+    const nya = anrop.slice(efterForsta);
+    assert.ok(
+      nya.every((u) => u.startsWith("https://b.")),
+      `primären frågades om i andra anropet: ${nya.join(", ")}`,
+    );
+    assert.equal(nya.length, 1);
+  });
+
+  it("spärren lossnar när leverantörens tid gått ut", async () => {
+    const anrop: string[] = [];
+    let nu = 1_000_000;
+    let strypt = true;
+    const c = new OpenRouterClient({
+      led: [led("primär", "https://a.example/v1", "k1")],
+      httpFetch: async (url) => {
+        anrop.push(url);
+        return strypt ? resp(429, "kvot", "30") : ok("primären igen");
+      },
+      ...fast,
+      maxRetries: 1,
+      now: () => nu,
+      sleep: async (ms) => {
+        nu += ms;
+      },
+    });
+
+    await assert.rejects(() => c.complete("ett", { model: "m" }));
+    const efter = anrop.length;
+    // Innan spärren lossnat: inget nytt anrop alls.
+    await assert.rejects(() => c.complete("tva", { model: "m" }), /ur spel/);
+    assert.equal(anrop.length, efter, "anropade ett spärrat led");
+
+    nu += 31_000;
+    strypt = false;
+    assert.equal(await c.complete("tre", { model: "m" }), "primären igen");
+  });
+
+  it("nyckel-/kreditfel stänger ledet resten av körningen", async () => {
+    const anrop: string[] = [];
+    let nu = 1_000_000;
+    const c = new OpenRouterClient({
+      led: [
+        led("primär", "https://a.example/v1", "k1"),
+        led("reserv", "https://b.example/v1", "k2"),
+      ],
+      httpFetch: async (url) => {
+        anrop.push(url);
+        return url.startsWith("https://a.")
+          ? resp(402, "Insufficient credits")
+          : ok("reserven");
+      },
+      ...fast,
+      now: () => nu,
+      sleep: async (ms) => {
+        nu += ms;
+      },
+    });
+
+    await c.complete("ett", { model: "m" });
+    const efter = anrop.length;
+    nu += 86_400_000; // ett dygn senare — kredit läker ändå inte av sig själv
+    await c.complete("tva", { model: "m" });
+    assert.ok(
+      anrop.slice(efter).every((u) => u.startsWith("https://b.")),
+      "en tom plånbok frågades om",
+    );
+  });
+
+  it("samma adress med olika nyckel är två led — reserven får sin fråga", async () => {
+    // Samma förväxling som stängde ute en påfylld reserv i valflask#1858.
+    // Kostnadsomkörningens env visar att leden delar BÅDE adress och modell:
+    // bara nyckeln skiljer dem åt.
+    const nycklar: string[] = [];
+    let nu = 1_000_000;
+    const c = new OpenRouterClient({
+      led: [
+        led("primär", "https://samma.example/v1", "konto-a"),
+        led("reserv", "https://samma.example/v1", "konto-b"),
+      ],
+      httpFetch: async (_url, init) => {
+        const auth = String(
+          (init?.headers as Record<string, string> | undefined)?.Authorization ?? "",
+        ).replace("Bearer ", "");
+        nycklar.push(auth);
+        return auth === "konto-a" ? resp(429, "kvot", "3600") : ok("reserven");
+      },
+      ...fast,
+      maxRetries: 1,
+      now: () => nu,
+      sleep: async (ms) => {
+        nu += ms;
+      },
+    });
+
+    assert.equal(await c.complete("p", { model: "m" }), "reserven");
+    assert.ok(
+      nycklar.includes("konto-b"),
+      `reserven fick aldrig frågan — anrop: ${nycklar.join(", ")}`,
+    );
+  });
+});
