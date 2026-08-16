@@ -38,6 +38,7 @@ export class OpenRouterClient implements LlmClient {
   private baseDelayMs: number;
   private maxBackoffMs: number;
   private nedkylningMs: number;
+  private maxNedkylningMs: number;
   private minIntervalMs: number;
   private httpFetch: HttpFetch;
   private sleep: (ms: number) => Promise<void>;
@@ -100,6 +101,19 @@ export class OpenRouterClient implements LlmClient {
      * leverantören inte angett Retry-After (ms). Default 60s.
      */
     nedkylningMs?: number;
+    /**
+     * Tak för hur länge ett led får hållas ur spel när leverantören SJÄLV
+     * angett en tid i `Retry-After` (ms). Default 15 min.
+     *
+     * Den här filen hade inget tak alls: `Retry-After` lästes med
+     * Number.MAX_SAFE_INTEGER som gräns, så ett svar om «4,4 dygn» tog ledet
+     * ur spel i 4,4 dygn — resten av körningen, oavsett om spärren i själva
+     * verket lossnat. Valflasks kopia hade motsatt fel och kapade vid
+     * anropstimeouten, 90 sekunder, vilket gjorde avstängningen verkningslös.
+     * Ingen av ytterligheterna är rätt: taket ska överleva mellan anrop utan
+     * att kunna döda en körning.
+     */
+    maxNedkylningMs?: number;
     /** Proaktiv throttle: minsta tid mellan anrop (ms). Default 1200. */
     minIntervalMs?: number;
     /**
@@ -124,6 +138,7 @@ export class OpenRouterClient implements LlmClient {
     this.baseDelayMs = opts.baseDelayMs ?? 2_000;
     this.maxBackoffMs = opts.maxBackoffMs ?? 20_000;
     this.nedkylningMs = opts.nedkylningMs ?? 60_000;
+    this.maxNedkylningMs = opts.maxNedkylningMs ?? 15 * 60_000;
     this.minIntervalMs = opts.minIntervalMs ?? 2_500;
     this.httpFetch =
       opts.httpFetch ?? (globalThis.fetch.bind(globalThis) as HttpFetch);
@@ -254,7 +269,7 @@ export class OpenRouterClient implements LlmClient {
             }
             // Slut på försök: ta endpointen ur spel tills spärren lossnar,
             // så nästa par slipper betala om hela stegen.
-            const ned = ra ?? this.nedkylningMs;
+            const ned = Math.min(ra ?? this.nedkylningMs, this.maxNedkylningMs);
             this.urSpelTill.set(nyckel, this.now() + ned);
             fel.push(
               `${ep.namn} ${ep.url}: HTTP ${res.status} (kvot/överbelastning, ur spel ${Math.ceil(ned / 1000)}s)`,

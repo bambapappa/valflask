@@ -382,3 +382,97 @@ describe("OpenRouterClient avstängning av led", () => {
     );
   });
 });
+
+describe("avstängningen överlever mellan anrop", () => {
+  // Felet som kostade körning 31949952846 två timmar: avstängningen kapades
+  // vid anropstimeouten (90s). Ett 429 som sa «kom tillbaka om 4,4 dygn» tog
+  // ledet ur spel i nittio sekunder, och eftersom en post tog längre tid än så
+  // hade spärren alltid hunnit lossna. Varje post betalade om hela
+  // omförsöksstegen: 12,5 minuter, jämnt, mot 49 sekunder när leverantören
+  // svarade normalt.
+  const led = (namn: string, baseUrl: string, apiKey: string) => ({ namn, baseUrl, apiKey });
+
+  function bygg(retryAfter: string, opts: Record<string, unknown> = {}) {
+    const anrop: string[] = [];
+    let nu = 1_000_000;
+    const c = new OpenRouterClient({
+      led: [
+        led("primär", "https://a.example/v1", "k1"),
+        led("reserv", "https://b.example/v1", "k2"),
+      ],
+      httpFetch: async (url) => {
+        anrop.push(url);
+        return url.startsWith("https://a.") ? resp(429, "kvot", retryAfter) : ok("reserven");
+      },
+      ...fast,
+      maxRetries: 1,
+      now: () => nu,
+      sleep: async (ms) => {
+        nu += ms;
+      },
+      ...opts,
+    });
+    return { c, anrop, framat: (ms: number) => (nu += ms) };
+  }
+
+  it("en kvotspärr på dygn håller ledet ur spel längre än ett anrop tar", async () => {
+    // 389051s = 4,5 dygn, ordagrant det opencode svarade 2026-08-16.
+    const { c, anrop, framat } = bygg("389051");
+
+    await c.complete("ett", { model: "m" });
+    const efterForsta = anrop.length;
+
+    // Nästa post kommer långt efter anropstimeouten — 12,5 minuter, precis
+    // som i drift. Med det gamla taket (90s) hade spärren lossnat här.
+    framat(750_000);
+    await c.complete("tva", { model: "m" });
+
+    const nya = anrop.slice(efterForsta);
+    assert.ok(
+      nya.every((u) => u.startsWith("https://b.")),
+      `primären frågades om efter 12,5 min — spärren höll inte: ${nya.join(", ")}`,
+    );
+  });
+
+  it("taket gäller: ett orimligt svarshuvud dödar inte körningen", async () => {
+    const { c, anrop, framat } = bygg("389051");
+
+    await c.complete("ett", { model: "m" });
+    const efterForsta = anrop.length;
+
+    // Efter takets 15 minuter ska ledet prövas igen, inte hållas ute i dygn.
+    framat(15 * 60_000 + 1000);
+    await c.complete("tva", { model: "m" });
+
+    assert.ok(
+      anrop.slice(efterForsta).some((u) => u.startsWith("https://a.")),
+      "primären prövades aldrig igen fast taket gått ut",
+    );
+  });
+
+  it("omförsökens väntan är en annan storhet än avstängningen", async () => {
+    // Ett enskilt omförsök ska aldrig sova längre än ett anrop får ta, även
+    // när leverantören ber om dygn. Det är just den kapningen som av misstag
+    // återanvändes som tak för avstängningen.
+    const sovit: number[] = [];
+    let nu = 1_000_000;
+    const c = new OpenRouterClient({
+      led: [led("primär", "https://a.example/v1", "k1")],
+      httpFetch: async () => resp(429, "kvot", "389051"),
+      ...fast,
+      maxRetries: 2,
+      timeoutMs: 90_000,
+      now: () => nu,
+      sleep: async (ms) => {
+        sovit.push(ms);
+        nu += ms;
+      },
+    });
+
+    await assert.rejects(() => c.complete("p", { model: "m" }));
+    assert.ok(
+      sovit.every((ms) => ms <= 90_000),
+      `ett omförsök sov längre än anropstimeouten: ${sovit.join(", ")}`,
+    );
+  });
+});

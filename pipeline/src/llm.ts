@@ -75,6 +75,7 @@ export class OpenRouterClient implements LlmClient {
   private now: () => number;
   private lastCallAt = 0;
   private nedkylningMs: number;
+  private maxNedkylningMs: number;
   /**
    * Led som tagits ur spel, och till när (tidsstämpel i ms).
    *
@@ -117,11 +118,28 @@ export class OpenRouterClient implements LlmClient {
     /**
      * Hur länge ett led hålls ur spel efter att omförsöken tagit slut på ett
      * 429, när leverantören inte sagt något själv (ms). Default 60s.
-     * Sa den `Retry-After` gäller den tiden i stället, kapad vid timeoutMs
-     * precis som omförsökens väntan — ett svarshuvud ska inte kunna släcka
-     * ett led resten av körningen.
      */
     nedkylningMs?: number;
+    /**
+     * Tak för hur länge ett led får hållas ur spel när leverantören SJÄLV
+     * angett en tid i `Retry-After` (ms). Default 15 min.
+     *
+     * TVÅ SKILDA STORHETER, och att blanda ihop dem kostade en körning.
+     * Omförsökens väntan kapas vid `timeoutMs` (90s) — ett enskilt försök ska
+     * inte sova längre än ett anrop får ta. Avstängningen är något annat: den
+     * ska överleva MELLAN anrop, annars betalar varje nytt anrop om hela
+     * omförsöksstegen mot ett led som redan sagt nej.
+     *
+     * Första versionen kapade avstängningen vid `timeoutMs`. En kvotspärr som
+     * sa «kom tillbaka om 4,4 dygn» tog då ledet ur spel i nittio sekunder,
+     * och eftersom en post tog längre tid än så hade spärren alltid hunnit
+     * lossna till nästa post. Kostnadsomkörningen 31949952846 betalade därför
+     * 12,5 minuter per post, jämnt, i två timmar — mot 49 sekunder när
+     * leverantören svarade normalt. Taket ska vara långt nog att en spärr
+     * överlever mellan poster, kort nog att ett orimligt svarshuvud inte
+     * dödar hela körningen.
+     */
+    maxNedkylningMs?: number;
     httpFetch?: HttpFetch;
     sleep?: (ms: number) => Promise<void>;
     now?: () => number;
@@ -133,6 +151,7 @@ export class OpenRouterClient implements LlmClient {
     this.baseDelayMs = opts.baseDelayMs ?? 2_000;
     this.minIntervalMs = opts.minIntervalMs ?? 2_500;
     this.nedkylningMs = opts.nedkylningMs ?? 60_000;
+    this.maxNedkylningMs = opts.maxNedkylningMs ?? 15 * 60_000;
     this.httpFetch =
       opts.httpFetch ?? (globalThis.fetch.bind(globalThis) as HttpFetch);
     this.sleep = opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)));
@@ -244,8 +263,10 @@ export class OpenRouterClient implements LlmClient {
             // betala om hela stegen. Leverantörens egen Retry-After gäller om
             // den finns, kapad — annars nedkylningen.
             const ned =
-              parseRetryAfterMs(res.headers.get("retry-after"), this.timeoutMs) ??
-              this.nedkylningMs;
+              parseRetryAfterMs(
+                res.headers.get("retry-after"),
+                this.maxNedkylningMs,
+              ) ?? this.nedkylningMs;
             this.urSpelTill.set(nyckel, this.now() + ned);
             lastError = new Error(
               `HTTP ${res.status} (kvot/överbelastning, ur spel ${Math.ceil(ned / 1000)}s)`,
