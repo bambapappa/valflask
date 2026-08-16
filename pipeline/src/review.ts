@@ -43,6 +43,65 @@ export function findIndexByReviewId(items: ReviewCandidate[], id: string): numbe
   return items.findIndex((e) => reviewId(e) === id);
 }
 
+/**
+ * Löser ett kö-argument som är ANTINGEN ett index ELLER ett stabilt review-id.
+ *
+ * VARFÖR: index är positioner, och positioner flyttar sig. Ett beslutsunderlag
+ * skrivs mot kön en dag och verkställs mot kön en annan, och däremellan har
+ * någon avgjort poster ovanför. Då pekar varje nummer i dokumentet på fel post
+ * — och godkännandet säger ingenting, för index 17 finns fortfarande.
+ *
+ * Det är mätt, inte befarat. När `REVIEWKO-79-2026-08-16.md` skrevs låg 79
+ * poster i kön; sexton avgjordes samma dag, och därefter hade **ingen av de 59
+ * kvarvarande kvar sitt nummer** — inte en enda. Ett dokument skrivet på
+ * förmiddagen godkände alltså på eftermiddagen 59 fel löften, tyst.
+ *
+ * Id:t räknas ur adressen och rubriken och rör sig inte när kön krymper. Det
+ * bar redan issueflödet (`approve-id`), men den vägen var osynlig i listningen
+ * och krävde ett eget kommandonamn. Nu duger id:t överallt ett index duger, och
+ * `list` skriver ut det — så ett underlag skrivet ur listningen bär den stabila
+ * nyckeln utan att någon behöver tänka på saken.
+ *
+ * `ko:`-prefixet godtas därför att granskningsloggen och kö-issuen skriver
+ * nyckeln i den formen; det är samma tolv tecken.
+ */
+export function loesKoArgument(items: ReviewCandidate[], arg: string | undefined): number {
+  const rå = (arg ?? "").trim();
+  if (rå === "") {
+    console.error("Ange ett index eller ett review-id (tolv tecken, står i listningen och i issue-titeln).");
+    process.exit(1);
+  }
+
+  const utanPrefix = rå.startsWith("ko:") ? rå.slice(3) : rå;
+  const serUtSomId = /^[0-9a-f]{12}$/u.test(utanPrefix);
+  // Ett rent tal som inte är tolv tecken långt kan bara vara ett index.
+  const serUtSomIndex = /^\d+$/u.test(rå) && rå.length < 12;
+
+  if (serUtSomId && !serUtSomIndex) {
+    const index = findIndexByReviewId(items, utanPrefix);
+    if (index < 0) {
+      console.error(`Ingen kö-post med review-id ${utanPrefix} — redan avgjord?`);
+      process.exit(1);
+    }
+    return index;
+  }
+
+  if (serUtSomIndex) {
+    const index = parseInt(rå, 10);
+    if (index < 0 || index >= items.length) {
+      console.error(`Ogiltigt index: ${rå}. Tillgängliga: 0–${items.length - 1}`);
+      process.exit(1);
+    }
+    return index;
+  }
+
+  console.error(
+    `Varken index eller review-id: ${rå}\n` +
+      "Ett index är ett tal; ett review-id är tolv tecken 0–9a–f, med eller utan ko:-prefix.",
+  );
+  process.exit(1);
+}
+
 export const KOSTNADSTYPER = [
   "utgift",
   "intäktsminskning",
@@ -273,7 +332,11 @@ function list(dataDir: string = DATA_DIR): void {
       );
     }
 
-    console.log(`[${i}] ${title}`);
+    // Id:t står FÖRE numret med flit. Numret är en position och flyttar sig så
+    // snart en post ovanför avgörs; id:t gör det inte. Ett underlag som skrivs
+    // ur den här listningen ska bära den nyckel som fortfarande pekar rätt när
+    // besluten verkställs, och den som läser raden ska se vilken det är.
+    console.log(`${reviewId(item)}  [${i}] ${title}`);
     console.log(`    Partier: ${parties}`);
     console.log(`    Källa: ${item.articleUrl}`);
     if (item.cost) {
@@ -361,13 +424,8 @@ export function approve(
     args.push(a);
   }
 
-  const index = parseInt(args[0] ?? "", 10);
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
-
-  if (Number.isNaN(index) || index < 0 || index >= items.length) {
-    console.error(`Ogiltigt index: ${args[0]}. Tillgängliga: 0–${items.length - 1}`);
-    process.exit(1);
-  }
+  const index = loesKoArgument(items, args[0]);
 
   const item = items[index]!;
   const cand = item.candidate ?? {};
@@ -379,7 +437,7 @@ export function approve(
     const base = Number(args[2]);
     const high = Number(args[3]);
     if (![low, base, high].every((n) => Number.isFinite(n) && n >= 0)) {
-      console.error("Ogiltiga belopp. Användning: approve <index> <low> <base> <high> (msek)");
+      console.error("Ogiltiga belopp. Användning: approve <post> <low> <base> <high> (msek)");
       process.exit(1);
     }
     // Den gamla uträkningen räknade fram det gamla beloppet och får inte följa
@@ -564,13 +622,8 @@ export function reject(
   reason: string,
   dataDir: string = DATA_DIR,
 ): { title: string } {
-  const index = parseInt(indexStr, 10);
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
-
-  if (Number.isNaN(index) || index < 0 || index >= items.length) {
-    console.error(`Ogiltigt index: ${indexStr}. Tillgängliga: 0–${items.length - 1}`);
-    process.exit(1);
-  }
+  const index = loesKoArgument(items, indexStr);
 
   const item = items[index]!;
   const title = item.candidate?.title ?? item.articleTitle ?? "(okänd)";
@@ -753,7 +806,9 @@ switch (command) {
   case "approve":
     if (!args[0]) {
       console.error(
-        'Användning: pnpm review approve <index> [low base high] [--calc "uträkningen"]\n' +
+        'Användning: pnpm review approve <post> [low base high] [--calc "uträkningen"]\n' +
+          '  <post> är ett review-id (tolv tecken, står i listningen) eller ett index.\n' +
+          '  Id:t är det som håller — index flyttar sig när poster ovanför avgörs.\n' +
           '                    [--typ <kostnadstyp>] [--basis <källnivå>] [--basis-url <adress>]',
       );
       process.exit(1);
@@ -773,7 +828,7 @@ switch (command) {
   }
   case "reject":
     if (!args[0] || !args[1]) {
-      console.error("Användning: pnpm review reject <index> <orsak>");
+      console.error("Användning: pnpm review reject <post> <orsak>  (<post> = review-id eller index)");
       process.exit(1);
     }
     reject(args[0], args.slice(1).join(" "));
@@ -784,8 +839,10 @@ switch (command) {
   default:
     console.log("Användning: pnpm review <list|approve|reject|add>");
     console.log("  list                         Visa poster i needs_review");
-    console.log("  approve <index> [low base high] [--group p-XXXX]  Godkänn; kostnad; länka dublett");
-    console.log("  reject <index> <orsak>       Avvisa post");
+    console.log("  approve <post> [low base high] [--group p-XXXX]  Godkänn; kostnad; länka dublett");
+    console.log("  reject <post> <orsak>        Avvisa post\n" +
+      "  <post> är ett review-id (tolv tecken ur listningen) eller ett index.\n" +
+      "  Skriv id. Index flyttar sig så snart en post ovanför avgörs.");
     console.log("  avvisade                     Visa avvisningsminnet");
     console.log("  hav <nyckel> <skäl>          Häv en avvisning så posten kan komma tillbaka");
     console.log("  add <fil.json>               Lägg in ett manuellt inrapporterat löfte för granskning");
