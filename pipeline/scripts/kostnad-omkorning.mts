@@ -131,6 +131,14 @@ async function main(): Promise<void> {
     if (SKRIV) {
       p.cost = ny;
       p.costReason = `LLM-estimat (confidence ${ny.confidence}) — omkörd efter haveri, bekräfta/justera belopp`;
+      // Skriv EFTER VARJE post, inte på slutet. Skrivningen låg förut efter
+      // hela loopen, och då är en lång körning allt-eller-inget: körning
+      // 31949952846 malde i nästan två timmar mot jobbets tak utan att en enda
+      // post hade kunnat räddas om den slagit i det. Samma lärdom som
+      // foreslag.yml redan bär, där varje klart löfte pushas direkt.
+      // Filen är liten och skrivningen kostar millisekunder mot ett
+      // modellanrop som kostar minuter.
+      writeFileSync(fil, `${JSON.stringify(poster, null, 2)}\n`, "utf8");
     }
   }
 
@@ -139,8 +147,7 @@ async function main(): Promise<void> {
     console.log("torrkörning — lägg till --skriv för att verkställa.");
     return;
   }
-  writeFileSync(fil, `${JSON.stringify(poster, null, 2)}\n`, "utf8");
-  console.log(`skrivet: ${fil}`);
+  console.log(`skrivet löpande: ${fil}`);
 }
 
 await main();
