@@ -52,8 +52,22 @@ export class OpenRouterClient implements LlmClient {
    * processen; en kvotspärr (429) till dess leverantören sagt att den
    * lossnar. Poängen: kostnaden betalas EN gång, inte per par — annars
    * betalar varje efterföljande par om hela omförsöksstegen i onödan.
+   *
+   * NYCKELN ÄR LEDET, INTE ADRESSEN. Primär och reserv får peka på samma
+   * bas-URL med var sin nyckel — två konton hos samma leverantör, med var
+   * sin kvot. Kartan var förut nycklad på adressen, och då räckte det att
+   * primären slog i sin kvot för att reserven skulle hoppas över utan ett
+   * enda anrop: `foreslag`-körningen 2026-08-16 föll så, med en påfylld
+   * reserv som aldrig fick frågan. Adress + modell + konto skiljer dem åt.
    */
   private urSpelTill = new Map<string, number>();
+  /**
+   * Löpnummer per nyckel, så att två led mot SAMMA adress ändå går att
+   * skilja åt i spärrkartan utan att nyckeln själv används som kartnyckel.
+   * Nycklar är hemligheter; de ska inte kunna läcka ur en felutskrift eller
+   * en dump. Numret säger bara "konto 1" och "konto 2".
+   */
+  private kontonummer = new Map<string, number>();
 
   constructor(opts: {
     apiKey: string;
@@ -123,6 +137,23 @@ export class OpenRouterClient implements LlmClient {
         ));
   }
 
+  /**
+   * Ledets identitet i spärrkartan: adress + modell + konto.
+   *
+   * Två led mot samma adress med var sin nyckel är två konton med var sin
+   * kvot, och en spärr på det ena får inte stänga det andra. Nyckeln själv
+   * går aldrig in i kartnyckeln — den byts mot ett löpnummer, så att inget
+   * hemligt kan följa med ut i en felutskrift.
+   */
+  private spärrnyckel(ep: { url: string; key: string; model: string }): string {
+    let n = this.kontonummer.get(ep.key);
+    if (n === undefined) {
+      n = this.kontonummer.size + 1;
+      this.kontonummer.set(ep.key, n);
+    }
+    return `${ep.url}\u0000${ep.model}\u0000konto${n}`;
+  }
+
   private backoff(attempt: number): number {
     return (
       this.baseDelayMs * 2 ** attempt +
@@ -155,11 +186,20 @@ export class OpenRouterClient implements LlmClient {
 
     // Modell per endpoint: primären får model-strängen som den är; fallbacken
     // översätts via fallbackModelMap (saknas nyckel → primär-strängen).
-    const endpoints: Array<{ url: string; key: string; model: string }> = [
-      { url: `${this.baseUrl}/chat/completions`, key: this.apiKey, model: primaryModel },
+    // Namnet står med i varje felrad. Utan det är två led mot samma adress
+    // omöjliga att skilja åt i loggen — felet läses då som att en och samma
+    // endpoint svarat två gånger, i stället för att reserven hoppats över.
+    const endpoints: Array<{ namn: string; url: string; key: string; model: string }> = [
+      {
+        namn: "primär",
+        url: `${this.baseUrl}/chat/completions`,
+        key: this.apiKey,
+        model: primaryModel,
+      },
     ];
     if (this.fallbackBaseUrl && this.fallbackApiKey) {
       endpoints.push({
+        namn: "reserv",
         url: `${this.fallbackBaseUrl}/chat/completions`,
         key: this.fallbackApiKey,
         model: this.fallbackModelMap[primaryModel] ?? primaryModel,
@@ -171,12 +211,13 @@ export class OpenRouterClient implements LlmClient {
     // när felet i själva verket var att primären slagit i kvoten.
     const fel: string[] = [];
 
-    for (const ep of endpoints) {
-      const spärrTill = this.urSpelTill.get(ep.url) ?? 0;
+    for (const [lednummer, ep] of endpoints.entries()) {
+      const nyckel = this.spärrnyckel(ep);
+      const spärrTill = this.urSpelTill.get(nyckel) ?? 0;
       if (this.now() < spärrTill) {
         const kvar = spärrTill - this.now();
         fel.push(
-          `${ep.url}: ur spel${
+          `${ep.namn} ${ep.url}: ur spel${
             Number.isFinite(kvar) ? ` ${Math.ceil(kvar / 1000)}s till` : ""
           } (hoppas över)`,
         );
@@ -214,9 +255,9 @@ export class OpenRouterClient implements LlmClient {
             // Slut på försök: ta endpointen ur spel tills spärren lossnar,
             // så nästa par slipper betala om hela stegen.
             const ned = ra ?? this.nedkylningMs;
-            this.urSpelTill.set(ep.url, this.now() + ned);
+            this.urSpelTill.set(nyckel, this.now() + ned);
             fel.push(
-              `${ep.url}: HTTP ${res.status} (kvot/överbelastning, ur spel ${Math.ceil(ned / 1000)}s)`,
+              `${ep.namn} ${ep.url}: HTTP ${res.status} (kvot/överbelastning, ur spel ${Math.ceil(ned / 1000)}s)`,
             );
             break;
           }
@@ -227,10 +268,12 @@ export class OpenRouterClient implements LlmClient {
             // Nyckel-/kreditfel läker inte av sig självt under körningen —
             // ta endpointen ur spel helt i stället för att fråga om och om.
             if (res.status === 401 || res.status === 402 || res.status === 403) {
-              this.urSpelTill.set(ep.url, Number.POSITIVE_INFINITY);
-              fel.push(`${ep.url}: HTTP ${res.status} (nyckel/kredit, ur spel) ${kropp}`);
+              this.urSpelTill.set(nyckel, Number.POSITIVE_INFINITY);
+              fel.push(
+                `${ep.namn} ${ep.url}: HTTP ${res.status} (nyckel/kredit, ur spel) ${kropp}`,
+              );
             } else {
-              fel.push(`${ep.url}: HTTP ${res.status}: ${kropp}`);
+              fel.push(`${ep.namn} ${ep.url}: HTTP ${res.status}: ${kropp}`);
             }
             break;
           }
@@ -245,7 +288,10 @@ export class OpenRouterClient implements LlmClient {
           // Svarade någon annan än primären? Då är primären nere, och det
           // syns annars ingenstans: körningen ser frisk ut ända till
           // reserven också tar slut. Rapportera en gång, med skälet.
-          if (ep.url !== endpoints[0]?.url && !this.reservRapporterad) {
+          // Ledets ordning avgör, inte adressen: pekar reserven på samma
+          // bas-URL som primären skulle en jämförelse på adress göra ett
+          // reservsvar osynligt.
+          if (lednummer > 0 && !this.reservRapporterad) {
             this.reservRapporterad = true;
             this.onReservSvarade(
               fel.length > 0 ? fel.join(" | ") : "okänt skäl",
@@ -259,7 +305,7 @@ export class OpenRouterClient implements LlmClient {
             await this.sleep(this.backoff(attempt));
             continue;
           }
-          fel.push(`${ep.url}: ${msg}`);
+          fel.push(`${ep.namn} ${ep.url}: ${msg}`);
           break;
         }
       }
