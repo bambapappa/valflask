@@ -39205,7 +39205,8 @@
       "basis": "parti",
       "basis_url": null,
       "method_note": "Belopp angivet i källtext.",
-      "confidence": 0.7
+      "confidence": 0.7,
+      "calculation": "Vänsterpartiet anger själva beloppet: «Förslaget är att tillföra fem miljarder kronor nationellt från 2027». Den siffran är partiets och byts inte ut — basbeloppet är 5 000 miljoner kronor per år. Löftet gäller statsbidragen till hälso- och sjukvården; partiet vill höja både de generella och de riktade bidragen men skriver inte ut fördelningen, och den ändrar inte statens utgift. Det är nya pengar till regionerna ovanpå dagens statsbidrag, inte ett övertagande av en utgift någon annan redan betalar, så hela beloppet är ny nettokostnad. Spannet 3 750–6 750 speglar det partiet inte anger: satsningen börjar först 2027, så mandatperiodens första år bär ingenting, och en nivå för ett år kan trappas in. Kvinnolönelyftet i samma artikel är ett eget löfte och räknas inte här."
     },
     "financing_claimed": {
       "described": true,
@@ -39215,7 +39216,13 @@
     "comparisons": [],
     "quip": "Fem miljarder från 2027, finansieringen hänvisas till samma kalenderår.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-16",
+        "commit": "0000000",
+        "change": "Löftet har fått en offentlig uträkning. Beloppet, 5 000 miljoner kronor per år, är oförändrat och är partiets eget — det publicerades utan ett enda steg bakom sig. Uträkningen skriver ut vad partiet självt anger, varför hela beloppet är ny statlig utgift och inte en omfördelning, vad spannet vilar på, och varför lönesatsningen i samma artikel inte räknas här."
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
