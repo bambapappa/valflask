@@ -1,0 +1,119 @@
+name: kostnad-omkorning
+# Kör om kostnadssteget för de kö-poster där det havererat.
+#
+# Faller modellsvaret skriver estimatorn belopp 0 med tom uträkning. I datat
+# går den nollan inte att skilja från ett omdöme — kostnadsreglerna nollar
+# lagar, förbud och utredningslöften med flit — så posten ser färdig ut fast
+# ingen räknat på den. Genomgången av löfteskön 2026-08-16 fann nitton sådana
+# av 79, däribland fyra skatte- och fortbildningslöften.
+#
+# BARA MANUELL. Omkörningen kostar modellanrop och ska startas när någon vet
+# att det finns fallna poster; `pnpm kostnad:om --lista` svarar på den frågan
+# utan att anropa något. Ingen schemaläggning, och därför inget larm — den som
+# startat körningen ser själv om den faller.
+#
+# Skriver bara data/needs_review.json. Ingenting publiceras: resultatet hamnar
+# i kön, där en människa fattar beslutet som förut.
+on:
+  workflow_dispatch:
+    inputs:
+      max:
+        description: "Max antal poster att köra om (tomt = alla fallna)"
+        required: false
+        default: ""
+      skriv:
+        description: "Skriv resultatet (annars torrkörning)"
+        type: boolean
+        required: false
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: kostnad-omkorning
+  cancel-in-progress: false
+jobs:
+  kor-om:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.event.repository.default_branch }}
+          # Samma skäl som i arkiv.yml: bara pushsteget autentiserar, och det
+          # bär sin egen färska token i origin-URL:en.
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: npm ci
+        working-directory: pipeline
+      - name: Kör om kostnadssteget
+        id: omkorning
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          LLM_FALLBACK_BASE_URL: ${{ vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL }}
+          LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+          MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
+          MAX: ${{ inputs.max }}
+          SKRIV: ${{ inputs.skriv }}
+        run: |
+          args=()
+          [ -n "$MAX" ] && args+=("--max=$MAX")
+          [ "$SKRIV" = "true" ] && args+=(--skriv)
+          npm run kostnad:om -- "${args[@]}"
+        working-directory: pipeline
+      - name: Förnya botens token inför push
+        id: push-token
+        # Modellanropen kan hålla på längre än tokenens timme. Samma fälla som
+        # kastade arkiv- och skördekörningarnas resultat i augusti 2026.
+        if: ${{ inputs.skriv }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - name: Committa data/needs_review.json
+        if: ${{ inputs.skriv }}
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Checkouten kördes med persist-credentials: false, så origin bär
+          # inga uppgifter alls. Utan den här raden mintas en token som aldrig
+          # används, och git svarar "could not read Username".
+          git remote set-url origin \
+            "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          cp data/needs_review.json /tmp/needs_review.json
+          for attempt in 1 2 3 4 5; do
+            if ! git fetch origin "$DEFAULT_BRANCH"; then
+              echo "försök $attempt: kunde inte hämta $DEFAULT_BRANCH"
+              sleep $((attempt * 5))
+              continue
+            fi
+            git reset --hard "origin/$DEFAULT_BRANCH"
+            cp /tmp/needs_review.json data/needs_review.json
+            git add data/needs_review.json
+            if git diff --cached --quiet; then
+              echo "Inga omkörda poster att committa."
+              exit 0
+            fi
+            git commit -m "data: kostnadssteget omkört för fallna kö-poster"
+            if git push origin "HEAD:$DEFAULT_BRANCH"; then
+              echo "Push lyckades (försök $attempt)."
+              exit 0
+            fi
+            echo "Push-försök $attempt misslyckades — gör om från färsk defaultgren..."
+            sleep $((attempt * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
