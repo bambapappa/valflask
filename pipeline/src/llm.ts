@@ -74,6 +74,30 @@ export class OpenRouterClient implements LlmClient {
   private sleep: (ms: number) => Promise<void>;
   private now: () => number;
   private lastCallAt = 0;
+  private nedkylningMs: number;
+  /**
+   * Led som tagits ur spel, och till när (tidsstämpel i ms).
+   *
+   * Utan den här kartan betalar VARJE anrop om hela omförsöksstegen mot ett
+   * led som redan sagt nej. Handlingsvågens kopia av den här filen har haft
+   * kartan sedan länge; den här hade den inte, och skillnaden syntes i drift:
+   * `pipeline`-körningen 31939465474 stod tre timmar i modellsteget mot en
+   * strypt leverantör, och kostnadsomkörningen 31946300185 tog 12,5 minuter
+   * för EN post — nästan allt av det var omförsök mot två led som redan
+   * svarat 429.
+   *
+   * Nyckeln är ledet, inte adressen: primär och reserv får peka på samma
+   * bas-URL med var sin nyckel — två konton hos samma leverantör, med var
+   * sin kvot. Samma lärdom som valflask#1858, där den förväxlingen stängde
+   * ute en påfylld reserv.
+   */
+  private urSpelTill = new Map<string, number>();
+  /**
+   * Löpnummer per nyckel, så att två led mot samma adress går att skilja åt
+   * utan att nyckeln själv används som kartnyckel. Nycklar är hemligheter;
+   * numret säger bara "konto 1" och "konto 2".
+   */
+  private kontonummer = new Map<string, number>();
 
   constructor(opts: {
     /**
@@ -90,6 +114,14 @@ export class OpenRouterClient implements LlmClient {
     baseDelayMs?: number;
     /** Proaktiv throttle: minsta tid mellan anrop (ms). Default 1200. */
     minIntervalMs?: number;
+    /**
+     * Hur länge ett led hålls ur spel efter att omförsöken tagit slut på ett
+     * 429, när leverantören inte sagt något själv (ms). Default 60s.
+     * Sa den `Retry-After` gäller den tiden i stället, kapad vid timeoutMs
+     * precis som omförsökens väntan — ett svarshuvud ska inte kunna släcka
+     * ett led resten av körningen.
+     */
+    nedkylningMs?: number;
     httpFetch?: HttpFetch;
     sleep?: (ms: number) => Promise<void>;
     now?: () => number;
@@ -100,10 +132,26 @@ export class OpenRouterClient implements LlmClient {
     this.maxRetries = opts.maxRetries ?? 4;
     this.baseDelayMs = opts.baseDelayMs ?? 2_000;
     this.minIntervalMs = opts.minIntervalMs ?? 2_500;
+    this.nedkylningMs = opts.nedkylningMs ?? 60_000;
     this.httpFetch =
       opts.httpFetch ?? (globalThis.fetch.bind(globalThis) as HttpFetch);
     this.sleep = opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)));
     this.now = opts.now ?? (() => Date.now());
+  }
+
+  /**
+   * Ledets identitet i spärrkartan: adress + modell + konto.
+   *
+   * Nyckeln själv går aldrig in i kartnyckeln — den byts mot ett löpnummer,
+   * så att inget hemligt kan följa med ut i en felutskrift eller en dump.
+   */
+  private spärrnyckel(ep: { url: string; key: string; model: string }): string {
+    let n = this.kontonummer.get(ep.key);
+    if (n === undefined) {
+      n = this.kontonummer.size + 1;
+      this.kontonummer.set(ep.key, n);
+    }
+    return `${ep.url}\u0000${ep.model}\u0000konto${n}`;
   }
 
   private backoff(attempt: number): number {
@@ -154,6 +202,18 @@ export class OpenRouterClient implements LlmClient {
     const felPerEndpoint: string[] = [];
 
     for (const ep of endpoints) {
+      const nyckel = this.spärrnyckel(ep);
+      const spärrTill = this.urSpelTill.get(nyckel) ?? 0;
+      if (this.now() < spärrTill) {
+        const kvar = spärrTill - this.now();
+        felPerEndpoint.push(
+          `${ep.namn} (${vardnamn(ep.url)}, ${ep.model}) → ur spel${
+            Number.isFinite(kvar) ? ` ${Math.ceil(kvar / 1000)}s till` : ""
+          } (hoppas över)`,
+        );
+        continue;
+      }
+
       let lastError: Error | undefined;
       body.model = ep.model;
       for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
@@ -180,7 +240,17 @@ export class OpenRouterClient implements LlmClient {
               await this.sleep(ra ?? this.backoff(attempt));
               continue;
             }
-            break; // slut på försök på denna endpoint → prova nästa
+            // Slut på försök: ta ledet ur spel, så att nästa anrop slipper
+            // betala om hela stegen. Leverantörens egen Retry-After gäller om
+            // den finns, kapad — annars nedkylningen.
+            const ned =
+              parseRetryAfterMs(res.headers.get("retry-after"), this.timeoutMs) ??
+              this.nedkylningMs;
+            this.urSpelTill.set(nyckel, this.now() + ned);
+            lastError = new Error(
+              `HTTP ${res.status} (kvot/överbelastning, ur spel ${Math.ceil(ned / 1000)}s)`,
+            );
+            break; // prova nästa led
           }
 
           if (!res.ok) {
@@ -221,6 +291,12 @@ export class OpenRouterClient implements LlmClient {
             }
 
             // Övrigt icke-retrybart (401, 402 utan kredit, 404) → nästa endpoint.
+            // En död nyckel eller slut kredit läker inte av sig självt under
+            // körningen — ta ledet ur spel helt i stället för att fråga om
+            // och om vid varje anrop.
+            if (res.status === 401 || res.status === 402 || res.status === 403) {
+              this.urSpelTill.set(nyckel, Number.POSITIVE_INFINITY);
+            }
             lastError = new Error(`HTTP ${res.status}: ${text.slice(0, 200)}`);
             break;
           }
