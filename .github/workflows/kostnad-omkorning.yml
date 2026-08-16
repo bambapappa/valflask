@@ -96,13 +96,19 @@ jobs:
         id: push-token
         # Modellanropen kan hålla på längre än tokenens timme. Samma fälla som
         # kastade arkiv- och skördekörningarnas resultat i augusti 2026.
-        if: ${{ inputs.skriv }}
+        #
+        # always() med flit: slår körningen i jobbets tak, eller faller den
+        # mitt i, är det just DÅ det som hunnit skrivas behöver räddas. Utan
+        # den kastas hela körningens arbete i samma sekund som taket nås.
+        if: ${{ always() && inputs.skriv }}
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
         with:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Committa data/needs_review.json
-        if: ${{ inputs.skriv }}
+        # Skriptet skriver löpande, en post i taget, så filen bär allt som
+        # hunnit bli klart även om körningen avbröts. Därför always().
+        if: ${{ always() && inputs.skriv }}
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
