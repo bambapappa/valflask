@@ -49,27 +49,48 @@ jobs:
           # Samma skäl som i arkiv.yml: bara pushsteget autentiserar, och det
           # bär sin egen färska token i origin-URL:en.
           persist-credentials: false
+      # pipeline/ är en pnpm-katalog: repot spårar pipeline/pnpm-lock.yaml och
+      # ingen package-lock.json. Första utkastet körde `npm ci` här, kopierat
+      # från arkiv.yml — men den körningen arbetar i handlingsvagen/pipeline,
+      # som DÄREMOT spårar package-lock.json. Körning 31938898106 föll direkt:
+      # «npm ci can only install with an existing package-lock.json».
+      # Samma förväxling lämnade en ströfil i arbetsträdet dagen innan.
+      - uses: pnpm/action-setup@v4  # ogiltig SHA-pin ersatt 2026-06-15
+        with:
+          version: 9
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
         with:
           node-version: 22
+          cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
       - name: Install pipeline deps
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         working-directory: pipeline
       - name: Kör om kostnadssteget
         id: omkorning
+        # Hela kedjan, inte bara primärens nyckel. Ett led byggs av adress +
+        # nyckel + modellnamn för rollen; sätts bara en del av det kastar
+        # `byggLed` innan något körs. Körning 31946138758 föll på just det:
+        # LLM_API_KEY var satt men LLM_BASE_URL saknades. Omkörningen använder
+        # bara rollen `extract`, så bara MODEL_EXTRACT* hör hit.
         env:
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           LLM_FALLBACK_BASE_URL: ${{ vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL }}
           LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+          LLM_ZAI_BASE_URL: ${{ vars.LLM_ZAI_BASE_URL }}
+          LLM_ZAI_API_KEY: ${{ secrets.LLM_ZAI_API_KEY }}
           MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
+          MODEL_EXTRACT_FALLBACK: ${{ vars.MODEL_EXTRACT_FALLBACK }}
+          MODEL_EXTRACT_ZAI: ${{ vars.MODEL_EXTRACT_ZAI }}
           MAX: ${{ inputs.max }}
           SKRIV: ${{ inputs.skriv }}
         run: |
           args=()
           [ -n "$MAX" ] && args+=("--max=$MAX")
           [ "$SKRIV" = "true" ] && args+=(--skriv)
-          npm run kostnad:om -- "${args[@]}"
+          pnpm kostnad:om "${args[@]}"
         working-directory: pipeline
       - name: Förnya botens token inför push
         id: push-token
