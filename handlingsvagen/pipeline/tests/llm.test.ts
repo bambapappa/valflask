@@ -262,3 +262,43 @@ test("samma adress OCH samma nyckel är ett led — spärren delas", async () =>
   // ska hoppas över, inte prövas om.
   assert.equal(anrop.length, 2, `antal anrop: ${anrop.length}`);
 });
+
+test("nedkylningen har ett tak — ett svarshuvud får inte släcka ett led i dygn", async () => {
+  // Den här filen läste Retry-After med Number.MAX_SAFE_INTEGER som gräns, så
+  // opencodes «kom tillbaka om 4,4 dygn» tog ledet ur spel resten av
+  // körningen. Valflasks kopia hade motsatt fel och kapade vid anropstimeouten
+  // (90s), vilket gjorde avstängningen verkningslös. Taket ligger nu mitt
+  // emellan, och lika i båda kopiorna.
+  const anrop: string[] = [];
+  let nu = 1_000_000;
+  let strypt = true;
+  const klient = new OpenRouterClient({
+    apiKey: "k1",
+    baseUrl: GO,
+    maxRetries: 1,
+    baseDelayMs: 1000,
+    minIntervalMs: 0,
+    onReservSvarade: () => {},
+    httpFetch: async (url) => {
+      anrop.push(url);
+      return strypt ? svar(429, { retryAfter: "389051" }) : svarOk("primären igen");
+    },
+    sleep: async (ms) => {
+      nu += ms;
+    },
+    now: () => nu,
+  });
+
+  await assert.rejects(klient.complete("ett", { model: "m" }));
+  const efter = anrop.length;
+
+  // Strax före taket: fortfarande ur spel, inget nytt anrop.
+  nu += 14 * 60_000;
+  await assert.rejects(klient.complete("tva", { model: "m" }), /ur spel/);
+  assert.equal(anrop.length, efter, "anropade ett led som skulle vara ur spel");
+
+  // Efter taket: prövas igen, i stället för att vara ute i fyra dygn.
+  nu += 2 * 60_000;
+  strypt = false;
+  assert.equal(await klient.complete("tre", { model: "m" }), "primären igen");
+});
