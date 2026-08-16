@@ -49,11 +49,22 @@ jobs:
           # Samma skäl som i arkiv.yml: bara pushsteget autentiserar, och det
           # bär sin egen färska token i origin-URL:en.
           persist-credentials: false
+      # pipeline/ är en pnpm-katalog: repot spårar pipeline/pnpm-lock.yaml och
+      # ingen package-lock.json. Första utkastet körde `npm ci` här, kopierat
+      # från arkiv.yml — men den körningen arbetar i handlingsvagen/pipeline,
+      # som DÄREMOT spårar package-lock.json. Körning 31938898106 föll direkt:
+      # «npm ci can only install with an existing package-lock.json».
+      # Samma förväxling lämnade en ströfil i arbetsträdet dagen innan.
+      - uses: pnpm/action-setup@v4  # ogiltig SHA-pin ersatt 2026-06-15
+        with:
+          version: 9
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
         with:
           node-version: 22
+          cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
       - name: Install pipeline deps
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         working-directory: pipeline
       - name: Kör om kostnadssteget
         id: omkorning
@@ -69,7 +80,7 @@ jobs:
           args=()
           [ -n "$MAX" ] && args+=("--max=$MAX")
           [ "$SKRIV" = "true" ] && args+=(--skriv)
-          npm run kostnad:om -- "${args[@]}"
+          pnpm kostnad:om "${args[@]}"
         working-directory: pipeline
       - name: Förnya botens token inför push
         id: push-token
