@@ -8,6 +8,7 @@ import assert from "node:assert/strict";
 import {
   extractArchiveTodayUrl,
   archiveWithFallback,
+  snapshotUrUrSparsvar,
   type HttpFetch,
 } from "../src/archive.ts";
 
@@ -100,4 +101,50 @@ test("fallback: bägge misslyckas → null + retry (rot-check bär integriteten)
   const r = await archiveWithFallback("https://x.se", fetch);
   assert.equal(r.archive_url, null);
   assert.equal(r.retry, true);
+});
+
+/**
+ * Adressen ur sparsvaret — den uppgift arkiv-backfillen kastade.
+ *
+ * VARFÖR: `archive-backfill.mts` sparade kopior och frågade sedan
+ * availability-API:t 90 sekunder senare vad som sparats. Det API:t indexerar
+ * långsammare än så. I pipelinekörning 31955869060 sparades tolv kopior, alla
+ * tolv svarade «ännu ej indexerad», och steget slutade med «Inga archive_url
+ * uppdaterade. Kvar utan arkiv: 32 löften» — efter nio minuters arbete. Steget
+ * var grönt varje körning och flyttade ingenting, vilket är samma form som
+ * pushfelet den 15 augusti: arbetet gjordes och slängdes.
+ *
+ * Adressen fanns hela tiden i svaret på sparbegäran. Uttagningen låg redan i
+ * `waybackSave` och är nu en egen funktion, så båda vägarna läser den likadant.
+ *
+ * VAD DET INTE FÅNGAR: om kopian duger. Att arkivet svarade med en adress
+ * säger ingenting om att citatet står i ögonblicksbilden — det prövas ord för
+ * ord när kopian appliceras, och den prövningen är oförändrad.
+ */
+test("sparsvarets adress läses ur slutadressen efter omdirigering", () => {
+  const svar = res("https://web.archive.org/web/20260816201446/https://kristdemokraterna.se/valsystem");
+  assert.equal(
+    snapshotUrUrSparsvar(svar),
+    "https://web.archive.org/web/20260816201446/https://kristdemokraterna.se/valsystem",
+  );
+});
+
+test("sparsvarets adress läses ur Location när omdirigeringen inte följts", () => {
+  const svar = res("https://web.archive.org/save/https://mp.se/folkel", {
+    status: 302,
+    headers: { location: "https://web.archive.org/web/20260816201512/https://mp.se/folkel" },
+  });
+  assert.equal(
+    snapshotUrUrSparsvar(svar),
+    "https://web.archive.org/web/20260816201512/https://mp.se/folkel",
+  );
+});
+
+test("ett svar utan kopia ger ingen adress — då, och bara då, är väntan på indexering rätt", () => {
+  // Precis det läge fas C:s 90-sekundersväntan finns för. Blir svaret kvar på
+  // /save/ utan Location har arkivet inte sagt var kopian hamnade.
+  const svar = res("https://web.archive.org/save/https://mp.se/folkel");
+  assert.equal(snapshotUrUrSparsvar(svar), null);
+  // Och en adress som inte alls pekar på arkivet får aldrig tas för en kopia.
+  assert.equal(snapshotUrUrSparsvar(res("https://mp.se/folkel")), null);
 });

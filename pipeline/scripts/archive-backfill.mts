@@ -22,6 +22,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { quoteInSnapshotText, snapshotText } from "../src/archive-verify.ts";
+import { snapshotUrUrSparsvar } from "../src/archive.ts";
 import { GRUNDPAUS_MS, hamtaFranArkivet } from "../src/wayback-takt.ts";
 
 /** Hur många begäranden arkivet strypte under körningen. Skrivs ut till sist. */
@@ -89,18 +90,24 @@ async function availability(url: string, ts: string): Promise<string | null> {
   return availabilityOnce(url, "");
 }
 /**
- * Begär en ny kopia. Returnerar false när arkivet strypte begäran — då är
+ * Begär en ny kopia. Returnerar `null` när arkivet strypte begäran — då är
  * ingenting sparat, och budgeten ska inte räkna av för ett nej. Mätt
  * 2026-08-09: fem kopior i rad räcker för att nästa ska svara 429.
+ *
+ * Lyckas begäran returneras ögonblicksbildens adress ur svaret, när den finns
+ * där. Wayback omdirigerar `/save/<url>` till kopian den just skapade, så
+ * adressen är känd direkt — och det är den enda pålitliga vägen till den, för
+ * availability-API:t indexerar långsammare än en körning kan vänta.
  */
-async function requestSave(url: string): Promise<boolean> {
+async function requestSave(url: string): Promise<{ snapshot: string | null } | null> {
   const svar = await hamtaFranArkivet(`https://web.archive.org/save/${url}`, undefined, {
     headers: { "User-Agent": UA },
     redirect: "follow",
     signal: AbortSignal.timeout(60000),
   });
-  if (svar.slag === "strypt") { strypta++; return false; }
-  return svar.slag === "svar";
+  if (svar.slag === "strypt") { strypta++; return null; }
+  if (svar.slag !== "svar") return null;
+  return { snapshot: snapshotUrUrSparsvar(svar.res) };
 }
 
 const resolved = new Map<string, string>(); // key(url utan frag) -> snapshot-URL
@@ -160,6 +167,8 @@ if (MODE === "save") {
 
 // --- Fas B: begär saves (bunden) ---
 const saved: string[] = [];
+/** Ögonblicksbildens adress direkt ur sparsvaret, per källadress. */
+const sparade = new Map<string, string>();
 /** Adresser vars färska kopia bara får användas där den gamla inte räcker. */
 const farska = new Map<string, string>();
 if (MODE === "save") {
@@ -173,10 +182,18 @@ if (MODE === "save") {
     if (saves >= MAX_SAVES) break;
     if (/youtube\.com|youtu\.be/.test(key)) { console.log(`  (hoppar youtube) ${key}`); continue; }
     console.log(`  save (${saves + 1}/${MAX_SAVES}): ${key}`);
-    if (await requestSave(key)) {
+    const utfall = await requestSave(key);
+    if (utfall) {
       saves++;
       iRad = 0;
       saved.push(key);
+      // Adressen ur sparsvaret, när arkivet gav en. Den gör fas C:s väntan
+      // överflödig för just den här kopian — men avgör ingenting: kopian måste
+      // fortfarande bära citatet, och det prövas i appliceringen nedan.
+      if (utfall.snapshot) {
+        sparade.set(key, utfall.snapshot);
+        console.log(`    ✓ adress ur sparsvaret: ${utfall.snapshot.slice(0, 70)}`);
+      }
     } else {
       // Strypt: ingenting sparades, så budgeten räknas inte av. Två nej i rad
       // betyder att arkivet vill ha en paus, inte att vi ska tjata.
@@ -188,12 +205,33 @@ if (MODE === "save") {
   }
 }
 
-// --- Fas C: vänta på indexering, omkoll av sparade ---
-if (saved.length > 0) {
-  console.log(`Fas C: väntar 90s på indexering, sedan omkoll av ${saved.length} sparade...`);
+// --- Fas C: ta emot de sparade kopiorna ---
+//
+// Steget frågade förut availability-API:t efter 90 sekunders väntan om vad
+// som just sparats. Det API:t indexerar långsammare än så, och resultatet blev
+// att arbetet gjordes varje körning och kastades varje gång: i pipelinekörning
+// 31955869060 sparades tolv kopior, tolv svarade «ännu ej indexerad», och
+// körningen slutade med «Inga archive_url uppdaterade. Kvar utan arkiv: 32».
+// Ett grönt steg som inte flyttar någonting ser ut som att arkivet saknar
+// kopior; det gjorde det inte, det var vi som slängde adresserna.
+//
+// Adressen står i sparsvaret. Väntan behövs bara för de kopior arkivet inte
+// gav någon adress till.
+const varForaldrad = new Set(foraldrade);
+const utanAdress = saved.filter((key) => !sparade.has(key));
+for (const key of saved) {
+  const snap = sparade.get(key);
+  if (!snap) continue;
+  if (varForaldrad.has(key)) farska.set(key, snap);
+  else resolved.set(key, snap);
+}
+if (utanAdress.length > 0) {
+  console.log(
+    `Fas C: ${saved.length - utanAdress.length} kopior kom med adress ur sparsvaret. ` +
+      `Väntar 90s på indexering för de ${utanAdress.length} som inte gjorde det...`,
+  );
   await sleep(90000);
-  const varForaldrad = new Set(foraldrade);
-  for (const key of saved) {
+  for (const key of utanAdress) {
     const snap = await availability(key, "");
     if (!snap) { console.log(`  – ännu ej indexerad: ${key}`); await sleep(GRUNDPAUS_MS); continue; }
     // En adress som redan hade en kopia behåller den. Den färska läggs vid

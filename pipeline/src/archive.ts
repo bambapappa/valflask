@@ -30,13 +30,46 @@ async function waybackSave(
   if (res.status === 403 || res.status === 503) return { archive_url: null, retry: true };
   if (!res.ok) return { archive_url: null, retry: true };
 
-  const finalUrl = res.url;
-  if (finalUrl && finalUrl.includes("web.archive.org")) return { archive_url: finalUrl, retry: false };
-
-  const location = res.headers.get("location");
-  if (location && location.includes("web.archive.org")) return { archive_url: location, retry: false };
+  const snapshot = snapshotUrUrSparsvar(res);
+  if (snapshot) return { archive_url: snapshot, retry: false };
 
   return { archive_url: null, retry: true };
+}
+
+/**
+ * Ögonblicksbildens adress ur svaret på en sparbegäran.
+ *
+ * Wayback svarar på `/save/<url>` med en omdirigering till den kopia den just
+ * skapade, så adressen finns redan i svaret. Den uppgiften är värd att kunna
+ * plocka ut på ett ställe: `archive-backfill.mts` kastade förut svaret och
+ * frågade i stället availability-API:t 90 sekunder senare om vad som sparats.
+ * Det API:t indexerar långsammare än så. Mätt i pipelinekörning 31955869060:
+ * tolv kopior sparades, tolv svarade «ännu ej indexerad», och körningen slutade
+ * med «Inga archive_url uppdaterade» — arbetet gjordes varje körning och
+ * kastades varje gång.
+ *
+ * Adressen är ingen garanti för att kopian duger. Den som använder den måste
+ * fortfarande hämta ögonblicksbilden och pröva att citatet står i den ord för
+ * ord; det är den kontrollen som avgör, inte att arkivet svarade.
+ */
+export function snapshotUrUrSparsvar(res: {
+  url?: string;
+  headers: { get(namn: string): string | null };
+}): string | null {
+  // Adressen måste vara en ögonblicksbild, inte vilken arkivadress som helst.
+  // Kontrollen läste förut bara värdnamnet, och `/save/<url>` bär samma
+  // värdnamn: följdes inte omdirigeringen tog den sparadressen för kopian.
+  // En sådan länk ser riktig ut och leder läsaren till en ny sparning i
+  // stället för till beviset.
+  const ar_ogonblicksbild = (u: string): boolean => /^https?:\/\/web\.archive\.org\/web\/\d+/u.test(u);
+
+  const finalUrl = res.url;
+  if (finalUrl && ar_ogonblicksbild(finalUrl)) return finalUrl;
+
+  const location = res.headers.get("location");
+  if (location && ar_ogonblicksbild(location)) return location;
+
+  return null;
 }
 
 export async function archiveViaWayback(url: string, httpFetch: HttpFetch = globalThis.fetch.bind(globalThis)): Promise<ArchiveResult> {
