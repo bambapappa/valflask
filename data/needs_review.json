@@ -22,10 +22,11 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Brett inriktningslöfte utan belopp eller konkret åtgärd; prissätts som 0 enligt regeln om inriktningslöften.",
+      "confidence": 0.2,
+      "calculation": "Ingen kvantifierbar nivå angiven; ingen ny statlig nettokostnad utöver redan befintliga stöd kan beräknas utan att hitta på siffror."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0663 (350), p-2026-0162 (0), p-2026-0406 (800) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~350"
+    "costReason": "LLM-estimat (confidence 0.2) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -47,13 +48,14 @@
       "period": "per_ar",
       "msek_low": 0,
       "msek_base": 0,
-      "msek_high": 0,
+      "msek_high": 5,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Förbud är en reglering; direkt statlig kostnad är marginell tillsyn. Inga överföringar eller nya utgifter.",
+      "confidence": 0.4,
+      "calculation": "Antar endast löpande tillsyn/kontroll av förbudet, 0–5 mkr/år. Ingen ny transferering; följdverkningar kvantifieras inte enligt regel 9."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0755 (0), p-2026-0588 (0), p-2026-0087 (0)"
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -72,16 +74,17 @@
     "articleTitle": "Parboendegaranti | Kristdemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 0,
       "msek_base": 0,
-      "msek_high": 0,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Lag/reglering som ålägger kommuner en rättighet. Statens direkta kostnad för själva åtgärden är försumbar; kommunala kostnader och samhällsföljder räknas inte in.",
+      "confidence": 0.3,
+      "calculation": "Parboendegaranti är en lagstadgad rättighet utan specificerat statsbidrag. Statlig nettokostnad ≈ 0. Mindre utrednings- och tillsynsadministration uppskattas till 0–30 mkr."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0441 (300), p-2026-0722 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -159,15 +162,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 3,
+      "msek_base": 10,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Antar statlig brottsskadeersättning när gärningsmannen saknar medel. Osäker ökning av antal beviljade ärenden för poliser, ingen exakt nivå i löftet.",
+      "confidence": 0.3,
+      "calculation": "Antag att ersättningen ökar för ~300–2 000 poliser per år (del av vålds-/hotärenden) och snittersättning ~8–15 tkr. 300×8 tkr≈2,4 mkr; 2 000×15 tkr=30 mkr. Avser fler beviljade kränkningsersättningar, inte ändrad ersättningsnivå per fall."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -279,10 +283,11 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; eventuella kostsamma delar prissätts på specifika löften.",
+      "confidence": 0.2,
+      "calculation": "Ingen kvantifierbar statlig åtgärd anges, därför sätts kostnaden till 0 mkr."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0022 (0)"
+    "costReason": "LLM-estimat (confidence 0.2) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -307,10 +312,11 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Ingen lagändring görs; att behålla befintligt ränteavdrag medför ingen ny statsfinansiell kostnad. Beloppet avser åtgärden, inte följder av en framtida sänkning.",
+      "confidence": 0.65,
+      "calculation": "Gällande rätt lämnas oförändrad, så ingen ny kostnad eller skattesänkning: 0 mkr."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0027 (0), p-2026-0028 (20000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~10000"
+    "costReason": "LLM-estimat (confidence 0.65) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -417,15 +423,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 1,
+      "msek_base": 3,
+      "msek_high": 15,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Avser löpande administration/uppföljning. Icke-överimplementering i sig kostar inget; följdeffekter prissätts inte enligt regel 9.",
+      "confidence": 0.25,
+      "calculation": "Antar 1–5 årsarbetskrafter för uppföljning av regelkostnader à 1–2,5 mkr plus IT/utvärderingar 0,5–2,5 mkr. Låg: 1×1+0,5≈1,5; bas 3; hög: 5×2,5+2,5=15 mkr/år."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0312 (0)"
+    "costReason": "LLM-estimat (confidence 0.25) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -531,16 +538,17 @@
     "articleTitle": "Rovdjursförvaltning | Kristdemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 0,
       "msek_base": 0,
-      "msek_high": 0,
+      "msek_high": 5,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Förvaltningsreglering utan specificerad nivå; direkt kostnad för åtgärden bedöms försumbar, endast eventuell administrativ omställning.",
+      "confidence": 0.3,
+      "calculation": "Ingen ny förmån eller statsbidrag. Ökat lokalt inflytande är en ansvarsförändring som kan kräva mindre utredning/administration, uppskattad till 0–5 mkr."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -647,15 +655,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 20,
+      "msek_base": 50,
+      "msek_high": 100,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Prissätter en statlig fortbildningssatsning för lärare via Skolverket; nivån bygger på jämförbara ämneslyft. Avser åtgärdens kostnad, inte kommunernas löpande ansvar.",
+      "confidence": 0.35,
+      "calculation": "15 000–30 000 berörda lärare × 4 000–10 000 kr per kurs/vikarie = 60–300 mkr som flerårig satsning; fördelat på ca 3 år ≈ 20–100 mkr/år. Bas 50 mkr/år."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0423 (300) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~300"
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -790,16 +799,17 @@
     "articleTitle": "Den som arbetar och gör rätt för sig ska få medborgarskap snabbare | Moderaterna",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Löftet gäller en utredning, inte själva snabbspåret. Kostnaden avser en statlig utredning (SOU-storlek) i fasta priser.",
+      "confidence": 0.6,
+      "calculation": "En statlig utredning/statligt kommittéväsende kostar typiskt 5–30 mkr i fasta priser. Bas 15 mkr. Eventuella kostnader för ett framtida snabbspår prissätts inte här."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0838 (0), p-2026-0837 (30), p-2026-0076 (200), p-2026-0124 (0), p-2026-0839 (20) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~20"
+    "costReason": "LLM-estimat (confidence 0.6) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -917,16 +927,17 @@
     "articleTitle": "Liberalerna: fler åtgärder mot felaktiga utbetalningar – Liberalerna",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Prissätter själva utredningen, inte förslag den kan leda till. SOU-storlek engångskostnad.",
+      "confidence": 0.5,
+      "calculation": "En statlig utredning/kommitté med sekretariat kostar vanligen 5–30 mkr. Medelstorlek antas ~15 mkr."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0496 (0), p-2026-0697 (7000), p-2026-0448 (3000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~3000"
+    "costReason": "LLM-estimat (confidence 0.5) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1034,17 +1045,18 @@
     "articleUrl": "https://www.mp.se/just-nu/folkel-gron-el-ska-vara-billigare-och-tillganglig-for-alla/",
     "articleTitle": "Folkel – grön el för alla | Miljöpartiet",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 350,
+      "msek_base": 600,
+      "msek_high": 900,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Skattesänkning per kWh ≈ 0,43 kr (från ca 43 öre till EU:s miniminivå nära noll). Antar 0,8–2 TWh ladd-el per år för elbilar och laddhybrider.",
+      "confidence": 0.4,
+      "calculation": "Elskatt idag ca 43 öre/kWh; EU-minimum nära noll => sänkning ~0,43 kr/kWh. Ladd-el: ca 350 000 elbilar × 2 000 kWh + 250 000 laddhybrider × 1 000 kWh ≈ 0,95 TWh, med spann 0,8–2 TWh. 0,8–2 TWh × 0,43 kr/kWh ≈ 340–860 mkr/år, rundat 350–900."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0026 (17000), p-2026-0254 (0), p-2026-0347 (0)"
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1121,16 +1133,17 @@
     "articleTitle": "Folkel – grön el för alla | Miljöpartiet",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 0,
       "msek_base": 0,
-      "msek_high": 0,
+      "msek_high": 10,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Reglering: statens direkta kostnad är att ändra byggregler och viss tillsyn/information, vilket är försumbar. Installationskostnaden bärs av byggherrar och räknas som följd, inte statlig utgift.",
+      "confidence": 0.5,
+      "calculation": "Uppdatering av byggregler samt begränsad information/tillsyn uppskattas till 0–10 mkr engång. Inga varaktiga statliga utgifter antas."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.5) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1151,17 +1164,18 @@
     "articleUrl": "https://www.mp.se/just-nu/sprakrorens-sommartal-2026/",
     "articleTitle": "Språkrörens sommartal 2026 | Miljöpartiet",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsminskning",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_base": 5,
+      "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Skattebortfallet bedöms litet: de flesta småhus omfattas redan av skattefri ersättning upp till ca 30 000 kr/år och överskottselen är ofta liten. Avser inkomstskatt, inte energiskatt.",
+      "confidence": 0.3,
+      "calculation": "Antar ~50 000–100 000 mikroproducenter; bara en mindre del säljer överskott över skattefri gräns och beskattas med ~30 %. Exv. 2 000–5 000 hushåll × 2 000–10 000 kr beskattningsbar ersättning × 30 % ≈ 1–15 mkr; utvidgning till fler boendeformer ger spann uppåt."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0252 (0), p-2026-0121 (0)"
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1265,7 +1279,20 @@
     "failures": [],
     "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/smahus",
     "articleTitle": "Småhus | Kristdemokraterna",
-    "duplicateOf": "p-2026-0808"
+    "duplicateOf": "p-2026-0808",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En planeringsstimulans är ett statsbidrag till kommuner. Löftet saknar nivå; beloppsspannet bygger på tidigare statliga planeringsstöd för bostadsplanering och på antagande om antal kommunprojekt.",
+      "confidence": 0.4,
+      "calculation": "Antag 100–200 planprojekt/år × 0,5–2 mkr per projekt = 50–400 mkr; bas sätter 150 mkr. Osäkerhet p.g.a. avsaknad av nivå."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1574,16 +1601,17 @@
     "articleTitle": "Tiggeri | Kristdemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 0,
       "msek_base": 0,
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Löftet är en lagändring/reglering (kommunal möjlighet att förbjuda tiggeri). Enligt regel 9 prissätts endast den direkta åtgärden, som är försumbar för staten; samhällsföljder eller kommunala…",
+      "confidence": 0.65,
+      "calculation": "Reglering: ingen ny statlig utgift. Lagstiftningsarbete är redan finansierat/obetydligt. 0 mkr."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.65) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1630,17 +1658,18 @@
     "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/tobak",
     "articleTitle": "Tobak | Kristdemokraterna",
     "cost": {
-      "type": "utgift",
+      "type": "intäktsökning",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 900,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Exponeringsförbud är reglering med försumbar direkt kostnad. Kompetenscenter 20–50 mkr/år. Höjda tobakspunktskatter antas som senaste höjningar; netto efter center.",
+      "confidence": 0.35,
+      "calculation": "Tobakspunktskatt ca 12 mdkr; 3–8 % höjning ger 360–960 mkr brutto. Exponeringsförbud 0. Kompetenscenter 20–50 mkr. Netto ca 310–940 mkr, avrundat 200–900 mkr."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1689,15 +1718,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 5000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Vagt löfte utan belopp; uppskattar årligt extra vägunderhåll och utökad trafikövervakning. Osäker nivå.",
+      "confidence": 0.4,
+      "calculation": "Antar extra vägunderhåll ~400–4000 mkr/år och utökad hastighets-/alkoholkontroll ~100–500 mkr/år -> 500–5000 mkr/år."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1890,16 +1920,17 @@
     "articleTitle": "Våld i nära relationer | Kristdemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 0,
       "msek_base": 0,
-      "msek_high": 0,
+      "msek_high": 5,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Löftet är en styrning/reglering av kommunerna, inte ett statsbidrag. Statens direkta kostnad för lagkrav/uppföljning bedöms försumbar; eventuella kommunala kostnader är inte statlig utgift. Beloppet…",
+      "confidence": 0.4,
+      "calculation": "Bedömd direkt statlig kostnad 0 mkr; osäkerhet 0–5 mkr för mindre statlig samordning/administration."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0446 (650), p-2026-0799 (200) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~425"
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
