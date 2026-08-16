@@ -56,8 +56,44 @@ export function kapaNot(text: string, max: number): string {
   return `${cut.replace(/[\s,;:.–-]+$/, "")}…`;
 }
 
+/**
+ * Ett tal ur modellsvaret — men bara när värdet betecknar EXAKT ett tal.
+ *
+ * Fältet var tidigare `typeof v === "number"`, och allt annat kastades. Det
+ * fällde hela kostnadssteget så snart modellen svarade med samma tal som
+ * sträng, vilket den gör titt som tätt: `"1200"`, `"1 200"` med tusentalsrymd,
+ * eller `"1,5"` med svenskt decimaltecken. Utfallet blev `failedCost`, alltså
+ * belopp 0 och tom uträkning — och en nolla i datat ser ut som ett omdöme om
+ * att löftet är gratis, inte som en körning som inte gick igenom. **Nitton av
+ * 79 poster i kön 2026-08-16 låg där, och fyra av dem var skatte- och
+ * fortbildningslöften som säkert kostar pengar.**
+ *
+ * Toleransen är avsiktligt smal: ett värde som betecknar mer än ett tal ska
+ * fortsätta falla. `"100-200"` är ett spann och säger inte vilket tal som
+ * avses; `"upp till 100"` och `"minst 100"` är gränser, inte belopp. Att gissa
+ * åt modellen vore att uppfinna en siffra, och det är värre än att falla.
+ */
 function finiteNum(v: unknown): number | null {
-  return typeof v === "number" && Number.isFinite(v) ? v : null;
+  if (typeof v === "number") return Number.isFinite(v) ? v : null;
+  if (typeof v !== "string") return null;
+
+  // Normalisera rymder (inkl. hårt och smalt blanksteg) och minustecken.
+  const t = v
+    .replace(/[\u00a0\u202f\u2007\u2009]/gu, " ")
+    .replace(/[\u2212\u2013\u2014]/gu, "-")
+    .trim();
+  if (t === "") return null;
+
+  // Ett ensamt ungefärstecken framför talet ändrar inte VILKET tal som avses.
+  const utanCirka = t.replace(/^(?:~|ca\.?|cirka|omkring)\s*/iu, "").trim();
+
+  // Exakt ett tal, inget mer: valfritt minus, siffror med tusentalsrymd, och
+  // ett decimaltecken som får vara komma eller punkt. Allt annat faller.
+  const m = /^-?\d{1,3}(?: \d{3})*(?:[.,]\d+)?$|^-?\d+(?:[.,]\d+)?$/u.exec(utanCirka);
+  if (!m) return null;
+
+  const n = Number(utanCirka.replace(/ /gu, "").replace(",", "."));
+  return Number.isFinite(n) ? n : null;
 }
 
 function placeholder(method_note: string, confidence: number): CostEstimate {
