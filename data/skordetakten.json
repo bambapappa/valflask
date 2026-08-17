@@ -1,0 +1,15 @@
+{
+  "_om": "Skördetakten: vad som är normalläge, och vad som är en tillfälligt höjd takt. Grinden pnpm test läser den här filen OCH de två ställen takten faktiskt står — cron i .github/workflows/pipeline.yml och max_articles_per_run i data/sources.yaml — och faller om de går isär, eller om en höjning lever längre än sitt datum. Se pipeline/src/skordetakten.ts.",
+  "normal": {
+    "korningar_per_dygn": 3,
+    "sidor_per_korning": 20
+  },
+  "hojd": {
+    "sedan": "2026-08-17",
+    "till_och_med": "2026-08-21",
+    "korningar_per_dygn": 6,
+    "sidor_per_korning": 45,
+    "skal": "Sju partiers politikavdelningar kopplades in samma dag och 757 sidor låg olästa. Sex körningar à 45 ger 270 per dygn, alltså knappt tre dygn.",
+    "sank_nar": "Täckningen per parti är jämn — se kolumnen «sidor lästa» på startsidan eller pnpm test:tackning. Är granskningskön mycket längre än vi hinner beta av är det skäl att sänka ÄVEN om täckningen inte är klar: skörden är inte flaskhalsen, granskningen är."
+  }
+}

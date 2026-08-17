@@ -76,7 +76,22 @@ till mätningar.
 
 Kadensen är höjd från tre till sex körningar per dygn och budgeten från 20 till
 45 sidor per körning, för att hämta in eftersläpet på 757 olästa politiksidor
-— sex körningar à 45 ger 270 per dygn, alltså knappt tre dygn. Det är en ikappkörning, inte ett nytt normalläge: sänk tillbaka
+— sex körningar à 45 ger 270 per dygn, alltså knappt tre dygn.
+
+**Höjningen har en klocka, och klockan ligger i bygget.** `data/skordetakten.json`
+deklarerar normalläget (3 × 20), den höjda takten (6 × 45) och ett
+`till_och_med`-datum, 2026-08-21. `pnpm test` läser filen OCH de två ställen
+takten faktiskt står — cron i `pipeline.yml` och `max_articles_per_run` i
+`sources.yaml` — och faller åt tre håll: när takten höjs utan att filen säger
+det, när deklarationen inte stämmer med verkligheten, och när fristen gått ut.
+Vill någon ha mer tid flyttas datumet fram, och då står förlängningen i
+historiken med ett skäl bredvid sig i stället för att ske av glömska. Regeln
+och proven ligger i `pipeline/src/skordetakten.ts`.
+
+Anteckningen om att sänka tillbaka skrevs först bara på anslagstavlan. Det var
+inte nog, av samma skäl som ordreglerna bär: en regel utan grind är en
+påminnelse, och påminnelser åldras. Ett undantag utan bortre gräns är ingen
+interimlösning — det är ett nytt normalläge med bättre ordval. Det är en ikappkörning, inte ett nytt normalläge: sänk tillbaka
 när täckningen jämnat ut sig.
 
 **Förkastade alternativ:** *Pausa KD:s A–Ö* — hade återöppnat hålet källan
