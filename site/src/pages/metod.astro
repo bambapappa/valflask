@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { taladeKallorTal } from "../lib/prosans-tal";
+import { arkivvantansTal } from "../lib/arkivvantans-tal";
 import { getRattelser } from "../lib/data";
 import { rattelserForSidan } from "../lib/rattelsenoter";
 
@@ -17,6 +18,12 @@ const rattelser = rattelserForSidan(getRattelser(), "/metod");
 // och krönikorna. Skrivna som siffror i texten blir de tysta osanningar den
 // dag ett löfte till skördas ur ett tal.
 const talade = taladeKallorTal();
+
+// Väntar källor på ett arkiv som inte svarar ska läsaren få veta det, med
+// antal och sedan när. Raden skrivs ur datat och försvinner av sig själv när
+// talet är noll — ett undantag som inte syns är ett undantag som blir
+// permanent.
+const arkivvantan = arkivvantansTal();
 
 const jsonLd = [
   {
@@ -170,6 +177,9 @@ const jsonLd = [
 
       <h2 id="andrade-kallor">När källan ändrar sig</h2>
       <p>Till nästan varje citat hör en <strong>arkivkopia</strong> — en ögonblicksbild av sidan som den såg ut när vi hämtade citatet, sparad hos Internet Archive. <strong>Kopian godtas bara om citatet står ordagrant i själva ögonblicksbilden</strong>, och bär den inte citatet sätter vi ingen kopia alls hellre än en som inte styrker något. Bland undantagen finns både filmer, som inte går att spara som text på det sättet, och webbsidor där ingen tillgänglig kopia ännu bär citatet. De står utan arkivlänk tills en sådan kopia finns.</p>
+      {arkivvantan.antal > 0 && (
+        <p><strong>Just nu väntar {arkivvantan.antal} källor på en arkivkopia.</strong> Arkivtjänsten har inte svarat sedan {arkivvantan.sedan}, och en kopia vi inte kan hämta är inte samma sak som en kopia som saknas. Vi skriver hellre ut att vi väntar än låter luckan se ut som ett val. Kommer arkivet inte tillbaka inom två veckor räknas väntan inte längre som en förklaring — då är det vårt problem, inte arkivets.</p>
+      )}
       <p>Sedan öppnar vi källorna igen <strong>varje vecka</strong> — både löftenas och partibeskedens — och jämför mot citatet. Svarar sidan inte längre, eller står citatet inte längre där, sätts en synlig stämpel vid citatet och arkivkopian gäller. Vi ändrar aldrig citatet i efterhand för att få det att stämma med hur sidan ser ut i dag.</p>
       <p>Fallen samlas på <a href="/andrade-kallor">ändrade källor</a>, med vad vi citerade och vad sidan säger nu, sida vid sida. Där står också vem som äger sidan — när riksdagen språkgranskar en motion är det riksdagen som ändrat texten, inte partiet som skrev den. Vi redovisar vad som står, aldrig varför.</p>
       <p>Är det <em>vi</em> som haft fel — ett citat som aldrig stämde — är det ingen ändrad källa utan ett fel hos oss, och då hamnar det i <a href="/rattelser">rättelseloggen</a>.</p>

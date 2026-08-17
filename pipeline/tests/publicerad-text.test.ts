@@ -41,7 +41,13 @@ const DATA = resolve(import.meta.dirname, "../../data");
  * den: en post räknade upp nio löften som «p-0411 600 mkr, p-0089 300 mkr …»,
  * och ett mönster som bara tog den fullständiga formen hade gått förbi dem.
  */
-const INTERN = /p-\d{4}-\d{4}|\bp-\d{4}\b|g-[a-zåäö0-9-]{4,}/giu;
+// Gruppnamnet måste börja ett ord. Utan spärren matchade mönstret INUTI
+// vanlig svenska: «en gång-inlämning» innehåller bokstavsföljden
+// «g-inlämning», och grinden pekade ut p-2026-0908 för ett gruppnamn som
+// aldrig stod där. En grind som fäller på rätt sak av fel skäl lär läsaren
+// att bortse från den. Lookbehind i stället för \b, för \b räknar å, ä och ö
+// som ordgränser.
+const INTERN = /p-\d{4}-\d{4}|\bp-\d{4}\b|(?<![\p{L}\p{N}])g-[a-zåäö0-9-]{4,}/giu;
 
 interface Lofte {
   id: string;
@@ -120,6 +126,11 @@ describe("text som möter läsaren", () => {
       "Delarna ligger på partiets egna löften om ett sektorsbidrag för skolans personal och om rätt till stöd utan diagnoskrav.",
       "Samma politik som Moderaternas och Liberalernas löften om slopad mängdrabatt, som båda står på 650 miljoner kronor per år.",
       "Beloppet är 4 000 miljoner kronor per år och kommer ur partiets egen budget för 2025–2027.",
+      // Fällde tidigare på ett gruppnamn som aldrig stod där: bokstavsföljden
+      // «g-inlämning» finns inuti «gång-inlämning». Mätt på p-2026-0908
+      // 2026-08-17, som pekades ut för något den inte gjort.
+      "Löfte om 'en gång-inlämning' mellan myndigheter kräver systemintegration och gemensamma gränssnitt.",
+      "Uppgifterna lämnas en gång-inlämning per år, inte fyra.",
     ];
     for (const rad of skaPassera) {
       assert.equal(rad.match(INTERN), null, `borde passera: ${rad}`);

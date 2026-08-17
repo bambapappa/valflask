@@ -134,6 +134,15 @@ async function archiveTodayOnce(
     return { archive_url: null, retry: true };
   }
   // 429/anti-bot: archive.today strular ofta från datacenter-IP — retry senare.
+  //
+  // Mätt 2026-08-17, och det är värt att veta innan någon förlitar sig på
+  // det här spåret: **sparandet är CAPTCHA-skyddat.** En enda begäran mot
+  // /submit/ från en vanlig hemmauppkoppling gav 429 med en CAPTCHA i
+  // svaret. Uppslaget mot /newest/ svarar däremot normalt (302 på arkiverat,
+  // 404 på oarkiverat). Reservarkivet duger alltså till att HITTA kopior men
+  // inte till att SKAPA dem, och en bot-kontroll är inget vi löser — den är
+  // tjänstens sätt att säga nej. Vill man ha ett andra spår som faktiskt kan
+  // spara krävs en tjänst med riktig API-nyckel, till exempel Perma.cc.
   if (submitRes.status === 429 || submitRes.status === 403) return { archive_url: null, retry: true };
   const fromSubmit = extractArchiveTodayUrl(submitRes);
   if (fromSubmit) return { archive_url: fromSubmit, retry: false };
@@ -146,6 +155,50 @@ async function archiveTodayOnce(
   } catch { /* ge upp för denna körning */ }
 
   return { archive_url: null, retry: true };
+}
+
+/**
+ * Uppslag UTAN sparande: finns redan en färdig ögonblicksbild hos
+ * archive.today? Skild från `archiveViaArchiveToday`, som sparar när den inte
+ * hittar något — och sparandet är det dyra, det strypta och det som ska ha en
+ * budget. Ett uppslag är billigt och kan göras för varje källa.
+ *
+ * Skälet till att den finns: 2026-08-17 låg Internet Archive nere hela
+ * morgonen, och backfillen — som bara talade med Wayback — rapporterade
+ * «saknas» för 26 käll-URL:er. Reservspåret fanns redan i den här filen sedan
+ * länge, men bara i `archiveWithFallback`, som backfillen aldrig anropade.
+ * Kapaciteten fanns; kopplingen saknades.
+ *
+ * Returnerar `null` både när ingen kopia finns och när tjänsten inte svarar.
+ * De två skiljs åt av anroparen, som vet vad den ska göra med skillnaden.
+ */
+export async function slaUppArchiveToday(
+  url: string,
+  httpFetch: HttpFetch = globalThis.fetch.bind(globalThis),
+): Promise<string | null> {
+  try {
+    const res = await httpFetch(`https://${ARCHIVE_TODAY_HOST}/newest/${url}`, {
+      method: "GET",
+      headers: { "User-Agent": UA },
+      redirect: "follow",
+      signal: AbortSignal.timeout(ARCHIVE_TODAY_TIMEOUT_MS),
+    });
+    return extractArchiveTodayUrl(res);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Vilken tjänst en kopia ligger hos. Härleds ur adressen i stället för att
+ * lagras i ett eget fält: adressen kan inte glida isär från sig själv, och ett
+ * fält som säger något annat än länken är ett fel som ingen upptäcker.
+ */
+export function arkivleverantor(archiveUrl: string | null | undefined): "wayback" | "archive.today" | "okand" {
+  if (!archiveUrl) return "okand";
+  if (/(^|\/\/)web\.archive\.org\//.test(archiveUrl)) return "wayback";
+  if (/(^|\/\/)archive\.(?:ph|today|is|li|vn|fo|md)\//.test(archiveUrl)) return "archive.today";
+  return "okand";
 }
 
 export async function archiveViaArchiveToday(url: string, httpFetch: HttpFetch = globalThis.fetch.bind(globalThis)): Promise<ArchiveResult> {
