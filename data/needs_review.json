@@ -1033,5 +1033,388 @@
       "calculation": "Inget konkret enskilt åtagande att prissätta; 0 mkr."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Rättssäker asylprövning och återvändande utan skyddsskäl",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Asylprövningen måste vara rättssäker, och den som saknar skyddsskäl måste lämna landet.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asyl",
+    "articleTitle": "Asyl | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte om rättssäker asylprövning och återvändande utan konkret åtgärd eller belopp. Prissätts som noll enligt regel 13; eventuella specifika reformer prissätts separat.",
+      "confidence": 0.4,
+      "calculation": "Ingen kvantifierbar ny åtgärd anges. Jämförbart löfte p-2026-0328 = 0 msek/år. Base sätts därför till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0328 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Fler integrationsinsatser redan under asyltiden",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill att fler integrationsinsatser ska sättas in redan under asyltiden.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asylprogram",
+    "articleTitle": "Asylprogram | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå; prissatt i nivå med jämförbart löfte om 100 mkr/år. Avser nya statliga insatser under asyltiden, ej bidragsvillkor.",
+      "confidence": 0.4,
+      "calculation": "Antar utökade integrationsinsatser för asylsökande under väntetid. Räkneexempel: 15 000–30 000 asylsökande × 2 000–10 000 kr/person/år = 30–300 mkr/år; bas 100 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0390 (100)"
+  },
+  {
+    "candidate": {
+      "title": "Stärkt internationellt samarbete för att hämta hem barn som förts ut för barnäktenskap",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Genom stärkt internationellt samarbete ska svenska myndigheter få bättre möjligheter att snabbt lokalisera och hämta hem barn som förts ut ur Sverige för att giftas bort.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/barnaktenskap",
+    "articleTitle": "Barnäktenskap | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 70,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vag löfte utan belopp. Prissätter ökade myndighetsresurser för samordning, juridiskt/konsulärt arbete och hemresor; inte samhällsföljder.",
+      "confidence": 0.3,
+      "calculation": "Antar 10–50 barn/år som förs ut. Merkostnad per ärende 0,2–1 mkr för myndighetsarbete + fast samordning 5–20 mkr/år. Totalt ca 7–70 mkr/år; bas 20 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fängelsestraff för medverkan till barnäktenskapsbortförande",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Den som medverkar till att föra bort barn för äktenskap och inte följer beslut om återförande ska kunna dömas till fängelse.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/barnaktenskap",
+    "articleTitle": "Barnäktenskap | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagstiftningsåtgärd; direkt kostnad för lagändring försumbar. Fängelsekostnader är följd och kvantifieras inte. Jämförbar p-2026-0796 0 mkr.",
+      "confidence": 0.5,
+      "calculation": "Direkt kostnad 0. Ev. beredning 0–5 mkr. Följder i rättsväsendet exkluderas enligt regel 9."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0796 (0), p-2026-0373 (80) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~40"
+  },
+  {
+    "candidate": {
+      "title": "Tak på 12 barn i småbarnsgrupperna i förskolan",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna föreslår ett tak på 12 barn i småbarnsgrupperna i förskolan.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/barnomsorg",
+    "articleTitle": "Barnomsorg | Kristdemokraterna",
+    "duplicateOf": "p-2026-0735",
+    "duplicateReason": "samma tal: 12 barn · samma uttryck: «kristd föresl», «föresl barn», «barn småbar», «småbar försko»"
+  },
+  {
+    "candidate": {
+      "title": "Nationella prov ska korreleras med betyg",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Skolverket bör ta fram en modell för hur betygen ska korreleras mot resultaten i de nationella proven, inte på individnivå men väl på gruppnivå för respektive skola.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/betyg",
+    "articleTitle": "Betyg | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 2,
+      "msek_base": 5,
+      "msek_high": 12,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avser direkt utvecklingskostnad för Skolverket att ta fram modellen, inte framtida betygskonsekvenser eller statsbidrag. Liknar ett mindre analys- och utvecklingsuppdrag.",
+      "confidence": 0.4,
+      "calculation": "Skolverkets interna utvecklingsarbete: 1–3 årsarbetskrafter samt metod- och dataanalys. Lågt 2 mkr, bas 5 mkr. Högt 12 mkr om extern forskare och uppföljning inkluderas. Engångskostnad, inte årligt återkommande."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0430 (150) ⚠ AVVIKER: 5 avviker 30.0× från jämförbara (median 150)"
+  },
+  {
+    "candidate": {
+      "title": "Höga kunskapskrav och arbetsro i skolan",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "KD vill se höga kunskapskrav i skolan med tydligt fokus på ordning och arbetsro.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/betyg",
+    "articleTitle": "Betyg | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred inriktning utan konkret åtgärd eller nivå; kostnadsdrivande delar prissätts på specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Inget konkret åtagande angivet → ingen ny statlig nettokostnad prissätts."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0464 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Klassiskt bildningsideal ska värnas i skolsystemet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vårt skolsystem ska värna ett klassiskt bildningsideal som tar avstånd från relativism som urholkar kunskapens egenvärde.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/bildning",
+    "articleTitle": "Bildning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte om värdegrund utan konkret åtgärd eller belopp; prissätts som 0 enligt regel 13.",
+      "confidence": 0.1,
+      "calculation": "Inga konkreta steg eller målgrupper anges, så ingen kostnad kan beräknas; base 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fler aktörer och stärkt kommunalt inflytande över bostadsplanering",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill se fler aktörer på marknaden som pressar priserna tillsammans, samt stärka det regionala och kommunala inflytandet över bostadsplaneringen och förenkla regelkrånglet.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/bostad",
+    "articleTitle": "Bostad | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte om fler aktörer, stärkt kommunalt inflytande och förenklat regelverk. Direkta kostnaden för regelförändringar antas försumbar (regel 9/13).",
+      "confidence": 0.2,
+      "calculation": "Ingen konkret åtgärd, belopp eller mottagare anges. Löftet prissätts som inriktningslöfte utan ny statlig nettokostnad: 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0887 (0), p-2026-0675 (15), p-2026-0793 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Blandade boendemiljöer med olika upplåtelseformer",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill skapa mer blandade boendemiljöer med olika upplåtelseformer.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/bostad",
+    "articleTitle": "Bostad | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 enligt regel 13.",
+      "confidence": 0.2,
+      "calculation": "Inga specificerade statliga kostnader; endast övergripande mål om blandade upplåtelseformer."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fler poliser, domare och ökad kapacitet i Kriminalvården",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Det krävs fler poliser och domare samt ökad kapacitet i Kriminalvården.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/brottsbekampning",
+    "articleTitle": "Brottsbekämpning | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 800,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan antal. Baseras på jämförbart kriminalvårdslöfte (800 mkr/år) och ett försiktigt påslag för fler poliser/domare.",
+      "confidence": 0.4,
+      "calculation": "Kriminalvård: 400–800 mkr/år (jfr p-2026-0522). Poliser: 100–500 mkr/år (några hundra tjänster). Domare: 50–200 mkr/år. Summerat 550–1500, avrundat till 500–1500 med bas 800."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0522 (800), p-2026-0690 (20), p-2026-0607 (0), p-2026-0318 (0) ⚠ AVVIKER: 800 avviker 80.0× från jämförbara (median 10)"
+  },
+  {
+    "candidate": {
+      "title": "Införa flyttprogram för familjer i gängkriminalitet",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Flyttprogram bör införas för att hjälpa en hel familj att flytta om barnet fastnat i gängkriminalitet.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/brottsforebyggande-atgarder",
+    "articleTitle": "Brottsförebyggande åtgärder | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4,
+      "msek_base": 15,
+      "msek_high": 35,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antar ett riktat statsbidrag till kommuner för flyttstöd till familjer med barn i gängkriminalitet. Få familjer antas beröras årligen; kostnad per familj uppskattas utifrån flytt- och boendestöd.",
+      "confidence": 0.35,
+      "calculation": "20–70 familjer/år × 200–500 tkr per familj (flyttkostnad, hyresgaranti, socialt stöd) = 4–35 mkr/år; bas 15 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0580 (0), p-2026-0790 (80)"
+  },
+  {
+    "candidate": {
+      "title": "Fler avhopparprogram och bättre kriminalvård",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Fler måste ges möjlighet att lämna det kriminella livet bakom sig genom avhopparprogram och en kriminalvård som förbereder för ett laglydigt liv, samtidigt som återfall möts med kraftigare åtgärder.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/brottsforebyggande-atgarder",
+    "articleTitle": "Brottsförebyggande åtgärder | Kristdemokraterna",
+    "duplicateOf": "p-2026-0607"
+  },
+  {
+    "candidate": {
+      "title": "Stärka civilsamhället",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi är den politiska röst i regeringen som tydligast har agerat för ett starkt civilsamhälle och vi vill ge bra förutsättningar för civilsamhället att arbeta.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/civilsamhallet",
+    "articleTitle": "Civilsamhället | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 enligt regel 13.",
+      "confidence": 0.2,
+      "calculation": "Ingen specifik åtgärd, nivå eller finansiering angiven; inga kostnadsbärande delar att beräkna här."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
   }
 ]
