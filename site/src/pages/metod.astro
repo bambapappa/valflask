@@ -1,8 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { taladeKallorTal } from "../lib/prosans-tal";
+import { getRattelser } from "../lib/data";
+import { rattelserForSidan } from "../lib/rattelsenoter";
 
 const title = "Metod — utlovat.se";
+
+// Rättelsenoten hör hemma på sidan där felet stod, inte bara i loggen. Samma
+// regel som Frågevågens frågesidor följer, och samma skäl: den som läser
+// metoden ska se att en av meningarna varit fel, utan att först gå till
+// /rattelser och leta.
+const rattelser = rattelserForSidan(getRattelser(), "/metod");
 
 // Talen om de talade källorna är påståenden om datat, inte om metoden, och
 // slås därför upp vid varje bygge — samma skäl som Handlingsvågens metodsida
@@ -60,7 +68,7 @@ const jsonLd = [
         "name": "Hur hanterar ni löften som sägs i tal eller på video?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Löften ur text måste stå ordagrant i källan. Löften ur tal jämför vi mot en textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken, eftersom en automatisk textversion ofta blir slarvig med det. Vi märker alltid ut löften som kommer från tal. Två svagheter skriver vi ut: textversionen sparas inte hos oss, och länken pekar bara på en tidpunkt i filmen där källan är en videolänk — är den en partisida får man leta själv.",
+          "text": "Löften ur text måste stå ordagrant i källan. Löften ur tal jämför vi mot en textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken, eftersom en automatisk textversion ofta blir slarvig med det. Vi märker alltid ut löften som kommer från tal. Två svagheter skriver vi ut: textversionen har vi sparad men publicerar den inte, eftersom talet är talarens eget verk, och länken pekar bara på en tidpunkt i filmen där källan är en videolänk — är den en partisida får man leta själv.",
         },
       },
     ],
@@ -122,7 +130,7 @@ const jsonLd = [
       <h3>Löften från tal och video</h3>
       <p>De flesta löften kommer från text — partiernas webbplatser, riksdagens dokument, nyhetsartiklar — och då kräver vi att citatet står exakt så i texten. Men en del löften sägs i tal, till exempel i Almedalen, där det enda som finns är talarens egna ord i en film.</p>
       <p>Då jämför vi citatet mot en textversion av talet, men utan att vara petiga på stora och små bokstäver eller kommatecken — eftersom en automatisk textversion av tal ofta blir slarvig med just det. Det är en medveten och liten uppmjukning som <strong>bara</strong> gäller tal; text behåller den strikta kontrollen. Vi märker alltid ut när ett löfte kommer från ett tal.</p>
-      <p>Två saker om den här gruppen ska sägas rakt ut, för de är svagare än resten av materialet. <strong>Textversionen sparar vi inte.</strong> Den användes när citatet kontrollerades, men den ligger inte i vårt öppna kodförråd, så försvinner filmen finns bara vår anteckning om att kontrollen gjordes — inte underlaget att göra om den. Och <strong>länken pekar inte alltid på rätt tidpunkt i filmen.</strong> Där källan är en videolänk gör den det, så att vem som helst kan höra orden själv; där partiet i stället publicerat talet på sin egen sida länkar vi dit, och då får man leta själv. Av de {talade.totalt} löften som kommer ur tal har {talade.medTidpunkt} en tidpunkt. Vi skriver hellre ut det än låter det se jämnare ut än det är.</p>
+      <p>Två saker om den här gruppen ska sägas rakt ut, för de är svagare än resten av materialet. <strong>Textversionen har vi sparad, men vi publicerar den inte.</strong> Den ligger i vårt slutna arkiv och inte i det öppna kodförrådet, av ett skäl som inte är vårt att välja bort: ett tal är talarens eget verk, och vi får citera ur det men inte lägga ut det i sin helhet. Det betyder att du kan se <em>att</em> vi kontrollerat citatet mot texten och vilken dag — det står under citatet på löftets egen sida — men du kan inte göra om kontrollen själv utan att lyssna på filmen. Det är svagare än en arkivkopia du kan öppna, och står därför utskrivet varje gång i stället för att gömmas. Och <strong>länken pekar inte alltid på rätt tidpunkt i filmen.</strong> Där källan är en videolänk gör den det, så att vem som helst kan höra orden själv; där partiet i stället publicerat talet på sin egen sida länkar vi dit, och då får man leta själv. Av de {talade.totalt} löften som kommer ur tal har {talade.medTidpunkt} en tidpunkt. Vi skriver hellre ut det än låter det se jämnare ut än det är.</p>
 
       <h2 id="ai">AI-förordningen: var AI används, och vem som ansvarar</h2>
       <p>Sajten byggs med hjälp av AI, och det ska synas exakt var. Sedan den 2 augusti 2026 kräver EU:s AI-förordning att den som publicerar AI-skriven text i frågor av allmänintresse säger det öppet. Vallöften och prislappar är just sådana frågor, så här står det utskrivet — punkt för punkt, i stället för som en svepande brasklapp.</p>
@@ -169,6 +177,24 @@ const jsonLd = [
       <h2 id="gap">Hur mycket finns det egentligen att röra sig med?</h2>
       <p>Det finns en gräns för hur mycket nya pengar staten realistiskt kan lägga på reformer. Som mått använder vi ett konkret, officiellt tal: <strong>regeringens egen reformbudget i budgetpropositionen för 2026</strong> — knappt 80 miljarder kronor per år, utöver försvar och stöd till Ukraina. Vi ställer summan av alla löften mot det utrymmet över hela mandatperioden (fyra år, alltså cirka 320 miljarder) — och den blir nästan alltid övertrasserad. Det är liksom poängen.</p>
       <p>Varför just den siffran? För att den är hämtad ur regeringens egen budget och därför lätt att kontrollera. Konjunkturinstitutets bedömning av det <em>egentliga</em> reformutrymmet är dessutom ännu snävare — så om något är vår mätare snäll mot löftena. Saknas en pålitlig siffra visar vi bara löftessumman och säger varför.</p>
+
+      {rattelser.length > 0 && (
+        <section class="sektion" id="rattelser">
+          <h2>Rättat i efterhand</h2>
+          <p class="rattelsenot__ingress">
+            {rattelser.length === 1 ? "En rättelse rör" : `${rattelser.length} rättelser rör`}
+            {" "}den här sidan. Fel rättas synligt, aldrig i tysthet — hela loggen står på
+            {" "}<a href="/rattelser">rättelsesidan</a>.
+          </p>
+          {rattelser.map((r) => (
+            <article class="rattelsenot">
+              <div class="etikett num">{r.date} · {r.affects}</div>
+              <p><strong>Vad:</strong> {r.what}</p>
+              <p><strong>Varför:</strong> {r.why}</p>
+            </article>
+          ))}
+        </section>
+      )}
     </div>
   </div>
 </Layout>

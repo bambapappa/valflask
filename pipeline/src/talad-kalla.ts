@@ -88,7 +88,11 @@ export function tidpunktSomText(sekunder: number): string {
 }
 
 /** Vad kontrollen av en talad källa kan svara. */
-export type TaladUtfall = "talad-belagd" | "talad-utan-avskrift" | "talad-utan-tid";
+export type TaladUtfall =
+  | "talad-belagd"
+  | "talad-belagd-hallen"
+  | "talad-utan-avskrift"
+  | "talad-utan-tid";
 
 /**
  * Beläggs det talade citatet så som beslutet kräver?
@@ -115,13 +119,24 @@ export type TaladUtfall = "talad-belagd" | "talad-utan-avskrift" | "talad-utan-t
  * mot den. `undefined` betyder att ingen avskrift är angiven; att skilja det
  * från `false` är samma regel som skiljer «kom aldrig till» från «gick inte att
  * avgöra» — en post utan avskrift är inte en post med en dålig avskrift.
+ *
+ * **Mänskligt beslut 2026-08-17 — en avskrift kan vara hållen utan att vara
+ * publik.** Avskrifterna till sändningarna finns sedan 2026-06-29 i det privata
+ * bevisvalvet, och citaten är prövade mot dem. De får ändå inte publiceras:
+ * SPEC §6.2 och §17 förbjuder fulltextlagring och återpublicering, och ett
+ * partiledartal är någons verk. Utfallet `talad-belagd-hallen` säger därför
+ * exakt det som är sant — citatet är prövat mot en avskrift, men läsaren kan
+ * inte öppna den. Det är svagare än en arkivkopia och får aldrig visas som
+ * likvärdigt; en post som kan byta till en publicerad textkälla bör göra det.
  */
 export function provaTaladKalla(
   url: string | null | undefined,
   avskriftBarCitatet?: boolean,
+  hallenAvskriftBarCitatet?: boolean,
 ): TaladUtfall {
   if (tidpunktISekunder(url) === null) return "talad-utan-tid";
-  return avskriftBarCitatet === true ? "talad-belagd" : "talad-utan-avskrift";
+  if (avskriftBarCitatet === true) return "talad-belagd";
+  return hallenAvskriftBarCitatet === true ? "talad-belagd-hallen" : "talad-utan-avskrift";
 }
 
 /**
@@ -135,4 +150,45 @@ export function avskriftensAdress(
 ): string | null {
   const u = kalla?.transcript_url;
   return typeof u === "string" && u.trim() !== "" ? u : null;
+}
+
+/** Den hållna avskriften: var den ligger, när citatet prövades och hur hårt. */
+export interface HallenAvskrift {
+  /** Filmens id hos värden — det som gör avskriften återfinningsbar i valvet. */
+  video_id: string;
+  /** Valvfilen, med repo och sökväg. Privat: adressen går inte att öppna utan behörighet. */
+  vault: string;
+  /** Datum då citatet senast prövades mot avskriften. */
+  checked_at: string;
+  /**
+   * Hårdaste regeln citatet klarade. `strikt` jämför tecken för tecken så när
+   * som på typografi; `mjuk` är ASR-undantaget från 2026-06-29, som bortser
+   * från skiftläge och skiljetecken därför att maskinskriven text hör fel på
+   * just dem. Att skriva ut vilken som gällde är hela poängen — annars säger
+   * fältet bara «kontrollerat», och det är inget mått.
+   */
+  comparison: "strikt" | "mjuk";
+}
+
+/**
+ * Den hållna avskriften, när posten anger en.
+ *
+ * Skild från `avskriftensAdress` med flit: den funktionen svarar på vad en
+ * läsare kan öppna, den här på vad vi har kontrollerat mot. Blandas de ihop
+ * blir en privat kontroll redovisad som ett publikt belägg.
+ */
+export function hallenAvskrift(
+  kalla: { transcript_held?: HallenAvskrift | null } | null | undefined,
+): HallenAvskrift | null {
+  const h = kalla?.transcript_held;
+  return h && typeof h.video_id === "string" && h.video_id !== "" ? h : null;
+}
+
+/** Filmens id ur en sändningsadress: `?v=` hos YouTube, sista ledet hos youtu.be. */
+export function filmensId(url: string | null | undefined): string | null {
+  const u = url ?? "";
+  const v = /[?&]v=([A-Za-z0-9_-]+)/.exec(u);
+  if (v) return v[1]!;
+  const kort = /youtu\.be\/([A-Za-z0-9_-]+)/.exec(u);
+  return kort ? kort[1]! : null;
 }

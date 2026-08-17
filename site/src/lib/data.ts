@@ -34,6 +34,19 @@ export interface PromisePost {
     source_checked_at?: string;
     /** Vad som ändrats — se `andrade-kallor.ts`. Bara på källor som inte är `ok`. */
     source_change?: Kallandring;
+    /**
+     * Avskrift av sändningen som vi har prövat citatet mot men inte publicerar
+     * — SPEC §6.2 och §17 förbjuder fulltextlagring i repot, och ett tal är
+     * någons verk. Mänskligt beslut 2026-08-17. Bara på talade källor, och
+     * aldrig ett belägg läsaren själv kan öppna: `pnpm avskrift:kontroll` är
+     * återskapandet för den som har valvet.
+     */
+    transcript_held?: {
+      video_id: string;
+      vault: string;
+      checked_at: string;
+      comparison: "strikt" | "mjuk";
+    } | null;
   };
   category: string;
   cost: {

@@ -29,6 +29,11 @@
  *   ej-provad   kom aldrig till (--max slog till) — skilj den från oavgjort,
  *               annars ser en avbruten körning ut som ett nätstrul
  *
+ * Talade källor har egna utfall, och ett av dem är svagare än det ser ut:
+ * `talad-belagd-hallen` betyder att citatet är prövat mot en avskrift i det
+ * privata valvet, som läsaren inte kan öppna. Prövningen görs om med
+ * `pnpm avskrift:kontroll`, inte här — det här svepet går på nätet.
+ *
  * Exitkod 1 sätts BARA av "bar-inte". Ett nätfel får aldrig se ut som ett
  * underkänt citat; det är samma regel som källrötebevakningen följer, och
  * skälet är att vi annars anklagar en ögonblicksbild för vårt eget nätstrul.
@@ -37,7 +42,15 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { quoteInSnapshotText, snapshotText } from "../src/archive-verify.ts";
 import { standpunkterUrCeller, type ArkivPost, type StanceCell } from "../src/arkiv-poster.ts";
-import { arTaladKalla, avskriftensAdress, provaTaladKalla, tidpunktISekunder, tidpunktSomText } from "../src/talad-kalla.ts";
+import {
+  arTaladKalla,
+  avskriftensAdress,
+  hallenAvskrift,
+  type HallenAvskrift,
+  provaTaladKalla,
+  tidpunktISekunder,
+  tidpunktSomText,
+} from "../src/talad-kalla.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const DATA = join(ROOT, "data");
@@ -72,16 +85,22 @@ type Utfall =
   | "oavgjort"
   | "ej-provad"
   | "talad-belagd"
+  | "talad-belagd-hallen"
   | "talad-utan-avskrift"
   | "talad-utan-tid";
-type Post = ArkivPost & { avskrift?: string | null };
+type Post = ArkivPost & { avskrift?: string | null; hallen?: boolean };
 type Rad = Post & { utfall: Utfall };
 
 type Promise_ = {
   id: string;
   status?: string;
   quote?: string;
-  source?: { url?: string; archive_url?: string | null; transcript_url?: string | null };
+  source?: {
+    url?: string;
+    archive_url?: string | null;
+    transcript_url?: string | null;
+    transcript_held?: HallenAvskrift | null;
+  };
 };
 function loften(): Post[] {
   const rows = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Promise_[];
@@ -94,6 +113,11 @@ function loften(): Post[] {
       kalla: p.source?.url ?? "",
       arkiv: p.source?.archive_url ?? null,
       avskrift: avskriftensAdress(p.source),
+      // Den hållna avskriften hämtas inte här: den ligger i det privata valvet
+      // och det här svepet går på nätet. Att posten HAR en är däremot läsbart,
+      // och skillnaden mot «ingen avskrift alls» är hela poängen. Själva
+      // prövningen mot texten görs om av `pnpm avskrift:kontroll`.
+      hallen: hallenAvskrift(p.source) !== null,
     }));
 }
 
@@ -149,13 +173,19 @@ for (const p of talade) {
     const t = avskriftstext.get(p.avskrift) ?? null;
     bar = t === null ? undefined : quoteInSnapshotText(t, p.quote);
   }
-  const utfall = provaTaladKalla(p.kalla, bar);
+  const utfall = provaTaladKalla(p.kalla, bar, p.hallen);
   rader.push({ ...p, utfall });
-  if (!somJson && (!baraFel || utfall !== "talad-belagd")) {
+  const belagd = utfall === "talad-belagd" || utfall === "talad-belagd-hallen";
+  if (!somJson && (!baraFel || !belagd)) {
     const sek = tidpunktISekunder(p.kalla);
     const var_ = sek === null ? "INGEN TIDPUNKT" : `vid ${tidpunktSomText(sek)}`;
-    const brist = utfall === "talad-utan-avskrift" ? "INGEN AVSKRIFT" : utfall === "talad-utan-tid" ? "" : "";
-    console.log(`${(utfall === "talad-belagd" ? "talad" : "TALAD").padEnd(9)} ${p.id.padEnd(24)} ${p.slag.padEnd(11)} ${var_} ${brist}  ${p.kalla}`);
+    const brist =
+      utfall === "talad-utan-avskrift"
+        ? "INGEN AVSKRIFT"
+        : utfall === "talad-belagd-hallen"
+          ? "hållen avskrift, ej publik — pnpm avskrift:kontroll"
+          : "";
+    console.log(`${(belagd ? "talad" : "TALAD").padEnd(9)} ${p.id.padEnd(24)} ${p.slag.padEnd(11)} ${var_} ${brist}  ${p.kalla}`);
   }
 }
 
@@ -175,6 +205,7 @@ for (const lank of arkivlankar) {
         oavgjort: "oavgjort",
         "ej-provad": "ej prövad",
         "talad-belagd": "talad",
+        "talad-belagd-hallen": "talad*",
         "talad-utan-avskrift": "TALAD",
         "talad-utan-tid": "TALAD",
       };
@@ -203,6 +234,9 @@ if (somJson) {
   console.log(`Saknar arkivkopia:      ${rakna("saknas")}`);
   console.log(`Gick inte att avgöra:   ${rakna("oavgjort")}   (nätet — säger inget om kopian)`);
   console.log(`Talad källa, belagd:    ${rakna("talad-belagd")}   (avskrift + tidsstämpel, beslutet 2026-08-09)`);
+  console.log(
+    `Talad, hållen avskrift: ${rakna("talad-belagd-hallen")}   (prövad mot valvet — läsaren kan inte öppna den; pnpm avskrift:kontroll)`,
+  );
   console.log(`Talad UTAN avskrift:    ${rakna("talad-utan-avskrift")}   (tidsstämpel finns; avskriften saknas eller bär inte citatet)`);
   console.log(`Talad UTAN tidpunkt:    ${utanTid.length}   (tidpunkten måste slås upp i sändningen)`);
   if (rakna("ej-provad") > 0) {
