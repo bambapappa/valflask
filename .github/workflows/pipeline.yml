@@ -153,10 +153,33 @@ jobs:
           git commit -m "data: pipeline run ${{ github.run_id }}"
           # main kan ha gått vidare (mergad PR) sedan checkout → rebasa och försök igen,
           # annars avvisas push:en som non-fast-forward och hela körningen failar.
+          #
+          # `git rebase --abort` är det som saknades 2026-08-17 (larm #1908).
+          # Rebasen föll på en konflikt i data/changelog.json, trädet blev
+          # kvar i rebase-läge, och de fyra följande försöken svarade alla
+          # «Pulling is not possible because you have unmerged files». Loopen
+          # såg ut att försöka fem gånger men försökte i praktiken en enda —
+          # och körningens data pushades aldrig.
           for attempt in 1 2 3 4 5; do
             if git pull --rebase origin main && git push; then
               echo "Push lyckades (försök $attempt)."
               exit 0
+            fi
+            # Skilj kapplöpning från konflikt. En kapplöpning löser sig av
+            # att försöka igen; en konflikt gör det aldrig, och att snurra
+            # på den döljer vad som hände.
+            if git rev-parse --verify --quiet REBASE_HEAD >/dev/null; then
+              konflikter=$(git diff --name-only --diff-filter=U | tr '\n' ' ')
+              git rebase --abort 2>/dev/null || true
+              if [ -n "$konflikter" ]; then
+                echo "Rebasen föll på en KONFLIKT i: $konflikter"
+                echo "Det är inte en kapplöpning och löser sig inte av fler försök."
+                echo "data/changelog.json är en tillagd-sist-lista: två körningar som"
+                echo "båda lägger till en post krockar alltid i slutet. Datat i den här"
+                echo "körningen är INTE pushat. Lös för hand och kontrollera att sista"
+                echo "postens data_hash matchar computeDataHash(promises.json)."
+                exit 1
+              fi
             fi
             echo "Push-försök $attempt misslyckades (main har troligen gått vidare). Försöker igen..."
             sleep $((attempt * 5))

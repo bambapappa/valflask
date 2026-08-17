@@ -59,8 +59,35 @@ jobs:
       - name: Commit data if changed
         run: |
           git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
-          git add data/stances.json data/promises.json data/changelog.json && git diff --cached --quiet || git commit -m "data: källröta-kontroll $(date -u +%F) (run ${{ github.run_id }})"
-          git push
+          git add data/stances.json data/promises.json data/changelog.json
+          if git diff --cached --quiet; then
+            echo "Inga dataändringar — inget att committa."
+            exit 0
+          fi
+          git commit -m "data: källröta-kontroll $(date -u +%F) (run ${{ github.run_id }})"
+          # main går vidare under körningen — pipelinen, skörden och
+          # review-besluten pushar hit hela dygnet. Här stod förut en naken
+          # `git push`, och 2026-08-17 föll bevakningen på precis det: en
+          # annan körning hann före med 21 sekunder, pushen avvisades som
+          # non-fast-forward, och veckans rötmätning kastades. Larmet gick
+          # för något som inte var trasigt.
+          #
+          # `git rebase --abort` i loopen är inte prydnad. Faller rebasen på
+          # en konflikt står trädet kvar i rebase-läge, och varje följande
+          # `git pull` svarar «Pulling is not possible because you have
+          # unmerged files» — försök 2 till 5 kan då inte lyckas ens i
+          # teorin. Det är den fällan pipeline.yml gick i samma morgon.
+          for forsok in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push; then
+              echo "Push lyckades (försök $forsok)."
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push-försök $forsok misslyckades (main har troligen gått vidare). Försöker igen..."
+            sleep $((forsok * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
 
   # Larmet är hela skälet till att ett fel i den här körningen syns för en
   # människa. Delad implementation i larm.yml — lägg aldrig en kopia här.
