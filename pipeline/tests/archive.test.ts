@@ -231,34 +231,45 @@ const ghostSvar = (html: string, status = 200): Response => ({
   text: async () => html,
 } as unknown as Response);
 
-test("slaUppGhostarchive: hittar en sidkopia", async () => {
+test("slaUppGhostarchive: hittar en sidkopia när adressen står i samma rad", async () => {
   const url = "https://kd.se/pension";
   const fetch: HttpFetch = async () =>
-    ghostSvar(`<tr><td>${url}</td><td><a href="/archive/rJZdi">se</a></td></tr>`);
+    ghostSvar(`<h1>Archives for ${url}</h1><table><tr><td>${url}</td><td><a href="/archive/rJZdi">se</a></td></tr></table>`);
   assert.equal(await slaUppGhostarchive(url, fetch), "https://ghostarchive.org/archive/rJZdi");
 });
 
-test("slaUppGhostarchive: hittar en VIDEOkopia — det ingen annan tjänst gör", async () => {
+test("slaUppGhostarchive: hittar en VIDEOkopia på filmens id — det ingen annan tjänst gör", async () => {
+  // Videoraden visar bara filmens titel, ingen adress. Id:t i /varchive/ ÄR
+  // YouTubes video-id, och det är den exakta jämförelsen.
   const url = "https://www.youtube.com/watch?v=jNQXAC9IVRw";
   const fetch: HttpFetch = async () =>
-    ghostSvar(`<td>${url}</td><a href="/varchive/jNQXAC9IVRw">se</a>`);
+    ghostSvar(`<h1>Archives for ${url}</h1><table><tr><td>Me at the zoo</td><td><a href="/varchive/jNQXAC9IVRw">se</a></td></tr></table>`);
   assert.equal(
     await slaUppGhostarchive(url, fetch),
     "https://ghostarchive.org/varchive/jNQXAC9IVRw",
   );
 });
 
-test("slaUppGhostarchive: träff på ANNAN adress godtas inte", async () => {
-  // Sökningen är mönsterbaserad. En kopia av grannsidan på samma domän är
-  // inget belägg för vårt citat, och att ta den hade varit tyst fel: länken
-  // hade sett riktig ut och pekat på fel sida.
+test("slaUppGhostarchive: ekot i rubriken godtas INTE som träff", async () => {
+  // Regressionsprovet. Sökresultatsidan ekar alltid tillbaka frågan, även för
+  // en påhittad adress — mätt 2026-08-17. Första versionen godtog träffen om
+  // adressen fanns "någonstans i svaret", vilket alltså alltid var sant. Här
+  // ekas frågan i rubriken medan enda arkivraden gäller en ANNAN sida.
+  const url = "https://kd.se/pension";
   const fetch: HttpFetch = async () =>
-    ghostSvar('<td>https://kd.se/NAGOT-ANNAT</td><a href="/archive/rJZdi">se</a>');
-  assert.equal(await slaUppGhostarchive("https://kd.se/pension", fetch), null);
+    ghostSvar(`<h1>Archives for ${url}</h1><table><tr><td>https://kd.se/NAGOT-ANNAT</td><td><a href="/archive/rJZdi">se</a></td></tr></table>`);
+  assert.equal(await slaUppGhostarchive(url, fetch), null);
+});
+
+test("slaUppGhostarchive: videokopia av FEL film godtas inte", async () => {
+  const url = "https://www.youtube.com/watch?v=jNQXAC9IVRw";
+  const fetch: HttpFetch = async () =>
+    ghostSvar(`<h1>Archives for ${url}</h1><table><tr><td>Annan film</td><td><a href="/varchive/ANNANFILM123">se</a></td></tr></table>`);
+  assert.equal(await slaUppGhostarchive(url, fetch), null);
 });
 
 test("slaUppGhostarchive: inga träffar ger null", async () => {
-  const fetch: HttpFetch = async () => ghostSvar("<p>No results</p>");
+  const fetch: HttpFetch = async () => ghostSvar("<h1>Archives for https://kd.se/pension</h1><p>No results</p>");
   assert.equal(await slaUppGhostarchive("https://kd.se/pension", fetch), null);
 });
 

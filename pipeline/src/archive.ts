@@ -192,9 +192,6 @@ export async function slaUppArchiveToday(
 /* ────────────────────────────────────────────────────── Ghostarchive ── */
 
 const GHOST_HOST = "ghostarchive.org";
-/** En färdig ögonblicksbild hos Ghostarchive. `varchive` är videoarkivet. */
-const GHOST_SNAPSHOT_RE = /\/(v?archive)\/([A-Za-z0-9_-]{4,})/;
-
 /**
  * Uppslag hos Ghostarchive — tredje spåret, och det enda som arkiverar
  * YouTube-video.
@@ -205,9 +202,22 @@ const GHOST_SNAPSHOT_RE = /\/(v?archive)\/([A-Za-z0-9_-]{4,})/;
  * Två oberoende gratisarkiv, båda öppna för läsning och stängda för
  * automatiskt skrivande — det är inte en egenhet hos det ena.
  *
- * Träffen godtas bara om den EXAKTA adressen står i svaret. Sökningen är
- * mönsterbaserad och kan annars ge kopior av andra sidor på samma domän, och
- * en kopia av grannsidan är inget belägg för vårt citat.
+ * VAKTEN, OCH VARFÖR DEN FÖRSTA INTE VAKTADE NÅGOT
+ *
+ * Första versionen godtog träffen om den exakta adressen fanns någonstans i
+ * svaret. Mätt 2026-08-17: **sökresultatsidan ekar alltid tillbaka frågan**,
+ * även för en påhittad adress som `finns-inte-alls-12345.example.org`. Testet
+ * var alltså alltid sant och vaktade ingenting. Det enda som räddade oss var
+ * att en tom träfflista saknar arkivlänkar — tur, inte en spärr. En sökning
+ * som gav kopior av ANDRA sidor hade fäst fel kopia vid ett löfte.
+ *
+ * Nu prövas varje träffrad för sig, och prövningen skiljer sig åt:
+ *
+ *   · videokopia — `/varchive/<id>` bär YouTubes egen video-id. Den jämförs
+ *     mot id:t i vår adress. Exakt, och raden innehåller ingen URL alls att
+ *     jämföra mot (den visar bara filmens titel).
+ *   · sidkopia — `/archive/<kod>` bär en ogenomskinlig kod. Då krävs att den
+ *     exakta adressen står i SAMMA rad, inte bara på sidan.
  */
 export async function slaUppGhostarchive(
   url: string,
@@ -220,9 +230,17 @@ export async function slaUppGhostarchive(
     );
     if (!res.ok) return null;
     const html = await res.text();
-    if (!html.includes(url)) return null; // sökträffar för något annat
-    const m = GHOST_SNAPSHOT_RE.exec(html);
-    return m ? `https://${GHOST_HOST}/${m[1]}/${m[2]}` : null;
+    // Rubriken ligger utanför tabellen och ekar frågan — därför bara raderna.
+    const rader = html.split(/<tr/i).slice(1);
+    const videoId = /[?&]v=([A-Za-z0-9_-]{6,})/.exec(url)?.[1]
+      ?? /youtu\.be\/([A-Za-z0-9_-]{6,})/.exec(url)?.[1];
+    for (const rad of rader) {
+      const v = /\/varchive\/([A-Za-z0-9_-]{4,})/.exec(rad);
+      if (v && videoId && v[1] === videoId) return `https://${GHOST_HOST}/varchive/${v[1]}`;
+      const a = /\/archive\/([A-Za-z0-9_-]{4,})/.exec(rad);
+      if (a && rad.includes(url)) return `https://${GHOST_HOST}/archive/${a[1]}`;
+    }
+    return null;
   } catch {
     return null;
   }
