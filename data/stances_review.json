@@ -22,5 +22,221 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi bygger ny kärnkraft.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet är 4 ord — golvet är 5"
+      }
+    ],
+    "articleUrl": "https://www.sd.se/vad-vi-vill/folder-vi-gor-sverige-till-sverige-igen/",
+    "articleTitle": "Folder - Vi gör Sverige till Sverige igen | Sverigedemokraterna",
+    "runId": "run-2026-08-17-18-34"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Språkkrav inom äldreomsorgen",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet är 3 ord — golvet är 5"
+      }
+    ],
+    "articleUrl": "https://www.sd.se/vad-vi-vill/sverige-pa-vag/",
+    "articleTitle": "Sverige på väg | Sverigedemokraterna",
+    "runId": "run-2026-08-17-18-34"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-akasse",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Därför föreslår Vänsterpartiet att: Den högsta dagpenningen och grundbeloppet höjs.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G6",
+        "reason": "Okänd delfråga: sq-jobb-akasse"
+      }
+    ],
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/a-kassa/",
+    "articleTitle": "A-kassa – Vänsterpartiet",
+    "runId": "run-2026-08-17-18-34"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-straffalder",
+      "party": "mp",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Miljöpartiet säger nej till sänkt straffmyndighetsålder och ungdomsfängelser.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G7",
+        "reason": "Publiceringsdatum 2022-08-17T17:48:10.000Z ligger 1461 dygn från körningen — fönstret är ±548 dygn"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/barn-och-barnratt/",
+    "articleTitle": "Miljöpartiets barnrättspolitik",
+    "runId": "run-2026-08-17-18-34"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-reduktionsplikt",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Därför vill Miljöpartiet under en övergångsperiod öka andelen förnybara drivmedel i bensin och diesel genom en reduktionsplikt.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G7",
+        "reason": "Publiceringsdatum 2021-07-07T07:29:56.000Z ligger 1867 dygn från körningen — fönstret är ±548 dygn"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/bilar-och-bransle/",
+    "articleTitle": "Miljöpartiet bilar och bränslen",
+    "runId": "run-2026-08-17-18-34"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-atervandring",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Den frivilliga återvandringen har påbörjats och ska fortsätta att främjas.",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/vad-vi-vill/folder-vi-gor-sverige-till-sverige-igen/",
+    "articleTitle": "Folder - Vi gör Sverige till Sverige igen | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/vad-vi-vill/folder-vi-gor-sverige-till-sverige-igen/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-03",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-17-18-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Återföra huvudmannaskapet över skolan till staten",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/vad-vi-vill/sverige-pa-vag/",
+    "articleTitle": "Sverige på väg | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/vad-vi-vill/sverige-pa-vag/",
+    "archiveUrl": "https://web.archive.org/web/20260817202225/https://www.sd.se/vad-vi-vill/sverige-pa-vag/",
+    "dateStated": "2026-06-12",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-17-18-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Statligt stöd till ny kärnkraft",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/vad-vi-vill/sverige-pa-vag/",
+    "articleTitle": "Sverige på väg | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/vad-vi-vill/sverige-pa-vag/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-12",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-17-18-34",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet \"Statligt stöd till ny kärnkraft\" tar upp stöd till ny kärnkraft men säger inget om att det ska fortsätta eller om partiet står bakom den beslutade ordningen framåt, vilket är själva avgränsningen."
+      }
+    ],
+    "verifyReason": "Citatet \"Statligt stöd till ny kärnkraft\" tar upp stöd till ny kärnkraft men säger inget om att det ska fortsätta eller om partiet står bakom den beslutade ordningen framåt, vilket är själva avgränsningen."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-reduktionsplikt",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vänsterpartiet anser att reduktionsplikten behöver höjas från nuvarande nivå på 10 procent.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/klimatmalen-till-2030/",
+    "articleTitle": "Klimatmålen till 2030 – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/klimatmalen-till-2030/",
+    "archiveUrl": "https://web.archive.org/web/20260817203908/https://www.vansterpartiet.se/var-politik/klimatmalen-till-2030/",
+    "dateStated": "2026-08-17",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-17-18-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-vinst",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Stopp för vinstjakten i vård och omsorg. Varenda skattekrona ska gå till personal och brukare, inte till VD:ars-löner och aktieägares utdelningar.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/aldreomsorg/",
+    "articleTitle": "Äldreomsorg – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/aldreomsorg/",
+    "archiveUrl": "https://web.archive.org/web/20260817211536/https://www.vansterpartiet.se/var-politik/politik-a-o/aldreomsorg/",
+    "dateStated": "2026-08-17",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-17-18-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
