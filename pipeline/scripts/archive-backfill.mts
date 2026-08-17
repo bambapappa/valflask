@@ -27,6 +27,17 @@ import { GRUNDPAUS_MS, hamtaFranArkivet } from "../src/wayback-takt.ts";
 
 /** Hur många begäranden arkivet strypte under körningen. Skrivs ut till sist. */
 let strypta = 0;
+/**
+ * Hur många uppslag arkivet aldrig svarade på — nätfel eller ett 5xx som inte
+ * är strypning. **Det är inte samma sak som «ingen kopia finns», och fick inte
+ * heta så.** 2026-08-17 svarade Internet Archive 502 och 503 på både
+ * availability- och CDX-API:t under hela morgonen. Körningen skrev «saknas»
+ * för tjugosex käll-URL:er och «Kvar utan arkiv: 45» — som om det vore mätt.
+ * Ingenting var mätt: arkivet var nere. Raden ovan sade redan att en strypt
+ * begäran inte är ett nej, men bara 429 och 503 gick den vägen; ett 502 föll
+ * igenom som ett giltigt «nej».
+ */
+let osvarade = 0;
 
 const DATA = join(import.meta.dirname, "../../data");
 const MODE = process.argv[2] ?? "avail";
@@ -74,7 +85,7 @@ async function availabilityOnce(url: string, ts: string): Promise<string | null>
     signal: AbortSignal.timeout(20000),
   });
   if (svar.slag === "strypt") { strypta++; return null; }
-  if (svar.slag === "nat" || !svar.res.ok) return null;
+  if (svar.slag === "nat" || !svar.res.ok) { osvarade++; return null; }
   try {
     const j = await svar.res.json() as { archived_snapshots?: { closest?: { url?: string; available?: boolean } } };
     const c = j.archived_snapshots?.closest;
@@ -116,9 +127,15 @@ const needSave: string[] = [];
 // --- Fas A: befintliga snapshots ---
 console.log("Fas A: availability för befintliga snapshots...");
 for (const key of urls) {
+  const foreOsvarade = osvarade;
   const snap = await availability(key, groups.get(key)!.ts);
   if (snap) { resolved.set(key, snap); console.log(`  ✓ ${key} -> ${snap.slice(0, 60)}`); }
-  else { needSave.push(key); console.log(`  – saknas: ${key}`); }
+  else {
+    needSave.push(key);
+    // Skilj «arkivet svarade inte» från «arkivet svarade, och det finns ingen
+    // kopia». Bara det senare är en mätning.
+    console.log(osvarade > foreOsvarade ? `  ? arkivet svarade inte: ${key}` : `  – saknas: ${key}`);
+  }
   await sleep(GRUNDPAUS_MS);
 }
 
@@ -316,4 +333,14 @@ if (strypta > 0) {
   // Skrivs ut för att en strypt körning annars ser fullständig ut: «kvar utan
   // arkiv» blir samma tal oavsett om arkivet svarade nej eller inte hade något.
   console.log(`Arkivet strypte ${strypta} begäranden — kör igen senare innan du drar slutsatser om det som står kvar.`);
+}
+if (osvarade > 0) {
+  // Samma skäl som ovan, men för det fel som faktiskt inträffade 2026-08-17:
+  // arkivet svarade 502 på allt. Utan den här raden ser en nedtid ut som en
+  // mätning — «saknas» för varenda källa — och nästa läsare tror att kopiorna
+  // inte finns.
+  console.log(
+    `Arkivet svarade inte på ${osvarade} uppslag (nätfel eller 5xx). De räknas INTE som «ingen kopia finns» ` +
+      "— det är inget besked alls. Är talet lika stort som antalet källor är arkivet nere; kör om senare.",
+  );
 }
