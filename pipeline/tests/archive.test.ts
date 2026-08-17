@@ -9,6 +9,8 @@ import {
   extractArchiveTodayUrl,
   archiveWithFallback,
   snapshotUrUrSparsvar,
+  slaUppArchiveToday,
+  arkivleverantor,
   type HttpFetch,
 } from "../src/archive.ts";
 
@@ -147,4 +149,64 @@ test("ett svar utan kopia ger ingen adress — då, och bara då, är väntan p�
   assert.equal(snapshotUrUrSparsvar(svar), null);
   // Och en adress som inte alls pekar på arkivet får aldrig tas för en kopia.
   assert.equal(snapshotUrUrSparsvar(res("https://mp.se/folkel")), null);
+});
+
+/* ───────────────────────── slaUppArchiveToday ── */
+
+/**
+ * Uppslaget som skildes från sparandet 2026-08-17.
+ *
+ * Bakgrunden är mätt: Internet Archive låg nere hela morgonen, och
+ * `archive-backfill.mts` — som bara talade med Wayback — rapporterade
+ * «saknas» för 26 käll-URL:er. Reservspåret fanns redan i `archive.ts`, men
+ * bara inne i `archiveWithFallback`, som backfillen aldrig anropade.
+ * Kapaciteten fanns; kopplingen saknades. Ett uppslag är billigt och får
+ * göras för varje källa; ett sparande är dyrt och har en budget.
+ */
+test("slaUppArchiveToday: hittar en färdig kopia utan att spara något", async () => {
+  const bett: string[] = [];
+  const fetch: HttpFetch = async (u) => {
+    bett.push(u);
+    return res("https://archive.ph/aB9k2");
+  };
+  assert.equal(await slaUppArchiveToday("https://kd.se/pension", fetch), "https://archive.ph/aB9k2");
+  assert.equal(bett.length, 1, "uppslaget ska vara EN begäran");
+  assert.ok(bett[0]!.includes("/newest/"), "och den ska gå till /newest/");
+  assert.ok(!bett.some((u) => u.includes("/submit/")), "uppslaget får aldrig spara");
+});
+
+test("slaUppArchiveToday: ingen kopia ger null, inte ett undantag", async () => {
+  const fetch: HttpFetch = async () => res("https://archive.ph/newest/https://kd.se/x", { status: 404 });
+  assert.equal(await slaUppArchiveToday("https://kd.se/x", fetch), null);
+});
+
+test("slaUppArchiveToday: tjänsten nere ger null, inte ett kastat fel", async () => {
+  const fetch: HttpFetch = async () => { throw new Error("ECONNREFUSED"); };
+  assert.equal(await slaUppArchiveToday("https://kd.se/x", fetch), null);
+});
+
+/* ───────────────────────── arkivleverantor ── */
+
+/**
+ * Leverantören härleds ur adressen och lagras inte i ett eget fält. En
+ * adress kan inte glida isär från sig själv; ett fält som säger något annat
+ * än länken är ett fel ingen upptäcker.
+ */
+test("arkivleverantor: skiljer Wayback från reservarkivet", () => {
+  assert.equal(
+    arkivleverantor("https://web.archive.org/web/20260709051254/https://v.se/nyhet"),
+    "wayback",
+  );
+  assert.equal(arkivleverantor("https://archive.ph/aB9k2"), "archive.today");
+  assert.equal(arkivleverantor("https://archive.is/20260716/https://v.se/nyhet"), "archive.today");
+});
+
+test("arkivleverantor: en adress som inte är ett arkiv är inte en kopia", () => {
+  // Skulle en källänk råka hamna i archive_url ska den inte räknas som
+  // arkiverad bara för att fältet är ifyllt.
+  assert.equal(arkivleverantor("https://kristdemokraterna.se/pension"), "okand");
+  assert.equal(arkivleverantor(null), "okand");
+  assert.equal(arkivleverantor(undefined), "okand");
+  // Domännamn som bara LIKNAR arkivet får inte passera.
+  assert.equal(arkivleverantor("https://web.archive.org.falsk.se/web/1/x"), "okand");
 });

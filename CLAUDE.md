@@ -102,7 +102,18 @@ människas beslut.
   hur talen hålls färska på nytt. Mekanismen finns kvar i
   `pipeline/src/kronikans-tal.ts` för det fallet.
 - **Arkivlänkar måste bära citatet.** En arkivkopia accepteras bara om
-  citatet står ordagrant i själva ögonblicksbilden.
+  citatet står ordagrant i själva ögonblicksbilden. Det gäller oavsett
+  vilken tjänst kopian ligger hos — Wayback är förstahandsvalet,
+  archive.today slås upp som reserv.
+- **«Arkivet svarade inte» är inte «det finns ingen kopia».** Det första är
+  ett okänt läge, det andra en mätning, och en grind som blandar ihop dem
+  tvingar fram antingen en lögn eller ett rött bygge i veckor. Täckningen får
+  därför ligga över taket fem procent **bara** när överskjutandet är källor
+  som väntar på ett tyst arkiv och ingen väntat längre än fjorton dygn —
+  därefter faller bygget ändå, för då är det inte längre arkivets fel.
+  Väntan syns för läsaren på metodsidan så länge den pågår. Regeln ligger i
+  `pipeline/src/arkivvantan.ts`, aldrig kopierad någon annanstans. Mänskligt
+  beslut 2026-08-17.
 - **Prosan påstår inget om koden som inte mäts.** Skriver du en mening på
   metod-, om-, press-, api- eller neutralitetssidan som säger vad koden eller
   datat gör, ska den bära ett ankare i `site/src/lib/prosans-ankare.ts` — med

@@ -22,7 +22,19 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { quoteInSnapshotText, snapshotText } from "../src/archive-verify.ts";
-import { snapshotUrUrSparsvar } from "../src/archive.ts";
+import {
+  archiveViaArchiveToday,
+  arkivleverantor,
+  slaUppArchiveToday,
+  snapshotUrUrSparsvar,
+} from "../src/archive.ts";
+import {
+  TOM_VANTAN,
+  provaVantan,
+  skrivForsok,
+  type Vantan,
+  type Vantanutfall,
+} from "../src/arkivvantan.ts";
 import { GRUNDPAUS_MS, hamtaFranArkivet } from "../src/wayback-takt.ts";
 
 /** Hur många begäranden arkivet strypte under körningen. Skrivs ut till sist. */
@@ -123,18 +135,47 @@ async function requestSave(url: string): Promise<{ snapshot: string | null } | n
 
 const resolved = new Map<string, string>(); // key(url utan frag) -> snapshot-URL
 const needSave: string[] = [];
+/** Käll-URL:er vars kopia kom från reservarkivet, inte från Wayback. */
+const franReserv = new Set<string>();
+/** Varför en käll-URL står utan kopia — underlaget för interimregeln. */
+const utfallPerUrl = new Map<string, Vantanutfall | "kopia">();
 
 // --- Fas A: befintliga snapshots ---
 console.log("Fas A: availability för befintliga snapshots...");
 for (const key of urls) {
+  // Filmer hoppas över helt, och bokförs ALDRIG som väntande. En film går
+  // inte att spara som text hos något arkiv — den väntar inte på något, den
+  // är ett permanent undantag. Bokförd som väntande hade den passerat
+  // åldersgränsen om fjorton dygn och fällt bygget för något som aldrig kan
+  // lösas, vilket är precis den sortens grind som lär folk att stänga av
+  // grindar. Sparfasen hoppade redan över dem; fas A gjorde det inte.
+  if (/youtube\.com|youtu\.be/.test(key)) {
+    console.log(`  (film, kan inte arkiveras som text) ${key}`);
+    continue;
+  }
   const foreOsvarade = osvarade;
   const snap = await availability(key, groups.get(key)!.ts);
   if (snap) { resolved.set(key, snap); console.log(`  ✓ ${key} -> ${snap.slice(0, 60)}`); }
   else {
-    needSave.push(key);
     // Skilj «arkivet svarade inte» från «arkivet svarade, och det finns ingen
     // kopia». Bara det senare är en mätning.
-    console.log(osvarade > foreOsvarade ? `  ? arkivet svarade inte: ${key}` : `  – saknas: ${key}`);
+    const waybackTyst = osvarade > foreOsvarade;
+    console.log(waybackTyst ? `  ? Wayback svarade inte: ${key}` : `  – Wayback saknar kopia: ${key}`);
+    // Reservspåret. Ett UPPSLAG, inte ett sparande — det senare hör hemma i
+    // fas B med sin budget. Görs alltid, inte bara när Wayback tiger: att en
+    // kopia finns hos archive.today är lika sant när Wayback svarat nej.
+    const reserv = await slaUppArchiveToday(key);
+    if (reserv) {
+      resolved.set(key, reserv);
+      franReserv.add(key);
+      console.log(`    ✓ reservarkivet har en: ${reserv.slice(0, 60)}`);
+    } else {
+      needSave.push(key);
+      // Bokför VARFÖR källan står utan kopia. Det är den bokföringen
+      // interimregeln vilar på: en lucka får vara över taket bara när den
+      // består av källor som väntar på ett arkiv som inte svarat.
+      utfallPerUrl.set(key, waybackTyst ? "arkivet_svarade_inte" : "ingen_kopia");
+    }
   }
   await sleep(GRUNDPAUS_MS);
 }
@@ -212,11 +253,25 @@ if (MODE === "save") {
         console.log(`    ✓ adress ur sparsvaret: ${utfall.snapshot.slice(0, 70)}`);
       }
     } else {
-      // Strypt: ingenting sparades, så budgeten räknas inte av. Två nej i rad
-      // betyder att arkivet vill ha en paus, inte att vi ska tjata.
-      iRad++;
-      console.log(`  – arkivet strypte begäran, inget sparat: ${key}`);
-      if (iRad >= 2) { console.log("  Två strypta i rad — avbryter sparandet och lämnar resten till nästa körning."); break; }
+      // Wayback ville inte. Innan vi ger upp: be reservarkivet spara.
+      // Det är hela skillnaden mot 2026-08-17, då Wayback var nere och
+      // körningen därför inte sparade någonting alls — trots att
+      // archive.today svarade normalt hela tiden.
+      const reserv = await archiveViaArchiveToday(key);
+      if (reserv.archive_url) {
+        saves++;
+        iRad = 0;
+        saved.push(key);
+        sparade.set(key, reserv.archive_url);
+        franReserv.add(key);
+        console.log(`    ✓ reservarkivet sparade: ${reserv.archive_url.slice(0, 70)}`);
+      } else {
+        // Strypt av båda: ingenting sparades, så budgeten räknas inte av. Två
+        // nej i rad betyder att arkiven vill ha en paus, inte att vi ska tjata.
+        iRad++;
+        console.log(`  – varken Wayback eller reservarkivet sparade: ${key}`);
+        if (iRad >= 2) { console.log("  Två nej i rad — avbryter sparandet och lämnar resten till nästa körning."); break; }
+      }
     }
     await sleep(GRUNDPAUS_MS);
   }
@@ -290,10 +345,18 @@ for (const p of promises) {
     if (quoteInSnapshotText(t, p.quote)) { traff = snap; break; }
   }
   if (traff === undefined) {
-    if (!avgjord) { ejAvgjort++; console.log(`  ✗ gick ej att avgöra (nätet): ${p.id}`); }
-    else { vagrade.push(p.id); console.log(`  ✗ kopian bär inte citatet: ${p.id}  ${key}`); }
+    if (!avgjord) {
+      ejAvgjort++;
+      console.log(`  ✗ gick ej att avgöra (nätet): ${p.id}`);
+      utfallPerUrl.set(key, "arkivet_svarade_inte");
+    } else {
+      vagrade.push(p.id);
+      console.log(`  ✗ kopian bär inte citatet: ${p.id}  ${key}`);
+      utfallPerUrl.set(key, "bar_inte_citatet");
+    }
     continue;
   }
+  utfallPerUrl.set(key, "kopia");
   const frag = p.source.url.includes("#") ? "#" + p.source.url.split("#")[1] : "";
   p.source.archive_url = traff + frag;
   changed.push(p.id);
@@ -314,7 +377,52 @@ if (changed.length > 0) {
 } else {
   console.log("\nInga archive_url uppdaterade.");
 }
+// --- bokför väntan ---
+// Filen är underlaget för interimregeln i prosans ankare: en lucka över taket
+// godtas bara när den består av källor som väntar på ett arkiv som inte
+// svarat, och ingen har väntat längre än TAK_DYGN. Skrivs varje körning, även
+// när ingenting ändrades — det är just då den behöver stämma.
+{
+  const nu = new Date().toISOString();
+  let vantan: Vantan = TOM_VANTAN;
+  try {
+    vantan = JSON.parse(readFileSync(join(DATA, "arkivvantan.json"), "utf8")) as Vantan;
+  } catch { /* första körningen: filen finns inte än */ }
+  for (const [url, utfall] of utfallPerUrl) vantan = skrivForsok(vantan, url, utfall, nu);
+  save(join(DATA, "arkivvantan.json"), vantan);
+
+  const besked = provaVantan(vantan, nu);
+  if (besked.vantande.length > 0) {
+    console.log(
+      `\nVäntar på arkivet: ${besked.vantande.length} käll-URL:er, äldsta sedan ${besked.sedan!.slice(0, 10)}.`,
+    );
+    if (besked.forGamla.length > 0) {
+      console.log(
+        `  ⚠ ${besked.forGamla.length} har väntat längre än gränsen. Interimet gäller inte längre — ` +
+          "bygget faller, och nu är det inte arkivets fel utan vårt.",
+      );
+      for (const p of besked.forGamla) console.log(`    ${p.forsta.slice(0, 10)}  ${p.url}`);
+    } else {
+      console.log("  Interimregeln håller: luckan får vara över taket så länge, och metodsidan säger det.");
+    }
+  }
+}
+
 console.log(`Kvar utan arkiv: ${promises.filter((p) => !p.source.archive_url).length} löften.`);
+{
+  // Leverantören härleds ur adressen, inte ur ett fält. Raden finns för att
+  // en kopia hos reservarkivet är en kopia — men det ska synas hur många som
+  // vilar på reserven, för den är den mindre beprövade av de två.
+  const per = { wayback: 0, "archive.today": 0, okand: 0 };
+  for (const p of promises) {
+    if (!p.source.archive_url) continue;
+    per[arkivleverantor(p.source.archive_url)]++;
+  }
+  console.log(
+    `Kopiorna ligger hos: Wayback ${per.wayback}, reservarkivet ${per["archive.today"]}` +
+      (per.okand > 0 ? `, okänd tjänst ${per.okand}` : "") + ".",
+  );
+}
 if (vagrade.length > 0) {
   console.log(`Vägrade kopia (bär inte citatet): ${vagrade.join(", ")}`);
 }

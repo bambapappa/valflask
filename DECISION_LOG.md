@@ -21,6 +21,58 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-17 — Arkivluckan får ett undantag, och undantaget har en klocka
+
+**Gäller:** Fläskvågen och Frågevågen — båda vågarnas källor arkiveras genom
+samma kedja i `pipeline/src/archive.ts` och samma backfill. Handlingsvågen
+rörs inte: dess bevis är riksdagshandlingar, som ligger kvar hos riksdagen och
+inte hos ett arkiv vi är beroende av.
+
+**Beslut (mänskligt beslut 2026-08-17):** Arkivtäckningen får ligga över taket
+fem procent **bara** när överskjutandet består av källor som väntar på ett
+arkiv som inte svarat, **och** ingen av dem väntat längre än **fjorton dygn**.
+Passerar en enda källa gränsen faller bygget ändå. Så länge väntan pågår bär
+metodsidan en genererad rad med antalet och sedan när, och den försvinner av
+sig själv när talet är noll. Regeln ligger i `pipeline/src/arkivvantan.ts`,
+bokföringen i `data/arkivvantan.json`, och prosans ankare
+`metod-vantan-har-en-bortre-grans` prövar att gränsen biter i båda
+riktningarna.
+
+Samtidigt kopplas **reservarkivet in i backfillen**. archive.today fanns redan
+i arkivkedjan sedan länge, men bara i `archiveWithFallback`, som backfillen
+aldrig anropade — kapaciteten fanns, kopplingen saknades. Nu slås reservet upp
+för varje källa Wayback inte kan ge en kopia till.
+
+**Motiv:** Internet Archive låg nere hela morgonen den 17 augusti 2026 — 502
+och 503 på både availability- och CDX-API:t — samma morgon som 47 löften
+godkändes ur granskningskön. Luckan gick från 6,12 till 11,88 procent av ett
+skäl som inte hade med datat att göra, och grinden kunde inte skilja «kopian
+finns inte» från «vi nådde inte fram till arkivet». Det första är en mätning vi
+ska stå för. Det andra är ett okänt läge, och att låta det hålla sajten på ett
+gammalt bygge i dagar tjänar ingen läsare.
+
+**Mätt, inte antaget, samma dag:** archive.today svarar normalt på **uppslag**
+(302 på arkiverat, 404 på oarkiverat) men **kräver CAPTCHA för sparande** — en
+enda begäran mot `/submit/` gav 429 med en CAPTCHA i svaret. Reservarkivet
+duger alltså till att hitta kopior, inte till att skapa dem, och en bot-kontroll
+är inget vi löser. Ingen av de 56 väntande webbkällorna fanns hos reservet
+heller. Memento TimeTravel, som aggregerar ett tiotal arkiv, är nedlagt: DNS
+löser inte ens.
+
+**Förkastade alternativ:** *Höja taket* — det hade gjort meningen på
+metodsidan osann utan att någon behövt säga det högt, och citatgrindarna
+lossas aldrig. *Undantag utan åldersgräns* — en interimlösning som inte kan ta
+slut är en sänkt grind med bättre ordval; samma sak som språkregeln som stod
+skriven i en månad utan grind. *Eget arkiv i repot* — en kopia vi hostar
+bevisar ingenting, eftersom vi kunde ha skrivit den; hela värdet i en
+arkivlänk är att en oberoende part håller den. Det väcker dessutom samma
+upphovsrättsfråga som fällde avskrifterna. *Perma.cc som andraspår* — riktig
+API-nyckel och byggd för citatpermanens, men gratiskvoten är omkring tio
+länkar i månaden och räcker inte till 56 väntande källor. Kvar som möjlighet
+för enstaka tunga löften, med ett betalt konto.
+
+---
+
 ## 2026-08-14 — Veckokrönikorna avpubliceras och genereringen läggs ned
 
 **Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga krönikor, och

@@ -47,6 +47,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { getPromises, getParties } from "./data.ts";
+import { provaVantan, type Vantan } from "../../../pipeline/src/arkivvantan.ts";
 import { getIssuesFile, getStances } from "./stances.ts";
 import { harTidpunkt } from "./prosans-tal.ts";
 
@@ -394,18 +395,70 @@ export const ANKARE: Ankare[] = [
     // rätt, för meningen var då osann. Två omgångar backfill tog den till 24 av
     // 674. Kvar är 14 filmer och 10 webbsidor vars kopia finns men inte bär
     // citatet ordagrant; de får ingen länk hellre än en som inte styrker något.
+    //
+    // 2026-08-17: taket fick ett undantag, och undantaget har en klocka.
+    // Internet Archive låg nere hela morgonen (502/503 på både availability
+    // och CDX), samma morgon som 47 löften godkändes ur granskningskön.
+    // Luckan gick till 11,88 procent av ett skäl som inte hade med datat att
+    // göra, och grinden kunde inte skilja «kopian finns inte» från «vi nådde
+    // inte fram». Nu kan den: `data/arkivvantan.json` bokför varför varje
+    // källa står utan kopia, och en lucka över taket godtas **bara** när den
+    // består av källor som väntar på ett tyst arkiv OCH ingen väntat längre
+    // än fjorton dygn. Passerar en enda den gränsen faller bygget ändå.
+    // Regeln ligger i `pipeline/src/arkivvantan.ts` och prövas där; den
+    // kopieras aldrig hit, för två kopior av en regel glider isär tyst.
     prov: () => {
       const a = aktiva();
       const utan = a.filter((p) => !p.source.archive_url);
-      return utan.length / a.length < 0.05;
+      if (utan.length / a.length < 0.05) return true;
+      const rad = repofil("data/arkivvantan.json");
+      if (!rad) return false; // blänkt repo, eller ingen bokförd väntan
+      const besked = provaVantan(JSON.parse(rad) as Vantan, new Date().toISOString());
+      if (!besked.godtas) return false;
+      // Interimet räcker bara så långt som väntan faktiskt förklarar luckan.
+      // Källor som saknar kopia av ANDRA skäl får inte åka snålskjuts.
+      const vantandeUrl = new Set(besked.vantande.map((p) => p.url));
+      const oforklarade = utan.filter((p) => !vantandeUrl.has(p.source.url.split("#")[0]!));
+      return oforklarade.length / a.length < 0.05;
     },
     fallprov:
-      "Nolla archive_url på tio webbkällor — provet faller när arkivtäckningen går under 95 procent.",
+      "Nolla archive_url på tio webbkällor utan att bokföra dem som väntande i data/arkivvantan.json — provet faller när arkivtäckningen går under 95 procent och luckan inte förklaras av ett tyst arkiv. Sätt `forsta` på en väntande post femton dygn bakåt — provet faller på åldersgränsen.",
     // Ommätt 2026-08-14 (ATTGORA E1): luckan är 14 av 690 = 2,03 procent, och
     // **samtliga fjorton är filmer**. Ingen vanlig webbsida saknar längre en
     // kopia — de 20 som stod i kö när strypningen bet har fyllts. Kvar är bara
     // de talade källorna, som väntar på avskrifter (E2) och inte på arkivet.
     matt: "14 av 690 utan kopia, samtliga filmer, 2026-08-14",
+  },
+  {
+    id: "metod-vantan-har-en-bortre-grans",
+    sida: METOD,
+    pastaende: "räknas väntan inte längre som en förklaring",
+    // Meningen lovar läsaren att undantaget tar slut. Ett undantag utan
+    // bortre gräns är ingen interimlösning utan en sänkt grind med bättre
+    // ordval, och det är precis vad den här posten finns för att hindra.
+    //
+    // Provet mäter det prosan INTE säger: inte att gränsen står skriven
+    // någonstans, utan att den **biter**. En väntan som passerat gränsen
+    // måste göra `provaVantan` avvisande — annars är meningen tom.
+    prov: () => {
+      const rad = repofil("pipeline/src/arkivvantan.ts");
+      if (!rad) return false;
+      const nu = "2026-08-17T00:00:00.000Z";
+      const gammal = new Date(Date.parse(nu) - 15 * 86_400_000).toISOString();
+      const fersk = new Date(Date.parse(nu) - 1 * 86_400_000).toISOString();
+      const post = (forsta: string) => ({
+        url: "https://x.se/" + forsta, forsta, senaste: forsta, forsok: 1,
+        utfall: "arkivet_svarade_inte" as const,
+      });
+      // Färsk väntan godtas; en som passerat gränsen gör det inte. Båda
+      // riktningarna prövas — ett prov som bara visar det ena kan vara sant
+      // om en funktion som alltid svarar likadant.
+      return provaVantan({ poster: [post(fersk)] }, nu).godtas
+        && !provaVantan({ poster: [post(gammal)] }, nu).godtas;
+    },
+    fallprov:
+      "Höj TAK_DYGN i pipeline/src/arkivvantan.ts till 30, eller ta bort åldersfiltret i provaVantan — provet faller, för då tar väntan aldrig slut.",
+    matt: "gränsen är 14 dygn; 15 dygns väntan avvisas, 1 dygns godtas, 2026-08-17",
   },
   {
     id: "metod-uppskattning-bar-ungefartecken",
