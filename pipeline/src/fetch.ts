@@ -33,10 +33,10 @@ export class FixtureSource implements ArticleSource {
 
 export interface SourceFeed {
   id: string;
-  type: "rss" | "riksdagen_api" | "page" | "index";
+  type: "rss" | "riksdagen_api" | "page" | "index" | "sitemap";
   url: string;
   /**
-   * Bara för "index": mönster som en artikeladress SÖKVÄG måste matcha.
+   * Bara för "index" och "sitemap": mönster som en artikeladress SÖKVÄG måste matcha.
    * Utan det krävs ett datum i sökvägen. De fem WordPress-partierna daterar
    * inte sina adresser men samlar artiklarna under ett eget prefix —
    * `/nyhet/`, `/nyheter/`, `/just-nu/` — och det är precisare än att gissa.
@@ -444,6 +444,95 @@ export function findArticleLinks(
 }
 
 /**
+ * Max antal adresser som följs ur EN sitemap per hämtning.
+ *
+ * Högre än MAX_INDEX_ARTICLES av samma skäl som `max_articles` finns för
+ * kataloger: en sitemap är inte färskvara utan partiets hela sidregister, och
+ * ett lågt tak blir då inte en fördröjning utan ett hårt tak på hur långt in i
+ * registret vi någonsin ser. Kostar inga LLM-körningar — budgeten på NYA
+ * artiklar ligger i runPipeline och dedup fäller det oförändrade.
+ */
+export const MAX_SITEMAP_ARTICLES = 250;
+
+/**
+ * Max antal delregister som följs ur en `<sitemapindex>`. Mätt 2026-08-17
+ * delar partierna upp sitt register i 1–12 delar; 25 rymmer det med marginal
+ * utan att en felkonfigurerad sajt kan dra igång hundratals hämtningar.
+ */
+export const MAX_SITEMAP_DELAR = 25;
+
+/**
+ * Plockar sidadresser ur en sitemap.
+ *
+ * Varför den här vägen alls behövs: `index`-typen följer `href` i HTML, och
+ * det fungerar bara på sajter som renderar sin meny på servern. Moderaterna,
+ * Miljöpartiet och Vänsterpartiet bygger sina politikmenyer med skript —
+ * hämtar man deras politiksida får man 0 länkar till politik, bara
+ * länkar till distriktsavdelningarna i sidfoten. Mätt 2026-08-17.
+ *
+ * Deras sitemap listar däremot varje sida: V 111, MP 98, M 87 rikspolitiksidor.
+ * Sitemap är dessutom det partiet SJÄLVT pekar ut som sina sidor, alltså den
+ * symmetriska vägen in — samma mekanism för alla åtta, i stället för ett
+ * gissat länkmönster per parti.
+ *
+ * `<sitemapindex>` följs ett steg (de flesta partier delar upp registret per
+ * innehållstyp). Djupare än så går vi inte: ingen av de åtta behöver det, och
+ * en obegränsad följning är en genomsökning av hela sajten.
+ */
+export function sitemapLinks(
+  xml: string,
+  articlePattern?: string,
+  maxArticles: number = MAX_SITEMAP_ARTICLES,
+): { urls: string[]; index: boolean } {
+  const locs = [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/giu)].map((m) =>
+    m[1]!.replace(/&amp;/gu, "&"),
+  );
+  // Ett register över register: adresserna ÄR sitemaps och ska hämtas, inte
+  // filtreras mot artikelmönstret — det matchar aldrig en sitemap-adress.
+  // Eget tak: de åtta partierna delar upp registret i 1–12 delar, och taket
+  // för SIDOR har inget att göra med hur många delregister vi får hämta.
+  if (/<sitemapindex/iu.test(xml)) {
+    return {
+      urls: locs.filter((u) => u.startsWith("https://")).slice(0, MAX_SITEMAP_DELAR),
+      index: true,
+    };
+  }
+
+  let mönster: RegExp | null = null;
+  if (articlePattern) {
+    try {
+      mönster = new RegExp(articlePattern, "u");
+    } catch {
+      console.error(`[fetch] ogiltigt article_pattern: ${articlePattern}`);
+      return { urls: [], index: false };
+    }
+  }
+
+  const funna = new Set<string>();
+  for (const raw of locs) {
+    let abs: URL;
+    try {
+      abs = new URL(raw);
+    } catch {
+      continue;
+    }
+    if (abs.protocol !== "https:") continue;
+    if (/\.(pdf|jpg|jpeg|png|gif|svg|webp|mp4|zip|ico|css|js|xml)$/iu.test(abs.pathname)) continue;
+    // Mönstret prövas mot HELA adressen, inte bara sökvägen. Partiernas
+    // lokalavdelningar ligger under samma domän som rikspolitiken
+    // (mp.se/ale/politik, centerpartiet.se/centerpartiet-lokalt/…/politik),
+    // och ett sökvägsmönster kan inte skilja dem åt. MP:s sitemap har 4 116
+    // träffar på "/politik/" men 98 på rikspolitiken.
+    if (mönster && !mönster.test(abs.href)) continue;
+    abs.hash = "";
+    funna.add(abs.href);
+  }
+  // Bokstavsordning: en sitemap har ingen redaktionell ordning att bevara, och
+  // determinism gör körningarna jämförbara.
+  return { urls: [...funna].sort().slice(0, Math.max(0, maxArticles)), index: false };
+}
+
+/**
  * Publiceringsdatum ur artikelns egen HTML. Behövs för de partier vars
  * adresser saknar datum: utan det skulle varje gammal artikel se färsk ut och
  * G4:s datumfönster pröva fel sak. Alla fem WordPress-partierna publicerar
@@ -779,7 +868,9 @@ export class LiveSource implements ArticleSource {
             ? await this.fetchPage(feed, etagCache)
             : feed.type === "index"
               ? await this.fetchIndex(feed, etagCache)
-              : await this.fetchRss(feed, etagCache);
+              : feed.type === "sitemap"
+                ? await this.fetchSitemap(feed, etagCache)
+                : await this.fetchRss(feed, etagCache);
 
         for (const article of feedArticles) {
           if (article.text.length < this.limits.min_chars) continue;
@@ -969,6 +1060,89 @@ export class LiveSource implements ArticleSource {
         });
       } catch (e) {
         console.error(`[fetch] ${feed.id}: artikeln ${lank} föll: ${e instanceof Error ? e.message : e}`);
+      }
+    }
+    return articles;
+  }
+
+  /**
+   * "sitemap"-källa: läser partiets eget sidregister och hämtar de sidor vars
+   * adress matchar mönstret. Se `sitemapLinks` för varför vägen behövs.
+   *
+   * Sidorna saknar datum i adressen och är sällan daterade i HTML — en
+   * politiksida är inte en nyhet. Faller båda vägarna används hämtningstiden,
+   * precis som i `fetchIndex`. Det är rätt sak för den här sortens källa:
+   * sidan beskriver vad partiet tycker NU, och G4:s datumfönster ska inte
+   * fälla en aktuell politiksida för att den låg still ett år.
+   */
+  private async fetchSitemap(
+    feed: SourceFeed,
+    etagCache: Map<string, CacheEntry>,
+  ): Promise<NormalizedArticle[]> {
+    if (!(await this.checkRobots(feed.url))) {
+      console.log(`[fetch] robots.txt blockerar ${feed.id}`);
+      return [];
+    }
+    const tak = feed.max_articles ?? MAX_SITEMAP_ARTICLES;
+    const rot = await this.fetchRawWithCache(feed.url, etagCache, {
+      Accept: "application/xml,text/xml",
+    });
+    if (!rot) return [];
+
+    const forsta = sitemapLinks(
+      new TextDecoder("utf-8").decode(rot.bytes),
+      feed.article_pattern,
+      tak,
+    );
+    let adresser = forsta.urls;
+    if (forsta.index) {
+      const ur: string[] = [];
+      for (const under of forsta.urls) {
+        const res = await this.fetchRawWithCache(under, etagCache, {
+          Accept: "application/xml,text/xml",
+        });
+        if (!res) continue;
+        const del = sitemapLinks(
+          new TextDecoder("utf-8").decode(res.bytes),
+          feed.article_pattern,
+          tak,
+        );
+        // Ett register som pekar på ett register pekar på ett tredje steg vi
+        // inte följer. `del.index` sant här betyder att sajten är djupare
+        // nästlad än de åtta partierna är — då hoppas grenen över tyst.
+        if (!del.index) ur.push(...del.urls);
+      }
+      adresser = [...new Set(ur)].sort().slice(0, tak);
+    }
+
+    if (adresser.length === 0) {
+      console.log(`[fetch] ${feed.id}: sitemapen gav inga sidor efter mönstret`);
+      return [];
+    }
+
+    const articles: NormalizedArticle[] = [];
+    for (const lank of adresser) {
+      try {
+        if (!(await this.checkRobots(lank))) continue;
+        const res = await this.fetchRawWithCache(lank, etagCache, {
+          Accept: "text/html,application/xhtml+xml",
+        });
+        if (!res) continue;
+        const html = new TextDecoder("utf-8").decode(res.bytes);
+        const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
+        const text = stripHtml(html);
+        articles.push({
+          url: lank,
+          domain: extractDomain(lank),
+          title: titleMatch ? stripHtml(titleMatch[1]!) : lank,
+          text,
+          published: datumUrAdress(lank) ?? datumUrHtml(html) ?? new Date().toISOString(),
+          contentHash: sha256(text),
+        });
+      } catch (e) {
+        console.error(
+          `[fetch] ${feed.id}: sidan ${lank} föll: ${e instanceof Error ? e.message : e}`,
+        );
       }
     }
     return articles;

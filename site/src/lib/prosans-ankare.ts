@@ -48,6 +48,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { getPromises, getParties } from "./data.ts";
 import { provaVantan, type Vantan } from "../../../pipeline/src/arkivvantan.ts";
+import { ordnaEfterTackning, partiForUrl } from "../../../pipeline/src/skordeordning.ts";
 import { getIssuesFile, getStances } from "./stances.ts";
 import { harTidpunkt } from "./prosans-tal.ts";
 
@@ -461,6 +462,66 @@ export const ANKARE: Ankare[] = [
     matt: "gränsen är 14 dygn; 15 dygns väntan avvisas, 1 dygns godtas, 2026-08-17",
   },
   {
+    id: "metod-tackning-minst-last-gar-forst",
+    sida: METOD,
+    pastaende: "Läsningen tar det parti först som vi läst minst av",
+    // Meningen är hela löftet till läsaren om att snedfördelningen krymper.
+    // Står den utan mätning är den en avsiktsförklaring, och avsiktsför-
+    // klaringar åldras — det var precis så den förra ordningen kunde ligga
+    // kvar och ge KD hela budgeten körning efter körning utan att någon såg.
+    //
+    // Provet mäter det prosan INTE säger: inte att en sorteringsfunktion
+    // finns, utan att den vänder på den ordning som faktiskt rådde. Fallet
+    // är det verkliga: KD alfabetiskt först och bäst täckt, SD sist och sämst.
+    prov: () => {
+      const kod = repofil("pipeline/src/skordeordning.ts");
+      if (!kod) return false;
+      const artiklar = [
+        "https://kristdemokraterna.se/var-politik/a",
+        "https://kristdemokraterna.se/var-politik/b",
+        "https://sd.se/vad-vi-vill/a",
+        "https://sd.se/vad-vi-vill/b",
+      ];
+      const last = new Map([["kd", 233], ["sd", 15]]);
+      const ordnad = ordnaEfterTackning(artiklar, (u) => u, () => 0, last);
+      // Båda riktningarna: det sämst täckta först OCH det bäst täckta inte
+      // först. Ett prov som bara visar det ena kan vara sant om en funktion
+      // som alltid svarar likadant.
+      return (
+        partiForUrl(ordnad[0]!) === "sd" &&
+        partiForUrl(ordnad[ordnad.length - 1]!) === "kd"
+      );
+    },
+    fallprov:
+      "Sortera artiklarna på adress i stället för på täckning i ordnaEfterTackning — provet faller, för då går kristdemokraterna.se först igen precis som före 2026-08-17.",
+    matt: "kd 233 lästa sidor mot sd 15; sd får första platsen, kd sista, 2026-08-17",
+  },
+  {
+    id: "metod-tackning-varje-parti-har-en-vag-in",
+    sida: METOD,
+    pastaende: "Varje parti har nu en registrerad väg in till hela sin politikavdelning",
+    // Undantaget prosan inte nämner: det räcker inte att NÅGON källa finns
+    // per parti — en RSS med nyheter är inte en väg in till politiken, och
+    // det var just skillnaden mellan en enkelsida och en genomsökt katalog
+    // som skapade snedfördelningen. Provet kräver en politikkälla, alltså
+    // page, index eller sitemap, för var och en av de åtta.
+    prov: () => {
+      const yaml = repofil("data/sources.yaml");
+      if (!yaml) return false;
+      const partier = new Set<string>();
+      for (const block of yaml.split(/\n\s*- id:/u).slice(1)) {
+        const typ = /\n\s*type:\s*(\S+)/u.exec(block)?.[1];
+        const url = /\n\s*url:\s*"([^"]+)"/u.exec(block)?.[1];
+        if (!typ || !url) continue;
+        if (typ !== "page" && typ !== "index" && typ !== "sitemap") continue;
+        const parti = partiForUrl(url);
+        if (parti) partier.add(parti);
+      }
+      return ["s", "m", "sd", "c", "v", "kd", "l", "mp"].every((p) => partier.has(p));
+    },
+    fallprov:
+      "Ta bort sd-vadvivill och sd-politik-sitemap ur data/sources.yaml — provet faller, för då har SD ingen väg in till sin politik och blir underskördat igen.",
+    matt: "alla åtta riksdagspartier har minst en källa av slaget page, index eller sitemap, 2026-08-17",
     id: "metod-videokopian-ar-inget-ordagrant-belagg",
     sida: METOD,
     pastaende: "ett skydd mot att beviset försvinner, inte ett ordagrant belägg",
