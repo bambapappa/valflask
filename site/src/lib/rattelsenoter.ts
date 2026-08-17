@@ -28,6 +28,21 @@ import type { Issue, StanceCell } from "./stances";
 /** Beteckningar en rättelse kan bära i `affects`. */
 const ID_MONSTER = /\b(?:st-\d{4}-\d{4}|sq-[a-z0-9-]+)\b/giu;
 
+/**
+ * Rättelser som gäller en av sajtens egna textsidor, nyast först.
+ *
+ * Samma regel som för frågorna, av samma skäl: noten hör hemma där läsaren är,
+ * inte bara i loggen. Nyckeln är sidans sökväg skriven ordagrant i `affects`
+ * («/metod»), och ingen liknelse — en post som inte namnger sidan kopplas inte
+ * hit. Ett fel i en mening om metoden är ett fel läsaren möter på metodsidan.
+ */
+export function rattelserForSidan(rattelser: readonly Rattelse[], sokvag: string): Rattelse[] {
+  return rattelser
+    .filter((r) => r.affects.includes(sokvag))
+    .slice()
+    .sort((a, b) => b.date.localeCompare(a.date));
+}
+
 /** Beteckningarna posten faktiskt namnger, utan dubbletter. */
 export function beteckningarI(affects: string): Set<string> {
   return new Set((affects.match(ID_MONSTER) ?? []).map((s) => s.toLowerCase()));

@@ -257,18 +257,38 @@ export const ANKARE: Ankare[] = [
     matt: "14 av 32 hade tidpunkt 2026-08-09",
   },
   {
-    id: "metod-avskriften-sparas-inte",
+    id: "metod-avskriften-hallen-ej-publik",
     sida: METOD,
-    pastaende: "<strong>Textversionen sparar vi inte.</strong>",
-    // Ovanligt ankare: det vaktar en INRÖMMELSE. Börjar vi spara avskrifter
-    // ska sidan sluta be om ursäkt för att vi inte gör det.
-    prov: () =>
-      aktiva().every(
+    pastaende:
+      "<strong>Textversionen har vi sparad, men vi publicerar den inte.</strong>",
+    // Ovanligt ankare: det vaktar en INRÖMMELSE, och det är andra gången den
+    // skrivs om. Förra lydelsen — «Textversionen sparar vi inte» — var osann
+    // från den dag valvet fylldes, och provet såg det inte: det mätte bara om
+    // det fanns en PUBLIK länk till en avskrift, aldrig om det fanns en sparad.
+    // Ett prov som bara kan falla åt ena hållet vaktar ingenting åt det andra.
+    // Nu mäts båda leden: varje talat citat ska bära en hållen avskrift, och
+    // inget löfte får bära en publik utan att meningen skrivs om igen.
+    prov: () => {
+      const talade = aktiva().filter(
+        (p) => p.source.kind === "tal" && !p.source.archive_url,
+      );
+      if (talade.length === 0) return false;
+      const hallen = talade.every((p) => p.source.transcript_held?.video_id);
+      const ingenPublik = aktiva().every(
         (p) => !(p.source as { transcript_url?: string }).transcript_url,
-      ),
+      );
+      // Tredje ledet, och det som gör provet till ett prov: förbehållet måste
+      // nå läsaren. En sparad avskrift som ingen får veta att vi har är samma
+      // sak som ingen avskrift, och ett prov som bara läser datat kan inte se
+      // skillnaden — det svarar ja även när sidan tiger.
+      const citat = repofil("site/src/components/Citat.astro");
+      const syns =
+        citat.includes("transcriptHeld") && citat.includes("avskrift kontrollerad, ej publik");
+      return hallen && ingenPublik && syns;
+    },
     fallprov:
-      "Sätt transcript_url på ett löfte — provet faller, och meningen ska skrivas om till det bättre.",
-    matt: "0 av 553 bar transcript_url 2026-08-09",
+      "Ta bort transcript_held från ett talat löfte, eller sätt transcript_url på ett — provet faller åt var sitt håll, och meningen ska skrivas om till det som då gäller.",
+    matt: "14 av 14 talade källor bar en hållen avskrift, 0 av 719 en publik, 2026-08-17",
   },
   {
     id: "metod-rotkontroll-varje-vecka",

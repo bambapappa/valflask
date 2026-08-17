@@ -12,8 +12,16 @@ interface Props {
   kind?: "webb" | "tal";
   /** Källans skick vid senaste rötkontrollen. Odefinierad = aldrig kontrollerad. */
   sourceStatus?: Kallstatus;
+  /**
+   * Avskriften vi håller men inte publicerar. Visas som sitt eget, svagare
+   * belägg: läsaren ska se att någon annan än hen själv har gjort kontrollen.
+   * Att tiga om det vore att låta ett talat citat se lika kontrollerbart ut som
+   * ett med arkivkopia.
+   */
+  transcriptHeld?: { checked_at: string; comparison: "strikt" | "mjuk" } | null;
 }
-const { quote, person, party, domain, date, sourceUrl, archiveUrl, kind, sourceStatus } = Astro.props;
+const { quote, person, party, domain, date, sourceUrl, archiveUrl, kind, sourceStatus, transcriptHeld } =
+  Astro.props;
 const isTal = kind === "tal";
 // En källa som ändrats eller tagits bort ska synas där citatet står, inte i en
 // logg. Läsaren som klickar på källänken ska veta innan hen klickar att det är
@@ -30,6 +38,12 @@ const sourceLabel = isTal ? "se i talet" : sourceLinkLabel(sourceUrl);
   {isTal && <> · <span class="tal-markor" title="Löftet är sagt i tal och kontrolleras mot en sparad textversion (se /metod)">talat löfte</span></>}
   {' '}· <a href={sourceUrl}>{sourceLabel}<span aria-hidden="true"> ↗</span></a>
   {archiveUrl && <> · <a href={archiveUrl}>{archiveLinkLabel(archiveUrl)}<span aria-hidden="true"> ↗</span></a></>}
+  {transcriptHeld && (
+    <> · <span
+      class="avskrift-markor"
+      title={`Citatet är kontrollerat ${transcriptHeld.checked_at} mot en textversion av talet som vi har sparad men inte får publicera — det är någon annans tal. Läs varför på /metod.`}
+    >avskrift kontrollerad, ej publik</span></>
+  )}
 </div>
 {/* Stämpeln pekar vidare: den som ser att en källa ändrats ska kunna se VAD som
     ändrats, inte bara att något gjort det. Fallet står på /andrade-kallor när
@@ -42,6 +56,13 @@ const sourceLabel = isTal ? "se i talet" : sourceLinkLabel(sourceUrl);
     margin-bottom: var(--mellanrum);
   }
   .tal-markor {
+    font-variant: small-caps;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+  }
+  /* Samma dämpade form som talmarkören: det här är ett förbehåll, inte ett
+     kvalitetsmärke, och ska inte se ut som en arkivlänk man kan klicka på. */
+  .avskrift-markor {
     font-variant: small-caps;
     letter-spacing: 0.02em;
     opacity: 0.85;

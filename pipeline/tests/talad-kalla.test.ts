@@ -6,6 +6,8 @@ import {
   tidpunktSomText,
   provaTaladKalla,
   avskriftensAdress,
+  hallenAvskrift,
+  filmensId,
 } from "../src/talad-kalla.ts";
 
 test("spelarsidor känns igen som talade källor", () => {
@@ -83,4 +85,45 @@ test("avskriftens adress läses bara när den finns och inte är tom", () => {
   assert.equal(avskriftensAdress({ transcript_url: "   " }), null);
   assert.equal(avskriftensAdress({ transcript_url: null }), null);
   assert.equal(avskriftensAdress(undefined), null);
+});
+
+const HALLEN = {
+  video_id: "nzYmcPx0jJc",
+  vault: "bambapappa/vallen-2026/transcripts/nzYmcPx0jJc.txt",
+  checked_at: "2026-08-17",
+  comparison: "strikt",
+} as const;
+
+/**
+ * Mänskligt beslut 2026-08-17: avskriften får hållas utan att publiceras, och
+ * då ska utfallet säga just det. Provet vaktar att den hållna kontrollen aldrig
+ * kryper in i `talad-belagd` — den som läser koden ska se skillnaden mellan
+ * «du kan öppna belägget» och «vi har öppnat det åt dig».
+ */
+test("en hållen avskrift ger ett eget utfall, aldrig samma som en publicerad", () => {
+  assert.equal(provaTaladKalla(`${SANDNING}?position=377`, undefined, true), "talad-belagd-hallen");
+  assert.equal(provaTaladKalla(`${SANDNING}?position=377`, true, true), "talad-belagd");
+  assert.equal(provaTaladKalla(`${SANDNING}?position=377`, undefined, false), "talad-utan-avskrift");
+  assert.equal(provaTaladKalla(`${SANDNING}?position=377`, undefined, undefined), "talad-utan-avskrift");
+});
+
+test("den hållna avskriften väger aldrig upp en saknad tidsstämpel", () => {
+  // Avskriften svarar på ATT orden finns, tidsstämpeln på VAR. Den ena ersätter
+  // inte den andra, och beslutet från 2026-08-09 kräver båda.
+  assert.equal(provaTaladKalla(SANDNING, undefined, true), "talad-utan-tid");
+});
+
+test("den hållna avskriften läses bara när den bär ett filmid", () => {
+  assert.deepEqual(hallenAvskrift({ transcript_held: HALLEN }), HALLEN);
+  assert.equal(hallenAvskrift({ transcript_held: { ...HALLEN, video_id: "" } }), null);
+  assert.equal(hallenAvskrift({ transcript_held: null }), null);
+  assert.equal(hallenAvskrift(undefined), null);
+});
+
+test("filmens id läses ur båda YouTube-formerna, och ur inget annat", () => {
+  assert.equal(filmensId("https://youtube.com/watch?v=nzYmcPx0jJc&t=274s"), "nzYmcPx0jJc");
+  assert.equal(filmensId("https://www.youtube.com/watch?t=274s&v=iwXT2XAad-w"), "iwXT2XAad-w");
+  assert.equal(filmensId("https://youtu.be/-tyocJrGFzk?t=228"), "-tyocJrGFzk");
+  assert.equal(filmensId("https://www.socialdemokraterna.se/val-2026"), null);
+  assert.equal(filmensId(null), null);
 });
