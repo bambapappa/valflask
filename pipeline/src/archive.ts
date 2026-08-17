@@ -189,16 +189,67 @@ export async function slaUppArchiveToday(
   }
 }
 
+/* ────────────────────────────────────────────────────── Ghostarchive ── */
+
+const GHOST_HOST = "ghostarchive.org";
+/** En färdig ögonblicksbild hos Ghostarchive. `varchive` är videoarkivet. */
+const GHOST_SNAPSHOT_RE = /\/(v?archive)\/([A-Za-z0-9_-]{4,})/;
+
+/**
+ * Uppslag hos Ghostarchive — tredje spåret, och det enda som arkiverar
+ * YouTube-video.
+ *
+ * Mätt 2026-08-17, samma dag som archive.today: **sökningen är öppen**
+ * (`GET /search?term=` svarar 200 utan hinder) men **sparandet ligger bakom
+ * en Cloudflare-utmaning** (`POST /archive2` svarar 403 «Just a moment…»).
+ * Två oberoende gratisarkiv, båda öppna för läsning och stängda för
+ * automatiskt skrivande — det är inte en egenhet hos det ena.
+ *
+ * Träffen godtas bara om den EXAKTA adressen står i svaret. Sökningen är
+ * mönsterbaserad och kan annars ge kopior av andra sidor på samma domän, och
+ * en kopia av grannsidan är inget belägg för vårt citat.
+ */
+export async function slaUppGhostarchive(
+  url: string,
+  httpFetch: HttpFetch = globalThis.fetch.bind(globalThis),
+): Promise<string | null> {
+  try {
+    const res = await httpFetch(
+      `https://${GHOST_HOST}/search?term=${encodeURIComponent(url)}`,
+      { method: "GET", headers: { "User-Agent": UA }, redirect: "follow", signal: AbortSignal.timeout(30_000) },
+    );
+    if (!res.ok) return null;
+    const html = await res.text();
+    if (!html.includes(url)) return null; // sökträffar för något annat
+    const m = GHOST_SNAPSHOT_RE.exec(html);
+    return m ? `https://${GHOST_HOST}/${m[1]}/${m[2]}` : null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Vilken tjänst en kopia ligger hos. Härleds ur adressen i stället för att
  * lagras i ett eget fält: adressen kan inte glida isär från sig själv, och ett
  * fält som säger något annat än länken är ett fel som ingen upptäcker.
  */
-export function arkivleverantor(archiveUrl: string | null | undefined): "wayback" | "archive.today" | "okand" {
+export function arkivleverantor(
+  archiveUrl: string | null | undefined,
+): "wayback" | "archive.today" | "ghostarchive" | "okand" {
   if (!archiveUrl) return "okand";
   if (/(^|\/\/)web\.archive\.org\//.test(archiveUrl)) return "wayback";
   if (/(^|\/\/)archive\.(?:ph|today|is|li|vn|fo|md)\//.test(archiveUrl)) return "archive.today";
+  if (/(^|\/\/)ghostarchive\.org\//.test(archiveUrl)) return "ghostarchive";
   return "okand";
+}
+
+/**
+ * Är adressen en VIDEOkopia? Den bär ingen text att pröva citatet mot, och
+ * får därför aldrig hamna i `archive_url` — se `video_archive_url` i
+ * `arkivvantan.ts` och metodsidans stycke om talade källor.
+ */
+export function arVideokopia(archiveUrl: string | null | undefined): boolean {
+  return Boolean(archiveUrl && /(^|\/\/)ghostarchive\.org\/varchive\//.test(archiveUrl));
 }
 
 export async function archiveViaArchiveToday(url: string, httpFetch: HttpFetch = globalThis.fetch.bind(globalThis)): Promise<ArchiveResult> {

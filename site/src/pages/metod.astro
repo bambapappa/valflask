@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { taladeKallorTal } from "../lib/prosans-tal";
 import { arkivvantansTal } from "../lib/arkivvantans-tal";
+import { videokopiornasTal } from "../lib/videokopiornas-tal";
 import { getRattelser } from "../lib/data";
 import { rattelserForSidan } from "../lib/rattelsenoter";
 
@@ -24,6 +25,10 @@ const talade = taladeKallorTal();
 // talet är noll — ett undantag som inte syns är ett undantag som blir
 // permanent.
 const arkivvantan = arkivvantansTal();
+
+// Videokopiorna: raden ska inte finnas alls innan kopiorna gör det, och den
+// ska säga vad en videokopia bevisar och vad den inte bevisar.
+const videokopior = videokopiornasTal();
 
 const jsonLd = [
   {
@@ -177,6 +182,9 @@ const jsonLd = [
 
       <h2 id="andrade-kallor">När källan ändrar sig</h2>
       <p>Till nästan varje citat hör en <strong>arkivkopia</strong> — en ögonblicksbild av sidan som den såg ut när vi hämtade citatet, sparad hos Internet Archive. <strong>Kopian godtas bara om citatet står ordagrant i själva ögonblicksbilden</strong>, och bär den inte citatet sätter vi ingen kopia alls hellre än en som inte styrker något. Bland undantagen finns både filmer, som inte går att spara som text på det sättet, och webbsidor där ingen tillgänglig kopia ännu bär citatet. De står utan arkivlänk tills en sådan kopia finns.</p>
+      {videokopior.medKopia > 0 && (
+        <p><strong>Filmerna har en kopia av ett annat slag.</strong> {videokopior.medKopia} av {videokopior.totalt} löften ur tal har en videokopia hos ett arkiv, från {videokopior.sandningar} sändningar. Den betyder att orden går att höra även om filmen tas bort — inte att vi kontrollerat citatet mot den. En film bär ingen text att jämföra ord för ord, och den kontrollen sker mot avskriften, precis som förut. Videokopian är alltså ett skydd mot att beviset försvinner, inte ett ordagrant belägg.</p>
+      )}
       {arkivvantan.antal > 0 && (
         <p><strong>Just nu väntar {arkivvantan.antal} källor på en arkivkopia.</strong> Arkivtjänsten har inte svarat sedan {arkivvantan.sedan}, och en kopia vi inte kan hämta är inte samma sak som en kopia som saknas. Vi skriver hellre ut att vi väntar än låter luckan se ut som ett val. Kommer arkivet inte tillbaka inom två veckor räknas väntan inte längre som en förklaring — då är det vårt problem, inte arkivets.</p>
       )}

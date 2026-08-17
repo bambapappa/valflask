@@ -10,7 +10,9 @@ import {
   archiveWithFallback,
   snapshotUrUrSparsvar,
   slaUppArchiveToday,
+  slaUppGhostarchive,
   arkivleverantor,
+  arVideokopia,
   type HttpFetch,
 } from "../src/archive.ts";
 
@@ -209,4 +211,74 @@ test("arkivleverantor: en adress som inte är ett arkiv är inte en kopia", () =
   assert.equal(arkivleverantor(undefined), "okand");
   // Domännamn som bara LIKNAR arkivet får inte passera.
   assert.equal(arkivleverantor("https://web.archive.org.falsk.se/web/1/x"), "okand");
+});
+
+/* ───────────────────────── slaUppGhostarchive ── */
+
+/**
+ * Tredje spåret, och det enda som arkiverar YouTube-video.
+ *
+ * Mätt 2026-08-17: sökningen är öppen (`GET /search?term=` svarar 200 utan
+ * hinder), sparandet ligger bakom en Cloudflare-utmaning (`POST /archive2`
+ * svarar 403 «Just a moment…»). Samma form som archive.today — två oberoende
+ * gratisarkiv, båda öppna för läsning och stängda för automatiskt skrivande.
+ */
+const ghostSvar = (html: string, status = 200): Response => ({
+  url: "https://ghostarchive.org/search",
+  status,
+  ok: status >= 200 && status < 300,
+  headers: new Headers({}),
+  text: async () => html,
+} as unknown as Response);
+
+test("slaUppGhostarchive: hittar en sidkopia", async () => {
+  const url = "https://kd.se/pension";
+  const fetch: HttpFetch = async () =>
+    ghostSvar(`<tr><td>${url}</td><td><a href="/archive/rJZdi">se</a></td></tr>`);
+  assert.equal(await slaUppGhostarchive(url, fetch), "https://ghostarchive.org/archive/rJZdi");
+});
+
+test("slaUppGhostarchive: hittar en VIDEOkopia — det ingen annan tjänst gör", async () => {
+  const url = "https://www.youtube.com/watch?v=jNQXAC9IVRw";
+  const fetch: HttpFetch = async () =>
+    ghostSvar(`<td>${url}</td><a href="/varchive/jNQXAC9IVRw">se</a>`);
+  assert.equal(
+    await slaUppGhostarchive(url, fetch),
+    "https://ghostarchive.org/varchive/jNQXAC9IVRw",
+  );
+});
+
+test("slaUppGhostarchive: träff på ANNAN adress godtas inte", async () => {
+  // Sökningen är mönsterbaserad. En kopia av grannsidan på samma domän är
+  // inget belägg för vårt citat, och att ta den hade varit tyst fel: länken
+  // hade sett riktig ut och pekat på fel sida.
+  const fetch: HttpFetch = async () =>
+    ghostSvar('<td>https://kd.se/NAGOT-ANNAT</td><a href="/archive/rJZdi">se</a>');
+  assert.equal(await slaUppGhostarchive("https://kd.se/pension", fetch), null);
+});
+
+test("slaUppGhostarchive: inga träffar ger null", async () => {
+  const fetch: HttpFetch = async () => ghostSvar("<p>No results</p>");
+  assert.equal(await slaUppGhostarchive("https://kd.se/pension", fetch), null);
+});
+
+test("slaUppGhostarchive: tjänsten nere ger null, inte ett kastat fel", async () => {
+  const fetch: HttpFetch = async () => { throw new Error("ECONNREFUSED"); };
+  assert.equal(await slaUppGhostarchive("https://kd.se/x", fetch), null);
+});
+
+/* ───────────────────────── videokopior ── */
+
+test("arkivleverantor känner igen Ghostarchive", () => {
+  assert.equal(arkivleverantor("https://ghostarchive.org/archive/rJZdi"), "ghostarchive");
+  assert.equal(arkivleverantor("https://ghostarchive.org/varchive/jNQXAC9IVRw"), "ghostarchive");
+});
+
+test("arVideokopia skiljer video från text — och det avgör vilket fält den får hamna i", () => {
+  // En videokopia bär ingen text att pröva citatet mot. Hamnar den i
+  // archive_url ser löftet ut att ha ett ordagrant belägg det inte har.
+  assert.equal(arVideokopia("https://ghostarchive.org/varchive/jNQXAC9IVRw"), true);
+  assert.equal(arVideokopia("https://ghostarchive.org/archive/rJZdi"), false);
+  assert.equal(arVideokopia("https://web.archive.org/web/2026/https://kd.se/x"), false);
+  assert.equal(arVideokopia(null), false);
 });
