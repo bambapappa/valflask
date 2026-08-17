@@ -177,6 +177,74 @@ feeds:
     max_articles: 250
     verified: "2026-08-10 — 200, 184 937 tecken, 220 undersidor efter mönstret; reavinstskatt 1 006 tecken text"
 
+  # --- Politiksidor via partiernas egna sitemaps (type: sitemap) ---
+  #
+  # VARFÖR DEN HÄR GRUPPEN FINNS. KD:s A–Ö ovan gav 193 publicerade löften ur
+  # 241 lästa undersidor. Det var rätt — politiken stod där, och vi missade ett
+  # publicerat vallöfte för att vi inte läste den. Men ingen ANNAN partis
+  # politikavdelning var registrerad på samma sätt, och 2026-08-17 mättes vad
+  # det blivit: 232 av 801 löften var KD:s mot 42 för SD, och av de 212 senast
+  # tillagda var 193 KD:s. Vi hade läst 270 sidor hos KD och 22 hos SD.
+  #
+  # Beslutet från tidigare sa redan att listorna skulle vara SYMMETRISKA. Det
+  # blev de aldrig. De här fyra källorna är symmetrin, och `pnpm test:symmetri`
+  # faller numera om ett parti får en politikkälla och ett annat blir utan.
+  #
+  # VARFÖR SITEMAP OCH INTE INDEX. M, MP och V bygger sina politikmenyer med
+  # skript: hämtar man deras politiksida får man noll länkar till politik, bara
+  # distriktsavdelningarna i sidfoten. Mätt 2026-08-17. Deras sitemap listar
+  # däremot varje sida, och den är dessutom vad partiet SJÄLVT pekar ut som
+  # sina sidor — alltså samma mekanism för alla, i stället för ett gissat
+  # länkmönster per parti.
+  #
+  # MÖNSTREN PRÖVAS MOT HELA ADRESSEN, inte mot sökvägen. Lokalavdelningarna
+  # ligger under samma domän som rikspolitiken: MP:s sitemap har 4 116 träffar
+  # på "/politik/" men 98 på rikspolitiken, resten är mp.se/ale/politik och
+  # dess likar. Samma sak hos C. Ett sökvägsmönster kan inte skilja dem åt.
+
+  # V — 111 rikspolitiksidor, 0 lästa (2026-08-17). Mönstret utesluter
+  # euval2024/politik: det är förra EU-valets politik, inte 2026 års.
+  - id: v-politik-sitemap
+    type: sitemap
+    url: "https://www.vansterpartiet.se/sitemap.xml"
+    article_pattern: "^https://www\\.vansterpartiet\\.se/var-politik/"
+    verified: "2026-08-17 — sitemapindex, 2 035 adresser totalt, 111 på /var-politik/ efter mönstret"
+
+  # MP — 98 rikspolitiksidor, 1 läst (2026-08-17).
+  - id: mp-politik-sitemap
+    type: sitemap
+    url: "https://www.mp.se/sitemap.xml"
+    article_pattern: "^https://www\\.mp\\.se/politik/"
+    verified: "2026-08-17 — 27 004 adresser totalt, 4 116 på /politik/ varav 98 rikspolitik efter mönstret"
+
+  # M — 87 rikspolitiksidor, 1 läst (2026-08-17).
+  - id: m-politik-sitemap
+    type: sitemap
+    url: "https://moderaterna.se/sitemap.xml"
+    article_pattern: "^https://moderaterna\\.se/var-politik/"
+    verified: "2026-08-17 — sitemapindex med 12 delar, 2 534 adresser totalt, 87 på /var-politik/"
+
+  # SD — 6 politiksidor, 0 lästa (2026-08-17). Att det är sex och inte hundra
+  # är SD:s eget val av hur mycket de skriver ut, inte vår täckning: hela
+  # /vad-vi-vill/ är sex sidor. Källan står här ändå, för symmetrins skull och
+  # för att den fångar det de lägger till.
+  - id: sd-politik-sitemap
+    type: sitemap
+    url: "https://sd.se/sitemap.xml"
+    article_pattern: "^https://(www\\.)?sd\\.se/vad-vi-vill/"
+    verified: "2026-08-17 — sitemapindex, 407 adresser totalt, 6 på /vad-vi-vill/"
+
+  # S, C, L och KD saknas i den här gruppen, och skälen är olika:
+  #   S och KD serverar ingen sitemap alls (SiteVision svarar 404 på
+  #     /sitemap.xml). KD täcks av A–Ö-katalogen ovan; S nås via startsidan
+  #     som index-källa och sin valplattform. S:s A–Ö finns och är
+  #     serverrenderad på kategorinivå — ett eget spår att öppna.
+  #   C:s sitemap har 37 254 adresser men INGEN rikspolitik under /politik/;
+  #     allt som matchar är lokalavdelningarnas sidor. C:s rikspolitik ligger
+  #     på val2026.centerpartiet.se, som redan är en page-källa ovan.
+  #   L har 3 207 adresser och noll under /politik-a-o/ — deras A–Ö är EN sida
+  #     som byggs med skript. L täcks av valmanifestet, som är publicerat.
+
   # --- Nyhetslistor för partier SOM HAR flöde (andra vägen in) ---
   # Efter att MP:s flöde visade sig servera en fem veckor gammal cache utan att
   # något syntes är en enda väg in per parti inte betryggande. De här källorna
@@ -340,5 +408,17 @@ feeds:
     verified: "2026-07-02 — 200, MP fossilfri matproduktion"
 
 limits:
-  max_articles_per_run: 20
+  # Höjt från 20 till 30 den 2026-08-17, av samma skäl som kadensen i
+  # pipeline.yml: fyra partiers politikavdelningar kopplades in samtidigt och
+  # låg nästan olästa. 6 körningar × 30 ger 180 sidor per dygn, så eftersläpet
+  # på knappt 300 sidor är inhämtat på ett par dygn.
+  #
+  # Taket skyddar två saker: LLM-kostnaden per körning, och granskningskön —
+  # varje sida som ger en kandidat hamnar hos en människa. Höj inte utan att
+  # se efter hur lång kön är.
+  #
+  # Vem som får de 30 platserna avgörs av skordeordning.ts: det parti vi läst
+  # minst på går först. Utan den ordningen gör en höjning här bara att det
+  # redan bäst täckta partiet skördas ännu fortare.
+  max_articles_per_run: 30
   min_chars: 400

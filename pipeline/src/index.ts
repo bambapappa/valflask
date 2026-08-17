@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import type { LlmClient } from "./llm.ts";
 import type { ArticleSource, SourceConfig, SourceFeed } from "./fetch.ts";
 import { dedup, loadSeen, seenKey } from "./fetch.ts";
+import { laststTal, ordnaEfterTackning } from "./skordeordning.ts";
 import { extractFromArticle } from "./extract.ts";
 import { runGates, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
@@ -99,16 +100,30 @@ export async function runPipeline(
   // (2) riksdagen (motioner/anföranden); (3) övriga. URL-sortering inom varje
   // grupp ger determinism.
   const prio = (a: NormalizedArticle): number =>
-    a.feedType === "page" || a.feedType === "index"
+    a.feedType === "page" || a.feedType === "index" || a.feedType === "sitemap"
       ? 0
       : a.domain === "data.riksdagen.se"
         ? 1
         : 2;
-  articles.sort((a, b) => prio(a) - prio(b) || a.url.localeCompare(b.url));
 
   const seenPath = `${ctx.dataDir}/seen.json`;
   const existingSeen = loadSeen(seenPath);
-  const { newArticles } = dedup(articles, existingSeen);
+  const { newArticles: oordnade } = dedup(articles, existingSeen);
+
+  // Inom prioritetsgrupperna: det parti vi läst minst på går först. Sorteras
+  // det på adress i stället — som det gjorde till 2026-08-17 — vinner
+  // kristdemokraterna.se alfabetiskt över moderaterna.se, sd.se och allt på
+  // www., och ett parti med en stor katalog äter hela budgeten varje körning
+  // tills katalogen är slut. Se skordeordning.ts för vad det kostade.
+  //
+  // Ordnas EFTER dedup: rangen ska räknas på de sidor vi faktiskt ska
+  // behandla, inte på allt som hämtades och redan var sett.
+  const newArticles = ordnaEfterTackning(
+    oordnade,
+    (a) => a.url,
+    prio,
+    laststTal(existingSeen),
+  );
 
   // Kapa PROCESS-budgeten på nya artiklar (inte på hämtade). URL-sortering ovan
   // ger data.riksdagen.se först → motioner/anföranden prioriteras. Endast de

@@ -7,6 +7,7 @@ import { getPromises, getParties, getConstants, getChangelog } from "../lib/data
 import { totalFlasket, financingGap, formatMsek, formatMsekShort, countPromises, dataHash, formatDateShort } from "../lib/calc";
 import { maskeraText } from "../lib/mask";
 import { partyTotalMsek, promiseNetMsek, groupedPromises } from "../lib/aggregates";
+import { tackningensTal, sidorFor } from "../lib/tackningens-tal";
 
 const promises = getPromises();
 const parties = getParties();
@@ -19,6 +20,7 @@ const totalShort = formatMsekShort(flasket);
 const count = countPromises(promises);
 const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 const hash = dataHash(changelog);
+const tackning = tackningensTal();
 
 
 const partyRows = parties.map((p) => ({
@@ -65,6 +67,7 @@ const jsonLd = [
               <th>Parti</th>
               <th class="num">Totalt (mdkr)</th>
               <th class="num">Löften</th>
+              <th class="num">Sidor lästa</th>
             </tr>
           </thead>
           <tbody>
@@ -74,11 +77,18 @@ const jsonLd = [
                 <td><a href={`/parti/${row.code}`}>{row.name}</a></td>
                 <td class="num belopp">{formatMsek(row.total)}</td>
                 <td class="num">{promises.filter((p) => p.parties.includes(row.code) && p.status !== 'tillbakadragen').length}</td>
+                <td class="num">{sidorFor(tackning, row.code)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <p class="tackningsnot">
+        Sista kolumnen är hur många sidor vi hunnit läsa på partiets egen
+        webbplats. Den står där för att de två talen före den inte går att
+        jämföra utan den: ett parti vi läst mer av får fler löften och en högre
+        summa, utan att ha lovat mer. <a href="/metod#tackning">Så jämnar vi ut det</a>.
+      </p>
     </section>
 
     <section class="sektion">
@@ -134,5 +144,12 @@ const jsonLd = [
   }
   .etikett--sub {
     margin-top: 0.15rem;
+  }
+  .tackningsnot {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    color: var(--dis);
+    line-height: var(--radavstand-mono);
+    margin-top: 0.6rem;
   }
 </style>

@@ -21,6 +21,70 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-17 — Skörden ska vara symmetrisk, och ojämnheten ska synas
+
+**Gäller:** Fläskvågen och Frågevågen — båda hämtar sitt underlag genom samma
+skörd i `pipeline/src/fetch.ts` och samma budget i `data/sources.yaml`.
+Handlingsvågen rörs inte: dess underlag är riksdagens dokumentregister, som är
+lika fullständigt för alla partier och inte beror på vad vi råkat registrera.
+Det publicerade beståndet är kontrollerat i båda de berörda vågarna.
+
+**Beslut (mänskligt beslut 2026-08-17):** Varje riksdagsparti ska ha minst en
+registrerad väg in till hela sin politikavdelning, och när budgeten inte räcker
+till alla går det parti först som vi läst minst av. Täckningen per parti visas
+för läsaren bredvid antalet löften, så länge den är ojämn och även därefter.
+
+**Motiv:** Mätt den 17 augusti 2026 var 232 av 801 publicerade löften KD:s och
+42 SD:s. Av de 212 senast tillagda var 193 — 91 procent — KD:s. Vi hade läst
+233 sidor hos KD och 11 hos S. Talet mätte inte partierna. Det mätte oss.
+
+Orsaken var två rader kod och en asymmetri i en konfigurationsfil. KD:s A–Ö var
+det enda partis **politikavdelning** som var registrerad som en genomsökt
+källa; alla andra hade en enda sida, och deras genomsökta källor pekade på
+nyhetsflödet. Samtidigt sorterades skörden inom sin prioritetsgrupp på adress i
+bokstavsordning, och `kristdemokraterna.se` står före `moderaterna.se`, före
+`sd.se` och före allt på `www.`. Med 220 undersidor i kön åt KD hela budgeten
+om 20 varje körning, och gjorde det tills katalogen var slut.
+
+Ingen av delarna var slarv. A–Ö-källan lades in för att KD var **under**täckt —
+21 procent av deras löften kom från egen kanal mot 61–100 för de andra — och
+för att en läsare hittade ett publicerat KD-vallöfte vi missat. Rättelsen
+sköt över målet, och ingenting mätte att den gjort det.
+
+Ett tidigare beslut sa redan att listorna skulle vara **symmetriska**. Det
+skrevs ner och byggdes aldrig. Det är samma lärdom som ordreglerna bär: en
+regel utan grind är en påminnelse, och påminnelser åldras. Därför faller
+`pnpm test` numera om ett parti saknar väg in till sin politik.
+
+**Så är det byggt:** Ny källtyp `sitemap` i `pipeline/src/fetch.ts` läser
+partiets eget sidregister — nödvändigt eftersom M, MP och V bygger sina
+politikmenyer med skript och ger noll länkar att följa. Fyra nya källor: V 111,
+MP 98, M 87 och SD 6 rikspolitiksidor. Ordningen ligger i
+`pipeline/src/skordeordning.ts` och rangordnar på lästa sidor per parti.
+Symmetrin vaktas av `pipeline/tests/kallsymmetri.test.ts`, täckningen visas av
+`site/src/lib/tackningens-tal.ts` och prövas mot den **byggda** sidan av
+`pnpm test:tackning`. Prosans ankare `metod-tackning-minst-last-gar-forst` och
+`metod-tackning-varje-parti-har-en-vag-in` binder metodsidans två påståenden
+till mätningar.
+
+Kadensen är höjd från tre till sex körningar per dygn och budgeten från 20 till
+30 sidor per körning, för att hämta in eftersläpet på knappt 300 olästa
+politiksidor. Det är en ikappkörning, inte ett nytt normalläge: sänk tillbaka
+när täckningen jämnat ut sig.
+
+**Förkastade alternativ:** *Pausa KD:s A–Ö* — hade återöppnat hålet källan
+byggdes för att täcka, och är dessutom verkningslöst: katalogen är redan
+genomläst (241 sidor hämtade, 193 publicerade, 59 avvisade, 19 kvar i kön).
+*Stryka eller kapa KD-löften för balansens skull* — vore vår egen förvrängning
+ovanpå den vi redan hade; ett parti som skrivit ner tvåhundra ståndpunkter har
+faktiskt sagt mer. *Räkna täckningen ur `promises.json`* — den vet bara om
+sidor som gav ett löfte, och ett parti vi läst mycket men hittat lite hos hade
+då sett olässt ut. Talet läses därför ur `seen.json`. *Låta antalet löften stå
+utan täckningskolumn* — det är talet läsaren jämför på, och utan den andra
+kolumnen jämför de vår skörd i tron att de jämför partierna.
+
+---
+
 ## 2026-08-17 — Filmerna får en videokopia, och den är inte ett ordagrant belägg
 
 **Gäller:** Fläskvågen. Frågevågens besked kommer ur publicerade sidor, inte ur
