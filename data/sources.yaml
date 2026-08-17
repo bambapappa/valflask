@@ -408,17 +408,23 @@ feeds:
     verified: "2026-07-02 — 200, MP fossilfri matproduktion"
 
 limits:
-  # Höjt från 20 till 30 den 2026-08-17, av samma skäl som kadensen i
+  # Höjt från 20 till 45 den 2026-08-17, av samma skäl som kadensen i
   # pipeline.yml: fyra partiers politikavdelningar kopplades in samtidigt och
-  # låg nästan olästa. 6 körningar × 30 ger 180 sidor per dygn, så eftersläpet
-  # på knappt 300 sidor är inhämtat på ett par dygn.
+  # låg nästan olästa. 6 körningar × 45 ger 270 sidor per dygn, så eftersläpet
+  # på knappt 300 sidor är inhämtat på ungefär ett dygn.
+  #
+  # Varför inte högre: körningen tog 73–87 minuter med taket 20, och en stor
+  # del av den tiden är LLM-arbete per sida. 45 landar grovt på 2,5–3 timmar,
+  # vilket ryms inom fyrtimmarskadensen. Går taket så högt att en körning inte
+  # hinner bli klar innan nästa köas avbryts den köade — då skördar vi mindre,
+  # inte mer.
   #
   # Taket skyddar två saker: LLM-kostnaden per körning, och granskningskön —
-  # varje sida som ger en kandidat hamnar hos en människa. Höj inte utan att
-  # se efter hur lång kön är.
+  # varje sida som ger en kandidat hamnar hos en människa. Kön är den riktiga
+  # flaskhalsen i en ikappkörning; skörden går alltid fortare än granskningen.
   #
-  # Vem som får de 30 platserna avgörs av skordeordning.ts: det parti vi läst
+  # Vem som får de 45 platserna avgörs av skordeordning.ts: det parti vi läst
   # minst på går först. Utan den ordningen gör en höjning här bara att det
   # redan bäst täckta partiet skördas ännu fortare.
-  max_articles_per_run: 30
+  max_articles_per_run: 45
   min_chars: 400
