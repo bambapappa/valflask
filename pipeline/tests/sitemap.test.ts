@@ -111,3 +111,30 @@ test("tom eller trasig sitemap ger noll sidor", () => {
   assert.deepEqual(sitemapLinks("").urls, []);
   assert.deepEqual(sitemapLinks("<html>inte en sitemap</html>").urls, []);
 });
+
+test("DET TYSTA NOLLET: en gzippad sitemap packas upp", async () => {
+  // Centerpartiets register ligger som sitemap1.xml.gz och serveras UTAN
+  // Content-Encoding: gzip — filen är packad, inte överföringen. Avkodad som
+  // text blev den skräp utan en enda <loc>, och källan svarade «inga sidor
+  // efter mönstret» fast registret har 208 politiksidor. Ett tyst noll.
+  const { gzipSync } = await import("node:zlib");
+  const { sitemapText } = await import("../src/fetch.ts");
+  const xml = karta("https://www.centerpartiet.se/centerpartiets-politik/bostader");
+  const packad = new Uint8Array(gzipSync(Buffer.from(xml, "utf8")));
+  const ut = sitemapLinks(sitemapText(packad));
+  assert.deepEqual(ut.urls, ["https://www.centerpartiet.se/centerpartiets-politik/bostader"]);
+});
+
+test("opackad sitemap går fortfarande igenom oförändrad", async () => {
+  const { sitemapText } = await import("../src/fetch.ts");
+  const xml = karta("https://sd.se/vad-vi-vill/x");
+  const bytes = new Uint8Array(Buffer.from(xml, "utf8"));
+  assert.deepEqual(sitemapLinks(sitemapText(bytes)).urls, ["https://sd.se/vad-vi-vill/x"]);
+});
+
+test("en trasig gzip ger tom text, inte ett kastat undantag", async () => {
+  const { sitemapText } = await import("../src/fetch.ts");
+  // Gzip-huvudet stämmer, resten är skräp.
+  const trasig = new Uint8Array([0x1f, 0x8b, 0x08, 0x00, 0x99, 0x99, 0x99, 0x99]);
+  assert.equal(sitemapText(trasig), "");
+});

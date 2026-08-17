@@ -234,16 +234,49 @@ feeds:
     article_pattern: "^https://(www\\.)?sd\\.se/vad-vi-vill/"
     verified: "2026-08-17 — sitemapindex, 407 adresser totalt, 6 på /vad-vi-vill/"
 
-  # S, C, L och KD saknas i den här gruppen, och skälen är olika:
-  #   S och KD serverar ingen sitemap alls (SiteVision svarar 404 på
-  #     /sitemap.xml). KD täcks av A–Ö-katalogen ovan; S nås via startsidan
-  #     som index-källa och sin valplattform. S:s A–Ö finns och är
-  #     serverrenderad på kategorinivå — ett eget spår att öppna.
-  #   C:s sitemap har 37 254 adresser men INGEN rikspolitik under /politik/;
-  #     allt som matchar är lokalavdelningarnas sidor. C:s rikspolitik ligger
-  #     på val2026.centerpartiet.se, som redan är en page-källa ovan.
-  #   L har 3 207 adresser och noll under /politik-a-o/ — deras A–Ö är EN sida
-  #     som byggs med skript. L täcks av valmanifestet, som är publicerat.
+  # L — 126 politiksidor, 0 lästa (2026-08-17). En riktig A–Ö: a-kassa,
+  # abort, ai, ålderism, äldreomsorg … Sidan /politik-a-o/ som menyn pekar på
+  # byggs med skript och gav noll länkar; sidorna ligger under /politik/.
+  - id: l-politik-sitemap
+    type: sitemap
+    url: "https://www.liberalerna.se/sitemap.xml"
+    article_pattern: "^https://www\\.liberalerna\\.se/politik/"
+    verified: "2026-08-17 — sitemapindex, 3 207 adresser totalt, 126 på /politik/ efter mönstret; a-kassa 6 849 tecken"
+
+  # C — 208 politiksidor, 0 lästa (2026-08-17). Rikspolitiken ligger under
+  # /centerpartiets-politik/, inte under /politik/ — det senare matchar bara
+  # lokalavdelningarnas sidor, som är 14 186 av sajtens 37 254 adresser.
+  # Katalogen har två våningar (…/politik-a-o/bostader/bostadsbyggande), och
+  # sitemapen listar båda, så ingen följning behövs.
+  - id: c-politik-sitemap
+    type: sitemap
+    url: "https://www.centerpartiet.se/sitemap.xml"
+    article_pattern: "^https://www\\.centerpartiet\\.se/centerpartiets-politik/"
+    verified: "2026-08-17 — 37 254 adresser totalt, 208 på /centerpartiets-politik/; bostadsbyggande 4 601 tecken"
+
+  # --- Katalog i två våningar (type: index, follow_depth: 2) ---
+
+  # S — 121 politiksidor, 0 lästa (2026-08-17). Socialdemokraterna har ingen
+  # sitemap: SiteVision svarar 404 på /sitemap.xml, precis som hos KD. Deras
+  # A–Ö är däremot serverrenderad, men i TVÅ våningar: /var-politik listar
+  # fjorton ämnesområden, och de enskilda ståndpunkterna ligger en nivå in.
+  # Nivå ett ensam ger fjorton sidor; nivå ett plus två ger 121.
+  #
+  # Områdessidorna hämtas som artiklar de också — de bär 6 000 tecken egen
+  # text, inte bara länkar.
+  #
+  # Adressen är /var-politik (utan a-till-o): själva A–Ö-registret renderas
+  # med skript och ger noll länkar, medan sidan ovanför listar områdena i HTML.
+  - id: s-politik-index
+    type: index
+    url: "https://www.socialdemokraterna.se/var-politik"
+    article_pattern: "^/var-politik/a-till-o/"
+    follow_depth: 2
+    max_articles: 200
+    verified: "2026-08-17 — 200, 14 områden på nivå ett, 121 sidor med nivå två; ekonomi 6 067 tecken, banker 5 157"
+
+  # KD saknas i de här två grupperna med flit: partiets A–Ö täcks redan av
+  # kd-politik-a-till-o ovan, som är samma sorts katalogkälla.
 
   # --- Nyhetslistor för partier SOM HAR flöde (andra vägen in) ---
   # Efter att MP:s flöde visade sig servera en fem veckor gammal cache utan att
@@ -409,9 +442,10 @@ feeds:
 
 limits:
   # Höjt från 20 till 45 den 2026-08-17, av samma skäl som kadensen i
-  # pipeline.yml: fyra partiers politikavdelningar kopplades in samtidigt och
-  # låg nästan olästa. 6 körningar × 45 ger 270 sidor per dygn, så eftersläpet
-  # på knappt 300 sidor är inhämtat på ungefär ett dygn.
+  # pipeline.yml: sju partiers politikavdelningar kopplades in samtidigt och
+  # låg nästan olästa. Med alla åtta partier inkopplade är eftersläpet 757
+  # sidor (C 208, KD 220 lästa, S 121, L 126, V 111, MP 98, M 87, SD 6), och
+  # 6 körningar × 45 ger 270 per dygn — alltså knappt tre dygn.
   #
   # Varför inte högre: körningen tog 73–87 minuter med taket 20, och en stor
   # del av den tiden är LLM-arbete per sida. 45 landar grovt på 2,5–3 timmar,
