@@ -461,6 +461,35 @@ export const ANKARE: Ankare[] = [
     matt: "gränsen är 14 dygn; 15 dygns väntan avvisas, 1 dygns godtas, 2026-08-17",
   },
   {
+    id: "metod-videokopian-ar-inget-ordagrant-belagg",
+    sida: METOD,
+    pastaende: "ett skydd mot att beviset försvinner, inte ett ordagrant belägg",
+    // Meningen skiljer två sorters bevis åt, och det är hela skälet till att
+    // videokopian fick ett EGET fält. Ett fel här ser ut som en förbättring:
+    // en videoadress i `archive_url` hade fått löftet att se ut att ha ett
+    // ordagrant belägg det inte har, och citatgrinden hade inte kunnat pröva
+    // det — det finns ingen text i en film att pröva mot.
+    //
+    // Provet mäter undantaget prosan inte nämner: att skillnaden inte bara är
+    // beskriven utan hålls i datat.
+    prov: () => {
+      const rad = repofil("data/promises.json");
+      if (!rad) return false;
+      const alla = JSON.parse(rad) as Array<{
+        source: { url: string; archive_url: string | null; video_archive_url?: string | null };
+      }>;
+      const arVideo = (u: string | null | undefined) =>
+        Boolean(u && /(^|\/\/)ghostarchive\.org\/varchive\//.test(u));
+      const film = (u: string) => /youtube\.com|youtu\.be/.test(u);
+      // Ingen videokopia i archive_url, och ingen videokopia på en webbsida.
+      return alla.every((p) => !arVideo(p.source.archive_url))
+        && alla.every((p) => !p.source.video_archive_url || film(p.source.url));
+    },
+    fallprov:
+      "Flytta en ghostarchive.org/varchive/-adress från video_archive_url till archive_url — provet faller, för då påstår löftet ett ordagrant belägg som inte går att pröva.",
+    matt: "0 videokopior i archive_url av 801 löften, 2026-08-17",
+  },
+  {
     id: "metod-uppskattning-bar-ungefartecken",
     sida: METOD,
     pastaende: "Den märks alltid med ett ungefär-tecken och ett spann",

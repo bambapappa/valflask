@@ -189,16 +189,85 @@ export async function slaUppArchiveToday(
   }
 }
 
+/* ────────────────────────────────────────────────────── Ghostarchive ── */
+
+const GHOST_HOST = "ghostarchive.org";
+/**
+ * Uppslag hos Ghostarchive — tredje spåret, och det enda som arkiverar
+ * YouTube-video.
+ *
+ * Mätt 2026-08-17, samma dag som archive.today: **sökningen är öppen**
+ * (`GET /search?term=` svarar 200 utan hinder) men **sparandet ligger bakom
+ * en Cloudflare-utmaning** (`POST /archive2` svarar 403 «Just a moment…»).
+ * Två oberoende gratisarkiv, båda öppna för läsning och stängda för
+ * automatiskt skrivande — det är inte en egenhet hos det ena.
+ *
+ * VAKTEN, OCH VARFÖR DEN FÖRSTA INTE VAKTADE NÅGOT
+ *
+ * Första versionen godtog träffen om den exakta adressen fanns någonstans i
+ * svaret. Mätt 2026-08-17: **sökresultatsidan ekar alltid tillbaka frågan**,
+ * även för en påhittad adress som `finns-inte-alls-12345.example.org`. Testet
+ * var alltså alltid sant och vaktade ingenting. Det enda som räddade oss var
+ * att en tom träfflista saknar arkivlänkar — tur, inte en spärr. En sökning
+ * som gav kopior av ANDRA sidor hade fäst fel kopia vid ett löfte.
+ *
+ * Nu prövas varje träffrad för sig, och prövningen skiljer sig åt:
+ *
+ *   · videokopia — `/varchive/<id>` bär YouTubes egen video-id. Den jämförs
+ *     mot id:t i vår adress. Exakt, och raden innehåller ingen URL alls att
+ *     jämföra mot (den visar bara filmens titel).
+ *   · sidkopia — `/archive/<kod>` bär en ogenomskinlig kod. Då krävs att den
+ *     exakta adressen står i SAMMA rad, inte bara på sidan.
+ */
+export async function slaUppGhostarchive(
+  url: string,
+  httpFetch: HttpFetch = globalThis.fetch.bind(globalThis),
+): Promise<string | null> {
+  try {
+    const res = await httpFetch(
+      `https://${GHOST_HOST}/search?term=${encodeURIComponent(url)}`,
+      { method: "GET", headers: { "User-Agent": UA }, redirect: "follow", signal: AbortSignal.timeout(30_000) },
+    );
+    if (!res.ok) return null;
+    const html = await res.text();
+    // Rubriken ligger utanför tabellen och ekar frågan — därför bara raderna.
+    const rader = html.split(/<tr/i).slice(1);
+    const videoId = /[?&]v=([A-Za-z0-9_-]{6,})/.exec(url)?.[1]
+      ?? /youtu\.be\/([A-Za-z0-9_-]{6,})/.exec(url)?.[1];
+    for (const rad of rader) {
+      const v = /\/varchive\/([A-Za-z0-9_-]{4,})/.exec(rad);
+      if (v && videoId && v[1] === videoId) return `https://${GHOST_HOST}/varchive/${v[1]}`;
+      const a = /\/archive\/([A-Za-z0-9_-]{4,})/.exec(rad);
+      if (a && rad.includes(url)) return `https://${GHOST_HOST}/archive/${a[1]}`;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Vilken tjänst en kopia ligger hos. Härleds ur adressen i stället för att
  * lagras i ett eget fält: adressen kan inte glida isär från sig själv, och ett
  * fält som säger något annat än länken är ett fel som ingen upptäcker.
  */
-export function arkivleverantor(archiveUrl: string | null | undefined): "wayback" | "archive.today" | "okand" {
+export function arkivleverantor(
+  archiveUrl: string | null | undefined,
+): "wayback" | "archive.today" | "ghostarchive" | "okand" {
   if (!archiveUrl) return "okand";
   if (/(^|\/\/)web\.archive\.org\//.test(archiveUrl)) return "wayback";
   if (/(^|\/\/)archive\.(?:ph|today|is|li|vn|fo|md)\//.test(archiveUrl)) return "archive.today";
+  if (/(^|\/\/)ghostarchive\.org\//.test(archiveUrl)) return "ghostarchive";
   return "okand";
+}
+
+/**
+ * Är adressen en VIDEOkopia? Den bär ingen text att pröva citatet mot, och
+ * får därför aldrig hamna i `archive_url` — se `video_archive_url` i
+ * `arkivvantan.ts` och metodsidans stycke om talade källor.
+ */
+export function arVideokopia(archiveUrl: string | null | undefined): boolean {
+  return Boolean(archiveUrl && /(^|\/\/)ghostarchive\.org\/varchive\//.test(archiveUrl));
 }
 
 export async function archiveViaArchiveToday(url: string, httpFetch: HttpFetch = globalThis.fetch.bind(globalThis)): Promise<ArchiveResult> {

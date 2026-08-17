@@ -26,6 +26,7 @@ import {
   archiveViaArchiveToday,
   arkivleverantor,
   slaUppArchiveToday,
+  slaUppGhostarchive,
   snapshotUrUrSparsvar,
 } from "../src/archive.ts";
 import {
@@ -164,11 +165,11 @@ for (const key of urls) {
     // Reservspåret. Ett UPPSLAG, inte ett sparande — det senare hör hemma i
     // fas B med sin budget. Görs alltid, inte bara när Wayback tiger: att en
     // kopia finns hos archive.today är lika sant när Wayback svarat nej.
-    const reserv = await slaUppArchiveToday(key);
+    const reserv = (await slaUppArchiveToday(key)) ?? (await slaUppGhostarchive(key));
     if (reserv) {
       resolved.set(key, reserv);
       franReserv.add(key);
-      console.log(`    ✓ reservarkivet har en: ${reserv.slice(0, 60)}`);
+      console.log(`    ✓ ${arkivleverantor(reserv)} har en: ${reserv.slice(0, 60)}`);
     } else {
       needSave.push(key);
       // Bokför VARFÖR källan står utan kopia. Det är den bokföringen
@@ -413,14 +414,14 @@ console.log(`Kvar utan arkiv: ${promises.filter((p) => !p.source.archive_url).le
   // Leverantören härleds ur adressen, inte ur ett fält. Raden finns för att
   // en kopia hos reservarkivet är en kopia — men det ska synas hur många som
   // vilar på reserven, för den är den mindre beprövade av de två.
-  const per = { wayback: 0, "archive.today": 0, okand: 0 };
+  const per = { wayback: 0, "archive.today": 0, ghostarchive: 0, okand: 0 };
   for (const p of promises) {
     if (!p.source.archive_url) continue;
     per[arkivleverantor(p.source.archive_url)]++;
   }
   console.log(
-    `Kopiorna ligger hos: Wayback ${per.wayback}, reservarkivet ${per["archive.today"]}` +
-      (per.okand > 0 ? `, okänd tjänst ${per.okand}` : "") + ".",
+    `Kopiorna ligger hos: Wayback ${per.wayback}, archive.today ${per["archive.today"]}, ` +
+      `Ghostarchive ${per.ghostarchive}` + (per.okand > 0 ? `, okänd tjänst ${per.okand}` : "") + ".",
   );
 }
 if (vagrade.length > 0) {

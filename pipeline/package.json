@@ -28,7 +28,8 @@
     "gruppharledning": "node --import tsx/esm scripts/gruppharledning.mts",
     "citat-byt": "node --import tsx/esm scripts/citat-byt.mts",
     "lofte-dra-in": "node --import tsx/esm scripts/lofte-dra-in.mts",
-    "kostnad:om": "node --import tsx/esm scripts/kostnad-omkorning.mts"
+    "kostnad:om": "node --import tsx/esm scripts/kostnad-omkorning.mts",
+    "film:arkiv": "node --import tsx/esm scripts/film-arkiv.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1",

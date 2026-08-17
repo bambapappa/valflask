@@ -21,6 +21,48 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-17 — Filmerna får en videokopia, och den är inte ett ordagrant belägg
+
+**Gäller:** Fläskvågen. Frågevågens besked kommer ur publicerade sidor, inte ur
+sändningar, och Handlingsvågens bevis är riksdagshandlingar — ingen av dem har
+filmkällor att skydda.
+
+**Beslut (mänskligt beslut 2026-08-17):** Löften ur tal får en **videokopia**
+hos Ghostarchive, i det egna fältet `source.video_archive_url`. Den skrivs
+**aldrig** till `archive_url`. Inskicket görs av en människa; uppslaget och
+inskrivningen görs av `pnpm film:arkiv`.
+
+Metodsidan skriver ut vad kopian betyder och vad den inte betyder: att orden
+går att höra även om filmen tas bort, **inte** att citatet kontrollerats mot
+den. Den kontrollen sker mot avskriften, som förut. Raden skrivs ur datat och
+finns inte alls förrän kopiorna gör det.
+
+**Motiv:** Fjorton löften kommer ur sex sändningar på YouTube. Ingen av dem kan
+få en arkivkopia hos Wayback eller archive.today — en film går inte att spara
+som text, och det är det permanenta undantaget i arkivtäckningen. Följden stod
+redan på metodsidan: försvinner filmen står vi med vår avskrift och inget som
+läsaren kan öppna. Ghostarchive arkiverar YouTube-video och är det enda av de
+tre arkiven som gör det.
+
+**Varför ett eget fält och inte `archive_url`:** citatgrinden godtar en
+arkivkopia bara om citatet står ordagrant i själva ögonblicksbilden. En film
+bär ingen text att pröva mot. En videoadress i `archive_url` hade fått löftet
+att se ut att ha ett ordagrant belägg som inte går att kontrollera — ett fel
+som **ser ut som en förbättring**, vilket är den farligaste sorten. Skillnaden
+hålls därför i datat och inte bara i prosan: tre prov och prosa-ankaret
+`metod-videokopian-ar-inget-ordagrant-belagg`, vars fallprov är att flytta en
+`varchive`-adress till `archive_url`.
+
+**Förkastade alternativ:** *Räkna videokopian i arkivtäckningen* — då hade
+luckan sett bättre ut utan att ett enda citat blivit mer kontrollerbart.
+*Automatisera inskicket* — det ligger bakom en Cloudflare-utmaning, och en
+bot-kontroll är tjänstens sätt att säga att en människa ska göra det; att
+kringgå den vore dessutom illa mot ett gratisarkiv vi är beroende av.
+*Publicera avskrifterna i stället* — avgjort 2026-08-17 i E2: ett tal är
+talarens verk, och fulltext sparas aldrig i repot.
+
+---
+
 ## 2026-08-17 — Arkivluckan får ett undantag, och undantaget har en klocka
 
 **Gäller:** Fläskvågen och Frågevågen — båda vågarnas källor arkiveras genom
