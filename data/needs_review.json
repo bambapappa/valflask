@@ -146,35 +146,6 @@
   },
   {
     "candidate": {
-      "title": "Utöka belåningsgraden från 85 till 90 procent",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "För att underlätta för familjer och ungdomar att köpa sin första bostad vill vi att möjligheten att belåna bostaden med bostaden som säkerhet utökas från 85 till 90 procent av bostadens värde.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ranteavdrag",
-    "articleTitle": "Ränteavdrag | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 5,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Regeländring gällande belåningsgrad. Avser endast eventuell admin/övervakning för staten, inte samhällsföljder som ökad skuldsättning eller finansiell stabilitet.",
-      "confidence": 0.65,
-      "calculation": "Detta är en lag- och regeländring (tak på belåningsgrad höjs från 85 till 90 %). Den direkta statliga kostnaden är i princip noll – möjligtvis mindre administrativa kostnader för Finansinspektionen för uppdaterade riktlinjer. Underlag, omfördelningar och riskkonsekvenser lämnas okvantifierade enligt regel 9. Spannet 0–5 mkr speglar osäkerhet om eventuell utökad tillsyn."
-    },
-    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0410 (13000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~13000"
-  },
-  {
-    "candidate": {
       "title": "Minska regelbördan genom förenklade skatteregler och en regel in två ut",
       "parties": [
         "kd"
@@ -228,35 +199,6 @@
       "method_note": "Bred digitaliseringslöfte utan konkret omfattning. Kostnad avser statlig IT-utveckling för samordning av myndighetskontakt, inte samhällsekonomiska följder.",
       "confidence": 0.3,
       "calculation": "Löfte om 'en gång-inlämning' mellan myndigheter kräver systemintegration, gemensamma gränssnitt och processomdesign. Modest tolkning: 2–3 myndigheter × 20–30 mkr ≈ 50 mkr. Mellan: bredare integration över fler myndigheter, gemensam plattform ≈ 150 mkr. Hög: fullskalig omläggning med påverkan på många system och organisationsförändringar ≈ 500 mkr. Osäkerheten är stor eftersom löftet saknar specificerad omfattning."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Lokala behov ska väga tyngre vid riksintressen",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Lokala och regionala behov ska väga tyngre, och staten ska tydligare samordna sina intressen.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/riksintressen",
-    "articleTitle": "Riksintressen | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 5,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Inriktningslöfte om prioriteringsordning vid riksintressen. Ingen konkret åtgärd med kostnad specificerad; eventuell merkostnad begränsas till administrativ omorganisation.",
-      "confidence": 0.3,
-      "calculation": "Löftet avser en ändrad prioriteringsordning och samordning inom befintlig statlig verksamhet. Ingen ny utgift identifieras. Ev. kostnad för uppdaterade vägledningar/myndighetsinstruktioner uppskattas till 0–5 mkr."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   },
@@ -317,122 +259,6 @@
       "calculation": "Löftet ändrar villkoren för hur befintligt statligt riskkapital (Almi, Industrifonden m.fl.) ska investeras — krav på saminvestering med privat kapital. Ingen ny statsutgift för själva investeringarna eftersom dessa redan finns i budgeten. Direkt kostnad utgörs av administrativ omställning: nya investeringspolicyer, granskningsrutiner och uppföljning. Snittar mot lägre ände av SOU-liknande policyöversyn (~5 msek) med osäkerhet uppåt vid systemändringar (~15 msek)."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0674 (10)"
-  },
-  {
-    "candidate": {
-      "title": "Öka lokalt inflytande över rovdjursförvaltning",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Därför behöver den lokala nivåns inflytande över rovdjursförvaltningen öka.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/rovdjursforvaltning",
-    "articleTitle": "Rovdjursförvaltning | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 5,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Förvaltningsreglering utan specificerad nivå; direkt kostnad för åtgärden bedöms försumbar, endast eventuell administrativ omställning.",
-      "confidence": 0.3,
-      "calculation": "Ingen ny förmån eller statsbidrag. Ökat lokalt inflytande är en ansvarsförändring som kan kräva mindre utredning/administration, uppskattad till 0–5 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Uppgraderat försvarssamarbete på EU-nivå",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Kristdemokraterna förespråkar ett uppgraderat försvarssamarbete på EU-nivå, bland annat genom utökad försvarsmobilitet, ett eget cyberförsvar samt en till stor del gemensam försvarsmaterielproduktion i Europa.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/sakerhetspolitik",
-    "articleTitle": "Säkerhetspolitik | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 50,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Brett inriktningslöfte om EU-samarbete. Direkta svenska nettokostnader är försumbara tills specifika program/bidrag beslutas; eventuella medel kanaliseras via befintlig EU-budget.",
-      "confidence": 0.2,
-      "calculation": "Löftet avser politisk inriktning på EU-nivå (försvarsmobilitet, cyberförsvar, gemensam materielproduktion) utan konkret svenskt åtagande eller belopp. Svensk medverkan i EU-försvarssamarbete sker redan inom befintliga ramar (PESCO, EDA). Nya direkta statliga utgifter för Sverige begränsas till eventuell medfinansiering av gemensamma projekt, men inga sådana är specificerade. Base = 0 enligt regel 13 (inriktningslöfte). High speglar osäkerhet kring framtida medel till gemensamma EU-initiativ."
-    },
-    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Bättre balans mellan bevarande och förnyelse vid samhällsplanering",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Kristdemokraterna vill se en bättre balans mellan bevarande och förnyelse, där bostadsintresset idag väger för lätt.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/samhallsplanering-och-byggande",
-    "articleTitle": "Samhällsplanering och byggande | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Bred inriktningslöfte utan specifik åtgärd eller belopp. Se regel 13.",
-      "confidence": 0.1,
-      "calculation": "Löftet anger en allmän strävan efter bättre balans vid samhällsplanering, utan konkret åtgärd, nivå eller belopp. Behandlas som inriktningslöfte enligt regel 13 – base 0."
-    },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Stärka kvalitet och rättssäkerhet i samhällsvården",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Kristdemokraterna vill stärka kvaliteten, rättssäkerheten och uppföljningen inom samhällsvården så att varje barn får den omsorg och det skydd som de har rätt till.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/samhallsvard",
-    "articleTitle": "Samhällsvård | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 50,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Kostsamma delar ska prissättas på specifika löften, inte här.",
-      "confidence": 0.15,
-      "calculation": "Inriktningslöfte enligt regel 13. Inget konkret åtgärdsförslag, belopp eller nivå anges — base sätts därför till 0. Ett högstavn spann inkluderar möjliga framtida administrativa kostnader för uppföljningssystem eller tillsyn, men utan specificerade åtgärder är underlaget för tunt för en meningsfull kostnadsberäkning."
-    },
-    "costReason": "LLM-estimat (confidence 0.15) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -822,35 +648,6 @@
   },
   {
     "candidate": {
-      "title": "Villkor för skuldavskrivningar till fattiga länder",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Som villkor för skuldavskrivning ska dock ställas krav på sund ekonomisk politik, demokratisk utveckling och respekt för mänskliga rättigheter.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/skuldavskrivningar",
-    "articleTitle": "Skuldavskrivningar | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 50,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Villkorsställning är en regleringsåtgärd utan egen direkt kostnad; beloppet avser själva åtgärden, inte framtida avskrivningar eller samhällsföljder.",
-      "confidence": 0.4,
-      "calculation": "Löftet stipulerar endast villkor för skuldavskrivning till fattiga länder — ingen ny summa, nivå eller utökad verksamhet anges. Befintlig svensk skuldavskrivning ingår redan i biståndsbudgeten, så den marginella nettoförändringen är ≈ 0 mkr. Spannet (0–50 mkr) täcker eventuell marginell administration för villkorsprövning och uppföljning av demokrati- och mänskliga rättighetskrav."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Sänka trösklarna till företagande via förenklade regler och höjd momsgräns",
       "parties": [
         "kd"
@@ -877,35 +674,6 @@
       "calculation": "Nuvarande momsregistreringsgräns ~30 tkr. Höjs den mot ~100–120 tkr berörs grovt 30 000–80 000 mikroföretag/sidoverksamheter. Utebliven utgående moms ~10–20 tkr per företag och år, delvis motverkad av ej återbetald ingående moms ~3–8 tkr → teoretiskt nettobortfall ~0,2–1 mdkr. Pga osäkerhet om nivå, antal och beteende sätts bas lågt (~100 msek) och low 0 (kan bli nära noll). Förenklade regler och minskad administration: försumbar direkt kostnad; avser åtgärden, inte samhällseffekter."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0157 (0) ⚠ AVVIKER: belopp 100 men jämförbara ligger på 0"
-  },
-  {
-    "candidate": {
-      "title": "Underlätta ägarskiften och stärka tryggheten för företagare",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Samtidigt vill vi underlätta ägarskiften, stärka tryggheten för företagare och förbättra villkoren för växande företag.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/smaforetag",
-    "articleTitle": "Småföretag | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 100,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Brett inriktningslöfte: uppräkning av flera målområden utan konkret åtgärd, belopp eller nivå. Prissätts till 0; konkreta delar (t.ex. ägarskiftesregler) prissätts på separata löften.",
-      "confidence": 0.5,
-      "calculation": "Citatet listar tre mål (underlätta ägarskiften, stärka trygghet för företagare, förbättra villkor för växande företag) utan någon utpekad åtgärd, nivå eller belopp. Enligt regeln för breda sammanfattningslöften behandlas det som inriktningslöfte med base 0 msek. Jämförbara vaga företagarlöften (t.ex. 'Enklare att växa och anställa som företagare') har prissatts till 0. Spannet 0–100 msek/år täcker osäkerheten kring att underliggande åtgärder (t.ex. ändrade beskatt-ningsregler vid ägarskiften) kan få statsfinansiell kostnad, men sådana prissätts på partiets specifika löften och dubbelräknas inte här."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0367 (150), p-2026-0808 (0), p-2026-0777 (0), p-2026-0811 (0)"
   },
   {
     "candidate": {
@@ -996,35 +764,6 @@
   },
   {
     "candidate": {
-      "title": "Verka för minskad spelreklam",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Kristdemokraterna vill verka för minskad spelreklam.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/spelreklam",
-    "articleTitle": "Spelreklam | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 10,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Regleringslöfte: minska spelreklam sker via regler/förbud, ingen direkt statskostnad. Endast ev. utredning/tillsyn i spannet; samhällsföljder prissätts ej.",
-      "confidence": 0.3,
-      "calculation": "Löftet är en inriktningsåtgärd (\"verka för\") utan belopp. Direkt statlig kostnad för skärpt spelreklamsreglering ≈ 0 mkr. Rimlig enda tänkbar kostnad: utredning/översyn av reklamregler, ~5–10 msek engångsvis. Uteblivna spelintäkter eller minskade reklaminsatser är följder/omfördelningar, inte ny statlig utgift, och kvantifieras ej enligt reglerna."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0339 (150) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
-  },
-  {
-    "candidate": {
       "title": "Minska statligt ägande av bolag på konkurrensutsatt marknad",
       "parties": [
         "kd"
@@ -1051,35 +790,6 @@
       "calculation": "Löftet anger inga bolag eller belopp, endast riktning: minska statligt ägande på konkurrensutsatt marknad. Direkt statlig kostnad är beredning och exekvering — värderingar, externa rådgivare och transaktionskostnader, historiskt tiotals mkr per enskild affär. Vid ett brett ur offeringsprogram kan sammanlagd exekveringskostnad nå någon till några hundra mkr. Försäljningsintäkter (statens börsposter på konkurrensutsatta marknad uppgår till tiotals mdkr) och förlorad årlig utdelning är kapitalöverföringar/följder som enligt avgränsningsreglerna inte prissätts. Partiets egen siffra saknas; base ~10 msek i linje med jämförbart löfte p-2026-0674, spann 0–200 msek för att täcka osäkerhet i programmens omfattning."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0674 (10)"
-  },
-  {
-    "candidate": {
-      "title": "Avskaffa det generella strandskyddet",
-      "parties": [
-        "kd"
-      ],
-      "person": null,
-      "quote": "Det generella strandskyddet bör därför avskaffas och ersättas med en möjlighet för kommuner att belägga enskilda strandlinjer med skydd.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/strandskydd",
-    "articleTitle": "Strandskydd | Kristdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 15,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Avreglering: prissatt enbart åtgärdens direkta kostnad (lagändring, ev. vägledning), som är försumbar. Bebyggelsekonsekvenser och naturvärden är följder, inte statlig utgift.",
-      "confidence": 0.65,
-      "calculation": "Löftet är en regelförändring (avskaffa generellt strandskydd i miljöbalken, ersatt med kommunal möjlighet att skydda enskilda stränder). Direkt statlig kostnad: lagstiftningsarbete intern ≈ 0, ev. utredning/vägledning/träning för kommuner och länsstyrelser ≈ 5–15 msek engång. Ingen återkommande statlig utgift; eventuell minskad belastning på länsstyrelser vägs mot nya kommunala uppgifter ≈ netto 0. Base 0 enligt regeln om förbud/regleringar."
-    },
-    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
   },
   {
     "candidate": {
