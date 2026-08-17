@@ -57,9 +57,16 @@ regel utan grind är en påminnelse, och påminnelser åldras. Därför faller
 `pnpm test` numera om ett parti saknar väg in till sin politik.
 
 **Så är det byggt:** Ny källtyp `sitemap` i `pipeline/src/fetch.ts` läser
-partiets eget sidregister — nödvändigt eftersom M, MP och V bygger sina
-politikmenyer med skript och ger noll länkar att följa. Fyra nya källor: V 111,
-MP 98, M 87 och SD 6 rikspolitiksidor. Ordningen ligger i
+partiets eget sidregister — nödvändigt eftersom M, MP, V och L bygger sina
+politikmenyer med skript och ger noll länkar att följa. Registret packas upp
+när det är gzippat: Centerpartiets ligger som `sitemap1.xml.gz` och serveras
+utan `Content-Encoding`, vilket gav ett tyst noll tills det upptäcktes.
+Kataloger i två våningar täcks av `follow_depth: 2` på `index`-typen —
+Socialdemokraternas A–Ö listar fjorton ämnesområden och har ståndpunkterna en
+nivå in, och de har ingen sitemap alls.
+
+**Alla åtta partier har nu en katalogkälla**, med sidantal de själva bestämt:
+C 208, KD 220, S 121, L 126, V 111, MP 98, M 87 och SD 6. Ordningen ligger i
 `pipeline/src/skordeordning.ts` och rangordnar på lästa sidor per parti.
 Symmetrin vaktas av `pipeline/tests/kallsymmetri.test.ts`, täckningen visas av
 `site/src/lib/tackningens-tal.ts` och prövas mot den **byggda** sidan av
@@ -68,8 +75,8 @@ Symmetrin vaktas av `pipeline/tests/kallsymmetri.test.ts`, täckningen visas av
 till mätningar.
 
 Kadensen är höjd från tre till sex körningar per dygn och budgeten från 20 till
-30 sidor per körning, för att hämta in eftersläpet på knappt 300 olästa
-politiksidor. Det är en ikappkörning, inte ett nytt normalläge: sänk tillbaka
+45 sidor per körning, för att hämta in eftersläpet på 757 olästa politiksidor
+— sex körningar à 45 ger 270 per dygn, alltså knappt tre dygn. Det är en ikappkörning, inte ett nytt normalläge: sänk tillbaka
 när täckningen jämnat ut sig.
 
 **Förkastade alternativ:** *Pausa KD:s A–Ö* — hade återöppnat hålet källan

@@ -513,15 +513,24 @@ export const ANKARE: Ankare[] = [
         const typ = /\n\s*type:\s*(\S+)/u.exec(block)?.[1];
         const url = /\n\s*url:\s*"([^"]+)"/u.exec(block)?.[1];
         if (!typ || !url) continue;
-        if (typ !== "page" && typ !== "index" && typ !== "sitemap") continue;
+        // «Hela sin politikavdelning» — inte en enda sida. Det kravet är
+        // hela skillnaden: en katalog ger hundratals sidor, en enkelsida en.
+        // Godtas page-källor här mäter provet inte det meningen lovar.
+        const arKatalog =
+          typ === "sitemap" ||
+          (typ === "index" &&
+            (/\n\s*max_articles:/u.test(block) || /\n\s*follow_depth:\s*2/u.test(block)));
+        if (!arKatalog) continue;
         const parti = partiForUrl(url);
         if (parti) partier.add(parti);
       }
       return ["s", "m", "sd", "c", "v", "kd", "l", "mp"].every((p) => partier.has(p));
     },
     fallprov:
-      "Ta bort sd-vadvivill och sd-politik-sitemap ur data/sources.yaml — provet faller, för då har SD ingen väg in till sin politik och blir underskördat igen.",
-    matt: "alla åtta riksdagspartier har minst en källa av slaget page, index eller sitemap, 2026-08-17",
+      "Ta bort källan s-politik-index ur data/sources.yaml — provet faller, för då har S ingen katalogkälla alls och vi når bara partiets förstasida. Att bara stryka follow_depth fäller INTE provet: källan är en katalog ändå, fast en grundare, och alla partiers kataloger är inte i två våningar.",
+    matt: "alla åtta riksdagspartier har en katalogkälla: sitemap, eller index med eget tak eller två våningar, 2026-08-17",
+  },
+  {
     id: "metod-videokopian-ar-inget-ordagrant-belagg",
     sida: METOD,
     pastaende: "ett skydd mot att beviset försvinner, inte ett ordagrant belägg",

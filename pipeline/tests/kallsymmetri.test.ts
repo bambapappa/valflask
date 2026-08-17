@@ -62,35 +62,57 @@ test("varje riksdagsparti har minst en registrerad politikkälla", () => {
   );
 });
 
-test("inget parti har en katalogkälla medan ett annat saknar det", () => {
-  // Det var exakt den här skillnaden som uppstod: KD fick sin A–Ö som
-  // genomsökt katalog, alla andra hade en enda sida. En katalogkälla ger
-  // hundratals sidor, en enkelsida ger en.
-  const config = kallor();
+/**
+ * En KATALOGKÄLLA når hela politikavdelningen, inte en enda sida.
+ *
+ * Tre former, en per sorts sajt: `sitemap` (partiet publicerar ett
+ * sidregister), `index` med eget `max_articles` (serverrenderad katalog i en
+ * våning, som KD:s A–Ö) och `index` med `follow_depth: 2` (katalog i två
+ * våningar, som S:s).
+ */
+function katalogPartier(config: SourceConfig): Set<string> {
   const katalog = new Set<string>();
   for (const feed of config.feeds) {
-    if (feed.type !== "sitemap" && !(feed.type === "index" && feed.max_articles)) continue;
+    const arKatalog =
+      feed.type === "sitemap" ||
+      (feed.type === "index" && (feed.max_articles !== undefined || feed.follow_depth === 2));
+    if (!arKatalog) continue;
     const parti = partiForUrl(feed.url);
     if (parti) katalog.add(parti);
   }
-  // Har NÅGOT parti en katalog ska frågan vara ställd för alla åtta: antingen
-  // har partiet en egen katalog, eller så står det utskrivet i sources.yaml
-  // varför det inte går. Kommentaren är beviset på att frågan är ställd.
-  const yaml = readFileSync(
-    resolve(import.meta.dirname, "../../data/sources.yaml"),
-    "utf8",
-  );
-  if (katalog.size === 0) return;
-  const oforklarade = RIKSDAGSPARTIER.filter((p) => {
-    if (katalog.has(p)) return false;
-    // Partiets kod ska nämnas i den förklarande kommentaren om varför det
-    // saknas. Utan den vet ingen om det är ett val eller en glömska.
-    return !new RegExp(`^\\s*#.*\\b${p.toUpperCase()}\\b`, "mu").test(yaml);
-  });
+  return katalog;
+}
+
+test("varje riksdagsparti har en KATALOGKÄLLA, inte bara en enstaka sida", () => {
+  // Det var exakt den här skillnaden som skapade snedfördelningen: KD fick
+  // sin A–Ö som genomsökt katalog medan alla andra hade en enda politiksida.
+  // En katalog ger hundratals sidor, en enkelsida ger en — och antalet löften
+  // följer den skillnaden, inte partierna.
+  //
+  // Kravet är skärpt 2026-08-17 från «minst en politikkälla» till «en
+  // katalog», eftersom alla åtta numera har en. Ett krav som alla klarar är
+  // ett krav som går att ställa.
+  const katalog = katalogPartier(kallor());
+  const utan = RIKSDAGSPARTIER.filter((p) => !katalog.has(p));
   assert.deepEqual(
-    oforklarade,
+    utan,
     [],
-    `dessa partier saknar katalogkälla UTAN att sources.yaml säger varför: ${oforklarade.join(", ")}`,
+    `dessa partier saknar katalogkälla: ${utan.join(", ")}. ` +
+      "Utan en når vi bara partiets förstasida, och de blir underskördade " +
+      "jämfört med de sju andra.",
+  );
+});
+
+test("grinden biter: ett parti utan katalogkälla ska falla", () => {
+  const konstruerad = {
+    feeds: kallor().feeds.filter(
+      (f) => !(partiForUrl(f.url) === "s" && f.id === "s-politik-index"),
+    ),
+  } as SourceConfig;
+  assert.equal(
+    katalogPartier(konstruerad).has("s"),
+    false,
+    "utan s-politik-index ska S sakna katalog",
   );
 });
 

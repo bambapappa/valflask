@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
+import { gunzipSync } from "node:zlib";
 import { DATE_WINDOW_DAYS, type NormalizedArticle } from "./gates.ts";
 
 /* ──────────────────────── ArticleSource (M2 injicerbart gränssnitt) ── */
@@ -58,6 +59,25 @@ export interface SourceFeed {
    * faktiskt behandlats markeras sett. Överskottet tas nästa körning.
    */
   max_articles?: number;
+  /**
+   * Bara för "index": hur många länksteg katalogen får följas.
+   *
+   * 1 (förval) är en nyhetslista — listan pekar direkt på artiklarna.
+   *
+   * 2 behövs för kataloger i två våningar. Socialdemokraternas A–Ö är en
+   * sådan: `/var-politik` listar fjorton ÄMNESOMRÅDEN, och de enskilda
+   * ståndpunkterna ligger en nivå längre in. Mätt 2026-08-17 ger nivå ett
+   * fjorton sidor och nivå ett plus två 121 — och S har ingen sitemap att
+   * gena via, för SiteVision svarar 404 på /sitemap.xml.
+   *
+   * Sidorna på mellannivån hämtas som artiklar de också: hos S bär en
+   * områdessida 6 000 tecken egen text, inte bara länkar. Bär den bara
+   * länkar faller den ändå på min_chars.
+   *
+   * Djupare än 2 finns inte, och ska inte finnas: tre steg utan datumkrav
+   * är en genomsökning av hela sajten, inte en katalog.
+   */
+  follow_depth?: 1 | 2;
   verified?: string;
 }
 
@@ -460,6 +480,30 @@ export const MAX_SITEMAP_ARTICLES = 250;
  * utan att en felkonfigurerad sajt kan dra igång hundratals hämtningar.
  */
 export const MAX_SITEMAP_DELAR = 25;
+
+/**
+ * Sitemaptext ur råa bytes, gzip-packad eller inte.
+ *
+ * Centerpartiets register ligger som `sitemap1.xml.gz` och serveras utan
+ * `Content-Encoding: gzip` — filen ÄR komprimerad, det är inte överföringen
+ * som är det, så webbläsarens och fetch:ens egen uppackning rör den inte.
+ * Avkodad som text blev den skräp utan en enda `<loc>`, och källan svarade
+ * «inga sidor efter mönstret» fast registret har 37 255 adresser och 208
+ * politiksidor. Ett tyst noll, alltså — det värsta slaget.
+ *
+ * Magiska talet 0x1f 0x8b är gzip-huvudet. Att pröva på bytes i stället för
+ * på filändelsen håller även för register som packas utan att heta .gz.
+ */
+export function sitemapText(bytes: Uint8Array): string {
+  const packad = bytes.length > 1 && bytes[0] === 0x1f && bytes[1] === 0x8b;
+  try {
+    return new TextDecoder("utf-8").decode(packad ? gunzipSync(bytes) : bytes);
+  } catch {
+    // En trasig gzip är inte en anledning att fälla hela körningen; källan
+    // rapporterar noll sidor och nästa körning provar igen.
+    return "";
+  }
+}
 
 /**
  * Plockar sidadresser ur en sitemap.
@@ -1031,10 +1075,41 @@ export class LiveSource implements ArticleSource {
     if (!listResult) return [];
 
     const listHtml = new TextDecoder("utf-8").decode(listResult.bytes);
-    const lankar = findArticleLinks(listHtml, feed.url, feed.article_pattern, feed.max_articles);
+    const tak = feed.max_articles ?? MAX_INDEX_ARTICLES;
+    let lankar = findArticleLinks(listHtml, feed.url, feed.article_pattern, tak);
     if (lankar.length === 0) {
       console.log(`[fetch] ${feed.id}: nyhetslistan gav inga daterade artikellänkar`);
       return [];
+    }
+
+    // Andra våningen. Sidorna från nivå ett hämtas som artiklar nedan ändå;
+    // här läses de en gång till för sina egna länkar. Det kostar ingen extra
+    // hämtning i praktiken — fetchRawWithCache svarar ur etag-cachen andra
+    // gången — och det är det enda sättet in i en katalog som S:s, där
+    // ståndpunkterna ligger en nivå under ämnesområdena.
+    if (feed.follow_depth === 2) {
+      const djupare = new Set(lankar);
+      for (const gren of lankar) {
+        if (djupare.size >= tak) break;
+        try {
+          if (!(await this.checkRobots(gren))) continue;
+          const res = await this.fetchRawWithCache(gren, etagCache, {
+            Accept: "text/html,application/xhtml+xml",
+          });
+          if (!res) continue;
+          const html = new TextDecoder("utf-8").decode(res.bytes);
+          for (const l of findArticleLinks(html, gren, feed.article_pattern, tak)) {
+            if (djupare.size >= tak) break;
+            djupare.add(l);
+          }
+        } catch (e) {
+          console.error(
+            `[fetch] ${feed.id}: grenen ${gren} föll: ${e instanceof Error ? e.message : e}`,
+          );
+        }
+      }
+      lankar = [...djupare].sort();
+      console.log(`[fetch] ${feed.id}: två våningar gav ${lankar.length} sidor`);
     }
 
     const articles: NormalizedArticle[] = [];
@@ -1089,11 +1164,7 @@ export class LiveSource implements ArticleSource {
     });
     if (!rot) return [];
 
-    const forsta = sitemapLinks(
-      new TextDecoder("utf-8").decode(rot.bytes),
-      feed.article_pattern,
-      tak,
-    );
+    const forsta = sitemapLinks(sitemapText(rot.bytes), feed.article_pattern, tak);
     let adresser = forsta.urls;
     if (forsta.index) {
       const ur: string[] = [];
@@ -1102,11 +1173,7 @@ export class LiveSource implements ArticleSource {
           Accept: "application/xml,text/xml",
         });
         if (!res) continue;
-        const del = sitemapLinks(
-          new TextDecoder("utf-8").decode(res.bytes),
-          feed.article_pattern,
-          tak,
-        );
+        const del = sitemapLinks(sitemapText(res.bytes), feed.article_pattern, tak);
         // Ett register som pekar på ett register pekar på ett tredje steg vi
         // inte följer. `del.index` sant här betyder att sajten är djupare
         // nästlad än de åtta partierna är — då hoppas grenen över tyst.

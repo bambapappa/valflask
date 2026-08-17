@@ -2,10 +2,10 @@ name: pipeline
 on:
   schedule:
     # Var fjärde timme sedan 2026-08-17, upp från tre gånger om dygnet.
-    # Skälet är att komma ikapp: fyra partiers politikavdelningar kopplades in
-    # samma dag (V 111, MP 98, M 87, SD 6 sidor) och nästan inget av det var
-    # läst, medan KD:s A–Ö redan var genomläst. Med den gamla kadensen hade
-    # utjämningen tagit veckor.
+    # Skälet är att komma ikapp: sju partiers politikavdelningar kopplades in
+    # samma dag (C 208, L 126, S 121, V 111, MP 98, M 87, SD 6 sidor) och
+    # nästan inget av det var läst, medan KD:s A–Ö redan var genomläst. Med
+    # den gamla kadensen hade utjämningen tagit månader.
     #
     # Varför just fyra timmar: körningen tar 73–87 minuter, och
     # concurrency-gruppen nedan köar i stället för att köra parallellt. Fyra
