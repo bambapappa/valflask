@@ -10,11 +10,8 @@
  * och importeras därifrån. Den kopieras aldrig hit: grinden och sidan måste
  * säga samma sak, och två kopior av en regel glider isär tyst.
  */
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
 import { provaVantan, TOM_VANTAN, type Vantan } from "../../../pipeline/src/arkivvantan.ts";
-
-const ROT = resolve(import.meta.dirname, "../../..");
+import { loadData } from "./data.ts";
 
 export interface Vantanstal {
   /** Hur många käll-URL:er som väntar på ett arkiv som inte svarat. */
@@ -24,9 +21,15 @@ export interface Vantanstal {
 }
 
 export function arkivvantansTal(): Vantanstal {
+  // Läses genom sajtens EGEN dataladdare, inte genom en egen sökväg. Första
+  // versionen räknade fram katalogen ur `import.meta.dirname`, vilket fungerar
+  // när filen körs direkt med node men inte i Astro-bygget — där blev talet 0,
+  // raden renderades aldrig, och sidan såg ut att säga att ingen väntade fast
+  // femtiofem gjorde det. Ett andra sätt att hitta datat är ett sätt för
+  // mycket: de glider isär, och den som glider tyst vinner.
   let vantan: Vantan = TOM_VANTAN;
   try {
-    vantan = JSON.parse(readFileSync(resolve(ROT, "data/arkivvantan.json"), "utf8")) as Vantan;
+    vantan = loadData<Vantan>("arkivvantan.json");
   } catch {
     return { antal: 0, sedan: null };
   }
