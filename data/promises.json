@@ -41466,5 +41466,635 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-17T08"
     }
+  },
+  {
+    "id": "p-2026-0912",
+    "group_id": null,
+    "title": "Förkorta arbetstiden för vårdpersonal med bibehållen lön",
+    "slug": "forkorta-arbetstiden-for-vardpersonal-med-bibehallen-lon",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "För att förbättra arbetsmiljön och göra vårdyrken mer attraktiva vill Vänsterpartiet också förkorta arbetstiden med bibehållen lön.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/sa-far-vi-ordning-pa-sjukvarden/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.525Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4000,
+      "msek_base": 9000,
+      "msek_high": 20000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Saknar angiven omfattning. Konkret åtgärd, till skillnad från breda p-2026-0010. Räknar på 5–10 % arbetstidsförkortning med bibehållen lön för ca 250 000–350 000 offentligt anställda i vård/omsorg.",
+      "confidence": 0.35,
+      "calculation": "~300 000 FTE × ~50 000 kr/mån i lön+avgifter × 12 mån × 5–10 % förkortning = 9 000–18 000 mkr/år. Spannet 4 000–20 000 mkr fångar snävare/bredare avgränsning och lägre/högre omkostnader."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0913",
+    "group_id": null,
+    "title": "Dubbelspår längs hela Nya Ostkustbanan",
+    "slug": "dubbelspar-langs-hela-nya-ostkustbanan",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Likaså vill Vänsterpartiet bygga Nya Ostkustbanan med dubbelspår hela vägen.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/nog-med-brutna-tagloften-bygg-nya-ostkustbanan-och-radda-nattagen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.594Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 40000,
+      "msek_base": 60000,
+      "msek_high": 100000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnadsbedömd som ny dubbelspårsjärnväg utifrån jämförbara svenska projekt; bruttokostnad före finansiering, exkl. drift.",
+      "confidence": 0.4,
+      "calculation": "Antagen sträcka ~20–25 mil dubbelspår. 200 km × 200 mkr/km = 40 mdkr; 250 km × 400 mkr/km = 100 mdkr. Bas 60 mdkr motsvarar ~250 km × 240 mkr/km. Osäkerhet främst om sträckning, tunnlar och marklägen."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0914",
+    "group_id": null,
+    "title": "Statligt stöd för stängsling av grödor och inköp av fällor mot vildsvin",
+    "slug": "statligt-stod-for-stangsling-av-grodor-och-inkop-av-fallor-mot-vildsvin",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Ett statligt stöd ska införas för att stängsla in grödor och inskaffa fällor som skydd mot vildsvin.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/vildsvin",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.645Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 250,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Riktat stöd som täcker andel av stängslings- och fällkostnader; avviker uppåt från p-2026-0674 eftersom detta är kapitalsubvention, inte kreditgaranti. Belopp avser själva stödet, inte…",
+      "confidence": 0.35,
+      "calculation": "Antagande: staten betalar ~50 % av kostnad via ansökningsstöd. Vildsvinssäkra stängsel ~40–80 kr/m; berörd gård behöver ~1–3 km ≈ 50–250 tkr per gård, fällor tillkommer marginellt. Grovt 1 000–3 000 sökande/år (skånska/götaländska jordbruk med vildsvinsproblem) × 50–150 tkr statsandel ≈ 50–300 msek/år, med hög utbyggnadsfrekvens första åren sedan avtagande; bas 100 msek/år som återkommande program. Osäkerheten ligger i utnyttjandegrad och tak på stödet, inte i partiets egen siffra (saknas)."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0915",
+    "group_id": null,
+    "title": "Statligt stöd för utbildning av jägare och jakthundar i vildsvinsjakt",
+    "slug": "statligt-stod-for-utbildning-av-jagare-och-jakthundar-i-vildsvinsjakt",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill införa ett statligt stöd för att utbilda jägare och jakthundar i vildsvinsjakt.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/vildsvin",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.689Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 45,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Smalt riktat stödprogram (kursbidrag till jägare/hundägare) utan angiven nivå; lagt nära jämförbart småskaligt löfte. Avser själva stödet, inte effekter av ökad jakt.",
+      "confidence": 0.3,
+      "calculation": "~300 000 aktiva jägare i Sverige; antag 5–15 % berörs per år (15 000–45 000) x statsbidrag ~500–1 500 kr per deltagare = 7–70 msek. Dessutom stöd till kursanordnare och jakthundsutbildning (~5–20 msek). Rimligt programomfång totalt ~5–45 msek/år, i nivå med jämförbart statligt stödlöfte (~10 msek/år)."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0916",
+    "group_id": null,
+    "title": "Staten betalar kostnaden för trikin- och cesiumtest av vildsvinskött",
+    "slug": "staten-betalar-kostnaden-for-trikin-och-cesiumtest-av-vildsvinskott",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Staten ska bjuda jägarna på kostnaden för trikintest och cesiumtest, som behöver göras innan köttet kan säljas.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/vildsvin",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.732Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 8,
+      "msek_base": 20,
+      "msek_high": 45,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statens övertagande av jägarnas testkostnad är en ny statsutgift. Beloppet avser själva testsubventionen; antalet tester är osäkert eftersom bara kött som säljs kräver test.",
+      "confidence": 0.55,
+      "calculation": "~100 000–150 000 skjutna vildsvin/år i Sverige. Antag 20–50 % av köttet går till försäljning och kräver trikintest à ~300–500 kr per djur → 20 000–75 000 tester × 300–500 kr ≈ 6–38 msek. Cesiumtest tillkommer främst i Tjernobyl-drabbade län (mindre andel, ~50–150 kr) och subventionen kan höja utnyttjandet → ~8–45 msek/år, bas ~20 msek."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0917",
+    "group_id": null,
+    "title": "Värdighetsgaranti i äldreomsorgen i varje kommun",
+    "slug": "vardighetsgaranti-i-aldreomsorgen-i-varje-kommun",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna har länge drivit frågan att varje kommun ska ha en värdighetsgaranti i äldreomsorgen.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/vardighetsgaranti",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.774Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 50,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglerande löfte: lagkrav på värdighetsgaranti i varje kommun, inget belopp. Prissatt statens direkta kostnad (tillsyn, vägledning, ev. introduktionsstöd) — inte kommunernas merkostnader eller…",
+      "confidence": 0.35,
+      "calculation": "Löftet uppfylls genom lagstiftning (jämför värdighetsgarantin i socialtjänstlagen). Statens direkta kostnad: vägledning/tillsyn via IVO och ev. riktat stöd till kommuner ~10–50 msek/år. Om staten bidrar till införandet med statsbidrag kan det lägga på några hundra msek/år (osäkert). Kommunernas kostnad för höjd omsorgsnivå (fler personaltimmar) är omfördelning/kommunal utgift, inte ny statlig nettoutgift, och exkluderas. Spann 0–400 msek speglar osäkerheten om statsbidrag ingår; bas 50 msek avser statens administration."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0918",
+    "group_id": null,
+    "title": "Rätt för varje patient att välja vårdcentral, vårdgivare, hemtjänst och äldreboende",
+    "slug": "ratt-for-varje-patient-att-valja-vardcentral-vardgivare-hemtjanst-och-aldreboende",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Varje patient och omsorgstagare ska ha rätt att välja vårdcentral, vårdgivare, hemtjänstutförare och äldreboende utifrån sina behov och önskemål.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/valfrihet",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.819Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Valfrihetsrätt kodifieras i lag; det mesta finns redan (patientlagen, kommunal valfrihet). Prissatt är bara åtgärden, inte samhällseffekter. Jfr p-2026-0646 (≈0).",
+      "confidence": 0.5,
+      "calculation": "Löftet ger en lagstadgad rätt att välja utförare; ingen nivå anges. Rätten att välja vårdgivare i landet finns sedan 2015 och de flesta kommuner har redan valfrihet i hemtjänst, vilket gör den nya nettokostnaden små. Direkta kostnader: lagändring, vägledning till regioner/kommuner, ev. gemensamt IT-stöd för val/registrering ~0–50 msek som engångskostnad. Samma storleksordning som jämförbart löfte p-2026-0646 (0 msek engång). Följder (t.ex. ändrade patientflöden) kvantifieras ej enligt regel 9."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0919",
+    "group_id": null,
+    "title": "Utvidgade kontaktförbud och prioriterad rättslig handläggning av våld i nära relationer",
+    "slug": "utvidgade-kontaktforbud-och-prioriterad-rattslig-handlaggning-av-vald-i-nara-relationer",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Det ska finnas kraftfulla verktyg såsom utvidgade kontaktförbud och rättsväsendet ska prioritera snabb och effektiv handläggning av dessa fall.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/vald-i-nara-relationer",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.869Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 25,
+      "msek_high": 75,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Främst lag- och regeländring; själva utvidgningen av kontaktförbud är nästan kostnadsfri. Spannet täcker ev. extra resurser till polis/åklagare/domstolar. Följder ej prissatta.",
+      "confidence": 0.3,
+      "calculation": "Utvidgade kontaktförbud = regeländring, direkt kostnad ≈ 0. 'Prioriterad snabb handläggning' tolkas som viss resursförstärkning: fler ärenden (poliskontroll, förhör, domstol) + snabbare behandling kan kräva kanske 30–80 tjänster inom rättsväsendet à ~1–1,5 msek/år inkl. lokala kostnader ≈ 0–75 msek/år. Jämförbara löften spänner 0–130 msek/år (bl.a. granskare 0 för vistelseförbud, 130 för bredare paket). Base 25 msek/år som mittvärde; osäkerheten stor eftersom löftet saknar nivå och omfattning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0920",
+    "group_id": null,
+    "title": "Allmänt vaccinationsprogram för äldre",
+    "slug": "allmant-vaccinationsprogram-for-aldre",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Vi vill också införa ett allmänt vaccinationsprogram för äldre personer för att ge ett jämlikt och kostnadsfritt skydd mot sjukdomar som till exempel influensa, covid-19, pneumokockinfektioner, bältros och andra allvarliga infektioner som särskilt drabbar äldre.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/vaccinationer",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.913Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 250,
+      "msek_base": 550,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnadsfritt allmänt vaccinprogram för 65+ (influensa, covid, pneumokocker, bältros). Prissatt som statens nya nettokostnad: borttag av patientavgifter plus vacciner som idag inte ingår…",
+      "confidence": 0.45,
+      "calculation": "~1,8 milj personer 65+. Influensa: redan subventionerad, ny kostnad = borttagen avgift ~70 % deltagande × 100–150 kr ≈ 125–190 mkr. Bältros (2 doser à ~1 500 kr) till 65-årskohort ~115 000 pers ≈ 300–350 mkr; full catch-up på alla 65+ skulle kosta miljarder och ligger i övre spannet. Pneumokocker: ~115 000 × ~500 kr ≈ 55–60 mkr. Covid: administrationskostnad ~50–100 mkr. Summa ≈ 550–700 mkr/år vid kohortprogram, upp mot 1 200 mkr vid bredare upplägg. Partiets egna belopp: inga; alla nivåer är mina uppskattningar."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0921",
+    "group_id": null,
+    "title": "Ungdomsmottagningar i hela landet med bredare stöd till unga",
+    "slug": "ungdomsmottagningar-i-hela-landet-med-bredare-stod-till-unga",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill att ungdomsmottagningar ska finnas tillgängliga för unga i hela landet och erbjuda stöd inte bara kring sex och preventivmedel utan också kring psykisk hälsa, relationer och livsfrågor.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ungdomsmottagningar",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:55.957Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 75,
+      "msek_base": 200,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statens kostnad antas ske via riktade statsbidrag för nyetablering och breddat stöd. Kommunerna betalar redan stor del av driften, så endast statens marginalbidrag prissätts, inte hela…",
+      "confidence": 0.35,
+      "calculation": "~250 befintliga ungdomsmottagningar; full landstäckning kräver uppskattningsvis 50–80 nya × 3–5 msek/år i drift ≈ 150–400 msek. Breddat stöd (psykolog/kuratorstid för psykisk hälsa, relationer, livsfrågor) på befintliga mottagningar ≈ 1 msek/mottagning ≈ 200–250 msek. Kommunerna står dock för huvuddelen av driften redan idag; statens nya nettokostnad antas vara ett riktat statsbidrag som täcker en minoritet av totalen ≈ 75–400 msek/år, bas ~200 msek."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0922",
+    "group_id": null,
+    "title": "Satsa mer på lärlingsutbildningar och lärlingsanställningar",
+    "slug": "satsa-mer-pa-larlingsutbildningar-och-larlingsanstallningar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Kristdemokraterna vill satsa mer på lärlingsutbildningar och lärlingsanställningar.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/ungdomsarbetsloshet",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:56.000Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 700,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp eller nivå. Estimat bygger på utökning av statliga lärlingsanslag och arbetsgivarstöd för lärlingsjobb i linje med tidigare reformers storlek; stor osäkerhet.",
+      "confidence": 0.35,
+      "calculation": "Antaganden: ca 10 000–15 000 gymnasiala lärlingselever; extra lärlingsanslag ~15–25 tkr/elev/år ≈ 150–375 msek. Lärlingsanställningar: subvention motsvarande ca 50–100 tkr/person/år × 2 000–6 000 nya lärlingsanställningar (begränsad utnyttjandegrad) ≈ 100–600 msek. Summa satsning ≈ 250–700 msek/år; base satt till ~300 msek eftersom löftet inte anger omfattning. Alla siffror är egna antaganden, partiet anger inget belopp."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0923",
+    "group_id": null,
+    "title": "Beslagta pass och skärp straff för terrorverksamhet",
+    "slug": "beslagta-pass-och-skarp-straff-for-terrorverksamhet",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Det ska vara möjligt att beslagta pass för personer som misstänks ansluta sig till terrororganisationer utomlands och straffen ska vara kännbara om man deltar i terrorverksamhet.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/terrorbekampning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:56.042Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 25,
+      "msek_high": 80,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Främst lagändring; nya kostnader är främst fängelsedagar från skärpta straff. Få terrordomar/år ger lägre belopp än jämförbara strafflöften. Samhällsföljder ej prissatta.",
+      "confidence": 0.35,
+      "calculation": "Skärpta straff → fler fängelsedagar: ~3–15 terrordomar/år × 2–5 års längre straff × 365 dagar × ~2 000–3 000 kr/dag (Kriminalvårdens kostnad) ≈ 4–80 mkr/år. Passbeslag vid terrorresor hanteras inom Polisens/Säpos befintliga verksamhet ≈ försumbar direktkostnad. Lägre än jämförbara löften (70–130 mkr) eftersom terrorbrott är betydligt ovanligare än t.ex. kontaktförbrott."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0924",
+    "group_id": null,
+    "title": "Ge Säpo och Polisen rätt verktyg mot terrorism",
+    "slug": "ge-sapo-och-polisen-ratt-verktyg-mot-terrorism",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Säpo och Polisen ska ges rätt verktyg för att kunna upptäcka planer och personer innan terrorbrott begås.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/terrorbekampning",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:56.084Z"
+    },
+    "category": "rättsväsende",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 50,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan specificerade verktyg eller belopp; tolkat som måttlig resursförstärkning av terrorförebyggande verksamhet. Liknande verktygslöften landar 0–600 msek; detta är smalare (endast…",
+      "confidence": 0.35,
+      "calculation": "Ingen åtgärd eller nivå anges. Om löftet innebär utökad spaning, analys och IT stiger kostnaden; historiska förstärkningar av terrorförebyggande verksamhet ligger ofta kring tiotals till hundratals mkr/år. Bas 50 msek ≈ mindre resurs-/systemförstärkning; low 0 om det bara handlar om regeländring (regel 9); high ~300 msek vid betydande utbyggd bevakningskapacitet. Antal mottagare är statliga myndigheter, ingen spridningsgrad att uppskatta; osäkerheten speglar det ospecificerade åtagandet."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
+  },
+  {
+    "id": "p-2026-0925",
+    "group_id": null,
+    "title": "Kostnadsfri tandvård till och med det år man fyller 19 år",
+    "slug": "kostnadsfri-tandvard-till-och-med-det-ar-man-fyller-19-ar",
+    "parties": [
+      "kd"
+    ],
+    "person": null,
+    "quote": "Fram till och med det år man fyller 19 år ska tandvården vara kostnadsfri.",
+    "date_stated": "2026-08-17",
+    "source": {
+      "url": "https://kristdemokraterna.se/var-politik/politik-a-till-o/tandvard",
+      "domain": "kristdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-17T08:01:56.128Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 200,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Fri tandvård till och med 19-årsåret: endast en årskull tillkommer om nuläget är gratis tandvård till 18. ~1/5 av jämförbart löfte om gratis tandvård till 23 (1000 msek). Osäkerhet om nulägesregler.",
+      "confidence": 0.45,
+      "calculation": "Antag att gratis tandvård i nuläget gäller till 18 år; löftet lägger till året man fyller 19. ~125 000 personer per årskull × 70–80 % som söker tandvård × ~1 500–2 500 kr i genomsnittlig statlig kostnad per ung patient (undersökning + viss behandling) ≈ 140–235 msek/år. Bas 200 msek. Korscheck: jämförbart löfte om gratis tandvård till 23 år estimeras till 1000 msek/år, dvs ca 200 msek per årskull för fem kohorter (19–23) — konsistent. Spannet 100–400 täcker osäkerhet i utnyttjandegrad, behandlingsomfattning och avgiftsregler. Om gratis tandvård till 23 redan gällde i nuläget vore kostnaden 0; om avgifter införts för alla unga vuxna kan kostnaden närma sig högspannet. Partiets egen siffra saknas — beloppet är helt min uppskattning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-17T08"
+    }
   }
 ]
