@@ -12379,14 +12379,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 1000,
-      "msek_high": 2000,
+      "msek_low": 173,
+      "msek_base": 600,
+      "msek_high": 1035,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Rättad 2026-07-04: 30 000 kr är bonus PER BARN, inte totalkostnad. ~20–40 000 lika-delande föräldrapar/år × 30 000 kr ⇒ 0,6–1,2 mdkr/år + öronmärkt fjärde månad. Spann bekräftat av granskare.",
-      "confidence": 0.9,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. 115 000 födslar × 5–30 % × 30 000 kr = 172,5–1 035 miljoner kronor."
+      "method_note": "Egen uppskattning; utnyttjandegraden är vår antagelse och avgör beloppet.",
+      "confidence": 0.5,
+      "calculation": "Partiet anger 30 000 kronor per barn, inte vad reformen kostar totalt. Totalen är därför vår uppskattning, och den avgörs av hur många föräldrapar som delar lika. Räkningen: omkring 115 000 födslar per år × 5–30 procent som delar lika × 30 000 kronor = 173–1 035 miljoner kronor per år. Basbeloppet 600 miljoner är mitten av det spannet. Andelen som delar lika är vår antagelse och inte partiets, och den är det enskilt osäkraste i uträkningen — därför är spannet brett och tilltron låg."
     },
     "financing_claimed": {
       "described": false,
@@ -12396,7 +12396,13 @@
     "comparisons": [],
     "quip": "Löftet Ny jämställdhetsbonus på 30 000 kr per barn låter billigt per styck — gånger alla föräldrapar landar notan kring en miljard om året.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-18",
+        "commit": "0000000",
+        "change": "Spannet har gått från 500–1000–2000 till 173–600–1 035 miljoner kronor per år, och tilltron från 0.9 till 0,5. De publicerade talen följde inte av den publicerade uträkningen: den räknade fram 172,5–1 035 miljoner medan posten visade ett lägstavärde nästan tre gånger så högt och ett högstavärde nästan dubbelt. Nu står talen som räkningen ger, och uträkningen skriver ut att andelen föräldrar som delar lika är vår antagelse. Citatet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "deepseek/deepseek-v4-pro",
       "verified_by": "moonshotai/kimi-k2.7-code",
@@ -12426,14 +12432,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 75,
-      "msek_base": 100,
-      "msek_high": 135,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
+      "method_note": "Omfördelning av ett befintligt anslag — beloppet avser åtgärden, inte följderna.",
       "confidence": 0.7,
-      "calculation": "Partiet anger själv nivån: de 100 miljoner kronor som i dag går till inrikesflyget ska i stället kunna sökas för samtliga trafikslag. Basbeloppet är den siffran, 100 miljoner kronor per år. Löftet flyttar ett befintligt stöd snarare än att skapa ett nytt, men breddningen gör att fler kan söka, och beloppet står kvar som den nivå partiet själv pekar ut. Spannet rymmer att stödet blir något mindre eller något större än dagens."
+      "calculation": "Partiet vill att de 100 miljoner kronor som i dag går till inrikesflyget ska kunna sökas för samtliga trafikslag. Pengarna är alltså redan anslagna, och löftet ändrar vem som får söka dem — inte hur mycket staten betalar. En omfördelning av ett befintligt anslag är ingen ny statlig utgift, och beloppet är därför 0. Det som faktiskt kostar staten är regeländringen, som är försumbar. Beloppet avser åtgärden, inte de följder en breddning kan få för trafiken. Källan innehåller också ett yrkande om att anslaget bör höjas generellt, men den anger ingen nivå för höjningen, och en nivå får inte hittas på."
     },
     "financing_claimed": {
       "described": true,
@@ -12448,6 +12454,11 @@
         "date": "2026-08-07",
         "change": "Uträkningen saknades och är skriven. Beloppet är oförändrat och är partiets eget.",
         "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      },
+      {
+        "date": "2026-08-18",
+        "commit": "0000000",
+        "change": "Beloppet har gått från 100 till 0 miljoner kronor per år. De 100 miljonerna är ett anslag som redan finns och redan betalas ut — löftet breddar vem som får söka dem, det skapar dem inte. En omfördelning är ingen ny statlig utgift. Uträkningen sade redan att löftet «flyttar ett befintligt stöd snarare än att skapa ett nytt» men behöll ändå hela beloppet; nu drar den slutsatsen. Citatet är oförändrat."
       }
     ],
     "extraction": {
@@ -27170,7 +27181,7 @@
     },
     "comparisons": [],
     "quip": "För 1600 msek utlovas gröna skattekrediter, en prislapp som finansieras med traditionellt valfläsk.",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-08-07",
@@ -27186,6 +27197,11 @@
         "date": "2026-08-08",
         "change": "Uträkningen skriver nu ut beloppet den landar på. Inget belopp har ändrats.",
         "commit": "5de9a9c0f84ef959e16ce01057f71c3656f1b90e"
+      },
+      {
+        "date": "2026-08-18",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Citatet var tre ord ur en innehållsförteckning och sade varken vad partiet lovar eller vad det kostar. Beloppet var dessutom det högsta en enskild investering kan få i skattelättnad, använt som om det vore hela reformens kostnad — hur mycket den kostar beror på hur många som söker, och det säger partiet inte."
       }
     ],
     "extraction": {
@@ -42182,8 +42198,14 @@
     },
     "comparisons": [],
     "quip": "Trehundra miljoner till lönelyft inom norrländsk vård, varvid finansieringen lämnas lika vidsträckt som landskapet.",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-18",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma pengar räknades två gånger. Partiet delar själv upp sin satsning på vården i Norrland i tre delar, och den här posten är en av dem. Hela satsningen ligger kvar som ett eget löfte, så delen behövs inte. Beloppet är dessutom partiets andel till Norrland av en nationell satsning som redan finns publicerad var för sig."
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -42227,8 +42249,14 @@
     },
     "comparisons": [],
     "quip": "400 msek för utbildningsplatser och avskrivna skulder, varvid finansieringen torde skrivas av med lika stor lätthet.",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-18",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma pengar räknades två gånger. Posten är en av tre delar i partiets satsning på vården i Norrland, och hela satsningen ligger kvar som ett eget löfte."
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -42272,8 +42300,14 @@
     },
     "comparisons": [],
     "quip": "700 miljarder i klimatinvesteringar; finansieringen presenteras med samma tydlighet som ett suddat kvitto.",
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-18",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Citatet är inte något partiet sagt, utan texten i en länk på partiets förstasida. Länken leder till en nyhet från mars 2022, där förslaget är ett investeringsprogram över tio år — inte en årlig utgift, som posten angav. Löftet räknades därför som mer än en tredjedel av alla partiers löften tillsammans."
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
@@ -42390,14 +42424,14 @@
     "category": "klimat-miljö",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 750,
       "msek_base": 1000,
       "msek_high": 1350,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 1 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 750–1 350 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren.",
+      "method_note": "Belopp angivet i källtext; källan anger ingen årlig takt.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 1 000 miljoner kronor — «en restaureringsmiljard» för att genomföra EU:s naturrestaureringslag. Den siffran är partiets och byts inte ut mot en egen. Källan säger inte att beloppet återkommer varje år, och beloppet redovisas därför som en engångssumma. Att det är rätt läsning står i samma artikel: om den andra miljarden skriver partiet uttryckligen «årligen», om den här gör de det inte. Spannet 750–1 350 miljoner är vårt och står för att källan anger en nivå utan att skriva ut hur den fördelas över åren.",
       "confidence": 0.7
     },
     "financing_claimed": {
@@ -42408,7 +42442,13 @@
     "comparisons": [],
     "quip": "En restaureringsmiljard vars finansiering tycks kräva en egen restaurering.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-18",
+        "commit": "0000000",
+        "change": "Perioden har gått från per år till engångsbelopp. Källan säger «investera en restaureringsmiljard» och anger ingen årlig takt; bokfört per år räknades löftet som 4 000 miljoner kronor för mandatperioden i stället för partiets 1 000. Att skillnaden är partiets egen syns i samma artikel, där den andra miljarden uttryckligen sägs vara årlig. Beloppet och citatet är oförändrade."
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
