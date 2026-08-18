@@ -476,3 +476,74 @@ describe("avstängningen överlever mellan anrop", () => {
     );
   });
 });
+
+describe("ett lyckat fall igenom syns", () => {
+  // Natten till 2026-08-18 svarade varken primären eller sekundären för
+  // utvinningsrollen, det extra ledet gjorde hela skörden, och INGENTING i
+  // loggen sa det: `felPerEndpoint` kastades bort så fort ett senare led
+  // svarade. Proven nedan mäter att den tystnaden är borta.
+
+  it("rapporterar vilket led som svarade, och varför de föregående inte gjorde det", async () => {
+    const anropade: string[] = [];
+    const klient = new OpenRouterClient({
+      ...fast,
+      led: [
+        { namn: "primär", baseUrl: "https://ett", apiKey: "k1", modell: { extract: "deepseek" } },
+        { namn: "sekundär", baseUrl: "https://tva", apiKey: "k2", modell: { extract: "deepseek" } },
+        { namn: "extra", baseUrl: "https://tre", apiKey: "k3", modell: { extract: "glm" } },
+      ],
+      httpFetch: async (url) => {
+        anropade.push(String(url));
+        if (String(url).startsWith("https://tre")) return ok("svaret");
+        return resp(404, "model not found: deepseek");
+      },
+    });
+
+    let sett: { led: string; modell: string; foregaendeFel: string[] } | undefined;
+    const svar = await klient.complete("fråga", {
+      model: "extract",
+      onSvar: (i) => {
+        sett = i;
+      },
+    });
+
+    assert.equal(svar, "svaret");
+    assert.ok(sett, "återkopplingen ska ha anropats");
+    assert.equal(sett!.led, "extra", "det extra ledet svarade");
+    assert.equal(sett!.modell, "glm", "och det gjorde det med SIN modell, inte primärens");
+    assert.equal(sett!.foregaendeFel.length, 2, "båda leden före ska stå med");
+    assert.match(sett!.foregaendeFel.join(" "), /primär/u);
+    assert.match(sett!.foregaendeFel.join(" "), /sekundär/u);
+    assert.match(
+      sett!.foregaendeFel.join(" "),
+      /deepseek/u,
+      "och felet ska namnge modellen som inte svarade",
+    );
+  });
+
+  it("säger ingenting när primären svarar — varningen ska inte bli brus", async () => {
+    const klient = new OpenRouterClient({
+      ...fast,
+      led: [
+        { namn: "primär", baseUrl: "https://ett", apiKey: "k1", modell: { extract: "deepseek" } },
+        { namn: "extra", baseUrl: "https://tre", apiKey: "k3", modell: { extract: "glm" } },
+      ],
+      httpFetch: async () => ok("svaret"),
+    });
+
+    let sett: { led: string; foregaendeFel: string[] } | undefined;
+    await klient.complete("fråga", { model: "extract", onSvar: (i) => (sett = i) });
+
+    assert.equal(sett!.led, "primär");
+    assert.deepEqual(sett!.foregaendeFel, [], "inga fel före ⇒ inget att rapportera");
+  });
+
+  it("återkopplingen är valfri — en anropare utan den fungerar som förut", async () => {
+    const klient = new OpenRouterClient({
+      ...fast,
+      led: [{ namn: "primär", baseUrl: "https://ett", apiKey: "k1", modell: { extract: "deepseek" } }],
+      httpFetch: async () => ok("svaret"),
+    });
+    assert.equal(await klient.complete("fråga", { model: "extract" }), "svaret");
+  });
+});

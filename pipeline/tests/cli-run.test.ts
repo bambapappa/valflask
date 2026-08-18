@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { buildContextFromEnv } from "../src/cli-run.ts";
+import { buildContextFromEnv, byggLed } from "../src/cli-run.ts";
 import type { SourceConfig } from "../src/fetch.ts";
 
 const config: SourceConfig = {
@@ -144,5 +144,70 @@ describe("cli-run buildContextFromEnv", () => {
       }),
       /allowlist/,
     );
+  });
+});
+
+describe("en reserv som bär samma modellnamn är ingen reserv", () => {
+  // Natten till 2026-08-18 svarade utvinningsrollen varken på primären eller
+  // sekundären, medan verifieringen och copyn gick igenom på samma led. Båda
+  // leden var satta till samma utvinningsmodell, så ett modellfel slog ut dem
+  // samtidigt. Kedjan såg ut att ha tre led och hade i praktiken två.
+
+  const roller = { extract: "extract", verify: "verify", copy: "copy" };
+
+  function fangaVarningar(fn: () => void): string[] {
+    const rader: string[] = [];
+    const original = console.warn;
+    console.warn = (...a: unknown[]) => void rader.push(a.join(" "));
+    try {
+      fn();
+    } finally {
+      console.warn = original;
+    }
+    return rader;
+  }
+
+  const tvaLed = (extractPrimar: string, extractSekundar: string) => ({
+    LLM_BASE_URL: "https://ett",
+    LLM_API_KEY: "k1",
+    MODEL_EXTRACT: extractPrimar,
+    MODEL_VERIFY: "kimi",
+    MODEL_COPY: "copy-a",
+    LLM_FALLBACK_BASE_URL: "https://tva",
+    LLM_FALLBACK_API_KEY: "k2",
+    MODEL_EXTRACT_FALLBACK: extractSekundar,
+    MODEL_VERIFY_FALLBACK: "kimi-2",
+    MODEL_COPY_FALLBACK: "copy-b",
+  });
+
+  it("varnar när två led kör samma modell för samma roll", () => {
+    const rader = fangaVarningar(() => byggLed(tvaLed("deepseek", "deepseek"), roller));
+    const träff = rader.filter((r) => /samma modell \(deepseek\)/u.test(r));
+    assert.equal(träff.length, 1, "exakt en varning för utvinningsrollen");
+    assert.match(träff[0]!, /primär och sekundär/u, "båda leden ska namnges");
+    assert.match(träff[0]!, /MODEL_EXTRACT/u, "och variabeln som ska ändras");
+  });
+
+  it("varnar inte när leden bär olika modellnamn", () => {
+    const rader = fangaVarningar(() => byggLed(tvaLed("deepseek", "glm"), roller));
+    assert.deepEqual(
+      rader.filter((r) => /samma modell/u.test(r)),
+      [],
+      "olika modeller ⇒ ingen varning, annars blir den brus",
+    );
+  });
+
+  it("varnar per roll, inte per led — verify och copy skiljer sig här", () => {
+    const rader = fangaVarningar(() => byggLed(tvaLed("deepseek", "deepseek"), roller));
+    assert.equal(rader.filter((r) => /samma modell/u.test(r)).length, 1);
+    assert.equal(rader.filter((r) => /rollen verify/u.test(r)).length, 0);
+    assert.equal(rader.filter((r) => /rollen copy/u.test(r)).length, 0);
+  });
+
+  it("varningen stoppar inte körningen — kedjan byggs ändå", () => {
+    const led = fangaVarningar(() => void byggLed(tvaLed("deepseek", "deepseek"), roller));
+    assert.ok(led.length > 0, "varningen ska ha skrivits");
+    const kedja = byggLed(tvaLed("deepseek", "deepseek"), roller);
+    assert.equal(kedja.length, 2, "båda leden är kvar — att dela kvot kan vara avsiktligt");
   });
 });
