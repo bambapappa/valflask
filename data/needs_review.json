@@ -322,7 +322,7 @@
       "confidence": 0.35,
       "calculation": "Del 1 — skatt på egenproducerad el: ~150 000–250 000 mikroproducenter (solceller m.m.) × egenförbrukning ca 5 000–15 000 kWh × elskatt ~0,36 kr/kWh. Mycket är redan undantaget, så ny intäktsminskning ≈ 50–200 msek. Del 2 — dynamisk elskatt: totala elskatteintäkter ca 8 000–10 000 msek/år. Om skattesatsen sänks vid lågprisperioder (t.ex. 10–25 % lägst under 20–40 % av tiden) → intäktsminskning ≈ 200–1 000 msek. Sammanlagt: låg ~150, mitten ~500, hög ~1 200 msek. Stor osäkerhet eftersom utfallet beror på framtida elpriser och utformning."
     },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp HARMONISERING: citatets första led — att skatten på egenproducerad el tas bort — är samma politik som det publicerade p-2026-0867 «Skattefri solel till alla hushåll oavsett boendeform», som är prissatt till 5 mkr per år. Den här postens uträkning kommer fram till omkring 500 mkr för samma led (150 000–250 000 mikroproducenter × egenförbrukning × elskatt 0,36 kr/kWh). Två priser på samma sak, och skillnaden är hundrafaldig. Avgör vilken grund som gäller innan något av dem publiceras — den publicerade siffran kan vara den som är fel. Andra ledet, att elskatten ska bli dynamisk, finns inte publicerat och saknar egen uträkning här."
   },
   {
     "candidate": {
@@ -731,7 +731,7 @@
       "confidence": 0.35,
       "calculation": "Antag 1–3 dagliga nattågslinjer. En upphandlad nattågslinje kräver ofta 50–150 mkr/år i nettosubvention. Bas vid två linjer ≈ 150 mkr; spann 50–400 mkr."
     },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp PARET: den här posten och «Långsiktig statlig finansiering av nattågen» kommer ur samma artikel och bär samma löfte. Behåll en av dem. Rekommendation: behåll den andra — den namnger finansieringen och står tydligare för sig själv — och dra tillbaka den här."
   },
   {
     "candidate": {
@@ -1215,14 +1215,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 500,
-      "msek_base": 800,
-      "msek_high": 1500,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Vagt löfte utan antal. Baseras på jämförbart kriminalvårdslöfte (800 mkr/år) och ett försiktigt påslag för fler poliser/domare.",
       "confidence": 0.4,
-      "calculation": "Kriminalvård: 400–800 mkr/år (jfr p-2026-0522). Poliser: 100–500 mkr/år (några hundra tjänster). Domare: 50–200 mkr/år. Summerat 550–1500, avrundat till 500–1500 med bas 800."
+      "calculation": "Citatet räknar upp tre åtgärder — fler poliser, fler domare och ökad kapacitet i Kriminalvården — och alla tre ligger redan som egna löften hos partiet: polistäthet minst i nivå med EU-snittet (p-2026-0911, 8 000 mkr per år), fler fängelser (p-2026-0824, 5 000 mkr som engångskostnad) och fler poliser med verktyg och resurser (p-2026-0607). En bred uppräkning vars delar redan är prissatta räknas inte en gång till, så beloppet sätts till 0 mkr. Prissattes den här posten separat skulle 800 mkr läggas ovanpå 13 000 mkr för samma politik."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0522 (800), p-2026-0690 (20), p-2026-0607 (0), p-2026-0318 (0) ⚠ AVVIKER: 800 avviker 80.0× från jämförbara (median 10)"
   },
@@ -1378,7 +1378,7 @@
       "confidence": 0.45,
       "calculation": "Direkt statlig kostnad = bygginvestering. Normalkostnad ~3–5 mkr/plats; enklare utförande (lägre boendestandard, billigare mat) antas ~1,5–3 mkr/plats. Antal nya platser ej angivet — antagit 1000–2500 platser för gängkriminella: 1000 × 1,5 = 1500 mkr låg; 2500 × 3 = 7500 mkr hög; bas ~1500–2000 platser × ~2–2,5 mkr ≈ 4000 msek engång. I samma storleksordning som jämförbart löfte p-2026-0824 (5000 msek). Billigare mat är en återkommande driftsbesparing per plats men försumbar i sammanhanget och ej adderad."
     },
-    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0824 (5000)"
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0824 (5000) GRUPP: samma politik som Kristdemokraternas publicerade p-2026-0824 «Bygga fler fängelser» (5 000 mkr som engångskostnad). Olika partier som lovar samma politik är ett delat löfte och ska dela group_id, så att utbyggnaden räknas en gång. Beloppen är förenliga: den här posten anger lägre boendestandard och billigare mat, alltså en billigare plats, och ligger därför lägre."
   },
   {
     "candidate": {
@@ -1473,14 +1473,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 800,
-      "msek_base": 3500,
-      "msek_high": 11000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Vagt löfte utan nivå: tolkat som att hålla drivmedelsskatter och reduktionsplikt under planerad uppgång. Ankare är senaste skattesänkningen (~1–1,5 kr/l). Lägre pumppris är ingen statlig utgift.",
       "confidence": 0.35,
-      "calculation": "Löftet anger ingen nivå eller mekanism. Tolkning: behålla sänkta drivmedelsskatter/reducerad reduktionsplikt i stället för schemalagda höjningar (indexering, stigande inblandningskrav). Antagen beskattad volym: ~4 mlr l bensin + ~4,5 mlr l diesel ≈ 8,5 mlr l/år. Låg: endast utebliven indexering ~0,1 kr/l ≈ 0,8 mdkr. Hög: hela skillnaden mot skattenivåerna före 2022 års sänkningar ~1,3 kr/l ≈ 11 mdkr. Bas: ~0,4 kr/l i snitt ≈ 3,5 mdkr. Spannet är brett eftersom löftet inte specificerar hur priset ska 'garanteras'."
+      "calculation": "Citatet anger varken åtgärd eller nivå — det säger att drivmedelspriserna ska hållas fortsatt låga. De åtgärder som gör det ligger redan som egna löften hos partiet: sänkt dieselskatt (p-2026-0573, 4 200 mkr per år) och fortsatt låga skatter på drivmedel (p-2026-0127, 8 000 mkr per år). En bred garanti utan utpekad åtgärd prissätts därför inte, och beloppet sätts till 0 mkr; annars räknas samma skattesänkning två gånger. Posten om att hålla nere bränslepriserna genom sänkt skatt och minskad reduktionsplikt, som ligger i samma kö, är samma löfte ur en annan folder."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
   },
@@ -1976,7 +1976,7 @@
       "confidence": 0.35,
       "calculation": "Ca 230 000 sysselsatta i äldreomsorg, med LSS ~260 000; lönekostnad grovt ~150 mdkr/år. Förkortning 3–8 % av arbetstiden kräver motsvarande mer personal: 0,03–0,08 × ~150 mdkr ≈ 4,5–12 mdkr/år. Om tolkas bredare och omfattar regionsvård (ungefär dubbel personalstyrka) kan kostnaden nå ~20–25 mdkr. Base ~10 mdkr motsvarar ~5 % förkortning i kommunal vård & omsorg med viss utfasning. Partiets egen nivå saknas — hela beloppet är min uppskattning, ingen del är partiets siffra."
     },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp ÖVERLAPP: partiets publicerade p-2026-0912 «Förkorta arbetstiden för vårdpersonal med bibehållen lön» är prissatt till 9 000 mkr per år. Den här posten gäller arbetstidsförkortning inom omsorgen och är prissatt till 10 000. Personalgrupperna går delvis i varandra — mycket av äldreomsorgens personal är vårdpersonal — så godkänns båda som egna löften riskerar samma personal att räknas två gånger. Avgör om det är ett löfte eller två innan något publiceras; blir det ett, gäller det som har den tydligaste avgränsningen."
   },
   {
     "candidate": {
@@ -2005,7 +2005,7 @@
       "confidence": 0.4,
       "calculation": "~230 000 anställda i kommunal äldreomsorg. Antagen statlig satsning om ~10–20 tkr per anställd och år (lönehöjningar, kompetensutveckling) ≈ 2,3–4,6 mdr/år, plus medel för nyanställningar. Spann 1–6 mdr/år; bas 3 000 msek anpassad till närmast jämförbara löften (p-2026-0016 och p-2026-0400 ≈ 3 000 msek/år). Löftet anger ingen egen nivå — per-capita-nivån och antalet mottagare är min uppskattning, spannet speglar osäkerheten."
     },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0362 (800), p-2026-0917 (50), p-2026-0016 (3000), p-2026-0125 (0), p-2026-0400 (3000) ⚠ AVVIKER: 3000 avviker 3.8× från jämförbara (median 800)"
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0362 (800), p-2026-0917 (50), p-2026-0016 (3000), p-2026-0125 (0), p-2026-0400 (3000) ⚠ AVVIKER: 3000 avviker 3.8× från jämförbara (median 800) ÖVERLAPP: lönedelen i citatet är samma politik som partiets publicerade p-2026-0613 «Kvinnolönelyftet», som bär partiets egen siffra — 30 miljarder över tio år, alltså 3 000 mkr per år. Den här posten är prissatt till samma 3 000 men på en egen uppskattning, och lägger dessutom till fler anställda och kompetensutveckling. Rekommendation: dra tillbaka som dubblett av p-2026-0613, eller gruppera dem så att lönesatsningen räknas en gång. Partiets egen siffra gäller framför vår uppskattning."
   },
   {
     "candidate": {
@@ -2063,7 +2063,7 @@
       "confidence": 0.35,
       "calculation": "Löftet styr regelverket (behovsbedömning/arbetstillstånd) utan belopp. Direkt kostnad: utveckling av behovsanalys (t.ex. bristlistor hos Arbetsförmedlingen/Migrationsverket) ~5–15 tjänster + IT/administrativa justeringar ≈ 5–15 mskr/år. Jämförbara publicerade löften om arbetskraftsinvandring landar ~15 msek/år. Spann 2–35 msek/år; osäkerheten speglar att åtgärdens omfattning inte är specificerad. Samhällseffekter av förändrade invandringsvolymer ingår ej."
     },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0843 (15), p-2026-0842 (15), p-2026-0081 (15)"
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0843 (15), p-2026-0842 (15), p-2026-0081 (15) PARET: den här posten och «Införa ett rättvist system för arbetskraftsinvandring» kommer ur samma sida och bär samma löfte om vad som ska styra arbetskraftsinvandringen. Behåll en av dem."
   },
   {
     "candidate": {
@@ -2206,7 +2206,7 @@
       "basis_url": null,
       "method_note": "Regleringslöfte (förbud): prissatt bara åtgärdens direkta kostnad — lagstiftning och ev. ökad kustkontroll. Uteblivna fiskeländer och fiskarnas inkomstbortfall är följder, ej statlig utgift.",
       "confidence": 0.45,
-      "calculation": "Ett förbud/ fredning kräver ingen ny stor statlig utgift i sig. Direkt kostnad = lagstiftning, administration och ev. ökad tillsyn (Kustbevakningen) över kustzonen ut till 12 sjömil. Grovt: mer kontrolltid/patroullering ≈ 0–50 msek/år, bas ~5 msek/år. Det industriella fiskets landningsvärde (storleksordningen ~1 mdkr/år brutto) och fiskarnas inkomstbortfall är en omfördelning/följd, inte en ny statlig kostnad, och prissätts ej. Inget uppköp av kvoter eller omställningsstöd utlovas explicit i citatet."
+      "calculation": "Ett förbud och en fredning kräver ingen ny statlig utgift i sig; kostnaden är lagstiftning, administration och utökad tillsyn av kustzonen ut till 12 sjömil, i praktiken hos Kustbevakningen. Beloppet 5 mkr per år avser den utökade tillsynen. Partiets publicerade löfte om att stoppa det storskaliga industrifisket (p-2026-0419) är prissatt till 0 mkr och gäller själva förbudet; skillnaden mot den här posten är fredningen av hela kustzonen, som är det som kostar tillsyn. De två vilar därmed på samma grund och ska räknas ihop, inte var för sig."
     },
     "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp"
   },
@@ -3609,14 +3609,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 1200,
-      "msek_high": 3000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Vagt löfte utan nivå; ankrat mot senaste statliga investeringsstöden för bostadsbyggande (~1 mdkr/år vid topp). Jämförelselöftena gäller kultur/film — avvikit nedåt ej, uppåt i storlek då…",
       "confidence": 0.35,
-      "calculation": "Tidigare statligt stöd: regionalpolitiskt investeringsstöd för flerbostadshus + tillfälligt riksvidt stöd till hyresrätter uppgick som mest till ~1–1,2 mdkr/år. Ett 'öka stöd och lån' utan nivå tolkas som utbyggnad i den storleksordningen: bas ~1 200 msek/år; spann 400 (moderat tillskott till befintliga stöd) till 3 000 (riksvidt permanent stöd). Lånedelen är i sig balansräkningspost — endast risk/räntesubvention är verklig budgetutgift — varför vikten ligger på stöddelen, inte lånvolymen."
+      "calculation": "Citatet är en uppräkning — «stöd och lån» — utan nivå, och båda delarna ligger redan som egna löften hos partiet: statligt garanterade krediter för bostadsbyggande (p-2026-0674) och statligt stöd till kommunala bostadsbolag (p-2026-0679, 1 000 mkr per år, ankrat i en myndighetssiffra). Beloppet sätts till 0 mkr för att samma statsstöd inte ska räknas två gånger. Ankaret för nivån ligger kvar på p-2026-0679: det tidigare investeringsstödet för hyresrätter uppgick som mest till omkring 1–1,2 miljarder kronor per år."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0426 (250), p-2026-0572 (400), p-2026-0427 (400), p-2026-0339 (150) ⚠ AVVIKER: 1200 avviker 3.7× från jämförbara (median 325)"
   },
