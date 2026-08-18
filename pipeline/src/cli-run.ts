@@ -115,38 +115,41 @@ export function byggLed(
     );
   }
 
-  // EN RESERV SOM BÄR SAMMA MODELLNAMN ÄR INGEN RESERV.
+  // KEDJAN BÄR TVÅ SLAGS RESERV, OCH BARA DEN ENA GÅR ATT MÄTA HÄR.
   //
-  // Kedjan skyddar mot att en LEVERANTÖR faller. Den skyddar inte mot att en
-  // MODELL gör det: pekar två led på samma modellnamn för samma roll slår ett
-  // modellfel — avregistrerad, omdöpt, tillfälligt borttagen — ut båda på en
-  // gång, och kedjan är i praktiken ett led kortare än den ser ut.
+  // Varje led har egen adress, egen nyckel och egna modellnamn. Två led som
+  // kör SAMMA modell hos OLIKA konton är därför en fullgod reserv mot allt som
+  // sitter i kontot — slut kvot, taktspärr, död nyckel, utebliven betalning.
+  // Att de delar modellnamn är då ett medvetet val, inte ett misstag, och
+  // ingenting att varna för. Den uppsättningen är projektets: två konton hos
+  // samma leverantör med samma modeller, och ett tredje led med egna.
   //
-  // Mätt natten till 2026-08-18: utvinningsrollen svarade varken på primären
-  // eller sekundären, som båda var satta till samma modell, medan verifieringen
-  // och copyn gick igenom på samma led. Det extra ledet — med ett eget
-  // modellnamn — gjorde hela skörden. Att just utvinningen föll på båda och
-  // inget annat gjorde det är signaturen för ett modellfel, inte ett
-  // leverantörsfel.
+  // Det enda som faktiskt är ett enda felställe är när rollen kör samma modell
+  // i HELA kedjan. Då tar ett modellfel — avregistrerad, omdöpt, tillfälligt
+  // borttagen, taktspärrad hos leverantören — varenda led på en gång, och
+  // ingen reserv finns kvar oavsett hur många konton som står i ledet.
   //
-  // Det här är en varning och inget stopp: att köra samma modell på två
-  // leverantörer kan vara ett medvetet val för att fördela kvot.
+  // Första versionen av den här varningen fällde på två led som delade modell
+  // och bad om att de skulle göras olika. Det var fel råd: den hade tjatat vid
+  // varje körning om en uppsättning som var riktig, och en varning som alltid
+  // kommer slutar läsas. Den mäter nu bristen i stället för mönstret.
+  //
+  // Natten till 2026-08-18 fungerade kedjan som den skulle: utvinningsmodellen
+  // svarade inte hos något av de två kontona, och det tredje ledet med en egen
+  // modell gjorde hela skörden. Att just den rollen föll på båda kontona medan
+  // verifiering och copy gick igenom på samma konton är signaturen för ett
+  // modellfel — ett kontofel hade tagit alla tre rollerna.
   for (const roll of Object.keys(roller)) {
     const primarModell = roller[roll]!;
-    const perLed = led.map((l) => ({ namn: l.namn, modell: l.modell?.[primarModell] ?? primarModell }));
-    const sett = new Map<string, string[]>();
-    for (const { namn, modell } of perLed) {
-      sett.set(modell, [...(sett.get(modell) ?? []), namn]);
-    }
-    for (const [modell, namnen] of sett) {
-      if (namnen.length > 1) {
-        console.warn(
-          `LLM-kedjan: rollen ${roll} kör samma modell (${modell}) på leden ` +
-            `${namnen.join(" och ")}. Ett modellfel slår då ut båda samtidigt — ` +
-            `kedjan skyddar mot att en leverantör faller, inte mot att en modell gör det. ` +
-            `Sätt olika MODEL_${roll.toUpperCase()}-värden per led om reserven ska bita.`,
-        );
-      }
+    const modeller = new Set(led.map((l) => l.modell?.[primarModell] ?? primarModell));
+    if (led.length > 1 && modeller.size === 1) {
+      console.warn(
+        `LLM-kedjan: rollen ${roll} kör samma modell (${[...modeller][0]}) i HELA kedjan ` +
+          `(${led.map((l) => l.namn).join(", ")}). Leden skyddar mot kontofel — slut kvot, ` +
+          `taktspärr, död nyckel — men ett modellfel tar alla samtidigt, och då finns ingen ` +
+          `reserv kvar. Ge minst ett led ett eget MODEL_${roll.toUpperCase()}-värde om rollen ` +
+          `ska överleva att modellen försvinner.`,
+      );
     }
   }
 
