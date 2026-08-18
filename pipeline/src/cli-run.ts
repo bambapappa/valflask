@@ -233,6 +233,7 @@ export function buildContextFromEnv(
     stancesEnabled,
     stancesMode,
     maxNewArticles: config.limits.max_articles_per_run,
+    samtidigaArtiklar: config.limits.samtidiga_artiklar,
     archiveFn: createArchiveFn(),
     models: { extract, verify, copy },
   };

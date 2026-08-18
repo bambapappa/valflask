@@ -4,8 +4,9 @@ import type { LlmClient } from "./llm.ts";
 import type { ArticleSource, SourceConfig, SourceFeed } from "./fetch.ts";
 import { dedup, loadSeen, seenKey } from "./fetch.ts";
 import { laststTal, ordnaEfterTackning } from "./skordeordning.ts";
+import { kartaSamtidigt } from "./samtidigt.ts";
 import { extractFromArticle } from "./extract.ts";
-import { runGates, type NormalizedArticle } from "./gates.ts";
+import { runGates, type ExtractionCandidate, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
 import type { ArchiveFn } from "./archive.ts";
 import { estimateCost, costDeviation } from "./cost.ts";
@@ -41,6 +42,13 @@ export interface PipelineContext {
   mode: "auto" | "review";
   /** Max antal NYA (osedda) artiklar att bearbeta per körning. Odefinierat = alla. */
   maxNewArticles?: number;
+  /**
+   * Hur många artiklar som bearbetas samtidigt. Odefinierat = 1, alltså
+   * sekventiellt — det läge proven jämför allt annat mot. Talet ändrar bara
+   * takten: sammanfogningen går i indataordning, så samma indata ger samma kö
+   * oavsett vad som står här (`samtidighet.test.ts`).
+   */
+  samtidigaArtiklar?: number | undefined;
   archiveFn: ArchiveFn;
   models: {
     extract: string;
@@ -90,7 +98,14 @@ interface ProcessedCandidate {
 export async function runPipeline(
   ctx: PipelineContext,
 ): Promise<PipelineResult> {
+  // Tiden mäts och skrivs ut, för att nästa beslut om takt och budget ska
+  // kunna vila på en mätning. Det förra vilade inte på en: kommentaren i
+  // pipeline.yml sa 73–87 minuter medan körningarna tog 201–325, och ingen
+  // rad i loggen sa emot. Talen ligger i loggen och inte i resultatet — de
+  // skiljer sig mellan två körningar, och resultatet ska inte göra det.
+  const t0 = Date.now();
   const articles = await ctx.articleSource.fetch();
+  const hamtningMs = Date.now() - t0;
   // Processprioritet inom budgeten: (1) page och index — partiernas egna
   // skrivna manifest och deras nyheter är projektets primärkälla och ger bara
   // artiklar när innehåll är nytt/ändrat, så de får aldrig svältas ut av
@@ -184,136 +199,180 @@ export async function runPipeline(
     }
   }
 
-  for (const article of toProcess) {
-    try {
-      const candidates = await extractFromArticle(
+  // Dubblettkollen på ett ställe: den körs två gånger nedan — en gång i det
+  // samtidiga passet mot beståndet som det såg ut när körningen startade, och
+  // en gång i sammanfogningen mot poolen som växer under körningen. Två anrop,
+  // en lydelse, så att takten omöjligt kan ändra vad som räknas som dubblett.
+  const hittaDublett = (
+    accepted: ExtractionCandidate,
+    pool: ExistingPromiseLite[],
+  ) => {
+    const dupKey = { title: accepted.title, parties: accepted.parties, category: accepted.category };
+    // Politikkollen sist av dubblettkollarna: den letar inte efter samma
+    // text utan efter samma uppgift — samma tal eller samma uttryck hos
+    // samma parti, oavsett kategori. Kön 2026-08-13 gav noll på de tre
+    // ovan och bar ändå fyra dubbletter; den dyraste vägde 12 000 mkr.
+    const politikDup = findPolicyDuplicate(accepted, pool);
+    // Citatkollen går FÖRST och är den enda som är exakt: samma citat är
+    // samma yttrande, oavsett vilken titel utvinningen råkade sätta.
+    // Titelkollarna nedan är heuristiker och missar just omskördar.
+    // Tvärparti-varianten fångar SAMMA POLITIK hos annat parti (5 % av BNP går
+    // bara att göra en gång) — även den till review med --group-förslag, så
+    // totalen/koalitioner inte dubbelräknar när M/SD/KD släpper sina manifest.
+    const dup =
+      findQuoteDuplicate(accepted, pool) ??
+      findPossibleDuplicate(dupKey, pool) ??
+      findCrossPartyDuplicate(dupKey, pool) ??
+      politikDup?.match ??
+      null;
+    return { dup, politikDup };
+  };
+
+  const dublettpost = (
+    accepted: ExtractionCandidate,
+    article: NormalizedArticle,
+    dup: ExistingPromiseLite,
+    politikDup: ReturnType<typeof findPolicyDuplicate>,
+  ): NeedsReviewEntry => ({
+    candidate: accepted,
+    failures: [],
+    articleUrl: article.url,
+    articleTitle: article.title,
+    duplicateOf: dup.id,
+    // Skälet skrivs ut bara för politikkollen: de andra tre säger sig
+    // själva (samma citat, samma titel), medan den här har läst något
+    // som inte syns när man lägger de två löftena bredvid varandra.
+    ...(politikDup && dup.id === politikDup.match.id
+      ? { duplicateReason: politikDup.reason }
+      : {}),
+  });
+
+  /** Vad en artikel lämnar ifrån sig ur det samtidiga passet. */
+  type Kandidatutfall =
+    | { sort: "ko"; post: NeedsReviewEntry }
+    | { sort: "prissatt"; accepted: ExtractionCandidate; post: NeedsReviewEntry };
+  interface Artikelutfall {
+    article: NormalizedArticle;
+    gateReview: NeedsReviewEntry[];
+    kandidater: Kandidatutfall[];
+    stanceReview: Array<{ candidate: unknown; failures: StanceGateFailure[]; article: NormalizedArticle }>;
+    stanceAccepterade: Array<{ candidate: Parameters<typeof verifyStance>[0]; verify: Awaited<ReturnType<typeof verifyStance>> }>;
+    fel?: { url: string; error: string };
+  }
+
+  // Beståndet som det såg ut när körningen startade. Frusen kopia, så att det
+  // samtidiga passet läser något som ingen skriver i under tiden.
+  const poolVidStart: ExistingPromiseLite[] = [...dedupPool];
+
+  // ── Passet som väntar. Utvinning, verifiering, kostnad och Frågevågens två
+  // anrop ligger alla här, och de gör inget annat än att lämna ifrån sig ett
+  // svar. Ingenting som rör delat tillstånd — köns ordning, dubblettpoolen,
+  // arkivkopiorna — händer före sammanfogningen nedan, och sammanfogningen går
+  // i INDATAORDNING. Det är därför takten inte kan ändra vad en körning
+  // producerar; `samtidighet.test.ts` mäter det genom att köra samma indata
+  // med tak 1 och tak 6 och kräva samma kö, post för post.
+  const t1 = Date.now();
+  const utfall = await kartaSamtidigt(
+    toProcess,
+    ctx.samtidigaArtiklar ?? 1,
+    async (article): Promise<Artikelutfall> => {
+      const ut: Artikelutfall = {
         article,
-        ctx.llm,
-        ctx.models.extract,
-      );
-
-      const gateReport = runGates(article, candidates, {
-        allowlist: ctx.allowlist,
-        partiDomaner: ctx.partiDomaner ?? [],
-        now: ctx.now,
-      });
-
-      for (const r of gateReport.review) {
-        reviewItems.push({
-          candidate: r.candidate,
-          failures: r.failures,
-          articleUrl: article.url,
-          articleTitle: article.title,
-        });
-      }
-
-      for (const accepted of gateReport.accepted) {
-        const verifyResult = await verifyCandidate(
-          accepted,
+        gateReview: [],
+        kandidater: [],
+        stanceReview: [],
+        stanceAccepterade: [],
+      };
+      try {
+        const candidates = await extractFromArticle(
           article,
           ctx.llm,
-          ctx.models.verify,
+          ctx.models.extract,
         );
 
-        if (
-          !verifyResult.is_promise ||
-          verifyResult.verdict === "reject"
-        ) {
-          reviewItems.push({
-            candidate: accepted,
-            failures: [],
-            articleUrl: article.url,
-            articleTitle: article.title,
-            verifyReason: verifyResult.reason,
-          });
-          continue;
-        }
-
-        if (verifyResult.verdict === "review") {
-          reviewItems.push({
-            candidate: accepted,
-            failures: [],
-            articleUrl: article.url,
-            articleTitle: article.title,
-            verifyReason: verifyResult.reason,
-          });
-          continue;
-        }
-
-        // Dublettkoll: troligen samma löfte som ett redan publicerat — eller ett
-        // tidigare i samma körning? → till review för manuell länkning (delad group_id).
-        // Tvärparti-varianten fångar SAMMA POLITIK hos annat parti (5 % av BNP går
-        // bara att göra en gång) — även den till review med --group-förslag, så
-        // totalen/koalitioner inte dubbelräknar när M/SD/KD släpper sina manifest.
-        // Citatkollen går FÖRST och är den enda som är exakt: samma citat är
-        // samma yttrande, oavsett vilken titel utvinningen råkade sätta.
-        // Titelkollarna nedan är heuristiker och missar just omskördar.
-        const dupKey = { title: accepted.title, parties: accepted.parties, category: accepted.category };
-        // Politikkollen sist av dubblettkollarna: den letar inte efter samma
-        // text utan efter samma uppgift — samma tal eller samma uttryck hos
-        // samma parti, oavsett kategori. Kön 2026-08-13 gav noll på de tre
-        // ovan och bar ändå fyra dubbletter; den dyraste vägde 12 000 mkr.
-        const politikDup = findPolicyDuplicate(accepted, dedupPool);
-        const dup =
-          findQuoteDuplicate(accepted, dedupPool) ??
-          findPossibleDuplicate(dupKey, dedupPool) ??
-          findCrossPartyDuplicate(dupKey, dedupPool) ??
-          politikDup?.match ??
-          null;
-        if (dup) {
-          reviewItems.push({
-            candidate: accepted,
-            failures: [],
-            articleUrl: article.url,
-            articleTitle: article.title,
-            duplicateOf: dup.id,
-            // Skälet skrivs ut bara för politikkollen: de andra tre säger sig
-            // själva (samma citat, samma titel), medan den här har läst något
-            // som inte syns när man lägger de två löftena bredvid varandra.
-            ...(politikDup && dup.id === politikDup.match.id
-              ? { duplicateReason: politikDup.reason }
-              : {}),
-          });
-          continue;
-        }
-        dedupPool.push({
-          id: "(denna körning)",
-          title: accepted.title,
-          parties: accepted.parties,
-          category: accepted.category,
-          group_id: null,
-          quote: accepted.quote,
+        const gateReport = runGates(article, candidates, {
+          allowlist: ctx.allowlist,
+          partiDomaner: ctx.partiDomaner ?? [],
+          now: ctx.now,
         });
 
-        // Kostnadsankring: hämta jämförbara publicerade löften (samma politik hos
-        // andra partier m.m.) så estimatet hamnar i samma storleksordning, och så
-        // granskaren ser riktmärkena i review-raden.
-        const comparables = findComparableCosts(
-          { title: accepted.title, category: accepted.category },
-          comparablePool,
-        );
-        const cost = await estimateCost(accepted, ctx.llm, ctx.models.extract, comparables);
-        // ALLT går till granskningskön. Ingen kandidat publiceras av en körning.
-        //
-        // Mänskligt beslut 2026-08-18, som ersätter hybrid-routningen från
-        // 2026-06-24. Den lät löften med uttryckligt belopp i källtexten
-        // publiceras utan mänskligt godkännande, och tjugo löften nådde sajten
-        // den vägen. Sju av dem kom i en enda körning natten till 18 augusti;
-        // sex höll inte, och ett bar 38,77 procent av rikssumman på ett citat
-        // som var en menylänk.
-        //
-        // Skälet att ta bort vägen är inte bara de sju. Metodsidan lovar
-        // läsaren att «inget nytt löfte och inget belopp når sajten utan att en
-        // människa släppt igenom det» och att «maskinen får föreslå, inte
-        // publicera». Den meningen var inte sann så länge den här grenen fanns.
-        // Nu är den det, och prosans ankare `metod-sparren-granskningskon`
-        // mäter den mot den här filen.
-        //
-        // Bieffekt värd att veta: varningarna nedan — avvikelse mot jämförbara
-        // och bred uppräkning — räknades förut BARA för LLM-estimat. De löften
-        // som gick förbi kön fick dem alltså aldrig, fast det var just de som
-        // ingen människa läste. Nu får varje kö-post dem.
-        {
+        for (const r of gateReport.review) {
+          ut.gateReview.push({
+            candidate: r.candidate,
+            failures: r.failures,
+            articleUrl: article.url,
+            articleTitle: article.title,
+          });
+        }
+
+        for (const accepted of gateReport.accepted) {
+          const verifyResult = await verifyCandidate(
+            accepted,
+            article,
+            ctx.llm,
+            ctx.models.verify,
+          );
+
+          if (
+            !verifyResult.is_promise ||
+            verifyResult.verdict === "reject" ||
+            verifyResult.verdict === "review"
+          ) {
+            ut.kandidater.push({
+              sort: "ko",
+              post: {
+                candidate: accepted,
+                failures: [],
+                articleUrl: article.url,
+                articleTitle: article.title,
+                verifyReason: verifyResult.reason,
+              },
+            });
+            continue;
+          }
+
+          // Dubblett mot något REDAN PUBLICERAT syns redan här, och då sparas
+          // kostnadsanropet. Kollisioner INOM körningen kan bara avgöras när
+          // ordningen är känd, alltså i sammanfogningen — de kostar ett
+          // estimat som den sekventiella koden slapp. De är sällsynta, och
+          // priset är att takten aldrig påverkar utfallet.
+          const tidig = hittaDublett(accepted, poolVidStart);
+          if (tidig.dup) {
+            ut.kandidater.push({
+              sort: "ko",
+              post: dublettpost(accepted, article, tidig.dup, tidig.politikDup),
+            });
+            continue;
+          }
+
+          // Kostnadsankring: hämta jämförbara publicerade löften (samma politik hos
+          // andra partier m.m.) så estimatet hamnar i samma storleksordning, och så
+          // granskaren ser riktmärkena i review-raden.
+          const comparables = findComparableCosts(
+            { title: accepted.title, category: accepted.category },
+            comparablePool,
+          );
+          const cost = await estimateCost(accepted, ctx.llm, ctx.models.extract, comparables);
+          // ALLT går till granskningskön. Ingen kandidat publiceras av en körning.
+          //
+          // Mänskligt beslut 2026-08-18, som ersätter hybrid-routningen från
+          // 2026-06-24. Den lät löften med uttryckligt belopp i källtexten
+          // publiceras utan mänskligt godkännande, och tjugo löften nådde sajten
+          // den vägen. Sju av dem kom i en enda körning natten till 18 augusti;
+          // sex höll inte, och ett bar 38,77 procent av rikssumman på ett citat
+          // som var en menylänk.
+          //
+          // Skälet att ta bort vägen är inte bara de sju. Metodsidan lovar
+          // läsaren att «inget nytt löfte och inget belopp når sajten utan att en
+          // människa släppt igenom det» och att «maskinen får föreslå, inte
+          // publicera». Den meningen var inte sann så länge den här grenen fanns.
+          // Nu är den det, och prosans ankare `metod-sparren-granskningskon`
+          // mäter den mot den här filen.
+          //
+          // Bieffekt värd att veta: varningarna nedan — avvikelse mot jämförbara
+          // och bred uppräkning — räknades förut BARA för LLM-estimat. De löften
+          // som gick förbi kön fick dem alltså aldrig, fast det var just de som
+          // ingen människa läste. Nu får varje kö-post dem.
           const comparablesNote =
             comparables.length > 0
               ? ` — jämförbara: ${comparables.map((c) => `${c.id} (${c.msek_base})`).join(", ")}`
@@ -337,67 +396,116 @@ export async function runPipeline(
                   );
                 })()
               : "";
-          reviewItems.push({
-            candidate: accepted,
-            failures: [],
-            articleUrl: article.url,
-            articleTitle: article.title,
-            cost,
-            costReason:
-              (cost.basis === "llm_estimat"
-                ? `LLM-estimat (confidence ${cost.confidence}) — bekräfta/justera belopp`
-                : cost.confidence < 0.6
-                  ? `Låg kostnadssäkerhet: ${cost.confidence}`
-                  : `Belopp ur källtexten (${cost.basis}) — bekräfta belopp och period`) +
-              comparablesNote + deviationNote + umbrellaNote,
-          });
-          continue;
-        }
-      }
-
-      // ── Frågevågen-passet (§5): samma artikel, egen grindkedja, egen kö.
-      if (issuesFile) {
-        const stanceCandidates = await extractStancesFromArticle(
-          article,
-          issuesFile,
-          ctx.llm,
-          ctx.models.extract,
-        );
-        const stanceReport = runStanceGates(article, stanceCandidates, {
-          allowlist: ctx.allowlist,
-          issuesFile,
-          now: ctx.now,
-        });
-        for (const r of stanceReport.review) {
-          stanceGateReview.push({ ...r, article });
-        }
-        for (const accepted of stanceReport.accepted) {
-          const sq = issuesFile.issues
-            .flatMap((i) => i.subquestions)
-            .find((x) => x.id === accepted.subquestion_id);
-          const verify = await verifyStance(
+          ut.kandidater.push({
+            sort: "prissatt",
             accepted,
-            sq?.text ?? "",
-            article,
-            ctx.llm,
-            ctx.models.verify,
-            sq?.fairness_note,
-          );
-          const archiveResult = await ctx.archiveFn(article.url);
-          processedStances.push({
-            candidate: accepted,
-            article,
-            verify,
-            archiveUrl: archiveResult.archive_url,
-            extractModel: ctx.models.extract,
-            verifyModel: ctx.models.verify,
+            post: {
+              candidate: accepted,
+              failures: [],
+              articleUrl: article.url,
+              articleTitle: article.title,
+              cost,
+              costReason:
+                (cost.basis === "llm_estimat"
+                  ? `LLM-estimat (confidence ${cost.confidence}) — bekräfta/justera belopp`
+                  : cost.confidence < 0.6
+                    ? `Låg kostnadssäkerhet: ${cost.confidence}`
+                    : `Belopp ur källtexten (${cost.basis}) — bekräfta belopp och period`) +
+                comparablesNote + deviationNote + umbrellaNote,
+            },
           });
         }
+
+        // ── Frågevågen-passet (§5): samma artikel, egen grindkedja, egen kö.
+        if (issuesFile) {
+          const stanceCandidates = await extractStancesFromArticle(
+            article,
+            issuesFile,
+            ctx.llm,
+            ctx.models.extract,
+          );
+          const stanceReport = runStanceGates(article, stanceCandidates, {
+            allowlist: ctx.allowlist,
+            issuesFile,
+            now: ctx.now,
+          });
+          for (const r of stanceReport.review) {
+            ut.stanceReview.push({ ...r, article });
+          }
+          for (const accepted of stanceReport.accepted) {
+            const sq = issuesFile.issues
+              .flatMap((i) => i.subquestions)
+              .find((x) => x.id === accepted.subquestion_id);
+            const verify = await verifyStance(
+              accepted,
+              sq?.text ?? "",
+              article,
+              ctx.llm,
+              ctx.models.verify,
+              sq?.fairness_note,
+            );
+            ut.stanceAccepterade.push({ candidate: accepted, verify });
+          }
+        }
+      } catch (e) {
+        ut.fel = {
+          url: article.url,
+          error: e instanceof Error ? e.message : String(e),
+        };
       }
-    } catch (e) {
-      errors.push({
-        url: article.url,
-        error: e instanceof Error ? e.message : String(e),
+      return ut;
+    },
+  );
+
+  console.log(
+    `[takt] hämtning ${Math.round(hamtningMs / 1000)} s (${articles.length} sidor) | ` +
+      `bearbetning ${Math.round((Date.now() - t1) / 1000)} s ` +
+      `(${toProcess.length} artiklar, ${ctx.samtidigaArtiklar ?? 1} i taget)`,
+  );
+
+  // ── Sammanfogningen. Går i indataordning och är det ENDA stället där delat
+  // tillstånd ändras: köns ordning, dubblettpoolen och arkivkopiorna. Arkivet
+  // ligger kvar här av egen anledning — Wayback har en egen takt (5 sekunders
+  // grundpaus, se wayback-takt.ts) och ska inte anropas av sex arbeten samtidigt.
+  for (const ut of utfall) {
+    if (ut.fel) {
+      errors.push(ut.fel);
+      continue;
+    }
+    reviewItems.push(...ut.gateReview);
+    for (const k of ut.kandidater) {
+      if (k.sort === "ko") {
+        reviewItems.push(k.post);
+        continue;
+      }
+      // Samma kandidat som passerade beståndskollen ovan prövas nu mot poolen
+      // som växer under körningen — det är här två artiklar i SAMMA körning som
+      // bär samma löfte skiljs åt, och den första i indataordning vinner.
+      const { dup, politikDup } = hittaDublett(k.accepted, dedupPool);
+      if (dup) {
+        reviewItems.push(dublettpost(k.accepted, ut.article, dup, politikDup));
+        continue;
+      }
+      dedupPool.push({
+        id: "(denna körning)",
+        title: k.accepted.title,
+        parties: k.accepted.parties,
+        category: k.accepted.category,
+        group_id: null,
+        quote: k.accepted.quote,
+      });
+      reviewItems.push(k.post);
+    }
+    stanceGateReview.push(...ut.stanceReview);
+    for (const s of ut.stanceAccepterade) {
+      const archiveResult = await ctx.archiveFn(ut.article.url);
+      processedStances.push({
+        candidate: s.candidate,
+        article: ut.article,
+        verify: s.verify,
+        archiveUrl: archiveResult.archive_url,
+        extractModel: ctx.models.extract,
+        verifyModel: ctx.models.verify,
       });
     }
   }
