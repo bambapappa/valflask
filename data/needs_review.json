@@ -1981,16 +1981,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 10000,
-      "msek_high": 22000,
+      "msek_low": 4500,
+      "msek_base": 7500,
+      "msek_high": 12000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Vagt löfte utan nivå. Antar statsbidrag till kommun/region för ~5 % kortare arbetstid i omsorgen; nyanställd personal är äkta ny statlig kostnad. Spann speglar smal (kommunal omsorg) till bred…",
+      "method_note": "Avser kommunal äldreomsorg och LSS. Regionernas vårdpersonal prissätts separat på p-2026-0912; personalgrupperna är skilda och räknas inte två gånger.",
       "confidence": 0.35,
-      "calculation": "Ca 230 000 sysselsatta i äldreomsorg, med LSS ~260 000; lönekostnad grovt ~150 mdkr/år. Förkortning 3–8 % av arbetstiden kräver motsvarande mer personal: 0,03–0,08 × ~150 mdkr ≈ 4,5–12 mdkr/år. Om tolkas bredare och omfattar regionsvård (ungefär dubbel personalstyrka) kan kostnaden nå ~20–25 mdkr. Base ~10 mdkr motsvarar ~5 % förkortning i kommunal vård & omsorg med viss utfasning. Partiets egen nivå saknas — hela beloppet är min uppskattning, ingen del är partiets siffra."
+      "calculation": "Löftet gäller arbetstidsförkortning inom omsorgen, alltså den kommunala äldreomsorgen och LSS — ungefär 230 000–260 000 anställda med en samlad lönekostnad på storleksordningen 150 miljarder kronor per år. Partiets publicerade löfte om förkortad arbetstid för vårdpersonal (p-2026-0912) gäller regionernas personal, omkring 300 000 årsarbetare, och är en annan grupp. De två räknas därför var för sig och överlappar inte.\n\nPartiet anger ingen förkortningsnivå. Beloppet vilar på samma antagande som p-2026-0912: fem procent kortare arbetstid med bibehållen lön, vilket kräver motsvarande mer personal. 0,05 × 150 miljarder ≈ 7 500 miljoner kronor per år. Spannet 4 500–12 000 motsvarar tre till åtta procent. Nivån är vårt antagande, inte partiets."
     },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp ÖVERLAPP: partiets publicerade p-2026-0912 «Förkorta arbetstiden för vårdpersonal med bibehållen lön» är prissatt till 9 000 mkr per år. Den här posten gäller arbetstidsförkortning inom omsorgen och är prissatt till 10 000. Personalgrupperna går delvis i varandra — mycket av äldreomsorgens personal är vårdpersonal — så godkänns båda som egna löften riskerar samma personal att räknas två gånger. Avgör om det är ett löfte eller två innan något publiceras; blir det ett, gäller det som har den tydligaste avgränsningen."
+    "costReason": "Harmoniserad mot p-2026-0912: samma antagna förkortning (fem procent), skilda personalgrupper utskrivna i båda. Två löften, inte ett."
   },
   {
     "candidate": {
