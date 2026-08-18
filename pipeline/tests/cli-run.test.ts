@@ -147,11 +147,12 @@ describe("cli-run buildContextFromEnv", () => {
   });
 });
 
-describe("en reserv som bär samma modellnamn är ingen reserv", () => {
-  // Natten till 2026-08-18 svarade utvinningsrollen varken på primären eller
-  // sekundären, medan verifieringen och copyn gick igenom på samma led. Båda
-  // leden var satta till samma utvinningsmodell, så ett modellfel slog ut dem
-  // samtidigt. Kedjan såg ut att ha tre led och hade i praktiken två.
+describe("varningen mäter bristen på modellreserv, inte mönstret", () => {
+  // Projektets uppsättning: primär och sekundär är TVÅ KONTON hos samma
+  // leverantör med samma modeller, det tredje ledet har egna. Det är en
+  // fullgod reserv mot allt som sitter i kontot — slut kvot, taktspärr, död
+  // nyckel — och ska inte varnas för. Bara när HELA kedjan kör en enda modell
+  // för en roll finns det inget kvar när modellen faller.
 
   const roller = { extract: "extract", verify: "verify", copy: "copy" };
 
@@ -164,50 +165,71 @@ describe("en reserv som bär samma modellnamn är ingen reserv", () => {
     } finally {
       console.warn = original;
     }
-    return rader;
+    return rader.filter((r) => /i HELA kedjan/u.test(r));
   }
 
-  const tvaLed = (extractPrimar: string, extractSekundar: string) => ({
-    LLM_BASE_URL: "https://ett",
-    LLM_API_KEY: "k1",
-    MODEL_EXTRACT: extractPrimar,
-    MODEL_VERIFY: "kimi",
-    MODEL_COPY: "copy-a",
-    LLM_FALLBACK_BASE_URL: "https://tva",
-    LLM_FALLBACK_API_KEY: "k2",
-    MODEL_EXTRACT_FALLBACK: extractSekundar,
-    MODEL_VERIFY_FALLBACK: "kimi-2",
-    MODEL_COPY_FALLBACK: "copy-b",
-  });
+  const env = (led: Array<Record<string, string>>) => {
+    const e: Record<string, string> = {};
+    const suffix = ["", "_FALLBACK", "_ZAI"];
+    const url = ["LLM_BASE_URL", "LLM_FALLBACK_BASE_URL", "LLM_ZAI_BASE_URL"];
+    const key = ["LLM_API_KEY", "LLM_FALLBACK_API_KEY", "LLM_ZAI_API_KEY"];
+    led.forEach((m, n) => {
+      e[url[n]!] = `https://led${n + 1}`;
+      e[key[n]!] = `nyckel-${n + 1}`;
+      for (const roll of Object.keys(roller)) {
+        e[`MODEL_${roll.toUpperCase()}${suffix[n]}`] = m[roll]!;
+      }
+    });
+    return e;
+  };
 
-  it("varnar när två led kör samma modell för samma roll", () => {
-    const rader = fangaVarningar(() => byggLed(tvaLed("deepseek", "deepseek"), roller));
-    const träff = rader.filter((r) => /samma modell \(deepseek\)/u.test(r));
-    assert.equal(träff.length, 1, "exakt en varning för utvinningsrollen");
-    assert.match(träff[0]!, /primär och sekundär/u, "båda leden ska namnges");
-    assert.match(träff[0]!, /MODEL_EXTRACT/u, "och variabeln som ska ändras");
-  });
-
-  it("varnar inte när leden bär olika modellnamn", () => {
-    const rader = fangaVarningar(() => byggLed(tvaLed("deepseek", "glm"), roller));
-    assert.deepEqual(
-      rader.filter((r) => /samma modell/u.test(r)),
-      [],
-      "olika modeller ⇒ ingen varning, annars blir den brus",
+  it("varnar INTE för två konton med samma modell när ett tredje led bär en egen", () => {
+    // Uppsättningen i drift: go konto 1, go konto 2, zai.
+    const rader = fangaVarningar(() =>
+      byggLed(
+        env([
+          { extract: "deepseek", verify: "kimi", copy: "copy-a" },
+          { extract: "deepseek", verify: "kimi", copy: "copy-a" },
+          { extract: "glm", verify: "glm", copy: "glm" },
+        ]),
+        roller,
+      ),
     );
+    assert.deepEqual(rader, [], "delad modell mellan konton är en reserv, inte en brist");
   });
 
-  it("varnar per roll, inte per led — verify och copy skiljer sig här", () => {
-    const rader = fangaVarningar(() => byggLed(tvaLed("deepseek", "deepseek"), roller));
-    assert.equal(rader.filter((r) => /samma modell/u.test(r)).length, 1);
-    assert.equal(rader.filter((r) => /rollen verify/u.test(r)).length, 0);
-    assert.equal(rader.filter((r) => /rollen copy/u.test(r)).length, 0);
+  it("varnar när rollen kör en enda modell i hela kedjan", () => {
+    const rader = fangaVarningar(() =>
+      byggLed(
+        env([
+          { extract: "deepseek", verify: "kimi", copy: "copy-a" },
+          { extract: "deepseek", verify: "glm", copy: "copy-b" },
+        ]),
+        roller,
+      ),
+    );
+    assert.equal(rader.length, 1, "bara utvinningsrollen saknar modellreserv");
+    assert.match(rader[0]!, /rollen extract/u);
+    assert.match(rader[0]!, /deepseek/u);
+    assert.match(rader[0]!, /MODEL_EXTRACT/u);
+    assert.doesNotMatch(rader[0]!, /rollen verify/u, "verify har två modeller och är hel");
   });
 
-  it("varningen stoppar inte körningen — kedjan byggs ändå", () => {
-    const led = fangaVarningar(() => void byggLed(tvaLed("deepseek", "deepseek"), roller));
-    assert.ok(led.length > 0, "varningen ska ha skrivits");
-    const kedja = byggLed(tvaLed("deepseek", "deepseek"), roller);
-    assert.equal(kedja.length, 2, "båda leden är kvar — att dela kvot kan vara avsiktligt");
+  it("varnar inte för ett ensamt led — det finns ingen reserv att sakna", () => {
+    const rader = fangaVarningar(() =>
+      byggLed(env([{ extract: "deepseek", verify: "kimi", copy: "copy-a" }]), roller),
+    );
+    assert.deepEqual(rader, [], "en kedja med ett led är ett val, inte en brist");
+  });
+
+  it("varningen stoppar inte körningen", () => {
+    const e = env([
+      { extract: "deepseek", verify: "deepseek", copy: "deepseek" },
+      { extract: "deepseek", verify: "deepseek", copy: "deepseek" },
+    ]);
+    const rader = fangaVarningar(() => void byggLed(e, roller));
+    assert.equal(rader.length, 3, "alla tre rollerna saknar modellreserv");
+    assert.equal(byggLed(e, roller).length, 2, "båda leden är ändå kvar");
   });
 });
+
