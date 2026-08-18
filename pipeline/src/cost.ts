@@ -161,6 +161,32 @@ export function looksLikeOneOff(text: string): boolean {
   );
 }
 
+/**
+ * Säger källtexten SJÄLV att beloppet återkommer?
+ *
+ * Motsatt fråga mot `looksLikeOneOff`, och den ställs för att `per_ar` aldrig
+ * ska bli ett antagande. Ett belopp bokfört per år räknas fyra gånger i
+ * mandatperiodens summa; säger källan ingenting om takten är de tre extra
+ * årens pengar våra, inte partiets.
+ *
+ * Mätt 2026-08-18: av de sju löften nattens körning publicerade förbi
+ * granskningskön bar två ett återkommandeord — «bör öka till årlig
+ * anslagsnivå på 7 miljarder» och «satsa en havsmiljard årligen» — och deras
+ * period var rätt. De fem övriga sade «totalt», «uppgår till» eller ingenting
+ * alls, och alla fem fyrdubblades. Miljöpartiets egen artikel bar båda
+ * fallen: «årligen» om havsmiljarden, inget om restaureringsmiljarden, och vi
+ * satte samma period på båda.
+ */
+export function angerLopandePeriod(text: string): boolean {
+  // Inga `\b`/`\w` kring de svenska orden: i JS är båda ASCII även med
+  // u-flaggan, så «årligen» aldrig matchade — ordgränsen håller varken före
+  // «å» eller inuti «årlig|en». Provet fällde första versionen på just det.
+  // Lookbehind i stället, så att «fyraårig» och «flerårig» inte råkar träffa.
+  return /(?<![a-zåäöéèü])(?:årlig|per\s+år|om\s+året|varje\s+år)|\/\s*år(?![a-zåäöéèü])/iu.test(
+    text,
+  );
+}
+
 const TYPES = ["utgift", "intäktsminskning", "besparing", "intäktsökning"];
 const PERIODS = ["per_ar", "engang"];
 
@@ -266,15 +292,31 @@ export async function estimateCost(
   ) {
     const low = Math.round(amount * 0.75);
     const high = Math.round(amount * 1.35);
+    // Perioden LÄSES ur källan, den antas inte. Fram till 2026-08-18 stod
+    // `period: "per_ar"` hårdkodat här medan LLM-grenen nedan sedan länge
+    // vägde in `looksLikeOneOff` — samma rättelse gjord på ett ställe av två.
+    // Priset blev fyra löften i en enda körning: V:s «totalt 1,2 miljarder»
+    // till Norrland och MP:s restaureringsmiljard fyrdubblades, och V:s
+    // tioåriga klimatprogram om 700 miljarder bokfördes per år, vilket gav
+    // posten 38,77 procent av hela rikssumman.
+    const text = `${candidate.quote} ${candidate.title}`;
+    const lopande = angerLopandePeriod(text);
+    const engangs = looksLikeOneOff(text);
+    // Varken–eller är det farliga fallet: källan säger ett belopp men ingen
+    // takt. Då sätts ingen takt av oss — posten går till granskningskön med
+    // partiets siffra bevarad, och en människa avgör perioden.
+    const periodOkand = !lopande && !engangs;
     return {
       type: "utgift",
-      period: "per_ar",
+      period: lopande ? "per_ar" : "engang",
       msek_low: low,
       msek_base: amount,
       msek_high: high,
       basis: "parti",
       basis_url: null,
-      method_note: "Belopp angivet i källtext.",
+      method_note: periodOkand
+        ? "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa."
+        : "Belopp angivet i källtext.",
       // Stegen är korta här, men de finns: partiet anger sin egen siffra och
       // vi behåller den. Fältet stod tomt fram till 2026-08-16, och i lägen
       // där körningen publicerar utan mänsklig granskning nådde det läsaren
@@ -287,8 +329,15 @@ export async function estimateCost(
         `Spannet är vårt, inte partiets: ${tusental(low)}–${tusental(high)} miljoner kronor, ` +
         `en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för ` +
         `att källtexten anger en nivå utan att skriva ut hur den fasas in eller ` +
-        `fördelas över åren.`,
-      confidence: 0.7,
+        `fördelas över åren.` +
+        (periodOkand
+          ? ` Källan säger inte om beloppet återkommer varje år eller gäller en gång. ` +
+            `Takten är därför inte satt av oss, utan lämnad till den som granskar posten.`
+          : ``),
+      // Confidence styr routningen i index.ts: under 0,6 går posten till
+      // granskningskön i stället för att publiceras. En okänd takt ÄR en lägre
+      // säkerhet — fältet används alltså som det är menat, inte som en spak.
+      confidence: periodOkand ? 0.5 : 0.7,
     };
   }
   // Per-enhetsbelopp/tröskelvärde eller misstänkt litet belopp: totalen måste

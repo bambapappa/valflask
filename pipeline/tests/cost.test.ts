@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { estimateCost, looksLikeOneOff, costDeviation, kapaNot } from "../src/cost.ts";
+import { estimateCost, looksLikeOneOff, angerLopandePeriod, costDeviation, kapaNot } from "../src/cost.ts";
 import type { ComparableCost } from "../src/similarity.ts";
 import type { LlmClient } from "../src/llm.ts";
 import type { ExtractionCandidate } from "../src/gates.ts";
@@ -23,12 +23,83 @@ function mockLlm(response: string): LlmClient {
 
 describe("estimateCost", () => {
   it("härleder deterministiskt när belopp finns i text", async () => {
-    const c = await estimateCost(cand(1000));
+    const c = await estimateCost({
+      ...cand(1000),
+      quote: "Vi satsar 1 miljard kronor per år på detta.",
+    });
     assert.equal(c.basis, "parti");
     assert.equal(c.msek_base, 1000);
     assert.equal(c.confidence, 0.7);
     assert.equal(c.msek_low, 750);
     assert.equal(c.msek_high, 1350);
+  });
+
+  // ── Perioden läses ur källan, den antas inte ────────────────────────────
+  //
+  // Nattens körning 2026-08-17 publicerade sju löften förbi granskningskön.
+  // Fem av dem sade ett belopp utan att säga någon takt, och alla fem
+  // bokfördes per år — vilket räknar beloppet fyra gånger i mandatperiodens
+  // summa. Citaten nedan är de riktiga.
+
+  it("belopp UTAN takt i källan auto-publiceras inte (V:s 1,2 miljarder till Norrland)", async () => {
+    const c = await estimateCost({
+      ...cand(1200),
+      title: "1,2 miljarder kronor extra till vården i Norrland",
+      quote: "Vänsterpartiet vill satsa 1,2 miljarder kronor extra på vården i Norrland.",
+    });
+    assert.equal(c.basis, "parti", "partiets egen siffra behålls");
+    assert.equal(c.msek_base, 1200, "beloppet byts aldrig ut mot ett eget");
+    assert.ok(c.confidence < 0.6, "hamnar under auto-publiceringströskeln ⇒ granskningskön");
+    assert.notEqual(c.period, "per_ar", "en takt källan inte anger får inte antas");
+    assert.match(c.method_note, /anger ingen takt/u, "skälet ska stå i posten");
+  });
+
+  it("belopp MED takt i källan behåller per_ar och auto-publicering (MP:s havsmiljard)", async () => {
+    const c = await estimateCost({
+      ...cand(1039),
+      title: "En havsmiljard årligen för havsmiljöåtgärder",
+      quote:
+        "Miljöpartiet vill satsa en havsmiljard årligen på bland annat akvatisk restaurering, " +
+        "övergödning, marint områdesskydd och lokalt havs- och vattenvårdsarbete.",
+    });
+    assert.equal(c.basis, "parti");
+    assert.equal(c.period, "per_ar", "«årligen» är partiets eget ord");
+    assert.equal(c.confidence, 0.7);
+  });
+
+  it("samma artikel, två miljarder, olika takt — skillnaden är partiets egen", async () => {
+    // MP:s Östersjöpaket skrev «årligen» om havsmiljarden men inte om
+    // restaureringsmiljarden. Före rättelsen fick båda per_ar.
+    const havs = await estimateCost({
+      ...cand(1039),
+      title: "En havsmiljard årligen för havsmiljöåtgärder",
+      quote: "Miljöpartiet vill satsa en havsmiljard årligen på akvatisk restaurering.",
+    });
+    const restaurering = await estimateCost({
+      ...cand(1000),
+      title: "Restaureringsmiljard för genomförande av EU:s naturrestaureringslag",
+      quote:
+        "Dessutom vill Miljöpartiet investera en restaureringsmiljard för att Sverige " +
+        "ska kunna genomföra EU:s naturrestaureringslag.",
+    });
+    assert.equal(havs.period, "per_ar");
+    assert.notEqual(restaurering.period, "per_ar");
+    assert.ok(
+      havs.confidence > restaurering.confidence,
+      "den som saknar takt ska bära lägre säkerhet, inte samma",
+    );
+  });
+
+  it("angerLopandePeriod: återkommandeord ja; totalbelopp och tystnad nej", () => {
+    assert.equal(angerLopandePeriod("bör öka till årlig anslagsnivå på 7 miljarder kronor"), true);
+    assert.equal(angerLopandePeriod("satsa en havsmiljard årligen"), true);
+    assert.equal(angerLopandePeriod("12 miljarder kronor per år"), true);
+    assert.equal(angerLopandePeriod("2 miljarder om året"), true);
+    assert.equal(angerLopandePeriod("500 miljoner varje år"), true);
+    assert.equal(angerLopandePeriod("7 mdkr/år till Klimatklivet"), true);
+    assert.equal(angerLopandePeriod("uppgår till totalt 1,2 miljarder kronor"), false);
+    assert.equal(angerLopandePeriod("investera en restaureringsmiljard"), false);
+    assert.equal(angerLopandePeriod("700 miljarder i investeringar för klimatet"), false);
   });
 
   it("per-enhetsbelopp i citatet auto-publiceras ALDRIG som totalkostnad (p-2026-0337)", async () => {

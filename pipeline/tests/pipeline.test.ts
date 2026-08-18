@@ -160,7 +160,27 @@ describe("T4: full pipeline snapshot", () => {
       const result2 = await runPipeline(makeContext(fixtures, tmp2));
 
       assert.deepEqual(result1, result2, "Two runs must be deeply identical");
-      assert.equal(result1.promises.length, 3, "Three promises published");
+      // Ett av de tre fixturlöftena säger själv sin takt («40 miljarder kronor
+      // per år»); de två andra anger ett belopp utan att säga om det återkommer.
+      // Sedan 2026-08-18 auto-publiceras bara det första — de två andra går till
+      // granskningskön med partiets siffra bevarad, så att en människa avgör
+      // perioden i stället för att koden antar per år. Provet mäter FÖRDELNINGEN,
+      // inte bara antalet: en ändring som råkar publicera de tysta igen faller här.
+      assert.equal(result1.promises.length, 1, "Bara löftet som anger sin takt publiceras");
+      assert.equal(
+        result1.promises[0]!.cost.period,
+        "per_ar",
+        "och det gör det för att källan säger «per år»",
+      );
+      assert.equal(result1.needsReview.length, 2, "De två utan angiven takt går till kön");
+      for (const r of result1.needsReview) {
+        assert.equal(r.cost?.basis, "parti", "partiets egen siffra följer med till kön");
+        assert.match(
+          r.cost?.method_note ?? "",
+          /anger ingen takt/u,
+          "och skälet står i posten",
+        );
+      }
       assert.equal(result1.errors.length, 0, "No errors");
       assert.equal(result1.dataHash, result2.dataHash, "data_hash stable");
       assert.equal(result1.dataHash.length, 64, "SHA-256 hex");
@@ -168,7 +188,7 @@ describe("T4: full pipeline snapshot", () => {
       const promises = JSON.parse(
         readFileSync(join(tmp1, "promises.json"), "utf8"),
       ) as PipelinePromise[];
-      assert.equal(promises.length, 3);
+      assert.equal(promises.length, 1);
       for (const p of promises) {
         assert.ok(p.id.startsWith("p-2026-"), `id format: ${p.id}`);
         assert.equal(p.status, "aktiv");
