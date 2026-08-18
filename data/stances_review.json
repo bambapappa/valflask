@@ -739,5 +739,351 @@
       }
     ],
     "verifyReason": "Citatet 'Stoppa vinstjakten i välfärden' berör visserligen vinster i välfärden (rätt sida av avgränsningen, och partiattributionen stämmer), men det står i ett brottsbekämpningssammanhang, nämner varken lag, vinstutdelning eller friskolekoncerner specifikt, så ett rent 'ja' kräver tolkning och bör granskas manuellt."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-put",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Återinföra permanenta uppehållstillstånd.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet är 3 ord — golvet är 5"
+      },
+      {
+        "gate": "G7",
+        "reason": "Publiceringsdatum 2020-10-09T11:51:04.000Z ligger 2139 dygn från körningen — fönstret är ±548 dygn"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/gron-politik-for-etablering/",
+    "articleTitle": "Miljöpartiets förslag för nyanländas etablering | Miljöpartiet",
+    "runId": "run-2026-08-18-21-34"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Skattepengar till vård och omsorg ska användas i verksamheten och eventuella överskott återinvesteras i verksamheten.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G7",
+        "reason": "Publiceringsdatum 2012-10-29T08:02:07.000Z ligger 5042 dygn från körningen — fönstret är ±548 dygn"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/halso-och-sjukvard/",
+    "articleTitle": "Miljöpartiets hälso- och sjukvårdspolitik",
+    "runId": "run-2026-08-18-21-34"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-ko",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Införa gemensamt skolval och stoppa orättvisa kösystem där skolkoncerner väljer ut elever.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/grundskola",
+    "articleTitle": "Grundskola\n| Socialdemokraterna",
+    "runId": "run-2026-08-18-21-34"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "mp",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Miljöpartiet vill inte bygga ny kärnkraft i Sverige.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G7",
+        "reason": "Publiceringsdatum 2021-07-08T12:24:17.000Z ligger 1867 dygn från körningen — fönstret är ±548 dygn"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/karnkraft/",
+    "articleTitle": "Miljöpartiets energipolitik",
+    "runId": "run-2026-08-18-21-34"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-visitationszoner",
+      "party": "v",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "För att på allvar stärka tryggheten i samhället och i politiskt eftersatta områden vill vi skapa trygghetszoner i stället för visitationszoner.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/grova-brott/",
+    "articleTitle": "Grova brott – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/grova-brott/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-18",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-forsvar-karnvapen",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sverige ska lagstifta mot kärnvapen på svensk mark i både freds- och krigstid",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/forsvar-och-sakerhet/",
+    "articleTitle": "Miljöpartiets försvars- och säkerhetspolitik",
+    "sourceUrl": "https://www.mp.se/politik/forsvar-och-sakerhet/",
+    "archiveUrl": null,
+    "dateStated": "2026-05-20",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Utvidga statens bemyndigande att ge lån och stöd till att gälla all storskalig fossilfri elproduktion dvs. Vindkraft till havs, och kärnkraft, enligt principen om teknikneutralitet.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/energipolitik",
+    "articleTitle": "Energipolitik\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/energipolitik",
+    "archiveUrl": null,
+    "dateStated": "2026-04-27",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Förbjuda vinstuttag i skolan, gymnasieskolan och förskolan.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/friskolor",
+    "articleTitle": "Friskolor\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/friskolor",
+    "archiveUrl": null,
+    "dateStated": "2026-06-15",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-ko",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Införa en gemensam antagning till alla skolor och förbjuda orättvisa urvalskriterier som kötid som låter koncerner välja elever.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/friskolor",
+    "articleTitle": "Friskolor\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/friskolor",
+    "archiveUrl": null,
+    "dateStated": "2026-06-15",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "v",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Vänsterpartiet avvisar planerna på att bygga ut kärnkraften",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/karnkraft/",
+    "articleTitle": "Kärnkraft – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/karnkraft/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-18",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet tar ställning mot utbyggnad av kärnkraft men säger ingenting om statlig finansiering av ny kärnkraft, vilket är vad delfrågan med sin avgränsning faktiskt frågar efter."
+      }
+    ],
+    "verifyReason": "Citatet tar ställning mot utbyggnad av kärnkraft men säger ingenting om statlig finansiering av ny kärnkraft, vilket är vad delfrågan med sin avgränsning faktiskt frågar efter."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-ko",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Miljöpartiet vill göra skolvalet mer rättvist och transparent, förändra kösystem som gynnar redan resursstarka familjer",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/jamlikhet/",
+    "articleTitle": "Miljöpartiet vill öka jämlikheten så att alla människor ska ha samma möjlighet till trygghet och ett gott liv.",
+    "sourceUrl": "https://www.mp.se/politik/jamlikhet/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-22",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet säger att kösystem ska förändras, inte avskaffas, och besvarar därmed inte den rakt ja/nej-formulerade frågan om avskaffande av dagens kösystem."
+      }
+    ],
+    "verifyReason": "Citatet säger att kösystem ska förändras, inte avskaffas, och besvarar därmed inte den rakt ja/nej-formulerade frågan om avskaffande av dagens kösystem."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Förbjuda vinstuttag i skolan, gymnasieskolan och förskolan.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/grundskola",
+    "articleTitle": "Grundskola\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/grundskola",
+    "archiveUrl": null,
+    "dateStated": "2026-06-15",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-nettonoll",
+      "party": "v",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Sverige bör anta klimatmål om nollutsläpp senast år 2035.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/klimat/",
+    "articleTitle": "Klimatkrisen – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/klimat/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-18",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Socialdemokraterna vill förbjuda vinstuttag och göra gymnasieskolan obligatorisk",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/gymnasieskola",
+    "articleTitle": "Gymnasieskola\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/gymnasieskola",
+    "archiveUrl": null,
+    "dateStated": "2026-06-15",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Stärka språkkraven och erbjuda språkträning på arbetstid för att säkra kommunikationen mellan dig och personalen.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/hemtjanst",
+    "articleTitle": "Hemtjänst\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/hemtjanst",
+    "archiveUrl": null,
+    "dateStated": "2026-06-15",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-21-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
