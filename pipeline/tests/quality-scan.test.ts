@@ -389,6 +389,22 @@ describe("looksLikeCompletedPolicy — löfte eller skryt", () => {
     );
   });
 
+  it("«återinföra» räddar ett citat med supinum — mönstret var dött före 2026-08-18", () => {
+    // `\b` biter inte före å/ä/ö i JavaScript, så `\båterinföra\b` matchade
+    // aldrig « återinföra» men däremot «Xåterinföra». Mönstret var alltså
+    // levande åt precis fel håll. Tre riktiga köposter föll på det.
+    assert.equal(
+      looksLikeCompletedPolicy(
+        "Samtidigt behöver Sverige återinföra registrering för den som har vistats i landet längre än tre månader.",
+      ),
+      false,
+    );
+    assert.equal(looksLikeCompletedPolicy("Vi har avskaffat den, och vill återinföra den."), false);
+    assert.equal(looksLikeCompletedPolicy("Anslaget som togs bort ska återställas."), false);
+    // Och det får inte fastna inuti ett annat ord: «Xåterinföra» är inget ord.
+    assert.ok(looksLikeCompletedPolicy("Vi har sänkt skatten och kallar det Xåterinföra."));
+  });
+
   it("dåtid PLUS åtagande om framtiden är ett löfte, inte skryt", () => {
     assert.equal(
       looksLikeCompletedPolicy("Vi har sänkt skatten, och vi vill fortsätta sänka den nästa mandatperiod."),
