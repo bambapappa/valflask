@@ -21,6 +21,50 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-18 — En tillfällig och en permanent sänkning av samma skatt är ett delat löfte
+
+**Gäller:** Fläskvågen. Frågevågen och Handlingsvågen rörs inte — grupperingen
+finns bara på löftessidan, där den avgör vad som räknas i summan. Det
+publicerade beståndet är kontrollerat i den våg raden nämner: gruppen
+`g-sankt-matmoms` har två medlemmar och inget tredje matmomslöfte ligger
+utanför den.
+
+**Beslut:** Kristdemokraternas löfte om att sänka matmomsen *tillfälligt*
+(`p-2026-0658`) och Sverigedemokraternas om att göra den nedsatta momsen
+*permanent* (`p-2026-0485`) hör ihop i gruppen `g-sankt-matmoms` och räknas en
+gång. Gruppen representeras av det högsta beloppet för mandatperioden, alltså
+den permanenta versionens 48 000 miljoner kronor.
+
+**Motiv:** Instrumentet är detsamma — den nedsatta mervärdesskattesatsen på
+livsmedel — och skillnaden mellan löftena är hur länge den ska gälla. En
+momssats kan bara sänkas en gång. Räknades de var för sig skulle 21 250
+miljoner läggas ovanpå 48 000 för en sänkning som bara kan genomföras en gång,
+och rikssumman skulle bära 21 250 miljoner som ingen lovat betala utöver det
+andra löftet.
+
+Att den permanenta versionen representerar gruppen följer av att den är det
+dyraste åtagandet om samma politik, vilket är precis vad regeln om delade
+löften säger. Båda beloppen vilar dessutom på samma myndighetskälla:
+regeringens proposition om tillfälligt sänkt mervärdesskatt på livsmedel anger
+skattebortfallet till 37,19 miljarder kronor för april 2026 till december 2027,
+varav 21,25 miljarder för 2027.
+
+**Förkastade alternativ:**
+
+*Skilja dem åt som olika politik.* Frågan restes 2026-08-08 och stod öppen till
+i dag. Den vilar på att «tillfälligt» och «permanent» är olika åtaganden — vilket
+de är — men grupperingen prövar inte om åtagandena är identiska, den prövar om
+politiken kan genomföras mer än en gång. Det kan den inte.
+
+*Låta det högsta årsbeloppet representera i stället för det högsta
+mandatperiodsbeloppet.* Det hade valt Kristdemokraternas 21 250 framför
+Sverigedemokraternas 12 000 och därmed låtit ett engångsbelopp representera ett
+löpande. Perioden måste räknas in innan beloppen jämförs; att låta bli var
+felet som gjorde att «9 250 miljoner i spridning» påstods i granskningens
+underlag samma dag, innan påståendet rättades.
+
+---
+
 ## 2026-08-17 — Skörden ska vara symmetrisk, och ojämnheten ska synas
 
 **Gäller:** Fläskvågen och Frågevågen — båda hämtar sitt underlag genom samma
