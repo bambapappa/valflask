@@ -818,7 +818,7 @@
       "confidence": 0.5,
       "calculation": "Åtgärden är en lagändring om tillståndsåterkallelse och tvångsförsäljning. Ingen ny statlig utgift utöver marginell administration, sätts till 0 enligt regel 9."
     },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0609 (0)"
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0609 (0) ÖVERLAPP: att en hyresvärd som missköter sig ska kunna förlora sitt tillstånd och tvingas sälja är efterlevnadssidan av partiets publicerade p-2026-0132, som inför tillståndsplikt för att få hyra ut. Partiet har dessutom p-2026-0625 om allmännyttans förköpsrätt till misskötta fastigheter. Avgör om det är samma reform; är det det, är den här posten en dubblett."
   },
   {
     "candidate": {
@@ -1289,7 +1289,20 @@
     "articleUrl": "https://www.vansterpartiet.se/nyheter/vansterpartiet-vill-satsa-12-miljarder-pa-varden-i-norrland/",
     "articleTitle": "Vänsterpartiet vill satsa 1,2 miljarder på vården i Norrland – Vänsterpartiet",
     "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma tal: 1 miljar"
+    "duplicateReason": "samma tal: 1 miljar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 1000,
+      "msek_high": 1000,
+      "basis": "parti",
+      "basis_url": null,
+      "confidence": 0.8,
+      "method_note": "Partiets egen siffra: glesbygdsmiljarden är 1 miljard kronor nationellt. Delas grupp med paketet p-2026-0926 räknas politiken en gång.",
+      "calculation": "Partiet anger själv beloppen i citatet: glesbygdsmiljarden är 1 miljard kronor nationellt, varav 500 miljoner till Norrlands fem län. Basbeloppet är därför partiets eget, 1 000 mkr per år, och ingenting är uppskattat av oss. Löftet hör samtidigt ihop med partiets satsning på vården i Norrland, där partiet anger totalsumman 1,2 miljarder kronor (p-2026-0926). Godkänn posten i samma grupp som det löftet, så prissätts politiken en gång och den högsta av de två summorna representerar gruppen."
+    },
+    "costReason": "Godkänn med --group p-2026-0926. Beloppet är partiets eget och ska inte skrivas om."
   },
   {
     "candidate": {
@@ -1312,16 +1325,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4000,
-      "msek_base": 8000,
-      "msek_high": 14000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Inget belopp i löftet. Hälsocentraler drivs av regioner men prissatt som statlig nettokostnad via finansiering till regionerna. Bygger på antal centra × rimlig extra läkar-/utrustningskostnad; stor…",
       "confidence": 0.35,
-      "calculation": "~1 100 hälsocentraler i landet. 'Alltid läkare i huset' + fler kompetenser antas kräva 1–2 extra läkartjänster à ~1,5–2 msek/år inkl. lönekostnadspåslag plus stödfunktioner ≈ 3–8 msek/år per centrum. Utrustningsuppgradering mot mini-sjukhus (lab, ultraljud, ev. bildtagning) ~10–25 msek engång per centrum, avskrivet över ~10 år ≈ 1–2,5 msek/år per centrum. Totalt ~4–10,5 msek/år per centrum × 1 100 centra ≈ 4 400–11 500 msek/år; high inkluderar bredare utrustningssatsning och löneökningstryck, base ~8 000 msek."
+      "calculation": "Löftet är en del av Vänsterpartiets satsning på vården i Norrland, och partiet anger själv vad hela satsningen är värd: 1,2 miljarder kronor (p-2026-0926). Partiets egen siffra gäller framför vår uppskattning, och en del kan inte kosta mer än helheten. Politiken prissätts en gång, på paketets totalsumma, och den här delen sätts därför till 0 mkr — den syns kvar för läsaren men läggs inte ovanpå. Den uppskattning som låg här — ungefär 1 100 hälsocentraler × 3–8 mkr per centrum i extra läkartjänster och utrustning, alltså 4 000–14 000 mkr per år — skulle ha gjort delen nästan sju gånger dyrare än partiets egen totalsiffra."
     },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
+    "costReason": "Godkänn med --group p-2026-0926."
   },
   {
     "candidate": {
@@ -1617,7 +1630,7 @@
       "confidence": 0.3,
       "calculation": "Livstidsstraff: ren lagändring ≈ 0 msek. Offentligt pedofilregister: systemutveckling ~20–60 msek engång, drift/behörighet ~5–15 msek/år. 'Nya verktyg för Polisen' utan nivå: spänner 0 (juridiska befogenheter) till ~100 msek/år (teknik som övervakning/analys). Årligt netto: låg ~10 (endast drift), bas ~50 (register + måttliga verktyg), hög ~150 (bredare teknikupphandling). Anknytning till jämförbara löften om polisverktyg (0–50 msek/år)."
     },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0607 (0), p-2026-0924 (50), p-2026-0035 (600), p-2026-0869 (10)"
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0607 (0), p-2026-0924 (50), p-2026-0035 (600), p-2026-0869 (10) TRE LED I ETT CITAT. «Livstidsstraff» är en lagändring och kostar försumbart. «Nya verktyg för Polisen» anger ingen nivå och går inte att prissätta som det står. «Ett offentligt pedofilregister» är den enda konkreta åtgärden, och partiet har redan p-2026-0532 «Inför en statlig interaktiv pedofilkarta» publicerad till 10 mkr. Beloppet 50 mkr här vilar därför delvis på något som redan är prissatt. Dela posten i sina led, eller behåll bara det led som inte är publicerat."
   },
   {
     "candidate": {
@@ -2433,7 +2446,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/50-forslag-battre-etablering/",
-    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet"
+    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2454,7 +2468,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/50-forslag-battre-etablering/",
-    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet"
+    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2475,7 +2490,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/50-forslag-battre-etablering/",
-    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet"
+    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2496,7 +2512,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/50-forslag-battre-etablering/",
-    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet"
+    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2517,7 +2534,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/50-forslag-battre-etablering/",
-    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet"
+    "articleTitle": "50 förslag för bättre etablering | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2567,7 +2585,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/7-stegsprogram/",
-    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet"
+    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2588,7 +2607,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/7-stegsprogram/",
-    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet"
+    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2609,7 +2629,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/7-stegsprogram/",
-    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet"
+    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2630,7 +2651,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/7-stegsprogram/",
-    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet"
+    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2651,7 +2673,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/7-stegsprogram/",
-    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet"
+    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2792,7 +2815,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/abort/",
-    "articleTitle": "Abort | Miljöpartiet"
+    "articleTitle": "Abort | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2813,7 +2837,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/abort/",
-    "articleTitle": "Abort | Miljöpartiet"
+    "articleTitle": "Abort | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2834,7 +2859,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/abort/",
-    "articleTitle": "Abort | Miljöpartiet"
+    "articleTitle": "Abort | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -2855,7 +2881,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/abort/",
-    "articleTitle": "Abort | Miljöpartiet"
+    "articleTitle": "Abort | Miljöpartiet",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -3597,7 +3624,7 @@
       "confidence": 0.55,
       "calculation": "~250 000–350 000 a-kassemottagare/år. (1) Slopad nedtrappning: förlängt högt inkomsthéllertak (>100 dagar) för ~1/3 mottagare med inkomst över lägre taket ≈ 2 000–3 000 msek/år (anknyter till liknande löfte ≈3 000). (2) Slopad karens: karensavdrag ~4 000–6 000 kr × ~250 000–350 000 nya ersättningsperioder/år ≈ 1 000–2 000 msek. (3) Indexering av tak/nivå med inflation ~1–2 %/år ≈ 200–500 msek. Summa ≈ 3 200–5 500; base 4 500; högt spannt pga konjunkturkänslighet — fler arbetslösa ger högre kostnad."
     },
-    "costReason": "LLM-estimat (confidence 0.55) — bekräfta/justera belopp — jämförbara: p-2026-0448 (3000), p-2026-0714 (0) ⚠ AVVIKER: 4500 avviker 3.0× från jämförbara (median 1500)"
+    "costReason": "LLM-estimat (confidence 0.55) — bekräfta/justera belopp — jämförbara: p-2026-0448 (3000), p-2026-0714 (0) ⚠ AVVIKER: 4500 avviker 3.0× från jämförbara (median 1500) TRE LED I ETT CITAT, ETT AV DEM PUBLICERAT. «Ta bort den branta nedtrappningen» är samma politik som partiets publicerade p-2026-0448 «Ta bort den brantare nedtrappningen i arbetslöshetsförsäkringen» (3 000 mkr per år) och ska inte räknas igen. Kvar som nytt står slopade karensdagar och att ersättningens värde inte ska urholkas. Beloppet 4 500 mkr rymmer alla tre leden. Dela posten, eller sätt beloppet till det de två nya leden kostar och gruppera nedtrappningen med p-2026-0448."
   },
   {
     "candidate": {
@@ -3879,7 +3906,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/bilar-och-bransle/",
-    "articleTitle": "Miljöpartiet bilar och bränslen"
+    "articleTitle": "Miljöpartiet bilar och bränslen",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -3900,7 +3928,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/bilar-och-bransle/",
-    "articleTitle": "Miljöpartiet bilar och bränslen"
+    "articleTitle": "Miljöpartiet bilar och bränslen",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -3921,7 +3950,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/bilar-och-bransle/",
-    "articleTitle": "Miljöpartiet bilar och bränslen"
+    "articleTitle": "Miljöpartiet bilar och bränslen",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -3942,7 +3972,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/bilar-och-bransle/",
-    "articleTitle": "Miljöpartiet bilar och bränslen"
+    "articleTitle": "Miljöpartiet bilar och bränslen",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
@@ -3963,7 +3994,8 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/bilar-och-bransle/",
-    "articleTitle": "Miljöpartiet bilar och bränslen"
+    "articleTitle": "Miljöpartiet bilar och bränslen",
+    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
   },
   {
     "candidate": {
