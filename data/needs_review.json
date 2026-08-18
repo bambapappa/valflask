@@ -679,7 +679,7 @@
         "v"
       ],
       "person": null,
-      "quote": "En nybyggd trea ska inte behöva kosta över 20 000 kronor i månaden, Målet är att hyran ska vara överkomlig för vanliga hushåll och riktlinjen är ca 20% av lönen.",
+      "quote": "En nybyggd trea ska inte behöva kosta över 20 000 kronor i månaden",
       "category": "välfärd",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -697,9 +697,9 @@
       "basis_url": null,
       "method_note": "Hyrestak är en reglering; statens direkta kostnad är försumbar. Eventuella samhällsföljder av pristaket kvantifieras inte.",
       "confidence": 0.4,
-      "calculation": "Ingen utbetalning eller skattesänkning; endast regeländring. Direkt kostnad sätts till 0 mkr."
+      "calculation": "Ett tak för vad en nybyggd trea får kosta i månaden är en hyresreglering. Den genomförs med en regeländring och innebär ingen utbetalning och ingen skattesänkning, så statens direkta kostnad sätts till 0 mkr. Vad ett pristak gör med byggandet och med hyresmarknaden är en följd av politiken och prissätts inte här."
     },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp Citatet är bytt vid granskningen 2026-08-18 och läst mot källsidan samma dag; det gamla citatet höll inte som det stod. Kontrollera mot arkivkopian före publicering."
   },
   {
     "candidate": {
@@ -1736,7 +1736,7 @@
       "basis_url": null,
       "method_note": "Premie utan angiven nivå; ankrar mot tidigare supermiljöbilspremie (~40–60 tkr/bil) och universellt jämförelselöfte på 7 500 msek. Inkomsttak under 120% av medianen skär kostnaden ungefär hälften.",
       "confidence": 0.45,
-      "calculation": "Ca 100 000–130 000 elbilsköp per år om en premie återinförs (premien höjer andelen). Senaste genomförda versionen av samma åtgärd (supermiljöbilspremien/klimatbonusen) betalade i snitt ~40–50 tkr per bil. Hushåll under 120% av medianinkomsten är ~60–65% av alla, men elbilsköpare snedfördelas mot högre inkomster → antag 35–50% av köparna berättigade. 110 000 × 45 tkr × 0,35–0,5 ≈ 1 700–2 500 msek; med beteendeeffekt (fler elbilsköp bland berättigade) upp mot ~4 500 msek. Base ~3 000 msek ≈ hälften av jämförbart universellt löfte (7 500 msek), vilket stämmer med att inkomsttaket halverar mottagarkretsen. Min del: mottagarantal och andel berättigade; premienivån är lånad från historisk utförsäljning, inte partiets egen siffra."
+      "calculation": "Ungefär 100 000–130 000 elbilar köps per år om en premie återinförs; premien höjer själv andelen elbilar. Den senast genomförda versionen av samma åtgärd — supermiljöbilspremien och därefter klimatbonusen — betalade i snitt 40 000–50 000 kronor per bil, och det är det ankaret basbeloppet vilar på. Inkomstgränsen är partiets egen: premien ska nå alla hushåll upp till 120 procent av medelinkomsten, vilket är omkring två tredjedelar av hushållen. Vår del är antalet mottagare och premiens storlek, eftersom citatet inte anger någon av dem. 120 000 bilar × 45 000 kr × 0,55 ≈ 3 000 mkr per år; spannet rymmer att både antalet och premien kan bli högre eller lägre."
     },
     "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0416 (800), p-2026-0351 (7500), p-2026-0662 (2000)"
   },
@@ -1823,7 +1823,7 @@
       "basis_url": null,
       "method_note": "Höjning från nuvarande 70 % (efter dag 100) till 80 % plus aktivitetsstöd. Kostnaden är merkostnaden i ersättning; taket i a-kassan begränsar utfallet och konjunkturläget driver spannet.",
       "confidence": 0.55,
-      "calculation": "A-kassans sammanlagda utgifter ligger normalt runt 35–45 mdkr/år. Grovt 50–60 % av utbetalningsdagarna ligger på 70-procentsnivån (efter första 100 dagarna). Höjning 70→80 % = +14,3 % på den delen ≈ 2,5–3 mdkr, men inkomsttaket gör att bara de under taket påverkas fullt ut, vilket drar ned något. Aktivitetsstöd vid arbetsmarknadsåtgärder ~10–15 mdr... (~10–15 mdkr/år), motsvarande procenthöjning ≈ +1–1,5 mdkr. Totalt ≈ 3,5–4,5 mdkr/år vid normal konjunktur; lågt 2 mdkr vid hög sysselsättning, högt ~6,5 mdkr i svagare konjunktur med fler mottagare. Antaganden om andel dagar per nivå och takpåverkan är egna uppskattningar."
+      "calculation": "A-kassans samlade utgifter ligger normalt kring 35–45 miljarder kronor per år. Grovt 50–60 procent av utbetalningsdagarna ligger på 70-procentsnivån, alltså efter de första 100 dagarna. Höjningen från 70 till 80 procent är partiets egen siffra och innebär ett påslag på 14,3 procent på den delen, ungefär 2 500–4 500 mkr per år; att lägga till tid med aktivitetsstöd drar upp beloppet ytterligare. Basbeloppet sätts till 4 000 mkr per år. Nivån 80 procent är partiets; fördelningen av utbetalningsdagarna och a-kassans totala utgifter är våra antaganden. Citatet slutar med komma därför att det är en punkt i partiets egen uppräkning, och återges som det står."
     },
     "costReason": "LLM-estimat (confidence 0.55) — bekräfta/justera belopp — jämförbara: p-2026-0565 (2300), p-2026-0581 (0) ⚠ AVVIKER: 4000 avviker 3.5× från jämförbara (median 1150)"
   },
@@ -1910,19 +1910,15 @@
         "v"
       ],
       "person": null,
-      "quote": "Att minutstyrningen avskaffas helt.",
+      "quote": "Att minutstyrningen avskaffas helt. Omsorgen ska bygga på tillit, inte tidtagarur.",
       "category": "välfärd",
       "amount_in_text_msek": null,
       "financing_mentioned": false
     },
-    "failures": [
-      {
-        "gate": "G3",
-        "reason": "Citatet har 4 ord — minst 5 krävs (kortare tillåts bara om citatet är en hel, unik punkt på partiets egen sida)"
-      }
-    ],
+    "failures": [],
     "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/aldreomsorg/",
-    "articleTitle": "Äldreomsorg – Vänsterpartiet"
+    "articleTitle": "Äldreomsorg – Vänsterpartiet",
+    "costReason": "Citatet är bytt vid granskningen 2026-08-18 och läst mot källsidan samma dag; det gamla citatet höll inte som det stod. Kontrollera mot arkivkopian före publicering."
   },
   {
     "candidate": {
@@ -2657,7 +2653,7 @@
       "basis_url": null,
       "method_note": "Ny tillfällig skatt (2026–2028) som ger staten intäkter. 'Övervinst' är odefinierad i löftet; estimerat på banksektorns vinster med brett spann.",
       "confidence": 0.4,
-      "calculation": "Sveriges storbanker (SEB, Swedbank, Handelsbanken, Nordea) gör samlade vinster på ~100–120 mdkr/år; hela sektorn ~120–150 mdkr. Löftet definierar inte 'övervinst' — antag att 30–60 % av vinster ligger över normalavkastning ≈ 40–80 mdkr. Skatt 50 % → ~20–40 mdkr/år. Beteendeeffekter (skatteplanering, prisångräkning mot kunder, minskad utlåning, förskjutna vinster i tiden) kan halvera realiserat utfall → låg ~5 mdkr. Jämförbar ordning som andra stora skattelöften (~20 mdkr/år). Mycket osäkert: beror helt på hur övervinst definieras och banks vinstnivå 2026–2028."
+      "calculation": "Sveriges storbanker gör tillsammans vinster på omkring 100–120 miljarder kronor per år, och hela sektorn 120–150 miljarder. Skattesatsen 50 procent och perioden 2026–2028 är partiets egna; vad som räknas som «övervinst» säger citatet inget om, så den avgränsningen är vår. Antag att 30–60 procent av vinsterna ligger över en normal avkastning: 130 miljarder × 0,45 × 0,50 ≈ 29 miljarder brutto. Bankerna kan flytta vinst och anpassa prissättningen, så genomslaget antas bli 60–80 procent, vilket ger omkring 20 000 mkr per år. Spannet rymmer både en snävare definition av övervinst och ett svagare genomslag."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0809 (20000), p-2026-0860 (400), p-2026-0028 (20000)"
   },
@@ -3278,7 +3274,7 @@
         "v"
       ],
       "person": null,
-      "quote": "Vänsterpartiet vill se en lagstiftning liknande den i Storbritannien.",
+      "quote": "Vänsterpartiet vill se en lagstiftning liknande den i Storbritannien. Den innebär att kundens bank normalt får ersätta halva summan för bedrägeriet, medan banken som bedragaren flyttar pengarna till får stå för andra halvan.",
       "category": "övrigt",
       "amount_in_text_msek": null,
       "financing_mentioned": false
@@ -3296,9 +3292,9 @@
       "basis_url": null,
       "method_note": "Lagstiftning där banker, inte staten, ersätter offer. Belopp avser bara beredning och ev. tillsyn — inte bankernas ersättningsutbetalningar eller samhällsföljder.",
       "confidence": 0.5,
-      "calculation": "Löftet är en lagregel (liknande UK:s återbetalningsskyldighet). Direkt statlig kostnad: lagberedning, remissarbete och eventuell utökad tillsyn hos Finansinspektionen, grovt 0–25 msk/år. Själva ersättningarna till bedrägerioffer betalas av bankerna (överföring bank→konsument), vilket inte är en ny statlig utgift och lämnas okvantifierat enligt reglerna. Base ~5 mkr för administration och tillsyn."
+      "calculation": "Löftet är en lagregel om att banker ska ersätta den som blivit lurad, efter brittisk förebild där kundens bank står för halva summan och mottagarbanken för andra halvan. Statens direkta kostnad är att bereda lagen och en viss utökad tillsyn hos Finansinspektionen, 0–25 mkr per år, och basbeloppet sätts till 5 mkr. Själva ersättningen betalas av bankerna, inte av staten, och räknas därför inte som en statlig utgift."
     },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp Citatet är bytt vid granskningen 2026-08-18 och läst mot källsidan samma dag; det gamla citatet höll inte som det stod. Kontrollera mot arkivkopian före publicering."
   },
   {
     "candidate": {
