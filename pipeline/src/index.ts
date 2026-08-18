@@ -10,7 +10,6 @@ import { verifyCandidate, type VerifyResult } from "./verify.ts";
 import type { ArchiveFn } from "./archive.ts";
 import { estimateCost, costDeviation } from "./cost.ts";
 import { findQuoteDuplicate, findPossibleDuplicate, findCrossPartyDuplicate, findPolicyDuplicate, findComparableCosts, looksLikeUmbrella, findSamePartyInCategory, type ExistingPromiseLite, type ComparablePromiseLite } from "./similarity.ts";
-import { generateQuip } from "./copy.ts";
 import { maybeGenerateWeekly, type ChronicleEntry } from "./chronicle.ts";
 import {
   publish,
@@ -294,9 +293,27 @@ export async function runPipeline(
           comparablePool,
         );
         const cost = await estimateCost(accepted, ctx.llm, ctx.models.extract, comparables);
-        // Hybrid (§8, mänskligt beslut): LLM-estimat går ALLTID till review så människan
-        // bekräftar/justerar beloppet; även låg confidence. Kostnaden bärs med.
-        if (cost.basis === "llm_estimat" || cost.confidence < 0.6) {
+        // ALLT går till granskningskön. Ingen kandidat publiceras av en körning.
+        //
+        // Mänskligt beslut 2026-08-18, som ersätter hybrid-routningen från
+        // 2026-06-24. Den lät löften med uttryckligt belopp i källtexten
+        // publiceras utan mänskligt godkännande, och tjugo löften nådde sajten
+        // den vägen. Sju av dem kom i en enda körning natten till 18 augusti;
+        // sex höll inte, och ett bar 38,77 procent av rikssumman på ett citat
+        // som var en menylänk.
+        //
+        // Skälet att ta bort vägen är inte bara de sju. Metodsidan lovar
+        // läsaren att «inget nytt löfte och inget belopp når sajten utan att en
+        // människa släppt igenom det» och att «maskinen får föreslå, inte
+        // publicera». Den meningen var inte sann så länge den här grenen fanns.
+        // Nu är den det, och prosans ankare `metod-sparren-granskningskon`
+        // mäter den mot den här filen.
+        //
+        // Bieffekt värd att veta: varningarna nedan — avvikelse mot jämförbara
+        // och bred uppräkning — räknades förut BARA för LLM-estimat. De löften
+        // som gick förbi kön fick dem alltså aldrig, fast det var just de som
+        // ingen människa läste. Nu får varje kö-post dem.
+        {
           const comparablesNote =
             comparables.length > 0
               ? ` — jämförbara: ${comparables.map((c) => `${c.id} (${c.msek_base})`).join(", ")}`
@@ -329,30 +346,13 @@ export async function runPipeline(
             costReason:
               (cost.basis === "llm_estimat"
                 ? `LLM-estimat (confidence ${cost.confidence}) — bekräfta/justera belopp`
-                : `Låg kostnadssäkerhet: ${cost.confidence}`) + comparablesNote + deviationNote + umbrellaNote,
+                : cost.confidence < 0.6
+                  ? `Låg kostnadssäkerhet: ${cost.confidence}`
+                  : `Belopp ur källtexten (${cost.basis}) — bekräfta belopp och period`) +
+              comparablesNote + deviationNote + umbrellaNote,
           });
           continue;
         }
-
-        const archiveResult = await ctx.archiveFn(article.url);
-
-        const quip = await generateQuip(
-          accepted.title,
-          `${cost.msek_base} msek`,
-          ctx.llm,
-          ctx.models.copy,
-        );
-
-        processedCandidates.push({
-          candidate: accepted,
-          article,
-          verifyResult,
-          cost,
-          quip,
-          archiveUrl: archiveResult.archive_url,
-          extractModel: ctx.models.extract,
-          verifyModel: ctx.models.verify,
-        });
       }
 
       // ── Frågevågen-passet (§5): samma artikel, egen grindkedja, egen kö.
@@ -402,17 +402,16 @@ export async function runPipeline(
     }
   }
 
-  if (ctx.mode === "review") {
-    for (const pc of processedCandidates.splice(0)) {
-      reviewItems.push({
-        candidate: pc.candidate,
-        failures: [],
-        articleUrl: pc.article.url,
-        articleTitle: pc.article.title,
-        cost: pc.cost,
-        verifyReason: "PIPELINE_MODE=review: all items to review",
-      });
-    }
+  // `PIPELINE_MODE=review` var vägen att stänga av autopubliceringen för en
+  // körning. Sedan 2026-08-18 finns ingen autopublicering att stänga av —
+  // varje kandidat går till kön ovan — så listan är alltid tom här. Ratten
+  // ligger kvar därför att `mode` fortfarande styr Frågevågens flöde.
+  if (processedCandidates.length > 0) {
+    throw new Error(
+      "Pipelinen fyllde processedCandidates. Ingen körning får publicera ett " +
+        "löfte utan mänskligt godkännande — se metodsidans spärr och beslutet " +
+        "2026-08-18. Kandidater ska läggas i reviewItems.",
+    );
   }
 
   // Markera SEDDA endast artiklar som inte kastade fel — failade (rate limit/timeout)

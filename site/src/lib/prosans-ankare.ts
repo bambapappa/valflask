@@ -202,17 +202,31 @@ export const ANKARE: Ankare[] = [
     sida: METOD,
     pastaende:
       "Varje egen uppskattning granskas av en människa innan den publiceras",
-    // Grinden är raden i index.ts som skickar VARJE llm_estimat till kön.
-    // Prosan vilar på att villkoret inte snävas in.
+    // Grinden VAR raden i index.ts som skickade varje llm_estimat till kön,
+    // och provet läste det villkoret. Sedan 2026-08-18 finns inget villkor:
+    // varje kandidat går till kön, oavsett grund. Påståendet är alltså sant
+    // med större marginal än förut — men provet mätte kodens FORM, och när
+    // formen försvann föll det. Det är rätt beteende av grinden och skälet
+    // till att den finns.
+    //
+    // Provet mäter nu saken i stället för formen: att pipelinen inte har
+    // någon väg som publicerar, och att spärren som säger ifrån står kvar.
+    // Håller det, går varje egen uppskattning till en människa — det följer
+    // av att ALLT gör det.
     prov: () => {
       const kod = repofil("pipeline/src/index.ts");
-      return /cost\.basis === "llm_estimat"[\s\S]{0,40}reviewItems\.push|if \(cost\.basis === "llm_estimat" \|\| cost\.confidence < 0\.6\)/u.test(
-        kod,
-      );
+      const ingenPublicering = !/processedCandidates\.push\s*\(/u.test(kod);
+      const spärr =
+        /if\s*\(processedCandidates\.length\s*>\s*0\)\s*\{[\s\S]{0,400}?throw new Error/u.test(
+          kod,
+        );
+      const kandidatenNarKon = /reviewItems\.push\s*\(/u.test(kod);
+      return ingenPublicering && spärr && kandidatenNarKon;
     },
     fallprov:
-      "Ändra villkoret till att bara låg confidence går till kön — provet faller, och 438 gissade belopp hade kunnat publiceras oläst.",
-    matt: "438 av 553 aktiva löften har basis llm_estimat 2026-08-09",
+      "Lägg tillbaka en processedCandidates.push i pipelinen — provet faller, " +
+      "och ett gissat belopp hade kunnat publiceras oläst.",
+    matt: "438 av 553 aktiva löften har basis llm_estimat 2026-08-09"
   },
   {
     id: "metod-andra-oberoende-datorn",
@@ -731,15 +745,42 @@ export const ANKARE: Ankare[] = [
     // commits på main robotpushar, och regeln på main ger boten undantag
     // alltid. Den nya lydelsen vilar på etikettgrinden i stället, och det
     // är den provet mäter.
+    //
+    // **Skärpt 2026-08-18, och skälet är dyrköpt.** Provet mätte BARA
+    // etikettvillkoret — alltså den ena vägen in i datat. Pipelinen hade en
+    // egen väg förbi kön: löften med uttryckligt belopp i källtexten
+    // publicerades utan godkännande, och tjugo löften nådde sajten så. Sju kom
+    // i en enda körning, sex av dem höll inte. Meningen ovan var alltså osann
+    // i tio veckor medan provet lyste grönt, för det mätte inte undantaget
+    // prosan inte nämner.
+    //
+    // Provet mäter nu båda vägarna: etikettvillkoret som förut, OCH att
+    // pipelinen inte har någon publiceringsväg kvar. Andra ledet läses ur
+    // koden som faktiskt kör: `runPipeline` ska kasta om något hamnar i
+    // `processedCandidates`, och den gren som förut lade dit kandidater ska
+    // vara borta.
     prov: () => {
       const wf = repofil(".github/workflows/review-apply.yml");
-      return (
+      const etikettgrind =
         wf.includes("apply-labeled-decisions.mts") &&
-        wf.includes("startsWith(github.event.label.name, 'beslut:')")
-      );
+        wf.includes("startsWith(github.event.label.name, 'beslut:')");
+
+      const pipeline = repofil("pipeline/src/index.ts");
+      // Spärren finns och säger ifrån.
+      const spärr =
+        /if\s*\(processedCandidates\.length\s*>\s*0\)\s*\{[\s\S]{0,400}?throw new Error/u.test(
+          pipeline,
+        );
+      // Och ingen kod fyller listan igen. `.splice(0)` och `.length` räknas
+      // inte — det är läsningar, inte påfyllning.
+      const ingenPåfyllning = !/processedCandidates\.push\s*\(/u.test(pipeline);
+
+      return etikettgrind && spärr && ingenPåfyllning;
     },
     fallprov:
-      "Låt review-apply köra utan etikettvillkoret — provet faller, och då kan datat ändras utan ett mänskligt beslut.",
+      "Ta bort etikettvillkoret ur review-apply, ELLER lägg tillbaka en " +
+      "processedCandidates.push i pipelinen — provet faller åt båda hållen, " +
+      "för då kan ett löfte nå sajten utan att en människa släppt igenom det.",
   },
   {
     id: "metod-sparren-vad-den-inte-ar",
