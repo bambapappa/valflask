@@ -17204,5 +17204,614 @@
     ],
     "articleUrl": "https://www.mp.se/politik/energieffektivisering/",
     "articleTitle": "Energieffektivisering | Miljöpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Mer personal och språkkrav i äldreomsorgen",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Mer personal och språkkrav i äldreomsorgen.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 3000,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämförbara bemanningslöften i äldreomsorgen ligger kring 3 000 mkr/år. Löftet saknar nivå; spannet speglar olika ambitionsnivåer. Språkkrav ses som reglering med försumbar direkt kostnad.",
+      "confidence": 0.45,
+      "calculation": "Bas på jämförbara bemanningslöften: 3 000 mkr/år motsvarar ca 4 000 årsarbetare à ca 750 tkr. Låg 1 000 mkr vid snäv satsning, hög 5 000 mkr vid bredare bemanning. Språkkravens direkta kostnad sätts till ~0; eventuell utbildning ej specificerad."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0976 (0), p-2026-1027 (3000), p-2026-0362 (800), p-2026-0016 (3000), p-2026-0917 (50) ⚠ AVVIKER: 3000 avviker 3.8× från jämförbara (median 800)"
+  },
+  {
+    "candidate": {
+      "title": "Allmän och statlig a-kassa",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill därför att arbetslöshetsförsäkringen ska vara allmän och statlig.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2015-07-18T12:48:56.000Z ligger 4049 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/a-kassa",
+    "articleTitle": "A-kassa – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Högre a-kasseersättning i början som trappas av över tid",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill därför att ersättningen ska vara högre i början av arbetslösheten och sedan trappas av över tid.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2015-07-18T12:48:56.000Z ligger 4049 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/a-kassa",
+    "articleTitle": "A-kassa – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa Arbetsförmedlingens återbetalning av miljarder till staten",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Stoppa den trend som innebär att Arbetsförmedlingen skickar tillbaka flera miljarder kronor varje år som är avsedda för utbildningar och vägar till jobb för arbetslösa.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/arbetsformedlingen",
+    "articleTitle": "Arbetsförmedlingen\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 3000,
+      "msek_high": 6000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Prissätter utebliven återbetalning som årlig nettoutgift för staten; redan anvisade AF-medel används i stället för att gå tillbaka. 'Flera miljarder' tolkas som 2–6 mdkr/år, bredare än lokal…",
+      "confidence": 0.4,
+      "calculation": "'Flera miljarder' anges utan nivå. Antag 2–6 mdkr/år; bas 3 mdkr. Omräknat till mkr: 2 000–6 000 mkr/år. Osäkerheten gäller hur stora belopp AF faktiskt återbetalar."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0985 (500), p-2026-0336 (50000), p-2026-0599 (1250)"
+  },
+  {
+    "candidate": {
+      "title": "Upphandling av arbetsmarknadsutbildningar vid överskott",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Märker Arbetsförmedlingen att det kommer att bli ett överskott så ska de kunna upphandla arbetsmarknadsutbildningar som kommunerna kan anvisa till.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/arbetsformedlingen",
+    "articleTitle": "Arbetsförmedlingen\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Möjliggörande regeländring: utbildningarna ska finansieras med AF:s överskott inom befintlig ram, dvs. omfördelning ej ny statskostnad. Prissatt endast direkt/administrativ kostnad. Jfr p-2026-0649…",
+      "confidence": 0.5,
+      "calculation": "Löftet handlar om att AF SKA KUNNA upphandla arbetsmarknadsutbildningar när överskott uppstår — finansieringen tas ur befintligt anslagsöverskott (pengar annars oanvända), vilket enligt netto-principen är omfördelning, inte ny statlig utgift. Kvar prissätts: administrativ kostnad för förordningsändring, upphandlingsberedskap löpande och uppföljning hos AF, uppskattat ~0–60 mkr/år med bas ~5 mkr. Osäkerheten ligger i hur ofta och hur omfattande upphandlingarna blir; nivån anpassad till jämförbart löfte p-2026-0649 (0 msek/år)."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0649 (0) ⚠ AVVIKER: belopp 5 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Stärka sex- och samlevnadsundervisningen i skolan",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Därför vill Liberalerna stärka sex- och samlevnadsundervisningen i skolan.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2015-06-24T18:00:20.000Z ligger 4073 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/abort",
+    "articleTitle": "Abort – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Driva frågan om fri abort internationellt och inom EU",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill att Sverige driver frågan om fri abort i internationella samarbeten och inom EU.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2015-06-24T18:00:20.000Z ligger 4073 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/abort",
+    "articleTitle": "Abort – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "EU-medborgare ska kunna få abortvård i annat EU-land",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "EU-medborgare som blir nekade abort i sitt hemland ska kunna få vård i ett annat EU-land.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2015-06-24T18:00:20.000Z ligger 4073 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/abort",
+    "articleTitle": "Abort – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Begränsa arbetskraftsinvandring till yrken med arbetskraftsbrist",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Arbetskraftsinvandring ska begränsans mot yrken där arbetskraft inte hittas i Sverige.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/arbetskraftsinvandring",
+    "articleTitle": "Arbetskraftsinvandring\n| Socialdemokraterna"
+  },
+  {
+    "candidate": {
+      "title": "Europeisk AI-säkerhetsstrategi",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill att EU antar en europeisk AI-säkerhetsstrategi för att skydda demokratiska samhällen och kritisk infrastruktur.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2015-07-18T13:22:15.000Z ligger 4049 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/ai",
+    "articleTitle": "AI och teknikutveckling – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Europeiska AI-system och språkmodeller",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill därför stärka utvecklingen av europeiska AI-system och språkmodeller.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2015-07-18T13:22:15.000Z ligger 4049 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/ai",
+    "articleTitle": "AI och teknikutveckling – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Återinföra revisionsplikten",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Återinföra revisionsplikten för att göra det svårare för kriminella att använda företag som verktyg för penningtvätt och ekonomisk brottslighet",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/arbetslivskriminalitet",
+    "articleTitle": "Arbetslivskriminalitet\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring; direkta statliga kostnaden för själva åtgärden är försumbar, möjligen mindre utredning/administration. Företagens revisionskostnader är inte statens utgift.",
+      "confidence": 0.5,
+      "calculation": "Återinförd revisionsplikt är ett lagkrav som inte medför någon ny statlig utgift utöver eventuell smärre utredning/administration: 0–10 mkr. Företagens kostnader för revisor räknas inte som statlig utgift."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Nationell strategi för att stärka kraftvärmen",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Stärka kraftvärmens konkurrenskraft med en nationell strategi.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/energi/kraftvarme",
+    "articleTitle": "Kraftvärme | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Nationell strategi prissätts som utrednings-/planarbete (SOU-storlek), inte eventuella framtida stöd. Liknande planlöfte bedöms 0, men framtagandet kan kosta 5–30 mkr.",
+      "confidence": 0.5,
+      "calculation": "En nationell strategi antas kräva utredningsarbete, remisser och konsultstöd: 5–30 mkr engång. Inga löpande åtgärder prissätts här."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0666 (0) ⚠ AVVIKER: belopp 10 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Bygga ut elproduktion i befintliga kraftvärmeverk",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Satsa på att bygga ut elproduktion på de ställen där man idag bara producerar värme.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/energi/kraftvarme",
+    "articleTitle": "Kraftvärme | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 960,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar nivå, så kostnaden skattas som ett statligt investeringsstöd för att konvertera värmeverk till kraftvärme, inte som driftbidrag.",
+      "confidence": 0.3,
+      "calculation": "~10–30 anläggningar × 20–80 mkr i investering per verk × 25–40 % stödandel = 50–960 mkr; basen 200 mkr antar färre/medelstora projekt."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0667 (0), p-2026-0788 (0), p-2026-0821 (0) ⚠ AVVIKER: belopp 200 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Kraftvärmen som reglerbar kraftkälla i förnybart elsystem",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Säkra kraftvärmens roll som en stabil och reglerbar kraftkälla i ett förnybart elsystem.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/energi/kraftvarme",
+    "articleTitle": "Kraftvärme | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är ett inriktnings-/regleringslöfte utan konkret åtgärd eller belopp. Direkt statlig kostnad bedöms försumbar; eventuella följder kvantifieras inte.",
+      "confidence": 0.2,
+      "calculation": "Ingen nivå, subvention eller ersättning anges. Prissätts som reglering/inriktning med 0 mkr i ny statlig nettokostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0671 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Främja teknikutveckling för effektivare kraftvärme",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "främja teknikutveckling som gör kraftvärmen ännu effektivare och mer flexibel.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/energi/kraftvarme",
+    "articleTitle": "Kraftvärme | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Aktivt bekämpa ålderism i arbetslivet med rättvisa regler",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "När samhället förväntar sig att fler ska arbeta längre måste vi aktivt bekämpa ålderism i arbetslivet – med rättvisa regler, starkare skydd mot diskriminering och verkliga möjligheter till arbete och utveckling även högre upp i åldrarna.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2015-08-02T11:23:35.000Z ligger 4034 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/alderism",
+    "articleTitle": "Ålderism – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Satsa 4,2 miljarder på civilt försvar och beredskapslager till 2025",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Ökad motståndskraft inom områdena hälso- och sjukvård, livsmedel och dricksvattenförsörjning, transporter, ordning och säkerhet, finansiell beredskap, energiförsörjning samt elektroniska kommunikationer och post behöver vidareutvecklas och stärkas.",
+      "category": "försvar",
+      "amount_in_text_msek": 4200,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2020-09-21T07:00:08.000Z ligger 2158 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/ett-sverige-som-ligger-steget-fore-i-krisen-hela-listan/",
+    "articleTitle": "Ett Sverige som ligger steget före i krisen – hela listan | Miljöpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Öka anslaget till kompetenscentret för växtförädling",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Främja inhemsk växtförädling genom ökning av anslaget till kompetenscentret för växtförädling.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2020-09-21T07:00:08.000Z ligger 2158 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/ett-sverige-som-ligger-steget-fore-i-krisen-hela-listan/",
+    "articleTitle": "Ett Sverige som ligger steget före i krisen – hela listan | Miljöpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta ett nationellt institut för mänskliga rättigheter",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Sverige ska få ett nationellt institut för bevakande av mänskliga rättigheter.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2020-09-21T07:00:08.000Z ligger 2158 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/ett-sverige-som-ligger-steget-fore-i-krisen-hela-listan/",
+    "articleTitle": "Ett Sverige som ligger steget före i krisen – hela listan | Miljöpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Införa riskskatt för kreditinstitut med skulder över 150 miljarder",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "En riskskatt ska betalas av kreditinstitut med skulder överstigande 150 miljarder kronor för att täcka kostnaderna för kriser i det finansiella systemet.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2020-09-21T07:00:08.000Z ligger 2158 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/ett-sverige-som-ligger-steget-fore-i-krisen-hela-listan/",
+    "articleTitle": "Ett Sverige som ligger steget före i krisen – hela listan | Miljöpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Fler närvarande poliser på gator och torg",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Vi vill se fler närvarande poliser på gator och torg.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2020-09-21T08:09:33.000Z ligger 2158 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/ett-tryggare-sverige-hela-listan/",
+    "articleTitle": "Ett tryggare Sverige – hela listan | Miljöpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Tillskott till Statens institutionsstyrelse",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Tillskott för att öka kapacitet, säkerhet och kvalitet hos Statens institutionsstyrelse.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2020-09-21T08:09:33.000Z ligger 2158 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/ett-tryggare-sverige-hela-listan/",
+    "articleTitle": "Ett tryggare Sverige – hela listan | Miljöpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Fortsatt satsning mot arbetslivskriminalitet",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Fortsättning på tidigare satsning mot arbetslivskriminalitet i syfte att få strukturerna för detta arbete på plats.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2020-09-21T08:09:33.000Z ligger 2158 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/ett-tryggare-sverige-hela-listan/",
+    "articleTitle": "Ett tryggare Sverige – hela listan | Miljöpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Stärkt straffrättsligt skydd för barn som bevittnar brott",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Det straffrättsliga skyddet för barn som bevittnar brott mellan närstående stärks.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2020-09-21T08:09:33.000Z ligger 2158 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/ett-tryggare-sverige-hela-listan/",
+    "articleTitle": "Ett tryggare Sverige – hela listan | Miljöpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Ökade medel till Finansinspektionen mot penningtvätt",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Finansinspektionen får ökade medel för att bekämpa penningtvätt och finansiering av terrorism.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G4",
+        "reason": "Publiceringsdatum 2020-09-21T08:09:33.000Z ligger 2158 dygn från körningen — fönstret är ±548 dygn (≈18 mån)"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/ett-tryggare-sverige-hela-listan/",
+    "articleTitle": "Ett tryggare Sverige – hela listan | Miljöpartiet"
   }
 ]

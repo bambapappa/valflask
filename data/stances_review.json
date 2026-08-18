@@ -690,5 +690,54 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Stoppa vinstjakten i välfärden för att säkerställa att skattepengar går till elever och patienter istället för att finansiera kriminella nätverk",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/arbetslivskriminalitet",
+    "articleTitle": "Arbetslivskriminalitet\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/arbetslivskriminalitet",
+    "archiveUrl": null,
+    "dateStated": "2026-08-13",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-20-34",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Stoppa vinstjakten i välfärden för att säkerställa att skattepengar går till elever och patienter istället för att finansiera kriminella nätverk",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/arbetslivskriminalitet",
+    "articleTitle": "Arbetslivskriminalitet\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/arbetslivskriminalitet",
+    "archiveUrl": null,
+    "dateStated": "2026-08-13",
+    "extractModel": "deepseek-v4-pro",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-18-20-34",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet 'Stoppa vinstjakten i välfärden' berör visserligen vinster i välfärden (rätt sida av avgränsningen, och partiattributionen stämmer), men det står i ett brottsbekämpningssammanhang, nämner varken lag, vinstutdelning eller friskolekoncerner specifikt, så ett rent 'ja' kräver tolkning och bör granskas manuellt."
+      }
+    ],
+    "verifyReason": "Citatet 'Stoppa vinstjakten i välfärden' berör visserligen vinster i välfärden (rätt sida av avgränsningen, och partiattributionen stämmer), men det står i ett brottsbekämpningssammanhang, nämner varken lag, vinstutdelning eller friskolekoncerner specifikt, så ett rent 'ja' kräver tolkning och bör granskas manuellt."
   }
 ]
