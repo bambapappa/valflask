@@ -1,5 +1,15 @@
 export interface LlmOptions {
   systemPrompt?: string;
+  /**
+   * Anropas när ett led faktiskt svarat — med ledets namn och det modellnamn
+   * som skickades dit.
+   *
+   * Finns för att kedjan annars är osynlig när den fungerar. Vilken modell som
+   * BLEV tillfrågad först står i konfigurationen; vilken som SVARADE stod
+   * ingenstans, och därför kunde ett dygns skörd göras av ett annat led utan
+   * att något i repot visste om det.
+   */
+  onSvar?: (info: { led: string; modell: string; foregaendeFel: string[] }) => void;
   temperature?: number;
   responseFormat?: { type: "json_object" };
   model?: string;
@@ -329,6 +339,27 @@ export class OpenRouterClient implements LlmClient {
           if (typeof content !== "string") {
             throw new Error("Inget innehåll i LLM-svaret");
           }
+          // ETT LYCKAT FALL IGENOM SKA SYNAS.
+          //
+          // Tidigare kastades `felPerEndpoint` bort så fort ett senare led
+          // svarade: felen surfade bara om ALLA led föll. En kedja som
+          // fungerar genom att falla igenom var alltså helt tyst, och det
+          // kostade ett dygn. Natten till 2026-08-18 svarade varken primären
+          // eller sekundären för utvinningsrollen — båda bär samma modellnamn,
+          // så ett modellfel slår ut båda — och det extra ledet gjorde hela
+          // skörden. Ingenting i loggen sa det, och datat skrev ändå in
+          // primärens modellnamn.
+          if (felPerEndpoint.length > 0) {
+            console.warn(
+              `LLM-kedjan föll igenom till "${ep.namn}" (${vardnamn(ep.url)}, ${ep.model}). ` +
+                `Leden före svarade inte: ${felPerEndpoint.join("  |  ")}`,
+            );
+          }
+          opts?.onSvar?.({
+            led: ep.namn,
+            modell: ep.model,
+            foregaendeFel: [...felPerEndpoint],
+          });
           return content;
         } catch (e) {
           // Timeout / nätfel / parsefel → retrybart.

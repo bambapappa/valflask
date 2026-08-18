@@ -114,6 +114,42 @@ export function byggLed(
         "nyckel och modellnamn för alla tre rollerna — se LED_ORDNING i cli-run.ts.",
     );
   }
+
+  // EN RESERV SOM BÄR SAMMA MODELLNAMN ÄR INGEN RESERV.
+  //
+  // Kedjan skyddar mot att en LEVERANTÖR faller. Den skyddar inte mot att en
+  // MODELL gör det: pekar två led på samma modellnamn för samma roll slår ett
+  // modellfel — avregistrerad, omdöpt, tillfälligt borttagen — ut båda på en
+  // gång, och kedjan är i praktiken ett led kortare än den ser ut.
+  //
+  // Mätt natten till 2026-08-18: utvinningsrollen svarade varken på primären
+  // eller sekundären, som båda var satta till samma modell, medan verifieringen
+  // och copyn gick igenom på samma led. Det extra ledet — med ett eget
+  // modellnamn — gjorde hela skörden. Att just utvinningen föll på båda och
+  // inget annat gjorde det är signaturen för ett modellfel, inte ett
+  // leverantörsfel.
+  //
+  // Det här är en varning och inget stopp: att köra samma modell på två
+  // leverantörer kan vara ett medvetet val för att fördela kvot.
+  for (const roll of Object.keys(roller)) {
+    const primarModell = roller[roll]!;
+    const perLed = led.map((l) => ({ namn: l.namn, modell: l.modell?.[primarModell] ?? primarModell }));
+    const sett = new Map<string, string[]>();
+    for (const { namn, modell } of perLed) {
+      sett.set(modell, [...(sett.get(modell) ?? []), namn]);
+    }
+    for (const [modell, namnen] of sett) {
+      if (namnen.length > 1) {
+        console.warn(
+          `LLM-kedjan: rollen ${roll} kör samma modell (${modell}) på leden ` +
+            `${namnen.join(" och ")}. Ett modellfel slår då ut båda samtidigt — ` +
+            `kedjan skyddar mot att en leverantör faller, inte mot att en modell gör det. ` +
+            `Sätt olika MODEL_${roll.toUpperCase()}-värden per led om reserven ska bita.`,
+        );
+      }
+    }
+  }
+
   return led;
 }
 
