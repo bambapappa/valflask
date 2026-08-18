@@ -460,5 +460,32 @@ limits:
   # Vem som får de 45 platserna avgörs av skordeordning.ts: det parti vi läst
   # minst på går först. Utan den ordningen gör en höjning här bara att det
   # redan bäst täckta partiet skördas ännu fortare.
-  max_articles_per_run: 45
+  # Höjt 45 → 120 den 2026-08-18, när körningen gjordes samtidig. De två talen
+  # hänger ihop: budgeten ska vara så stor som körtiden tål, och körtiden
+  # bestäms numera av takten nedan och inte av hur många sidor det är.
+  #
+  # Vad som mättes innan höjningen: körningarna tog 201, 296 och 325 minuter —
+  # inte 73–87 som kommentaren i pipeline.yml påstod — och med kadens var
+  # fjärde timme köade de bakom varandra. 6 × 45 blev därför aldrig 270 sidor
+  # om dygnet i praktiken. Med 6 × 120 och körningar som ryms i sitt fönster
+  # tar eftersläpet på 757 sidor ungefär ett dygn i stället för tre.
+  #
+  # Ordningen som avgör VEM som får budgeten ligger i skordeordning.ts och rörs
+  # inte av höjningen: partiet vi läst minst på går fortfarande först.
+  max_articles_per_run: 120
   min_chars: 400
+
+  # Takten. Båda talen ändrar bara hur fort körningen går, aldrig vad den
+  # producerar — sammanfogningen sker i indataordning och `samtidighet.test.ts`
+  # mäter att tak 1 och tak 6 ger samma kö, post för post.
+  #
+  # Varför just 6: leverantörernas taktspärr är den verkliga gränsen. Blir det
+  # 429-svar går de till reservkontot och syns i loggen (kedjans varning), så
+  # ett för högt tal märks i stället för att tyst kosta kvot. Sänk hit om det
+  # börjar synas.
+  samtidiga_artiklar: 6
+  # Hämtningen är snällare räknad: 6 sidor i taget INOM en källa, och källorna
+  # tas fortfarande en i taget. Det gör att en partisajt aldrig ser mer än sex
+  # samtidiga frågor från oss. robots.txt hämtas en gång per värd även när sex
+  # sidor startar samtidigt.
+  samtidiga_hamtningar: 6

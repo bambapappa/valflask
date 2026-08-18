@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { gunzipSync } from "node:zlib";
 import { DATE_WINDOW_DAYS, type NormalizedArticle } from "./gates.ts";
+import { kartaSamtidigt } from "./samtidigt.ts";
 
 /* ──────────────────────── ArticleSource (M2 injicerbart gränssnitt) ── */
 
@@ -89,6 +90,13 @@ export interface SourceConfig {
   limits: {
     max_articles_per_run: number;
     min_chars: number;
+    /**
+     * Hur många artiklar som bearbetas samtidigt (LLM-anropen). Odefinierat = 1.
+     * Se samtidigt.ts för varför talet aldrig får ändra utfallet.
+     */
+    samtidiga_artiklar?: number;
+    /** Hur många sidor som hämtas samtidigt inom en källa. Odefinierat = 1. */
+    samtidiga_hamtningar?: number;
   };
 }
 
@@ -865,18 +873,24 @@ const USER_AGENT = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 
 export class LiveSource implements ArticleSource {
   private feeds: SourceFeed[];
-  private limits: { max_articles_per_run: number; min_chars: number };
+  private limits: SourceConfig["limits"];
   private httpFetch: HttpFetchFn;
   private cacheDir: string | null;
   private userAgent: string;
   private robotsCache: Map<string, RobotsRule[]>;
+  /**
+   * Pågående robots-hämtningar. Utan den skulle de första samtidiga sidorna på
+   * en värd alla missa cachen och be om robots.txt var för sig — sex frågor
+   * där en räcker, och ovänligt mot en sajt vi ändå ber om hundratals sidor.
+   */
+  private robotsPagaende: Map<string, Promise<RobotsRule[]>>;
   private stats: Map<string, number>;
 
   private now: () => Date;
 
   constructor(opts: {
     feeds: SourceFeed[];
-    limits: { max_articles_per_run: number; min_chars: number };
+    limits: SourceConfig["limits"];
     httpFetch?: HttpFetchFn;
     cacheDir?: string | null;
     userAgent?: string;
@@ -890,6 +904,7 @@ export class LiveSource implements ArticleSource {
     this.userAgent = opts.userAgent ?? USER_AGENT;
     this.now = opts.now ?? (() => new Date());
     this.robotsCache = new Map();
+    this.robotsPagaende = new Map();
     this.stats = new Map();
   }
 
@@ -936,30 +951,87 @@ export class LiveSource implements ArticleSource {
     return articles;
   }
 
+  private async robotsRegler(robotsUrl: string): Promise<RobotsRule[]> {
+    const klart = this.robotsCache.get(robotsUrl);
+    if (klart) return klart;
+    let pagaende = this.robotsPagaende.get(robotsUrl);
+    if (!pagaende) {
+      pagaende = (async (): Promise<RobotsRule[]> => {
+        try {
+          const res = await this.httpFetch(robotsUrl, {
+            headers: { "User-Agent": this.userAgent },
+            signal: AbortSignal.timeout(5000),
+          });
+          if (!res.ok) return [];
+          return parseRobotsTxt(await res.text(), this.userAgent);
+        } catch {
+          return [];
+        }
+      })();
+      this.robotsPagaende.set(robotsUrl, pagaende);
+    }
+    const regler = await pagaende;
+    this.robotsCache.set(robotsUrl, regler);
+    return regler;
+  }
+
   private async checkRobots(feedUrl: string): Promise<boolean> {
     const url = new URL(feedUrl);
-    const robotsUrl = `${url.protocol}//${url.host}/robots.txt`;
-
-    if (!this.robotsCache.has(robotsUrl)) {
-      try {
-        const res = await this.httpFetch(robotsUrl, {
-          headers: { "User-Agent": this.userAgent },
-          signal: AbortSignal.timeout(5000),
-        });
-        if (res.ok) {
-          const text = await res.text();
-          this.robotsCache.set(robotsUrl, parseRobotsTxt(text, this.userAgent));
-        } else {
-          this.robotsCache.set(robotsUrl, []);
-        }
-      } catch {
-        this.robotsCache.set(robotsUrl, []);
-      }
-    }
-
-    const rules = this.robotsCache.get(robotsUrl)!;
+    const rules = await this.robotsRegler(`${url.protocol}//${url.host}/robots.txt`);
     if (rules.length === 0) return true;
     return isPathAllowed(url.pathname, rules);
+  }
+
+  /**
+   * Hämtar en lista sidor och gör en artikel av var och en.
+   *
+   * Samtidigt sedan 2026-08-18, med tak ur `limits.samtidiga_hamtningar`. Det
+   * här är den ena av körningens två sekventiella flaskhalsar: hämtningen läser
+   * ~1 500 sidor genom 43 källor, en i taget, varje gång. Ordningen ut är
+   * adressernas ordning oavsett takt — `kartaSamtidigt` håller den — så vilka
+   * sidor som blir artiklar och i vilken ordning ändras inte av talet.
+   *
+   * En sida som faller loggas och hoppas över, precis som förut: en trasig
+   * undersida får aldrig ta med sig resten av källan.
+   */
+  private async hamtaSidor(
+    lankar: readonly string[],
+    feedId: string,
+    ordet: string,
+    etagCache: Map<string, CacheEntry>,
+  ): Promise<NormalizedArticle[]> {
+    const svar = await kartaSamtidigt(
+      lankar,
+      this.limits.samtidiga_hamtningar ?? 1,
+      async (lank): Promise<NormalizedArticle | null> => {
+        try {
+          if (!(await this.checkRobots(lank))) return null;
+          const res = await this.fetchRawWithCache(lank, etagCache, {
+            Accept: "text/html,application/xhtml+xml",
+          });
+          if (!res) return null;
+          const html = new TextDecoder("utf-8").decode(res.bytes);
+          const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
+          const text = stripHtml(html);
+          return {
+            url: lank,
+            domain: extractDomain(lank),
+            title: titleMatch ? stripHtml(titleMatch[1]!) : lank,
+            text,
+            // Adressens datum är sannast när det finns; annars artikelns eget.
+            // Hämtningstiden är sista utvägen och gör en gammal artikel färsk.
+            published: datumUrAdress(lank) ?? datumUrHtml(html) ?? new Date().toISOString(),
+            contentHash: sha256(text),
+          };
+        } catch (e) {
+          console.error(
+            `[fetch] ${feedId}: ${ordet} ${lank} föll: ${e instanceof Error ? e.message : e}`,
+          );
+          return null;
+        }
+      },
+    );
+    return svar.filter((a): a is NormalizedArticle => a !== null);
   }
 
   private async fetchWithCache(
@@ -1112,32 +1184,7 @@ export class LiveSource implements ArticleSource {
       console.log(`[fetch] ${feed.id}: två våningar gav ${lankar.length} sidor`);
     }
 
-    const articles: NormalizedArticle[] = [];
-    for (const lank of lankar) {
-      try {
-        if (!(await this.checkRobots(lank))) continue;
-        const res = await this.fetchRawWithCache(lank, etagCache, {
-          Accept: "text/html,application/xhtml+xml",
-        });
-        if (!res) continue;
-        const html = new TextDecoder("utf-8").decode(res.bytes);
-        const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
-        const text = stripHtml(html);
-        articles.push({
-          url: lank,
-          domain: extractDomain(lank),
-          title: titleMatch ? stripHtml(titleMatch[1]!) : lank,
-          text,
-          // Adressens datum är sannast när det finns; annars artikelns eget.
-          // Hämtningstiden är sista utvägen och gör en gammal artikel färsk.
-          published: datumUrAdress(lank) ?? datumUrHtml(html) ?? new Date().toISOString(),
-          contentHash: sha256(text),
-        });
-      } catch (e) {
-        console.error(`[fetch] ${feed.id}: artikeln ${lank} föll: ${e instanceof Error ? e.message : e}`);
-      }
-    }
-    return articles;
+    return this.hamtaSidor(lankar, feed.id, "artikeln", etagCache);
   }
 
   /**
@@ -1187,32 +1234,7 @@ export class LiveSource implements ArticleSource {
       return [];
     }
 
-    const articles: NormalizedArticle[] = [];
-    for (const lank of adresser) {
-      try {
-        if (!(await this.checkRobots(lank))) continue;
-        const res = await this.fetchRawWithCache(lank, etagCache, {
-          Accept: "text/html,application/xhtml+xml",
-        });
-        if (!res) continue;
-        const html = new TextDecoder("utf-8").decode(res.bytes);
-        const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
-        const text = stripHtml(html);
-        articles.push({
-          url: lank,
-          domain: extractDomain(lank),
-          title: titleMatch ? stripHtml(titleMatch[1]!) : lank,
-          text,
-          published: datumUrAdress(lank) ?? datumUrHtml(html) ?? new Date().toISOString(),
-          contentHash: sha256(text),
-        });
-      } catch (e) {
-        console.error(
-          `[fetch] ${feed.id}: sidan ${lank} föll: ${e instanceof Error ? e.message : e}`,
-        );
-      }
-    }
-    return articles;
+    return this.hamtaSidor(adresser, feed.id, "sidan", etagCache);
   }
 
   /**

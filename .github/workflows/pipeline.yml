@@ -7,13 +7,20 @@ on:
     # nästan inget av det var läst, medan KD:s A–Ö redan var genomläst. Med
     # den gamla kadensen hade utjämningen tagit månader.
     #
-    # Varför just fyra timmar: körningen tar 73–87 minuter, och
-    # concurrency-gruppen nedan köar i stället för att köra parallellt. Fyra
-    # timmar ger marginal även när en körning drar över. Tätare än så och
-    # köade körningar börjar avbryta varandra.
+    # RÄTTAT 2026-08-18. Här stod att körningen tar 73–87 minuter. Det var inte
+    # sant när det skrevs om: de tre senaste tog 201, 296 och 325 minuter, och
+    # concurrency-gruppen nedan köade dem bakom varandra i stället för att de
+    # hann emellan. Kadensen mätte alltså aldrig vad den utlovade — en
+    # schemalagd start var ett löfte om en körning som redan låg och väntade.
     #
-    # Sänk tillbaka när täckningen jämnat ut sig — det här är en
-    # ikappkörning, inte ett nytt normalläge.
+    # Två saker gjordes åt det samma dag: hämtningen och artikelloopen kör
+    # samtidigt (`samtidigt.ts`, tak i sources.yaml), och etag-cachen sparas
+    # mellan körningar i steget nedan — utan den lästes alla ~1 500 sidor om
+    # från början varje gång.
+    #
+    # Kadensen står kvar på fyra timmar tills den NYA körtiden är mätt. Att
+    # täta den innan dess vore att gissa igen, och det var gissningen som
+    # skapade kön. Ryms körningen med marginal: täta till varannan timme.
     - cron: "10 0,4,8,12,16,20 * * *"   # UTC → 02:10, 06:10 … svensk sommartid
   workflow_dispatch:
     inputs:
@@ -71,6 +78,20 @@ jobs:
       - name: Install site deps
         run: pnpm install --frozen-lockfile
         working-directory: site
+      # Etag-cachen mellan körningar. Utan det här steget startade varje
+      # körning med tom cache och hämtade om alla ~1 500 sidor i sin helhet;
+      # med det svarar de oförändrade 304 utan kropp. Cachen är bara ett minne
+      # av vad vi redan hämtat — går den förlorad blir körningen långsam, aldrig
+      # fel, och seen.json (som ligger i git) är det som styr vad som bearbetas.
+      # Nyckeln bär run_id så varje körning sparar en färsk kopia; restore-keys
+      # plockar den senaste.
+      - name: Cache för hämtningen (etag)
+        uses: actions/cache@v4
+        with:
+          path: pipeline/.cache
+          key: pipeline-etag-${{ github.run_id }}
+          restore-keys: |
+            pipeline-etag-
       - name: Run pipeline
         run: pnpm pipeline:run
         working-directory: pipeline
