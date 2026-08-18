@@ -160,27 +160,23 @@ describe("T4: full pipeline snapshot", () => {
       const result2 = await runPipeline(makeContext(fixtures, tmp2));
 
       assert.deepEqual(result1, result2, "Two runs must be deeply identical");
-      // Ett av de tre fixturlöftena säger själv sin takt («40 miljarder kronor
-      // per år»); de två andra anger ett belopp utan att säga om det återkommer.
-      // Sedan 2026-08-18 auto-publiceras bara det första — de två andra går till
-      // granskningskön med partiets siffra bevarad, så att en människa avgör
-      // perioden i stället för att koden antar per år. Provet mäter FÖRDELNINGEN,
-      // inte bara antalet: en ändring som råkar publicera de tysta igen faller här.
-      assert.equal(result1.promises.length, 1, "Bara löftet som anger sin takt publiceras");
-      assert.equal(
-        result1.promises[0]!.cost.period,
-        "per_ar",
-        "och det gör det för att källan säger «per år»",
-      );
-      assert.equal(result1.needsReview.length, 2, "De två utan angiven takt går till kön");
+      // **En körning publicerar aldrig ett löfte.** Mänskligt beslut 2026-08-18.
+      // Alla tre fixturlöftena har giltigt belopp, godkänt citat och passerar
+      // varje grind — och går ändå till granskningskön, för att det är en
+      // människa som släpper igenom, inte koden. Det är den meningen metodsidan
+      // ger läsaren, och det här provet är det som håller den sann.
+      assert.equal(result1.promises.length, 0, "En körning publicerar aldrig ett löfte");
+      assert.equal(result1.needsReview.length, 3, "Alla tre går till granskningskön");
+      assert.deepEqual(result1.changelogEntry.added, [], "changelog får inga tillagda id");
+      // Beloppet följer med till kön — kandidaten kastas inte, den väntar.
       for (const r of result1.needsReview) {
-        assert.equal(r.cost?.basis, "parti", "partiets egen siffra följer med till kön");
-        assert.match(
-          r.cost?.method_note ?? "",
-          /anger ingen takt/u,
-          "och skälet står i posten",
-        );
+        assert.ok(r.cost, "kostnaden bärs med till kön");
+        assert.ok((r.costReason ?? "").length > 0, "och skälet står utskrivet");
       }
+      // Perioden ska ändå vara läst ur källan, inte antagen: bara det löfte som
+      // säger «per år» bär per_ar när granskaren får se det.
+      const medTakt = result1.needsReview.filter((r) => r.cost?.period === "per_ar");
+      assert.equal(medTakt.length, 1, "bara källan som anger takt ger per_ar");
       assert.equal(result1.errors.length, 0, "No errors");
       assert.equal(result1.dataHash, result2.dataHash, "data_hash stable");
       assert.equal(result1.dataHash.length, 64, "SHA-256 hex");
@@ -188,7 +184,7 @@ describe("T4: full pipeline snapshot", () => {
       const promises = JSON.parse(
         readFileSync(join(tmp1, "promises.json"), "utf8"),
       ) as PipelinePromise[];
-      assert.equal(promises.length, 1);
+      assert.equal(promises.length, 0, "promises.json rörs inte av en körning");
       for (const p of promises) {
         assert.ok(p.id.startsWith("p-2026-"), `id format: ${p.id}`);
         assert.equal(p.status, "aktiv");
@@ -198,7 +194,7 @@ describe("T4: full pipeline snapshot", () => {
       }
 
       const ids = promises.map((p) => p.id);
-      assert.deepEqual(ids, [...ids].sort(), "Promises sorted by id");
+      assert.deepEqual(ids, [], "inga id att sortera — ingenting publicerades");
 
       const changelog = JSON.parse(
         readFileSync(join(tmp1, "changelog.json"), "utf8"),
@@ -217,6 +213,9 @@ describe("T4: full pipeline snapshot", () => {
     }
   });
 
+  // Ögonblicksbilden följer resultatet: en körning skriver numera till kön,
+  // inte till promises.json, så det är kön som ska vaktas mot en oavsiktlig
+  // ändring. En snapshot av en tom lista hade inte mätt någonting.
   test("T4 snapshot: output matches checked-in snapshot", async () => {
     const fixtures = loadFixtures([
       "normal-1.json",
@@ -228,12 +227,12 @@ describe("T4: full pipeline snapshot", () => {
       writeExistingPromises(tmp, []);
       await runPipeline(makeContext(fixtures, tmp));
       const promisesJson = readFileSync(
-        join(tmp, "promises.json"),
+        join(tmp, "needs_review.json"),
         "utf8",
       );
 
       const snapshotDir = join(import.meta.dirname, "__snapshots__");
-      const snapshotPath = join(snapshotDir, "T4-promises.json");
+      const snapshotPath = join(snapshotDir, "T4-needs-review.json");
 
       let expected: string;
       try {
