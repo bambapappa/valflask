@@ -435,7 +435,13 @@ const COMPLETED = [
 /** Markörer för åtagande om framtiden. */
 const COMMITMENT = [
   /\b(vill|ska|bör|kommer att|kommer vi|lovar|tänker|avser|föreslår|vi ämnar)\b/i,
-  /\b(återinföra|återkomma|återställa)\b/i,
+  // `\b` biter inte före å/ä/ö — de är inte ordtecken i JavaScripts regexmotor,
+  // så `\båterinföra\b` matchade ALDRIG «att återinföra» men däremot
+  // «Xåterinföra». Mönstret var alltså dött åt rätt håll och levande åt fel.
+  // Samma fälla står dokumenterad för skrytmönstret ovan; den var aldrig lagad
+  // här. Mätt 2026-08-18: tre löften i granskningskön föll som «genomförd
+  // politik» trots att de bar ordet återinföra.
+  /(?:^|[^a-zà-öø-ÿ])(återinföra|återkomma|återställa)(?![a-zà-öø-ÿ])/i,
   /\bnästa mandatperiod\b/i,
   /\bska (bli|få|kunna|vara)\b/i,
 ];
