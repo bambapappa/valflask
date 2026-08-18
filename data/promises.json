@@ -39473,14 +39473,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 30,
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 250,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Skattebortfallet bedöms litet: de flesta småhus omfattas redan av skattefri ersättning upp till ca 30 000 kr/år och överskottselen är ofta liten. Avser inkomstskatt, inte energiskatt.",
-      "confidence": 0.3,
-      "calculation": "Antar ~50 000–100 000 mikroproducenter; bara en mindre del säljer överskott över skattefri gräns och beskattas med ~30 %. Exv. 2 000–5 000 hushåll × 2 000–10 000 kr beskattningsbar ersättning × 30 % ≈ 1–15 mkr; utvidgning till fler boendeformer ger spann uppåt."
+      "method_note": "Avser energiskatten på egenproducerad el, inte inkomstskatten på såld överskottsel. Partiet anger själv avgränsningen: egenproducerad och delad förnybar el upp till 2 MW. Det mesta av dagens hushållssolel är redan undantaget, så beloppet avser den nya delen.",
+      "confidence": 0.35,
+      "calculation": "Löftet gäller energiskatten på egenproducerad el, omkring 0,36 kr/kWh — inte inkomstskatten på såld överskottsel. I samma tal säger partiet «Inga skatter ska tas ut på elen», och på partiets sida om folkel står avgränsningen: egenproducerad och delad förnybar el upp till 2 MW.\n\nSverige har 150 000–250 000 mikroproducenter med 5 000–15 000 kWh egenförbrukning per år. Vore inget undantaget blev bortfallet 270–1 350 mkr. Men egenförbrukad solel under 500 kW är redan skattefri, vilket täcker i princip alla villor. Nytt är tre delar: anläggningar mellan 500 kW och partiets gräns 2 MW, delad el i energigemenskaper, och hushåll som i dag inte kan ha egna paneler. Det ger 30–250 mkr per år, bas 100. Gränsen 2 MW är partiets; antalet berörda och egenförbrukningen är våra antaganden."
     },
     "financing_claimed": {
       "described": false,
@@ -39490,7 +39490,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-18",
+        "commit": "0000000",
+        "change": "Beloppet har gått från 5 till 100 miljoner kronor per år, och spannet från 0–30 till 30–250. Posten prissatte fel skatt: uträkningen räknade inkomstskatt på ersättning för såld överskottsel, med metodnoten «Avser inkomstskatt, inte energiskatt». Källan säger något annat. I samma tal som citatet är hämtat ur står «Inga skatter ska tas ut på elen» och «ta bort skatten på egenproducerad och delad el», och på partiets sida om folkel står avgränsningen upp till 2 megawatt. Löftet gäller alltså energiskatten på egenförbrukad el, inte inkomstskatten på det som säljs vidare. Citatet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
