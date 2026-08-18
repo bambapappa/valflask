@@ -42335,13 +42335,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5250,
-      "msek_base": 7000,
-      "msek_high": 9450,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 7 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 5 250–9 450 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren.",
+      "msek_low": 2510,
+      "msek_base": 3500,
+      "msek_high": 4500,
+      "basis": "granskare",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/proposition/budgetpropositionen-for-2026_HD031d22/",
+      "method_note": "Höjningen prissatt mot anslaget i budgetpropositionen, inte hela nivån.",
+      "calculation": "Partiet anger nivån: Klimatklivet «bör öka TILL årlig anslagsnivå på 7 miljarder kronor». Ordet är öka till, så det som kostar staten är skillnaden mot dagens stöd — inte hela nivån. Dagens nivå står i budgetpropositionen för 2026, utgiftsområde 20, anslag 1:16 Klimatinvesteringar, som Klimatklivet betalas ur: 4 490 miljoner kronor för 2026, beräknat till 3 500 för 2027 och 2 500 för 2028. Höjningen blir därför olika stor per år: 7 000 − 4 490 = 2 510, 7 000 − 3 500 = 3 500 och 7 000 − 2 500 = 4 500 miljoner kronor. Basbeloppet är höjningen mot de tre årens genomsnitt, 3 500 miljoner per år, och spannet är ytterligheterna. De 7 miljarderna är partiets siffra, anslagsnivåerna är regeringens, subtraktionen är vår.",
       "confidence": 0.7
     },
     "financing_claimed": {
@@ -42352,7 +42352,13 @@
     "comparisons": [],
     "quip": "Sju miljarder årligen, varvid finansieringen i sedvanlig ordning hänvisas till framtida förhandlingar.",
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-18",
+        "commit": "d728d2b",
+        "change": "Beloppet har gått från 7000 till 3 500 miljoner kronor per år, och spannet från 5250–9450 till 2 510–4 500. Löftet är att öka Klimatklivet TILL 7 miljarder per år, och posten prissatte hela den nivån som om stödet startade från noll. Klimatklivet finns redan: anslaget 1:16 Klimatinvesteringar är 4 490 miljoner kronor för 2026 enligt budgetpropositionen, beräknat till 3 500 för 2027 och 2 500 för 2028. Det som kostar staten är höjningen, inte nivån. Citatet är oförändrat. Grunden är ändrad från partiets siffra till granskare, eftersom beloppet nu är partiets nivå minus en officiell anslagssiffra — uträkningen skriver ut vilken del som är vems."
+      }
+    ],
     "extraction": {
       "model": "deepseek-v4-pro",
       "verified_by": "kimi-k2.7-code",
