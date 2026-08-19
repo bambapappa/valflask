@@ -15830,13 +15830,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 1800,
-      "msek_base": 3000,
+      "msek_base": 1950,
       "msek_high": 9000,
       "basis": "llm_estimat",
       "basis_url": "https://www.socialstyrelsen.se/om-socialstyrelsen/pressrum/press/miljarder-i-statsbidrag-lyft--for-aldreomsorgen/",
-      "method_note": "Höjda riktade statsbidrag till äldreomsorgen. Löftet anger ingen nivå, så beloppet vilar på storleken hos statens befintliga bidrag. Delat löfte med Socialdemokraternas löfte om bättre villkor och fler anställda i äldreomsorgen — samma politik räknas en gång.",
+      "method_note": "Höjda riktade statsbidrag till äldreomsorgen. Löftet anger ingen nivå; basbeloppet är lånat från Socialdemokraternas egen angivna siffra för samma bemanning, och lånet står utskrivet i uträkningen. Delat löfte med Socialdemokraternas löften om bemanning i äldreomsorgen — samma politik räknas en gång.",
       "confidence": 0.4,
-      "calculation": "Löftet säger att ambitionerna i äldreomsorgen ska höjas tydligt, men anger ingen nivå. Utan nivå prissätts löftet som ett nytt riktat statsbidrag av vanlig storlek. Kommuner och regioner delade på närmare nio miljarder kronor i riktade statsbidrag till äldreomsorgen 2023, fördelat på sex bidrag, och det största enskilda — Äldreomsorgslyftet — ligger på omkring 1,8 miljarder kronor per år. Basbeloppet läggs på 3 000 miljoner kronor per år, alltså ett nytt bidrag som är större än det största befintliga. Låg: 1 800, ett bidrag i samma storlek som Äldreomsorgslyftet. Hög: 9 000, en fördubbling av allt staten i dag öronmärker för äldreomsorgen. Lönerna i äldreomsorgen sätts av kommunerna och deras motparter, inte av staten."
+      "calculation": "Löftet säger att ambitionerna i äldreomsorgen ska höjas tydligt, men anger ingen nivå. Basbeloppet är lånat, och lånet står här utskrivet: Socialdemokraterna anger själva 1,95 miljarder kronor mer än regeringen till ökad bemanning i äldreomsorgen, de två löftena är samma politik och räknas en gång. Det är alltså ett annat partis siffra — Liberalerna har inte angett någon. Spannets bottenvärde 1 800 miljoner kronor är ett bidrag i samma storlek som Äldreomsorgslyftet, det största befintliga riktade bidraget. Taket 9 000 miljoner kronor motsvarar en fördubbling av allt staten i dag öronmärker för äldreomsorgen, och står kvar därför att löftet talar om tydligt höjda ambitioner utan att säga hur mycket. Lönerna i äldreomsorgen sätts av kommunerna och deras motparter, inte av staten."
     },
     "financing_claimed": {
       "described": false,
@@ -15856,6 +15856,11 @@
         "date": "2026-07-28",
         "change": "Beloppet omräknat från 5 000 till 3 000 miljoner kronor per år, och löftet grupplänkat med Socialdemokraternas löfte om bättre villkor och fler anställda i äldreomsorgen: samma politik, ingen av dem med angiven nivå. Beloppet vilar nu på storleken hos statens befintliga riktade bidrag till äldreomsorgen i stället för på en andel av vad äldreomsorgen kostar totalt.",
         "commit": "89f3c3cc6f4cd1fe5c37095210baf4eb00a2ee30"
+      },
+      {
+        "date": "2026-08-19",
+        "change": "Beloppet omräknat från 3 000 till 1 950 miljoner kronor per år. Det gamla talet var vår egen uppskattning av vad ett nytt riktat statsbidrag brukar kosta, och samma tal bar tidigare Socialdemokraternas löfte om samma bemanning. När det löftet fick partiets egen siffra, 1,95 miljarder kronor, följde inte den här posten med — den stod kvar på ett tal originalet hade lämnat. Basbeloppet vilar nu på samma grund som resten av gruppen, och att siffran är lånad från ett annat parti står utskrivet i uträkningen. Citatet är oförändrat.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -46727,7 +46732,7 @@
   },
   {
     "id": "p-2026-1027",
-    "group_id": null,
+    "group_id": "g-aldreomsorg-satsning",
     "title": "Stärka bemanningen och arbetsmiljön i äldreomsorgen",
     "slug": "starka-bemanningen-och-arbetsmiljon-i-aldreomsorgen",
     "parties": [
@@ -46747,13 +46752,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 1500,
-      "msek_base": 3000,
+      "msek_base": 1950,
       "msek_high": 5000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löfte utan nivå; prissatt som riktade statsbidrag till kommuner för höjd bemanning och arbetsmiljö, i linje med jämförbara äldreomsorgslöften (~3 mdkr/år).",
+      "method_note": "Löfte utan nivå, prissatt som riktade statsbidrag till kommuner för höjd bemanning och arbetsmiljö. Basbeloppet är lånat från Socialdemokraternas egen angivna siffra för samma bemanning, och lånet står utskrivet i uträkningen. Delat löfte med Socialdemokraternas och Liberalernas löften om bemanningen i äldreomsorgen — samma politik räknas en gång.",
       "confidence": 0.5,
-      "calculation": "Ingen nivå anges i löftet. Anknytning till jämförbart publicerat löfte om 'fler kollegor + bättre villkor i äldreomsorgen' ≈ 3 000 msek/år. Kontrollkalkyl: ~230 000 anställda i äldreomsorgen × ~450 tkr i total lönekostnad ≈ ~100 mdkr personalkostnad; en bemanningshöjning om ~1,5–2 % via riktade statsbidrag ≈ 1 500–2 000 msek, tillkommer arbetsmiljö- och fortbildningssatsningar upp mot ~5 000 msek. Base 3 000 msek följer jämförbara löften; spannet speglar okänd ambitionsnivå. Min uppskattning är antalet mottagare/kostnadsnivå — partiet anger ingen egen siffra."
+      "calculation": "Ingen nivå anges i löftet. Kontrollkalkyl: omkring 230 000 anställda i äldreomsorgen gånger cirka 450 000 kronor i total lönekostnad ger ungefär 100 miljarder kronor i personalkostnad; en bemanningshöjning på 1,5–2 procent via riktade statsbidrag blir då 1 500–2 000 miljoner kronor. Basbeloppet är lånat, och lånet står här utskrivet: Socialdemokraterna anger själva 1,95 miljarder kronor mer än regeringen till ökad bemanning i äldreomsorgen, och det är samma politik som räknas en gång. Siffran ligger inom kontrollkalkylens eget intervall. Taket 5 000 miljoner kronor står för att löftet också nämner arbetsmiljön, som kan bära fortbildnings- och arbetsmiljösatsningar utöver bemanningen. Miljöpartiet anger ingen egen siffra."
     },
     "financing_claimed": {
       "described": false,
@@ -46763,7 +46768,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Beloppet omräknat från 3 000 till 1 950 miljoner kronor per år, och löftet grupplänkat med Socialdemokraternas och Liberalernas löften om samma bemanning. Det gamla talet valdes för att det följde ett jämförbart publicerat löfte, och det löftet har sedan dess fått partiets egen siffra — 1,95 miljarder kronor — utan att den här posten följde med. Postens egen kontrollkalkyl landade redan på 1 500–2 000 miljoner kronor, så det nya beloppet stämmer med uträkningens egna steg. Citatet är oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -47585,7 +47596,7 @@
   },
   {
     "id": "p-2026-1046",
-    "group_id": null,
+    "group_id": "g-aldreomsorgslyftet",
     "title": "Permanent och förstärkt Äldreomsorgslyft",
     "slug": "permanent-och-forstarkt-aldreomsorgslyft",
     "parties": [
@@ -47604,14 +47615,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 800,
-      "msek_base": 1400,
-      "msek_high": 2500,
+      "msek_low": 1500,
+      "msek_base": 2000,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Pris satt som befintligt statsbidrag för Äldreomsorgslyftet (senast ca 1,4 mdkr/år) med spann för att inkludera osäkerhet om nivå och förstärkning. Åtgärden i sig, inte samhällsföljder.",
-      "confidence": 0.4,
-      "calculation": "Äldreomsorgslyftets statsbidrag har de senaste åren legat på ca 1,2–1,6 mdkr/år; bas 1 400 mkr. Förstärkning och permanentning antas kunna höja till 2,5 mdkr eller minska till 0,8 mdkr beroende på ambitionsnivå. 0,8–2,5 mdkr/år."
+      "method_note": "Äldreomsorgslyftet permanentas och förstärks. Löftet anger ingen nivå, så beloppet vilar på anslagets senaste och planerade storlek. Delat löfte med partiets löfte om samma permanentning på hemtjänstsidan — samma politik räknas en gång.",
+      "confidence": 0.65,
+      "calculation": "Löftet pekar ut en bestämd åtgärd — Äldreomsorgslyftet — men anger ingen nivå, så beloppet ankras i vad åtgärden senast faktiskt kostade: 2025 års anslag på 1,8 miljarder kronor och den planerade permanentningen från 2026 på 2,1 miljarder. Basbeloppet 2 000 miljoner kronor ligger mellan de två, med 1 500 som botten och 3 000 som tak för utökning eller nedskärning. Partiet anger ingen egen siffra, och sidorna nämner bara volymen: över 25 000 personer har påbörjat en utbildning."
     },
     "financing_claimed": {
       "described": false,
@@ -47621,7 +47632,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Beloppet omräknat från 1 400 till 2 000 miljoner kronor per år, och löftet grupplänkat med partiets löfte om samma permanentning av Äldreomsorgslyftet på hemtjänstsidan: samma politik, och den kan bara genomföras en gång. Det gamla beloppet vilade på ett historiskt snitt av anslaget, 1,2–1,6 miljarder kronor. Ankaret är nu 2025 års anslag på 1,8 miljarder och den planerade permanentningen från 2026 på 2,1 miljarder, alltså vad åtgärden senast kostade och är planerad att kosta. Citatet är oförändrat.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -61424,14 +61441,14 @@
     "category": "välfärd",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 1463,
+      "period": "per_ar",
+      "msek_low": 1500,
       "msek_base": 1950,
-      "msek_high": 2633,
+      "msek_high": 2600,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 1 950 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 1 463–2 633 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
+      "method_note": "Partiets egen siffra: 1,95 miljarder kronor mer än regeringen till ökad bemanning i äldreomsorgen. Läses som en årlig nivå. Delat löfte med partiets löfte om bättre villkor och fler kollegor i äldreomsorgen — samma politik räknas en gång.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 1 950 miljoner kronor mer än regeringen till ökad bemanning inom äldreomsorgen. Den siffran är partiets och byts inte ut mot en egen. Källan skriver ut ett budgetår, 2026, men löftet gäller bemanningen och inte en engångsförstärkning — en tjänst som tillsätts ett år finns kvar nästa. Beloppet läses därför som en årlig nivå. Spannet 1 500–2 600 miljoner kronor är vårt och står för att bara ett år är utskrivet.",
       "confidence": 0.5
     },
     "financing_claimed": {
@@ -61442,7 +61459,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Perioden ändrad från engångsbelopp till årlig nivå, och spannet harmoniserat med partiets övriga löfte om samma bemanning. Källan skriver ut budgetåret 2026, men löftet gäller bemanningen och inte en engångsförstärkning. Beloppet 1 950 miljoner kronor och citatet är oförändrade.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -67673,7 +67696,7 @@
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
       "domain": "socialdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819192441/https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
       "fetched_at": "2026-08-19T14:04:31.282Z"
     },
     "category": "utbildning",
@@ -67718,7 +67741,7 @@
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
       "domain": "socialdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819192441/https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
       "fetched_at": "2026-08-19T14:04:31.346Z"
     },
     "category": "utbildning",
@@ -67763,7 +67786,7 @@
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
       "domain": "socialdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819192441/https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
       "fetched_at": "2026-08-19T14:04:31.407Z"
     },
     "category": "utbildning",
@@ -70721,7 +70744,7 @@
   },
   {
     "id": "p-2026-1560",
-    "group_id": null,
+    "group_id": "g-aldreomsorgslyftet",
     "title": "Permanenta Äldreomsorgslyftet för betald utbildning till undersköterska",
     "slug": "permanenta-aldreomsorgslyftet-for-betald-utbildning-till-underskoterska",
     "parties": [
@@ -70745,7 +70768,7 @@
       "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Äldreomsorgslyftet har de senaste åren anslagits med 1,8–2,4 mdkr årligen. Att permanenta det innebär en årlig kostnad i samma storleksordning. Spannet fångar osäkerhet om framtida anslagsnivå.",
+      "method_note": "Äldreomsorgslyftet permanentas. Beloppet vilar på 2025 års anslag och den planerade permanentningen från 2026. Delat löfte med partiets löfte om samma permanentning på äldreomsorgssidan — samma politik räknas en gång.",
       "confidence": 0.65,
       "calculation": "Baserat på 2025 års anslag på 1,8 mdkr och planerad permanentning från 2026 på 2,1 mdkr. Använder 2 mdkr som bas, med låg 1,5 och hög 3 mdkr för eventuell utökning eller nedskärning."
     },
@@ -70757,7 +70780,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Löftet grupplänkat med partiets löfte om samma permanentning av Äldreomsorgslyftet på äldreomsorgssidan: samma politik, och den kan bara genomföras en gång. Beloppet 2 000 miljoner kronor per år och citatet är oförändrade — gruppen vilar på den här postens ankare.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -75296,7 +75325,7 @@
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/kvinnohalsa",
       "domain": "socialdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819204601/https://www.socialdemokraterna.se/var-politik/a-till-o/kvinnohalsa",
       "fetched_at": "2026-08-19T14:04:41.872Z"
     },
     "category": "välfärd",
@@ -75341,7 +75370,7 @@
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/kvinnohalsa",
       "domain": "socialdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819204601/https://www.socialdemokraterna.se/var-politik/a-till-o/kvinnohalsa",
       "fetched_at": "2026-08-19T14:04:41.937Z"
     },
     "category": "välfärd",
@@ -75386,7 +75415,7 @@
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/kvinnohalsa",
       "domain": "socialdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819204601/https://www.socialdemokraterna.se/var-politik/a-till-o/kvinnohalsa",
       "fetched_at": "2026-08-19T14:04:41.990Z"
     },
     "category": "välfärd",
@@ -75431,7 +75460,7 @@
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/kvinnohalsa",
       "domain": "socialdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819204601/https://www.socialdemokraterna.se/var-politik/a-till-o/kvinnohalsa",
       "fetched_at": "2026-08-19T14:04:42.026Z"
     },
     "category": "välfärd",
@@ -81056,7 +81085,7 @@
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
       "domain": "socialdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819192441/https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
       "fetched_at": "2026-08-19T14:12:50.408Z"
     },
     "category": "utbildning",
@@ -81101,7 +81130,7 @@
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/forsvar-och-beredskap",
       "domain": "socialdemokraterna.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819212858/https://www.socialdemokraterna.se/var-politik/a-till-o/forsvar-och-beredskap",
       "fetched_at": "2026-08-19T14:12:50.477Z"
     },
     "category": "försvar",
@@ -84839,7 +84868,7 @@
     "source": {
       "url": "https://www.mp.se/politik/minskad-segregation/",
       "domain": "mp.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819192339/https://www.mp.se/politik/minskad-segregation/",
       "fetched_at": "2026-08-19T14:12:56.012Z"
     },
     "category": "välfärd",
@@ -84884,7 +84913,7 @@
     "source": {
       "url": "https://www.mp.se/politik/minskad-segregation/",
       "domain": "mp.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819192339/https://www.mp.se/politik/minskad-segregation/",
       "fetched_at": "2026-08-19T14:12:56.084Z"
     },
     "category": "välfärd",
@@ -84929,7 +84958,7 @@
     "source": {
       "url": "https://www.mp.se/politik/minskad-segregation/",
       "domain": "mp.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819192339/https://www.mp.se/politik/minskad-segregation/",
       "fetched_at": "2026-08-19T14:12:56.153Z"
     },
     "category": "migration",
@@ -84974,7 +85003,7 @@
     "source": {
       "url": "https://www.mp.se/politik/minskad-segregation/",
       "domain": "mp.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819192339/https://www.mp.se/politik/minskad-segregation/",
       "fetched_at": "2026-08-19T14:12:56.225Z"
     },
     "category": "utbildning",
@@ -85019,7 +85048,7 @@
     "source": {
       "url": "https://www.mp.se/politik/minskad-segregation/",
       "domain": "mp.se",
-      "archive_url": null,
+      "archive_url": "https://web.archive.org/web/20260819192339/https://www.mp.se/politik/minskad-segregation/",
       "fetched_at": "2026-08-19T14:12:56.294Z"
     },
     "category": "övrigt",
@@ -85780,6 +85809,51 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-08-19T14"
+    }
+  },
+  {
+    "id": "p-2026-1894",
+    "group_id": null,
+    "title": "Anslå 350 miljoner kronor årligen till socialtjänsten för skyddat boende",
+    "slug": "ansla-350-miljoner-kronor-arligen-till-socialtjansten-for-skyddat-boende",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "För att socialtjänsten ska ges möjlighet till detta, bör det enligt Vänsterpartiet anslås 350 miljoner kronor årligen.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/mans-vald-mot-kvinnor/",
+      "domain": "vansterpartiet.se",
+      "archive_url": "https://web.archive.org/web/20260814190345/https://www.vansterpartiet.se/var-politik/politik-a-o/mans-vald-mot-kvinnor/",
+      "fetched_at": "2026-08-19T21:25:59.367Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 263,
+      "msek_base": 350,
+      "msek_high": 473,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Belopp angivet i källtext.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 350 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 263–473 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
     }
   }
 ]

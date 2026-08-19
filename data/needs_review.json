@@ -2566,17 +2566,17 @@
     "articleTitle": "Äldreomsorg\n| Socialdemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 1463,
+      "period": "per_ar",
+      "msek_low": 1500,
       "msek_base": 1950,
-      "msek_high": 2633,
+      "msek_high": 2600,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 1 950 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 1 463–2 633 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
+      "method_note": "Partiets egen siffra: 1,95 miljarder kronor mer än regeringen till ökad bemanning i äldreomsorgen, läst som en årlig nivå. Samma politik som partiets publicerade löften om bemanningen i äldreomsorgen — ska grupperas och räknas en gång.",
+      "calculation": "Partiet anger själv beloppet: 1 950 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Citatet självt nämner inget belopp — «en miljardsatsning». De 1 950 miljoner kronorna står i faktarutan längre ned på samma sida, där partiet anger 1,95 miljarder kronor mer än regeringen till ökad bemanning inom äldreomsorgen för 2026. Källan skriver inte ut takten, men löftet gäller bemanningen och inte en engångsförstärkning — en tjänst som tillsätts ett år finns kvar nästa. Beloppet läses därför som en årlig nivå, och samma läsning gäller partiets övriga löften om samma bemanning. Spannet 1 500–2 600 miljoner kronor är vårt och står för att bara ett år är utskrivet.",
       "confidence": 0.5
     },
-    "costReason": "Låg kostnadssäkerhet: 0.5 — jämförbara: p-2026-0917 (50), p-2026-0400 (3000), p-2026-0362 (800), p-2026-0016 (3000), p-2026-0125 (0)"
+    "costReason": "Partiets egen siffra, läst som årlig nivå. Ska grupperas med de publicerade löftena om samma bemanning."
   },
   {
     "candidate": {
@@ -3022,16 +3022,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 3000,
-      "msek_high": 5000,
-      "basis": "llm_estimat",
+      "msek_low": 1500,
+      "msek_base": 1950,
+      "msek_high": 2600,
+      "basis": "parti",
       "basis_url": null,
-      "method_note": "Jämförbara bemanningslöften i äldreomsorgen ligger kring 3 000 mkr/år. Löftet saknar nivå; spannet speglar olika ambitionsnivåer. Språkkrav ses som reglering med försumbar direkt kostnad.",
-      "confidence": 0.45,
-      "calculation": "Bas på jämförbara bemanningslöften: 3 000 mkr/år motsvarar ca 4 000 årsarbetare à ca 750 tkr. Låg 1 000 mkr vid snäv satsning, hög 5 000 mkr vid bredare bemanning. Språkkravens direkta kostnad sätts till ~0; eventuell utbildning ej specificerad."
+      "method_note": "Partiets egen siffra för bemanningen: 1,95 miljarder kronor mer än regeringen, läst som en årlig nivå. Språkkravsledet prissätts inte här — det är en reglering med försumbar direkt kostnad och ligger som eget publicerat löfte. Samma politik som partiets publicerade löften om bemanningen i äldreomsorgen — ska grupperas och räknas en gång.",
+      "confidence": 0.6,
+      "calculation": "Citatet bär två led. Språkkravsledet är en reglering vars direkta kostnad är försumbar, och det är dessutom redan prissatt till noll på partiets egna publicerade löften om språkkrav i välfärden — det prissätts därför inte här. Kvar är bemanningen. Partiet anger själv beloppet för den: 1,95 miljarder kronor mer än regeringen till ökad bemanning inom äldreomsorgen, och partiets egen siffra gäller. Det tidigare beloppet, 3 000 miljoner kronor, var vår egen uppskattning ankrad i jämförbara bemanningslöften; det ankaret vilade i sin tur på ett publicerat löfte som sedan dess har fått partiets egen siffra. Spannet 1 500–2 600 miljoner kronor är vårt och står för att bara ett år är utskrivet."
     },
-    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0976 (0), p-2026-1027 (3000), p-2026-0362 (800), p-2026-0016 (3000), p-2026-0917 (50) ⚠ AVVIKER: 3000 avviker 3.8× från jämförbara (median 800)"
+    "costReason": "Partiets egen siffra ersätter vår uppskattning. Språkkravsledet prissätts på partiets eget språkkravslöfte. Ska grupperas."
   },
   {
     "candidate": {
@@ -6382,17 +6382,17 @@
     "articleTitle": "Hemtjänst\n| Socialdemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 1463,
+      "period": "per_ar",
+      "msek_low": 1500,
       "msek_base": 1950,
-      "msek_high": 2633,
+      "msek_high": 2600,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 1 950 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 1 463–2 633 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
+      "method_note": "Partiets egen siffra: 1,95 miljarder kronor mer än regeringen till ökad bemanning i äldreomsorgen, läst som en årlig nivå. Samma politik som partiets publicerade löften om bemanningen i äldreomsorgen — ska grupperas och räknas en gång.",
+      "calculation": "Partiet anger själv beloppet: 1 950 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Partiet anger beloppet i citatet: 1,95 miljarder kronor mer än regeringen till ökad bemanning. Källan skriver inte ut takten, men löftet gäller bemanningen och inte en engångsförstärkning — en tjänst som tillsätts ett år finns kvar nästa. Beloppet läses därför som en årlig nivå, och samma läsning gäller partiets övriga löften om samma bemanning. Spannet 1 500–2 600 miljoner kronor är vårt och står för att bara ett år är utskrivet.",
       "confidence": 0.5
     },
-    "costReason": "Låg kostnadssäkerhet: 0.5 — jämförbara: p-2026-0614 (16000), p-2026-0119 (0), p-2026-0926 (1200), p-2026-0613 (3000), p-2026-0865 (5000)"
+    "costReason": "Partiets egen siffra, läst som årlig nivå. Ska grupperas med de publicerade löftena om samma bemanning."
   },
   {
     "candidate": {
@@ -7279,17 +7279,17 @@
     "articleTitle": "Kollektivtrafik\n| Socialdemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "engang",
+      "period": "per_ar",
       "msek_low": 225,
       "msek_base": 300,
       "msek_high": 405,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 300 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 225–405 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
+      "method_note": "Belopp angivet i källtext: Tillföra 300 miljoner kronor till Trafikavtal. Läses som en årlig nivå.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 300 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Källan skriver inte ut takten. Trafikavtal är ett löpande anslag som staten upphandlar samhällsviktig trafik ur varje år, och en förstärkning av ett sådant anslag är en årlig nivå — trafiken ska köras även nästa år. Beloppet läses därför som en årlig nivå. Spannet är vårt, inte partiets: 225–405 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren.",
       "confidence": 0.5
     },
-    "costReason": "Låg kostnadssäkerhet: 0.5 — jämförbara: p-2026-0745 (0) ⚠ AVVIKER: belopp 300 men jämförbara ligger på 0"
+    "costReason": "Partiets egen siffra, läst som årlig nivå (mänskligt beslut 2026-08-19)."
   },
   {
     "candidate": {
@@ -7448,35 +7448,6 @@
   },
   {
     "candidate": {
-      "title": "Anslå 350 miljoner kronor årligen till socialtjänsten för skyddat boende",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "För att socialtjänsten ska ges möjlighet till detta, bör det enligt Vänsterpartiet anslås 350 miljoner kronor årligen.",
-      "category": "välfärd",
-      "amount_in_text_msek": 350,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/mans-vald-mot-kvinnor/",
-    "articleTitle": "Mäns våld mot kvinnor – Vänsterpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 263,
-      "msek_base": 350,
-      "msek_high": 473,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Belopp angivet i källtext.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 350 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 263–473 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren.",
-      "confidence": 0.7
-    },
-    "costReason": "Belopp ur källtexten (parti) — bekräfta belopp och period — jämförbara: p-2026-0473 (0), p-2026-0474 (0) ⚠ AVVIKER: belopp 350 men jämförbara ligger på 0"
-  },
-  {
-    "candidate": {
       "title": "Stärka och utveckla räddningstjänsten i hela landet, med särskilt fokus på deltidsbrandkårer",
       "parties": [
         "c"
@@ -7631,11 +7602,11 @@
       "msek_high": 67500,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 50 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 37 500–67 500 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
+      "method_note": "Belopp angivet i källtext: 50 miljarder kronor till det civila försvaret inom ramen för försvarsöverenskommelsen. Ramen löper över flera år, så beloppet bokförs som ett engångsbelopp.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 50 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Citatet bär sin egen period: investeringen görs «inom ramen för försvarsöverenskommelsen», och en försvarsöverenskommelse är en ram över flera år — de 50 miljarderna är summan i den ramen, inte ett belopp varje år. Sidan skiljer dessutom investeringen från den löpande finansieringen, som står som en egen punkt om en beredskapsskatt. Beloppet bokförs därför som ett engångsbelopp. Spannet är vårt, inte partiets: 37 500–67 500 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra.",
       "confidence": 0.5
     },
-    "costReason": "Låg kostnadssäkerhet: 0.5"
+    "costReason": "Partiets egen siffra. Perioden följer av citatet: en ram över flera år, alltså engångsbelopp (mänskligt beslut 2026-08-19)."
   },
   {
     "candidate": {
@@ -7763,17 +7734,17 @@
     "articleTitle": "Kultur\n| Socialdemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "engang",
+      "period": "per_ar",
       "msek_low": 263,
       "msek_base": 350,
       "msek_high": 473,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 350 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 263–473 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
+      "method_note": "Belopp angivet i källtext: Förstärka statsbidraget till studieförbunden med 350 miljoner kronor. Läses som en årlig nivå.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 350 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Källan skriver inte ut takten. Statsbidraget till studieförbunden är ett löpande anslag, och löftet är att förstärka det för att motverka nedskärningar som annars återkommer. Beloppet läses därför som en årlig nivå. Spannet är vårt, inte partiets: 263–473 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren.",
       "confidence": 0.5
     },
-    "costReason": "Låg kostnadssäkerhet: 0.5 — jämförbara: p-2026-0382 (300), p-2026-0060 (5000), p-2026-0571 (8)"
+    "costReason": "Partiets egen siffra, läst som årlig nivå (mänskligt beslut 2026-08-19)."
   },
   {
     "candidate": {
@@ -7911,17 +7882,17 @@
     "articleTitle": "Kvinnohälsa\n| Socialdemokraterna",
     "cost": {
       "type": "utgift",
-      "period": "engang",
+      "period": "per_ar",
       "msek_low": 675,
       "msek_base": 900,
       "msek_high": 1215,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 900 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 675–1 215 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
+      "method_note": "Belopp angivet i källtext: Satsa 900 miljoner kronor mer än regeringen på kvinnovård. Läses som en årlig nivå.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 900 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Källan skriver inte ut takten vid själva löftet, men jämförelsen är mot ett bestämt budgetår: faktarutan på samma sida säger att regeringen minskat den särskilda satsningen på kvinnohälsa med 600 miljoner kronor för 2026. Ett belopp «mer än regeringen» för ett budgetår är en årlig nivå, och vården ska bedrivas även nästa år. Beloppet läses därför som en årlig nivå. Spannet är vårt, inte partiets: 675–1215 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren.",
       "confidence": 0.5
     },
-    "costReason": "Låg kostnadssäkerhet: 0.5 — jämförbara: p-2026-0119 (0) ⚠ AVVIKER: belopp 900 men jämförbara ligger på 0"
+    "costReason": "Partiets egen siffra, läst som årlig nivå (mänskligt beslut 2026-08-19)."
   },
   {
     "candidate": {
