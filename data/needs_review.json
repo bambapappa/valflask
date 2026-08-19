@@ -9131,5 +9131,763 @@
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/enkla-jobb",
     "articleTitle": "Enkla jobb – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Säkra tillgången till östrogenplåster",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Säkra tillgången till östrogenplåster och andra läkemedel för att behandla klimakteriebesvär.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/alla-kvinnor-med-klimakteriebesvar-ska-kunna-fa-ostrogenplaster/",
+    "articleTitle": "Alla kvinnor med klimakteriebesvär ska kunna få östrogenplåster | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Liknar reglerad läkemedelstillgång; direkta åtgärden är administrativ/regulatorisk. Jämför p-2026-0723 (0 mkr/år).",
+      "confidence": 0.4,
+      "calculation": "Ingen nivå angiven. Säkerställande via myndighetsstyrning/beredskap: 0 mkr i basen; upp till ~20 mkr/år om extra administration/inköp krävs."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0536 (500), p-2026-0723 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~250"
+  },
+  {
+    "candidate": {
+      "title": "Utred förskrivningsrätt för barnmorskor",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Utreda om barnmorskor ska få rätt att förskriva klimakterieläkemedel.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/alla-kvinnor-med-klimakteriebesvar-ska-kunna-fa-ostrogenplaster/",
+    "articleTitle": "Alla kvinnor med klimakteriebesvär ska kunna få östrogenplåster | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 4,
+      "msek_base": 10,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Konkret åtagande är att tillsätta en utredning — prissatt som en SOU-utredning i normalstorlek. Själva förskrivningsrätten är en regeländring utan väsentlig direkt statlig kostnad.",
+      "confidence": 0.65,
+      "calculation": "Utredning i SOU-storlek: sekretariat ~3–5 tjänster × 1–1,5 år (löner ~0,7–1 msek/tjänst inkl. lokaler och omkostnader) + direktiv, referensgrupper, remissarbete och eventuell lagrådsgranskning ≈ 4–20 msek engångskostnad. Bas 10 msek mitt i spannet. Den framtida förskrivningsrätten prissätts inte här — den kvantifieras separat om den beslutas."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-1039 (0), p-2026-0051 (0) ⚠ AVVIKER: belopp 10 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Förbättra klimakterierådgivningen",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Förbättra klimakterierådgivningen.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/alla-kvinnor-med-klimakteriebesvar-ska-kunna-fa-ostrogenplaster/",
+    "articleTitle": "Alla kvinnor med klimakteriebesvär ska kunna få östrogenplåster | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 40,
+      "msek_high": 120,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå eller åtgärdsform. Antaget statligt stöd: kunskapsstöd, fortbildning och ev. statsbidrag till regioners klimakterierådgivning. Smalare åtgärd än jämförbara välfärdslöften (150…",
+      "confidence": 0.3,
+      "calculation": "Ingen nivå anges i löftet. Antaganden: (1) Nationella riktlinjer, kunskapsstöd och informationsmaterial: ~5–15 msek/år. (2) Fortbildning för barnmorskor/sjuksköterskor i primärvården: ~10–40 msek/år. (3) Eventuellt statsbidrag till regioner för rådgivning eller mottagningar: 0–70 msek/år. Summa ca 15–125 msek/år, bas ca 40 msek/år. Jämförbara välfärdslöften ligger på ~150 msek/år men omfattar bredare åtgärder; klimakterierådgivning är smalare. Osäkerheten är hög eftersom utförandet (utbildning vs. regionbidrag) inte specificeras."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1243 (1500), p-2026-0740 (3000), p-2026-0910 (150) ⚠ AVVIKER: 40 avviker 37.5× från jämförbara (median 1500)"
+  },
+  {
+    "candidate": {
+      "title": "Kunskapslyft om klimakteriet för vårdpersonal",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Genomföra ett kunskapslyft om klimakteriet för vårdpersonal.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/alla-kvinnor-med-klimakteriebesvar-ska-kunna-fa-ostrogenplaster/",
+    "articleTitle": "Alla kvinnor med klimakteriebesvär ska kunna få östrogenplåster | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kunskapslyft = fortbildningsinsats för personal, prissatt som utbildningskostnad (utveckling, genomförande, tid), inte effekter i vården. Smalare än jämförbara välfärdslöften.",
+      "confidence": 0.4,
+      "calculation": "~250 000 vårdanställda i relevant vård; realistiskt uppnås ~30 000–100 000 via fortbildning (läkar-, sjuksköterske-, barnmorskegrupper i primärvård/kvinnosjukvård). Kostnad per person för digital kurs + handledning inkl. arbetstid ≈ 1 000–4 000 kr → 30–400 msek. Lägg till kursutveckling och spridning. Bas 100 msek = medelscenario (~50 000 × ~2 000 kr). Engångsinsats med viss osäkerhet om omfattning; spannet fångar smal digital insats upp till bred satsning."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0912 (9000), p-2026-0010 (0), p-2026-0364 (100)"
+  },
+  {
+    "candidate": {
+      "title": "Skärpta straff för omsorgspersonal som våldtar äldre",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna går till val på att skärpa straffet för omsorgspersonal som våldtar äldre.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/vallofte-hardare-straff-for-aldreomsorgspersonal-som-valdtar-aldre/",
+    "articleTitle": "Vallöfte: Hårdare straff för äldreomsorgspersonal som våldtar äldre  | Moderaterna",
+    "duplicateOf": "p-2026-0596"
+  },
+  {
+    "candidate": {
+      "title": "Slopa mängdrabatten för flera brott",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Under nästa mandatperiod vill Moderaterna gå vidare med att slopa mängdrabatten så att den som begår flera brott får betydligt hårdare straff.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/vallofte-hardare-straff-for-aldreomsorgspersonal-som-valdtar-aldre/",
+    "articleTitle": "Vallöfte: Hårdare straff för äldreomsorgspersonal som våldtar äldre  | Moderaterna",
+    "duplicateOf": "p-2026-0313"
+  },
+  {
+    "candidate": {
+      "title": "Ingen straffrabatt för omsorgspersonal som förlorar jobbet på grund av brott",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill även ändra reglerna så att anställda inom omsorgen inte får straffrabatt när de förlorarar jobbet på grund av brott.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/vallofte-hardare-straff-for-aldreomsorgspersonal-som-valdtar-aldre/",
+    "articleTitle": "Vallöfte: Hårdare straff för äldreomsorgspersonal som våldtar äldre  | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 1,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Straffmätning styrs av lag; direkt statlig kostnad i princip noll. Beloppet avser själva åtgärden, inte samhällsföljder som marginellt längre straff.",
+      "confidence": 0.65,
+      "calculation": "Regeländring i straffmätning (straffnedsätt pga. jobb fallout avskaffas för omsorgsanställda). Kostnad = beredning/lagändring ≈ 0. Följden kan bli marginellt längre fängelsestraff: antag ett lågt ensiffrigt antal domar/år × någon vecka–månad extra × ~2 tkr/dag ⇒ under ~1 mkr/år, som högst något mkr. Bas 1 msek avser den lilla återkommande merkostnaden; låg 0 om inga extra fängelsedagar; hög 10 msek med marginal."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Biståndsramen ska prioriteras utifrån behov",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill att principen för biståndsramen ska vara densamma som gäller för alla andra politikområden: en prioritering utifrån behov som vägs mot andra ändamål, inte ett automatiskt utbetalningssystem kopplat till BNI-tillväxten.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/bistand-2/",
+    "articleTitle": "Bistånd | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: principändring utan angiven nivå. Direkt kostnad för regeländringen är försumbar; ev. framtida förändring av biståndsnivån är en följd som inte prissätts här.",
+      "confidence": 0.4,
+      "calculation": "Löftet avkopplar biståndsramen från BNI-målet och ersätter det med behovsvägning — ingen ny nivå anges. Själva regel/principändringen har ingen nämnbar direkt statlig kostnad (base 0). Ramens framtida storlek beslutas fortfarande årligen; potentiella besparingar eller ökningar är okvantifierade följder utan belopp i löftet. Spannet 0–100 msek täcker enbart ev. mindre administrativ omställning."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0888 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Mer bistånd till näringsliv och handel",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill att en större del av det svenska utvecklingsbiståndet orienteras mot mottagarländernas näringsliv, bland annat genom Swedfund, och att synergierna mellan handel, bistånd och privata investeringar stärks.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/bistand-2/",
+    "articleTitle": "Bistånd | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 50,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Orientering inom befintlig biståndsbudget = omfördelning, inte ny kostnad; skiljer sig från 1%-löftena. Endast ev. kapitaltillskott till Swedfund och administration prissätts.",
+      "confidence": 0.35,
+      "calculation": "Löftet flyttar befintliga biståndsmedel mot näringslivsändamål (bl.a. Swedfund) utan att höja biståndsnivån — netto ingen ny statsutgift (regel 11). Direkta kostnader: eventuell ökad kapitalisering av Swedfund och omställning/administration, grovt 10–50 msek/år i bas, med osäkerhet upp mot ~300 msek vid kraftigare Swedfund-mandat. Spann 0–300 msek, bas 50 msek. Jämförelselöftena på 13 mdkr avser höjt BNI-mål för biståndet — inte detta löfte."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-1370 (13000), p-2026-0410 (13000), p-2026-0811 (0), p-2026-0640 (13000), p-2026-0388 (13000) ⚠ AVVIKER: 50 avviker 260.0× från jämförbara (median 13000)"
+  },
+  {
+    "candidate": {
+      "title": "Alla biståndsprojekt ska ha mål och exitstrategi",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Alla bilaterala biståndsprojekt ska ha tydliga mål och en exitstrategi, d.v.s. en plan för hur insatsen fasas ut när den uppnått sitt syfte.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/bistand-2/",
+    "articleTitle": "Bistånd | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1131 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Fortsatt stöd till Ukraina kopplat till EU och investeringar",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Stödet till Ukraina ska fortsätta så länge Rysslands aggression pågår, tydligt kopplat till Ukrainas väg mot EU-medlemskap och kombinerat med handel och privata investeringar för att skapa arbetstillfällen i ett land vars ekonomi Ryssland bombat sönder.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/bistand-2/",
+    "articleTitle": "Bistånd | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: fortsatt Ukrainastöd är befintlig politik, ingen ny statlig nettokostnad. Handel/privata investeringar är inte statsutgift. High fångar eventuell framtida upptrappning.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger inget belopp och ingen ny åtgärd: stödet ska 'fortsätta', dvs. bibehållen nivå av redan beslutat/motsvarande stöd (militärt och humanitärt stöd till Ukraina löper redan i statsbudgeten). Enligt netto-principen är fortsatt befintlig utgift ingen ny statlig kostnad, och privata investeringar/handel är inte statsfinansierade. Base = 0. Osäkerheten ligger i att 'så länge aggressionen pågår' kan innebära framtida beslut om ytterligare stödpaket; som tak används ett blygsamt incitament på upp mot ~1 000 msek/år för eventuell marginell upptrappning, vilket är litet mot historiska årliga stödnivåer eftersom löftet inte lovar en höjning."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1002 (0), p-2026-0112 (0), p-2026-1108 (250), p-2026-0968 (30), p-2026-0424 (200) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~30"
+  },
+  {
+    "candidate": {
+      "title": "Hjälp till självhjälp som princip",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Hjälp till självhjälp ska vara principen som genomsyrar allt vi gör.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/bistand-2/",
+    "articleTitle": "Bistånd | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ren principdeklaration ('hjälp till självhjälp') utan utpekad åtgärd, nivå eller belopp — inriktningslöfte, prissätts till 0.",
+      "confidence": 0.65,
+      "calculation": "Citatet anger endast en övergripande vägledande princip utan konkret åtagande, mottagare eller belopp. Enligt regeln för breda sammanfattande löften prissätts detta som inriktningslöfte: 0 msek; kostsamma delar ska i så fall prissättas på partiets specifika löften och inte dubbelräknas här. Jämförelselöftet (150 msek) gäller en specifik myndighetsreform och är inte applicerbart."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-1098 (150) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
+  },
+  {
+    "candidate": {
+      "title": "Moderaterna inför ingen bolåneskatt",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna kommer därför inte införa någon bolåneskatt.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/bolaneskatt/",
+    "articleTitle": "Bolåneskatt | Moderaterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Status quo: bolåneskatt finns inte i dag, så att inte införa den ändrar inget mot nuvarande lag. Utebliven framtida intäkt är en motbeslutseffekt, ingen ny statlig kostnad.",
+      "confidence": 0.65,
+      "calculation": "En bolåneskatt är en hypotetisk skatt som inte existerar i nuvarande system. Att avstå från att införa den medför därför 0 kronor i förändring för staten — varken utgift eller intäktsminskning mot dagens utfall. Jämförbart löfte p-2026-1314 (nej till bolåneskatt) är också prissatt till 0 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-1314 (0), p-2026-0163 (5000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~2500"
+  },
+  {
+    "candidate": {
+      "title": "5 000 kronor mer i plånboken för tvåbarnsfamiljer",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "därför vill vi se till att en vanlig tvåbarnsfamilj ska få 5 000 kronor mer i plånboken under kommande mandatperiod.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/bolaneskatt/",
+    "articleTitle": "Bolåneskatt | Moderaterna",
+    "verifyReason": "Citatet är ordagrant och partiet (Moderaterna, 'm') stämmer med domänen och texten ('Vi moderater'). Det är ett framtidslöfte i sektionen 'Det här vill vi göra'. Dock innehåller samma sida en motstridig formulering: 'en vanlig barnfamilj får 5 000 kronor mer i månaden under nästa mandatperiod', medan det extraherade citatet lyder '5 000 kronor mer i plånboken under kommande mandatperiod' – vilket kan läsas som ett totalbelopp för hela mandatperioden. Skillnaden är väsentlig (5 000 kr totalt vs. ca 60 000 kr/år) och titeln utelämnar tidsramen, vilket riskerar att feltolka löftets storlek. Källans interna inkonsekvens om tidsramen kräver manuell granskning innan publicering."
+  },
+  {
+    "candidate": {
+      "title": "Fortsatt sänkt skatt på arbete och pension",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Genom att fortsätta sänka skatten på arbete och pension, hålla ordning på statsfinanserna och undvika nya kostnader för boende",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/bolaneskatt/",
+    "articleTitle": "Bolåneskatt | Moderaterna",
+    "duplicateOf": "p-2026-0168"
+  },
+  {
+    "candidate": {
+      "title": "Socialdemokraterna lovar att införa bolåneskatt",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Socialdemokraterna lovar att införa en bolåneskatt som kostar ungefär 7 000 kronor per år för en person som har ett lån på på 3 miljoner kronor.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/bolaneskatt/",
+    "articleTitle": "Bolåneskatt | Moderaterna",
+    "verifyReason": "Citatet förekommer ordagrant i källtexten, men källan är Moderaternas egen attack-/kampanjsida (moderaterna.se), inte Socialdemokraternas material. 'Bolåneskatt' är Moderaternas beteckning på det Socialdemokraterna själva kallar 'bankskatt', och beloppet 7 000 kr/år är Moderaternas uppskattning av ränteökning – inget som S själva lovat eller specificerat. Att publicera detta som ett vallöfte från partiet 's', med motpartens formuleringar och siffror, innebär risken för felaktig partiattribuering och vilseledande innehåll. Löftet kan inte verifieras från S:s egen källa och bör förkastas."
+  },
+  {
+    "candidate": {
+      "title": "Förbjuda skadlig trålning",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Därför bör skadlig trålning av fisk förbjudas.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/fiske/",
+    "articleTitle": "Fiske | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 15,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förbud/prisreglering: prissatt endast åtgärdens direkta kostnad (regelverk, kontroll, övervakning), ej uteblivna fiskeintäkter eller samhällsföljder. I linje med jämförbart löfte p-2026-1212 (~5…",
+      "confidence": 0.35,
+      "calculation": "Ett trålförbud genomförs genom lagändring i fiskeriregelverket. Direkta kostnader: utredning/förordningsarbete (engång, några mkr) samt löpande kontroll och övervakning (extra kustbevaknings-/kontrollresurser, IT och administration), uppskattat till ~3–15 mkr/år. Bas 5 msek/år ankrat i jämförbart löfte om trålförbud (p-2026-1212 ≈ 5 msek/år). Fiskarnas uteblivna intäkter och eventuell framtida kompensation/utköp ingår ej i löftet och prissätts inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-1212 (5), p-2026-1214 (0), p-2026-0402 (0) ⚠ AVVIKER: belopp 5 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Underlätta yrkesfiskarlicens och livsmedelsverksamheter",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill göra det lättare att få yrkesfiskarlicens och utöka möjligheterna att fiska till egna livsmedelsverksamheter.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/fiske/",
+    "articleTitle": "Fiske | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 1,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avreglering/förenkling av tillståndsgivning — direkt statlig kostnad nära noll, endast mindre myndighets- och föreskriftsändringar. Fiskekvoter och samhällsföljder prissätts inte.",
+      "confidence": 0.6,
+      "calculation": "Löftet är en regeländring: enklare prövning av yrkesfiskarlicens + utökad rätt att fiska till egen livsmedelsverksamhet. Direkt kostnad = omarbetade föreskrifter, ev. IT-justeringar i tillståndssystemet och handläggning hos tillsynsmyndighet: ~0–5 msek engång. Ökat fisketryck, ändrade licensintäkter eller påverkan på fiskebestånd är följder/omfördelningar, inte nya statliga utgifter, och lämnas okvantifierade."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0882 (0), p-2026-0367 (150), p-2026-0808 (0), p-2026-1237 (0) ⚠ AVVIKER: belopp 1 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Bevara ålfisket som kulturarv",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill säkerställa att denna tradition kan fortsätta och att ålfiskare ges möjlighet att leva av sitt arbete.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/fiske/",
+    "articleTitle": "Fiske | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt kulturarvslöfte utan belopp eller konkret åtgärd. Prissatt som löpande stöd/ersättning till det lilla antalet ålfiskare plus mindre kulturarvsinsatser; låg konfidens eftersom instrumentet är…",
+      "confidence": 0.3,
+      "calculation": "Ingen nivå anges. Antagande: ~100 yrkesfiskare med åltillstånd i Sverige, de flesta med ål som bisyssla. Försörjningsstöd/ersättning för att kunna leva av fisket: ~100 fiskare × 100–300 tkr/år ≈ 10–30 msek/år. Kulturarvsinsatser (dokumentation, utbildning, traditionsbärare) ~1–5 msek/år. Totalt spann ~5–60 msek, bas ~20 msek. Osäkerhet: åtgärdsform okänd (riktat stöd, ersättning vid fiskestopp eller enbart kulturarvsprogram)."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Tillåta jakt på säl och skyddsjakt på skarv",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill att jakt på alla tre sälarter ska tillåtas, samt tillåta allmän skyddsjakt på skarv på eget initiativ.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/fiske/",
+    "articleTitle": "Fiske | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2,
+      "msek_base": 8,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring: beloppet avser statens administrativa kostnad (tillståndshantering, uppföljning), inte samhälls- eller ekosystemeffekter. Smalare än jämförbart löfte om 25 msek som även omfattar…",
+      "confidence": 0.35,
+      "calculation": "Löftet är en regeländring: tillstånd till säljakt + allmän skyddsjakt på skarv. Direkt statlig kostnad = föreskriftsarbete (engångsaktigt) samt löpande handläggning av skyddsjaktstillstånd för säl och populationsuppföljning hos länsstyrelser/central nivå. Antagande: ~10–30 tjänstemannadagar per län × 21 län + central administration ≈ 2–20 msek/år. Skarvjakt på eget initiativ ger ingen tillståndskostnad. Jämförbart löfte p-2026-0903 (25 msek) är bredare (halverade populationer), därav lägre nivå här."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0903 (25) ⚠ AVVIKER: 8 avviker 3.1× från jämförbara (median 25)"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa överfiske och begränsa industriellt trålfiske i EU",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill att EU för en hållbar fiskeripolitik som stoppar överfiske och begränsar det storskaliga industriella trålfisket.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/fiske/",
+    "articleTitle": "Fiske | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 2,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte riktat till EU om regelverk; prissatt som den marginella svenska kostnaden för kontroll/förvaltning i linje med jämförbara fiskelöften (0–5 msek), inte samhällsföljder.",
+      "confidence": 0.3,
+      "calculation": "Löftet är en önskan om EU-reglering, inget svenskt åtagande med belopp. Direkt statlig kostnad enligt regel 9 är i princip försumbar men kan omfatta ökad fiskerikontroll och förvaltning av trålbegränsningar: ~0–5 msek/år, i nivå med jämförbara löften (förbud bottentrålning 5 msek, laxbegränsning 2 msek, flera 0 msek). Base 2 msek avspeglar medelvärdet av riktmärkena. Uteblivna fiskeintäkter är omfördelning/följd, ej ny statlig kostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1215 (2), p-2026-1212 (5), p-2026-0635 (0), p-2026-0664 (0), p-2026-1369 (0) ⚠ AVVIKER: belopp 2 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Mellantvång och nya verktyg för socialtjänsten",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Införa nya verktyg för Socialtjänsten, bland annat ett så kallat mellantvång, för att säkerställa att både barn i riskzonen och deras föräldrar deltar i relevanta insatser – även när det saknas samtycke från föräldrarna.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forebyggande-arbete/",
+    "articleTitle": "Förebyggande arbete | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 30,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring (mellantvång) där direkta kostnader är utredning, vägledning och utbildning av socialtjänst. Samhällsföljder som ökade placeringar/rättsprocesser är ej statens direkta nya kostnad och…",
+      "confidence": 0.3,
+      "calculation": "Kärnan är en lagreglering, vilket i sig är nästan gratis. Direkta statliga kostnader uppskattas som: utredning + lagstiftning ~10–20 mkr engång, samt löpande stöd till ~290 kommuners socialförvaltningar — vägledningsmaterial, metodstöd och utbildning i de nya verktygen, grovt 50 000–150 000 kr/kommun och år ≈ 15–45 mkr/år, med marginal för uppföljningssystem upp till ~150 mkr/år. Följder (fler tvångsingripanden, familjebehandling, LVU-placeringar) är beteende-/överföringseffekter som kommuner i huvudsak bär och exkluderas enligt avgränsningsreglerna. Osäkerheten är därför stor: low 0 till high 150 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0473 (0), p-2026-0474 (0), p-2026-0468 (5600), p-2026-0627 (1500) ⚠ AVVIKER: 30 avviker 25.0× från jämförbara (median 750)"
+  },
+  {
+    "candidate": {
+      "title": "Regelbundna hembesök inom mödravården",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Ge mödravården i uppdrag att genomföra regelbundna hembesök och erbjuda stöd till förstagångsföräldrar, särskilt socioekonomiskt utsatta familjer.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forebyggande-arbete/",
+    "articleTitle": "Förebyggande arbete | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 80,
+      "msek_base": 200,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statligt stimulans/statsbidrag till regioner för hembesök i mödravården; kostnad = antal förstagångsföräldrar × besök × pris per besök. Samhällseffekter exkluderade.",
+      "confidence": 0.4,
+      "calculation": "~45 000 förstagångsföderskor per år × 2–4 hembesök × ~1 000–2 000 kr per besök (barnmorsketid ca 1–1,5 h, resa, administration) ≈ 90–360 msek/år. Bas: 45 000 × 3 besök × ~1 500 kr ≈ 200 msek/år. Extra insatser till socioekonomiskt utsatta familjer (~20–25 %) ingår ungefärligt i spannets övre del. Notera att mödravården är regionfinansierad — nya statliga kostnaden antas motsvara statsbidrag som täcker utbyggnaden, inte befintlig verksamhet."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Obligatoriskt första BVC-besök",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Identifiera barns behov tidigt genom att göra det första BVC-besöket obligatoriskt.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forebyggande-arbete/",
+    "articleTitle": "Förebyggande arbete | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringslöfte: nästan alla föräldrar gör redan det första BVC-besöket, som är gratis. Priset avser bara lagändring, uppföljning och information — inte besöken (redan finansierade) eller…",
+      "confidence": 0.4,
+      "calculation": "~115 000 födslar/år; >98 % genomför redan första BVC-besöket frivilligt → endast ~1–2 % extra besök × ~1–2 tkr/besök ≈ 1–5 mkr marginellt per år. Huvuddelen är engångskostnad: lagändring, ev. uppföljningssystem och informationsinsats ~5–20 mkr. Base satt till 5 msek engång; samhällsföljder lämnas okvantifierade."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Fler familjecentraler med samordnade tidiga insatser",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Fler familjecentraler ska etableras där MVC, BVC och socialtjänst har i uppdrag att arbeta samordnat med tidiga riktade insatser.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forebyggande-arbete/",
+    "articleTitle": "Förebyggande arbete | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 450,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Etableringsstöd/statsbidrag för fler familjecentraler; marginalkostnad för samordning ovanpå befintlig mödravård/barnavård. Samma storleksordning som jämförbart löfte om 500 msek/år.",
+      "confidence": 0.45,
+      "calculation": "Idag finns runt 200+ familjecentraler. Löftet anger inte antal: antag 50–150 nya. Kommunerna driver redan MVC/BVC (ej ny statskostnad enligt netto-principen), staten bidrar med etablerings-/driftsstöd för den samordnade enheten: ~3–5 mkr/center och år. 50 × 3 ≈ 150 mkr; 150 × 5 ≈ 750 mkr. Bas ~100 center × ~4,5 mkr ≈ 450 msek/år, i linje med jämförbart löfte p-2026-0536 (500 msek/år). Osäkerhet i antal center och statsandel återspeglas i spannet."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0536 (500)"
+  },
+  {
+    "candidate": {
+      "title": "Satsning på skolsociala team och familjehem",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Satsa på skolsociala team och familjehem.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forebyggande-arbete/",
+    "articleTitle": "Förebyggande arbete | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 60,
+      "msek_base": 200,
+      "msek_high": 450,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt satsningslöfte utan belopp. Estimat som statsbidragsliknande satsning: skolsociala team + stöd/utbildning till familjehem. Arvoden till familjehem betalas av kommuner (omfördelning) och ingår ej.",
+      "confidence": 0.35,
+      "calculation": "Skolsociala team: ca 290 kommuner × 0,2–0,5 mkr/år i bidrag per kommun ≈ 60–150 mkr. Familjehem: ca 15 000 hem × 5–20 tkr i statligt stöd/utbildning/avlösning ≈ 75–300 mkr. Summa ≈ 135–450 mkr/år, bas 200 msek. Osäkerheten ligger i att löftet saknar nivå och omfattning; jämförbara löften (0–2 msek) avser smalare åtgärder men bekräftar låg precision."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0909 (0), p-2026-0508 (2) ⚠ AVVIKER: 200 avviker 200.0× från jämförbara (median 1)"
+  },
+  {
+    "candidate": {
+      "title": "Nationellt program för eftervård efter förlossning",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill att det inrättas ett nationellt program för eftervården, i likhet med det som finns för mödra- och barnhälsovården inför och efter förlossning, som inkluderar tidig uppföljning på BB och därefter inom mödrahälsovården.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forlossningsvard/",
+    "articleTitle": "Förlossningsvård | Moderaterna",
+    "duplicateOf": "p-2026-0050",
+    "duplicateReason": "samma uttryck: «inrätt nation», «nation progra», «progra efterv», «efterv likhet», «likhet finns», «finns mödra», «mödra barnhä», «barnhä inför», «inför förlos»"
+  },
+  {
+    "candidate": {
+      "title": "Kvinnor ska vara mer delaktiga i planering av förlossningen",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill även att kvinnor ska vara mer delaktiga i planering och beslut avseende sin förlossning och förlossningssätt.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forlossningsvard/",
+    "articleTitle": "Förlossningsvård | Moderaterna",
+    "duplicateOf": "p-2026-0051",
+    "duplicateReason": "samma uttryck: «delakt planer», «planer beslut», «beslut avseen», «avseen förlos»"
+  },
+  {
+    "candidate": {
+      "title": "Jämligare förlossningsvård och eftervård i hela landet",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill att förlossningsvård och eftervård erbjuds på ett mer jämlikt sätt i hela landet.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forlossningsvard/",
+    "articleTitle": "Förlossningsvård | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan utpekad åtgärd eller nivå; vården är regionsansvarig och jämlikhet styrs främst via mål och styrning. Kostsamma delar prissätts i partiets specifika löften.",
+      "confidence": 0.65,
+      "calculation": "Citatet anger en ambition (mer jämlik förlossningsvård/eftervård i hela landet) men ingen konkret åtgärd, nivå eller finansiering → inriktningslöfte, base 0. Jämförbart löfte 'Garantera akutsjukvård i hela landet' (v) prissattes till 0 av samma skäl. Konkreta instrument i jämförelselöftena (nationellt program ~250 msek, kompetenscentrum ~30 msek) är separata, mer specifika löften och ska inte dubbelräknas här. High ~150 msek rymmer ev. riktade styrningsbidrag/utjämning som kan följa av inriktningen, men utan utpekad åtgärd är grundkostnaden i princip noll."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0778 (30), p-2026-1181 (0), p-2026-0050 (250), p-2026-0442 (800), p-2026-0136 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~30"
   }
 ]
