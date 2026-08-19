@@ -355,35 +355,6 @@
   },
   {
     "candidate": {
-      "title": "Införa nationell månadsbiljett för all kollektivtrafik (Sverigebiljett)",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Vänsterpartiet vill införa en gemensam nationell månadsbiljett för all kollektivtrafik.",
-      "category": "infrastruktur",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/var-politik/klimatmalen-till-2030/",
-    "articleTitle": "Klimatmålen till 2030 – Vänsterpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 400,
-      "msek_high": 2000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Endast biljettens införande: systemintegration, drift och intäktsutjämning mellan regioner. Inget pris/subvention anges; smalare än MP:s Sverigekort (8000 msek).",
-      "confidence": 0.35,
-      "calculation": "Inget pris anges i löftet. Till marknadspris är en gemensam biljett i princip omfördelning mellan regioner (regel 11). Statens nya nettokostnad: (1) integration av ~20 regionala biljettsystem i nationell lösning + clearing/drift: ~50–150 msek/år löpande. (2) Om nationellt pris sätts under summan av regionala månadskort behövs kompensation till regioner för förlorade intäkter: ~1–2 milj. månadskortsägare × andel som byter × 100–500 kr/mån skillnad → ~100–1000+ msek/år. Totalt spann ~100–2000 msek/år, bas ~400 msek/år. Osäkerheten ligger främst i om staten subventionerar priset eller inte."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0439 (1000), p-2026-0656 (0), p-2026-0823 (0), p-2026-0466 (1200), p-2026-0321 (8000)"
-  },
-  {
-    "candidate": {
       "title": "Förbättra villkoren och återinföra studerandevillkoret i a-kassan",
       "parties": [
         "v"
@@ -1007,35 +978,6 @@
       "calculation": "Antag 10–30 ytterligare SHK-utredningar per år. Styckkostnad ca 1–2 mkr (personal, resor, analys). Låg: 10×1=10 mkr/år, bas: 20×1.5=30 mkr/år, hög: 30×2=60 mkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0848 (16000) ⚠ AVVIKER: 30 avviker 533.3× från jämförbara (median 16000)"
-  },
-  {
-    "candidate": {
-      "title": "Tillfällig skatt på bankernas övervinster",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Införa en tillfällig skatt på bankernas övervinster, som betalas tillbaka till hushåll och välfärden, eftersom bankernas räntenettomarginaler ökat kraftigt.",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/banker",
-    "articleTitle": "Banker\n| Socialdemokraterna",
-    "cost": {
-      "type": "intäktsökning",
-      "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 7000,
-      "msek_high": 15000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Avser statens nya skatteintäkt från en tillfällig skatt på bankernas övervinster; återbetalningen till hushåll och välfärden prissätts inte här. Grovt intervall utifrån ökade räntenetton och antagen…",
-      "confidence": 0.4,
-      "calculation": "Svenska storbankers räntenetto har ökat kraftigt jämfört med lågränteläge, uppskattningsvis flera tiotals miljarder kronor. Antar att övervinsten uppgår till cirka 40–100 mdkr per år och att en tillfällig skatt tas ut med 10–20 procent. Det ger 4–20 mdkr; nedjusterat för skatteplanering och osäkerhet till 2–15 mdkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1862,22 +1804,6 @@
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/alderism",
     "articleTitle": "Ålderism – Liberalerna"
-  },
-  {
-    "candidate": {
-      "title": "Investera 100 miljarder per år i klimatomställning",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Miljöpartiet vill därför investera 100 miljarder om året i en rättvis klimatomställning under en tioårsperiod.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": 100000,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/ekonomi-och-skatter/",
-    "articleTitle": "Ekonomi och skatter | Miljöpartiet"
   },
   {
     "candidate": {
@@ -3209,35 +3135,6 @@
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/alderism",
     "articleTitle": "Ålderism – Liberalerna"
-  },
-  {
-    "candidate": {
-      "title": "Tillfällig skatt på bankernas övervinster för att pressa boräntan",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Därför vill vi införa ett tillfälligt incitament att pressa boräntan. Skatten ska bara gälla den del av bankernas räntenetto som överstiger historiskt genomsnitt, vilket ger bankerna en direkt drivkraft att hålla nere räntorna för sina kunder.",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/banker/fakta-om-bankskatt-och-bolaneskatt",
-    "articleTitle": "Fakta om bankskatt och bolåneskatt\n| Socialdemokraterna",
-    "cost": {
-      "type": "intäktsökning",
-      "period": "per_ar",
-      "msek_low": 10000,
-      "msek_base": 20000,
-      "msek_high": 30000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Liknar jämförbart V-löfte om 20 mdkr/år för 50% på övervinster. Löftet saknar egen skattesats och tröskel vilket ger stort spann; intäkten kan bli lägre om skatten lyckas pressa räntorna.",
-      "confidence": 0.4,
-      "calculation": "Jämför med bankskatt 50% på övervinster ≈20 000 mkr/år. Antar motsvarande bas, men eftersom skattesats/tröskel saknas och beteendeeffekt kan minska underlaget sätts spann 10 000–30 000 mkr/år med bas 20 000."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1024 (20000), p-2026-0101 (17000)"
   },
   {
     "candidate": {
@@ -5136,35 +5033,6 @@
   },
   {
     "candidate": {
-      "title": "Stärka hela försvaret",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Utveckla armén, marinen, flygvapnet och hemvärnet med ändamålsenliga vapensystem för mark, luft och hav.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/forsvar-och-beredskap",
-    "articleTitle": "Försvar och beredskap\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 20000,
-      "msek_base": 50000,
-      "msek_high": 100000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Liknande försvarssatsning men vagare; baseras på jämförbart löfte p-2026-0384. Stort spann för osäkerhet om ambitionsnivå.",
-      "confidence": 0.4,
-      "calculation": "Ankrar till jämförbart löfte p-2026-0384 om 50 000 msek/år. Löftet saknar egen nivå och omfattar breda vapensystem; intervall 20 000–100 000 msek/år speglar olika ambitionsnivåer. Ingen egen partisiffra."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0384 (50000)"
-  },
-  {
-    "candidate": {
       "title": "Säkra det civila försvaret",
       "parties": [
         "s"
@@ -5335,17 +5203,17 @@
     "articleTitle": "Fler jobb och minskad arbetslöshet – Vänsterpartiet",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 20000,
+      "period": "engang",
+      "msek_low": 50000,
+      "msek_base": 70000,
+      "msek_high": 150000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet saknar belopp och tidplan. Trafikverket uppskattar underhållsskulden till tiotals miljarder. Estimatet antar en årlig extra anslagshöjning utöver nuvarande underhållsbudget för att beta av…",
+      "method_note": "Järnvägens underhållsskuld betas av, inte betalas årligen — beloppet bokförs som ett engångsbelopp. Samma politik som Centerpartiets löfte om att bygga bort underhållsskulden; ska grupperas och räknas en gång.",
       "confidence": 0.4,
-      "calculation": "Trafikverkets underhållsbudget ~25 mdkr/år. Underhållsskuld uppskattas till 50-100 mdkr. För att åtgärda skulden krävs en höjning av årliga anslag. Antagande: 20-80% ökning av årlig budget = 5-20 mdkr extra per år. Base: 10 mdkr/år."
+      "calculation": "Löftet anger ingen nivå. En underhållsskuld är ett uppdämt underhållsbehov — ett belopp som ska betas av, inte en årlig utgift som återkommer när den är betald. Beloppet bokförs därför som ett engångsbelopp, och samma bokföring gäller Centerpartiets löfte om att bygga bort samma skuld. Ankaret är den skuld Trafikverket och branschen beskrivit: storleksordningen 50–150 miljarder kronor, med 70 miljarder som bas. Spannet är vårt och står för att löftet varken anger belopp eller tidtabell."
     },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0803 (0), p-2026-0317 (0) ⚠ AVVIKER: belopp 10000 men jämförbara ligger på 0"
+    "costReason": "En underhållsskuld är ett engångsbelopp, inte en årlig nivå (mänskligt beslut 2026-08-19). Ska grupperas med Centerpartiets löfte om samma skuld."
   },
   {
     "candidate": {
@@ -5706,35 +5574,6 @@
   },
   {
     "candidate": {
-      "title": "Klimatfond och grön investeringsbank för strategiska klimatprojekt",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Genom en klimatfond och en grön investeringsbank kan staten bidra med kapital och riskdelning för att fler strategiska projekt ska bli verklighet.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/industripolitik/",
-    "articleTitle": "Miljöpartiets industripolitik",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 30000,
-      "msek_base": 100000,
-      "msek_high": 200000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Vagt löfte utan belopp. Ankrar på jämförbar klimatfond på 100 mdkr/år; brett intervall pga osäkerhet om fond- och bankomfattning.",
-      "confidence": 0.4,
-      "calculation": "Jämförbart löfte: 100 000 mkr/år. Antar att klimatfond + grön investeringsbank får kapital/riskdelning i samma storleksordning. Låg scenario: 30 000 mkr/år (mindre bank/fond). Hög scenario: 200 000 mkr/år (större fond plus bankkapital)."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0611 (100000)"
-  },
-  {
-    "candidate": {
       "title": "Sänka företagsskatterna för att göra det mer lönsamt att investera och växa",
       "parties": [
         "c"
@@ -5942,35 +5781,6 @@
   },
   {
     "candidate": {
-      "title": "Införa Sverigebiljett för 450 kr/månaden i all regional kollektivtrafik",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Införa Sverigebiljett för 450 kr/månaden som ger tillgänglighet till regional kollektivtrafik i hela landet. Detta för att göra klimatsmarta alternativ till bilism mer tillgängliga.",
-      "category": "infrastruktur",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/klimat/",
-    "articleTitle": "Klimatkrisen – Vänsterpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 1800,
-      "msek_base": 4500,
-      "msek_high": 8000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Prissätter statlig kompensation till regionerna för lägre biljettintäkter och visst ökat resande. Liknar MP:s Sverigekort, men 450 kr/mån är något mindre generöst.",
-      "confidence": 0.4,
-      "calculation": "450 kr/mån × 12 = 5 400 kr/år per biljett. Antag 400 000–1 000 000 månadsbiljetter. Nettokompensation per biljett 4 000–8 000 kr/år (dagens månadskort ca 800–1 000 kr/mån minus 450 kr samt ökad trafik). 400 000 × 4 000 = 1 600 mkr, 1 000 000 × 8 000 = 8 000 mkr; bas 4 500 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0439 (1000), p-2026-0823 (0), p-2026-0466 (1200), p-2026-0321 (8000), p-2026-0605 (0) ⚠ AVVIKER: 4500 avviker 4.5× från jämförbara (median 1000)"
-  },
-  {
-    "candidate": {
       "title": "Rensa bort onödiga regler och lagar som hindrar företag från att växa och anställa",
       "parties": [
         "c"
@@ -6146,35 +5956,6 @@
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/jamstalldhet/",
     "articleTitle": "Miljöpartiets jämställdhetspolitik"
-  },
-  {
-    "candidate": {
-      "title": "Sverigebiljetten med totalkostnad 450 kr för vuxna",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Bland annat föreslår vi Sverigebiljetten, som med en totalkostnad på 450 kronor för vuxna och 225 kronor för barn, unga och pensionärer, gör det billigare och enklare att välja kollektivtrafiken.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/klimatmalen/",
-    "articleTitle": "Klimatmålen – Vänsterpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10800,
-      "msek_high": 20000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Uppskattar statens subventionskostnad för en nationell månadsbiljett till 450 kr, baserat på antaganden om antal användare och subventionsgrad per biljett.",
-      "confidence": 0.4,
-      "calculation": "Antag 1,5 mn vuxna och 0,5 mn reducerade användare. Subvention per vuxenbiljett: 500 kr/mån (skillnad mot dagens snittintäkt), reducerad: 300 kr/mån. Årskostnad: (1,5 mn * 500 + 0,5 mn * 300) * 12 = 10,8 mdkr. Spann 5–20 mdkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -6393,24 +6174,6 @@
       "confidence": 0.5
     },
     "costReason": "Partiets egen siffra, läst som årlig nivå. Ska grupperas med de publicerade löftena om samma bemanning."
-  },
-  {
-    "candidate": {
-      "title": "Inför gemensam Sverigebiljett",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Vänsterpartiet vill införa en gemensam Sverigebiljett för all regional kollektivtrafik i hela Sverige.",
-      "category": "infrastruktur",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/kollektivtrafik/",
-    "articleTitle": "Kollektivtrafik – Vänsterpartiet",
-    "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma uttryck: «region kollek», «kollek hela»"
   },
   {
     "candidate": {
@@ -6755,93 +6518,6 @@
       "calculation": "Antag 50–200 GWh biogas för jordbruksuppvärmning per år. Energi- och koldioxidskatt ~0,3 kr/kWh. Skattebortfall = 50–200 GWh × 0,3 kr/kWh = 15–60 mkr/år. Bas 100 GWh → 30 mkr."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Höja försvarsanslaget till 3,5% av BNP till 2030",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Nå försvarsanslaget påminst 3,5 procent av BNP till 2030.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/forsvar",
-    "articleTitle": "Försvar | Centerpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 50000,
-      "msek_base": 65000,
-      "msek_high": 120000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Estimatet bygger på dagens BNP-prognos och befintlig försvarsbudget. 3,5 % av BNP 2030 minus dagens nivå, som redan överstiger 2 %. Högre spann viktar in tillväxt och Natos 2 %-mål underifrån…",
-      "confidence": 0.6,
-      "calculation": "Dagens försvarsanslag: ~138 mdkr (2025). BNP-prognos 2030: ~6 300 mdkr. 3,5 % av BNP 2030 = 220,5 mdkr. Merkostnad: 220,5 - 138 = 82,5 mdkr. Avrundat spann 50–120 mdkr för att fånga osäkerhet i BNP-utveckling och att dagens anslag kan växa ytterligare innan 2030."
-    },
-    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0340 (50000), p-2026-0829 (50000), p-2026-0384 (50000)"
-  },
-  {
-    "candidate": {
-      "title": "Stärka det civila försvaret genom ökade resurser",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Stärka det civila försvaret genom ökade resurser till bland annat kommuner och regioner, för att hela samhället ska klara en kris.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/forsvar",
-    "articleTitle": "Försvar | Centerpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 3000,
-      "msek_high": 6000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Vagt löfte utan belopp. Prissätter som utökade statsbidrag till kommuner/regioner för civilt försvar; betydligt smalare än militär försvarsupprustning p-2026-0384.",
-      "confidence": 0.35,
-      "calculation": "Antar ökade statsbidrag till exempelvis MSB, räddningstjänst, sjukvård och kommunal krisberedskap. Utgår från senare års satsningar på civilt försvar i miljardklassen. Intervall 1 000–6 000 mkr/år."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0384 (50000) ⚠ AVVIKER: 3000 avviker 16.7× från jämförbara (median 50000)"
-  },
-  {
-    "candidate": {
-      "title": "Modernisera armén, marinen och flygvapnet",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Utveckla och modernisera armén, marinen och flygvapnet med mer personal och bättre materiel.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/forsvar",
-    "articleTitle": "Försvar | Centerpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 45000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Saknar nivå; prissätts som årligt tillskott i nivå med senaste försvarsanslagsökningarna. Bredd och osäkerhet ger stort spann.",
-      "confidence": 0.35,
-      "calculation": "Senaste årens svenska försvarslyft har legat kring 10–20 mdkr/år. Löftet gäller alla tre försvarsgrenar med mer personal och bättre materiel, så ett påslag om 0,5–3 sådana nivåer antas: ~5–45 mdkr/år, bas 15."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -7578,35 +7254,6 @@
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/bibliotek",
     "articleTitle": "Bibliotek – Liberalerna"
-  },
-  {
-    "candidate": {
-      "title": "Investera 50 miljarder kronor på civilt försvar",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Investera 50 miljarder kronor på det civila försvaret inom ramen för försvarsöverenskommelsen för att öka tempot i uppbyggnaden.",
-      "category": "försvar",
-      "amount_in_text_msek": 50000,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/krisberedskap",
-    "articleTitle": "Krisberedskap\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 37500,
-      "msek_base": 50000,
-      "msek_high": 67500,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Belopp angivet i källtext: 50 miljarder kronor till det civila försvaret inom ramen för försvarsöverenskommelsen. Ramen löper över flera år, så beloppet bokförs som ett engångsbelopp.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 50 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Citatet bär sin egen period: investeringen görs «inom ramen för försvarsöverenskommelsen», och en försvarsöverenskommelse är en ram över flera år — de 50 miljarderna är summan i den ramen, inte ett belopp varje år. Sidan skiljer dessutom investeringen från den löpande finansieringen, som står som en egen punkt om en beredskapsskatt. Beloppet bokförs därför som ett engångsbelopp. Spannet är vårt, inte partiets: 37 500–67 500 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra.",
-      "confidence": 0.5
-    },
-    "costReason": "Partiets egen siffra. Perioden följer av citatet: en ram över flera år, alltså engångsbelopp (mänskligt beslut 2026-08-19)."
   },
   {
     "candidate": {
@@ -8393,122 +8040,6 @@
   },
   {
     "candidate": {
-      "title": "Nå målet om 12 000 värnpliktiga och sikta på 20 000",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Uppnå målet om att utbilda 12 000 värnpliktiga och på längre sikt nå mål om 20 000 värnpliktiga",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": true
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/militart-forsvar",
-    "articleTitle": "Militärt försvar\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 5000,
-      "msek_high": 12000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Kostnaden för att öka antalet värnpliktiga från dagens nivå (ca 8 000) till 12 000 och sedan 20 000. Basen antar en linjär ökning av styckkostnaden för utbildning, förläggning och materiel. Det…",
-      "confidence": 0.4,
-      "calculation": "Antaganden: Dagens nivå ~8 000 värnpliktiga. Steg 1: öka till 12 000 (+4 000). Steg 2: öka till 20 000 (+12 000 totalt). Marginalkostnad per värnpliktig uppskattas till 0,5–1,0 mkr/år (inkl. grundutbildning, materiel, logi, ersättning). Steg 1: 4 000 × 0,5–1,0 mkr = 2 000–4 000 mkr. Steg 2: 12 000 × 0,5–1,0 mkr = 6 000–12 000 mkr. Base sätts till 5 000 mkr som ett mellanvärde för steg 1 och en påbörjad upptrappning mot steg 2."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0021 (10000)"
-  },
-  {
-    "candidate": {
-      "title": "Upprätta nya regementen i Kiruna och Kvarn",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Upprätta nya regementen i Kiruna och Kvarn för att stärka krigsorganisationen och göra säkerhetspolitiska markeringar.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": true
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/militart-forsvar",
-    "articleTitle": "Militärt försvar\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 800,
-      "msek_base": 1200,
-      "msek_high": 2000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Kostnad för två nya regementen. Baserat på jämförelse med återetableringen av regementen i Arvidsjaur, Sollefteå, Falun och Östersund, där årskostnaden per regemente uppskattats till 400–800 mkr…",
-      "confidence": 0.4,
-      "calculation": "Två regementen. Årskostnad per regemente: ~400–800 mkr (löner, infrastruktur, drift, övningsverksamhet). Base: 2 × 600 mkr = 1 200 mkr. Spann: 800–2 000 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Stärka Gotland med ny amfibiebataljon och brigadluftvärn",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Stärka Gotland genom att etablera en ny operativ amfibiebataljon och tillföra brigadluftvärn för att öka avskräckningsförmågan.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": true
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/militart-forsvar",
-    "articleTitle": "Militärt försvar\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 700,
-      "msek_base": 1200,
-      "msek_high": 2000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Kostnaden är en uppskattning av årlig drift och personal för en amfibiebataljon (~300-500 msek) och brigadluftvärn (~400-700 msek), exklusive större initiala materielanskaffningskostnader vilka ofta…",
-      "confidence": 0.4,
-      "calculation": "Antaganden: Årlig driftskostnad för en amfibiebataljon inklusive personalkostnader (ca 500-800 soldater) uppskattas till 300-500 msek baserat på kostnaden för Amfibieregementet. Brigadluftvärn med ett par kompanier (t.ex. Eldenhet 98) bedöms kosta 400-700 msek per år i drift och personal. Summa: 700-1200 msek, med övre intervall för mer omfattande förband. Engångskostnad för materiel tillkommer."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Initiera produktion av ytterligare en svensk ubåt",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Initiera produktion av ytterligare en svensk ubåt och stegvis utöka förmågan i Östersjön.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": true
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/militart-forsvar",
-    "articleTitle": "Militärt försvar\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 3500,
-      "msek_base": 4100,
-      "msek_high": 6500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Kostnad för ytterligare en ubåt jämförbar med FMV:s A26-kontrakt (~8,2 mdkr för två). Engångsutgift för byggnation, stegvis utökning redan inräknat.",
-      "confidence": 0.65,
-      "calculation": "Bas: ~4 100 mkr per ubåt (två ubåtar ~8 200 mkr). Låg: 3 500 mkr (viss stordrift), hög: 6 500 mkr (prisökning, extra utrustning). Totalkostnad för en ubåt, engångsprojekt."
-    },
-    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Utreda för- och nackdelar med brukarrum och drug checking",
       "parties": [
         "s"
@@ -8850,64 +8381,6 @@
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/elevhalsa",
     "articleTitle": "Elevhälsa – Liberalerna"
-  },
-  {
-    "candidate": {
-      "title": "Stärka nationella försvaret enligt Natos artikel 3",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Stärka det nationella försvaret i linje med Natos artikel 3 som ett bidrag till det kollektiva försvaret enligt artikel 5.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/nato",
-    "articleTitle": "Nato\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 50000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet är brett och saknar specifik nivå. Det är inte ett inriktningslöfte enligt regel 13 då det utpekar en konkret åtgärd (stärka försvaret enligt artikel 3), men nivån anges inte. Jämförbara…",
-      "confidence": 0.35,
-      "calculation": "Löftet anger ingen egen nivå (regel 15). En måttlig förstärkning jämfört dagens ~140 mdkr antas vara 10–15 % (≈14–21 mdkr, bas 15 mdkr). Ett lågt estimat är en begränsad höjning på 5 mdkr. Ett högt estimat är en fullskalig utbyggnad motsvarande ~35 % höjning (≈50 mdkr), i nedre spannet av jämförbart löfte p-2026-0384. Spannet 5–50 mdkr ger high/low ≥ 1.5."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0384 (50000) ⚠ AVVIKER: 15000 avviker 3.3× från jämförbara (median 50000)"
-  },
-  {
-    "candidate": {
-      "title": "Kraftigt utöka försvarsutgifterna",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Kraftigt utöka försvarsutgifterna med ett starkt fokus på ökad operativ militär förmåga.",
-      "category": "försvar",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/nato",
-    "articleTitle": "Nato\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 10000,
-      "msek_base": 30000,
-      "msek_high": 60000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet saknar belopp. Jämförbara löften ligger kring 50 000 msek/år. Uppskattning baserad på en kraftig men ospecificerad ökning av försvarsanslaget, med spann från en måttlig till en mycket stor…",
-      "confidence": 0.4,
-      "calculation": "Antagande: en ökning av försvarsutgifterna med mellan 10 och 60 mdkr per år utöver redan planerade nivåer. Baserat på jämförbara löften och osäkerhet kring ambitionsnivå."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0829 (50000), p-2026-0041 (50000)"
   },
   {
     "candidate": {
