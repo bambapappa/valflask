@@ -1,0 +1,147 @@
+name: arkiv-backfill
+# Hämtar ikapp arkivkopiorna för Fläskvågens publicerade löften.
+#
+# Ett review-godkännande sätter `archive_url: null` — kopian hämtas inte i
+# beslutsögonblicket. Pipelinen fyller nullen i bakgrunden, men med en bunden
+# budget: `archive-backfill.mts save 12` var fjärde timme, alltså 72 kopior om
+# dygnet. Den takten är avsiktlig och snäll mot Wayback så länge nullen droppar
+# in några i taget.
+#
+# Den håller inte för ett pass. Den 19 augusti 2026 godkändes 309 löften ur
+# granskningskön i en följd, och andelen utan arkivkopia gick från 3,23 till
+# 28,63 procent. Metodsidan lovar under fem, prosagrinden mäter det, och bygget
+# stod rött — alltså slutade sajten driftsättas. Vid 72 om dygnet hade luckan
+# tagit fem dygn att dränera, och under tiden hade ingenting nått läsaren.
+#
+# Därför den här körningen: samma skript, samma kontroll av att citatet står i
+# ögonblicksbilden, men med en budget som den som startar körningen sätter
+# själv. Steady state ligger kvar på 12 i pipeline.yml. Ett ikapphämtningspass
+# är ett beslut någon fattar, inte en kadens som smyger uppåt.
+#
+# BARA MANUELL. Körningen begär saves hos Wayback och ska startas av någon som
+# vet att det finns en lucka att stänga. `avail` svarar på hur stor den är utan
+# att begära en enda save.
+#
+# Skriver data/promises.json, data/changelog.json och data/arkivvantan.json.
+# Ingenting publiceras som inte redan är publicerat: en arkivlänk läggs till ett
+# löfte som redan står på sajten, och bara när citatet står ordagrant i kopian.
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "avail = bara befintliga kopior · save = begär nya också"
+        type: choice
+        options: [avail, save]
+        default: avail
+      maxSaves:
+        description: "Max antal saves att begära (bara i läge save)"
+        required: false
+        default: "100"
+permissions:
+  contents: write
+concurrency:
+  # Samma grupp som pipeline: två körningar som båda skriver promises.json och
+  # changelog.json samtidigt skriver över varandras data_hash.
+  group: pipeline
+  cancel-in-progress: false
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.event.repository.default_branch }}
+          # Samma skäl som i arkiv.yml och kostnad-omkorning.yml: bara
+          # pushsteget autentiserar, och det bär sin egen färska token.
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Arkiv-backfill
+        env:
+          MODE: ${{ inputs.mode }}
+          MAX_SAVES: ${{ inputs.maxSaves }}
+        run: node --import tsx/esm scripts/archive-backfill.mts "$MODE" "$MAX_SAVES"
+        working-directory: pipeline
+      - name: Förnya botens token inför push
+        id: push-token
+        # Wayback stryper, skriptet väntar in indexeringen, och körningen kan
+        # bli längre än tokenens timme. Samma fälla som kastade arkiv- och
+        # skördekörningarnas resultat i augusti 2026.
+        #
+        # always() med flit: skriptet skriver löpande, så det som hunnit bli
+        # klart ska räddas även när körningen slår i taket eller faller.
+        if: ${{ always() }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - name: Committa arkivkopiorna
+        if: ${{ always() }}
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
+          BASE_SHA: ${{ github.sha }}
+        # INGEN reset-och-skriv-över här, och ingen rebase heller.
+        #
+        # Rebasen är vägen pipeline.yml går, och den föll den 19 augusti: en
+        # körning som arbetat i två timmar tappade allt — arkiv-backfillen med
+        # — på en konflikt i data/changelog.json, för loggen är en
+        # tillagd-sist-lista och två körningar krockar alltid i slutet.
+        #
+        # Mönstret från kostnad-omkorning.yml (reset --hard + kopiera tillbaka)
+        # undviker konflikten men duger inte heller här: den körningen skriver
+        # bara granskningskön, medan den här rör promises.json och changelog.json.
+        # Att kopiera dem över en färsk defaultgren skulle radera löften som
+        # godkänts under tiden och changelog-poster som skrivits efter oss —
+        # tyst, och med en data_hash som inte längre stämmer.
+        #
+        # Därför: har defaultgrenen rört sig sedan checkouten pushar vi
+        # ingenting alls och säger det rakt ut. Backfillen är idempotent — en
+        # omkörning gör om samma arbete — så en spilld körning kostar tid, aldrig
+        # data. Att gissa en sammanslagning kostar det omvända.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin \
+            "https://x-access-token:${PUSH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git add data/promises.json data/changelog.json data/arkivvantan.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Inga nya arkivkopior att committa."
+            exit 0
+          fi
+          for attempt in 1 2 3; do
+            if git fetch origin "$DEFAULT_BRANCH"; then break; fi
+            echo "försök $attempt: kunde inte hämta $DEFAULT_BRANCH"
+            sleep $((attempt * 5))
+          done
+          fjarr="$(git rev-parse "origin/$DEFAULT_BRANCH")"
+          if [ "$fjarr" != "$BASE_SHA" ]; then
+            echo "::error::$DEFAULT_BRANCH har flyttat sig under körningen ($BASE_SHA → $fjarr)."
+            echo "Ingenting pushades. Kopiorna som hämtades är inte förlorade i sak —"
+            echo "backfillen är idempotent, så starta om körningen mot färsk gren."
+            exit 1
+          fi
+          git commit -m "data: arkivkopior hämtade ikapp för publicerade löften"
+          if git push origin "HEAD:$DEFAULT_BRANCH"; then
+            echo "Push lyckades."
+            exit 0
+          fi
+          echo "::error::Push misslyckades. Starta om körningen mot färsk gren."
+          exit 1
