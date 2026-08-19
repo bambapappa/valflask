@@ -584,27 +584,86 @@ export function sitemapLinks(
   return { urls: [...funna].sort().slice(0, Math.max(0, maxArticles)), index: false };
 }
 
-/**
- * Publiceringsdatum ur artikelns egen HTML. Behövs för de partier vars
- * adresser saknar datum: utan det skulle varje gammal artikel se färsk ut och
- * G4:s datumfönster pröva fel sak. Alla fem WordPress-partierna publicerar
- * antingen `article:published_time`, JSON-LD:s `datePublished` eller ett
- * `<time datetime>` — kontrollerat 2026-08-03.
- */
-export function datumUrHtml(html: string): string | null {
-  const kandidater = [
-    /<meta[^>]+property="article:published_time"[^>]+content="([^"]+)"/i,
-    /<meta[^>]+content="([^"]+)"[^>]+property="article:published_time"/i,
-    /"datePublished"\s*:\s*"([^"]+)"/i,
-    /<time[^>]+datetime="([^"]+)"/i,
-  ];
-  for (const r of kandidater) {
+/** Första träffen bland mönstren som ger ett giltigt datum, som ISO-tid. */
+function forstaGiltigaDatum(html: string, monster: readonly RegExp[]): string | null {
+  for (const r of monster) {
     const m = html.match(r);
     if (!m) continue;
     const d = new Date(m[1]!);
     if (!Number.isNaN(d.getTime())) return d.toISOString();
   }
   return null;
+}
+
+/**
+ * Uppdateringsdatum ur artikelns egen HTML, när sidan bär ett.
+ *
+ * En partisida om abort eller djurskydd skapas en gång och skrivs om inför
+ * varje val. Miljöpartiets djursida bär `datePublished` 2021-11-19 och
+ * `dateModified` 2026-06-23; Liberalernas abortsida `datePublished` 2015-06-24
+ * och `article:modified_time` 2026-05-26. Läser man bara skapandedatumet ser
+ * partiets nu gällande politik ut att vara fem år gammal, och G4:s datumfönster
+ * avvisar den. Den text som står på sidan i dag är den version partiet svarar
+ * för — därför gäller uppdateringsdatumet när det finns. Mänskligt beslut
+ * 2026-08-19.
+ *
+ * `<time>`-formen läses bara när taggen själv säger att den bär en
+ * uppdatering (`class="updated"` eller `aria-label="Uppdaterad"`). Ett
+ * omärkt `<time>` duger inte: MP:s djursida har fyra stycken, och det
+ * första hör till en puff i en artikellista, inte till sidan.
+ */
+export function uppdateringsdatumUrHtml(html: string): string | null {
+  const metadata = forstaGiltigaDatum(html, [
+    /<meta[^>]+property="article:modified_time"[^>]+content="([^"]+)"/i,
+    /<meta[^>]+content="([^"]+)"[^>]+property="article:modified_time"/i,
+    /<meta[^>]+property="og:updated_time"[^>]+content="([^"]+)"/i,
+    /<meta[^>]+content="([^"]+)"[^>]+property="og:updated_time"/i,
+    /"dateModified"\s*:\s*"([^"]+)"/i,
+  ]);
+  if (metadata) return metadata;
+
+  for (const tagg of html.match(/<time[^>]*>/gi) ?? []) {
+    if (!/class="[^"]*\bupdated\b[^"]*"|aria-label="[Uu]ppdaterad"/.test(tagg)) continue;
+    const m = tagg.match(/datetime="([^"]+)"/i);
+    if (!m) continue;
+    const d = new Date(m[1]!);
+    if (!Number.isNaN(d.getTime())) return d.toISOString();
+  }
+
+  // Synlig text är sista utvägen: Liberalerna skriver "(Senast uppdaterad:
+  // 26.05.2026)" i brödtexten, andra skriver ISO-form.
+  const synlig = html.match(
+    /[Ss]enast uppdaterad:?\s*(?:(\d{4}-\d{2}-\d{2})|(\d{2})\.(\d{2})\.(\d{4}))/u,
+  );
+  if (synlig) {
+    const iso = synlig[1] ?? `${synlig[4]}-${synlig[3]}-${synlig[2]}`;
+    const d = new Date(`${iso}T12:00:00.000Z`);
+    if (!Number.isNaN(d.getTime())) return d.toISOString();
+  }
+  return null;
+}
+
+/**
+ * Artikelns datum ur dess egen HTML. Behövs för de partier vars adresser
+ * saknar datum: utan det skulle varje gammal artikel se färsk ut och G4:s
+ * datumfönster pröva fel sak. Alla fem WordPress-partierna publicerar
+ * antingen `article:published_time`, JSON-LD:s `datePublished` eller ett
+ * `<time datetime>` — kontrollerat 2026-08-03.
+ *
+ * Uppdateringsdatumet går före skapandedatumet när sidan bär ett, se
+ * `uppdateringsdatumUrHtml`. Saknas det är skapandedatumet den enda version
+ * som finns, och då gäller det.
+ */
+export function datumUrHtml(html: string): string | null {
+  return (
+    uppdateringsdatumUrHtml(html) ??
+    forstaGiltigaDatum(html, [
+      /<meta[^>]+property="article:published_time"[^>]+content="([^"]+)"/i,
+      /<meta[^>]+content="([^"]+)"[^>]+property="article:published_time"/i,
+      /"datePublished"\s*:\s*"([^"]+)"/i,
+      /<time[^>]+datetime="([^"]+)"/i,
+    ])
+  );
 }
 
 /** Datumet ur en artikeladress, som ISO-tid. G4 prövar publiceringsdatumet,

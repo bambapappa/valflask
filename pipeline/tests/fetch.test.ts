@@ -20,6 +20,7 @@ import {
   findArticleLinks,
   datumUrAdress,
   datumUrHtml,
+  uppdateringsdatumUrHtml,
   harForegaendeValsAr,
   arRegionEllerKommundokument,
   MAX_INDEX_ARTICLES,
@@ -782,6 +783,57 @@ describe("LiveSource med mock-HTTP", () => {
       "2026-06-26T09:43:33.000Z",
     );
     assert.equal(datumUrHtml("<p>ingen tid alls</p>"), null);
+  });
+
+  test("datumUrHtml: uppdateringsdatumet går före skapandedatumet", () => {
+    // Miljöpartiets djursida, ord för ord ur sidans egen HTML 2026-08-19:
+    // skapad 2021, omskriven 2026. Läses skapandedatumet avvisar G4:s
+    // datumfönster partiets nu gällande djurpolitik som fem år gammal.
+    const mp =
+      '<time datetime="2026-06-16" class="post-item__item-date">Puff i lista</time>' +
+      '<script type="application/ld+json">{"datePublished":"2021-11-19T13:16:50+01:00",' +
+      '"dateModified":"2026-06-23T11:53:39+02:00"}</script>' +
+      '<time datetime="2021-11-19T13:16:50+01:00" aria-label="Publicerad">Publicerad</time>' +
+      '<time class="updated" datetime="2026-06-23T11:53:39+02:00" aria-label="Uppdaterad">Uppdaterad</time>';
+    assert.equal(datumUrHtml(mp), "2026-06-23T09:53:39.000Z");
+
+    // Liberalernas abortsida: skapad 2015, omskriven 2026.
+    const liberalerna =
+      '<meta property="article:modified_time" content="2026-05-26T11:42:43+00:00" />' +
+      '<script type="application/ld+json">{"datePublished":"2015-06-24T18:00:20+00:00"}</script>';
+    assert.equal(datumUrHtml(liberalerna), "2026-05-26T11:42:43.000Z");
+  });
+
+  test("uppdateringsdatumUrHtml: bara märkta uppdateringar räknas", () => {
+    // Omärkt <time> i en artikellista är inte sidans uppdateringsdatum. MP:s
+    // djursida har fyra <time>, och det första hör till en puff.
+    assert.equal(
+      uppdateringsdatumUrHtml('<time datetime="2026-06-16" class="post-item__item-date">'),
+      null,
+    );
+    assert.equal(
+      uppdateringsdatumUrHtml('<time datetime="2026-06-23T11:53:39+02:00" aria-label="Uppdaterad">'),
+      "2026-06-23T09:53:39.000Z",
+    );
+    assert.equal(
+      uppdateringsdatumUrHtml('<meta content="2026-05-26T11:42:43+00:00" property="og:updated_time">'),
+      "2026-05-26T11:42:43.000Z",
+    );
+    // Synlig text är sista utvägen: Liberalerna skriver den i brödtexten.
+    assert.equal(
+      uppdateringsdatumUrHtml("<p>(Senast uppdaterad: 26.05.2026)</p>"),
+      "2026-05-26T12:00:00.000Z",
+    );
+    assert.equal(uppdateringsdatumUrHtml("<p>Senast uppdaterad 2026-05-26</p>"), "2026-05-26T12:00:00.000Z");
+    assert.equal(uppdateringsdatumUrHtml('<meta property="article:published_time" content="2026-08-02T13:23:03+00:00" />'), null);
+  });
+
+  test("datumUrHtml: utan uppdatering gäller skapandedatumet", () => {
+    // Finns ingen omskrivning är den skapade versionen den enda som finns.
+    const bara =
+      '<script type="application/ld+json">{"datePublished":"2026-06-26T11:43:32+02:00"}</script>' +
+      '<time datetime="2020-01-01" class="post-item__item-date">Puff i lista</time>';
+    assert.equal(datumUrHtml(bara), "2026-06-26T09:43:32.000Z");
   });
 
   test("index-källa: odaterad adress tar datum ur artikeln", async () => {
