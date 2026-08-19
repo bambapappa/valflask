@@ -1991,16 +1991,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 8,
-      "msek_base": 20,
-      "msek_high": 40,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Prissätter fortsatt återvandringsstöd. Nivån ankrar på senast kända bidragsnivåer (ca 10–20 tkr per person) och lågt utnyttjande, inte partiets egen siffra.",
-      "confidence": 0.4,
-      "calculation": "Antar 300–1 000 personer/år × i snitt 10–20 tkr = 3–20 mkr; resor/admin ca 5–20 mkr. Total 8–40 mkr, bas 20 mkr."
+      "method_note": "Löftet innebär att den nuvarande ordningen behålls, vilket inte ändrar statens utgift. Nivån som fortsätter gälla är partiets egen och redan införd: 350 000 kronor för vuxna och 25 000 för barn sedan den 1 januari 2026.",
+      "confidence": 0.8,
+      "calculation": "Löftet är att fortsätta stödja frivillig återvandring. Återvandringsbidraget finns redan och står på samma sida under rubriken «Det här har vi gjort»: sedan den 1 januari 2026 är det 350 000 kronor för vuxna och 25 000 kronor för barn, dock högst 500 000 kronor för makar eller sambor och högst 600 000 kronor per familj. Nivån är alltså partiets egen och redan införd. Att behålla en ordning som redan gäller ändrar inte statens utgift, och löftet anger ingen höjning, ingen utvidgning och inget nytt anslag. Beloppet är därför noll. Det tidigare beloppet vilade på vårt eget antagande om hur många som skulle söka bidraget, vilket löftet inte säger något om."
     },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0492 (0) ⚠ AVVIKER: belopp 20 men jämförbara ligger på 0"
+    "costReason": "Att fortsätta en ordning som redan gäller är ingen ny kostnad. Nivån utskriven i uträkningen (mänskligt beslut 2026-08-20)."
   },
   {
     "candidate": {

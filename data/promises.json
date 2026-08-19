@@ -26411,7 +26411,7 @@
   },
   {
     "id": "p-2026-0597",
-    "group_id": "g-p-2026-0163",
+    "group_id": null,
     "title": "Ytterligare 5 000 kr till barnfamiljer under nästa mandatperiod",
     "slug": "ytterligare-5-000-kr-till-barnfamiljer-under-nasta-mandatperiod",
     "parties": [
@@ -26432,14 +26432,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "engang",
-      "msek_low": 800,
-      "msek_base": 1400,
-      "msek_high": 2200,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet tolkas som en skattesänkning om totalt 5 000 kr per barnfamilj under mandatperioden, vilket ger 1 250 kr/år. Antal barnfamiljer uppskattas till ca 1,1 miljoner. Intervallet speglar osäkerhet… [period satt till engang: engångssignal…",
-      "confidence": 0.4,
-      "calculation": "~1 100 000 barnfamiljer × (5 000 kr / 4 år) ≈ 1 375 mn kr/år. Base rundas till 1 400. Lågt scenario: färre familjer eller lägre utnyttjande (800 mn kr). Högt scenario: fler familjer eller högre utnyttjande (2 200 mn kr)."
+      "method_note": "Brett inriktningslöfte om hushållens disponibla inkomst. Prissätts inte här — de skattesänkningar som ska ge utfallet ligger som partiets egna löften och prissätts där.",
+      "confidence": 0.7,
+      "calculation": "Citatet lovar ett utfall i hushållets plånbok, inte en åtgärd. Det säger varken vilken skatt eller avgift som ändras, eller att staten betalar ut något — de 5 000 kronorna är summan av vad partiets skattesänkningar tillsammans ska ge en barnfamilj där båda arbetar. Partiet har egna löften om de sänkningarna, och de prissätts var för sig. Ett brett löfte ovanpå dem prissätts inte, eftersom det annars räknar samma pengar en gång till. Den tidigare uträkningen delade 5 000 kronor på fyra år och multiplicerade med ett antaget antal barnfamiljer, och byggde därmed en statlig kostnad ur ett utfall partiet aldrig prissatt."
     },
     "financing_claimed": {
       "described": false,
@@ -26449,7 +26449,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-20",
+        "commit": "0000000",
+        "change": "Beloppet ändrat från 1 400 miljoner kronor som engångsbelopp till noll, och grupplänken till partiets löfte om jobbskatteavdraget borttagen. Citatet lovar ett utfall i hushållets plånbok utan att peka ut någon åtgärd, och de skattesänkningar som ska ge utfallet är partiets egna löften som prissätts var för sig. Det gamla beloppet byggdes ur utfallet och räknade därmed samma pengar en gång till. Grupplänken pekade dessutom bara på en av de sänkningar löftet spänner över. Citatet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
