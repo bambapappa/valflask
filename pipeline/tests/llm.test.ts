@@ -547,3 +547,49 @@ describe("ett lyckat fall igenom syns", () => {
     assert.equal(await klient.complete("fråga", { model: "extract" }), "svaret");
   });
 });
+
+describe("tomt svar är inget svar", () => {
+  /** Så här ser en modell ut som slår i tokentaket medan den tänker högt. */
+  function tomt(finishReason?: string): Response {
+    return resp(200, {
+      choices: [
+        {
+          message: { content: "" },
+          ...(finishReason === undefined ? {} : { finish_reason: finishReason }),
+        },
+      ],
+    });
+  }
+  const ledet = [{ namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" }];
+
+  it("gör om det tomma svaret i stället för att lämna det vidare", async () => {
+    // `typeof "" === "string"`, så vakten mot saknat innehåll släppte igenom
+    // en tom sträng som om modellen hade svarat. Den gick till JSON.parse,
+    // föll där, och posten tappades tyst.
+    let calls = 0;
+    const httpFetch = async () => (++calls === 1 ? tomt("length") : ok('{"ja":true}'));
+    const c = new OpenRouterClient({ led: ledet, httpFetch, ...fast });
+    assert.equal(await c.complete("p", { model: "m" }), '{"ja":true}');
+    assert.equal(calls, 2);
+  });
+
+  it("räknar bara blanktecken som tomt", async () => {
+    let calls = 0;
+    const httpFetch = async () => (++calls === 1 ? ok("  \n\t ") : ok("riktigt"));
+    const c = new OpenRouterClient({ led: ledet, httpFetch, ...fast });
+    assert.equal(await c.complete("p", { model: "m" }), "riktigt");
+    assert.equal(calls, 2);
+  });
+
+  it("bär med finish_reason när modellen aldrig skriver något", async () => {
+    // Utan skälet går "slog i tokentaket" inte att skilja från "modellen
+    // skrev inget", och taket är något vi själva satt.
+    const c = new OpenRouterClient({ led: ledet, httpFetch: async () => tomt("length"), ...fast });
+    await assert.rejects(c.complete("p", { model: "m" }), /finish_reason: length/);
+  });
+
+  it("säger rent ut när finish_reason saknas", async () => {
+    const c = new OpenRouterClient({ led: ledet, httpFetch: async () => tomt(), ...fast });
+    await assert.rejects(c.complete("p", { model: "m" }), /finish_reason: okänt/);
+  });
+});
