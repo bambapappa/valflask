@@ -53266,7 +53266,7 @@
   {
     "id": "p-2026-1171",
     "group_id": null,
-    "title": "Obligatorisk sökinsats vid frånvaro i skolan",
+    "title": "Skolan ska omedelbart söka kontakt vid oanmäld frånvaro",
     "slug": "obligatorisk-sokinsats-vid-franvaro-i-skolan",
     "parties": [
       "l"
@@ -53301,7 +53301,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-20",
+        "commit": "0000000",
+        "change": "Rubriken ändrad från «Obligatorisk sökinsats vid frånvaro i skolan» till «Skolan ska omedelbart söka kontakt vid oanmäld frånvaro». De två löftena bär två olika åtaganden ur samma artikel — det ena att skolan omedelbart ska söka kontakt, det andra att polis och socialtjänst ska agera om barnet inte hittas inom ett dygn — men de gamla rubrikerna var nästan identiska och lästes som samma löfte. Likheten satt i våra egna rubriker, inte i partiets ord. Citat, belopp och webbadress är oförändrade."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -62458,7 +62464,7 @@
   {
     "id": "p-2026-1375",
     "group_id": null,
-    "title": "Obligatorisk sökinsats vid frånvaro",
+    "title": "Polis och socialtjänst ska agera om barnet inte hittas inom ett dygn",
     "slug": "obligatorisk-sokinsats-vid-franvaro",
     "parties": [
       "l"
@@ -62493,7 +62499,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-20",
+        "commit": "0000000",
+        "change": "Rubriken ändrad från «Obligatorisk sökinsats vid frånvaro» till «Polis och socialtjänst ska agera om barnet inte hittas inom ett dygn». De två löftena bär två olika åtaganden ur samma artikel — det ena att skolan omedelbart ska söka kontakt, det andra att polis och socialtjänst ska agera om barnet inte hittas inom ett dygn — men de gamla rubrikerna var nästan identiska och lästes som samma löfte. Likheten satt i våra egna rubriker, inte i partiets ord. Citat, belopp och webbadress är oförändrade."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -64276,14 +64288,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 50,
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 700,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Förstatligandet i sig till stor del omfördelning; anknyter till jämförbart estimat om 10 msek/år. Stärkning ospecificerad ger stort spann.",
+      "method_note": "Förstatligande av personlig assistans. Själva assistansersättningen är en omfördelning mellan kommun och stat och räknas inte som ny kostnad; beloppet avser den administration staten tar över.",
       "confidence": 0.3,
-      "calculation": "Utgår från jämförbart löftes estimat (10 mkr/år). Låg = 5 (ren admin); hög = 50 (viss ambitionshöjning)."
+      "calculation": "Assistans utöver tjugo timmar i veckan betalas redan av staten genom Försäkringskassan och påverkas inte. Grundassistansen — de första tjugo timmarna, grovt 10 000–15 000 brukare till uppskattat 15–20 miljarder kronor — betalas i dag av kommunerna. Att flytta den till staten är en omfördelning mellan offentliga huvudmän och räknas därför inte som en ny kostnad. Statens nya nettokostnad är främst den administration Försäkringskassan tar över: 10 000–15 000 ärenden gånger 10 000–40 000 kronor om året ger 100–600 miljoner kronor per år. Därtill kommer omställning av system och personal, uppskattat till 100–300 miljoner kronor en gång. Basbeloppet 300 miljoner per år speglar mitten av administrationsspannet."
     },
     "financing_claimed": {
       "described": false,
@@ -64293,7 +64305,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-20",
+        "commit": "0000000",
+        "change": "Beloppet rättat från 10 till 300 miljoner kronor per år och spannet från 5–50 till 100–700. Den gamla uträkningen bestod av en enda mening — «utgår från jämförbart löftes estimat (10 mkr/år)» — och hade inget eget led. Den nya räknar den administration staten tar över och skiljer den från assistansersättningen, som är en omfördelning mellan kommun och stat och inte en ny kostnad. Citatet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -72754,14 +72772,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 250,
-      "msek_high": 500,
+      "msek_low": 135,
+      "msek_base": 340,
+      "msek_high": 625,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Spridning av Sluta skjut och sociala insatsgrupper till utsatta områden. Kostnaden uppskattas utifrån antal orter och enhetskostnad, med jämförelse mot liknande sociala insatser.",
       "confidence": 0.4,
-      "calculation": "Antag 15-25 orter för Sluta skjut à 5-15 mkr/år, och 30-50 sociala insatsgrupper à 2-5 mkr/år. Totalt 100-500 mkr/år, med bas 250 mkr. Osäkerhet kring exakt omfattning och samfinansiering med kommuner."
+      "calculation": "Löftet bär två delar. Sluta skjut antas spridas till 15–25 orter till en kostnad av 5–15 miljoner kronor per ort och år: 75–375 miljoner. Sociala insatsgrupper antas inrättas i 30–50 områden till 2–5 miljoner per grupp och år: 60–250 miljoner. Tillsammans 135–625 miljoner kronor per år. Basbeloppet 340 miljoner följer av mittvärdena: 20 orter gånger 10 miljoner plus 40 grupper gånger 3,5 miljoner. Osäkerheten ligger i omfattningen och i hur mycket kommunerna samfinansierar."
     },
     "financing_claimed": {
       "described": false,
@@ -72771,7 +72789,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-20",
+        "commit": "0000000",
+        "change": "Beloppet rättat från 250 till 340 miljoner kronor per år och spannet från 100–500 till 135–625. Uträkningens egen uppräkning — 15–25 orter à 5–15 miljoner plus 30–50 grupper à 2–5 miljoner — summerar till 135–625, inte till de 100–500 som stod skrivet. Basbeloppet följer nu av mittvärdena i uppräkningen. Citatet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -82282,14 +82306,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10,
-      "msek_base": 30,
-      "msek_high": 80,
+      "msek_low": 20,
+      "msek_base": 75,
+      "msek_high": 130,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnaden avser administration och prov för staten. Själva kravet är en lagreglering vars statsfinansiella kostnad är försumbar, men införandet av kunskapstester medför löpande kostnader för….",
       "confidence": 0.4,
-      "calculation": "Antal ansökningar om PUT per år ~50 000–100 000. Antag att en andel ~20–40 % behöver genomföra ett formaliserat kunskapstest (~10 000–40 000 personer). Enhetskostnad för prov: lokaler, personal, bedömning ~1 500–3 000 kr/person, plus systemutveckling/underhåll ~5–10 mkr/år. 10 000 pers × 1,5 tkr + 5 mkr = 20 mkr; 40 000 pers × 3 tkr + 10 mkr = 130 mkr. Intervall dämpat till 10–80 mkr pga osäkerhet om provkonstruktion och utnyttjandegrad. Själva lagkravet budgetmässigt försumbart."
+      "calculation": "Antalet ansökningar om permanent uppehållstillstånd ligger på omkring 50 000–100 000 per år. En andel på 20–40 procent antas behöva göra ett formaliserat kunskapstest, alltså 10 000–40 000 personer. Kostnaden per prov — lokaler, personal och bedömning — antas till 1 500–3 000 kronor, plus 5–10 miljoner kronor om året för att utveckla och underhålla provet. Det ger 10 000 × 1 500 kronor plus 5 miljoner = 20 miljoner i det låga fallet, och 40 000 × 3 000 kronor plus 10 miljoner = 130 miljoner i det höga. Basbeloppet 75 miljoner ligger mitt i det spannet. Ej prissatt: färre beviljade tillstånd och ökad efterfrågan på sfi, som är följder av åtgärden och inte åtgärden själv."
     },
     "financing_claimed": {
       "described": false,
@@ -82299,7 +82323,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-20",
+        "commit": "0000000",
+        "change": "Beloppet rättat från 30 till 75 miljoner kronor per år och spannet från 10–80 till 20–130. Uträkningen härledde 20–130 miljoner ur sina egna antaganden men «dämpade» sedan spannet till 10–80 utan angivet skäl, och basbeloppet 30 följde varken av härledningen eller av det dämpade spannet. Nu står de tal texten faktiskt räknar fram. Citatet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
