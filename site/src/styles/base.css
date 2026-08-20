@@ -61,6 +61,7 @@ body {
   margin: 0;
   font-size: var(--steg-0);
   line-height: var(--radavstand-brod);
+  overflow-wrap: break-word;
 }
 
 /* Trycket är stilla: inga transitions/animationer utom taxametern (DESIGN.md §8) */
@@ -202,6 +203,36 @@ button, .knapp {
   border: 1px solid var(--svarta);
   padding: 0.5rem 1rem;
   cursor: pointer;
+  min-height: 44px;
+}
+
+input, select { min-height: 44px; }
+
+.valkort-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: var(--linje-tabell-ytter);
+  gap: 1px;
+  background: var(--svarta);
+}
+.valkort {
+  display: flex;
+  flex-direction: column;
+  background: var(--papper);
+  color: var(--svarta);
+  padding: 1rem;
+  min-height: 15rem;
+  text-decoration: none;
+}
+.valkort:hover { text-decoration: none; }
+.valkort h2 { font-size: var(--steg-2); }
+.valkort p { margin: 0 0 1rem; }
+.valkort .etikett { margin-top: auto; font-weight: 700; text-decoration: underline; }
+.valkort--markerad { background: var(--gul); }
+
+@media (max-width: 48rem) {
+  .valkort-grid { grid-template-columns: 1fr; }
+  .valkort { min-height: 0; }
 }
 button:hover, .knapp:hover,
 button[aria-pressed="true"], .knapp[aria-pressed="true"] {
