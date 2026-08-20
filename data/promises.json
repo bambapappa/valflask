@@ -52610,13 +52610,13 @@
       "type": "intäktsökning",
       "period": "per_ar",
       "msek_low": 3000,
-      "msek_base": 8000,
-      "msek_high": 25000,
+      "msek_base": 6000,
+      "msek_high": 15000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Partiet anger ingen skattenivå eller bas. Referens: den tidigare värnskatten (5 % på höga inkomster) gav i storleksordningen 5–6 mdkr/år. En bredare beredskapsskatt kan ge mer, därav brett intervall.",
+      "method_note": "Ny skatt för att bidra till finansieringen av försvarsutbyggnaden. Varken sats eller bas är angiven; beloppet är ankrat i värnskattens faktiska utfall, det enda svenska prejudikatet för instrumentet.",
       "confidence": 0.4,
-      "calculation": "Exempel 1: extra statlig skatt på höga arbetsinkomster likt värnskatten, ca 5 mdkr/år. Exempel 2: bred skatt på förvärvsinkomster om 0,5–1 % av ca 2 000–3 000 mdkr ger 10–30 mdkr före beteendeeffekter. Antaget netto efter skatteplanering: 3–25 mdkr, bas 8 mdkr."
+      "calculation": "Löftet anger ingen skattesats och ingen bas — partiet skriver på sin egen sida att skatten ska utredas och införas. Det närmaste svenska prejudikatet är värnskatten: fem procent extra statlig inkomstskatt på höga inkomster, som gav omkring sex miljarder kronor om året innan den avskaffades 2020. Basbeloppet sätts till den nivån, eftersom det är den enda svenska siffran för just det här instrumentet. Låg 3 000 miljoner om skatten träffar en smalare grupp än värnskatten gjorde. Hög 15 000 miljoner om den sätts högre eller bredare — men inte som en bred skatt på alla förvärvsinkomster, eftersom partiet säger att vanliga hushåll inte ska drabbas. Beteendeeffekter och skatteplanering minskar utfallet och ryms i spannets nedre del."
     },
     "financing_claimed": {
       "described": false,
@@ -52626,7 +52626,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-20",
+        "commit": "0000000",
+        "change": "Beloppet rättat från 8 000 till 6 000 miljoner kronor per år och spannet från 3 000–25 000 till 3 000–15 000. Den gamla uträkningen ställde två helt olika skattedesigner bredvid varandra — en värnskattelik på ungefär 5 miljarder och en bred skatt på alla förvärvsinkomster på 10–30 miljarder — och satte basen 8 miljarder mitt emellan, i ett spann som spänner över en faktor åtta. Basen följde inte av någotdera exemplet. Beloppet är nu ankrat i värnskattens faktiska utfall, omkring 6 miljarder kronor om året innan den avskaffades 2020. Takbeloppet är sänkt eftersom en bred skatt på alla förvärvsinkomster strider mot partiets egen utfästelse att vanliga hushåll inte ska drabbas. Citatet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -86573,6 +86579,51 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1908",
+    "group_id": null,
+    "title": "Bygga ut cykelvägar i hela landet",
+    "slug": "bygga-ut-cykelvagar-i-hela-landet",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Bygga ut cykelvägar i hela landet och förenkla för kommuner att bygga.",
+    "date_stated": "2026-08-20",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/cykel",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-20T21:29:38.510Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 1000,
+      "msek_high": 2500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statlig medfinansiering av cykelvägsutbyggnad; 'förenkla för kommuner' är regeländring utan egen kostnad. Omfattning ej angiven — stor osäkerhet.",
+      "confidence": 0.4,
+      "calculation": "Antagande: statligt program som medfinansierar ca 100–200 km nya/ombyggda cykelvägar per år. Byggnadskostnad ca 8–20 mkr/km beroende på landsbygd/tätort ⇒ 800–4 000 mkr/år brutto. Statlig andel antas 50–100 % ⇒ ca 400–4 000 msek. Befintligt statligt cykelanslag ligger betydligt lägre, så löftet implicerar kraftig upptrappning; konservativt spann 300–2 500 msek/år. 'Förenkla för kommuner att bygga' bedöms som regeländring med försumbar direkt kostnad och ingår inte i beloppet."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-20T21"
     }
   }
 ]
