@@ -5,11 +5,13 @@ interface Props {
   count?: number;
   date?: string;
   taxameterValue?: number;
+  headingLevel?: "h1" | "h2";
 }
-const { total, subtitle, count, date, taxameterValue } = Astro.props;
+const { total, subtitle, count, date, taxameterValue, headingLevel = "h1" } = Astro.props;
+const Heading = headingLevel;
 ---
 <div class="platta lopsedel">
-  <h1 class="lopsedel__title">{subtitle || 'FLÄSKVÅGEN'}</h1>
+  <Heading class="lopsedel__title">{subtitle || 'FLÄSKVÅGEN'}</Heading>
   <div class="num-stor belopp" {...(taxameterValue != null ? { "data-taxameter": String(taxameterValue) } : {})}>{total}</div>
   <div class="lopsedel__meta">
     för de fyra åren 2027–2030{count ? ` · ${count} löften` : ''}{date ? ` · ${date}` : ''}
