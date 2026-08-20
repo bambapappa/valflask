@@ -204,11 +204,17 @@ export class OpenRouterClient implements LlmClient {
       // litet JSON-objekt på några hundra tokens. Mätt 2026-08-20, samma dag
       // förslagskörningen fallit tre dygn i rad på kredit.
       //
-      // Taket är generöst mot alla våra svar: extraktionen ger högst fem
-      // löften med citat på 40 ord, kopplingen ett objekt, kostnaden en
-      // uträkning på 800 tecken. Slår ett svar ändå i taket blir JSON:en
-      // trunkerad och paret räknas som fallet — det prövas om nästa körning,
-      // precis som vid vilket annat fel som helst.
+      // Taket är generöst mot SVARET: extraktionen ger högst fem löften med
+      // citat på 40 ord, kopplingen ett objekt, kostnaden en uträkning på
+      // 800 tecken.
+      //
+      // Men taket gäller inte bara svaret. Hos en modell som tänker högt
+      // dras resonemanget från samma budget, och tar det slut kommer
+      // `content` tillbaka TOM — inte trunkerad, som det stod här förut.
+      // Ett tomt svar är svårare att känna igen än ett halvt, och därför
+      // avvisas det uttryckligen där svaret läses, med `finish_reason` i
+      // felet. Höj `LLM_MAX_TOKENS` om ett led visar sig tänka mer än det
+      // ryms.
       max_tokens: opts?.maxTokens ?? Number(process.env["LLM_MAX_TOKENS"] ?? "4096"),
     };
     if (opts?.responseFormat) {
@@ -310,11 +316,36 @@ export class OpenRouterClient implements LlmClient {
           }
 
           const data = (await res.json()) as {
-            choices?: Array<{ message?: { content?: unknown } }>;
+            choices?: Array<{ message?: { content?: unknown }; finish_reason?: unknown }>;
           };
-          const content = data?.choices?.[0]?.message?.content;
+          const val = data?.choices?.[0];
+          const content = val?.message?.content;
           if (typeof content !== "string") {
             throw new Error("Inget innehåll i LLM-svaret");
+          }
+          // ETT TOMT SVAR ÄR INGET SVAR.
+          //
+          // `typeof "" === "string"`, så den vakten ovan släpper igenom en
+          // tom sträng som om modellen hade svarat. Den gick vidare till
+          // JSON.parse, föll där, och paret räknades som obesvarat — utan
+          // att något i loggen sa att modellen aldrig skrev ett tecken.
+          //
+          // Mätt 2026-08-20: tre av trettiofyra anrop mot glm-5.2 kom
+          // tillbaka tomma, och alla tre gällde par som en människa hade
+          // godkänt. De föll ur mätningen som "fel" i stället för att synas
+          // som missade kopplingar, vilket lyfte träffsiffran från 78 till
+          // 93 procent.
+          //
+          // `finish_reason` följer med i felet därför att det är det enda
+          // som skiljer "slog i tokentaket" från "modellen skrev inget".
+          // Utan det går de två inte att skilja åt, och taket är något vi
+          // själva satt.
+          //
+          // Kastet är avsiktligt retrybart: ett tomt svar kan vara
+          // övergående, och ett omförsök som lyckas är en räddad koppling.
+          if (content.trim() === "") {
+            const skal = typeof val?.finish_reason === "string" ? val.finish_reason : "okänt";
+            throw new Error(`Tomt svar från modellen (finish_reason: ${skal})`);
           }
           // Svarade någon annan än primären? Då är primären nere, och det
           // syns annars ingenstans: körningen ser frisk ut ända till

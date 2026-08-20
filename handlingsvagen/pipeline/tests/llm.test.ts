@@ -302,3 +302,45 @@ test("nedkylningen har ett tak — ett svarshuvud får inte släcka ett led i dy
   strypt = false;
   assert.equal(await klient.complete("tre", { model: "m" }), "primären igen");
 });
+
+/** Svar med tomt innehåll — hur en modell som slår i tokentaket ser ut. */
+const svarTomt = (finishReason?: string) =>
+  svar(200, {
+    text: JSON.stringify({
+      choices: [
+        {
+          message: { content: "" },
+          ...(finishReason === undefined ? {} : { finish_reason: finishReason }),
+        },
+      ],
+    }),
+  });
+
+test("tomt svar är inget svar — det görs om", async () => {
+  // `typeof "" === "string"`, så vakten mot saknat innehåll släppte igenom
+  // en tom sträng som om modellen hade svarat. Den gick vidare till
+  // JSON.parse, föll där, och paret tappades tyst.
+  let n = 0;
+  const { klient } = bygg(() => (++n === 1 ? svarTomt("length") : svarOk('{"ja":true}')));
+  assert.equal(await klient.complete("a", { model: "m" }), '{"ja":true}');
+  assert.equal(n, 2, "det tomma svaret ska ha gjorts om, inte lämnats vidare");
+});
+
+test("bara blanktecken räknas också som tomt", async () => {
+  let n = 0;
+  const { klient } = bygg(() => (++n === 1 ? svarOk("  \n\t ") : svarOk("riktigt")));
+  assert.equal(await klient.complete("a", { model: "m" }), "riktigt");
+  assert.equal(n, 2);
+});
+
+test("finish_reason följer med felet när modellen aldrig skriver något", async () => {
+  // Utan skälet går "slog i tokentaket" inte att skilja från "modellen skrev
+  // inget", och taket är något vi själva satt.
+  const { klient } = bygg(() => svarTomt("length"));
+  await assert.rejects(klient.complete("a", { model: "m" }), /finish_reason: length/);
+});
+
+test("saknas finish_reason sägs det rent ut", async () => {
+  const { klient } = bygg(() => svarTomt());
+  await assert.rejects(klient.complete("a", { model: "m" }), /finish_reason: okänt/);
+});

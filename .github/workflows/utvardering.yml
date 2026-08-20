@@ -31,6 +31,10 @@ on:
         description: "Antal par i urvalet — hälften ja, hälften nej"
         required: false
         default: "40"
+      max_tokens:
+        description: "Tak på svarets längd. Hos en modell som tänker högt dras resonemanget från samma budget, och tar den slut kommer svaret tomt."
+        required: false
+        default: "4096"
 permissions:
   contents: read
 concurrency: { group: utvardering, cancel-in-progress: false }
@@ -65,13 +69,14 @@ jobs:
           LLM_API_KEY: ${{ inputs.led == 'zai' && secrets.LLM_ZAI_API_KEY || (inputs.led == 'sekundar' && secrets.LLM_FALLBACK_API_KEY || secrets.LLM_API_KEY) }}
           MODELL: ${{ inputs.modell }}
           ANTAL: ${{ inputs.antal || '40' }}
+          LLM_MAX_TOKENS: ${{ inputs.max_tokens || '4096' }}
         run: |
           set -uo pipefail
           if [ -z "${LLM_API_KEY:-}" ] || [ -z "${LLM_BASE_URL:-}" ]; then
             echo "Ledet '${{ inputs.led }}' saknar nyckel eller adress i detta repo."
             exit 1
           fi
-          echo "led: ${{ inputs.led }} · modell: $MODELL · urval: $ANTAL par"
+          echo "led: ${{ inputs.led }} · modell: $MODELL · urval: $ANTAL par · tokentak: $LLM_MAX_TOKENS"
           node --import tsx/esm scripts/utvardera-modell.mts \
             --modell "$MODELL" --antal "$ANTAL" --json /tmp/utvardering.json \
             | tee /tmp/utvardering.txt
