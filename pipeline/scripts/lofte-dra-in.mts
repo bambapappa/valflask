@@ -29,6 +29,7 @@ import {
   rattelsePost,
   type Indragningsrad,
 } from "../src/indragning.ts";
+import { beroendeAv, type Ankarlofte } from "../src/ankaren.ts";
 import { pathToFileURL } from "node:url";
 
 /**
@@ -132,6 +133,25 @@ if (grupperSomBytteBarare.length > 0) {
   );
 }
 
+// VAD LUTAR SIG MOT DET SOM FÖRSVINNER?
+//
+// Ett löfte utan egen siffra prissätts ofta genom att låna ett annat partis
+// angivna belopp, och lånet står utskrivet i uträkningen. Dras långivaren
+// tillbaka blir låntagaren föräldralös i samma stund — uträkningen hänvisar
+// till ett löfte som inte finns, och beloppet står kvar som om ingenting hänt.
+// Det upptäcktes först vid ett svep långt efteråt; nu frågas det före.
+const ankrare = beroendeAv(loften as unknown as Ankarlofte[], [...drasIn]);
+if (ankrare.length > 0) {
+  console.log(
+    `\n⚠ ${ankrare.length} löfte(n) ankrar i det som dras tillbaka. De bär ett lånat` +
+      ` belopp som blir utan källa, och ska rättas i samma pass:`,
+  );
+  for (const a of ankrare) {
+    console.log(`  ${a.id} [${a.parties.join(",").toUpperCase()}] lånar ${a.belopp} mkr av ${a.langivare.toUpperCase()}`);
+    console.log(`     «${a.mening.slice(0, 140)}»`);
+  }
+}
+
 const post = rattelsePost(
   rader.map((r) => ({ lofte: byId.get(r.id)!, skal: r.skal })),
   datum,
@@ -170,5 +190,9 @@ console.log(
   "Kvar att göra för hand:\n" +
     "  · backfilla den riktiga commit-hashen i historikposterna och i rättelseposten,\n" +
     "    och räkna om data_hash i samma commit (andra commiten)\n" +
-    "  · bygg om läskopian i Handlingsvågen — den följer Fläskvågens löften",
+    "  · bygg om läskopian i Handlingsvågen — den följer Fläskvågens löften" +
+    (ankrare.length > 0
+      ? `\n  · RÄTTA DE ${ankrare.length} LÖFTEN SOM ANKRADE I DET INDRAGNA (listade ovan) —\n` +
+        "    deras belopp vilar nu på ett löfte som inte finns"
+      : ""),
 );
