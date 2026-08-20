@@ -15830,13 +15830,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 1800,
-      "msek_base": 3000,
+      "msek_base": 1950,
       "msek_high": 9000,
       "basis": "llm_estimat",
       "basis_url": "https://www.socialstyrelsen.se/om-socialstyrelsen/pressrum/press/miljarder-i-statsbidrag-lyft--for-aldreomsorgen/",
-      "method_note": "Höjda riktade statsbidrag till äldreomsorgen. Löftet anger ingen nivå, så beloppet vilar på storleken hos statens befintliga bidrag. Delat löfte med Socialdemokraternas löfte om bättre villkor och fler anställda i äldreomsorgen — samma politik räknas en gång.",
+      "method_note": "Höjda riktade statsbidrag till äldreomsorgen. Löftet anger ingen nivå; basbeloppet är lånat från Socialdemokraternas egen angivna siffra för samma bemanning, och lånet står utskrivet i uträkningen. Delat löfte med Socialdemokraternas löften om bemanning i äldreomsorgen — samma politik räknas en gång.",
       "confidence": 0.4,
-      "calculation": "Löftet säger att ambitionerna i äldreomsorgen ska höjas tydligt, men anger ingen nivå. Utan nivå prissätts löftet som ett nytt riktat statsbidrag av vanlig storlek. Kommuner och regioner delade på närmare nio miljarder kronor i riktade statsbidrag till äldreomsorgen 2023, fördelat på sex bidrag, och det största enskilda — Äldreomsorgslyftet — ligger på omkring 1,8 miljarder kronor per år. Basbeloppet läggs på 3 000 miljoner kronor per år, alltså ett nytt bidrag som är större än det största befintliga. Låg: 1 800, ett bidrag i samma storlek som Äldreomsorgslyftet. Hög: 9 000, en fördubbling av allt staten i dag öronmärker för äldreomsorgen. Lönerna i äldreomsorgen sätts av kommunerna och deras motparter, inte av staten."
+      "calculation": "Löftet säger att ambitionerna i äldreomsorgen ska höjas tydligt, men anger ingen nivå. Basbeloppet är lånat, och lånet står här utskrivet: Socialdemokraterna anger själva 1,95 miljarder kronor mer än regeringen till ökad bemanning i äldreomsorgen, de två löftena är samma politik och räknas en gång. Det är alltså ett annat partis siffra — Liberalerna har inte angett någon. Spannets bottenvärde 1 800 miljoner kronor är ett bidrag i samma storlek som Äldreomsorgslyftet, det största befintliga riktade bidraget. Taket 9 000 miljoner kronor motsvarar en fördubbling av allt staten i dag öronmärker för äldreomsorgen, och står kvar därför att löftet talar om tydligt höjda ambitioner utan att säga hur mycket. Lönerna i äldreomsorgen sätts av kommunerna och deras motparter, inte av staten."
     },
     "financing_claimed": {
       "described": false,
@@ -15856,6 +15856,11 @@
         "date": "2026-07-28",
         "change": "Beloppet omräknat från 5 000 till 3 000 miljoner kronor per år, och löftet grupplänkat med Socialdemokraternas löfte om bättre villkor och fler anställda i äldreomsorgen: samma politik, ingen av dem med angiven nivå. Beloppet vilar nu på storleken hos statens befintliga riktade bidrag till äldreomsorgen i stället för på en andel av vad äldreomsorgen kostar totalt.",
         "commit": "89f3c3cc6f4cd1fe5c37095210baf4eb00a2ee30"
+      },
+      {
+        "date": "2026-08-19",
+        "change": "Beloppet omräknat från 3 000 till 1 950 miljoner kronor per år. Det gamla talet var vår egen uppskattning av vad ett nytt riktat statsbidrag brukar kosta, och samma tal bar tidigare Socialdemokraternas löfte om samma bemanning. När det löftet fick partiets egen siffra, 1,95 miljarder kronor, följde inte den här posten med — den stod kvar på ett tal originalet hade lämnat. Basbeloppet vilar nu på samma grund som resten av gruppen, och att siffran är lånad från ett annat parti står utskrivet i uträkningen. Citatet är oförändrat.",
+        "commit": "564e3167"
       }
     ],
     "extraction": {
@@ -26406,7 +26411,7 @@
   },
   {
     "id": "p-2026-0597",
-    "group_id": "g-p-2026-0163",
+    "group_id": null,
     "title": "Ytterligare 5 000 kr till barnfamiljer under nästa mandatperiod",
     "slug": "ytterligare-5-000-kr-till-barnfamiljer-under-nasta-mandatperiod",
     "parties": [
@@ -26427,14 +26432,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "engang",
-      "msek_low": 800,
-      "msek_base": 1400,
-      "msek_high": 2200,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet tolkas som en skattesänkning om totalt 5 000 kr per barnfamilj under mandatperioden, vilket ger 1 250 kr/år. Antal barnfamiljer uppskattas till ca 1,1 miljoner. Intervallet speglar osäkerhet… [period satt till engang: engångssignal…",
-      "confidence": 0.4,
-      "calculation": "~1 100 000 barnfamiljer × (5 000 kr / 4 år) ≈ 1 375 mn kr/år. Base rundas till 1 400. Lågt scenario: färre familjer eller lägre utnyttjande (800 mn kr). Högt scenario: fler familjer eller högre utnyttjande (2 200 mn kr)."
+      "method_note": "Brett inriktningslöfte om hushållens disponibla inkomst. Prissätts inte här — de skattesänkningar som ska ge utfallet ligger som partiets egna löften och prissätts där.",
+      "confidence": 0.7,
+      "calculation": "Citatet lovar ett utfall i hushållets plånbok, inte en åtgärd. Det säger varken vilken skatt eller avgift som ändras, eller att staten betalar ut något — de 5 000 kronorna är summan av vad partiets skattesänkningar tillsammans ska ge en barnfamilj där båda arbetar. Partiet har egna löften om de sänkningarna, och de prissätts var för sig. Ett brett löfte ovanpå dem prissätts inte, eftersom det annars räknar samma pengar en gång till. Den tidigare uträkningen delade 5 000 kronor på fyra år och multiplicerade med ett antaget antal barnfamiljer, och byggde därmed en statlig kostnad ur ett utfall partiet aldrig prissatt."
     },
     "financing_claimed": {
       "described": false,
@@ -26444,7 +26449,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-20",
+        "commit": "3065aafd",
+        "change": "Beloppet ändrat från 1 400 miljoner kronor som engångsbelopp till noll, och grupplänken till partiets löfte om jobbskatteavdraget borttagen. Citatet lovar ett utfall i hushållets plånbok utan att peka ut någon åtgärd, och de skattesänkningar som ska ge utfallet är partiets egna löften som prissätts var för sig. Det gamla beloppet byggdes ur utfallet och räknade därmed samma pengar en gång till. Grupplänken pekade dessutom bara på en av de sänkningar löftet spänner över. Citatet är oförändrat."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -28681,7 +28692,7 @@
   },
   {
     "id": "p-2026-0640",
-    "group_id": null,
+    "group_id": "g-bistand-enprocentsmalet",
     "title": "Återställ enprocentsmålet för bistånd och prioritera SRHR och hbtqi-rättigheter",
     "slug": "aterstall-enprocentsmalet-for-bistand-och-prioritera-srhr-och-hbtqi-rattigheter",
     "parties": [
@@ -28718,12 +28729,22 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-08-05",
         "commit": "150deaa980e7f1959cf38c1ed1df084336f5af2f",
         "change": "Publicerat ur granskningskön efter genomläsning post för post."
+      },
+      {
+        "date": "2026-08-19",
+        "commit": "cb793992",
+        "change": "Löftet är tillbakadraget: Samma parti lovar samma sak i sitt politiska handlingsprogram, och den posten bär löftet i sin renaste form: «Minst en procent av BNI ska gå till bistånd». Den här posten är en upprepning av samma enprocentsmål i en nyhetstext, och hela dess belopp är satt för just det målet. Ett parti som lovar samma sak två gånger har gjort ett löfte, inte två."
+      },
+      {
+        "date": "2026-08-19",
+        "commit": "cb793992",
+        "change": "Löftet grupplänkat med de övriga löftena om enprocentsmålet i biståndet. Det bar samma politik och samma belopp som dem men stod utanför gruppen, vilket är hela skälet till att upprepningen kunde räknas en gång till i rikssumman. Länken skrivs in nu för att den är sann om löftet och för att beläggen ska kunna följa med till det löfte som står kvar."
       }
     ],
     "extraction": {
@@ -46727,7 +46748,7 @@
   },
   {
     "id": "p-2026-1027",
-    "group_id": null,
+    "group_id": "g-aldreomsorg-satsning",
     "title": "Stärka bemanningen och arbetsmiljön i äldreomsorgen",
     "slug": "starka-bemanningen-och-arbetsmiljon-i-aldreomsorgen",
     "parties": [
@@ -46747,13 +46768,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 1500,
-      "msek_base": 3000,
+      "msek_base": 1950,
       "msek_high": 5000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löfte utan nivå; prissatt som riktade statsbidrag till kommuner för höjd bemanning och arbetsmiljö, i linje med jämförbara äldreomsorgslöften (~3 mdkr/år).",
+      "method_note": "Löfte utan nivå, prissatt som riktade statsbidrag till kommuner för höjd bemanning och arbetsmiljö. Basbeloppet är lånat från Socialdemokraternas egen angivna siffra för samma bemanning, och lånet står utskrivet i uträkningen. Delat löfte med Socialdemokraternas och Liberalernas löften om bemanningen i äldreomsorgen — samma politik räknas en gång.",
       "confidence": 0.5,
-      "calculation": "Ingen nivå anges i löftet. Anknytning till jämförbart publicerat löfte om 'fler kollegor + bättre villkor i äldreomsorgen' ≈ 3 000 msek/år. Kontrollkalkyl: ~230 000 anställda i äldreomsorgen × ~450 tkr i total lönekostnad ≈ ~100 mdkr personalkostnad; en bemanningshöjning om ~1,5–2 % via riktade statsbidrag ≈ 1 500–2 000 msek, tillkommer arbetsmiljö- och fortbildningssatsningar upp mot ~5 000 msek. Base 3 000 msek följer jämförbara löften; spannet speglar okänd ambitionsnivå. Min uppskattning är antalet mottagare/kostnadsnivå — partiet anger ingen egen siffra."
+      "calculation": "Ingen nivå anges i löftet. Kontrollkalkyl: omkring 230 000 anställda i äldreomsorgen gånger cirka 450 000 kronor i total lönekostnad ger ungefär 100 miljarder kronor i personalkostnad; en bemanningshöjning på 1,5–2 procent via riktade statsbidrag blir då 1 500–2 000 miljoner kronor. Basbeloppet är lånat, och lånet står här utskrivet: Socialdemokraterna anger själva 1,95 miljarder kronor mer än regeringen till ökad bemanning i äldreomsorgen, och det är samma politik som räknas en gång. Siffran ligger inom kontrollkalkylens eget intervall. Taket 5 000 miljoner kronor står för att löftet också nämner arbetsmiljön, som kan bära fortbildnings- och arbetsmiljösatsningar utöver bemanningen. Miljöpartiet anger ingen egen siffra."
     },
     "financing_claimed": {
       "described": false,
@@ -46763,7 +46784,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Beloppet omräknat från 3 000 till 1 950 miljoner kronor per år, och löftet grupplänkat med Socialdemokraternas och Liberalernas löften om samma bemanning. Det gamla talet valdes för att det följde ett jämförbart publicerat löfte, och det löftet har sedan dess fått partiets egen siffra — 1,95 miljarder kronor — utan att den här posten följde med. Postens egen kontrollkalkyl landade redan på 1 500–2 000 miljoner kronor, så det nya beloppet stämmer med uträkningens egna steg. Citatet är oförändrat.",
+        "commit": "564e3167"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -47585,7 +47612,7 @@
   },
   {
     "id": "p-2026-1046",
-    "group_id": null,
+    "group_id": "g-aldreomsorgslyftet",
     "title": "Permanent och förstärkt Äldreomsorgslyft",
     "slug": "permanent-och-forstarkt-aldreomsorgslyft",
     "parties": [
@@ -47604,14 +47631,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 800,
-      "msek_base": 1400,
-      "msek_high": 2500,
+      "msek_low": 1500,
+      "msek_base": 2000,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Pris satt som befintligt statsbidrag för Äldreomsorgslyftet (senast ca 1,4 mdkr/år) med spann för att inkludera osäkerhet om nivå och förstärkning. Åtgärden i sig, inte samhällsföljder.",
-      "confidence": 0.4,
-      "calculation": "Äldreomsorgslyftets statsbidrag har de senaste åren legat på ca 1,2–1,6 mdkr/år; bas 1 400 mkr. Förstärkning och permanentning antas kunna höja till 2,5 mdkr eller minska till 0,8 mdkr beroende på ambitionsnivå. 0,8–2,5 mdkr/år."
+      "method_note": "Äldreomsorgslyftet permanentas och förstärks. Löftet anger ingen nivå, så beloppet vilar på anslagets senaste och planerade storlek. Delat löfte med partiets löfte om samma permanentning på hemtjänstsidan — samma politik räknas en gång.",
+      "confidence": 0.65,
+      "calculation": "Löftet pekar ut en bestämd åtgärd — Äldreomsorgslyftet — men anger ingen nivå, så beloppet ankras i vad åtgärden senast faktiskt kostade: 2025 års anslag på 1,8 miljarder kronor och den planerade permanentningen från 2026 på 2,1 miljarder. Basbeloppet 2 000 miljoner kronor ligger mellan de två, med 1 500 som botten och 3 000 som tak för utökning eller nedskärning. Partiet anger ingen egen siffra, och sidorna nämner bara volymen: över 25 000 personer har påbörjat en utbildning."
     },
     "financing_claimed": {
       "described": false,
@@ -47621,7 +47648,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Beloppet omräknat från 1 400 till 2 000 miljoner kronor per år, och löftet grupplänkat med partiets löfte om samma permanentning av Äldreomsorgslyftet på hemtjänstsidan: samma politik, och den kan bara genomföras en gång. Det gamla beloppet vilade på ett historiskt snitt av anslaget, 1,2–1,6 miljarder kronor. Ankaret är nu 2025 års anslag på 1,8 miljarder och den planerade permanentningen från 2026 på 2,1 miljarder, alltså vad åtgärden senast kostade och är planerad att kosta. Citatet är oförändrat.",
+        "commit": "564e3167"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -61424,14 +61457,14 @@
     "category": "välfärd",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 1463,
+      "period": "per_ar",
+      "msek_low": 1500,
       "msek_base": 1950,
-      "msek_high": 2633,
+      "msek_high": 2600,
       "basis": "parti",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 1 950 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 1 463–2 633 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
+      "method_note": "Partiets egen siffra: 1,95 miljarder kronor mer än regeringen till ökad bemanning i äldreomsorgen. Läses som en årlig nivå. Delat löfte med partiets löfte om bättre villkor och fler kollegor i äldreomsorgen — samma politik räknas en gång.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 1 950 miljoner kronor mer än regeringen till ökad bemanning inom äldreomsorgen. Den siffran är partiets och byts inte ut mot en egen. Källan skriver ut ett budgetår, 2026, men löftet gäller bemanningen och inte en engångsförstärkning — en tjänst som tillsätts ett år finns kvar nästa. Beloppet läses därför som en årlig nivå. Spannet 1 500–2 600 miljoner kronor är vårt och står för att bara ett år är utskrivet.",
       "confidence": 0.5
     },
     "financing_claimed": {
@@ -61442,7 +61475,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Perioden ändrad från engångsbelopp till årlig nivå, och spannet harmoniserat med partiets övriga löfte om samma bemanning. Källan skriver ut budgetåret 2026, men löftet gäller bemanningen och inte en engångsförstärkning. Beloppet 1 950 miljoner kronor och citatet är oförändrade.",
+        "commit": "564e3167"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -70721,7 +70760,7 @@
   },
   {
     "id": "p-2026-1560",
-    "group_id": null,
+    "group_id": "g-aldreomsorgslyftet",
     "title": "Permanenta Äldreomsorgslyftet för betald utbildning till undersköterska",
     "slug": "permanenta-aldreomsorgslyftet-for-betald-utbildning-till-underskoterska",
     "parties": [
@@ -70745,7 +70784,7 @@
       "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Äldreomsorgslyftet har de senaste åren anslagits med 1,8–2,4 mdkr årligen. Att permanenta det innebär en årlig kostnad i samma storleksordning. Spannet fångar osäkerhet om framtida anslagsnivå.",
+      "method_note": "Äldreomsorgslyftet permanentas. Beloppet vilar på 2025 års anslag och den planerade permanentningen från 2026. Delat löfte med partiets löfte om samma permanentning på äldreomsorgssidan — samma politik räknas en gång.",
       "confidence": 0.65,
       "calculation": "Baserat på 2025 års anslag på 1,8 mdkr och planerad permanentning från 2026 på 2,1 mdkr. Använder 2 mdkr som bas, med låg 1,5 och hög 3 mdkr för eventuell utökning eller nedskärning."
     },
@@ -70757,7 +70796,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Löftet grupplänkat med partiets löfte om samma permanentning av Äldreomsorgslyftet på äldreomsorgssidan: samma politik, och den kan bara genomföras en gång. Beloppet 2 000 miljoner kronor per år och citatet är oförändrade — gruppen vilar på den här postens ankare.",
+        "commit": "564e3167"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -85780,6 +85825,678 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-08-19T14"
+    }
+  },
+  {
+    "id": "p-2026-1894",
+    "group_id": null,
+    "title": "Anslå 350 miljoner kronor årligen till socialtjänsten för skyddat boende",
+    "slug": "ansla-350-miljoner-kronor-arligen-till-socialtjansten-for-skyddat-boende",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "För att socialtjänsten ska ges möjlighet till detta, bör det enligt Vänsterpartiet anslås 350 miljoner kronor årligen.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/mans-vald-mot-kvinnor/",
+      "domain": "vansterpartiet.se",
+      "archive_url": "https://web.archive.org/web/20260814190345/https://www.vansterpartiet.se/var-politik/politik-a-o/mans-vald-mot-kvinnor/",
+      "fetched_at": "2026-08-19T21:25:59.367Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 263,
+      "msek_base": 350,
+      "msek_high": 473,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Belopp angivet i källtext.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 350 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 263–473 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren.",
+      "confidence": 0.7
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1895",
+    "group_id": "g-c-forsvarsanslaget",
+    "title": "Höja försvarsanslaget till 3,5% av BNP till 2030",
+    "slug": "hoja-forsvarsanslaget-till-3-5-av-bnp-till-2030",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Nå försvarsanslaget påminst 3,5 procent av BNP till 2030.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/forsvar",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:47:54.962Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50000,
+      "msek_base": 65000,
+      "msek_high": 120000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Estimatet bygger på dagens BNP-prognos och befintlig försvarsbudget. 3,5 % av BNP 2030 minus dagens nivå, som redan överstiger 2 %. Högre spann viktar in tillväxt och Natos 2 %-mål underifrån…",
+      "confidence": 0.6,
+      "calculation": "Dagens försvarsanslag: ~138 mdkr (2025). BNP-prognos 2030: ~6 300 mdkr. 3,5 % av BNP 2030 = 220,5 mdkr. Merkostnad: 220,5 - 138 = 82,5 mdkr. Avrundat spann 50–120 mdkr för att fånga osäkerhet i BNP-utveckling och att dagens anslag kan växa ytterligare innan 2030."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Löftet grupplänkat med partiets löften om att modernisera försvarsgrenarna och att stärka det civila försvaret: samma politik, och den kan bara genomföras en gång. Det här löftet är det enda av de tre som bär en nivå partiet självt satt — minst 3,5 procent av BNP till 2030 — och den nivån rymmer de andra två. Beloppet är oförändrat.",
+        "commit": "cb793992"
+      }
+    ],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1896",
+    "group_id": "g-c-forsvarsanslaget",
+    "title": "Modernisera armén, marinen och flygvapnet",
+    "slug": "modernisera-arm-n-marinen-och-flygvapnet",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Utveckla och modernisera armén, marinen och flygvapnet med mer personal och bättre materiel.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/forsvar",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:42.869Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 15000,
+      "msek_high": 45000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Saknar nivå; prissätts som årligt tillskott i nivå med senaste försvarsanslagsökningarna. Bredd och osäkerhet ger stort spann.",
+      "confidence": 0.35,
+      "calculation": "Senaste årens svenska försvarslyft har legat kring 10–20 mdkr/år. Löftet gäller alla tre försvarsgrenar med mer personal och bättre materiel, så ett påslag om 0,5–3 sådana nivåer antas: ~5–45 mdkr/år, bas 15."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Löftet om att modernisera armén, marinen och flygvapnet grupplänkat med partiets löfte om att nå försvarsanslaget på minst 3,5 procent av BNP till 2030: samma politik, och den kan bara genomföras en gång. Löftet anger ingen egen nivå, medan anslagsmålet gör det, och anslagsmålet rymmer den här delen. Beloppet är oförändrat men räknas inte utöver gruppens.",
+        "commit": "cb793992"
+      }
+    ],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1897",
+    "group_id": "g-c-forsvarsanslaget",
+    "title": "Stärka det civila försvaret genom ökade resurser",
+    "slug": "starka-det-civila-forsvaret-genom-okade-resurser",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Stärka det civila försvaret genom ökade resurser till bland annat kommuner och regioner, för att hela samhället ska klara en kris.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/forsvar",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:43.314Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 3000,
+      "msek_high": 6000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp. Prissätter som utökade statsbidrag till kommuner/regioner för civilt försvar; betydligt smalare än partiets löfte om att rusta upp försvaret till fem procent av BNP.",
+      "confidence": 0.35,
+      "calculation": "Antar ökade statsbidrag till exempelvis MSB, räddningstjänst, sjukvård och kommunal krisberedskap. Utgår från senare års satsningar på civilt försvar i miljardklassen. Intervall 1 000–6 000 mkr/år."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Löftet om att stärka det civila försvaret grupplänkat med partiets löfte om att nå försvarsanslaget på minst 3,5 procent av BNP till 2030: samma politik, och den kan bara genomföras en gång. Löftet anger ingen egen nivå, medan anslagsmålet gör det, och anslagsmålet rymmer den här delen. Beloppet är oförändrat men räknas inte utöver gruppens.",
+        "commit": "cb793992"
+      }
+    ],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1898",
+    "group_id": null,
+    "title": "Nå målet om 12 000 värnpliktiga och sikta på 20 000",
+    "slug": "na-malet-om-12-000-varnpliktiga-och-sikta-pa-20-000",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Uppnå målet om att utbilda 12 000 värnpliktiga och på längre sikt nå mål om 20 000 värnpliktiga",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/militart-forsvar",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:43.774Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden för att öka antalet värnpliktiga från dagens nivå (ca 8 000) till 12 000 och sedan 20 000. Basen antar en linjär ökning av styckkostnaden för utbildning, förläggning och materiel. Det…",
+      "confidence": 0.4,
+      "calculation": "Antaganden: Dagens nivå ~8 000 värnpliktiga. Steg 1: öka till 12 000 (+4 000). Steg 2: öka till 20 000 (+12 000 totalt). Marginalkostnad per värnpliktig uppskattas till 0,5–1,0 mkr/år (inkl. grundutbildning, materiel, logi, ersättning). Steg 1: 4 000 × 0,5–1,0 mkr = 2 000–4 000 mkr. Steg 2: 12 000 × 0,5–1,0 mkr = 6 000–12 000 mkr. Base sätts till 5 000 mkr som ett mellanvärde för steg 1 och en påbörjad upptrappning mot steg 2."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1899",
+    "group_id": null,
+    "title": "Upprätta nya regementen i Kiruna och Kvarn",
+    "slug": "uppratta-nya-regementen-i-kiruna-och-kvarn",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Upprätta nya regementen i Kiruna och Kvarn för att stärka krigsorganisationen och göra säkerhetspolitiska markeringar.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/militart-forsvar",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:44.196Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 800,
+      "msek_base": 1200,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för två nya regementen. Baserat på jämförelse med återetableringen av regementen i Arvidsjaur, Sollefteå, Falun och Östersund, där årskostnaden per regemente uppskattats till 400–800 mkr…",
+      "confidence": 0.4,
+      "calculation": "Två regementen. Årskostnad per regemente: ~400–800 mkr (löner, infrastruktur, drift, övningsverksamhet). Base: 2 × 600 mkr = 1 200 mkr. Spann: 800–2 000 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1900",
+    "group_id": null,
+    "title": "Stärka Gotland med ny amfibiebataljon och brigadluftvärn",
+    "slug": "starka-gotland-med-ny-amfibiebataljon-och-brigadluftvarn",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Stärka Gotland genom att etablera en ny operativ amfibiebataljon och tillföra brigadluftvärn för att öka avskräckningsförmågan.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/militart-forsvar",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:44.615Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 700,
+      "msek_base": 1200,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden är en uppskattning av årlig drift och personal för en amfibiebataljon (~300-500 msek) och brigadluftvärn (~400-700 msek), exklusive större initiala materielanskaffningskostnader vilka ofta…",
+      "confidence": 0.4,
+      "calculation": "Antaganden: Årlig driftskostnad för en amfibiebataljon inklusive personalkostnader (ca 500-800 soldater) uppskattas till 300-500 msek baserat på kostnaden för Amfibieregementet. Brigadluftvärn med ett par kompanier (t.ex. Eldenhet 98) bedöms kosta 400-700 msek per år i drift och personal. Summa: 700-1200 msek, med övre intervall för mer omfattande förband. Engångskostnad för materiel tillkommer."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1901",
+    "group_id": null,
+    "title": "Initiera produktion av ytterligare en svensk ubåt",
+    "slug": "initiera-produktion-av-ytterligare-en-svensk-ubat",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Initiera produktion av ytterligare en svensk ubåt och stegvis utöka förmågan i Östersjön.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/militart-forsvar",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:45.046Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 3500,
+      "msek_base": 4100,
+      "msek_high": 6500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för ytterligare en ubåt jämförbar med FMV:s A26-kontrakt (~8,2 mdkr för två). Engångsutgift för byggnation, stegvis utökning redan inräknat.",
+      "confidence": 0.65,
+      "calculation": "Bas: ~4 100 mkr per ubåt (två ubåtar ~8 200 mkr). Låg: 3 500 mkr (viss stordrift), hög: 6 500 mkr (prisökning, extra utrustning). Totalkostnad för en ubåt, engångsprojekt."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1902",
+    "group_id": null,
+    "title": "Investera 50 miljarder kronor på civilt försvar",
+    "slug": "investera-50-miljarder-kronor-pa-civilt-forsvar",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Investera 50 miljarder kronor på det civila försvaret inom ramen för försvarsöverenskommelsen för att öka tempot i uppbyggnaden.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/krisberedskap",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:45.466Z"
+    },
+    "category": "försvar",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 37500,
+      "msek_base": 50000,
+      "msek_high": 67500,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Belopp angivet i källtext: 50 miljarder kronor till det civila försvaret inom ramen för försvarsöverenskommelsen. Ramen löper över flera år, så beloppet bokförs som ett engångsbelopp.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 50 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Citatet bär sin egen period: investeringen görs «inom ramen för försvarsöverenskommelsen», och en försvarsöverenskommelse är en ram över flera år — de 50 miljarderna är summan i den ramen, inte ett belopp varje år. Sidan skiljer dessutom investeringen från den löpande finansieringen, som står som en egen punkt om en beredskapsskatt. Beloppet bokförs därför som ett engångsbelopp. Spannet är vårt, inte partiets: 37 500–67 500 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra.",
+      "confidence": 0.5
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1903",
+    "group_id": "g-s-bankernas-overvinster",
+    "title": "Tillfällig skatt på bankernas övervinster för att pressa boräntan",
+    "slug": "tillfallig-skatt-pa-bankernas-overvinster-for-att-pressa-borantan",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Därför vill vi införa ett tillfälligt incitament att pressa boräntan. Skatten ska bara gälla den del av bankernas räntenetto som överstiger historiskt genomsnitt, vilket ger bankerna en direkt drivkraft att hålla nere räntorna för sina kunder.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/banker/fakta-om-bankskatt-och-bolaneskatt",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:45.893Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsökning",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 20000,
+      "msek_high": 30000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Liknar jämförbart V-löfte om 20 mdkr/år för 50% på övervinster. Löftet saknar egen skattesats och tröskel vilket ger stort spann; intäkten kan bli lägre om skatten lyckas pressa räntorna.",
+      "confidence": 0.4,
+      "calculation": "Jämför med bankskatt 50% på övervinster ≈20 000 mkr/år. Antar motsvarande bas, men eftersom skattesats/tröskel saknas och beteendeeffekt kan minska underlaget sätts spann 10 000–30 000 mkr/år med bas 20 000."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Löftet grupplänkat med partiets kortare formulering av samma skatt på en annan sida: samma politik, och en skatt kan bara införas en gång. Den här posten kommer från partiets faktasida, som beskriver hur skatten är konstruerad — bara den del av bankernas räntenetto som överstiger det historiska genomsnittet — och representerar därför gruppen. Beloppet är oförändrat.",
+        "commit": "cb793992"
+      }
+    ],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1904",
+    "group_id": "g-s-bankernas-overvinster",
+    "title": "Tillfällig skatt på bankernas övervinster",
+    "slug": "tillfallig-skatt-pa-bankernas-overvinster",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Införa en tillfällig skatt på bankernas övervinster, som betalas tillbaka till hushåll och välfärden, eftersom bankernas räntenettomarginaler ökat kraftigt.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/banker",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:46.326Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsökning",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 7000,
+      "msek_high": 15000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avser statens nya skatteintäkt från en tillfällig skatt på bankernas övervinster; återbetalningen till hushåll och välfärden prissätts inte här. Grovt intervall utifrån ökade räntenetton och antagen…",
+      "confidence": 0.4,
+      "calculation": "Svenska storbankers räntenetto har ökat kraftigt jämfört med lågränteläge, uppskattningsvis flera tiotals miljarder kronor. Antar att övervinsten uppgår till cirka 40–100 mdkr per år och att en tillfällig skatt tas ut med 10–20 procent. Det ger 4–20 mdkr; nedjusterat för skatteplanering och osäkerhet till 2–15 mdkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Löftet grupplänkat med partiets utförligare beskrivning av samma skatt på faktasidan: samma politik, och en skatt kan bara införas en gång. De två sidorna angav olika storlek på samma skatt, och faktasidan är den som beskriver konstruktionen. Beloppet är oförändrat men räknas inte utöver gruppens.",
+        "commit": "cb793992"
+      }
+    ],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1905",
+    "group_id": "g-mp-klimatinvesteringen",
+    "title": "Investera 100 miljarder per år i klimatomställning",
+    "slug": "investera-100-miljarder-per-ar-i-klimatomstallning",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Miljöpartiet vill därför investera 100 miljarder om året i en rättvis klimatomställning under en tioårsperiod.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.mp.se/politik/ekonomi-och-skatter/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:46.740Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100000,
+      "msek_base": 100000,
+      "msek_high": 100000,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Partiets egen siffra: 100 miljarder kronor om året i tio år. Beloppet är hela investeringsnivån partiet anger, inte en uppskattning av en del av den.",
+      "confidence": 0.9,
+      "calculation": "Partiet anger själv beloppet i citatet: 100 miljarder kronor om året under en tioårsperiod. Den siffran är partiets och byts inte ut mot en egen — därför är spannet inte vidgat åt något håll, det finns ingen egen uppskattning att vara osäker om. Perioden följer också av citatet: «om året». Att partiet säger tio år och mandatperioden är fyra ändrar inte årsnivån, som är det som räknas här. Beloppet avser investeringen partiet lovar, inte klimatomställningens samhällsföljder."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Löftet grupplänkat med partiets löfte om en klimatfond och en grön investeringsbank: samma investering beskriven på två sidor, och den kan bara göras en gång. Den här posten bär partiets egen siffra — 100 miljarder kronor om året — och representerar därför gruppen. Beloppet är oförändrat.",
+        "commit": "cb793992"
+      }
+    ],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1906",
+    "group_id": "g-mp-klimatinvesteringen",
+    "title": "Klimatfond och grön investeringsbank för strategiska klimatprojekt",
+    "slug": "klimatfond-och-gron-investeringsbank-for-strategiska-klimatprojekt",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Genom en klimatfond och en grön investeringsbank kan staten bidra med kapital och riskdelning för att fler strategiska projekt ska bli verklighet.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.mp.se/politik/industripolitik/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:48:47.161Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30000,
+      "msek_base": 100000,
+      "msek_high": 200000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp. Ankrar på jämförbar klimatfond på 100 mdkr/år; brett intervall pga osäkerhet om fond- och bankomfattning.",
+      "confidence": 0.4,
+      "calculation": "Jämförbart löfte: 100 000 mkr/år. Antar att klimatfond + grön investeringsbank får kapital/riskdelning i samma storleksordning. Låg scenario: 30 000 mkr/år (mindre bank/fond). Hög scenario: 200 000 mkr/år (större fond plus bankkapital)."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [
+      {
+        "date": "2026-08-19",
+        "change": "Löftet grupplänkat med partiets löfte om att investera 100 miljarder kronor om året i klimatomställningen: samma investering beskriven på två sidor. Beloppet på den här posten är vår uppskattning, och den uppskattningen ankrade i partiets egen siffra på det andra löftet — utan grupplänken hade samma hundra miljarder räknats två gånger. Beloppet är oförändrat men räknas inte utöver gruppens.",
+        "commit": "cb793992"
+      }
+    ],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
+    }
+  },
+  {
+    "id": "p-2026-1907",
+    "group_id": null,
+    "title": "Sverigebiljetten med totalkostnad 450 kr för vuxna",
+    "slug": "sverigebiljetten-med-totalkostnad-450-kr-for-vuxna",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Bland annat föreslår vi Sverigebiljetten, som med en totalkostnad på 450 kronor för vuxna och 225 kronor för barn, unga och pensionärer, gör det billigare och enklare att välja kollektivtrafiken.",
+    "date_stated": "2026-08-19",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/klimatmalen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-19T21:56:51.821Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 10800,
+      "msek_high": 20000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattar statens subventionskostnad för en nationell månadsbiljett till 450 kr, baserat på antaganden om antal användare och subventionsgrad per biljett.",
+      "confidence": 0.4,
+      "calculation": "Antag 1,5 mn vuxna och 0,5 mn reducerade användare. Subvention per vuxenbiljett: 500 kr/mån (skillnad mot dagens snittintäkt), reducerad: 300 kr/mån. Årskostnad: (1,5 mn * 500 + 0,5 mn * 300) * 12 = 10,8 mdkr. Spann 5–20 mdkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-19T21"
     }
   }
 ]
