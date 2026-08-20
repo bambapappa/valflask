@@ -14553,14 +14553,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 300,
-      "msek_high": 600,
+      "msek_low": 300,
+      "msek_base": 450,
+      "msek_high": 750,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på antaganden om antal extra IVF-försök (5 000–15 000) à 40 000 kr per försök, med hänsyn till att inte alla utnyttjar alla extra försök.",
+      "method_note": "Fler offentligt finansierade IVF-försök ökar regionernas kostnader. Antalet försök och priset per försök är båda våra egna antaganden; ingen part anger en siffra. Osäkerheten är stor.",
       "confidence": 0.4,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Beloppet från jämförbart löfte om fler behandlingsförsök hos Moderaterna är 400 miljoner kronor per år. Lågt scenario antar oförändrat antal påbörjade behandlingar men fördubblat antal försök per par (≈300 miljoner kronor). Högt scenario antar att gratis försök 4–6 lockar nya grupper och ökar antalet behandlingar med 50–100 % (≈600–750 miljoner kronor). Osäkerhet råder kring regionernas förhandlade priser per försök."
+      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Den vilade tidigare på ett moderatlöfte om fler behandlingsförsök, prissatt till 400 miljoner kronor per år. Det löftet är tillbakadraget sedan den 28 juli — citatet beskrev en post i vårbudgeten och innehöll inget åtagande om framtiden — och kan inte bära en jämförelse. Scenarierna nedan är därför vår egen uppskattning, utan stöd i något annat partis siffra. Lågt scenario antar oförändrat antal påbörjade behandlingar men fördubblat antal försök per par: omkring 300 miljoner kronor per år. Högt scenario antar att avgiftsfria försök fyra till sex lockar nya grupper och ökar antalet behandlingar med 50–100 procent: 600–750 miljoner kronor per år. Basbeloppet 450 miljoner ligger mitt i det spannet. Störst osäkerhet ligger i regionernas förhandlade priser per försök."
     },
     "financing_claimed": {
       "described": false,
@@ -14575,6 +14575,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-08-20",
+        "change": "Spannet rättat från 100–600 till 300–750 miljoner kronor per år och basbeloppet från 300 till 450. Uträkningens egna scenarier gav 300 respektive 600–750, men löftet stod på 100–600 med basen 300 — talen läsaren såg följde inte av texten läsaren såg. Hänvisningen till ett moderatlöfte om fler behandlingsförsök på 400 miljoner kronor är borttagen: det löftet drogs tillbaka den 28 juli och kan inte bära en jämförelse. Citatet är oförändrat.",
+        "commit": "bc46de2defe76b2eb3764fd68405bf4438dea7b7"
       }
     ],
     "extraction": {
