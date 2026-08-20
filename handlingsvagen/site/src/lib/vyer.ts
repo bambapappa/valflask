@@ -16,7 +16,7 @@ import {
   getKopplingar,
   getHandlingMap,
   getPersoner,
-  getSoktaLoften,
+  sokstatus,
   malId,
   type DomStatus,
   type PartiDom,
@@ -83,10 +83,26 @@ export interface PartiSida {
     bade_och: number;
     avstod: number;
     ingen_handling: number;
-    /** Utan utslag DÄRFÖR ATT vi sökt igenom löftet utan att hitta något. */
+    /** Utan utslag DÄRFÖR ATT vi sökt igenom löftet utan att hitta något som håller. */
     sokt_utan_traff: number;
-    /** Utan utslag DÄRFÖR ATT vi ännu inte sökt på löftet. */
+    /**
+     * Utan utslag DÄRFÖR ATT sökningen inte hittar någon handling som liknar
+     * löftet tillräckligt. Det är en MÄTNING, inte en lucka — metodsidan
+     * beskriver gränsen och varför den finns.
+     */
+    ingen_liknande: number;
+    /** Utan utslag DÄRFÖR ATT sökningen ännu inte gått över löftet. En arbetskö. */
+    vantar_pa_sokning: number;
+    /**
+     * Kvar av bakåtkompatibilitet: allt sökningen inte gett utslag på och som
+     * inte är en mätning. Lika med `vantar_pa_sokning`; det gamla namnet dolde
+     * skillnaden och används inte längre på sidan.
+     */
     ej_sokt: number;
+    /** Löften sökningen gått över — vägda plus sökta utan träff plus ingen liknande. */
+    genomsokta: number;
+    /** Andelen genomsökta i hela procent. Noll löften ger noll. */
+    genomsokt_procent: number;
     /** Utslag partiets handlingar gett MOT ANDRA PARTIERS löften. */
     emot_andras: number;
   };
@@ -166,7 +182,6 @@ export function buildPartiSida(code: string): PartiSida | null {
 
   const vagda = loften.filter((l) => l.n_i_linje + l.n_emot + l.n_avstod > 0);
   const utanUtslag = loften.filter((l) => l.n_i_linje + l.n_emot + l.n_avstod === 0);
-  const sokta = getSoktaLoften();
   const summa = {
     total_loften: loften.length,
     vagda: vagda.length,
@@ -183,8 +198,21 @@ export function buildPartiSida(code: string): PartiSida | null {
     // att vi letat och inte funnit något, och att vi inte letat. Skillnaden
     // följer parti — för S är nästan varje tomt löfte genomsökt, för L bara
     // ungefär hälften — så samma ord sa olika saker om olika partier.
-    sokt_utan_traff: utanUtslag.filter((l) => sokta.has(l.id)).length,
-    ej_sokt: utanUtslag.filter((l) => !sokta.has(l.id)).length,
+    // Tre lägen där det förut stod ett. `sokstatus` är försiktig med det
+    // starkaste påståendet: utan belägg för att vi sökt säger den "väntar".
+    sokt_utan_traff: utanUtslag.filter((l) => sokstatus(l.id) === "kandidater").length,
+    ingen_liknande: utanUtslag.filter((l) => sokstatus(l.id) === "ingen-liknande").length,
+    vantar_pa_sokning: utanUtslag.filter((l) => sokstatus(l.id) === "vantar").length,
+    ej_sokt: utanUtslag.filter((l) => sokstatus(l.id) === "vantar").length,
+    genomsokta: loften.length - utanUtslag.filter((l) => sokstatus(l.id) === "vantar").length,
+    genomsokt_procent:
+      loften.length === 0
+        ? 0
+        : Math.round(
+            ((loften.length - utanUtslag.filter((l) => sokstatus(l.id) === "vantar").length) /
+              loften.length) *
+              100,
+          ),
     emot_andras: andras.filter((h) => h.utslag === "emot").length,
   };
 

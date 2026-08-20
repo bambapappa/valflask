@@ -145,6 +145,91 @@ main,
   color: var(--dis);
 }
 
+/* ── Täckningsmätaren: hur långt vi hunnit, skild från vad vi vägt ──
+ * Talen ovanför är resultat; de här är arbetsläge. Stod de i samma rad lästes
+ * arbetskön som ett omdöme om partiet. Stapelns fyra fält skiljs på FORM —
+ * fylld, gul, skrafferad, tom — så färgen aldrig är ensam bärare. */
+.grupprubrik {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  color: var(--dis);
+  margin: calc(var(--mellanrum) * 1.25) 0 0.4rem;
+}
+.matare {
+  border-top: var(--linje-tabell-ytter);
+  border-bottom: var(--linje-under);
+  padding: calc(var(--mellanrum) * 0.75) var(--mellanrum);
+  margin: 0 0 var(--mellanrum);
+}
+.matare-rad {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--mellanrum);
+  flex-wrap: wrap;
+}
+.matare-tal,
+.matare-pct {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--steg-2);
+  line-height: 1.1;
+  margin: 0;
+}
+.matare-tal small {
+  font-size: var(--steg--1);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--sparrning-etikett);
+  color: var(--dis);
+}
+/* Stapeln är en svg därför att fältens bredd är DATA, och data får inte stå
+ * i ett style-attribut: sajtens säkerhetspolicy kastar bort dem, och stilen
+ * hade sett rätt ut lokalt och varit borta i drift. Fälten skiljs på ljushet
+ * — svart, gul, grå, tom — och varje fält står dessutom utskrivet med sitt
+ * tal i nyckeln under, så färgen aldrig bär budskapet ensam. */
+.stapel {
+  display: block;
+  width: 100%;
+  height: 14px;
+  margin: 0.6rem 0 0;
+  border: 1px solid var(--svarta);
+}
+.stapel rect { stroke: var(--svarta); stroke-width: 0.5; }
+.s-vagd  { fill: var(--svarta); }
+.s-traff { fill: var(--gul); }
+.s-ingen { fill: var(--linje-svag); }
+.s-ko    { fill: var(--papper); }
+.nyckel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem var(--mellanrum);
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  color: var(--dis);
+}
+.nyckel li { display: flex; align-items: center; gap: 0.4rem; }
+.sw { width: 12px; height: 12px; border: 1px solid var(--svarta); flex: none; }
+.sw--vagd  { background: var(--svarta); }
+.sw--traff { background: var(--gul); }
+.sw--ingen { background: var(--linje-svag); }
+.sw--ko    { background: var(--papper); border-style: dotted; }
+.matare-not {
+  font-family: var(--font-mono);
+  font-size: var(--steg--1);
+  line-height: 1.5;
+  border-left: 3px solid var(--gul);
+  padding-left: 0.7rem;
+  margin: 0.85rem 0 0;
+  max-width: 60ch;
+}
+
 /* ── Sök- och filterfält ── */
 .sok { position: relative; flex: 1 1 260px; }
 .sok-etikett { display: block; margin-bottom: 0.3rem; }

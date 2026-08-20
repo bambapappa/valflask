@@ -26,9 +26,23 @@ for (const kod of koder) {
   // ihop — och just den uppdelningen är hela poängen: den ena hälften betyder
   // "vi har letat", den andra "vi har inte letat".
   assert.strictEqual(
-    s!.summa.sokt_utan_traff + s!.summa.ej_sokt,
+    s!.summa.sokt_utan_traff + s!.summa.ingen_liknande + s!.summa.vantar_pa_sokning,
     s!.summa.ingen_handling,
-    `genomsökt + ej genomsökt = utan handling för ${kod}`,
+    `sökt utan träff + ingen liknande + väntar = utan handling för ${kod}`,
+  );
+  // Mätaren räknar samma population baklänges: allt utom det som väntar.
+  assert.strictEqual(
+    s!.summa.genomsokta + s!.summa.vantar_pa_sokning,
+    s!.summa.total_loften,
+    `genomsökta + väntande = alla löften för ${kod}`,
+  );
+  // Procenten ska vara procenten AV det talet, inte av något annat.
+  assert.strictEqual(
+    s!.summa.genomsokt_procent,
+    s!.summa.total_loften === 0
+      ? 0
+      : Math.round((s!.summa.genomsokta / s!.summa.total_loften) * 100),
+    `andelen genomsökt räknas på totalen för ${kod}`,
   );
 
   // Talen högst upp måste täcka VARJE vägt löfte. Utan den här grinden kunde
