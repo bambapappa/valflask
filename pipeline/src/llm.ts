@@ -11,6 +11,8 @@ export interface LlmOptions {
    */
   onSvar?: (info: { led: string; modell: string; foregaendeFel: string[] }) => void;
   temperature?: number;
+  /** Tak på svarets längd. Utan tak reserverar leverantören modellens maximum. */
+  maxTokens?: number;
   responseFormat?: { type: "json_object" };
   model?: string;
   /**
@@ -208,6 +210,20 @@ export class OpenRouterClient implements LlmClient {
         { role: "user" as const, content: prompt },
       ],
       temperature: opts?.temperature ?? 0,
+      // TAK PÅ SVARET. Sattes aldrig förut, och då fyller leverantören i
+      // modellens maximum — 65 536 tokens hos den fallback vi använder.
+      // OpenRouter RESERVERAR kredit mot det talet, inte mot vad svaret
+      // faktiskt blir, och avvisade därför anrop med "you requested up to
+      // 65536 tokens, but can only afford 18283" trots att svaret är ett
+      // litet JSON-objekt på några hundra tokens. Mätt 2026-08-20, samma dag
+      // förslagskörningen fallit tre dygn i rad på kredit.
+      //
+      // Taket är generöst mot alla våra svar: extraktionen ger högst fem
+      // löften med citat på 40 ord, kopplingen ett objekt, kostnaden en
+      // uträkning på 800 tecken. Slår ett svar ändå i taket blir JSON:en
+      // trunkerad och paret räknas som fallet — det prövas om nästa körning,
+      // precis som vid vilket annat fel som helst.
+      max_tokens: opts?.maxTokens ?? Number(process.env["LLM_MAX_TOKENS"] ?? "4096"),
     };
     if (opts?.responseFormat) {
       body.response_format = opts.responseFormat;
