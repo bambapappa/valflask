@@ -5,32 +5,34 @@ interface Props {
   parties: Array<{ code: string; name: string }>;
 }
 const { hash, lastRun, parties } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const current = (href: string) => href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
 ---
 <header class="siteheader">
-  <div class="siteheader__brand">
-    <a href="/" class="siteheader__title">
-      UTLOVAT<span class="markering">.SE</span>
-    </a>
-    <div class="etikett siteheader__meta">
-      Vågstation för valfläsk · Uppdaterad {new Date(lastRun).toLocaleDateString("sv-SE")} · Akt {hash.slice(0, 8)}
+  <div class="siteheader__inner">
+    <div class="siteheader__top">
+      <div class="siteheader__brand">
+        <a href="/" class="siteheader__title">
+          UTLOVAT<span class="markering">.SE</span>
+        </a>
+        <div class="etikett siteheader__meta">
+          Tre sätt att granska politiken · Uppdaterad {new Date(lastRun).toLocaleDateString("sv-SE")} · Akt {hash.slice(0, 8)}
+        </div>
+      </div>
+      <a href="/sok" class="knapp siteheader__search">Sök hela utlovat.se</a>
     </div>
+    <nav aria-label="Huvudnavigation" class="siteheader__nav">
+      <ul class="siteheader__menu">
+        <li><a href="/" class="etikett siteheader__link" aria-current={current("/") ? "page" : undefined}>Löften och kostnader</a></li>
+        <li><a href="/fragor" class="etikett siteheader__link" aria-current={current("/fragor") || current("/fraga") ? "page" : undefined}>Frågor och ståndpunkter</a></li>
+        <li><a href="/handlingsvagen/" class="etikett siteheader__link" aria-current={current("/handlingsvagen") ? "page" : undefined}>Handlingar i riksdagen</a></li>
+        <li><a href="/jamfor" class="etikett siteheader__link" aria-current={current("/jamfor") ? "page" : undefined}>Jämför</a></li>
+        <li><a href="/topplistor" class="etikett siteheader__link" aria-current={current("/topplistor") ? "page" : undefined}>Topplistor</a></li>
+        <li><a href="/svangningar" class="etikett siteheader__link" aria-current={current("/svangningar") ? "page" : undefined}>Svängregistret</a></li>
+        <li><a href="/metod" class="etikett siteheader__link" aria-current={current("/metod") ? "page" : undefined}>Metod och transparens</a></li>
+      </ul>
+    </nav>
   </div>
-  <nav aria-label="Huvudnavigation" class="siteheader__nav">
-    <ul class="siteheader__menu">
-      <li><a href="/" class="etikett siteheader__link">Start</a></li>
-      <li><a href="/fragor" class="etikett siteheader__link">Frågorna</a></li>
-      <li><a href="/handlingsvagen/" class="etikett siteheader__link">Handlingarna</a></li>
-      <li><a href="/svangningar" class="etikett siteheader__link">Svängregistret</a></li>
-      <li><a href="/jamfor" class="etikett siteheader__link">Jämför</a></li>
-      <li><a href="/regeringar" class="etikett siteheader__link">Regeringar</a></li>
-      <li><a href="/topplistor" class="etikett siteheader__link">Topplistor</a></li>
-      <li><a href="/metod" class="etikett siteheader__link">Metod</a></li>
-      <li><a href="/rattelser" class="etikett siteheader__link">Rättelser</a></li>
-      <li><a href="/andrade-kallor" class="etikett siteheader__link">Ändrade källor</a></li>
-      <li><a href="/om" class="etikett siteheader__link">Om</a></li>
-      <li><a href="/api" class="etikett siteheader__link">API</a></li>
-    </ul>
-  </nav>
 </header>
 
 <style>
@@ -41,6 +43,10 @@ const { hash, lastRun, parties } = Astro.props;
     font-size: var(--steg-3);
     text-decoration: none;
   }
+  .siteheader { border-bottom: var(--linje-sektion); }
+  .siteheader__inner { max-width: var(--matt-data); margin: 0 auto; padding: 0 1rem 0.75rem; }
+  .siteheader__top { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+  .siteheader__search { flex: 0 0 auto; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
   .siteheader__nav {
     border-top: var(--linje-sektion);
     padding-top: 0.5rem;
@@ -56,5 +62,14 @@ const { hash, lastRun, parties } = Astro.props;
   }
   .siteheader__link {
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .siteheader__link[aria-current="page"] { font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; }
+  @media (max-width: 44rem) {
+    .siteheader__top { align-items: flex-start; flex-direction: column; }
+    .siteheader__search { width: 100%; justify-content: center; }
+    .siteheader__menu { gap: 0 1rem; }
   }
 </style>
