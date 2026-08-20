@@ -1718,5 +1718,239 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-akassa",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Ta bort den branta avtrappningen i A-kassan. Riva upp den nya brantare avtrappningen som försämrar den ekonomiska tryggheten för vanligt folk.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/a-kassa",
+    "articleTitle": "A-kassa\n| Socialdemokraterna",
+    "runId": "run-2026-08-20-16-45"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Språkkrav och språkträning för personalen. Införa tydliga språkkrav och språkträning för att säkerställa att du och personalen förstår varandra",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/aldreomsorg",
+    "articleTitle": "Äldreomsorg\n| Socialdemokraterna",
+    "runId": "run-2026-08-20-16-45"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-bemanning",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi vill se en helt ny starkare lagstiftning som också leder till höjd bemanning.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-20-s-vallofte-ett-paradigmskifte-for-svensk-aldreomsorg",
+    "articleTitle": "S vallöfte: Ett paradigmskifte för svensk äldreomsorg\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-20-s-vallofte-ett-paradigmskifte-for-svensk-aldreomsorg",
+    "archiveUrl": null,
+    "dateStated": "2026-08-20",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-16-45",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet handlar om ny lagstiftning som mekanism för höjd bemanning, inte om en nationell bemanningsnorm som sådan, och kräver välvillig tolkning för att bli ett ja."
+      }
+    ],
+    "verifyReason": "Citatet handlar om ny lagstiftning som mekanism för höjd bemanning, inte om en nationell bemanningsnorm som sådan, och kräver välvillig tolkning för att bli ett ja."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Språkkrav för de anställda. Du ska kunna förstå vad personalen säger.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-20-s-vallofte-ett-paradigmskifte-for-svensk-aldreomsorg",
+    "articleTitle": "S vallöfte: Ett paradigmskifte för svensk äldreomsorg\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-20-s-vallofte-ett-paradigmskifte-for-svensk-aldreomsorg",
+    "archiveUrl": null,
+    "dateStated": "2026-08-20",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-16-45",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-bemanning",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Mer personal och språkkrav i äldreomsorgen.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
+    "articleTitle": "Val 2026\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/val-2026",
+    "archiveUrl": null,
+    "dateStated": "2026-08-20",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-16-45",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet uttrycker endast en önskan om mer personal och språkkrav i äldreomsorgen, men säger inget om det ska regleras genom en nationell bemanningsnorm eller på annat sätt, så det svarar inte på frågans avgränsning."
+      }
+    ],
+    "verifyReason": "Citatet uttrycker endast en önskan om mer personal och språkkrav i äldreomsorgen, men säger inget om det ska regleras genom en nationell bemanningsnorm eller på annat sätt, så det svarar inte på frågans avgränsning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-vinst",
+      "party": "v",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Vänsterpartiet tycker inte att vinstsyftande företag ska kunna bedriva verksamhet med skattemedel i sjukvårdens kärnverksamheter.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/sjukvard/",
+    "articleTitle": "Sjukvård – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/sjukvard/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-20",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-16-45",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet uttrycker att Vänsterpartiet motsätter sig vinstsyftande företag i skattefinansierad vård, vilket motsvarar ett ja till begränsning/totalförbud, inte ett nej."
+      }
+    ],
+    "verifyReason": "Citatet uttrycker att Vänsterpartiet motsätter sig vinstsyftande företag i skattefinansierad vård, vilket motsvarar ett ja till begränsning/totalförbud, inte ett nej."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Därför måste skolornas möjlighet att gå med vinst avskaffas.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/skolan/",
+    "articleTitle": "Skolan – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/skolan/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-20",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-16-45",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vänsterpartiet vill att staten tar tillbaka huvudansvaret för skolorna från kommunerna.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/skolan/",
+    "articleTitle": "Skolan – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/skolan/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-20",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-16-45",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi vill stoppa aktiebolag i skolan, införa full insyn i skattefinansierad skolverksamhet och ge kommuner möjlighet att säga nej till nyetableringar som försvårar en långsiktig skolplanering.",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/skola/",
+    "articleTitle": "Miljöpartiets skol- och utbildningspolitik",
+    "sourceUrl": "https://www.mp.se/politik/skola/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-23",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-16-45",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet handlar om att stoppa aktiebolag som skolform, inte specifikt om vinstutdelning från friskolekoncerner i lag, och ger därmed inte besked på den avgränsade delfrågan."
+      }
+    ],
+    "verifyReason": "Citatet handlar om att stoppa aktiebolag som skolform, inte specifikt om vinstutdelning från friskolekoncerner i lag, och ger därmed inte besked på den avgränsade delfrågan."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Därför vill vi stoppa vinstjakten och öka insynen i alla skattefinansierade skolor.",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/skola/",
+    "articleTitle": "Miljöpartiets skol- och utbildningspolitik",
+    "sourceUrl": "https://www.mp.se/politik/skola/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-23",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-16-45",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
