@@ -1,0 +1,88 @@
+# Duger en billigare modell för matchningen?
+#
+# Kör `utvardera-modell.mts` över ett balanserat urval av par som en MÄNNISKA
+# redan dömt, och redovisar de två felen var för sig: missad koppling (kostar
+# täckning) och påhittad koppling (kostar granskningstid och trovärdighet).
+#
+# Jobbet finns för att nycklarna bor här och ingen annanstans. Utvärderingen
+# går inte att köra från en laptop utan att kopiera ut en nyckel, och det ska
+# den inte behöva.
+#
+# LÄSER BARA. Skriver ingen data, rör aldrig kön, committar ingenting.
+# Resultatet lämnas som artefakt — inte som en commit — just för att en
+# mätning inte är ett beslut.
+#
+# Ledet väljs per körning. `zai` är den enda som brukar ha kvot över när
+# opencodes femtimmarsfönster är fullt och OpenRouters månadstak är slaget.
+name: utvardering
+on:
+  workflow_dispatch:
+    inputs:
+      led:
+        description: "Vilken leverantör som frågas"
+        type: choice
+        options: [zai, primar, sekundar]
+        default: zai
+      modell:
+        description: "Modell-id hos det valda ledet (t.ex. glm-5.2)"
+        required: true
+        default: "glm-5.2"
+      antal:
+        description: "Antal par i urvalet — hälften ja, hälften nej"
+        required: false
+        default: "40"
+permissions:
+  contents: read
+concurrency: { group: utvardering, cancel-in-progress: false }
+jobs:
+  matt:
+    runs-on: ubuntu-latest
+    # Varje par hämtar hela källdokumentet från riksdagen innan modellen
+    # frågas, och en proposition är hundratusentals tecken. 40 par tog i
+    # storleksordningen tjugo minuter i förslagskörningen.
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: handlingsvagen
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: npm ci
+        working-directory: handlingsvagen/pipeline
+      - name: Mät modellen mot människans domar
+        env:
+          # Skriptet bygger sin klient ur LLM_API_KEY/LLM_BASE_URL rakt av —
+          # inte ur byggLed — så ledet väljs genom att peka de två
+          # variablerna dit. INGEN reserv kopplas in: en mätning som tyst
+          # faller igenom till en annan modell mäter fel modell, och det är
+          # precis den förväxlingen den här körningen finns för att undvika.
+          LLM_BASE_URL: ${{ inputs.led == 'zai' && vars.LLM_ZAI_BASE_URL || (inputs.led == 'sekundar' && vars.LLM_FALLBACK_BASE_URL || vars.LLM_BASE_URL) }}
+          LLM_API_KEY: ${{ inputs.led == 'zai' && secrets.LLM_ZAI_API_KEY || (inputs.led == 'sekundar' && secrets.LLM_FALLBACK_API_KEY || secrets.LLM_API_KEY) }}
+          MODELL: ${{ inputs.modell }}
+          ANTAL: ${{ inputs.antal || '40' }}
+        run: |
+          set -uo pipefail
+          if [ -z "${LLM_API_KEY:-}" ] || [ -z "${LLM_BASE_URL:-}" ]; then
+            echo "Ledet '${{ inputs.led }}' saknar nyckel eller adress i detta repo."
+            exit 1
+          fi
+          echo "led: ${{ inputs.led }} · modell: $MODELL · urval: $ANTAL par"
+          node --import tsx/esm scripts/utvardera-modell.mts \
+            --modell "$MODELL" --antal "$ANTAL" --json /tmp/utvardering.json \
+            | tee /tmp/utvardering.txt
+          exit ${PIPESTATUS[0]}
+        working-directory: handlingsvagen/pipeline
+      - name: Lämna mätningen som artefakt
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
+        with:
+          name: utvardering-${{ inputs.led }}-${{ inputs.modell }}
+          path: |
+            /tmp/utvardering.json
+            /tmp/utvardering.txt
+          if-no-files-found: warn
