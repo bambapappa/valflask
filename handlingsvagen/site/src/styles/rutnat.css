@@ -68,7 +68,9 @@ main,
 }
 .toppnav a {
   text-decoration: none;
-  padding: 0.25rem 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 .toppnav a:hover,
 .toppnav a[aria-current="page"] {
@@ -145,6 +147,8 @@ main,
 
 /* ── Sök- och filterfält ── */
 .sok { position: relative; flex: 1 1 260px; }
+.sok-etikett { display: block; margin-bottom: 0.3rem; }
+.sok-hjalp { color: var(--dis); margin: 0.35rem 0 0; }
 /* Bara sökfältet — aldrig `.amnesok input` rakt av. Ämnessidans partifilter
    ligger inne i samma ruta, och en kryssruta som får full bredd, indrag och
    egen ram trycker undan partinamnet bredvid sig. Chromium visar det inte:
@@ -162,6 +166,7 @@ main,
   border-radius: 0;
   background: var(--papper);
   color: var(--svarta);
+  min-height: 44px;
 }
 .sok-traffar {
   position: absolute;

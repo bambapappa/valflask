@@ -29,8 +29,11 @@ const { hash } = Astro.props;
 <style>
   .sitefooter {
     border-top: var(--linje-sektion);
-    padding: 1.5rem 0;
+    padding: 1.5rem 1rem;
     margin-top: 3rem;
+    max-width: var(--matt-data);
+    margin-left: auto;
+    margin-right: auto;
   }
   .sitefooter__data {
     margin-bottom: 0.5rem;
@@ -44,5 +47,6 @@ const { hash } = Astro.props;
     font-size: var(--steg--1);
     color: var(--dis);
     line-height: var(--radavstand-mono);
+    overflow-wrap: anywhere;
   }
 </style>

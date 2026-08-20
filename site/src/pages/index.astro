@@ -47,7 +47,40 @@ const jsonLd = [
 ---
 <Layout title={`Riksdagspartiernas vallöften 2026 kostar ${totalShort} mdkr — utlovat.se`} description={`Riksdagspartiernas vallöften 2026 kostar hittills ${totalShort} mdkr för mandatperioden. Oberoende, källspårad sammanställning.`} ogImage="/og/start.png" hasTaxameter={true} jsonLd={jsonLd} canonicalPath="/">
   <div class="page-content">
-    <Lopsedel total={total} subtitle="Valfläsket hittills" count={count} date="2026" taxameterValue={flasket} />
+    <section class="oversikt" aria-label="Välj vad du vill undersöka">
+      <p class="etikett oversikt__kicker">Välj vad du vill undersöka</p>
+      <h1 class="oversikt__rubrik">Tre sätt att granska politiken</h1>
+      <p class="oversikt__ingress">Utlovat.se samlar löften, ståndpunkter och handlingar. Samma källkrav gäller oavsett parti. Vi visar underlaget och låter dig dra slutsatsen.</p>
+      <div class="valkort-grid">
+        <a class="valkort valkort--markerad" href="#loften">
+          <p class="etikett">Fläskvågen</p>
+          <h2>Löften och kostnader</h2>
+          <p>Se vallöften, öppna uträkningar och uppskattad kostnad för mandatperioden.</p>
+          <span class="etikett">Utforska löftena ↓</span>
+        </a>
+        <a class="valkort" href="/fragor">
+          <p class="etikett">Frågevågen</p>
+          <h2>Frågor och ståndpunkter</h2>
+          <p>Jämför partiernas egna svar och källor i tio sakfrågor.</p>
+          <span class="etikett">Öppna frågorna →</span>
+        </a>
+        <a class="valkort" href="/handlingsvagen/">
+          <p class="etikett">Handlingsvågen</p>
+          <h2>Handlingar i riksdagen</h2>
+          <p>Sök bland partiernas och ledamöternas faktiska riksdagshandlingar.</p>
+          <span class="etikett">Öppna handlingarna →</span>
+        </a>
+      </div>
+      <div class="oversikt__verktyg etikett">
+        <a href="/sok">Sök på hela utlovat.se</a>
+        <a href="/handlingsvagen/amnen">Sök ord i riksdagens handlingar</a>
+        <a href="https://valtris.utlovat.se/">Spela Valtris<span aria-hidden="true"> ↗</span></a>
+        <a href="https://rostfiske.utlovat.se/">Spela Röstfiske<span aria-hidden="true"> ↗</span></a>
+      </div>
+    </section>
+
+    <div id="loften" class="ankare-offset"></div>
+    <Lopsedel total={total} subtitle="Valfläsket hittills" count={count} date="2026" taxameterValue={flasket} headingLevel="h2" />
 
     <div class="prosa-content prosa-content--centered">
       <p>Riksdagspartiernas vallöften 2026 kostar hittills <strong class="num belopp">{totalShort} mdkr</strong> för de fyra åren 2027–2030, fördelat på {count} löften från åtta partier.</p>
@@ -133,6 +166,13 @@ const jsonLd = [
 </Layout>
 
 <style>
+  .oversikt { padding: 2rem 0 3rem; }
+  .oversikt__rubrik { font-size: var(--steg-4); margin-bottom: 0.75rem; }
+  .oversikt__kicker { margin: 0 0 0.5rem; }
+  .oversikt__ingress { max-width: var(--matt-prosa); font-size: var(--steg-1); }
+  .oversikt__verktyg { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; border-bottom: var(--linje-sektion); padding: 1rem 0; }
+  .oversikt__verktyg a { min-height: 44px; display: inline-flex; align-items: center; }
+  .ankare-offset { scroll-margin-top: 1rem; }
   .prosa-content--centered {
     margin: 1.5rem auto;
   }

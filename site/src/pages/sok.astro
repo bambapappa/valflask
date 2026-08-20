@@ -12,11 +12,17 @@ const jsonLd = [
   },
 ];
 ---
-<Layout title="Sök löften — utlovat.se" description="Sök bland riksdagspartiernas vallöften 2026." jsonLd={jsonLd} canonicalPath="/sok">
+<Layout title="Sök på utlovat.se" description="Sök på sidorna om löften, frågor, partier, ledamöter, metod och spel." jsonLd={jsonLd} canonicalPath="/sok">
   <div class="page-content">
     <div class="prosa-content prosa-content--centered">
-      <h1>Sök löften</h1>
-      <p>Sök bland alla vallöften i utlovat.se:s databas.</p>
+      <p class="etikett">Sök i hela utlovat.se</p>
+      <h1>Vad letar du efter?</h1>
+      <p>Sökningen letar i de publicerade sidornas rubriker och text: löften, frågor, partier, ledamöter, metod och spel. Skriv det som faktiskt står på sidan, till exempel <i>klimat</i>, <i>jämför</i> eller <i>Röstfiske</i>.</p>
+      <aside class="sokomfang" aria-labelledby="sokomfang-rubrik">
+        <h2 id="sokomfang-rubrik">Söker du efter ett ord i riksdagens dokument?</h2>
+        <p>Den här sökningen läser inte hela riksdagens dokument. Ett ämne som NPF kan därför sakna här även om det förekommer i handlingarna.</p>
+        <a class="knapp" href="/handlingsvagen/amnen">Sök ämnen och ord i handlingarna</a>
+      </aside>
 
       <noscript>
         <div class="noscript-links etikett">
@@ -41,4 +47,7 @@ const jsonLd = [
     padding: 0.75rem;
     border: 1px solid var(--linje-svag);
   }
+  .sokomfang { border-top: var(--linje-sektion); border-bottom: var(--linje-sektion); padding: 1rem 0; margin: 1.5rem 0; }
+  .sokomfang h2 { font-size: var(--steg-2); }
+  .sokomfang .knapp { display: inline-flex; align-items: center; text-decoration: none; }
 </style>
