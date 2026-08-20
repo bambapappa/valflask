@@ -14,6 +14,28 @@ const sida = buildPartiSida(kod!);
 if (!sida) return Astro.redirect("/");
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
+/**
+ * Täckningsstapelns fyra fält, som x/bredd i löftesenheter.
+ *
+ * Måtten står i svg-attribut och inte i style, därför att sajtens
+ * säkerhetspolicy kastar bort inline-stilar — de hade sett rätt ut lokalt och
+ * varit borta i drift. Provet `test-stil.mts` vaktar det, och pekar självt ut
+ * svg:ns width-attribut som vägen när talet är data.
+ */
+const st = sida.summa;
+const stapelfalt = [
+  { klass: "s-vagd", n: st.vagda },
+  { klass: "s-traff", n: st.sokt_utan_traff },
+  { klass: "s-ingen", n: st.ingen_liknande },
+  { klass: "s-ko", n: st.vantar_pa_sokning },
+].filter((f) => f.n > 0);
+let lopande = 0;
+const stapel = stapelfalt.map((f) => {
+  const x = lopande;
+  lopande += f.n;
+  return { ...f, x };
+});
+
 const KIND: Record<string, string> = {
   votering: "votering", motion: "motion", proposition: "proposition",
   interpellation: "interpellation", skriftlig_fraga: "skriftlig fråga",
@@ -49,15 +71,14 @@ function statusToken(l: PartiLofteRad): string {
   <Rattelsenot rattelser={rattelserForPath(`/parti/${kod}`)} />
   <p class="ingress">Partiets löften, bredvid det partiet självt gjort i riksdagen. Står en rad tom har vi inte granskat den ännu — det är inget omdöme om partiet.</p>
 
-  <div class="summa" role="group" aria-label="Sammanfattning">
+  <p class="grupprubrik">Vad vi vägt</p>
+  <div class="summa" role="group" aria-label="Vad vi vägt">
     <div><b>{sida.summa.total_loften}</b><span>löften totalt</span></div>
     <div><b>{sida.summa.vagda}</b><span>vägda mot handling</span></div>
     <div><b>{sida.summa.i_linje}</b><span>i linje med egna löften</span></div>
     <div><b>{sida.summa.emot}</b><span>emot egna löften</span></div>
     {sida.summa.bade_och > 0 && <div><b>{sida.summa.bade_och}</b><span>både och</span></div>}
     {sida.summa.avstod > 0 && <div><b>{sida.summa.avstod}</b><span>avstod</span></div>}
-    <div><b>{sida.summa.sokt_utan_traff}</b><span>genomsökta utan träff</span></div>
-    <div><b>{sida.summa.ej_sokt}</b><span>ännu inte genomsökta</span></div>
   </div>
   <p class="summanot">
     Talen ovan gäller <b>partiets egna löften</b>. Vad partiet gjort när andra
@@ -65,13 +86,50 @@ function statusToken(l: PartiLofteRad): string {
     <b>emot</b> nästan alltid hamnar, eftersom ett parti sällan handlar mot sitt
     eget löfte.
   </p>
+
+  <p class="grupprubrik">Hur långt vi hunnit</p>
+  <div class="matare" role="group" aria-label="Hur långt vi hunnit">
+    <div class="matare-rad">
+      <p class="matare-tal">
+        {sida.summa.genomsokta} <small>av {sida.summa.total_loften} genomsökta</small>
+      </p>
+      <p class="matare-pct">{sida.summa.genomsokt_procent}&nbsp;%</p>
+    </div>
+    <svg
+      class="stapel"
+      viewBox={`0 0 ${Math.max(sida.summa.total_loften, 1)} 10`}
+      preserveAspectRatio="none"
+      role="img"
+      aria-label={`${sida.summa.genomsokta} av ${sida.summa.total_loften} löften genomsökta`}
+    >
+      {stapel.map((f) => (
+        <rect class={f.klass} x={f.x} y="0" width={f.n} height="10" />
+      ))}
+    </svg>
+    <ul class="nyckel">
+      {sida.summa.vagda > 0 && <li><i class="sw sw--vagd"></i>{sida.summa.vagda} vägda</li>}
+      {sida.summa.sokt_utan_traff > 0 && <li><i class="sw sw--traff"></i>{sida.summa.sokt_utan_traff} sökta utan träff</li>}
+      {sida.summa.ingen_liknande > 0 && <li><i class="sw sw--ingen"></i>{sida.summa.ingen_liknande} ingen liknande handling</li>}
+      {sida.summa.vantar_pa_sokning > 0 && <li><i class="sw sw--ko"></i>{sida.summa.vantar_pa_sokning} väntar på sökning</li>}
+    </ul>
+    <p class="matare-not">
+      {sida.summa.vantar_pa_sokning > 0 && (
+        <>
+          {sida.summa.vantar_pa_sokning} av löftena har sökningen ännu inte gått
+          över — talet faller när den körs.{" "}
+        </>
+      )}
+      Hur långt vi hunnit skiljer sig kraftigt mellan partierna. <b>Jämför dem
+      inte på det här talet.</b>
+    </p>
+  </div>
   <p class="summanot">
-    De två sista talen betyder olika saker.
-    <b>Genomsökta utan träff</b> är löften vi letat efter handlingar till utan
-    att hitta något som håller. <b>Ännu inte genomsökta</b> är löften vi inte
-    hunnit leta på — där säger tomheten ingenting alls, varken om partiet eller
-    om riksdagen. Hur långt vi hunnit skiljer sig mellan partierna, så jämför
-    inte partier på de här talen.
+    De tre sista talen betyder olika saker. <b>Sökta utan träff</b> är löften vi
+    letat efter handlingar till utan att hitta något som håller. <b>Ingen
+    liknande handling</b> betyder att sökningen varit där och inte funnit ett
+    enda dokument som liknar löftet tillräckligt — det är en mätning, och
+    metodsidan förklarar gränsen. <b>Väntar på sökning</b> är löften vi inte
+    hunnit leta på, och där säger tomheten ingenting alls.
   </p>
 
   <div class="vy-verktyg">

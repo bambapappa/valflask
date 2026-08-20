@@ -153,6 +153,64 @@ export function getSoktaLoften(): Set<string> {
   }
   return _sokta;
 }
+
+/** En post i sökregistret: när sökningen senast gick över löftet, och hur många kandidater den fann. */
+export interface Sokpost {
+  senast: string;
+  kandidater: number;
+}
+
+let _sokregister: Map<string, Sokpost> | undefined;
+
+/**
+ * Sökregistret — vilka löften sökningen HAR gått över, och med vilket utfall.
+ *
+ * `provade-par.json` minns bara PAR. Ett löfte där nyckelordssökningen inte
+ * hittade en enda kandidat lämnar därför inget spår där, och går inte att
+ * skilja från ett löfte sökningen aldrig hunnit fram till. De två sakerna
+ * betyder helt olika ting för läsaren: det första är en mätning vi ska stå
+ * för, det andra en arbetskö som säger ingenting alls.
+ *
+ * Filen skrivs av förslagskörningen för varje löfte den går över, också när
+ * kandidatlistan är tom. Den kan saknas — då vet vi inget om något löfte, och
+ * `sokstatus` faller tillbaka på det försiktiga svaret.
+ */
+export function getSokregister(): Map<string, Sokpost> {
+  if (!_sokregister) {
+    try {
+      const fil = las<{ poster: Record<string, Sokpost> }>("sokta-loften.json");
+      _sokregister = new Map(Object.entries(fil.poster ?? {}));
+    } catch {
+      _sokregister = new Map();
+    }
+  }
+  return _sokregister;
+}
+
+/** Vad vi vet om sökningen på ett löfte. */
+export type Sokstatus = "kandidater" | "ingen-liknande" | "vantar";
+
+/**
+ * Tre lägen, och ordningen är medvetet försiktig.
+ *
+ * Har löftet prövade par HAR sökningen varit där och funnit något att läsa —
+ * det gäller även för data som är äldre än sökregistret, så uppdelningen
+ * fungerar från första dagen utan att en enda körning behöver ha hunnit
+ * skriva filen.
+ *
+ * Säger registret att sökningen fann noll kandidater är det en mätning:
+ * **ingen liknande handling**.
+ *
+ * Vet vi ingetdera säger vi att löftet **väntar på sökning**. Det är det
+ * svagaste påståendet av de tre, och det ska det vara: att gissa att vi sökt
+ * vore att påstå mer än vi mätt.
+ */
+export function sokstatus(lofteId: string): Sokstatus {
+  if (getSoktaLoften().has(lofteId)) return "kandidater";
+  const post = getSokregister().get(lofteId);
+  if (post) return post.kandidater > 0 ? "kandidater" : "ingen-liknande";
+  return "vantar";
+}
 export function getHandlingMap(): Map<string, Handling> {
   if (!_handlingar) {
     const arr = las<Handling[]>("handlingar.json");

@@ -64,3 +64,58 @@ export function tackningsordning(provade: Provade): (a: { id: string }, b: { id:
 export function mergeProvade(farsk: string[], nya: string[]): string[] {
   return serialiseraProvade(new Set([...farsk, ...nya]));
 }
+
+// ── Vilka löften sökningen HAR gått över ────────────────────────────────────
+
+/**
+ * Sökregistret: varje löfte sökningen läst kandidater för, och hur många den
+ * fann.
+ *
+ * VARFÖR DET INTE RÄCKER MED `provade-par.json`. Den filen minns **par**. Ett
+ * löfte där nyckelordssökningen inte hittade en enda kandidat lämnar därför
+ * inget spår alls — och ser i datat exakt likadant ut som ett löfte sökningen
+ * aldrig hunnit fram till. Partisidan tvingades kalla båda «ännu inte
+ * genomsökta», och de två sakerna är inte samma:
+ *
+ *   · **ingen liknande handling** är en MÄTNING. Sökningen har varit där, och
+ *     inget dokument liknar löftet tillräckligt för att vara värt att läsa.
+ *     Metodsidan beskriver den gränsen och varför den finns.
+ *   · **väntar på sökning** är en ARBETSKÖ. Vi vet ingenting ännu.
+ *
+ * Mätt 2026-08-20 var 1 035 av 1 743 löften utan prövade par, och det talet
+ * bar båda betydelserna på en gång. 537 av dem publicerades dagen innan och
+ * hade aldrig sökts; resten hade sökts gång på gång utan kandidater. Samma
+ * sammanblandning som en gång delade `ingen_handling` i två — nu ett steg till.
+ *
+ * Registret skrivs av förslagskörningen för VARJE löfte den går över, också
+ * när kandidatlistan är tom. Det är hela poängen: nollan ska lämna ett spår.
+ */
+export interface Sokpost {
+  /** Datum för senaste sökning, ISO-datum (YYYY-MM-DD). */
+  senast: string;
+  /** Hur många kandidater sökningen fann. Noll är ett giltigt svar. */
+  kandidater: number;
+}
+
+export interface Sokregister {
+  poster: Record<string, Sokpost>;
+}
+
+export const TOMT_SOKREGISTER: Sokregister = { poster: {} };
+
+/** Skriver in en sökning. Senare datum vinner; kandidatantalet är det senast mätta. */
+export function skrivSokning(
+  reg: Sokregister,
+  lofteId: string,
+  kandidater: number,
+  dag: string,
+): Sokregister {
+  return { poster: { ...reg.poster, [lofteId]: { senast: dag, kandidater } } };
+}
+
+/** Sorterar posterna på id — deterministiska diffar, precis som provade-par. */
+export function serialiseraSokregister(reg: Sokregister): Sokregister {
+  const poster: Record<string, Sokpost> = {};
+  for (const id of Object.keys(reg.poster).sort()) poster[id] = reg.poster[id]!;
+  return { poster };
+}

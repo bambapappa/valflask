@@ -26,7 +26,10 @@ import { OpenRouterClient } from "../src/llm.ts";
 import { rankaKandidater, rankaVoteringsKandidater, skapaForslag, type Lofte, type TermIndex } from "../src/foreslag.ts";
 import { dokumentfrekvenser, slaIhopSkarvor, type Skarva } from "../src/nyckelord.ts";
 import { LAGE_A_FONSTER, type KopplingsForslag } from "../src/grindar.ts";
-import { laddaProvade, parNyckel, serialiseraProvade, tackningsordning } from "../src/provade.ts";
+import {
+  laddaProvade, parNyckel, serialiseraProvade, tackningsordning,
+  skrivSokning, serialiseraSokregister, TOMT_SOKREGISTER, type Sokregister,
+} from "../src/provade.ts";
 
 interface KoPost extends KopplingsForslag {
   skapad: string;
@@ -139,6 +142,14 @@ async function main() {
   for (const k of ko) provade.add(parNyckel(k.promise_id ?? k.stance_id ?? "", k.handling_id));
   const sedd = provade; // samma mängd bär både skip-koll och beständigt minne
 
+  // Sökregistret: vilka löften sökningen HAR gått över, och hur många
+  // kandidater den fann. Skrivs för varje löfte, också när listan är tom —
+  // det är nollan som behöver lämna ett spår. Se `src/provade.ts`.
+  const sokregisterPath = resolve(rot, "data/sokta-loften.json");
+  let sokregister: Sokregister = existsSync(sokregisterPath)
+    ? (JSON.parse(readFileSync(sokregisterPath, "utf8")) as Sokregister)
+    : TOMT_SOKREGISTER;
+
   // MINST TÄCKTA LÖFTET FÖRST (b-0038). Kördes listan i filordning betalade
   // alltid samma löften först, och en körning som slår i tids- eller
   // budgettaket stannade alltid på samma ställe — löftena sist i filen
@@ -181,6 +192,9 @@ async function main() {
   let parKlara = 0;
   const sparaKo = () => writeFileSync(koPath, JSON.stringify(ko, null, 2) + "\n");
   const sparaProvade = () => writeFileSync(provadePath, JSON.stringify(serialiseraProvade(provade), null, 2) + "\n");
+  const sparaSokregister = () =>
+    writeFileSync(sokregisterPath, JSON.stringify(serialiseraSokregister(sokregister), null, 2) + "\n");
+  const idag = new Date().toISOString().slice(0, 10);
   for (const lofte of loften) {
     const dokKandidater = rankaKandidater(lofte, handlingar, maxKandidater, termIndex);
     const votKandidater = rankaVoteringsKandidater(lofte, handlingar, betankanden, maxKandidater);
@@ -191,6 +205,11 @@ async function main() {
     console.log(
       `${lofte.id} "${lofte.title.slice(0, 60)}" — ${dokKandidater.length} dokument- och ${votKandidater.length} voteringskandidater`,
     );
+    // Sökningen har nu varit över det här löftet. Bokför det INNAN modellen
+    // frågas: hittade sökningen noll kandidater är det ett svar, inte en
+    // lucka, och det svaret får inte försvinna bara för att det inte kostade
+    // ett modellanrop.
+    if (!dryRun) sokregister = skrivSokning(sokregister, lofte.id, kandidater.length, idag);
     for (const { handling, poang, betankande } of kandidater) {
       if (sedd.has(parNyckel(lofte.id, handling.id))) continue;
       if (dryRun) {
@@ -242,12 +261,13 @@ async function main() {
     // Kön OCH provade-minnet skrivs efter varje löfte — en krasch eller
     // timeout längre fram kastar aldrig bort förslag som passerat grindarna,
     // och nej-svaren som redan kostat modellanrop bevaras.
-    if (!dryRun) { sparaKo(); sparaProvade(); }
+    if (!dryRun) { sparaKo(); sparaProvade(); sparaSokregister(); }
   }
 
   if (!dryRun) {
     sparaKo();
     sparaProvade();
+    sparaSokregister();
     console.log(`klart: ${nya} nya förslag → ${koPath} (väntar på mänskligt beslut)`);
     if (parFel > 0) {
       console.error(`obs: ${parFel} par föll på fel under körningen — en omkörning prövar dem igen`);
