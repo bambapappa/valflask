@@ -776,7 +776,19 @@
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/7-stegsprogram/",
     "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet",
-    "costReason": "DATUMGRINDEN MÄTER FEL DATUM. Posten stoppades på källans publiceringsdatum, men sidan anger själv ett senare ändringsdatum som ligger innanför fönstret. Orsaken är att koden läser article:published_time och datePublished men aldrig article:modified_time eller dateModified. Det är inte en grind som ska lossas — det är fel datum som mäts. Posten kan inte avgöras förrän frågan om vilket datum som gäller är avgjord; den är ett mänskligt beslut."
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 2500,
+      "msek_base": 6000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Nytt/utvidgat skatteavdrag liknande ROT: kostnaden är sänkta skatteintäkter. Ingen partisiffra; spannet bygger på antagen andel energiåtgärder av befintligt rotunderlag. Avser avdragets…",
+      "confidence": 0.35,
+      "calculation": "Befintligt ROT ligger historiskt runt 15 mdkr/år = 30 % av ca 50 mdkr arbetskostnad. Ett klimatanpassat ROT antas ge förhöjt avdrag/utökat tak för energieffektiviseringsåtgärder (fönster, isolering, värmepumpar) plus viss breddning mot skolor/miljonprogram. Antagande (mitt eget, ingen partisiffra): 15–30 % av rotunderlaget, dvs. 7–15 mdkr arbetskostnad, berörs, med extra statsandel 30–50 %-enheter → ca 2,5–12 mdkr/år. Beteendeeffekter (att en del renoveringar ändå skett) drar nedåt, breddning till flerbostadshus/skolor drar uppåt."
+    }
   },
   {
     "candidate": {
@@ -1519,7 +1531,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/bostader/",
-    "articleTitle": "Miljöpartiets bostadspolitik"
+    "articleTitle": "Miljöpartiets bostadspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 30,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringslöfte: prissatt statens direkta kostnad — administration, tillsyn och systemutveckling för klimatdeklarationer/gränsvärden samt ev. stöd till återanvändning — inte branschens följkostnader.",
+      "confidence": 0.35,
+      "calculation": "Klimatdeklaration för byggnader finns delvis sedan 2022; löftet är främst lagstiftning. Direkta statliga poster: (1) myndighetsadministration/tillsyn för deklarationer och gränsvärden ~10–30 msek/år; (2) engångsutveckling av regelverk, databas och vägledning ~10–40 msek; (3) ev. stöd till återanvändning av byggmaterial (cirkulära nav, digital marknadsplats) ~0–50 msek/år men nivå ospecifierad. Sammanvägt: low ~5 msek (ren tillsyn), base ~30 msek/år (administration + måttligt stöd), high ~100 msek (utbyggnadsfas + generösare stöd). Följkostnader för byggsektorn kvantifieras inte enligt reglerna."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1593,7 +1618,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/brobyggare-pa-skolor-i-utsatta-omraden/",
-    "articleTitle": "Miljöpartiet vill anställa brobyggare på skolor i utsatta områden | Miljöpartiet"
+    "articleTitle": "Miljöpartiet vill anställa brobyggare på skolor i utsatta områden | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 40,
+      "msek_high": 120,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp: antas som riktat statsbidrag till kommuner för samverkan skola–närsamhälle i utsatta områden. Anchored vid storleken på jämförbara små samverkansbidrag; osäkerheten är stor.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ingen nivå. Antagande: statsbidrag till kommuner med utsatta områden (~150–300 områden nationwide, men inte alla söker). Bidrag ~0,2–0,5 mkr per område/kommun × 100–250 berörda enheter ≈ 20–125 mkr/år; base ~40 mkr speglar ett måttligt utbyggt bidrag. Alternativt kan åtgärden delvis vara vägledning/reglering (nästan kostnadsfritt), vilket motiverar låga värdet. Alla tal är egna antaganden — partiet anger ingen siffra."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -4345,7 +4383,20 @@
     },
     "failures": [],
     "articleUrl": "https://moderaterna.se/var-politik/eu/",
-    "articleTitle": "EU | Moderaterna"
+    "articleTitle": "EU | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Sanktioner är regulering: prissatt som marginell kostnad för sanktionsfullföljd/övervakning (bl.a. skuggflottan), ej samhällsekonomiska följder. Avkastning på frysta ryska tillgångar är inte statens…",
+      "confidence": 0.3,
+      "calculation": "Löftet hålls genom reglering inom EU/Sverige. Direkt statlig kostnad = marginell förstärkning av tillsmyndigheter (sjöbevakning, tull, polis, sanktionsmyndighet): grovt 0–20 msek/år, base ~5 msek/år. Avkastningen på frysta ryska tillgångar tillfaller inte staten idag; att styra den till Ukraina kostar staten i princip inget netto (eventuell borgens-/juridikpost ingår i spannet). Följder för handel/energi kvantifieras ej enligt regel 9."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -4564,7 +4615,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/abort",
-    "articleTitle": "Abort – Liberalerna"
+    "articleTitle": "Abort – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 10,
+      "msek_base": 40,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå; prissatt som statlig satsning på lärarfortbildning och stödmaterial, ej ordinarie undervisning som redan finansieras via skolans ordinarie anslag.",
+      "confidence": 0.35,
+      "calculation": "Antagande: satsning liknande tidigare ämneslyft men i liten skala. ~4 000 grundskolor + gymnasieskolor; fortbildning/läromedel motsvande ~5–25 tkr per skola ≈ 20–100 mkr; plus centralt stödmaterial och fortbildningsinsatser ~5–30 mkr. Totalt ~25–130 mkr, avrundat 10–150 mkr. Ingen extra undervisningstid, timmar eller löneökning prissatt — klassrumsverksamheten finansieras redan inom befintliga skolanslag, endast den nya statliga satsningen räknas."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -4609,7 +4673,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/abort",
-    "articleTitle": "Abort – Liberalerna"
+    "articleTitle": "Abort – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Gränsöverskridande vård för EU-kvinnor nekade abort hemma. Flödet till Sverige är litet (flera går till Tyskland/Nederländerna). Prissätter vårdkostnaden, inte EU-processen.",
+      "confidence": 0.3,
+      "calculation": "Antag 50–500 kvinnor/år söker abortvård i Sverige (främst från länder med strikta abortlagar; majoriteten av resandet går idag till närmare grannländer). Vårdkostnad ~10–25 tkr per abort, ev. plus visst rese-/informationstöd ≈ 0,5–15 mkr/år; avrundat spann 1–20 msek. Stor osäkerhet: oklart om Sverige, hemlandet eller EU-nivå bär kostnaden; om hemlandet debiteras blir den svenska nettokostnaden nära noll."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -4896,7 +4973,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/eu/",
-    "articleTitle": "Miljöpartiet och EU"
+    "articleTitle": "Miljöpartiet och EU",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 1000,
+      "msek_high": 2500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnad för bildande av skyddade områden: markinköp, ersättning till markägare och administration. Följder för skogsbruk/näringar ej prissatta.",
+      "confidence": 0.4,
+      "calculation": "Sverige har ca 41 mn ha land; ca 15-16 procent är formellt skyddat idag, så löftet kräver ca 6-7 mn ha nytt skydd till 2030. En stor andel kan ske billigt genom att formellt skydda redan statlig mark, fjällnära områden och frivilliga avsättningar. Skydd av privat produktiv skog kräver dock inköp eller ersättning (oråvatål), grovt 30-100 tkr/ha beroende på trakt. Statens nuvarande anslag för bildande och förvaltning av skyddade områden ligger i storleksordningen 0,5-0,8 mdr kr/ar. Fördubblat tempo mot 30 procent antas kräva ca 1-3 ggr nuvarande niva, dvs grovt 1-2,5 mdr kr/ar, medan en optimistisk berkäkning pa statlig mark och administrativt skydd (Natura 2000) hamnar naermare 0,3 mdr. Bas saetts till ca 1 mdr kr/ar, spann 0,3-2,5 mdr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -4999,7 +5089,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/foretagande/",
-    "articleTitle": "Grön företagarpolitik skapar jobb | Miljöpartiet"
+    "articleTitle": "Grön företagarpolitik skapar jobb | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; kostsamma delar prissätts på separata löften. Base 0; span täcker ev. utrednings-/förenklingskostnader.",
+      "confidence": 0.4,
+      "calculation": "Löftet är en allriktningsformulering ('förbättra tryggheten och minska regelkrånglet') utan utpekad åtgärd, nivå eller belopp. Enligt regeln för breda önskelöften sätts base till 0 msek. Osäkerheten ligger i att genomförandet kan kräva utredningar/förenklingsarbete i SOU-storlek (~5–30 msek) plus ev. löpande administration, varför high sätts till 50 msek. Konkreta reformdelar (t.ex. specifika regeländringar eller trygghetsåtgärder) prissätts separat för att undvika dubbelräkning."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -5044,7 +5147,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/foretagande/",
-    "articleTitle": "Grön företagarpolitik skapar jobb | Miljöpartiet"
+    "articleTitle": "Grön företagarpolitik skapar jobb | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 150,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp; prissatt som blygsam utbyggnad av stöd/bidrag till arbetsintegrerande sociala företag. Beloppet avser direkta statskostnader, inte samhällseffekter.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ingen nivå eller åtgärd i detalj. ASF-sektorn i Sverige är liten (några hundra företag, uppskattningsvis 5 000–10 000 anställda varav många i stödda platser). Antagande: reformen innebär utökade utvecklingsbidrag (ca 10–30 mkr/år) samt ev. subventionerade platser: 1 000–2 500 platser × 0,15–0,25 mkr/plats ≈ 150–600 mkr. Låg nivå (20 mkr) speglar att 'bättre förutsättningar' kan vara mest regeländringar/upphandlingskrav med marginell direkt kostnad; hög nivå (400 mkr) en kraftigare programsatsning. Bas 150 mkr = försiktig medelnivå. All siffring är min egen uppskkning; löftet ger ingen vägledning om nivå, därför låg konfidens."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -6881,7 +6997,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/gruvor-och-mineraler/",
-    "articleTitle": "Miljöpartiets gruv- och mineralpolitik"
+    "articleTitle": "Miljöpartiets gruv- och mineralpolitik",
+    "cost": {
+      "type": "intäktsökning",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 800,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ny skatt = intäktsökning för staten. Ingen skattenivå angiven i löftet; uppskattning via typiska royalty-nivåer. Att intäkterna avses gå till lokalsamhällen är omfördelning, inte extra nettokostnad.",
+      "confidence": 0.35,
+      "calculation": "Svensk gruvbrytning ~30 Mt järnmalmskoncentrat/pellets per år (främst LKAB) plus koppar-/zinkkoncentrat. Antagen royalty 5–25 kr/ton koncentrat, alternativt 0,5–2 % av brytningsvärde (~60–80 mdkr/år). Låg: 30 Mt × 5–10 kr ≈ 150–300 mkr. Bas: 30 Mt × ~25 kr ≈ 750 mkr + marginell koppar ≈ 800 mkr. Hög: resultatbaserad tilläggsskatt eller 2–3 % av värde i högkonjunktur ≈ 1 500–2 000 mkr. Löftet saknar nivå; spannet speglar okänd skattesats, konjunktur och beteendeeffekter (nedläggningar/utebliven expandering)."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -7101,7 +7230,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/halso-och-sjukvard/",
-    "articleTitle": "Miljöpartiets hälso- och sjukvårdspolitik"
+    "articleTitle": "Miljöpartiets hälso- och sjukvårdspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 600,
+      "msek_base": 1000,
+      "msek_high": 1600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Gratis tandvård utökas från 19 till 23 år (~470 000 unga vuxna). Liknande förslag brukar prissättas runt 1 mdkr/år, netto efter befintligt tandvårdsbidrag. Vaga delar (högkostnadsskydd) prissätts ej…",
+      "confidence": 0.6,
+      "calculation": "~470 000 personer i ålder 20–23 år (ca 4 årskullar × ~115 000). Medellkostnad tandvård per ung vuxen ~2 000–2 500 kr/år (examination, hygiënist, lagningar) med ökat utnyttjande när vården är gratis: 470 000 × 2 000–2 500 ≈ 0,95–1,2 mdkr brutto. Minus befintligt tandvårdsbidrag 600 kr × 470 000 ≈ 280 msek som redan betalas → netto ~0,7–1,0 mdkr/år. Viss extra kostnad för de med störst behov (prioritering) och stordriftseffekter → spann 0,6–1,6 mdkr, bas 1 000 msek i linje med tidigare publicerade kostnader för motsvarande reform. Utveckling av högkostnadsskyddet är för vagt för separat prissättning."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -7646,7 +7788,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/biologisk-mangfald",
-    "articleTitle": "Biologisk mångfald"
+    "articleTitle": "Biologisk mångfald",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 500,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp; prissatt mot statens löpande kostnad för bildande/förvaltning av reservat och nationalparker (intrångsersättning, skötsel), inte samhällsföljder.",
+      "confidence": 0.3,
+      "calculation": "Ingen nivå anges i löftet. Anknytning: statens löpande skyddsarbete (intrångsersättning till markägare vid bildande av reservat/nationalparker samt förvaltning av skyddade områden) har historiskt legat på ungefär 0,5–1,5 mdkr/år. Antaganden: låg ~150 msek = endast marginell förstärkning av pågående program; bas ~500 msek = fortsatt/måttligt utökat skyddsarbete; hög ~1 200 msek = kraftigt utökat bildande av nya reservat och parker. Fasta priser, brutto per år, före partiets egen finansiering. Osäkerheten är stor eftersom omfattningen av nytt skydd inte specificeras."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -8040,7 +8195,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/bistand",
-    "articleTitle": "Bistånd – Liberalerna"
+    "articleTitle": "Bistånd – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 50,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "I huvudsak omfördelning inom befintlig biståndsbudget; endast marginell admin för villkorstyrning och ev. mindre förstärkning av civilsamhällesstöd prissatt.",
+      "confidence": 0.4,
+      "calculation": "Svenskt bistånd ~60-70 mdkr/år omdisponeras inom befintlig ram (villkoring, styrning mot civilsamhälle) = ingen ny bruttokostnad enligt netto-principen. Ny statlig kostnad bedöms vara uppföljning/villkorsanalys inom Sida/UD plus eventuell mindre ökning av demokrati- och civilsamhällesstöd: ~0-200 mkr/år, bas ~50 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -8326,7 +8494,20 @@
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/foretagande",
     "articleTitle": "Företagande | Centerpartiet",
     "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma uttryck: «bort onödig», «onödig regler»"
+    "duplicateReason": "samma uttryck: «bort onödig», «onödig regler»",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 35,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kostnaden avser direkt förstärkning av Regelrådet (mer personal/analyskapacitet), inte samhällseffekter av regelrensning. Löftet vagt om omfattning.",
+      "confidence": 0.4,
+      "calculation": "Regelrådet är en liten rådsverksamhet; 'stärka' tolkas som väsentligt utökad kapacitet. Antag ~5–15 extra analytiker inkl. stöd och lokaler à ~1–1,5 mkr/tjänst → ca 5–20 mkr/år extra, plus eventuell utökad remissanalys → high ~35 mkr. Base ~15 mkr/år. Regelavvecklingens effekter för företag är ingen statlig utgift och prissätts inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -8429,7 +8610,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/cirkular-ekonomi",
-    "articleTitle": "Cirkulär ekonomi – Liberalerna"
+    "articleTitle": "Cirkulär ekonomi – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 70,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering/förbud: beloppet avser endast åtgärdens direkta kostnad (tillstånd, tillsyn, kontroll), inte samhällsföljder som utebliven konsumtion eller företagsintäkter.",
+      "confidence": 0.3,
+      "calculation": "Löftet är en reglering utan belopp. Direkt statlig kostnad = ny lagstiftning + tillsyn/kontroll av affärsmodeller (t.ex. Konsumentverket, Kemikalieinspektionen, Naturvårdsverket). Antagande: 10–30 tjänster för tillsyn, vägledning, kontroller + IT/systemstöd ≈ 1–3 Mkr per tjänst och år → grovt 5–70 msek/år, bas ~20 msek. Följder (minskad försäljning, branschintäkter, beteendeförändringar) är överföringar/följder och prissätts inte enligt regel 9."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -8650,7 +8844,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/cykling",
-    "articleTitle": "Cykling – Liberalerna"
+    "articleTitle": "Cykling – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 45,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en samordningsåtgärd: statens kostnad är framtagning av gemensam standard/vägledning och ev. mindre stöd. Fysiska byteskostnader för skyltar bärs av kommuner/Trafikverket i ordinarie drift…",
+      "confidence": 0.35,
+      "calculation": "Statens direkta nytta: 1) utredning/standardiseringsarbete för enhetlig cykelskyltning (SOU-storlek, ~5–15 mkr engång); 2) ev. vägledningsmaterial och implementeringsstöd till kommuner (~3–10 mkr); 3) ev. mindre startbidrag för ombyggnad av skyltning (~0–20 mkr). Summa ~5–45 mkr, bas 15 mkr. Byteskostnader för befintliga skyltar (~tusentals skyltar × några tusen kr) ligger hos kommunerna vid ordinarie underhåll och exkluderas enligt netto-principen."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -9807,7 +10014,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/ekonomi",
-    "articleTitle": "Ekonomi – Liberalerna"
+    "articleTitle": "Ekonomi – Liberalerna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 5000,
+      "msek_base": 10000,
+      "msek_high": 25000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett löfte om skattesänkning för alla som arbetar, utan nivå. Prissatt mot senaste årens faktiska steg i jobbskatteavdrag/grundavdrag (typiskt 5–15 mdkr/år), brutto före finansiering.",
+      "confidence": 0.3,
+      "calculation": "Inget belopp anges i löftet; ankrar i senaste genomförda skattesänkningar för förvärvsarbetande. Grovräkning: ~4,7 miljoner förvärvsarbetande × ca 1 000–5 000 kr lägre skatt per person och år ≈ 5 000–23 000 msek/år. Bas 10 000 msek motsvarar ~2 100 kr per arbetstagare, i linje med ett medelstort steg av jobbskatteavdraget. Spannet täcker smal bottenhöjning (lägsta) till ett kraftigt combined paket (högsta)."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11145,7 +11365,20 @@
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/forsvar/raddningstjanst",
     "articleTitle": "Räddningstjänst | Centerpartiet",
     "duplicateOf": "p-2026-0381",
-    "duplicateReason": "samma uttryck: «landet särski», «särski fokus»"
+    "duplicateReason": "samma uttryck: «landet särski», «särski fokus»",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 700,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå; tolkas som nytt årligt statligt stöd till räddningstjänst, främst deltidsbrandkårer. Endast statens marginella tillskott — kommunernas basfinansiering räknas inte.",
+      "confidence": 0.35,
+      "calculation": "Räddningstjänsten är kommunalt finansierad (samlat ca 9 mdkr/år) och statens stöd är idag litet, så löftet tolkas som ett riktat statsbidrag snarare än övertagande av basfinansiering. Landet har grovt 500–600 deltidsstationer; antaget stöd för rekrytering, utbildning och övning om 0,2–1 mkr per station och år ≈ 100–600 mkr. Med marginal för nationella insatser (rekryteringskampanj, utrustning, ledning) sätts spannet 100–700 mkr med bas 300 mkr/år. Osäkerheten är stor: varken nivå eller åtgärdsform anges, så partiets senare konkreta löften bör ligga till grund för skarpare siffror."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11191,7 +11424,20 @@
     "failures": [],
     "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/marknadsskolan/",
     "articleTitle": "Marknadsskolan – Vänsterpartiet",
-    "duplicateOf": "p-2026-0470"
+    "duplicateOf": "p-2026-0470",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 50,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagstiftningslöfte: beloppet avser bara genomförandets direkta kostnad (omställning/administration), inte samhällsföljder. Skolpengen betalas redan idag — överföring till kommunalt huvudmannaskap är…",
+      "confidence": 0.3,
+      "calculation": "Avskaffandet sker via lagstiftning; regel 9 ger base≈0 för själva åtgärden. Skolpeng flödar redan från offentliga medel till friskolor, så ett kommunalt/ statligt övertagande är i princip omfördelning (regel 11), inte ny kostnad. Kvar: engångskostnader för omställning — myndighets­handläggning, omorganisation av huvudmän, ev. övergångsavtal ≈ grovt 0–400 mkr; bas ~50 mkr som antagen administrations-/övergångskostnad. Osäkerheten är stor eftersom löftet saknar angiven åtgärdsdesign (vinstförbud, övertagande eller stopp av nya tillstånd)."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11208,7 +11454,20 @@
     "failures": [],
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/forsvar/terrorism",
     "articleTitle": "Terrorism | Centerpartiet",
-    "duplicateOf": "p-2026-0862"
+    "duplicateOf": "p-2026-0862",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kriminalisering är en lagändring; direkt kostad är utredning och lagarbete. Prissätter själva åtgärden, inte följder som fler åtal eller vårdkostnader.",
+      "confidence": 0.5,
+      "calculation": "Löftet hålls genom en lagändring (förbud/kriminalisering). Direkt statlig kostnad = förarbete: eventuell utredning i SOU-storlek ~5–20 msek som engångskostnad. Ökade kostnader för polis, åklagare, domstolar och kriminalvård vid fler äklagor och domar är svåröverskådliga följder av lagen, inte den nya åtgärdens pris, och lämnas okvantifierade. Bas 5 msek speglar normal lagberedning; low 0 om det sker inom befintligt arbete."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11225,7 +11484,20 @@
     "failures": [],
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/forsvar/terrorism",
     "articleTitle": "Terrorism | Centerpartiet",
-    "duplicateOf": "p-2026-0758"
+    "duplicateOf": "p-2026-0758",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 50,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Besparing: besparing = indragna bidrag; administrativ kostnad för villkorsprövning marginalell. Storlek beror helt på avgränsning av 'extremistiska' – få identifierade org. smalt, bredare tolkning…",
+      "confidence": 0.35,
+      "calculation": "Statens stöd till folkrörelser och studieförbund är miljarder/år, men andel till org. med antidemokratiska/våldsamma budskap är liten. Smal tolkning: ~5–20 identifierade organisationer × 0,5–2 mkr/år ≈ 10–30 msek. Bred tolkning inkl. studieförbunds vidareförmedlade lokaler/aktivitetsstöd till kontroversiella religiösa föreningar: debatterade uppskattningar ~100–150 msek/år. Base ≈ 50 msek/år som mittpunkt. Eventuell ny administration för prövning är försumbar. Samhällseffekter av stoppet ej prissatta."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11241,7 +11513,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/bibliotek",
-    "articleTitle": "Bibliotek – Liberalerna"
+    "articleTitle": "Bibliotek – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; tillgång till bibliotek är redan lagstadgad. Bas satt till 0; spannet rymmer ev. framtida höjda biblioteksstatsbidrag.",
+      "confidence": 0.3,
+      "calculation": "Löftet ('alla ska ha tillgång till bibliotek och få hjälp att nyttja dem') anger ingen specifik åtgärd, nivå eller belopp, och motsvarar i stort gällande bibliotekslag. Ingen identifierbar ny statlig nettokostnad → base 0. Osäkerhet: en ev. kommande satsning (höjt allmänt biblioteksstatsbidrag eller stöd för digital vägledning) skulle kunna ligga på tiotals upp mot ~100 mkr/år, vilket speglas av high."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11257,7 +11542,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/bibliotek",
-    "articleTitle": "Bibliotek – Liberalerna"
+    "articleTitle": "Bibliotek – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: 'fortsatt satsa' utan ny åtgärd, nivå eller belopp. Befintliga lässatsningar ligger kvar i basplanen — ingen ny statlig nettokostnad. Spannet rymmer ev. framtida tilläggsinitiativ.",
+      "confidence": 0.3,
+      "calculation": "Citatet anger ingen specifik åtgärd, höjning eller belopp — endast att pågående satsningar på läsförmåga ska fortsätta. Att fortsätta existerande politik är ingen ny statlig kostnad (bas 0). Om partiet senare lägger till nya läsinitiativ avser spannet 0–300 msek/år, i linje med storleksordningen för tidigare nationella läs- och skrivsatsningar; osäkerheten är därför stor och basen förblir 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11302,7 +11600,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/kultur/",
-    "articleTitle": "Miljöpartiets kulturpolitik"
+    "articleTitle": "Miljöpartiets kulturpolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Principförstärkning i lag och styrmodell — ren regleringsåtgärd. Beloppet avser endast direkt kostnad (eventuell utredning/omarbetning av lagtext och vägledning), inte samhällsföljder.",
+      "confidence": 0.4,
+      "calculation": "Löftet är en lagändring i bibliotekslagen samt vägledning/förändring av kultursamverkansmodellen. Ingen ny förmån eller utgift postas. Direkt kostnad: ev. utredning och lagändringsarbete ~0–20 mkr som engångskostnad; löpande administration försumbar. Följder av armlängds avstånd (t.ex. ändrad bidragsfördelning) är omfördelning/följd och prissätts inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11318,7 +11629,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/kultur/",
-    "articleTitle": "Miljöpartiets kulturpolitik"
+    "articleTitle": "Miljöpartiets kulturpolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 1100,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Nettokostnad: ersättning av Skapande skola räknas som marginalökning; huvudpost är återinförd estetisk verksamhet (~100 p) för alla gymnasieelever plus mindre medel till förskollärarutbildningen.",
+      "confidence": 0.4,
+      "calculation": "Kulturgaranti: ersätter Skapande skola (~200 msek/år); antar garantin något större, netto 0–300 msek, bas 100. Estetisk verksamhet: ~340 000 gy-elever × 100 poäng under 3-årigt program ≈ 11 milj elevpoäng/år × 60–100 kr/poäng (lärare, lokaler, material) ≈ 700–1 100 msek; staten bär huvuddelen via riksbidrag → bas ~1 000. Osäkerhet: kan delvis tränga ut individuellt val → lägre nettokostnad. Förskollärarutbildning: tillkommande lärartimmar i musik/kultur ~10–50 msek → bas 25. Summa bas ~1 100 msek/år; spannet räknar med nettoeffekt nära noll i lågänden och fullt tillägg i högängen."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11350,7 +11674,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/kultur/",
-    "articleTitle": "Miljöpartiets kulturpolitik"
+    "articleTitle": "Miljöpartiets kulturpolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 75,
+      "msek_high": 225,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp. Anknytning till befintligt statsstöd till konstnärsallianserna (litet, tiotals msek/år) plus regeländringar kring stipendier vs sjukförsäkring/a-kassa, som i sig är billiga…",
+      "confidence": 0.35,
+      "calculation": "Tre delar: (1) Stödet till konstnärsallianserna ligger idag i storleksordningen 15–25 msek/år; 'säkra och utöka' tolkas som +50–100% ≈ 10–25 msek extra. (2) 'Stärka trygghetssystemen för konstnärer' utan nivå: kan innebära utökade stipendier/ersättningar via konstnärsstödet, uppskattningsvis 0–200 msek beroende på omfattning. (3) Regeln att stipendier ska tryggas mot sjukförsäkring/a-kassa är främst en regeländring med liten direkt kostnad, men kan ge ökade försäkringsutbetalningar. Summa: låg ~20 (endast alliansstöd + marginellt), bas ~75 (måttlig utökning), hög ~225 (bredare trygghetsutökning). Osäkerheten är stor eftersom löftet saknar nivåer."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11366,7 +11703,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/kultur/",
-    "articleTitle": "Miljöpartiets kulturpolitik"
+    "articleTitle": "Miljöpartiets kulturpolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred uppräkning av fyra kulturområden utan nivåer eller belopp → inriktningslöfte, base 0. Spannet rymmer ev. små statsbidrag; kostsamma delar (t.ex. skolbibliotek, kommunalt ansvar) prissätts i…",
+      "confidence": 0.3,
+      "calculation": "Citatet: 'stärka läsfrämjandet, bemannade skolbibliotek, minoritetsspråkens språkcentrum och digitaliseringen av kulturarvet' — fyra områden, inget belopp, ingen nivå → regel 13: inriktningslöfte, base 0. Skolbibliotek är kommunal verksamhet; en statlig övertagning är omfördelning (regel 11), ej ny statlig netto kostnad. Spannet 0–200 msek rymmer rimliga små statsbidrag/satsningar (läsfrämjandekampanjer, språkcentrum, digitaliseringsprojekt ~10–200 msek) om löftet konkretiseras, men inget åtagande är i dag mätbart."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11412,7 +11762,20 @@
     "failures": [],
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/funktionsratt",
     "articleTitle": "Funktionsrätt | Centerpartiet",
-    "duplicateOf": "p-2026-0344"
+    "duplicateOf": "p-2026-0344",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 600,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå. Prissatt som typiska kostnader för riktade skolsatsningar: statsbidrag, lärarfortbildning och fler specialpedagoger. Osäkerheten är stor eftersom åtgärderna inte specificerats.",
+      "confidence": 0.35,
+      "calculation": "Antagande: ~10–15% av ~1,2 mn skolelever har NPF eller annan funktionsnedsättning (~120–180 000 elever). Rimliga åtgärder: (1) riktat statsbidrag till huvudmän ~200–800 mkr/år, jämförbart med tidigare riktade stödbidrag i skolan; (2) fortbildning i NPF för lärare ~50–150 mkr/år; (3) utökade specialpedagog-/speciallärartjänster, 500–2 000 tjänster × ~0,7 mkr ≈ 350–1 400 mkr, där staten via bidrag antas stå för en del. Summerat spann ~100–1 500 mkr/år; bas ~600 mkr speglar en medelnivå. Partiet anger ingen nivå – alla belopp är egna antaganden, inte partiets siffror."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11428,7 +11791,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/lands-och-glesbygd/",
-    "articleTitle": "Miljöpartiets politik för landsbygd och glesbygd"
+    "articleTitle": "Miljöpartiets politik för landsbygd och glesbygd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 400,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett riktninglöfte utan belopp. Prissatt som en måttlig höjning av befintliga riktade statsbidrag till glesbygd (skola, nära vård), inte fulla samhällseffekter. Stor osäkerhet.",
+      "confidence": 0.35,
+      "calculation": "Löftet saknar nivå och knyper ihop flera områden. Anknytning till befintliga riktade stöd: glesbygdspåslag i skolans statsbidrag ~100–200 msek/år, antagen höjning 50–100 % ≈ 50–200 msek. Nära vård via e-hälsa, ambulerande sjukvård och mindre vårdenheter: jämförbara riktade satsningar ~100–400 msek/år. Summerad ny statlig nettokostnad ≈ 150–600 msek/år, med marginal uppåt för etablering av vårdenheter på fler orter → spann 150–800, bas ~400 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11444,7 +11820,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/lands-och-glesbygd/",
-    "articleTitle": "Miljöpartiets politik för landsbygd och glesbygd"
+    "articleTitle": "Miljöpartiets politik för landsbygd och glesbygd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 350,
+      "msek_base": 500,
+      "msek_high": 900,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp; ankrat i befintlig drift av statliga servicekontor och tidigare landsbygdsstöd. Prissatt statens medfinansiering, ej kommunernas andel.",
+      "confidence": 0.35,
+      "calculation": "Landsbygdsavtal: ~100–200 glesbygdskommuner/aktörer × 2–5 mkr statlig medfinansiering per avtal ≈ 200–1 000 msek/år. Utveckling av servicekontor (utökad bemanning, eventuellt nya kontor) ≈ 50–150 msek/år. Totalt ≈ 250–1 150 msek; bas satt till 500 msek/år mitt i spannet. Osäkerheten är stor eftersom varken avtalsnivå, antal avtal eller omfattning på servicekontorsutvecklingen anges i löftet."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11481,7 +11870,20 @@
       }
     ],
     "articleUrl": "https://www.mp.se/politik/lands-och-glesbygd/",
-    "articleTitle": "Miljöpartiets politik för landsbygd och glesbygd"
+    "articleTitle": "Miljöpartiets politik för landsbygd och glesbygd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 800,
+      "msek_base": 1500,
+      "msek_high": 3000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar nivå; ankrat i klimatbonusens tidigare faktiska årsnotkostnad. Att även begagnade bilar omfattas vidgar spannet uppåt.",
+      "confidence": 0.5,
+      "calculation": "Klimatbonusen (avskaffad 2022) kostade som mest ca 1,5–2,5 mdkr/år vid ~40 000–50 000 nya elbilar × 40 000–70 000 kr i stöd. Löftet omfattar även begagnade bilar: antag ~40 000–50 000 nya + 10 000–30 000 begagnade försäljningar × lägre stöd 10 000–50 000 kr ⇒ ca 0,8–3 mdkr/år brutto, ingen hänsyn till beteendeeffekter. Bas 1 500 msek motsvarar senaste faktiska kostnadsnivån för en liknande reform."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11497,7 +11899,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/lands-och-glesbygd/",
-    "articleTitle": "Miljöpartiets politik för landsbygd och glesbygd"
+    "articleTitle": "Miljöpartiets politik för landsbygd och glesbygd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring: kommuner får rätt att VALFRITT ta ut turistavgift. Intäkterna tillfaller kommunerna, ej staten — ej en statlig intäktsökning. Prissatt är statens direkta kostnad…",
+      "confidence": 0.55,
+      "calculation": "Löftet är en lagändring som ger kommuner en möjlighet (opt-in), ingen statlig utgift eller intäkt i sig. Avgiftsintäkterna är kommunala. Statens direkta kostnad ≈ beredning: antingen direkt lagstiftning (≈0 msek) eller utredning i SOU-storlek med förslag och tillämpningsregler (~5–20 msek engång). Base 5 msek avser en normal utredning; löpande statlig förvaltning bedöms försumbar eftersom administrationen ligger hos kommuner och värdar."
+    },
+    "costReason": "LLM-estimat (confidence 0.55) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11514,7 +11929,20 @@
     "failures": [],
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter",
     "articleTitle": "Infrastruktur och transporter | Centerpartiet",
-    "duplicateOf": "(denna körning)"
+    "duplicateOf": "(denna körning)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 10000,
+      "msek_high": 30000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp; prissatt som årlig tilläggsutgift utöver befintlig nationell transportplan (~60-70 mdkr/år), som enligt nettoprincipen inte är ny kostnad. Spannet är brett eftersom inga…",
+      "confidence": 0.35,
+      "calculation": "Befintlig nationell transportplan ligger på ca 60-70 mdkr/år men utgör noll Förändring. Löftets 'Sverigelyft' tolkas som extra anslag över planen. Jämförbara politiska väg-/järnvägslyft har historiskt motsvarat ca 50-100 mdkr extra per flerårsperiod (4-12 år), dvs. grovt 5-15 mdkr/år. Antagande: 3-30 mdkr/år i ny statlig utgift för upprustning/utbyggnad, bas 10 mdkr/år. Partiets löfte saknar nivå; hela spannet är min uppskattning."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11564,7 +11992,20 @@
       }
     ],
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/bil",
-    "articleTitle": "Bil | Centerpartiet"
+    "articleTitle": "Bil | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 800,
+      "msek_high": 2500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp. Prissatt statens nettokostnad: lagerhållning av reserven plus stöd vid upphandling av storskalig produktion. Prispressen på marknaden är en överföring som inte prissatts.",
+      "confidence": 0.35,
+      "calculation": "Reserv: ~100–200 tusen m³ HVO/biodiesel × 10–15 kr/l ≈ 1–3 mdkr bundet kapital; årlig hållkostnad (ränta, lager, rotation) ~5–10 % ≈ 50–250 msek/år. Upphandling av storskalig skogsbaserad produktion: jämförbara statliga satsningar på biodrivmedelsanläggningar har legat på hundratals msek per projekt; antag 1–2 större satsningar plus löpande produktionstöd ~3–8 kr/l × 50–150 tusen m³ ≈ 150–1200 msek/år. Summa ny nettokostnad för staten ≈ 200–2500 msek/år, bas 800. Lägre pumppris till konsument är en följd/överföring och är inte med i beloppet."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11581,7 +12022,20 @@
     "failures": [],
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/bil",
     "articleTitle": "Bil | Centerpartiet",
-    "duplicateOf": "p-2026-0460"
+    "duplicateOf": "p-2026-0460",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 4500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Utan given nivå; prissatt som NETTOökning av minskade skatteintäkter mot dagens reseavdrag (omfördelning + utökning), inte hela systemets kostnad.",
+      "confidence": 0.4,
+      "calculation": "Dagens reseavdrag används av ca 1,3–1,5 milj deklaranter med snittavdrag ca 5–6 tkr, total ca 7–9 mdkr/år i sänkta skatteintäkter. Löftet ersätter systemet med ett avståndsbaserat avdrag som gynnar långpendlare: antag 0,4–0,8 milj berörda × extra avdrag 3 000–8 000 kr ≈ 1,2–6,4 mdkr ytterligare sänkta intäkter, delvis motverkat av mindre avdrag för kortpendlare när nuvarande system byts ut. Netto för staten ≈ 0,5–4,5 mdkr/år; bas 2 000 msek motsvarar en reform i storlek med tidigare större utbyggnader av reseavdraget."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11619,7 +12073,20 @@
     "failures": [],
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/cykel",
     "articleTitle": "Cykel | Centerpartiet",
-    "duplicateOf": "(denna körning)"
+    "duplicateOf": "(denna körning)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 1000,
+      "msek_high": 2500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statlig medfinansiering av cykelvägsutbyggnad; 'förenkla för kommuner' är regeländring utan egen kostnad. Omfattning ej angiven — stor osäkerhet.",
+      "confidence": 0.4,
+      "calculation": "Antagande: statligt program som medfinansierar ca 100–200 km nya/ombyggda cykelvägar per år. Byggnadskostnad ca 8–20 mkr/km beroende på landsbygd/tätort ⇒ 800–4 000 mkr/år brutto. Statlig andel antas 50–100 % ⇒ ca 400–4 000 msek. Befintligt statligt cykelanslag ligger betydligt lägre, så löftet implicerar kraftig upptrappning; konservativt spann 300–2 500 msek/år. 'Förenkla för kommuner att bygga' bedöms som regeländring med försumbar direkt kostnad och ingår inte i beloppet."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11635,7 +12102,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/mat-och-jordbruk/",
-    "articleTitle": "Miljöpartiets jordbrukspolitik"
+    "articleTitle": "Miljöpartiets jordbrukspolitik",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 600,
+      "msek_high": 1400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Skatteavdrag för gröna lantbruksåtgärder + biopremie, bruto före finansieringen (borttagen dieselrabatt). Ingen siffra i löftet; nivåer uppskatta mot jämförbara gröna stöd.",
+      "confidence": 0.35,
+      "calculation": "Grönt avdrag: ~50 000 lantbruk med skatteunderlag × 50–80 % uppfyller miljökrav × 5 000–15 000 kr i avdrag ≈ 125–600 mkr, mittpunkt ~325 mkr. Biopremie: ~100–250 miljoner liter förnybart bränsle vid omställning × 1–3 kr/liter i premie ≈ 100–750 mkr, mittpunkt ~300 mkr. Total brutokostnad ≈ 600 mkr/år, spann 200–1 400. Finansieringen (borttagen skatterabatt på fossil diesel, grovt ~1 mdkr) räknas inte av här enligt regeln om brutto före partiets finansiering. Partiets egna nivåer saknas — osäkerheten ligger i spannet."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11651,7 +12131,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/mat-och-jordbruk/",
-    "articleTitle": "Miljöpartiets jordbrukspolitik"
+    "articleTitle": "Miljöpartiets jordbrukspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1200,
+      "msek_base": 2200,
+      "msek_high": 3500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Varken arealer eller ersättningsnivåer anges. Bygger på dagens hävdade naturbetesareal och schablonnivåer för miljöersättningar. Prissätter statens nya stödkostnad, inte miljönyttan eller…",
+      "confidence": 0.35,
+      "calculation": "Idag ~250 000 ha hävdad naturbetesmark; nuvarande miljöersättningar ~3 000–5 000 kr/ha ≈ 1 mdkr/år. (1) Fördubbling: +250 000 ha × 4 000–6 000 kr/ha ≈ 1 000–1 500 msek/år. (2) Höjda ersättningar för befintliga arealer, +25–50 % av ~1 mdkr ≈ 250–500 msek/år. (3) Restaurering av igenväxt mark ~10 000–20 000 kr/ha utspritt över programperioden ≈ 200–400 msek/år i genomsnitt. (4) Höjda ekologiersättningar ≈ 200–500 msek/år. Summa ≈ 1 650–2 900 msek/år; spannet vida p.g.a. osäkra nivåer. Delvis EU-medfinansierat idag, men räknat som statlig bruttokostnad före eventuell medfinansiering."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11667,7 +12160,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/mat-och-jordbruk/",
-    "articleTitle": "Miljöpartiets jordbrukspolitik"
+    "articleTitle": "Miljöpartiets jordbrukspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 450,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Prissätter statens subvention/drift av avbytartjänster; 'samlad myndighetsservice' är regelarbete utan direkt kostnad. Antal användare och subventionsnivå saknas i löftet, osäkerheten är stor.",
+      "confidence": 0.4,
+      "calculation": "~60 000 lantbruksföretag i Sverige. Antag att 5–20 % använder avbytare under ett år (semester, sjukdom, föräldraledighet) = 3 000–12 000 insatser. Kostnad per insats (ersättning till avbytare, statens subventionerade andel, beräkningstid ca 1–3 veckor): 15 000–40 000 kr. Totalt: 3 000×15 000 ≈ 45 mkr upp till 12 000×40 000 ≈ 480 mkr per år. Bas ~200 msek ligger i linje med den historiska omfattningen av tidigare avbytarverksamhet. Löftet anger ingen nivå, därför jämförelse med samma åtgärd som tidigare funnits i Sverige."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11685,7 +12191,20 @@
     "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/matpriser",
     "articleTitle": "Matpriser\n| Socialdemokraterna",
     "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma tal: 6 procen"
+    "duplicateReason": "samma tal: 6 procen",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 12000,
+      "msek_base": 16500,
+      "msek_high": 21000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Matmomsen sänks 12→6 %; kostnaden är statens uteblivna momsintäkter på hushållens livsmedelskonsumtion. Årlig kostnad medan reformen gäller; varaktigheten ('tillfällig') är okänd.",
+      "confidence": 0.6,
+      "calculation": "Hushållens årliga konsumtion av livsmedel (butiksvaror, ej restaurang/alkohol) ≈ 300–340 mdkr inkl. 12 % moms → momsbas ≈ 270–300 mdkr exkl. moms. Sänkning med 6 procentenheter ger 6 % × ~275 mdkr ≈ 16–17 mdkr/år i förlorade statsintäkter vid fullt prisgenomslag. Livsmedelsefterfrågan är prisokänslig (elasticitet ca −0,3): volymen ökar marginellt (~1–2 %) vid lägre priser, vilket delvis kompenserar. Ofullständig överföring till konsumentpriser och osäker bas ger spannet ~12–21 mdkr/år. Partiet anger ingen egen siffra; beloppet är min uppskattning."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11731,7 +12250,20 @@
     "failures": [],
     "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/penningpolitik/",
     "articleTitle": "Penningpolitik – Vänsterpartiet",
-    "verifyReason": "Citatet återges korrekt från Vänsterpartiets penningpolitiska sida och partitillhörigheten stämmer. Texten beskriver dock en långvarig policyposition ('har länge krävt') snarare än ett konkret vallöfte för kommande mandatperiod. Det är tveksamt om detta bör klassas som ett vallöfte. Inga monetära belopp förekommer i texten."
+    "verifyReason": "Citatet återges korrekt från Vänsterpartiets penningpolitiska sida och partitillhörigheten stämmer. Texten beskriver dock en långvarig policyposition ('har länge krävt') snarare än ett konkret vallöfte för kommande mandatperiod. Det är tveksamt om detta bör klassas som ett vallöfte. Inga monetära belopp förekommer i texten.",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Institutionell reform: flytt av beslut om penningpolitiska mål till riksdagen. Direkt kostnad är evt. utredning/beredning av riksbankslag; själva maktförflyttningen är kostnadsneutral och…",
+      "confidence": 0.3,
+      "calculation": "Löftet är en regeländring (riksbankslagen, ev. grundlagsändring). Direkt statlig kostnad ≈ en SOU-stor utredning plus beredning: ~5–20 mkr engång. Ingen ny förmån eller utgift; ändrade penningpolitiska måls effekter på ränta/ekonomi är följder, inte statsutgift. Base 10 mkr som mitt i utredningsintervallet."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11749,7 +12281,20 @@
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/dubbdack-och-vinterdack",
     "articleTitle": "Dubbdäck och vinterdäck | Centerpartiet",
     "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma uttryck: «kommun rätt», «lokala dubbdä»"
+    "duplicateReason": "samma uttryck: «kommun rätt», «lokala dubbdä»",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 2,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ren regeländring: lagstiftning som ger kommuner befogenhet. Direkt statlig kostnad försumbar; tillsynen betalas av kommunerna och böter är en följd/överföring, inte statlig utgift. Beloppet avser…",
+      "confidence": 0.65,
+      "calculation": "Löftet = ändring i lag/förordning (~0 msek) plus ev. små engångskostnader för föreskrifter, vägledning och IT-anpassning av föreläggandesystem ~0–10 msek. Ingen återkommande statlig kostnad identifieras: kommunal övervakning är kommunal utgift, böterna en intäkts-/överföringspost. Base 2 msek avspeglar marginell statlig administration."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11765,7 +12310,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/cykling",
-    "articleTitle": "Cykling – Liberalerna"
+    "articleTitle": "Cykling – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Byggande/statsbidrag för regionala cykelstråk; ankrat mot befintligt statligt cykelstöd (~100 msek/år) uppskalat för 'flera stråk'. Löftet saknar nivå, därför bred osäkerhet.",
+      "confidence": 0.4,
+      "calculation": "Löftet anger inget belopp. Ankare: statens årliga stöd till cykelåtgärder har historiskt legat runt 100 msek/år; 'flera sammanhängande regionala stråk' tolkas som en uppskalning till ca 2–5x. Korscheck: separerad cykelväg i landsmiljö ~3–10 msek/km; 30–100 km nya/upprustade stråk per år ger ~100–500 msek/år. Base 250 msek ≈ 2,5x dagens anslagsnivå. Beloppet är brutto för statligt engagemang; regioner/ kommuner medfinansierar ofta, vilket kan sänka statens nettodel."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11781,7 +12339,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/cykling",
-    "articleTitle": "Cykling – Liberalerna"
+    "articleTitle": "Cykling – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 20,
+      "msek_base": 100,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inget belopp i löftet. Tolkat som statligt stöd för cykelplatser/hållare i buss/tåg hos trafikhuvudmän; själva regeländringen är nästan kostnadsfri. Osäkerheten är stor.",
+      "confidence": 0.35,
+      "calculation": "Antag investeringsstöd för cykelutrymmen: ~4 000–6 000 regionala och stadsbussar × 20–50 tkr för cykelhållare/utrymmen ≈ 80–300 mkr engång. Eventuell anpassning av tågmateriel och perronger tillkommer delvis men görs oftast vid nyanskaffning (regional finansiering enligt netto-principen, ej dubbelräknat). Regeländring att tillåta cykel kosta ~0. Spannet 20–300 mkr speglar att åtgärden kan vara nästan ren regulering (låg) eller brett utrustningsstöd (hög); bas 100 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11797,7 +12368,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/migration-och-lika-ratt/",
-    "articleTitle": "Miljöpartiets migrationspolitik"
+    "articleTitle": "Miljöpartiets migrationspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 600,
+      "msek_base": 1500,
+      "msek_high": 3000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Årlig mottagning av 5 000 kvotflyktingar: statens kostnader för etableringsersättning, kommunersättning och Migrationsverkets urval/förflyttning. Endast direkta statskostnader, ej samhällsekonomiska…",
+      "confidence": 0.45,
+      "calculation": "Antag ~65% vuxna: ~3 250 vuxna × etableringsersättning 0,2–0,3 mkr (upp till 24 mån) ≈ 650–975 mkr per kohort. Kommunersättning ~0,15–0,25 mkr × 5 000 ≈ 750–1 250 mkr. Migrationsverkets urval/resor ~0,05–0,1 mkr × 5 000 ≈ 250–500 mkr. Kohortkostnad ~1,6–2,7 mdkr spridd över 2–3 år; med överlappande kohorter blir steady state ~0,6–3 mdkr/år, bas ~1,5 mdkr. Kostnaden byggs upp under de första åren. Siffror är egna schablonantaganden, ej partiets."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11813,7 +12397,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/migration-och-lika-ratt/",
-    "articleTitle": "Miljöpartiets migrationspolitik"
+    "articleTitle": "Miljöpartiets migrationspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: ingen konkret åtgärd eller nivå anges; kostsamma delar (biträde, domstolsresurser) prissätts i separata löften. Spannet fångar tänkbara reformer.",
+      "confidence": 0.4,
+      "calculation": "Citatet 'Stärka rättssäkerheten i asylprocessen' pekar inte ut någon enskild åtgärd, nivå eller mottagargrupp → behandlas som inriktningslöfte, base 0. High: om löftet förverkligas är typåtgärder utökat/förbättrat offentligt biträde (flertalet asylsökande har redan biträde, så marginalen är smal; ex. 5 000–10 000 extra ärenden × 20–50 tkr ≈ 100–500 msek, realistiskt lägre) samt mer resurser till Migrationsverket/migrationsdomstolar (~50–100 msek). Sammanvägt sätts taket vid ~150 msek/år som osäkerhetsband."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11829,7 +12426,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/migration-och-lika-ratt/",
-    "articleTitle": "Miljöpartiets migrationspolitik"
+    "articleTitle": "Miljöpartiets migrationspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regel-/verkställighetsändring, ingen utgiftsnivå angiven. Beloppet avser direkt statlig kostnad (omställning, handläggning), inte svåröverskådliga följer av att fler får stanna.",
+      "confidence": 0.3,
+      "calculation": "Löftet är ett stopp av utvisningar: en lag- och verkställighetsändring, inte en ny förmån med belopp. Direkt statlig kostnad uppskattas till Migrationsverkets omställning, nya rättsliga riktlinjer och ändrad handläggning av pågående ärenden, grovt 10–150 msek/år. Följder (regelbundna uppehållstillstånd, samhällsersättning till kommuner, etableringsstöd, vård) är delvis omfördelning och delvis beteendebetingade samt svåröverskådliga, och prissätts enligtregel inte här. Osäkerheten är stor; spannet speglar oklart antal berörda ärenden."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11845,7 +12455,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/migration-och-lika-ratt/",
-    "articleTitle": "Miljöpartiets migrationspolitik"
+    "articleTitle": "Miljöpartiets migrationspolitik",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Spårbytet är en regeländring i utlänningslagen; endast direkt admin på Migrationsverket prissatt (till stor del avgiftstäckt). Samhällsföljder lämnas okvantifierade; 'värna arbetskraftsinvandringen'…",
+      "confidence": 0.35,
+      "calculation": "Återinfört spårbyte = lagändring i sig nästan kostnadsfri. Effekt: historiskt ca 1 000–3 000 arbetstillståndsansökningar/år från asylsökande i landet × handläggningskostnad ~15–25 tkr ≈ 15–75 mkr brutto, varav avgifter täcker stor del → nettoadmin ~0–30 mkr/år; viss osäkerhet uppåt vid informationsåtgärder. 'Värna arbetskraftsinvandringen': inget konkret åtagande, 0 mkr. Följder för välfärd/skatteunderlag prissätts ej."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11879,7 +12502,20 @@
     "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/migration-och-flyktingpolitik",
     "articleTitle": "Migration och flyktingpolitik\n| Socialdemokraterna",
     "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma uttryck: «återin arbets», «arbets arbets»"
+    "duplicateReason": "samma uttryck: «återin arbets», «arbets arbets»",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 25,
+      "msek_high": 80,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringsåtgärd: prissatt enbart statens administrativa kostnad (handläggning hos Migrationsverket/Arbetsförmedling och samordning med parter). Samhällseffekter som färre tillstånd eller…",
+      "confidence": 0.4,
+      "calculation": "Arbetsmarknadsprövning = extra prövningssteg i arbetstillståndsärenden. Antag ~15 000–25 000 ärenden/år; ytterligare handläggning ~0,5–2 tim/ärende à ~800–1 000 kr total konskostnad ≈ 6–50 mkr. Därutöver samordning med arbetsmarknadens parter, vägledning och IT-anpassning: ~5–30 mkr. Summa ~10–80 mkr/år; bas 25 msek speglar en försiktig administrationsnivå."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11896,7 +12532,20 @@
     "failures": [],
     "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/migration-och-flyktingpolitik",
     "articleTitle": "Migration och flyktingpolitik\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-0837"
+    "duplicateOf": "p-2026-0837",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 80,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring; prissatt direkta kostnader för provutveckling, provadministration och handläggning — inte samhällsföljder som ändrad invandring eller ökat Sfi-behov.",
+      "confidence": 0.35,
+      "calculation": "Regelkrav, ingen ny förmån. Direkt kostnad: (1) engångsutveckling av språk- och samhällskunskapsprov ~20–50 msek; (2) provgenomförande för grovt 40 000–80 000 sökande/år × ~500–1500 kr/prov ≈ 20–120 msek/år; (3) marginellt mer handläggning på Migrationsverket ~5–30 msek/år. Summerat årsnetto ~30–200 msek, bas ~80 msek. Ej prissatt: färre beviljade tillstånd, ökad Sfi-efterfrågan, omfördelning mellan aktörer — okvantifierade följder enligt reglerna."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11914,7 +12563,20 @@
     "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/migration-och-flyktingpolitik",
     "articleTitle": "Migration och flyktingpolitik\n| Socialdemokraterna",
     "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma uttryck: «utrike födda», «födda kvinno»"
+    "duplicateReason": "samma uttryck: «utrike födda», «födda kvinno»",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 400,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp; ankring i etableringsprogrammets storlek. Kostnad = stärkta insatser för kvinnor + individualiserat etableringstillägg; samhällsvinster i självförsörjning prissätts ej.",
+      "confidence": 0.4,
+      "calculation": "Etableringsprogrammet har ca 30 000–50 000 aktiva deltagare per år, grovt hälften kvinnor → ~15 000–25 000. (1) Stärkta insatser (vägledning, utbildnings-/praktikplatser, förlängt stöd) ~5 000–25 000 kr/deltagare ≈ 75–600 mkr/år. (2) Individualisering av etableringstillägget: ~5 000–10 000 personer med idag nedsatt tillägg pga makes inkomst × 1 000–3 000 kr/mån × 6–24 mån ≈ 30–700 mkr/år. Summa brutto ~100–1 300 mkr; med hänsyn till utnyttjandegrad och att vissa insatser tränger ut annat stöd satt spann 150–800 mkr, bas 400 mkr. Grova antaganden, inga exakta myndighetssiffror."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11931,7 +12593,20 @@
     "failures": [],
     "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/pension/",
     "articleTitle": "Pension – Vänsterpartiet",
-    "duplicateOf": "p-2026-1019"
+    "duplicateOf": "p-2026-1019",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 25000,
+      "msek_high": 50000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Mållöfte: 65 % av slutlön för låg-/medelinkomsttagare. Nuvarande allmän pension ger ~55–60 %; kostnaden beror helt på utförandet (garantinivå vs höjda pensionsrätter). Brutto före skatteåterflöde…",
+      "confidence": 0.3,
+      "calculation": "~1,9 M ålderspensionärer, varav låg-/medelinkomsttagare ~60–70 % ≈ 1,1–1,3 M personer. Typisk slutlön ~400–450 tkr/år. Gap mot 65 %-mål antas 5–10 procentenheter, men ofullständiga karriärer/självvald lägre ålder ger i snitt ~15–30 tkr/år per berörd. 1,2 M × 15–30 tkr ≈ 18–36 mdkr/år. Utförande som garanti träffar färre men högre belopp per person; spansvidd 10–50 mdkr, bas 25 mdkr. Partiets nivå är 65 %-målet; antal berörda och gapstorlek är mina uppskattningar."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11976,7 +12651,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/miljo/",
-    "articleTitle": "Miljöpartiets miljö- och naturpolitik inför valet 2026"
+    "articleTitle": "Miljöpartiets miljö- och naturpolitik inför valet 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 3,
+      "msek_base": 10,
+      "msek_high": 25,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Laglöfte: prissatt som direkt kostnad för utredning, förarbeten och administration. Ramverkets samhällsföljder (regleringseffekter) är inte en statlig utgift och lämnas okvantifierade.",
+      "confidence": 0.45,
+      "calculation": "Naturlag = lagstiftningsåtgärd. Direkt kostnad: SOU-utredning ca 5–15 mkr + förarbeten, remisser, admin ca 2–10 mkr, ev. uppföljningsorgan tillkommer. Engångskostnad sammanlagt ca 3–25 mkr, bas 10 mkr. Ev. löpande kostnader för övervakning/råd samt effekter av hänsynsregleringar ingår ej."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -11992,7 +12680,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/miljo/",
-    "articleTitle": "Miljöpartiets miljö- och naturpolitik inför valet 2026"
+    "articleTitle": "Miljöpartiets miljö- och naturpolitik inför valet 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 3000,
+      "msek_high": 6000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "30x30-mål innebär ungefär en dubbling av skyddad natur. Kostnad = ersättning/markinköp, restaurering och förvaltning fördelat på ~10 år; stort spann eftersom stor del kan läggas på statsägd mark.",
+      "confidence": 0.35,
+      "calculation": "Sveriges landyta ~41 Mha; 30 % ≈ 12,3 Mha. Skyddad natur idag ~15–16 % → ~6 Mha nytt skydd behövs, främst skog. Ersättning till markägare ~30–80 tkr/ha för privat produktiv skog, men betydande del kan ske på statlig mark till låg kostnad → totalt ~100–250 mdkr över ~10 år ≈ 10–25 mdkr/år i ren marknadskostnad. Jämförelse: nuvarande anslag för naturvård/skyddad natur ligger i storleksordningen 1–2 mdkr/år och behöver fördubblas–fördubblas igen för måluppfyllelse plus restaurering av våtmarker och vattendrag (tkr–tiotusentals kr/ha). Sammanvägt: ~1,5–6 mdkr per år, bas ~3 mdkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12008,7 +12709,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/miljo/",
-    "articleTitle": "Miljöpartiets miljö- och naturpolitik inför valet 2026"
+    "articleTitle": "Miljöpartiets miljö- och naturpolitik inför valet 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: lagstadgat skydd som ska värnas/stärkas. Direkt statlig kostnad för att behålla/förstärka regelverket är i princip noll; spannet rymmer ev. tillsyn och information.",
+      "confidence": 0.4,
+      "calculation": "Allemansrätten och strandskyddet är lagar; att 'värna' dem är ingen ny utgift. 'Stärka' kan tolkas som mer tillsyn (Länsstyrelserna), informationskampanjer eller utökad strandskyddshandläggning: grovt 0–50 msek/år beroende på ambitionsnivå (t.ex.信息insatser ~5–20 mkr + förstärkt tillsyn ~10–30 mkr). Bas förblir 0 eftersom ingen konkret åtgärd eller nivå anges."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12024,7 +12738,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/miljo/",
-    "articleTitle": "Miljöpartiets miljö- och naturpolitik inför valet 2026"
+    "articleTitle": "Miljöpartiets miljö- och naturpolitik inför valet 2026",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan utpekad åtgärd, nivå eller belopp. Kostsamma delar (miljögiftsåtgärder, dricksvattenåtgärder) prissätts på separata specifika löften.",
+      "confidence": 0.5,
+      "calculation": "Citatet är en övergripande målsättning ('stoppa spridningen av miljögifter och säkra rent dricksvatten') som spänner över flera politikområden utan något enskilt konkret åtagande eller belopp. Enligt regeln för breda sammanfattnings-/önskelöften prissätts det som inriktningslöfte med base 0. Spannet täcker högst eventuella marginella administrativa kostnader (tillsyn, handlingsplan). Eventuella verkliga utgifter som reningsåtgärder, substitutionsstöd eller vattenskydd ska prissättas på partiets specifika löften och inte dubbelräknas här: ~0 msek base, 0–30 msek högsta."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12114,7 +12841,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/djurskydd",
-    "articleTitle": "Djurskydd – Liberalerna"
+    "articleTitle": "Djurskydd – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte om djurvälfärd utan utpekad åtgärd eller belopp; prissatt som inriktningslöfte (base 0). Spannet fångar ev. kostnader för tillsyn/djurvälfärdsstöd i specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ingen åtgärd, nivå eller belopp — enbart en målsättning om djurs välfärd. Enligt reglerna för breda önskelöften prissätts basen till 0 mkr; konkreta kostnader (flere kontroller, djurvälfärdsersättningar, skärpt lagstiftning) ska prissätts på partiets specifika löften för att undvika dubbelräkning. Spannet 0–200 mkr speglar osäkerheten kring ev. kommande åtaganden för tillsyn och stöd; lös lagstiftning i sig är i princip kostnadsfri för staten."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12131,7 +12871,20 @@
     "failures": [],
     "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/naringspolitik",
     "articleTitle": "Näringspolitik\n| Socialdemokraterna",
-    "duplicateOf": "(denna körning)"
+    "duplicateOf": "(denna körning)",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte: uppräkning av flera områden (industri, innovation, klimat) utan konkret åtgärd eller belopp. Kostsamma delar prissätts på partiets specifika löften och dubbelräknas inte här.",
+      "confidence": 0.65,
+      "calculation": "Citatet anger ingen nivå, summa eller enskild åtgärd — endast målriktning över flera politikområden. Enligt regel 13 prissätts det som inriktningslöfte till 0 msek; konkreta investeringar/klimatåtgärder hanteras i separata löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12148,7 +12901,20 @@
     "failures": [],
     "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/naringspolitik",
     "articleTitle": "Näringspolitik\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-0776"
+    "duplicateOf": "p-2026-0776",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regelförenkling/förkortade tillståndsprocesser är främst lagändring; direkt statlig kostnad nära noll. Beloppet avser ev. utredningar och administration, inte samhällsföljder.",
+      "confidence": 0.3,
+      "calculation": "Löftet saknar belopp och nivå. Enligt regel 9 prissätts endast åtgärdens direkta kostnad: lagändringar drivs inom ordinarie regeringskansliarbete ≈ 0 mkr, men möjliga utredningar, digitalisering av tillståndsprocesser och myndighetsomställning kan kosta ungefär 0–100 mkr/år. Bas 5 mkr speglar att kärnan är regeländring utan ny statsfinansiering. Företagens tidsbesparingar och tillväxt är följder, inte statlig utgift."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12168,15 +12934,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 300,
+      "msek_base": 700,
+      "msek_high": 1500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Vagt löfte utan belopp; ankrat i tidigare riktade statsbidrag till primärvårdens arbete med psykisk ohälsa (~0,5–1 mdr kr/år). Beloppet avser själva satsningen, ej samhällsföljder.",
+      "confidence": 0.35,
+      "calculation": "Löftet anger ingen nivå eller åtgärd i kronor. Ankring enligt regel 15: tidigare riktade statsbidrag till primärvården för psykisk ohälsa (närmast jämförbar åtgärd) har legat runt 0,5–1 mdr kr/år. Korscheck: ~1 100–1 200 vårdcentraler × 0,3–1 mkr extra per enhet och år (utbildning i primärpsykiatri, samtalsteam, utökade besökstider) ≈ 350–1 200 mkr. Bas 700 mkr motsvarande tidigare bidragsnivå; spann 300–1 500 mkr för osäkerhet i omfattning och utförande. Återkommande driftsstöd, inte engångskostnad. Brutto för staten före eventuell partifinansiering; omfördelningar inom vården räknas inte."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0343 (0)"
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12224,7 +12991,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/motion-om-sveriges-medlemskap-i-nato/",
-    "articleTitle": "Motion om Sveriges medlemskap i Nato | Miljöpartiet"
+    "articleTitle": "Motion om Sveriges medlemskap i Nato | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 2,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagförbud — beloppet avser bara åtgärden själv (lagstiftning, beredning, ev. tillsyn), inte svåröverskådliga försvars- eller säkerhetspolitiska följder.",
+      "confidence": 0.65,
+      "calculation": "Enligt regel 9 prissätts ett förbud/lagförbud till den direkta kostnaden: lagutskott/jurister ~1–3 mkr + ev. interpolering i förordningar och viss myndighetstillsyn ~0–7 mkr ⇒ engångskostnad ca 0–10 mkr, bas 2 msek. Följder för försvarsförmåga eller alliansrelationer kvantifieras ej."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12240,7 +13020,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/motion-om-sveriges-medlemskap-i-nato/",
-    "articleTitle": "Motion om Sveriges medlemskap i Nato | Miljöpartiet"
+    "articleTitle": "Motion om Sveriges medlemskap i Nato | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Diplomatiskt positionslöfte inom Nato; ingen direkt ny statsutgift. Drivs inom befintlig utrikes- och försvarsförvaltning. Beloppet avser själva åtgärden, inte allianspolitiska följder.",
+      "confidence": 0.65,
+      "calculation": "Löftet är att Sverige ska verka för en principändring i Nato — inga nya förmåner, bidrag eller resurser utlovas. Arbete sker via befintliga diplomatiska kanaler (utrikesdepartementet, Nato-delegationen) till marginell extra kostnad ~0 msek. Ev. tillägg för extra initiativ, seminarier eller utredningsunderlag < 5 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12256,7 +13049,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/motion-om-sveriges-medlemskap-i-nato/",
-    "articleTitle": "Motion om Sveriges medlemskap i Nato | Miljöpartiet"
+    "articleTitle": "Motion om Sveriges medlemskap i Nato | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kravet riktar sig till Nato som organisation; svenska staten kan bara verka diplomatiskt. Ingen identifierbar svensk utgift — endast ev. mindre pådrivskostnad.",
+      "confidence": 0.65,
+      "calculation": "Löftet handlar om Natos medlemskapsregler, som beslutas av Nato självt — inte av svenska staten. Direkt statlig kostnad är därför i praktiken noll. Enda tänkbara svenska kostnaden är diplomatiskt arbete (resolutioner, seminarier, texts underlag) ≈ 0–10 msek som engångsinsats. Inga nya förmåner, bidrag eller skatteändringar för svenska staten ingår."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12275,7 +13081,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/motion-om-sveriges-medlemskap-i-nato/",
-    "articleTitle": "Motion om Sveriges medlemskap i Nato | Miljöpartiet"
+    "articleTitle": "Motion om Sveriges medlemskap i Nato | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser partiets röstning i riksdagen — en position utan direkt statsfinansiell åtgärd eller belopp. Kostnad för själva åtgärden är därmed noll.",
+      "confidence": 0.65,
+      "calculation": "Ingen uträkning möjlig eller relevant: löftet är ett röstningsbeslut i riksdagen, ingen utgift, skatt eller besparing. Hypotetiska försvarspolitiska följder av Nato-utanförskap (t.ex. andra försvarsanslag eller utebliven medlemsavgift) är okvantifierbara konsekvenser, inte löftets direkta kostnad, och prissätts enligt avgränsningsreglerna inte här. Base = 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12336,7 +13155,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/elevhalsa",
-    "articleTitle": "Elevhälsa – Liberalerna"
+    "articleTitle": "Elevhälsa – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ren regelåtgärd: priset avser att ta fram statliga föreskrifter/vägledning, inte de kommunala följkostnaderna för elevhälsans bemanning.",
+      "confidence": 0.4,
+      "calculation": "Löftet är en reglering av elevhälsans vårduppdrag. Direkt statlig kostnad = framtagning av föreskrifter, vägledningsmaterial och ev. anpassad tillsyn: ~5–20 msek som engångskostnad (SOU-nivå + myndighetsarbete). En faktisk utbyggnad av elevhälsa (skolsköterskor, kuratorer, psykologer) skulle kosta miljarder men är kommunalt ansvar och nämns inte som statligt åtagande — följderna lämnas okvantifierade enligt reglerna 9 och 11."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12352,7 +13184,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/elevhalsa",
-    "articleTitle": "Elevhälsa – Liberalerna"
+    "articleTitle": "Elevhälsa – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2,
+      "msek_base": 15,
+      "msek_high": 40,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringslöfte: statens direkta kostnad är administration, vägledning/modellavtal och ev. små samordningsstöd — inte huvudmännens eller regionernas kostnader.",
+      "confidence": 0.4,
+      "calculation": "Löftet är ett krav på skolhuvudmän att teckna avtal med sjukvården. Enligt regleringsregeln prissätts statens direkta kostnad: ~1–5 mkr/år för administration, uppföljning och modellavtal, plus eventuellt små statsbidrag för samordning kring 0–35 mkr. Totalt ≈ 2–40 mkr, bas ~15 mkr. Kostnader som hamnar på kommuner/regioner (elevhälsans utbyggnad) är omfördelning/följd och ingår ej."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12368,7 +13213,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/elevhalsa",
-    "articleTitle": "Elevhälsa – Liberalerna"
+    "articleTitle": "Elevhälsa – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 50,
+      "msek_high": 250,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är främst en regeländring (sekretess) med nästan ingen direkt statlig kostnad; viss satsning på samverkan/fortbildning kan tillkomma. Kommunerna driver verksamheten; beloppet avser åtgärden…",
+      "confidence": 0.3,
+      "calculation": "Ändring av sekretessregler ≈ 0 msek (lagstiftning). Om staten stödjer samverkan med t.ex. samordnare eller fortbildning: ~5 000–6 000 skolor × 10–40 tkr/skola och år ≈ 50–250 mkr. Löftet anger inga resurser, därför låg bas och brett spann; ny nettokostnad för staten begränsas av att kommuner redan driver både socialtjänst och elevvård."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12384,7 +13242,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/elevhalsa",
-    "articleTitle": "Elevhälsa – Liberalerna"
+    "articleTitle": "Elevhälsa – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 180,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå; prissatt som riktat statsbidrag i storlek med tidigare statsbidrag för elevhälsa (~120 msek/år), avsett att finansiera tillförda experttjänster som logopeder.",
+      "confidence": 0.4,
+      "calculation": "Ingen nivå anges i löftet. Anknytning: befintligt/ytterligare riktat statsbidrag för elevhälsa ligger historiskt runt ~120 msek/år. Kostnad per heltidstjänst logoped/annan expert ~0,6–0,8 msek/år inkl. sociala avgifter. Antagande: staten finansierar 150–500 (deltids)tjänster spridda över landets ~4 800 grundskolor + gymnasieskolor ≈ 100–400 msek/år. Base ~180 msek motsvarar grovt 250–300 deltidsexperter, i linje med tidigare elevhälsansatsningars nivå. Min uppskattning av antal; nivån ankrad på tidigare kostnad för samma åtgärd. Osäkerhet: omfattning och kommunalt utnyttjande okända, confidence låg."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12401,7 +13272,20 @@
     "failures": [],
     "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/religiosa-friskolor/",
     "articleTitle": "Religiösa friskolor – Vänsterpartiet",
-    "duplicateOf": "p-2026-0015"
+    "duplicateOf": "p-2026-0015",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 30,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förbud prissatt till åtgärdens direkta kostnad (utredning, lagändring, omställning); skolpeng som följer elever till kommunala skolor är omfördelning, inte ny statlig kostnad.",
+      "confidence": 0.5,
+      "calculation": "Förbud är i sig billig lagstiftning; ~10 000–15 000 elever i religiösa friskolor flyttas och skolpengen följer med till kommunala skolor (netto ≈ 0 enligt omfördelningsregeln). Direkta kostnader: förutgående utredning ~10–20 mkr, lagändring/registrering, förstärkt tillsyn samt eventuellt omställningsstöd till berörda huvudmän och kommuner för mottagande av elever ~10–100 mkr engångsvis. Spann 5–150 mkr, bas 30 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12446,7 +13330,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/pensioner/",
-    "articleTitle": "Pensioner | Miljöpartiet"
+    "articleTitle": "Pensioner | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 800,
+      "msek_base": 2000,
+      "msek_high": 3600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ingen nivå angiven; prissatt som en reform i storlek med senaste genomförda höjningen av låga pensioner/garantipension (särskild pensionshöjning 2023). Netto efter att bostadstillägg delvis sjunker.",
+      "confidence": 0.4,
+      "calculation": "~500 000 personer med garantipension/låg inkomstpension. Antagen höjning i linje med senaste faktiska höjningen: ca 300–700 kr/mån för de med lägst pension, utfasad uppåt. Effektiva mottagare ~350 000–450 000 med genomsnittlig utbetalad höjning ~200–600 kr/mån: 400 000 × 400 kr × 12 ≈ 1 900 mkr/år. Offset: 20–30 % kvittas mot lägre bostadstillägg → netto ~1 400–2 700 mkr. Osäkerhet i omfattning ger spannet 800–3 600 mkr; bas ~2 000 mkr. 'Reformera pensionssystemet' i sig prissätts ej separat."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12478,7 +13375,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/pensioner/",
-    "articleTitle": "Pensioner | Miljöpartiet"
+    "articleTitle": "Pensioner | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 1000,
+      "msek_high": 2000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå; antar statlig subvention som sänker biljettpriser för unga och pensionärer. Kostnad styrs av sänkningsgrad och statens andel; därför brett spann och låg säkerhet.",
+      "confidence": 0.35,
+      "calculation": "Biljettintäkter regional kollektivtrafik uppskattningsvis ~20 mdkr/år. Unga (0–19 år, ~1,3 mn pers) + pensionärer (65+, ~1,6 mn) ≈ 30 % av resorna men betalar redan rabatterade priser ≈ 20–25 % av intäkterna ≈ 4–5 mdkr. Sänks priserna 20–50 % för grupperna → brutto 0,8–2,5 mdkr. Ökad efterfrågan kompenserar delvis och staten delar sannolikt kostnaden med regionerna → netto ~0,4–2 mdkr/år, bas ~1 mdkr. Grova antaganden, inte exakta myndighetssiffror."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12494,7 +13404,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/pensioner/",
-    "articleTitle": "Pensioner | Miljöpartiet"
+    "articleTitle": "Pensioner | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan belopp eller konkret åtgärd. Att styra AP-fondernas placeringar är en mandatförändring, ingen ny statsutgift; ev. avkastningseffekter är följder som inte prissätts.",
+      "confidence": 0.3,
+      "calculation": "Löftet saknar nivå och bestämd åtgärd: 'Investera pensionspengarna hållbart' motsvarar en direktiv-/mandatändring för de allmänna pensionernas bufferfonder. Direkt ny kostnad för staten ≈ 0; ev. omställning, uppföljning och rapportering i förvaltningen uppskattas till 0–20 mkr/år. Pensionsutfall och avkastningsförändringar är svåröverskådliga följder, inte statlig utgift, och prissätts enligt reglerna inte här."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12510,7 +13433,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/pensioner/",
-    "articleTitle": "Pensioner | Miljöpartiet"
+    "articleTitle": "Pensioner | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå: tolkas som pension/ersättning till äldre med kort bosättningstid. Enligt netto-regeln prissätts bara statens höjning över dagens (kommunala) försörjningsstöd, inte hela nivån.",
+      "confidence": 0.35,
+      "calculation": "Grupp: äldre som invandrat sent i livet, ~8 000–15 000 pers, varav de flesta idag har kommunalt försörjningsstöd. 'Skälig pension' tolkas som ~ garantipension-/försörjningsstödsnivå (~10 000–12 000 kr/mån), men den nivån betalas redan av kommunerna — statens nya nettokostnad är bara marginalhöjningen: ~1 000–3 000 kr/mån × ~10 000 pers × 12 ≈ 120–360 mkr. De som idag saknar stöd helt (några tusen × ~120 000 kr/år) samt administration höjer spannet: low ~100, base ~300, high ~800 msek/år. Osäkerheten ligger i nivå och antal berörda; partiet anger ingen siffra."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12530,7 +13466,20 @@
     "failures": [],
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/sjofart-och-hamnar",
     "articleTitle": "Sjöfart och hamnar | Centerpartiet",
-    "duplicateOf": "p-2026-0417"
+    "duplicateOf": "p-2026-0417",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 20,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bonus-malus är som bilsystemet konstruerat att självfinansieras: malusavgifter betalar bonusar. Prissatt är därför endast statens administrations- och uppbyggnadskostnad, inte överföringar eller…",
+      "confidence": 0.35,
+      "calculation": "Avgifter på högutsläppsfartyg finansierar bonusar till klimatsmarta fartyg, dvs. nettoförändringen för staten bör ligga nära noll för själva transfereringarna (regel om netto, inte brutto). Kvar som ägg ny statlig kostnad: löpande administration (register, avgiftsindrivning, kontroll hos ansvarig myndighet) uppskattad till ~5–20 msek/år, plus engångskostnad för lagstiftning/IT om ~10–30 msek normaliserat över tid. Om bonusutbetalningar initialt överstiger malusintäkter kan nettokostnaden bli högre; vid högt malusuppslag kan systemet tvärtom ge överskott. Spann därför 5–60 msek/år, bas 20 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12546,7 +13495,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/enkla-jobb",
-    "articleTitle": "Enkla jobb – Liberalerna"
+    "articleTitle": "Enkla jobb – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglerande åtgärd: ny anställningsform med lägre lönenivå. Prissatt är bara åtgärden själv (lagändring, administration), inte samhällsföljder.",
+      "confidence": 0.4,
+      "calculation": "Löftet reglerar lönenivån (70 % av lägstalön) och arbetsrättsligt skydd — ingen statlig subvention nämns. Direkt kostnad för staten är utredning, lagändring och ev. tillsyn ≈ 0–20 mkr engångskostnad (base ~5 mkr). Lägre löner, ändrat skatteunderlag och förändrade arbetslöshets-/välfärdskostnader är omfördelningar eller konsekvenser, inte nya statsutgifter, och lämnas okvantifierade."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12562,7 +13524,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/enkla-jobb",
-    "articleTitle": "Enkla jobb – Liberalerna"
+    "articleTitle": "Enkla jobb – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringslöfte: krav på delaktighet i praktik/utbildning för försörjningsstödstagare. Försörjningsstöd är kommunalt; priset avser statens ev. nya statsbidrag/utbildningsplatser och administration…",
+      "confidence": 0.35,
+      "calculation": "~350 000 individer får försörjningsstöd. Antag 10–30 % omfattas av praktik-/utbildningskrav (35 000–105 000 pers). Organiserad praktik/utbildning ~10–30 tkr/person → total aktivitetskostnad ~0,4–3 mdkr/år, men majoriteten bärs av kommuner/redan befintliga åtgärder. Statens antagna nya andel (statsbidrag, utbildningsplatser, uppföljningssystem) ~10–25 % av aktivitetskostnaden → ca 50–800 mkr/år; bas 200 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12578,7 +13553,20 @@
     },
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/enkla-jobb",
-    "articleTitle": "Enkla jobb – Liberalerna"
+    "articleTitle": "Enkla jobb – Liberalerna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 10000,
+      "msek_high": 25000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå. Prissatt som en förstärkt jobbskatteavdragsliknande sänkning av skatten på arbetsinkomster; tidigare liknande reformsteg har kostat staten några få till ~10 mdkr/år. 'Generösa'…",
+      "confidence": 0.3,
+      "calculation": "Partiet anger ingen nivå — allt nedan är eget antagande. Berörda: ~2,5–4 mn förvärvsarbetande med låg–medelinkomster. Sänkt skatt 1 000–3 000 kr/år per person ⇒ ~2,5–12 mdkr. Syftet (större netto avstånd mot bidrag) talar för sänkningar koncentrerade till låga inkomster men 'generösa' antas rymma även mellankiktet: en stor förstärkt avdragsliknande reform har historiskt legat kring ~10 mdkr/år, vilket sätts som bas. Låg 3 mdkr = ett moderat steg; hög 25 mdkr = mycket generös sänkning inkl. bredare kikt. Beteendeeffekter (fler i arbete) kan delvis motverka intäktsbortfallet men räknas inte av."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12728,7 +13716,20 @@
     "failures": [],
     "articleUrl": "https://moderaterna.se/nyhet/vallofte-hardare-straff-for-aldreomsorgspersonal-som-valdtar-aldre/",
     "articleTitle": "Vallöfte: Hårdare straff för äldreomsorgspersonal som våldtar äldre  | Moderaterna",
-    "duplicateOf": "p-2026-0313"
+    "duplicateOf": "p-2026-0313",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 100,
+      "msek_base": 400,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring i straffmätning; kostnaden är längre fängelsestraff → fler platser i kriminalvården. Allvarliga vålds-/sexualbrott omfattas redan av tidigare avskaffanden, så marginalen är smalare. Bred… [period satt till engang: engångssignal…",
+      "confidence": 0.35,
+      "calculation": "Kostnad = extra fängelsedagar, inte själva lagstiftningen. Antaganden: ca 1 500–3 000 dömda per år med flera brott där mängdrabatten fortfarande tillämpas (egendoms-, narkotika-, trafikbrott m.m. — allvarliga vålds-/sexualbrott omfattas redan av tidigare reformer). Snittförlängning ~1–4 månader → ca 100–1 000 extra intagna i jämvikt. Kostnad ~1,2–1,8 msek per plats och år inkl. kapacitetsbyggnad → ca 100–1 200 msek/år, bas ~400. Avskräckningseffekter och brottsutveckling ej prissatta; därför låg confidence."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12835,15 +13836,16 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 2,
+      "msek_base": 15,
+      "msek_high": 50,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
-      "confidence": 0.1
+      "method_note": "Krav på mål/exitstrategi är en styrregel inom biståndet. Direkt kostnad är Sidas administration (metodstöd, utbildning, uppföljning), ej förändrad biståndsvolym. Eventuella besparingar vid utfasning…",
+      "confidence": 0.3,
+      "calculation": "Löftet ändrar inte biståndets nivå utan inför ett styrkrav. Direkt kostnad = implementering hos Sida: metodutveckling, utbildning av handläggare för hundratals bilaterala projekt samt uppföljningssystem. Antagande: ~10–30 årsarbeten à ~1 mkr + systemstöd ≈ 10–50 mkr som engångskostnad, med liten löpande rest. Utfasning av enskilda projekt kan frigöra medel men är en omfördelningsföljd som lämnas okvantifierad."
     },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1131 (0)"
+    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12947,7 +13949,20 @@
     "failures": [],
     "articleUrl": "https://moderaterna.se/var-politik/bolaneskatt/",
     "articleTitle": "Bolåneskatt | Moderaterna",
-    "verifyReason": "Citatet är ordagrant och partiet (Moderaterna, 'm') stämmer med domänen och texten ('Vi moderater'). Det är ett framtidslöfte i sektionen 'Det här vill vi göra'. Dock innehåller samma sida en motstridig formulering: 'en vanlig barnfamilj får 5 000 kronor mer i månaden under nästa mandatperiod', medan det extraherade citatet lyder '5 000 kronor mer i plånboken under kommande mandatperiod' – vilket kan läsas som ett totalbelopp för hela mandatperioden. Skillnaden är väsentlig (5 000 kr totalt vs. ca 60 000 kr/år) och titeln utelämnar tidsramen, vilket riskerar att feltolka löftets storlek. Källans interna inkonsekvens om tidsramen kräver manuell granskning innan publicering."
+    "verifyReason": "Citatet är ordagrant och partiet (Moderaterna, 'm') stämmer med domänen och texten ('Vi moderater'). Det är ett framtidslöfte i sektionen 'Det här vill vi göra'. Dock innehåller samma sida en motstridig formulering: 'en vanlig barnfamilj får 5 000 kronor mer i månaden under nästa mandatperiod', medan det extraherade citatet lyder '5 000 kronor mer i plånboken under kommande mandatperiod' – vilket kan läsas som ett totalbelopp för hela mandatperioden. Skillnaden är väsentlig (5 000 kr totalt vs. ca 60 000 kr/år) och titeln utelämnar tidsramen, vilket riskerar att feltolka löftets storlek. Källans interna inkonsekvens om tidsramen kräver manuell granskning innan publicering.",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 600,
+      "msek_base": 2000,
+      "msek_high": 3000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Partiets egen nivå är 5 000 kr per tvåbarnsfamilj; antalet mottagare är uppskattat. Osäkerhet: beloppet kan vara per år eller totalt över mandatperioden, samt eventuell fasning.",
+      "confidence": 0.4,
+      "calculation": "Partiets nivå: 5 000 kr per tvåbarnsfamilj; antal mottagare är min uppskattning. Sweden har ~1,2 milj. hushåll med barn, varav ~37–40 % har två barn → ~400 000–500 000 hushåll. Full effekt per år: ~450 000 × 5 000 kr ≈ 2 250 msek/år (tolkning: 5 000 kr mer per år). Om 5 000 kr istället avser totalen över 4 år: ~560 msek/år. Mellantolkning (trappsteg/fasning mot 5 000 kr/år vid periodens slut) samt att alla familjer inte nås fullt ut av typiska skattesänkningar ger bas ~2 000 msek; spannet 600–3 000 msek täcker båda huvudtolkningarna."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12964,7 +13979,20 @@
     "failures": [],
     "articleUrl": "https://moderaterna.se/var-politik/bolaneskatt/",
     "articleTitle": "Bolåneskatt | Moderaterna",
-    "duplicateOf": "p-2026-0168"
+    "duplicateOf": "p-2026-0168",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 10000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå. 'Fortsätta sänka' tolkas som ytterligare steg, prissatt som senaste jämförbara årliga skattesänkningarna på arbete och pension — inte som enbart bibehållna nivåer.",
+      "confidence": 0.35,
+      "calculation": "Partiet anger ingen nivå. Enligt regel 15 ankrar jag på vad samma åtgärd senast kostade: ett typiskt årssteg av jobbskatteavdraget ligger historiskt kring 3–8 mdkr, och pensionsskattesänkningar (t.ex. utökat utrymme under statlig skatt) kring 1–5 mdkr. 'Fortsatt sänka skatten på arbete och pension' ≈ ytterligare ett kombinerat steg per år: arbete ~3–6 mdkr + pension ~1–2 mdkr ≈ bas 5 mdkr. Låg 2 mdkr täcker blygsamma index-/tröskeljusteringar, hög 10 mdkr täcker ett kraftigare paket. Fasta priser, statens nettointäktsbortfall brutto före ev. finansiering."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -12981,7 +14009,20 @@
     "failures": [],
     "articleUrl": "https://moderaterna.se/var-politik/bolaneskatt/",
     "articleTitle": "Bolåneskatt | Moderaterna",
-    "verifyReason": "Citatet förekommer ordagrant i källtexten, men källan är Moderaternas egen attack-/kampanjsida (moderaterna.se), inte Socialdemokraternas material. 'Bolåneskatt' är Moderaternas beteckning på det Socialdemokraterna själva kallar 'bankskatt', och beloppet 7 000 kr/år är Moderaternas uppskattning av ränteökning – inget som S själva lovat eller specificerat. Att publicera detta som ett vallöfte från partiet 's', med motpartens formuleringar och siffror, innebär risken för felaktig partiattribuering och vilseledande innehåll. Löftet kan inte verifieras från S:s egen källa och bör förkastas."
+    "verifyReason": "Citatet förekommer ordagrant i källtexten, men källan är Moderaternas egen attack-/kampanjsida (moderaterna.se), inte Socialdemokraternas material. 'Bolåneskatt' är Moderaternas beteckning på det Socialdemokraterna själva kallar 'bankskatt', och beloppet 7 000 kr/år är Moderaternas uppskattning av ränteökning – inget som S själva lovat eller specificerat. Att publicera detta som ett vallöfte från partiet 's', med motpartens formuleringar och siffror, innebär risken för felaktig partiattribuering och vilseledande innehåll. Löftet kan inte verifieras från S:s egen källa och bör förkastas.",
+    "cost": {
+      "type": "intäktsökning",
+      "period": "per_ar",
+      "msek_low": 6000,
+      "msek_base": 9000,
+      "msek_high": 11000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ny bolåneskatt enligt partiets nivå: ~7 000 kr/år för 3-mkr-lån ≈ 0,23 % av lånet. Intäkt = skattesats × hela bolåneskuldstocken; osäkerhet i skuldstock och beteendeeffekter.",
+      "confidence": 0.6,
+      "calculation": "Partiets nivå: 7 000 kr/år per 3 mkr-lån ger skattesats ≈ 7 000/3 000 000 = 0,233 % av lånebeloppet. Hushållens totala bolåneskuld antas ~3 500–4 500 mdkr. 0,00233 × 3 500 000 msek ≈ 8 200 msek; 0,00233 × 4 500 000 msek ≈ 10 500 msek. Med marginal för nedbetalningar, möjliga undantag och beteendeeffekter sätts spannet 6 000–11 000 msek, bas ~9 000 msek per år."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -13289,7 +14330,20 @@
     "articleUrl": "https://moderaterna.se/var-politik/forlossningsvard/",
     "articleTitle": "Förlossningsvård | Moderaterna",
     "duplicateOf": "p-2026-0050",
-    "duplicateReason": "samma uttryck: «inrätt nation», «nation progra», «progra efterv», «efterv likhet», «likhet finns», «finns mödra», «mödra barnhä», «barnhä inför», «inför förlos»"
+    "duplicateReason": "samma uttryck: «inrätt nation», «nation progra», «progra efterv», «efterv likhet», «likhet finns», «finns mödra», «mödra barnhä», «barnhä inför», «inför förlos»",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 120,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inget belopp i löftet; eget estimat av nationellt program + statsbidrag till regioner för standardiserad postpartum uppföljning, ej samhällsföljder.",
+      "confidence": 0.4,
+      "calculation": "~110 000 förlossningar/år × 1 extra barnmorskebesök à ~600–1 000 kr ≈ 65–110 mkr; tidig uppföljning på BB sker mest redan under vårdtiden (liten marginell kostnad, men kan kräva extra resurser i lågscenario~hus). Därtill programutveckling, stöd och administration ~10–20 mkr/år. Låg = främst program/admin när regioner redan levererar större delen; hög = ~2 kontakter per förlossning inkl. extra BB-resurser (~250 mkr) + administration."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -13307,7 +14361,20 @@
     "articleUrl": "https://moderaterna.se/var-politik/forlossningsvard/",
     "articleTitle": "Förlossningsvård | Moderaterna",
     "duplicateOf": "p-2026-0051",
-    "duplicateReason": "samma uttryck: «delakt planer», «planer beslut», «beslut avseen», «avseen förlos»"
+    "duplicateReason": "samma uttryck: «delakt planer», «planer beslut», «beslut avseen», «avseen förlos»",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: princip om ökad patientdelaktighet utan konkret åtgärd, nivå eller belopp. Base 0; ev. kostnad för mer planeringstid i mödravården prissätts i partiets specifika vårdlöften.",
+      "confidence": 0.4,
+      "calculation": "Löftet anger endast en princip (kvinnor mer delaktiga i planering/beslut kring förlossning) utan utpekad åtgärd, nivå eller belopp → behandlas som inriktningslöfte med base 0. Om det senare konkretiseras, t.ex. som utökad planeringstid i mödravård (~100 000 förlossningar/år × någon extra timme barnmorsketid à några hundra kr), skulle kostnaden bli i storleksordningen tiotals msek, men det prissätts inte här. Spannet 0–50 msek speglar osäkerheten kring framtida konkretisering."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
