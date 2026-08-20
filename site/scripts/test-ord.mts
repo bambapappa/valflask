@@ -38,10 +38,11 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { join, relative, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const ROT = resolve(import.meta.dirname, "../..");
 
-interface Ord {
+export interface Ord {
   /** Vad grinden heter i utskriften. */
   namn: string;
   /** Måste matcha ordet fritt stående, inte som efterled i en sammansättning. */
@@ -53,7 +54,7 @@ interface Ord {
   passerar: string[];
 }
 
-const ORDEN: Ord[] = [
+export const ORDEN: Ord[] = [
   {
     namn: "ägarbeslut",
     monster: /ägarbeslut/giu,
@@ -70,6 +71,31 @@ const ORDEN: Ord[] = [
     passerar: ["tre vågar", "brottsvågor", "flyktingvågor", "migrationsvågor"],
   },
 ];
+
+/**
+ * Prövar en text mot listan och svarar med de ord som fälls.
+ *
+ * Finns här och inte i en kopia hos den som skriver texten. Ordreglerna är
+ * grindade och inte påminda — och en grind som bara sveper repot EFTERÅT
+ * fångar felet först när bygget går rött. Kostnadssteget skriver publik prosa
+ * rakt in i kön; det ordet «ägarbeslut» tog sig in den vägen två gånger på ett
+ * dygn och fällde huvudgrenen båda gångerna. Nu kan den som skriver fråga
+ * samma lista innan den skriver.
+ *
+ * Mönstren bär `g`-flaggan, som gör `RegExp.test` tillståndsbärande. Därför
+ * nollställs `lastIndex` före varje prövning — utan det svarar vartannat anrop
+ * fel, och en grind som svarar fel varannan gång är värre än ingen.
+ */
+export function provaOrden(text: string): Array<{ namn: string; istallet: string; traff: string }> {
+  const fynd: Array<{ namn: string; istallet: string; traff: string }> = [];
+  for (const ord of ORDEN) {
+    ord.monster.lastIndex = 0;
+    const m = ord.monster.exec(text);
+    if (m) fynd.push({ namn: ord.namn, istallet: ord.istallet, traff: m[0] });
+    ord.monster.lastIndex = 0;
+  }
+  return fynd;
+}
 
 /**
  * Kataloger som aldrig läses.
@@ -124,6 +150,19 @@ function traffas(ord: Ord, rad: string): boolean {
   ord.monster.lastIndex = 0;
   return ord.monster.test(rad);
 }
+
+/**
+ * Sveper bara när filen KÖRS. Importeras den — och det gör kostnadssteget, för
+ * att kunna fråga listan innan det skriver publik prosa — ska ingenting hända
+ * utom att `ORDEN` och `provaOrden` blir tillgängliga. Utan vakten körde varje
+ * import hela repo-svepet och kunde avsluta processen mitt i en körning.
+ *
+ * Samma idiom som `pipeline/src/review.ts` använder för sin CLI-halva.
+ */
+const KORS_SOM_SKRIPT =
+  process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href;
+
+if (KORS_SOM_SKRIPT) {
 
 /* ══════════════ Halva 1 — grinden prövar sina egna mönster ══════════════ */
 
@@ -269,3 +308,5 @@ if (fynd.length > 0) {
   process.exit(1);
 }
 console.log(`  OK: inget av ${ORDEN.length} förbjudna ord i ${lasta} lästa filer`);
+
+}

@@ -23,10 +23,29 @@
  *   Flaggor: --stub (ingen modell, för prov), --max=N
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { estimateCost, type CostEstimate } from "../src/cost.ts";
 import { OpenRouterClient, type LlmClient } from "../src/llm.ts";
 import { byggLed } from "../src/cli-run.ts";
+
+/**
+ * Ordgrinden, hämtad med en **beräknad** sökväg — samma väg som indragningen
+ * använder för sajtens uträkning, och av samma skäl: en vanlig import drar in
+ * `site/`s källor i pipelinens strängare typkontroll.
+ *
+ * VARFÖR DEN LÄSES HÄR. Kostnadssteget skriver publik prosa rakt in i kön.
+ * Ordreglerna är grindade, men grinden sveper repot EFTERÅT — den fångar
+ * felet först när huvudgrenens bygge går rött. Ett av de förbjudna orden tog
+ * sig in den vägen två gånger på ett dygn (2026-08-20) och fällde bygget båda
+ * gångerna; andra gången skrev omkörningen tillbaka samma mening över den
+ * rättelse som just gjorts. Listan är densamma som grinden sveper med — den
+ * kopieras aldrig hit, för två kopior av en regel glider isär tyst.
+ */
+const ordgrinden = (await import(
+  pathToFileURL(join(import.meta.dirname, "../../site/scripts/test-ord.mts")).href
+)) as { provaOrden: (text: string) => Array<{ namn: string; istallet: string; traff: string }> };
+const { provaOrden } = ordgrinden;
 
 const DATA = resolve(import.meta.dirname, "../../data");
 
@@ -124,6 +143,21 @@ async function main(): Promise<void> {
     if (kostnadenFoll({ candidate: p.candidate, cost: ny })) {
       kvar++;
       console.log(`  [${i}] föll igen — lämnas orörd`);
+      continue;
+    }
+    // Ordgrinden INNAN skrivningen. En text som fälls skrivs inte alls:
+    // posten lämnas fallen och prövas om nästa körning. Att skriva om
+    // modellens mening automatiskt vore att gissa vad den menade, och att
+    // skriva den ändå vore att fälla huvudgrenen med öppna ögon.
+    const ordfynd = [
+      ...provaOrden(ny.calculation ?? ""),
+      ...provaOrden(ny.method_note ?? ""),
+    ];
+    if (ordfynd.length > 0) {
+      kvar++;
+      for (const f of ordfynd) {
+        console.log(`  [${i}] förbjudet ord «${f.traff}» i uträkningen — ${f.istallet}. Lämnas orörd.`);
+      }
       continue;
     }
     lagade++;
