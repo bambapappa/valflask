@@ -21916,14 +21916,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 20,
+      "msek_low": 40,
       "msek_base": 100,
-      "msek_high": 500,
+      "msek_high": 225,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Lägre försörjningskrav medför fler anhöriginvandrare och ökade offentliga utgifter. Antagande om marginaleffekt och nettokostnad per person, men stor osäkerhet.",
+      "method_note": "Lägre försörjningskrav medför fler anhöriginvandrare och ökade offentliga utgifter. Beloppet per person är lånat från Miljöpartiets löfte om att avskaffa kravet helt, och antalet personer är vårt eget antagande. Osäkerheten är stor i båda leden.",
       "confidence": 0.3,
-      "calculation": "Uträkningen är rekonstruerad i efterhand; det ursprungliga resonemanget sparades inte. Antaganden: Regeringsförslag om höjning (t.ex. till 2,0 gånger normalbelopp) minskar beviljade tillstånd med ~2 000 per år. Begränsning till 1,10 innebär att ~1 000 av dessa ändå beviljas. Offentlig nettokostnad per person ~180 000 kr per år (i linje med jämförbart löfte Miljöpartiets löfte om att avskaffa försörjningskravet helt på 1,2 miljarder kronor vid fullt avskaffande). Resulterande kostnad: 1 000 * 180 000 = 180 miljoner kronor per år. Låg=70, hög=400 speglar osäkerhet om antal och kostnad per person."
+      "calculation": "Regeringens förslag höjer försörjningskravet till omkring 2,0 gånger normalbeloppet, vilket antas minska antalet beviljade tillstånd med ungefär 2 000 per år. Att i stället stanna vid 1,10 innebär att omkring hälften av dessa, ungefär 1 000 personer per år, ändå beviljas. Nettokostnaden per person i statliga transfereringar hämtas från Miljöpartiets löfte om att avskaffa försörjningskravet helt, som räknar med 80 000–150 000 kronor per person och år; mitten av det spannet, 100 000 kronor, används här. 1 000 × 100 000 kronor ger 100 miljoner kronor per år. Spannet 40–225 miljoner speglar att både antalet personer (500–1 500) och kostnaden per person (80 000–150 000 kronor) är osäkra."
     },
     "financing_claimed": {
       "described": false,
@@ -21938,6 +21938,11 @@
         "date": "2026-07-27",
         "change": "Uträkningen omskriven till vanlig svenska: den hänvisade till andra löften med deras interna nummer, som inte säger läsaren något, och innehöll fackuttryck. Beloppet är oförändrat.",
         "commit": "0b62ee775ae948c4350fd6722da181e688595ab0"
+      },
+      {
+        "date": "2026-08-20",
+        "change": "Uträkningen rättad och spannet smalnat: låg från 20 till 40 och hög från 500 till 225 miljoner kronor per år. Basbeloppet 100 miljoner är oförändrat. Den gamla uträkningen lånade 180 000 kronor per person ur Miljöpartiets löfte om att avskaffa försörjningskravet helt när det löftet stod på 1,2 miljarder kronor. Det löftet räknas sedan den 27 juli om till 400 miljoner, med 80 000–150 000 kronor per person — och 180 000 ligger utanför hela det spannet. Den gamla uträkningen slutade dessutom på 180 miljoner med spannet 70–400, vilket inte var de tal löftet stod på.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
