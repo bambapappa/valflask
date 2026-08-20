@@ -1669,5 +1669,54 @@
       }
     ],
     "verifyReason": "Citatet säger att fossila bränslen måste bort för att nå målet om nettonollutsläpp 2045, men uttalar sig inte om själva målet ska ligga fast, skärpas eller luckras upp."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-forsvar-karnvapen",
+      "party": "m",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Därför vill Moderaterna inte ha ett förbud mot kärnvapen på svenskt territorium om det råder krig.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/forsvar-och-krisberedskap/",
+    "articleTitle": "Moderaternas försvarspolitik 2026: Nato, Ukraina, totalförsvar och ett starkare svenskt försvar | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/forsvar-och-krisberedskap/",
+    "archiveUrl": "https://web.archive.org/web/20260820133105/https://moderaterna.se/var-politik/forsvar-och-krisberedskap/",
+    "dateStated": "2026-08-05",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-13-05",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+      }
+    ],
+    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "m",
+      "position": "villkorat",
+      "condition_note": "Vinstutdelning ska endast kunna förkas när en skola inte uppfyller kvalitetskraven, i stället för ett allmänt förbud.",
+      "quote": "Skolor som inte uppfyller kraven ska kunna förlora tillstånd och möjlighet till vinstutdelning.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/grund-och-gymnasieskola/",
+    "articleTitle": "Grund- och gymnasieskola | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/grund-och-gymnasieskola/",
+    "archiveUrl": null,
+    "dateStated": "2026-07-20",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-20-13-05",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]

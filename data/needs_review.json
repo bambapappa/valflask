@@ -14404,5 +14404,381 @@
       "calculation": "Citatet anger en ambition (mer jämlik förlossningsvård/eftervård i hela landet) men ingen konkret åtgärd, nivå eller finansiering → inriktningslöfte, base 0. Jämförbart löfte 'Garantera akutsjukvård i hela landet' (v) prissattes till 0 av samma skäl. Konkreta instrument i jämförelselöftena (nationellt program ~250 msek, kompetenscentrum ~30 msek) är separata, mer specifika löften och ska inte dubbelräknas här. High ~150 msek rymmer ev. riktade styrningsbidrag/utjämning som kan följa av inriktningen, men utan utpekad åtgärd är grundkostnaden i princip noll."
     },
     "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0778 (30), p-2026-1181 (0), p-2026-0050 (250), p-2026-0442 (800), p-2026-0136 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~30"
+  },
+  {
+    "candidate": {
+      "title": "Stärka totalförsvaret parallellt",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Sverige ska ha ett starkt totalförsvar där det militära försvaret och civila försvaret stärks parallellt.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forsvar-och-krisberedskap/",
+    "articleTitle": "Moderaternas försvarspolitik 2026: Nato, Ukraina, totalförsvar och ett starkare svenskt försvar | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0691 (0), p-2026-0319 (0), p-2026-1759 (0), p-2026-0126 (13000), p-2026-1790 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Nå Natos 3,5-procentsmål till 2030",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vår ambition är att 3,5%-målet för det militära försvaret ska uppnås redan 2030 (Natos mål är 2035).",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forsvar-och-krisberedskap/",
+    "articleTitle": "Moderaternas försvarspolitik 2026: Nato, Ukraina, totalförsvar och ett starkare svenskt försvar | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 60000,
+      "msek_base": 65000,
+      "msek_high": 90000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på jämförbart löfte p-2026-1895 som anger 65 000 msek/år för att nå 3,5 % av BNP till 2030.",
+      "confidence": 0.65,
+      "calculation": "65 000 msek/år enligt jämförbart löfte; osäkerhet ±5 000 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-1895 (65000)"
+  },
+  {
+    "candidate": {
+      "title": "Nej till skattehöjningar för försvaret",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Partiet säger därför nej till särskilda skattehöjningar för att betala för försvaret.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forsvar-och-krisberedskap/",
+    "articleTitle": "Moderaternas försvarspolitik 2026: Nato, Ukraina, totalförsvar och ett starkare svenskt försvar | Moderaterna",
+    "duplicateOf": "p-2026-1314"
+  },
+  {
+    "candidate": {
+      "title": "Bidra till fredsfrämjande insatser i Ukraina",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Sverige ska också vara berett att bidra till fredsfrämjande insatser i Ukraina efter en vapenvila eller fred.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/forsvar-och-krisberedskap/",
+    "articleTitle": "Moderaternas försvarspolitik 2026: Nato, Ukraina, totalförsvar och ett starkare svenskt försvar | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 250,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Villkorat beredskapslöfte; kostnad uppstår först efter ev. vapenvila/fred. Spannet speglar kontingentstorlek, jfr kostnad för tidigare svenska internationella insatser.",
+      "confidence": 0.3,
+      "calculation": "Inget belopp i löftet och insatsen är villkorad av en framtida vapenvila. Referens: svenska fredsfrämjande kontingenter internationellt (ca 150–250 personer) har historiskt kostat storleksordningen 200–400 msek/år i drift, logistik och rotation. En större kontingent i Ukraina (500–1 500 personer) skulle kunna kosta 1 000–3 000 msek/år. Sannolikhet vägs in: low = 0 (ingen fred/insats blir inte av), base ~250 motsvarar ett mindre bidrag vägt mot osäkerhet om insatsen realiseras, high ~1 500 en större kontingent. Beredskap innan dess tillför marginell kostnad eftersom förbanden redan finns inom försvarets ordinarie ram."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0943 (0), p-2026-0383 (25000) ⚠ AVVIKER: 250 avviker 50.0× från jämförbara (median 12500)"
+  },
+  {
+    "candidate": {
+      "title": "Avskaffa mängdrabatten fullt ut",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Avskaffa mängdrabatten fullt ut och se till att hela straffskalan används.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/gangkriminalitet-gangvald/",
+    "articleTitle": "Gängkriminalitet/Gängvåld | Moderaterna",
+    "duplicateOf": "p-2026-0313"
+  },
+  {
+    "candidate": {
+      "title": "Sänka straffbarhetsåldern och avskaffa ungdomsreduktionen",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Sänka straffbarhetsåldern för de allvarligaste brotten och avskaffa ungdomsreduktionen för 18–20-åringar.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/gangkriminalitet-gangvald/",
+    "articleTitle": "Gängkriminalitet/Gängvåld | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 650,
+      "msek_high": 1300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Beloppet avser kriminalvårdens och rättsväsendets bruttokostnad, inte lagstiftningen i sig. Liknande förslag om avskaffad mängdrabatt har skattats kring 650 mkr; här rör det sig om ungdomsreduktion…",
+      "confidence": 0.45,
+      "calculation": "Jämförbara förslag om slopad mängdrabbat skattas till ~650 mkr/år. Ungdomsrabatten för 18–20 berör färre fall men skärper strafflängden, medan sänkt straggbarhetsgrad för de allra grövsta brotten kan öka antalet frihetsberövade. Spann anger 0,5–2 × 650 = 325–1300, avrundat till 300–1300; median 650 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0517 (0), p-2026-0313 (650), p-2026-0743 (650), p-2026-0709 (650)"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta ungdomsfängelser",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Inrätta ungdomsfängelser med fokus på utbildning och vägar ut ur kriminalitet.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/gangkriminalitet-gangvald/",
+    "articleTitle": "Gängkriminalitet/Gängvåld | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 200,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning utifrån antal platser och årlig kostnad per fängelseplats inkl. utbildning; osäkert antal platser.",
+      "confidence": 0.3,
+      "calculation": "Antag 50–200 platser × 1,5–2,5 mkr/plats/år (drift+kapital) ≈ 75–500 mkr; bas 200 mkr för ~100 platser."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1148 (30), p-2026-1173 (15), p-2026-1643 (30), p-2026-1603 (250), p-2026-0403 (80) ⚠ AVVIKER: 200 avviker 6.7× från jämförbara (median 30)"
+  },
+  {
+    "candidate": {
+      "title": "Införa kommunala säkerhetsvakter",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Införa kommunala säkerhetsvakter med befogenhet att upprätthålla ordning i hela kommunen.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/gangkriminalitet-gangvald/",
+    "articleTitle": "Gängkriminalitet/Gängvåld | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet anger ingen nivå. Uppskattning utifrån att staten finansierar kommunala säkerhetsvakter i de flesta kommuner, med 2–5 vakter per kommun och årlig kostnad 400–600 tkr per vakt.",
+      "confidence": 0.4,
+      "calculation": "290 kommuner × 50–100 % deltagande × 2–5 vakter × 400–600 tkr/år ≈ 116–870 mkr. Baserat på 75 % deltagande, 3 vakter, 500 tkr ≈ 326 mkr. Avrundat till 200–1200 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta en förverkandefond",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Inrätta en förverkandefond där brottsvinster återförs till brottsoffer och brottsförebyggande arbete.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/gangkriminalitet-gangvald/",
+    "articleTitle": "Gängkriminalitet/Gängvåld | Moderaterna",
+    "duplicateOf": "p-2026-0037",
+    "duplicateReason": "samma uttryck: «förver brotts», «brotts brotts», «brotts arbete»"
+  },
+  {
+    "candidate": {
+      "title": "Stärka svenska språket, läsningen och matematiken samt införa nya läroplaner och rättvisare betyg",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Därför stärker vi svenska språket, läsningen och matematiken, inför nya kunskapsinriktade läroplaner och ett mer rättvist betygssystem som mäter vad elever faktiskt kan.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/grund-och-gymnasieskola/",
+    "articleTitle": "Grund- och gymnasieskola | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 20,
+      "msek_base": 30,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett löfte; prissätter de konkreta delarna (nya läroplaner + betygssystem). Ankrar i jämförbart löfte om 30 msek för nya läroplaner; betygssystemet ger osäkerhet.",
+      "confidence": 0.4,
+      "calculation": "Jämförbart löfte p-2026-0063: 30 msek för nya läroplaner. Betygssystemets merkostnad uppskattas till 0–30 msek beroende på omfattning. Lågt fall 20 msek (mindre justeringar), högt fall 60 msek (full översyn). Base 30 msek som närmast jämförbart."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0464 (0), p-2026-0063 (30), p-2026-0070 (3), p-2026-0096 (1500), p-2026-0560 (0) ⚠ AVVIKER: 30 avviker 10.0× från jämförbara (median 3) ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-0060 (5000), p-2026-0065 (5000), p-2026-0064 (1000), p-2026-0166 (800), p-2026-0066 (500). Är delarna redan prissatta ska detta löfte sättas till 0."
+  },
+  {
+    "candidate": {
+      "title": "Stärka läraryrket, minska administrationen och utveckla lärarutbildningen",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill stärka läraryrket, minska administrationen, utveckla lärarutbildningen och ge rektorer och lärare bättre verktyg för att skapa ordning i klassrummet.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/grund-och-gymnasieskola/",
+    "articleTitle": "Grund- och gymnasieskola | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp – prissätts som 0 enligt regel 13.",
+      "confidence": 0.1,
+      "calculation": "Ingen specifik reform angiven; de kostsamma delarna prissätts på partiets specifika löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0834 (5), p-2026-0833 (1852), p-2026-0067 (5), p-2026-0464 (0), p-2026-1820 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~5"
+  },
+  {
+    "candidate": {
+      "title": "Alla elever ska få rätt stöd",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Alla elever ska få rätt stöd – både de som riskerar att halka efter och de som behöver större utmaningar.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/grund-och-gymnasieskola/",
+    "articleTitle": "Grund- och gymnasieskola | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 1000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte om elevstöd för alla – ingen konkret åtgärd, nivå eller belopp anges. Kostsamma delar (t.ex. extra anpassningar, lärartäthet) prissätts i partiets specifika löften och…",
+      "confidence": 0.3,
+      "calculation": "Citatet är en övergripande målsättning ('rätt stöd' för både svaga och starka elever) utan utpekad åtgärd, styrka eller belopp. Behandlas som inriktningslöfte: base = 0 msek. Högsta värdet (1 000 msek/år) fångar rimlig osäkerhet om löftet ändå driver med initiativ, men några konkreta kostnader kan inte härledas ur texten."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Familjer ska kunna välja skola med tydliga kvalitetskrav",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Samtidigt ska familjer kunna välja den skola som passar barnet bäst, med tydliga krav på kvalitet oavsett huvudman.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/grund-och-gymnasieskola/",
+    "articleTitle": "Grund- och gymnasieskola | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Fri skolval och rätten att välja huvudman finns redan i svensk skollag; löftet är regulatoriskt (kvalitetskrav) utan ny finansiering. Base 0, spannet täcker ev. förstärkt tillsyn. Samhällsföljder…",
+      "confidence": 0.4,
+      "calculation": "Löftet beskriver i princip gällande system (rätt till skolval oavsett huvudman). Direkt ny statlig kostnad: ingen angiven. Enda tänkbara kostnaden är ev. skärpt kvalitetstillsyn/kravdokument hos Skolinspektionen, grovt 0–50 msek/år (jämförbart löfte p-2026-0068 prissatt till 0 msek/år). Base 0 eftersom åtgärden är regelverk, inte pengar."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0068 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Skolor som inte uppfyller kraven ska kunna förlora tillstånd och vinstutdelningsmöjlighet",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Skolor som inte uppfyller kraven ska kunna förlora tillstånd och möjlighet till vinstutdelning.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/grund-och-gymnasieskola/",
+    "articleTitle": "Grund- och gymnasieskola | Moderaterna",
+    "verifyReason": "Citatet återges ordagrant i källtexten och partitillhörigheten (Moderaterna, moderaterna.se) stämmer. Men uttalandet förekommer i en 'Frågor och svar'-sektion som ett svar på varför Moderaterna inte vill förbjuda aktiebolag som driftsform – det läsas snarare som ett försvar av befintliga kvalitetsregler (möjligheten att återkalla tillstånd finns redan i skollagen) än som ett nytt vallöfte. Det står inte i sektionen 'Det här vill vi göra'. Formuleringen 'ska kunna' är dock löftesliknande och policyförankrad, men eftersom det är tveksamt om det är ett nytt löfte eller en beskrivning av gällande regelverk bör det manuellgranskas."
+  },
+  {
+    "candidate": {
+      "title": "Fler subventionerade fertilitetsbehandlingar och syskonförsök",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Antalet försök ska öka och syskonförsök ska inkluderas.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/halso-och-sjukvard-2/",
+    "articleTitle": "Hälso- och sjukvård | Moderaterna",
+    "duplicateOf": "p-2026-0048",
+    "duplicateReason": "samma uttryck: «antale försök», «försök syskon», «syskon inklud»"
   }
 ]
