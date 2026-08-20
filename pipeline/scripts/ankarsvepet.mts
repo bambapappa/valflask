@@ -43,10 +43,16 @@ if (argv.includes("--beroende")) {
     console.log(`Inget löfte ankrar i ${idn.join(", ")}.`);
     process.exit(0);
   }
-  console.log(`${b.length} löfte(n) ankrar i ${idn.join(", ")} — de måste rättas i samma pass:\n`);
+  console.log(
+    `${b.length} löfte(n) kan ankra i ${idn.join(", ")}. Matchningen är parti + belopp —\n` +
+      `ett ankare namnger aldrig löftet, så LÄS MENINGEN och avgör om den avser\n` +
+      `just det du ändrar. De troliga står först.\n`,
+  );
   for (const a of b) {
-    console.log(`  ${a.id} [${a.parties.join(",").toUpperCase()}] lånar ${a.belopp} mkr av ${a.langivare.toUpperCase()}`);
+    const styrka = a.amnestraffar > 0 ? `trolig (${a.amnestraffar} ord ur rubriken)` : "osäker — bara parti och belopp talar för den";
+    console.log(`  ${a.id} [${a.parties.join(",").toUpperCase()}] lånar ${a.belopp} mkr av ${a.langivare.toUpperCase()} · ${styrka}`);
     console.log(`     ${a.title}`);
+    console.log(`     avser: ${a.galler}`);
     console.log(`     «${a.mening.slice(0, 160)}»\n`);
   }
   // Utfallskod 1: den som kör det här i en kedja ska stanna, inte fortsätta.
@@ -99,7 +105,18 @@ console.log(`\n${fynd.length} föråldrade ankare:\n`);
 for (const f of fynd) {
   console.log(`${f.id} [${f.parties.join(",").toUpperCase()}] lånar ${f.belopp} mkr av ${f.langivare.toUpperCase()}`);
   console.log(`   ${f.title}`);
-  console.log(`   ${f.langivare.toUpperCase()} står nu på: ${f.langivarens_belopp.join(", ") || "inget belopp"}`);
+  // Ett parti kan ha trettio olika belopp. Hela listan är brus; det som hjälper
+  // den som ska rätta är de närmaste talen — eller beskedet att partiet inte
+  // har något löfte kvar alls i den storleksordningen.
+  const nara = f.langivarens_belopp
+    .map((b) => ({ b, avstand: Math.abs(b - f.belopp) }))
+    .sort((x, y) => x.avstand - y.avstand)
+    .slice(0, 3)
+    .map((x) => x.b);
+  console.log(
+    `   ${f.langivare.toUpperCase()} har inget löfte på ${f.belopp} mkr. Närmast: ` +
+      `${nara.join(", ") || "inget belopp alls"} (av ${f.langivarens_belopp.length} olika)`,
+  );
   console.log(`   «${f.mening.slice(0, 180)}»\n`);
 }
 

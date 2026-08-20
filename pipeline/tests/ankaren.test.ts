@@ -132,6 +132,37 @@ describe("beroendeAv", () => {
   it("ingenting lutar sig mot ett löfte ingen lånat av", () => {
     assert.deepEqual(beroendeAv(bestand, ["p-m"]), []);
   });
+
+  it("två löften hos samma parti på samma belopp träffar båda — och det syns", () => {
+    // Ett ankare namnger partiet och talet men ALDRIG löftet; interna id:n är
+    // förbjudna i publicerad text. Provat på riktigt: en ändring av
+    // Centerpartiets IVF-löfte på 300 mkr flaggade två löften som i själva
+    // verket ankrade i partiets studieförbundslöfte, också på 300.
+    const tvetydigt: Ankarlofte[] = [
+      { ...lofte("p-ivf", ["c"], 300, "Egen kalkyl."), title: "Fördubbla antalet offentligt finansierade IVF-försök" },
+      { ...lofte("p-studie", ["c"], 300, "Egen kalkyl."), title: "Långsiktig finansiering av studieförbund och folkhögskolor" },
+      lofte("p-lan", ["s"], 300, "Använder jämförbar reform: Centerpartiets löfte om studieförbund och folkhögskolor på 300 mkr/år som bas."),
+    ];
+    const b = beroendeAv(tvetydigt, ["p-ivf", "p-studie"]);
+    assert.equal(b.length, 2, "båda löftena på 300 ska träffas");
+    // Det troliga står först, och det är det vars rubrik meningen ekar.
+    assert.equal(b[0]!.galler, "p-studie");
+    assert.ok(b[0]!.amnestraffar > 0);
+    assert.equal(b[1]!.galler, "p-ivf");
+    assert.equal(b[1]!.amnestraffar, 0, "inget utom parti och belopp talar för IVF-träffen");
+  });
+
+  it("ingenting filtreras bort — en osäker träff är fortfarande en träff", () => {
+    // Att filtrera på ämnesord skulle dölja äkta ankare som råkar vara skrivna
+    // med andra ord än rubriken. Hellre en läsuppgift än ett tyst bortfall.
+    const p: Ankarlofte[] = [
+      lofte("p-mal", ["c"], 300, "Egen kalkyl."),
+      lofte("p-lan", ["s"], 300, "I linje med Centerpartiets nivå på 300 mkr."),
+    ];
+    const b = beroendeAv(p, ["p-mal"]);
+    assert.equal(b.length, 1);
+    assert.equal(b[0]!.amnestraffar, 0);
+  });
 });
 
 describe("ankartackning", () => {

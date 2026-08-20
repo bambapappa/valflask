@@ -179,6 +179,29 @@ export function foraldradeAnkare(
     .map((a) => ({ ...a, langivarens_belopp: [...(nu[a.langivare] ?? [])].sort((x, y) => x - y) }));
 }
 
+/** Ord värda att jämföra på — korta ord säger inget om ämnet. */
+function amnesord(text: string): Set<string> {
+  return new Set(
+    text
+      .toLowerCase()
+      .split(/[^a-zåäöé]+/u)
+      .filter((o) => o.length >= 5),
+  );
+}
+
+/** Ett ankare som kan peka på det som ska ändras — och hur troligt det är. */
+export interface Beroende extends Ankare {
+  /**
+   * Antal ämnesord som ankarmeningen delar med det ändrade löftets rubrik.
+   *
+   * Noll betyder inte att träffen är falsk, bara att ingenting utom partiet och
+   * beloppet talar för den. Den som ändrar måste läsa meningen.
+   */
+  amnestraffar: number;
+  /** Löftet träffen gäller — ett parti kan ha flera löften på samma belopp. */
+  galler: string;
+}
+
 /**
  * Vilka löften ankrar i de här löftena?
  *
@@ -187,17 +210,40 @@ export function foraldradeAnkare(
  * annars blir låntagarna föräldralösa i samma stund, och ingen märker det förrän
  * nästa svep. Ren funktion utan git: den läser nuvarande belopp, för det är det
  * som är på väg att ändras.
+ *
+ * MATCHNINGEN ÄR PARTI + BELOPP, OCH DEN ÄR MED FLIT TRUBBIG. Ett ankare
+ * namnger partiet och talet men aldrig löftet — interna id:n är förbjudna i
+ * publicerad text. Har ett parti två löften på samma belopp träffar båda, och
+ * bara meningen avgör vilket som avses. Provat: en ändring av Centerpartiets
+ * IVF-löfte på 300 mkr flaggade två löften som i själva verket ankrade i
+ * partiets studieförbudslöfte, också på 300.
+ *
+ * Därför filtreras ingenting bort — det skulle dölja äkta träffar. I stället
+ * räknas `amnestraffar`, och listan sorteras så att de troliga står först.
  */
-export function beroendeAv(loften: Ankarlofte[], idn: string[]): Ankare[] {
+export function beroendeAv(loften: Ankarlofte[], idn: string[]): Beroende[] {
   const mal = new Set(idn);
   const berorda = loften.filter((p) => mal.has(p.id));
-  const parBelopp = new Set<string>();
+  const parBelopp = new Map<string, string[]>();
+  const rubrik = new Map<string, Set<string>>();
   for (const p of berorda) {
     const b = p.cost?.msek_base;
     if (typeof b !== "number") continue;
-    for (const parti of p.parties) parBelopp.add(`${parti}::${b}`);
+    rubrik.set(p.id, amnesord(p.title));
+    for (const parti of p.parties) {
+      const k = `${parti}::${b}`;
+      parBelopp.set(k, [...(parBelopp.get(k) ?? []), p.id]);
+    }
   }
-  return ankare(loften).filter(
-    (a) => !mal.has(a.id) && parBelopp.has(`${a.langivare}::${a.belopp}`),
-  );
+  const ut: Beroende[] = [];
+  for (const a of ankare(loften)) {
+    if (mal.has(a.id)) continue;
+    for (const galler of parBelopp.get(`${a.langivare}::${a.belopp}`) ?? []) {
+      const ord = amnesord(a.mening);
+      let traffar = 0;
+      for (const o of rubrik.get(galler) ?? []) if (ord.has(o)) traffar++;
+      ut.push({ ...a, galler, amnestraffar: traffar });
+    }
+  }
+  return ut.sort((x, y) => y.amnestraffar - x.amnestraffar);
 }
