@@ -2649,5 +2649,170 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-reduktionsplikt",
+      "party": "s",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Vi har inte några förslag om höjda drivmedelsskatter eller höjd reduktionsplikt.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/branslepriser/fakta-om-socialdemokraternas-politik-kring-drivmedelsskatt",
+    "articleTitle": "Fakta om Socialdemokraternas politik kring drivmedelsskatt\n| Socialdemokraterna",
+    "runId": "run-2026-08-21-16-45"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Socialdemokrater vill att samhället tar tillbaka kontrollen över skolan och att vinster förbjuds, så att skolans fokus blir fler lärare, kunskap och en bra utbildning för varje elev.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/marknadskolan-och-vinster-i-skolan",
+    "articleTitle": "Marknadskolan och vinster i skolan\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/marknadskolan-och-vinster-i-skolan",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-21-16-45",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-matmoms",
+      "party": "s",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Införa en tillfälligt sänkt matmoms till 6 procent för att ge hushållen en omedelbar ekonomisk lättnad i det tuffa kostnadsläget.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/matpriser",
+    "articleTitle": "Matpriser\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/matpriser",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-21-16-45",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-miniminiva",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sverige måste ha en stram migrationspolitik i linje med EU:s miniminivåer för att kunna ge goda chanser till effektiv integration.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/migration-och-flyktingpolitik",
+    "articleTitle": "Migration och flyktingpolitik\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/migration-och-flyktingpolitik",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-21-16-45",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet stöder positionen men \"migrationspolitik\" är bredare än \"asyllagstiftning\" och \"i linje med\" är något mjukare än \"ligga på\", vilket skapar en mindre tveksamhet om det exakta beskedet."
+      }
+    ],
+    "verifyReason": "Citatet stöder positionen men \"migrationspolitik\" är bredare än \"asyllagstiftning\" och \"i linje med\" är något mjukare än \"ligga på\", vilket skapar en mindre tveksamhet om det exakta beskedet."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "m",
+      "position": "villkorat",
+      "condition_note": "Skolor som inte uppfyller kraven ska kunna förlora tillstånd och möjlighet till vinstutdelning.",
+      "quote": "Tydligare kvalitetsregler behövs för både kommunala och fristående skolor. Skolor som inte uppfyller kraven ska kunna förlora tillstånd och möjlighet till vinstutdelning.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/skola-och-utbildning/",
+    "articleTitle": "Skola och utbildning | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/skola-och-utbildning/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-05",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-21-16-45",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-straffalder",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sänka straffbarhetsåldern för de allvarligaste brotten och inrätta ungdomsfängelser med fokus på utbildning och vägar ut ur kriminalitet.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/straff-2/",
+    "articleTitle": "Straff | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/straff-2/",
+    "archiveUrl": null,
+    "dateStated": "2026-07-20",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-21-16-45",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-forsvar-karnvapen",
+      "party": "s",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Sverige ska fortsatt ta en ledande roll i detta arbete och står fast vid principen om att inga kärnvapen får placeras på svenskt territorium i fredstid.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/nedrustning",
+    "articleTitle": "Nedrustning\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/nedrustning",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-21-16-45",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet bekräftar endast principen att kärnvapen inte ska placeras i Sverige i fredstid, men säger ingenting om huruvida detta ska lagfästas, vilket är den faktiska skiljelinjen i delfrågan."
+      }
+    ],
+    "verifyReason": "Citatet bekräftar endast principen att kärnvapen inte ska placeras i Sverige i fredstid, men säger ingenting om huruvida detta ska lagfästas, vilket är den faktiska skiljelinjen i delfrågan."
   }
 ]
