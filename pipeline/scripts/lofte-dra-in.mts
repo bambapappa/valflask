@@ -30,6 +30,7 @@ import {
   type Indragningsrad,
 } from "../src/indragning.ts";
 import { beroendeAv, type Ankarlofte } from "../src/ankaren.ts";
+import { taLaset } from "../src/datalas.ts";
 import { pathToFileURL } from "node:url";
 
 /**
@@ -166,6 +167,11 @@ if (!skriv) {
   process.exit(0);
 }
 
+// Låset tas FÖRE läsningen av de filer som ska skrivas tillbaka, annars kan
+// sviten hinna emellan. En indragning som kördes utan lås 2026-08-21 fick sin
+// statusändring överskriven medan rättelsen blev kvar — se datalas.ts.
+const slappLas = taLaset(DATA_DIR, "lofte-dra-in");
+
 const skalPerId = new Map(rader.map((r) => [r.id, r.skal]));
 const nya = loften.map((l) => {
   const skal = skalPerId.get(l.id);
@@ -187,6 +193,7 @@ writeFileSync(join(DATA_DIR, "promises.json"), JSON.stringify(nya, null, 2) + "\
 writeFileSync(join(DATA_DIR, "rattelser.json"), JSON.stringify([...rattelser, post], null, 2) + "\n");
 writeFileSync(join(DATA_DIR, "changelog.json"), JSON.stringify(changelog, null, 2) + "\n");
 
+slappLas();
 console.log("\nskrivet: promises.json, rattelser.json, changelog.json");
 console.log(
   "Kvar att göra för hand:\n" +
