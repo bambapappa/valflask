@@ -478,6 +478,99 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
     }
   });
 
+  /**
+   * Noten beskriver hur beloppet kommit till, och måste beskriva DET belopp som
+   * står bredvid.
+   *
+   * Regeln fanns för uträkningen men inte för noten, så kö-postens beskrivning
+   * följde med ett nytt belopp. Sju löften som sattes till noll 2026-08-21 bar
+   * noter som «prissatt som statens stödandel …» intill en nolla.
+   */
+  it("noten följer beloppet — kö-postens beskrivning följer inte med ett nytt", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-note-"));
+    try {
+      const badda = (cost: Record<string, unknown>) => {
+        writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+        writeFileSync(join(dir, "needs_review.json"), JSON.stringify([queueItem]));
+        writeFileSync(join(dir, "changelog.json"), JSON.stringify([]));
+        writeFileSync(join(dir, "provningar.json"), JSON.stringify({
+          poster: [{
+            id: konyckel(queueItem.articleUrl, queueItem.candidate!.quote),
+            slag: "lofte", datum: "2026-08-21", utfall: "haller",
+            underlag_hash: kanon("lofte", {
+              quote: queueItem.candidate!.quote, title: queueItem.candidate!.title,
+              parties: queueItem.candidate!.parties, status: "aktiv", group_id: null,
+              source: { url: queueItem.articleUrl }, cost,
+            }),
+          }],
+        }));
+      };
+      const calc = "Delarna prissätts på sina egna löften, så posten bär inget belopp.";
+      badda({ type: "utgift", period: "per_ar", msek_low: 0, msek_base: 0, msek_high: 0,
+              basis: "granskare", calculation: calc });
+
+      approve(["0", "0", "0", "0", "--calc", calc], dir);
+      let p = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8")) as Array<{ cost: { method_note: string; msek_base: number } }>;
+      const nollad = p.find((x) => x.cost.msek_base === 0 && x.cost.method_note !== undefined)!;
+      assert.equal(nollad.cost.method_note, "(belopp satt av granskare)",
+        "kö-postens note om ett annat belopp följer inte med");
+      assert.ok(!nollad.cost.method_note.includes("note"), "den ärvda texten är borta");
+
+      // Och granskaren kan skriva en egen som beskriver det belopp som står där.
+      badda({ type: "utgift", period: "per_ar", msek_low: 0, msek_base: 0, msek_high: 0,
+              basis: "granskare", calculation: calc });
+      approve(["0", "0", "0", "0", "--calc", calc, "--note", "Delarna bär priset på sina egna löften."], dir);
+      p = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8"));
+      const egen = p.filter((x) => x.cost.msek_base === 0).at(-1)!;
+      assert.equal(egen.cost.method_note, "Delarna bär priset på sina egna löften. (belopp satt av granskare)");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  /**
+   * Taket på uträkningen gällde bara `--calc`. En ÄRVD uträkning gick förbi:
+   * p-2026-2209 publicerades med 803 tecken och fälldes först av schemaprovet,
+   * efter att löftet redan låg i promises.json.
+   */
+  it("stoppar en ärvd uträkning som är längre än schemat tillåter", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-lang-calc-"));
+    try {
+      const langCalc = "A".repeat(801);
+      const lang: ReviewCandidate = {
+        ...queueItem,
+        cost: { ...queueItem.cost!, calculation: langCalc },
+      };
+      writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+      writeFileSync(join(dir, "needs_review.json"), JSON.stringify([lang]));
+      writeFileSync(join(dir, "changelog.json"), JSON.stringify([]));
+      writeFileSync(join(dir, "provningar.json"), JSON.stringify({
+        poster: [{
+          id: konyckel(lang.articleUrl, lang.candidate!.quote),
+          slag: "lofte", datum: "2026-08-21", utfall: "haller",
+          underlag_hash: kanon("lofte", {
+            quote: lang.candidate!.quote, title: lang.candidate!.title,
+            parties: lang.candidate!.parties, status: "aktiv", group_id: null,
+            source: { url: lang.articleUrl }, cost: lang.cost,
+          }),
+        }],
+      }));
+      const r = spawnSync(
+        process.execPath,
+        ["--import", "tsx/esm", "-e",
+         `import {approve} from ${JSON.stringify(join(import.meta.dirname, "../src/review.ts"))};` +
+         `approve(["0"], ${JSON.stringify(dir)});`],
+        { encoding: "utf8" },
+      );
+      assert.notEqual(r.status, 0, "för lång uträkning ska stoppa godkännandet");
+      assert.match((r.stdout ?? "") + (r.stderr ?? ""), /801 tecken; taket är 800/u);
+      assert.equal(JSON.parse(readFileSync(join(dir, "promises.json"), "utf8")).length, 1,
+        "inget publicerades");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it("en okänd källnivå stoppar godkännandet i stället för att tyst bli något annat", () => {
     const dir = mkdtempSync(join(tmpdir(), "review-basis-fel-"));
     try {
