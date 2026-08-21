@@ -670,35 +670,6 @@
   },
   {
     "candidate": {
-      "title": "Ny brobyggartjänst i skolor i utsatta områden",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Miljöpartiet ser behov av en ny typ av brobyggartjänst i skolor i de utsatta områden i Sverige där segregationens effekter är som störst.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/brobyggare-pa-skolor-i-utsatta-omraden/",
-    "articleTitle": "Miljöpartiet vill anställa brobyggare på skolor i utsatta områden | Miljöpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 75,
-      "msek_base": 150,
-      "msek_high": 350,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Vagt löfte utan nivå. Uppskattat som lönekostnad för brobyggare i skolor i utsatta områden; beloppet avser statens nya nettokostnad för tjänsterna, inte bredare segregeringsåtgärder.",
-      "confidence": 0.4,
-      "calculation": "Polisen listar ~60 utsatta områden; uppskattningsvis 150–250 skolor där. Antag 1 brobyggare per skola, lön ~40 tkr/mån + arbetsgivaravgift/lokaler/overhead ≈ 0,5–0,7 msek/år per tjänst. 150 skolor × 0,6 msek ≈ 90 msek/år; 250 skolor × 0,7 ≈ 175 msek/år. Högre ände rymmer flera personal per skola eller bredare områdesurval (~500 × 0,7 ≈ 350). Antal mottagare är min uppskattning — partiet anger ingen nivå."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Inför allmän och statlig a-kassa",
       "parties": [
         "l"
@@ -841,35 +812,6 @@
       "calculation": "Konkret leverans är en strategi/utredning: sekretariat, sakkunniga, externa analyser, remissrunda och eventuell följdmotion i riksdagen. SOU-liknande insatser landar typiskt kring 5–30 msek som engångskostnad; AI-området kan kräva viss extern expertis vilket motiverar övre spannet. Bas 15 msek. Integritetsskyddet nämns utan utpekade åtgärder och antas ingå i strategiprocessen — ev. framtida reglering eller tillsyn prissätts på separata löften."
     },
     "costReason": "LLM-estimat (confidence 0.6) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Ta bort regler som hindrar äldre från att arbeta",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Vi måste bekämpa fördomar och diskriminering, och vi måste ta bort regler och avtal som hindrar äldre från att arbeta om de vill.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/politik/alderism",
-    "articleTitle": "Ålderism – Liberalerna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 10,
-      "msek_high": 50,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Avreglering: direkt kostnad för att ta bort regler/avtal är försumbar; små medel för ev. lagändring och insatser mot diskriminering. Effekter (fler äldre i arbete) är följder, ej prissatta.",
-      "confidence": 0.3,
-      "calculation": "Kärnan är regelavveckling (ändring av lagar/avtal), engångskostnad ~5–20 msek för utredning/lagstiftning. 'Bekämpa fördomar och diskriminering' kan innebära informations-/tillsatsinsatser ~10–30 msek/år. Base ~10 msek/år, spann 0–50. Ökad sysselsättning bland äldre påverkar skatteintäkter och pensioner, men det är beteendeföljder, inte statens direkta nya kostnad, och kvantifieras ej."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1250,35 +1192,6 @@
   },
   {
     "candidate": {
-      "title": "Fördubblad utbyggnad av förnybar energi och ökat solstöd",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "fördubblad utbyggnadstakt för förnybar energi och ökat stöd till solenergi",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/7-stegsprogram/",
-    "articleTitle": "Sverige behöver klimatterapi | Miljöpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 1200,
-      "msek_high": 3000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Ökat solelstöd prissätts mot senaste stödnivåer (~0,5–0,8 mdkr/år) fördubblade; övrig utbyggnadstakt antas mest elcertifikat-/marknadsfinansierad men med viss extra statlig satsning. Endast statens…",
-      "confidence": 0.35,
-      "calculation": "Befintligt solelstöd har historiskt legat runt 0,5–0,8 mdkr/år. 'Ökat stöd' i linje med fördubblad utbyggnadstakt tolkas som stödnivå ~1,5–2 ggr dagens, dvs. ökning ~0,5–1,2 mdkr/år. Fördubblad utbyggnadstakt för övrig förnybar el (vind) antas till största delen ske via tillståndsprocesser och elcertifikat som inte är direkt statlig kostnad, men vissa kompletterande stöd/planeringsåtgärder ~0–1 mdkr/år läggs till. Total ny statlig netto kostnad ≈ 0,4–3 mdkr/år, bas ~1,2 mdkr/år. Ej medräknat: samhällsekonomiska kostnader, nättinvesteringar, konsumentpriserffekter."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Krav på noggranna utredningar före placering i anpassad skola",
       "parties": [
         "l"
@@ -1455,35 +1368,6 @@
   },
   {
     "candidate": {
-      "title": "Återinföra stöd till energieffektivisering i flerbostadshus och industrier",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Miljöpartiet vill återinföra stöd till energieffektivisering i flerbostadshus och industrier.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/energi/",
-    "articleTitle": "Miljöpartiet energi och energieffektivisering",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 900,
-      "msek_high": 1500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Subvention utan angiven nivå; ankrat på åtgärdens tidigare faktiska kostnad: Boverkets stöd till energieffektivisering i flerbostadshus (~420 msek/år 2016–18) och tidigare industristöd (PFE ~500…",
-      "confidence": 0.45,
-      "calculation": "Löftet saknar belopp, så priset sätts till vad samma åtgärd senast kostade. Bostadsdel: det tidigare statliga stödet till energieffektivisering i flerbostadshus var ~1 250 msek fördelat på ca 3 år ≈ 420 msek/år. Industridel: tidigare program för energieffektivisering i energiintensiv industri (PFE-skatteavdrag) låg på ~500 msek/år i topp. Bas ≈ 420 + 500 ≈ 900 msek/år. Span: låg 400 (endast bostadsstödet på gamla nivån), hög 1 500 (utökat program med högre tak och bredare industriåtgärd). Antagande: återkommande årligt anslag i fasta priser, brutto före eventuell partifinansiering."
-    },
-    "costReason": "LLM-estimat (confidence 0.45) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Inträdesjobb med lägre ingångslön och slopade arbetsgivaravgifter",
       "parties": [
         "l"
@@ -1510,35 +1394,6 @@
       "calculation": "Underlag: arbetslösa unga ~120k + nyanlända i etablering ~50k; antag 60–140k inträdesjobb/år (bas ~100k). Snittlön ~24 tkr/mån x ~9 mån => ~216 tkr per deltagare. Löneunderlag ~13–30 mdkr (bas ~21,6 mdkr). Arbetsgivaravgift 31,4% => uteblivna intäkter ~4–9,4 mdkr (bas ~6,8 mdkr). Netto justeras ned ~25–35% för kommunal/statlig skatt på nytillkomna jobb, lägre arbetslöshetsersättning och att en del unga annars haft nedsatt avgift => netto ~2,5–9 mdkr, bas ~4,5 mdkr. 'Något lägre ingångslön' sänker skattebasen marginellt och är inte separat prissatt. Antaganden är mina egna; partiet ger ingen siffra."
     },
     "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Aktivitetskrav för mottagare av försörjningsstöd",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Samtidigt vill vi ställa krav på att människor som får försörjningsstöd också deltar i praktik, utbildning eller andra aktiviteter som leder närmare arbete.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/politik/arbetsmarknad",
-    "articleTitle": "Arbetsmarknad – Liberalerna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 20,
-      "msek_base": 150,
-      "msek_high": 500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Regelkrav på aktivitet är i grunden en reglering; beloppet avser statlig administration, uppföljning och eventuell medfinansiering av praktik/utbildning — inte kommunernas försörjningsstöd eller…",
-      "confidence": 0.35,
-      "calculation": "~100 000 hushåll i arbetsför ålder med försörjningsstöd; ~30–50 % bedöms omfattas av aktivitetskrav = 30 000–50 000 personer. Kostnad per plats (praktik, utbildning, coaching) antas 5–20 tkr → brutto 150–1 000 msek. Huvudansvaret ligger dock på kommunerna, så statens nya nettokostnad är främst administration (IT, uppföljning, tillsyn) plus viss medfinansiering, ~20–50 % av brutto ≈ 20–500 msek. Base 150 msek; spannet brett eftersom löftet saknar nivå och omfattning."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -2015,66 +1870,6 @@
   },
   {
     "candidate": {
-      "title": "Statliga lån och stöd till all fossilfri elproduktion",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Utvidga statens bemyndigande att ge lån och stöd till att gälla all storskalig fossilfri elproduktion dvs. Vindkraft till havs, och kärnkraft, enligt principen om teknikneutralitet.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/energipolitik",
-    "articleTitle": "Energipolitik\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Bemyndigande att ge lån och stöd är en regeländring utan direkt statsfinansiell kostnad.",
-      "confidence": 0.65,
-      "calculation": "Regeländringen i sig kräver inga anslag. Eventuella lån och stöd prövas i särskild ordning och medför kostnad först då, ej i detta löfte."
-    },
-    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0788 (0), p-2026-0821 (0), p-2026-0342 (0), p-2026-0332 (0), p-2026-0667 (0)"
-  },
-  {
-    "candidate": {
-      "title": "Gå med i EU:s bankunion",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Gå med i EU:s bankunion för att skydda svenska jobb och sparares pengar.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/europa-och-eu/eus-ekonomiska-samarbete",
-    "articleTitle": "EU:s ekonomiska samarbete | Centerpartiet",
-    "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma uttryck: «bankun skydda», «sparar pengar»",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 5,
-      "msek_base": 20,
-      "msek_high": 60,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Regleringsändring: prissatt only direkt anpassning hos FI/Riksgälden (IT, personal, utbildning). Bankernas avgifter till resolutionsfonden är ej statsutgift; framtida backstop-ansvar lämnas…",
-      "confidence": 0.45,
-      "calculation": "Medlemskap i bankunionen är i grunden en regleringsfråga. Direkt statlig kostnad = engångsanpassning hos Finansinspektionen och Riksgälden: uppskattat 20–60 berörda tjänster × IT/systemändringar, processutveckling, utbildning och eventuell utredning ≈ 5–60 msek engång. Löpande merkostnad bedöms försumbar i jämförelse. BankernasResolution Fund-avgifter och SRF-inbetalningar betalas av bankerna (omfördelning från nationell resolutionsfond), inte av staten. Möjligt framtida backstop-ansvar via ESM är en contingent följd, inte en ny statsutgift idag."
-    },
-    "costReason": "LLM-estimat (confidence 0.45) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Se över DO:s uppdrag för att åtgärda åldersdiskriminering",
       "parties": [
         "l"
@@ -2191,35 +1986,6 @@
   },
   {
     "candidate": {
-      "title": "Tillåta altruistiskt värdmoderskap med tydliga rättsliga garantier",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Tillåta altruistiskt värdmoderskap med tydliga rättsliga garantier",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/politik/assisterad-befruktning",
-    "articleTitle": "Assisterad befruktning – Liberalerna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 40,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Regleringslöfte: själva tillståndet kostar i princip inget; prissatt endast utredning/lagstiftning. Vård- och samhällsföljder (t.ex. IVF via offentlig vård) är konsekvenser, inte åtgärdens pris.",
-      "confidence": 0.5,
-      "calculation": "Regeländring i sig ~0 msek. Direkta kostnader = förarbeten: SOU-utredning om värdmoderskapslagstiftning ~10–20 msek plus remissbearbetning, lagrådsgranskning och eventuell myndighetsinstruktion ~5–20 msek ≈ totalt ~15 msek engång. Små löpande kostnader för domstols-/myndighetshantering samt ev. framtira IVF-kostnader lämnas medvetet okvantifierade enligt avgränsningsreglerna."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Utreda frågor om barn födda genom värdmoderskap utomlands",
       "parties": [
         "l"
@@ -2320,35 +2086,6 @@
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/barns-rattigheter-2",
     "articleTitle": "Barns rättigheter – Liberalerna"
-  },
-  {
-    "candidate": {
-      "title": "Återinför permanenta uppehållstillstånd",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Återinföra permanenta uppehållstillstånd.",
-      "category": "migration",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/gron-politik-for-etablering/",
-    "articleTitle": "Miljöpartiets förslag för nyanländas etablering | Miljöpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 2,
-      "msek_base": 15,
-      "msek_high": 50,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Lagändring i utlänningslagen; prissatt som direkt implementeringskostnad (regeländring, omställning hos Migrationsverket), inte samhällsekon. följder.",
-      "confidence": 0.4,
-      "calculation": "Löftet är en regeländring utan belopp. Direkt kostnad = genomförande: lagstiftningsarbete/nya föreskrifter ~2–10 mkr; omställning av handläggning, IT-stöd och utbildning hos Migrationsverket ~5–30 mkr; ev. utredningsunderlag ~5–10 mkr. Engångskostnad totalt ~2–50 mkr, bas 15 mkr. Ändrade kostnader för tillståndsprocesser (färre förlängningsärenden, fler permanentärenden) är netto oklara, och effekter på befolkning/välfärd är följder som lämnas okvantifierade enligt regel 9."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -2468,36 +2205,6 @@
   },
   {
     "candidate": {
-      "title": "Dela barnbidraget lika mellan föräldrar",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Säkerställa att barnbidraget alltid delas lika mellan föräldrarna.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/familj/barnbidrag",
-    "articleTitle": "Barnbidrag | Centerpartiet",
-    "duplicateOf": "p-2026-0859",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 10,
-      "msek_high": 40,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Ren omfördelning inom hushållet — statens totala barnbidragsutgift ändras inte. Beloppet avser enbart åtgärdens direkta kostnad (system/administration), inte fördelningseffekter.",
-      "confidence": 0.5,
-      "calculation": "Idag betalas barnbidraget ut till en förälder; en obligatorisk likadelning flyttar hälften till den andra föräldern men staten betalar samma totala belopp — ny nettokostnad ≈ 0. Kvar: engångskostnad för omställning av Försäkringskassans utbetalningssystem (dubbla mottagare per barn, ~1,2 milj barnbidrag) plus viss löpande hantering av tvistfall/undantag, grovt 5–40 msek; löpande merkostnad för extra utbetalningsflöden försumbar."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Alla skolor ska ha bemannade skolbibliotek",
       "parties": [
         "l"
@@ -2580,35 +2287,6 @@
       "method_note": "Vagt löfte utan nivå; ankrat vid storleken på befintliga/statsbidrag och tidigare bibliotekshöjningar. Beloppet avser själva satsningen (inköp + driftsstöd), inte samhällseffekter.",
       "confidence": 0.35,
       "calculation": "Löftet anger inget belopp.Statens stöd till folkbibliotek/litteraturinköp ligger historiskt i spannet ca 200–500 msek/år; en 'styrkesatsning' motsvarar rimligen en upptrappning: ~290 kommunala bibliotek × 0,2–0,8 msek extra bokinköp/drift ≈ 60–230 msek, plus kompletterande riktade satsningar upp mot ca 450 msek. Låggräns 50 msek motsvarar en minimal symbolisk höjning (jämförbar med tidigare mindre enskilda höjningar av biblioteksanslag)."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Kortare arbetstid och slopad karens i vården",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Kortare arbetstid, slopad karens, kompetensutveckling och fler betalda specialistutbildningar ska bidra till ett mer hållbart arbetsliv.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/halso-och-sjukvard/",
-    "articleTitle": "Miljöpartiets hälso- och sjukvårdspolitik",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 300,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Bred uppräkning av flera åtgärder utan nivåer — behandlas som inriktningslöfte. Kortare arbetstid är främst arbetsgivarkostnad, slopad karens är reglering; kostsamma delar prissätts i separata löften.",
-      "confidence": 0.35,
-      "calculation": "Citatet räknar upp fyra olika åtgärder (kortare arbetstid, slopad karens, kompetensutveckling, fler betalda specialistutbildningar) utan belopp eller nivåer → inriktningslöfte enligt reglerna, base 0. Kortare arbetstid i vården betalas av arbetsgivare (regioner/kommuner), inte staten direkt. Slopad karens är en regleringsändring vars direkta statliga kostnad är oklar. Fler utbildningsplatser saknar angiven omfattning. Spannet (0–300 msek) speglar eventuella mindre statliga insatser som utredningar, pilotsatsningar eller administration."
     },
     "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -2934,37 +2612,6 @@
       "calculation": "1) Bankskatt: V föreslog 2022 en bankskatt på 0,2% av skulder, ~10-15 mdkr/år. Antar här en snävare övervinstskatt ~5-15 mdkr. 2) Höjd kapitalskatt: från 30% till 35% på kapitalinkomster uppskattas ge ~5-10 mdkr/år (baserat på total kapitalskatt ~70 mdkr). 3) Höjd skatt på höga inkomster: återinförd värnskatt (5% på inkomster >~700 tkr) gav tidigare ~5 mdkr/år; en bredare höjning kan ge upp till ~25 mdkr. Summerat: lågt 5, bas 20, högt 50 mdkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0971 (0), p-2026-0438 (0), p-2026-0835 (0), p-2026-0650 (0), p-2026-0613 (3000) ⚠ AVVIKER: belopp 20000 men jämförbara ligger på 0"
-  },
-  {
-    "candidate": {
-      "title": "Modernisera familjelagstiftningen",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Modernisera familjelagstiftningen och tillåta fler metoder för assisterad befruktning.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/familj/ofrivillig-barnloshet",
-    "articleTitle": "Ofrivillig barnlöshet | Centerpartiet",
-    "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma uttryck: «tillåt metode», «metode assist», «assist befruk»",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 3,
-      "msek_base": 10,
-      "msek_high": 25,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Regleringsändring: ny statlig kostnad är främst utredning/lagarbete. Ökade kostnader för fertilitetsvård hamnar på regionerna och är en följd, inte en direkt statsutgift.",
-      "confidence": 0.4,
-      "calculation": "Löftet är ett tillstånd (tillåta fler metoder), inte en finansiering. Direkt kostnad: SOU-utredning om familjelagstiftning ~5–20 msek + beredning, remiss, register-/administrativa anpassningar ~2–5 msek ≈ 3–25 msek engång. Om regionerna därefter erbjuder nya metoder inom offentlig vård är deras kostnad en konsekvens av avregleringen, inte statens nya nettokostnad, och lämnas okvantifierad."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -3376,36 +3023,6 @@
   },
   {
     "candidate": {
-      "title": "Införa gemensamt skolval och stoppa orättvisa kösystem",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Införa ett gemensamt skolval och stoppa orättvisa kösystem där skolkoncerner väljer ut elever.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/grundskola",
-    "articleTitle": "Grundskola\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-0499",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 10,
-      "msek_base": 60,
-      "msek_high": 150,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Regleringslöfte: kösystem förbjuds via lag (försumbar direkt kostnad). Prissatt är att bygga/driva ett gemensamt nationellt antagningssystem (IT + admin). Effekter på skolkoncerner är följd, ej…",
-      "confidence": 0.3,
-      "calculation": "Två delar: (1) lagstiftning mot kösystem ~0 msek. (2) Gemensamt skolval = central antagning: utveckling av nationell plattform ~20–100 msek + integration mot ~2000 skolhuvudmän 0,005–0,02 msek/st ≈ 10–40 msek, totalt engång ~30–140 msek; bas 60 msek. Löpande drift/admin ~10–50 msek/år ingår ej i beloppet. Koncerners intäkter/elevfördelning prissätts ej (omfördelning/följd)."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Enklare att anmäla diskriminering",
       "parties": [
         "l"
@@ -3580,35 +3197,6 @@
   },
   {
     "candidate": {
-      "title": "Öka platser på yrkesutbildning för nyanlända kvinnor",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Vi vill öka antalet platser på yrkesutbildningen på Komvux och folkhögskola, med särskilt fokus på nyanlända kvinnor.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/jobb/",
-    "articleTitle": "Jobb | Miljöpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 350,
-      "msek_high": 600,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet anger inget antal platser. Prissatt som en typisk expansionsomgång av yrkesvux-/folkhögskoleplatser enligt gällande per-elev-statsbidrag; beloppet avser statens nya bidragskostnad, inte…",
-      "confidence": 0.4,
-      "calculation": "Löftet saknar nivå, så antalet platser är min uppskattning: en rimlig expansion om ~2 000–5 000 nya platser. Statsbidraget per plats ligger grovt på 110 000–130 000 kr/år för yrkesvux (vissa yrken högre) och 50 000–70 000 kr/år för folkhögskola. Blandat antagande ~90 000–130 000 kr/plats ger ~2 000 × 100 tkr ≈ 200 msek till ~5 000 × 120 tkr ≈ 600 msek per år. Fokus på nyanlända kvinnor styrs mot额外的 platser men ändrar inte styckkostnaden; nyanlända kan ha kortare utbildningar (intro) vilket delvis drar ned snittet. Osäkerheten ligger främst i antalet platser."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Förenkla upphandling av arbetsintegrerade sociala företag",
       "parties": [
         "mp"
@@ -3664,35 +3252,6 @@
       "calculation": "Antar att 'fortsätta' innebär ytterligare en omgång omlokalisering under mandatperioden: ~300–800 statliga tjänster flyttas. Historiska omställningskostnader ligger grovt på 0,5–1 mkr per flyttad tjänst (flytt, IT, dubbla lokaler under övergång, avgångs-/rekryteringskostnader eftersom många inte följer med). 300×0,5 ≈ 150 mkr; 800×1 ≈ 800 mkr. Löner och lokalkostnader överförs i princip oförändrade mellan orter (regel 11), så endast övergångskostnaden plus ev. små löpande merkostnader för splittrad verksamhet prissätts. Osäkerheten är stor eftersom omfattning inte anges; låg gräns täcker små delutflyttningar, hög gräns större verk."
     },
     "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Satsa 1,95 miljarder mer än regeringen på hemtjänstbemanning",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Satsa 1,95 miljarder kronor mer än regeringen på ökad bemanning för att ge personalen mer tid för varje besök och minska stressen.",
-      "category": "välfärd",
-      "amount_in_text_msek": 1950,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/hemtjanst",
-    "articleTitle": "Hemtjänst\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 1950,
-      "msek_high": 2600,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Partiets egen siffra: 1,95 miljarder kronor mer än regeringen till ökad bemanning i äldreomsorgen, läst som en årlig nivå. Samma politik som partiets publicerade löften om bemanningen i äldreomsorgen — ska grupperas och räknas en gång.",
-      "calculation": "Partiet anger själv beloppet: 1 950 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Partiet anger beloppet i citatet: 1,95 miljarder kronor mer än regeringen till ökad bemanning. Källan skriver inte ut takten, men löftet gäller bemanningen och inte en engångsförstärkning — en tjänst som tillsätts ett år finns kvar nästa. Beloppet läses därför som en årlig nivå, och samma läsning gäller partiets övriga löften om samma bemanning. Spannet 1 500–2 600 miljoner kronor är vårt och står för att bara ett år är utskrivet.",
-      "confidence": 0.5
-    },
-    "costReason": "Partiets egen siffra, läst som årlig nivå. Ska grupperas med de publicerade löftena om samma bemanning."
   },
   {
     "candidate": {
@@ -4314,22 +3873,6 @@
   },
   {
     "candidate": {
-      "title": "Återställa stödet till studieförbunden och skapa fler folkhögskoleplatser",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Miljöpartiet vill återställa och stärka stödet till studieförbunden, skapa fler folkhögskoleplatser, stärka kultursamverkansmodellen och utreda kulturljudzoner, där kommuner kan peka ut kulturkvarter där ljud från konserter och spelningar tillåts i högre grad än i vanliga bostadsområden.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/kultur/",
-    "articleTitle": "Miljöpartiets kulturpolitik"
-  },
-  {
-    "candidate": {
       "title": "Stärka trygghetssystemen för konstnärer och utöka stödet till konstnärsallianserna",
       "parties": [
         "mp"
@@ -4507,27 +4050,6 @@
       "calculation": "Dagens reseavdrag används av ca 1,3–1,5 milj deklaranter med snittavdrag ca 5–6 tkr, total ca 7–9 mdkr/år i sänkta skatteintäkter. Löftet ersätter systemet med ett avståndsbaserat avdrag som gynnar långpendlare: antag 0,4–0,8 milj berörda × extra avdrag 3 000–8 000 kr ≈ 1,2–6,4 mdkr ytterligare sänkta intäkter, delvis motverkat av mindre avdrag för kortpendlare när nuvarande system byts ut. Netto för staten ≈ 0,5–4,5 mdkr/år; bas 2 000 msek motsvarar en reform i storlek med tidigare större utbyggnader av reseavdraget."
     },
     "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Reformera bruksvärdesystemet",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Dessutom vill vi reformera bruksvärdesystemet för att skapa bättre rörlighet och ökad nyproduktion.",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [
-      {
-        "gate": "G3",
-        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
-      }
-    ],
-    "articleUrl": "https://www.liberalerna.se/politik/bostad",
-    "articleTitle": "Bostad – Liberalerna"
   },
   {
     "candidate": {
@@ -5364,36 +4886,6 @@
   },
   {
     "candidate": {
-      "title": "Slopa mängdrabatten för flera brott",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Under nästa mandatperiod vill Moderaterna gå vidare med att slopa mängdrabatten så att den som begår flera brott får betydligt hårdare straff.",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/vallofte-hardare-straff-for-aldreomsorgspersonal-som-valdtar-aldre/",
-    "articleTitle": "Vallöfte: Hårdare straff för äldreomsorgspersonal som våldtar äldre  | Moderaterna",
-    "duplicateOf": "p-2026-0313",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 100,
-      "msek_base": 400,
-      "msek_high": 1200,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Lagändring i straffmätning; kostnaden är längre fängelsestraff → fler platser i kriminalvården. Allvarliga vålds-/sexualbrott omfattas redan av tidigare avskaffanden, så marginalen är smalare. Bred… [period satt till engang: engångssignal…",
-      "confidence": 0.35,
-      "calculation": "Kostnad = extra fängelsedagar, inte själva lagstiftningen. Antaganden: ca 1 500–3 000 dömda per år med flera brott där mängdrabatten fortfarande tillämpas (egendoms-, narkotika-, trafikbrott m.m. — allvarliga vålds-/sexualbrott omfattas redan av tidigare reformer). Snittförlängning ~1–4 månader → ca 100–1 000 extra intagna i jämvikt. Kostnad ~1,2–1,8 msek per plats och år inkl. kapacitetsbyggnad → ca 100–1 200 msek/år, bas ~400. Avskräckningseffekter och brottsutveckling ej prissatta; därför låg confidence."
-    },
-    "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Biståndsramen ska prioriteras utifrån behov",
       "parties": [
         "m"
@@ -5787,64 +5279,6 @@
   },
   {
     "candidate": {
-      "title": "Införa kommunala säkerhetsvakter",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Införa kommunala säkerhetsvakter med befogenhet att upprätthålla ordning i hela kommunen.",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/gangkriminalitet-gangvald/",
-    "articleTitle": "Gängkriminalitet/Gängvåld | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 200,
-      "msek_base": 500,
-      "msek_high": 1200,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet anger ingen nivå. Uppskattning utifrån att staten finansierar kommunala säkerhetsvakter i de flesta kommuner, med 2–5 vakter per kommun och årlig kostnad 400–600 tkr per vakt.",
-      "confidence": 0.4,
-      "calculation": "290 kommuner × 50–100 % deltagande × 2–5 vakter × 400–600 tkr/år ≈ 116–870 mkr. Baserat på 75 % deltagande, 3 vakter, 500 tkr ≈ 326 mkr. Avrundat till 200–1200 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Stärka svenska språket, läsningen och matematiken samt införa nya läroplaner och rättvisare betyg",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Därför stärker vi svenska språket, läsningen och matematiken, inför nya kunskapsinriktade läroplaner och ett mer rättvist betygssystem som mäter vad elever faktiskt kan.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/grund-och-gymnasieskola/",
-    "articleTitle": "Grund- och gymnasieskola | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 20,
-      "msek_base": 30,
-      "msek_high": 60,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Brett löfte; prissätter de konkreta delarna (nya läroplaner + betygssystem). Ankrar i jämförbart löfte om 30 msek för nya läroplaner; betygssystemet ger osäkerhet.",
-      "confidence": 0.4,
-      "calculation": "Jämförbart löfte p-2026-0063: 30 msek för nya läroplaner. Betygssystemets merkostnad uppskattas till 0–30 msek beroende på omfattning. Lågt fall 20 msek (mindre justeringar), högt fall 60 msek (full översyn). Base 30 msek som närmast jämförbart."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0464 (0), p-2026-0063 (30), p-2026-0070 (3), p-2026-0096 (1500), p-2026-0560 (0) ⚠ AVVIKER: 30 avviker 10.0× från jämförbara (median 3) ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-0060 (5000), p-2026-0065 (5000), p-2026-0064 (1000), p-2026-0166 (800), p-2026-0066 (500). Är delarna redan prissatta ska detta löfte sättas till 0."
-  },
-  {
-    "candidate": {
       "title": "Stärka läraryrket, minska administrationen och utveckla lärarutbildningen",
       "parties": [
         "m"
@@ -5920,24 +5354,6 @@
   },
   {
     "candidate": {
-      "title": "Max tjugo elever per klass",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Vi vill ha max tjugo elever per klass, mer lärarledd undervisning och en skola som utmanar varje barn.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/nyheter/idag-borjar-fortidsrostningen-for-utlandssvenskar",
-    "articleTitle": "Idag börjar förtidsröstningen för utlandssvenskar – Liberalerna",
-    "duplicateOf": "p-2026-0391",
-    "duplicateReason": "samma uttryck: «tjugo elever», «elever klass»"
-  },
-  {
-    "candidate": {
       "title": "BankID till utlandssvenskar",
       "parties": [
         "l"
@@ -5967,41 +5383,6 @@
   },
   {
     "candidate": {
-      "title": "Fastslå nationellt mål om 4 procent av BNP till forskning",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Fastslå ett nationellt mål om 4 procent av BNP till forskning, där både statens och näringslivets investeringar ingår.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-staten-ska-lagga-1-procent-av-bnp-pa-forskning",
-    "articleTitle": "Liberalerna: staten ska lägga 1 procent av BNP på forskning – Liberalerna",
-    "duplicateOf": "p-2026-0696",
-    "duplicateReason": "samma tal: 4 procen · samma uttryck: «procen forskn»"
-  },
-  {
-    "candidate": {
-      "title": "Förenkla regler för seriösa restauranger och företag",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false,
-      "quote": "Förenkla regler för seriösa restauranger och företag"
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/politik/alkohol",
-    "articleTitle": "Alkohol – Liberalerna",
-    "duplicateOf": "p-2026-1800"
-  },
-  {
-    "candidate": {
       "title": "Ge barn tidig kunskap om sina rättigheter",
       "parties": [
         "l"
@@ -6016,63 +5397,6 @@
     "articleUrl": "https://www.liberalerna.se/politik/barnaktenskap",
     "articleTitle": "Barnäktenskap",
     "verifyReason": "Citatet återfinns ordagrant i källtexten på liberalerna.se och partitillhörigheten (L) stämmer; ingen penningsumma förekommer och ingen har heller angivits. Dock är formuleringen en mycket allmän målsättning ('ska de tidigt få kunskap om sina rättigheter') utan konkret åtgärd, mätbarhet eller finansiering, och den hämtad ur en textsida om barnäktenskap snarare än utbildningspolitik, vilket gör kategoriseringen 'utbildning' tveksam. Manuell granskning rekommenderas innan publicering."
-  },
-  {
-    "candidate": {
-      "title": "Mål om en barnmorska per födande kvinna ska genomföras nästa mandatperiod",
-      "parties": [
-        "s"
-      ],
-      "person": {
-        "name": "Magdalena Andersson",
-        "role": "Partiledare"
-      },
-      "quote": "Socialdemokraterna går till val på att målet om en barnmorska per födande kvinna ska genomföras under nästa mandatperiod.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": true
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-19-s-gar-till-val-pa-en-barnmorska-per---fodande-kvinna",
-    "articleTitle": "S går till val på en barnmorska per födande kvinna\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-1661"
-  },
-  {
-    "candidate": {
-      "title": "Vill tillsätta en kommission för kvinnohälsa",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Vi vill tillsätta en kommission för kvinnohälsa, genomföra målet om en barnmorska per födande och stärka vården vid endometrios, klimakteriebesvär och förlossningsskador.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-19-s-gar-till-val-pa-en-barnmorska-per---fodande-kvinna",
-    "articleTitle": "S går till val på en barnmorska per födande kvinna\n| Socialdemokraterna",
-    "verifyReason": "Citatet är ordagrant från källtextens FAQ-sektion och partiet (S) stämmer – texten beskriver uttryckligen ett vallöfte ('går partiet till val på ett trygghetslöfte'). Däremot är financing_mentioned=false tveksam: källan innehåller ett eget avsnitt 'Vad kostar vallöftet och hur finansieras det?' där finansieringsansvar, 900 miljoner kronor i tidigare budgetmotioner samt indexuppräkning av statsbidrag diskuteras, även om ingen konkret kostnad för själva löftet anges (amount_in_text_msek=null är därför OK). Metadataflaggan för finansiering bör manuellt kontrolleras innan publicering."
-  },
-  {
-    "candidate": {
-      "title": "Genomföra målet om en barnmorska per födande",
-      "parties": [
-        "s"
-      ],
-      "person": {
-        "name": "Lena Hallengren",
-        "role": "gruppledare i riksdagen"
-      },
-      "quote": "Löften om en barnmorska per födande har vi alla hört, nu är det dags för genomförande. Nästa mandatperiod ska det målet bli verklighet",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": true
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-19-s-vallofte-kvinnors-halsa-ska-tas-pa-allvar---genom-hela-livet.",
-    "articleTitle": "S vallöfte: Kvinnors hälsa ska tas på allvar – genom hela livet.\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-1661"
   },
   {
     "candidate": {
@@ -6143,23 +5467,6 @@
     "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-20-s-vallofte-ett-paradigmskifte-for-svensk-aldreomsorg",
     "articleTitle": "S vallöfte: Ett paradigmskifte för svensk äldreomsorg\n| Socialdemokraterna",
     "verifyReason": "Kärnen stämmer: citatet 'Vi vill se en helt ny starkare lagstiftning som också leder till höjd bemanning' återfinns ordagrant i källtexten, partiet är korrekt (S, socialdemokraterna.se), Magdalena Andersson presenterade löftet på pressträffen, och 'en ny äldreomsorgslag med en värdighetsgaranti' är explicit uttryckt som vallöfte. Dock finns diskrepanser i metadata: källtexten nämner i kostnadsfrågan 'nästan två miljarder mer än regeringen på äldreomsorgen' (≈2000 MSEK, hänvisat till förra budgetmotionen) och explicit finansiering ('helt ny princip för finansiering... statsbidragen räknas upp med inflationen', 'Vi kommer finansiera våra vallöften'), vilket inte överensstämmer med kandidatens amount_in_text=null och financing_mentioned=false. Beloppet avser visserligen en tidigare budgetmotion snarare än detta specifika löfte, vilket skapar tveksamhet — metadata behöver manuell kontroll innan publicering."
-  },
-  {
-    "candidate": {
-      "title": "Fast läkare för alla äldre",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Vi vill att alla äldre ska ha en fast namngiven läkarkontakt på vårdcentralen.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-20-s-vallofte-ett-paradigmskifte-for-svensk-aldreomsorg",
-    "articleTitle": "S vallöfte: Ett paradigmskifte för svensk äldreomsorg\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-0011"
   },
   {
     "candidate": {
@@ -6236,35 +5543,6 @@
       "calculation": "Rutavdraget kostar staten ca 2-4 mdkr årligen i uteblivna skatteintäkter. Avskaffas det ökar intäkterna med motsvarande belopp. Spann: 2000-5000 mkr, base 3000 mkr."
     },
     "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0486 (25000), p-2026-0760 (100), p-2026-1557 (150), p-2026-0345 (20000), p-2026-1355 (200) ⚠ AVVIKER: 3000 avviker 15.0× från jämförbara (median 200)"
-  },
-  {
-    "candidate": {
-      "title": "Gör om rotavdraget till ett grönt rotavdrag",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Vänsterpartiet vill därför att dagens rotavdrag görs om till ett grönt rotavdrag.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/rut-och-rot/",
-    "articleTitle": "RUT och ROT – Vänsterpartiet",
-    "cost": {
-      "type": "intäktsminskning",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Omläggning av befintligt rotavdrag till grönt; ingen ny kostnad, endast omfördelning inom samma budgetram.",
-      "confidence": 0.3,
-      "calculation": "Rotavdraget är en befintlig subvention; att göra om det grönt ändrar inte statens totala utgift, bara fördelningen. Därför sätts kostnaden till 0."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -7117,23 +6395,6 @@
   },
   {
     "candidate": {
-      "title": "Planera för klimatsmarta transporter, laddinfrastruktur och energilösningar i nya områden",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Planera för klimatsmarta transporter, laddinfrastruktur och energilösningar i alla nya områden.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/bostader/samhallsplanering",
-    "articleTitle": "Samhällsplanering | Centerpartiet",
-    "duplicateOf": "p-2026-1083"
-  },
-  {
-    "candidate": {
       "title": "20 miljarder till äldreomsorgen, vården och höjda statsbidrag",
       "parties": [
         "mp"
@@ -7572,24 +6833,6 @@
   },
   {
     "candidate": {
-      "title": "Utöka den allmänna förskolan till 30 timmar i veckan",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Vi vill utöka den allmänna förskolan från 15 till 30 timmar i veckan, med ett första steg till 20 timmar.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/skola/",
-    "articleTitle": "Miljöpartiets skol- och utbildningspolitik",
-    "duplicateOf": "p-2026-0860",
-    "duplicateReason": "samma tal: 15 till"
-  },
-  {
-    "candidate": {
       "title": "Staten ska ta större ansvar för skolans finansiering",
       "parties": [
         "mp"
@@ -7740,23 +6983,6 @@
   },
   {
     "candidate": {
-      "title": "Höja barnbidraget med 350 kronor per barn och månad",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Miljöpartiet vill höja barnbidraget med 350 kronor per barn och månad och höja bostadsbidraget med upp till 2 250 kronor i månaden.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/socialforsakringar-och-ekonomisk-trygghet/",
-    "articleTitle": "Miljöpartiets välfärdspolitik",
-    "duplicateOf": "p-2026-0616"
-  },
-  {
-    "candidate": {
       "title": "Införa omvänt Nixregister för telefonförsäljning",
       "parties": [
         "v"
@@ -7829,23 +7055,6 @@
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/digitalisering/bredband",
     "articleTitle": "Bredband | Centerpartiet",
     "duplicateOf": "p-2026-1688"
-  },
-  {
-    "candidate": {
-      "title": "Införa euron i Sverige",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Därför är det självklart för Liberalerna att vi vill ha ett komplett EU-medlemskap – och införa euron i Sverige.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/politik/euron",
-    "articleTitle": "Euron – Liberalerna",
-    "duplicateOf": "p-2026-1184"
   },
   {
     "candidate": {
@@ -7943,23 +7152,6 @@
     "articleUrl": "https://www.mp.se/politik/starkare-skydd-djur-och-natur-hela-listan/",
     "articleTitle": "Starkare skydd för djur och natur – hela listan | Miljöpartiet",
     "verifyReason": "Citatet 'Arbetet med att främja ekojordbruk säkras.' finns ordagrant i källtexten och partitillhörigheten (MP) stämmer. Dock ramar texten in listan som redan genomförda budgetåtgärder för 2021 ('I budgeten för 2021 har Miljöpartiet sett till...'), alltså en beskrivning av tidigare resultat snarare än ett framtidsinriktat vallöfte inför valet 2026. Gränsfall – manuell granskning rekommenderas innan publicering. Inet belopp anges för ekojordbruksåtgärden i texten."
-  },
-  {
-    "candidate": {
-      "title": "Införa euron i Sverige",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Införa euron i Sverige",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/politik/europeiska-unionen",
-    "articleTitle": "Europeiska unionen – Liberalerna",
-    "duplicateOf": "p-2026-1184"
   },
   {
     "candidate": {
@@ -8181,23 +7373,6 @@
   },
   {
     "candidate": {
-      "title": "Säkerställa att alla kan få ett digitalt ID",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Säkerställa att alla kan få ett digitalt ID. Möjligheten att identifiera sig digitalt får inte vara beroende av att man har ett bankkonto.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/digitalisering/hallbar-digitalisering",
-    "articleTitle": "Hållbar digitalisering | Centerpartiet",
-    "duplicateOf": "p-2026-1131"
-  },
-  {
-    "candidate": {
       "title": "Utöka rätten till förskola för barn till föräldralediga och arbetslösa till 30 timmar per vecka",
       "parties": [
         "l"
@@ -8256,23 +7431,6 @@
   },
   {
     "candidate": {
-      "title": "Stärka studenternas ekonomi och trygghet",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Högre studiestöd, bättre bostadsbidrag och mer flexibla regler för fribeloppet ska göra det lättare att kombinera studier med arbete utan att förlora ekonomisk trygghet.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/studentpolitik/",
-    "articleTitle": "Miljöpartiets politik för studenter",
-    "duplicateOf": "p-2026-1852"
-  },
-  {
-    "candidate": {
       "title": "Stärka studenthälsan och det psykiska välbefinnandet",
       "parties": [
         "mp"
@@ -8316,52 +7474,6 @@
     "articleUrl": "https://www.mp.se/politik/studentpolitik/",
     "articleTitle": "Miljöpartiets politik för studenter",
     "duplicateOf": "(denna körning)"
-  },
-  {
-    "candidate": {
-      "title": "5 000 kronor mer kvar i plånboken för vanliga familjer",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Vårt löfte till en vanlig familj är 5 000 kronor mer i månaden, bland annat genom sänkt skatt på arbete med 1 000 kronor i månaden, skattefri kollektivtrafikförmån, jobbat-avdrag som sänker skatten för dem som arbetat hela livet, skattefritt ISK-sparande",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/det-har-handlar-valet-2026-om/",
-    "articleTitle": "Det här handlar valet 2026 om | Moderaterna",
-    "duplicateOf": "p-2026-1354"
-  },
-  {
-    "candidate": {
-      "title": "Mängdrabatten för brottslingar ska bort",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Mängdrabatten för brottslingar ska bort.",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/nyhet/det-har-handlar-valet-2026-om/",
-    "articleTitle": "Det här handlar valet 2026 om | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 400,
-      "msek_base": 650,
-      "msek_high": 1000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Avser statens merkostnad för fler fängelseår, ej samhällsföljder. Baserat på jämförbara löften om slopad mängdrabatt.",
-      "confidence": 0.5,
-      "calculation": "~1 000–1 500 fler fängelseår/år × ~400–700 tkr per platsår ≈ 400–1 000 mkr. Bas 650 mkr enligt jämförbara löften."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0313 (650), p-2026-0998 (30), p-2026-0709 (650), p-2026-0743 (650), p-2026-0462 (650)"
   },
   {
     "candidate": {
@@ -8454,35 +7566,6 @@
       "calculation": "Antagande: utredning (SOU-liknande) 5–15 mkr + eventuell implementeringskostnad 0–15 mkr ≈ 5–30 mkr."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Införa språkkrav för all pedagogisk personal i förskolan",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Vi vill därför införa språkkrav för all pedagogisk personal i förskolan.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/forskola/",
-    "articleTitle": "Förskola | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 200,
-      "msek_high": 400,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Avser kostnad för språkutbildning och testning av befintlig personal; nyrekryteringar påverkas ej. Jämför med p-2026-0072 (200 msek/år).",
-      "confidence": 0.4,
-      "calculation": "Antag ~70 000 pedagogisk personal i förskolan, varav 5–10 % behöver utbildning (3 500–7 000). Kostnad per person: test 1–2 tkr + utbildning 20–50 tkr ≈ 25–50 tkr. Totalt: 3 500×25 tkr=87,5 mkr; 7 000×50 tkr=350 mkr. Bas 200 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0392 (2200), p-2026-1492 (0), p-2026-0072 (200), p-2026-1493 (2200), p-2026-1436 (2200) ⚠ AVVIKER: 200 avviker 11.0× från jämförbara (median 2200)"
   },
   {
     "candidate": {
@@ -8976,23 +8059,6 @@
   },
   {
     "candidate": {
-      "title": "Vanlig tvåbarnsfamilj ska få ytterligare 5 000 kronor mer i plånboken",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Människor som går till jobbet och gör rätt för sig ska få mer pengar i plånboken, därför vill vi se till att en vanlig tvåbarnsfamilj ska få ytterligare 5 000 kronor mer i plånboken under kommande mandatperiod.",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/inflation/",
-    "articleTitle": "Inflation | Moderaterna",
-    "duplicateOf": "p-2026-1354"
-  },
-  {
-    "candidate": {
       "title": "Hålla inflationen låg",
       "parties": [
         "m"
@@ -9082,27 +8148,6 @@
       "calculation": "Regeländring utan direkt transferering; kostnad främst administrativ. Jämförbart program (p-2026-1059) kostar 25 mkr/år, men detta är smalare. Antar 0–25 mkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1059 (25), p-2026-0527 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~12.5"
-  },
-  {
-    "candidate": {
-      "title": "Anpassa skatte- och trygghetssystemen för äldre",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "anpassa skatte- och trygghetssystemen",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [
-      {
-        "gate": "G3",
-        "reason": "Citatet har 4 ord — minst 5 krävs (kortare tillåts bara om citatet är en hel, unik punkt på partiets egen sida)"
-      }
-    ],
-    "articleUrl": "https://www.liberalerna.se/politik/alderism",
-    "articleTitle": "Ålderism – Liberalerna"
   },
   {
     "candidate": {
@@ -9314,24 +8359,6 @@
   },
   {
     "candidate": {
-      "title": "Implementera EU-regler på miniminivå",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Vi vill att EU-direktiv implementeras på miniminivå för att undvika överreglering och onödig byråkrati som skadar konkurrenskraften.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/jordbruk-2/",
-    "articleTitle": "Jordbruk | Moderaterna",
-    "duplicateOf": "p-2026-1735",
-    "duplicateReason": "samma uttryck: «direkt implem», «undvik överre», «överre onödig»"
-  },
-  {
-    "candidate": {
       "title": "Stötta fossilfri omställning inom jordbruket",
       "parties": [
         "m"
@@ -9358,35 +8385,6 @@
       "calculation": "Ingen konkret åtgärd eller nivå anges. Skattebefrielse för biodrivmedel är redan införd; eventuell förlängning innebär ingen ny kostnad. Produktion av fossilfri mineralgödsel är en regelfråga utan direkt statsfinansiell effekt. Därför sätts base till 0."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1859 (0), p-2026-0342 (0), p-2026-1285 (0), p-2026-1429 (500), p-2026-1522 (75)"
-  },
-  {
-    "candidate": {
-      "title": "Öka Sveriges självförsörjning genom stärkt konkurrenskraft",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Vi vill öka Sveriges självförsörjning genom att stärka svensk konkurrenskraft i lantbruket.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/jordbruk-2/",
-    "articleTitle": "Jordbruk | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning.",
-      "confidence": 0.1,
-      "calculation": "Ingen specifik reform, nivå eller målgrupp anges. Löftet är en allmän målsättning om stärkt konkurrenskraft i lantbruket, vilket faller under regel 13 (brett sammanfattningslöfte)."
-    },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1487 (400), p-2026-1758 (0), p-2026-1766 (0), p-2026-1211 (0)"
   },
   {
     "candidate": {
@@ -9419,35 +8417,6 @@
   },
   {
     "candidate": {
-      "title": "Moderaterna vill fortsätta bygga ut fossilfri elproduktion med fokus på ny kärnkraft",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Moderaterna vill fortsätta bygga ut den fossilfria elproduktionen med fokus på ny kärnkraft, inklusive små modulära reaktorer (SMR), samtidigt som vattenkraft, vindkraft och kraftvärme bidrar utifrån sina styrkor.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/karnkraft-2/",
-    "articleTitle": "Kärnkraft | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet är ett inriktningslöfte utan konkret åtgärd eller belopp; kostnader för kärnkraftsutbyggnad prissätts på specifika löften.",
-      "confidence": 0.1,
-      "calculation": "Ingen konkret åtgärd eller nivå anges; bred uppräkning av teknikslag. Därför sätts base till 0 för att undvika dubbelräkning med specifika kärnkraftslöften."
-    },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1412 (200), p-2026-0342 (0), p-2026-0153 (2000), p-2026-1750 (0), p-2026-0109 (2000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~200"
-  },
-  {
-    "candidate": {
       "title": "Öka satsningarna på investeringsstödet Kraftlyftet för lokal energiproduktion",
       "parties": [
         "m"
@@ -9474,35 +8443,6 @@
       "calculation": "Jämförbara löften: 75–1000 mkr/år. Kraftlyftet är ett riktat stöd; antar 200–500 mkr/år som rimlig satsning, med lägre spann 100 mkr för smalare variant."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0405 (200), p-2026-0822 (0), p-2026-0415 (1000), p-2026-1674 (75), p-2026-1622 (100)"
-  },
-  {
-    "candidate": {
-      "title": "Fullfölja straffreformen med ytterligare skärpningar och slopad mängdrabatt",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Fullfölja straffreformen med ytterligare skärpningar och slopad mängdrabatt.",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/kriminalitet/",
-    "articleTitle": "Kriminalitet | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 650,
-      "msek_base": 650,
-      "msek_high": 1300,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Beloppet avser statens kostnader för längre fängelsestraff (Kriminalvården) och rättsväsendet. Baserat på jämförbara löften om slopad mängdrabatt, men med osäkerhet för ytterligare skärpningar.",
-      "confidence": 0.5,
-      "calculation": "Jämförbara löften anger 650 mkr/år för slopad mängdrabatt. 'Ytterligare skärpningar' kan öka kostnaden, men omfattningen är oklar. Spann: 650–1300 mkr/år, base 650 mkr/år."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0462 (650), p-2026-0313 (650), p-2026-0743 (650), p-2026-0709 (650)"
   },
   {
     "candidate": {
@@ -9722,53 +8662,6 @@
   },
   {
     "candidate": {
-      "title": "Stärka brottsoffrets ställning genom att ge ersättning direkt från staten",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Stärka brottsoffrets ställning genom att underlätta för brottsoffer att få sitt skadestånd (bland annat genom att ge ersättning direkt från staten som i sin tur får driva in pengarna från gärningspersonen), möjliggöra mer utmätning till förmån för brottsoffer, stärka rätten",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/lag-och-ordning-2/",
-    "articleTitle": "Lag och ordning | Moderaterna",
-    "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma uttryck: «brotts stärka», «stärka brotts», «brotts ställn»"
-  },
-  {
-    "candidate": {
-      "title": "Öka den svenska livsmedelsproduktionen",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Öka den svenska livsmedelsproduktionen",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/livsmedel/",
-    "articleTitle": "Livsmedel | Moderaterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; behandlas som inriktningslöfte enligt regel 13.",
-      "confidence": 0.1,
-      "calculation": "Ingen specifik åtgärd, nivå eller målgrupp anges. Löftet är en bred målsättning; kostnaderna prissätts på partiets specifika förslag."
-    },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1452 (0), p-2026-1487 (400), p-2026-0515 (500), p-2026-1296 (0), p-2026-1758 (0)"
-  },
-  {
-    "candidate": {
       "title": "Bygga upp beredskapslager av strategiska livsmedelsvaror",
       "parties": [
         "m"
@@ -9844,23 +8737,6 @@
   },
   {
     "candidate": {
-      "title": "Slopa mängdrabatten för brottslingar",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "vi vill slopa dagens mängdrabatt och vi kommer se till att förslagen genomförs under nästa mandatperiod",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/mangdrabatt/",
-    "articleTitle": "Mängdrabatt | Moderaterna",
-    "duplicateOf": "p-2026-0313"
-  },
-  {
-    "candidate": {
       "title": "Minska regelbördan för bönder med minst 25 procent",
       "parties": [
         "m"
@@ -9890,35 +8766,6 @@
   },
   {
     "candidate": {
-      "title": "Behålla låga bränslepriser",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Moderaterna vill behålla låga bränslepriser.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/matpriser/",
-    "articleTitle": "Matpriser | Moderaterna",
-    "cost": {
-      "type": "intäktsminskning",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller nivå; prissätts som noll för att undvika dubbelräkning.",
-      "confidence": 0.1,
-      "calculation": "Ingen specifik reform angiven; ingen kostnad kan beräknas."
-    },
-    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1153 (0)"
-  },
-  {
-    "candidate": {
       "title": "Förlänga sänkt matmoms vid behov",
       "parties": [
         "m"
@@ -9945,24 +8792,6 @@
       "calculation": "KD:s engångssänkning kostar 21 250 mkr. M:s förslag är en förlängning av en redan existerande sänkning, vilket ger en årlig kostnad. Antag att den årliga kostnaden är 10–20 mdkr, med bas 15 mdkr, beroende på varaktighet och omfattning."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0658 (21250)"
-  },
-  {
-    "candidate": {
-      "title": "Ge tvåbarnsfamilj 5000 kronor mer i plånboken",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Moderaterna vill se till att en vanlig tvåbarnsfamilj ska få ytterligare 5 000 kronor mer i plånboken under kommande mandatperiod.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/matpriser/",
-    "articleTitle": "Matpriser | Moderaterna",
-    "duplicateOf": "p-2026-0597",
-    "duplicateReason": "samma tal: 5 kronor · samma uttryck: «ytterl kronor», «kronor plånbo»"
   },
   {
     "candidate": {
@@ -10146,24 +8975,6 @@
   },
   {
     "candidate": {
-      "title": "Satsa på avancerad vattenrening",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Vi vill satsa ytterligare på forskning och utveckling samt utbyggnad av avancerad vattenrening.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/ostersjon/",
-    "articleTitle": "Östersjön | Moderaterna",
-    "duplicateOf": "(denna körning)",
-    "duplicateReason": "samma uttryck: «utveck utbygg», «utbygg avance», «avance vatten»"
-  },
-  {
-    "candidate": {
       "title": "Stärka det småskaliga fisket",
       "parties": [
         "m"
@@ -10222,23 +9033,6 @@
   },
   {
     "candidate": {
-      "title": "Bygga ut systemet med ordningsvakter och kommunala säkerhetsvakter",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Bygga ut systemet med ordningsvakter och kommunala säkerhetsvakter som ett komplement till polisen.",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/overvakning/",
-    "articleTitle": "Övervakning | Moderaterna",
-    "duplicateOf": "(denna körning)"
-  },
-  {
-    "candidate": {
       "title": "Bistånd ska uppgå till 1% av BNI",
       "parties": [
         "s"
@@ -10253,41 +9047,6 @@
     "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/bistand",
     "articleTitle": "Bistånd\n| Socialdemokraterna",
     "duplicateOf": "p-2026-0410"
-  },
-  {
-    "candidate": {
-      "title": "Fokus på kvinnor och flickors rättigheter",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Att utvecklingssamarbetet ska ha ett särskilt fokus på jämställdhet och kvinnors och flickors fulla åtnjutande av mänskliga rättigheter, inklusive sexuell och reproduktiv hälsa och rättigheter (SRHR).",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/bistand",
-    "articleTitle": "Bistånd\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-1778",
-    "duplicateReason": "samma uttryck: «sexuel reprod», «reprod hälsa», «hälsa rättig», «rättig srhr»"
-  },
-  {
-    "candidate": {
-      "title": "Stärka rätten till självbestämmande över stöd, service och personlig assistans",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Stärka rätten till självbestämmande över stöd, service och personlig assistans.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/diskriminering/funktionsratt",
-    "articleTitle": "Funktionsrätt | Centerpartiet",
-    "duplicateOf": "p-2026-1852"
   },
   {
     "candidate": {
@@ -10424,24 +9183,6 @@
   },
   {
     "candidate": {
-      "title": "Tillåta fler än två vårdnadshavare och göra altruistiskt surrogatmödraskap lagligt",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Värna möjligheterna för personer med olika sexuell läggning att bilda familj till exempel genom att tillåta fler än två vårdnadshavare och göra altruistiskt surrogatmödraskap lagligt.",
-      "category": "övrigt",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/diskriminering/hbtqi",
-    "articleTitle": "HBTQI | Centerpartiet",
-    "duplicateOf": "p-2026-1151",
-    "duplicateReason": "samma uttryck: «vårdna altrui», «surrog laglig»"
-  },
-  {
-    "candidate": {
       "title": "Stärka resurserna till polisen för att utreda hatbrott och förbjuda omvändelseförsök",
       "parties": [
         "c"
@@ -10523,40 +9264,6 @@
     "articleUrl": "https://moderaterna.se/var-politik/personlig-assistans/",
     "articleTitle": "Personlig assistans | Moderaterna",
     "duplicateOf": "p-2026-0447"
-  },
-  {
-    "candidate": {
-      "title": "Främja välfärdsteknik för personer med funktionsnedsättning",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Moderaterna vill främja utveckling och användning av välfärdsteknik för att förbättra möjligheterna för personer med funktionsnedsättning att leva självständigt.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/personlig-assistans/",
-    "articleTitle": "Personlig assistans | Moderaterna",
-    "duplicateOf": "p-2026-0447"
-  },
-  {
-    "candidate": {
-      "title": "Sänka skatten för låg- och medelinkomsttagare",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Sänka skatten för vanligt folk, särskilt för dem med låga inkomster.",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/ekonomi-och-skatter",
-    "articleTitle": "Ekonomi och skatter | Centerpartiet",
-    "duplicateOf": "p-2026-0056"
   },
   {
     "candidate": {
