@@ -1,0 +1,149 @@
+# Prissätter kö-poster som aldrig fick någon kostnad.
+#
+# Två jobb, med flit åtskilda — samma uppdelning och samma skäl som
+# calculation-backfill.yml:
+#   prissatt  — långt (LLM). Kör estimaten, laddar upp datat som artifact.
+#               Pushar INGENTING (behöver ingen token som kan hinna löpa ut).
+#   commit    — kort. Mintar en FÄRSK bot-token, hämtar artifacten och pushar.
+#
+# SKILLNADEN MOT calculation-backfill: den här rör aldrig promises.json. Den
+# skriver kostnaden PÅ KÖ-POSTEN, och en människa godkänner fortfarande varje
+# löfte. Ett estimat fästs bara om `provaUtrakningen` inte har någon invändning;
+# resten hamnar i data/ko_prissattning_anmarkningar.json för läsning.
+#
+# Börja med sample=10, dry_run=true för att kalibrera.
+name: ko-prissattning
+on:
+  workflow_dispatch:
+    inputs:
+      sample:
+        description: "Antal slumpade kö-poster (ignoreras om 'all' = true)"
+        type: string
+        default: "10"
+      all:
+        description: "Kör ALLA kö-poster utan kostnad"
+        type: boolean
+        default: false
+      dry_run:
+        description: "Torrkörning (rapportera enbart, skriv inget)"
+        type: boolean
+        default: true
+      seed:
+        description: "Slumpfrö (för återupprepbart urval)"
+        type: string
+        default: "1"
+      rounds:
+        description: "Antal varv — poster som föll bort på misslyckade API-anrop får en ny chans"
+        type: string
+        default: "3"
+      source_run_id:
+        description: "Applicera EN TIDIGARE körnings dataartifact i stället för att räkna om (hoppar prissatt-jobbet)"
+        type: string
+        default: ""
+permissions:
+  contents: write
+  actions: read
+# Delar concurrency-grupp med pipeline.yml: en prissättning och en ordinarie
+# körning får aldrig skriva needs_review.json samtidigt.
+concurrency: { group: pipeline, cancel-in-progress: false }
+jobs:
+  prissatt:
+    if: ${{ inputs.source_run_id == '' }}
+    runs-on: ubuntu-latest
+    # Under GitHubs hårda sextimmarstak, av samma skäl som backfillen: slås
+    # taket dödas jobbet direkt och uppladdningsstegen hoppas över.
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Prissätt kö-posterna
+        working-directory: pipeline
+        env:
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          LLM_FALLBACK_BASE_URL: ${{ vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL }}
+          LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+          MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
+        run: |
+          FLAGS="--seed=${{ inputs.seed }} --rounds=${{ inputs.rounds }}"
+          if [ "${{ inputs.all }}" = "true" ]; then FLAGS="$FLAGS --all"; else FLAGS="$FLAGS --sample=${{ inputs.sample }}"; fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then FLAGS="$FLAGS --dry-run"; fi
+          echo "Kör: pnpm ko:prissatt -- $FLAGS"
+          pnpm ko:prissatt --silent -- $FLAGS | tee ../ko-prissattning-rapport.txt
+      # always(): laddar upp ÄVEN när steget avbryts eller failar. Skriptet
+      # checkpointar löpande, så det som ligger på disk är komplett och giltigt.
+      - name: Ladda upp rapport
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ko-prissattning-rapport
+          path: ko-prissattning-rapport.txt
+      - name: Ladda upp data (skarp körning)
+        if: ${{ always() && inputs.dry_run == false }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ko-prissattning-data
+          path: |
+            data/needs_review.json
+            data/ko_prissattning_anmarkningar.json
+          if-no-files-found: ignore
+
+  commit:
+    needs: prissatt
+    # Även ett AVBRUTET jobb ska committas: skriptet checkpointar löpande, så
+    # artefakten bär giltigt arbete för de poster som hanns med.
+    if: ${{ always() && (inputs.source_run_id != '' || (inputs.dry_run == false && needs.prissatt.result != 'skipped')) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint bot app token (färsk, strax före push)
+        id: token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          token: ${{ steps.token.outputs.token }}
+          persist-credentials: true
+      - name: Hämta dataartifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ko-prissattning-data
+          path: artifact-data
+          run-id: ${{ inputs.source_run_id != '' && inputs.source_run_id || github.run_id }}
+          github-token: ${{ github.token }}
+      - name: Applicera och pusha
+        run: |
+          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          for f in needs_review.json ko_prissattning_anmarkningar.json; do
+            src="$(find artifact-data -name "$f" | head -1)"
+            [ -n "$src" ] && cp "$src" "data/$f" && echo "applicerade data/$f"
+          done
+          git add -A data/
+          if git diff --cached --quiet; then
+            echo "Inga ändringar — inget att committa."
+            exit 0
+          fi
+          SRC="${{ inputs.source_run_id != '' && inputs.source_run_id || github.run_id }}"
+          git commit -m "data: kö-prissättning (artifact från run $SRC)"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push; then
+              echo "Push lyckades (försök $attempt)."
+              exit 0
+            fi
+            echo "Push-försök $attempt misslyckades. Försöker igen..."
+            sleep $((attempt * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1

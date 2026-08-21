@@ -357,6 +357,55 @@ function gateG4(candidate: ExtractionCandidate, article: NormalizedArticle, now:
   return failures;
 }
 
+/* ─────────────────────────────────── G4b: källan hör till ett tidigare val ── */
+
+/** Valåret sajten granskar. Speglas av `VALAR` i fetch.ts. */
+const GRANSKAT_VALAR = 2026;
+
+/**
+ * Ord som gör en adresspost till ett DOKUMENT eller en BUDGETPERIOD, inte till
+ * ett datum. Det är skillnaden som avgör: `/nyheter/2025-11-03-…` är en
+ * nyhet från i höstas och kan mycket väl bära ett löfte, medan
+ * `/valplattform-2022-2/` och `/…-i-budgeten-2021-hela-listan/` namnger vilket
+ * val respektive vilken budget innehållet gäller.
+ */
+const DOKUMENTORD = /(valplattform|valmanifest|valprogram|handlingsprogram|manifest|budget)/iu;
+
+/**
+ * Sant om adressen SJÄLV säger att innehållet hör till ett tidigare val eller
+ * en tidigare budget.
+ *
+ * Kravet är att dokumentordet och årtalet står i SAMMA adresspost. Ett årtal
+ * ensamt räcker inte — partiernas nyheter har datum i adressen, och en nyhet
+ * från 2025 ligger väl inom G4:s fönster. Ett dokumentord ensamt räcker inte
+ * heller: `/valmanifest/` utan år är årets manifest.
+ *
+ * MÄTT, INTE BEFARAT. Kontrollen fanns redan som `harForegaendeValsAr`, men
+ * bara inne i jakten på manifest-PDF:er — en vanlig HTML-sida mötte den
+ * aldrig. Följden: Miljöpartiets lista över vad partiet fick igenom i
+ * BUDGETEN FÖR 2021 (sidan skriven 2020-09-21) och Vänsterpartiets
+ * VALPLATTFORM 2022 skördades som löften inför valet 2026. G4:s datumfönster
+ * såg dem inte, för `datumUrHtml` låter uppdateringsdatumet gå före
+ * skapandedatumet, och båda sidorna hade rörts om 2026. Ett av löftena
+ * publicerades: p-2026-2142, 150 mkr/år, indraget 2026-08-21. Tjugotvå poster
+ * till låg i kön.
+ */
+export function kallanHorTillTidigareVal(url: string): boolean {
+  let poster: string[];
+  try {
+    poster = new URL(url).pathname.split("/");
+  } catch {
+    return false;
+  }
+  for (const post of poster) {
+    if (!DOKUMENTORD.test(post)) continue;
+    // Årtalet måste stå som ett eget tal, inte inuti en lång sifferkedja.
+    const ar = [...post.matchAll(/(?<![0-9])(?:19|20)\d{2}(?![0-9])/gu)].map((m) => Number(m[0]));
+    if (ar.length > 0 && Math.max(...ar) < GRANSKAT_VALAR) return true;
+  }
+  return false;
+}
+
 /* ───────────────────────────────────────────────── Orkestrering: runGates ── */
 
 /**
@@ -365,9 +414,11 @@ function gateG4(candidate: ExtractionCandidate, article: NormalizedArticle, now:
  * Exekveringsordning (rapporterade grind-id följer alltid specens namn):
  *  1. G2 (artikelnivå) — otillåten källa fäller allt; kandidatinnehåll spelar
  *     då ingen roll.
- *  2. G5 (artikelnivå) — belopps-/spambomb: fler än 5 kandidater fäller hela
+ *  2. G4b (artikelnivå) — adressen namnger ett tidigare val eller en tidigare
+ *     budget; sidan bär inga löften för det här valet.
+ *  3. G5 (artikelnivå) — belopps-/spambomb: fler än 5 kandidater fäller hela
  *     artikeln INNAN någon kandidat processas vidare.
- *  3. Per kandidat: G1 → (G3, G4). Alla fallerande grindar samlas (bättre
+ *  4. Per kandidat: G1 → (G3, G4). Alla fallerande grindar samlas (bättre
  *     underlag i review-issuet) men G3/G4 kräver schema-giltig kandidat (G1).
  */
 export function runGates(
@@ -385,7 +436,19 @@ export function runGates(
   const [g2Failure] = gateG2(article, ctx.allowlist);
   if (g2Failure) return sendAllToReview(g2Failure);
 
-  // 2. G5 — artikelnivå.
+  // 2. G4b — artikelnivå. En sida som själv säger vilket tidigare val eller
+  //    vilken tidigare budget den gäller bär inga löften för det här valet, och
+  //    då spelar kandidatinnehållet ingen roll.
+  if (kallanHorTillTidigareVal(article.url)) {
+    return sendAllToReview({
+      gate: "G4",
+      reason:
+        `Adressen ${article.url} namnger ett tidigare val eller en tidigare budget — ` +
+        `sajten granskar valet ${GRANSKAT_VALAR}`,
+    });
+  }
+
+  // 3. G5 — artikelnivå.
   if (candidates.length > MAX_PROMISES_PER_ARTICLE) {
     return sendAllToReview({
       gate: "G5",
@@ -393,7 +456,7 @@ export function runGates(
     });
   }
 
-  // 3. Per kandidat. Domänen är redan kanoniserad och godkänd av G2 ovan —
+  // 4. Per kandidat. Domänen är redan kanoniserad och godkänd av G2 ovan —
   //    samma kanon används här, så "www." inte gör en partisida till en
   //    främmande domän.
   const domanResultat = canonicalDomain(article.url);

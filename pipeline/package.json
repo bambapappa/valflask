@@ -32,7 +32,8 @@
     "datumgrind:om": "node --import tsx/esm scripts/datumgrind-omprovning.mts",
     "film:arkiv": "node --import tsx/esm scripts/film-arkiv.mts",
     "ankarsvepet": "node --import tsx/esm scripts/ankarsvepet.mts",
-    "gront": "node --import tsx/esm scripts/gront.mts"
+    "gront": "node --import tsx/esm scripts/gront.mts",
+    "ko:prissatt": "node --import tsx/esm scripts/ko-prissattning.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1",
