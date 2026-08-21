@@ -402,6 +402,7 @@ export function approve(
   let calculationFlag: string | undefined;
   let typFlag: string | undefined;
   let periodFlag: string | undefined;
+  let noteFlag: string | undefined;
   let basisFlag: string | undefined;
   let basisUrlFlag: string | undefined;
   const args: string[] = [];
@@ -432,6 +433,15 @@ export function approve(
     }
     if (a.startsWith("--typ=")) {
       typFlag = a.slice("--typ=".length);
+      continue;
+    }
+    if (a === "--note") {
+      noteFlag = rawArgs[i + 1];
+      i++;
+      continue;
+    }
+    if (a.startsWith("--note=")) {
+      noteFlag = a.slice("--note=".length);
       continue;
     }
     if (a === "--period") {
@@ -554,7 +564,20 @@ export function approve(
       // aldrig kö-postens gamla etikett.
       basis: basisFlag ?? "granskare",
       basis_url: basisUrlFlag ?? (basisFlag ? null : cost?.basis_url ?? null),
-      method_note: (utanHaveritext(cost?.method_note ?? "") + " (belopp satt av granskare)").trim(),
+      // Noten beskriver hur beloppet kommit till, och den måste beskriva DET
+      // belopp som står bredvid.
+      //
+      // Samma regel som för uträkningen, av samma skäl — men den fanns bara för
+      // uträkningen. Kö-postens note ärvdes rakt av, så när granskaren satte ett
+      // nytt belopp följde beskrivningen av det gamla med. Sju löften som sattes
+      // till noll 2026-08-21 bar noter som «prissatt som statens stödandel …»
+      // och «kostnad = ersättning/markinköp … fördelat på ~10 år» — intill en
+      // nolla. Läsaren möter då en förklaring av ett belopp som inte står där.
+      //
+      // Nu: den som sätter beloppet skriver noten själv med --note, annars står
+      // bara att en människa satt det. Uträkningen bär resonemanget och är
+      // obligatorisk, så ingenting går förlorat.
+      method_note: noteFlag ? `${noteFlag.trim()} (belopp satt av granskare)` : "(belopp satt av granskare)",
       ...(calculation ? { calculation } : {}),
       confidence: 0.9,
     };
@@ -576,6 +599,21 @@ export function approve(
   // Tre löften gick den vägen, och alla tre visade sig vara fel när de lästes.
   // Kontrollen låg tidigare som en varning i den ena grenen och missade därför
   // just den väg posterna faktiskt tog.
+  // Taket gällde bara `--calc`, som kapas vid MAX_CALCULATION. En ÄRVD
+  // uträkning gick förbi: kö-posten p-2026-2209 publicerades med 803 tecken och
+  // fälldes först av schemaprovet, efter att löftet redan låg i promises.json.
+  // Kapa inte — en avhuggen uträkning slutar mitt i ett led och blir omöjlig att
+  // följa. Säg ifrån, så att en människa kortar den med förståndet i behåll.
+  if ((cost.calculation ?? "").length > MAX_CALCULATION) {
+    console.error(
+      `Uträkningen är ${(cost.calculation ?? "").length} tecken; taket är ${MAX_CALCULATION}.\n` +
+        "Den visas publikt på löftessidan och schemat vägrar längre text.\n\n" +
+        `  pnpm review approve ${index} <low> <base> <high> --calc "…"\n\n` +
+        "Korta den så att varje led står kvar — kapa den inte på mitten.",
+    );
+    process.exit(1);
+  }
+
   if (((cost.calculation ?? "").trim()) === "") {
     console.error(
       "Uträkningen saknas, och den visas publikt på löftessidan — ett belopp\n" +
