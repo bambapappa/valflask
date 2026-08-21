@@ -85,6 +85,7 @@ const cliArgs: string[] = [String(index)];
 if (cmd.amounts) cliArgs.push(...cmd.amounts.map(String));
 if (cmd.group) cliArgs.push("--group", cmd.group);
 if (cmd.costType) cliArgs.push("--typ", cmd.costType);
+if (cmd.period) cliArgs.push("--period", cmd.period);
 // Texten efter kommandoraden blir uträkningen bakom beloppet och visas publikt.
 if (cmd.calculation) cliArgs.push("--calc", cmd.calculation);
 

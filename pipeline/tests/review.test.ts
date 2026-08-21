@@ -324,6 +324,160 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
     }
   });
 
+  /**
+   * Perioden ska beskriva det belopp som står bredvid den.
+   *
+   * Ett parti som anger en summa över tio eller femton år levererar en kö-post
+   * med `period: "engang"`. Ärvs den rakt av bokförs hela summan i det
+   * fyraåriga fönstret: Vänsterpartiets 700 miljarder över tio år och
+   * Miljöpartiets 150 miljarder över femton–tjugo år stod bägge så, alltså 536
+   * miljarder som aldrig hörde hemma i mandatperioden. Att räkna om till en
+   * årstakt kräver att perioden byts i SAMMA steg som beloppet.
+   */
+  it("perioden följer beloppet — en tioårssumma blir en årstakt, inte ett engångsbelopp", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-period-"));
+    try {
+      // Kö-posten som partiet levererar den: hela tioårssumman, som en gång.
+      const tioarssumma: ReviewCandidate = {
+        ...queueItem,
+        cost: { ...queueItem.cost!, period: "engang", msek_low: 525_000, msek_base: 700_000, msek_high: 945_000 },
+      };
+      const badda = (cost: Record<string, unknown>) => {
+        writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+        writeFileSync(join(dir, "needs_review.json"), JSON.stringify([tioarssumma]));
+        writeFileSync(join(dir, "changelog.json"), JSON.stringify([]));
+        writeFileSync(join(dir, "provningar.json"), JSON.stringify({
+          poster: [{
+            id: konyckel(tioarssumma.articleUrl, tioarssumma.candidate!.quote),
+            slag: "lofte", datum: "2026-08-21", utfall: "haller",
+            underlag_hash: kanon("lofte", {
+              quote: tioarssumma.candidate!.quote, title: tioarssumma.candidate!.title,
+              parties: tioarssumma.candidate!.parties, status: "aktiv", group_id: null,
+              source: { url: tioarssumma.articleUrl }, cost,
+            }),
+          }],
+        }));
+      };
+      const calc = "700 miljarder över tio år ger 70 000 miljoner kronor per år.";
+      badda({ type: "utgift", period: "per_ar", msek_low: 52_500, msek_base: 70_000, msek_high: 94_500,
+              basis: "granskare", calculation: calc });
+
+      approve(["0", "52500", "70000", "94500", "--period", "per_ar", "--calc", calc], dir);
+
+      const promises = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8")) as Array<{ cost: { period: string; msek_base: number } }>;
+      const publicerat = promises.find((x) => x.cost.msek_base === 70_000)!;
+      assert.equal(publicerat.cost.period, "per_ar",
+        "perioden är den granskaren angav, inte kö-postens engang");
+      // Det är summan över mandatperioden som felet handlade om: 280 miljarder,
+      // inte 700. Utan flaggan blir talet 700 000 gånger ett.
+      assert.equal(publicerat.cost.msek_base * 4, 280_000);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("en okänd period stoppar godkännandet i stället för att tyst ärva kö-postens", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-period-fel-"));
+    try {
+      writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+      writeFileSync(join(dir, "needs_review.json"), JSON.stringify([queueItem]));
+      writeFileSync(join(dir, "changelog.json"), JSON.stringify([]));
+      writeFileSync(join(dir, "provningar.json"), JSON.stringify({ poster: [] }));
+      const r = spawnSync(
+        process.execPath,
+        ["--import", "tsx/esm", "-e",
+         `import {approve} from ${JSON.stringify(join(import.meta.dirname, "../src/review.ts"))};` +
+         `approve(["0","1","1","1","--calc","x","--period","per_år"], ${JSON.stringify(dir)});`],
+        { encoding: "utf8" },
+      );
+      assert.notEqual(r.status, 0, "okänd period ska stoppa godkännandet");
+      assert.match((r.stdout ?? "") + (r.stderr ?? ""), /Okänd period/u);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  /**
+   * Ett löfte är partiets eget ord ur partiets egen källa.
+   *
+   * Kö-posten «Socialdemokraterna lovar att införa bolåneskatt» låg på
+   * moderaterna.se — Moderaternas kampanjsida OM Socialdemokraterna. Citatet är
+   * motståndarens beskrivning, och posten var på väg att publiceras som ett
+   * socialdemokratiskt löfte på 9 000 miljoner kronor per år. `failures` var tom:
+   * ingen grind tittade på vems sajt källan låg på.
+   */
+  it("vägrar publicera ett löfte vars källa ligger på ett annat partis sajt", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-motpart-"));
+    try {
+      const motpartskalla: ReviewCandidate = {
+        ...queueItem,
+        articleUrl: "https://moderaterna.se/var-politik/bolaneskatt/",
+        articleTitle: "Bolåneskatt | Moderaterna",
+        candidate: { ...queueItem.candidate!, parties: ["s"], title: "Socialdemokraterna lovar att införa bolåneskatt" },
+      };
+      writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+      writeFileSync(join(dir, "needs_review.json"), JSON.stringify([motpartskalla]));
+      writeFileSync(join(dir, "changelog.json"), JSON.stringify([]));
+      writeFileSync(join(dir, "provningar.json"), JSON.stringify({ poster: [] }));
+      const r = spawnSync(
+        process.execPath,
+        ["--import", "tsx/esm", "-e",
+         `import {approve} from ${JSON.stringify(join(import.meta.dirname, "../src/review.ts"))};` +
+         `approve(["0"], ${JSON.stringify(dir)});`],
+        { encoding: "utf8" },
+      );
+      assert.notEqual(r.status, 0, "motpartens sajt får inte bli partiets löfte");
+      assert.match((r.stdout ?? "") + (r.stderr ?? ""), /Källan tillhör ett annat parti/u);
+      const kvar = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8"));
+      assert.equal(kvar.length, 1, "inget publicerades");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  // Motsatsen måste också hålla: partiets egen sajt stoppas INTE, och en källa
+  // som inte är någon partisajt alls (riksdagen, en tidning) rörs inte heller.
+  it("partiets egen sajt och icke-partisajter passerar grinden", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-egen-kalla-"));
+    try {
+      const badda = (post: ReviewCandidate) => {
+        writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+        writeFileSync(join(dir, "needs_review.json"), JSON.stringify([post]));
+        writeFileSync(join(dir, "changelog.json"), JSON.stringify([]));
+        writeFileSync(join(dir, "provningar.json"), JSON.stringify({
+          poster: [{
+            id: konyckel(post.articleUrl, post.candidate!.quote),
+            slag: "lofte", datum: "2026-08-21", utfall: "haller",
+            underlag_hash: kanon("lofte", {
+              quote: post.candidate!.quote, title: post.candidate!.title,
+              parties: post.candidate!.parties, status: "aktiv", group_id: null,
+              source: { url: post.articleUrl }, cost: post.cost,
+            }),
+          }],
+        }));
+      };
+      const egen: ReviewCandidate = {
+        ...queueItem, articleUrl: "https://moderaterna.se/var-politik/skatter/",
+        candidate: { ...queueItem.candidate!, parties: ["m"] },
+      };
+      badda(egen);
+      approve(["0"], dir);
+      assert.equal(JSON.parse(readFileSync(join(dir, "promises.json"), "utf8")).length, 2,
+        "partiets egen sajt passerar");
+
+      const media: ReviewCandidate = {
+        ...queueItem, articleUrl: "https://www.svt.se/nyheter/valet-2026",
+        candidate: { ...queueItem.candidate!, parties: ["m"] },
+      };
+      badda(media);
+      approve(["0"], dir);
+      assert.equal(JSON.parse(readFileSync(join(dir, "promises.json"), "utf8")).length, 2,
+        "en källa som inte är någon partisajt rörs inte av regeln");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it("en okänd källnivå stoppar godkännandet i stället för att tyst bli något annat", () => {
     const dir = mkdtempSync(join(tmpdir(), "review-basis-fel-"));
     try {

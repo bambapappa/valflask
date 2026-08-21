@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import { computeDataHash, type ChangelogEntry } from "./publish.ts";
 import { konyckel, lasProvningar, provningsGrind } from "./provningar.ts";
 import { avvisa, hav, slaUpp, type Avvisning } from "./avvisningar.ts";
+import { partiForUrl } from "./skordeordning.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -111,6 +112,20 @@ export const KOSTNADSTYPER = [
 export type Kostnadstyp = (typeof KOSTNADSTYPER)[number];
 
 /**
+ * Om beloppet gäller ett år eller en gång — samma lista som `promises.schema.json`.
+ *
+ * Perioden ärvdes förut rakt av från kö-posten och gick inte att sätta. Ett
+ * parti som anger en summa över tio eller femton år får då hela summan bokförd
+ * i ett fyraårigt fönster: Vänsterpartiets 700 miljarder över tio år och
+ * Miljöpartiets 150 miljarder över femton–tjugo stod bägge som `engang`, alltså
+ * 536 miljarder som aldrig hörde hemma i mandatperioden. Att räkna om till en
+ * årstakt kräver att perioden byts i samma steg som beloppet — annars beskriver
+ * fältet en annan sak än siffran bredvid.
+ */
+export const PERIODER = ["per_ar", "engang"] as const;
+export type Period = (typeof PERIODER)[number];
+
+/**
  * Hur förankrat ett belopp är — samma lista som `promises.schema.json`.
  *
  * Ordningen är den metodsidan redovisar för läsaren, mest pålitlig först.
@@ -133,6 +148,7 @@ export type ReviewCommand =
       group?: string;
       calculation?: string;
       costType?: Kostnadstyp;
+      period?: Period;
     }
   | { action: "reject"; reason: string };
 
@@ -142,6 +158,7 @@ export type ReviewCommand =
  *  /godkänn 500 1000 2000         → ja med ändrade belopp (msek: low base high)
  *  /godkänn --group p-2026-0123   → ja, länka som dublett (delad group_id)
  *  /godkänn 0 4500 9000 --typ intäktsminskning → ja, med angiven kostnadstyp
+ *  /godkänn 52500 70000 94500 --period per_ar  → ja, med beloppet omräknat till årstakt
  *  /avvisa <skäl>                 → nej
  * Engelska alias: /approve, /reject. Endast FÖRSTA raden tolkas som kommando.
  * En rad som börjar "Uträkning:" blir uträkningen bakom beloppet och visas
@@ -172,9 +189,14 @@ export function parseReviewCommand(body: string): ReviewCommand | null {
     // på "utgift". Ett skattesänkningslöfte publicerades då som en utgift
     // (rättat på p-2026-0592 och p-2026-0593) — därför kan typen anges här.
     const typMatch = rest.match(/--typ[= ]+(\S+)/u);
+    // Perioden måste bort ur beloppsläsningen på samma sätt som typen: annars
+    // läses «per_ar» som ett tal, blir NaN, och hela kommandot faller till
+    // hjälptext trots att det är riktigt skrivet.
+    const periodMatch = rest.match(/--period[= ]+(\S+)/u);
     const numbers = rest
       .replace(/--group[= ]+\S+/u, "")
       .replace(/--typ[= ]+\S+/u, "")
+      .replace(/--period[= ]+\S+/u, "")
       .trim()
       .split(/\s+/u)
       .filter((s) => s !== "")
@@ -187,6 +209,13 @@ export function parseReviewCommand(body: string): ReviewCommand | null {
       // som gjorde det förra felet osynligt. Oklart kommando ⇒ hjälptext.
       if (!(KOSTNADSTYPER as readonly string[]).includes(typ)) return null;
       cmd.costType = typ as Kostnadstyp;
+    }
+    if (periodMatch) {
+      const period = periodMatch[1]!.toLowerCase();
+      // Samma skäl som för typen: en felstavad period får inte tyst bli den
+      // ärvda. Perioden avgör om beloppet räknas en gång eller fyra.
+      if (!(PERIODER as readonly string[]).includes(period)) return null;
+      cmd.period = period as Period;
     }
     if (numbers.length === 3 && numbers.every((n) => Number.isFinite(n) && n >= 0)) {
       cmd.amounts = [numbers[0]!, numbers[1]!, numbers[2]!];
@@ -366,11 +395,13 @@ export function approve(
   dataDir: string = DATA_DIR,
 ): { id: string; title: string; msekBase: number } {
   // Plocka ut --group <id> / --group=<id> (länkning av dublett), --calc <text>
-  // (uträkningen bakom ett belopp satt för hand) och --typ <kostnadstyp> ur
+  // (uträkningen bakom ett belopp satt för hand), --typ <kostnadstyp> och
+  // --period <per_ar|engang> ur
   // argumenten.
   let linkTo: string | undefined;
   let calculationFlag: string | undefined;
   let typFlag: string | undefined;
+  let periodFlag: string | undefined;
   let basisFlag: string | undefined;
   let basisUrlFlag: string | undefined;
   const args: string[] = [];
@@ -403,6 +434,15 @@ export function approve(
       typFlag = a.slice("--typ=".length);
       continue;
     }
+    if (a === "--period") {
+      periodFlag = rawArgs[i + 1];
+      i++;
+      continue;
+    }
+    if (a.startsWith("--period=")) {
+      periodFlag = a.slice("--period=".length);
+      continue;
+    }
     if (a === "--basis") {
       basisFlag = rawArgs[i + 1];
       i++;
@@ -429,6 +469,32 @@ export function approve(
 
   const item = items[index]!;
   const cand = item.candidate ?? {};
+
+  // Ett löfte måste vara partiets EGET ord ur partiets egen källa.
+  //
+  // Kö-posten «Socialdemokraterna lovar att införa bolåneskatt» var hämtad från
+  // moderaterna.se/var-politik/bolaneskatt/ — Moderaternas kampanjsida OM
+  // Socialdemokraterna. Citatet är motståndarens beskrivning av vad partiet
+  // ska göra, inte något partiet sagt. Den hade publicerats som ett
+  // socialdemokratiskt löfte på 9 000 miljoner kronor per år; ingen grind såg
+  // den, för `failures` var tom.
+  //
+  // Kartan fanns redan, men bara för att fördela skörden. Här avgör den i
+  // stället en publicering: ligger källan på ett annat partis egen domän är
+  // det inte partiets ord. Mätt när regeln skrevs: noll av 2 084 publicerade
+  // löften och ett av 782 kö-poster.
+  const kallansParti = partiForUrl(item.articleUrl ?? "");
+  const tillskrivna: string[] = (cand as { parties?: string[] }).parties ?? [];
+  if (kallansParti && tillskrivna.length > 0 && !tillskrivna.includes(kallansParti)) {
+    console.error(
+      `Källan tillhör ett annat parti. Löftet tillskrivs ${tillskrivna.join("/")}, men\n` +
+        `${item.articleUrl}\nligger på ${kallansParti}:s egen sajt — det är motståndarens\n` +
+        "beskrivning av partiet, inte partiets eget ord.\n\n" +
+        "Hitta partiets egen källa, eller avvisa posten:\n" +
+        `  pnpm review reject ${index} "källan är ett annat partis sajt"`,
+    );
+    process.exit(1);
+  }
 
   // Kostnad: bär med beräknad kostnad; tillåt manuell override <low> <base> <high>.
   let cost: CostShape | null = item.cost ?? null;
@@ -463,9 +529,13 @@ export function approve(
       console.error(`Okänd källnivå: ${basisFlag}. Giltiga: ${BASISVARDEN.join(", ")}.`);
       process.exit(1);
     }
+    if (periodFlag !== undefined && !(PERIODER as readonly string[]).includes(periodFlag)) {
+      console.error(`Okänd period: ${periodFlag}. Giltiga: ${PERIODER.join(", ")}.`);
+      process.exit(1);
+    }
     cost = {
       type: typFlag ?? cost?.type ?? "utgift",
-      period: cost?.period ?? "per_ar",
+      period: periodFlag ?? cost?.period ?? "per_ar",
       msek_low: Math.round(low),
       msek_base: Math.round(base),
       msek_high: Math.round(high),
@@ -809,7 +879,8 @@ switch (command) {
         'Användning: pnpm review approve <post> [low base high] [--calc "uträkningen"]\n' +
           '  <post> är ett review-id (tolv tecken, står i listningen) eller ett index.\n' +
           '  Id:t är det som håller — index flyttar sig när poster ovanför avgörs.\n' +
-          '                    [--typ <kostnadstyp>] [--basis <källnivå>] [--basis-url <adress>]',
+          '                    [--typ <kostnadstyp>] [--period <per_ar|engang>]\n' +
+          '                    [--basis <källnivå>] [--basis-url <adress>]',
       );
       process.exit(1);
     }
@@ -840,6 +911,7 @@ switch (command) {
     console.log("Användning: pnpm review <list|approve|reject|add>");
     console.log("  list                         Visa poster i needs_review");
     console.log("  approve <post> [low base high] [--group p-XXXX]  Godkänn; kostnad; länka dublett");
+    console.log("           [--typ <kostnadstyp>] [--period <per_ar|engang>] [--basis <källnivå>]");
     console.log("  reject <post> <orsak>        Avvisa post\n" +
       "  <post> är ett review-id (tolv tecken ur listningen) eller ett index.\n" +
       "  Skriv id. Index flyttar sig så snart en post ovanför avgörs.");
