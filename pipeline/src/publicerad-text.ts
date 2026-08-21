@@ -28,6 +28,25 @@
 export const INTERN_BETECKNING =
   /p-\d{4}-\d{4}|\bp-\d{4}\b|(?<![\p{L}\p{N}])g-[a-zåäö0-9-]{4,}/giu;
 
+/**
+ * En intern regelkod — «regel 9», «enligt regel 13», «Regel 10 och 13».
+ *
+ * Kostnadsreglerna är numrerade i `prompts/A5-cost.md`, och numret följde med
+ * ut i uträkningen: 90 publicerade löften och 99 köposter hänvisade till en
+ * kod i text som renderas på löftessidan. «Regel 13» säger en utomstående
+ * ingenting — skälet gör det: «citatet är en bred uppräkning utan konkret
+ * åtagande».
+ *
+ * Mönstret är åtskilt från `INTERN_BETECKNING` därför att de fälls med olika
+ * besked. Ett löftesnummer ska bytas mot en beskrivning av löftet; en regelkod
+ * ska bytas mot regelns sakliga innehåll, eller strykas när meningen redan
+ * säger det.
+ *
+ * **Bara siffran räknas.** «Regeln om breda uppräkningslöften» är skriven för
+ * läsaren och ska passera; det är numret som är den interna beteckningen.
+ */
+export const INTERN_REGELKOD = /\b[Rr]egel(?:n)?\s+\d+\b/gu;
+
 export interface LasarensFalt {
   calculation?: string | null;
   method_note?: string | null;
@@ -49,8 +68,10 @@ export function lasarensText(cost: LasarensFalt | null | undefined): Array<[stri
 export function internaBeteckningar(cost: LasarensFalt | null | undefined, id = ""): string[] {
   const ut: string[] = [];
   for (const [falt, text] of lasarensText(cost)) {
-    for (const traff of text.matchAll(INTERN_BETECKNING)) {
-      ut.push(`${id ? id + " " : ""}${falt}: «${traff[0]}»`);
+    for (const monster of [INTERN_BETECKNING, INTERN_REGELKOD]) {
+      for (const traff of text.matchAll(monster)) {
+        ut.push(`${id ? id + " " : ""}${falt}: «${traff[0]}»`);
+      }
     }
   }
   return ut;

@@ -1217,7 +1217,7 @@
       "basis_url": null,
       "method_note": "Uppdragslösning: Svenska kraftnät finansierar nätförstärkningar via nättaxor, inte skattemedel. Beloppet avser direkt kostnad för uppdraget/administration, inte samhällskostnaden för utbyggnaden.",
       "confidence": 0.45,
-      "calculation": "Löftet ger ett statligt bolag ett uppdrag; själva nätförstärkningarna (miljardklass) bärs av Svenska kraftnäts taxor och lån, inte av statsbudgeten. Prissatt enligt regel 9/11: ny statlig nettokostnad ≈ administration av uppdraget, ev. ökad samordning och eventuell mindre kapitalinsats som senare bärs av avgifter: ~0–100 msek, base ~10 msek som engångskostnad. Varken överföring till konsumenter eller verkens anslutningskostnader räknas som statlig utgift."
+      "calculation": "Löftet ger ett statligt bolag ett uppdrag; själva nätförstärkningarna (miljardklass) bärs av Svenska kraftnäts taxor och lån, inte av statsbudgeten. Prissatt eftersom löftet hålls av en lag eller en reglering/11: ny statlig nettokostnad ≈ administration av uppdraget, ev. ökad samordning och eventuell mindre kapitalinsats som senare bärs av avgifter: ~0–100 msek, base ~10 msek som engångskostnad. Varken överföring till konsumenter eller verkens anslutningskostnader räknas som statlig utgift."
     },
     "costReason": "LLM-estimat (confidence 0.45) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -1244,7 +1244,7 @@
       "msek_high": 20,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Lag/regeländring i migrationsrätten — prissatt enligt regel 9: endast direkta kostnader (utredning, lagändring, vägledning), inte samhällseffekter av uteblivna utvisningar.",
+      "method_note": "Lag/regeländring i migrationsrätten — prissatt enligt Löftet hålls av en lag eller en reglering: endast direkta kostnader (utredning, lagändring, vägledning), inte samhällseffekter av uteblivna utvisningar.",
       "confidence": 0.4,
       "calculation": "Åtgärden är en regeländring som stoppar återkallade uppehållstillstånd/utvisningar vid mindre misstag. Direkt statlig kostnad: beredning av lagändring, ev. utredning, ny vägledning och utbildning av handläggare vid Migrationsverket ≈ 2–20 msek engång. Att färre personer utvisas (fler kvarstående tillstånd, ev. välfärdsnytta/kostnad på sikt) är en följd/omfördelning, inte en ny statlig utgift, och lämnas okvantifierad."
     },
@@ -1333,7 +1333,7 @@
       "basis_url": null,
       "method_note": "Regeländring av elområdesindelningen; beloppet avser utredning/beslutsprocess, inte nätförstärkningar eller priseffekter för konsumenter.",
       "confidence": 0.3,
-      "calculation": "Att slå ihop elområden är en regleringsåtgärd: utredning, beslutsprocess hos Svenska kraftnät/Ei samt EU-anpassning ~5–30 mkr engång. Nätförstärkningar som krävs för färre zoner och ändrade priser mellan regioner är följer/omfördelningar, ej ny statlig utgift enligt regel 9, och lämnas okvantifierade."
+      "calculation": "Att slå ihop elområden är en regleringsåtgärd: utredning, beslutsprocess hos Svenska kraftnät/Ei samt EU-anpassning ~5–30 mkr engång. Nätförstärkningar som krävs för färre zoner och ändrade priser mellan regioner är följer/omfördelningar, ej ny statlig utgift eftersom löftet hålls av en lag eller en reglering, och lämnas okvantifierade."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0551 (2000), p-2026-0787 (0), p-2026-0898 (0), p-2026-0335 (0), p-2026-0087 (0) ⚠ AVVIKER: belopp 10 men jämförbara ligger på 0"
   },
@@ -1478,7 +1478,7 @@
       "basis_url": null,
       "method_note": "Sanktioner är regulering: prissatt som marginell kostnad för sanktionsfullföljd/övervakning (bl.a. skuggflottan), ej samhällsekonomiska följder. Avkastning på frysta ryska tillgångar är inte statens…",
       "confidence": 0.3,
-      "calculation": "Löftet hålls genom reglering inom EU/Sverige. Direkt statlig kostnad = marginell förstärkning av tillsmyndigheter (sjöbevakning, tull, polis, sanktionsmyndighet): grovt 0–20 msek/år, base ~5 msek/år. Avkastningen på frysta ryska tillgångar tillfaller inte staten idag; att styra den till Ukraina kostar staten i princip inget netto (eventuell borgens-/juridikpost ingår i spannet). Följder för handel/energi kvantifieras ej enligt regel 9."
+      "calculation": "Löftet hålls genom reglering inom EU/Sverige. Direkt statlig kostnad = marginell förstärkning av tillsmyndigheter (sjöbevakning, tull, polis, sanktionsmyndighet): grovt 0–20 msek/år, base ~5 msek/år. Avkastningen på frysta ryska tillgångar tillfaller inte staten idag; att styra den till Ukraina kostar staten i princip inget netto (eventuell borgens-/juridikpost ingår i spannet). Följder för handel/energi kvantifieras ej eftersom löftet hålls av en lag eller en reglering."
     },
     "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -1507,7 +1507,7 @@
       "basis_url": null,
       "method_note": "Fördubbling av kommunal energirådgivning. Statens stöd idag täcker ca 200-250 rådgivare; extra kostnad = nya rådgivare × full kostnad, med kommunal medfinansiering vägd in.",
       "confidence": 0.45,
-      "calculation": "Utgångspunkt: ca 230 energirådgivare i kommunerna idag. Fördubbling = ca 230 nya. Full kostnad per rådgivare (lön, sociala avgifter, lokaler, material) ~0,7-0,9 mkr/år => brutto ~160-200 mkr/år. Staten betalar via stöd till kommunerna typiskt 50-100 % av kostnaden (resten kommunal medfinansiering enligt regel 11), så statens nya nettokostnad ~60-200 mkr/år. Bas ~120 msek motsvarar ca 230 rådgivare x ~0,8 mkr x ~65 % statlig andel."
+      "calculation": "Utgångspunkt: ca 230 energirådgivare i kommunerna idag. Fördubbling = ca 230 nya. Full kostnad per rådgivare (lön, sociala avgifter, lokaler, material) ~0,7-0,9 mkr/år => brutto ~160-200 mkr/år. Staten betalar via stöd till kommunerna typiskt 50-100 % av kostnaden (resten kommunal medfinansiering eftersom det är en omfördelning och inte en ny kostnad för staten), så statens nya nettokostnad ~60-200 mkr/år. Bas ~120 msek motsvarar ca 230 rådgivare x ~0,8 mkr x ~65 % statlig andel."
     },
     "costReason": "LLM-estimat (confidence 0.45) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -1622,7 +1622,7 @@
       "basis_url": null,
       "method_note": "Förbud är en regleringsåtgärd — direkt kostnad är främst administration, tillsyn och kontroll. Uteblivna fångstintäkter och eventuella omställningsstöd är samhällsföljder, inte ny statlig utgift…",
       "confidence": 0.4,
-      "calculation": "Regel 9: prissatt direkt kostnad för åtgärden, inte följderna. Ett svenskt drivkraftarbete för EU-förbud plus genomförande i svenska vatten innebär främst ökad tillsyn/kontroll (kustbevakning, handläggning): uppskattningsvis 0–40 msek/år, base ~5 msek/år. Inga ersättningar till fisket ingår i löftet och har därför inte lagts till."
+      "calculation": "Löftet hålls av en lag eller en reglering: prissatt direkt kostnad för åtgärden, inte följderna. Ett svenskt drivkraftarbete för EU-förbud plus genomförande i svenska vatten innebär främst ökad tillsyn/kontroll (kustbevakning, handläggning): uppskattningsvis 0–40 msek/år, base ~5 msek/år. Inga ersättningar till fisket ingår i löftet och har därför inte lagts till."
     },
     "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -1864,7 +1864,7 @@
       "basis_url": null,
       "method_note": "Löftet är att se över DO:s uppdrag och resurser — prissatt som en utredning i SOU-storlek. Eventuella framtida anslagshöjningar till DO är en följd av utredningen och prissätts ej.",
       "confidence": 0.6,
-      "calculation": "Löftet = 'se över DO:s uppdrag och resurser' (regel 10: utredningslöfte). Själva granskningen prissätts: en utredning/översyn med sekretariat om 3–5 personer under ca 1 år, med direktiv, underlag, analys och betänkande ≈ 5–15 msek som engångskostnad; bas 10 msek. DO:s totala anslag är i storleksordningen 100 msek/år, men en höjning av det är ett beslut som utredningen kan leda till — inte en del av löftet — och därmed inte dubbelräknad här."
+      "calculation": "Löftet = 'se över DO:s uppdrag och resurser' (Löftet är att utreda eller planera: utredningslöfte). Själva granskningen prissätts: en utredning/översyn med sekretariat om 3–5 personer under ca 1 år, med direktiv, underlag, analys och betänkande ≈ 5–15 msek som engångskostnad; bas 10 msek. DO:s totala anslag är i storleksordningen 100 msek/år, men en höjning av det är ett beslut som utredningen kan leda till — inte en del av löftet — och därmed inte dubbelräknad här."
     },
     "costReason": "LLM-estimat (confidence 0.6) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -2112,7 +2112,7 @@
       "basis_url": null,
       "method_note": "Regleringsändring: prissatt är bara genomförandet (kriterier, material, fortbildning), inte samhällsföljder. Löpande gradering sköts av kommunala lärare → marginell statlig kostnad ≈ 0.",
       "confidence": 0.45,
-      "calculation": "Betyg sätts av befintliga lärare i ordinarie tjänst → återkommande statlig kostnad i princip noll (kommunerna betalar lärartid; ej statens netto enligt regel 11). Engångskostnad för staten: Skolverket tar fram kunskapskrav/betygskriterier för tidigare årskurser, styrdokument, informations- och kompetensutvecklingsinsatser ~5–30 mkr, i linje med tidigare läroplansändringar. Viss fortbildning kan dra ut på tiden (några år) → low 3, base 15, high 45 msek. Följden att fler elever identifieras och får stöd är en konsekvens, ej prissatt."
+      "calculation": "Betyg sätts av befintliga lärare i ordinarie tjänst → återkommande statlig kostnad i princip noll (kommunerna betalar lärartid; ej statens netto eftersom det är en omfördelning och inte en ny kostnad för staten). Engångskostnad för staten: Skolverket tar fram kunskapskrav/betygskriterier för tidigare årskurser, styrdokument, informations- och kompetensutvecklingsinsatser ~5–30 mkr, i linje med tidigare läroplansändringar. Viss fortbildning kan dra ut på tiden (några år) → low 3, base 15, high 45 msek. Följden att fler elever identifieras och får stöd är en konsekvens, ej prissatt."
     },
     "costReason": "LLM-estimat (confidence 0.45) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -2752,7 +2752,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är ett brett inriktningslöfte utan angiven nivå på ökade investeringar eller underhåll. Prissätts enligt regel 13 som ett inriktningslöfte, base 0. Eventuella konkreta belopp prissätts på…",
+      "method_note": "Löftet är ett brett inriktningslöfte utan angiven nivå på ökade investeringar eller underhåll. Prissätts som ett inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande, base 0. Eventuella konkreta belopp prissätts på…",
       "confidence": 0.3,
       "calculation": "Löftet specificerar inte hur mycket mer V vill satsa på järnväg jämfört med befintliga planer. Inga belopp anges, därför sätts estimatet till 0."
     },
@@ -3046,7 +3046,7 @@
       "basis_url": null,
       "method_note": "Löftet är att utvärdera en lag — prissatt som en mindre utredning/utvärdering i SOU-storlek (5–25 mkr), engångskostnad. Inga framtida lagändringar eller samhällsföljder ingår.",
       "confidence": 0.65,
-      "calculation": "Regel 10: utredningslöfte. En lagutvärdering med sekretariat, experter och underlagsanalyser motsvarar en mindre SOU-utredning. Historiskt kostar sådana grovt 5–25 mkr som engångskostnad; en focused lagutvärdering ligger i nedre delen (~10 msek som bas). Löftet avser enbart själva utvärderingsuppdraget — inte kostnader för eventuella reformförslag den kan leda till."
+      "calculation": "Löftet är att utreda eller planera: utredningslöfte. En lagutvärdering med sekretariat, experter och underlagsanalyser motsvarar en mindre SOU-utredning. Historiskt kostar sådana grovt 5–25 mkr som engångskostnad; en focused lagutvärdering ligger i nedre delen (~10 msek som bas). Löftet avser enbart själva utvärderingsuppdraget — inte kostnader för eventuella reformförslag den kan leda till."
     },
     "costReason": "LLM-estimat (confidence 0.65) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -3220,7 +3220,7 @@
       "basis_url": null,
       "method_note": "Vagt löfte utan antal verk ellerorter. Prissatt som nettoomställningskostnad (flytt, dubbla lokaler, personalomkostnader) för en fortsatt utflyttning; löner/lokaler är omfördelning, inte ny kostnad.",
       "confidence": 0.35,
-      "calculation": "Antar att 'fortsätta' innebär ytterligare en omgång omlokalisering under mandatperioden: ~300–800 statliga tjänster flyttas. Historiska omställningskostnader ligger grovt på 0,5–1 mkr per flyttad tjänst (flytt, IT, dubbla lokaler under övergång, avgångs-/rekryteringskostnader eftersom många inte följer med). 300×0,5 ≈ 150 mkr; 800×1 ≈ 800 mkr. Löner och lokalkostnader överförs i princip oförändrade mellan orter (regel 11), så endast övergångskostnaden plus ev. små löpande merkostnader för splittrad verksamhet prissätts. Osäkerheten är stor eftersom omfattning inte anges; låg gräns täcker små delutflyttningar, hög gräns större verk."
+      "calculation": "Antar att 'fortsätta' innebär ytterligare en omgång omlokalisering under mandatperioden: ~300–800 statliga tjänster flyttas. Historiska omställningskostnader ligger grovt på 0,5–1 mkr per flyttad tjänst (flytt, IT, dubbla lokaler under övergång, avgångs-/rekryteringskostnader eftersom många inte följer med). 300×0,5 ≈ 150 mkr; 800×1 ≈ 800 mkr. Löner och lokalkostnader överförs i princip oförändrade mellan orter (det är en omfördelning och inte en ny kostnad för staten), så endast övergångskostnaden plus ev. små löpande merkostnader för splittrad verksamhet prissätts. Osäkerheten är stor eftersom omfattning inte anges; låg gräns täcker små delutflyttningar, hög gräns större verk."
     },
     "costReason": "LLM-estimat (confidence 0.35) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -3510,9 +3510,9 @@
       "msek_high": 50,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Lag/förbudslöfte: endast direkt kostnad (beredning, tillsyn, administration) prissätts. Följder som uteblivna bränsleskatter eller omställningsstöd exkluderas enligt regel 9.",
+      "method_note": "Lag/förbudslöfte: endast direkt kostnad (beredning, tillsyn, administration) prissätts. Följder som uteblivna bränsleskatter eller omställningsstöd exkluderas eftersom löftet hålls av en lag eller en reglering.",
       "confidence": 0.3,
-      "calculation": "Löftet är att stifta en omställningslag som fasar ut fossil verksamhet till 2030. Lagens direkta statliga kostnad: beredning/utredning ~5–20 msek (engång) plus löpande tillsyn, uppföljning och administration hos existerande myndigheter ~5–30 msek/år. Samhällsföljder (utebliven energiskatt/koldioxidtaxa på tiotals mdkr, omställningsstöd, kompensation till berörda företag) är följer av utfasningen, inte kostnaden för själva lagåtgärden, och lämnas okvantifierade enligt regel 9. Bas 10 msek/år ≈ genomsnittlig myndighets­tillsyn; spannet 0–50 speglar osäkerhet om tillsynsinsatsernas omfattning."
+      "calculation": "Löftet är att stifta en omställningslag som fasar ut fossil verksamhet till 2030. Lagens direkta statliga kostnad: beredning/utredning ~5–20 msek (engång) plus löpande tillsyn, uppföljning och administration hos existerande myndigheter ~5–30 msek/år. Samhällsföljder (utebliven energiskatt/koldioxidtaxa på tiotals mdkr, omställningsstöd, kompensation till berörda företag) är följer av utfasningen, inte kostnaden för själva lagåtgärden, och lämnas okvantifierade eftersom löftet hålls av en lag eller en reglering. Bas 10 msek/år ≈ genomsnittlig myndighets­tillsyn; spannet 0–50 speglar osäkerhet om tillsynsinsatsernas omfattning."
     },
     "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -3570,7 +3570,7 @@
       "basis_url": null,
       "method_note": "Regel-/förbudslöfte: prissatt är endast direkta adminjusteringar hos myndigheter, inte samhällsföljder.",
       "confidence": 0.4,
-      "calculation": "Löftet är en praktik-/regeländring (myndigheter ska ej medverka till barnäktenskap). Direkt kostnad begränsas till engångsvis internutbildning, riktlinjer och omställning hos t.ex. migrations- och skattemyndighet: ~0–20 msek engång, bas 5 msek. Inga återkommande nettoutgifter identifierade; samhällseffekter okvantifierade enligt regel 9."
+      "calculation": "Löftet är en praktik-/regeländring (myndigheter ska ej medverka till barnäktenskap). Direkt kostnad begränsas till engångsvis internutbildning, riktlinjer och omställning hos t.ex. migrations- och skattemyndighet: ~0–20 msek engång, bas 5 msek. Inga återkommande nettoutgifter identifierade; samhällseffekter okvantifierade eftersom löftet hålls av en lag eller en reglering."
     },
     "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -3628,7 +3628,7 @@
       "basis_url": null,
       "method_note": "Löftet är ett inriktningsmål ('På sikt införa...') utan konkret åtagande om teknik, genomförande eller tidpunkt. Jämförbart löfte (p-2026-0745) är också ett inriktningsmål prissatt till 0. Kostnaden…",
       "confidence": 0,
-      "calculation": "Base 0: Löftet saknar kvantifierbar åtgärd, budget eller tidsplan. Ett nationellt biljettsystem skulle kräva omfattande IT-utveckling, standardisering, avtal med regionala trafikhuvudmän och löpande drift, men inga av dessa parametrar är specificerade. Utan konkretion är den direkta statliga kostnaden omätbar och behandlas därför som ett inriktningslöfte enligt regel 13."
+      "calculation": "Base 0: Löftet saknar kvantifierbar åtgärd, budget eller tidsplan. Ett nationellt biljettsystem skulle kräva omfattande IT-utveckling, standardisering, avtal med regionala trafikhuvudmän och löpande drift, men inga av dessa parametrar är specificerade. Utan konkretion är den direkta statliga kostnaden omätbar och behandlas därför som ett inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande."
     },
     "costReason": "LLM-estimat (confidence 0) — bekräfta/justera belopp — jämförbara: p-2026-0745 (0)"
   },
@@ -3750,7 +3750,7 @@
       "basis_url": null,
       "method_note": "Lagstiftningslöfte: beloppet avser bara genomförandets direkta kostnad (omställning/administration), inte samhällsföljder. Skolpengen betalas redan idag — överföring till kommunalt huvudmannaskap är…",
       "confidence": 0.3,
-      "calculation": "Avskaffandet sker via lagstiftning; regel 9 ger base≈0 för själva åtgärden. Skolpeng flödar redan från offentliga medel till friskolor, så ett kommunalt/ statligt övertagande är i princip omfördelning (regel 11), inte ny kostnad. Kvar: engångskostnader för omställning — myndighets­handläggning, omorganisation av huvudmän, ev. övergångsavtal ≈ grovt 0–400 mkr; bas ~50 mkr som antagen administrations-/övergångskostnad. Osäkerheten är stor eftersom löftet saknar angiven åtgärdsdesign (vinstförbud, övertagande eller stopp av nya tillstånd)."
+      "calculation": "Avskaffandet sker via lagstiftning; att löftet hålls av en lag eller en reglering ger base≈0 för själva åtgärden. Skolpeng flödar redan från offentliga medel till friskolor, så ett kommunalt/ statligt övertagande är i princip omfördelning, inte ny kostnad. Kvar: engångskostnader för omställning — myndighets­handläggning, omorganisation av huvudmän, ev. övergångsavtal ≈ grovt 0–400 mkr; bas ~50 mkr som antagen administrations-/övergångskostnad. Osäkerheten är stor eftersom löftet saknar angiven åtgärdsdesign (vinstförbud, övertagande eller stopp av nya tillstånd)."
     },
     "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -4375,7 +4375,7 @@
       "basis_url": null,
       "method_note": "Regelförenkling/förkortade tillståndsprocesser är främst lagändring; direkt statlig kostnad nära noll. Beloppet avser ev. utredningar och administration, inte samhällsföljder.",
       "confidence": 0.3,
-      "calculation": "Löftet saknar belopp och nivå. Enligt regel 9 prissätts endast åtgärdens direkta kostnad: lagändringar drivs inom ordinarie regeringskansliarbete ≈ 0 mkr, men möjliga utredningar, digitalisering av tillståndsprocesser och myndighetsomställning kan kosta ungefär 0–100 mkr/år. Bas 5 mkr speglar att kärnan är regeländring utan ny statsfinansiering. Företagens tidsbesparingar och tillväxt är följder, inte statlig utgift."
+      "calculation": "Löftet saknar belopp och nivå. eftersom löftet hålls av en lag eller en reglering prissätts endast åtgärdens direkta kostnad: lagändringar drivs inom ordinarie regeringskansliarbete ≈ 0 mkr, men möjliga utredningar, digitalisering av tillståndsprocesser och myndighetsomställning kan kosta ungefär 0–100 mkr/år. Bas 5 mkr speglar att kärnan är regeländring utan ny statsfinansiering. Företagens tidsbesparingar och tillväxt är följder, inte statlig utgift."
     },
     "costReason": "LLM-estimat (confidence 0.3) — omkörd efter haveri, bekräfta/justera belopp"
   },
@@ -4598,7 +4598,7 @@
       "basis_url": null,
       "method_note": "Sänkningen av elskatten ankrar på KD:s jämförbara löfte p-2026-0659 (6 000 mkr/år). En återgång till ett enda elprisområde prissätts som en marginell administrativ nettokostnad; de stora…",
       "confidence": 0.6,
-      "calculation": "1) Elskattesänkning: KD:s liknande förslag p-2026-0659 är 6 000 mkr/år. Antas samma nivå som bas. Spann 3 000–9 000 mkr/år reflekterar att djupet på sänkningen inte är angivet. 2) Ena elprisområde: regel 9 – ett reglerings-/marknadsbeslut. Den direkta statliga åtgärden (förordningsändring, utredning, it-anpassningar hos SvK) är en engångskostnad på några tiotals miljoner, försumbar som årlig post. Elprisförändringar är följdöverföringar, ej statsfinansiell nettokostnad. Totalt ≈ 6 000 mkr/år."
+      "calculation": "1) Elskattesänkning: KD:s liknande förslag p-2026-0659 är 6 000 mkr/år. Antas samma nivå som bas. Spann 3 000–9 000 mkr/år reflekterar att djupet på sänkningen inte är angivet. 2) Ena elprisområde: att löftet hålls av en lag eller en reglering – ett reglerings-/marknadsbeslut. Den direkta statliga åtgärden (förordningsändring, utredning, it-anpassningar hos SvK) är en engångskostnad på några tiotals miljoner, försumbar som årlig post. Elprisförändringar är följdöverföringar, ej statsfinansiell nettokostnad. Totalt ≈ 6 000 mkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0659 (6000), p-2026-0326 (0), p-2026-0030 (0), p-2026-0121 (0), p-2026-0032 (20000) ⚠ AVVIKER: belopp 6000 men jämförbara ligger på 0"
   },
@@ -4967,7 +4967,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte riktat till EU om regelverk; prissatt som den marginella svenska kostnaden för kontroll/förvaltning i linje med jämförbara fiskelöften (0–5 msek), inte samhällsföljder.",
       "confidence": 0.3,
-      "calculation": "Löftet är en önskan om EU-reglering, inget svenskt åtagande med belopp. Direkt statlig kostnad enligt regel 9 är i princip försumbar men kan omfatta ökad fiskerikontroll och förvaltning av trålbegränsningar: ~0–5 msek/år, i nivå med jämförbara löften (förbud bottentrålning 5 msek, laxbegränsning 2 msek, flera 0 msek). Base 2 msek avspeglar medelvärdet av riktmärkena. Uteblivna fiskeintäkter är omfördelning/följd, ej ny statlig kostnad."
+      "calculation": "Löftet är en önskan om EU-reglering, inget svenskt åtagande med belopp. Direkt statlig kostnad eftersom löftet hålls av en lag eller en reglering är i princip försumbar men kan omfatta ökad fiskerikontroll och förvaltning av trålbegränsningar: ~0–5 msek/år, i nivå med jämförbara löften (förbud bottentrålning 5 msek, laxbegränsning 2 msek, flera 0 msek). Base 2 msek avspeglar medelvärdet av riktmärkena. Uteblivna fiskeintäkter är omfördelning/följd, ej ny statlig kostnad."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1215 (2), p-2026-1212 (5), p-2026-0635 (0), p-2026-0664 (0), p-2026-1369 (0) ⚠ AVVIKER: belopp 2 men jämförbara ligger på 0"
   },
@@ -5155,7 +5155,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp – prissätts som 0 enligt regel 13.",
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp – prissätts som 0 eftersom citatet är en bred uppräkning utan konkret åtagande.",
       "confidence": 0.1,
       "calculation": "Ingen specifik reform angiven; de kostsamma delarna prissätts på partiets specifika löften."
     },
@@ -6520,7 +6520,7 @@
       "basis_url": null,
       "method_note": "Löftet är en inriktning utan konkret åtgärd eller belopp; direkt statlig kostnad försumbar, följder ej kvantifierade.",
       "confidence": 0.3,
-      "calculation": "Ingen specifik reform eller kostnad anges. Regel 9: prissätt endast direkt åtgärdskostnad, som här är nära noll."
+      "calculation": "Ingen specifik reform eller kostnad anges. Löftet hålls av en lag eller en reglering: prissätt endast direkt åtgärdskostnad, som här är nära noll."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0417 (800), p-2026-1849 (0), p-2026-1403 (0)"
   },
@@ -6830,7 +6830,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet avser en reglering (nationell taxa med pristak), vilket enligt regel 9 främst är en marknadsåtgärd. Direkt statlig kostnad för att införa och administrera taket bedöms som försumbar…",
+      "method_note": "Löftet avser en reglering (nationell taxa med pristak), vilket eftersom löftet hålls av en lag eller en reglering främst är en marknadsåtgärd. Direkt statlig kostnad för att införa och administrera taket bedöms som försumbar…",
       "confidence": 0.3,
       "calculation": "Ingen direkt statlig utgift. Administrativ kostnad för tillsyn och uppföljning kan uppskattas till 0–5 mkr/år, men osäkerheten är stor och basen sätts till 0."
     },
@@ -7033,7 +7033,7 @@
       "basis_url": null,
       "method_note": "Bred inriktning utan konkret åtgärd eller belopp; prissätts som inriktningslöfte.",
       "confidence": 0.1,
-      "calculation": "Ingen specifik reform eller nivå anges; enligt regel 13 sätts base till 0."
+      "calculation": "Ingen specifik reform eller nivå anges; eftersom citatet är en bred uppräkning utan konkret åtagande sätts base till 0."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0126 (13000), p-2026-0334 (300), p-2026-1269 (0), p-2026-1837 (0), p-2026-1900 (1200) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~300"
   },
@@ -7188,7 +7188,7 @@
       "basis_url": null,
       "method_note": "Löftet är ett inriktningslöfte utan konkret åtgärd eller belopp. Direkt kostnad för själva åtgärden är försumbar; eventuella framtida reformer prissätts separat.",
       "confidence": 0.3,
-      "calculation": "Ingen specifik åtgärd anges. Regel 13: bred inriktning utan konkret åtagande → base 0. Jämförbara löften (p-2026-0923, p-2026-0924) har egna belopp men avser specifika verktyg, ej detta allmänna löfte."
+      "calculation": "Ingen specifik åtgärd anges. Citatet är en bred uppräkning utan konkret åtagande: bred inriktning utan konkret åtagande → base 0. Jämförbara löften (p-2026-0923, p-2026-0924) har egna belopp men avser specifika verktyg, ej detta allmänna löfte."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0607 (0), p-2026-0923 (25), p-2026-0924 (50), p-2026-0023 (0), p-2026-0580 (0)"
   },
@@ -8189,7 +8189,7 @@
       "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är en organisationsöversyn utan konkret nivå; prissätts som en utredning/plan enligt regel 10, i linje med jämförbart löfte p-2026-1693.",
+      "method_note": "Löftet är en organisationsöversyn utan konkret nivå; prissätts som en utredning/plan eftersom löftet är att utreda eller planera, i linje med jämförbart löfte p-2026-1693.",
       "confidence": 0.4,
       "calculation": "Antagande: en SOU-liknande utredning med sekretariat, experter och remissförfarande kostar typiskt 5–30 mkr. Bas 15 mkr, spann 5–30 mkr. Ingen löpande kostnad för själva översynen."
     },
@@ -8882,7 +8882,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd; direkt kostnad försumbar, eventuell administration eller tillsyn ryms i spannet.",
       "confidence": 0.3,
-      "calculation": "Ingen specifik åtgärd eller nivå anges. Regel 13: inriktningslöfte → base 0. Möjlig kostnad för vägledning/tillsyn uppskattas till 0–5 mkr/år, jämförbart med p-2026-0818."
+      "calculation": "Ingen specifik åtgärd eller nivå anges. Citatet är en bred uppräkning utan konkret åtagande: inriktningslöfte → base 0. Möjlig kostnad för vägledning/tillsyn uppskattas till 0–5 mkr/år, jämförbart med p-2026-0818."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0818 (5) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~5"
   },
@@ -8945,7 +8945,7 @@
       "basis_url": null,
       "method_note": "Bred inriktning utan konkret åtgärd eller belopp; prissätts som inriktningslöfte.",
       "confidence": 0.1,
-      "calculation": "Ingen specifik reform eller nivå anges; enligt regel 13 sätts base till 0."
+      "calculation": "Ingen specifik reform eller nivå anges; eftersom citatet är en bred uppräkning utan konkret åtagande sätts base till 0."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0698 (500), p-2026-1224 (500), p-2026-1718 (0), p-2026-0344 (0), p-2026-0547 (300) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~300"
   },
@@ -9143,7 +9143,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts som utredning/plan enligt regel 10 och 13.",
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts som utredning/plan eftersom löftet är att utreda eller planera och citatet är en bred uppräkning utan konkret åtagande.",
       "confidence": 0.3,
       "calculation": "Löftet är en bred uppräkning utan specifik åtgärd eller nivå. Jämförbara löften (p-2026-0855, p-2026-1800) sätts till 0. En eventuell utredning skulle kosta 5–30 mkr, men då ingen konkret åtgärd anges sätts base till 0."
     },
@@ -9308,7 +9308,7 @@
       "basis_url": null,
       "method_note": "Straffskärpning är en lagändring; direkt statlig kostnad är försumbar. Fängelsevistelser kan öka men är en osäker följd, ej prissatt.",
       "confidence": 0.3,
-      "calculation": "Lagändring utan direkt utgift. Eventuella merkostnader för längre fängelsestraff är svårbedömda och utesluts enligt regel 9."
+      "calculation": "Lagändring utan direkt utgift. Eventuella merkostnader för längre fängelsestraff är svårbedömda och utesluts eftersom löftet hålls av en lag eller en reglering."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0706 (0), p-2026-0689 (0), p-2026-1022 (0), p-2026-0596 (70), p-2026-1532 (80)"
   },
@@ -9474,7 +9474,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning med specifika löften.",
       "confidence": 0.1,
-      "calculation": "Löftet anger inget system, kriterium eller belopp. Behandlas som inriktningslöfte enligt regel 13: base 0, inga kostnader kvantifierade."
+      "calculation": "Löftet anger inget system, kriterium eller belopp. Behandlas som inriktningslöfte enligt Citatet är en bred uppräkning utan konkret åtagande: base 0, inga kostnader kvantifierade."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1859 (0), p-2026-1285 (0), p-2026-1529 (1000), p-2026-1779 (0)"
   },
@@ -9672,7 +9672,7 @@
       "basis_url": null,
       "method_note": "Löftet är en inriktning utan konkret nivå eller utformning. Direkt statlig kostnad för nya ersättningsmodeller bedöms som försumbar; eventuella överföringar till lokalsamhällen är omfördelningar…",
       "confidence": 0.3,
-      "calculation": "Ingen specificerad ersättningsmodell eller belopp. Regel 9/13: prissätt endast direkt åtgärdskostnad, som är nära noll. Eventuella framtida intäkter till kommuner är överföringar från vindkraftsbolag, ej statlig kostnad."
+      "calculation": "Ingen specificerad ersättningsmodell eller belopp. att löftet hålls av en lag eller en reglering/13: prissätt endast direkt åtgärdskostnad, som är nära noll. Eventuella framtida intäkter till kommuner är överföringar från vindkraftsbolag, ej statlig kostnad."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1893 (0), p-2026-1764 (0), p-2026-1729 (0), p-2026-1730 (0)"
   },
@@ -10071,7 +10071,7 @@
       "basis_url": null,
       "method_note": "Bred inriktning utan konkret åtgärd eller belopp; prissätts som noll för att undvika dubbelräkning.",
       "confidence": 0.1,
-      "calculation": "Löftet är en uppräkning av tre miljöproblem utan specifik åtgärd eller nivå. Enligt regel 13 behandlas det som inriktningslöfte med base 0. Eventuella konkreta delar prissätts separat."
+      "calculation": "Löftet är en uppräkning av tre miljöproblem utan specifik åtgärd eller nivå. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte med base 0. Eventuella konkreta delar prissätts separat."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1673 (0), p-2026-1215 (2) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1"
   },
@@ -10263,7 +10263,7 @@
       "basis_url": null,
       "method_note": "Löftet är ett inriktningslöfte om att successivt öka inblandningskravet för fossilfritt biobränsle på transatlantiska flygresor. Ingen konkret nivå eller kostnad anges. Direkt statlig kostnad för…",
       "confidence": 0.3,
-      "calculation": "Ingen specifik åtgärd eller nivå anges. Regel 9: lagkrav har försumbar direkt kostnad. Regel 13: brett inriktningslöfte utan konkret åtagande → base 0. Jämförbara löften (p-2026-0822, p-2026-0764, p-2026-1739) har också 0 msek."
+      "calculation": "Ingen specifik åtgärd eller nivå anges. Löftet hålls av en lag eller en reglering: lagkrav har försumbar direkt kostnad. Citatet är en bred uppräkning utan konkret åtagande: brett inriktningslöfte utan konkret åtagande → base 0. Jämförbara löften (p-2026-0822, p-2026-0764, p-2026-1739) har också 0 msek."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0822 (0), p-2026-0764 (0), p-2026-1186 (500), p-2026-1474 (200), p-2026-1739 (0)"
   },
@@ -10542,7 +10542,7 @@
       "basis_url": null,
       "method_note": "Löftet är ett inriktningslöfte om att följa och utöka befintlig lagstiftning utan konkret åtgärd eller belopp. Direkt statlig kostnad försumbar; eventuella kostnader prissätts på specifika förslag.",
       "confidence": 0.1,
-      "calculation": "Ingen konkret åtgärd eller nivå anges. Regel 13: brett inriktningslöfte → base 0. Eventuell tillsyns- eller utredningskostnad ryms inom ordinarie budget."
+      "calculation": "Ingen konkret åtgärd eller nivå anges. Citatet är en bred uppräkning utan konkret åtagande: brett inriktningslöfte → base 0. Eventuell tillsyns- eller utredningskostnad ryms inom ordinarie budget."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1224 (500) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~500"
   },
@@ -10617,7 +10617,7 @@
       "basis_url": null,
       "method_note": "Löftet är en bred inriktning utan konkret åtgärd eller belopp. Direkt statlig kostnad för själva moderniseringen är försumbar; följderna kvantifieras inte.",
       "confidence": 0.3,
-      "calculation": "Ingen specifik åtgärd anges. Regel 9/13: lagändringar har försumbar direkt kostnad, base 0."
+      "calculation": "Ingen specifik åtgärd anges. att löftet hålls av en lag eller en reglering/13: lagändringar har försumbar direkt kostnad, base 0."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1306 (0), p-2026-1151 (0), p-2026-1313 (0), p-2026-0642 (0), p-2026-1701 (0)"
   },
@@ -10913,7 +10913,7 @@
       "basis_url": null,
       "method_note": "Förbudet är en reglering; direkt statlig kostnad försumbar. Eventuella intäkter från framtida brytning uteblir men är osäkra och räknas inte som utgift.",
       "confidence": 0.5,
-      "calculation": "Ingen direkt statlig utgift för att införa förbudet. Administrativ kostnad för lagstiftning och tillsyn bedöms försumbar (<1 mkr). Uteblivna framtida koncessionsintäkter är spekulativa och exkluderas enligt regel 9."
+      "calculation": "Ingen direkt statlig utgift för att införa förbudet. Administrativ kostnad för lagstiftning och tillsyn bedöms försumbar (<1 mkr). Uteblivna framtida koncessionsintäkter är spekulativa och exkluderas eftersom löftet hålls av en lag eller en reglering."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0952 (0)"
   },
@@ -11064,7 +11064,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; direkt statlig kostnad försumbar.",
       "confidence": 0.3,
-      "calculation": "Löftet anger ingen specifik reform, nivå eller kostnad. Som inriktningslöfte (regel 13) prissätts direkt kostnad till 0; eventuella framtida åtgärder hanteras i separata löften."
+      "calculation": "Löftet anger ingen specifik reform, nivå eller kostnad. Som inriktningslöfte prissätts direkt kostnad till 0; eventuella framtida åtgärder hanteras i separata löften."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0886 (0), p-2026-1767 (0), p-2026-1610 (5)"
   },
@@ -11111,7 +11111,7 @@
       "basis_url": null,
       "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning.",
       "confidence": 0.1,
-      "calculation": "Ingen specifik reform eller kostnad anges; behandlas som inriktningslöfte enligt regel 13."
+      "calculation": "Ingen specifik reform eller kostnad anges; behandlas som inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1856 (0)"
   },
@@ -11174,7 +11174,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller kostnad; prissätts som 0 för att undvika dubbelräkning.",
       "confidence": 0.1,
-      "calculation": "Löftet anger ingen specifik reform eller siffra, endast en allmän inriktning. Enligt regel 13 behandlas det som ett inriktningslöfte med base 0."
+      "calculation": "Löftet anger ingen specifik reform eller siffra, endast en allmän inriktning. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som ett inriktningslöfte med base 0."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1889 (0), p-2026-1184 (0), p-2026-1237 (0), p-2026-1238 (50), p-2026-0112 (0)"
   },
@@ -11203,7 +11203,7 @@
       "basis_url": null,
       "method_note": "Bred inriktning utan konkret åtgärd eller belopp; prissätts som noll för att undvika dubbelräkning.",
       "confidence": 0.1,
-      "calculation": "Löftet är en allmän målsättning om handelspolitikens principer, utan specifik reform eller kostnad. Enligt regel 13 behandlas det som inriktningslöfte med base 0."
+      "calculation": "Löftet är en allmän målsättning om handelspolitikens principer, utan specifik reform eller kostnad. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte med base 0."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1237 (0), p-2026-1238 (50), p-2026-1741 (0), p-2026-1488 (200), p-2026-1763 (0)"
   },
@@ -11230,7 +11230,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; behandlas som inriktningslöfte enligt regel 13.",
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; behandlas som inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande.",
       "confidence": 0.1,
       "calculation": "Ingen specifik reform anges, endast allmän målsättning om minskade klyftor och ökat internationellt samarbete. Inga kvantifierbara delar att prissätta."
     },
@@ -11689,7 +11689,7 @@
       "basis_url": null,
       "method_note": "Löftet är ett inriktningslöfte utan konkret åtgärd eller belopp; prissätter endast den direkta statliga kostnaden för själva åtgärden, som är försumbar.",
       "confidence": 0.3,
-      "calculation": "Ingen specifik reform eller nivå anges. Enligt regel 13 behandlas breda uppräkningar som inriktningslöften med base 0. Eventuella framtida kostnader prissätts på specifika löften."
+      "calculation": "Ingen specifik reform eller nivå anges. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas breda uppräkningar som inriktningslöften med base 0. Eventuella framtida kostnader prissätts på specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1295 (0), p-2026-1645 (100), p-2026-0319 (0)"
   },
@@ -11921,7 +11921,7 @@
       "basis_url": null,
       "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning med specifika löften.",
       "confidence": 0.1,
-      "calculation": "Ingen specifik reform angiven; enligt regel 13 behandlas som inriktningslöfte med base 0."
+      "calculation": "Ingen specifik reform angiven; eftersom citatet är en bred uppräkning utan konkret åtagande behandlas som inriktningslöfte med base 0."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0970 (500) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~500"
   },
@@ -12159,7 +12159,7 @@
       "basis_url": null,
       "method_note": "Bred inriktning utan konkret åtgärd eller belopp; prissätts som inriktningslöfte.",
       "confidence": 0.1,
-      "calculation": "Ingen specifik reform angiven; enligt regel 13 behandlas som inriktningslöfte med base 0."
+      "calculation": "Ingen specifik reform angiven; eftersom citatet är en bred uppräkning utan konkret åtagande behandlas som inriktningslöfte med base 0."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1226 (900), p-2026-1491 (500), p-2026-1787 (0), p-2026-0582 (0), p-2026-0826 (12000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~500"
   },
@@ -12221,7 +12221,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Bred inriktning utan konkret åtgärd eller belopp; prissätts som utredning/plan enligt regel 10.",
+      "method_note": "Bred inriktning utan konkret åtgärd eller belopp; prissätts som utredning/plan eftersom löftet är att utreda eller planera.",
       "confidence": 0.1,
       "calculation": "Ingen specifik reform angiven – endast en vision. Kostnad för en statlig utredning (SOU) uppskattas till 5–30 mkr, men eftersom löftet saknar avgränsning sätts base till 0 och spannet till 0."
     },
@@ -12298,7 +12298,7 @@
       "basis_url": null,
       "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; avser att förbättra förutsättningar, vilket är en målsättning snarare än en specificerad reform.",
       "confidence": 0.3,
-      "calculation": "Löftet anger ingen specifik åtgärd, nivå eller tidsram. Det är en bred uppräkning av ett politikområde (startups/scaleups) utan konkret åtagande. Enligt regel 13 behandlas det som inriktningslöfte med base 0; eventuella kostsamma delar prissätts på specifika löften."
+      "calculation": "Löftet anger ingen specifik åtgärd, nivå eller tidsram. Det är en bred uppräkning av ett politikområde (startups/scaleups) utan konkret åtagande. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte med base 0; eventuella kostsamma delar prissätts på specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0630 (0), p-2026-1265 (0), p-2026-1455 (10), p-2026-0847 (0)"
   },
@@ -12751,7 +12751,7 @@
       "basis_url": null,
       "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning.",
       "confidence": 0.1,
-      "calculation": "Ingen specifik reform eller kostnad anges; behandlas som inriktningslöfte enligt regel 13."
+      "calculation": "Ingen specifik reform eller kostnad anges; behandlas som inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1572 (15), p-2026-1201 (0), p-2026-1362 (0)"
   },
@@ -12778,7 +12778,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Bred inriktning utan konkret åtgärd eller belopp; behandlas som inriktningslöfte enligt regel 13.",
+      "method_note": "Bred inriktning utan konkret åtgärd eller belopp; behandlas som inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande.",
       "confidence": 0.1,
       "calculation": "Ingen specifik reform eller nivå anges; kostnaden prissätts på partiets specifika löften."
     },
@@ -12807,7 +12807,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; behandlas som inriktningslöfte enligt regel 13.",
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; behandlas som inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande.",
       "confidence": 0.1,
       "calculation": "Ingen specifik åtgärd, målgrupp eller nivå anges. Löftet är en bred uppräkning av ett politikområde utan prissättbart åtagande, därför sätts base till 0."
     },
@@ -12884,7 +12884,7 @@
       "basis_url": null,
       "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning med specifika löften.",
       "confidence": 0.2,
-      "calculation": "Löftet anger ingen nivå eller specifik reform, endast en bred satsning på förnybar energi. Enligt regel 13 behandlas det som inriktningslöfte med base 0."
+      "calculation": "Löftet anger ingen nivå eller specifik reform, endast en bred satsning på förnybar energi. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte med base 0."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1299 (0), p-2026-1358 (200), p-2026-1394 (0), p-2026-0667 (0), p-2026-0788 (0)"
   },
@@ -12959,7 +12959,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts som noll för att undvika dubbelräkning.",
       "confidence": 0.1,
-      "calculation": "Ingen specifik reform eller kostnad anges; behandlas som inriktningslöfte enligt regel 13."
+      "calculation": "Ingen specifik reform eller kostnad anges; behandlas som inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1716 (15), p-2026-1294 (0), p-2026-1841 (0), p-2026-0577 (5), p-2026-1734 (0)"
   },
@@ -13244,7 +13244,7 @@
       "basis_url": null,
       "method_note": "Åtgärden är en reglering av skolans digitala verktyg; direkt statlig kostnad försumbar. Eventuella kostnader för inköp av analoga läromedel eller fortbildning är inte specificerade och bedöms som…",
       "confidence": 0.3,
-      "calculation": "Regel 9: förbud/reglering prissätts till direkt kostnad ≈ 0 mkr. Inga angivna belopp eller utpekade ersättningsåtgärder."
+      "calculation": "Löftet hålls av en lag eller en reglering: förbud/reglering prissätts till direkt kostnad ≈ 0 mkr. Inga angivna belopp eller utpekade ersättningsåtgärder."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0359 (2500), p-2026-0476 (0), p-2026-1492 (0), p-2026-1517 (500) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~250"
   },
@@ -13701,7 +13701,7 @@
       "basis_url": null,
       "method_note": "Vagt löfte utan konkret åtgärd eller belopp. Direkt kostnad för själva lagstiftningen är försumbar; effekter på äldreomsorgen kvantifieras inte.",
       "confidence": 0.2,
-      "calculation": "Ingen nivå eller åtgärd anges. Enligt regel 9 prissätts endast lagstiftningsåtgärdens direkta kostnad ≈ 0 mkr. Eventuella framtida kvalitetskravs kostnader är följder, inte del av detta löfte."
+      "calculation": "Ingen nivå eller åtgärd anges. eftersom löftet hålls av en lag eller en reglering prissätts endast lagstiftningsåtgärdens direkta kostnad ≈ 0 mkr. Eventuella framtida kvalitetskravs kostnader är följder, inte del av detta löfte."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1337 (0), p-2026-1335 (0), p-2026-0917 (50), p-2026-0956 (15), p-2026-1423 (0)"
   },
@@ -14073,7 +14073,7 @@
       "basis_url": null,
       "method_note": "Bred inriktning utan konkret åtgärd eller belopp. Prissätts som inriktningslöfte till 0; specifika reformer hanteras separat.",
       "confidence": 0.2,
-      "calculation": "Löftet anger inget konkret åtagande, målgruppens storlek eller ersättningsnivå. Enligt regel 13 behandlas det som inriktningslöfte med base 0. Eventuella kostnader för t.ex. stärkt barnavård prissätts i partiers specifika löften för att undvika dubbelräkning."
+      "calculation": "Löftet anger inget konkret åtagande, målgruppens storlek eller ersättningsnivå. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte med base 0. Eventuella kostnader för t.ex. stärkt barnavård prissätts i partiers specifika löften för att undvika dubbelräkning."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1667 (500), p-2026-1829 (0), p-2026-1874 (5), p-2026-1525 (0), p-2026-1839 (0)"
   },
@@ -14172,7 +14172,7 @@
       "msek_high": 10,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Lagändring; direkt kostnad försumbar enligt regel 9. Fängelsekostnader till följd av längre straff kvantifieras inte.",
+      "method_note": "Lagändring; direkt kostnad försumbar eftersom löftet hålls av en lag eller en reglering. Fängelsekostnader till följd av längre straff kvantifieras inte.",
       "confidence": 0.3,
       "calculation": "Ingen direkt statlig utgift för själva lagändringen; reformen genomförs inom befintlig lagstiftningsprocess. Eventuell engångskostnad för utredning/kommunikation 0–10 mkr. Längre fängelsestraff och ökad anstaltsbeläggning är en följd, inte prissatt."
     },
@@ -14203,7 +14203,7 @@
       "basis_url": null,
       "method_note": "Bred inriktning utan konkret åtagande eller belopp; kostnad hanteras i specifika löften. Jämförbart S-löfte är en annan parts investeringsprogram, inte vägledande.",
       "confidence": 0.3,
-      "calculation": "Inget belopp eller konkret åtgärd i löftet. Enligt regel 13 sätts base 0 för att undvika dubbelräkning; eventuella kostnader prissätts på partispecifika förslag. S 50 mdkr är inte detta löftes nivå."
+      "calculation": "Inget belopp eller konkret åtgärd i löftet. eftersom citatet är en bred uppräkning utan konkret åtagande sätts base 0 för att undvika dubbelräkning; eventuella kostnader prissätts på partispecifika förslag. S 50 mdkr är inte detta löftes nivå."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1732 (0), p-2026-1902 (50000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~25000"
   },
@@ -14232,7 +14232,7 @@
       "basis_url": null,
       "method_note": "Regel-/informationsåtgärd utan ny transferering. Direkt kostnad försumbar; ev. utredning/kommunikation ryms inom befintliga anslag. Jämförbara 0-löften stödjer lågt spann.",
       "confidence": 0.3,
-      "calculation": "Ingen ny utgiftspost. Tydliggörande kan ske via förordningsändring och vägledning hos MSB. Uppskattad engångskostnad 0–20 mkr (utredning, webb, informationsmaterial); bas 0 enligt regel 9."
+      "calculation": "Ingen ny utgiftspost. Tydliggörande kan ske via förordningsändring och vägledning hos MSB. Uppskattad engångskostnad 0–20 mkr (utredning, webb, informationsmaterial); bas 0 eftersom löftet hålls av en lag eller en reglering."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0691 (0), p-2026-1759 (0), p-2026-0126 (13000), p-2026-0319 (0)"
   },
@@ -14337,7 +14337,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; kostnader prissätts på specifika löften.",
       "confidence": 0.3,
-      "calculation": "Ingen beräkning – brett strategilöfte, base 0 enligt regel 13."
+      "calculation": "Ingen beräkning – brett strategilöfte, base 0 eftersom citatet är en bred uppräkning utan konkret åtagande."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0614 (16000), p-2026-0137 (10000), p-2026-0279 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~10000"
   },
@@ -14704,7 +14704,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd, nivå eller avgränsning; prissätts inte här. Järnvägssatsningar hanteras i specifika löften.",
       "confidence": 0.3,
-      "calculation": "Ingen beräkning – brett upprustningslöfte utan angiven omfattning eller belopp; base 0 enligt regel 13 för inriktningslöften."
+      "calculation": "Ingen beräkning – brett upprustningslöfte utan angiven omfattning eller belopp; base 0 eftersom citatet är en bred uppräkning utan konkret åtagande för inriktningslöften."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1274 (0), p-2026-1791 (0), p-2026-1803 (0), p-2026-0317 (0), p-2026-1871 (0)"
   },
@@ -14987,7 +14987,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp. Kostnaderna prissätts på specifika tandvårdslöften; här sätts 0 för att undvika dubbelräkning.",
       "confidence": 0.3,
-      "calculation": "Löftet anger ingen nivå eller avgränsad reform, bara att tandvården ska bli mer jämlik och behovsstyrd. Enligt regel 13 behandlas det som inriktningslöfte med base 0; eventuella framtida kostnader hör till partiers konkreta tandvårdsförslag."
+      "calculation": "Löftet anger ingen nivå eller avgränsad reform, bara att tandvården ska bli mer jämlik och behovsstyrd. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte med base 0; eventuella framtida kostnader hör till partiers konkreta tandvårdsförslag."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0925 (200), p-2026-0440 (7000), p-2026-0484 (4600), p-2026-0552 (4600), p-2026-0125 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~4600"
   },
@@ -15045,7 +15045,7 @@
       "basis_url": null,
       "method_note": "Lagändring; direkt statsfinansiell kostnad försumbar. Följder ej kvantifierade.",
       "confidence": 0.2,
-      "calculation": "Normalarbetstiden regleras i lag. Att ändra lagen har ingen direkt kostnad för staten. Enligt regel 9 prissätts endast åtgärden, inte samhällsföljder."
+      "calculation": "Normalarbetstiden regleras i lag. Att ändra lagen har ingen direkt kostnad för staten. eftersom löftet hålls av en lag eller en reglering prissätts endast åtgärden, inte samhällsföljder."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
   },
@@ -15266,7 +15266,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; kostnad prissätts på specifika löften och dubbelräknas inte.",
       "confidence": 0.1,
-      "calculation": "Ingen konkret reform eller nivå anges i löftet. Enligt regel 13 behandlas det som inriktningslöfte med base 0; eventuella kostnader hör till partiets specifika skollöften."
+      "calculation": "Ingen konkret reform eller nivå anges i löftet. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte med base 0; eventuella kostnader hör till partiets specifika skollöften."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0102 (0)"
   },
@@ -15358,7 +15358,7 @@
       "basis_url": null,
       "method_note": "Reduktionsplikt är en reglering av bränsleleverantörer, ingen direkt statlig utgift. Direkt kostnad för lagändring/tillsyn är försumbar. Samhällsekonomiska följder (priser, skatteintäkter)…",
       "confidence": 0.5,
-      "calculation": "Regel 9: reglering → direkt kostnad ≈ 0. Ingen subvention eller statlig transferering. Eventuell utredning/proposition ryms inom ordinarie budget, uppskattas till 0 mkr i nettokostnad."
+      "calculation": "Löftet hålls av en lag eller en reglering: reglering → direkt kostnad ≈ 0. Ingen subvention eller statlig transferering. Eventuell utredning/proposition ryms inom ordinarie budget, uppskattas till 0 mkr i nettokostnad."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
   },
@@ -15576,7 +15576,7 @@
       "msek_high": 100,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; bas 0 enligt regel 13. Hög osäkerhet om framtida anslag till FN/diplomati.",
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; bas 0 eftersom citatet är en bred uppräkning utan konkret åtagande. Hög osäkerhet om framtida anslag till FN/diplomati.",
       "confidence": 0.2,
       "calculation": "Ingen specificerad reform. Om tolkat som ökade anslag: t.ex. +10–20 % på delar av utrikesförvaltning och FN-avgifter ≈ 50–150 mkr/år, men bas 0 pga vagt löfte."
     },
@@ -15805,7 +15805,7 @@
       "basis_url": null,
       "method_note": "Avser direkt kostnad för kravställande och uppföljning; prispåverkan på kött är en följd av regleringen och räknas inte. Jämförbara upphandlingskrav värderas till 0.",
       "confidence": 0.3,
-      "calculation": "Kravet införs inom befintlig upphandlingsregelverk; ingen ny statlig utgift för själva åtgärden. Extra administration för uppföljning uppskattas till 0–5 mkr/år, men basbeloppet sätts till 0 enligt regel 9."
+      "calculation": "Kravet införs inom befintlig upphandlingsregelverk; ingen ny statlig utgift för själva åtgärden. Extra administration för uppföljning uppskattas till 0–5 mkr/år, men basbeloppet sätts till 0 eftersom löftet hålls av en lag eller en reglering."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1409 (5), p-2026-0426 (250), p-2026-0649 (0), p-2026-1200 (0), p-2026-1618 (0)"
   },
@@ -16113,7 +16113,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp. Kostnad prissätts på specifika skollöften; här sätts base 0 för att undvika dubbelräkning.",
       "confidence": 0.3,
-      "calculation": "Ingen konkret reform, nivå eller mottagargrupp anges. Enligt regel 13 behandlas löftet som inriktningslöfte med base 0; eventuella kostnader hanteras i partiers specifika skolpolitiska förslag."
+      "calculation": "Ingen konkret reform, nivå eller mottagargrupp anges. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas löftet som inriktningslöfte med base 0; eventuella kostnader hanteras i partiers specifika skolpolitiska förslag."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1743 (0)"
   },
@@ -16217,7 +16217,7 @@
       "basis_url": null,
       "method_note": "Omfördelning av befintliga trängselskattemedel; ingen ny statlig kostnad. Administration försummas.",
       "confidence": 0.3,
-      "calculation": "Trängselskattens årliga intäkter (~2 mdkr) omfördelas till lokala investeringar. Enligt regel 11 prissätts endast marginell nettoförändring, som bedöms försumbar (0 mkr)."
+      "calculation": "Trängselskattens årliga intäkter (~2 mdkr) omfördelas till lokala investeringar. eftersom det är en omfördelning och inte en ny kostnad för staten prissätts endast marginell nettoförändring, som bedöms försumbar (0 mkr)."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1114 (0), p-2026-1120 (0), p-2026-1607 (2000), p-2026-1878 (0), p-2026-1280 (0)"
   },
@@ -16244,7 +16244,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Vagt inriktningslöfte utan konkret åtgärd; prissätts till 0 enligt regel 13. Eventuella åtgärder hanteras under specifika löften.",
+      "method_note": "Vagt inriktningslöfte utan konkret åtgärd; prissätts till 0 eftersom citatet är en bred uppräkning utan konkret åtagande. Eventuella åtgärder hanteras under specifika löften.",
       "confidence": 0.1,
       "calculation": "Ingen konkret åtgärd eller belopp anges. Löftet är en bred viljeinriktning; bas 0 msek."
     },
@@ -16530,7 +16530,7 @@
       "basis_url": null,
       "method_note": "Bred inriktning utan konkret åtgärd eller belopp; kostnader prissätts på specifika löften.",
       "confidence": 0.3,
-      "calculation": "Ingen konkret reform eller siffra anges. Enligt regel 13 behandlas som inriktningslöfte med base 0 för att undvika dubbelräkning."
+      "calculation": "Ingen konkret reform eller siffra anges. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas som inriktningslöfte med base 0 för att undvika dubbelräkning."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1271 (0), p-2026-0835 (0), p-2026-1448 (150), p-2026-1561 (4000), p-2026-0613 (3000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
   },
@@ -16588,7 +16588,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp. Direkt statlig kostnad för regelförändring bedöms försumbar; följder kvantifieras inte.",
       "confidence": 0.2,
-      "calculation": "Ingen specificerad reform eller nivå. Enligt regel 13 behandlas som inriktningslöfte: base 0 mkr. Eventuella kostnader prissätts i partiets specifika löften."
+      "calculation": "Ingen specificerad reform eller nivå. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas som inriktningslöfte: base 0 mkr. Eventuella kostnader prissätts i partiets specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0530 (0), p-2026-0524 (1000), p-2026-0073 (0), p-2026-1722 (0), p-2026-0080 (100)"
   },
@@ -16617,7 +16617,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning.",
       "confidence": 0.1,
-      "calculation": "Ingen konkret åtgärd, nivå eller målgrupp anges. Enligt regel 13 behandlas det som inriktningslöfte: 0 mkr/år."
+      "calculation": "Ingen konkret åtgärd, nivå eller målgrupp anges. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte: 0 mkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1719 (0)"
   },
@@ -16762,7 +16762,7 @@
       "basis_url": null,
       "method_note": "Beloppet avser åtgärdens direkta kostnad (administration/handläggning), inte samhällsföljder som minskad invandring eller lägre bidragsutgifter.",
       "confidence": 0.5,
-      "calculation": "Lagändring med försörjningskrav som huvudregel: ingen ny direkt statlig utgift utöver normal handläggning hos Migrationsverket. Jämförbara legaländringar (p-2026-0744, p-2026-0899) prissätts till 0 mkr. Effekter på mottagande och transfereringar lämnas okvantifierade enligt regel 9."
+      "calculation": "Lagändring med försörjningskrav som huvudregel: ingen ny direkt statlig utgift utöver normal handläggning hos Migrationsverket. Jämförbara legaländringar (p-2026-0744, p-2026-0899) prissätts till 0 mkr. Effekter på mottagande och transfereringar lämnas okvantifierade eftersom löftet hålls av en lag eller en reglering."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0744 (0), p-2026-0899 (0), p-2026-0529 (400), p-2026-0497 (0), p-2026-0510 (10)"
   },
@@ -16941,7 +16941,7 @@
       "basis_url": null,
       "method_note": "Avreglering: direkt kostnad för lagändring är försumbar. Följder (fler ärenden, skatteintäkter) kvantifieras inte.",
       "confidence": 0.3,
-      "calculation": "Lagändring inkl. utredning och proposition: 0–10 mkr engång. Bas 0 enligt regel 9."
+      "calculation": "Lagändring inkl. utredning och proposition: 0–10 mkr engång. Bas 0 eftersom löftet hålls av en lag eller en reglering."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   },
@@ -17149,7 +17149,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd, nivå eller målgrupp; prissätts till 0 för att undvika dubbelräkning med specifika löften. Jämförbart löfte också 0 msek.",
       "confidence": 0.3,
-      "calculation": "Ingen beräkning möjlig: löftet anger ingen konkret åtgärd, omfattning eller belopp. Enligt regel 13 sätts base till 0; eventuella kostnader hanteras i partiers specifika löften."
+      "calculation": "Ingen beräkning möjlig: löftet anger ingen konkret åtgärd, omfattning eller belopp. eftersom citatet är en bred uppräkning utan konkret åtagande sätts base till 0; eventuella kostnader hanteras i partiers specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1305 (0)"
   },
@@ -17340,7 +17340,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning med specifika löften.",
       "confidence": 0.2,
-      "calculation": "Ingen specificerad reform; enligt regel 13 hanteras som inriktningslöfte med base 0."
+      "calculation": "Ingen specificerad reform; eftersom citatet är en bred uppräkning utan konkret åtagande hanteras som inriktningslöfte med base 0."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
   },
@@ -17416,7 +17416,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; prissätts till 0 för att undvika dubbelräkning med specifika löften.",
       "confidence": 0.2,
-      "calculation": "Ingen konkret reform specificerad; enligt regel 13 prissätts breda inriktningslöften till 0 mkr."
+      "calculation": "Ingen konkret reform specificerad; eftersom citatet är en bred uppräkning utan konkret åtagande prissätts breda inriktningslöften till 0 mkr."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
   },
@@ -17566,7 +17566,7 @@
       "basis_url": null,
       "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts inte för att undvika dubbelräkning med specifika löften.",
       "confidence": 0.2,
-      "calculation": "Inget konkret åtagande, målgrupp eller belopp anges. Enligt regel 13 behandlas formuleringen som inriktningslöfte: base = 0 msek/år. Eventuella kostnader ligger i partiets specifika saklöften."
+      "calculation": "Inget konkret åtagande, målgrupp eller belopp anges. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas formuleringen som inriktningslöfte: base = 0 msek/år. Eventuella kostnader ligger i partiets specifika saklöften."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1766 (0), p-2026-1466 (150), p-2026-0425 (200), p-2026-1801 (0), p-2026-0630 (0)"
   },
@@ -17595,7 +17595,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; prissätts inte. Eventuella delåtgärder hanteras på specifika löften.",
       "confidence": 0.1,
-      "calculation": "Ingen beräkning. Brett önskelöfte enligt regel 13; base 0."
+      "calculation": "Ingen beräkning. Brett önskelöfte eftersom citatet är en bred uppräkning utan konkret åtagande; base 0."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
   },
@@ -17680,7 +17680,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts inte som egen reform (regel 13).",
+      "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts inte som egen reform.",
       "confidence": 0.1,
       "calculation": "Ingen specificerad åtgärd; base 0. Eventuella kostnader hanteras i partiers specifika STEM-löften."
     },
@@ -18345,7 +18345,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; bas 0. Övre spann från jämförbar stödfunktion på cirka 15 mkr/år.",
       "confidence": 0.3,
-      "calculation": "Ingen konkret åtgärd angiven, så bas 0 enligt regel 13. Om löftet tolkas som en stödfunktion för kvinnliga företagare, analogt med jämförbart stöd (~15 mkr/år), blir övre spann 15 mkr/år."
+      "calculation": "Ingen konkret åtgärd angiven, så bas 0 eftersom citatet är en bred uppräkning utan konkret åtagande. Om löftet tolkas som en stödfunktion för kvinnliga företagare, analogt med jämförbart stöd (~15 mkr/år), blir övre spann 15 mkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2007 (0), p-2026-0630 (0), p-2026-2059 (0), p-2026-1458 (15), p-2026-2070 (0)"
   },
@@ -18708,7 +18708,7 @@
       "basis_url": null,
       "method_note": "Marginell ökad a-kasseutbetalning när arbetslösa får studera deltid med bibehållen ersättning; ingen ny förmån utan förlängda/utökade ersättningsperioder. Beteendeeffekter osäkra.",
       "confidence": 0.35,
-      "calculation": "~200 000 personer med a-kasseersättning vid given tidpunkt. Antag 5–15 % (10 000–30 000) utnyttjar rätten till delidsstudier. Större delen hade ändå fått ersättning (regel 11: netto, ej brutto), så kostnaden är förlängd ersättningstid ~1–3 månader à ~13 000 kr/mån plus de som annars lämnat systemet för studiestöd: 25 000 × 1,5 mån × 13 000 ≈ 490 mkr; spann 100–900 msek. Administration tillkommer marginellt."
+      "calculation": "~200 000 personer med a-kasseersättning vid given tidpunkt. Antag 5–15 % (10 000–30 000) utnyttjar rätten till delidsstudier. Större delen hade ändå fått ersättning (Det är en omfördelning och inte en ny kostnad för staten: netto, ej brutto), så kostnaden är förlängd ersättningstid ~1–3 månader à ~13 000 kr/mån plus de som annars lämnat systemet för studiestöd: 25 000 × 1,5 mån × 13 000 ≈ 490 mkr; spann 100–900 msek. Administration tillkommer marginellt."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp"
   },
@@ -18815,7 +18815,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts ej (regel 13) för att undvika dubbelräkning.",
+      "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts ej för att undvika dubbelräkning.",
       "confidence": 0.1,
       "calculation": "Ingen beräkning – brett önskelöfte, base 0."
     },
@@ -18933,7 +18933,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; prissätts till 0 för att undvika dubbelräkning. Jämförbart löfte p-2026-0852 också 0.",
       "confidence": 0.3,
-      "calculation": "Ingen specificerad reformkomponent eller nivå anges. Enligt regel 13 sätts base 0; eventuella kostnader prissätts på partiets specifika löften."
+      "calculation": "Ingen specificerad reformkomponent eller nivå anges. eftersom citatet är en bred uppräkning utan konkret åtagande sätts base 0; eventuella kostnader prissätts på partiets specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0852 (0)"
   },
@@ -19228,7 +19228,7 @@
       "basis_url": null,
       "method_note": "Bred inriktning utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning med specifika bostadslöften.",
       "confidence": 0.3,
-      "calculation": "Ingen konkret reform specificerad; enligt regel 13 prissätts inriktningslöftet till 0 mkr; eventuella delåtgärder hanteras i separata löften."
+      "calculation": "Ingen konkret reform specificerad; eftersom citatet är en bred uppräkning utan konkret åtagande prissätts inriktningslöftet till 0 mkr; eventuella delåtgärder hanteras i separata löften."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2200 (0), p-2026-2005 (0), p-2026-1740 (0), p-2026-2046 (15), p-2026-0367 (150)"
   },
@@ -19860,7 +19860,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; prissätts ej för att undvika dubbelräkning.",
       "confidence": 0.1,
-      "calculation": "Ingen beräkning. Brett önskelöfte enligt regel 13; specifika åtgärder prissätts på egna löften."
+      "calculation": "Ingen beräkning. Brett önskelöfte eftersom citatet är en bred uppräkning utan konkret åtagande; specifika åtgärder prissätts på egna löften."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1960 (0), p-2026-1488 (200), p-2026-1741 (0), p-2026-2132 (0)"
   },
@@ -20069,7 +20069,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning med specifika förslag.",
       "confidence": 0.2,
-      "calculation": "Ingen konkret reform eller nivå anges. Löftet är en bred inriktning om enklare och billigare anställningar. Utan specificerad åtgärd (t.ex. sänkt arbetsgivaravgift eller administrativ förenkling) kan ingen statlig kostnad beräknas. Bas 0 enligt regel 13."
+      "calculation": "Ingen konkret reform eller nivå anges. Löftet är en bred inriktning om enklare och billigare anställningar. Utan specificerad åtgärd (t.ex. sänkt arbetsgivaravgift eller administrativ förenkling) kan ingen statlig kostnad beräknas. Bas 0 eftersom citatet är en bred uppräkning utan konkret åtagande."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1798 (0), p-2026-1797 (0), p-2026-1485 (800), p-2026-0121 (0), p-2026-1255 (0)"
   },
@@ -20127,7 +20127,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; kostnad prissätts i specifika löften.",
       "confidence": 0.2,
-      "calculation": "Ingen konkret åtgärd angiven; enligt regel 13 sätts base 0 för att undvika dubbelräkning."
+      "calculation": "Ingen konkret åtgärd angiven; eftersom citatet är en bred uppräkning utan konkret åtagande sätts base 0 för att undvika dubbelräkning."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-2053 (0), p-2026-1817 (0), p-2026-2174 (0), p-2026-0112 (0), p-2026-2066 (300)"
   },
@@ -20476,7 +20476,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning.",
       "confidence": 0.3,
-      "calculation": "Ingen konkret åtgärd eller nivå angiven. Enligt regel 13 behandlas breda inriktningslöften som 0 mkr; kostsamma delar prissätts på specifika löften."
+      "calculation": "Ingen konkret åtgärd eller nivå angiven. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas breda inriktningslöften som 0 mkr; kostsamma delar prissätts på specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1718 (0)"
   },
@@ -20818,7 +20818,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; kostnad prissätts på specifika förslag.",
       "confidence": 0.3,
-      "calculation": "Löftet anger ingen reform, nivå eller målgrupp. Enligt regel 13 behandlas det som inriktningslöfte: base 0, inga kostnader dubbelräknas."
+      "calculation": "Löftet anger ingen reform, nivå eller målgrupp. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte: base 0, inga kostnader dubbelräknas."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2034 (0), p-2026-1849 (0), p-2026-1357 (0), p-2026-1544 (0), p-2026-1826 (50)"
   },
@@ -21320,7 +21320,7 @@
       "basis_url": null,
       "method_note": "Direkt kostnad för själva fiskestoppet (tillsyn/administration) bedöms försumbar; samhällsekonomiska följder kvantifieras inte.",
       "confidence": 0.5,
-      "calculation": "Förbud/reglering enligt regel 9: ingen direkt statlig utgift utöver löpande tillsyn. Jämförbara löften anger 0 mkr/år. Därför 0 mkr/år."
+      "calculation": "Förbud/reglering enligt Löftet hålls av en lag eller en reglering: ingen direkt statlig utgift utöver löpande tillsyn. Jämförbara löften anger 0 mkr/år. Därför 0 mkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0089 (0), p-2026-1213 (0), p-2026-0402 (0), p-2026-2173 (0), p-2026-1020 (5)"
   },
@@ -21441,7 +21441,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning med specifika försvarslöften.",
       "confidence": 0.3,
-      "calculation": "Ingen konkret åtgärd angiven; enligt regel 13 sätts base till 0. Jämförbara löften om cyberförsvar har också 0."
+      "calculation": "Ingen konkret åtgärd angiven; eftersom citatet är en bred uppräkning utan konkret åtagande sätts base till 0. Jämförbara löften om cyberförsvar har också 0."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1122 (10), p-2026-1269 (0), p-2026-1837 (0), p-2026-1900 (1200), p-2026-1940 (0)"
   },
@@ -21499,7 +21499,7 @@
       "basis_url": null,
       "method_note": "Avser direkt kostnad för lagändring och tillsyn; samhällsföljder och hanteringskostnader hos huvudmän kvantifieras inte.",
       "confidence": 0.3,
-      "calculation": "Regel 9: lag/reglering. Direkt statlig kostnad = utredning, lagstiftning, informationsinsatser, viss tillsyn. Uppskattas till 0–5 mkr engångsvis. Inga transfereringar eller nya bidrag ingår."
+      "calculation": "Löftet hålls av en lag eller en reglering: lag/reglering. Direkt statlig kostnad = utredning, lagstiftning, informationsinsatser, viss tillsyn. Uppskattas till 0–5 mkr engångsvis. Inga transfereringar eller nya bidrag ingår."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0526 (0), p-2026-1651 (700), p-2026-0392 (2200), p-2026-0699 (1500), p-2026-1670 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~700"
   },
@@ -21707,7 +21707,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; kostnad sätts till 0 för att undvika dubbelräkning med specifika löften.",
       "confidence": 0.2,
-      "calculation": "Ingen beräkning – brett mål utan specificerad åtgärd. Base 0 enligt regel 13."
+      "calculation": "Ingen beräkning – brett mål utan specificerad åtgärd. Base 0 eftersom citatet är en bred uppräkning utan konkret åtagande."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
   },
@@ -22011,7 +22011,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; prissätts inte som enskild reform.",
       "confidence": 0.1,
-      "calculation": "Ingen konkret åtgärd, nivå eller målgrupp anges. Behandlas som brett inriktningslöfte enligt regel 13; base 0 msek."
+      "calculation": "Ingen konkret åtgärd, nivå eller målgrupp anges. Behandlas som brett inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande; base 0 msek."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1741 (0), p-2026-1488 (200) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~100"
   },
@@ -22214,7 +22214,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; kostnader prissätts i specifika löften. Direkt statlig kostnad ej kvantifierbar.",
       "confidence": 0.1,
-      "calculation": "Ingen konkret åtgärd eller nivå angiven; enligt regel 13 sätts base till 0 och inga kostnader dubbelräknas."
+      "calculation": "Ingen konkret åtgärd eller nivå angiven; eftersom citatet är en bred uppräkning utan konkret åtagande sätts base till 0 och inga kostnader dubbelräknas."
     },
     "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0315 (0), p-2026-2103 (0), p-2026-0342 (0), p-2026-0335 (0), p-2026-1905 (100000)"
   },
@@ -22312,7 +22312,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; jämförbara 'snabba på'-löften har satts till 0 msek. Kostnader prissätts på specifika förslag.",
       "confidence": 0.3,
-      "calculation": "Löftet anger ingen åtgärd, nivå eller tidsplan. Enligt regel 13 behandlas det som inriktningslöfte med bas 0. Jämförbara löften (p-2026-1859, p-2026-1739) har också 0 msek. Inga egna antaganden om antal eller stöd görs."
+      "calculation": "Löftet anger ingen åtgärd, nivå eller tidsplan. eftersom citatet är en bred uppräkning utan konkret åtagande behandlas det som inriktningslöfte med bas 0. Jämförbara löften (p-2026-1859, p-2026-1739) har också 0 msek. Inga egna antaganden om antal eller stöd görs."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1859 (0), p-2026-1674 (75), p-2026-1739 (0), p-2026-1529 (1000), p-2026-2224 (2500) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~75"
   },
@@ -22496,7 +22496,7 @@
       "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Enligt regel 13 prissätts base 0; specifika åtgärder hanteras i egna löften.",
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. eftersom citatet är en bred uppräkning utan konkret åtagande prissätts base 0; specifika åtgärder hanteras i egna löften.",
       "confidence": 0.2,
       "calculation": "Ingen konkret åtgärd eller nivå angiven. Löftet är en bred uppräkning av beredskapsområden; kostnader för enskilda satsningar prissätts separat."
     },
@@ -22603,7 +22603,7 @@
       "basis_url": null,
       "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; direkta statliga kostnader prissätts i partiets specifika löften.",
       "confidence": 0.3,
-      "calculation": "Ingen konkret reform eller nivå anges. Jämförbara löften om företagsstöd/regelförenkling ligger kring 0–15 mkr. Enligt regel 13 sätts base till 0 för att undvika dubbelräkning."
+      "calculation": "Ingen konkret reform eller nivå anges. Jämförbara löften om företagsstöd/regelförenkling ligger kring 0–15 mkr. eftersom citatet är en bred uppräkning utan konkret åtagande sätts base till 0 för att undvika dubbelräkning."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1458 (15), p-2026-2070 (0), p-2026-0776 (0), p-2026-2007 (0), p-2026-2059 (0)"
   },
@@ -22661,7 +22661,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; prissätts som 0 för att undvika dubbelräkning.",
       "confidence": 0.3,
-      "calculation": "Bred målsättning om bättre företagsvillkor, utan specificerad reform. Enligt regel 13 sätts base till 0 mkr; eventuella kostsamma delar prissätts på partiers specifika löften."
+      "calculation": "Bred målsättning om bättre företagsvillkor, utan specificerad reform. eftersom citatet är en bred uppräkning utan konkret åtagande sätts base till 0 mkr; eventuella kostsamma delar prissätts på partiers specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1211 (0), p-2026-2068 (2500), p-2026-1758 (0), p-2026-1554 (15), p-2026-1487 (400) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~15"
   },
@@ -22725,7 +22725,7 @@
       "basis_url": null,
       "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; jämförbart löfte (p-2026-1308) har satts till 0. Ingen självständig kostnad att prissätta.",
       "confidence": 0.2,
-      "calculation": "Ingen specificerad reform. Bas 0 enligt regel 13; eventuella operativa kostnader prissätts på partispecifika förslag."
+      "calculation": "Ingen specificerad reform. Bas 0 eftersom citatet är en bred uppräkning utan konkret åtagande; eventuella operativa kostnader prissätts på partispecifika förslag."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1308 (0)"
   },
