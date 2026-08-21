@@ -19,6 +19,7 @@
  * I pipelinen körs 'save' med lågt maxSaves varje run (gradvis, snällt mot Wayback).
  */
 import { readFileSync, writeFileSync } from "node:fs";
+import { taLaset } from "../src/datalas.ts";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { quoteInSnapshotText, snapshotText } from "../src/archive-verify.ts";
@@ -70,6 +71,16 @@ function canonical(d: unknown): string {
 const save = (path: string, data: unknown) => writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
 
 interface Promise_ { id: string; quote: string; source: { url: string; archive_url: string | null; fetched_at?: string }; }
+// LÅSET TAS FÖRE LÄSNINGEN, INTE FÖRE SKRIVNINGEN.
+//
+// Körningen läser promises.json i början och skriver den i slutet, med tiotals
+// minuters arkivanrop emellan. Allt som skrivs däremellan skrivs över när den
+// är klar — den här körningen var den första som visade det, och samma
+// kapplöpning tog sedan en indragning som redan var bokförd i rättelseloggen.
+// Se pipeline/src/datalas.ts.
+const slappLas = taLaset(DATA, "archive:backfill");
+process.on("exit", slappLas);
+
 const promises = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Promise_[];
 
 const stripFrag = (u: string) => u.split("#")[0]!;
