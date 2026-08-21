@@ -10457,7 +10457,7 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-27",
@@ -10473,6 +10473,11 @@
         "date": "2026-08-17",
         "change": "Citatet är prövat mot den avskrift av sändningen som ligger i det privata bevisvalvet, och står där ordagrant. Avskriften publiceras inte: fulltext sparas aldrig i repot och ett tal är någons verk. Kontrollen går att göra om med pnpm avskrift:kontroll av den som har valvet. Inget citat, belopp eller besked ändras.",
         "commit": "a9ac7c708a1a8ae6cf6410e01ea0a80251d2f6e3"
+      },
+      {
+        "date": "2026-08-21",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti lovar samma sak två gånger. Den post som står kvar är hämtad från partiets egen sakpolitiska sida och avgränsar löftet till en företagares första medarbetare, medan den här är ett svepande uttalande ur ett videoklipp och bär ett belopp sjuttiofem gånger större för samma politik. Den här posten är alltså en dubblett."
       }
     ],
     "extraction": {
@@ -66886,8 +66891,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-21",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti lovar samma sak två gånger. Den post som står kvar bär partiets EGET angivna belopp — trehundra miljoner kronor till Trafikavtal — medan den här saknar siffra i citatet och prissattes med vår egen uppskattning. Regeln är att partiets egen siffra gäller. Den här posten är en dubblett."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -100028,6 +100039,96 @@
       "method_note": "Åtgärden är en reglering/processändring, ingen direkt statlig kostnad. Prissätter endast administrativ hantering, som bedöms försumbar.",
       "confidence": 0.3,
       "calculation": "Ingen ny utgift: polisens skyldighet att undersöka och återrapportera ryms inom befintlig budget. Eventuell extra administration ≈ 0 mkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T05"
+    }
+  },
+  {
+    "id": "p-2026-2207",
+    "group_id": null,
+    "title": "Sänk arbetsgivaravgiften för första medarbetaren",
+    "slug": "sank-arbetsgivaravgiften-for-forsta-medarbetaren",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Sänka skatten på anställning (arbetsgivaravgiften) kraftigt för en företagares första medarbetare.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/foretagande/sank-kostnaden-for-att-anstalla",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T05:47:54.683Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 200,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ankrar på tidigare nedsättning för första anställd i enskild firma (införd 2017) som kostade ~190 miljoner kr/år. 'Kraftigt' antyder utökad lättnad, vilket kan öka kostnaden. Brett intervall för…",
+      "confidence": 0.5,
+      "calculation": "Antag ~50 000–70 000 företag/år som nyanställer första medarbetare. Genomsnittlig avgiftsbas ~300 000 kr/år, arbetsgivaravgift 31,42%. En kraftig sänkning, t.ex. till 10,21% som tidigare nedsättning, eller helt slopad ger statlig kostnad 100–500 mkr/år. Tidigare nedsättning budgeterades till 190 mkr/år."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T05"
+    }
+  },
+  {
+    "id": "p-2026-2208",
+    "group_id": null,
+    "title": "Satsning på upphandlad tåg- och flygtrafik i hela landet",
+    "slug": "satsning-pa-upphandlad-tag-och-flygtrafik-i-hela-landet",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Tillföra 300 miljoner kronor till Trafikavtal för att staten ska kunna upphandla samhällsviktiga tåg- och flygförbindelser",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/kollektivtrafik",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T05:47:55.032Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 225,
+      "msek_base": 300,
+      "msek_high": 405,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Belopp angivet i källtext: Tillföra 300 miljoner kronor till Trafikavtal. Läses som en årlig nivå.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 300 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Källan skriver inte ut takten. Trafikavtal är ett löpande anslag som staten upphandlar samhällsviktig trafik ur varje år, och en förstärkning av ett sådant anslag är en årlig nivå — trafiken ska köras även nästa år. Beloppet läses därför som en årlig nivå. Spannet är vårt, inte partiets: 225–405 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren.",
+      "confidence": 0.5
     },
     "financing_claimed": {
       "described": false,
