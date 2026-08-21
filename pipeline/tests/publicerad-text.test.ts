@@ -32,13 +32,16 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { INTERN_BETECKNING } from "../src/publicerad-text.ts";
+import { INTERN_BETECKNING, INTERN_REGELKOD } from "../src/publicerad-text.ts";
 
 const DATA = resolve(import.meta.dirname, "../../data");
 
 // Regeln bor i src/publicerad-text.ts och kopieras inte hit: den ska gälla
 // FÖRE publiceringen också, och två kopior glider isär. Se modulens huvud.
-const INTERN = INTERN_BETECKNING;
+const INTERN = new RegExp(
+  `${INTERN_BETECKNING.source}|${INTERN_REGELKOD.source}`,
+  "giu",
+);
 
 interface Lofte {
   id: string;
@@ -110,6 +113,25 @@ describe("text som möter läsaren", () => {
     for (const rad of skaFallas) {
       assert.notEqual(rad.match(INTERN), null, `borde fällas: ${rad}`);
     }
+  });
+
+  /**
+   * En regelkod är intern på samma sätt som ett löftesnummer.
+   *
+   * Kostnadsreglerna är numrerade i prompten, och numret följde med ut: 90
+   * publicerade löften och 99 köposter hänvisade till «regel 9» eller
+   * «regel 13» i text som renderas på löftessidan. Numret säger en
+   * utomstående ingenting; skälet gör det.
+   */
+  it("faller på en intern regelkod, men släpper regeln skriven i ord", () => {
+    const fall = (t: string) => [...t.matchAll(INTERN)].map((m) => m[0]);
+    assert.deepEqual(fall("Prissätts till 0 enligt regel 13."), ["regel 13"]);
+    assert.deepEqual(fall("Regel 9: förbudskostnad är försumbar."), ["Regel 9"]);
+    assert.deepEqual(fall("Prissätts enligt regeln 10 och regel 13."), ["regeln 10", "regel 13"]);
+    // Regeln skriven för läsaren är inte en beteckning — bara numret är det.
+    assert.deepEqual(fall("Citatet är en bred uppräkning utan konkret åtagande."), []);
+    assert.deepEqual(fall("Löftet hålls av en lag eller en reglering."), []);
+    assert.deepEqual(fall("Regeln om breda uppräkningslöften ger noll."), []);
   });
 
   it("släpper igenom en hänvisning skriven för läsaren", () => {

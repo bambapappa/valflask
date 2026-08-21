@@ -31,7 +31,8 @@
     "kostnad:om": "node --import tsx/esm scripts/kostnad-omkorning.mts",
     "datumgrind:om": "node --import tsx/esm scripts/datumgrind-omprovning.mts",
     "film:arkiv": "node --import tsx/esm scripts/film-arkiv.mts",
-    "ankarsvepet": "node --import tsx/esm scripts/ankarsvepet.mts"
+    "ankarsvepet": "node --import tsx/esm scripts/ankarsvepet.mts",
+    "gront": "node --import tsx/esm scripts/gront.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1",
