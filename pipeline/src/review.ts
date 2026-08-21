@@ -5,6 +5,7 @@ import { computeDataHash, type ChangelogEntry } from "./publish.ts";
 import { konyckel, lasProvningar, provningsGrind } from "./provningar.ts";
 import { avvisa, hav, slaUpp, type Avvisning } from "./avvisningar.ts";
 import { partiForUrl } from "./skordeordning.ts";
+import { taLaset } from "./datalas.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -474,6 +475,28 @@ export function approve(
     args.push(a);
   }
 
+  // Ingen skrivning medan sviten muterar data/ — dess återställning skulle ta
+  // bort den utan ett ord. Se datalas.ts för vad det kostade.
+  const slappLas = taLaset(dataDir, "review approve");
+  try {
+    return approveLast(dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag);
+  } finally {
+    slappLas();
+  }
+}
+
+/** Själva godkännandet. Bruten ur `approve` bara för att låset ska ha ett finally. */
+function approveLast(
+  dataDir: string,
+  args: string[],
+  linkTo: string | undefined,
+  calculationFlag: string | undefined,
+  typFlag: string | undefined,
+  basisFlag: string | undefined,
+  basisUrlFlag: string | undefined,
+  periodFlag: string | undefined,
+  noteFlag: string | undefined,
+): { id: string; title: string; msekBase: number } {
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
   const index = loesKoArgument(items, args[0]);
 
@@ -730,6 +753,18 @@ export function reject(
   reason: string,
   dataDir: string = DATA_DIR,
 ): { title: string } {
+  // Samma skäl som i `approve`: sviten återställer data/ ur en säkerhetskopia,
+  // och en avvisning skriven under tiden försvinner spårlöst.
+  const slappLas = taLaset(dataDir, "review reject");
+  try {
+    return rejectLast(indexStr, reason, dataDir);
+  } finally {
+    slappLas();
+  }
+}
+
+/** Själva avvisningen. Bruten ur `reject` bara för att låset ska ha ett finally. */
+function rejectLast(indexStr: string, reason: string, dataDir: string): { title: string } {
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
   const index = loesKoArgument(items, indexStr);
 

@@ -3,6 +3,7 @@ import { resolve, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn, type ChildProcess } from "node:child_process";
 import { createHash } from "node:crypto";
+import { taLaset } from "../../pipeline/src/datalas.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "../..");
@@ -62,6 +63,22 @@ if (!existsSync(PROMISES_PATH)) {
   fail("promises.json not found");
   process.exit(1);
 }
+
+// LÅSET TAS FÖRE SÄKERHETSKOPIAN, INTE EFTER.
+//
+// Från och med kopian äger det här skriptet data/: allt som skrivs av något
+// annat härifrån och fram till återställningen försvinner spårlöst, för
+// återställningen lägger tillbaka filerna som de såg ut FÖRE skrivningen.
+//
+// Det hände 2026-08-21. En indragning kördes medan sviten låg i bakgrunden;
+// statusändringen och changelog-posten skrevs över, men rättelsen skrevs efteråt
+// och blev kvar. Kvar stod en publicerad rättelse om en indragning som inte
+// fanns. Se pipeline/src/datalas.ts.
+//
+// Låset släpps i `restoreData`, alltså i samma väg som återställningen — inte i
+// en egen gren som kan missas när skriptet avslutas på något annat sätt.
+const slappLas = taLaset(DATA_DIR, "sviten i site/ (test-t3-stale)");
+
 skydda(PROMISES_PATH, BACKUP_PATH);
 
 // Isolering: bevara befintlig dist/ så att efterföljande sviter (T9: data_hash-
@@ -119,6 +136,8 @@ function restoreData() {
       restoreFel.push(`${f.namn}: innehållet stämmer inte efter återställning (${f.hash.slice(0, 12)} → ${nu.slice(0, 12)})`);
     }
   }
+  // Först när filerna ligger tillbaka är katalogen någon annans att skriva i.
+  slappLas();
 }
 
 /**
