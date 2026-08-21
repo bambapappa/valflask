@@ -571,6 +571,53 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
     }
   });
 
+  /**
+   * Interna beteckningar hör inte hemma i text som möter läsaren, och regeln
+   * måste gälla FÖRE publiceringen.
+   *
+   * Den låg bara i provsviten. `p-2026-2250` godkändes 2026-08-21 med
+   * «p-2026-1212» i både uträkning och not, och fälldes först av sviten — när
+   * löftet redan låg i promises.json och grenen var röd.
+   */
+  it("vägrar publicera en uträkning som bär ett internt löftesnummer", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-internt-id-"));
+    try {
+      const calc = "Bas 5 msek/år ankrat i jämförbart löfte om trålförbud (p-2026-1212 ≈ 5 msek/år).";
+      const medId: ReviewCandidate = {
+        ...queueItem,
+        cost: { ...queueItem.cost!, calculation: calc },
+      };
+      writeFileSync(join(dir, "promises.json"), JSON.stringify([pub]));
+      writeFileSync(join(dir, "needs_review.json"), JSON.stringify([medId]));
+      writeFileSync(join(dir, "changelog.json"), JSON.stringify([]));
+      writeFileSync(join(dir, "provningar.json"), JSON.stringify({
+        poster: [{
+          id: konyckel(medId.articleUrl, medId.candidate!.quote),
+          slag: "lofte", datum: "2026-08-21", utfall: "haller",
+          underlag_hash: kanon("lofte", {
+            quote: medId.candidate!.quote, title: medId.candidate!.title,
+            parties: medId.candidate!.parties, status: "aktiv", group_id: null,
+            source: { url: medId.articleUrl }, cost: medId.cost,
+          }),
+        }],
+      }));
+      const r = spawnSync(
+        process.execPath,
+        ["--import", "tsx/esm", "-e",
+         `import {approve} from ${JSON.stringify(join(import.meta.dirname, "../src/review.ts"))};` +
+         `approve(["0"], ${JSON.stringify(dir)});`],
+        { encoding: "utf8" },
+      );
+      assert.notEqual(r.status, 0, "ett internt nummer i publik text ska stoppa godkännandet");
+      assert.match((r.stdout ?? "") + (r.stderr ?? ""), /intern beteckning/u);
+      assert.match((r.stdout ?? "") + (r.stderr ?? ""), /p-2026-1212/u, "säger vilket nummer det gäller");
+      assert.equal(JSON.parse(readFileSync(join(dir, "promises.json"), "utf8")).length, 1,
+        "inget publicerades");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it("en okänd källnivå stoppar godkännandet i stället för att tyst bli något annat", () => {
     const dir = mkdtempSync(join(tmpdir(), "review-basis-fel-"));
     try {
