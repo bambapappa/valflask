@@ -1952,5 +1952,151 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-miniminiva",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Moderaterna vill att asylinvandringen till Sverige ska vara minimal och att den asylrelaterade migrationspolitiken ska följa EU:s minimumkrav.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/invandring/",
+    "articleTitle": "Invandring | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/invandring/",
+    "archiveUrl": "https://web.archive.org/web/20260821022713/https://moderaterna.se/var-politik/invandring/",
+    "dateStated": "2026-08-05",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-01-51",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Att staten minskar risken för ny kärnkraft genom uppdaterade regelverk, en finansieringslösning och statligt ägande.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/klimat-miljo-och-energi/",
+    "articleTitle": "Klimat, miljö och energi | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/klimat-miljo-och-energi/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-05",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-01-51",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-matmoms",
+      "party": "m",
+      "position": "villkorat",
+      "condition_note": "Om omvärldsläget fortfarande är orolig och lågkonjunkturen biter sig kvar.",
+      "quote": "Om omvärldsläget fortfarande är orolig och lågkonjunkturen biter sig kvar är Moderaterna är beredd att se över om den tillfälligt sänkta matmomsen ska behållas för att hjälpa svenska hushåll.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/matpriser/",
+    "articleTitle": "Matpriser | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/matpriser/",
+    "archiveUrl": null,
+    "dateStated": "2026-07-20",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-01-51",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet säger att Moderaterna är 'beredd att se över om den tillfälligt sänkta matmomsen ska behållas', vilket handlar om att eventuellt förlänga eller behålla den tillfälliga sänkningen under vissa villkor – inte om att göra den permanent. Källtexten bekräftar detta: 'Sänkningen på matmomsen är tillfällig. Moderaterna är beredda att förlänga den om ...'. Därmed besvarar citatet inte delfrågans avgränsning om permanentgörande."
+      }
+    ],
+    "verifyReason": "Citatet säger att Moderaterna är 'beredd att se över om den tillfälligt sänkta matmomsen ska behållas', vilket handlar om att eventuellt förlänga eller behålla den tillfälliga sänkningen under vissa villkor – inte om att göra den permanent. Källtexten bekräftar detta: 'Sänkningen på matmomsen är tillfällig. Moderaterna är beredda att förlänga den om ...'. Därmed besvarar citatet inte delfrågans avgränsning om permanentgörande."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-miniminiva",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Minska den asylrelaterade invandringen till Sverige genom att bland annat anpassa asyllagstiftningen till EU-rättens miniminivå.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/migration/",
+    "articleTitle": "Migration | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/migration/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-05",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-01-51",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-atervandring",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Det handlar om att ge goda förutsättningar för frivillig återvandring för till exempel personer som känner att de inte kommit in i det svenska samhället och vill återvända till sitt hemland.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/migration/",
+    "articleTitle": "Migration | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/migration/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-05",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-01-51",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-lonegolv",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Höja försörjningskravet (lönekravet) för arbetskraftsinvandrare från länder utanför EU. I november 2023 höjdes det till 80 procent av medianlönen. Den 1 juni 2026 höjs det till 90 procent av medianlönen",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/migration/",
+    "articleTitle": "Migration | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/migration/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-05",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-01-51",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet redogör bara för beslutade höjningar av lönekravet, inte för om partiet vill behålla, skärpa, sänka eller avskaffa nivån efter att 90-procentsgränsen har införts."
+      }
+    ],
+    "verifyReason": "Citatet redogör bara för beslutade höjningar av lönekravet, inte för om partiet vill behålla, skärpa, sänka eller avskaffa nivån efter att 90-procentsgränsen har införts."
   }
 ]
