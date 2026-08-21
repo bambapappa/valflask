@@ -2098,5 +2098,393 @@
       }
     ],
     "verifyReason": "Citatet redogör bara för beslutade höjningar av lönekravet, inte för om partiet vill behålla, skärpa, sänka eller avskaffa nivån efter att 90-procentsgränsen har införts."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Införa vinstförbud i förskolan. Införa ett vinstförbud på förskolans område för att stoppa läckage av resurser och säkerställa att skattemedlen går till barnen och inget annat.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
+    "articleTitle": "Förskola\n| Socialdemokraterna",
+    "runId": "run-2026-08-21-04-49"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-reduktionsplikt",
+      "party": "s",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "I det här allvarliga läget är det inte aktuellt med någon höjning av reduktionsplikten eller höjda drivmedelsskatter.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/branslepriser/fakta-om-socialdemokraternas-politik-kring-drivmedelsskatt",
+    "articleTitle": "Fakta om Socialdemokraternas politik kring drivmedelsskatt\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/branslepriser/fakta-om-socialdemokraternas-politik-kring-drivmedelsskatt",
+    "archiveUrl": null,
+    "dateStated": "2026-08-13",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-inkomstskatt",
+      "party": "c",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Centerpartiet vill sänka skatten på arbete och företagande. Du som jobbar ska få behålla mer av din lön",
+      "person": null
+    },
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/ekonomi-och-skatter/inkomstskatt",
+    "articleTitle": "Inkomstskatt | Centerpartiet",
+    "sourceUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/ekonomi-och-skatter/inkomstskatt",
+    "archiveUrl": null,
+    "dateStated": "2026-08-21",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet uttalar sig generellt om sänkt skatt på arbete och företagande, inte specifikt om den statliga inkomstskatten, och ger därför inte stöd för ett ja på den avgränsade frågan."
+      }
+    ],
+    "verifyReason": "Citatet uttalar sig generellt om sänkt skatt på arbete och företagande, inte specifikt om den statliga inkomstskatten, och ger därför inte stöd för ett ja på den avgränsade frågan."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-vindveto",
+      "party": "c",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Centerpartiet vill bygga ut vindkraften för att säkra Sveriges tillgång till ren och billig el. Det ska vi göra genom snabbare tillståndsprocesser och en politik som garanterar att det blir en vinst för alla.",
+      "person": null
+    },
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/energi",
+    "articleTitle": "Energi | Centerpartiet",
+    "sourceUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/energi",
+    "archiveUrl": null,
+    "dateStated": "2026-02-13",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet handlar om att bygga ut vindkraft och snabbare tillståndsprocesser, men nämner inte det kommunala vetot, så det besvarar inte den specifika delfrågan."
+      }
+    ],
+    "verifyReason": "Citatet handlar om att bygga ut vindkraft och snabbare tillståndsprocesser, men nämner inte det kommunala vetot, så det besvarar inte den specifika delfrågan."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-matmoms",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi har krävt tillfälligt sänkt matmoms till 6 procent och att en matpriskommission inrättas som ska motverka skenande priser.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/ekonomi",
+    "articleTitle": "Ekonomi\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/ekonomi",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet säger bara att S har krävt en tillfällig sänkning av matmomsen, inte om den tillfälliga ordningen ska göras permanent."
+      }
+    ],
+    "verifyReason": "Citatet säger bara att S har krävt en tillfällig sänkning av matmomsen, inte om den tillfälliga ordningen ska göras permanent."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-vindveto",
+      "party": "v",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "En kommun bör vara skyldig att på begäran ta ställning för eller emot vindkraft på ett visst mark- eller vattenområde.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/vindkraft/",
+    "articleTitle": "Vindkraft – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/vindkraft/",
+    "archiveUrl": "https://web.archive.org/web/20260821053006/https://www.vansterpartiet.se/var-politik/politik-a-o/vindkraft/",
+    "dateStated": "2026-08-21",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet säger att en kommun ska vara skyldig att ta ställning för eller emot vindkraft, men anger inte om ställningstagandet ska vara bindande eller innebära att det kommunala vetot avskaffas."
+      }
+    ],
+    "verifyReason": "Citatet säger att en kommun ska vara skyldig att ta ställning för eller emot vindkraft, men anger inte om ställningstagandet ska vara bindande eller innebära att det kommunala vetot avskaffas."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Fasa ut vinstintresset och omvandla vinstdrivande aktiebolag i skolan till en associationsform utan vinstsyfte",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/friskolor",
+    "articleTitle": "Friskolor – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/friskolor",
+    "archiveUrl": null,
+    "dateStated": "2026-05-21",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-vinst",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vänsterpartiet motsätter sig denna utveckling. Vinstjakten i välfärden måste stoppas. Ett förbud mot vinster i välfärden bör utredas och införas.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/vinster-i-valfarden/",
+    "articleTitle": "Vinster i välfärden – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/vinster-i-valfarden/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-21",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vänsterpartiet motsätter sig denna utveckling. Vinstjakten i välfärden måste stoppas. Ett förbud mot vinster i välfärden bör utredas och införas.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/vinster-i-valfarden/",
+    "articleTitle": "Vinster i välfärden – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/vinster-i-valfarden/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-21",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet handlar generellt om vinster i välfärden och säger inget specifikt om vinstutdelning från friskolekoncerner, så det svarar inte på delfrågans avgränsning."
+      }
+    ],
+    "verifyReason": "Citatet handlar generellt om vinster i välfärden och säger inget specifikt om vinstutdelning från friskolekoncerner, så det svarar inte på delfrågans avgränsning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Införa språkkrav för pedagogisk personal i förskolan.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
+    "articleTitle": "Förskola\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet gäller språkkrav för pedagogisk personal i förskolan, inte för personal i äldreomsorgen, och ger därför inget besked om den aktuella delfrågan."
+      }
+    ],
+    "verifyReason": "Citatet gäller språkkrav för pedagogisk personal i förskolan, inte för personal i äldreomsorgen, och ger därför inget besked om den aktuella delfrågan."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-vindveto",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Samtidigt värnar vi det kommunala vetot vid etablering av vindkraftsparker. Kommunerna ska ha fullt inflytande över markanvändningen.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/glesbygd",
+    "articleTitle": "Glesbygd – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/glesbygd",
+    "archiveUrl": null,
+    "dateStated": "2026-05-18",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Socialdemokrater vill förbjuda vinstuttag så att alla skolor ska fokusera på kärnuppdraget: en bra utbildning och bildning för varje elev.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/friskolor",
+    "articleTitle": "Friskolor\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/friskolor",
+    "archiveUrl": null,
+    "dateStated": "2026-06-15",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-vinst",
+      "party": "v",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Medborgarna betalar skatt för att få en bra välfärd, då ska pengarna gå till välfärden och inte till privata bolagsvinster.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/valplattform-2022-2/valplattformen-pa-latt-svenska/",
+    "articleTitle": "Valplattformen på lätt svenska – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/valplattform-2022-2/valplattformen-pa-latt-svenska/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-21",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet säger att skattepengar ska gå till välfärden och inte till privata bolagsvinster, vilket tyder på ett ja – inte nej – till att begränsa vinstuttag i privat driven välfärd."
+      }
+    ],
+    "verifyReason": "Citatet säger att skattepengar ska gå till välfärden och inte till privata bolagsvinster, vilket tyder på ett ja – inte nej – till att begränsa vinstuttag i privat driven välfärd."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "v",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Sverige är det enda landet i världen som låter skattepengar bli vinster åt ägare i privata skolor. De flesta svenskar tycker att det är ett dåligt system och vi i Vänsterpartiet kräver ett omedelbart stopp för detta.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/valplattform-2022-2/valplattformen-pa-latt-svenska/",
+    "articleTitle": "Valplattformen på lätt svenska – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/valplattform-2022-2/valplattformen-pa-latt-svenska/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-21",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet uttrycker att Vänsterpartiet kräver ett omedelbart stopp för vinster till ägare i privata skolor, vilket motsäger den angivna positionen 'nej'."
+      }
+    ],
+    "verifyReason": "Citatet uttrycker att Vänsterpartiet kräver ett omedelbart stopp för vinster till ägare i privata skolor, vilket motsäger den angivna positionen 'nej'."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-huvudman",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Staten ska ta ansvar för en jämlik vård och omsorg. Sjukvården ska vara jämlik, jämställd och finnas för alla, oavsett var i Sverige du bor.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/valplattform-2022-2/valplattformen-pa-latt-svenska/",
+    "articleTitle": "Valplattformen på lätt svenska – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/valplattform-2022-2/valplattformen-pa-latt-svenska/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-21",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet säger att staten ska ta ansvar för jämlik vård, men besvarar inte avgränsningen om vem som ska vara huvudman för sjukvården; det kräver välvillig tolkning för att bli ett ja på frågan om staten ska ta över huvudansvaret från regionerna."
+      }
+    ],
+    "verifyReason": "Citatet säger att staten ska ta ansvar för jämlik vård, men besvarar inte avgränsningen om vem som ska vara huvudman för sjukvården; det kräver välvillig tolkning för att bli ett ja på frågan om staten ska ta över huvudansvaret från regionerna."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Liberalerna vill därför att staten tar det fulla ansvaret för grundskolan och blir huvudman för skolan.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/grundskolan",
+    "articleTitle": "Grundskolan – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/grundskolan",
+    "archiveUrl": null,
+    "dateStated": "2026-05-22",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "kimi-k2.7-code",
+    "runId": "run-2026-08-21-04-49",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
