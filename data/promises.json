@@ -10488,7 +10488,7 @@
   },
   {
     "id": "p-2026-0257",
-    "group_id": null,
+    "group_id": "g-anstallningsskatten-langtidsarbetslosa",
     "title": "Och vi vill göra det billigare att anställa människor som varit arbetslösa länge",
     "slug": "och-vi-vill-gora-det-billigare-att-anstalla-manniskor-som-varit-arbetslosa-lange",
     "parties": [
@@ -10533,7 +10533,7 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-27",
@@ -10544,6 +10544,11 @@
         "date": "2026-08-17",
         "change": "Citatet är prövat mot den avskrift av sändningen som ligger i det privata bevisvalvet, och står där ordagrant. Avskriften publiceras inte: fulltext sparas aldrig i repot och ett tal är någons verk. Kontrollen går att göra om med pnpm avskrift:kontroll av den som har valvet. Inget citat, belopp eller besked ändras.",
         "commit": "a9ac7c708a1a8ae6cf6410e01ea0a80251d2f6e3"
+      },
+      {
+        "date": "2026-08-21",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma löfte som Centerpartiets skrivna politik om att slopa anställningsskatten för långtidsarbetslösa, som nu är publicerad och ersätter det. Den här versionen var en vag mening ur ett videoklipp; kö-versionen namnger mekanismen."
       }
     ],
     "extraction": {
@@ -16620,7 +16625,7 @@
   },
   {
     "id": "p-2026-0415",
-    "group_id": null,
+    "group_id": "g-gron-baskraft-planeringsmal",
     "title": "Miljöpartiet vill införa investeringsstöd för grön baskraft",
     "slug": "miljopartiet-vill-infora-investeringsstod-for-gron-baskraft",
     "parties": [
@@ -16657,12 +16662,17 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-27",
         "change": "Beloppet ändrat så att det stämmer med den uträkning som visas på löftets sida. Löftet visade ett annat tal än sin egen redovisade räkning; nu gäller uträkningens basbelopp och dess låga och höga scenarier.",
         "commit": "47979c3a6a1cce53e12be3ece8230b0c028e0fd0"
+      },
+      {
+        "date": "2026-08-21",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Dubblett av p-2026-1978, som bär samma planeringsmål och investeringsstöd för grön baskraft men dessutom namnger vad stödet ska gå till. Det större löftet innehåller det mindre och står kvar."
       }
     ],
     "extraction": {
@@ -26689,12 +26699,17 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-08-04",
         "change": "Uträkningen skrevs om. Den text som sattes vid godkännandet var längre än det som ryms på en löftessida och kapades mitt i ett ord, så sista meningen slutade i luften. Metodnoten beskrev dessutom fortfarande den uppskattning per pensionär som beloppet inte längre bygger på. Beloppet är oförändrat.",
         "commit": "b2fc6d53b74d828566eae4fd010b68a2624e1ebb"
+      },
+      {
+        "date": "2026-08-21",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Innehålls i Moderaternas bredare löfte om sänkt skatt på arbete med förstärkt jobbskatteavdrag och nytt jobbat-avdrag, som nu är publicerat och ersätter det. Två löften från samma parti om samma politik grupperas inte — det bredare står."
       }
     ],
     "extraction": {
@@ -55800,8 +55815,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-21",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Innehålls i Vänsterpartiets bredare löfte om att höja taken i hela socialförsäkringen, som nu är publicerat och ersätter det. Två löften från samma parti om samma politik grupperas inte — det bredare står."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -89752,7 +89773,7 @@
   },
   {
     "id": "p-2026-1978",
-    "group_id": null,
+    "group_id": "g-gron-baskraft-planeringsmal",
     "title": "Planeringsmål och investeringsstöd för grön baskraft",
     "slug": "planeringsmal-och-investeringsstod-for-gron-baskraft",
     "parties": [
@@ -100149,6 +100170,1491 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-08-21T05"
+    }
+  },
+  {
+    "id": "p-2026-2209",
+    "group_id": null,
+    "title": "Arbetstidsförkortning inom omsorgen",
+    "slug": "arbetstidsforkortning-inom-omsorgen",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Arbetstidsförkortning inom omsorgen så att personalen orkar ett helt yrkesliv.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/aldreomsorg/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:29.413Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4500,
+      "msek_base": 7500,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avser kommunal äldreomsorg och LSS. Regionernas vårdpersonal prissätts separat på Vänsterpartiets löfte om förkorta arbetstiden för vårdpersonal med bibehållen lön; personalgrupperna är skilda och räknas inte två gånger.",
+      "confidence": 0.35,
+      "calculation": "Löftet gäller arbetstidsförkortning inom omsorgen, alltså den kommunala äldreomsorgen och LSS — ungefär 230 000–260 000 anställda med en samlad lönekostnad på storleksordningen 150 miljarder kronor per år. Partiets publicerade löfte om förkortad arbetstid för vårdpersonal gäller regionernas personal, omkring 300 000 årsarbetare, och är en annan grupp. De två räknas därför var för sig och överlappar inte. Partiet anger ingen förkortningsnivå. Beloppet vilar på samma antagande som Vänsterpartiets löfte om förkorta arbetstiden för vårdpersonal med bibehållen lön: fem procent kortare arbetstid med bibehållen lön, vilket kräver motsvarande mer personal. 0,05 × 150 miljarder ≈ 7 500 miljoner kronor per år. Spannet 4 500–12 000 motsvarar tre till åtta procent. Nivån är vårt antagande, inte partiets."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2210",
+    "group_id": null,
+    "title": "Tillagningskök i alla skolor och äldreboenden",
+    "slug": "tillagningskok-i-alla-skolor-och-aldreboenden",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "tillagningskök i alla skolor och äldreboenden",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/7-stegsprogram/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:29.736Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 6000,
+      "msek_base": 18000,
+      "msek_high": 39000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statligt engångsinvesteringbidrag till kommuner för att bygga tillagningskök där de saknas. Drift- och personalkostnader är kommunala och marginella — ej prissatta. Osäkerhet: andel enheter utan kök…",
+      "confidence": 0.35,
+      "calculation": "Antag ~5 000 skolenheter (grundskola+gymnasium), 30–40 % saknar tillagningskök → 1 500–2 000 kök. Byggkostnad 8–15 mkr/kök → 12 000–30 000 mkr. Äldreboenden: ~2 300 vård- och omsorgsboenden, ~40 % utan kök → ~900 kök × 3–10 mkr → 3 000–9 000 mkr. Optimistiskt låg scen: 20 % av skolor × 5 mkr + 500 äldreboenden × 2 mkr ≈ 6 000 mkr. Totalt spann ~6 000–39 000 mkr, bas ~18 000 mkr som statligt engångsbidrag. Alla antag om enhetsantal och andel utan kök är egna uppskattningar."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2211",
+    "group_id": null,
+    "title": "Utbyggnad av havsbaserad vindkraft och stamnät till havs",
+    "slug": "utbyggnad-av-havsbaserad-vindkraft-och-stamnat-till-havs",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Miljöpartiet vill få fart på havsbaserad vindkraft genom att bygga ut stamnät till havs, göra vindkraftsprövningen mer rättssäker och ge kommuner och närboende bättre ersättning och kompensation.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/energi/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:30.080Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5000,
+      "msek_base": 15000,
+      "msek_high": 40000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kärnan är statlig (Svenska kraftnäts) investering i stamnät till havs; prövning och kompensation är regleringar utan väsentlig direkt budgetkostnad. Osäkerhet stor: finansieras delvis via nättariffer.",
+      "confidence": 0.3,
+      "calculation": "Antag 2–4 GW havsbaserad vindkraft som ansluts med statligt havsstamnät. Kostnad per ansluten GW (havskablar, offshorestationer, landförstärkning) grovt 5–10 mdkr/GW → totalt ca 10–40 mdkr. Låg = begränsad första fas (~5 mdkr), bas ~15 mdkr, hög ~40 mdkr vid bred utbyggnad. Delvis självfinansierat via nättariffer hos statliga SvK, men statens nya nettoengagemang (kapitaltillskott/garantier) ligger i detta spann. Rättssäkrare prövning ≈ 0 msek; ersättning till kommuner/närboende betalas normalt av exploatörer, ej staten."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2212",
+    "group_id": null,
+    "title": "10 GW grön baskraft på plats till 2030",
+    "slug": "10-gw-gron-baskraft-pa-plats-till-2030",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Miljöpartiet vill ha 10 GW grön baskraft på plats till 2030.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/energi/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:30.401Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå. Prissatt som statens stödandel (kapitalbidrag, riskdelning, nätanslutning) för att få 10 GW grön baskraft på plats — inte hela investeringen, som till stor del bärs av marknaden. (belopp satt av granskare)",
+      "calculation": "Löftet anger ett mål — 10 GW grön baskraft till 2030 — men varken vilka anläggningar som avses, hur de ska komma till stånd eller vad staten ska betala. Medlen står på partiets eget löfte om planeringsmål och investeringsstöd för grön baskraft, prissatt till 1 500 miljoner kronor per år. Målet prissätts därför inte en gång till.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2213",
+    "group_id": null,
+    "title": "Stötta familjer när världsmarknadspriserna på bränsle stiger",
+    "slug": "stotta-familjer-nar-varldsmarknadspriserna-pa-bransle-stiger",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Stötta vanliga familjer när världsmarknadspriserna stiger.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/branslepriser",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:30.711Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 5000,
+      "msek_high": 12000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp eller instrument. Anchored at temporary fuel-tax cuts ~2022 (några mdkr per episod). Kostnad uppstår endast prischocksår; belopp = per utlöst år. Ej samhällseffekter.",
+      "confidence": 0.3,
+      "calculation": "Mest troliga instrument: tillfälligt sänkt/hävd energi- och koldioxidskatt vid prischock. Skatt ~3,6–4,4 kr/l; förbrukning bensin ~1,7 mdr liter + diesel ~3,9 mdr liter ≈ 5,6 mdr liter/år. 6 månaders tillfällig lättnad: 5,6e9 l × ~3,5 kr × 0,5 ≈ 9–10 mdkr; helår uppemot ~12 mdkr. Alternativ riktat stöd (t.ex. 1–2 tkr till 2–4 mln hushåll) ≈ 2–6 mdkr. Spannet täcker smal kompensation till full tillfällig skattehävning; bas ~5 mdkr per utlöst år."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2214",
+    "group_id": null,
+    "title": "Utöka allmän förskola från 15 till 30 timmar per vecka",
+    "slug": "utoka-allman-forskola-fran-15-till-30-timmar-per-vecka",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Miljöpartiet vill på sikt utöka den allmänna förskolan från 15 till 30 timmar i veckan.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/forskola-och-fritidshem/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:31.034Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 4500,
+      "msek_high": 7500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ersättning av föräldraavgifter för ytterligare 15 tim/v för barn 3–5 år; antal barn × avgiftsnivå plus viss ökad efterfrågan. 'På sikt' gör timing och omfattning osäker.",
+      "confidence": 0.45,
+      "calculation": "~350 000 barn i ålder 3–5 år går i förskola. Dubblad gratisandel innebär att maxtaxans avgifter för i princip alla timmar upp till 30 h/v ersätts av offentlig finans. Avgift efter nuvarande gratis 15 h typiskt ~1 000–1 400 kr/mån: 350 000 barn × ~1 100 kr/mån × 12 ≈ 4,5 mdkr/år. Därtill viss inducerad ökad användning (familjer under 30 h ökar) och platserbjudande: +0–50 %. Totalt spann ~3 000–7 500 mkr, bas 4 500 mkr. Not: beloppet avser statsfinansierad ersättning av avgifter/merkostnad, inte samhällseffekter."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2215",
+    "group_id": null,
+    "title": "Höja barn- och studiebidrag, förstärka bostadsbidrag och göra medicin billigare",
+    "slug": "hoja-barn-och-studiebidrag-forstarka-bostadsbidrag-och-gora-medicin-billigare",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Höja barn- och studiebidraget. Förstärka bostadsbidraget för de familjer som har det tuffast. Göra medicin billigare.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/ekonomi",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:31.367Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Flera förmånshöjningar utan angivna nivåer. Intervallet storleksordnas mot jämförbara reformer (p-2026-0468, p-2026-0712) och inkluderar en försiktig uppskattning för studiebidrag och… (belopp satt av granskare)",
+      "calculation": "Löftet räknar upp tre åtgärder som partiet lovar var för sig: höjt barn- och studiebidrag, förstärkt bostadsbidrag och billigare medicin. Alla tre är prissatta på de egna löftena — dubblade bidrag inför loven till 6 300 miljoner kronor per år, bostadsbidraget till 700 och billigare medicinuttag till 1 000. Att lägga ett belopp här också vore att räkna samma politik två gånger.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2216",
+    "group_id": null,
+    "title": "Fler extratjänster i välfärden",
+    "slug": "fler-extratjanster-i-valfarden",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Utöka extratjänsterna för bristyrken inom välfärden.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/gron-politik-for-etablering/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:31.763Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 3000,
+      "msek_high": 7000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löfte utan nivå; tolkat som återinförande/utbyggnad av extratjänster (stats субventionerad anställning). Kostnad = subvention per plats × antal platser, enligt programmets tidigare utförmning.",
+      "confidence": 0.4,
+      "calculation": "Extratjänster (2016–2021) gav arbetsgivare en subvention på upp till ~150 % av lönekostnaden. Lönekostnad per heltidstjänst i välfärden ~0,3 mkr/år inkl. sociala avgifter; med deltid och kortare varaktighet antas statskostnad ~0,25–0,45 mkr per plats och år. 'Utöka' utan angiven nivå antas motsvara ~5 000–15 000 nya platser: 5 000×0,25 ≈ 1 250 msek; 15 000×0,45 ≈ 6 750 msek. Bas ~3 000 msek motsvarar ~10 000 platser à ~0,3 mkr. Notera: vissa nettoeffekter (lägre a-kassa/försörjningsstöd, höjda skatteintäkter) ej avdragna, varför spannet är brett. Partiets nivå saknas — antalet platser är min uppskattning, subventionsformen bygger på det tidigare programmets utformning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2217",
+    "group_id": null,
+    "title": "Bredare elbilspremie och reformerat reseavdrag",
+    "slug": "bredare-elbilspremie-och-reformerat-reseavdrag",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "För landets bilister vill vi införa en bredare elbilspremie som når 3 miljoner hushåll, och vårt förslag om reformerat avdrag för resor till och från jobbet omfattar även de som cyklar eller tar bussen.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/klimatmalen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:32.513Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet är vagt: 'bredare elbilspremie' utan belopp, plus reformerat reseavdrag. Jämförbara löften ligger på 3000–7500 msek/år. Osäkerheten är stor eftersom premienivå och utformning av reseavdraget… (belopp satt av granskare)",
+      "calculation": "Löftet räknar upp två åtgärder som partiet lovar var för sig: en bred elbilspremie och ett reformerat reseavdrag. Båda är prissatta på de egna löftena — premien till 3 000 miljoner kronor per år och det färdmedelsneutrala reseavdraget till 2 500. Att lägga ett belopp här också vore att räkna samma politik två gånger.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2218",
+    "group_id": null,
+    "title": "Införa avståndsbaserat och färdmedelsneutralt reseavdrag samt ta bort förmånsbeskattning av periodkort",
+    "slug": "infora-avstandsbaserat-och-fardmedelsneutralt-reseavdrag-samt-ta-bort-formansbeskattning-av-periodkort",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Miljöpartiet vill införa ett avståndsbaserat och färdmedelsneutralt reseavdrag. Vi vill också ta bort förmånsbeskattningen när arbetsgivare erbjuder anställda periodkort i kollektivtrafiken.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/kollektivtrafik/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:32.837Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 2700,
+      "msek_high": 4300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Sänkta skatteintäkter. Avståndsbaserat, färdmedelsneutralt reseavdrag ~ i nivå med 2025 års genomförda reform (~2–3 mdkr/år netto) + slopad förmånsbeskattning av periodkort (~0,1–0,5 mdkr).",
+      "confidence": 0.55,
+      "calculation": "Del 1 reseavdrag: ~0,9–1,2 mn långpendlare (>~25 km enkel väg) × ~12 000–14 000 pendlingkm/år × ~1,5–2 kr/km i avdrag ≈ 20–28 tkr avdrag × ~30–45 % marginalskatt ≈ 7–12 tkr per person → ~7–12 mdkr brutto minskade skatteintäkter. Nuvarande kostbaserade avdrag (uppskattat ~2–3 mdkr) ersätts delvis → nettoökning ~1,5–3 mdkr/år, i linje med offentliga kalkyler för avståndsbaserat reseavdrag (~2,3 mdkr). Basscenario ~2,4 mdkr. Del 2 periodkort: ~100–300 tsk anställda med arbetsgivarkort × ~8–10 tkr förmånsvärde × ~35–50 % skatt/avgift ≈ 0,1–1 mdkr; basscenario ~0,3 mdkr då utnyttjandet idag är lågt men kan öka. Totalt ~1,5–4 mdkr, bas ~2,7 mdkr/år i minskade skatteintäkter."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2219",
+    "group_id": null,
+    "title": "Höja pensionerna till 65 procent av slutlönen",
+    "slug": "hoja-pensionerna-till-65-procent-av-slutlonen",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Det allmänna pensionssystemet bör garantera pensioner motsvarande cirka 65 procent av slutlönen för låg- och medelinkomsttagare.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/pension/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:33.170Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 25000,
+      "msek_high": 50000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Mållöfte: 65 % av slutlön för låg-/medelinkomsttagare. Nuvarande allmän pension ger ~55–60 %; kostnaden beror helt på utförandet (garantinivå vs höjda pensionsrätter). Brutto före skatteåterflöde…",
+      "confidence": 0.3,
+      "calculation": "~1,9 M ålderspensionärer, varav låg-/medelinkomsttagare ~60–70 % ≈ 1,1–1,3 M personer. Typisk slutlön ~400–450 tkr/år. Gap mot 65 %-mål antas 5–10 procentenheter, men ofullständiga karriärer/självvald lägre ålder ger i snitt ~15–30 tkr/år per berörd. 1,2 M × 15–30 tkr ≈ 18–36 mdkr/år. Utförande som garanti träffar färre men högre belopp per person; spansvidd 10–50 mdkr, bas 25 mdkr. Partiets nivå är 65 %-målet; antal berörda och gapstorlek är mina uppskattningar."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2220",
+    "group_id": null,
+    "title": "Höja taken i hela socialförsäkringen så att 80 procent av löntagarna får 80 procent av inkomstunderlaget",
+    "slug": "hoja-taken-i-hela-socialforsakringen-sa-att-80-procent-av-lontagarna-far-80-procent-av-inkomstunderlaget",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Vi vill höja taken i hela socialförsäkringen så att 80 procent av löntagarna får 80 procent av inkomstunderlaget.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/sjukforsakringen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:33.776Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 20000,
+      "msek_high": 40000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Baserat på jämförbara löften om höjda tak/ersättningsnivåer; osäkerhet pga vag formulering.",
+      "confidence": 0.4,
+      "calculation": "Antag 4,5 miljoner löntagare, 80% = 3,6 miljoner. Höjning av tak i sjukpenning, föräldrapenning, a-kassa m.m. Ökad ersättning per person 5-10 tkr/år → 3,6M × 5-10 tkr ≈ 18-36 mdkr. Spann 10-40 mdkr, base 20 mdkr."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2221",
+    "group_id": null,
+    "title": "Skattesänkningar för den som arbetar",
+    "slug": "skattesankningar-for-den-som-arbetar",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "Den som arbetar ska få behålla mer av sin lön genom skattesänkningar.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.liberalerna.se/politik/arbetsmarknad",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:34.078Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 3000,
+      "msek_base": 8000,
+      "msek_high": 18000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ospecifik sänkning av skatt på arbetsinkomster, ingen nivå angiven. Ankrat vid storleksordningen för senare års faktiska sänkningssteg (grundavdrag/brytvärde), inte partiets egen siffra.",
+      "confidence": 0.35,
+      "calculation": "~5 milj förvärvsarbetare × ca 600–3 500 kr/år i lägre skatt ≈ 3–18 mdkr. Bas ~8 mdkr speglar storleksordningen hos senare årets genomförda paket (utökat förhöjt grundavdrag + höjt brytvårde för statlig skatt, tillsammans cirka 7–8 mdkr/år enligt offentliga budgetuppgifter i riksbud-getssammanhang). Löftet ger ingen nivå eller mekanism, därför brett spann och låg konfidens; gränsverkningar som krympande skatteunderlag beaktas grovt i high-end."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2222",
+    "group_id": null,
+    "title": "Höj barnbidrag med 350 kr/mån och inför ensamförsörjartillägg",
+    "slug": "hoj-barnbidrag-med-350-kr-man-och-infor-ensamforsorjartillagg",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Miljöpartiet vill höja barnbidraget med 350 kronor per barn och månad, införa ensamförsörjartillägg på 800 kronor per barn, och höja och indexera bostadsbidraget.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/gron-ekonomi/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:34.397Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 12000,
+      "msek_base": 17500,
+      "msek_high": 21000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "350 kr/mån höjning barnbidrag för ~2 milj barn ger ~8,4 mdkr. Ensamförsörjartillägg 800 kr/mån för ~900 000 barn ger ~8,6 mdkr. Höjt och indexerat bostadsbidrag ospecificerat, antas låg kostnad ~0,5…",
+      "confidence": 0.6,
+      "calculation": "Barnbidrag: 350 kr/mån × 12 = 4 200 kr/år per barn. Antal barn med barnbidrag ~2 000 000 → 8,4 mdkr. Ensamförsörjartillägg: 800 kr/mån × 12 = 9 600 kr/år per barn. Antal barn med ensamförälder uppskattas till 900 000 (570 000 hushåll × 1,6 barn) → 8,64 mdkr. Bostadsbidrag: höjning och indexering utan angiven nivå; antag 10 % av dagens utgift ~4,5 mdkr → 0,45 mdkr. Total bas 17,5 mdkr, intervall 12–21 mdkr beroende på antal berörda och bostadsbidragets utformning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2223",
+    "group_id": "g-anstallningsskatten-langtidsarbetslosa",
+    "title": "Slopa anställningsskatten för långtidsarbetslösa",
+    "slug": "slopa-anstallningsskatten-for-langtidsarbetslosa",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Slopa anställningsskatten helt under en period för företag som anställer någon som varit arbetslös länge.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/foretagande/sank-kostnaden-for-att-anstalla",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:34.721Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 3000,
+      "msek_high": 5000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uteblivna arbetsgivaravgifter (~31 %) vid anställning av långtidsarbetslösa. I linje med kostnaden för liknande tidigare subventioner (nystartsjobb).",
+      "confidence": 0.5,
+      "calculation": "Långtidsarbetslösa i Sverige ~150 000–200 000. Antar att 15 000–40 000 per år anställs med subventionen (ej alla fångas upp). Genomsnittslön ~30 000 kr/mån × 12 × 31,4 % arbetsgivaravgift ≈ 113 000 kr/person under ett år. 15 000 × 113 tkr ≈ 1 700 msek; 40 000 × 113 tkr ≈ 4 500 msek. Bas ~3 000 msek, i storleksordning som tidigare nystartsjobb (3–4 mdr/år vid toppen). Subventionen antas gälla ~1 år per anställning; 'en period' är inte specificerad i löftet."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2224",
+    "group_id": null,
+    "title": "Sveriges jordbruk ska bli 100 % ekologiskt",
+    "slug": "sveriges-jordbruk-ska-bli-100-ekologiskt",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "att Sveriges jordbruk blir 100 % ekologiskt",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/7-stegsprogram/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:36.742Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 2500,
+      "msek_high": 4500,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Mål utan angiven nivå; prissatt som utökad miljöersättning från dagens ~20 % ekologisk åkermark till 100 %. Endast statens stödkostnad — priser, skördeförluster och marknadsföljder ingår ej. (belopp satt av granskare)",
+      "calculation": "Sverige har omkring 2,5 miljoner hektar åkermark. Dagens stöd till ekologisk produktion ligger på 500–700 miljoner kronor per år och täcker ungefär 20 procent av arealen, alltså 1 000–1 500 kronor per hektar. Att nå hundra procent kräver ersättning för ytterligare omkring 2 miljoner hektar, och de sista omställningarna kostar mer per hektar än de första. 2 miljoner hektar × 1 000–1 500 kronor ger 2 000–3 000 miljoner kronor per år i extra stöd, plus rådgivning och kontroll. Basbeloppet 2 500 miljoner. Den tidigare texten skrev arealen som miljarder hektar i stället för miljoner.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2225",
+    "group_id": "g-bistand-enprocentsmalet",
+    "title": "Återinför enprocentsmålet i biståndet",
+    "slug": "aterinfor-enprocentsmalet-i-bistandet",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Vi vill att Sverige ska ta tillbaka enprocentsmålet i biståndet.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/bistand/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:37.078Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 8000,
+      "msek_base": 13000,
+      "msek_high": 26000,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Kostnad = gapet mellan nuvarande biståndsnivå (~0,85–0,9% av BNI) och återinfört 1%-mål. Svenskt BNI ~6 000 mdkr ger 1% ≈ 60 mdkr; ökningen är mellanskillnaden. (belopp satt av granskare)",
+      "calculation": "Biståndsramen ligger på 53 miljarder kronor per år 2026–2028, ett fast belopp som inte följer bruttonationalinkomsten. Enligt regeringens egna prognoser motsvarar det omkring 0,67 procent av bruttonationalinkomsten 2028, vilket ger en inkomst på omkring 7 900 miljarder kronor. Ett procentmål innebär då ett bistånd på omkring 79 miljarder kronor, alltså omkring 26 miljarder mer än i dag. Men målet nås inte första året: en upptrappning som når sin nivå i slutet av mandatperioden kostar i genomsnitt ungefär hälften under perioden. Basbeloppet läggs därför på 13 000 miljoner kronor per år. Det höga alternativet, 26 000, gäller om målet återställs direkt.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2226",
+    "group_id": null,
+    "title": "Bygg fler spår och tidigarelägg nya banor för snabbtåg",
+    "slug": "bygg-fler-spar-och-tidigarelagg-nya-banor-for-snabbtag",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "att fler nya spår ska byggas och att byggstarten för nya banor för snabbare tåg, exempelvis Ostlänken och Götalandsbanan, tidigareläggs",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/7-stegsprogram/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:37.376Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3500,
+      "msek_base": 8500,
+      "msek_high": 20000,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Stor järnvägsutbyggnad i Ostlänken/Götalandsbanan-klass. Ostlänken delvis planerad (tidigareläggning = främst tidsomfördelning); Götalandsbanan är ny statlig kostnad. Beloppet avser statens… (belopp satt av granskare)",
+      "calculation": "Götalandsbanan, omkring 300 kilometer ny bana, är inte finansierad i dag och kostar 100–150 miljarder kronor. Ostlänken ligger till stor del redan i nationell plan, så att tidigarelägga den flyttar utgifter i tiden snarare än att skapa nya. Fler spår utöver planen läggs till med 20–50 miljarder. Sammanlagt 150 miljarder kronor, spritt över 15–20 byggår, vilket ger omkring 8 500 miljoner kronor per år. Det är den nivån som räknas mot mandatperioden. Spannet 3 500–20 000 speglar att låg nivå mest är tidsförskjutning och hög nivå bär kostnadsöverskridanden.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2227",
+    "group_id": null,
+    "title": "Fasa ut lägstanivådagarna",
+    "slug": "fasa-ut-lagstanivadagarna",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Fasa ut lägstanivådagarna och istället förstärka ersättningen under den sjukpenninggrundande tiden.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/familj/foraldraforsakring",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:37.699Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4500,
+      "msek_base": 6000,
+      "msek_high": 7500,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Antar att 90 lägstanivådagar per barn ersätts med SGI-dagar. Merkostnad per dag ~720 kr (skillnad mellan genomsnittlig SGI-ersättning ~900 kr och lägstanivå 180 kr). Antal barn ~115 000/år… (belopp satt av granskare)",
+      "calculation": "Omkring 115 000 barn föds per år, och lägstanivådagarna är 90 per barn. Skillnaden mellan sjukpenninggrundande ersättning och lägstanivån är omkring 720 kronor per dag. 115 000 × 90 × 720 kronor ger 7 452 miljoner kronor per år vid fullt utnyttjande. Alla dagar tas inte ut: vid 60 procent blir det 4 500 miljoner, vid 80 procent 6 000, och 7 500 är taket där varje dag utnyttjas. Basbeloppet 6 000 motsvarar 80 procent, vilket den tidigare texten sade men inte räknade.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2228",
+    "group_id": "g-bistand-enprocentsmalet",
+    "title": "Avsätta bistånd motsvarande 1 procent av BNI",
+    "slug": "avsatta-bistand-motsvarande-1-procent-av-bni",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "Avsätta bistånd motsvarande 1 procent av bruttonationalinkomsten (BNI)",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.liberalerna.se/politik/bistand",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:38.011Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 8000,
+      "msek_base": 13000,
+      "msek_high": 26000,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Svenskt bistånd ligger redan nära 1% av BNI; prissatt som marginalen upp till målet (ca 0,05–0,15 procentenheter), inte hela biståndsbudgeten. (belopp satt av granskare)",
+      "calculation": "Biståndsramen ligger på 53 miljarder kronor per år 2026–2028, ett fast belopp som inte följer bruttonationalinkomsten. Enligt regeringens egna prognoser motsvarar det omkring 0,67 procent av bruttonationalinkomsten 2028, vilket ger en inkomst på omkring 7 900 miljarder kronor. Ett procentmål innebär då ett bistånd på omkring 79 miljarder kronor, alltså omkring 26 miljarder mer än i dag. Men målet nås inte första året: en upptrappning som når sin nivå i slutet av mandatperioden kostar i genomsnitt ungefär hälften under perioden. Basbeloppet läggs därför på 13 000 miljoner kronor per år. Det höga alternativet, 26 000, gäller om målet återställs direkt.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2229",
+    "group_id": null,
+    "title": "Massivt klimatinvesteringsprogram på 700 miljarder över 10 år",
+    "slug": "massivt-klimatinvesteringsprogram-pa-700-miljarder-over-10-ar",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Genomföra ett massivt investeringsprogram för klimatet på 700 miljarder kronor under 10 år för att snabbt ställa om transporter, energi och bostäder.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/klimat/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:38.334Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 52500,
+      "msek_base": 70000,
+      "msek_high": 94500,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa. (belopp satt av granskare)",
+      "calculation": "Partiet anger själv beloppet i källtexten: 700 miljarder kronor under tio år. Både summan och tidsspannet är partiets, och siffran byts inte ut mot vår egen. Tio år ger 70 000 miljoner kronor per år, och det är den nivån som räknas mot mandatperioden — fyra år av programmet, inte hela. Spannet är vårt, inte partiets: 52 500–94 500 miljoner per år, en fjärdedel under och drygt en tredjedel över partiets nivå, eftersom källtexten inte skriver ut hur programmet fasas in. En jämn fördelning över tio år är vårt antagande; ett investeringsprogram tyngdpunktas oftast senare.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2230",
+    "group_id": null,
+    "title": "Sänkt arbetstid, slopad karensdag och stärkt vård vid psykisk ohälsa",
+    "slug": "sankt-arbetstid-slopad-karensdag-och-starkt-vard-vid-psykisk-ohalsa",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Vi vill sänka arbetstiden med sikte på fyradagarsvecka, slopa karensdagen och stärka primärvårdens arbete med psykisk ohälsa.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/jamstalldhet/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:38.625Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Slopad karensdag prissatt som statlig karensersättning. Fyradagarsvecka är inriktning/lagstiftning utan direkt statskostnad; primärvårdsdelen saknar nivå och täcks marginellt i spannet. (belopp satt av granskare)",
+      "calculation": "Löftet räknar upp tre åtgärder som partiet lovar var för sig: kortare arbetstid, slopad karensdag och stärkt vård vid psykisk ohälsa. Alla tre är prissatta på de egna löftena — normalarbetstiden till 30 000 miljoner kronor per år, karensavdraget till 5 000, och resurserna till elevhälsan och psykiatrin på sitt eget löfte. Att lägga ett belopp här också vore att räkna samma politik två gånger.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2231",
+    "group_id": null,
+    "title": "Göra fackföreningsavgiften avdragsgill igen",
+    "slug": "gora-fackforeningsavgiften-avdragsgill-igen",
+    "parties": [
+      "s"
+    ],
+    "person": null,
+    "quote": "Göra fackföreningsavgiften avdragsgill igen och återinföra stödet för fackligt samråd som kompenserar fackförbund för deras viktiga arbete med att bedöma om arbetsplatser är lämpliga för att ta emot personer med lönestöd.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/jobb-och-arbetsmarknad",
+      "domain": "socialdemokraterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:38.953Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1800,
+      "msek_base": 3000,
+      "msek_high": 4300,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Kombinerar skattebortfall från avdragsgill fackavgift (intäktsminskning) och direkt utgift för fackligt samråd. Osäkerhet kring antal medlemmar, avgiftsnivåer, utnyttjandegrad och stödbelopp. (belopp satt av granskare)",
+      "calculation": "Omkring 3,3 miljoner löntagare är fackligt anslutna, och medlemsavgiften ligger på ungefär 3 600 kronor per år, alltså 11,9 miljarder kronor i samlade avgifter. Med ett avdrag som utnyttjas av omkring 75 procent och en marginalskatt kring 30 procent blir statens intäktsbortfall 11,9 × 0,75 × 0,30 ≈ 2 700 miljoner kronor per år. Därtill stödet för fackligt samråd: omkring 100 000 platser à 1 500–5 000 kronor ger 150–500 miljoner, med 300 miljoner som bas. Summa 3 000 miljoner kronor per år. Löftet delas med ett annat parti och räknas en gång i rikets summor.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2232",
+    "group_id": null,
+    "title": "Bygg ut järnväg i hela landet",
+    "slug": "bygg-ut-jarnvag-i-hela-landet",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Bygg ut järnväg i hela landet",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/klimatfardplan/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:39.498Z"
+    },
+    "category": "infrastruktur",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan angivna projekt eller belopp; prissatt som återkommande utbyggnadsutgift i linje med tidigare järnvägsbyggande. Avser byggkostnad, inte samhällseffekter. (belopp satt av granskare)",
+      "calculation": "Löftet anger varken projekt, sträckor eller belopp. Partiets kostsamma järnvägslöfte är det som namnger Ostlänken och Götalandsbanan och prissätts där; att också sätta ett belopp här skulle räkna samma spår två gånger. Löftet behandlas därför som ett inriktningslöfte och prissätts till noll — riktningen är utbyggnad i hela landet, och pengarna ligger i de löften som säger vad som ska byggas.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2233",
+    "group_id": null,
+    "title": "Skydda 30 procent av Sveriges natur och restaurera förstörda ekosystem",
+    "slug": "skydda-30-procent-av-sveriges-natur-och-restaurera-forstorda-ekosystem",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Skydda 30 procent av Sveriges natur och restaurera förstörda ekosystem.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/miljo/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:39.799Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "30x30-mål innebär ungefär en dubbling av skyddad natur. Kostnad = ersättning/markinköp, restaurering och förvaltning fördelat på ~10 år; stort spann eftersom stor del kan läggas på statsägd mark. (belopp satt av granskare)",
+      "calculation": "Löftet räknar upp två åtgärder som partiet lovar var för sig: att skydda 30 procent av naturen och att restaurera förstörda ekosystem. Båda är prissatta på de egna löftena — skyddet till 2 000 miljoner kronor per år, restaureringen på sitt eget löfte. Att lägga ett belopp här också vore att räkna samma politik två gånger.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2234",
+    "group_id": null,
+    "title": "Halvera skatteorättvisan mellan kommuner",
+    "slug": "halvera-skatteorattvisan-mellan-kommuner",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Vänsterpartiet vill halvera skatteorättvisan mellan Sveriges kommuner och ta ett första steg mot ett mer jämlikt land.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/nyheter/halvera-skatteorattvisan-mellan-kommuner/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:40.099Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10000,
+      "msek_base": 12500,
+      "msek_high": 15000,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Löftet saknar belopp. Uppskattning baserad på att halvera skillnaden i skatteunderlag mellan rika och fattiga kommuner, med antagande om statligt utjämningsbidrag. (belopp satt av granskare)",
+      "calculation": "Skillnaderna i skatteunderlag mellan Sveriges kommuner motsvarar efter dagens inkomstutjämning omkring 20–30 miljarder kronor. Att halvera den skillnaden genom ökat statsbidrag kostar hälften: 10–15 miljarder kronor per år. Basbeloppet 12 500 miljoner är mitten av det spannet. Den tidigare texten räknade fram samma 10–15 miljarder men satte basen till 20 000, alltså över sitt eget tak.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2235",
+    "group_id": null,
+    "title": "Avskaffa sänkningen av sjukpenningen efter ett år",
+    "slug": "avskaffa-sankningen-av-sjukpenningen-efter-ett-ar",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Vi vill avskaffa den sänkning som idag sker av sjukpenningen efter ett år, så att man får 80 procent av SGI även efter det, istället för 75 procent som idag.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/sjukforsakringen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:40.417Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 750,
+      "msek_base": 900,
+      "msek_high": 1100,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Beräknat på antal sjukpenningdagar efter dag 365 och skillnaden mellan 75 och 80 procent av SGI. Osäkerhet kring antal långtidssjuka och genomsnittlig SGI. (belopp satt av granskare)",
+      "calculation": "Omkring 50 000–70 000 personer har sjukpenning längre än 365 dagar. Genomsnittlig sjukpenninggrundande inkomst är ungefär 300 000 kronor per år, och skillnaden mellan 80 och 75 procent är 5 procent av den, alltså 15 000 kronor per person och år. 50 000 × 15 000 ger 750 miljoner kronor, 70 000 × 15 000 ger 1 050 miljoner. Basbeloppet 900 miljoner är mitten. Den tidigare texten räknade fram samma 750–1 050 och justerade sedan upp till 2 000–4 500 med hänvisning till partiell sjukskrivning — men deltid gör kostnaden lägre per person, inte högre.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2236",
+    "group_id": "g-slopad-karens",
+    "title": "Avskaffa karensdagen helt",
+    "slug": "avskaffa-karensdagen-helt",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Vänsterpartiet vill därför avskaffa karensdagen helt.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/sjukforsakringen/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:40.704Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 4000,
+      "msek_base": 5000,
+      "msek_high": 8000,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Baserat på tidigare beräkningar av karensavdragets kostnad för staten som arbetsgivare samt ersättning för sjuklönekostnader. Osäkerhet kring utnyttjande och beteendeeffekter. (belopp satt av granskare)",
+      "calculation": "Beloppet är partiets eget. När Socialdemokraterna la fram förslaget om att ta bort karensavdraget angav partiet att det kostar statskassan minst 5 miljarder kronor per år, och det är den siffran som räknas. Staten betalar karensen dels för sina egna anställda, dels i sjukpenningen för dem som inte har någon arbetsgivare. Att sjuklönen för första sjukdagen också blir dyrare för privata och kommunala arbetsgivare är en följd av lagändringen för dem — Svenskt Näringsliv har räknat på 21–42 miljarder kronor — men det är ingen utgift i statens budget och prissätts därför inte här. Spannet 4 000–8 000 rymmer att sjukfrånvaron kan öka när avdraget försvinner.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2237",
+    "group_id": null,
+    "title": "Skattereduktion för avgift till fackförening",
+    "slug": "skattereduktion-for-avgift-till-fackforening",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Skattereduktion för avgift till fackförening.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/skattepolitik/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:41.013Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 2700,
+      "msek_high": 4000,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Baserat på antal fackligt anslutna och genomsnittlig medlemsavgift; osäkerhet kring avdragstak och utformning. (belopp satt av granskare)",
+      "calculation": "Omkring 3,3 miljoner löntagare är fackligt anslutna, och medlemsavgiften ligger på ungefär 3 600 kronor per år, alltså 11,9 miljarder kronor i samlade avgifter. Med en skattereduktion som utnyttjas av omkring 75 procent och en marginalskatt kring 30 procent blir statens intäktsbortfall 11,9 × 0,75 × 0,30 ≈ 2 700 miljoner kronor per år. Spannet 1 500–4 000 speglar osäkerhet om avdragstak och utnyttjandegrad. Löftet delas med ett annat parti och räknas en gång i rikets summor.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2238",
+    "group_id": null,
+    "title": "Återinför studerandevillkoret i arbetslöshetsförsäkringen",
+    "slug": "aterinfor-studerandevillkoret-i-arbetsloshetsforsakringen",
+    "parties": [
+      "v"
+    ],
+    "person": null,
+    "quote": "Studerandevillkoret i arbetslöshetsförsäkringen måste återinföras.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.vansterpartiet.se/var-politik/politik-a-o/studiemedel/",
+      "domain": "vansterpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:41.350Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1200,
+      "msek_base": 2400,
+      "msek_high": 3600,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "Återinförande av studerandevillkoret beräknas utifrån tidigare kostnader och antal berörda. Osäkerhet p.g.a. vagt löfte utan nivå. (belopp satt av granskare)",
+      "calculation": "Ett återinfört studerandevillkor antas omfatta 20 000–40 000 personer per år. Ersättningen ligger på 10 000–15 000 kronor i månaden under omkring sex månader, alltså 60 000–90 000 kronor per person. 20 000 × 60 000 kronor ger 1 200 miljoner kronor, 40 000 × 90 000 ger 3 600 miljoner. Basbeloppet 2 400 miljoner är mitten av det spannet. Den tidigare texten satte basen till 3 000 med hänvisning till två andra löften vid deras interna nummer, vilket varken säger läsaren något eller följer av räkningen.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2239",
+    "group_id": null,
+    "title": "Statligt stöd på 60 procent för energieffektivisering",
+    "slug": "statligt-stod-pa-60-procent-for-energieffektivisering",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Att staten tar 60 procent av kostnaden för alla insatser som hushållen, fastighetsägarna eller företagen genomför för att effektivisera energianvändningen.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/energieffektivisering/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:41.893Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2500,
+      "msek_base": 6000,
+      "msek_high": 15000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statlig subvention på 60 % av kostnaden för energieffektivisering; prissatt som statens bruttsubvention per år. Osäkerheten ligger i utnyttjandegraden hos hushåll, fastighetsägare och företag.",
+      "confidence": 0.35,
+      "calculation": "Partiets egen siffra: 60 % stödnivå (övrigt är min uppskattning). Underlag: ca 4,8 mn hushåll samt fastighetsägare/företag. Antar 2–6 % genomför åtgärder per år (värmepumpar, isolering, fönster, ventilation) till i snitt 50–120 tkr. Lågt: 100 000 åtgärder × 50 tkr × 0,6 ≈ 3 mdkr. Bas: ca 150 000 × 70 tkr × 0,6 ≈ 6 mdkr. Högt: 300 000 × 100 tkr × 0,6 plus företags- och flerbostadshusåtgärder ≈ 15 mdkr. Generös, taklös subvention utan tak per objekt ger stor osäkerhet."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2240",
+    "group_id": null,
+    "title": "Sänkt skatt på arbete med förstärkt jobbskatteavdrag",
+    "slug": "sankt-skatt-pa-arbete-med-forstarkt-jobbskatteavdrag",
+    "parties": [
+      "m"
+    ],
+    "person": null,
+    "quote": "Moderaterna vill sänka skatten för alla som arbetar och har arbetat genom ett förstärkt jobbskatteavdrag och ett nytt jobbat-avdrag för pensionärer.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://moderaterna.se/var-politik/arbetsloshet/",
+      "domain": "moderaterna.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:42.466Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 8000,
+      "msek_base": 15000,
+      "msek_high": 30000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar belopp. Uppskattning efter tidigare JSA-förstärkningar (oftast 5–10 mdkr/år) och skattesänkningar för pensionärer (2–5 mdkr/år). Avser statens brutto-intäktsminskning.",
+      "confidence": 0.4,
+      "calculation": "Förstärkt jobbskatteavdrag: ~4,4M förvärvsarbetande × ca 1 500–3 000 kr/år i extra avdrag ≈ 7–13 mdkr/år. Nytt 'jobbat-avdrag' för pensionärer: ~1M pensionärer med arbetslivshistorik × 2 000–5 000 kr ≈ 2–5 mdkr/år. Summa ≈ 9–18 mdkr/år som bas; högre spann (~30 mdkr) för kraftigare utförande i linje med större tidigare JSA-steg. Antal mottagare och kronbelopp per person är egna antaganden — löftet anger ingen nivå, bara åtgärden."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
+    }
+  },
+  {
+    "id": "p-2026-2241",
+    "group_id": null,
+    "title": "Stoppa fossila subventioner",
+    "slug": "stoppa-fossila-subventioner",
+    "parties": [
+      "mp"
+    ],
+    "person": null,
+    "quote": "Vi behöver stoppa fossila subventioner så att förorenaren betalar.",
+    "date_stated": "2026-08-21",
+    "source": {
+      "url": "https://www.mp.se/politik/klimat/",
+      "domain": "mp.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-21T12:34:42.755Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsökning",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 5000,
+      "msek_high": 15000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar nivå. Fossila subventioner är i Sverige främst skatteutgifter (nedsatt dieselskatt, undantag flyg/sjöfart). Tar staten bort dem ökar intäkterna; spannet speglar definitionsosäkerheten.",
+      "confidence": 0.35,
+      "calculation": "Ingen nivå anges i löftet → uppskattning av befintliga fossila stöd. Smal definition: nationella skattenedsättningar på bränsle för jord-/skogsbruk, gruvor och vissa industrier ≈ 1–3 mdkr/år. Bred definition: även flygbränsle- och sjöfartsundantag samt liknande stöd ≈ 10–15 mdkr/år. Bas 5 mdkr som mittpunkt mellan definitionerna; low 1 mdkr, high 15 mdkr. Beteendeeffekter (minskad bränsleanvändning) och att vissa undantag är internationellt förhandlade drar nedåt. Siffrorna är grova uppskattningar, inte officiell statistik."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-21T12"
     }
   }
 ]
