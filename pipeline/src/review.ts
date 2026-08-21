@@ -6,6 +6,7 @@ import { konyckel, lasProvningar, provningsGrind } from "./provningar.ts";
 import { avvisa, hav, slaUpp, type Avvisning } from "./avvisningar.ts";
 import { partiForUrl } from "./skordeordning.ts";
 import { taLaset } from "./datalas.ts";
+import { internaBeteckningar } from "./publicerad-text.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -633,6 +634,22 @@ function approveLast(
         "Den visas publikt på löftessidan och schemat vägrar längre text.\n\n" +
         `  pnpm review approve ${index} <low> <base> <high> --calc "…"\n\n` +
         "Korta den så att varje led står kvar — kapa den inte på mitten.",
+    );
+    process.exit(1);
+  }
+
+  // Interna beteckningar hör inte hemma i text som möter läsaren, och regeln
+  // ska gälla FÖRE publiceringen. Den låg bara i provsviten: p-2026-2250
+  // godkändes 2026-08-21 med «p-2026-1212» i både uträkning och not, och
+  // fälldes först när löftet redan låg i promises.json. Samma regel, samma
+  // modul — se publicerad-text.ts.
+  const interna = internaBeteckningar(cost);
+  if (interna.length > 0) {
+    console.error(
+      "Uträkningen eller noten bär en intern beteckning, och bägge visas publikt:\n" +
+        interna.map((r) => `  ${r}`).join("\n") +
+        "\n\nSkriv hänvisningen så att en läsare förstår den — «partiets löfte om\n" +
+        "ett sektorsbidrag för skolans personal», inte numret.",
     );
     process.exit(1);
   }

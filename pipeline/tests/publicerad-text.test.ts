@@ -32,22 +32,13 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { INTERN_BETECKNING } from "../src/publicerad-text.ts";
 
 const DATA = resolve(import.meta.dirname, "../../data");
 
-/**
- * Ett löftesnummer eller ett gruppnamn — de två beteckningar datat använder
- * internt. Kortformen `p-0411` finns med därför att rättelseloggen använde
- * den: en post räknade upp nio löften som «p-0411 600 mkr, p-0089 300 mkr …»,
- * och ett mönster som bara tog den fullständiga formen hade gått förbi dem.
- */
-// Gruppnamnet måste börja ett ord. Utan spärren matchade mönstret INUTI
-// vanlig svenska: «en gång-inlämning» innehåller bokstavsföljden
-// «g-inlämning», och grinden pekade ut p-2026-0908 för ett gruppnamn som
-// aldrig stod där. En grind som fäller på rätt sak av fel skäl lär läsaren
-// att bortse från den. Lookbehind i stället för \b, för \b räknar å, ä och ö
-// som ordgränser.
-const INTERN = /p-\d{4}-\d{4}|\bp-\d{4}\b|(?<![\p{L}\p{N}])g-[a-zåäö0-9-]{4,}/giu;
+// Regeln bor i src/publicerad-text.ts och kopieras inte hit: den ska gälla
+// FÖRE publiceringen också, och två kopior glider isär. Se modulens huvud.
+const INTERN = INTERN_BETECKNING;
 
 interface Lofte {
   id: string;
