@@ -33,6 +33,35 @@ describe("parseAmountsMsek — kräver penningenhet", () => {
   });
 
   /**
+   * Singularformen fanns inte i enhetslistan, och luckan var inte teoretisk.
+   *
+   * Vänsterpartiets glesbygdsmiljard skriver «(totalt 1 miljard kronor
+   * nationellt): 500 miljoner kronor till Norrlands fem län». Parsern läste
+   * bara 500, och kontrollen som vaktar att partiets egen siffra används fällde
+   * posten för att ha förbigått en siffra kontrollen själv var blind för.
+   * Beloppet 1 000 var rätt hela tiden.
+   */
+  it("läser «1 miljard kronor» och «en miljard kronor», inte bara pluralen", () => {
+    assert.deepEqual(parseAmountsMsek("1 miljard kronor"), [1000]);
+    assert.deepEqual(parseAmountsMsek("en miljard kronor"), [1000]);
+    assert.deepEqual(parseAmountsMsek("ett anslag på en miljon kronor"), [1]);
+    assert.deepEqual(
+      parseAmountsMsek("Glesbygdsmiljarden (totalt 1 miljard kronor nationellt): 500 miljoner kronor till Norrlands fem län."),
+      [1000, 500],
+    );
+  });
+
+  /**
+   * Räkneordet får inte dra in artikeln. «En miljon människor» är inte pengar,
+   * och det är just den sortens träff som gjorde den gamla sökningen obrukbar.
+   */
+  it("räkneordet tas bara när det bär en penningenhet", () => {
+    assert.deepEqual(parseAmountsMsek("en miljon människor"), []);
+    assert.deepEqual(parseAmountsMsek("en av tio hushåll"), []);
+    assert.deepEqual(parseAmountsMsek("ett förslag om fler platser"), []);
+  });
+
+  /**
    * Förkortningarna datat faktiskt använder. Saknades de i enhetslistan lästes
    * en riktig uträkning som att den inte namngav något belopp, och svepet
    * 2026-08-08 gav tre falsklarm av just det skälet.

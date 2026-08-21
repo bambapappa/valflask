@@ -64,6 +64,11 @@ const SPACES = "     ";
 
 /** "1 234,5" → 1234.5. Svenska tusentalsmellanslag och decimalkomma. */
 function parseSwedishNumber(raw: string): number | null {
+  // «en miljard kronor» och «ett anslag på en miljon» skriver talet med ord när
+  // det är exakt ett. Räkneordet är det enda som tas — «två miljarder» skrivs i
+  // praktiken med siffra, och en full ordräknare skulle fånga «en» som artikel.
+  const ord = raw.trim().toLowerCase();
+  if (ord === "en" || ord === "ett") return 1;
   const cleaned = raw.replace(new RegExp(`[${SPACES}]`, "g"), "").replace(",", ".");
   const n = Number(cleaned);
   return Number.isFinite(n) ? n : null;
@@ -75,7 +80,7 @@ function parseSwedishNumber(raw: string): number | null {
  * första alternativet bara de tre första siffrorna i "1000" och läser talet
  * som 100.
  */
-const NUM_SRC = `\\d{1,3}(?:[${SPACES}]\\d{3})+(?:,\\d+)?|\\d+(?:,\\d+)?`;
+const NUM_SRC = `\\d{1,3}(?:[${SPACES}]\\d{3})+(?:,\\d+)?|\\d+(?:,\\d+)?|\\ben\\b|\\bett\\b`;
 
 /**
  * "5–10 miljarder kronor": bara det andra talet bär enheten. Ett ord får stå
@@ -97,7 +102,20 @@ const RANGE = /\d\s*[–—-]\s*(?:[a-zà-öø-ÿ]+\s+)?\d/;
  * något belopp. Det gav tre falsklarm på uträkningar som var riktiga. Listan är
  * därför byggd ur datat, inte ur vad som verkar rimligt att skriva.
  */
-const UNITS = "miljarder kronor|miljoner kronor|mdkr|mnkr|mn kr|msek|mkr";
+/**
+ * Singularformerna finns med för att de saknades, och luckan var inte teoretisk.
+ *
+ * Mönstret tog «miljarder kronor» men inte «miljard kronor», och Vänsterpartiets
+ * glesbygdsmiljard skriver just «(totalt 1 miljard kronor nationellt): 500
+ * miljoner kronor till Norrlands fem län». Parsern läste alltså bara 500, och
+ * kontrollen som vaktar att partiets egen siffra används fällde posten för att
+ * ha förbigått en siffra den själv var blind för. Beloppet 1 000 var rätt hela
+ * tiden.
+ *
+ * «En miljard kronor» tas också: talet skrivs lika ofta med ord som med siffra
+ * när det är exakt ett.
+ */
+const UNITS = "miljarder kronor|miljard kronor|miljoner kronor|miljon kronor|mdkr|mnkr|mn kr|msek|mkr";
 
 export function parseAmountsMsek(text: string): number[] {
   const re = new RegExp(`(${NUM_SRC})\\s*(${UNITS})`, "gi");
@@ -109,7 +127,11 @@ export function parseAmountsMsek(text: string): number[] {
     const n = parseSwedishNumber(raw);
     if (n === null) continue;
     const unit = rawUnit.toLowerCase();
-    out.push(unit.startsWith("miljarder") || unit === "mdkr" ? n * 1000 : n);
+    // Singularformen skalar förstås likadant som pluralen — «1 miljard kronor»
+    // är 1 000 miljoner, inte 1. Att bara pluralen skalades var samma lucka som
+    // att bara pluralen lästes.
+    const miljard = unit.startsWith("miljard") || unit === "mdkr";
+    out.push(miljard ? n * 1000 : n);
   }
   return out;
 }
