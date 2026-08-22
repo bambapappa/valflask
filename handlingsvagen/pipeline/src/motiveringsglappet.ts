@@ -104,19 +104,69 @@ export function arProcedurcitat(citat: string | undefined): boolean {
 }
 
 /**
+ * En rad som är läst och befunnen riktig.
+ *
+ * Måttet är en läslista och inte en dom — ungefär hälften av träffarna är
+ * riktiga motiveringar som råkar använda andra ord än citatet. Utan ett sätt
+ * att kvittera dem läser varje pass om samma rader, och listan kan därför
+ * aldrig bli klar. Paritetskön löste samma sak med utfall och skäl; det här är
+ * samma mönster.
+ *
+ * **Kvittensen kräver ett skäl.** En rad som bara stryks är en rad som tystats.
+ * Skälet är vad läsningen fann, och det ska gå att pröva av nästa läsare.
+ *
+ * Kvittensen gäller motiveringen som den såg ut när den lästes. Skrivs den om
+ * efteråt faller kvittensen, och raden kommer tillbaka — annars kunde en
+ * kvitterad rad bytas ut mot vad som helst.
+ */
+export interface Glappkvittens {
+  id: string;
+  las: string;
+  skal: string;
+  /** Hashen av motiveringen som lästes. Ändras den faller kvittensen. */
+  motiveringens_fingeravtryck: string;
+}
+
+/** Ett kort, stabilt fingeravtryck av en text. */
+export function fingeravtryck(text: string | undefined): string {
+  let h = 2166136261;
+  for (const tecken of (text ?? "").normalize("NFC")) {
+    h ^= tecken.codePointAt(0)!;
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h.toString(16).padStart(8, "0");
+}
+
+/** Gäller kvittensen fortfarande den motivering som står där nu? */
+export function kvittensenGaller(kvittens: Glappkvittens, koppling: Pick<KopplingPost, "method_note">): boolean {
+  return kvittens.motiveringens_fingeravtryck === fingeravtryck(koppling.method_note);
+}
+
+/**
  * Aktiva kopplingar vars motivering inte talar om sitt eget citat.
  *
  * `medProcedurcitat` tar med de rader där citatet är en beslutsformel. De hör
  * till en annan fråga och en annan läsning — se `arProcedurcitat`. Förvalet är
  * att lämna dem utanför, så att listan är den som går att beta av.
+ *
+ * `kvittenser` tar bort rader som lästs och befunnits riktiga, men bara så
+ * länge motiveringen är oförändrad sedan läsningen.
  */
 export function laslistan(
   kopplingar: readonly KopplingPost[],
-  { medProcedurcitat = false }: { medProcedurcitat?: boolean } = {},
+  {
+    medProcedurcitat = false,
+    kvittenser = [],
+  }: { medProcedurcitat?: boolean; kvittenser?: readonly Glappkvittens[] } = {},
 ): string[] {
+  const kvitterade = new Map(kvittenser.map((k) => [k.id, k]));
   return kopplingar
     .filter((k) => k.status === "aktiv")
     .filter((k) => medProcedurcitat || !arProcedurcitat(k.bevis?.citat))
+    .filter((k) => {
+      const kv = kvitterade.get(k.id);
+      return kv === undefined || !kvittensenGaller(kv, k);
+    })
     .filter((k) => {
       const t = tackning(k);
       return t !== null && t < GLAPPTROSKEL;
