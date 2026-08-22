@@ -708,6 +708,20 @@
     "commit": "42bd2dd"
   },
   {
+    "date": "2026-08-21",
+    "affects": "p-2026-2142 — 1 löfte tillbakadragna",
+    "what": "1 löfte är tillbakadraget och räknas inte längre in i någon summa. MP minskar med 600 miljoner kronor. Summan för alla partier minskar med 600 miljoner kronor för mandatperioden. Skälet står på varje löfte.",
+    "why": "Ett löfte dras tillbaka när det inte borde ha publicerats som ett eget löfte — samma parti har lovat samma sak en gång till, eller citatet visade sig inte bära det åtagande vi läste in i det. Politiken försvinner inte ur granskningen om den står kvar någon annanstans; det är dubbelräkningen som försvinner.",
+    "commit": "42bd2dd"
+  },
+  {
+    "date": "2026-08-21",
+    "affects": "p-2026-1354, p-2026-2264 — 2 löften tillbakadragna",
+    "what": "2 löften är tillbakadragna och räknas inte längre in i någon summa. L minskar med 4 000 miljoner kronor. Summan för alla partier minskar med 4 000 miljoner kronor för mandatperioden. Skälet står på varje löfte.",
+    "why": "Ett löfte dras tillbaka när det inte borde ha publicerats som ett eget löfte — samma parti har lovat samma sak en gång till, eller citatet visade sig inte bära det åtagande vi läste in i det. Politiken försvinner inte ur granskningen om den står kvar någon annanstans; det är dubbelräkningen som försvinner.",
+    "commit": "db26374"
+  },
+  {
     "date": "2026-08-22",
     "affects": "148 löften. Publicerad utgiftssumma för mandatperioden ökar med 54 368 miljoner kronor.",
     "what": "En genomgång av hela det publicerade beståndet har rättat tre sorters fel som läsaren kunde se på löftessidan. (1) På 119 löften inledde uträkningen med en mening om att texten rekonstruerats i efterhand; den är borttagen och inga belopp ändrade. (2) På 12 löften sa kostnadsfältet en sak och uträkningen bredvid en annan om period eller kostnadstyp — engångskostnad bokförd som årlig eller tvärtom, en post märkt besparing som redovisade en kostnad. (3) På 21 löften stämde inte beloppet med sin egen uträkning: fältet låg under eller över vad texten intill räknade fram. Där har beloppet rättats till det uträkningen själv ger, och uträkningen skrivits om där den motsade sig själv. Sex tillbakadragna löften som visade ett belopp helt utan uträkning har fått den skriven. Vad som ändrades och varför står på varje enskilt löfte.",
@@ -804,5 +818,12 @@
     "what": "Metodsidan har ett nytt avsnitt om att det finns två sorters löften — reformlöften som går att prissätta och inriktningslöften som inte gör det — och om vad en nolla betyder i vartdera fallet. Där står också att en uppskattning som lånar sin nivå från ett annat löfte nu skriver ut vilket, med länk dit, och att samma åtgärd ska kosta lika mycket oavsett vilket parti som lovar den. Två frågor i sidans frågor-och-svar är uppdaterade.",
     "why": "Sajten började visa löftessorten och ankarlänkarna samma dag. Metodsidan är det läsaren går till för att förstå vad siffrorna betyder, och en förändring i vad sidorna visar utan en förändring i metodbeskrivningen gör metodsidan till en beskrivning av något annat än det som faktiskt publiceras.",
     "commit": "ce0df34"
+  },
+  {
+    "date": "2026-08-22",
+    "affects": "505 nypublicerade löften får löftessort. Inga belopp ändras.",
+    "what": "De löften som publicerades i den här körningen skapades innan fältet för löftessort fanns. Sorten är nu satt på alla, härledd med samma funktion som pipelinen använder vid publicering, så att de klassas exakt som beståndet i övrigt.",
+    "why": "Fältet blev obligatoriskt samma dag genom en annan ändring. Utan det skulle löftessidorna för de här löftena inte kunna säga om en nolla betyder att åtgärden är gratis eller att det inte finns någon åtgärd att räkna på — och beståndet skulle bära två sorters poster där bara den ena går att läsa.",
+    "commit": "263ff9d"
   }
 ]

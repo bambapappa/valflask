@@ -114,7 +114,7 @@ const LASER_DATA_INTE_KOD = new Set([
   "metod-quip-ett-par-procent",
   "metod-avskriften-sparas-inte",
   "metod-arkivkopia-nastan-varje",
-  "metod-fyra-av-fem-prislappar",
+  "metod-nio-av-tio-prislappar",
 ]);
 
 blankaRepot(true);

@@ -680,20 +680,25 @@ export const ANKARE: Ankare[] = [
   },
 
   {
-    id: "metod-fyra-av-fem-prislappar",
+    id: "metod-nio-av-tio-prislappar",
     sida: METOD,
     pastaende:
-      "<strong>Fyra av fem prislappar, och texten som förklarar dem.</strong>",
+      "<strong>Nio av tio prislappar, och texten som förklarar dem.</strong>",
     // Andelen står i klartext på sidan och är ett påstående om datat. Den var
-    // «de flesta» förut, vilket bär allt mellan 51 och 99 procent.
+    // «de flesta» förut, vilket bär allt mellan 51 och 99 procent, och sedan
+    // «fyra av fem». Andelen STIGER när kön betas av: kö-posterna bär
+    // modellens uppskattning, och ett godkännande som inte ändrar beloppet
+    // behåller den. 2026-08-22 publicerades 501 löften ur kön och andelen gick
+    // från 79 till 90 procent. Provet fångade det, och sidan skrevs om åt det
+    // hållet som är mindre smickrande — det är hela poängen med ankaret.
     prov: () => {
       const a = aktiva();
       const andel = a.filter((p) => p.cost?.basis === "llm_estimat").length / a.length;
-      return andel >= 0.7 && andel < 0.9;
+      return andel >= 0.85 && andel < 0.95;
     },
     fallprov:
-      "Sätt basis till granskare på hälften av löftena — provet faller, och «fyra av fem» ska då skrivas om.",
-    matt: "438 av 553 = 79 % 2026-08-09",
+      "Sätt basis till granskare på hälften av löftena — provet faller, och «nio av tio» ska då skrivas om.",
+    matt: "2 480 av 2 740 = 90 % 2026-08-22",
   },
   {
     id: "metod-forslagen-kontrolleras-av-oberoende",
