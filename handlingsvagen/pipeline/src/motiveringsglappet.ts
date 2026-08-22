@@ -77,10 +77,46 @@ export function tackning(koppling: Pick<KopplingPost, "method_note" | "bevis">):
   return [...egna].filter((w) => iCitatet.has(w)).length / egna.size;
 }
 
-/** Aktiva kopplingar vars motivering inte talar om sitt eget citat. */
-export function laslistan(kopplingar: readonly KopplingPost[]): string[] {
+/**
+ * Ett citat som är riksdagens formel, inte partiets sak.
+ *
+ * «Riksdagen avslår regeringens proposition» innehåller inga sakord alls, så
+ * ordtäckningen mot en motivering som förklarar vad avslaget INNEBÄR blir
+ * noll oavsett hur bra förklaringen är. Måttet mäter alltså citatets form och
+ * inte motiveringens kvalitet.
+ *
+ * Mätt 2026-08-23: **98 av läslistans 155 rader bär ett sådant citat**, alltså
+ * 63 procent. Det är inte 98 dåliga motiveringar — det är 98 rader där
+ * mätaren inte kan uttala sig.
+ *
+ * De försvinner inte ur granskningen. De hör hemma i den andra frågan, den om
+ * procedurcitat som inte säger vad som beslutades (ATTGORA G5), och där är
+ * provet ett annat: säger motiveringen vad formeln gör? Ordtäckning är fel
+ * verktyg för den frågan, och en läslista som blandar de två blir 155 rader
+ * varav de flesta är artefakter — alltså en lista ingen orkar läsa.
+ */
+const PROCEDURCITAT =
+  /^\s*(riksdagen|utskottet)\s+(avslår|avstyrker|ställer sig bakom|antar|anvisar|bemyndigar|godkänner|tillkännager|beslutar|avslutar)/iu;
+
+/** Är citatet en beslutsformel snarare än partiets egna ord om saken? */
+export function arProcedurcitat(citat: string | undefined): boolean {
+  return PROCEDURCITAT.test(citat ?? "");
+}
+
+/**
+ * Aktiva kopplingar vars motivering inte talar om sitt eget citat.
+ *
+ * `medProcedurcitat` tar med de rader där citatet är en beslutsformel. De hör
+ * till en annan fråga och en annan läsning — se `arProcedurcitat`. Förvalet är
+ * att lämna dem utanför, så att listan är den som går att beta av.
+ */
+export function laslistan(
+  kopplingar: readonly KopplingPost[],
+  { medProcedurcitat = false }: { medProcedurcitat?: boolean } = {},
+): string[] {
   return kopplingar
     .filter((k) => k.status === "aktiv")
+    .filter((k) => medProcedurcitat || !arProcedurcitat(k.bevis?.citat))
     .filter((k) => {
       const t = tackning(k);
       return t !== null && t < GLAPPTROSKEL;
