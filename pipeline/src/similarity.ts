@@ -206,7 +206,13 @@ function stem(w: string): string {
   }
   return w;
 }
-function stemmedTokens(s: string): Set<string> {
+/**
+ * Innehållsorden i en text, stammade. Exporterad för paritetssvepet, som
+ * jämför löften med varandra och måste räkna «karensavdraget» och
+ * «karensavdrag» som samma ord — samma stam som ankringen använder, aldrig
+ * en andra kopia med egna trösklar.
+ */
+export function stemmedTokens(s: string): Set<string> {
   return new Set([...tokens(s)].map(stem));
 }
 
