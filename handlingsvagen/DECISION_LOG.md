@@ -19,8 +19,15 @@ Svepet **rapporterar och spärrar aldrig**. Ett fynd är ett mätvärde, inte et
 haveri, och körningen blir röd bara när svepet självt är trasigt — när mer än
 hälften av kopplingarna inte gick att pröva alls. Att skriva «inga fynd» efter
 en körning som inte kunde pröva något vore att rapportera tystnad som ett
-friskintyg. De 76 kopplingar som med flit citerar brödtexten på utskriven
-grund (`bevis.brodtext_oppen`) räknas för sig och är inga fynd.
+friskintyg. Kopplingar som med flit citerar brödtexten på utskriven grund
+(`bevis.brodtext_oppen`) räknas för sig och är inga fynd.
+
+Första körningen 2026-08-22: **786 aktiva kopplingar prövade, noll fynd, noll
+oprövade.** 777 står ordagrant i handlingens egen del, 9 vilar på det
+utskrivna undantaget. Att bara 9 av de 76 kopplingar som bär undantagsfältet
+hamnar där följer av att `byggHandlingstext` själv öppnar brödtexten för en
+motion vars yrkanden bara anvisar medel enligt en tabell — resten fångas av
+den regeln utan att undantaget behöver åberopas.
 
 **Motiv:** H2 prövas när en koppling skapas och sedan aldrig mer.
 Kopplingarna bär bara metadata — dokumenttexten ligger hos riksdagen — så det
@@ -35,8 +42,11 @@ ett skript som låg utanför repot.
 talar med riksdagens API och hade fallit när nätet gör det, inte när datat är
 fel; att låta svepet rätta självt — ett citatbyte är en rättelse med
 rättelsepost och ett mänskligt beslut, och tyst rättelse är förbjuden; att
-räkna brödtextcitaten som fynd — de 76 hade fyllt listan varje vecka och lärt
-läsaren att bortse från den.
+räkna brödtextcitaten som fynd — de hade stått i listan varje vecka utan att
+något behövde göras, och lärt läsaren att bortse från den; att bara skriva
+sammanräkningen — ett svep som skriver «777 håller» går inte att kontrollera,
+och den vecka ett tal ändras går det inte att se vilken koppling som bytte
+läge, så varje prövad koppling står kvar med sitt utfall.
 
 ---
 

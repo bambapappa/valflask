@@ -106,6 +106,12 @@ if (!torr) {
           "Rapporterande, aldrig en spärr. Se handlingsvagen/pipeline/src/h2svepet.ts.",
         kord: datum,
         ...status,
+        // Varje prövad koppling står kvar med sitt utfall, inte bara
+        // sammanräkningen. Ett svep som bara skriver «777 håller» går inte
+        // att kontrollera, och den vecka ett tal ändras går det inte att se
+        // VILKEN koppling som bytte läge. Raderna är stabila mellan veckor,
+        // så diffen är tom när ingenting rört sig.
+        rader: rader.slice().sort((a, b) => a.koppling_id.localeCompare(b.koppling_id)),
       },
       null,
       2,
