@@ -100,8 +100,21 @@ export function nollskalen(calculation: string): string[] {
  * Verb som gör citatet till ett åtagande om en åtgärd, inte en beskrivning av
  * ett tillstånd. «Höja», «införa», «bygga ut» — någon ska göra något.
  */
+/**
+ * Ordgränsen är unicode-säker, och det är inte en detalj.
+ *
+ * `\b` bygger på ASCII-ordtecken i JavaScript, så `\båterinföra\b` kräver ett
+ * ordtecken FÖRE «å» — mönstret matchade alltså aldrig «att återinföra» men
+ * däremot «Xåterinföra». De två alternativen `återinföra|återinför` var döda
+ * från dagen de skrevs, och 31 aktiva löften bär ordet i sitt citat.
+ *
+ * Samma fälla var redan funnen och lagad i `quality-scan.ts` 2026-08-18, där
+ * tre löften i kön dömdes som genomförd politik trots ordet. Den lagningen
+ * vandrade aldrig hit — samma mönster som F3 i ATTGORA, en regel som gäller i
+ * ena halvan av huset. `pnpm test:utrakningen` mäter nu båda hållen.
+ */
 const ATGARDSVERB =
-  /\b(höja|höjer|höjs|höjning|införa|inför|införs|bygga ut|bygger ut|utöka|utökar|förstärka|stärka|återinföra|återinför|avskaffa|avskaffar|slopa|slopar|dubblera|fördubbla)\b/iu;
+  /(?<!\p{L})(höja|höjer|höjs|höjning|införa|inför|införs|bygga ut|bygger ut|utöka|utökar|förstärka|stärka|återinföra|återinför|avskaffa|avskaffar|slopa|slopar|dubblera|fördubbla)(?!\p{L})/iu;
 
 /**
  * Ett namngivet statligt stöd i citatet — barnbidraget, garantipensionen,
@@ -124,6 +137,42 @@ const NAMNGIVET_STOD =
 export function utpekadAtgard(quote: string): string | null {
   if (!ATGARDSVERB.test(quote)) return null;
   const m = NAMNGIVET_STOD.exec(quote);
+  return m ? m[0] : null;
+}
+
+/**
+ * Ord som gör ett löfte till en utredning, en översyn eller en plan.
+ *
+ * Regeln är fastställd genom mänskligt beslut 2026-08-13 (ATTGORA A2) och står
+ * i `A5-cost.md`: *utrednings- och planlöften prissätts till noll*. Den
+ * tillämpades då på ett bestånd om 690 löften och fällde fyra. Beståndet är
+ * 2 713 i dag, och ingenting mätte ledet däremellan — C2 skrev ut att luckan
+ * fanns: «ingen kontroll mäter det ledet, så nästa skörd kan göra om det».
+ */
+const UTREDNINGSORD =
+  /(?<!\p{L})(utred\p{L}*|se över|ser över|översyn|översynen|kartlägg\p{L}*|utvärder\p{L}*|handlingsplan)(?!\p{L})|tillsätta?s?\s+(?:en\s+)?(?:ny\s+)?(?:statlig\s+)?(?:utredning|kommission|kommitté|utvärdering)|ta fram (?:en |ett )?(?:plan|strategi)/iu;
+
+/**
+ * Åtgärder som gör att ett löfte lovar mer än utredningen.
+ *
+ * Listan är bredare än `ATGARDSVERB`, som bara letar efter det som går att
+ * ankra i en känd post. Här räcker det att något GÖRS: A2 lät tre löften
+ * behålla sitt belopp därför att «citatet lovar en åtgärd utöver utredningen»,
+ * och de tre är provets facit.
+ */
+const UTREDNINGENS_UNDANTAG =
+  /(?<!\p{L})(höja|höjer|höjs|höjning|införa|inför|införs|införandet|bygga|bygger|utöka|utökar|förstärka|förstärkt|stärka|återinföra|återinför|avskaffa|avskaffar|slopa|slopar|dubblera|fördubbla|öka|ökar|ökad|ökade|ökning|rikta|riktar|riktade|reformera|reformeras|korta|kortar|satsa|satsar|anställa|förbjuda|förbjuds|förbud|kriminalisera|ta bort|tar bort|betala|ersätta|finansiera|tillföra|tillför|skärpa|skärper|sänka|sänker|sanering\p{L}*)(?!\p{L})/iu;
+
+/**
+ * Är löftet bara en utredning, trots att det bär ett belopp?
+ *
+ * Ger utredningsordet, så att invändningen kan skriva ut vad den läst. Bär
+ * citatet en åtgärd utöver utredningen tiger kontrollen — det är precis den
+ * skillnad A2 avgjorde på, och den ska inte prövas om av ett mönster.
+ */
+export function utredningUtanAtgard(quote: string): string | null {
+  if (UTREDNINGENS_UNDANTAG.test(quote)) return null;
+  const m = UTREDNINGSORD.exec(quote);
   return m ? m[0] : null;
 }
 
@@ -253,6 +302,22 @@ export function provaUtrakningen(p: UtrakningsLofte): Invandning[] {
         matt: `cost.msek_base är 0, citatet namnger "${atgard}", och nollningen vilar på ${
           skalen.length === 0 ? "inget angivet skäl" : `«${skalen.join("», «")}»`
         }.`,
+      });
+    }
+  }
+
+  // 1b. Utredningen, som är ankarregelns spegelbild: ett belopp som inte borde
+  //     finnas, i stället för en nolla som inte håller. Ligger här av samma
+  //     skäl — kontrollen behöver ingen uträkning för att bita.
+  {
+    const utredningen = c.msek_base > 0 ? utredningUtanAtgard(p.quote) : null;
+    if (utredningen !== null) {
+      ut.push({
+        kontroll: "utredning_med_belopp",
+        roll: "partiet",
+        invandning:
+          "Vi lovar att titta på saken, inte att göra den. Ni sätter ändå en prislapp på vårt löfte — och nollar andra partiers utredningar. Vilken regel gäller?",
+        matt: `Citatet lovar "${utredningen}" och ingen åtgärd utöver den, men cost.msek_base är ${c.msek_base}.`,
       });
     }
   }
