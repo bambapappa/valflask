@@ -761,6 +761,6 @@
     "affects": "14 löften får ett utskrivet ankare. Inga belopp ändras.",
     "what": "När en uträkning lånar sitt belopp som riktmärke från ett annat publicerat löfte står det nu vilket, i ett eget fält, och löftessidan visar det som en länk med det andra löftets rubrik. Fjorton löften har fått sitt ankare utskrivet.",
     "why": "Metoden tillåter att ett belopp ankras i ett jämförbart löfte, men det fanns ingenstans att skriva vilket: interna beteckningar får inte stå i text som möter läsaren. Följden var att 143 lånade belopp inte gick att följa — varken för en läsare som vill kontrollera siffran eller för en granskare som ska pröva kedjan. En maskinell matchning gav 25 förslag, men bara 12 höll vid kontroll, så resten är inte ifyllda: ett fel ankare är sämre än inget.",
-    "commit": "0000000"
+    "commit": "ad9d4e1"
   }
 ]
