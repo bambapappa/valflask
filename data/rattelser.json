@@ -825,5 +825,12 @@
     "what": "De löften som publicerades i den här körningen skapades innan fältet för löftessort fanns. Sorten är nu satt på alla, härledd med samma funktion som pipelinen använder vid publicering, så att de klassas exakt som beståndet i övrigt.",
     "why": "Fältet blev obligatoriskt samma dag genom en annan ändring. Utan det skulle löftessidorna för de här löftena inte kunna säga om en nolla betyder att åtgärden är gratis eller att det inte finns någon åtgärd att räkna på — och beståndet skulle bära två sorters poster där bara den ena går att läsa.",
     "commit": "263ff9d"
+  },
+  {
+    "date": "2026-08-22",
+    "affects": "Löftessidorna för p-2026-2422, p-2026-2426, p-2026-2444, p-2026-2485, p-2026-2494, p-2026-2665, p-2026-2682, p-2026-2694, p-2026-2696, p-2026-2759, p-2026-2789, p-2026-2845, p-2026-2851, p-2026-2855, p-2026-2857, p-2026-2860, p-2026-2867, p-2026-2874, p-2026-2876, p-2026-2909, p-2026-2917, p-2026-2918 — uträkningens grund",
+    "what": "22 uträkningar som lånade ett belopp ur ett annat löfte har fått sin grund utskriven. 19 pekar nu ut löftet de lånar av i ett fält, så att sidan renderar det som en länk med det andra löftets rubrik och läsaren kan pröva om ankaret i sin tur håller. Varje angivet tal är kontrollerat mot det löfte som pekas ut. Ett av löftena visade sig vara samma reform som ett löfte partiet redan har — riskfamiljsprogrammet står på två sidor av partiets webbplats och hade publicerats två gånger — och räknas nu en gång. Två uträkningar lånade ingenting som gick att peka ut och har skrivits om: den ena sa att basbeloppet låg i linje med två äldreomsorgslöften «≈3 000 msek» när bägge ligger på 1 950, den andra nämnde ett löfte och skrev i samma mening att det gäller motsatt åtgärd och inte används.",
+    "why": "Ett lånat belopp ska gå att följa till det löfte det lånas från. Att bara namnge löftet i prosan räcker inte: meningen slutar tyst stämma när det andra löftets belopp rör sig, och en läsare kan inte klicka sig dit. Inget basbelopp har ändrats av att grunden fått en adress. Dubbletten sänker Socialdemokraternas summa och rikssumman med 600 miljoner kronor för mandatperioden — ett belopp som räknades två gånger räknas nu en.",
+    "commit": "07cede49"
   }
 ]

@@ -31,7 +31,8 @@
     "utvardera-kandidater": "node --import tsx/esm scripts/utvardera-kandidater.mts",
     "utvardera-modell": "node --import tsx/esm scripts/utvardera-modell.mts",
     "brodtext-backfill": "node --import tsx/esm scripts/brodtext-backfill.mts",
-    "motivering": "node --import tsx/esm scripts/koppling-motivering.mts"
+    "motivering": "node --import tsx/esm scripts/koppling-motivering.mts",
+    "glapplista": "node --import tsx/esm scripts/glapplista.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1"
