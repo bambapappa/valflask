@@ -29,7 +29,9 @@
     "dra-in": "node --import tsx/esm scripts/koppling-dra-in.mts",
     "peka-om": "node --import tsx/esm scripts/koppling-peka-om.mts",
     "utvardera-kandidater": "node --import tsx/esm scripts/utvardera-kandidater.mts",
-    "utvardera-modell": "node --import tsx/esm scripts/utvardera-modell.mts"
+    "utvardera-modell": "node --import tsx/esm scripts/utvardera-modell.mts",
+    "brodtext-backfill": "node --import tsx/esm scripts/brodtext-backfill.mts",
+    "motivering": "node --import tsx/esm scripts/koppling-motivering.mts"
   },
   "dependencies": {
     "ajv": "^8.17.1"

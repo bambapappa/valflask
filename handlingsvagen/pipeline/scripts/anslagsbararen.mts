@@ -250,6 +250,10 @@ for (const r of barLoftet) {
     .filter((d) => d !== "")
     .join(" ")
     .trim();
+  // Fältet bredvid prosan: raden vi just skrev ut ÄR grunden för att citatet
+  // står utanför yrkandena, och den grunden ska gå att pröva utan att läsa
+  // löptext. Se src/brodtextspar.ts.
+  k.bevis = { ...k.bevis, brodtext_oppen: "anslagsrad" };
   rorda.push(k.id);
   if (k.promise_id) berordaLoften.add(k.promise_id);
 }

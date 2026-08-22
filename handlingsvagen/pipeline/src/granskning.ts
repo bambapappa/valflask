@@ -24,6 +24,7 @@ import { dokumentUrl } from "./riksdagen.ts";
 // logg.py — och två kopior av den formeln hade glidit isär utan att något
 // syntes förrän grinden började stoppa allt.
 import { provningsGrind, type Provning } from "../../../pipeline/src/provningar.ts";
+import type { Brodtextgrund } from "./brodtextspar.ts";
 
 /** En köpost i data/kopplingsforslag.json (skriven av scripts/foreslag.mts). */
 export interface KoPost extends KopplingsForslag {
@@ -38,7 +39,20 @@ export interface KopplingPost {
   stance_id?: string;
   handling_id: string;
   riktning: "stodjer" | "motverkar";
-  bevis: { citat: string; sida?: number | null; kalla_dok_id?: string };
+  bevis: {
+    citat: string;
+    sida?: number | null;
+    kalla_dok_id?: string;
+    /**
+     * Grunden för att citatet står utanför handlingens egna lydelser (H2).
+     *
+     * Undantaget har alltid skrivits ut i `method_note` — men bara i prosa, i
+     * tre former från tre verktyg, och därför gick det inte att pröva. Fältet
+     * säger vilken grund som gäller; `brodtextspar.ts` håller ihop fältet och
+     * prosan, och `tests/brodtextspar.test.ts` faller om de säger olika saker.
+     */
+    brodtext_oppen?: Brodtextgrund;
+  };
   /**
    * Vad punkten avslog, när beviset bara är en lista på avslagna motioner.
    * Yrkandenas egna lydelser, hämtade ur motionerna punkten pekar ut — aldrig

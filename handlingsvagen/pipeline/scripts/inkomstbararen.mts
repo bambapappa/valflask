@@ -205,6 +205,9 @@ for (const r of barLoftet) {
   if (!k || !rad) continue;
   const slag = loftetsSkatteslag(r.promise_id).slag;
   k.method_note = `${utanTidigareInkomstnot(k.method_note ?? "")} ${motiveringsnot(rad, slag, datum)}`.trim();
+  // Samma sak som i anslagsbäraren: inkomstraden är grunden, och grunden ska
+  // gå att pröva utan att läsa prosa. Se src/brodtextspar.ts.
+  k.bevis = { ...k.bevis, brodtext_oppen: "inkomstrad" };
   rorda++;
   if (k.promise_id) berordaLoften.add(k.promise_id);
 }
