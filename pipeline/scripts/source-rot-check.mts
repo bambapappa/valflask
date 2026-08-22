@@ -22,6 +22,7 @@ import { normalizeForVerbatim } from "../src/gates.ts";
 import { archiveWithFallback } from "../src/archive.ts";
 import { snapshotBacksQuote } from "../src/archive-verify.ts";
 import type { StanceCell } from "../src/stances.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const STANCES_PATH = join(ROOT, "data", "stances.json");
@@ -29,7 +30,7 @@ const USER_AGENT = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 const dryRun = process.argv.includes("--dry-run");
 
 const cells = JSON.parse(readFileSync(STANCES_PATH, "utf8")) as StanceCell[];
-const today = new Date().toISOString().slice(0, 10);
+const today = svenskDag();
 
 type CheckResult = "ok" | "andrad" | "borttagen" | "obestamd";
 

@@ -7,6 +7,7 @@ import { avvisa, hav, slaUpp, type Avvisning } from "./avvisningar.ts";
 import { partiForUrl } from "./skordeordning.ts";
 import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
+import { svenskDag } from "./dagen.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -692,7 +693,7 @@ function approveLast(
     parties: cand.parties ?? [],
     person: cand.person ?? null,
     quote: cand.quote ?? "",
-    date_stated: new Date().toISOString().slice(0, 10),
+    date_stated: svenskDag(),
     source: {
       url: item.articleUrl,
       domain: domainOf(item.articleUrl),
@@ -799,7 +800,7 @@ function rejectLast(indexStr: string, reason: string, dataDir: string): { title:
     const minne = lasAvvisade(dataDir);
     saveJson(
       join(dataDir, "avvisade.json"),
-      avvisa(minne, url, citat, reason, new Date().toISOString().slice(0, 10)),
+      avvisa(minne, url, citat, reason, svenskDag()),
     );
   }
   console.log(`Avvisad: "${title}" — ${reason}`);
@@ -824,7 +825,7 @@ export function lasAvvisade(dataDir: string = DATA_DIR): Avvisning[] {
  */
 export function havAvvisning(nyckel: string, skal: string, dataDir: string = DATA_DIR): void {
   const minne = lasAvvisade(dataDir);
-  const ut = hav(minne, nyckel, skal, new Date().toISOString().slice(0, 10));
+  const ut = hav(minne, nyckel, skal, svenskDag());
   if (!ut) {
     console.error(`Ingen avvisning med nyckeln ${nyckel}. Kör \`pnpm review avvisade\` för att se dem.`);
     process.exit(1);

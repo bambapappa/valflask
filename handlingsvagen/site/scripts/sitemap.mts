@@ -12,6 +12,7 @@
 
 import { readdirSync, statSync, writeFileSync } from "node:fs";
 import { resolve, join } from "node:path";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 const SITE = "https://utlovat.se";
 const BAS = "/handlingsvagen";
@@ -33,7 +34,7 @@ function sidor(dir: string, prefix = ""): string[] {
 }
 
 const adresser = sidor(dist).sort();
-const idag = new Date().toISOString().slice(0, 10);
+const idag = svenskDag();
 const xml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',

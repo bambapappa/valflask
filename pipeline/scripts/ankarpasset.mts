@@ -27,6 +27,7 @@ import { join } from "node:path";
 import { computeDataHash } from "../src/publish.ts";
 import { ankarbrott } from "../src/ankarkravet.ts";
 import { provaRad, tillampa, type Ankarrad, type Lofte, type Utfall } from "../src/ankarpasset.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const ROT = join(import.meta.dirname, "../..");
 const DATA = join(ROT, "data");
@@ -37,7 +38,7 @@ const skriv = argv.includes("--skriv");
 const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const varfor = varde("--varfor");
 const fil = argv.find((a) => !a.startsWith("--") && a !== varfor);
-const datum = new Date().toISOString().slice(0, 10);
+const datum = svenskDag();
 
 if (!fil) {
   console.error("Ange en fil: <id>\\t<ankare|grupp|egen>\\t<värde>\\t<skäl>. Se skriptets huvud.");

@@ -29,6 +29,7 @@
  */
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { svenskDag } from "../../pipeline/src/dagen.ts";
 
 const ROT = resolve(import.meta.dirname, "../..");
 const LOGGAR = ["DECISION_LOG.md", "handlingsvagen/DECISION_LOG.md"];
@@ -128,7 +129,7 @@ check(
 
 // Datumtaket får inte flyttas framåt för att slippa skriva raden. Går det
 // förbi dagens datum har någon skjutit kravet på framtiden.
-const idag = new Date().toISOString().slice(0, 10);
+const idag = svenskDag();
 check(
   "kravets datum ligger inte i framtiden",
   KRAVS_FRAN <= idag,

@@ -22,6 +22,7 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import type { KopplingPost } from "../src/granskning.ts";
 import { bytMotivering, provaMotivering, rattelsePost, type Motiveringsrad } from "../src/motiveringsbyte.ts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
@@ -29,7 +30,7 @@ const skriv = argv.includes("--skriv");
 const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const varfor = varde("--varfor");
 const fil = argv.find((a) => !a.startsWith("--") && a !== varfor);
-const datum = new Date().toISOString().slice(0, 10);
+const datum = svenskDag();
 
 if (fil === undefined) {
   console.error("Ange en fil med rader: <koppling-id>\\t<ny motivering>\\t<skäl>. Se skriptets huvud.");

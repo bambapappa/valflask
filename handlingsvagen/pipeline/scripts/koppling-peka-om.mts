@@ -27,12 +27,13 @@ import {
   type LoftesUppgift,
   type Ompekningsrad,
 } from "../src/ompekning.ts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 const fil = argv.find((a) => !a.startsWith("--"));
-const datum = new Date().toISOString().slice(0, 10);
+const datum = svenskDag();
 
 if (fil === undefined) {
   console.error("Ange en fil med rader: <koppling-id>\\t<löfte-id>\\t<skäl>. Se skriptets huvud.");

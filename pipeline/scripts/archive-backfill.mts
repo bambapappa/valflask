@@ -38,6 +38,7 @@ import {
   type Vantanutfall,
 } from "../src/arkivvantan.ts";
 import { GRUNDPAUS_MS, hamtaFranArkivet } from "../src/wayback-takt.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 /** Hur många begäranden arkivet strypte under körningen. Skrivs ut till sist. */
 let strypta = 0;
@@ -380,7 +381,7 @@ if (changed.length > 0) {
   const dataHash = createHash("sha256").update(canonical(promises)).digest("hex");
   const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as unknown[];
   changelog.push({
-    run_id: `archive-backfill-${new Date().toISOString().slice(0, 10)}`,
+    run_id: `archive-backfill-${svenskDag()}`,
     added: [], updated: changed, retracted: [],
     data_hash: dataHash, timestamp: new Date().toISOString(),
   });

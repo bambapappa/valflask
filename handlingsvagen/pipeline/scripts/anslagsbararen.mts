@@ -40,6 +40,7 @@ import {
   type Anslagsutfall,
   type Loftetsslag,
 } from "../src/anslagsbararen.ts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
@@ -47,7 +48,7 @@ const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : und
 const skriv = argv.includes("--skriv");
 const jsonUt = varde("--json");
 const matningsfil = varde("--matning");
-const datum = new Date().toISOString().slice(0, 10);
+const datum = svenskDag();
 
 if (matningsfil === undefined) {
   console.error("Ange --matning <fil> — utdata från: npm run anslag-tabell -- --klass-a --json <fil>");

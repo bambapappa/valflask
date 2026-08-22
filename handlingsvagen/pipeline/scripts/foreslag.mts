@@ -30,6 +30,7 @@ import {
   laddaProvade, parNyckel, serialiseraProvade, tackningsordning,
   skrivSokning, serialiseraSokregister, TOMT_SOKREGISTER, type Sokregister,
 } from "../src/provade.ts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 interface KoPost extends KopplingsForslag {
   skapad: string;
@@ -186,7 +187,7 @@ async function main() {
     systemPrompt = readFileSync(resolve(import.meta.dirname, "../prompts/koppling.md"), "utf8");
   }
 
-  const runId = `foreslag-${new Date().toISOString().slice(0, 10)}`;
+  const runId = `foreslag-${svenskDag()}`;
   let nya = 0;
   let parFel = 0;
   let parKlara = 0;
@@ -194,7 +195,7 @@ async function main() {
   const sparaProvade = () => writeFileSync(provadePath, JSON.stringify(serialiseraProvade(provade), null, 2) + "\n");
   const sparaSokregister = () =>
     writeFileSync(sokregisterPath, JSON.stringify(serialiseraSokregister(sokregister), null, 2) + "\n");
-  const idag = new Date().toISOString().slice(0, 10);
+  const idag = svenskDag();
   for (const lofte of loften) {
     const dokKandidater = rankaKandidater(lofte, handlingar, maxKandidater, termIndex);
     const votKandidater = rankaVoteringsKandidater(lofte, handlingar, betankanden, maxKandidater);

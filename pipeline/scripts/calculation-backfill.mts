@@ -28,6 +28,7 @@ import {
 import { computeDataHash } from "../src/publish.ts";
 import { OpenRouterClient, type LlmClient } from "../src/llm.ts";
 import { byggLed } from "../src/cli-run.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const DATA = resolve(import.meta.dirname, "../../data");
 
@@ -322,7 +323,7 @@ function buildSave(
 
     // Changelog: ersätt körningens egen post i stället för att lägga en ny vid
     // varje checkpoint, annars växer loggen med hundratals poster.
-    const runId = `calc-backfill-${new Date().toISOString().slice(0, 10)}`;
+    const runId = `calc-backfill-${svenskDag()}`;
     const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as Array<{ run_id?: string }>;
     const rest = changelog.filter((e) => e.run_id !== runId);
     rest.push({
@@ -343,7 +344,7 @@ function buildSave(
     const rattelser = JSON.parse(readFileSync(rPath, "utf8")) as Array<{ date: string; affects: string; what: string; why: string }>;
     if (!rattelser.some((r) => r.affects.includes(SENTINEL))) {
       rattelser.unshift({
-        date: new Date().toISOString().slice(0, 10),
+        date: svenskDag(),
         affects: "Kostnadsuppskattningar som bygger på beräkning (systematisk kvalitetshöjning)",
         what:
           "Sättet vi uppskattar kostnader på har förbättrats. Nya uppskattningar jämförs nu med liknande, redan publicerade löften så att samma politik hamnar i samma storleksordning, och varje uppskattning får en stegvis, öppet redovisad uträkning. För äldre uppskattningar har uträkningen räknats om i efterhand och lagts till där den nya beräkningen bekräftar det tidigare beloppet. Där beräkningen pekade på ett annat belopp ändrades ingenting automatiskt — de löftena ses över för hand. Uträkningar som lagts till i efterhand är märkta som rekonstruerade.",

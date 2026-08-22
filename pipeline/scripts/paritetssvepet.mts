@@ -24,6 +24,7 @@ import {
   type Paritetsfynd,
   type ParitetsLofte,
 } from "../src/pariteten.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const koFil = resolve(rot, "data/paritetskon.json");
@@ -52,7 +53,7 @@ const flagga = (namn: string): string | undefined => {
 };
 const finns = (namn: string): boolean => process.argv.includes(namn);
 
-const idag = (): string => new Date().toISOString().slice(0, 10);
+const idag = (): string => svenskDag();
 
 const lasKo = (): Kofil =>
   existsSync(koFil)

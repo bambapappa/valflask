@@ -30,6 +30,7 @@ import {
   malUtanKvarvarandeKoppling,
   type Indragningsrad,
 } from "../src/indragning.ts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
@@ -42,7 +43,7 @@ const anledning = varde("--anledning");
 // som förklarar fel sak är sämre än en som är kort. Skälet skrivs därför ut.
 const varfor = varde("--varfor");
 const fil = argv.find((a) => !a.startsWith("--") && a !== anledning && a !== varfor);
-const datum = new Date().toISOString().slice(0, 10);
+const datum = svenskDag();
 
 if (fil === undefined) {
   console.error("Ange en fil med rader: <koppling-id>\\t<skäl>. Se skriptets huvud.");
