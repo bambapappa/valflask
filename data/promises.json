@@ -19091,14 +19091,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet hålls av en nationell strategi; det är framtagningen som prissätts.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.3,
-      "calculation": "Löftet hålls av en framtagen strategi. En statlig utredning av medelstorlek med visst externt stöd kostar 5–30 miljoner kronor som engångskostnad, beroende på omfattning, expertis och remissförfarande. Basbeloppet sätts till 15 miljoner. Den kompetensutveckling strategin kan leda till prissätts inte här."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -19113,6 +19113,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 500 till 15 miljoner kronor, och perioden från per år till engångskostnad. Ett löfte om att ta fram en strategi prissätter framtagningen, inte den politik den kan leda till.",
         "commit": "09a70ae94bdcb20df891022dc12bc4070bc1b9ea"
+      },
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -30506,10 +30511,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 0,
+      "msek_base": 10,
       "msek_high": 30,
       "basis": "llm_estimat",
       "basis_url": null,
+      "anchor_ids": [
+        "p-2026-0918"
+      ],
       "method_note": "En lagstadgad rättighet medför i sig marginella direkta statliga kostnader. Eventuella ökade vårdkostnader är en omfördelning mellan regioner, inte en ny statlig utgift.",
       "confidence": 0.2,
       "calculation": "Engångskostnad för att utforma regelverk, nödvändiga it-anpassningar och informationsinsatser: uppskattas till 0–30 miljoner kronor. Löpande kostnader för staten bedöms som försumbara."
@@ -30527,6 +30535,11 @@
         "date": "2026-08-05",
         "commit": "150deaa980e7f1959cf38c1ed1df084336f5af2f",
         "change": "Publicerat ur granskningskön efter genomläsning post för post."
+      },
+      {
+        "date": "2026-08-22",
+        "change": "Basbeloppet höjt från noll till 10 miljoner kronor. Ett annat parti lovar samma rätt att välja vårdgivare i hela landet och den posten bär 10 miljoner för regelverk och it-anpassning, medan den här bar noll med samma uträkning. Samma åtgärd ska kosta lika.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -36200,15 +36213,15 @@
     "loftestyp": "reform",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 20,
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 20,
+      "msek_high": 35,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Direkt kostnad för lagstiftning och eventuell tillsyn. Löftet hålls av en lag eller en reglering: förbudskostnad oftast försumbar; samhällsföljder okvantifierade.",
       "confidence": 0.65,
-      "calculation": "Utredning och initialt systemstöd ~5 mkr, mindre myndighetsenhet ~10-15 mkr. Sammanlagd engångskostnad uppskattas till 0–20 mkr."
+      "calculation": "Att stoppa utländsk finansiering till stiftelser, föreningar och församlingar kräver att någon granskar penningflödena löpande. Uträkningen räknar en mindre myndighetsenhet om 10–15 miljoner kronor plus initialt systemstöd. En enhet är en årlig kostnad, inte en engångsutgift: 10–35 miljoner kronor per år med 20 som bas."
     },
     "financing_claimed": {
       "described": false,
@@ -36223,6 +36236,11 @@
         "date": "2026-08-21",
         "commit": "8f894b8",
         "change": "Uträkningen eller metodnoten hänvisade till en intern regelkod. Skälet står nu i klartext. Beloppet är oförändrat."
+      },
+      {
+        "date": "2026-08-22",
+        "change": "Perioden ändrad från engångs- till årlig kostnad och basbeloppet satt till 20 miljoner kronor. Uträkningen räknade en mindre myndighetsenhet, alltså en löpande kostnad, medan fältet bokförde den som en engångsutgift och satte basen till noll.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -44923,13 +44941,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 3,
-      "msek_high": 15,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Regelkrav på vårdgaranti, inte ny statsutgift. Kostar i huvudsak regionsreformens admin/uppföljning; vården finansieras redan av regionerna.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.3,
-      "calculation": "En bortre gräns på 7 dagar är en reglering av existerande abortvård. Direkt statlig kostnad begränsas till lagstiftning, handledning och uppföljning (~0–15 mkr engångs). Regionerna står för eventuell kapacitetsökning, vilket inte är en ny statlig utgift eftersom löftet hålls av en lag eller en reglering/11."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -44944,6 +44962,11 @@
         "date": "2026-08-21",
         "commit": "8f894b8",
         "change": "Uträkningen eller metodnoten hänvisade till en intern regelkod. Skälet står nu i klartext. Beloppet är oförändrat."
+      },
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 3 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -46130,14 +46153,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är att tillsätta en kriskommission — prissatt som utredningskostnad (SOU-storlek), inte kostnaden för de åtgärder kommissionen senare kan föreslå.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.65,
-      "calculation": "Statlig kommission/utredning i SOU-storlek: ledamöter, experter och sekretariat om ~5–10 tjänster, löptid ~1–2 år. Kostnad per personår med lokaler och underlag brukar landa kring 1,5–2 msek. ~7 personer × 1,5 år × ~1,5 msek ≈ 15 msek; spannet 5–30 msek täcker smalare/bredare kommission. Åtgärderna i kommissionens betänkande prissätts inte här."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -46152,6 +46175,11 @@
         "date": "2026-08-21",
         "commit": "8f894b8",
         "change": "Uträkningen eller metodnoten hänvisade till en intern regelkod. Skälet står nu i klartext. Beloppet är oförändrat."
+      },
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -48858,14 +48886,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "confidence": 0.6,
-      "method_note": "Utredningslöfte: utredningen prissätts, inte den politik den kan leda till.",
-      "calculation": "Löftet är att tillsätta en utredning om möjligheterna till en generell arbetstidsförkortning. Det är utredningen som prissätts, inte den arbetstidsförkortning den kan leda till. En statlig utredning i vanlig storlek — ordförande, sekretariat om tre till fem personer, experter och remissrunda under ett till två år — kostar 5–30 mkr som engångskostnad, och basbeloppet sätts till 15 mkr. Partiets egna publicerade och köade utredningslöften ligger i samma spann."
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -48875,7 +48903,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -49833,14 +49867,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är en översyn/utredning av immaterialrättsligt regelverk; prissätts som SOU-liknande utredning, inte följdpolitik.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "Översyn/utredning av immaterialrättsligt regelverk: SOU-kostnad ~5–30 mkr; bas 15 mkr. Givet vagt uppdrag sätts spannets bredd."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -49850,7 +49884,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -51967,14 +52007,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Avser utredning/översyn av regelverket, inte kostnader för eventuella framtida regelförändringar. Typisk SOU-storlek.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.4,
-      "calculation": "Översyn/utredning antas kosta 5–30 mkr engång baserat på normala statliga utredningskostnader."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -51984,7 +52024,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -53439,14 +53485,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Utredningslöfte; prissätter själva utredningen, inte ett framtida cyberförsvar.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "Normal SOU/statlig utredningskostnad antas ligga på 5–30 mkr engångsvis; bas 10 mkr."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -53456,7 +53502,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -56159,14 +56211,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Översyn av förtalslagstiftningen prissätts som en statlig utredning/översyn (SOU-storlek). Följdändringar i lagstiftning prissätts inte.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "En statlig utredning eller översyn kostar vanligen 5–30 mkr i engångsanslag. Bas 15 mkr (mellanstor utredning). Inga nya myndighetsuppgifter eller lagändringskostnader räknas in."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -56176,7 +56228,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -57542,14 +57600,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Utredningslöfte prissätts som en SOU/kommitté; den framtida reformens kostnad prissätts inte här.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "En statlig utredning av SOU-karaktär antas kosta cirka 5–30 mkr i engångsanslag. Basnivå satt till 15 mkr; spannet fångar mindre utredning eller större parlamentarisk kommitté."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -57559,7 +57617,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -58247,14 +58311,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Utredningslöfte; prissätter en SOU-liknande översyn, inte framtida elevhälsokostnader inom Komvux.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.4,
-      "calculation": "Engångsutredning/statlig översyn: typisk SOU-kostnad 5–30 mkr. Base satt till 10 mkr som mittvärde."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -58264,7 +58328,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -58529,14 +58599,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är att utreda, inte att genomföra en skatteförändring. Prissätter en statlig utredning i SOU-storlek.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "Antagande om en utredning med sekretariat, experter och remisser: 5–30 mkr engång. Bas 15 mkr motsvarar en medelstor SOU."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -58546,7 +58616,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -58943,14 +59019,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är att tillsätta en kriskommission/utredning, så prissättningen avser själva kommissionen, inte en framtida reform av tillståndsprocesser. Typisk SOU-storlek.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "Antar en kommission med sekretariat, experter, analyser och visst remissarbete: 5–30 mkr i fasta priser. Bas 15 mkr som mittvärde."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -58960,7 +59036,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -59682,14 +59764,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Behandlar löftet som en statlig utredning/kommission eftersom det är utredningen som prissätts, inte den politik den kan leda till. Kostnaden avser kommissionens arbete, inte framtida förslag.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "SOU-liknande kommission: engångskostnad typiskt 5–30 mkr. Bas 15 mkr för en nationell kriskommission med kansli, utfrågningar och betänkande. Låg 5 mkr, hög 30 mkr."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -59699,7 +59781,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -62944,14 +63032,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Avser kostnaden för själva utredningen/åtgärdsplanen, inte framtida åtgärder (utredningen prissätts, inte politiken den kan leda till).",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "En statlig utredning/åtgärdsplan i SOU-storlek: typiskt 5–30 mkr. Bas 15 mkr mitt i spannet."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -62961,7 +63049,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -65265,14 +65359,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Prissätter själva kommissionen/utredningen som en SOU-liknande engångskostnad, inte den politik den kan leda till. Beloppet är åtgärden, inte samhällsföljderna.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.4,
-      "calculation": "Antar en statlig kommission med sekretariat, utredare och förvaltningskostnader i SOU-storlek: 5–30 mkr engångsvis, med bas 15 mkr."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -65282,7 +65376,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -66323,14 +66423,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Prissätts som utrednings-/strategiarbete i SOU-storlek, inte som själva infrastrukturinvesteringarna.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.4,
-      "calculation": "En nationell strategi/utredning antas kosta 5–30 mkr engång, med bas 15 mkr. Inga investeringar i tankstationer ingår."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -66340,7 +66440,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -68921,13 +69027,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Avser engångskostnad för att ta fram en ny strategi, liknande en statlig utredning eller plan. Omfattar analys, samråd och framtagande av dokument, uppskattas till 5–30 mkr. Kan till viss del rymmas…",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.3,
-      "calculation": "Kostnad för att utveckla en ny strategi är typiskt 5–30 mkr (SOU-storlek). Antar att en ny utrikeshandelsstrategi kräver visst extra arbete utöver ordinarie verksamhet. Base sätts till 10 mkr, med ett spann från 0 (om den ryms helt inom befintlig budget) till 30 mkr."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -68937,7 +69043,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -74359,14 +74471,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är en översyn/utredning, inte en byggsatsning. Prissätts som en statlig utredning (SOU-storlek). Centerpartiets jämförbara löfte om en nationell satsning på idrottsanläggningar avser en konkret satsning och är därför mycket dyrare; denna post…",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.4,
-      "calculation": "En statlig utredning (SOU) med sekretariat, experter och resor kostar normalt ~5-30 mkr. Antaget: en översyn av behovet i hela landet. Base=15 mkr. Kostnaden är engångsvis, inte en årlig anläggningssatsning (jfr Centerpartiets löfte om en nationell satsning på idrottsanläggningar, som är 400 mkr/år)."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -74376,7 +74488,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -75659,14 +75777,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är en översyn/utredning om effektivt återställande med förorenarens betalningsansvar. Prissätts som en statlig utredningskostnad, inte som saneringsåtgärderna i sig.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "En statlig utredning eller översyn av detta slag kostar typiskt cirka 5–30 miljoner kronor i fasta priser. Basantagande: 10 miljoner kronor för en SOU-liknande process med sekretariat, experter och remisshantering."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -75676,7 +75794,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -76039,14 +76163,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är en översyn av regelverk, vilket är en ren utredningsåtgärd. En statlig utredning (SOU) kostar normalt 5–30 mkr som engångskostnad.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.65,
-      "calculation": "En statlig utredning (SOU) kostar typiskt 5–30 mkr baserat på historiska anslag för utredningsväsendet. Löftet anger ingen nivå eller åtgärd som skulle medföra löpande kostnader, så endast utredningskostnaden prissätts."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -76056,7 +76180,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -79991,14 +80121,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "En statlig utredning (SOU) kostar typiskt 5–30 mkr. Löftet är att utreda Trafikverkets organisation, en engångskostnad.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.65,
-      "calculation": "Standardkostnad för en utredning: 5–30 mkr, bas 15 mkr."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -80008,7 +80138,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -85129,15 +85265,18 @@
     "loftestyp": "reform",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 80,
+      "msek_high": 250,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Straffskärpning är en lagändring; den direkta kostnaden för själva åtgärden (utredning, proposition) är försumbar. Eventuella följdkostnader för Kriminalvården är svåröverskådliga och….",
+      "anchor_ids": [
+        "p-2026-0373"
+      ],
+      "method_note": "Skärpta straff för brott mot barn. Prissatt på samma nivå som ett annat partis löfte om samma brottstyp.",
       "confidence": 0.65,
-      "calculation": "Lagändring medför engångsarbete för Regeringskansliet och riksdagen, normalt inom ram. Inga direkta nya utgifter. Följder som ökad fängelsebeläggning är osäkra och räknas inte."
+      "calculation": "Skärpta straff för brott där barn rekryteras eller utnyttjas ger fler och längre frihetsberövanden. Kriminalvården och rättsväsendet är statliga, så kostnaden är statens egen. Beloppet läggs på samma nivå som ett annat partis löfte om skärpta straff för samma brottstyp: 80 miljoner kronor per år, med spannet 20–250 för osäkerhet om antal fall och strafflängd."
     },
     "financing_claimed": {
       "described": false,
@@ -85147,7 +85286,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet höjt från noll till 80 miljoner kronor per år, och perioden ändrad till årlig. Uträkningen skrev att ökad fängelsebeläggning är osäker och därför inte räknas. Ett annat parti lovar skärpta straff för samma brottstyp och den posten bär 80 miljoner per år för just polis, åklagare, domstolar och kriminalvård. Samma åtgärd ska kosta lika oavsett vem som lovar den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -88080,14 +88225,17 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Att fatta ett beslut om att på sikt avveckla en flygplats under vissa förutsättningar är en reglerings- och planeringsåtgärd som i sig själv har försumbara direkta statsfinansiella kostnader. De….",
+      "anchor_ids": [
+        "p-2026-1473"
+      ],
+      "method_note": "Avveckling av Bromma flygplats. Samma nivå som ett annat partis löfte om samma avveckling.",
       "confidence": 0.65,
-      "calculation": "Löftet är ett principbeslut: \"på sikt avveckla\" under vissa förutsättningar. Själva regeringsbeslutet eller utredningsdirektivet kostar i princip inget utöver redan budgeterad förvaltning -> 0 kr. De framtida konsekvenserna (t.ex. Kostnader för flytt av samhällsviktigt flyg eller intäkter från markförsäljning) är svåröverskådliga följder och räknas inte in här perom förbud/lagar/regleringar."
+      "calculation": "Att avveckla Bromma kostar detsamma oavsett vilket parti som lovar det: terminaler, landningsbana och hangarer ger typiskt 200–1 500 miljoner kronor, med 500 som medelfall och viss markförsäljning inräknad. Löftet är villkorat — avvecklingen ska ske \"på sikt\" och bara om beredskapen och det samhällsviktiga flyget kan säkras — men villkoret ändrar inte vad åtgärden kostar när den genomförs."
     },
     "financing_claimed": {
       "described": false,
@@ -88097,7 +88245,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet höjt från noll till 500 miljoner kronor som engångskostnad. Uträkningen kallade löftet ett principbeslut och nollade det. Ett annat parti lovar samma avveckling av samma flygplats och den posten bär 500 miljoner. Villkoret i citatet — \"på sikt\" och \"under förutsättning att\" — ändrar inte vad åtgärden kostar när den genomförs.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -89095,14 +89249,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 8,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är att ta fram en strategi (utredning/handlingsplan), inte att genomföra de infrastrukturinvesteringar som strategin kan leda till. Prissätts som ett typiskt….",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "Antagande: En statlig utredning eller strategisk plan (SOU) med expertgrupp, sekretariat och remissförfarande kostar i storleksordningen 5–30 mkr som engångskostnad. Basvärdet 15 mkr representerar en medelstor utredning. Låg 8 mkr för en lättare förvaltningsintern strategi, hög 30 mkr för en bred parlamentarisk utredning med omfattande konsultstöd. OBS: bygger inga hamninvesteringar."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -89112,7 +89266,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -99428,14 +99588,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 4,
-      "msek_base": 10,
-      "msek_high": 20,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Konkret åtagande är att tillsätta en utredning — prissatt som en SOU-utredning i normalstorlek. Själva förskrivningsrätten är en regeländring utan väsentlig direkt statlig kostnad.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.65,
-      "calculation": "Utredning i SOU-storlek: sekretariat ~3–5 tjänster × 1–1,5 år (löner ~0,7–1 msek/tjänst inkl. lokaler och omkostnader) + direktiv, referensgrupper, remissarbete och eventuell lagrådsgranskning ≈ 4–20 msek engångskostnad. Bas 10 msek mitt i spannet. Den framtida förskrivningsrätten prissätts inte här — den kvantifieras separat om den beslutas."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -99445,7 +99605,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -105844,14 +106010,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "En statlig utredning (SOU) kostar vanligtvis 5–30 mkr i engångskostnad. Löftet avser enbart utredningen, inte genomförande av brukarrum eller drug checking.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.65,
-      "calculation": "Antagande: en utredning med sekretariat, experter, resor och remissförfarande. Typisk kostnad för en SOU är 5–30 mkr, med bas 10 mkr."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -105861,7 +106027,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -111247,14 +111419,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Avser en översyn/utredning av brottsbestämmelser, inte eventuella lagändringar. Kostnad i linje med en SOU-utredning.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.5,
-      "calculation": "En statlig utredning (SOU) kostar vanligen 5–30 mkr i engångsutgift. Bas 15 mkr som mittpunkt."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -111264,7 +111436,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -111293,14 +111471,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är att utreda ett bosparande, inte att införa det. Kostnaden avser en utredning i SOU-storlek.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.65,
-      "calculation": "En statlig utredning (SOU) kostar vanligen 5–30 mkr i engångskostnad. Bas 15 mkr, spann 5–30 mkr."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -111310,7 +111488,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -111799,14 +111983,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Utredningslöfte: kostnad för en översyn, ej genomförande. Baserat på typisk SOU-utredning.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.4,
-      "calculation": "En statlig utredning (SOU) kostar vanligen 5–30 mkr. Base 15 mkr, spann 5–30 mkr."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -111816,7 +112000,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -111983,14 +112173,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 12,
-      "msek_high": 25,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är att ta fram en strategi, inte genomföra den. Prissätter endast utarbetandet (SOU-liknande engångskostnad); politik som strategin kan leda till prissätts inte här.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.65,
-      "calculation": "Nationell strategi ≈ utredningsarbete: sekretariat 3–6 personår à ~1–1,5 mkr + underlagsanalyser, forskningssammanställningar, remisser och förankring hos myndigheter/kommuner ≈ 5–25 mkr engångskostnad, mittpunkt ~12 mkr. Inga genomförandekostnader medräknade."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -112000,7 +112190,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 12 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -112213,14 +112409,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 20,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är att tillsätta en utredning; prissatt som en normal SOU-utredning med sekretariat och experter. Ev. senare lagändringar ingår inte.",
+      "method_note": "Utrednings- eller planlöfte. Prissätts till noll enligt beslutet 2026-08-07.",
       "confidence": 0.65,
-      "calculation": "Utredning i SOU-storlek: toxänktare + 2–3 administratörer + experter + remissunderlag under ~1–2 år ≈ 5–20 mkr engångskostnad; bas ~10 mkr. Endast utredningens direkta kostnad — inte framtida lagstiftning eller myndighetsändringar."
+      "calculation": "Löftet är att något ska utredas, ses över eller att en plan ska tas fram. Ett sådant löfte prissätts till utredningen, inte till den politik utredningen kan leda fram till — och den politiken har ingen lovat. Utredningen har ingen kostnad som går att hämta ur en källa, så varje siffra skulle bli vår egen gissning. Beloppet är därför noll. Blir förslaget verklighet prissätts det som ett eget löfte."
     },
     "financing_claimed": {
       "described": false,
@@ -112230,7 +112426,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Ett löfte om att utreda, se över eller ta fram en plan prissätts till noll — det beslutet fattades den 7 augusti 2026 och har tillämpats tre gånger sedan dess, men gällde bara de löften som just då hittades. Den här posten och trettiotvå andra bar fortfarande en schablon, medan tjugoåtta likadana löften stod på noll. Samma sorts löfte ska kosta lika mycket.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
