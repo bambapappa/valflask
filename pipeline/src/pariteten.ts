@@ -36,8 +36,9 @@
  * «karensavdrag» från «nationell» och «tydligare»: ett ord som står i vart
  * tionde löfte säger ingenting om att det är samma politik. Rubrikkravet
  * skiljer sakfrågan från bakgrunden — citatet nämner grannpolitik i förbigående,
- * rubriken är härledd ur åtagandet. Utan rubrikkravet flaggades 214 löften och
- * de flesta delade bara ett ord i en bisats; med det, 36.
+ * rubriken är härledd ur åtagandet. Mätt mot publicerade data 2026-08-22:
+ * ett delat sakord ensamt flaggar 490 löften, sällsynthetskravet tar bort 65,
+ * rubrikkravet ytterligare 175, och rubriköverlappet resten — 36 kvar.
  */
 
 import { stemmedTokens } from "./similarity.ts";

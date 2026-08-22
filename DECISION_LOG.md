@@ -40,7 +40,9 @@ fullgott svar; kön mäter att frågan är ställd, inte att något är fel.
 Två löften paras bara ihop när de delar ett **sällsynt sakord i sina
 rubriker**. Båda leden bär sin vikt: sällsyntheten skiljer «alunskiffer» från
 «nationell», och rubrikkravet skiljer sakfrågan från det citatet nämner i
-förbigående. Utan rubrikkravet flaggades 214 löften, med det 36.
+förbigående. Mätt mot publicerade data: ett delat sakord ensamt flaggar 490
+löften, sällsyntheten tar bort 65, rubrikkravet ytterligare 175, och
+rubriköverlappet resten — 36 kvar.
 
 **Motiv:** Regeln stod fastställd sedan tidigare utan att någon mätte den. De
 tre värdefullaste fynden i genomgången av de 2 720 publicerade löftena
