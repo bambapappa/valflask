@@ -27,6 +27,19 @@ export interface Lofte {
   parties: string[];
   person?: string | null;
   category?: string;
+  /**
+   * Löftets sort, satt i valflask: `reform` pekar ut en åtgärd som går att
+   * göra, `inriktning` säger vart partiet vill utan att säga hur.
+   *
+   * Sorten avgör hur hårt kravet på samma sakfråga ska hållas. Mot ett
+   * inriktningslöfte duger nästan vilken handling som helst i närheten, och
+   * «agerat i linje» blir därmed knappt möjligt att motsäga: vid genomgången
+   * 2026-08-22 vilade 71 av 321 publicerade utslag (22 %) på ett
+   * inriktningslöfte, och 60 av dem var «i linje». Prompten fick förr veta
+   * löftets titel och citat men inte dess sort, trots att sorten stod som ett
+   * fält i datat.
+   */
+  loftestyp?: "reform" | "inriktning";
   /** Varifrån löftet hämtades — bär dokument-id när källan är riksdagen. */
   source?: { url?: string | null } | null;
 }
@@ -44,6 +57,31 @@ export interface Lofte {
 export function lofteskallaDokId(lofte: Lofte): string | null {
   const m = /data\.riksdagen\.se\/dokument\/([A-Za-z0-9]+)/u.exec(lofte.source?.url ?? "");
   return m ? m[1]! : null;
+}
+
+/**
+ * Riksdagens egen formelsvenska i ett LÖFTESCITAT.
+ *
+ * Elva publicerade löften har ett citat som är ett riksdagsyrkande —
+ * «Riksdagen ställer sig bakom det som anförs i motionen om att vinstuttag ur
+ * skolan ska förbjudas och tillkännager detta för regeringen». Sex av dem är
+ * kopplade i Handlingsvågen, och för ett av dem är alla sex belägg samma
+ * yrkande i sex olika motioner. Registret som ska väga ord mot handling väger
+ * då handling mot handling: löftet och beviset är samma mening.
+ *
+ * `lofteskallaDokId` fångar det närbesläktade fallet — löftet hämtat ur ett
+ * namngivet riksdagsdokument, som då utesluts ur kandidaterna. Den hjälper
+ * inte här: de här löftena saknar källänk helt, så det finns inget dokument
+ * att utesluta, och beläggen är ändå andra motioner än den citatet kommer ur.
+ *
+ * Detta är en brist i `promises.json`, inte i kopplingen. Funktionen finns för
+ * att bristen ska gå att mäta där den får sin verkan, och för att ett
+ * kopplingsförslag ska kunna säga ifrån i stället för att tyst gå vidare.
+ */
+export function lofteAvRiksdagstext(lofte: Pick<Lofte, "quote">): boolean {
+  return /(Riksdagen ställer sig bakom det som anförs|tillkännager detta för regeringen|detta tillkännager riksdagen|Riksdagen (avslår|antar|anvisar|bifaller)\b)/iu.test(
+    lofte.quote ?? "",
+  );
 }
 
 const STOPPORD = new Set([
@@ -311,6 +349,19 @@ export function byggPrompt(
   return [
     `LÖFTE (${lofte.parties.join(", ").toUpperCase()}): ${lofte.title}`,
     `Exakt citat ur löfteskällan: "${lofte.quote}"`,
+    // Sorten står i datat och ska stå i prompten. Ett inriktningslöfte pekar
+    // ut ett håll utan att peka ut en åtgärd, och mot ett sådant löfte träffar
+    // nästan vad som helst i närheten — regel 3 säger redan att ett löfte utan
+    // sakfråga ska ge `null`, men den bedömningen gjordes om från grunden vid
+    // varje anrop trots att svaret fanns.
+    ...(lofte.loftestyp === "inriktning"
+      ? [
+          "LÖFTETS SORT: inriktning — löftet säger vart partiet vill utan att peka ut en " +
+            "åtgärd. Kräv då att handlingen träffar en SPECIFIK, namngiven del av löftet, och " +
+            "låt citatet visa vilken. Att handlingen ligger i samma politikområde räcker inte. " +
+            "Går ingen namngiven del att peka ut: svara att ingen koppling finns.",
+        ]
+      : []),
     "",
     `RIKSDAGSHANDLING (${handling.kind}, ${handling.datum}): ${handling.titel}`,
     ...(betankande

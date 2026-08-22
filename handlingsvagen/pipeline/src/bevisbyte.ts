@@ -115,9 +115,17 @@ export function bytesnot(byte: Byte, datum: string): string {
  * samma dokument. Därför behöver domarna inte räknas om efter ett byte.
  */
 export function bytBevis(koppling: KopplingPost, byte: Byte, datum: string): KopplingPost {
+  // Undantaget följer citatet. Bytte granskaren in ett citat på sitt eget skäl
+  // bär posten grunden `manskligt_beslut`; bytte hen in en lydelse som står i
+  // handlingen försvinner grunden, för då finns inget undantag kvar att bära.
+  // Utan den nollställningen skulle fältet beskriva ett citat som är borta —
+  // samma fälla som `utanTidigareBytesnot` finns för att undvika i prosan.
+  const { brodtext_oppen: _tidigare, ...bevis } = koppling.bevis;
   return {
     ...koppling,
-    bevis: { ...koppling.bevis, citat: byte.citat },
+    bevis: byte.brodtextSkal
+      ? { ...bevis, citat: byte.citat, brodtext_oppen: "manskligt_beslut" }
+      : { ...bevis, citat: byte.citat },
     method_note: `${utanTidigareBytesnot(koppling.method_note)} ${bytesnot(byte, datum)}`.trim(),
   };
 }

@@ -36,7 +36,12 @@ const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const anledning = varde("--anledning");
-const fil = argv.find((a) => !a.startsWith("--") && a !== anledning);
+// Rättelsepostens `why` beskrev till 2026-08-22 bara EN sorts indragning: att
+// citatet stod i brödtexten i stället för i yrkandet. Den förklaringen är fel
+// för en indragning som gjorts av ett annat skäl — och en publik rättelselogg
+// som förklarar fel sak är sämre än en som är kort. Skälet skrivs därför ut.
+const varfor = varde("--varfor");
+const fil = argv.find((a) => !a.startsWith("--") && a !== anledning && a !== varfor);
 const datum = new Date().toISOString().slice(0, 10);
 
 if (fil === undefined) {
@@ -129,10 +134,11 @@ rattelser.push({
         "handlingen inte bär löftet. Kopplingarna är tillbakadragna med skälet skrivet på var och en.") +
     ` Det gäller ${rader.length} kopplingar.`,
   why:
+    varfor ??
     "Ett belägg ska visa vad partiet faktiskt gjorde, inte vad partiet skrev om saken. En motions " +
-    "handling är dess yrkande; brödtexten argumenterar för yrkandet. Står det vi citerar bara i " +
-    "brödtexten, och begär inget av motionens yrkanden det löftet lovar, har vi visat en åsikt och " +
-    "kallat den en handling. Bedömningen av de kopplingar som står kvar är oförändrad.",
+      "handling är dess yrkande; brödtexten argumenterar för yrkandet. Står det vi citerar bara i " +
+      "brödtexten, och begär inget av motionens yrkanden det löftet lovar, har vi visat en åsikt och " +
+      "kallat den en handling. Bedömningen av de kopplingar som står kvar är oförändrad.",
   commit: "0000000",
 });
 writeFileSync(rattelserPath, JSON.stringify(rattelser, null, 2) + "\n");
