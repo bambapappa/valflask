@@ -50,6 +50,7 @@ function promise(id: string, base: number): PipelinePromise {
     quote: "x", date_stated: "2026-06-25",
     source: { url: "https://x", domain: "x", archive_url: null, fetched_at: "" },
     category: "övrigt",
+    loftestyp: "reform",
     cost: { type: "utgift", period: "per_ar", msek_low: base, msek_base: base, msek_high: base, basis: "parti", basis_url: null, method_note: "x", confidence: 0.5 },
     financing_claimed: { described: false, summary: null, msek: null },
     comparisons: [], quip: "", status: "aktiv", history: [],

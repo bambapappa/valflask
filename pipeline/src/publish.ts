@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { harledLoftestyp } from "./loftestyp.ts";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import {
@@ -33,6 +34,8 @@ export interface PipelinePromise {
     fetched_at: string;
   };
   category: string;
+  /** "reform" pekar ut en åtgärd som går att prissätta. "inriktning" säger vart partiet vill utan medel. */
+  loftestyp: "reform" | "inriktning";
   cost: CostEstimate;
   financing_claimed: {
     described: boolean;
@@ -236,6 +239,7 @@ export function publish(input: PublishInput): PublishResult {
         fetched_at: pc.article.published,
       },
       category: pc.candidate.category,
+      loftestyp: harledLoftestyp(pc.candidate.quote, pc.cost),
       cost: pc.cost,
       financing_claimed: {
         described: pc.candidate.financing_mentioned,

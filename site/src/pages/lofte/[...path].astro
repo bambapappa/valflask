@@ -25,6 +25,12 @@ const parties = getParties();
 const people = getPeople();
 const constants = getConstants();
 const partyNames = promise.parties.map((c) => getPartyByCode(parties, c)?.name || c).join(', ');
+// Ankaren renderas som länkar med löftets RUBRIK, aldrig som id: interna
+// beteckningar får inte möta läsaren (se publicerad-text-provet i pipelinen).
+const allaLoften = getPromises();
+const ankare = (promise.cost.anchor_ids ?? [])
+  .map((id) => allaLoften.find((q) => q.id === id))
+  .filter((q): q is NonNullable<typeof q> => q !== undefined);
 const total = formatMsek(promiseTotalMsek(promise), promise.cost.basis);
 // En besparing eller en ny intäkt är ingen kostnad. Etiketten följer typen, så
 // att sidan inte påstår att partiet lovar bort pengar det vill spara in.
@@ -121,6 +127,22 @@ const jsonLd = [
             </tbody>
           </table>
         </div>
+        {ankare.length > 0 && (
+          <p class="ankarnot">
+            Beloppet är lånat som riktmärke från
+            {ankare.map((a, i) => (
+              <>{i > 0 ? ', ' : ' '}<a href={`/lofte/${a.slug}/`}>{a.title}</a></>
+            ))}.
+          </p>
+        )}
+        {promise.loftestyp === 'inriktning' && (
+          <p class="inriktningsnot">
+            <strong>Inriktningslöfte.</strong> Citatet säger vart partiet vill, men inte
+            med vilket medel — ingen åtgärd, nivå eller mottagare pekas ut. Nollan betyder
+            därför att det inte finns någon åtgärd att räkna på, inte att politiken är gratis.
+            Kostar den något står den på partiets konkreta löften.
+          </p>
+        )}
         <div class="kostnad-meta">
           Grund: {formatBasisLabel(promise.cost.basis)}{promise.cost.basis_url ? ` · <a href="${promise.cost.basis_url}">källa ↗</a>` : ''}
           <br />
@@ -214,6 +236,23 @@ const jsonLd = [
   }
   .datavy--scroll {
     overflow-x: auto;
+  }
+  .inriktningsnot {
+    border-left: 3px solid var(--dis);
+    padding: 0.6rem 0 0.6rem 0.9rem;
+    margin: 0.9rem 0 0;
+    font-size: var(--steg--1);
+    color: var(--dis);
+    max-width: 60ch;
+  }
+  .inriktningsnot strong {
+    color: var(--bläck);
+  }
+  .ankarnot {
+    font-family: var(--font-mono);
+    font-size: var(--steg--1);
+    color: var(--dis);
+    margin: 0.6rem 0 0;
   }
   .kostnad-meta {
     font-family: var(--font-mono);
