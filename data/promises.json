@@ -13332,7 +13332,7 @@
   },
   {
     "id": "p-2026-0344",
-    "group_id": null,
+    "group_id": "g-mindre-klasser",
     "title": "Bättre studiero och stöd för att stoppa utslagningen i skolan",
     "slug": "battre-studiero-och-stod-for-att-stoppa-utslagningen-i-skolan",
     "parties": [
@@ -13386,6 +13386,11 @@
         "date": "2026-08-22",
         "change": "Uträkningens inledande mening om att texten rekonstruerats i efterhand är borttagen från den publicerade kalkylen. Den beskrev vår arbetsgång, inte löftet, och antydde felaktigt att övriga uträkningar skrivits samtidigt med beloppet. Belopp och uträkning i övrigt är oförändrade.",
         "commit": "7fe4d429e2cb4dfaf438bbb9b8815ce634d1629b"
+      },
+      {
+        "date": "2026-08-22",
+        "change": "Löftet är nu lagt i den grupp där partiernas löften om mindre klasser och studiero redan ligger. Nollan var rätt men kopplingen syntes inte. Ingen summa ändras.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -79031,7 +79036,7 @@
   },
   {
     "id": "p-2026-1670",
-    "group_id": null,
+    "group_id": "g-mindre-klasser",
     "title": "Införa bindande regler för lärartäthet, klasstorlek och elevhälsa samt ge kommuner vetorätt",
     "slug": "infora-bindande-regler-for-larartathet-klasstorlek-och-elevhalsa-samt-ge-kommuner-vetoratt",
     "parties": [
@@ -79068,7 +79073,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Löftet är nu lagt i den grupp där partiernas löften om mindre klasser och högre lärartäthet redan ligger. Nollan var rätt — partiets eget löfte i gruppen bär beloppet 2 700 miljoner kronor per år — men kopplingen syntes inte, så nollan såg ut som ett påstående om att bindande regler för klasstorlek inte kostar något. Nu räknas de en gång och det syns var beloppet ligger. Ingen summa ändras.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -101470,14 +101481,17 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 600,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Löftet är en regeländring som tar bort en begränsning, inte en direkt statlig utgift. Direkt kostnad för lagstiftning är försumbar; effekten på studiemedel är en överföring.",
+      "anchor_ids": [
+        "p-2026-0547"
+      ],
+      "method_note": "Slopad avräkning av arbetsinkomst under ledigheter mot studiemedel. Prissatt som ökade utbetalningar från studiestödsanslaget.",
       "confidence": 0.3,
-      "calculation": "Ingen direkt statlig kostnad. Regeländringens administration ≈ 0 mkr. Eventuella förändringar i studiemedelsutbetalningar är omfördelningar, ej nya utgifter."
+      "calculation": "Att arbete under ledigheterna inte längre ska räknas av mot studiemedlen betyder att fler studenter får fullt studiemedel. Staten betalar alltså ut mer — det är en ny utgift, inte en omfördelning mellan aktörer, eftersom ingen annan betalade den förut. Motsvarande löfte om slopat fribelopp under sommaren är prissatt till 150 miljoner kronor per år, och det här löftet gäller samma sak: arbete under ledigheterna. Spannet 50–600 miljoner speglar osäkerhet om hur många som i dag faktiskt får avräkning."
     },
     "financing_claimed": {
       "described": false,
@@ -101487,7 +101501,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet höjt från noll till 150 miljoner kronor per år. Uträkningen kallade förändrade studiemedelsutbetalningar en omfördelning och inte en ny utgift. Det stämmer inte: att slopa avräkningen betyder att staten betalar ut mer studiemedel, och ingen annan betalade den summan förut. Regeln om omfördelning gäller när staten tar över en utgift någon annan redan bär, inte när en utbetalning växer.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
