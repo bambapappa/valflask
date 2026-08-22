@@ -49,6 +49,7 @@ export interface PromisePost {
     } | null;
   };
   category: string;
+  loftestyp: "reform" | "inriktning";
   cost: {
     type: string;
     period: string;

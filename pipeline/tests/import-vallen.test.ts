@@ -243,6 +243,7 @@ test("importVallen: luddig dubbel mot befintligt publicerat → review med dupli
     slug: "x", parties: ["m"], person: null, quote, date_stated: "2026-05-01",
     source: { url: "https://moderaterna.se/y", domain: "moderaterna.se", archive_url: null, fetched_at: "" },
     category: "skatter",
+    loftestyp: "reform",
     cost: { type: "utgift", period: "per_ar", msek_low: 1, msek_base: 1, msek_high: 1, basis: "parti", basis_url: null, method_note: "x", confidence: 0.5 },
     financing_claimed: { described: false, summary: null, msek: null },
     comparisons: [], quip: "", status: "aktiv", history: [],

@@ -54,10 +54,18 @@ const jsonLd = [
       },
       {
         "@type": "Question",
+        "name": "Varför kostar vissa löften noll kronor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Av två olika skäl, och vi skriver ut vilket. Ett reformlöfte pekar ut något som går att göra, och kostar noll när själva åtgärden är gratis för staten — ett förbud eller en lagändring, till exempel. Ett inriktningslöfte säger vart partiet vill utan att säga med vilket medel. Där finns ingen åtgärd att räkna på, och noll betyder ingenting att räkna på — inte att politiken är gratis. Kostar politiken bakom det något står den kostnaden på partiets konkreta löften i samma fråga.",
+        },
+      },
+      {
+        "@type": "Question",
         "name": "Är ni rättvisa mot alla partier?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Ja. Vi samlar in, räknar och skämtar exakt likadant om alla åtta riksdagspartier. Vi säger aldrig om en politik är bra eller dålig, och topplistorna är ren sortering av siffror, inte våra åsikter.",
+          "text": "Ja. Vi samlar in, räknar och skämtar exakt likadant om alla åtta riksdagspartier. Samma åtgärd kostar lika mycket oavsett vem som lovar den — lovar tre partier fler poliser utan att säga hur många får de tre samma belopp. Vi säger aldrig om en politik är bra eller dålig, och topplistorna är ren sortering av siffror, inte våra åsikter.",
         },
       },
       {
@@ -113,6 +121,15 @@ const jsonLd = [
       <h2>Så räknar vi pengarna</h2>
       <p>Vi räknar allt i 2026 års penningvärde, så att äldre och nyare löften går att jämföra rakt av. Och vi räknar bara vad ett löfte <em>kostar</em> — inte vad det längre fram kanske skulle dra in eller spara. Sådana "om&nbsp;det&nbsp;här,&nbsp;så&nbsp;det&nbsp;där"-effekter räknar inget parti på samma sätt, så vi låter bli helt och säger det rakt ut. Hellre jämförbart än krångligt.</p>
 
+      <h2 id="tva-sorters-loften">Två sorters löften — och vad en nolla betyder</h2>
+      <p>Alla vallöften går inte att prissätta, och det beror inte på oss utan på hur de är skrivna. <em>Höj barnbidraget med tvåhundra kronor</em> går att räkna på. <em>Psykiatrin ska stärkas</em> gör det inte — det säger vart partiet vill, men inte med vilket medel. Båda är löften. De är bara olika sorters löften, och vi märker ut vilken sort varje löfte är.</p>
+      <ul>
+        <li><strong>Reformlöfte.</strong> Citatet pekar ut något som går att göra: ett medel, en nivå, ett belopp, eller en lag som ska ändras. Det går att sätta en prislapp på, och det går att pröva efteråt om det blev gjort.</li>
+        <li><strong>Inriktningslöfte.</strong> Citatet säger vart partiet vill utan att säga hur. Det finns ingen åtgärd att räkna på, så beloppet är noll — och noll betyder här <em>«ingenting att räkna på»</em>, inte «det här är gratis».</li>
+      </ul>
+      <p>Skillnaden spelar roll, för en nolla kan betyda två helt olika saker. Ett förbud mot något kostar staten nästan ingenting att införa — där är nollan ett svar. Ett löfte om att «stärka den nära vården» har också noll, men där är nollan en fråga som inte gått att besvara. Tidigare såg de likadana ut på sidan. Nu står det utskrivet vilket det är.</p>
+      <p>Ett inriktningslöfte är alltså inte ett sämre löfte, och det räknas inte bort. Det räknas bara inte in i kronorna, eftersom det inte finns några kronor att räkna. Kostar politiken bakom det något står den kostnaden på partiets konkreta löften i samma fråga.</p>
+
       <h2>Var siffrorna kommer ifrån</h2>
       <p>Helst vill vi ha en siffra som någon med insyn redan har räknat på. Vi tar dem i den här ordningen, med den mest pålitliga först:</p>
       <ol>
@@ -122,6 +139,8 @@ const jsonLd = [
         <li><strong>En egen uppskattning</strong> — när ingen annan angett ett belopp gör vi en datorgjord uppskattning utifrån vad liknande reformer har kostat. Den märks alltid med ett ungefär-tecken och ett spann, så att man ser att det är en uppskattning.</li>
       </ol>
       <p>Vilken av nivåerna en siffra kommer från syns alltid på löftessidan. Vi hittar aldrig på, och vi visar aldrig en uppskattning som om den vore exakt.</p>
+      <p>Ibland lånar en uppskattning sin nivå från ett annat löfte på sajten: samma sorts åtgärd har redan prissatts, och då lägger vi den nya på samma nivå i stället för att gissa på nytt. <strong>Då står det vilket löfte nivån är hämtad från, med en länk dit.</strong> Läsaren ska kunna klicka sig vidare och se om det ankaret i sin tur håller. Ett lånat belopp utan uppgift om varifrån är en siffra ingen kan följa till sin grund, och det är precis vad en öppen uträkning ska förhindra.</p>
+      <p>Samma princip styr nivån: <strong>samma åtgärd ska kosta lika mycket oavsett vilket parti som lovar den.</strong> Lovar tre partier fler poliser utan att säga hur många får de tre samma belopp. Att låta ett av dem stå på noll vore inte försiktighet — det vore att göra jämförelsen mellan partierna missvisande.</p>
 
       <h2 id="tackning">Vi har läst olika mycket om olika partier</h2>
       <p>Antalet löften på ett parti är inte ett mått på partiet. Det är ett mått på hur mycket av partiets material vi hunnit läsa, och där ligger vi ojämnt till: {tackning.mest} lästa sidor hos {namnFor(tackning.mestKod)} mot {tackning.minst} hos {namnFor(tackning.minstKod)}. <strong>Jämför därför inte partier på hur många löften de har.</strong></p>

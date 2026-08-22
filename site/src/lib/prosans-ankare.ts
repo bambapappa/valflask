@@ -991,6 +991,106 @@ export const ANKARE: Ankare[] = [
     },
     fallprov: "Ta bort frånvaroundantaget ur metodsidan — provet faller.",
   },
+  {
+    id: "metod-inriktning-bar-aldrig-belopp",
+    sida: METOD,
+    pastaende: "Det finns ingen åtgärd att räkna på, så beloppet är noll",
+    // Meningen påstår att sorten och nollan hänger ihop. Det är just vad
+    // provet i pipelinen mäter — en inriktning som bär ett basbelopp fäller
+    // bygget. Utan den grinden vore meningen bara en avsikt.
+    prov: () => {
+      // Två halvor. Datat får inte bryta mot regeln, OCH grinden som håller
+      // regeln måste finnas — annars vilar meningen på dagens tillstånd i
+      // stället för på något som fångar morgondagens.
+      const inriktningar = getPromises().filter((p) => p.loftestyp === "inriktning");
+      const brott = inriktningar.filter((p) => p.cost.msek_base !== 0);
+      const provet = repofil("pipeline/tests/loftestyp.test.ts");
+      return (
+        inriktningar.length > 0 &&
+        brott.length === 0 &&
+        provet.includes("ett inriktningslöfte bär aldrig ett basbelopp")
+      );
+    },
+    fallprov: "Ge ett inriktningslöfte ett basbelopp skilt från noll — provet faller.",
+    matt: "0 inriktningslöften med basbelopp 2026-08-22",
+  },
+  {
+    id: "metod-varje-lofte-bar-en-sort",
+    sida: METOD,
+    pastaende:
+      "Båda är löften. De är bara olika sorters löften, och vi märker ut vilken sort varje löfte är",
+    prov: () => {
+      const alla = getPromises();
+      const utan = alla.filter(
+        (p) => p.loftestyp !== "reform" && p.loftestyp !== "inriktning",
+      );
+      const schema = repofil("pipeline/schemas/promises.schema.json");
+      return (
+        alla.length > 0 &&
+        utan.length === 0 &&
+        // Sorten är obligatorisk i schemat, inte bara ifylld i dag.
+        /"required":\s*\[[^\]]*"loftestyp"/u.test(schema)
+      );
+    },
+    fallprov: "Ta bort loftestyp från ett löfte i promises.json — provet faller.",
+  },
+  {
+    id: "metod-lanad-niva-namnger-sitt-ankare",
+    sida: METOD,
+    pastaende:
+      "<strong>Då står det vilket löfte nivån är hämtad från, med en länk dit.</strong>",
+    // Två halvor: fältet finns i datat och pekar på löften som existerar, och
+    // löftessidan renderar det som en länk med det andra löftets rubrik.
+    // Faller endera halvan är meningen osann.
+    prov: () => {
+      const alla = getPromises();
+      const ids = new Set(alla.map((p) => p.id));
+      const medAnkare = alla.filter((p) => (p.cost.anchor_ids ?? []).length > 0);
+      const pekarRatt = medAnkare.every((p) =>
+        (p.cost.anchor_ids ?? []).every((id) => ids.has(id)),
+      );
+      const sida = repofil("site/src/pages/lofte/[...path].astro");
+      return (
+        medAnkare.length > 0 &&
+        pekarRatt &&
+        sida.includes("lånat som riktmärke från") &&
+        sida.includes("{a.title}")
+      );
+    },
+    fallprov:
+      "Ta bort ankarlänken ur löftessidan, eller låt ett anchor_ids peka på ett löfte som inte finns — provet faller.",
+  },
+  {
+    id: "metod-samma-atgard-kostar-lika",
+    sida: METOD,
+    pastaende:
+      "<strong>samma åtgärd ska kosta lika mycket oavsett vilket parti som lovar den.</strong>",
+    // Prosan namnger poliserna som exempel, så provet mäter just dem: alla
+    // partiers löften om fler poliser utan angivet antal ska bära samma
+    // basbelopp. Glider ett av dem isär är meningen inte längre sann.
+    prov: () => {
+      const poliser = getPromises().filter(
+        (p) =>
+          p.status === "aktiv" &&
+          p.group_id === "g-fler-poliser" &&
+          p.cost.msek_base > 0,
+      );
+      if (poliser.length < 2) return false;
+      const forsta = poliser[0].cost.msek_base;
+      const lika = poliser.every((p) => p.cost.msek_base === forsta);
+      // Regeln står i kostnadsprompten. Faller den är exemplet en tillfällighet.
+      const prompt = repofil("pipeline/prompts/A5-cost.md");
+      return (
+        lika &&
+        // Regeln står radbruten i prompten, så mellanslag normaliseras först.
+        prompt.replace(/\s+/gu, " ").includes(
+          "Samma åtgärd utan nivå ska prissättas lika oavsett vilket parti som lovar den.",
+        )
+      );
+    },
+    fallprov: "Ändra basbeloppet på ett av löftena om fler poliser — provet faller.",
+    matt: "1 500 msek per år hos varje parti 2026-08-22",
+  },
 ];
 
 /** Ett besked är inte belagt utan sin källa; mätt så att prosan kan hänvisa. */
