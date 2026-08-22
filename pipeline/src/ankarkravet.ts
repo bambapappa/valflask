@@ -15,8 +15,12 @@
  * `publicerad-text` spärrar interna beteckningar i text som möter läsaren,
  * dels för att numren inte säger en utomstående något, dels för att en mening
  * som pekar på ett nummer tyst slutar stämma när det löftets belopp rör sig.
- * Kopplingen hör därför hemma i ett strukturerat fält — i dag `group_id`, som
- * summeringen redan använder för att inte räkna samma reform två gånger.
+ * Kopplingen hör därför hemma i ett strukturerat fält. Det finns två: `group_id`
+ * när det är SAMMA reform och beloppet ska räknas en gång, och
+ * `cost.anchor_ids` när det är ett ANNAT löfte vars belopp lånas som
+ * riktmärke — det senare är vad A5-regel 7 uttryckligen tillåter. Sajten
+ * renderar ankaren som länkar med löftets rubrik, så läsaren ser en mening
+ * och inte ett nummer.
  *
  * Det gör kravet strängare än det ser ut: ett lånat belopp ska antingen sitta
  * i en grupp med det löfte det lånar från, eller räknas om på egen grund, eller
@@ -40,12 +44,13 @@ export interface AnkarPost {
   id: string;
   group_id?: string | null;
   status?: string;
-  cost: { calculation?: string | null };
+  cost: { calculation?: string | null; anchor_ids?: readonly string[] | null };
 }
 
 /** Sant om posten lånar ett belopp utan en spårbar koppling till källan. */
 export function lanarUtanSparbartAnkare(post: AnkarPost): boolean {
   if (!LANAR_BELOPP.test(post.cost.calculation ?? "")) return false;
+  if (post.cost.anchor_ids && post.cost.anchor_ids.length > 0) return false;
   return !post.group_id;
 }
 

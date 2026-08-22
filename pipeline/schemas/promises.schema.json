@@ -324,6 +324,14 @@
               "null"
             ]
           },
+          "anchor_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^p-2026-[0-9]{4}$"
+            },
+            "description": "Publicerade löften vars belopp den här uträkningen lånar som riktmärke. Kopplingen hör hemma här och inte i uträkningstexten: interna beteckningar får inte möta läsaren, och en mening som pekar på ett nummer slutar tyst stämma när det löftets belopp rör sig. Sajten renderar dem som länkar med löftets rubrik."
+          },
           "method_note": {
             "type": "string",
             "minLength": 1

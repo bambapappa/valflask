@@ -755,5 +755,12 @@
     "what": "Varje löfte är nu märkt som antingen reformlöfte eller inriktningslöfte. Ett reformlöfte pekar ut något som går att göra — ett medel, en nivå, ett tal, eller en lag- eller regeländring. Ett inriktningslöfte säger vart partiet vill utan att säga med vilket medel. På inriktningslöftena står nu en not som förklarar att nollan betyder att det inte finns någon åtgärd att räkna på, inte att politiken är gratis. Tio löften som drogs tillbaka tidigare samma dag är återställda och märkta som inriktningslöften i stället.",
     "why": "En nolla har hittills betytt två helt olika saker på sajten utan att något skilde dem åt: antingen att åtgärden verkligen inte kostar staten något — ett förbud, en lagändring — eller att citatet inte pekar ut någon åtgärd alls. För läsaren såg de likadana ut. Den oberoende granskningen tog det som skäl att underkänna 148 löften som «värderingar, inte åtaganden». Men ett inriktningslöfte är också ett löfte; det är bara en annan sorts löfte, och felet låg i att sajten inte visade skillnaden. Summorna är oförändrade — varje inriktningslöfte bar noll redan.",
     "commit": "3df7153"
+  },
+  {
+    "date": "2026-08-22",
+    "affects": "14 löften får ett utskrivet ankare. Inga belopp ändras.",
+    "what": "När en uträkning lånar sitt belopp som riktmärke från ett annat publicerat löfte står det nu vilket, i ett eget fält, och löftessidan visar det som en länk med det andra löftets rubrik. Fjorton löften har fått sitt ankare utskrivet.",
+    "why": "Metoden tillåter att ett belopp ankras i ett jämförbart löfte, men det fanns ingenstans att skriva vilket: interna beteckningar får inte stå i text som möter läsaren. Följden var att 143 lånade belopp inte gick att följa — varken för en läsare som vill kontrollera siffran eller för en granskare som ska pröva kedjan. En maskinell matchning gav 25 förslag, men bara 12 höll vid kontroll, så resten är inte ifyllda: ett fel ankare är sämre än inget.",
+    "commit": "0000000"
   }
 ]
