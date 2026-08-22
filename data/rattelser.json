@@ -748,5 +748,12 @@
     "what": "Länken som angavs som beloppets grund är borttagen. Den gick till en myndighetsredovisning av statsbidrag till äldreomsorgen som varken nämner 1,95 miljarder kronor, partiet eller jämförelsen med regeringen. Uträkningen säger nu uttryckligen att siffran inte är belagd i en primärkälla.",
     "why": "En källänkning intill ett belopp är ett löfte till läsaren om att sidan bakom bär talet. Gör den inte det är länken värre än ingen länk alls, eftersom den ger beloppet en trovärdighet det inte har förtjänat.",
     "commit": "bef525c"
+  },
+  {
+    "date": "2026-08-22",
+    "affects": "Alla publicerade löften får ett nytt fält: löftessort. 450 av de aktiva är inriktningslöften, 1 762 är reformlöften. Inga belopp ändras.",
+    "what": "Varje löfte är nu märkt som antingen reformlöfte eller inriktningslöfte. Ett reformlöfte pekar ut något som går att göra — ett medel, en nivå, ett tal, eller en lag- eller regeländring. Ett inriktningslöfte säger vart partiet vill utan att säga med vilket medel. På inriktningslöftena står nu en not som förklarar att nollan betyder att det inte finns någon åtgärd att räkna på, inte att politiken är gratis. Tio löften som drogs tillbaka tidigare samma dag är återställda och märkta som inriktningslöften i stället.",
+    "why": "En nolla har hittills betytt två helt olika saker på sajten utan att något skilde dem åt: antingen att åtgärden verkligen inte kostar staten något — ett förbud, en lagändring — eller att citatet inte pekar ut någon åtgärd alls. För läsaren såg de likadana ut. Den oberoende granskningen tog det som skäl att underkänna 148 löften som «värderingar, inte åtaganden». Men ett inriktningslöfte är också ett löfte; det är bara en annan sorts löfte, och felet låg i att sajten inte visade skillnaden. Summorna är oförändrade — varje inriktningslöfte bar noll redan.",
+    "commit": "0000000"
   }
 ]

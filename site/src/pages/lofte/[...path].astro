@@ -121,6 +121,14 @@ const jsonLd = [
             </tbody>
           </table>
         </div>
+        {promise.loftestyp === 'inriktning' && (
+          <p class="inriktningsnot">
+            <strong>Inriktningslöfte.</strong> Citatet säger vart partiet vill, men inte
+            med vilket medel — ingen åtgärd, nivå eller mottagare pekas ut. Nollan betyder
+            därför att det inte finns någon åtgärd att räkna på, inte att politiken är gratis.
+            Kostar den något står den på partiets konkreta löften.
+          </p>
+        )}
         <div class="kostnad-meta">
           Grund: {formatBasisLabel(promise.cost.basis)}{promise.cost.basis_url ? ` · <a href="${promise.cost.basis_url}">källa ↗</a>` : ''}
           <br />
@@ -214,6 +222,17 @@ const jsonLd = [
   }
   .datavy--scroll {
     overflow-x: auto;
+  }
+  .inriktningsnot {
+    border-left: 3px solid var(--dis);
+    padding: 0.6rem 0 0.6rem 0.9rem;
+    margin: 0.9rem 0 0;
+    font-size: var(--steg--1);
+    color: var(--dis);
+    max-width: 60ch;
+  }
+  .inriktningsnot strong {
+    color: var(--bläck);
   }
   .kostnad-meta {
     font-family: var(--font-mono);
