@@ -19,16 +19,18 @@
  * göra: ett instrument, en nivå, ett tal, eller en lag- eller regeländring
  * som uträkningen kan prissätta. Annars är det en `inriktning`.
  *
- * Ordningen mellan proven är inte godtycklig. Ett belopp skilt från noll
+ * Ordningen mellan proven är inte godtycklig. Ett basbelopp skilt från noll
  * betyder att någon HAR prissatt en åtgärd, och då finns det en åtgärd —
- * det provet går först. Sedan läses citatet, för det är citatet som är
- * löftet; uträkningen är vår text om det. Sist läses uträkningen, som fångar
+ * det provet går först. Taket räknas inte: ett spann 0–1 000 utan bas
+ * beskriver vad vi inte vet, inte vad åtgärden kostar.
+ *
+ * Sedan läses citatet, för det är citatet som är löftet; uträkningen är vår text om det. Sist läses uträkningen, som fångar
  * de reformer vars nolla följer av att åtgärden är en regel och inte av att
  * ingen åtgärd är angiven.
  *
  * VAD DEN INTE GÖR. Den avgör inte om löftet är bra, vagt eller trovärdigt,
- * och den flyttar inga pengar: varje inriktningslöfte bär noll redan, så
- * summorna är desamma före och efter att fältet infördes. Den säger bara
+ * och den flyttar inga pengar: varje inriktningslöfte bär noll i basbeloppet
+ * redan, och det är basbeloppet summorna räknar. Den säger bara
  * vilken sorts fråga läsaren ska ställa till posten.
  *
  * GRÄNSFALLEN är verkliga. «Alla ska kunna få ett digitalt ID» blir
@@ -59,9 +61,11 @@ export interface TypKostnad {
 
 /** Härleder löftessorten ur citatet och den prissättning som gjorts. */
 export function harledLoftestyp(citat: string, kostnad: TypKostnad): Loftestyp {
-  const nollad =
-    kostnad.msek_low === 0 && kostnad.msek_base === 0 && kostnad.msek_high === 0;
-  if (!nollad) return "reform";
+  // Basbeloppet är det som räknas i summorna och det som säger om en åtgärd
+  // faktiskt har prissatts. Ett tak utan bas — "0–1 000 mkr om löftet någon
+  // gång konkretiseras" — är inte en prissatt åtgärd utan ett spann som
+  // beskriver hur mycket vi INTE vet. Det gör posten till en inriktning.
+  if (kostnad.msek_base !== 0) return "reform";
   if (CITATET_NAMNGER_MEDEL.test(citat) || /\d/u.test(citat)) return "reform";
   const text = `${kostnad.calculation ?? ""} ${kostnad.method_note ?? ""}`;
   if (NOLLAN_AR_EN_REGEL.test(text)) return "reform";

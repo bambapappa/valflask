@@ -35,16 +35,17 @@ describe("löftessorten", () => {
     );
   });
 
-  it("ett inriktningslöfte bär aldrig ett belopp", () => {
+  it("ett inriktningslöfte bär aldrig ett basbelopp", () => {
     const med = loften
       .filter((p) => p.loftestyp === "inriktning")
-      .filter((p) => p.cost.msek_low !== 0 || p.cost.msek_base !== 0 || p.cost.msek_high !== 0);
+      .filter((p) => p.cost.msek_base !== 0);
     assert.deepEqual(
       med.map((p) => p.id),
       [],
       "En inriktning säger vart partiet vill, inte med vilket medel — då finns\n" +
-        "ingenting att räkna på. Bär posten ett belopp är den en reform, och sorten\n" +
-        "ska ändras i stället för att beloppet ska stå kvar under fel rubrik.",
+        "ingen åtgärd att prissätta. Basbeloppet är det summorna räknar, så bär\n" +
+        "posten ett sådant är den en reform. Ändra sorten, inte beloppet.\n" +
+        "Ett tak utan bas är däremot i sin ordning: det beskriver vad vi inte vet.",
     );
   });
 
@@ -56,6 +57,16 @@ describe("löftessorten", () => {
         calculation: "Citatet anger ingen åtgärd och ingen nivå.",
       }),
       "inriktning",
+    );
+    assert.equal(
+      harledLoftestyp("Stärka den demokratiska kontrollen över AI-utvecklingen", {
+        msek_low: 0,
+        msek_base: 0,
+        msek_high: 100,
+        calculation: "Citatet anger ingen konkret åtgärd. Taket rymmer en mindre tillsynsfunktion om löftet konkretiseras.",
+      }),
+      "inriktning",
+      "Ett tak utan bas är osäkerhet, inte en prissatt åtgärd.",
     );
     assert.equal(
       harledLoftestyp("Vi vill förbjuda religiösa friskolor", {

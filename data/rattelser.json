@@ -762,5 +762,12 @@
     "what": "När en uträkning lånar sitt belopp som riktmärke från ett annat publicerat löfte står det nu vilket, i ett eget fält, och löftessidan visar det som en länk med det andra löftets rubrik. Fjorton löften har fått sitt ankare utskrivet.",
     "why": "Metoden tillåter att ett belopp ankras i ett jämförbart löfte, men det fanns ingenstans att skriva vilket: interna beteckningar får inte stå i text som möter läsaren. Följden var att 143 lånade belopp inte gick att följa — varken för en läsare som vill kontrollera siffran eller för en granskare som ska pröva kedjan. En maskinell matchning gav 25 förslag, men bara 12 höll vid kontroll, så resten är inte ifyllda: ett fel ankare är sämre än inget.",
     "commit": "ad9d4e1"
+  },
+  {
+    "date": "2026-08-22",
+    "affects": "123 löften byter sort. 573 av de aktiva är nu inriktningslöften, 1 639 reformlöften. Inga belopp ändras.",
+    "what": "Härledningen av löftessort krävde först att alla tre beloppsfälten var noll. Den nycklas nu på basbeloppet ensamt. Ett löfte med basen noll men ett tak — 'noll till en miljard om löftet någon gång konkretiseras' — har därmed flyttats från reformlöfte till inriktningslöfte.",
+    "why": "Ett tak utan bas är inte en prissatt åtgärd. Det beskriver hur mycket vi inte vet om ett löfte som inte pekar ut något att göra. Att låta ett sådant spann göra posten till ett reformlöfte var att låta osäkerheten se ut som innehåll. Basbeloppet är dessutom det enda summorna räknar, så det är också det som avgör om en åtgärd verkligen har prissatts.",
+    "commit": "0000000"
   }
 ]
