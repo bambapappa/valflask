@@ -21,6 +21,48 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-22 — Paritetsfel mäts av ett rapporterande svep med en kö som kvitteras
+
+**Gäller:** Fläskvågen. Frågevågen och Handlingsvågen rörs inte — svepet
+jämför basbelopp, och de finns bara på löftessidan. Det publicerade beståndet
+är kontrollerat i den våg raden nämner: svepet är kört mot samtliga 2 715
+aktiva löften och gav 36 par, varav sju är lästa och kvitterade.
+
+**Beslut:** Regeln «samma politik ska kosta lika» får en mätning.
+`pipeline/src/pariteten.ts` parar varje nollat reformlöfte med det prissatta
+löfte hos ett annat parti som ligger närmast, och veckojobbet
+`paritetssvepet.yml` skriver paren till `data/paritetskon.json`. Kön är
+**rapporterande och spärrar aldrig**: varje rad ska läsas och kvitteras med
+ett av fyra utfall — `olika_atgarder`, `nollan_haller`, `rattat` eller
+`till_beslut` — och varje kvittens bär sitt skäl. «Olika åtgärder» är ett
+fullgott svar; kön mäter att frågan är ställd, inte att något är fel.
+
+Två löften paras bara ihop när de delar ett **sällsynt sakord i sina
+rubriker**. Båda leden bär sin vikt: sällsyntheten skiljer «alunskiffer» från
+«nationell», och rubrikkravet skiljer sakfrågan från det citatet nämner i
+förbigående. Mätt mot publicerade data: ett delat sakord ensamt flaggar 490
+löften, sällsyntheten tar bort 65, rubrikkravet ytterligare 175, och
+rubriköverlappet resten — 36 kvar.
+
+**Motiv:** Regeln stod fastställd sedan tidigare utan att någon mätte den. De
+tre värdefullaste fynden i genomgången av de 2 720 publicerade löftena
+2026-08-21/22 var alla paritetsfel — en dubbelräkning på 18 miljarder, ett
+nollningsbeslut som bara gällde de löften som fastnade i sökmönstret, och
+samma åtgärd prissatt hos ett parti och nollad hos ett annat. Ingen av dem
+kunde hittas genom att läsa ett löfte i taget, och granskningen som läste
+vartenda löfte hittade ingen av dem. Sökningen fanns bara som ett
+engångsskript i en granskningsmapp, och ett engångsskript åldras samma dag
+det körts.
+
+**Förkastade alternativ:** en blockerande grind — vid läsning höll elva av
+femton träffar inte, och en spärr på den träffbilden lär alla att kringgå den;
+att låta svepet självt avgöra vilket belopp som är rätt — det flyttar en
+publicerad siffra utan mänskligt beslut, och tyst rättelse är förbjuden; att
+para ihop löften på titellikhet ensam — det var vad engångsskriptet gjorde,
+och det gav elva felträffar på femton.
+
+---
+
 ## 2026-08-18 — En tillfällig och en permanent sänkning av samma skatt är ett delat löfte
 
 **Gäller:** Fläskvågen. Frågevågen och Handlingsvågen rörs inte — grupperingen

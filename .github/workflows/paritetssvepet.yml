@@ -1,0 +1,105 @@
+# Paritetssvepet — nollade reformlöften som liknar ett prissatt löfte hos ett
+# annat parti, veckovis.
+#
+# Regeln «samma politik ska kosta lika» är fastställd genom mänskligt beslut
+# och stod utan mätning. De tre värdefullaste fynden i genomgången av de 2 720
+# publicerade löftena 2026-08-21/22 var alla paritetsfel — en dubbelräkning på
+# 18 mdkr, ett nollningsbeslut som bara gällde träfflistan, och samma åtgärd
+# prissatt hos ett parti och nollad hos ett annat. Ingen av dem kunde hittas
+# genom att läsa ett löfte i taget, och sökningen fanns bara som ett
+# engångsskript i en granskningsmapp.
+#
+# Jobbet RAPPORTERAR och spärrar aldrig: vid läsning höll elva av femton
+# träffar inte — titlarna delade ord men åtgärderna var olika. Fynden är en kö
+# som ska kvitteras, och «olika åtgärder» är ett fullgott svar. Kön committas
+# som data; larmet går bara när svepet självt faller.
+name: paritetssvepet
+on:
+  schedule:
+    - cron: "10 6 * * 3"   # onsdagar 06:10 UTC — egen dag, svepet läser bara publicerat data och behöver inget nät
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: { group: paritetssvepet, cancel-in-progress: false }
+jobs:
+  svep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: true
+      - uses: pnpm/action-setup@v4  # samma pin-undantag som pipeline.yml (2026-06-15)
+        with:
+          version: 9
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pipeline/pnpm-lock.yaml
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Kör paritetssvepet
+        id: svep
+        run: pnpm paritetssvepet -- --skriv | tee /tmp/paritet.txt
+        working-directory: pipeline
+      - name: Commit kön if changed
+        run: |
+          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          git add data/paritetskon.json
+          if git diff --cached --quiet; then
+            echo "Kön ser likadan ut som förra veckan — inget att committa."
+            exit 0
+          fi
+          git commit -m "data: paritetssvepet $(date -u +%F) (run ${{ github.run_id }})"
+          # Se h2-svep.yml för varför pushen görs i en loop med rebase-abort.
+          for forsok in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push; then
+              echo "Push lyckades (försök $forsok)."
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push-försök $forsok misslyckades (main har troligen gått vidare). Försöker igen..."
+            sleep $((forsok * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
+      - name: Skriv körningens sammanfattning
+        if: always()
+        run: |
+          # Kön ska gå att läsa utan att öppna en JSON-fil. Sammanfattningen är
+          # körningens egen sida — inget ärende öppnas för fynd, eftersom ett
+          # fynd inte är ett fel.
+          {
+            echo "## Paritetssvepet"
+            echo ""
+            echo '```'
+            head -60 /tmp/paritet.txt || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # Delad implementation i larm.yml — lägg aldrig en kopia här.
+  larm:
+    needs: [svep]
+    if: failure()
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/larm.yml
+    with:
+      rubrik: "Paritetssvepet"
+      etikett: "larm-paritetssvepet"
+      atgard: |
+            Svepet jämför nollade reformlöften med prissatta löften hos andra
+            partier och håller kön som ska kvitteras. Faller det slutar den
+            enda kontroll som strukturellt kan hitta paritetsfel att mäta. Kör
+            `pnpm paritetssvepet` i `pipeline/` och läs vad som brister.
+            **Ett fynd fäller inte jobbet** — fynden är en läslista, inte ett
+            haveri.

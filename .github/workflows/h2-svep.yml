@@ -1,0 +1,95 @@
+# H2-svepet — ordagrannheten prövas om mot riksdagens källor, veckovis.
+#
+# H2 prövas när en koppling skapas och sedan aldrig mer. Kopplingarna bär bara
+# metadata; dokumenttexten ligger hos riksdagen. Att den kontrollen åldras är
+# mätt: andra ledet i H2 — citatet ska stå i handlingens EGEN del — tillkom
+# 2026-08-06 efter att kön fyllts, och när kön kördes om föll 354 poster till
+# 69. Frågorna kom in i grinden först 2026-08-14. Omkörningen gjordes med ett
+# skript utanför repot, och ett engångsskript åldras samma dag det körts.
+#
+# Jobbet RAPPORTERAR. Fynden skrivs som data och committas; larmet går när
+# svepet är trasigt — mer än hälften oprövade — aldrig för att ett fynd
+# hittades. Samma ordning som källrötebevakningen: ett fynd är ett mätvärde,
+# inte ett haveri. En byggrind som talar med riksdagens API hade fallit när
+# nätet gör det, inte när datat är fel.
+name: h2-svep
+on:
+  schedule:
+    - cron: "20 5 * * 2"   # tisdagar 05:20 UTC — efter måndagens rot-watch, egen dag så att riksdagens API inte får två svep samtidigt
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: { group: h2-svep, cancel-in-progress: false }
+jobs:
+  svep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint bot app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: true
+      - uses: pnpm/action-setup@v4  # samma pin-undantag som pipeline.yml (2026-06-15)
+        with:
+          version: 9
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: handlingsvagen/pipeline/pnpm-lock.yaml
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: handlingsvagen/pipeline
+      - name: Kör om H2 mot riksdagens källor
+        run: pnpm h2-svep
+        working-directory: handlingsvagen/pipeline
+      - name: Commit svepet if changed
+        run: |
+          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          git add handlingsvagen/data/h2-svepet.json
+          if git diff --cached --quiet; then
+            echo "Svepet gav samma bild som förra veckan — inget att committa."
+            exit 0
+          fi
+          git commit -m "data: h2-svep $(date -u +%F) (run ${{ github.run_id }})"
+          # main går vidare under körningen. En naken push avvisas då som
+          # non-fast-forward och veckans mätning kastas — det hände
+          # källrötebevakningen 2026-08-17. `git rebase --abort` i loopen är
+          # inte prydnad: faller rebasen på en konflikt står trädet kvar i
+          # rebase-läge och varje följande pull svarar «unmerged files».
+          for forsok in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push; then
+              echo "Push lyckades (försök $forsok)."
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "Push-försök $forsok misslyckades (main har troligen gått vidare). Försöker igen..."
+            sleep $((forsok * 5))
+          done
+          echo "Push misslyckades efter 5 försök."
+          exit 1
+
+  # Delad implementation i larm.yml — lägg aldrig en kopia här.
+  larm:
+    needs: [svep]
+    if: failure()
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/larm.yml
+    with:
+      rubrik: "H2-svepet"
+      etikett: "larm-h2-svep"
+      atgard: |
+            Svepet prövar om publicerade citat står ordagrant i riksdagens
+            dokument, och i handlingens egen del. Faller det står publicerade
+            belägg oprövade — inte fel, men okontrollerade. Kör
+            `pnpm h2-svep -- --torr --max 20` i `handlingsvagen/pipeline/` och
+            läs vad som brister. **Ett fynd fäller inte jobbet** — körningen
+            blir röd bara när mer än hälften inte gick att pröva, och då är det
+            svepet som är trasigt, inte beläggen.

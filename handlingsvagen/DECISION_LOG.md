@@ -1,6 +1,55 @@
 
 ---
 
+## 2026-08-22 — H2 prövas om varje vecka mot riksdagens källor, och svepet rapporterar
+
+**Gäller:** Handlingsvågen. Fläskvågen och Frågevågen rörs inte — H2 prövar
+kopplingar mellan löfte och riksdagshandling, och de finns bara här. Det
+publicerade beståndet är kontrollerat i den våg raden nämner: svepet är kört
+mot samtliga aktiva kopplingar i `kopplingar.json`.
+
+**Beslut (mänskligt beslut 2026-08-22):** Ordagrannheten i publicerade
+kopplingar prövas om veckovis mot riksdagens dokument. `h2-svep.yml` kör
+`pnpm h2-svep`, som för varje aktiv koppling hämtar källdokumentet och prövar
+båda leden i H2: att citatet står tecken för tecken i dokumentet, och att det
+står i den del som ÄR handlingen. Utfallet skrivs till
+`handlingsvagen/data/h2-svepet.json`.
+
+Svepet **rapporterar och spärrar aldrig**. Ett fynd är ett mätvärde, inte ett
+haveri, och körningen blir röd bara när svepet självt är trasigt — när mer än
+hälften av kopplingarna inte gick att pröva alls. Att skriva «inga fynd» efter
+en körning som inte kunde pröva något vore att rapportera tystnad som ett
+friskintyg. Kopplingar som med flit citerar brödtexten på utskriven grund
+(`bevis.brodtext_oppen`) räknas för sig och är inga fynd.
+
+Första körningen 2026-08-22: **786 aktiva kopplingar prövade, noll fynd, noll
+oprövade.** 777 står ordagrant i handlingens egen del, 9 vilar på det
+utskrivna undantaget. Att bara 9 av de 76 kopplingar som bär undantagsfältet
+hamnar där följer av att `byggHandlingstext` själv öppnar brödtexten för en
+motion vars yrkanden bara anvisar medel enligt en tabell — resten fångas av
+den regeln utan att undantaget behöver åberopas.
+
+**Motiv:** H2 prövas när en koppling skapas och sedan aldrig mer.
+Kopplingarna bär bara metadata — dokumenttexten ligger hos riksdagen — så det
+som står på sajten vilar på en kontroll gjord en gång, mot någon annans text.
+Att den kontrollen åldras är mätt: andra ledet i H2 tillkom 2026-08-06 efter
+att kön fyllts, och när kön kördes om mot den nya regeln föll 354 poster till
+69. Frågorna kom in i grinden först 2026-08-14. Varje sådan skärpning gäller
+bara det som prövas efter den, om ingen kör om — och omkörningen gjordes med
+ett skript som låg utanför repot.
+
+**Förkastade alternativ:** en byggrind som prövar H2 vid varje bygge — den
+talar med riksdagens API och hade fallit när nätet gör det, inte när datat är
+fel; att låta svepet rätta självt — ett citatbyte är en rättelse med
+rättelsepost och ett mänskligt beslut, och tyst rättelse är förbjuden; att
+räkna brödtextcitaten som fynd — de hade stått i listan varje vecka utan att
+något behövde göras, och lärt läsaren att bortse från den; att bara skriva
+sammanräkningen — ett svep som skriver «777 håller» går inte att kontrollera,
+och den vecka ett tal ändras går det inte att se vilken koppling som bytte
+läge, så varje prövad koppling står kvar med sitt utfall.
+
+---
+
 ## 2026-08-11 — Tom cell skiljs från oenighet och besläktning blir ett eget granskat lager
 
 **Beslut (mänskligt beslut 2026-08-11):** Rutnätet ska säga direkt att det
