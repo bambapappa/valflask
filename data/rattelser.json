@@ -824,6 +824,6 @@
     "affects": "505 nypublicerade löften får löftessort. Inga belopp ändras.",
     "what": "De löften som publicerades i den här körningen skapades innan fältet för löftessort fanns. Sorten är nu satt på alla, härledd med samma funktion som pipelinen använder vid publicering, så att de klassas exakt som beståndet i övrigt.",
     "why": "Fältet blev obligatoriskt samma dag genom en annan ändring. Utan det skulle löftessidorna för de här löftena inte kunna säga om en nolla betyder att åtgärden är gratis eller att det inte finns någon åtgärd att räkna på — och beståndet skulle bära två sorters poster där bara den ena går att läsa.",
-    "commit": "0000000"
+    "commit": "263ff9d"
   }
 ]
