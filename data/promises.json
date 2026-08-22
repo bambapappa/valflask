@@ -845,15 +845,18 @@
     "loftestyp": "reform",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "period": "engang",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 60,
       "basis": "llm_estimat",
       "basis_url": null,
+      "anchor_ids": [
+        "p-2026-2338"
+      ],
       "method_note": "Förbud mot religiösa friskolor — ingen ny statlig kostnad. Elever flyttas till kommunala skolor som redan finansieras.",
       "confidence": 0.3,
-      "calculation": "Ingen ny statlig utgift: proposition och riksdagsbehandling sker inom befintliga anslag. Skolpeng är en kommunal kostnad och statens utbetalningar till kommuner förändras ej direkt. Eventuella övergångseffekter är ovissa och avräknas enligt reglerna ej som statlig kostnad."
+      "calculation": "Ett förbud är i sig billig lagstiftning. Den direkta statliga kostnaden är utredning, lagrådsremiss och tillsyn under omställningen: 10–60 miljoner kronor med 30 som bas. Eleverna flyttas till andra skolor och skolpengen följer med, vilket enligt omfördelningsregeln ger noll i ny statlig utgift. Samma förbud lovas av ett annat parti och prissätts där lika — samma åtgärd ska kosta lika oavsett vem som lovar den."
     },
     "financing_claimed": {
       "described": false,
@@ -868,6 +871,11 @@
         "date": "2026-08-22",
         "change": "Uträkningens inledande mening om att texten rekonstruerats i efterhand är borttagen från den publicerade kalkylen. Den beskrev vår arbetsgång, inte löftet, och antydde felaktigt att övriga uträkningar skrivits samtidigt med beloppet. Belopp och uträkning i övrigt är oförändrade.",
         "commit": "7fe4d429e2cb4dfaf438bbb9b8815ce634d1629b"
+      },
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet höjt från noll till 30 miljoner kronor som engångskostnad för utredning och tillsyn. Ett annat parti lovar exakt samma förbud och den posten bar 30 miljoner medan den här bar noll. Samma åtgärd ska kosta lika oavsett vilket parti som lovar den; att den ena var nollad var ett neutralitetsfel.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -37976,15 +37984,15 @@
     "loftestyp": "reform",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "period": "per_ar",
+      "msek_low": 250,
+      "msek_base": 650,
+      "msek_high": 1100,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Lagändringen i sig medför ingen direkt statlig kostnad. Eventuella kostnader från ökat antal häktade är en indirekt följd och kvantifieras inte här.",
+      "method_note": "Sänkt tröskel för obligatorisk häktning. Prissatt som statens kostnad för fler häktade i Kriminalvårdens häkten.",
       "confidence": 0.65,
-      "calculation": "Åtgärden är en regeländring; inga myndighetsutgifter krävs för att genomföra den. Jämför med Moderaternas liknande regelreform om villkorligt fängelse, som bedömts till noll."
+      "calculation": "Att sänka gränsen för obligatorisk häktning från två års straffvärde till ett år ökar direkt antalet häktade. Häktet drivs av Kriminalvården, som är en statlig myndighet, så kostnaden är statens egen och inte en samhällsföljd som lämnas utanför. Sverige har omkring 2 500 häktade vid en given tidpunkt. En sänkt tröskel antas öka det antalet med 10–30 procent, alltså 250–750 personer, till en dygnskostnad kring 3 500 kronor: 250 × 365 × 3 500 ≈ 320 miljoner kronor i lågändan och 750 × 365 × 3 500 ≈ 960 miljoner i högändan. Spannet 250–1 100 miljoner kronor per år rymmer också att fler häktade kräver fler häktesplatser. Andelen är vår uppskattning; partiet anger ingen."
     },
     "financing_claimed": {
       "described": false,
@@ -37994,7 +38002,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet höjt från noll till 650 miljoner kronor per år, och perioden ändrad från engångs- till årlig kostnad. Uträkningen kallade det ökade antalet häktade en indirekt följd som inte kvantifieras. Det håller inte: häktena drivs av Kriminalvården, en statlig myndighet, så kostnaden är statens direkta och mekaniska följd av just den regeländring löftet gäller — inte en samhällseffekt av det slag metoden lämnar utanför.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -60833,14 +60847,17 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 500,
+      "msek_base": 1500,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan antal poliser eller belopp; prissätts som 0 för att undvika dubbelräkning.",
+      "anchor_ids": [
+        "p-2026-0397"
+      ],
+      "method_note": "Fler poliser utan angivet antal. Prissatt på samma nivå som övriga partiers löften om samma sak.",
       "confidence": 0.3,
-      "calculation": "Ingen konkret nivå: löftet nämner fler poliser, bättre verktyg och ökad närvaro utan antal eller finansiering. Eventuella kostnader fångas av partiets specifika löften. Beloppet är noll därför att löftet varken pekar ut en åtgärd eller anger en nivå; det finns ingenting att räkna på, och eventuella kostsamma delar prissätts på partiets egna specifika löften."
+      "calculation": "Löftet anger inget antal poliser. Enligt regeln att samma åtgärd utan nivå ska prissättas lika oavsett vilket parti som lovar den läggs beloppet på samma nivå som de andra partiernas löften om fler poliser: 1 500 miljoner kronor per år, med spannet 500–3 000. Storleksordningen motsvarar grovt 500–2 500 fler poliser och civilanställda à omkring 1,2 miljoner kronor per år inklusive utrustning och overhead. Antagandet om antal är vårt; partiet anger inget."
     },
     "financing_claimed": {
       "described": false,
@@ -60850,7 +60867,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet höjt från noll till 1 500 miljoner kronor per år. Löftet om fler poliser och ökad närvaro var nollat med motiveringen att kostnaden ligger på partiets specifika polislöften — men partiet har inget sådant löfte publicerat, så ingenting bar kostnaden. Samtidigt är tre andra partiers löfte om fler poliser utan angivet antal prissatt till 1 500 miljoner per år vardera. Att låta samma löfte kosta noll för ett parti och 1 500 miljoner för tre andra är ett neutralitetsfel, inte en försiktig bedömning. Löftet ligger nu på samma nivå som de övriga.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -81592,15 +81615,18 @@
     "loftestyp": "reform",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 2200,
+      "msek_high": 3500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Reglering/lagförslag prissätts bara för själva lagstiftningsarbetet; följdkostnader för kommuner är överföringar/följder och räknas inte som statlig utgift.",
+      "anchor_ids": [
+        "p-2026-1436"
+      ],
+      "method_note": "Lagkrav på barngruppsstorlek och personaltäthet. Prissatt på samma nivå som ett annat partis identiska lagkrav.",
       "confidence": 0.65,
-      "calculation": "Direkt kostnad för riksdags- och regeringsarbete ≈ 0 mkr; inga nya statsbidrag eller myndighetsanslag ingår. Följdkostnader okvantifierade. Löftet hålls av en lagändring eller regeländring, och en sådan bär bara sin direkta kostnad; följderna prissätts inte här."
+      "calculation": "Lagkrav på barngruppernas storlek och personaltätheten kräver fler förskollärare och fler lokaler. Kostnaden för det statsbidrag som kompenserar kommunerna läggs på samma nivå som ett annat partis identiska lagkrav: 2 200 miljoner kronor per år, med osäkerhetsspannet 1 500–3 500. Antagandet om kompensationsgrad är vårt; citatet anger ingen nivå."
     },
     "financing_claimed": {
       "described": false,
@@ -81610,7 +81636,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-22",
+        "change": "Beloppet höjt från noll till 2 200 miljoner kronor per år. Uträkningen prissatte bara lagtexten och lämnade genomförandet utanför med hänvisning till att kostnaden är kommunal. Ett annat parti lovar samma lagkrav, och den posten bär 2 200 miljoner per år för statsbidrag som kompenserar kommunerna. Att samma lagkrav kostar noll för det ena partiet och 2,2 miljarder för det andra är ett neutralitetsfel.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
