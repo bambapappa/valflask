@@ -201,7 +201,34 @@ export interface LofteDetalj {
   arkiv_url: string | null;
   domar: Record<string, { status: DomStatus; i_linje: string[]; emot: string[]; avstod: string[] }>;
   kopplingar: KopplingVy[];
+  /**
+   * Antalet TILLFÄLLEN kopplingarna kommer från, inte antalet punkter.
+   *
+   * Fyra beslutspunkter ur samma betänkande samma dag är ett tillfälle för en
+   * läsare som räknar belägg, men fyra rader i registret. Domsmotorn räknar
+   * punkter och ska göra det — en punkt är ett eget ställningstagande — men
+   * det tal som möter läsaren ska inte låta som fler tillfällen än det varit.
+   *
+   * Klassen är liten och mätt 2026-08-23: av 184 mål med flera kopplingar
+   * berörs **två**, båda med två voteringspunkter ur samma betänkande samma
+   * dag. Analysen 2026-08-22 talade om fyra punkter ur samma betänkande; så
+   * många finns inte i beståndet.
+   */
+  n_tillfallen: number;
   rattelser: Rattelse[];
+}
+
+/**
+ * Dokument och dag är tillfället.
+ *
+ * Två voteringspunkter ur samma betänkande delar både `dok_id` och `datum`,
+ * och det är exakt det som gör dem till ett tillfälle. Samma dokument en annan
+ * dag är två tillfällen — riksdagen kan återkomma till en fråga.
+ */
+export function antalTillfallen(
+  kopplingar: readonly { handling: { id: string; dok_id: string; datum: string } }[],
+): number {
+  return new Set(kopplingar.map((k) => `${k.handling.dok_id || k.handling.id}|${k.handling.datum}`)).size;
 }
 
 /** Datum ur ett run_id som "foreslag-2026-07-20", annars null. */
@@ -268,6 +295,7 @@ export function buildLofteDetalj(id: string): LofteDetalj | null {
     arkiv_url: lof.arkiv_url,
     domar,
     kopplingar: kopplingVyer,
+    n_tillfallen: antalTillfallen(kopplingVyer),
     rattelser: rattelserForLofte(id),
   };
 }
