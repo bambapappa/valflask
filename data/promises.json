@@ -2102,7 +2102,7 @@
       "basis_url": null,
       "method_note": "Löftet är allmänt hållet ('skärpa straffen') och saknar konkreta lagförslag, vilket gör en exakt siffra omöjlig. Beloppet är satt genom jämförelse med summan av de konkreta straffskärpningsförslag andra partier lagt (tillsammans cirka 1,7 miljarder kronor per år). Moderaternas egna specifika straffskärpningar — avskaffad mängdrabatt, skärpt utvisning vid brott, kriminalisering av deepfake — räknas som separata poster för att undvika dubbelräkning. Osäkerheten är stor och spannet speglar den (belopp satt av granskare).",
       "confidence": 0.4,
-      "calculation": "Löftet är att skärpa straffen så att de speglar brottens allvar. Lagar, förbud och regeländringar prissätts till noll: en straffskärpning hålls av en ändring i straffskalan, vars direkta kostnad är försumbar. Beloppet var dessutom satt genom jämförelse med andra partiers straffskärpningar, inte räknat ur löftet självt. De fängelsedygn en strängare påföljd kan ge är en följd av politiken, inte kostnaden för åtgärden, och beloppet avser åtgärden."
+      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Löftet är allmänt hållet — «skärpa straffen» — utan konkreta lagförslag, så det finns varken ett antal brott eller en straffökning att räkna på. Det tidigare beloppet var satt genom jämförelse med vad andra partiers konkreta straffskärpningar kostar, alltså med löften som i sin tur saknade egen räkning. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
     },
     "financing_claimed": {
       "described": false,
@@ -2127,6 +2127,11 @@
         "date": "2026-08-23",
         "change": "Beloppet nollat, tidigare 1 800 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
         "commit": "009c873"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen omskriven. Nollan står kvar, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Beloppet ska sättas den dag en källa bär både antalet fall och priset.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -27778,14 +27783,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 30,
+      "msek_base": 70,
+      "msek_high": 150,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Straffskärpning medför fler och längre fängelsestraff för överträdelse av kontaktförbud. Uppskattning utifrån antal anmälda brott och antaganden om påverkan på domstolspraxis. Kostnad för…",
       "confidence": 0.4,
-      "calculation": "Löftet är att skärpa straffen vid överträdelse av kontaktförbud. Lagar, förbud och regeländringar prissätts till noll: en straffskärpning hålls av en ändring i straffskalan, vars direkta kostnad är försumbar. De fängelsedygn en strängare påföljd kan ge är en följd av politiken, inte kostnaden för åtgärden, och beloppet avser åtgärden."
+      "calculation": "~7 000 anmälda överträdelser per år (Brå). Anta att straffskärpning leder till fler fängelsestraff och längre tid. Uppskattningsvis 50–100 extra personer i fängelse per år med en genomsnittlig straffökning på 2–4 månader. Kostnad per fängelsedygn ~3 500 kr. Extra ~4 500–12 000 fängelsedygn per år => 15–42 mkr. Lägg till vissa fler dygn för dem som redan döms => totalt 30–150 mkr, bas 70 mkr."
     },
     "financing_claimed": {
       "described": false,
@@ -27798,8 +27803,8 @@
     "history": [
       {
         "date": "2026-08-23",
-        "change": "Beloppet nollat, tidigare 70 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
-        "commit": "009c873"
+        "change": "Beloppet står kvar på 70 miljoner kronor per år. Det nollades tidigare samma dag i en genomgång av löften om skärpta straff, med skälet att fler fängelsedygn är en följd av politiken och inte kostnaden för åtgärden. Den läsningen var för hård: en straffskärpning kostar staten pengar i kriminalvården, och beloppet ska stå kvar när kostnaden går att räkna trovärdigt. Brottsförebyggande rådets statistik över anmälda överträdelser och Kriminalvårdens dygnskostnad bär båda ändarna av räkningen. Nollningen är därför återtagen och uträkningen är den ursprungliga.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -33850,7 +33855,7 @@
       "basis": "granskare",
       "basis_url": null,
       "method_note": "(belopp satt av granskare)",
-      "calculation": "Löftet är att höja maxstraffet för grov kvinnofridskränkning, se över straffskalan för barnpornografibrott och införa en ny nivå för grova ekobrott. Lagar, förbud och regeländringar prissätts till noll: en straffskärpning hålls av en ändring i straffskalan, vars direkta kostnad är försumbar. Samtliga tre led är ändringar i straffskalor. De fängelsedygn en strängare påföljd kan ge är en följd av politiken, inte kostnaden för åtgärden, och beloppet avser åtgärden.",
+      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Det tidigare beloppet var hämtat ur ett annat partis löfte som buntar ihop flera åtgärder, inte räknat ur de tre straffskalor löftet självt nämner. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns.",
       "confidence": 0.9
     },
     "financing_claimed": {
@@ -33881,6 +33886,11 @@
         "date": "2026-08-23",
         "change": "Beloppet nollat, tidigare 130 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
         "commit": "009c873"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen omskriven. Nollan står kvar, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Beloppet ska sättas den dag en källa bär både antalet fall och priset.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -44197,14 +44207,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 5,
+      "msek_base": 25,
+      "msek_high": 80,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Främst lagändring; nya kostnader är främst fängelsedagar från skärpta straff. Få terrordomar/år ger lägre belopp än jämförbara strafflöften. Samhällsföljder ej prissatta.",
       "confidence": 0.35,
-      "calculation": "Löftet är att göra det möjligt att beslagta pass vid misstänkt terrorresa och göra straffen för terrorverksamhet kännbara. Lagar, förbud och regeländringar prissätts till noll: en straffskärpning hålls av en ändring i straffskalan, vars direkta kostnad är försumbar. Passbeslaget hanteras inom polisens och säkerhetspolisens befintliga verksamhet. De fängelsedygn en strängare påföljd kan ge är en följd av politiken, inte kostnaden för åtgärden, och beloppet avser åtgärden."
+      "calculation": "Skärpta straff → fler fängelsedagar: ~3–15 terrordomar/år × 2–5 års längre straff × 365 dagar × ~2 000–3 000 kr/dag (Kriminalvårdens kostnad) ≈ 4–80 mkr/år. Passbeslag vid terrorresor hanteras inom Polisens/Säpos befintliga verksamhet ≈ försumbar direktkostnad. Lägre än jämförbara löften (70–130 mkr) eftersom terrorbrott är betydligt ovanligare än t.ex. kontaktförbrott."
     },
     "financing_claimed": {
       "described": false,
@@ -44217,8 +44227,8 @@
     "history": [
       {
         "date": "2026-08-23",
-        "change": "Beloppet nollat, tidigare 25 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
-        "commit": "009c873"
+        "change": "Beloppet står kvar på 25 miljoner kronor per år. Det nollades tidigare samma dag i en genomgång av löften om skärpta straff, med skälet att fler fängelsedygn är en följd av politiken och inte kostnaden för åtgärden. Den läsningen var för hård: en straffskärpning kostar staten pengar i kriminalvården, och beloppet ska stå kvar när kostnaden går att räkna trovärdigt. Kriminalvårdens dygnskostnad och antalet terrordomar per år bär båda ändarna av räkningen. Nollningen är därför återtagen och uträkningen är den ursprungliga.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -85496,7 +85506,7 @@
       ],
       "method_note": "Skärpta straff för brott mot barn. Prissatt på samma nivå som ett annat partis löfte om samma brottstyp.",
       "confidence": 0.65,
-      "calculation": "Löftet är att skärpa straffet för brott där barn rekryteras till gängkriminalitet eller utnyttjas. Lagar, förbud och regeländringar prissätts till noll: en straffskärpning hålls av en ändring i straffskalan, vars direkta kostnad är försumbar. De fängelsedygn en strängare påföljd kan ge är en följd av politiken, inte kostnaden för åtgärden, och beloppet avser åtgärden."
+      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Det tidigare beloppet lades på samma nivå som ett annat partis löfte om samma brottstyp, utan att antalet fall eller straffökningen räknades fram. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
     },
     "financing_claimed": {
       "described": false,
@@ -85516,6 +85526,11 @@
         "date": "2026-08-23",
         "change": "Beloppet nollat, tidigare 80 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
         "commit": "009c873"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen omskriven. Nollan står kvar, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Beloppet ska sättas den dag en källa bär både antalet fall och priset.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -133087,7 +133102,7 @@
       "basis_url": null,
       "method_note": "Straffskärpningar ger främst kostnader i Kriminalvården. Uppskattning utifrån antal extra fängelseår; jämförbara löften ligger på 25–130 mkr/år.",
       "confidence": 0.4,
-      "calculation": "Löftet är att skärpa straffen för grova vapenbrott och smuggling. Lagar, förbud och regeländringar prissätts till noll: en straffskärpning hålls av en ändring i straffskalan, vars direkta kostnad är försumbar. De fängelsedygn en strängare påföljd kan ge är en följd av politiken, inte kostnaden för åtgärden, och beloppet avser åtgärden."
+      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Det tidigare beloppet vilade på antagandet att skärpningen ger 30–150 extra fängelseår. Priset per fängelseplats är känt, men antalet är en ren gissning, och hela beloppet följer av den. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
     },
     "financing_claimed": {
       "described": false,
@@ -133102,6 +133117,11 @@
         "date": "2026-08-23",
         "change": "Beloppet nollat, tidigare 80 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
         "commit": "009c873"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen omskriven. Nollan står kvar, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Beloppet ska sättas den dag en källa bär både antalet fall och priset.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -135051,7 +135071,7 @@
       "basis_url": null,
       "method_note": "Blandat löfte: straffskärpning (lagändring), fotboja (övervakning) och kvinnojourstöd (bidrag). Skattat som årlig merkostnad med jämförbara löften som riktmärke; osäkerhet pga vag nivå.",
       "confidence": 0.3,
-      "calculation": "Löftet har tre delar och två av dem kostar staten pengar. Obligatorisk fotboja: 1 000–3 000 personer × sex månader × 300–500 kronor per dygn ger 50–200 miljoner kronor per år. Kvinnojourer: ett höjt statsbidrag på 50–150 miljoner kronor per år. Summa 100–350 miljoner kronor per år, bas 200. Straffskärpningen är inte medräknad: lagar och förbud prissätts till noll därför att löftet hålls av ändringen i straffskalan, vars direkta kostnad är försumbar, och de fängelsedygn en strängare påföljd kan ge är en följd av politiken och inte kostnaden för åtgärden."
+      "calculation": "Löftet har tre delar och två av dem kostar staten pengar. Obligatorisk fotboja: 1 000–3 000 personer × sex månader × 300–500 kronor per dygn ger 50–200 miljoner kronor per år. Kvinnojourer: ett höjt statsbidrag på 50–150 miljoner kronor per år. Summa 100–350 miljoner kronor per år, bas 200. Straffskärpningen är inte medräknad. Den kostar rimligtvis staten pengar i kriminalvården, men beloppet gick inte att räkna trovärdigt: det tidigare talet, 50–150 miljoner kronor per år, var satt genom jämförelse med två andra partiers straffskärpningar och inte räknat ur antalet fall. En påhittad siffra vore sämre än att skriva ut att posten saknar grund."
     },
     "financing_claimed": {
       "described": false,
@@ -135066,6 +135086,11 @@
         "date": "2026-08-23",
         "change": "Beloppet sänkt till 200 miljoner kronor per år, tidigare 300. Den del av löftet som faller under regeln är borttagen; resten står kvar. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
         "commit": "009c873"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningens mening om straffskärpningen omskriven. Beloppet är oförändrat; skälet till att straffdelen inte räknas är rättat från att den är en följd som inte prissätts till att den saknar räknelig grund.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
