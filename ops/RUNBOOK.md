@@ -243,6 +243,39 @@ röd ligger felet hos `data.riksdagen.se` eller i den Origin sajten skickar.
 
 ---
 
+## S2b — Valtris kan inte hämta löften
+
+**Symptom:** valtris.utlovat.se visar «Kunde inte hämta löften från utlovat.se
+just nu». Konsolen säger *«Connecting to 'https://utlovat.se/api/v1/promises.json'
+violates the following Content Security Policy directive: connect-src 'self'
+https://data.riksdagen.se»*.
+
+**Vad det INTE är.** API:et svarar 200 med rätt data, och det svarar med
+`Access-Control-Allow-Origin: *`. Både API och CORS är gröna hela tiden — felet
+sitter i den ANROPANDE sidans policy, och syns därför bara i webbläsarkonsolen.
+
+**Orsaken.** Transform Rule-regeln för säkerhetsheaders gäller **hela zonen**,
+så valtris.utlovat.se får samma CSP som utlovat.se. Där betyder `'self'`
+valtris.utlovat.se — inte utlovat.se. Utan `https://utlovat.se` utskrivet i
+`connect-src` blockeras spelets anrop till vårt eget API.
+
+**Åtgärd:**
+
+1. Logga in på Cloudflare, välj zonen `utlovat.se`.
+2. **Rules → Transform Rules → Modify Response Header**, regeln för
+   säkerhetsheaders.
+3. Låt `connect-src` lyda
+   `connect-src 'self' https://utlovat.se https://data.riksdagen.se`,
+   alltså exakt som `site/public/_headers`.
+4. Spara och kör `node ops/ai-atkomst.mjs https://utlovat.se`. Avsnittet
+   **«Valtris mot vårt API»** ska visa OK på båda raderna.
+5. Ladda om valtris.utlovat.se och se att spelet startar med riktiga löften.
+
+**För utlovat.se självt ändrar ledet ingenting** — `'self'` täcker redan den
+värden. Det öppnar bara för syskonvärden i zonen, och bara mot vårt eget API.
+
+---
+
 ## S3 — GitHub Pages nere
 
 Sajten har **en** väg ut: GitHub Pages som origin, Cloudflare som proxy. Ligger
