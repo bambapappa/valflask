@@ -136,7 +136,8 @@ try {
     updated: rader.map((r) => r.id),
     retracted: [],
     data_hash: computeDataHash(efter as never),
-    timestamp: `${datum}T00:00:00Z`,
+    // Verklig tid, inte midnatt — se tests/changelogstamplarna.test.ts.
+    timestamp: new Date().toISOString(),
   });
   writeFileSync(join(DATA_DIR, "changelog.json"), JSON.stringify(changelog, null, 2) + "\n", "utf8");
 } finally {
