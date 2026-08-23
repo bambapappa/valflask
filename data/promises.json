@@ -375,14 +375,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 1,
-      "msek_base": 15,
-      "msek_high": 50,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Prissätter regelverksarbetet: föreskrifter, it-anpassning och utbildning. Aktivitetsplikten utförs av kommunerna och Arbetsförmedlingen inom befintlig verksamhet.",
       "confidence": 0.4,
-      "calculation": "Löftet prissätts som det arbete staten själv måste göra för att införa plikten: 5–10 handläggarår för utrednings- och föreskriftsarbete à 0,7 miljoner kronor blir 3,5–7 miljoner, anpassning av ärendehanteringssystemen 5–20 miljoner och utbildning av personal 2–5 miljoner. Totalt 10–30 miljoner kronor som en engångskostnad. Själva aktiviteterna utförs och betalas av kommunerna och Arbetsförmedlingen inom befintlig verksamhet — det är ingen ny kostnad för staten. Löftet anger inga nya program utöver plikten i sig."
+      "calculation": "Löftet hålls av en regeländring som inför aktivitetsplikt. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -397,6 +397,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 1 000 till 15 miljoner kronor, och perioden från per år till engångskostnad. Det tidigare beloppet prissatte aktiviteterna, men de utförs och betalas av kommunerna och Arbetsförmedlingen — staten står bara för regelverksarbetet.",
         "commit": "09a70ae94bdcb20df891022dc12bc4070bc1b9ea"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -41305,13 +41310,13 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 4,
-      "msek_base": 10,
-      "msek_high": 50,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "granskare",
       "basis_url": null,
       "method_note": "Lagändring för medborgarskapsåterkallelse. Direkt kostnad är administrativ hantering (Migrationsverket, domstolar). Få ärenden/år då endast naturaliserade medborgare kan beröras. I linje med… (belopp satt av granskare)",
-      "calculation": "Lagändringen i sig är försumbar; den nya statliga kostnaden är den löpande handläggningen — utredning vid Migrationsverket och prövning i domstol. Antalet ärenden begränsas av att återkallande bara kan gälla den som har ett annat medborgarskap kvar och som dömts för grov brottslighet: uppskattningsvis 20–100 ärenden per år, till 0,2–0,5 miljoner kronor per ärende, alltså 4–50 miljoner kronor per år. Basen sätts till 10 miljoner kronor, samma belopp som Kristdemokraternas publicerade löfte om att återkalla medborgarskap vid terrorbrott eller grov gängbrottslighet bär, eftersom samma politik ska kosta lika. De två löftena delar grupp och räknas en gång, så rikssumman ändras inte av godkännandet.",
+      "calculation": "Löftet hålls av en lagändring som gör det möjligt att återkalla medborgarskap från gängkriminella. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Den handläggning och domstolsprövning som följer av regeln är en följd av politiken. Beloppet avser åtgärden, inte dess följder.",
       "confidence": 0.9
     },
     "financing_claimed": {
@@ -41327,6 +41332,11 @@
         "date": "2026-08-22",
         "change": "Spannet är rättat till uträkningens egna tal: 20–100 ärenden à 0,2–0,5 miljoner kronor ger 4–50 miljoner kronor per år. Fältet visade 3–25.",
         "commit": "7fe4d429e2cb4dfaf438bbb9b8815ce634d1629b"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -44790,13 +44800,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 20,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Reglerings-/riktlinjeslöfte; prissätter enbart direkt åtgärd (t.ex. vägledningsmaterial, information till föräldrar/skolor), ej samhällsföljder.",
       "confidence": 0.35,
-      "calculation": "Löfte om större restriktivitet är i praktiken ett reglerings-/vägledningsåtagande. Direkt kostnad utgörs av t.ex. framtagande av riktlinjer via Skolverket/Folkhälsomyndigheten och ev. informationskampanj till föräldrar. SOU-storlek eller informationsinsats: ca 0–20 mkr. Ingen statlig driftskostnad uppstår."
+      "calculation": "Löftet hålls av riktlinjer och reglering om skärmanvändning för yngre barn. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -44806,7 +44816,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -51239,14 +51255,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en reglering (höjda/breddade sanktionsavgifter) plus en utredning. Regleringen har försumbar statlig kostnad; utredningen prissätts som SOU 5–30 mkr.",
       "confidence": 0.4,
-      "calculation": "Utredning om stegrande avgifter: ~5–30 mkr engång. Höjda/breddade avgifter är en reglering utan direkt statsfinansiell nettokostnad; eventuella avgiftsintäkter ses som beteendeföljd och räknas ej."
+      "calculation": "Löftet hålls av en höjning och breddning av sanktionsavgifterna för arbetsmiljöbrott. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Avgifterna betalas av arbetsgivare och är ingen statlig utgift. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -51256,7 +51272,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -54952,14 +54974,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 12,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Prissätter den uttryckliga utredningen om tredje juridiskt kön som en SOU-liknande engångskostnad. Själva lagändringen är en reglering och antas ha försumbar direkt kostnad.",
       "confidence": 0.5,
-      "calculation": "En statlig utredning (SOU) kostar typiskt 5–30 mkr. Antar en utredning med sekretariat, experter och remissförfarande. Lagutvecklingen i sig prissätts enligt regeln att en lagändring i sig kostar staten nästan ingenting som försumbar direkt kostnad."
+      "calculation": "Löftet hålls av en utveckling av könstillhörighetslagen. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -54969,7 +54991,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 12 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -66053,14 +66081,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Prissätter själva översynen som en mindre utredning. Höjda ersättningsnivåer är en överföring mellan ledningsägare och fastighetsägare och belastar inte statsbudgeten direkt.",
       "confidence": 0.5,
-      "calculation": "Översyn/utredning antas kosta 5–30 mkr engång. Den höjda ersättningen i sig är en reglering/transferering och kvantifieras inte som statlig utgift."
+      "calculation": "Löftet hålls av en översyn och höjning av ersättningsnivåerna vid markintrång. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Den höjda ersättningen är en överföring mellan enskilda och inte en statlig utgift. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -66070,7 +66098,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -71004,14 +71038,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för statlig utredning (SOU) och framtagande av nytt regelverk, inklusive juridisk översyn av föräldraskap och nödvändiga systemförändringar i myndigheter. Avser endast den direkta åtgärden…",
       "confidence": 0.6,
-      "calculation": "En statlig utredning (SOU) kostar typiskt 5-30 mkr. Löftet att \"tillåta\" är i grunden ett regleringslöfte som kräver en omfattande juridisk och etisk översyn. Base antas till 15 mkr för en större utredning med efterföljande remissarbete och författningsförslag. 5 mkr som minimum för en snabbare parlamentarisk utredning, 30 mkr om en bredare samhällsanalys och försöksverksamhet inkluderas."
+      "calculation": "Löftet hålls av en lagändring som tillåter altruistiskt surrogatmödraskap. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -71021,7 +71055,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -76586,14 +76626,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 10,
-      "msek_base": 50,
-      "msek_high": 100,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för utredning och lagstiftning likt Centerpartiets löfte om halverade tillståndsprocesser i miljöbalken. Incitament till kommuner antas vara omfördelning utan nettokostnad.",
       "confidence": 0.3,
-      "calculation": "Engångskostnad för utredning och lagändring ~50 mkr, baserat på jämförbart löfte om reform av miljöbalken. Inga årliga utgifter antas då incitament sannolikt är omfördelning av fastighetsskatt."
+      "calculation": "Löftet hålls av en lagändring som gör ändringstillstånd till huvudregel i miljötillståndsprocesser. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -76603,7 +76643,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 50 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -79113,13 +79159,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Borttagande av startbesked är regelförenkling med försumbara direkta kostnader. Översyn av överklaganderegler utgör en mindre utredning.",
       "confidence": 0.4,
-      "calculation": "Kostnad för utredning/översyn: uppskattad till 5–30 mkr engångskostnad. Själva lagändringen bedöms ha obetydlig direkt byråkratisk kostnad."
+      "calculation": "Löftet hålls av en lagändring som tar bort kravet på startbesked och ser över överklagandereglerna. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -79129,7 +79175,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -79907,13 +79959,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 1,
-      "msek_high": 5,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är ett regeländringslöfte (förbud/avreglering). Den direkta statliga kostnaden avser sannolikt förordningsarbete, eventuell utredning och myndighetsanpassning. Samhällsekonomiska följder är…",
       "confidence": 0.4,
-      "calculation": "Antagandet är att åtgärden främst är en regeländring. Kostnad för att ta fram och genomföra ny föreskrift (Transportstyrelsen) eller en mindre utredning (SOU-storlek eller mindre). ~1 msek om främst myndighetsarbete, upp till ~5 msek om en formell utredning krävs. Lågt spann pga. avgränsningsregel 9."
+      "calculation": "Löftet hålls av en föreskriftsändring som tar bort 250-wattsgränsen. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -79923,7 +79975,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 1 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -95348,13 +95406,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 3,
-      "msek_high": 20,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Lagändring: kriminalisering/omgradering till grovt brott. Direkt kostnad är lagstiftningsarbete och vägledning; beloppet avser åtgärden, inte samhällsföljder.",
       "confidence": 0.5,
-      "calculation": "Direkt kostnad = tillkomst av lagändring i brottsbalken (departementsarbete, remiss, eventuell utredning ~0–10 mkr) plus vägledning/utbildning för polis och åklagare ~5–10 mkr engång. Antal barnäktenskapsärenden i Sverige är få, så marginella rättsprocess-/straffkostnader är små och ses som följd, inte prissatt ny utgift. Base ~3 mkr, spann 0–20 mkr."
+      "calculation": "Löftet hålls av en ändring i brottsbalken som gör tvångsäktenskap av barn till ett grovt brott. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -95364,7 +95422,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 3 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -95394,13 +95458,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 1,
-      "msek_high": 5,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kriminalisering är en lagändring; direkt kostnad för åtgärden nära noll. Få extra ärenden täcks av befintliga rättsväsendesanslag. Beloppet avser åtgärden, inte samhällsföljderna.",
       "confidence": 0.6,
-      "calculation": "Straffrättslig lagändring: lagstiftningsarbete sker inom ordinarie process ≈ 0 mkr. Direkta nya kostnader är ev. extra förundersökningar/åtal; tvångsäktenskapsärenden är enstaka per år och hanteras inom befintliga anslag ≈ 0–5 mkr/år. Base 1 mkr avspeglar marginell belastning på rättsväsendet."
+      "calculation": "Löftet hålls av en kriminalisering av försök till vilseledande till tvångsäktenskapsresa. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. De förundersökningar och åtal som följer är en följd av politiken. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -95410,7 +95474,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 1 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -99872,13 +99942,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 1,
-      "msek_high": 10,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Straffmätning styrs av lag; direkt statlig kostnad i princip noll. Beloppet avser själva åtgärden, inte samhällsföljder som marginellt längre straff.",
       "confidence": 0.65,
-      "calculation": "Regeländring i straffmätning (straffnedsätt pga. jobb fallout avskaffas för omsorgsanställda). Kostnad = beredning/lagändring ≈ 0. Följden kan bli marginellt längre fängelsestraff: antag ett lågt ensiffrigt antal domar/år × någon vecka–månad extra × ~2 tkr/dag ⇒ under ~1 mkr/år, som högst något mkr. Bas 1 msek avser den lilla återkommande merkostnaden; låg 0 om inga extra fängelsedagar; hög 10 msek med marginal."
+      "calculation": "Löftet hålls av en regeländring om straffmätning för anställda inom omsorgen. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. De marginellt längre straffen är en följd av politiken. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -99888,7 +99958,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 1 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -109403,13 +109479,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 25,
-      "msek_high": 250,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Förbud/kriminalisering: beloppet avser åtgärdens direkta kostnad (lagstiftning, rättslig handläggning), inte samhällsföljder som fängelseplatser eller brottsutveckling.",
       "confidence": 0.3,
-      "calculation": "Kriminalisering kräver i sig ingen större ny utgift utöver lagstiftningsarbete (~0 mkr). Nya nettokostnader uppstår när förbudet tillämpas i rättskedjan: uppskattningsvis 50–300 åtal/år × ~0,1–0,5 mkr per ärende (förundersökning, offentlig försvarare, domstol) ≈ 5–150 mkr/år, plus viss extra polisiär och åklagarlig kapacitet → intervall 0–250 mkr. Kostnader för fängelseplatser (~1–2 mkr/plats/år vid fällande domar) och preventiva effekter är svåröverskådliga följer, ej prissatta. Osäkerheten är stor eftersom tillämpningens omfattning är okänd."
+      "calculation": "Löftet hålls av en kriminalisering av deltagande i kriminella gäng och våldsbejakande organisationer. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. De åtal och domar förbudet kan ge är en följd av politiken. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -109419,7 +109495,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 25 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -110464,13 +110546,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 25,
-      "msek_high": 150,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Process-/regeländring av Försvarsmaktens yttrandeförfarande; beloppet avser direkt kostnad för utredning, metod- och teknikutveckling (t.ex. radaranpassning), inte samhällseffekter av ökad vindkraft.",
       "confidence": 0.3,
-      "calculation": "Kärnan är en regeländring: Försvarsmakten ska svara med villkor i stället för ja/nej — i sig nästan kostnadsfritt. Den kvantifierbara direkta kostnaden är att möjliggöra samexistens med 'ny teknik': kartläggning/utredning ~5–20 mkr, metodutveckling och pilot/test av t.ex. radaranpassning eller signalbehandling ~0–130 mkr. Summa intervall 0–150 mkr, bas ~25 mkr. Ej prissatt: ökad vindkraftsproduktion, effekt på försvarets förmåga eller planeffekter — det är följder, inte statlig utgift."
+      "calculation": "Löftet hålls av en regeländring om hur Försvarsmakten svarar i vindkraftsärenden. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -110480,7 +110562,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 25 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -110831,14 +110919,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 20,
-      "msek_high": 60,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Regleringsändring av hyressystemet. Löftet är att 'inleda ett arbete', dvs. utredning/lagändring — prissatt som utredning och omställning av Hyresnämndens processer, inte samhällseffekter som högre…",
       "confidence": 0.35,
-      "calculation": "Löftet avser att inleda arbete med trygghetshyror för nya kontrakt — i praktiken en utredning följt av lagändring. Antaganden: SOU-utredning med sekretariat ~5–20 msek engång, plus anpassning av Hyresnämndens processer, IT och information ~10–40 msek ≈ totalt 5–60 msek. Själva förhandlingsmodellen är en regeländring utan direkt statskostnad: högre hyror vid inflyttning är en överföring mellan hyresgäst och hyresvärd, och eventuellt ökade bostadstillägg är en svåröverskådlig följd som lämnas okvantifierad."
+      "calculation": "Löftet hålls av en lagändring om förhandlad hyra vid inflyttning. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -110848,7 +110936,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 20 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -111430,13 +111524,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 15,
-      "msek_high": 200,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är ett lagstiftningsskärpande utan belopp; direkt kostnad avser utredning/lagarbete. Följder som fler Platser i anstalt/häkte och polisresurser är samhällskonsekvenser som ej prissatts här.",
       "confidence": 0.3,
-      "calculation": "Själva åtgärden = lagändring: utredning i SOU-storlek ~5–20 mkr + beredning/remiss ~5–10 mkr engång ≈ 10–30 mkr. Osäkerhet uppåt om implementering kräver förvaltningsstöd/IT. Väsentliga följkostnader (fler gripanden, häktningar, fängelsedagar à ~2 000 kr/dag, utvisningsärenden) är konsekvenser av lagen, inte statens nya direkta kostnad för åtgärden, och lämnas okvantifierade enligt reglerna."
+      "calculation": "Löftet hålls av en skärpning av lagstiftningen mot ledande kriminella. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -111446,7 +111540,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -112530,13 +112630,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Regeländring av elområdesindelningen; beloppet avser utredning/beslutsprocess, inte nätförstärkningar eller priseffekter för konsumenter.",
       "confidence": 0.3,
-      "calculation": "Att slå ihop elområden är en regleringsåtgärd: utredning, beslutsprocess hos Svenska kraftnät/Ei samt EU-anpassning ~5–30 mkr engång. Nätförstärkningar som krävs för färre zoner och ändrade priser mellan regioner är följer/omfördelningar, ej ny statlig utgift eftersom löftet hålls av en lag eller en reglering, och lämnas okvantifierade."
+      "calculation": "Löftet hålls av en regeländring som minskar antalet elområden. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -112546,7 +112646,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -112772,13 +112878,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Förenkling av upphandlingsregler är i grunden en regeländring; prissatt som utredning/vägledning engångskostnad, inte samhällseffekter eller kommunernas inköp.",
       "confidence": 0.4,
-      "calculation": "Löftet avser regeländring: direkt statlig kostnad är främst en utredning av upphandlingsreglerna plus eventuellt vägledningsmaterial till kommuner, i storleksordningen 5–30 mkr som engångskostnad; bas ~10 mkr. Ökade kommunala upphandlingar från sociala företag är omfördelning/effekt, inte ny statlig utgift, och lämnas okvantifierat."
+      "calculation": "Löftet hålls av en ändring av upphandlingsreglerna för arbetsintegrerade sociala företag. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -112788,7 +112894,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -112818,13 +112930,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 10,
-      "msek_high": 20,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Institutionell reform: flytt av beslut om penningpolitiska mål till riksdagen. Direkt kostnad är evt. utredning/beredning av riksbankslag; själva maktförflyttningen är kostnadsneutral och…",
       "confidence": 0.3,
-      "calculation": "Löftet är en regeländring (riksbankslagen, ev. grundlagsändring). Direkt statlig kostnad ≈ en SOU-stor utredning plus beredning: ~5–20 mkr engång. Ingen ny förmån eller utgift; ändrade penningpolitiska måls effekter på ränta/ekonomi är följder, inte statsutgift. Base 10 mkr som mitt i utredningsintervallet."
+      "calculation": "Löftet hålls av en ändring av riksbankslagen. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -112834,7 +112946,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -113094,13 +113212,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Lagändring; själva åtgärdens direkta kostnad är försumbar. Spannet täcker eventuell utredning och vägledning. Skadestånd och beteendeföljder kvantifieras ej.",
       "confidence": 0.5,
-      "calculation": "Löftet är en reglering: skärpt tjänstemannaansvar vid myndighetsutövning. En ren lagändring kostar ~0 utöver ordinarie lagstiftningsarbete. I praktiken krävs sannolikt en utredning (SOU-storlek ca 5–30 msek, engång) samt ev. vägledning/träning på myndigheter. Statliga skadeståndsförbunden, försäkringspremier och ändrat myndighetsbeteende är följder eller omfördelningar — inte ny direkt statlig kostnad — och prissätts därför inte. low=0 (enbart lagändring), base=5 (typisk utredning), high=30 (utredning + implementering)."
+      "calculation": "Löftet hålls av en skärpning av tjänstemannaansvaret. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -113110,7 +113228,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -113232,13 +113356,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 20,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Lagstiftnings-/förbudslöfte: prissatt är den direkta kostnaden (utredning, ikraftträdande, ev. polishöjning), som är liten. Hbtqi-perspektiv i befintligt arbete är inriktning utan ny nettokostnad…",
       "confidence": 0.6,
-      "calculation": "Förbudet i sig: utredning/betänkande samt lagprocess ~3–10 mkr engång, ev. information till rättsväsen och myndigheter ~2–10 mkr. Följder (åtal, vård, brottsförebyggande effekter) är inte nya statliga nettokostnader för åtgärden. Hbtqi-perspektivet inom pågående hatbrotts-/hedersarbete = omfördelning av befintliga resurser ≈ 0. Totalt ≈ 5 msek, spann 0–20 mkr."
+      "calculation": "Löftet hålls av en egen lag som förbjuder omvändelseförsök. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -113248,7 +113372,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -113468,13 +113598,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 20,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kriminalisering är en lagändring; direkt kostad är utredning och lagarbete. Prissätter själva åtgärden, inte följder som fler åtal eller vårdkostnader.",
       "confidence": 0.5,
-      "calculation": "Löftet hålls genom en lagändring (förbud/kriminalisering). Direkt statlig kostnad = förarbete: eventuell utredning i SOU-storlek ~5–20 msek som engångskostnad. Ökade kostnader för polis, åklagare, domstolar och kriminalvård vid fler äklagor och domar är svåröverskådliga följder av lagen, inte den nya åtgärdens pris, och lämnas okvantifierade. Bas 5 msek speglar normal lagberedning; low 0 om det sker inom befintligt arbete."
+      "calculation": "Löftet hålls av en kriminalisering av deltagande i våldsbejakande och terroristiska organisationer. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Två andra partiers löften om att kriminalisera deltagande i gäng och kriminella nätverk står redan på noll. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -113484,7 +113614,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -113514,13 +113650,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 20,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Principförstärkning i lag och styrmodell — ren regleringsåtgärd. Beloppet avser endast direkt kostnad (eventuell utredning/omarbetning av lagtext och vägledning), inte samhällsföljder.",
       "confidence": 0.4,
-      "calculation": "Löftet är en lagändring i bibliotekslagen samt vägledning/förändring av kultursamverkansmodellen. Ingen ny förmån eller utgift postas. Direkt kostnad: ev. utredning och lagändringsarbete ~0–20 mkr som engångskostnad; löpande administration försumbar. Följder av armlängds avstånd (t.ex. ändrad bidragsfördelning) är omfördelning/följd och prissätts inte."
+      "calculation": "Löftet hålls av en ändring i bibliotekslagen och kultursamverkansmodellen. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -113530,7 +113666,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -113560,13 +113702,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 20,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Regeländring: kommuner får rätt att VALFRITT ta ut turistavgift. Intäkterna tillfaller kommunerna, ej staten — ej en statlig intäktsökning. Prissatt är statens direkta kostnad…",
       "confidence": 0.55,
-      "calculation": "Löftet är en lagändring som ger kommuner en möjlighet (opt-in), ingen statlig utgift eller intäkt i sig. Avgiftsintäkterna är kommunala. Statens direkta kostnad ≈ beredning: antingen direkt lagstiftning (≈0 msek) eller utredning i SOU-storlek med förslag och tillämpningsregler (~5–20 msek engång). Base 5 msek avser en normal utredning; löpande statlig förvaltning bedöms försumbar eftersom administrationen ligger hos kommuner och värdar."
+      "calculation": "Löftet hålls av en lagändring som ger kommuner möjlighet att införa en turistavgift. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Avgiftsintäkterna är kommunala. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -113576,7 +113718,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -114032,13 +114180,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 1,
-      "msek_high": 10,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Ren lagändring/förbud: direkt kostnad (beredning, ev. information) är försumbar. Beloppet avser själva åtgärden, inte samhällsföljder som domstols- eller socialtjänstbelastning.",
       "confidence": 0.4,
-      "calculation": "Löftet hålls av en lagändring, inte nya bidrag. Direkt statlig kostnad = lagberedning, ev. informationskampanj och viss administrativ handläggning av redan erkända utländska barnäktenskap: uppskattning ~0–10 msek engångskostnad. Följder (fler domstolsärenden, socialtjänstinsatser) är omfördelning/konsekvens och prissätts inte enligt avgränsningsreglerna."
+      "calculation": "Löftet hålls av en skärpning av lagen så att inget barn under 18 år räknas som gift. Lagar, förbud, avregleringar och regeländringar prissätts till noll: lagändringens direkta kostnad — utredning, beredning och remiss — räknas som försumbar. Beloppet avser åtgärden, inte dess följder."
     },
     "financing_claimed": {
       "described": false,
@@ -114048,7 +114196,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 1 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
