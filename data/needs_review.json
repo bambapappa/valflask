@@ -3490,5 +3490,34 @@
     "articleTitle": "Ålderism – Liberalerna",
     "duplicateOf": "p-2026-1960",
     "duplicateReason": "samma uttryck: «ålders studie», «studie anpass», «anpass skatte», «skatte tryggh»"
+  },
+  {
+    "candidate": {
+      "title": "Utveckla anpassad skolan – inte avveckla den",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Därför vill Liberalerna utveckla den anpassade skolan – inte avveckla den.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/anpassad-skola",
+    "articleTitle": "Anpassad skola – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; partiets specifika del Löften om anpassad skola (utredningskrav, vägar vidare) prissätts separat och dubbelräknas inte. Bas 0.",
+      "confidence": 0.4,
+      "calculation": "Citatet anger riktning ('utveckla, inte avveckla') men ingen åtgärd, nivå eller belopp → inriktningslöfte enligt regel 13, bas 0. Jämförbara löften: 'stärka läraryrket...' = 0 msek, medan konkreta delar om anpassad skola (utredningskrav ~5 msek, vägar efter anpassad gymnasieskola ~80 msek) prissätts på egna löften. High ~50 msek rymmer ev. ospecificerade mindre utvecklingsinsatser (kompetens, material), low 0 då ingen åtgärd är utpekad."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2610 (1000), p-2026-2171 (0), p-2026-2350 (5), p-2026-2462 (0), p-2026-1973 (80) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~5"
   }
 ]
