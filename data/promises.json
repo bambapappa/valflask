@@ -108483,8 +108483,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Citatet säger «För 2026 och 2027 satsar den moderatledda regeringen 250 miljoner kronor per år för fler idrottsanläggningar» — presens om vad regeringen redan gör, inte ett åtagande för nästa mandatperiod. En redovisning av beslutad budget är ingen utfästelse. Posten bär inga belägg i Handlingsvågen, så ingenting behöver pekas om."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -109035,8 +109041,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Citatet säger «Anslaget för skötsel av värdefull natur ökas med 100 miljoner kronor per år under 2025–2027» — en redan beslutad anslagsökning vars period dessutom tar slut innan mandatperioden börjar. Ingen utfästelse för nästa mandatperiod. Posten bär inga belägg i Handlingsvågen."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -115039,7 +115051,7 @@
       "basis_url": null,
       "method_note": "Löfte utan belopp: tolkat som att anslå medel upp till bedömt underhållsbehov, dvs ett tillskott över dagens nslag. Prissatt som gapet mellan nuvarande jrnvgsunderhll och behov, inte hela…",
       "confidence": 0.4,
-      "calculation": "Statens lnkande underhll av jrnvg (via Trafikverket) ligger i storleksordningen 10-12 mdkr/rr. Analys av underhllsbehov pekar p ett rligt gap mellan anslag och behov p grovt 1,5-8 mdkr beroende p hur 'de pengar som behvs' tolkas; den ackumulerade underhllsskulden p tiotals mdr terbetalas ver mnga r och ingr delvis i det rliga gapet. Base 4 mdkr/rr = mittpunkt av uppskattat rligt gap. Lgt = knappt pbyggnad ver dagens niv, hgt = full utjmnning av rligt behov."
+      "calculation": "Statens löpande underhåll av järnvägen, via Trafikverket, ligger i storleksordningen 10–12 miljarder kronor per år. Analyser av underhållsbehovet pekar på ett årligt gap mellan anslag och behov på grovt 1,5–8 miljarder kronor beroende på hur «de pengar som behövs» tolkas; den ackumulerade underhållsskulden på tiotals miljarder återbetalas över många år och ingår delvis i det årliga gapet. Basbeloppet 4 miljarder kronor per år är mittpunkten av det uppskattade årliga gapet. Löftet anger ingen egen nivå — «de pengar som behövs» är inte en siffra — och beloppet vilar därför på vår tolkning av behovet, inte på partiets ord."
     },
     "financing_claimed": {
       "described": false,
@@ -115049,7 +115061,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningens text var förvanskad: alla å, ä och ö hade fallit bort, så meningarna lydde «Statens lnkande underhll av jrnvg» och «mdkr/rr». Texten möter läsaren på löftessidan och gick inte att läsa. Den är omskriven med samma tal och samma resonemang; ingenting i beloppet är ändrat. Uträkningen säger nu också uttryckligen att löftet inte anger någon egen nivå.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
