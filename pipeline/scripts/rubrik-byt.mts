@@ -86,17 +86,21 @@ const nya = loften.map((p) => {
 });
 
 const rattelser = JSON.parse(readFileSync(join(DATA, "rattelser.json"), "utf8")) as unknown[];
+// Fälten är `date`/`affects`/`what`/`why` och inget annat: `rattelsenoter.ts`
+// läser `affects` med `.includes()` och `.match()`, och en post med ett eget
+// schema kraschar grinden i stället för att bara saknas. Kostade en röd
+// körning 2026-08-23.
 rattelser.push({
-  datum,
-  typ: "rubrikbyte",
+  date: datum,
+  affects: `Löftessidorna för ${rader.map((r) => r.id).join(", ")}`,
+  // `affects` får bära beteckningarna — noten slår upp sina sidor på dem.
+  // `what` är prosa som möter läsaren, och där är de förbjudna (F4/F5).
+  // Rubriken före och efter räcker för att säga vad som ändrats.
+  what: rader
+    .map((r) => `Rubriken «${karta.get(r.id)?.title ?? "—"}» är utbytt mot «${r.rubrik}» — ${r.skal}.`)
+    .join(" "),
+  why: varfor,
   commit: "0000000",
-  varfor,
-  poster: rader.map((r) => ({
-    id: r.id,
-    fore: karta.get(r.id)?.title ?? null,
-    efter: r.rubrik,
-    skal: r.skal,
-  })),
 });
 
 const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as ChangelogEntry[];
