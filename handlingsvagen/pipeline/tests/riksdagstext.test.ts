@@ -54,7 +54,32 @@ test("antalet kopplingar på sådana löften växer inte", () => {
       "löftet på löftessidan först, och ge det ett citat ur partiets egen källa.",
   );
 
-  // Blankprovet: taket mäter bara något om det finns löften att mäta.
-  assert.ok(traffade.size > 0, "inga löften med riksdagstext hittades — provet mäter ingenting");
+  assert.equal(
+    traffade.size,
+    tak.loften_med_riksdagstext,
+    `${traffade.size} löften bär ett riksdagsyrkande som eget citat — taket är ` +
+      `${tak.loften_med_riksdagstext}. Talet får sjunka; växer det ska löftet läsas om och få ett ` +
+      "citat ur partiets egen källa.",
+  );
   assert.ok(loften.length > 1000, `bara ${loften.length} löften lästa — löftesfilen nås inte`);
+});
+
+test("mätaren biter fortfarande, nu när skulden är noll", () => {
+  // Skulden betalades 2026-08-23: alla elva löften fick partiets egna ord ur
+  // samma motion i stället för kammarens yrkandeformel. Blankprovet krävde
+  // tidigare att minst ett löfte träffades, vilket var rätt så länge det fanns
+  // några — men ett prov som kräver att felet finns kvar kan inte bli grönt av
+  // att arbetet blir gjort. Kvar behövs beviset att mätaren fungerar.
+  assert.ok(
+    lofteAvRiksdagstext({
+      quote:
+        "Riksdagen ställer sig bakom det som anförs i motionen om att vinstuttag ur skolan ska " +
+        "förbjudas och tillkännager detta för regeringen.",
+    }),
+  );
+  assert.ok(
+    !lofteAvRiksdagstext({
+      quote: "Socialdemokraterna föreslår i stället att vinstförbud ur skolan och förskolan införs",
+    }),
+  );
 });
