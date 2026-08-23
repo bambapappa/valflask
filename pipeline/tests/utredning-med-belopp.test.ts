@@ -71,26 +71,43 @@ describe("A2:s facit — de tre som fick behålla sitt belopp", () => {
 });
 
 describe("skulden i beståndet", () => {
-  const traffar = aktiva.filter(
-    (p) => (p.cost?.msek_base ?? 0) > 0 && utredningUtanAtgard(p.quote ?? "") !== null,
-  );
+  const traffar = aktiva
+    .filter((p) => (p.cost?.msek_base ?? 0) > 0 && utredningUtanAtgard(p.quote ?? "") !== null)
+    .map((p) => p.id)
+    .sort();
+  const facit = JSON.parse(
+    readFileSync(resolve(import.meta.dirname, "../facit/utredningsskulden.json"), "utf8"),
+  ) as { count: number; poster: { id: string; skal: string }[] };
+  const frikanda = facit.poster.map((p) => p.id).sort();
 
-  it("kontrollen biter på verkliga data", () => {
-    // En kontroll som inte hittar något i ett bestånd där felet är mätt är
-    // grön av fel skäl. Talet får sjunka; går det till noll ska raden strykas.
-    assert.ok(
-      traffar.length > 0,
-      "inget löfte fälls längre — är skulden betald ska provet skrivas om, inte tas bort tyst",
+  it("facit säger samma antal som det listar", () => {
+    assert.equal(facit.poster.length, facit.count);
+  });
+
+  it("varje frikänd post bär ett skäl som går att pröva", () => {
+    for (const post of facit.poster) {
+      assert.ok(post.skal.length > 80, `${post.id}: skälet är för kort för att en läsare ska kunna pröva det`);
+    }
+  });
+
+  it("inget nytt löfte bär ett belopp för en ren utredning", () => {
+    // Svepet 2026-08-23 nollade 24 poster enligt regeln, däribland
+    // euroutredningen som var kontrollens avgörande fall. De två som står kvar
+    // är lästa och frikända: kontrollen ser dem, men läsningen gav dem rätt.
+    const nya = traffar.filter((id) => !frikanda.includes(id));
+    assert.deepEqual(
+      nya,
+      [],
+      "Ett belopp för ett löfte som bara lovar en utredning bryter mot en fastställd regel.\n" +
+        "Nolla det med `pnpm regelnollning`, eller läs det och lägg skälet i\n" +
+        `facit/utredningsskulden.json om regeln inte gäller. Nya: ${nya.join(", ")}`,
     );
   });
 
-  it("euroutredningen fälls, som den identiska gjorde 2026-08-13", () => {
-    // KD:s «förutsättningslös utredning om euron» nollades av A2. C:s
-    // «ansvarsfullt utreda för- och nackdelar med euron» står på 15. Samma
-    // sakfråga, samma regel, två svar — det är hela skälet till kontrollen.
-    assert.ok(
-      traffar.some((p) => p.id === "p-2026-1449"),
-      "p-2026-1449 ska fällas så länge den bär ett belopp",
-    );
+  it("de frikända står kvar bara så länge kontrollen fäller dem", () => {
+    // Ett facit som listar poster kontrollen inte längre ser växer av sig
+    // självt. Rättas en av dem ska den strykas härifrån.
+    const onodiga = frikanda.filter((id) => !traffar.includes(id));
+    assert.deepEqual(onodiga, [], `Dessa fälls inte längre och ska strykas ur facit: ${onodiga.join(", ")}`);
   });
 });

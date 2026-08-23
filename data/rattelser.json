@@ -853,5 +853,12 @@
     "what": "13 uträkningar som lånade ett belopp ur ett annat löfte har fått sin grund utskriven: 13 pekar nu ut löftet de lånar av, 0 visade sig vara samma reform och räknas nu en gång, och 0 har fått en uträkning som står på egen aritmetik. Inget basbelopp har ändrats av själva kopplingen.",
     "why": "Trettonde poster ur ankarskulden lästa. Var och en namngav i prosa både partiet och saken den lånar av, och pekar nu ut löftet i ett fält så att sidan renderar en läsbar hänvisning i stället för en formulering läsaren inte kan följa. Inget belopp ändras.",
     "commit": "d9470ac"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-0956, p-2026-0995, p-2026-1049, p-2026-1147, p-2026-1222, p-2026-1244, p-2026-1319, p-2026-1440, p-2026-1449, p-2026-1575, p-2026-1606, p-2026-1627, p-2026-1943, p-2026-2367, p-2026-2373, p-2026-2382, p-2026-2387, p-2026-2486, p-2026-2620, p-2026-2623, p-2026-2732, p-2026-2785, p-2026-2792, p-2026-2833, p-2026-2890, p-2026-2891 — 26 löften nollade",
+    "what": "26 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 24 enligt regeln att utredningar och planer prissätts till noll, 2 enligt regeln att lagar och förbud prissätts till noll. Beloppen är nollade och uträkningarna skriver ut vilken regel som gäller. C minskar med 120 miljoner kronor, L minskar med 22 miljoner kronor, M minskar med 45 miljoner kronor, MP minskar med 10 miljoner kronor, S minskar med 120 miljoner kronor, V minskar med 42 miljoner kronor. Summan för alla partier minskar med 359 miljoner kronor för mandatperioden.",
+    "why": "Reglerna är fastställda sedan tidigare och står i projektets metodbeskrivning: ett löfte om att utreda något prissätts till utredningen och inte till den politik den kan leda till, och ett löfte som hålls av en lagändring prissätts till åtgärden och inte till dess följder. Reglerna tillämpades senast på hela beståndet i augusti, när det var en fjärdedel så stort. Sedan dess har nya löften tillkommit utan att någon kontroll mätte ledet, och de här posterna hade undgått regeln. Ingen bedömning av politiken har ändrats — bara vilken regel som gäller för dess prislapp.",
+    "commit": "0000000"
   }
 ]
