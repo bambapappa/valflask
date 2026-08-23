@@ -22556,14 +22556,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 1,
-      "msek_base": 2,
-      "msek_high": 5,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för IVO att ta fram och kommunicera tydligare kravställning, jämförbart med andra myndighetsuppdrag om vägledningar.",
       "confidence": 0.3,
-      "calculation": "Antagande: IVO använder 0–2 interna personår för översyn och framtagande av förtydligad kravställning à ca 1,2 miljoner kronor per personår. Tillkommande informationsinsatser: 0–2 miljoner kronor. Totalkostnad 0–ca 5 miljoner kronor. Avrundat uppåt för osäkerhet: 0–10 miljoner kronor."
+      "calculation": "Löftet är att tillståndsprocessen ska förenklas genom ett förtydligande av kravställningen. Regeln är att lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av regeländringen, vars direkta kostnad är försumbar. Det som prissattes var interna personår hos tillsynsmyndigheten, alltså arbete inom befintlig förvaltning."
     },
     "financing_claimed": {
       "described": false,
@@ -22588,6 +22588,11 @@
         "date": "2026-08-23",
         "commit": "0705cec",
         "change": "Citatet byttes 2026-08-23 mot en annan lydelse på samma sida, hämtad ur källan och kontrollerad ord för ord. Beloppet, källan och bedömningen är oförändrade. Citatet bär inte hela meningen det är hämtat ur, och togs in på ett mänskligt beslut: Citatet är partiets egen formulering i motiveringen, inte det formella yrkandet. Meningen före namnger förtydligandet: att regeringen bör ge Ivo tydligare direktiv om en rimlig kravställning. Den meningen bär ett avstavat ord som textutvinningen klippt sönder och går därför inte att citera ordagrant."
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 2 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -46798,13 +46803,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 3,
-      "msek_high": 15,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Styrningsändring: tydliga mål i myndighetsinstruktioner/regleringsbrev. Direkt kostnad är marginell administration, inte nya satsningar; samhällsföljder prissätts ej.",
       "confidence": 0.5,
-      "calculation": "Åtgärden är att skriva in barnkonventionsmål i regeringens styrning av myndigheter. Direkt kostad: arbetstid i Regeringskansliet för att formulera mål samt ev. indikatorutveckling och uppföljning hos berörda myndigheter ≈ några personår à ~1 mkr, totalt ~0–15 mkr. Jämförbart löfte Kristdemokraternas löfte om det behövs en omfattande översyn av hur stat och myndigheter fungerar prissatt 0 msek. Inga nya utgiftsposter eller transfers ingår."
+      "calculation": "Löftet är att regeringens instruktioner till myndigheterna ska innehålla tydliga mål kopplade till barnkonventionens genomförande. Regeln är att utrednings- och planlöften prissätts till noll: att formulera mål i en instruktion är arbete inom den befintliga styrprocessen och utförs av statens egen förvaltning. Vad målen sedan kräver av myndigheterna är inte utpekat med nivå."
     },
     "financing_claimed": {
       "described": false,
@@ -46814,7 +46819,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 3 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -52536,13 +52547,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Prissätter ett myndighetsuppdrag/åtgärdsprogram mot betygsfiffel som plan- och stödarbete, inte enskilda skolåtgärder. Lågt 0 om det enbart blir riktlinjer utan nya medel.",
       "confidence": 0.4,
-      "calculation": "Programarbete vid skolmyndighet: 1-2 år med utredare, analys, förankring och stödmaterial. Ca 2-4 årsarbetare à 1-1,5 mkr plus kommunikation ≈ 3-8 mkr; med externa insatser/utvärdering upp till ca 30 mkr. Låg 0 vid rena riktlinjer."
+      "calculation": "Löftet är att införa ett åtgärdsprogram mot betygsfiffel och betygsinflation i väntan på ett nytt betygssystem. Regeln är att utrednings- och planlöften prissätts till noll: ett åtgärdsprogram är en plan, och arbetet med att ta fram den utförs av den befintliga skolmyndigheten. De åtgärder programmet sedan kan föreslå är inte lovade med nivå."
     },
     "financing_claimed": {
       "described": false,
@@ -52552,7 +52563,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -67251,14 +67268,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Nationell strategi prissätts som utrednings-/planarbete (SOU-storlek), inte eventuella framtida stöd. Liknande planlöfte bedöms 0, men framtagandet kan kosta 5–30 mkr.",
       "confidence": 0.5,
-      "calculation": "En nationell strategi antas kräva utredningsarbete, remisser och konsultstöd: 5–30 mkr engång. Inga löpande åtgärder prissätts här."
+      "calculation": "Löftet är att stärka kraftvärmens konkurrenskraft med en nationell strategi. Regeln är att utrednings- och planlöften prissätts till noll: det är strategin som lovas, och arbetet med att ta fram den utförs av statens befintliga förvaltning. Vad strategin sedan kan leda till i form av villkor eller stöd är inte lovat som konkret politik ännu och prissätts på de löften som utfäster det."
     },
     "financing_claimed": {
       "described": false,
@@ -67268,7 +67285,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -67858,14 +67881,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Prissätter framtagande/samordning av en nationell strategi som en plan- och utredningsinsats, i nivå med en jämförbar nationell strategi — Miljöpartiets löfte om en nationell strategi för kompetensförsörjning i vården, 15 mkr. Inga varaktiga reformer ingår.",
       "confidence": 0.5,
-      "calculation": "Strategi/utredning: utredningskansli, arbetsgrupp, remisser och kommunikation. Typiskt 5–30 mkr engång; bas 15 mkr från jämförbar nationell strategi."
+      "calculation": "Löftet är att stå bakom en nationell strategi mot ofrivillig ensamhet. Regeln är att utrednings- och planlöften prissätts till noll: det är strategin som lovas, inte de insatser den kan komma att föreslå. Ett strategiarbete med kansli, arbetsgrupp och remisser utförs av statens befintliga förvaltning."
     },
     "financing_claimed": {
       "described": false,
@@ -67875,7 +67898,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -69783,14 +69812,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Prissätter utveckling och återinförande som ett plan-/samordningsarbete i nivå med Miljöpartiets jämförbara planlöfte om en utvecklad nationell plan mot rasism (ca 15 mkr engång). Ingen löpande utrikespolitisk verksamhet är inräknad.",
       "confidence": 0.4,
-      "calculation": "Utgår från jämförbart planlöfte på ca 15 mkr engång. Antar ett mindre återinförande med handlingsplan och samordning på 5–15 mkr, samt en bredare variant med internationella insatser upp till ca 30 mkr."
+      "calculation": "Löftet är att utveckla och återinföra den feministiska utrikespolitiken. Ingen åtgärd, nivå eller mottagare anges; det som prissattes var en handlingsplan och ett samordningsarbete. Regeln är att utrednings- och planlöften prissätts till noll: planarbetet utförs av statens befintliga förvaltning."
     },
     "financing_claimed": {
       "described": false,
@@ -69800,7 +69829,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -73704,16 +73739,14 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 3,
-      "msek_high": 10,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Att införa nya direktiv i regleringsbrev är en administrativ åtgärd med försumbar direkt kostnad. Vänsterpartiets jämförbara löfte om tydliga barnkonventionsmål i myndigheternas styrning uppskattas till 3 msek. Spannet fångar osäkerhet kring eventuellt…",
       "confidence": 0.4,
-      "calculation": "Åtgärden är en instruktion i befintlig styrprocess. Kostnaden är i huvudsak arbetstid för tjänstemän på Regeringskansliet att formulera och förankra direktivet. Jämförbart löfte om styrning gav 3 msek. Lågt: 0 (ryms i ordinarie arbete). Högt: 10 (om det kräver en mindre utredning eller bred remissrunda).",
-      "anchor_ids": [
-        "p-2026-0975"
-      ]
+      "calculation": "Löftet är att införa tydliga servicedirektiv i myndigheternas regleringsbrev. Regeln är att utrednings- och planlöften prissätts till noll: ett direktiv i regleringsbrevet är en instruktion i den befintliga styrprocessen, och arbetet med att formulera och förankra det utförs av statens egen förvaltning. Vad servicedirektiven sedan kräver av myndigheterna anges inte med nivå.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -73723,7 +73756,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 3 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -79771,14 +79810,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 3,
-      "msek_base": 8,
-      "msek_high": 25,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Priset avser framtagande och antagande av nationella cykelmål, inte framtida cykelinfrastruktur. Behandlas som plan-/utredningslöfte.",
       "confidence": 0.4,
-      "calculation": "Regeringsuppdrag/utredning för nationella mål: 2–4 årsverken, remisser, konsultationer och analys ≈ 3–25 mkr; bas 8 mkr."
+      "calculation": "Löftet är att uppgradera cykeln till ett nationellt transportslag och anta nationella mål för ökad cykling. Regeln är att utrednings- och planlöften prissätts till noll: det är målen och det regeringsuppdrag som tar fram dem som prissattes, och det arbetet utförs av statens befintliga förvaltning. Vad ökad cykling sedan kräver i infrastruktur anges inte."
     },
     "financing_claimed": {
       "described": false,
@@ -79788,7 +79827,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 8 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -80768,16 +80813,14 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 20,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Att ta fram riktlinjer och stöd är en regleringsuppgift med låg direkt kostnad, liknande en nationell strategi. Engångskostnad för utredning och utveckling.",
       "confidence": 0.5,
-      "calculation": "Utgår från Miljöpartiets jämförbara löfte om en nationell strategi för kompetensförsörjning i vården, som uppskattats till 15 mkr. Riktlinjer för nedtrappning kan vara något mindre omfattande; bas 5 mkr, spann 0–20 mkr.",
-      "anchor_ids": [
-        "p-2026-0444"
-      ]
+      "calculation": "Löftet är att ta fram nationella riktlinjer och ett stöd till vården för nedtrappning av psykofarmaka. Regeln är att utrednings- och planlöften prissätts till noll: det är riktlinjerna som lovas, och kunskapsstyrande arbete av det slaget utförs av statens befintliga myndigheter.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -80787,7 +80830,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -111705,7 +111754,7 @@
   {
     "id": "p-2026-2357",
     "group_id": null,
-    "title": "Förbjuda skadlig trålning",
+    "title": "Göra den utflyttade trålgränsen permanent",
     "slug": "forbjuda-skadlig-tralning",
     "parties": [
       "m"
@@ -111816,14 +111865,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är att ta fram en nationell AI-strategi med integritetsperspektiv — prissatt som utrednings-/planarbete i SOU-storlek (engångskostnad). Kostsamma åtgärder som strategin senare kan leda till…",
       "confidence": 0.6,
-      "calculation": "Konkret leverans är en strategi/utredning: sekretariat, sakkunniga, externa analyser, remissrunda och eventuell följdmotion i riksdagen. SOU-liknande insatser landar typiskt kring 5–30 msek som engångskostnad; AI-området kan kräva viss extern expertis vilket motiverar övre spannet. Bas 15 msek. Integritetsskyddet nämns utan utpekade åtgärder och antas ingå i strategiprocessen — ev. framtida reglering eller tillsyn prissätts på separata löften."
+      "calculation": "Löftet är att ta fram en nationell AI-strategi. Regeln är att utrednings- och planlöften prissätts till noll: det är strategin som prissätts, inte den reglering eller tillsyn den kan leda fram till. Löftets andra led, att skydda individers integritet och rättigheter, pekar inte ut någon åtgärd och prissattes inte heller tidigare."
     },
     "financing_claimed": {
       "described": false,
@@ -111833,7 +111882,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -112254,14 +112309,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kriskommission som utredning/upprättelse, jämförbar med SOU-storlek. Beloppet avser kommissionens arbete, inte eventuella framtida ersättningar.",
       "confidence": 0.6,
-      "calculation": "Liknande utredningar/kommissioner kostar 5–30 mkr. Bas 15 mkr som mittpunkt. Osäkerhet pga oklar omfattning."
+      "calculation": "Löftet är att tillsätta en kriskommission som ska ge upprättelse åt dem som drabbats av bristerna i sjukförsäkringen. Regeln är att utrednings- och planlöften prissätts till noll: en kommission utreder och föreslår, och dess arbete utförs av statens befintliga förvaltning. Vad en upprättelse i form av ersättning skulle kosta beror på förslag som ännu inte finns."
     },
     "financing_claimed": {
       "described": false,
@@ -112271,7 +112326,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -112597,14 +112658,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Strategin är ett planlöfte; kostnaden avser utredningsarbete, inte investeringar. Jämförbar med andra nationella strategier (hamn, vätgas) som kostar 15 mkr.",
       "confidence": 0.6,
-      "calculation": "Liknande strategiuppdrag (t.ex. nationell hamnstrategi) har kostnaden 15 mkr. Spann 5–30 mkr beroende på bredd och utredningstid."
+      "calculation": "Löftet är att ta fram en övergripande nationell järnvägs- och transportstrategi där målen för järnvägen slås fast. Regeln är att utrednings- och planlöften prissätts till noll: det är strategin som lovas. De investeringar målen kan komma att motivera är inte lovade som konkret politik här."
     },
     "financing_claimed": {
       "described": false,
@@ -112614,7 +112675,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -119158,14 +119225,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnad för att ta fram nationella riktlinjer, ej effekter. Jämförbar med utredningsuppdrag.",
       "confidence": 0.4,
-      "calculation": "Att ta fram nationella riktlinjer motsvarar en utredning/uppdrag: 5–30 msek engångskostnad. Bas 15 msek."
+      "calculation": "Löftet är att ta fram nationella riktlinjer för myndigheter om det civila samhällets särart. Regeln är att utrednings- och planlöften prissätts till noll: det är riktlinjerna som lovas, och arbetet med dem utförs av statens befintliga förvaltning."
     },
     "financing_claimed": {
       "described": false,
@@ -119175,7 +119242,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -119532,14 +119605,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 50,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet avser nationell samordning för att påskynda vätgasinfrastruktur, inte själva utbyggnaden. Kostnaden bedöms som en utrednings-/samordningsinsats, jämförbar med liknande strategiuppdrag.",
       "confidence": 0.4,
-      "calculation": "Jämförbara löften (nationell strategi, hamnstrategi) ligger på 15 msek engång. Samordningsuppdrag av denna typ brukar kosta 5–50 msek beroende på omfattning. Bas 15 msek, spann 5–50 msek."
+      "calculation": "Löftet prissattes uteslutande till ett nationellt samordningsuppdrag. Regeln är att utrednings- och planlöften prissätts till noll: samordningen utförs av statens befintliga förvaltning. Själva utbyggnaden av vätgasinfrastruktur, som löftet vill påskynda, anges utan nivå eller finansiering och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -119549,7 +119622,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -119768,14 +119847,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Strategi/utredning utan konkret åtgärd; kostnad för framtagande, ej genomförande.",
       "confidence": 0.5,
-      "calculation": "Jämförbara strategiuppdrag: 5–30 mkr. Bas 15 mkr som rimlig mittpunkt."
+      "calculation": "Löftet är att anta en nationell strategi för kraftvärmen. Regeln är att utrednings- och planlöften prissätts till noll: strategiarbetet utförs av statens befintliga förvaltning, och de långsiktiga villkor strategin ska ge är inte utpekade som en åtgärd med en nivå."
     },
     "financing_claimed": {
       "described": false,
@@ -119785,7 +119864,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -124019,7 +124104,7 @@
   {
     "id": "p-2026-2619",
     "group_id": null,
-    "title": "Stärka vården vid endometrios, klimakteriebesvär och förlossningsskador",
+    "title": "Utvärdera riktlinjerna för endometriosvården och utreda barnmorskors förskrivningsrätt",
     "slug": "starka-varden-vid-endometrios-klimakteriebesvar-och-forlossningsskador",
     "parties": [
       "s"
@@ -124041,14 +124126,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Prissätter endast de konkreta utredningsuppdragen; vårdreformen i övrigt är ett inriktningslöfte utan belopp.",
       "confidence": 0.4,
-      "calculation": "Två utredningar/utvärderingar (endometrios-riktlinjer, barnmorskors förskrivningsrätt) à 5–15 mkr = 10–30 mkr; base 15 mkr. 'Stärka eftervården' saknar nivå och ingår inte."
+      "calculation": "Löftet prissattes till två utredningar — en utvärdering av riktlinjerna för endometriosvården och en utredning av om barnmorskor ska få förskriva hormonläkemedel — à 5–15 miljoner kronor. Regeln är att utrednings- och planlöften prissätts till noll: arbetet utförs av statens befintliga förvaltning, och det som en utredning eventuellt leder fram till är inte lovat som konkret politik ännu. Löftets fjärde led, att stärka eftervården så att förlossningsskador följs upp bättre, saknar nivå och prissattes inte heller tidigare."
     },
     "financing_claimed": {
       "described": false,
@@ -124058,7 +124143,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -137379,14 +137470,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Nollvision är ett inriktningsmål; kostnaden avser att ta fram och etablera en nationell strategi/handlingsplan, inte åtgärderna i den. Jämförbar handlingsplan har skattats till 15 mkr.",
       "confidence": 0.4,
-      "calculation": "Antagande: nationell strategi med samordning, analys, remiss och kommunikation. Lågt 5 mkr för enkel skrivbordsinsats, högt 30 mkr för bred process med myndighetssamverkan. Bas 15 mkr i linje med jämförbar handlingsplan. Beloppet avser själva införandet av visionen, inte samhällsföljderna."
+      "calculation": "Löftet är att införa en nollvision för mäns våld mot kvinnor. Regeln är att utrednings- och planlöften prissätts till noll: en nollvision är ett mål med en strategi under sig, och strategiarbetet utförs av statens befintliga förvaltning. De åtgärder som ska nå målet är inte utpekade med nivå och prissätts på de löften som utfäster dem."
     },
     "financing_claimed": {
       "described": false,
@@ -137396,7 +137487,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",

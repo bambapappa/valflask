@@ -66,6 +66,7 @@ interface Kostnad {
   period?: string | null;
   calculation?: string | null;
   method_note?: string | null;
+  anchor_ids?: readonly string[] | null;
 }
 
 export interface Lofte {
@@ -138,7 +139,21 @@ export function paverkan(lofte: Lofte): number {
   return lofte.cost.period === "per_ar" ? bas * 4 : bas;
 }
 
-/** Posten med beloppet nollat och uträkningen omskriven. */
+/**
+ * Posten med beloppet nollat och uträkningen omskriven.
+ *
+ * ANKAREN FÖLJER MED UT. Skrivs uträkningen om försvinner lånet ur texten, men
+ * `cost.anchor_ids` stod kvar — och sajten renderar dem som en länk med det
+ * andra löftets rubrik. Läsaren fick då veta att beloppet kommer därifrån,
+ * intill en uträkning som säger att det inte kommer någonstans ifrån alls.
+ *
+ * Felet uppstod två gånger på en timme 2026-08-23: samma session satte ankaren
+ * i ankarpasset och rev dem i nästa svep. Det är inte en slump utan verktygens
+ * ordning — ankaren sätts på poster med belopp, och nollningen tar bort belopp.
+ *
+ * En delrättelse (`spann`) skriver också om uträkningen och rensar därför lika
+ * mycket: den nya texten står för hela det som blir kvar.
+ */
 export function nolla<T extends Lofte>(lofte: T, rad: Nollrad, datum: string): T {
   const fore = lofte.cost.msek_base ?? 0;
   const enhet = lofte.cost.period === "per_ar" ? "miljoner kronor per år" : "miljoner kronor";
@@ -151,6 +166,7 @@ export function nolla<T extends Lofte>(lofte: T, rad: Nollrad, datum: string): T
       msek_base: nytt.base,
       msek_high: nytt.high,
       calculation: rad.utrakning.trim(),
+      anchor_ids: [],
     },
     history: [
       ...(lofte.history ?? []),
