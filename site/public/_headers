@@ -2,6 +2,16 @@
 # respekterar inte denna fil — headersen sätts i drift via en Cloudflare
 # Transform Rule (se ops/HANDOFF §12). Filen är källa för värdena.
 #
+# `connect-src` släpper också igenom `https://utlovat.se`, och det ledet är
+# till för en ANNAN värd i samma zon: Valtris på valtris.utlovat.se hämtar
+# löftena ur vårt öppna API. Regeln nedan sätts av en Cloudflare Transform Rule
+# på hela zonen, så valtris får samma CSP som utlovat.se — och där betyder
+# `'self'` valtris.utlovat.se, inte utlovat.se. Utan det utskrivna ledet
+# blockerar webbläsaren spelets anrop till vårt eget API.
+#
+# För utlovat.se självt ändrar ledet ingenting: `'self'` täcker redan den
+# värden. Det öppnar alltså inget nytt för sajten, bara för syskonvärden.
+#
 # `connect-src` släpper igenom EN tredjepart: data.riksdagen.se. Ämnessöket
 # på /handlingsvagen/amnen kan fråga riksdagens egen söktjänst direkt, så att
 # en läsare kan få allt som nämner ordet under mandatperioden och inte bara
@@ -11,7 +21,7 @@
 # Innan Transform Rule-regeln är utrullad faller sidan tillbaka på en vanlig
 # länk till samma sökning, så den ljuger aldrig om vad den kan visa.
 /*
-  Content-Security-Policy: default-src 'self'; connect-src 'self' https://data.riksdagen.se; img-src 'self' data:; style-src 'self'; script-src 'self' 'wasm-unsafe-eval'; font-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; connect-src 'self' https://utlovat.se https://data.riksdagen.se; img-src 'self' data:; style-src 'self'; script-src 'self' 'wasm-unsafe-eval'; font-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin

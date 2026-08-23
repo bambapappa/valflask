@@ -213,6 +213,43 @@ try {
   fel.push(`ämnessökningens externa åtkomst gick inte att kontrollera: ${e.message}`);
 }
 
+// 5. VALTRIS NÅR VÅRT EGET API.
+//    Transform Rule-regeln gäller HELA zonen, så valtris.utlovat.se får samma
+//    CSP som utlovat.se — och där betyder `'self'` valtris.utlovat.se. Utan
+//    `https://utlovat.se` utskrivet i connect-src blockerar webbläsaren spelets
+//    anrop till vårt eget öppna API, och Valtris visar «Kunde inte hämta
+//    löften». Det hände i drift och syntes ingenstans utom i konsolen: både API
+//    och CORS var gröna hela tiden, för felet satt i den anropande sidans CSP.
+try {
+  const spel = await hamta("https://valtris.utlovat.se/");
+  const csp = spel.headers.get("content-security-policy") ?? "";
+  const connectSrc = csp
+    .split(";")
+    .map((del) => del.trim())
+    .find((del) => del.toLowerCase().startsWith("connect-src "));
+  const oppen = Boolean(connectSrc?.split(/\s+/).includes("https://utlovat.se"));
+
+  const api = await hamta(`${BAS}/api/v1/promises.json`, { Origin: "https://valtris.utlovat.se" });
+  const tillaten = api.headers.get("access-control-allow-origin");
+  const apiOppen = api.status === 200 && (tillaten === "*" || tillaten === "https://valtris.utlovat.se");
+
+  console.log("\nValtris mot vårt API:");
+  console.log(`  ${oppen ? "OK  " : "FEL "} valtris CSP tillåter https://utlovat.se i connect-src`);
+  console.log(`  ${apiOppen ? "OK  " : "FEL "} API:et svarar med CORS för valtris`);
+  if (!oppen) {
+    fel.push(
+      "valtris.utlovat.se levererar en CSP utan https://utlovat.se i connect-src — " +
+        "spelet kan inte hämta löftena. Uppdatera Cloudflares Transform Rule mot site/public/_headers.",
+    );
+  }
+  if (!apiOppen) {
+    fel.push(`vårt API svarade ${api.status} med Access-Control-Allow-Origin: ${tillaten ?? "saknas"}`);
+  }
+} catch (e) {
+  console.log(`\nValtris mot vårt API:\n  FEL  ${e.message}`);
+  fel.push(`valtris åtkomst till API:et gick inte att kontrollera: ${e.message}`);
+}
+
 // 4. Bär förstasidan sitt innehåll utan att JavaScript körs? En agent som inte
 //    kör skript ska ändå se siffrorna.
 try {
