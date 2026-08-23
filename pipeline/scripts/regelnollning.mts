@@ -8,6 +8,11 @@
  *
  *   p-2026-1449<TAB>utredning<TAB>Löftet är att utreda …<TAB>citatet lovar bara en utredning
  *
+ * Ett femte fält, `low,base,high`, delrättar i stället för att nolla — för ett
+ * löfte där bara EN DEL faller under regeln. Det nya basbeloppet måste vara
+ * lägre än det nuvarande: verktyget tar bort en del av ett belopp, det sätter
+ * aldrig ett nytt.
+ *
  * Regeln är `utredning` eller `lagandring`. Reglerna och skälen står i
  * `src/regelnollning.ts`; de är fastställda sedan tidigare och skrivs inte här.
  *
@@ -66,12 +71,18 @@ const rader: Nollrad[] = readFileSync(listfil, "utf8")
   .map((r) => r.replace(/\r$/u, ""))
   .filter((r) => r.trim() !== "" && !r.startsWith("#"))
   .map((r) => {
-    const [id, regel, utrakning, skal] = r.split("\t");
+    const [id, regel, utrakning, skal, spann] = r.split("\t");
+    const tal = (spann ?? "").trim()
+      ? (spann ?? "").split(",").map((x) => Number(x.trim()))
+      : undefined;
     return {
       id: (id ?? "").trim(),
       regel: (regel ?? "").trim() as Regel,
       utrakning: (utrakning ?? "").trim(),
       skal: (skal ?? "").trim(),
+      ...(tal && tal.length === 3 && tal.every(Number.isFinite)
+        ? { spann: { low: tal[0]!, base: tal[1]!, high: tal[2]! } }
+        : {}),
     };
   });
 
@@ -96,7 +107,13 @@ for (const rad of rader) {
   );
   console.log(`  regel: ${rad.regel}`);
   console.log(`  ny uträkning: ${rad.utrakning.slice(0, 110)}`);
-  if (r.ok) console.log(`  ✓ går att nolla · −${paverkan(lofte!).toLocaleString("sv-SE")} mkr för mandatperioden`);
+  if (r.ok) {
+    const kvar = rad.spann ? rad.spann.base * (lofte!.cost.period === "per_ar" ? 4 : 1) : 0;
+    console.log(
+      `  ✓ ${rad.spann ? `delrättas till ${rad.spann.low}–${rad.spann.base}–${rad.spann.high}` : "går att nolla"}` +
+        ` · −${(paverkan(lofte!) - kvar).toLocaleString("sv-SE")} mkr för mandatperioden`,
+    );
+  }
   else for (const f of r.fel) console.log(`  ✗ ${f}`);
   fel.push(...r.fel);
 }

@@ -43,6 +43,18 @@ export interface Nollrad {
   utrakning: string;
   /** Vad läsningen fann. Går i rättelseloggen, aldrig i uträkningen. */
   skal: string;
+  /**
+   * Nytt spann när bara EN DEL av löftet faller under regeln.
+   *
+   * Ett löfte som buntar en straffskärpning med en fotboja och ett höjt
+   * statsbidrag ska inte nollas — bara straffdelen ska bort. Utan det här
+   * ledet vore enda valen att nolla hela posten, vilket vore fel, eller att
+   * skriva om den för hand, vilket är just det verktyget finns för att slippa.
+   *
+   * Måste alltid vara LÄGRE än det nuvarande basbeloppet: verktyget tar bort
+   * en del av ett belopp, det sätter aldrig ett nytt.
+   */
+  spann?: { low: number; base: number; high: number };
 }
 
 export const SKAL_MIN_TECKEN = 40;
@@ -84,6 +96,19 @@ export function provaNollrad(lofte: Lofte | undefined, rad: Nollrad): Nollprovni
   if (bas === 0) {
     fel.push(`${rad.id} står redan på noll — det finns ingenting att nolla`);
   }
+  if (rad.spann) {
+    const { low, base, high } = rad.spann;
+    if (!(low <= base && base <= high)) {
+      fel.push(`${rad.id}: spannet ${low}–${base}–${high} är inte i ordning`);
+    }
+    if (base >= bas) {
+      fel.push(
+        `${rad.id}: det nya basbeloppet ${base} är inte lägre än det nuvarande ${bas}. ` +
+          "Verktyget tar bort en del av ett belopp, det sätter aldrig ett nytt.",
+      );
+    }
+    if (base < 0 || low < 0) fel.push(`${rad.id}: ett negativt belopp är inte en delrättning`);
+  }
   if (rad.skal.trim().length < SKAL_MIN_TECKEN) {
     fel.push(
       `${rad.id}: skälet är för kort. Rättelseloggen ska säga vad läsningen fann, ` +
@@ -117,13 +142,14 @@ export function paverkan(lofte: Lofte): number {
 export function nolla<T extends Lofte>(lofte: T, rad: Nollrad, datum: string): T {
   const fore = lofte.cost.msek_base ?? 0;
   const enhet = lofte.cost.period === "per_ar" ? "miljoner kronor per år" : "miljoner kronor";
+  const nytt = rad.spann ?? { low: 0, base: 0, high: 0 };
   return {
     ...lofte,
     cost: {
       ...lofte.cost,
-      msek_low: 0,
-      msek_base: 0,
-      msek_high: 0,
+      msek_low: nytt.low,
+      msek_base: nytt.base,
+      msek_high: nytt.high,
       calculation: rad.utrakning.trim(),
     },
     history: [
@@ -131,7 +157,11 @@ export function nolla<T extends Lofte>(lofte: T, rad: Nollrad, datum: string): T
       {
         date: datum,
         change:
-          `Beloppet nollat, tidigare ${fore.toLocaleString("sv-SE")} ${enhet}. ` +
+          (rad.spann
+            ? `Beloppet sänkt till ${nytt.base.toLocaleString("sv-SE")} ${enhet}, tidigare ` +
+              `${fore.toLocaleString("sv-SE")}. Den del av löftet som faller under regeln är borttagen; ` +
+              "resten står kvar. "
+            : `Beloppet nollat, tidigare ${fore.toLocaleString("sv-SE")} ${enhet}. `) +
           REGLER[rad.regel] +
           " Regeln är fastställd sedan tidigare; posten hade undgått den.",
         commit: "0000000",
@@ -156,12 +186,25 @@ export function rattelsePost(
     .map(([r, n]) => `${n} enligt regeln att ${r === "utredning" ? "utredningar och planer" : "lagar och förbud"} prissätts till noll`)
     .join(", ");
 
+  const delrattade = rader.filter((r) => r.rad.spann).length;
+  const nollade = rader.length - delrattade;
+  const vadtext =
+    delrattade === 0
+      ? `${nollade} löften nollade`
+      : nollade === 0
+        ? `${delrattade} löften delrättade`
+        : `${nollade} löften nollade och ${delrattade} delrättat`;
+
   return {
     date: datum,
-    affects: `${ider.join(", ")} — ${ider.length} löften nollade`,
+    affects: `${ider.join(", ")} — ${vadtext}`,
     what:
-      `${ider.length} löften stod på ett belopp som kostnadsreglerna säger ska vara noll: ${regeltext}. ` +
-      `Beloppen är nollade och uträkningarna skriver ut vilken regel som gäller. ` +
+      `${rader.length} löften stod på ett belopp som kostnadsreglerna säger ska vara noll: ${regeltext}. ` +
+      (delrattade > 0
+        ? `${nollade > 0 ? `${nollade} är nollade` : "Beloppen är sänkta"}, och ${delrattade} ` +
+          "buntar flera åtaganden — där är bara den del som faller under regeln borttagen, resten står kvar. "
+        : "Beloppen är nollade. ") +
+      `Uträkningarna skriver ut vilken regel som gäller. ` +
       `${partitext ? `${partitext}. ` : ""}` +
       `Summan för alla partier minskar med ${summor.riket.toLocaleString("sv-SE")} miljoner kronor för mandatperioden.`,
     why:
