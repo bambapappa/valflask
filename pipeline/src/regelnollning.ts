@@ -32,6 +32,10 @@ export const REGLER = {
     "Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet " +
     "hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser " +
     "åtgärden, inte dess följder.",
+  dubbelrakning:
+    "En del av ett paket som redan prissatts på paketets eget löfte prissätts till " +
+    "noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och " +
+    "syns för läsaren — det är bara beloppet som flyttats dit det hör hemma.",
 } as const;
 
 export type Regel = keyof typeof REGLER;
@@ -199,7 +203,13 @@ export function rattelsePost(
   const perRegel = new Map<Regel, number>();
   for (const r of rader) perRegel.set(r.rad.regel, (perRegel.get(r.rad.regel) ?? 0) + 1);
   const regeltext = [...perRegel.entries()]
-    .map(([r, n]) => `${n} enligt regeln att ${r === "utredning" ? "utredningar och planer" : "lagar och förbud"} prissätts till noll`)
+    .map(([r, n]) => {
+      const vad =
+        r === "utredning" ? "utredningar och planer"
+        : r === "dubbelrakning" ? "en del av ett redan prissatt paket"
+        : "lagar och förbud";
+      return `${n} enligt regeln att ${vad} prissätts till noll`;
+    })
     .join(", ");
 
   const delrattade = rader.filter((r) => r.rad.spann).length;

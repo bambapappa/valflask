@@ -826,7 +826,7 @@
   },
   {
     "id": "p-2026-0015",
-    "group_id": null,
+    "group_id": "g-forbjuda-religiosa-friskolor",
     "title": "Vi vill förbjuda religiösa friskolor",
     "slug": "vi-vill-forbjuda-religiosa-friskolor",
     "parties": [
@@ -881,6 +881,11 @@
         "date": "2026-08-22",
         "change": "Beloppet höjt från noll till 30 miljoner kronor som engångskostnad för utredning och tillsyn. Ett annat parti lovar exakt samma förbud och den posten bar 30 miljoner medan den här bar noll. Samma åtgärd ska kosta lika oavsett vilket parti som lovar den; att den ena var nollad var ett neutralitetsfel.",
         "commit": "51c0936f2cd261004e2bd131c7886c9f0372f127"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 2 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -5295,14 +5300,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 4500,
-      "msek_high": 12000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": "https://www.liberalerna.se/nyheter/liberalerna-kraver-sankt-statlig-inkomstskatt",
       "method_note": "Första steget mot en halverad statlig inkomstskatt, prissatt på partiets egen kostnad för hela halveringen. Partiets två löften om samma sak räknas en gång.",
       "confidence": 0.6,
-      "calculation": "Partiet vill halvera den statliga inkomstskatten, från 20 till 10 procent, vilket enligt partiets egen uppgift kostar 30 miljarder kronor per år. Löftet gäller ett första steg vid årsskiftet, och partiledaren har angett en eller två procentenheter. Tio procentenheter kostar 30 miljarder, alltså 3 miljarder per procentenhet, och ett första steg blir därmed 3–6 miljarder kronor per år med 4,5 som basbelopp. Det höga alternativet rymmer att fler steg tas under mandatperioden. Partiets två löften om samma skattesänkning räknas en gång."
+      "calculation": "Löftet är samma sak som partiets löfte om halverad statlig inkomstskatt och skattefritt ISK-sparande, där hela paketet redan är prissatt. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Löftet står kvar och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -5317,6 +5323,11 @@
         "date": "2026-07-27",
         "change": "Omräknat från 40 000 till 4 500 miljoner kronor per år, och grupplänkat med partiets andra löfte om samma skattesänkning. Det gamla beloppet låg över vad partiet självt uppger att hela halveringen kostar, 30 miljarder kronor per år, trots att löftet gäller ett första steg om en eller två procentenheter.",
         "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 4 500 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -10228,7 +10239,7 @@
     },
     "comparisons": [],
     "quip": "",
-    "status": "aktiv",
+    "status": "tillbakadragen",
     "history": [
       {
         "date": "2026-07-24",
@@ -10249,6 +10260,11 @@
         "date": "2026-08-04",
         "change": "Finansieringsuppgiften har fått en period: per år, precis som partiet självt anger den. Fältet saknade period och beloppet drogs från kostnader räknade för hela mandatperioden, alltså ett år mot fyra.",
         "commit": "54d0bd7aa62dccd0388540aa4cd46276486101a3"
+      },
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet beskriver samma reform — ett samlat avdrag på 15 319 kronor i månaden — som partiets andra löfte om att de första 15 319 kronorna av arbetsinkomsten blir skattefria. Den posten bär beloppet och står kvar. En dubblett dras tillbaka enligt kostnadsreglerna; att höja den här till samma nivå hade dubbelräknat reformen."
       }
     ],
     "extraction": {
@@ -13709,7 +13725,7 @@
   },
   {
     "id": "p-2026-0350",
-    "group_id": null,
+    "group_id": "g-kortare-handlaggningstider-migrationsverket",
     "title": "Inför ett startupvisum och korta handläggningstiderna på Migrationsverket drastiskt",
     "slug": "infor-ett-startupvisum-och-korta-handlaggningstiderna-pa-migrationsverket-drastiskt",
     "parties": [
@@ -13753,6 +13769,11 @@
         "date": "2026-08-22",
         "change": "Uträkningens inledande mening om att texten rekonstruerats i efterhand är borttagen från den publicerade kalkylen. Den beskrev vår arbetsgång, inte löftet, och antydde felaktigt att övriga uträkningar skrivits samtidigt med beloppet. Belopp och uträkning i övrigt är oförändrade.",
         "commit": "7fe4d429e2cb4dfaf438bbb9b8815ce634d1629b"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 3 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -20193,14 +20214,15 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 4500,
-      "msek_high": 9000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Skattefritt sparande upp till partiets egen gräns på 500 000 kronor. Partiets tre löften om samma sak räknas en gång.",
       "confidence": 0.5,
-      "calculation": "Partiet anger själv gränsen i sitt konkreta löfte: sparande på investeringssparkonto blir skattefritt upp till 500 000 kronor. Staten förlorar den schablonskatt som i dag betalas på kapitalet under gränsen. Med omkring 3–4 miljoner sparare och i genomsnitt 200 000–400 000 kronor på kontot ligger merparten av kapitalet under gränsen, vilket ger ett bortfall kring 4,5 miljarder kronor per år. Partiets tre löften om skattefritt sparande är samma politik och räknas en gång och på samma grund."
+      "calculation": "Löftet om skattefritt ISK-sparande upp till 500 000 kronor är den ena halvan av partiets större löfte om halverad statlig inkomstskatt OCH skattefritt ISK-sparande, där båda delarna redan är prissatta tillsammans. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Löftet står kvar och syns för läsaren.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -20225,6 +20247,11 @@
         "date": "2026-08-04",
         "change": "Finansieringsfältet tömt, från 0.5 miljoner kronor. Löftet beskriver ingen finansiering — beloppet var en siffra ur själva citatet som granskningssteget skrev in i fel fält, och det drogs av från vad partiernas löften kostar som om partiet hade pekat ut pengar till dem.",
         "commit": "54d0bd7aa62dccd0388540aa4cd46276486101a3"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 4 500 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -21533,6 +21560,11 @@
         "date": "2026-08-05",
         "commit": "c9581cf7929099c32f0d51b636224fabd078c306",
         "change": "Lagt i grupp med Kristdemokraternas löfte om sänkt matmoms. Samma åtgärd räknas en gång; Sverigedemokraternas variant är permanent och bär därför gruppens belopp. Beloppet är oförändrat."
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 2 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -24413,14 +24445,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 25,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Jämför med årskostnaden för mindre statliga IT-system som belastningsregister och karttjänster. Antagande om utveckling, drift, säkerhet och uppdatering av känsliga personuppgifter.",
       "confidence": 0.4,
-      "calculation": "Antar utvecklingskostnad på 10–15 miljoner kronor (engång). Årlig drift: 3–8 miljoner kronor (server, support, uppdateringar). Amorteras utvecklingen på 5 år blir årskostnad ~5–11 miljoner kronor. Osäkerhet om rättsprocesser tillkommer, vilket kan öka kostnaden. Därför intervall: 3 (enkel lösning) till 20 miljoner kronor per år (komplext system med höga säkerhetskrav)."
+      "calculation": "En statlig interaktiv pedofilkarta är samma register som redan är prissatt i partiets löfte om livstidsstraff, nya verktyg för Polisen och ett offentligt pedofilregister. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -24435,6 +24468,11 @@
         "date": "2026-08-22",
         "change": "Uträkningens inledande mening om att texten rekonstruerats i efterhand är borttagen från den publicerade kalkylen. Den beskrev vår arbetsgång, inte löftet, och antydde felaktigt att övriga uträkningar skrivits samtidigt med beloppet. Belopp och uträkning i övrigt är oförändrade.",
         "commit": "7fe4d429e2cb4dfaf438bbb9b8815ce634d1629b"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -31319,6 +31357,11 @@
         "date": "2026-08-22",
         "change": "Rubriken lovar mer eller mer specifikt än citatet gör. Den står kvar tills vidare: prövningen i kvalitetsfiltret är nycklad på rubriken, så ett byte kopplar loss löftet från sin prövning och får det att framstå som opublicerat-men-oprövat. Rubriken måste därför bytas i samma körning som löftet prövas om, inte som en fristående textändring.",
         "commit": "56e9888f29c12d6ca187455803f28b9b4ba5bb85"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 2 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -33556,7 +33599,7 @@
   },
   {
     "id": "p-2026-0701",
-    "group_id": null,
+    "group_id": "g-forbjuda-religiosa-friskolor",
     "title": "Förbjuda religiösa förskolor och skolor",
     "slug": "forbjuda-religiosa-forskolor-och-skolor",
     "parties": [
@@ -33595,7 +33638,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 2 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -49935,8 +49984,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar investeringar i svensk teknologiutveckling som en del av en tillväxtpakt, vilket partiets löfte om investeringar i AI och ny industriteknologi också gör. Den posten står kvar. Att just den här dras tillbaka och inte den andra är också en rättelse av beloppet: den oberoende granskningen fann att basen 25 miljarder saknar prövbar grund — uträkningen hänvisar till en jämförbar investering på 50 miljarder utan att peka ut vilken."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -51587,8 +51642,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar intensifierat återvändandearbete, vilket är samma utfästelse som partiets löfte om intensifierat återvändande och samarbeten om återtagande. Den posten står kvar och övertar i samma rättelse den här postens prissättning, eftersom kostnaden för politiken inte försvinner med formuleringen."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -51597,7 +51658,7 @@
   },
   {
     "id": "p-2026-1077",
-    "group_id": null,
+    "group_id": "g-kortare-handlaggningstider-migrationsverket",
     "title": "Korta handläggningstider hos Migrationsverket",
     "slug": "korta-handlaggningstider-hos-migrationsverket",
     "parties": [
@@ -51637,7 +51698,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 3 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -56074,14 +56141,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5,
-      "msek_base": 12,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Nationellt register är ett mindre IT-/admin-system; smalare än Centerpartiets löfte om inför ett nationellt lämnaprogram med en lämnapeng som innehåller lämnapeng. Inga transfereringar, bara registerdrift och visst handläggarstöd.",
       "confidence": 0.35,
-      "calculation": "Utveckling av register ~5–20 mkr engång, drift/underhåll och handläggning ~3–10 mkr/år. Årskostnad inkl. avskrivning/IT-drift uppskattas till ~5–30 mkr, bas 12 mkr."
+      "calculation": "Ett nationellt register över bortförda barn är den registerdel som redan är prissatt i partiets löfte om obligatorisk sökinsats vid frånvaro för att stoppa bortförande. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -56091,7 +56159,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 12 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -64427,8 +64501,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar beredskapssjukhus i prioriterade områden, vilket ryms i partiets löfte om att inrätta beredskapssjukhus och stärka sjukvårdens krisberedskap. Den posten bär det högre beloppet och står kvar."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -65824,14 +65904,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 50,
-      "msek_base": 150,
-      "msek_high": 400,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är vagt men pekar ut biogasstöd. Ankar på befintligt statligt stöd till biogas från restprodukter, ofta i storleksordningen 100–300 mkr/år. Bred osäkerhet ger lågt konfidens.",
       "confidence": 0.3,
-      "calculation": "Jämför med statliga insatser för biogas från gödsel/matavfall, som brukar ligga på 100–300 mkr/år. Antar att löftet innebär ett liknande årligt stöd: bas 150 mkr. Osäkerhet sätts till 50–400 mkr eftersom löftet saknar nivå och mekanism."
+      "calculation": "Att ta tillvara restprodukter för biogas är en del av partiets löfte om kraftigt ökad biogasproduktion från gödsel och matavfall, där satsningen redan är prissatt. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Löftet står kvar och syns för läsaren.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -65841,7 +65922,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 150 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -67392,7 +67479,7 @@
   },
   {
     "id": "p-2026-1414",
-    "group_id": null,
+    "group_id": "g-lss-fardtjanst-hjalpmedel",
     "title": "Likvärdig tillgång till hjälpmedel i hela landet",
     "slug": "likvardig-tillgang-till-hjalpmedel-i-hela-landet",
     "parties": [
@@ -67429,7 +67516,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 3 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -67628,7 +67721,7 @@
   },
   {
     "id": "p-2026-1419",
-    "group_id": null,
+    "group_id": "g-energiskatt-egenproducerad-el",
     "title": "Avskaffa energiskatten på egenanvänd solel",
     "slug": "avskaffa-energiskatten-pa-egenanvand-solel",
     "parties": [
@@ -67665,7 +67758,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -74911,7 +75010,7 @@
   },
   {
     "id": "p-2026-1573",
-    "group_id": null,
+    "group_id": "g-parasporten",
     "title": "Öka anslaget särskilt till parasporten",
     "slug": "oka-anslaget-sarskilt-till-parasporten",
     "parties": [
@@ -74948,7 +75047,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -75239,7 +75344,7 @@
   },
   {
     "id": "p-2026-1580",
-    "group_id": null,
+    "group_id": "g-kortare-handlaggningstider-migrationsverket",
     "title": "Korta handläggningstiderna hos Migrationsverket",
     "slug": "korta-handlaggningstiderna-hos-migrationsverket",
     "parties": [
@@ -75276,7 +75381,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 3 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -77619,8 +77730,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar stopp för kringgåendet av EU:s sanktioner mot Ryssland, vilket ryms i partiets löfte om att öka sanktionerna mot Ryssland och oligarkerna. Den posten står kvar, och dess nolla följer av regleringsregeln — en utökad sanktionsregim bär bara sin administrativa kostnad."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -81019,8 +81136,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar ett moderniserat korttidsarbete, vilket är samma reform som partiets löfte om ett förstärkt system för korttidsarbete. Den posten bär beloppet och står kvar."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -81377,14 +81500,15 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 1,
-      "msek_base": 10,
-      "msek_high": 50,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för administrativ handläggning av enskild omprövning. Antalet berörda är okänt och osäkerheten stor.",
       "confidence": 0.3,
-      "calculation": "Antag 500–5000 ärenden, handläggning 5–10 timmar per ärende, á ca 1000 kr/tim ger 2,5–50 mkr. Bas 10 mkr (~1000 ärenden × 10 tkr)."
+      "calculation": "Omprövning av felaktigt indragna körkort är samma åtgärd som redan är prissatt i partiets löfte om att stoppa indragna körkort baserade på enbart PEth-tester, vars uträkning uttryckligen räknar in omprövningen av redan indragna körkort. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -81394,7 +81518,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -82359,7 +82489,7 @@
   },
   {
     "id": "p-2026-1730",
-    "group_id": null,
+    "group_id": "g-havsbaserad-vindkraft",
     "title": "Snabba på havsbaserad vindkraft i södra Sverige",
     "slug": "snabba-pa-havsbaserad-vindkraft-i-sodra-sverige",
     "parties": [
@@ -82396,7 +82526,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -86967,8 +87103,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar att polis och samhällsservice ska finnas i hela landet, vilket är samma utfästelse som partiets löfte om att garantera poliser i hela landet. Den posten bär beloppet och står kvar."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -88590,18 +88732,18 @@
       "fetched_at": "2026-08-19T14:12:55.372Z"
     },
     "category": "migration",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 60,
+      "msek_base": 150,
+      "msek_high": 350,
       "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "Brett inriktningslöfte utan konkreta åtgärder eller belopp; prissätts som 0.",
-      "confidence": 0.2,
-      "calculation": "Ingen konkret åtgärd specificerad; eventuella kostnader prissätts på specifika löften. Ett brett uppräkningslöfte utan konkret åtagande prissätts inte; delarna ligger på partiets specifika löften."
+      "method_note": "Avser statens merkostnad för fler handläggare, förvarsplatser, transporter och eskort. Löftet saknar nivå; brett spann.",
+      "confidence": 0.3,
+      "calculation": "Löftet lovar intensifierat återvändande och samarbeten om återtagande, men anger ingen nivå. Beloppet avser statens merkostnad för fler handläggare, förvars- och transportkostnader: antag en intensifiering motsvarande 15–40 årsarbetskrafter à ungefär 0,8–1,2 miljoner kronor, alltså 12–48 miljoner, plus ökade förvars- och transportkostnader på 40–200 miljoner. Det ger 52–248 miljoner kronor per år, och spannet breddas till 60–350 för att löftet är vagt. Basbeloppet är 150 miljoner kronor per år."
     },
     "financing_claimed": {
       "described": false,
@@ -88611,7 +88753,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Beloppet höjt från 0 till 150 miljoner kronor per år. Partiets andra löfte om intensifierat återvändande drogs tillbaka samma dag som en dubblett, och det var den posten som bar prissättningen. Kostnaden för politiken försvinner inte med formuleringen, så den följer med hit. Uträkningen och spannet är oförändrade i sak — de är den indragna postens, ordagrant om än omskrivna till löpande text. Sorten ändras samtidigt från inriktning till reform: ett inriktningslöfte bär aldrig ett basbelopp, och posten pekar med prissättningen ut en bestämd åtgärd — fler handläggare, förvarsplatser och transporter."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -91203,7 +91351,7 @@
   },
   {
     "id": "p-2026-1918",
-    "group_id": null,
+    "group_id": "g-kortare-handlaggningstider-migrationsverket",
     "title": "Korta Migrationsverkets handläggningstider",
     "slug": "korta-migrationsverkets-handlaggningstider",
     "parties": [
@@ -91240,7 +91388,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 3 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -91837,8 +91991,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar fler hyresrätter, studentbostäder och äldrebostäder, vilket ryms i partiets löfte om statliga stöd för klimatsmarta hyresrätter. Den posten bär beloppet och står kvar."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -94403,8 +94563,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar begränsad arbetskraftsinvandring till yrken med arbetskraftsbrist, vilket är samma sak som partiets löfte om begränsning till bristyrken. Den posten står kvar, och dess nolla följer av att åtgärden är en regeländring vars direkta statliga kostnad är försumbar."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -94817,8 +94983,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar bättre villkor för sociala företag, vilket är samma sak som partiets löfte om förenklad upphandling av arbetsintegrerade sociala företag. Den posten står kvar, och dess nolla följer av att en regeländring bär sin egen försumbara kostnad — den här postens 150 miljoner kronor per år var en uppskattning utan utpekad åtgärd."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -94827,7 +94999,7 @@
   },
   {
     "id": "p-2026-1996",
-    "group_id": null,
+    "group_id": "g-energiskatt-egenproducerad-el",
     "title": "Ta bort energiskatten för egenproducerad el",
     "slug": "ta-bort-energiskatten-for-egenproducerad-el",
     "parties": [
@@ -94864,7 +95036,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -95437,7 +95615,7 @@
   },
   {
     "id": "p-2026-2009",
-    "group_id": null,
+    "group_id": "g-lss-fardtjanst-hjalpmedel",
     "title": "Säkra tillgänglig vardag med ledsagning, färdtjänst och hjälpmedel",
     "slug": "sakra-tillganglig-vardag-med-ledsagning-fardtjanst-och-hjalpmedel",
     "parties": [
@@ -95474,7 +95652,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 3 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -97377,7 +97561,7 @@
   },
   {
     "id": "p-2026-2050",
-    "group_id": null,
+    "group_id": "g-parasporten",
     "title": "Stärka parasporten och rätten till idrott för personer med funktionsnedsättning",
     "slug": "starka-parasporten-och-ratten-till-idrott-for-personer-med-funktionsnedsattning",
     "parties": [
@@ -97414,7 +97598,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -97745,7 +97935,7 @@
   },
   {
     "id": "p-2026-2058",
-    "group_id": null,
+    "group_id": "g-lss-fardtjanst-hjalpmedel",
     "title": "Återupprätta intentionerna bakom LSS som rättighetslag",
     "slug": "ateruppratta-intentionerna-bakom-lss-som-rattighetslag",
     "parties": [
@@ -97782,7 +97972,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 3 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -104960,7 +105156,7 @@
   },
   {
     "id": "p-2026-2211",
-    "group_id": null,
+    "group_id": "g-havsbaserad-vindkraft",
     "title": "Utbyggnad av havsbaserad vindkraft och stamnät till havs",
     "slug": "utbyggnad-av-havsbaserad-vindkraft-och-stamnat-till-havs",
     "parties": [
@@ -104997,7 +105193,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -105098,7 +105300,7 @@
   },
   {
     "id": "p-2026-2214",
-    "group_id": null,
+    "group_id": "g-trettio-timmars-forskola",
     "title": "Utöka allmän förskola från 15 till 30 timmar per vecka",
     "slug": "utoka-allman-forskola-fran-15-till-30-timmar-per-vecka",
     "parties": [
@@ -105135,7 +105337,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -110878,7 +111086,7 @@
   },
   {
     "id": "p-2026-2338",
-    "group_id": null,
+    "group_id": "g-forbjuda-religiosa-friskolor",
     "title": "Förbjud religiösa friskolor",
     "slug": "forbjud-religiosa-friskolor",
     "parties": [
@@ -110915,7 +111123,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 2 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -111858,8 +112072,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lovar stärkt småskaligt fiske, vilket är samma sak som partiets löfte om att underlätta yrkesfiskarlicens och livsmedelsverksamheter. Den posten står kvar och räknar fram sin nivå ur vad en omarbetad föreskrift och handläggningen faktiskt kostar."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -114477,7 +114697,7 @@
   },
   {
     "id": "p-2026-2412",
-    "group_id": null,
+    "group_id": "g-forbud-alunskifferbrytning",
     "title": "Nationellt förbud mot uran- och alunskifferbrytning",
     "slug": "nationellt-forbud-mot-uran-och-alunskifferbrytning",
     "parties": [
@@ -114514,7 +114734,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -114811,7 +115037,7 @@
   },
   {
     "id": "p-2026-2419",
-    "group_id": null,
+    "group_id": "g-trettio-timmars-forskola",
     "title": "Alla barn ska ha rätt till 30 timmar förskola i veckan",
     "slug": "alla-barn-ska-ha-ratt-till-30-timmar-forskola-i-veckan",
     "parties": [
@@ -114848,7 +115074,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -116166,7 +116398,7 @@
   },
   {
     "id": "p-2026-2448",
-    "group_id": null,
+    "group_id": "g-sankt-matmoms",
     "title": "Sänkt matmoms till 6 procent",
     "slug": "sankt-matmoms-till-6-procent",
     "parties": [
@@ -116203,7 +116435,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 2 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -121100,7 +121338,7 @@
   },
   {
     "id": "p-2026-2553",
-    "group_id": null,
+    "group_id": "g-forbud-alunskifferbrytning",
     "title": "Införa förbud mot brytning i alunskiffer",
     "slug": "infora-forbud-mot-brytning-i-alunskiffer",
     "parties": [
@@ -121137,7 +121375,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -125229,7 +125473,7 @@
   },
   {
     "id": "p-2026-2641",
-    "group_id": null,
+    "group_id": "g-lss-fardtjanst-hjalpmedel",
     "title": "Förbättra färdtjänst, ledsagning och hjälpmedel",
     "slug": "forbattra-fardtjanst-ledsagning-och-hjalpmedel",
     "parties": [
@@ -125266,7 +125510,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Löftet ingår nu i en grupp med 3 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -135169,14 +135419,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 4000,
-      "msek_high": 8000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Indexering av befintliga välfärdsbidrag; årlig kostnad ≈ inflation × bidragsbas. Osäker bas och inflationstakt. Ankrar i partiets eget löfte om en bottenplatta för välfärden.",
       "confidence": 0.4,
-      "calculation": "Antag statsbidrag till välfärden (kommun/region) ca 100–200 mdkr. Vid inflation 2–4 % blir årlig uppräkning 2–8 mdkr. Bas 4 mdkr/år, i linje med partiets eget löfte om en bottenplatta för välfärden med inflationsuppräknade statsbidrag."
+      "calculation": "Löftet är samma reform som partiets löfte om en bottenplatta för välfärden med inflationsuppräknade statsbidrag, där systemet redan är prissatt. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Löftet står kvar och syns för läsaren.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -135186,7 +135437,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 4 000 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -138040,14 +138297,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 2,
-      "msek_base": 8,
-      "msek_high": 20,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Administrativ åtgärd: register, handläggning, rättssäkerhet. Jämförbara löften 0–15 mkr/år. Beloppet avser åtgärdens direkta kostnad, inte samhällsföljder.",
       "confidence": 0.4,
-      "calculation": "Antaganden: 3–5 heltidstjänster för handläggning och juridik (3–5 mkr), IT-system och drift (2–5 mkr), rättslig prövning/överklaganden (1–3 mkr) ≈ 6–13 mkr/år. Osäkerhet: 2–20 mkr/år beroende på utformning och omfattning."
+      "calculation": "Att svartlista fuskande företag från offentlig upphandling är ett av instrumenten i partiets breda program mot arbetslivskriminalitet, där programmet redan är prissatt. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -138057,7 +138315,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 8 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
