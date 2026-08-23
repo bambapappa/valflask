@@ -48927,7 +48927,7 @@
       "basis_url": null,
       "confidence": 0.5,
       "method_note": "Straffskärpning är en lagändring; direkt kostnad är beredningen. Följder i rättsväsendet är en följd av politiken och räknas inte.",
-      "calculation": "Löftet är en lagändring — skärpta straff för arbetsmiljöbrott och hårdare straff för företag som återkommer. Statens direkta kostnad är att bereda lagen, 0–10 mkr som engångskostnad, och basbeloppet sätts därför till 0 mkr. Vad skärpta straff sedan kostar i rättsväsendet är en följd av politiken, inte kostnaden för åtgärden."
+      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Löftet anger varken vilka arbetsmiljöbrott som avses eller hur mycket straffen ska höjas, så det finns varken ett antal fall eller en straffökning att räkna på. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
     },
     "financing_claimed": {
       "described": false,
@@ -48937,7 +48937,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen omskriven. Beloppet är oförändrat noll, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Samma skäl står nu på alla löften om skärpta straff som saknar räknelig grund.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -86028,13 +86034,16 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_base": 5,
+      "msek_high": 50,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är ett förbud/reglering (språkkrav). Den direkta statliga kostnaden för att införa och upprätthålla ett sådant krav är försumbar. Eventuella kostnader för språkutbildning eller administration….",
       "confidence": 0.65,
-      "calculation": "Åtgärden är ett regleringslöfte (införande av språkkrav). Prissätts den direkta kostnaden för själva åtgärden, vilken är försumbar (0 kr). Kostnader för t.ex. Språktester, utbildningsinsatser eller eventuell personalbrist är indirekta följder som inte ingår i prissättningen av själva kravet."
+      "calculation": "Löftet pekar ut en bestämd åtgärd — nationella språkkrav för personal i förskola och äldreomsorg — men anger ingen nivå, och nollningsregeln gäller bara löften som varken pekar ut en åtgärd eller anger en nivå. Beloppet är därför lånat från Moderaternas löfte om språkkrav inom äldreomsorgen, som räknar fram 5 miljoner kronor per år för att utforma kravet och för tester och certifiering. Att det här löftet också omfattar förskolan ryms i spannets övre del. Beloppet avser att utforma och kontrollera kravet, inte att bekosta språkutbildningen — den är prissatt för sig på partiets eget löfte om utbildningsinsatser och räknas inte här en andra gång.",
+      "anchor_ids": [
+        "p-2026-2346"
+      ]
     },
     "financing_claimed": {
       "described": false,
@@ -86044,7 +86053,18 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet höjt från noll till 5 miljoner kronor per år. Löftet pekar ut en bestämd åtgärd utan att ange en nivå, och nollningsregeln gäller bara löften som varken pekar ut en åtgärd eller anger en nivå. Beloppet är lånat från ett jämförbart löfte som räknar fram sin siffra, och lånet står utskrivet i uträkningen.",
+        "commit": "0000000"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen förtydligad. Beloppet är oförändrat, men det står nu utskrivet att det avser att utforma och kontrollera språkkravet och inte att bekosta utbildningen — den är prissatt på partiets eget löfte om utbildningsinsatser, och skulle annars räknas två gånger.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -88150,13 +88170,16 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_base": 2,
+      "msek_high": 5,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är ett förbud/reglering. Den direkta statliga kostnaden för att ändra fiskekvoter och regler är försumbar. Eventuella omställningsstöd eller förvaltningskostnader är inte specificerade och….",
       "confidence": 0.65,
-      "calculation": "Åtgärden är en reglering (stoppa industriellt fiske, stärka småskaligt). Direkt kostnad för regeländring ≈ 0. Omställningsstöd eller subventioner till småskaligt fiske specificeras inte i löftet och kan inte prissättas utan vidare underlag. Base sätts därför till 0 i enlighet med."
+      "calculation": "Löftet pekar ut en bestämd åtgärd — att stoppa det industriella överfisket — men anger ingen nivå. Beloppet ankras därför i vad samma åtgärd kostar. Moderaternas löfte om att stoppa överfiske och begränsa industriellt trålfiske räknar fram 2 miljoner kronor per år för ökad fiskerikontroll och förvaltning av trålbegränsningar, och den nivån är lånad hit. Kontrollen behövs för att begränsningen ska gälla.",
+      "anchor_ids": [
+        "p-2026-2459"
+      ]
     },
     "financing_claimed": {
       "described": false,
@@ -88166,7 +88189,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet höjt från noll till 2 miljoner kronor per år. Löftet pekar ut en bestämd åtgärd utan att ange en nivå, och nollningsregeln gäller bara löften som varken pekar ut en åtgärd eller anger en nivå. Beloppet är lånat från ett jämförbart löfte som räknar fram sin siffra, och lånet står utskrivet i uträkningen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -109917,13 +109946,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 50,
-      "msek_high": 400,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Lagstiftningslöfte: beloppet avser bara genomförandets direkta kostnad (omställning/administration), inte samhällsföljder. Skolpengen betalas redan idag — överföring till kommunalt huvudmannaskap är…",
       "confidence": 0.3,
-      "calculation": "Avskaffandet sker via lagstiftning; att löftet hålls av en lag eller en reglering ger base≈0 för själva åtgärden. Skolpeng flödar redan från offentliga medel till friskolor, så ett kommunalt/ statligt övertagande är i princip omfördelning, inte ny kostnad. Kvar: engångskostnader för omställning — myndighets­handläggning, omorganisation av huvudmän, ev. övergångsavtal ≈ grovt 0–400 mkr; bas ~50 mkr som antagen administrations-/övergångskostnad. Osäkerheten är stor eftersom löftet saknar angiven åtgärdsdesign (vinstförbud, övertagande eller stopp av nya tillstånd)."
+      "calculation": "Löftet hålls av en lagändring som avskaffar marknadsskolan. Lagar, förbud och regeländringar prissätts till noll: skolpengen betalas redan av offentliga medel, så ett offentligt övertagande är omfördelning och inte ny kostnad, och den omställning lagändringen kräver — myndighetshandläggning och omorganisation av huvudmän — utförs av statens befintliga förvaltning. Vad omställningen betyder för skolmarknaden är en följd och prissätts inte."
     },
     "financing_claimed": {
       "described": false,
@@ -109933,7 +109962,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 50 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -114298,7 +114333,7 @@
       "basis": "granskare",
       "basis_url": null,
       "method_note": "(belopp satt av granskare)",
-      "calculation": "Citatet anger vad partiets samlade skattepolitik ska ge en vanlig familj i månaden, och nämner ett barnavdrag utan att ange dess nivå eller utformning. Ingendera delen säger hur sänkningen görs. Beloppet sätts därför till noll: partiets konkreta skattesänkningar är prissatta på sina egna löften, och att prissätta utfallet igen vore att räkna samma sänkning två gånger.",
+      "calculation": "Löftet har två delar och de nollas av olika skäl. De 5 000 kronorna är utfallet av partiets samlade skattepolitik, och de sänkningarna är prissatta på sina egna löften — att räkna utfallet igen vore att räkna samma sänkning två gånger. Barnavdraget är en ny åtgärd som partiet pekar ut men inte sätter en nivå på, och som inte är prissatt någon annanstans. Det skulle kosta staten pengar. Beloppet står ändå på noll: ett barnavdrag har aldrig funnits i Sverige, så det finns ingen tidigare nivå att ankra i, och ett annat partis avdragsnivå får inte lånas in — då prissätts deras ambition och inte det här löftet. Anger partiet ett belopp per barn går kostnaden att räkna, och då ska den sättas.",
       "confidence": 0.9
     },
     "financing_claimed": {
@@ -114309,7 +114344,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen omskriven. Beloppet är oförändrat noll, men skälet täckte tidigare bara den ena halvan av löftet: dubbelräkningen gäller de 5 000 kronorna, inte barnavdraget. Barnavdraget är en ny åtgärd utan angiven nivå som inte är prissatt någon annanstans, och det står nu utskrivet att den kostar pengar men inte går att räkna utan en nivå.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -115586,14 +115627,17 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 15,
+      "msek_base": 50,
+      "msek_high": 150,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är ett inriktningsmål ('På sikt införa...') utan konkret åtagande om teknik, genomförande eller tidpunkt. Kristdemokraternas löfte om bredband i hela landet är också ett inriktningsmål prissatt till 0. Kostnaden…",
       "confidence": 0,
-      "calculation": "Base 0: Löftet saknar kvantifierbar åtgärd, budget eller tidsplan. Ett nationellt biljettsystem skulle kräva omfattande IT-utveckling, standardisering, avtal med regionala trafikhuvudmän och löpande drift, men inga av dessa parametrar är specificerade. Utan konkretion är den direkta statliga kostnaden omätbar och behandlas därför som ett inriktningslöfte eftersom citatet är en bred uppräkning utan konkret åtagande."
+      "calculation": "Löftet pekar ut en bestämd åtgärd — ett nationellt biljettsystem för all kollektivtrafik — men anger ingen nivå. Nollningsregeln gäller bara löften som varken pekar ut en åtgärd eller anger en nivå, så beloppet ankras i vad samma åtgärd kostar. Centerpartiets löfte om ett nationellt biljettsystem räknar fram 50 miljoner kronor per år ur engångsutveckling på 50–200 miljoner och årlig drift på 10–50, och den nivån är lånad hit. Att systemet införs «på sikt» ändrar omfattningen, inte kostnaden per år när det väl finns.",
+      "anchor_ids": [
+        "p-2026-2248"
+      ]
     },
     "financing_claimed": {
       "described": false,
@@ -115603,7 +115647,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet höjt från noll till 50 miljoner kronor per år. Löftet pekar ut en bestämd åtgärd utan att ange en nivå, och nollningsregeln gäller bara löften som varken pekar ut en åtgärd eller anger en nivå. Beloppet är lånat från ett jämförbart löfte som räknar fram sin siffra, och lånet står utskrivet i uträkningen.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -117668,14 +117718,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en organisationsöversyn utan konkret nivå; prissätts som en utredning/plan eftersom löftet är att utreda eller planera, i linje med Centerpartiets löfte om en utredning av Trafikverkets organisation.",
       "confidence": 0.4,
-      "calculation": "Antagande: en SOU-liknande utredning med sekretariat, experter och remissförfarande kostar typiskt 5–30 mkr. Bas 15 mkr, spann 5–30 mkr. Ingen löpande kostnad för själva översynen."
+      "calculation": "Löftet är att modernisera Trafikverkets organisation, och det som prissattes var utredningen som ska ta fram förslaget. Utrednings- och planlöften prissätts till noll: utredningens egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad en ny organisation sedan kostar är inte utlovat."
     },
     "financing_claimed": {
       "described": false,
@@ -117685,7 +117735,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -118598,7 +118654,7 @@
       "basis_url": null,
       "method_note": "Straffskärpning är en lagändring; direkt statlig kostnad är försumbar. Fängelsevistelser kan öka men är en osäker följd, ej prissatt.",
       "confidence": 0.3,
-      "calculation": "Lagändring utan direkt utgift. Eventuella merkostnader för längre fängelsestraff är svårbedömda och utesluts eftersom löftet hålls av en lag eller en reglering."
+      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Citatet säger «de här straffen kommer vi att höja» utan att i sig namnge vilka. Utan brottstyper går varken antalet fall eller straffökningen att räkna fram. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
     },
     "financing_claimed": {
       "described": false,
@@ -118608,7 +118664,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen omskriven. Beloppet är oförändrat noll, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Samma skäl står nu på alla löften om skärpta straff som saknar räknelig grund.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -118644,7 +118706,7 @@
       "basis_url": null,
       "method_note": "Straffskärpning är en lagändring; direkt statlig kostnad är försumbar. Jämförbara löften anger kostnader för utredning/administration, men här saknas konkret nivå.",
       "confidence": 0.3,
-      "calculation": "Lagändring utan ny myndighet eller resurskrävande åtgärd. Direkt kostnad ≈ 0 mkr. Eventuella kostnader för Kriminalvården är en följd, ej direkt åtgärd."
+      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Citatet räknar upp tre brottstyper men anger ingen straffökning, och löftets åtagande står i partiets nästa mening. Utan en angiven höjning finns inget att räkna på. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
     },
     "financing_claimed": {
       "described": false,
@@ -118654,7 +118716,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen omskriven. Beloppet är oförändrat noll, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Samma skäl står nu på alla löften om skärpta straff som saknar räknelig grund.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -125929,14 +125997,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnaden för att ta fram lagstiftning (utredning, remiss, proposition), inte samhällsföljder eller tillsyn.",
       "confidence": 0.4,
-      "calculation": "Ny lag kräver normalt en statlig utredning (SOU) och proposition. SOU-utredningar kostar ofta 5–30 mkr. Antagande: 5–30 mkr, bas 15 mkr."
+      "calculation": "Löftet hålls av en ny lagstiftning om import av krigsmateriel. Lagar, förbud och regeländringar prissätts till noll: beredningen — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. En lag till gör inte statsbudgeten större."
     },
     "financing_claimed": {
       "described": false,
@@ -125946,7 +126014,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -133802,14 +133876,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en lagändring utan angiven nivå; kostnaden avser utredning och lagstiftningsarbete, inte samhällsföljder.",
       "confidence": 0.4,
-      "calculation": "En SOU-utredning med expertgrupp och remissförfarande kostar vanligen 5–30 mkr; bas 15 mkr som mittpunkt."
+      "calculation": "Löftet är att modernisera jaktlagen, och det som prissattes var den SOU-utredning som ska ta fram förslaget. Utrednings- och planlöften prissätts till noll: utredningens egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad en ny jaktlag sedan innebär är inte utlovat i kronor."
     },
     "financing_claimed": {
       "described": false,
@@ -133819,7 +133893,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -136946,7 +137026,7 @@
       "basis_url": null,
       "method_note": "Lagstiftningsåtgärd; direkt kostnad för själva lagändringen är försumbar. Effekter på fängelsevistelser och rättsväsende är följder, inte prissatta här.",
       "confidence": 0.5,
-      "calculation": "Straffskärpning och borttagen straffrabatt genomförs via lagändring. Den direkta statliga kostnaden för lagstiftningsarbetet är nära noll. Eventuella merkostnader för längre fängelsestraff är en beteendeföljd av reformen och lämnas okvantifierad enligt avgränsningsregeln för lagar och regleringar."
+      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Löftet räknar upp flera brottstyper och en borttagen straffrabatt men anger ingen nivå för någon av dem, så det finns ingen straffökning att räkna på. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
     },
     "financing_claimed": {
       "described": false,
@@ -136956,7 +137036,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Uträkningen omskriven. Beloppet är oförändrat noll, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Samma skäl står nu på alla löften om skärpta straff som saknar räknelig grund.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
