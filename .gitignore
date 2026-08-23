@@ -1,5 +1,11 @@
 # Dependencies
 node_modules/
+# Utan snedstreck också: mönstret med snedstreck matchar bara KATALOGER, och
+# en symlänk som heter node_modules slank igenom och committades 2026-08-22.
+# Den pekade på en absolut sökväg i en utvecklares hemkatalog, och på runnern
+# lade `git reset --hard` tillbaka symlänken ovanpå det `npm ci` just
+# installerat — så föll förslagskörningen på «Cannot find package 'tsx'».
+node_modules
 .pnpm-store/
 
 # Build output
