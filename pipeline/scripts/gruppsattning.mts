@@ -28,6 +28,14 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { svenskDag } from "../src/dagen.ts";
+import {
+  mandatperioden as period,
+  provaGrupprad,
+  sankning as sankningFor,
+  tillampa,
+  type Grupplofte as Lofte,
+  type Grupprad as Rad,
+} from "../src/gruppsattning.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const argv = process.argv.slice(2);
@@ -42,8 +50,6 @@ if (!fil) {
   process.exit(1);
 }
 
-interface Rad { grupp: string; ids: string[]; skal: string }
-
 const rader: Rad[] = readFileSync(fil, "utf8")
   .split("\n")
   .map((r) => r.replace(/\r$/u, ""))
@@ -57,35 +63,13 @@ const rader: Rad[] = readFileSync(fil, "utf8")
     };
   });
 
-interface Lofte {
-  id: string;
-  title?: string;
-  status?: string;
-  group_id?: string | null;
-  parties?: readonly string[];
-  cost?: { msek_base?: number | null; period?: string | null };
-  history?: { date: string; change: string; commit: string }[];
-  [k: string]: unknown;
-}
-
 const loften = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Lofte[];
 const karta = new Map(loften.map((p) => [p.id, p]));
-const period = (p: Lofte) => (p.cost?.msek_base ?? 0) * (p.cost?.period === "per_ar" ? 4 : 1);
 
 const fel: string[] = [];
-for (const rad of rader) {
-  if (!/^g-[a-z0-9-]+$/u.test(rad.grupp)) fel.push(`${rad.grupp}: grupp-id ska vara g- följt av gemener och bindestreck`);
-  if (rad.ids.length < 2) fel.push(`${rad.grupp}: en grupp med färre än två medlemmar är ingen grupp`);
-  if (rad.skal.trim() === "") fel.push(`${rad.grupp} saknar skäl — rättelseloggen ska säga vad läsningen fann`);
-  for (const id of rad.ids) {
-    const p = karta.get(id);
-    if (!p) { fel.push(`${rad.grupp}: ${id} finns inte`); continue; }
-    if ((p.status ?? "aktiv") !== "aktiv") fel.push(`${rad.grupp}: ${id} har status ${p.status}`);
-    if (p.group_id && p.group_id !== rad.grupp) {
-      fel.push(`${rad.grupp}: ${id} sitter redan i gruppen ${p.group_id} — flytta den medvetet eller lämna den`);
-    }
-  }
-}
+for (const rad of rader) fel.push(...provaGrupprad(rad, karta).fel);
+// Ett id får inte stå i två grupper i SAMMA fil; det ser modulen inte, för den
+// prövar en rad i taget.
 const sedda = new Set<string>();
 for (const rad of rader) for (const id of rad.ids) {
   if (sedda.has(id)) fel.push(`${id} står i två grupper i samma fil`);
@@ -97,7 +81,7 @@ for (const rad of rader) {
   const med = rad.ids.map((i) => karta.get(i)).filter(Boolean) as Lofte[];
   if (med.length < 2) continue;
   const storst = Math.max(...med.map(period));
-  const bortraknat = med.reduce((n, p) => n + period(p), 0) - storst;
+  const bortraknat = sankningFor(med);
   sankning += bortraknat;
   console.log(`${rad.grupp}  (${med.length} löften, ${bortraknat.toLocaleString("sv-SE")} msek räknas inte längre dubbelt)`);
   for (const p of med) {
@@ -122,26 +106,7 @@ if (!varfor) { console.error("\n--skriv kräver --varfor."); process.exit(1); }
 const nya = loften.map((p) => {
   const rad = rader.find((r) => r.ids.includes(p.id));
   if (!rad) return p;
-  const med = rad.ids.map((i) => karta.get(i)!).filter(Boolean);
-  const storst = Math.max(...med.map(period));
-  return {
-    ...p,
-    group_id: rad.grupp,
-    history: [
-      ...(p.history ?? []),
-      {
-        date: datum,
-        change:
-          `Löftet ingår nu i en grupp med ${med.length - 1} annat eller andra löften som lovar samma sak. ` +
-          "Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — " +
-          (period(p) === storst
-            ? "den här posten är den största och bär den."
-            : `den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida.`) +
-          " Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget.",
-        commit: "0000000",
-      },
-    ],
-  };
+  return tillampa(p, rad, rad.ids.map((i) => karta.get(i)!).filter(Boolean), datum);
 });
 
 const rattelser = JSON.parse(readFileSync(join(DATA, "rattelser.json"), "utf8")) as unknown[];

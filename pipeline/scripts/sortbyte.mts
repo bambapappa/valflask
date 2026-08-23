@@ -30,6 +30,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { svenskDag } from "../src/dagen.ts";
+import { provaSortrad, tillampa, type Sortlofte as Lofte, type Sortrad as Rad } from "../src/sortbyte.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const argv = process.argv.slice(2);
@@ -38,45 +39,23 @@ const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : und
 const varfor = varde("--varfor");
 const fil = argv.find((a) => !a.startsWith("--") && a !== varfor);
 const datum = svenskDag();
-const SORTER = ["reform", "inriktning"] as const;
 
 if (!fil) {
   console.error("Ange en fil: <id>\\t<reform|inriktning>\\t<ny uträkning>\\t<skäl>.");
   process.exit(1);
 }
 
-interface Rad { id: string; sort: string; utrakning: string; skal: string }
 const rader: Rad[] = readFileSync(fil, "utf8")
   .split("\n").map((r) => r.replace(/\r$/u, ""))
   .filter((r) => r.trim() !== "" && !r.startsWith("#"))
   .map((r) => { const [id, sort, utrakning, skal] = r.split("\t");
     return { id: (id ?? "").trim(), sort: (sort ?? "").trim(), utrakning: (utrakning ?? "").trim(), skal: (skal ?? "").trim() }; });
 
-interface Lofte {
-  id: string; title?: string; status?: string; loftestyp?: string;
-  parties?: readonly string[];
-  cost?: { msek_base?: number | null; calculation?: string | null };
-  history?: { date: string; change: string; commit: string }[];
-  [k: string]: unknown;
-}
 const loften = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Lofte[];
 const karta = new Map(loften.map((p) => [p.id, p]));
-const INTERN = /\b[kp]-20\d\d-\d{4}\b/u;
 
 const fel: string[] = [];
-for (const rad of rader) {
-  const p = karta.get(rad.id);
-  if (!p) { fel.push(`${rad.id} finns inte`); continue; }
-  if ((p.status ?? "aktiv") !== "aktiv") fel.push(`${rad.id} har status ${p.status}`);
-  if (!SORTER.includes(rad.sort as (typeof SORTER)[number])) fel.push(`${rad.id}: sorten måste vara reform eller inriktning`);
-  if (rad.sort === p.loftestyp) fel.push(`${rad.id} är redan ${rad.sort}`);
-  if (rad.sort === "inriktning" && (p.cost?.msek_base ?? 0) !== 0) {
-    fel.push(`${rad.id}: ett inriktningslöfte bär aldrig ett basbelopp, och posten står på ${p.cost?.msek_base}`);
-  }
-  if (rad.utrakning.length < 60) fel.push(`${rad.id}: den nya uträkningen är för kort för att förklara sorten`);
-  if (INTERN.test(rad.utrakning)) fel.push(`${rad.id}: uträkningen bär en intern beteckning — den möter läsaren`);
-  if (rad.skal.length < 40) fel.push(`${rad.id}: skälet är för kort — rättelseloggen ska säga vad läsningen fann`);
-}
+for (const rad of rader) fel.push(...provaSortrad(karta.get(rad.id), rad).fel);
 
 for (const rad of rader) {
   const p = karta.get(rad.id);
@@ -97,21 +76,7 @@ if (!varfor) { console.error("\n--skriv kräver --varfor."); process.exit(1); }
 
 const nya = loften.map((p) => {
   const rad = rader.find((r) => r.id === p.id);
-  if (!rad) return p;
-  return {
-    ...p,
-    loftestyp: rad.sort,
-    cost: { ...(p.cost ?? {}), calculation: rad.utrakning },
-    history: [
-      ...(p.history ?? []),
-      { date: datum, commit: "0000000",
-        change:
-          `Sorten ändrad från ${p.loftestyp} till ${rad.sort}. Beloppet är oförändrat — ` +
-          "det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och " +
-          "prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en " +
-          "bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av." },
-    ],
-  };
+  return rad ? tillampa(p, rad, datum) : p;
 });
 
 const rattelser = JSON.parse(readFileSync(join(DATA, "rattelser.json"), "utf8")) as unknown[];

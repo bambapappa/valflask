@@ -51,6 +51,13 @@ export interface Lofte {
   title?: string;
   quote?: string;
   status?: string;
+  /**
+   * Sorten. Fältet står här därför att `satt()` ÄNDRAR den: ett
+   * inriktningslöfte bär aldrig ett basbelopp, så en prissatt nolla blir en
+   * reform. Saknades i typen till 2026-08-23, och verkställigheten skrev då
+   * ett fält som gränssnittet inte kände till.
+   */
+  loftestyp?: string;
   parties?: readonly string[];
   cost: Kostnad;
   history?: { date: string; change: string; commit: string }[];
@@ -137,7 +144,7 @@ export function paverkan(ankare: Lofte): number {
 export function satt<T extends Lofte>(lofte: T, ankare: Lofte, rad: Ankarrad, datum: string): T {
   const c = ankare.cost;
   const enhet = c.period === "per_ar" ? "miljoner kronor per år" : "miljoner kronor";
-  const bytteSort = (lofte as { loftestyp?: string }).loftestyp === "inriktning" && (c.msek_base ?? 0) !== 0;
+  const bytteSort = lofte.loftestyp === "inriktning" && (c.msek_base ?? 0) !== 0;
   return {
     ...lofte,
     ...(bytteSort ? { loftestyp: "reform" } : {}),
