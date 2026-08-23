@@ -35,6 +35,20 @@ const stam = (w: string): string => w.replace(/(?:arna|erna|orna|ande|ande|ade|a
  * Jämförelsen sker på stam, inte på exakt form: en rubrik får skriva «vård»
  * där citatet skriver «vården». Måttet är grovt med flit — det ska fånga en
  * rubrik som talar om något helt annat än citatet, inte betygsätta ordvalet.
+ *
+ * **DET HÄR ÄR EN GRIND, INTE ETT SVEP.** Måttet duger för att pröva en rubrik
+ * NÅGON JUST SKRIVIT, där formuleringen är fri och kan anpassas. Det duger inte
+ * för att leta felaktiga rubriker i beståndet. Körd över alla 2 713 aktiva
+ * löften 2026-08-23 gav den 58 poster under 20 procent, och de flesta var
+ * måttets fel och inte rubrikens: «Bygg ut läkar- och sjuksköterskeutbildning»
+ * mot «utbyggnad av … grundutbildning till läkare och sjuksköterska» får noll,
+ * liksom «Indexering» mot «indexeras» och «personaloptionsregler» mot
+ * «personaloptioner». Svensk sammansättning och avledning går inte att stamma
+ * bort med en ändelselista.
+ *
+ * Det är samma fälla som fällde tre andra mätningar i samma session: mönstret
+ * mäter det egna ordförrådet och inte ett fel. Vill man svepa beståndet efter
+ * rubriker som lovar mer än sitt citat får det bli en läsning — det är H5.
  */
 export function tackning(rubrik: string, citat: string): number {
   const ord = SAKORD(rubrik).map(stam);
