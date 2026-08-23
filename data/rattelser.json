@@ -958,5 +958,19 @@
     "what": "Uträkningens text var förvanskad: alla å, ä och ö hade fallit bort, så meningarna lydde «Statens lnkande underhll av jrnvg» och «mdkr/rr». Texten står publikt på löftessidan och gick inte att läsa. Den är omskriven med samma tal och samma resonemang — beloppet är oförändrat — och säger nu också uttryckligen att löftet inte anger någon egen nivå.",
     "why": "Funnen 2026-08-23 vid omläsningen av de löften som lästes mot fel underlag (ATTGORA H1). Kontrollerad mot hela beståndet med ett mått som inte beror på ordval — andelen å, ä och ö bland bokstäverna i uträkningar över 300 tecken. Medianen är 5,3 procent; den här posten låg på 0,00 och näst lägsta på 1,72. Det är ett isolerat fall, inte ett systematiskt.",
     "commit": "6f76b60"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-2346, p-2026-2401, p-2026-2453, p-2026-2457, p-2026-2463, p-2026-2484, p-2026-2543, p-2026-2545, p-2026-2584, p-2026-2586, p-2026-2761, p-2026-2763 — 12 löften tillbakadragna",
+    "what": "12 löften är tillbakadragna och räknas inte längre in i någon summa. M minskar med 20 miljoner kronor, MP minskar med 5 miljoner kronor. Summan för alla partier minskar med 25 miljoner kronor för mandatperioden. Skälet står på varje löfte.",
+    "why": "Ett löfte dras tillbaka när det inte borde ha publicerats som ett eget löfte — samma parti har lovat samma sak en gång till, eller citatet visade sig inte bära det åtagande vi läste in i det. Politiken försvinner inte ur granskningen om den står kvar någon annanstans; det är dubbelräkningen som försvinner.",
+    "commit": "5d9f194"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "Löftessidan för p-2026-1815",
+    "what": "Uträkningen lånade sitt belopp från ett moderat löfte om språkkrav inom äldreomsorgen. Det löftet är indraget samma dag, eftersom dess citat anger ett ikraftträdande 1 juli 2026 och alltså beskriver redan beslutad politik. Lånet går nu till partiets eget löfte om språkkrav för pedagogisk personal i förskolan, som står på samma nivå och räknar fram den ur antalet anställda. Beloppet är oförändrat.",
+    "why": "Indragningsverktyget varnar när ett löfte kan ankra i det som dras tillbaka, och bad om en läsning. Meningen namngav det moderata löftet i klartext, så träffen var riktig. Ett ankare till ett indraget löfte är ett belopp utan källa.",
+    "commit": "5d9f194"
   }
 ]
