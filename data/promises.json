@@ -27503,7 +27503,7 @@
       "source_checked_at": "2026-08-09"
     },
     "category": "klimat-miljö",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "engang",
@@ -27514,7 +27514,7 @@
       "basis_url": null,
       "method_note": "Ett förbud är en reglering utan direkt statsfinansiell kostnad. Eventuellt kan arbetet för att driva frågan inom EU medföra marginella administrativa utgifter.",
       "confidence": 0.65,
-      "calculation": "Kostnad för Sveriges arbete i EU för att driva ett PFAS-förbud: uppskattas till 0–10 mkr, med basen 0 eftersom regleringen i sig inte belastar statsbudgeten."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: ett totalförbud mot PFAS inom hela EU. Kostnadsregeln för förbud och regleringar säger att beloppet avser åtgärden och inte dess följder, och ett förbud som drivs i EU belastar inte den svenska statsbudgeten — arbetet utförs av Regeringskansliets befintliga EU-organisation. Det spann på upp till tio miljoner kronor som står kvar täcker eventuellt utrednings- och förhandlingsstöd. Vad ett förbud sedan innebär för företag och kommuner är en följd, inte en statlig utgift."
     },
     "financing_claimed": {
       "described": false,
@@ -27524,7 +27524,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -28545,7 +28551,7 @@
       "source_checked_at": "2026-08-09"
     },
     "category": "övrigt",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
@@ -28555,7 +28561,7 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Brett inriktningslöfte utan konkret åtagande eller belopp; prissätts som 0 eftersom citatet är en bred uppräkning utan konkret åtagande. (belopp satt av granskare)",
-      "calculation": "Löftet räknar upp flera åtgärder — förstärkta nystartsjobb, fler platser på Yrkesvux och förbättrad matchning — utan att säga hur mycket någon av dem ska förstärkas eller hur många platser det gäller. En bred uppräkning utan nivå prissätts inte här: lägger partiet ett konkret åtagande om någon av delarna får den delen sin egen kostnad, och den skulle annars räknas två gånger.",
+      "calculation": "Löftet pekar ut två bestämda åtgärder — förstärkta nystartsjobb och fler platser på Yrkesvux — men anger ingen nivå för någon av dem, och det tredje ledet om förbättrad matchning bär ingen åtgärd alls. Regeln att en utpekad åtgärd utan nivå ankras i vad samma åtgärd senast kostade går inte att tillämpa här: beståndet innehåller inget löfte som prissätter vare sig en förstärkning av nystartsjobben eller en utbyggnad av Yrkesvux, och att uppskatta antalet platser och kostnaden per plats vore två gissningar som multipliceras. Åtgärderna borde alltså kosta staten pengar, men underlaget räcker inte för att räkna fram hur mycket, och basbeloppet är därför noll. Anger partiet en nivå för någon av delarna prissätts den.",
       "confidence": 0.9
     },
     "financing_claimed": {
@@ -28571,6 +28577,11 @@
         "date": "2026-08-21",
         "commit": "8f894b8",
         "change": "Uträkningen eller metodnoten hänvisade till en intern regelkod. Skälet står nu i klartext. Beloppet är oförändrat."
+      },
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
       }
     ],
     "extraction": {
@@ -29492,7 +29503,7 @@
       "source_checked_at": "2026-08-10"
     },
     "category": "välfärd",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "engang",
@@ -29503,7 +29514,7 @@
       "basis_url": null,
       "method_note": "Reglering som ger allmännyttan förköpsrätt – en lagändring utan direkt statsfinansiell kostnad. Eventuell administration försumbar.",
       "confidence": 0.65,
-      "calculation": "Ingen ny statlig utgift; kostnaden för själva regleringen antas vara 0. Marginella handläggningskostnader ingår i befintliga anslag."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: allmännyttan ska få förköpsrätt till misskötta fastigheter. Kostnadsregeln för lagar och regleringar säger att beloppet avser åtgärden själv, och en förköpsrätt är en rättighet som skrivs in i lag — ingen ny statlig utgift. Marginella handläggningskostnader ryms i befintliga anslag. Vad kommunala bostadsbolag sedan väljer att köpa är deras beslut och deras pengar."
     },
     "financing_claimed": {
       "described": false,
@@ -29518,6 +29529,11 @@
         "date": "2026-08-05",
         "commit": "3a3cb419e3be74821940f798d3e28187b3697be8",
         "change": "Publicerat ur granskningskön. Löftet står för sig självt — det är inte en del av något paket vars totalsumma redan är prissatt, och ingen redan publicerad post bär samma politik."
+      },
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
       }
     ],
     "extraction": {
@@ -32132,7 +32148,7 @@
       "source_checked_at": "2026-08-10"
     },
     "category": "övrigt",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
@@ -32143,7 +32159,7 @@
       "basis_url": null,
       "method_note": "Löftet namnger en reform men anger ingen nivå — 'historisk' är ett värdeord och ingen siffra. Det är reformens övergripande formulering; dess delar är egna löften som prissätts var för sig. Beloppet noll här hindrar att modellen räknas både som helhet och som delar.",
       "confidence": 0.75,
-      "calculation": "Löftet namnger en reform men anger ingen nivå — 'historisk' är ett värdeord och ingen siffra. Det är reformens övergripande formulering; dess delar är egna löften som prissätts var för sig. Beloppet noll här hindrar att modellen räknas både som helhet och som delar."
+      "calculation": "Löftet namnger en bestämd reform, NABY-modellen för en ny nationell bostadspolitik. Beloppet är ändå noll, och skälet är dubbelräkning: reformens delar är egna löften som prissätts var för sig, och skulle helheten också bära en siffra räknades samma politik två gånger. Ordet historisk är ett värdeord och ingen nivå."
     },
     "financing_claimed": {
       "described": false,
@@ -32158,6 +32174,11 @@
         "date": "2026-08-05",
         "commit": "d6e3810539dda1402e6a69adcef5fa025f89f28e",
         "change": "Publicerat ur granskningskön. Posten hölls tillbaka som ankarlös, men beloppet följer av vad löftet FAKTISKT åtar sig — inte av ett ankare som saknas."
+      },
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
       }
     ],
     "extraction": {
@@ -33194,7 +33215,7 @@
       "source_checked_at": "2026-08-10"
     },
     "category": "rättsväsende",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "engang",
@@ -33205,7 +33226,7 @@
       "basis_url": null,
       "method_note": "Lagändring medför inga direkta statliga kostnader utöver marginella administrativa justeringar.",
       "confidence": 0.65,
-      "calculation": "Automatiskt utreseförbud är en rättsregel; försumbara kostnader för IT, blanketter och information. Ingen ny löpande utgift."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: ett utreseförbud för ett barn ska automatiskt omfatta minderåriga syskon. Kostnadsregeln för lagar och regleringar säger att beloppet avser åtgärden själv. Det är en rättsregel vars införande kostar arbetstid för beredning samt försumbara utgifter för blanketter, system och information — arbete som utförs av statens befintliga förvaltning."
     },
     "financing_claimed": {
       "described": false,
@@ -33215,7 +33236,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -43001,7 +43028,7 @@
       "fetched_at": "2026-08-17T08:00:55.414Z"
     },
     "category": "välfärd",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
@@ -43012,7 +43039,7 @@
       "basis_url": null,
       "method_note": "Löftet är en hyressättningsreglering utan angivna statsbidrag. Direkt statskostnad för själva åtgärden är försumbar; hyrespåverkan är en överföring/följd och kvantifieras inte.",
       "confidence": 0.5,
-      "calculation": "Reglering/prissättning: inga nya statsbidrag, ingen kompensation till fastighetsägare specificeras. Direkt kostnad för själva systemet ansätts till 0; eventuell administration antas rymmas i befintliga strukturer."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: ett hyressättningssystem där hyran utgår från betalningsförmåga i stället för fastighetsmarknadens avkastningskrav. Kostnadsregeln för regleringar säger att beloppet avser åtgärden själv. Löftet anger inga nya statsbidrag och ingen kompensation till fastighetsägare, och systemets administration antas rymmas i befintliga strukturer. Vad omläggningen betyder för hyresgäster och fastighetsägare är en omfördelning mellan parter, inte en statlig utgift."
     },
     "financing_claimed": {
       "described": false,
@@ -43027,6 +43054,11 @@
         "date": "2026-08-21",
         "commit": "8f894b8",
         "change": "Uträkningen eller metodnoten hänvisade till en intern regelkod. Skälet står nu i klartext. Beloppet är oförändrat."
+      },
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
       }
     ],
     "extraction": {
@@ -43099,7 +43131,7 @@
       "fetched_at": "2026-08-17T08:00:55.607Z"
     },
     "category": "rättsväsende",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "engang",
@@ -43110,7 +43142,7 @@
       "basis_url": null,
       "method_note": "Lagändring/reglering: prissätter den direkta statliga kostnaden för åtgärden, inte samhällsföljder. Försumbar.",
       "confidence": 0.4,
-      "calculation": "Ingen ny statlig transferering eller myndighetsuppbyggnad; eventuell administrativ anpassning för registerutdrag avgiftsfinansierad eller försumbar. 0 mkr."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: dejtingappar ska få bättre möjligheter att göra bakgrundskontroller. Kostnadsregeln för regleringar säger att beloppet avser åtgärden själv. Åtgärden är en ändrad tillgång till registeruppgifter, och den administrativa anpassningen är antingen avgiftsfinansierad eller försumbar. Ingen ny statlig transferering och ingen myndighetsuppbyggnad utfästs."
     },
     "financing_claimed": {
       "described": false,
@@ -43120,7 +43152,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -61241,7 +61279,7 @@
       "fetched_at": "2026-08-19T01:57:17.783Z"
     },
     "category": "infrastruktur",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "engang",
@@ -61252,7 +61290,7 @@
       "basis_url": null,
       "method_note": "Regelförändring/marknadsöppning: befintlig statlig infrastruktur upplåts. Direkt kostnad bedöms försumbar; eventuell avtals- och administrationskostnad ryms i spannet.",
       "confidence": 0.5,
-      "calculation": "Ingen ny utbyggnad eller ersättning till operatörer. Staten upplåter redan befintlig infrastruktur, så den statsfinansiella kostnaden är 0; osäkerhet för avtals-/administrationsarbete sätts till 0–20 mkr engång. Beloppet är noll därför att löftet varken pekar ut en åtgärd eller anger en nivå; det finns ingenting att räkna på, och eventuella kostsamma delar prissätts på partiets egna specifika löften."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: mobiloperatörer ska få använda Trafikverkets befintliga infrastruktur längs järnvägen. Kostnadsregeln för regleringar säger att beloppet avser åtgärden själv, och här upplåter staten något den redan äger — ingen ny utbyggnad och ingen ersättning till operatörer utfästs. Spannet upp till tjugo miljoner kronor som engångspost täcker avtals- och administrationsarbete."
     },
     "financing_claimed": {
       "described": false,
@@ -61262,7 +61300,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -84040,7 +84084,7 @@
       "fetched_at": "2026-08-19T14:12:48.653Z"
     },
     "category": "övrigt",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
@@ -84051,7 +84095,7 @@
       "basis_url": null,
       "method_note": "Att tillsätta en EU-kommissionär är en EU-budgetfråga; Sveriges statsbudget påverkas inte direkt. Kostnaden är försumbar.",
       "confidence": 0.65,
-      "calculation": "Ingen direkt statlig kostnad. EU:s administrativa budget finansieras via medlemsavgiften, men den påverkas inte av portföljfördelningen. Löftet är en ståndpunkt Sverige ska driva i förhandlingar, inte en svensk budgetpost; inriktningen medför ingen ny statlig utgift."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: att en särskild EU-kommissionär med ansvar för djurens välfärd tillsätts. Det är en ståndpunkt Sverige ska driva i förhandlingar om kommissionens sammansättning, inte en svensk budgetpost. EU:s administrativa budget finansieras via medlemsavgiften och påverkas inte av hur portföljerna fördelas."
     },
     "financing_claimed": {
       "described": false,
@@ -84061,7 +84105,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -92701,7 +92751,7 @@
       "fetched_at": "2026-08-21T05:44:18.770Z"
     },
     "category": "övrigt",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
@@ -92712,7 +92762,7 @@
       "basis_url": null,
       "method_note": "Inriktningslöfte: grundlagsskydd är reglering utan direkt kostnad; mediestöd är befintlig finansiering. Endast ev. utvidgning till små redaktioner kostar — syns i spannets topp.",
       "confidence": 0.3,
-      "calculation": "Tre delar: (1) grundlagsskydd av public service = författningsändring, direkt kostnad ≈ 0 msek; (2) 'stärka oberoende' = inget kvantifierbart åtagande; (3) 'säkerställa långsiktigt mediestöd' = i praktiken fortsättning av befintligt stöd (~600 msek/år) som redan är finansierat — ingen ny statlig netto kostnad. Möjlig ny del: breddat stöd till små redaktioner/lokala nyhetsförmedlare, grovt 10–30 % av stödet ≈ 50–150 msek/år; snävare ~0–100 msek. Bas 0 eftersom löftet saknar nivå och mest bekräftar nuläget."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: public service ska grundlagsskyddas. En författningsändring bär bara sin beredningskostnad, och den utförs av statens befintliga förvaltning. Löftets andra led, att säkerställa ett långsiktigt mediestöd, är i praktiken en fortsättning av det befintliga stödet på ungefär 600 miljoner kronor per år, som redan är finansierat — att lova att något ska bestå är ingen ny statlig utgift. Spannet upp till hundra miljoner kronor per år täcker att stödet skulle behöva växa för att nå små redaktioner."
     },
     "financing_claimed": {
       "described": false,
@@ -92722,7 +92772,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -101323,7 +101379,7 @@
       "fetched_at": "2026-08-21T05:45:26.041Z"
     },
     "category": "välfärd",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
@@ -101334,7 +101390,7 @@
       "basis_url": null,
       "method_note": "Löftet är ett inriktningslöfte utan konkret nivå eller åtgärd; att räkna upp finansieringen med inflationen är en indexering, inte en ny kostnad.",
       "confidence": 0.1,
-      "calculation": "Ingen ny kostnad: uppräkning med inflationen är en automatisk anpassning av befintlig finansiering, ingen real ökning. Därför sätts beloppet till 0."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: finansieringen till sjukvården ska räknas upp med inflationen. Beloppet är ändå noll, och skälet är dubbelräkning. Partiet har ett eget löfte om att införa en bottenplatta för välfärden med inflationsuppräknade statsbidrag, och där är samma uppräkning redan prissatt till fyra miljarder kronor per år. Samma pengar får inte räknas två gånger. Löftet står kvar och syns för läsaren; det är bara beloppet som ligger dit det hör hemma."
     },
     "financing_claimed": {
       "described": false,
@@ -101344,7 +101400,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -101369,7 +101431,7 @@
       "fetched_at": "2026-08-21T05:45:26.409Z"
     },
     "category": "välfärd",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "engang",
@@ -101380,7 +101442,7 @@
       "basis_url": null,
       "method_note": "Avskaffande av minutstyrning är en regelförändring; direkt statlig kostnad är försumbar. Eventuella omställningskostnader för kommuner är inte statliga utgifter.",
       "confidence": 0.5,
-      "calculation": "Minutstyrning är en kommunal arbetsmetod, inte en statlig förmån. Att avskaffa den kräver inga nya statliga utbetalningar. Därför sätts kostnaden till 0 mkr."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: minutstyrningen inom hemtjänsten ska avskaffas. Beloppet är ändå noll, och skälet är att minutstyrning är en kommunal arbetsmetod och ingen statlig förmån. Staten betalar inte ut något för att metoden används och sparar inget på att den upphör; åtgärden är en styrningsfråga hos huvudmännen. Vad förändringen betyder för bemanning och arbetstid hos kommunerna är deras kostnad, inte statens."
     },
     "financing_claimed": {
       "described": false,
@@ -101390,7 +101452,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -116819,7 +116887,7 @@
       "fetched_at": "2026-08-21T21:57:49.105Z"
     },
     "category": "välfärd",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
@@ -116830,7 +116898,7 @@
       "basis_url": null,
       "method_note": "Liknar reglerad läkemedelstillgång; direkta åtgärden är administrativ/regulatorisk. Jämför med Kristdemokraternas löfte om tillgång till antibiotika (0 mkr/år).",
       "confidence": 0.4,
-      "calculation": "Ingen nivå angiven. Säkerställande via myndighetsstyrning/beredskap: 0 mkr i basen; upp till ~20 mkr/år om extra administration/inköp krävs."
+      "calculation": "Löftet pekar ut en bestämd åtgärd: tillgången till östrogenplåster och andra klimakterieläkemedel ska säkras. Ingen nivå anges. Säkerställandet sker genom myndighetsstyrning och beredskapsarbete inom befintliga uppdrag, så basbeloppet är noll; spannet upp till tjugo miljoner kronor per år täcker att extra administration eller beredskapsinköp skulle krävas. Läkemedelskostnaden i sig bärs av förmånssystemet och regionerna och är ingen ny statlig utgift av löftet."
     },
     "financing_claimed": {
       "described": false,
@@ -116840,7 +116908,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -120536,7 +120610,7 @@
       "fetched_at": "2026-08-21T21:58:36.519Z"
     },
     "category": "infrastruktur",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "engang",
@@ -120547,7 +120621,7 @@
       "basis_url": null,
       "method_note": "Löftet är ett inriktningslöfte utan konkret åtgärd eller belopp. Att behålla Bromma innebär ingen ny statlig utgift; utveckling av Arlanda kan kräva investeringar men omfattning saknas. Jämförbara…",
       "confidence": 0.3,
-      "calculation": "Löftet är att låta rådande ordning bestå: Bromma behålls och Arlanda utvecklas. Att låta en flygplats vara kvar kostar inte staten något, och utvecklingen av Arlanda görs av Swedavia med egna intäkter. Ingen nivå anges för något statligt bidrag."
+      "calculation": "Löftet pekar ut två bestämda åtgärder: Bromma flygplats behålls och Arlanda utvecklas. Beloppet är ändå noll, och skälet är att löftet låter rådande ordning bestå. Att en flygplats får vara kvar kostar inte staten något, och utvecklingen av Arlanda görs av Swedavia med egna intäkter. Inget statligt bidrag utfästs, och ingen nivå anges. Spannet upp till femhundra miljoner kronor som engångspost täcker att staten skulle skjuta till medel för Arlanda."
     },
     "financing_claimed": {
       "described": false,
@@ -120557,7 +120631,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -121984,18 +122064,21 @@
       "fetched_at": "2026-08-21T21:58:55.286Z"
     },
     "category": "välfärd",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 2000,
+      "msek_base": 4000,
+      "msek_high": 8000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Indexering av befintliga statsbidrag innebär ingen ny kostnad i sig; det är en automatisk uppräkning som redan sker i viss mån. Kostnaden uppstår endast om indexeringen innebär en höjning utöver…",
       "confidence": 0.3,
-      "calculation": "Ingen ny kostnad för själva indexeringsmekanismen. Befintliga statsbidrag räknas redan upp årligen. Eventuell merkostnad beror på om indexeringen sätts högre än dagens uppräkning, men löftet anger ingen sådan nivå. Därför sätts base till 0, med osäkerhet upp till 0."
+      "calculation": "Löftet pekar ut en bestämd åtgärd — statsbidragen till välfärden ska indexeras efter demografi och prisutveckling — men anger ingen nivå. Beloppet är därför lånat från Socialdemokraternas löfte om en bottenplatta för välfärden med inflationsuppräknade statsbidrag, som står på fyra miljarder kronor per år. Samma politik ska kosta lika, och det är det enda löftet i beståndet som prissätter just en indexering av statsbidragen. Lånet har ett förbehåll: det här löftet indexerar också efter DEMOGRAFI, alltså efter hur många som behöver välfärden, medan ankaret bara räknar upp med priserna. En demografisk indexering växer snabbare än en prisindexering, så fyra miljarder är sannolikt ett golv snarare än en mittpunkt. Löftet anger ingen nivå som låter oss räkna fram hur mycket högre.",
+      "anchor_ids": [
+        "p-2026-1561"
+      ]
     },
     "financing_claimed": {
       "described": false,
@@ -122005,7 +122088,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet höjt från noll till 4 000 miljoner kronor per år. Löftet pekar ut en bestämd åtgärd utan att ange en nivå, och nollningsregeln gäller bara löften som varken pekar ut en åtgärd eller anger en nivå. Beloppet är lånat från ett jämförbart löfte som räknar fram sin siffra, och lånet står utskrivet i uträkningen. Sorten ändras samtidigt från inriktning till reform: ett inriktningslöfte bär aldrig ett basbelopp, och posten stod som inriktning bara därför att den var nollad.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
