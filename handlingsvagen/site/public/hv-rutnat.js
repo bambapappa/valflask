@@ -174,7 +174,15 @@
       inner.appendChild(domrad);
     }
 
-    inner.appendChild(el("h3", null, d.kopplingar.length + (d.kopplingar.length === 1 ? " koppling" : " kopplingar")));
+    // Antalet TILLFÄLLEN kommer med i API-svaret och räknas inte här — talet
+    // ska finnas på ett ställe, och det stället är `rutnat.ts`, där det också
+    // går att pröva. Fyra beslutspunkter ur samma betänkande samma dag är ett
+    // tillfälle för en läsare som räknar belägg, men fyra rader i registret.
+    var rubrik = d.kopplingar.length + (d.kopplingar.length === 1 ? " koppling" : " kopplingar");
+    if (typeof d.n_tillfallen === "number" && d.n_tillfallen < d.kopplingar.length) {
+      rubrik += " från " + d.n_tillfallen + (d.n_tillfallen === 1 ? " tillfälle" : " tillfällen");
+    }
+    inner.appendChild(el("h3", null, rubrik));
     d.kopplingar.forEach(function (k) { inner.appendChild(renderaKoppling(k)); });
 
     dialog.appendChild(inner);

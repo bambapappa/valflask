@@ -24,6 +24,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { sidansAlder, alderIDagar, type Alderskalla } from "../src/kallans-alder.ts";
 import { arTaladKalla } from "../src/talad-kalla.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const PROMISES = join(ROOT, "data", "promises.json");
@@ -36,7 +37,7 @@ const max = Number(varde("--max") ?? "0") || Infinity;
 const paus = Number(varde("--paus") ?? "800");
 const jsonUt = varde("--json");
 const sov = (ms: number) => new Promise((r) => setTimeout(r, ms));
-const idag = new Date().toISOString().slice(0, 10);
+const idag = svenskDag();
 
 interface Promise_ {
   id: string;

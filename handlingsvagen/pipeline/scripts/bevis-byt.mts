@@ -41,6 +41,7 @@ import { bytBevis, provaByte, rattelsePost, type Byte, type Bytesrad } from "../
 import { normalizeForVerbatim } from "../src/grindar.ts";
 import { cachat, politeFetch } from "./kallcache.mts";
 import { kanon, lasProvningar } from "../../../pipeline/src/provningar.ts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const rotData = resolve(rot, "../data");
@@ -49,7 +50,7 @@ const rattelserPath = resolve(rot, "data/rattelser.json");
 
 const [listfil] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const skriv = process.argv.includes("--skriv");
-const datum = new Date().toISOString().slice(0, 10);
+const datum = svenskDag();
 
 if (!listfil) {
   console.error("Ange en fil med en rad per byte: <koppling-id><TAB><nytt citat>[<TAB><skäl>]");

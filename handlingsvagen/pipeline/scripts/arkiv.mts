@@ -39,6 +39,7 @@ import { resolve } from "node:path";
 import { normalizeForVerbatim } from "../src/grindar.ts";
 import { dokumentUrl, htmlTillText, type HttpFetch } from "../src/riksdagen.ts";
 import { politeFetch } from "./hamta.mts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 interface Koppling {
   id: string;
@@ -86,7 +87,7 @@ interface ArkivPost {
 }
 
 const DOKUMENT = new Set(["motion", "proposition", "interpellation", "skriftlig_fraga"]);
-const idag = () => new Date().toISOString().slice(0, 10);
+const idag = () => svenskDag();
 
 /**
  * URL:en vars ögonblicksbild ska bära citatet — handlingens egen sida för

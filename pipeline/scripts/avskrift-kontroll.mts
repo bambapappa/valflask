@@ -24,6 +24,7 @@ import { join } from "node:path";
 import { looseNormalize } from "../src/import-vallen.ts";
 import { normalizeForVerbatim } from "../src/gates.ts";
 import { arTaladKalla, filmensId, tidpunktISekunder } from "../src/talad-kalla.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const args = process.argv.slice(2);
 const har = (f: string) => args.includes(f);
@@ -130,7 +131,7 @@ console.log(
 );
 
 if (har("--skriv")) {
-  const idag = new Date().toISOString().slice(0, 10);
+  const idag = svenskDag();
   let satta = 0;
   for (const r of rader) {
     if (r.utfall !== "strikt" && r.utfall !== "mjuk") continue;

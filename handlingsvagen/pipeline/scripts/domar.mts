@@ -25,6 +25,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { beraknaDomar } from "../src/domar-bygg.ts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 function parseArgs(argv: string[]) {
   let promisesPath: string | undefined;
@@ -43,7 +44,7 @@ function main() {
   writeFileSync(
     ut,
     JSON.stringify(
-      { genererad: new Date().toISOString().slice(0, 10), partidomar, ledamotsmeriter },
+      { genererad: svenskDag(), partidomar, ledamotsmeriter },
       null,
       2,
     ) + "\n",

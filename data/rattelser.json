@@ -832,5 +832,117 @@
     "what": "22 uträkningar som lånade ett belopp ur ett annat löfte har fått sin grund utskriven. 19 pekar nu ut löftet de lånar av i ett fält, så att sidan renderar det som en länk med det andra löftets rubrik och läsaren kan pröva om ankaret i sin tur håller. Varje angivet tal är kontrollerat mot det löfte som pekas ut. Ett av löftena visade sig vara samma reform som ett löfte partiet redan har — riskfamiljsprogrammet står på två sidor av partiets webbplats och hade publicerats två gånger — och räknas nu en gång. Två uträkningar lånade ingenting som gick att peka ut och har skrivits om: den ena sa att basbeloppet låg i linje med två äldreomsorgslöften «≈3 000 msek» när bägge ligger på 1 950, den andra nämnde ett löfte och skrev i samma mening att det gäller motsatt åtgärd och inte används.",
     "why": "Ett lånat belopp ska gå att följa till det löfte det lånas från. Att bara namnge löftet i prosan räcker inte: meningen slutar tyst stämma när det andra löftets belopp rör sig, och en läsare kan inte klicka sig dit. Inget basbelopp har ändrats av att grunden fått en adress. Dubbletten sänker Socialdemokraternas summa och rikssumman med 600 miljoner kronor för mandatperioden — ett belopp som räknades två gånger räknas nu en.",
     "commit": "07cede49"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-2789, p-2026-2848 — 2 löften tillbakadragna",
+    "what": "2 löften är tillbakadragna och räknas inte längre in i någon summa. C minskar med 240 miljoner kronor, S minskar med 800 miljoner kronor. Summan för alla partier minskar med 1 040 miljoner kronor för mandatperioden. Skälet står på varje löfte.",
+    "why": "Ett löfte dras tillbaka när det inte borde ha publicerats som ett eget löfte — samma parti har lovat samma sak en gång till, eller citatet visade sig inte bära det åtagande vi läste in i det. Politiken försvinner inte ur granskningen om den står kvar någon annanstans; det är dubbelräkningen som försvinner.",
+    "commit": "7982b10"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "Löftessidorna för p-2026-0081, p-2026-0535, p-2026-0561, p-2026-0633, p-2026-0843, p-2026-1423, p-2026-1543, p-2026-1655 — uträkningens grund",
+    "what": "8 uträkningar som lånade ett belopp ur ett annat löfte har fått sin grund utskriven: 6 pekar nu ut löftet de lånar av, 0 visade sig vara samma reform och räknas nu en gång, och 2 har fått en uträkning som står på egen aritmetik. Inget basbelopp har ändrats av själva kopplingen.",
+    "why": "Åtta poster ur ankarskulden lästa. Sex namngav i prosa vilket löfte de lånar av och pekar nu ut det i ett fält, så att sidan renderar det som en läsbar hänvisning. Två lånade i själva verket ingenting: den ena räknar fram sitt belopp ur tjänster och it-kostnad och nämnde andra löften bara som en bekräftelse, den andra nämnde ett annat löfte enbart för att avfärda det som irrelevant.",
+    "commit": "7f0cbd7"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "Löftessidorna för p-2026-0842, p-2026-1406, p-2026-1409, p-2026-1474, p-2026-1479, p-2026-1483, p-2026-1533, p-2026-1611, p-2026-1619, p-2026-1625, p-2026-1697, p-2026-1839, p-2026-1859 — uträkningens grund",
+    "what": "13 uträkningar som lånade ett belopp ur ett annat löfte har fått sin grund utskriven: 13 pekar nu ut löftet de lånar av, 0 visade sig vara samma reform och räknas nu en gång, och 0 har fått en uträkning som står på egen aritmetik. Inget basbelopp har ändrats av själva kopplingen.",
+    "why": "Trettonde poster ur ankarskulden lästa. Var och en namngav i prosa både partiet och saken den lånar av, och pekar nu ut löftet i ett fält så att sidan renderar en läsbar hänvisning i stället för en formulering läsaren inte kan följa. Inget belopp ändras.",
+    "commit": "d9470ac"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-0956, p-2026-0995, p-2026-1049, p-2026-1147, p-2026-1222, p-2026-1244, p-2026-1319, p-2026-1440, p-2026-1449, p-2026-1575, p-2026-1606, p-2026-1627, p-2026-1943, p-2026-2367, p-2026-2373, p-2026-2382, p-2026-2387, p-2026-2486, p-2026-2620, p-2026-2623, p-2026-2732, p-2026-2785, p-2026-2792, p-2026-2833, p-2026-2890, p-2026-2891 — 26 löften nollade",
+    "what": "26 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 24 enligt regeln att utredningar och planer prissätts till noll, 2 enligt regeln att lagar och förbud prissätts till noll. Beloppen är nollade och uträkningarna skriver ut vilken regel som gäller. C minskar med 120 miljoner kronor, L minskar med 22 miljoner kronor, M minskar med 45 miljoner kronor, MP minskar med 10 miljoner kronor, S minskar med 120 miljoner kronor, V minskar med 42 miljoner kronor. Summan för alla partier minskar med 359 miljoner kronor för mandatperioden.",
+    "why": "Reglerna är fastställda sedan tidigare och står i projektets metodbeskrivning: ett löfte om att utreda något prissätts till utredningen och inte till den politik den kan leda till. Och en utrednings egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning — utredare, sekretariat och remissarbete ryms i de personalkostnader staten redan bär, och en utredning till gör inte statsbudgeten större. Reglerna tillämpades senast på hela beståndet i augusti, när det var en fjärdedel så stort. Sedan dess har nya löften tillkommit utan att någon kontroll mätte ledet, och de här posterna hade undgått regeln. Ingen bedömning av politiken har ändrats — bara vilken regel som gäller för dess prislapp.",
+    "commit": "f7e9964"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-0036, p-2026-0708, p-2026-1804, p-2026-2400, p-2026-2824, p-2026-2866 — 5 löften nollade och 1 delrättat",
+    "what": "Sex löften om skärpta straff bar ett belopp som inte gick att räkna fram. Fem står nu på noll och ett är delrättat: där är bara straffdelen borttagen, medan obligatorisk fotboja och stöd till kvinnojourerna står kvar. Uträkningarna skriver ut att en straffskärpning rimligtvis kostar staten pengar i kriminalvården, och varför den kostnaden ändå inte gick att räkna för just det löftet. M minskar med 7 200 miljoner kronor, S med 840, C med 720, MP med 5. Summan för alla partier minskar med 8 765 miljoner kronor för mandatperioden.",
+    "why": "En straffskärpning kostar staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet ska därför stå kvar när det går att räkna trovärdigt — ur källor som bär både antalet fall och priset per fängelsedygn. Två löften gör det och är oförändrade. De sex övriga gjorde det inte: deras belopp var lånade ur andra partiers löften eller vilade på ett antaget antal fängelseår, och de löften de lånade ur saknade i sin tur egen räkning. En påhittad siffra är sämre än en nolla med skälet utskrivet. Ett tidigare skäl — att fängelsedygnen vore en följd av politiken som inte prissätts — var för hårt och är ersatt; två löften som nollats på den grunden samma dag har fått sina belopp tillbaka.",
+    "commit": "009c873"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-0007, p-2026-0863, p-2026-0935, p-2026-1072, p-2026-1152, p-2026-1389, p-2026-1495, p-2026-1614, p-2026-1668, p-2026-1685, p-2026-2016, p-2026-2017, p-2026-2112, p-2026-2316, p-2026-2339, p-2026-2347, p-2026-2360, p-2026-2383, p-2026-2388, p-2026-2389, p-2026-2395, p-2026-2398, p-2026-2403, p-2026-2404, p-2026-2405, p-2026-2415 — 26 löften nollade",
+    "what": "26 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 26 enligt regeln att lagar och förbud prissätts till noll. Beloppen är nollade. Uträkningarna skriver ut vilken regel som gäller. C minskar med 73 miljoner kronor, KD minskar med 5 miljoner kronor, L minskar med 22 miljoner kronor, M minskar med 179 miljoner kronor, MP minskar med 40 miljoner kronor, S minskar med 75 miljoner kronor, V minskar med 10 miljoner kronor. Summan för alla partier minskar med 364 miljoner kronor för mandatperioden.",
+    "why": "26 löften prissatte det arbete staten själv gör för att få fram en lagändring — utredning, remiss och departementsarbete — eller de följder ändringen kan få i rättskedjan. Kostnadsregeln säger att lagar, förbud och regeländringar prissätts till noll, och skälet är detsamma som för utredningar: beredningen utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. En lagändring till gör inte statsbudgeten större. 379 löften i beståndet tillämpade redan regeln; splittringen följde inte parti utan bara när posten skördades. Löften där beloppet betalar något verkligt — nya system, tillsynsresurser, ersättningar eller omprövning av tusentals befintliga ärenden — är inte berörda och står kvar.",
+    "commit": "5de68fb"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-2325, p-2026-2490, p-2026-2669 — 3 löften nollade",
+    "what": "3 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 1 enligt regeln att utredningar och planer prissätts till noll, 2 enligt regeln att lagar och förbud prissätts till noll. Beloppen är nollade. Uträkningarna skriver ut vilken regel som gäller. M minskar med 15 miljoner kronor, MP minskar med 15 miljoner kronor, V minskar med 50 miljoner kronor. Summan för alla partier minskar med 80 miljoner kronor för mandatperioden.",
+    "why": "Tre löften som paritetskön avslöjade och som samma kostnadsregler täcker: ett prissatte en SOU för en myndighetsöversyn, ett den utredning och proposition en ny lag kräver, och ett omställningsarbetet efter en lagändring. I alla tre fallen bar ett annat partis löfte om samma sak redan en nolla med skälet utskrivet, och skillnaden följde inte parti utan bara vilken post som råkade räkna med beredningen.",
+    "commit": "55db959"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-1815, p-2026-1861, p-2026-2445 — 3 löften prissatta",
+    "what": "3 löften stod på noll trots att citatet pekar ut en bestämd åtgärd. De har fått det belopp ett jämförbart löfte om samma åtgärd räknar fram, och uträkningen skriver ut varifrån talet är lånat. S ökar med 220 miljoner kronor, V ökar med 8 miljoner kronor. Summan för alla partier ökar med 228 miljoner kronor för mandatperioden.",
+    "why": "Tre löften stod på noll trots att citatet pekar ut en bestämd åtgärd: ett nationellt biljettsystem, nationella språkkrav i förskola och äldreomsorg, och ett stopp för industriellt överfiske. Nollningsregeln gäller bara löften som varken pekar ut en åtgärd eller anger en nivå. För var och en lovar ett annat parti samma sak och har räknat fram sin siffra, och den nivån är lånad hit med lånet utskrivet i uträkningen. Posterna hittades när paritetskön betades: samma politik stod på noll hos det ena partiet och på ett räknat belopp hos det andra.",
+    "commit": "55db959"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-2839 — 1 löften nollade",
+    "what": "1 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 1 enligt regeln att utredningar och planer prissätts till noll. Beloppen är nollade. Uträkningarna skriver ut vilken regel som gäller. C minskar med 15 miljoner kronor. Summan för alla partier minskar med 15 miljoner kronor för mandatperioden.",
+    "why": "Löftet prissatte den SOU som ska ta fram en ny jaktlag. Utredningslöften prissätts till noll eftersom arbetet utförs av statens befintliga förvaltning. Ett annat partis löfte om att modernisera samma lag stod redan på noll; posten hittades när paritetskön kördes om efter dagens ändringar.",
+    "commit": "55db959"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-0475, p-2026-0476, p-2026-0497, p-2026-0498, p-2026-0502, p-2026-0503, p-2026-0504, p-2026-0524, p-2026-0540, p-2026-0541, p-2026-0544 — 11 citat utbytta",
+    "what": "Vi visar nu en annan mening från samma källa som citat för 11 löften. Det gamla citatet stod ordagrant på sidan, men den nya lydelsen visar åtagandet tydligare — den bär nivån, eller hela meningen i stället för en del av den. Varje nytt citat är hämtat ur källan och kontrollerat ord för ord. 8 av dem bär inte hela meningen de är hämtade ur, och togs in på ett mänskligt beslut med skälet utskrivet i löftets historik.",
+    "why": "Ett citat ska visa vad partiet lovat, med den nivå partiet självt angett. Ett utplock ur en längre mening kan utelämna just det. Beloppet och bedömningen är oförändrade — det är citatet som bytt mening, inte prislappen.",
+    "commit": "0705cec"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-1123, p-2026-1325, p-2026-1798 — 3 rubriker ändrade",
+    "what": "Tre löftens rubriker lovade mer eller mer bestämt än partiets eget citat och är ändrade så att de följer citatet. «Bygga ut kollektivtrafiken» blev «göra kollektivtrafiken billigare och mer tillgänglig», «fler korta yrkesutbildningar» blev «stärka människors kompetens utifrån arbetsmarknadens behov», och en rubrik som lade till «under nästa mandatperiod» har fått tidsramen struken. Belopp, citat och källor är oförändrade, och ingen summa rör sig.",
+    "why": "Rubriken är vår sammanfattning, inte partiets ord — den ska därför aldrig lova mer än citatet bär. En läsare som ser rubriken i en lista och citatet först på löftessidan ska inte få två olika besked. Ändringen kräver att löftena prövas om i kvalitetsfiltret, eftersom prövningen är nycklad på rubriken, och det är gjort i samma pass.",
+    "commit": "7acaec4"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-0037, p-2026-0480, p-2026-0533, p-2026-0794, p-2026-0934, p-2026-0944, p-2026-1066, p-2026-1202, p-2026-1444, p-2026-1468, p-2026-1480, p-2026-1508, p-2026-1512, p-2026-1524, p-2026-1539, p-2026-1541, p-2026-1554, p-2026-1590, p-2026-1631, p-2026-1656, p-2026-1657, p-2026-1669, p-2026-1677, p-2026-1706, p-2026-1711, p-2026-1714, p-2026-1795, p-2026-1830, p-2026-1832, p-2026-1844, p-2026-1874, p-2026-2345, p-2026-2369, p-2026-2372, p-2026-2377, p-2026-2516, p-2026-2525, p-2026-2573, p-2026-2591, p-2026-2593, p-2026-2607, p-2026-2611, p-2026-2695, p-2026-2828, p-2026-2853, p-2026-2900, p-2026-2920 — 47 löften nollade",
+    "what": "47 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 21 enligt regeln att utredningar och planer prissätts till noll, 26 enligt regeln att lagar och förbud prissätts till noll. Beloppen är nollade. Uträkningarna skriver ut vilken regel som gäller. C minskar med 193 miljoner kronor, KD minskar med 30 miljoner kronor, L minskar med 40 miljoner kronor, M minskar med 65 miljoner kronor, MP minskar med 75 miljoner kronor, S minskar med 115 miljoner kronor, SD minskar med 5 miljoner kronor, V minskar med 110 miljoner kronor. Summan för alla partier minskar med 633 miljoner kronor för mandatperioden.",
+    "why": "47 löften bar ett belopp som uteslutande var kostnaden för att ta fram ett underlag — en utredning, en plan, en strategi eller en kommission — utan något annat kostnadsled i uträkningen. Kostnadsreglerna säger att både utredningar och lagberedning prissätts till noll, och skälet är detsamma: arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen eller regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte. Posterna hittades i ett andra svep som letade efter belopp som ENBART är en utredningskostnad, oavsett hur citatet är formulerat — det första svepet läste citatet och missade dem.",
+    "commit": "7eafeb3"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "Löftessidorna för p-2026-0078, p-2026-0382, p-2026-1077, p-2026-1098, p-2026-1347, p-2026-1546, p-2026-1548, p-2026-1553, p-2026-2275, p-2026-2320, p-2026-2371, p-2026-2493, p-2026-2554, p-2026-2610, p-2026-2629, p-2026-2691, p-2026-2704, p-2026-2720, p-2026-2892 — uträkningens grund",
+    "what": "19 uträkningar som lånade ett belopp ur ett annat löfte har fått sin grund utskriven: 19 pekar nu ut löftet de lånar av, 0 visade sig vara samma reform och räknas nu en gång, och 0 har fått en uträkning som står på egen aritmetik. Inget basbelopp har ändrats av själva kopplingen.",
+    "why": "Nittonde passet, och det första som valde ankaren ur uträkningens egen text. Handtaget är att en lånande uträkning nästan alltid CITERAR ankarets belopp — «jämförbart löfte om skärpta utvisningsregler för brott (1000 miljoner kronor per år)». Söker man aktiva löften vars basbelopp är just det citerade talet, och vars rubrik delar sakord med meningen, faller kandidaterna ut i en läslig hög: 50 av 102 poster fick minst en kandidat, och 19 av dem namnger ankaret så entydigt i parti, sak och belopp att läsningen bara bekräftar. Resten kräver den läsning skulden står för.",
+    "commit": "fac308f"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "Löftessidorna för p-2026-2357, p-2026-2619",
+    "what": "Rubriken «Förbjuda skadlig trålning» är utbytt mot «Göra den utflyttade trålgränsen permanent» — citatet lovar att göra försöket med utflyttad trålgräns permanent och flytta trålfisket längre ut från kusten, inte att förbjuda trålning; den gamla rubriken tillhör partiets andra trålningslöfte och stod på båda. Rubriken «Stärka vården vid endometrios, klimakteriebesvär och förlossningsskador» är utbytt mot «Utvärdera riktlinjerna för endometriosvården och utreda barnmorskors förskrivningsrätt» — citatet lovar utvärdera, följa och utreda, inte att stärka vården; den gamla rubriken tillhör partiets andra löfte på området, som lovar just förstärkningen, och stod på båda till två olika priser.",
+    "why": "Rubrikkravet, byggt 2026-08-23, fann två fall där samma parti bär samma rubrik över två skilda löften. Läsaren ser då samma löfte till två priser. Fyndet kom ur ankarpasset: kandidatsökningen efter ankaren tog de två trålningslöftena för varandras jämförelse, och det var de inte.",
+    "commit": "4ebb056"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-2619 — 1 löften nollade",
+    "what": "1 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 1 enligt regeln att utredningar och planer prissätts till noll. Beloppen är nollade. Uträkningarna skriver ut vilken regel som gäller. S minskar med 15 miljoner kronor. Summan för alla partier minskar med 15 miljoner kronor för mandatperioden.",
+    "why": "Efterskörd till utredningssvepet. Posten fångades av rubrikkravet — dess rubrik lovade att stärka vården medan citatet lovar utvärdera, följa och utreda — och när rubriken rättades syntes att uträkningen prissätter två utredningar och ingenting annat. Svepet 2026-08-23 missade den; mönstret läste 'utredning' i uträkningen men posten skriver 'utredningar/utvärderingar' i en uppräkning som inte matchade.",
+    "commit": "4ebb056"
+  },
+  {
+    "date": "2026-08-23",
+    "affects": "p-2026-0502, p-2026-0975, p-2026-1097, p-2026-1411, p-2026-1424, p-2026-1465, p-2026-1548, p-2026-1676, p-2026-1697, p-2026-2359, p-2026-2368, p-2026-2375, p-2026-2514, p-2026-2522, p-2026-2527, p-2026-2905 — 16 löften nollade",
+    "what": "16 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 15 enligt regeln att utredningar och planer prissätts till noll, 1 enligt regeln att lagar och förbud prissätts till noll. Beloppen är nollade. Uträkningarna skriver ut vilken regel som gäller. C minskar med 53 miljoner kronor, L minskar med 30 miljoner kronor, M minskar med 15 miljoner kronor, S minskar med 50 miljoner kronor, V minskar med 23 miljoner kronor. Summan för alla partier minskar med 171 miljoner kronor för mandatperioden.",
+    "why": "Tredje utredningssvepet, och det första som läser vad löftet ÄR i stället för hur det är formulerat. Det första svepet läste citatet efter utredningsord, det andra uträkningen efter regleringsspråk, det tredje uträkningen efter kostnadsled som uteslutande var utredningsarbete. Kvar blev poster där citatet lovar en strategi, en plan, en kommission eller ett mål — dokumentet är löftet — och där hela beloppet är kostnaden för att ta fram det. Tre av dem är arbetstid i den befintliga styrprocessen: ett direktiv i ett regleringsbrev, mål i en myndighetsinstruktion och ett förtydligande av en kravställning.",
+    "commit": "4ebb056"
   }
 ]

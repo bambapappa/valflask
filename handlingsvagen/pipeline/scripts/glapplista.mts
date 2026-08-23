@@ -4,12 +4,26 @@
  *
  *   pnpm glapplista            # utslagsgivande först
  *   pnpm glapplista -- --max 20
+ *   pnpm glapplista -- --kvittera k-2026-0681 --skal "…"
  *
- * LÄSER BARA. Rättelsen görs med `pnpm motivering`.
+ * LÄSER BARA, utom `--kvittera`, som skriver en rad i
+ * `data/glappkvittenser.json`. Rättelsen görs med `pnpm motivering`.
+ *
+ * **Kvittensen finns för att listan ska kunna bli klar.** Ungefär hälften av
+ * träffarna är riktiga motiveringar som råkar använda andra ord än citatet;
+ * utan ett sätt att säga «läst, håller» läser varje pass om samma rader. Den
+ * kräver ett skäl, och den faller om motiveringen skrivs om efteråt.
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { laslistan, tackning } from "../src/motiveringsglappet.ts";
+import { writeFileSync, existsSync } from "node:fs";
+import {
+  fingeravtryck,
+  laslistan,
+  tackning,
+  type Glappkvittens,
+} from "../src/motiveringsglappet.ts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 import type { KopplingPost } from "../src/granskning.ts";
 
 const ROT = join(import.meta.dirname, "../..");
@@ -18,6 +32,53 @@ const max = argv.includes("--max") ? Number(argv[argv.indexOf("--max") + 1]) : I
 const hoppa = argv.includes("--hoppa") ? Number(argv[argv.indexOf("--hoppa") + 1]) : 0;
 
 const K: KopplingPost[] = JSON.parse(readFileSync(join(ROT, "data/kopplingar.json"), "utf8"));
+
+const KVITTENSFIL = join(ROT, "data/glappkvittenser.json");
+const kvittenser: Glappkvittens[] = existsSync(KVITTENSFIL)
+  ? (JSON.parse(readFileSync(KVITTENSFIL, "utf8")) as { kvittenser: Glappkvittens[] }).kvittenser
+  : [];
+
+if (argv.includes("--kvittera")) {
+  const id = argv[argv.indexOf("--kvittera") + 1];
+  const skal = argv.includes("--skal") ? argv[argv.indexOf("--skal") + 1] : undefined;
+  const koppling = id === undefined ? undefined : K.find((k) => k.id === id);
+  if (id === undefined || koppling === undefined) {
+    console.error(`${id} finns inte i kopplingar.json`);
+    process.exit(1);
+  }
+  if (skal === undefined || skal.trim().length < 25) {
+    console.error(
+      "Ange --skal med vad läsningen fann. En rad som stryks utan skäl är en rad som tystats,\n" +
+        "och nästa läsare kan inte pröva den.",
+    );
+    process.exit(1);
+  }
+  const utan = kvittenser.filter((k) => k.id !== id);
+  utan.push({
+    id,
+    las: svenskDag(),
+    skal: skal.trim(),
+    motiveringens_fingeravtryck: fingeravtryck(koppling.method_note),
+  });
+  utan.sort((a, b) => a.id.localeCompare(b.id));
+  writeFileSync(
+    KVITTENSFIL,
+    JSON.stringify(
+      {
+        syfte:
+          "Rader på motiveringsglappets läslista som lästs och befunnits riktiga. Måttet är en " +
+          "läslista och inte en dom; utan kvittens läser varje pass om samma rader. Kvittensen " +
+          "faller om motiveringen skrivs om efteråt.",
+        kvittenser: utan,
+      },
+      null,
+      2,
+    ) + "\n",
+    "utf8",
+  );
+  console.log(`${id} kvitterad. ${utan.length} kvittenser totalt.`);
+  process.exit(0);
+}
 const H = new Map<string, Record<string, unknown>>(
   (JSON.parse(readFileSync(join(ROT, "data/handlingar.json"), "utf8")) as Record<string, unknown>[]).map((h) => [
     String(h["id"]),
@@ -38,7 +99,7 @@ for (const d of D.partidomar) {
 }
 
 const perId = new Map(K.map((k) => [k.id, k]));
-const lista = laslistan(K)
+const lista = laslistan(K, { kvittenser })
   .map((id) => perId.get(id)!)
   .sort((a, b) => Number(ut.has(b.id)) - Number(ut.has(a.id)) || (tackning(a) ?? 0) - (tackning(b) ?? 0));
 

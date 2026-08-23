@@ -142,6 +142,23 @@ mänskligt beslut och finns även kodade i `pipeline/prompts/A5-cost.md`:
 - **Utrednings- och planlöften → 0.** Är löftet att tillsätta en utredning
   eller ta fram en handlingsplan prissätts utredningen (försumbar) — inte
   den politik den kan leda till. Ett litet löfte är ändå ett löfte.
+- **Straffskärpningar kostar — men bara när det går att räkna.** Fler och
+  längre fängelsedygn är en verklig statlig utgift, inte en samhällsföljd, så
+  nollningsregeln för lagändringar gäller inte här. Beloppet skrivs ändå bara
+  ut när aritmetiken har en **yttre källa i båda ändar**: ett belagt antal
+  domar eller fängelseår, och en belagd dygnskostnad i kriminalvården. Saknas
+  någondera skrivs i uträkningen att åtgärden borde kosta men att underlaget
+  inte räcker, och basen sätts till noll. Ett antaget antal gånger en antagen
+  dygnskostnad är två gissningar som multipliceras. *(Mänskligt beslut
+  2026-08-23.)*
+- **Statens eget beredningsarbete → 0.** Arbetstid i Regeringskansliet, i en
+  myndighets befintliga organisation eller i ett utredningssekretariat ligger
+  redan i den statliga personalkostnaden. Det gäller beredningen av en
+  lagändring, ett direktiv i ett regleringsbrev, mål i en myndighetsinstruktion,
+  ett förtydligat tillsynskrav och ett samordningsuppdrag utan egna medel.
+  Frågan är inte om arbetet kostar något — allt arbete gör det — utan om staten
+  får en **ny** utgift eller om det utförs av folk som redan är anställda.
+  *(Mänskligt beslut 2026-08-23.)*
 - **Netto, inte brutto.** Att staten tar över en utgift som redan betalas
   (t.ex. av kommunerna) är omfördelning, inte ny kostnad. Prissätt bara
   den marginella nettoförändringen.

@@ -1,6 +1,6 @@
 {
   "syfte": "Nollade reformlöften som liknar ett prissatt löfte hos ett annat parti. Rapporterande kö, aldrig en spärr: varje rad ska läsas och kvitteras, och «olika åtgärder» är ett fullgott svar. Se pipeline/src/pariteten.ts.",
-  "kord": "2026-08-22",
+  "kord": "2026-08-23",
   "fynd": [
     {
       "nyckel": "p-2026-0597→p-2026-0631",
@@ -76,9 +76,9 @@
       "rubriklikhet": 0.308,
       "funnen": "2026-08-22",
       "kvittens": {
-        "utfall": "till_beslut",
-        "skal": "Verklig fråga. M:s citat pekar ut ett barnavdrag — en namngiven åtgärd — men uträkningen nollar löftet som ett utfallslöfte. Regeln säger att nollan gäller löften som varken pekar ut en åtgärd eller anger en nivå, och ett barnavdrag är en åtgärd. Samtidigt finns inget «vad åtgärden senast kostade» att ankra i, eftersom barnavdrag aldrig funnits, och L:s nivå får inte lånas in som basbelopp. Frågan rör en publicerad siffra och avgörs av en människa efter haller-det.",
-        "datum": "2026-08-22"
+        "utfall": "nollan_haller",
+        "skal": "Avgjord 2026-08-23. Nollan står, men skälet är rättat. Det täckte tidigare bara löftets ena halva: dubbelräkningen gäller de 5 000 kronorna, inte barnavdraget. Barnavdraget är en ny åtgärd utan angiven nivå som inte är prissatt någon annanstans, och det kostar rimligtvis pengar — men ett barnavdrag har aldrig funnits i Sverige, så det finns ingen tidigare nivå att ankra i, och Liberalernas avdragsnivå får inte lånas in som basbelopp eftersom det då är deras ambition som prissätts. Det står nu utskrivet i uträkningen.",
+        "datum": "2026-08-23"
       }
     },
     {
@@ -205,7 +205,12 @@
         "kärnkraft"
       ],
       "rubriklikhet": 0.4,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Motsatta politiker, inte samma. Miljöpartiet lovar att INTE bygga ny kärnkraft; Sverigedemokraterna lovar att bygga den med statligt stöd. Att avstå från en investering och att göra den kan omöjligt kosta lika.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-0976→p-2026-1243",
@@ -226,7 +231,12 @@
         "äldreomsorg"
       ],
       "rubriklikhet": 0.25,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Ett förbud mot ett tillskott. Miljöpartiet stoppar vinstuttag och minutstyrning genom lagändring, vilket enligt kostnadsregeln prissätts till noll. Liberalerna lovar att förbättra arbetsvillkor och kompetens, alltså pengar in i verksamheten. Samma sakområde, olika åtgärder.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-0492→p-2026-1219",
@@ -247,7 +257,64 @@
         "försörjningskrav"
       ],
       "rubriklikhet": 0.25,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Att behålla dagens regel mot att avskaffa den. Socialdemokraterna avvisar ett förslag om att INFÖRA försörjningskrav vid fortsatt uppehållstillstånd — läget står stilla och kostar inget nytt. Vänsterpartiet vill ta bort ett krav som gäller i dag vid familjeåterförening, vilket ger fler beviljade ansökningar.",
+        "datum": "2026-08-23"
+      }
+    },
+    {
+      "nyckel": "p-2026-0956→p-2026-2464",
+      "nollat": "p-2026-0956",
+      "nollat_rubrik": "Parlamentarisk haverikommission för äldreomsorgen",
+      "nollat_partier": [
+        "v"
+      ],
+      "prissatt": "p-2026-2464",
+      "prissatt_rubrik": "Språkkrav för anställda i äldreomsorgen",
+      "prissatt_partier": [
+        "s"
+      ],
+      "msek_base": 300,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "äldreomsorg"
+      ],
+      "rubriklikhet": 0.333,
+      "funnen": "2026-08-23",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "En kommission mot utbildning. Vänsterpartiet vill tillsätta en parlamentarisk haverikommission som utreder missförhållanden i äldreomsorgen; Socialdemokraterna vill betala språkutbildning för 25 000–50 000 anställda. Det enda gemensamma är sakområdet.",
+        "datum": "2026-08-23"
+      }
+    },
+    {
+      "nyckel": "p-2026-2792→p-2026-0048",
+      "nollat": "p-2026-2792",
+      "nollat_rubrik": "Utvärdera riktlinjerna för endometriosvård",
+      "nollat_partier": [
+        "s"
+      ],
+      "prissatt": "p-2026-0048",
+      "prissatt_rubrik": "Se över riktlinjerna för offentligt subventionerade fertilitetsbehandlingar",
+      "prissatt_partier": [
+        "m"
+      ],
+      "msek_base": 200,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "riktlinj"
+      ],
+      "rubriklikhet": 0.25,
+      "funnen": "2026-08-23",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "En utvärdering mot en utvidgning. Socialdemokraternas löfte är att utvärdera befintliga riktlinjer för endometriosvård. Moderaternas ser över riktlinjerna för fertilitetsbehandlingar OCH lovar att antalet försök ska öka och att syskonförsök ska ingå — en åtgärd utöver översynen, vilket är precis skälet till att den posten behöll sitt belopp när utredningsregeln svepte beståndet.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-0530→p-2026-0498",
@@ -269,7 +336,38 @@
         "utökade"
       ],
       "rubriklikhet": 0.308,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Var man ansöker mot vem som får stanna. Miljöpartiets löfte gäller att vissa anhöriga får ansöka inifrån Sverige i stället för att resa ut — en handläggningsregel. Centerpartiets gäller att fler unga vuxna beviljas uppehållstillstånd, alltså fler personer i landet med statliga kostnader.",
+        "datum": "2026-08-23"
+      }
+    },
+    {
+      "nyckel": "p-2026-0708→p-2026-0596",
+      "nollat": "p-2026-0708",
+      "nollat_rubrik": "Skärpta straff för kvinnofridskränkning, barnpornografi och synnerligen grova ekobrott",
+      "nollat_partier": [
+        "s"
+      ],
+      "prissatt": "p-2026-0596",
+      "prissatt_rubrik": "Skärpta straff för överträdelser av kontaktförbud",
+      "prissatt_partier": [
+        "m"
+      ],
+      "msek_base": 70,
+      "period": "per_ar",
+      "kategori": "rättsväsende",
+      "delade_ord": [
+        "skärpta"
+      ],
+      "rubriklikhet": 0.273,
+      "funnen": "2026-08-23",
+      "kvittens": {
+        "utfall": "nollan_haller",
+        "skal": "Samma fråga som paret om arbetsmiljöbrott, och samma svar. Moderaternas post räknar ur Brottsförebyggande rådets antal överträdelser och Kriminalvårdens dygnskostnad, alltså källor utanför projektet i båda ändar. Socialdemokraternas löfte anger tre brottstyper men ingen straffökning, och dess tidigare belopp var lånat ur ett annat partis löfte som buntar flera åtgärder. Uträkningen säger nu att posten borde bära ett belopp och varför den inte gör det.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-1022→p-2026-0596",
@@ -290,28 +388,12 @@
         "skärpta"
       ],
       "rubriklikhet": 0.5,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-0470→p-2026-2325",
-      "nollat": "p-2026-0470",
-      "nollat_rubrik": "Avskaffa marknadsskolan med vinstdrivande aktiebolag",
-      "nollat_partier": [
-        "mp"
-      ],
-      "prissatt": "p-2026-2325",
-      "prissatt_rubrik": "Avskaffa marknadsskolan",
-      "prissatt_partier": [
-        "v"
-      ],
-      "msek_base": 50,
-      "period": "engang",
-      "kategori": "utbildning",
-      "delade_ord": [
-        "marknadsskolan"
-      ],
-      "rubriklikhet": 0.4,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "nollan_haller",
+        "skal": "Avgjord 2026-08-23. En straffskärpning kostar staten pengar, och beloppet ska stå kvar när det går att räkna trovärdigt. Moderaternas post gör det — den räknar ur Brottsförebyggande rådets antal överträdelser och Kriminalvårdens dygnskostnad. Vänsterpartiets löfte anger ingen straffökning, så det finns varken ett antal fall eller en nivå att räkna på, och dess uträkning säger nu rakt ut att posten borde bära ett belopp och varför den inte gör det. Skillnaden följer alltså räknebarheten och inte parti.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-2175→p-2026-2087",
@@ -332,49 +414,12 @@
         "organisation"
       ],
       "rubriklikhet": 0.308,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-2445→p-2026-2248",
-      "nollat": "p-2026-2445",
-      "nollat_rubrik": "Ett gemensamt biljettsystem för hela landet",
-      "nollat_partier": [
-        "s"
-      ],
-      "prissatt": "p-2026-2248",
-      "prissatt_rubrik": "Nationellt biljettsystem för kollektivtrafik",
-      "prissatt_partier": [
-        "c"
-      ],
-      "msek_base": 50,
-      "period": "per_ar",
-      "kategori": "infrastruktur",
-      "delade_ord": [
-        "biljettsystem"
-      ],
-      "rubriklikhet": 0.25,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-2861→p-2026-2325",
-      "nollat": "p-2026-2861",
-      "nollat_rubrik": "Avskaffa marknadsskolan och skapa en likvärdig skola",
-      "nollat_partier": [
-        "mp"
-      ],
-      "prissatt": "p-2026-2325",
-      "prissatt_rubrik": "Avskaffa marknadsskolan",
-      "prissatt_partier": [
-        "v"
-      ],
-      "msek_base": 50,
-      "period": "engang",
-      "kategori": "utbildning",
-      "delade_ord": [
-        "marknadsskolan"
-      ],
-      "rubriklikhet": 0.333,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Inte jämförbara. Moderaternas post är bokförd som utgift och Centerpartiets som besparing — att dra in bidrag ger staten pengar och kostar dem inte. Svepet parade ihop en nollad utgift med en besparing, vilket är en artefakt av att det bara jämför belopp och inte kostnadstyp.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-1201→p-2026-2787",
@@ -395,7 +440,12 @@
         "veterinär"
       ],
       "rubriklikhet": 0.273,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Krav mot ersättning. Socialdemokraterna säkerställer veterinär beredskap genom ökade krav på privata aktörer, alltså en reglering utan statlig utbetalning. Centerpartiet lovar statligt stöd till jourverksamhet, alltså pengar till mottagningarna. Samma mål, motsatta mekanismer.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-0603→p-2026-0919",
@@ -416,7 +466,12 @@
         "relation"
       ],
       "rubriklikhet": 0.25,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Två skilda verktyg mot samma brottslighet. Moderaternas löfte gäller preventiva tvångsmedel — avlyssning och övervakning före brott. Kristdemokraternas gäller utvidgade kontaktförbud och prioriterad handläggning i domstol. Det ena övervakar, det andra förbjuder och skyndar på.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-0545→p-2026-1669",
@@ -437,50 +492,12 @@
         "undvika"
       ],
       "rubriklikhet": 0.273,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-1693→p-2026-2490",
-      "nollat": "p-2026-1693",
-      "nollat_rubrik": "Utreda Trafikverkets organisation",
-      "nollat_partier": [
-        "c"
-      ],
-      "prissatt": "p-2026-2490",
-      "prissatt_rubrik": "Modernisera Trafikverkets organisation för bättre järnvägsresultat",
-      "prissatt_partier": [
-        "m"
-      ],
-      "msek_base": 15,
-      "period": "engang",
-      "kategori": "infrastruktur",
-      "delade_ord": [
-        "organisation",
-        "trafikverkets"
-      ],
-      "rubriklikhet": 0.286,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-1701→p-2026-2373",
-      "nollat": "p-2026-1701",
-      "nollat_rubrik": "Modernisera korttidsarbete",
-      "nollat_partier": [
-        "s"
-      ],
-      "prissatt": "p-2026-2373",
-      "prissatt_rubrik": "Modernisera jaktlagen",
-      "prissatt_partier": [
-        "m"
-      ],
-      "msek_base": 15,
-      "period": "engang",
-      "kategori": "övrigt",
-      "delade_ord": [
-        "modernisera"
-      ],
-      "rubriklikhet": 0.333,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "En utvärdering mot en reform. Centerpartiet lovar att utvärdera friskolelagens konsekvenser två år efteråt, vilket enligt utredningsregeln går på noll. Socialdemokraterna lovar att göra om skolpengssystemet i grunden. Att det senare beloppet är prissatt som en utredningskostnad är en annan fråga och hör till H14.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-2053→p-2026-2369",
@@ -501,71 +518,12 @@
         "grundlagsskydd"
       ],
       "rubriklikhet": 0.286,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-2571→p-2026-2669",
-      "nollat": "p-2026-2571",
-      "nollat_rubrik": "Skärpa reglerna för import, utlåning och uthyrning av krigsmateriel",
-      "nollat_partier": [
-        "v"
-      ],
-      "prissatt": "p-2026-2669",
-      "prissatt_rubrik": "Lagstiftning för import av krigsmateriel",
-      "prissatt_partier": [
-        "mp"
-      ],
-      "msek_base": 15,
-      "period": "engang",
-      "kategori": "försvar",
-      "delade_ord": [
-        "krigsmateriel"
-      ],
-      "rubriklikhet": 0.333,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-2671→p-2026-2623",
-      "nollat": "p-2026-2671",
-      "nollat_rubrik": "Svensk standard vid offentlig upphandling av kött",
-      "nollat_partier": [
-        "s"
-      ],
-      "prissatt": "p-2026-2623",
-      "prissatt_rubrik": "Se över lagen om offentlig upphandling",
-      "prissatt_partier": [
-        "c"
-      ],
-      "msek_base": 15,
-      "period": "engang",
-      "kategori": "övrigt",
-      "delade_ord": [
-        "offentlig",
-        "upphandling"
-      ],
-      "rubriklikhet": 0.25,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-0855→p-2026-1147",
-      "nollat": "p-2026-0855",
-      "nollat_rubrik": "Förenkla regelverk för riksintressen",
-      "nollat_partier": [
-        "kd"
-      ],
-      "prissatt": "p-2026-1147",
-      "prissatt_rubrik": "Översyn av regelverk för ideellt arbete",
-      "prissatt_partier": [
-        "s"
-      ],
-      "msek_base": 10,
-      "period": "engang",
-      "kategori": "övrigt",
-      "delade_ord": [
-        "regelverk"
-      ],
-      "rubriklikhet": 0.286,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Samma grundlag, olika skydd. Liberalerna vill stärka grundlagsskyddet för demokratin som system; Vänsterpartiet för de nationella minoritetsspråken. Det är två skilda grundlagsändringar med skilda syften. Prissättningsskillnaden — noll mot en utredningskostnad — är H14:s fråga.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-2195→p-2026-0510",
@@ -586,7 +544,12 @@
         "försörjningskrav"
       ],
       "rubriklikhet": 0.25,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Motsatta riktningar. Moderaterna vill HÖJA försörjningskravet för arbetskraftsinvandrare; Socialdemokraterna vill UNDANTA forskare och doktorander från det. Att skärpa ett krav och att befria någon från det kan omöjligt kosta lika.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-2546→p-2026-2329",
@@ -607,7 +570,12 @@
         "överimplementering"
       ],
       "rubriklikhet": 0.5,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Ett mål mot ett organ. Båda vill minska överimplementeringen av EU-regler, men Moderaternas löfte namnger Implementeringsrådet och prissätter dess bemanning — fem till tio årsarbetskrafter — medan Liberalernas lovar utfallet utan att peka ut något organ. Ett stående råd är en verklig löpande kostnad; en ambition att färre regler ska överimplementeras är det inte.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-2488→p-2026-2392",
@@ -630,7 +598,39 @@
         "undantag"
       ],
       "rubriklikhet": 0.667,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Avgjord 2026-08-23. Löftena gäller samma undantag från lönekrav för bristyrken, men posterna prissätter olika delar av det. Liberalernas är en engångspost för Migrationsverkets omställning — regelverk, it-ändringar och handläggningsinstruktioner. Moderaternas är en årlig post, och dess egen uträkning säger att kostnaden främst är administrativ. Ett engångsbelopp och ett årligt är inte samma nivå, och verktyget för att ankra ett belopp vägrar korsa periodgränsen av precis det skälet. Båda kostnadsdelarna är verkliga; de är bara inte samma.",
+        "datum": "2026-08-23"
+      }
+    },
+    {
+      "nyckel": "p-2026-2623→p-2026-2915",
+      "nollat": "p-2026-2623",
+      "nollat_rubrik": "Se över lagen om offentlig upphandling",
+      "nollat_partier": [
+        "c"
+      ],
+      "prissatt": "p-2026-2915",
+      "prissatt_rubrik": "Svartlista fuskande företag från offentlig upphandling",
+      "prissatt_partier": [
+        "s"
+      ],
+      "msek_base": 8,
+      "period": "per_ar",
+      "kategori": "övrigt",
+      "delade_ord": [
+        "offentlig",
+        "upphandling"
+      ],
+      "rubriklikhet": 0.25,
+      "funnen": "2026-08-23",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "En översyn mot ett system. Centerpartiet vill se över lagen om offentlig upphandling för att stoppa förhalande överklaganden; Socialdemokraterna vill bygga en svartlistning av fuskande företag, med handläggare, it-system och rättslig prövning. Det ena är en utredning, det andra en löpande verksamhet.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-0053→p-2026-1697",
@@ -652,51 +652,12 @@
         "riktlinj"
       ],
       "rubriklikhet": 0.25,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-0786→p-2026-2403",
-      "nollat": "p-2026-0786",
-      "nollat_rubrik": "Kriminalisera deltagande i kriminella nätverk",
-      "nollat_partier": [
-        "kd"
-      ],
-      "prissatt": "p-2026-2403",
-      "prissatt_rubrik": "Kriminalisera deltagande i terroristorganisationer",
-      "prissatt_partier": [
-        "c"
-      ],
-      "msek_base": 5,
-      "period": "engang",
-      "kategori": "rättsväsende",
-      "delade_ord": [
-        "deltagande",
-        "kriminalisera"
-      ],
-      "rubriklikhet": 0.4,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-0862→p-2026-2403",
-      "nollat": "p-2026-0862",
-      "nollat_rubrik": "Kriminalisera deltagande i gäng",
-      "nollat_partier": [
-        "m"
-      ],
-      "prissatt": "p-2026-2403",
-      "prissatt_rubrik": "Kriminalisera deltagande i terroristorganisationer",
-      "prissatt_partier": [
-        "c"
-      ],
-      "msek_base": 5,
-      "period": "engang",
-      "kategori": "rättsväsende",
-      "delade_ord": [
-        "deltagande",
-        "kriminalisera"
-      ],
-      "rubriklikhet": 0.5,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Riktlinjer för olika sjukdomar. Moderaterna gäller endometrios och menstruell hälsa i elevhälsan; Vänsterpartiet nedtrappning av psykofarmaka. Det delade uttrycket «nationella riktlinjer» är vårdens standardform för allt sådant arbete.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-1628→p-2026-2351",
@@ -718,28 +679,38 @@
         "sanktion"
       ],
       "rubriklikhet": 0.308,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Moderaternas löfte namnger något Socialdemokraternas inte gör. Båda vill skärpa sanktionerna mot Ryssland, men den prissatta posten räknar fram förstärkning av sjöbevakning, tull och sanktionsmyndighet, alltså kapacitet att kontrollera efterlevnaden. Den nollade posten lovar att sanktionerna ska utvidgas utan att peka ut någon sådan förstärkning.",
+        "datum": "2026-08-23"
+      }
     },
     {
-      "nyckel": "p-2026-1815→p-2026-2346",
-      "nollat": "p-2026-1815",
-      "nollat_rubrik": "Införa språkkrav i välfärden",
+      "nyckel": "p-2026-0862→p-2026-2414",
+      "nollat": "p-2026-0862",
+      "nollat_rubrik": "Kriminalisera deltagande i gäng",
       "nollat_partier": [
-        "s"
-      ],
-      "prissatt": "p-2026-2346",
-      "prissatt_rubrik": "Moderaterna vill införa språkkrav inom äldreomsorgen 2026",
-      "prissatt_partier": [
         "m"
       ],
-      "msek_base": 5,
-      "period": "per_ar",
-      "kategori": "välfärd",
+      "prissatt": "p-2026-2414",
+      "prissatt_rubrik": "Kriminalisera omvändelseförsök",
+      "prissatt_partier": [
+        "mp"
+      ],
+      "msek_base": 3,
+      "period": "engang",
+      "kategori": "rättsväsende",
       "delade_ord": [
-        "språkkrav"
+        "kriminalisera"
       ],
       "rubriklikhet": 0.25,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-23",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Olika brott, och olika kostnadsdelar. Moderaterna vill kriminalisera deltagande i gäng och nollas därför att lagberedningen ryms i statens befintliga förvaltning. Miljöpartiets belopp prissätter inte beredningen utan utbildning och information till rättsväsendet och Migrationsverket — en implementeringskostnad som Moderaternas löfte inte lovar att bekosta.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-1441→p-2026-2381",
@@ -760,7 +731,38 @@
         "djurtransport"
       ],
       "rubriklikhet": 0.273,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Avgjord 2026-08-23. Löftena gäller samma sak — tidsgränser för djurtransporter — men prissätter olika delar. Centerpartiets är en engångspost och dess uträkning säger att EU-förhandlingen ryms i förvaltningsanslaget. Liberalernas är en årlig post för förstärkt kontroll och tillsyn av transporterna. Ett engångsarbete i Bryssel och en löpande kontroll på vägarna är inte samma kostnad, och ankarverktyget vägrar korsa periodgränsen.",
+        "datum": "2026-08-23"
+      }
+    },
+    {
+      "nyckel": "p-2026-2403→p-2026-2414",
+      "nollat": "p-2026-2403",
+      "nollat_rubrik": "Kriminalisera deltagande i terroristorganisationer",
+      "nollat_partier": [
+        "c"
+      ],
+      "prissatt": "p-2026-2414",
+      "prissatt_rubrik": "Kriminalisera omvändelseförsök",
+      "prissatt_partier": [
+        "mp"
+      ],
+      "msek_base": 3,
+      "period": "engang",
+      "kategori": "rättsväsende",
+      "delade_ord": [
+        "kriminalisera"
+      ],
+      "rubriklikhet": 0.25,
+      "funnen": "2026-08-23",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Samma sak som paret ovan. Centerpartiets kriminalisering av deltagande i terroristorganisationer nollas därför att lagberedningen ryms i förvaltningen; Miljöpartiets belopp prissätter utbildning och information till rättsväsendet, vilket är en annan kostnadsdel.",
+        "datum": "2026-08-23"
+      }
     },
     {
       "nyckel": "p-2026-2834→p-2026-2381",
@@ -781,29 +783,12 @@
         "tidsgräns"
       ],
       "rubriklikhet": 0.3,
-      "funnen": "2026-08-22"
-    },
-    {
-      "nyckel": "p-2026-1861→p-2026-2459",
-      "nollat": "p-2026-1861",
-      "nollat_rubrik": "Stoppa industriellt överfiske och stärka småskaligt fiske",
-      "nollat_partier": [
-        "v"
-      ],
-      "prissatt": "p-2026-2459",
-      "prissatt_rubrik": "Stoppa överfiske och begränsa industriellt trålfiske i EU",
-      "prissatt_partier": [
-        "m"
-      ],
-      "msek_base": 2,
-      "period": "per_ar",
-      "kategori": "klimat-miljö",
-      "delade_ord": [
-        "industriellt",
-        "överfiske"
-      ],
-      "rubriklikhet": 0.444,
-      "funnen": "2026-08-22"
+      "funnen": "2026-08-22",
+      "kvittens": {
+        "utfall": "olika_atgarder",
+        "skal": "Ordsammanträffande. Centerpartiets löfte gäller myndigheters handläggningstider för tillstånd, Liberalernas hur länge djur får transporteras. Båda innehåller «tidsgräns», men om helt olika ting.",
+        "datum": "2026-08-23"
+      }
     }
   ]
 }

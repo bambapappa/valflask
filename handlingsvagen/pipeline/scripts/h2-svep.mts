@@ -23,11 +23,12 @@ import { cachat, politeFetch } from "./kallcache.mts";
 import { provaCitatet, svepstatus, svepetArTrasigt, type Sveprad } from "../src/h2svepet.ts";
 import type { Handling } from "../src/handlingar.ts";
 import type { KopplingPost } from "../src/granskning.ts";
+import { svenskDag } from "../../../pipeline/src/dagen.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const torr = process.argv.includes("--torr");
 const max = process.argv.includes("--max") ? Number(process.argv[process.argv.indexOf("--max") + 1]) : Infinity;
-const datum = new Date().toISOString().slice(0, 10);
+const datum = svenskDag();
 
 const kopplingar: KopplingPost[] = JSON.parse(readFileSync(resolve(rot, "data/kopplingar.json"), "utf8"));
 const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));

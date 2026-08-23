@@ -197,6 +197,100 @@ export function paritetsfynd(
   return fynd.sort((a, b) => b.msek_base - a.msek_base || a.nyckel.localeCompare(b.nyckel));
 }
 
+
+/**
+ * Hur långt två belopp för samma åtgärd får ligga isär innan paret ska läsas.
+ *
+ * Två som räknat samma reform landar sällan på exakt samma tal — antaganden om
+ * utnyttjandegrad och omfattning skiljer sig legitimt. En faktor två är
+ * däremot inte en skillnad i antaganden, den är en skillnad i vad man tror att
+ * åtgärden är.
+ */
+export const SPRANG_MIN = 2;
+
+/** Beloppet över mandatperioden, så att årliga och engångsposter går att jämföra. */
+export const mandatperioden = (l: ParitetsLofte): number =>
+  (l.cost?.msek_base ?? 0) * (l.cost?.period === "per_ar" ? 4 : 1);
+
+/**
+ * Par där BÅDA löftena är prissatta och beloppen ligger långt isär.
+ *
+ * `paritetsfynd` parar ett nollat löfte mot ett prissatt, och hittar därför
+ * bara den ena sortens ojämnhet. Två prissatta löften om samma sak jämförs
+ * aldrig, hur långt isär talen än ligger — och det är en verklig lucka:
+ * matmomssänkningen till sex procent står på 12 000, 15 000, 16 500 och
+ * 21 250 hos fyra partier, och förstatligad personlig assistans på 40 hos två
+ * partier, 1 200 hos ett tredje och 8 000 hos ett fjärde.
+ *
+ * Kraven är svepets egna — samma sällsynthetstak, samma rubriklikhet, samma
+ * kategori, olika partier, ingen gemensam grupp — med kravet på en nolla i ena
+ * änden utbytt mot ett krav på att beloppen ligger isär. Talen jämförs över
+ * mandatperioden, så att en engångspost och en årlig går att ställa mot
+ * varandra; det var just den skillnaden som gjorde matmomsen svår att se.
+ *
+ * Rapporterande, aldrig en spärr. Två partier FÅR lova olika mycket av samma
+ * sak — det som ska läsas är om de gör det, eller om vi räknat dem olika.
+ */
+export function prisparfynd(
+  loften: readonly ParitetsLofte[],
+  installningar: { sallsyntTak?: number; rubriklikhetMin?: number; sprangMin?: number } = {},
+): Paritetsfynd[] {
+  const sallsyntTak = installningar.sallsyntTak ?? SALLSYNT_TAK;
+  const rubriklikhetMin = installningar.rubriklikhetMin ?? RUBRIKLIKHET_MIN;
+  const sprangMin = installningar.sprangMin ?? SPRANG_MIN;
+
+  const aktiva = loften.filter((l) => l.status === "aktiv" && basbelopp(l) > 0);
+  const df = ordfrekvens(loften.filter((l) => l.status === "aktiv"));
+  const rubrikord = new Map(aktiva.map((l) => [l.id, stemmedTokens(l.title)]));
+
+  const sedda = new Set<string>();
+  const fynd: Paritetsfynd[] = [];
+  for (const a of aktiva) {
+    for (const b of aktiva) {
+      if (a.id >= b.id) continue; // varje par en gång
+      if (a.category !== b.category) continue;
+      if (a.group_id !== null && a.group_id === b.group_id) continue;
+      if (b.parties.some((p) => a.parties.includes(p))) continue;
+
+      const ordA = rubrikord.get(a.id) ?? new Set<string>();
+      const ordB = rubrikord.get(b.id) ?? new Set<string>();
+      const delade = [...ordA].filter(
+        (o) => ordB.has(o) && o.length >= SAKORD_MIN_LANGD && (df.get(o) ?? 0) <= sallsyntTak,
+      );
+      if (delade.length === 0) continue;
+      const likhet = overlapp(ordA, ordB);
+      if (likhet < rubriklikhetMin) continue;
+
+      const belopp = [mandatperioden(a), mandatperioden(b)].sort((x, y) => x - y);
+      const lag = belopp[0] ?? 0;
+      const hog = belopp[1] ?? 0;
+      if (lag <= 0 || hog / lag < sprangMin) continue;
+
+      const nyckel = nyckelFor(a.id, b.id);
+      if (sedda.has(nyckel)) continue;
+      sedda.add(nyckel);
+      // Fältnamnen är svepets, så kön och kvittenserna fungerar likadant. Här
+      // betyder `nollat` den lägre posten och `prissatt` den högre.
+      const [lagre, hogre] = mandatperioden(a) <= mandatperioden(b) ? [a, b] : [b, a];
+      fynd.push({
+        nyckel: nyckelFor(lagre.id, hogre.id),
+        nollat: lagre.id,
+        nollat_rubrik: lagre.title,
+        nollat_partier: lagre.parties,
+        prissatt: hogre.id,
+        prissatt_rubrik: hogre.title,
+        prissatt_partier: hogre.parties,
+        msek_base: basbelopp(hogre),
+        period: hogre.cost?.period ?? null,
+        kategori: hogre.category,
+        delade_ord: delade.sort(),
+        rubriklikhet: Number(likhet.toFixed(3)),
+      });
+    }
+  }
+  return fynd.sort((a, b) => b.msek_base - a.msek_base || a.nyckel.localeCompare(b.nyckel));
+}
+
 /** Fynden ingen läst än. Det är det tal kön mäts på. */
 export function okvitterade(
   fynd: readonly Paritetsfynd[],

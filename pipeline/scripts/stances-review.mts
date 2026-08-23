@@ -25,6 +25,7 @@ import {
 import { validateStanceInvariants, type IssuesFile, type StanceCell } from "../src/stances.ts";
 import { avvisa, type Avvisning } from "../src/avvisningar.ts";
 import { lasProvningar, provningsGrind, standpunktNyckel } from "../src/provningar.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const DATA = join(ROOT, "data");
@@ -99,7 +100,7 @@ if (action === "reject") {
     }
     writeFileSync(
       fil,
-      JSON.stringify(avvisa(minne, url, citat, reason, new Date().toISOString().slice(0, 10)), null, 2) + "\n",
+      JSON.stringify(avvisa(minne, url, citat, reason, svenskDag()), null, 2) + "\n",
     );
   }
   console.log(`Avvisad ${id}: ${reason}`);
@@ -186,7 +187,7 @@ const result = publishStances({
         domain: new URL(entry.articleUrl).hostname.replace(/^www\./, ""),
         title: entry.articleTitle,
         text: candidate.quote, // citatet är redan verbatimgranskat i grindkedjan
-        published: `${entry.dateStated ?? new Date().toISOString().slice(0, 10)}T00:00:00Z`,
+        published: `${entry.dateStated ?? svenskDag()}T00:00:00Z`,
       },
       verify: approvedVerify,
       archiveUrl: entry.archiveUrl ?? null,

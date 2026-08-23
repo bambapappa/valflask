@@ -32,6 +32,7 @@ import {
 import { beroendeAv, type Ankarlofte } from "../src/ankaren.ts";
 import { taLaset } from "../src/datalas.ts";
 import { pathToFileURL } from "node:url";
+import { svenskDag } from "../src/dagen.ts";
 
 /**
  * Sajtens egen uträkning, hämtad med en **beräknad** sökväg.
@@ -51,7 +52,7 @@ const aggregates = (await import(
 const { totalFlasket, partyTotalMsek, dedupeByGroup } = aggregates;
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
-const datum = new Date().toISOString().slice(0, 10);
+const datum = svenskDag();
 
 const [listfil] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const skriv = process.argv.includes("--skriv");

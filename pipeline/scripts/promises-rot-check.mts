@@ -56,6 +56,7 @@ import {
   type Rotutfall,
 } from "../src/kallrota.ts";
 import { arTaladKalla } from "../src/talad-kalla.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const PROMISES = join(ROOT, "data", "promises.json");
@@ -71,7 +72,7 @@ const paus = Number(varde("--paus") ?? "1200");
 // Ett flaggat löfte kontrolleras alltid mot källan igen innan det läggs fram.
 const bara = new Set((varde("--id") ?? "").split(",").map((s) => s.trim()).filter(Boolean));
 const sov = (ms: number) => new Promise((r) => setTimeout(r, ms));
-const idag = new Date().toISOString().slice(0, 10);
+const idag = svenskDag();
 
 /**
  * Vad som ändrats, inte bara att något ändrats.

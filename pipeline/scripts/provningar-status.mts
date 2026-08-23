@@ -7,78 +7,57 @@
  * något mätte det, och täckningen stod på fyra av 1 382.
  *
  *   pnpm provningar:status          # tabellen
- *   pnpm provningar:status --tak    # utfallskod 1 om något oprövat publicerats
+ *   pnpm provningar:status --tak    # utfallskod 1 om skulden vuxit
  *
- * `--tak` är spärren mot att det glider tillbaka: antalet oprövade får aldrig
- * växa. Går det upp har något publicerats förbi grinden, och då ska bygget
- * säga ifrån i stället för att låta det passera tyst.
+ * `--tak` är spärren mot att det glider tillbaka, och den vaktar **två** tal.
+ * Antalet oprövade får aldrig växa — går det upp har något publicerats förbi
+ * grinden. Och de gamla prövningarna får aldrig bli fler än de namngivna i
+ * `facit/provningsskulden.json` — en prövning som beskriver en annan version
+ * än den som står publicerad är ingen prövning av det publicerade.
+ *
+ * Det andra ledet saknades till 2026-08-23, och luckan var mätbar: 390 saker
+ * bar en prövning av en äldre version, 367 av dem löften, utan att något sa
+ * ifrån. `provningsGrind()` fäller samma sak — men bara i godkännandevägen,
+ * alltså aldrig för det som redan är publicerat.
  */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { identiteter, kanon, lasProvningar, type Slag } from "../src/provningar.ts";
+import { lasProvningar } from "../src/provningar.ts";
+import {
+  domSkulden,
+  kopplingsSaker,
+  loftesSaker,
+  rakna,
+  standpunktsSaker,
+  type Rakning,
+  type Skuldfacit,
+} from "../src/provningsskulden.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const HV_DATA = join(import.meta.dirname, "../../handlingsvagen/data");
 const TAKFIL = join(DATA, "provningar-tak.json");
+const SKULDFACIT = join(import.meta.dirname, "../facit/provningsskulden.json");
 
 function las<T>(sokvag: string): T[] {
   return existsSync(sokvag) ? (JSON.parse(readFileSync(sokvag, "utf-8")) as T[]) : [];
 }
 
-type Sak = { nycklar: string[]; slag: Slag; obj: Record<string, unknown> };
-
-const befolkning: Record<string, Sak[]> = {
-  // Identiteterna räknas av `identiteter()` i `provningar.ts` — samma lista som
-  // grinden godtar och som `logg.py` speglar. Räknades de här skulle de tre
-  // ställena glida isär, och det har de gjort en gång: mätningen i handoff såg
-  // 94,6 procent på löftena medan den här såg 100, och skillnaden var ingen
-  // lucka i arbetet utan i uppslagningen.
-  lofte: las<Record<string, unknown>>(join(DATA, "promises.json"))
-    .filter((p) => p["status"] !== "tillbakadragen")
-    .map((p) => ({
-      nycklar: identiteter("lofte", String(p["id"]), p),
-      slag: "lofte" as const,
-      obj: p,
-    })),
-  koppling: las<Record<string, unknown>>(join(HV_DATA, "kopplingar.json"))
-    .filter((k) => k["status"] !== "indragen")
-    .map((k) => ({
-      nycklar: identiteter("koppling", String(k["id"]), k),
-      slag: "koppling" as const,
-      obj: k,
-    })),
-  standpunkt: las<Record<string, unknown>>(join(DATA, "stances.json"))
-    .filter((s) => {
-      const pos = (s["current"] as { position?: string } | undefined)?.position;
-      return pos !== undefined && pos !== null && pos !== "inget_tydligt_besked";
-    })
-    .map((s) => ({
-      nycklar: identiteter("standpunkt", `${s["subquestion_id"]}::${s["party"]}`, s),
-      slag: "standpunkt" as const,
-      obj: s,
-    })),
-};
-
+// Befolkningarna byggs av `provningsskulden.ts`, så att provet och mätningen
+// räknar samma sak. Räknades de på två ställen skulle de glida isär, och det
+// har hänt en gång: mätningen i handoff såg 94,6 procent på löftena medan den
+// här såg 100, och skillnaden låg i uppslagningen och inte i arbetet.
 const provningar = lasProvningar(DATA);
-const rader: { slag: string; aktuell: number; gammal: number; oprovad: number; summa: number }[] = [];
+const befolkning: [string, Rakning][] = [
+  ["lofte", rakna(loftesSaker(las(join(DATA, "promises.json"))), provningar)],
+  ["koppling", rakna(kopplingsSaker(las(join(HV_DATA, "kopplingar.json"))), provningar)],
+  ["standpunkt", rakna(standpunktsSaker(las(join(DATA, "stances.json"))), provningar)],
+];
 
-for (const [slag, saker] of Object.entries(befolkning)) {
-  let aktuell = 0;
-  let gammal = 0;
-  for (const sak of saker) {
-    const p = sak.nycklar.map((n) => provningar.get(n)).find((x) => x !== undefined);
-    if (!p) continue;
-    if (p.underlag_hash === kanon(sak.slag, sak.obj)) aktuell++;
-    else gammal++;
-  }
-  rader.push({ slag, aktuell, gammal, oprovad: saker.length - aktuell - gammal, summa: saker.length });
-}
-
-const total = rader.reduce(
-  (a, r) => ({
-    aktuell: a.aktuell + r.aktuell,
-    gammal: a.gammal + r.gammal,
-    oprovad: a.oprovad + r.oprovad,
+const total = befolkning.reduce(
+  (a, [, r]) => ({
+    aktuell: a.aktuell + r.aktuella,
+    gammal: a.gammal + r.gamla.length,
+    oprovad: a.oprovad + r.oprovade,
     summa: a.summa + r.summa,
   }),
   { aktuell: 0, gammal: 0, oprovad: 0, summa: 0 },
@@ -87,10 +66,10 @@ const total = rader.reduce(
 const p = (n: number, av: number) => (av ? ((n / av) * 100).toFixed(1) : "0.0");
 console.log(`\n${"".padEnd(14)}${"aktuella".padStart(10)}${"gamla".padStart(8)}${"oprövade".padStart(10)}${"summa".padStart(8)}   täckning`);
 console.log("─".repeat(60));
-for (const r of rader) {
+for (const [slag, r] of befolkning) {
   console.log(
-    `  ${r.slag.padEnd(12)}${String(r.aktuell).padStart(10)}${String(r.gammal).padStart(8)}` +
-      `${String(r.oprovad).padStart(10)}${String(r.summa).padStart(8)}   ${p(r.aktuell, r.summa).padStart(5)} %`,
+    `  ${slag.padEnd(12)}${String(r.aktuella).padStart(10)}${String(r.gamla.length).padStart(8)}` +
+      `${String(r.oprovade).padStart(10)}${String(r.summa).padStart(8)}   ${p(r.aktuella, r.summa).padStart(5)} %`,
   );
 }
 console.log("─".repeat(60));
@@ -104,7 +83,9 @@ console.log("  oprövade = har aldrig gått genom filtret\n");
 
 if (!process.argv.includes("--tak")) process.exit(0);
 
-// Spärren: oprövade får bli färre, aldrig fler.
+let rott = false;
+
+// Led 1: oprövade får bli färre, aldrig fler.
 const tak = existsSync(TAKFIL)
   ? (JSON.parse(readFileSync(TAKFIL, "utf-8")) as { oprovade: number }).oprovade
   : total.oprovad;
@@ -115,10 +96,42 @@ if (total.oprovad > tak) {
       "Något har publicerats utan att gå genom kvalitetsfiltret. Pröva det, eller\n" +
       "dra tillbaka det — taket höjs inte för att göra bygget grönt.",
   );
-  process.exit(1);
-}
-
-if (total.oprovad < tak) {
+  rott = true;
+} else if (total.oprovad < tak) {
   writeFileSync(TAKFIL, JSON.stringify({ oprovade: total.oprovad }, null, 2) + "\n", "utf-8");
   console.log(`Taket sänkt: ${tak} → ${total.oprovad} oprövade. Committa data/provningar-tak.json.`);
 }
+
+// Led 2: de gamla får bara krympa, och listan är namngiven.
+//
+// Ett tal ensamt duger inte: då kan en post rättas medan en annan går sönder,
+// och skulden ser oförändrad ut fast den bytt innehåll. Med id i listan måste
+// den rättade strykas, och den nya kan inte gömma sig bakom den.
+const facit = existsSync(SKULDFACIT)
+  ? (JSON.parse(readFileSync(SKULDFACIT, "utf-8")) as Skuldfacit)
+  : { count: total.gammal, ids: befolkning.flatMap(([, r]) => r.gamla) };
+const dom = domSkulden(
+  befolkning.flatMap(([, r]) => r.gamla),
+  facit,
+);
+
+if (dom.nya.length > 0) {
+  console.error(
+    `\n${dom.nya.length} sak(er) har fått en prövning som beskriver en annan version:\n` +
+      dom.nya.map((id) => `  ${id}`).join("\n") +
+      "\n\nBeloppet, citatet eller riktningen har ändrats efter att prövningen skrevs.\n" +
+      "Pröva om saken — lägg den INTE i facit/provningsskulden.json. Den filen är\n" +
+      "en skuld som ska betalas av, inte ett ställe att gömma nya poster i.",
+  );
+  rott = true;
+}
+
+if (dom.rattade.length > 0) {
+  console.log(
+    `\n${dom.rattade.length} sak(er) i facit är prövade på nytt och ska strykas ur\n` +
+      "facit/provningsskulden.json:\n" +
+      dom.rattade.map((id) => `  ${id}`).join("\n"),
+  );
+}
+
+if (rott) process.exit(1);

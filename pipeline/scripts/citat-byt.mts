@@ -29,9 +29,10 @@ import { normalizeForVerbatim } from "../src/gates.ts";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { kanon, lasProvningar } from "../src/provningar.ts";
 import { provaByte, bytCitat, rattelsePost, type Byte, type Bytesrad } from "../src/citatbyte.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
-const datum = new Date().toISOString().slice(0, 10);
+const datum = svenskDag();
 
 const [listfil] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const skriv = process.argv.includes("--skriv");
