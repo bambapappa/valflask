@@ -2164,14 +2164,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 1,
-      "msek_base": 5,
-      "msek_high": 20,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Fonden inrättas genom ett regelverk; utbetalningarna finansieras av de förverkade medlen och är ingen ny kostnad.",
       "confidence": 0.4,
-      "calculation": "Att inrätta fonden kräver ett regelverk — en promemoria för 1–3 miljoner kronor eller en statlig utredning för 5–10 miljoner — plus system för att hantera medlen, sammanlagt upp till 20 miljoner som engångskostnad. Utbetalningarna ur fonden är ingen ny statlig kostnad: de finansieras av pengar som förverkats från brottslingar."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -2186,6 +2186,11 @@
         "date": "2026-07-27",
         "change": "Beloppet ändrat från 500 till 5 miljoner kronor, och perioden från per år till engångskostnad. Utbetalningarna ur fonden räknades tidigare som en statlig utgift, men de finansieras av de förverkade medlen.",
         "commit": "09a70ae94bdcb20df891022dc12bc4070bc1b9ea"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -21187,14 +21192,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnaden beror på om undantaget utformas som ett riktat statsbidrag eller en skattelättnad. Basantagandet är en mindre utredning och viss kompensation till ett fåtal skolor. Högt scenario inkluderar",
       "confidence": 0.3,
-      "calculation": "En statlig utredning eller intern analys inom Regeringskansliet kostar typiskt 5–30 miljoner kronor. Antar en mindre analys: låg 3 miljoner kronor, bas 10 miljoner kronor, hög 30 miljoner kronor. Berör endast utredningskostnaden, inte eventuella framtida regleringskostnader."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -21214,6 +21219,11 @@
         "date": "2026-08-22",
         "change": "Uträkningens inledande mening om att texten rekonstruerats i efterhand är borttagen från den publicerade kalkylen. Den beskrev vår arbetsgång, inte löftet, och antydde felaktigt att övriga uträkningar skrivits samtidigt med beloppet. Belopp och uträkning i övrigt är oförändrade.",
         "commit": "7fe4d429e2cb4dfaf438bbb9b8815ce634d1629b"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor per år. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -24446,14 +24456,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 1,
-      "msek_base": 5,
-      "msek_high": 10,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar 10–50 extra ärenden/år à 100 000–200 000 kr i rättskedjan, ger 1–10 msek/år.",
       "confidence": 0.3,
-      "calculation": "En mindre departementsutredning eller skrivelse: 0–5 miljoner kronor. En mer omfattande statlig utredning med remissarbete: 5–10 miljoner kronor. I praktiken försumbart."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -24473,6 +24483,11 @@
         "date": "2026-08-22",
         "change": "Perioden rättad från årlig till engångskostnad. Uträkningen räknar en engångsutredning.",
         "commit": "7fe4d429e2cb4dfaf438bbb9b8815ce634d1629b"
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -38052,13 +38067,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Lagförslag om häktningsregler – direkt kostnad för utredning och lagstiftningsarbete. Eventuella följdkostnader för Kriminalvården bedöms inte, eftersom löftet hålls av en lag eller en reglering.",
       "confidence": 0.2,
-      "calculation": "Antas kräva en SOU-utredning (~10 mkr). Om endast departementspromemoria lägre; intervall 0–30 mkr engång."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -38073,6 +38088,11 @@
         "date": "2026-08-21",
         "commit": "8f894b8",
         "change": "Uträkningen eller metodnoten hänvisade till en intern regelkod. Skälet står nu i klartext. Beloppet är oförändrat."
+      },
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -44819,13 +44839,13 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 15,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Regel- och riktlinsändring för befintligt statligt riskkapital. Direkt kostnad avser admin/omställning, inte själva investeringarna som redan är budgeterade.",
       "confidence": 0.35,
-      "calculation": "Löftet ändrar villkoren för hur befintligt statligt riskkapital (Almi, Industrifonden m.fl.) ska investeras — krav på saminvestering med privat kapital. Ingen ny statsutgift för själva investeringarna eftersom dessa redan finns i budgeten. Direkt kostnad utgörs av administrativ omställning: nya investeringspolicyer, granskningsrutiner och uppföljning. Snittar mot lägre ände av SOU-liknande policyöversyn (~5 msek) med osäkerhet uppåt vid systemändringar (~15 msek)."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -44835,7 +44855,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor per år. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -45304,14 +45330,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet avser en översyn av rättsliga möjligheter, inte införandet av ett register. Prissätts som en statlig utredning/översyn.",
       "confidence": 0.5,
-      "calculation": "SOU-liknande översyn: sekretariat, experter, remissförfarande under 1–2 år. Engångskostnad 5–30 mkr, bas ca 15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -45321,7 +45347,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -51051,13 +51083,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 15,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Ratificering är en reglering; prissätter endast direkt utrednings- och implementeringskostnad, inte löpande tillsyn eller samhällsföljder.",
       "confidence": 0.4,
-      "calculation": "En ratificering kräver typiskt en departementsutredning (Ds) eller mindre SOU samt remiss och proposition. Kostnad ~2–10 mkr för utredning plus viss implementering; sätter bas 5, spann 0–15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -51067,7 +51099,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -57402,14 +57440,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Prissätter själva utredningen, inte framtida regleringar eller marknadseffekter. En statlig utredning av SOU-typ kostar ofta 5–30 mkr.",
       "confidence": 0.5,
-      "calculation": "Antar en utredning av SOU-typ med kansli, sekretariat, experter och remissförfarande under 1–2 år. Låg 5 mkr, huvudscenario 15 mkr, hög 30 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -57419,7 +57457,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -68740,14 +68784,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Energikommissionen liknar en statlig utredning; engångskostnaden följer schablon för SOU:er (5–30 mkr).",
       "confidence": 0.65,
-      "calculation": "En typisk kommittéutredning (SOU) kostar i storleksordningen 5–30 mkr. Base sätts till 15 mkr som ett mittvärde."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -68757,7 +68801,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -69856,14 +69906,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 40,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet avser framtagandet av en statlig strategi/plan, inte själva genomförandet eller subventioner. Prissätts som en statlig utredning (SOU) eller intensivt myndighetsuppdrag. Osäkerhetsspannet…",
       "confidence": 0.5,
-      "calculation": "Kostnad för en strategi/utredning: 1–2 års arbete med sekretariat, experter, remissförfarande. ~5–30 mkr för en standard-SOU; högre (upp till 40 mkr) om den kräver konsultstöd, omfattande datainsamling eller internationella jämförelser om flera branscher."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -69873,7 +69923,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -70426,14 +70482,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 3,
-      "msek_base": 8,
-      "msek_high": 25,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Antar en lagstiftningsprocess med utredning och remissförfarande. Löftet är en regeländring utan specificerad ny verksamhet, varför den direkta statliga kostnaden avgränsas till utredning och…",
       "confidence": 0.4,
-      "calculation": "En SOU för översyn av adoptionslagstiftning ~5-15 mkr + juridiskt beredningsarbete inom departement + remiss och mindre systemändringar (ex. information till domstolar). Sammanlagt spann 3-25 mkr som engångskostnad."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -70443,7 +70499,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 8 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -71723,14 +71785,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 2,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är vagt (en bred lagöversyn) och avser främst en regeländring. Prissätts som en utredning/lagstiftningsprocess i SOU-storlek, vilket är den direkta statliga kostnaden. De svåröverskådliga…",
       "confidence": 0.4,
-      "calculation": "Antar en statlig utredning (SOU) kring äktenskapsbalken med efterföljande proposition. Typkostnad utredningsväsen: 5–15 mkr. Översyn + remiss + lagrådsremiss = upp till 30 mkr. Bas 10 mkr, i linje med jämförbart löfte. Low 2 mkr om departementsskrivelse räcker, high 30 mkr för fullskaleutredning."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -71740,7 +71802,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -71917,13 +71985,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnad för att utreda och genomföra regelförenklingar. Själva regelförändringarna är i huvudsak kostnadsneutrala för staten; eventuella dynamiska effekter eller besparingar hos andra aktörer…",
       "confidence": 0.4,
-      "calculation": "Löftet är ett effektiviserings-/regelförenklingslöfte utan angiven nivå. Kostnaden för staten är arbetet med att se över, remittera och införa ändrade byggregler. En utredning (SOU) kostar typiskt 5-15 mkr. Tillkommande arbete på Regeringskansliet och Boverket kan kräva ytterligare resurser. Base sätts till 10 mkr som en engångsadministration, med ett spann från i princip kostnadsneutralt till en något större insats (0-30 mkr)."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -71933,7 +72001,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -72483,14 +72557,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 50,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet saknar konkret åtgärd; prissätter endast administrativa kostnader för utredning och lagstiftning. Eventuella framtida skatteeffekter kvantifieras inte här.",
       "confidence": 0.3,
-      "calculation": "Antar en mindre statlig utredning och efterföljande lagstiftningsarbete ~10 mkr. Osäkerheten fångas i intervallet 5-50 mkr. Inga intäktsökningar eller -minskningar inräknade eftersom löftet inte specificerar en ny skatt eller lättnad."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -72500,7 +72574,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -73177,13 +73257,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Regelförenkling är en lagstiftningsåtgärd; direkt statlig kostnad är försumbar. Eventuell utredning eller översyn kan kosta en mindre engångssumma.",
       "confidence": 0.3,
-      "calculation": "En statlig utredning (SOU) eller en större intern översyn kostar typiskt 5–30 mkr som engångskostnad. Inga löpande statsutgifter för själva förenklingen."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -73193,7 +73273,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -73268,14 +73354,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är att tillsätta en kommission, vilket är en utredningsåtgärd. Prissätts som en statlig utredning (SOU) med sekretariat, experter och viss research. Kostnaden avser själva kommissionen, inte…",
       "confidence": 0.6,
-      "calculation": "En typisk statlig utredning kostar 5–30 mkr. En kommission med brett uppdrag och viss egen utredningskapacitet antas ligga i det övre spannet. Base sätts till 10 mkr för ett omfattande men tidsbegränsat uppdrag."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -73285,7 +73371,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -73875,14 +73967,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Direkt kostnad för utredning och lagstiftningsarbete för att avskaffa 101 regler. Avregleringar i sig är kostnadsfria; följdeffekter ej medräknade.",
       "confidence": 0.4,
-      "calculation": "Uppskattning av engångskostnad för utredning och lagarbete: ~5-30 mkr baserat på typiska utredningskostnader (SOU)."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -73892,7 +73984,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -75570,14 +75668,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är att uppdatera en strategi med nya mål och åtgärder, vilket i praktiken innebär en utredning eller strategiprocess. Prissätts som en statlig utredning (SOU) eller större myndighetsuppdrag…",
       "confidence": 0.4,
-      "calculation": "Kostnad för att ta fram en ny livsmedelsstrategi. Antagande: en parlamentarisk kommitté eller större utredning. ~1-2 års arbete, sekretariat, experter, remissförfarande. Jämförbart med typiska SOU-kostnader. Låg: 5 mkr (kompakt process), bas: 15 mkr (normal utredning), hög: 30 mkr (bred process med omfattande konsultstöd och hearings)."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -75587,7 +75685,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -77528,14 +77632,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Prissätter endast framtagandet/införandet av handlingsplanen som en utredningsliknande insats; underliggande åtgärder i citatet prissätts inte här.",
       "confidence": 0.4,
-      "calculation": "En handlingsplan/utredning antas kosta i SOU-storlek: arbetsgrupp, konsultationer, förankring. Låg 5, bas 15, hög 30 mkr engång. Åtgärder som skolundervisning, normarbete och personalutbildning prissätts inte i detta löfte, utan hade krävt egna nivåer."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -77545,7 +77649,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -78687,14 +78797,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en grundlagsändring: att avskaffa monarkin och införa en republik med folkvald statschef. Det kräver minst en utredning och en grundlagsändringsprocess. Prissätts som en utredningskostnad…",
       "confidence": 0.3,
-      "calculation": "Antagande: En statlig utredning (SOU) kostar vanligen 5–30 mkr. En större utredning om statsskicket kan ligga i det övre spannet. Base sätts till 10 mkr. Själva omställningen (val, nya institutioner) är en följd som inte prissätts här, och dagens apanage omfördelas snarare än ökar statens nettokostnad."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -78704,7 +78814,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -78733,14 +78849,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Lagstiftningsprocessen kräver utredning och beredning, liknande en SOU. Engångskostnad.",
       "confidence": 0.5,
-      "calculation": "En statlig utredning kostar vanligen 5–30 mkr. Här antas en utredning och efterföljande proposition, vilket ger ett intervall 5–30 mkr med bas 10 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -78750,7 +78866,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -79291,14 +79413,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en systemreform utan angiven nivå. Prissätter den direkta kostnaden för att utreda och införa ett nytt skolpengssystem, inte de omfördelningseffekter som följer. Jämförbara löften varierar…",
       "confidence": 0.4,
-      "calculation": "Antar en statlig utredning (SOU) samt visst implementeringsstöd. Utredning ~5-10 mkr, systemförändring och administration ~10-20 mkr. Totalt ~15 mkr som bas, med spann 5-30 mkr för osäkerhet kring omfattning."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -79308,7 +79430,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -79665,14 +79793,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 50,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en inriktning utan konkret åtgärd eller belopp. En 'smidigare' kombination kan tolkas som en utredning, pilotprojekt eller mindre infrastruktursatsningar såsom cykelparkeringar vid…",
       "confidence": 0.4,
-      "calculation": "Antagande: löftet innebär en utredning/plan (5-15 mkr) kombinerat med enklare fysiska åtgärder som fler cykelställ och information (~10-50 mkr). Basen är en SOU-utredning (15 mkr) med begränsad pilot."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -79682,7 +79810,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -81026,14 +81160,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Extern granskning av en myndighets agerande i ett specifikt ärende, liknande en mindre statlig utredning eller revision.",
       "confidence": 0.65,
-      "calculation": "Kostnaden för en extern granskning bedöms ligga i intervallet 5–30 mkr, baserat på typiska kostnader för statliga utredningar (SOU) och externa revisioner. Basantagandet är en medelstor granskning."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -81043,7 +81177,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -81266,13 +81406,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 15,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet avser att driva på för operativ samordning, vilket främst innebär diplomatiskt initiativ och eventuellt en förstudie/utredning – inte en permanent försvarskostnad. Därför bedöms en…",
       "confidence": 0.3,
-      "calculation": "En statlig utredning eller förstudie (t.ex. SOU) kostar vanligen 5–15 mkr. Löftet innebär inget nytt permanent åtagande, utan endast en initiativfas, varför basen sätts till 5 mkr med ett osäkerhetsintervall ner till 0 och upp till 15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -81282,7 +81422,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -81403,14 +81549,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet avser framtagandet av en nationell plan, inte själva infrastrukturinvesteringarna. Kostnaden är en engångsutgift för utredningsarbete i SOU-storlek.",
       "confidence": 0.6,
-      "calculation": "En statlig utredning (SOU) kostar vanligen 5–30 mkr. Antar en medelstor planeringsinsats för laddinfrastruktur för tung trafik, bas ~15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -81420,7 +81566,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -85144,14 +85296,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnad för att ta fram en livsmedelsstrategi om utrednings- och planlöften. Jämförbar plan bedömd 0, men strategiarbete kräver utredningsresurser.",
       "confidence": 0.5,
-      "calculation": "SOU/strategiarbete: engångskostnad typiskt 5–30 mkr, bas 10 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -85161,7 +85313,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -86807,14 +86965,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är att 'ta fram' en lösning, vilket tolkas som en utredning/plan. Prissätts som en statlig utredning (SOU). Den framtida försäkringslösningens kostnad prissätts inte här.",
       "confidence": 0.4,
-      "calculation": "En statlig utredning (SOU) kostar vanligtvis 5–30 mkr i arvoden, kansli och administration. Base sätts till 15 mkr för en medelstor utredning. Spannet fångar enklare analys (5 mkr) till bred parlamentarisk kommitté (30 mkr)."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -86824,7 +86982,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -86899,14 +87063,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser utredning/övervägande av gemensam upphandling, inte själva flygplansinköpet.",
       "confidence": 0.4,
-      "calculation": "Övervägande/utredning i SOU-storlek: 5–30 mkr engång, bas 15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -86916,7 +87080,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -87455,13 +87625,13 @@
       "type": "utgift",
       "period": "engang",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 30,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är ett nationellt mål utan konkreta finansieringsåtaganden. Prissätts som en utredning eller handlingsplan (SOU-storlek, inte som investeringarna som krävs för att nå målet (regel….",
       "confidence": 0.2,
-      "calculation": "Att sätta ett mål och ta fram en strategi kostar. En statlig utredning (SOU) för ett komplext område som transportpolitik med externa experter, remissförfarande och analyser. ~5-10 utredare/experter × 1-2 år. Base ~5 mkr för enklare uppdrag, high ~30 mkr om det inkluderar breda pilotstudier eller konsultstöd. De underliggande investeringarna prissätts inte här."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -87471,7 +87641,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -88855,14 +89031,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 5,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en bred inriktningsförklaring utan konkret åtgärd eller belopp. Prissätts som ett inriktningslöfte (base 0 msek). Det höga spannet (upp till 30 msek) avser en eventuell….",
       "confidence": 0.2,
-      "calculation": "Ingen konkret åtgärd, nivå eller utpekad reform anges. Citatet är en sammanfattande inriktning ('stärka utvecklingen'), vilket ger base = 0 msek. Skulle löftet konkretiseras till en utredning/plan prissätts det till en engångskostnad i typisk SOU-storlek: ~5–30 mkr. Spannet reflekterar denna möjliga, men osäkra, kostnad."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -88872,7 +89048,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -110947,14 +111129,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 20,
-      "msek_high": 50,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Planlöfte: prissatt som utredning/nationell plan (~5–30 msek) jämte litet startstöd till alternativmetoder. Själva omställningen till djurförsöksfri forskning prissätts ej.",
       "confidence": 0.5,
-      "calculation": "Huvudåtagandet är 'ta fram en nationell plan' ≈ SOU-liknande utredning på ca 10–15 msek. 'Stötta satsningarna på alternativ' tolkas som ett begränsat, initialt stöd (t.ex. forskningsmedel till alternativa metoder) om ca 5–35 msek. Summerat intervall ca 5–50 msek som engångskostnad; den framtida politik planen kan leda till räknas inte in enligt avgränsningsreglerna."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -110964,7 +111146,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 20 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -112081,14 +112269,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnad för utredning av grundlagsändring, ej samhällsföljder. Jämförbar med SOU-utredningar.",
       "confidence": 0.4,
-      "calculation": "Grundlagsändring kräver utredning (SOU) ~5-30 mkr. Bas 15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -112098,7 +112286,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -112219,14 +112413,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Vagt löfte om att modernisera etikprövningen; kostnad för utredning och eventuell översyn, ej reformens fulla effekt.",
       "confidence": 0.3,
-      "calculation": "Antagande: utredning (SOU-liknande) 5–15 mkr + eventuell implementeringskostnad 0–15 mkr ≈ 5–30 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -112236,7 +112430,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -112461,14 +112661,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en utrednings-/reformambition utan konkret nivå. Kostnaden avser en statlig utredning (SOU) för att förenkla grundskyddet, inte genomförandet.",
       "confidence": 0.3,
-      "calculation": "En SOU-utredning kostar vanligen 5–30 mkr (arvoden, sekretariat, remisshantering). Bas 15 mkr, spann 5–30 mkr. Ingen löpande kostnad prissätts eftersom reformens utformning är okänd."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -112478,7 +112678,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -119005,14 +119211,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 10,
-      "msek_base": 25,
-      "msek_high": 50,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en nationell plan med riktade stöd, men utan belopp. Jämförbara planlöften kostar 0–15 mkr. Riktade stöd till industrin kan vara betydande, men här prissätts endast planen och initiala…",
       "confidence": 0.4,
-      "calculation": "Nationell plan: 10–30 mkr (jfr SOU-utredning). Riktade stöd: initiala förstudier/administrativa kostnader 0–20 mkr. Totalt 10–50 mkr, bas 25 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -119022,7 +119228,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 25 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -119419,14 +119631,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 20,
-      "msek_high": 50,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnaden för att ta fram en ny energiöverenskommelse, inte dess framtida politik. Jämförbar med utredningar/överenskommelser.",
       "confidence": 0.4,
-      "calculation": "En ny energiöverenskommelse kräver utredning, förhandlingar och kanske en SOU. Liknande processer kostar 5–50 mkr. Bas 20 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -119436,7 +119648,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 20 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -121627,14 +121845,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är att utreda och införa tariffer; kostnaden för själva utredningen och framtagandet av priser, inte effekterna av tarifferna.",
       "confidence": 0.4,
-      "calculation": "En statlig utredning (SOU) kostar vanligen 5–30 mkr; här antas en utredning med myndighetsuppdrag att ta fram fasta priser, vilket ryms i intervallet."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -121644,7 +121862,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -122455,14 +122679,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser endast utredningskostnaden för att utreda förbudet, inte eventuella framtida effekter. Jämförbar med SOU-storlek.",
       "confidence": 0.4,
-      "calculation": "En statlig utredning (SOU) kostar vanligen 5–30 mkr i engångskostnad. Bas 15 mkr som mittpunkt."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -122472,7 +122696,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -122547,14 +122777,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnad för utredning och framtagande av regelverk, ej framtida vårdkostnader.",
       "confidence": 0.4,
-      "calculation": "Liknande utredningar (SOU) kostar 5–30 mkr. Antagande: 1–2 utredningar + remissförfarande ≈ 15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -122564,7 +122794,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -123191,14 +123427,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnad för lagändring och processförtydligande, ej samhällsföljder. Baserat på typisk utrednings- och lagstiftningskostnad.",
       "confidence": 0.4,
-      "calculation": "Antag SOU-utredning (5–15 mkr) + lagrådsremiss och proposition (5–10 mkr) + informationsinsatser (0–5 mkr) ≈ 5–30 mkr, base 15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -123208,7 +123444,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -123375,14 +123617,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnad för utredning och lagändring, inte samhällsföljder. Jämförbara löften ligger nära 0, men här ingår en SOU-liknande utredning.",
       "confidence": 0.4,
-      "calculation": "Antagande: en statlig utredning (SOU) kostar 5–30 mkr, inkl. betänkande och remiss. Bas 15 mkr. Ingen löpande kostnad eftersom regelförtydligande inte direkt ändrar budgeten."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Lagar, förbud och regeländringar prissätts till noll: löftet hålls av lagändringen, vars beredning — utredning, remiss och departementsarbete — utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad regeländringen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -123392,7 +123634,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Lagar, förbud, avregleringar och marknadsåtgärder prissätts till noll: löftet hålls av lagändringen, vars direkta kostnad är försumbar. Beloppet avser åtgärden, inte dess följder. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -127275,14 +127523,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är en lagstiftningsöversyn och ett övervägande, inte en färdig reform. Prissätts som en SOU-liknande utredning; eventuella framtida insatser ingår inte.",
       "confidence": 0.5,
-      "calculation": "En statlig utredning/översyn kostar vanligen 5–30 mkr. Här antas en översyn av lagstiftningen med rättsliga analyser och remissförfarande: 5–30 mkr, bas 15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -127292,7 +127540,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -133434,14 +133688,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnaden för att tillsätta och driva en kommission, ej effekter av dess förslag. Jämförbar med SOU-utredning.",
       "confidence": 0.6,
-      "calculation": "En statlig utredning/kommission kostar vanligen 5–30 mkr i direktutredningskostnader (arvoden, sekretariat, resor, administration). Bas 15 mkr som mittpunkt."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -133451,7 +133705,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -134610,14 +134870,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är att utreda möjligheten, inte införa reformen. Kostnaden avser en statlig utredning i SOU-storlek, jämförbar med Vänsterpartiets stöd för en utredning om frivillig dödshjälp, som prissatts till 12 mkr.",
       "confidence": 0.65,
-      "calculation": "En SOU-utredning med expertgrupp, sekretariat och remissförfarande kostar vanligen 5–30 mkr. Bas 15 mkr, spann 5–30 mkr. Engångskostnad."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -134627,7 +134887,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -136813,14 +137079,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser en utredning/kommitté i SOU-storlek, inte framtida åtgärder mot psykisk ohälsa.",
       "confidence": 0.5,
-      "calculation": "En statlig utredning (SOU) kostar vanligen 5–30 mkr i direktutredningskostnad; här antas en bred tvärsektoriell utredning ≈ 15 mkr."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -136830,7 +137096,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 15 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -137749,14 +138021,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5,
-      "msek_base": 10,
-      "msek_high": 30,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Avser kostnaden för att ta fram strategin, inte samhällsföljder. Jämförbar med andra nationella strategiuppdrag.",
       "confidence": 0.4,
-      "calculation": "Strategi/utredning på SOU-nivå: 5–30 mkr engång. Bas 10 mkr utifrån jämförbara strategiuppdrag; osäkerhet pga oklar bredd."
+      "calculation": "Hela det tidigare beloppet var kostnaden för att ta fram underlaget — en utredning, en plan eller en kommission. Utrednings- och planlöften prissätts till noll: det är utredningen som prissätts, inte den politik den kan leda till, och dess egen kostnad räknas som försumbar därför att arbetet utförs av statens befintliga förvaltning och ryms i de personalkostnader staten redan bär. Vad utredningen sedan kan leda till är inte utlovat i kronor och prissätts inte här."
     },
     "financing_claimed": {
       "described": false,
@@ -137766,7 +138038,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "change": "Beloppet nollat, tidigare 10 miljoner kronor. Utrednings- och planlöften prissätts till noll: är löftet att utreda, se över eller ta fram en plan är det utredningen som prissätts, inte den politik den kan leda till. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
