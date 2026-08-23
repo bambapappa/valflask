@@ -2,6 +2,8 @@
  * Kör paritetssvepet och håller kön som ska kvitteras.
  *
  *   pnpm paritetssvepet                     — kör svepet, skriv ingenting
+ *   pnpm paritetssvepet -- --prispar        — den andra hälften: två prissatta
+ *                                             löften om samma sak, långt isär
  *   pnpm paritetssvepet -- --skriv          — uppdatera data/paritetskon.json
  *   pnpm paritetssvepet -- --kvittera <nyckel> --utfall <utfall> --skal "…"
  *
@@ -16,7 +18,9 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import {
+  mandatperioden,
   paritetsfynd,
+  prisparfynd,
   okvitterade,
   vantarPaBeslut,
   type Kvittens,
@@ -66,6 +70,24 @@ const skrivKo = (ko: Kofil): void => {
 
 const loften: ParitetsLofte[] = JSON.parse(readFileSync(resolve(rot, "data/promises.json"), "utf8"));
 const fynd = paritetsfynd(loften);
+
+// Den andra hälften. Rapporterande och utan kö: det här är en läslista, och
+// varje rad ska läsas mot båda löftenas uträkningar innan något rättas.
+if (finns("--prispar")) {
+  const prispar = prisparfynd(loften);
+  const belopp = new Map(loften.map((l) => [l.id, mandatperioden(l)]));
+  console.log(`\n${prispar.length} par där båda löftena är prissatta och beloppen ligger minst dubbelt isär.`);
+  console.log("Två partier FÅR lova olika mycket av samma sak — det som ska läsas är om de");
+  console.log("gör det, eller om vi räknat dem olika.\n");
+  for (const f of prispar) {
+    const lag = belopp.get(f.nollat) ?? 0;
+    const hog = belopp.get(f.prissatt) ?? 0;
+    console.log(`${(hog / lag).toFixed(1).padStart(7)}×  ${f.kategori}  delar ${f.delade_ord.join(", ")}`);
+    console.log(`         ${String(lag).padStart(7)}  ${f.nollat_partier.join(",")}  «${f.nollat_rubrik}»`);
+    console.log(`         ${String(hog).padStart(7)}  ${f.prissatt_partier.join(",")}  «${f.prissatt_rubrik}»`);
+  }
+  process.exit(0);
+}
 const ko = lasKo();
 const tidigare = new Map(ko.fynd.map((f) => [f.nyckel, f]));
 
