@@ -42143,7 +42143,7 @@
       "fetched_at": "2026-08-16T18:38:41.410Z"
     },
     "category": "skatter",
-    "loftestyp": "inriktning",
+    "loftestyp": "reform",
     "cost": {
       "type": "utgift",
       "period": "per_ar",
@@ -42153,7 +42153,7 @@
       "basis": "granskare",
       "basis_url": null,
       "method_note": "Ingen lagändring görs; att behålla befintligt ränteavdrag medför ingen ny statsfinansiell kostnad. Beloppet avser åtgärden, inte följder av en framtida sänkning. (belopp satt av granskare)",
-      "calculation": "Löftet är att behålla ränteavdragen «på nuvarande nivå» — gällande rätt lämnas alltså oförändrad. Ingen skattesats ändras, inget avdrag införs eller avskaffas, och statens intäkter blir desamma som utan löftet. Noll följer av att ingenting förändras, inte av att kostnaden är okänd.",
+      "calculation": "Löftet pekar ut en bestämd åtgärd: ränteavdragen för bolån ska behållas. Beloppet är ändå noll, och skälet är att «på nuvarande nivå» inte är en NIVÅ i kostnadsreglernas mening utan gällande rätt. Ingen skattesats ändras, inget avdrag införs eller avskaffas, och statens intäkter blir desamma som utan löftet. Att lova att något ska bestå är ingen ny statlig utgift och ingen ny intäktsminskning. Skulle avdraget vara på väg att trappas ned vore ett löfte om att behålla det en verklig kostnad mot det utfallet, men någon sådan nedtrappning är inte beslutad.",
       "confidence": 0.9
     },
     "financing_claimed": {
@@ -42164,7 +42164,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Sorten ändrad från inriktning till reform. Beloppet är oförändrat — det som var fel var klassningen, inte siffran. Sorten sattes maskinellt ur citat och prissättning, och ett nollat löfte blev därför inriktning även när citatet pekar ut en bestämd åtgärd. Uträkningen skriver nu ut vilken regel nollan följer av."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -82484,8 +82490,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-23",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Citatet lyder «Mer pengar i plånboken för fler» — fyra ord utan skatt, nivå eller mottagare. Det är en paroll om ett önskat utfall, inte ett åtagande om en åtgärd, och partiets faktiska skatteförslag ligger på egna löften. Uträkningen konstaterade redan att ingen konkret skattesänkning anges."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
