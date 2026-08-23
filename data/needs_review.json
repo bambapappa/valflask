@@ -3519,5 +3519,51 @@
       "calculation": "Citatet anger riktning ('utveckla, inte avveckla') men ingen åtgärd, nivå eller belopp → inriktningslöfte enligt regel 13, bas 0. Jämförbara löften: 'stärka läraryrket...' = 0 msek, medan konkreta delar om anpassad skola (utredningskrav ~5 msek, vägar efter anpassad gymnasieskola ~80 msek) prissätts på egna löften. High ~50 msek rymmer ev. ospecificerade mindre utvecklingsinsatser (kompetens, material), low 0 då ingen åtgärd är utpekad."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2610 (1000), p-2026-2171 (0), p-2026-2350 (5), p-2026-2462 (0), p-2026-1973 (80) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~5"
+  },
+  {
+    "candidate": {
+      "title": "Grundlagsskydda aborträtten även på EU-nivå",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Dessutom vill Liberalerna att aborträtten grundlagsskyddas även på EU-nivå.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/abort",
+    "articleTitle": "Abort – Liberalerna",
+    "duplicateOf": "p-2026-2716"
+  },
+  {
+    "candidate": {
+      "title": "Skapa fler anpassade utbildningar efter gymnasiet",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Därför vill Liberalerna skapa fler anpassade utbildningar efter gymnasiet.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/anpassad-skola",
+    "articleTitle": "Anpassad skola – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå; prissatt som expansion av platser i anpassad utbildning efter gymnasiet via statsbidrag per plats. Tunt underlag, därför bred spann och låg säkerhet.",
+      "confidence": 0.3,
+      "calculation": "Anpassade utbildningar efter gymnasiet (f.d. gymnasiesärskolans individuella program) har idag grovt räknat ~2 000 deltagare. Löftet anger ingen nivå, så antagande: 25–100 % fler platser = 500–2 000 nya heltidsplatser. Statsbidraget per heltidsplats i (anpassad) vuxenutbildning antas ~150–250 tkr/år. Låg: 500 × 150 tkr ≈ 75 msek; hög: 2 000 × 250 tkr ≈ 500 mkr, men med hänsyn till partiets övriga prioriteringar sätts hög till 300. Bas ~150 msek motsvarar ~750 nya platser à ~200 tkr. Antalsantagandet är min uppskattning; löftet saknar egen siffra."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1067 (250), p-2026-1270 (0), p-2026-1971 (0), p-2026-0684 (75), p-2026-2166 (100)"
   }
 ]
