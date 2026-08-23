@@ -32,6 +32,22 @@
  * uppfinna en koppling. Skulden är fryst i `facit/ankarskulden.json` och får
  * bara krympa.
  *
+ * VAD KRAVET INTE GÄLLER: en post vars hela publicerade kostnad är noll.
+ * Kravet handlar om ett LÅNAT BELOPP som läsaren inte kan följa till sin källa.
+ * Är låg, bas och hög alla noll finns inget sådant belopp. Meningen som nämner
+ * ett annat löfte gör då något annat — den visar ett PREJUDIKAT FÖR NOLLAN:
+ * «ett jämförbart löfte om en rättssäker migrationspolitik är prissatt till
+ * 0 mkr på samma grund». Det är den styrkning kostnadsreglerna uttryckligen ber
+ * om, och grinden fällde den praxis den borde belöna.
+ *
+ * Avgränsningen är hela kostnaden och inte bara basbeloppet, och skillnaden är
+ * inte akademisk. Av de 68 nollade posterna i skulden 2026-08-23 bär 17 ett
+ * nollskilt spann, och i två av dem — «jämförbara löften ligger 0–15 mkr … bas
+ * 0, osäkerhet upp till 15 mkr» — är det TAKET som är lånat. Hade avgränsningen
+ * läst basbeloppet ensamt hade de två sluppit ut på en teknikalitet. Nu blir de
+ * kvar, tillsammans med de femton vars tak kommer ur den egna texten; att skilja
+ * dem åt kräver en läsning, och den läsningen är just vad skulden står för.
+ *
  * VAD DET INTE FÅNGAR: om gruppen som posten sitter i är RÄTT grupp, eller om
  * beloppet som lånas är rimligt. Det är en läsning, inte en grind.
  */
@@ -44,12 +60,26 @@ export interface AnkarPost {
   id: string;
   group_id?: string | null;
   status?: string;
-  cost: { calculation?: string | null; anchor_ids?: readonly string[] | null };
+  cost: {
+    calculation?: string | null;
+    anchor_ids?: readonly string[] | null;
+    msek_low?: number | null;
+    msek_base?: number | null;
+    msek_high?: number | null;
+  };
+}
+
+/** Publicerar posten över huvud taget något belopp? */
+export function barBelopp(post: AnkarPost): boolean {
+  const { msek_low, msek_base, msek_high } = post.cost;
+  return [msek_low, msek_base, msek_high].some((v) => (v ?? 0) !== 0);
 }
 
 /** Sant om posten lånar ett belopp utan en spårbar koppling till källan. */
 export function lanarUtanSparbartAnkare(post: AnkarPost): boolean {
   if (!LANAR_BELOPP.test(post.cost.calculation ?? "")) return false;
+  // En nolla lånar ingenting. Se docstringen ovan.
+  if (!barBelopp(post)) return false;
   if (post.cost.anchor_ids && post.cost.anchor_ids.length > 0) return false;
   return !post.group_id;
 }
