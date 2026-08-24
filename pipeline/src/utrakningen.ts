@@ -74,6 +74,11 @@ const NOLLSKAL: Array<[string, RegExp]> = [
   ["bred uppräkning", /uppräkning|önskelista|inriktning|flera politikområden|utan konkret|räknar upp|önskat utfall|mål(?:et)? (?:i sig|har ing)/iu],
   ["prissatt en gång på ett annat löfte", /dubbelräkn|räkna samma politik|prissätts (?:en gång|på ett annat|som egna|som eget|var för sig|på de löftena)|ligger på (?:ett annat|partiets)|eget(?:s|na)? löfte|egna löften|egna specifika|konkreta \w+löften|reformens egna delar|jämförbart med p-\d/iu],
   ["varken åtgärd eller nivå anges", /ing(?:en|et) (?:nivå|belopp|åtgärd)|anger (?:varken|ingen|inget)|utan (?:att ange|angiven)|utan specificerad|saknar angiven|värdeord|inte en åtgärd|går inte att (?:veta|räkna|prissätta)|ingenting att räkna på|inte specificeras|pekar inte ut (?:någon|något)|prissätts (?:därför )?inte\b/iu],
+  // Regeln `ankarlost` i `regelnollning.ts`: åtgärden är utpekad, nivån saknas,
+  // och beståndet har inget jämförbart löfte att låna av. Nollan bär då sitt
+  // skäl genom att skriva ut just det — och utan den här raden läser
+  // `nollan_utan_skal` en sådan uträkning som en oförklarad nolla.
+  ["underlaget räcker inte till en nivå", /beståndet saknar ett jämförbart löfte att ankra|underlaget inte räcker|gissningar som multipliceras/iu],
   ["försumbar direkt kostnad", /försumbar\w*|marginell\w*|obetydlig\w*|bärs av|betalar inte|kostar (?:staten|statskassan)? ?(?:ingenting|inget)|ing(?:en|a) nya? (?:statlig|offentlig|myndighets)\w*|inga nya (?:anslag|utgifter|investeringar)|inga löpande statliga utgifter/iu],
 ];
 

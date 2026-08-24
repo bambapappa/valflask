@@ -13,7 +13,8 @@
  * lägre än det nuvarande: verktyget tar bort en del av ett belopp, det sätter
  * aldrig ett nytt.
  *
- * Regeln är `utredning` eller `lagandring`. Reglerna och skälen står i
+ * Regeln är `utredning`, `lagandring`, `dubbelrakning`, `gallande` eller
+ * `ankarlost`. Reglerna och skälen står i
  * `src/regelnollning.ts`; de är fastställda sedan tidigare och skrivs inte här.
  *
  * **Skriptet avgör aldrig om regeln gäller.** Att ett löfte bara lovar en
@@ -30,6 +31,7 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import {
+  andring,
   nolla,
   paverkan,
   provaNollrad,
@@ -134,11 +136,13 @@ for (const parti of new Set(rader.flatMap((r) => byId.get(r.id)?.parties ?? []))
 }
 const riket = totalFlasket(loften) - totalFlasket(efter);
 
+// Tecknet, inte ett fast minus: nollas en BESPARING stiger partiets nettosumma,
+// och «−−20 000» säger ingenting till den som läser torrkörningen.
 console.log("\nMätt med sajtens egen uträkning, för mandatperioden:");
 for (const [p, mkr] of [...partier].sort(([a], [b]) => a.localeCompare(b))) {
-  console.log(`  ${p.toUpperCase()}: −${mkr.toLocaleString("sv-SE")} mkr`);
+  console.log(`  ${p.toUpperCase()}: ${andring(mkr)}`);
 }
-console.log(`  riket: −${riket.toLocaleString("sv-SE")} mkr`);
+console.log(`  riket: ${andring(riket)}`);
 
 const post = rattelsePost(
   rader.map((r) => ({ lofte: byId.get(r.id)!, rad: r })),

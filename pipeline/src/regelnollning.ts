@@ -10,6 +10,14 @@
  *     inte — det står utskrivet i regeln.
  *   · **Utrednings- och planlöften → 0.** «Är löftet att tillsätta en utredning
  *     eller ta fram en handlingsplan prissätts utredningen (försumbar).»
+ *   · **Netto, inte brutto → 0 när nivån är oförändrad.** «Prissätt bara den
+ *     marginella nettoförändringen.» Ett löfte att FORTSÄTTA med gällande
+ *     politik har ingen marginell förändring. Regeln heter `gallande` här.
+ *   · **Underlaget räcker inte → 0, utskrivet.** Straffskärpningsregeln säger
+ *     att ett belopp skrivs ut bara när aritmetiken har en yttre källa i båda
+ *     ändar, och att basen annars sätts till noll med skälet utskrivet. H5
+ *     tillämpade samma hållning utanför straffrätten 2026-08-23. Regeln heter
+ *     `ankarlost` här.
  *
  * A2 svepte beståndet efter den andra regeln 2026-08-13 och fällde fyra löften
  * av 690. Beståndet är 2 713 i dag, och ingenting mätte ledet däremellan. Det
@@ -36,9 +44,35 @@ export const REGLER = {
     "En del av ett paket som redan prissatts på paketets eget löfte prissätts till " +
     "noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och " +
     "syns för läsaren — det är bara beloppet som flyttats dit det hör hemma.",
+  gallande:
+    "Ett löfte att fortsätta med politik som redan gäller prissätts till noll: " +
+    "beloppet avser statens nya nettokostnad, och en oförändrad nivå är ingen ny " +
+    "kostnad. Löftet står kvar — det är ett löfte att inte ändra något, och det " +
+    "kan brytas.",
+  ankarlost:
+    "En utpekad åtgärd utan nivå prissätts till noll när beståndet saknar ett " +
+    "jämförbart löfte att ankra i: uträkningen skriver då ut att åtgärden borde " +
+    "kosta men att underlaget inte räcker. En antagen omfattning gånger ett antaget " +
+    "styckepris är två gissningar som multipliceras, och det är sämre än ingen " +
+    "siffra alls.",
 } as const;
 
 export type Regel = keyof typeof REGLER;
+
+/**
+ * Vad rättelsenoten kallar regeln.
+ *
+ * En `Record<Regel, string>` och inte en kedja med sista ledet som utfall:
+ * kedjan beskrev tyst varje ny regel som «lagar och förbud», och noten är
+ * publicerad text. Nu faller typkontrollen i stället, direkt vid tillägget.
+ */
+const NOTORD: Record<Regel, string> = {
+  utredning: "utredningar och planer",
+  lagandring: "lagar och förbud",
+  dubbelrakning: "en del av ett redan prissatt paket",
+  gallande: "en fortsättning av politik som redan gäller",
+  ankarlost: "en åtgärd utan nivå som beståndet saknar ankare för",
+};
 
 export interface Nollrad {
   id: string;
@@ -60,6 +94,9 @@ export interface Nollrad {
    */
   spann?: { low: number; base: number; high: number };
 }
+
+/** Vad `promises.schema.json` tar emot i `cost.calculation`. */
+export const UTRAKNING_MAX_TECKEN = 800;
 
 export const SKAL_MIN_TECKEN = 40;
 
@@ -113,6 +150,17 @@ export function provaNollrad(lofte: Lofte | undefined, rad: Nollrad): Nollprovni
       );
     }
     if (base < 0 || low < 0) fel.push(`${rad.id}: ett negativt belopp är inte en delrättning`);
+  }
+  // Schemat tar 800 tecken. Skrivs en längre uträkning går den in i datat och
+  // faller först i `schema-data.test.ts`, alltså efter att filen ändrats — och
+  // rättningen blir då en handredigering av en publicerad text. Bättre att
+  // raden faller innan något skrivs. Hände 2026-08-24: en av H21:s uträkningar
+  // landade på 804 tecken.
+  if (rad.utrakning.length > UTRAKNING_MAX_TECKEN) {
+    fel.push(
+      `${rad.id}: uträkningen är ${rad.utrakning.length} tecken, och schemat tar ${UTRAKNING_MAX_TECKEN}. ` +
+        "Korta den innan raden körs.",
+    );
   }
   if (rad.skal.trim().length < SKAL_MIN_TECKEN) {
     fel.push(
@@ -190,6 +238,19 @@ export function nolla<T extends Lofte>(lofte: T, rad: Nollrad, datum: string): T
   };
 }
 
+/**
+ * «Minskar med X» eller «ökar med X» — verbet väljs av tecknet.
+ *
+ * Verbet var fast. Nollas en BESPARING blir deltat negativt, och noten sade
+ * «M minskar med −20 000 miljoner kronor». Ett dubbelt negationstecken i
+ * publicerad prosa säger ingenting alls till en läsare, och åt fel håll till
+ * den som räknar: partiets besparingar minskar, alltså stiger dess nettosumma.
+ */
+export function andring(mkr: number): string {
+  const verb = mkr < 0 ? "ökar med" : "minskar med";
+  return `${verb} ${Math.abs(mkr).toLocaleString("sv-SE")} miljoner kronor`;
+}
+
 export function rattelsePost(
   rader: { lofte: Lofte; rad: Nollrad }[],
   datum: string,
@@ -198,18 +259,12 @@ export function rattelsePost(
   const ider = [...new Set(rader.map((r) => r.lofte.id))].sort();
   const partitext = [...summor.partier.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([p, mkr]) => `${p.toUpperCase()} minskar med ${mkr.toLocaleString("sv-SE")} miljoner kronor`)
+    .map(([p, mkr]) => `${p.toUpperCase()} ${andring(mkr)}`)
     .join(", ");
   const perRegel = new Map<Regel, number>();
   for (const r of rader) perRegel.set(r.rad.regel, (perRegel.get(r.rad.regel) ?? 0) + 1);
   const regeltext = [...perRegel.entries()]
-    .map(([r, n]) => {
-      const vad =
-        r === "utredning" ? "utredningar och planer"
-        : r === "dubbelrakning" ? "en del av ett redan prissatt paket"
-        : "lagar och förbud";
-      return `${n} enligt regeln att ${vad} prissätts till noll`;
-    })
+    .map(([r, n]) => `${n} enligt regeln att ${NOTORD[r]} prissätts till noll`)
     .join(", ");
 
   const delrattade = rader.filter((r) => r.rad.spann).length;
@@ -232,15 +287,11 @@ export function rattelsePost(
         : "Beloppen är nollade. ") +
       `Uträkningarna skriver ut vilken regel som gäller. ` +
       `${partitext ? `${partitext}. ` : ""}` +
-      `Summan för alla partier minskar med ${summor.riket.toLocaleString("sv-SE")} miljoner kronor för mandatperioden.`,
+      `Summan för alla partier ${andring(summor.riket)} för mandatperioden.`,
     why:
-      "Reglerna är fastställda sedan tidigare och står i projektets metodbeskrivning: ett löfte om " +
-      "att utreda något prissätts till utredningen och inte till den politik den kan leda till, och " +
-      "ett löfte som hålls av en lagändring prissätts till åtgärden och inte till dess följder. " +
-      "Reglerna tillämpades senast på hela beståndet i augusti, när det var en fjärdedel så stort. " +
-      "Sedan dess har nya löften tillkommit utan att någon kontroll mätte ledet, och de här posterna " +
-      "hade undgått regeln. Ingen bedömning av politiken har ändrats — bara vilken regel som gäller " +
-      "för dess prislapp.",
+      "Reglerna är fastställda sedan tidigare och står i projektets metodbeskrivning. De som " +
+      `tillämpats här är: ${[...perRegel.keys()].map((r) => REGLER[r]).join(" ")} ` +
+      "Ingen bedömning av politiken har ändrats — bara vilken regel som gäller för dess prislapp.",
     commit: "0000000",
   };
 }
