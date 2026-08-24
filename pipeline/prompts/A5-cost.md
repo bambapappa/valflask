@@ -84,6 +84,30 @@ Avgränsningsregler — de avgör VAD som ska prissättas:
     spannet, inte i basbeloppet. Samma åtgärd utan nivå ska prissättas lika
     oavsett vilket parti som lovar den.
 
+16. STRAFFSKÄRPNINGAR ÄR ETT UNDANTAG FRÅN REGEL 9. Fler och längre
+    fängelsedygn är en verklig statlig utgift, inte en samhällsföljd, så
+    nollningsregeln för lagändringar gäller INTE en skärpt straffskala. Men
+    beloppet skrivs bara ut när aritmetiken har en YTTRE KÄLLA I BÅDA ÄNDAR:
+    ett belagt antal domar eller fängelseår, och en belagd dygnskostnad i
+    kriminalvården. Saknas någondera sätter du base till 0 och skriver i
+    calculation att åtgärden borde kosta men att underlaget inte räcker. Ett
+    antaget antal gånger en antagen dygnskostnad är två gissningar som
+    multipliceras, och det är sämre än ingen siffra alls. Skriv ALDRIG att
+    kostnaden för fler frihetsberövanden är en beteendeföljd — det är den
+    formuleringen beslutet upphävde.
+17. STATENS EGET BEREDNINGSARBETE → 0. Arbetstid i Regeringskansliet, i en
+    myndighets befintliga organisation eller i ett utredningssekretariat ligger
+    redan i den statliga personalkostnaden. Det gäller beredningen av en
+    lagändring, ett direktiv i ett regleringsbrev, ett mål i en
+    myndighetsinstruktion, ett förtydligat tillsynskrav och ett
+    samordningsuppdrag utan egna medel. Frågan är inte om arbetet kostar något
+    — allt arbete gör det — utan om staten får en NY utgift eller om det utförs
+    av folk som redan är anställda.
+18. INGA INTERNA BETECKNINGAR I PUBLICERAD TEXT. `calculation` och
+    `method_note` visas för läsaren. Skriv aldrig ut ett löftes id (p-2026-…),
+    ett grupp-id eller något annat internt nummer där — beskriv det andra
+    löftet med ord i stället: «partiets eget löfte om språkkrav i förskolan».
+
 SCHEMA
 { "type": "utgift" | "intäktsminskning" | "besparing" | "intäktsökning",
   "period": "per_ar" | "engang",

@@ -3131,5 +3131,151 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "l",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Skolans pengar ska gå till eleverna, inte till vinstuttag eller kommunala besparingar.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-presenterar-valfilmen-studiero-och-max-20-elever-i-klassen-for-din-frihet",
+    "articleTitle": "Liberalerna presenterar valfilmen \"Studiero och max 20 elever i klassen. För din frihet.\" – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/nyheter/liberalerna-presenterar-valfilmen-studiero-och-max-20-elever-i-klassen-for-din-frihet",
+    "archiveUrl": "https://web.archive.org/web/20260824135817/https://www.liberalerna.se/nyheter/liberalerna-presenterar-valfilmen-studiero-och-max-20-elever-i-klassen-for-din-frihet",
+    "dateStated": "2026-08-13",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-24-13-07",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet nämner vinstuttag i kontexten av klasstorlekar och är en allmän princip om att skolans pengar ska gå till eleverna, men det tar inte ställning till om vinstutdelning ska förbjudas eller begränsas i lag — och positionen 'nej' följer inte av ett citat som snarare kritiserar vinstuttag."
+      }
+    ],
+    "verifyReason": "Citatet nämner vinstuttag i kontexten av klasstorlekar och är en allmän princip om att skolans pengar ska gå till eleverna, men det tar inte ställning till om vinstutdelning ska förbjudas eller begränsas i lag — och positionen 'nej' följer inte av ett citat som snarare kritiserar vinstuttag."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-matmoms",
+      "party": "s",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Vi har krävt tillfälligt sänkt matmoms till 6 procent",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/ekonomi",
+    "articleTitle": "Ekonomi\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/ekonomi",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-24-18-20",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet anger att S har krävt en tillfällig matmomssänkning, men säger inget om huruvida den ska göras permanent — att tolka ordet 'tillfälligt' som ett nej kräver en välvillig tolkning som inte utgör ett besked."
+      }
+    ],
+    "verifyReason": "Citatet anger att S har krävt en tillfällig matmomssänkning, men säger inget om huruvida den ska göras permanent — att tolka ordet 'tillfälligt' som ett nej kräver en välvillig tolkning som inte utgör ett besked."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Partiet presenterar samtidigt flera förslag för att stoppa vinstuttag, stärka statens ansvar och minska skolsegregationen.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/fritidshem",
+    "articleTitle": "Fritidshem\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/fritidshem",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-24-18-20",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-ko",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Införa ett gemensamt skolval och stoppa orättvisa kösystem där skolkoncerner väljer ut elever.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/grundskola",
+    "articleTitle": "Grundskola\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/grundskola",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-24-18-20",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-inkomstskatt",
+      "party": "c",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Höja gränsen för när man börjar betala statlig inkomstskatt i takt med inflationen, så att ingen får höjd skatt när priserna ökar.",
+      "person": null
+    },
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/ekonomi-och-skatter/inkomstskatt",
+    "articleTitle": "Inkomstskatt | Centerpartiet",
+    "sourceUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/ekonomi-och-skatter/inkomstskatt",
+    "archiveUrl": null,
+    "dateStated": "2026-08-24",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-24-20-04",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Socialdemokraterna vill införa nationella språkkrav i välfärden.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/pension",
+    "articleTitle": "Pension\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/pension",
+    "archiveUrl": null,
+    "dateStated": "2026-08-21",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-24-20-04",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
