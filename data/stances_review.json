@@ -3131,5 +3131,30 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "l",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Skolans pengar ska gå till eleverna, inte till vinstuttag eller kommunala besparingar.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-presenterar-valfilmen-studiero-och-max-20-elever-i-klassen-for-din-frihet",
+    "articleTitle": "Liberalerna presenterar valfilmen \"Studiero och max 20 elever i klassen. För din frihet.\" – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/nyheter/liberalerna-presenterar-valfilmen-studiero-och-max-20-elever-i-klassen-for-din-frihet",
+    "archiveUrl": "https://web.archive.org/web/20260824135817/https://www.liberalerna.se/nyheter/liberalerna-presenterar-valfilmen-studiero-och-max-20-elever-i-klassen-for-din-frihet",
+    "dateStated": "2026-08-13",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-24-13-07",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet nämner vinstuttag i kontexten av klasstorlekar och är en allmän princip om att skolans pengar ska gå till eleverna, men det tar inte ställning till om vinstutdelning ska förbjudas eller begränsas i lag — och positionen 'nej' följer inte av ett citat som snarare kritiserar vinstuttag."
+      }
+    ],
+    "verifyReason": "Citatet nämner vinstuttag i kontexten av klasstorlekar och är en allmän princip om att skolans pengar ska gå till eleverna, men det tar inte ställning till om vinstutdelning ska förbjudas eller begränsas i lag — och positionen 'nej' följer inte av ett citat som snarare kritiserar vinstuttag."
   }
 ]
