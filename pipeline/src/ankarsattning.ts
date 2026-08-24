@@ -51,6 +51,13 @@ export interface Lofte {
   title?: string;
   quote?: string;
   status?: string;
+  /**
+   * Sorten. Fältet står här därför att `satt()` ÄNDRAR den: ett
+   * inriktningslöfte bär aldrig ett basbelopp, så en prissatt nolla blir en
+   * reform. Saknades i typen till 2026-08-23, och verkställigheten skrev då
+   * ett fält som gränssnittet inte kände till.
+   */
+  loftestyp?: string;
   parties?: readonly string[];
   cost: Kostnad;
   history?: { date: string; change: string; commit: string }[];
@@ -121,11 +128,26 @@ export function paverkan(ankare: Lofte): number {
 }
 
 /** Posten med ankarets spann och en uträkning som skriver ut lånet. */
+/**
+ * Posten med beloppet satt ur ankaret.
+ *
+ * SORTEN FÖLJER MED. Ett inriktningslöfte bär aldrig ett basbelopp — det är
+ * hela skillnaden mellan sorterna, och `loftestyp.test.ts` vaktar den. Att
+ * prissätta en nolla gör därför posten till en reform, och lämnas sorten kvar
+ * faller nästa körning på en grind som har rätt.
+ *
+ * Det hände 2026-08-23, och det är samma sorts fel som när nollningen skrev om
+ * uträkningen men lämnade ankaret kvar: verktyget ändrade det ena av två fält
+ * som hör ihop. Sorten styr dessutom kopplingssteget sedan 2026-08-22, så ett
+ * fel här fortplantar sig till Handlingsvågen.
+ */
 export function satt<T extends Lofte>(lofte: T, ankare: Lofte, rad: Ankarrad, datum: string): T {
   const c = ankare.cost;
   const enhet = c.period === "per_ar" ? "miljoner kronor per år" : "miljoner kronor";
+  const bytteSort = lofte.loftestyp === "inriktning" && (c.msek_base ?? 0) !== 0;
   return {
     ...lofte,
+    ...(bytteSort ? { loftestyp: "reform" } : {}),
     cost: {
       ...lofte.cost,
       msek_low: c.msek_low ?? 0,
@@ -142,7 +164,11 @@ export function satt<T extends Lofte>(lofte: T, ankare: Lofte, rad: Ankarrad, da
           `Beloppet höjt från noll till ${(c.msek_base ?? 0).toLocaleString("sv-SE")} ${enhet}. ` +
           "Löftet pekar ut en bestämd åtgärd utan att ange en nivå, och nollningsregeln gäller bara " +
           "löften som varken pekar ut en åtgärd eller anger en nivå. Beloppet är lånat från ett " +
-          "jämförbart löfte som räknar fram sin siffra, och lånet står utskrivet i uträkningen.",
+          "jämförbart löfte som räknar fram sin siffra, och lånet står utskrivet i uträkningen." +
+          (bytteSort
+            ? " Sorten ändras samtidigt från inriktning till reform: ett inriktningslöfte bär aldrig " +
+              "ett basbelopp, och posten stod som inriktning bara därför att den var nollad."
+            : ""),
         commit: "0000000",
       },
     ],

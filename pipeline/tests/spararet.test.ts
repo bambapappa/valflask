@@ -32,10 +32,14 @@ import { resolve } from "node:path";
 
 const ROT = resolve(import.meta.dirname, "../..");
 
-/** Varje spårad fil som `<läge> <hash> <steg>\t<sökväg>`. */
-const sparade = (): Array<{ lage: string; sokvag: string }> =>
-  execFileSync("git", ["ls-files", "-s"], { cwd: ROT, maxBuffer: 1 << 28 })
-    .toString()
+/**
+ * Tolkar utdata från `git ls-files -s`: `<läge> <hash> <steg>\t<sökväg>`.
+ *
+ * Utbruten ur mätningen så att provet kan mata in ett känt fel. En grind som
+ * bara ser ett rent bestånd kan inte skiljas från en som inte mäter.
+ */
+export const tolka = (utdata: string): Array<{ lage: string; sokvag: string }> =>
+  utdata
     .split("\n")
     .filter(Boolean)
     .map((r) => {
@@ -43,13 +47,34 @@ const sparade = (): Array<{ lage: string; sokvag: string }> =>
       return { lage: meta!.split(" ")[0]!, sokvag: sokvag! };
     });
 
+/** Lägeskoden för en symlänk i gitens index. */
+const SYMLANK = "120000";
+
+export const symlankar = (rader: ReturnType<typeof tolka>): string[] =>
+  rader.filter((f) => f.lage === SYMLANK).map((f) => f.sokvag);
+
+export const underNodeModules = (rader: ReturnType<typeof tolka>): string[] =>
+  rader.filter((f) => /(^|\/)node_modules(\/|$)/u.test(f.sokvag)).map((f) => f.sokvag);
+
+const sparade = () => tolka(execFileSync("git", ["ls-files", "-s"], { cwd: ROT, maxBuffer: 1 << 28 }).toString());
+
 describe("vad som ligger i repot", () => {
   it("hittar spårade filer att mäta", () => {
     assert.ok(sparade().length > 100, "en tom lista intygar ingenting");
   });
 
+  it("provet biter mot ett infört fel", () => {
+    // Exakt den rad git skrev för symlänken som dödade kopplingssökningen.
+    const infort = tolka(
+      "100644 abc 0\tpipeline/package.json\n120000 95eb129 0\thandlingsvagen/pipeline/node_modules\n",
+    );
+    assert.deepEqual(symlankar(infort), ["handlingsvagen/pipeline/node_modules"]);
+    assert.deepEqual(underNodeModules(infort), ["handlingsvagen/pipeline/node_modules"]);
+    assert.deepEqual(symlankar(tolka("100644 abc 0\tpipeline/package.json\n")), []);
+  });
+
   it("ingen symlänk är spårad", () => {
-    const lankar = sparade().filter((f) => f.lage === "120000");
+    const lankar = symlankar(sparade()).map((sokvag) => ({ sokvag }));
     assert.deepEqual(
       lankar.map((f) => f.sokvag),
       [],
@@ -59,7 +84,7 @@ describe("vad som ligger i repot", () => {
   });
 
   it("ingenting under node_modules är spårat", () => {
-    const traff = sparade().filter((f) => /(^|\/)node_modules(\/|$)/u.test(f.sokvag));
+    const traff = underNodeModules(sparade()).map((sokvag) => ({ sokvag }));
     assert.deepEqual(
       traff.map((f) => f.sokvag),
       [],

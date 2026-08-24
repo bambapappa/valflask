@@ -80,4 +80,14 @@ describe("rättelseloggens schema", () => {
         "En rättelse som namnger sina poster når sin sida; en som bara beskriver en sida gör det inte.",
     );
   });
+
+  it("provet biter mot ett infört fel", () => {
+    // Precis det schema `rubrik-byt` skrev 2026-08-23 och som föll i CI.
+    const felaktig = { datum: "2026-08-23", typ: "rubrikbyte", varfor: "…", poster: [] } as Record<string, unknown>;
+    const saknade = KRAV.filter((f) => typeof felaktig[f] !== "string" || (felaktig[f] as string).trim() === "");
+    assert.deepEqual(saknade, [...KRAV], "en post med eget schema saknar alla tre fälten");
+
+    const riktig = { date: "2026-08-23", affects: "p-2026-0001", what: "…", why: "…" } as Record<string, unknown>;
+    assert.deepEqual(KRAV.filter((f) => typeof riktig[f] !== "string"), []);
+  });
 });
