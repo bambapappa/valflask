@@ -31594,7 +31594,7 @@
   },
   {
     "id": "p-2026-0660",
-    "group_id": null,
+    "group_id": "g-sankt-skatt-pa-arbete",
     "title": "KD höjer jobbskatteavdraget",
     "slug": "kd-hojer-jobbskatteavdraget",
     "parties": [
@@ -31643,6 +31643,11 @@
         "date": "2026-08-07",
         "change": "Beloppet har gått från 11 000 till 17 000 miljoner kronor per år. Ankaret var den förstärkning av jobbskatteavdraget som gjordes i budgeten för 2024. Den är inte längre den senaste: en ny förstärkning gäller från januari 2026 och kostar 17,36 miljarder kronor per år. Tre andra löften om samma åtgärd var redan ankrade i den nyare siffran, så samma politik var prissatt olika beroende på vilket parti som lovade den.",
         "commit": "b0834ad193a329e3f61c572dcd0c23195fc2afb9"
+      },
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Löftet ingår nu i en grupp med 5 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget."
       }
     ],
     "extraction": {
@@ -108656,14 +108661,15 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 5000,
-      "msek_high": 12000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Vagt löfte utan belopp eller instrument. Anchored at temporary fuel-tax cuts ~2022 (några mdkr per episod). Kostnad uppstår endast prischocksår; belopp = per utlöst år. Ej samhällseffekter.",
       "confidence": 0.3,
-      "calculation": "Mest troliga instrument: tillfälligt sänkt/hävd energi- och koldioxidskatt vid prischock. Skatt ~3,6–4,4 kr/l; förbrukning bensin ~1,7 mdr liter + diesel ~3,9 mdr liter ≈ 5,6 mdr liter/år. 6 månaders tillfällig lättnad: 5,6e9 l × ~3,5 kr × 0,5 ≈ 9–10 mdkr; helår uppemot ~12 mdkr. Alternativ riktat stöd (t.ex. 1–2 tkr till 2–4 mln hushåll) ≈ 2–6 mdkr. Spannet täcker smal kompensation till full tillfällig skattehävning; bas ~5 mdkr per utlöst år."
+      "calculation": "Citatet lyder «Stötta vanliga familjer när världsmarknadspriserna stiger» och namnger varken åtgärd, instrument eller nivå. Den tidigare uträkningen valde ett instrument åt partiet — «mest troliga instrument: tillfälligt sänkt eller hävd energi- och koldioxidskatt vid prischock» — och räknade fram ett halvår av lättnad ur det. Både instrumentet och varaktigheten är våra. En utpekad åtgärd utan nivå prissätts till noll när beståndet saknar ett jämförbart löfte att ankra i: uträkningen skriver då ut att åtgärden borde kosta men att underlaget inte räcker. En antagen omfattning gånger ett antaget styckepris är två gissningar som multipliceras, och det är sämre än ingen siffra alls. Partiets egna prissatta löften om drivmedel och energi står kvar var för sig.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -108673,7 +108679,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "change": "Beloppet nollat, tidigare 5 000 miljoner kronor per år. En utpekad åtgärd utan nivå prissätts till noll när beståndet saknar ett jämförbart löfte att ankra i: uträkningen skriver då ut att åtgärden borde kosta men att underlaget inte räcker. En antagen omfattning gånger ett antaget styckepris är två gissningar som multipliceras, och det är sämre än ingen siffra alls. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -109052,14 +109064,15 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 8000,
-      "msek_high": 18000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Ospecifik sänkning av skatt på arbetsinkomster, ingen nivå angiven. Ankrat vid storleksordningen för senare års faktiska sänkningssteg (grundavdrag/brytvärde), inte partiets egen siffra.",
       "confidence": 0.35,
-      "calculation": "~5 milj förvärvsarbetare × ca 600–3 500 kr/år i lägre skatt ≈ 3–18 mdkr. Bas ~8 mdkr speglar storleksordningen hos senare årets genomförda paket (utökat förhöjt grundavdrag + höjt brytvårde för statlig skatt, tillsammans cirka 7–8 mdkr/år enligt offentliga budgetuppgifter i riksbud-getssammanhang). Löftet ger ingen nivå eller mekanism, därför brett spann och låg konfidens; gränsverkningar som krympande skatteunderlag beaktas grovt i high-end."
+      "calculation": "Löftet är partiets breda formulering av att sänka skatten på arbete: «Den som arbetar ska få behålla mer av sin lön genom skattesänkningar.» Instrumentet står på partiets eget löfte om ett förstärkt jobbskatteavdrag, som bär 17 000 miljoner kronor per år ankrat i vad det tionde jobbskatteavdraget faktiskt kostade. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -109069,7 +109082,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "change": "Beloppet nollat, tidigare 8 000 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -109954,7 +109973,7 @@
   },
   {
     "id": "p-2026-2240",
-    "group_id": null,
+    "group_id": "g-sankt-skatt-pa-arbete",
     "title": "Sänkt skatt på arbete med förstärkt jobbskatteavdrag",
     "slug": "sankt-skatt-pa-arbete-med-forstarkt-jobbskatteavdrag",
     "parties": [
@@ -109993,7 +110012,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Löftet ingår nu i en grupp med 5 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -119459,14 +119484,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 6000,
-      "msek_base": 12000,
-      "msek_high": 18000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Fortsättningslöfte utan belopp; prissatt mot senaste årens faktiska svenska stöd till Ukraina (militära paket samt ekonomiskt/humanitärt stöd), inte återuppbyggnadens totala summa.",
       "confidence": 0.45,
-      "calculation": "'Fortsätta stötta' tolkas som bibehållen nivå av pågående stöd. Anknytning till faktiska kostnader senaste åren: militära stödpaket i storleksordningen 5–10 mdkr/år plus ekonomiskt/humanitärt stöd ca 2–5 mdkr/år ger ca 7–15 mdkr/år; base ~12 mdkr. Långsiktig återuppbyggnad är flerårig och delvis budgeterad via internationella donorer — den osäkerheten ligger i spannets övre del. Antar ingen påtaglig avtrappning under mandatperioden. Inga exakta myndighetssiffror används; nivåerna är rimlighetsuppskattningar av löpande stöd."
+      "calculation": "Citatet lovar att «fortsätta stötta Ukraina ekonomiskt, militärt och för långsiktig återuppbyggnad av landet» — ingen ny nivå anges, och uträkningen läste själv meningen som «bibehållen nivå av pågående stöd». Ett löfte att fortsätta med politik som redan gäller prissätts till noll: beloppet avser statens nya nettokostnad, och en oförändrad nivå är ingen ny kostnad. Löftet står kvar — det är ett löfte att inte ändra något, och det kan brytas.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -119476,7 +119502,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "change": "Beloppet nollat, tidigare 12 000 miljoner kronor per år. Ett löfte att fortsätta med politik som redan gäller prissätts till noll: beloppet avser statens nya nettokostnad, och en oförändrad nivå är ingen ny kostnad. Löftet står kvar — det är ett löfte att inte ändra något, och det kan brytas. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -119922,7 +119954,7 @@
   },
   {
     "id": "p-2026-2441",
-    "group_id": null,
+    "group_id": "g-jarnvagens-underhallsskuld",
     "title": "Åtgärda underhållsskulden för järnvägen",
     "slug": "atgarda-underhallsskulden-for-jarnvagen",
     "parties": [
@@ -119961,7 +119993,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -120372,7 +120410,7 @@
   },
   {
     "id": "p-2026-2450",
-    "group_id": null,
+    "group_id": "g-jarnvagens-underhallsskuld",
     "title": "Bygga bort underhållsskulden senast 2035",
     "slug": "bygga-bort-underhallsskulden-senast-2035",
     "parties": [
@@ -120411,7 +120449,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -122746,14 +122790,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10000,
-      "msek_base": 15000,
-      "msek_high": 25000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Baserat på Sveriges nuvarande stödnivå till Ukraina (militärt + civilt) som uppgått till cirka 15-25 mdkr per år. Löftet är brett och utan egen siffra, så spannet följer befintlig nivå.",
       "confidence": 0.4,
-      "calculation": "Sveriges totala stöd till Ukraina har de senaste åren legat på 15-25 mdkr/år. Löftet anger ingen ny nivå, så jag antar att nuvarande takt fortsätter. Spann: 10-25 mdkr, base 15 mdkr (15000 msek)."
+      "calculation": "Citatet lovar att «fortsätta stödja Ukraina med militär utrustning, utbildning och stöd till återuppbyggnad, så länge den ryska aggressionen pågår» — alltså att hålla den nivå som redan gäller. Ramen för det militära stödet är 40 miljarder kronor per år och är beslutad. Ett löfte att fortsätta med politik som redan gäller prissätts till noll: beloppet avser statens nya nettokostnad, och en oförändrad nivå är ingen ny kostnad. Löftet står kvar — det är ett löfte att inte ändra något, och det kan brytas.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -122763,7 +122808,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "change": "Beloppet nollat, tidigare 15 000 miljoner kronor per år. Ett löfte att fortsätta med politik som redan gäller prissätts till noll: beloppet avser statens nya nettokostnad, och en oförändrad nivå är ingen ny kostnad. Löftet står kvar — det är ett löfte att inte ändra något, och det kan brytas. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -123012,7 +123063,7 @@
   },
   {
     "id": "p-2026-2504",
-    "group_id": null,
+    "group_id": "g-sankt-skatt-pa-arbete",
     "title": "Moderaterna vill fortsätta sänka skatten för alla som arbetar eller har arbetat",
     "slug": "moderaterna-vill-fortsatta-sanka-skatten-for-alla-som-arbetar-eller-har-arbetat",
     "parties": [
@@ -123051,7 +123102,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Löftet ingår nu i en grupp med 5 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -123976,14 +124033,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 10000,
-      "msek_base": 20000,
-      "msek_high": 30000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Vagt löfte utan belopp; uppskattat som en ökning av nuvarande stöd, jämförbart med C:s 1% av BNI (~25 mdkr) men lägre.",
       "confidence": 0.4,
-      "calculation": "Sveriges BNI ~5 500 mdkr; 1% = 55 mdkr. Nuvarande stöd ~30 mdkr/år. Ökning till 0,5–1% av BNI ger 10–30 mdkr/år. Base 20 mdkr."
+      "calculation": "Citatet lovar att «öka det ekonomiska, militära och humanitära stödet till Ukraina» men anger ingen nivå. Den tidigare uträkningen översatte ordet «öka» till en ökning på 0,5–1 procent av bruttonationalinkomsten — en siffra partiet aldrig sagt. Beståndet innehåller ett enda Ukrainalöfte med utskriven nivå, och den nivån är ett annat partis. En utpekad åtgärd utan nivå prissätts till noll när beståndet saknar ett jämförbart löfte att ankra i: uträkningen skriver då ut att åtgärden borde kosta men att underlaget inte räcker. En antagen omfattning gånger ett antaget styckepris är två gissningar som multipliceras, och det är sämre än ingen siffra alls. Ökningen borde kosta pengar; hur mycket har partiet inte sagt.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -123993,7 +124051,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "change": "Beloppet nollat, tidigare 20 000 miljoner kronor per år. En utpekad åtgärd utan nivå prissätts till noll när beståndet saknar ett jämförbart löfte att ankra i: uträkningen skriver då ut att åtgärden borde kosta men att underlaget inte räcker. En antagen omfattning gånger ett antaget styckepris är två gissningar som multipliceras, och det är sämre än ingen siffra alls. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -130842,8 +130906,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti lovar samma sak på samma sida: att underhållsskulden på järnvägen ska vara borta till 2035. Den posten står kvar. Skillnaden mellan de två var bara bokföringen — den ena bokförde skulden som ett engångsbelopp, den andra delade den i årliga avbetalningar — och en underhållsskuld är ett uppdämt behov som betas av, inte en utgift som återkommer när den är betald."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -138884,14 +138954,15 @@
     "cost": {
       "type": "besparing",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 5000,
-      "msek_high": 10000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet anger ingen nivå; avser besparing på bistånd, ej äldreomsorgssatsning. Baserat på svenskt bistånd ~50 mdkr/år och rimlig nedprioritering på 6–20 %.",
       "confidence": 0.4,
-      "calculation": "Sveriges biståndsbudget ca 50 000 mkr/år. Nedprioritering 6–20 % ≈ 3 000–10 000 mkr/år. Base 10 % ≈ 5 000 mkr. Osäkerhet: ingen angiven nivå, politisk prioritering. Ej kostnad för äldreomsorg, endast besparing."
+      "calculation": "Citatet lyder «Vi är beredda att prioritera ned bistånd för att satsa mer på äldreomsorgen» — ett villkorat åtagande utan nivå. Den tidigare uträkningen antog en nedprioritering på 6–20 procent av biståndsbudgeten och satte tio procent som bas. Den andelen kommer inte från partiet. Beståndet innehåller inget jämförbart löfte om att SÄNKA biståndet att ankra i; de fem löftena om enprocentsmålet går åt andra hållet. En utpekad åtgärd utan nivå prissätts till noll när beståndet saknar ett jämförbart löfte att ankra i: uträkningen skriver då ut att åtgärden borde kosta men att underlaget inte räcker. Två gissningar som multipliceras är sämre än ingen siffra alls. Nedprioriteringen skulle spara pengar; hur mycket har partiet inte sagt.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -138901,7 +138972,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "change": "Beloppet nollat, tidigare 5 000 miljoner kronor per år. En utpekad åtgärd utan nivå prissätts till noll när beståndet saknar ett jämförbart löfte att ankra i: uträkningen skriver då ut att åtgärden borde kosta men att underlaget inte räcker. En antagen omfattning gånger ett antaget styckepris är två gissningar som multipliceras, och det är sämre än ingen siffra alls. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",

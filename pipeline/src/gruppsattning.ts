@@ -84,6 +84,26 @@ export function sankning(medlemmar: readonly Grupplofte[]): number {
   return varden.reduce((a, b) => a + b, 0) - Math.max(...varden);
 }
 
+/**
+ * Hur mycket rikssumman sjunker av just DEN HÄR raden.
+ *
+ * `sankning()` svarar på vad en färdig grupp döljer, och det är rätt svar bara
+ * när gruppen bildas från grunden. Utökas en grupp som redan finns är en del av
+ * den sänkningen redan tagen: står tre löften i gruppen sedan tidigare räknas
+ * två av dem inte redan i dag, och raden får inte ta åt sig äran för det.
+ *
+ * Skillnaden är inte kosmetisk. Talet går rakt in i rättelsenotens mening om
+ * hur mycket totalen sjunker — det är ett publicerat påstående om vad
+ * ändringen gjorde.
+ */
+export function sankningsdelta(rad: Grupprad, alla: readonly Grupplofte[]): number {
+  const aktiv = (p: Grupplofte) => (p.status ?? "aktiv") === "aktiv";
+  const iGruppen = alla.filter((p) => p.group_id === rad.grupp && aktiv(p));
+  const nya = alla.filter((p) => rad.ids.includes(p.id) && p.group_id !== rad.grupp && aktiv(p));
+  const efter = [...iGruppen, ...nya];
+  return sankning(efter) - sankning(iGruppen);
+}
+
 /** Posten med sitt group_id och en historikpost som säger vad gruppen gör. */
 export function tillampa<T extends Grupplofte>(
   lofte: T, rad: Grupprad, medlemmar: readonly Grupplofte[], datum: string,

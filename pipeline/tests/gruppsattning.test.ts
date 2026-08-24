@@ -11,7 +11,15 @@
  */
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { mandatperioden, provaGrupprad, sankning, tillampa, type Grupplofte, type Grupprad } from "../src/gruppsattning.ts";
+import {
+  mandatperioden,
+  provaGrupprad,
+  sankning,
+  sankningsdelta,
+  tillampa,
+  type Grupplofte,
+  type Grupprad,
+} from "../src/gruppsattning.ts";
 
 const p = (id: string, bas: number, o: Partial<Grupplofte> = {}): Grupplofte =>
   ({ id, status: "aktiv", cost: { msek_base: bas, period: "per_ar" }, ...o });
@@ -101,5 +109,53 @@ describe("gruppsättningens verkställighet", () => {
 
   it("beloppet rörs inte", () => {
     assert.equal(tillampa(med[1]!, rad(), med, "2026-08-23").cost?.msek_base, 50);
+  });
+});
+
+describe("sänkningen när en grupp UTÖKAS", () => {
+  const post = (id: string, bas: number, grupp?: string): Grupplofte => ({
+    id,
+    status: "aktiv",
+    ...(grupp ? { group_id: grupp } : {}),
+    cost: { msek_base: bas, period: "per_ar" },
+  });
+
+  it("en ny grupp sänker med allt utom den största", () => {
+    const alla = [post("a", 100), post("b", 80), post("c", 60)];
+    const rad = { grupp: "g-x", ids: ["a", "b", "c"], skal: "x".repeat(40) };
+    // (100+80+60−100) × 4 = 560
+    assert.equal(sankningsdelta(rad, alla), 560);
+  });
+
+  it("en utökning tar inte åt sig äran för det gruppen redan dolde", () => {
+    // a och b står redan i gruppen: 80×4 = 320 räknas inte redan i dag.
+    const alla = [post("a", 100, "g-x"), post("b", 80, "g-x"), post("c", 60)];
+    const rad = { grupp: "g-x", ids: ["c"], skal: "x".repeat(40) };
+    // Efter: 240 döljs. Före: 320… nej — före döljs 320, efter 560. Delta 240.
+    assert.equal(sankningsdelta(rad, alla), 240);
+  });
+
+  it("en ny medlem som är störst gör att en annan post börjar räknas bort", () => {
+    const alla = [post("a", 100, "g-x"), post("b", 80, "g-x"), post("c", 300)];
+    const rad = { grupp: "g-x", ids: ["c"], skal: "x".repeat(40) };
+    // Före: (180−100)×4 = 320. Efter: (480−300)×4 = 720. Delta 400.
+    assert.equal(sankningsdelta(rad, alla), 400);
+  });
+
+  it("en tillbakadragen medlem räknas inte med", () => {
+    const alla = [
+      post("a", 100, "g-x"),
+      { ...post("b", 5000, "g-x"), status: "tillbakadragen" },
+      post("c", 60),
+    ];
+    const rad = { grupp: "g-x", ids: ["c"], skal: "x".repeat(40) };
+    // Före: en ensam aktiv medlem döljer ingenting. Efter: (160−100)×4 = 240.
+    assert.equal(sankningsdelta(rad, alla), 240);
+  });
+
+  it("står raden redan i gruppen sjunker ingenting", () => {
+    const alla = [post("a", 100, "g-x"), post("b", 80, "g-x")];
+    const rad = { grupp: "g-x", ids: ["a", "b"], skal: "x".repeat(40) };
+    assert.equal(sankningsdelta(rad, alla), 0);
   });
 });
