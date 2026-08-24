@@ -17,16 +17,35 @@
  *                             domsmotorns partiuniversum), kod/namn/block.
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { byggKopia, type RaLoftesuppgift } from "../src/vendorkopia.ts";
 
+/**
+ * Grannens data ligger ett steg upp: Handlingsvågen bor i `handlingsvagen/`
+ * inuti valflask, så Fläskvågens `data/` är systerkatalogen till vår egen.
+ *
+ * Standardvärdet VAR `/home/user/valflask/data/promises.json` — en sökväg som
+ * bara finns i en byggcontainer. Utanför den föll körningen på ENOENT, och det
+ * var det bästa som kunde hända: hade sökvägen funnits hade skriptet läst
+ * någon annans data utan att säga ifrån. En standard ska peka på repot den
+ * ligger i, inte på maskinen den råkade köras på först.
+ */
 function parseArgs(argv: string[]) {
-  let promisesPath = process.env.PROMISES_PATH ?? "/home/user/valflask/data/promises.json";
-  let partiesPath = process.env.PARTIES_PATH ?? "/home/user/valflask/data/parties.json";
+  const grannen = (fil: string) => resolve(import.meta.dirname, "../../..", "data", fil);
+  let promisesPath = process.env.PROMISES_PATH ?? grannen("promises.json");
+  let partiesPath = process.env.PARTIES_PATH ?? grannen("parties.json");
   for (let i = 0; i < argv.length; i += 1) {
     if (argv[i] === "--promises") promisesPath = resolve(argv[++i]!);
     else if (argv[i] === "--parties") partiesPath = resolve(argv[++i]!);
+  }
+  for (const [flagga, sokvag] of [["--promises", promisesPath], ["--parties", partiesPath]] as const) {
+    if (!existsSync(sokvag)) {
+      throw new Error(
+        `Hittar inte ${sokvag}. Ange ${flagga} <sökväg> eller sätt ` +
+          `${flagga === "--promises" ? "PROMISES_PATH" : "PARTIES_PATH"}.`,
+      );
+    }
   }
   return { promisesPath, partiesPath };
 }
