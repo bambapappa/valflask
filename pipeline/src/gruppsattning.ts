@@ -58,7 +58,17 @@ export function provaGrupprad(
   }
   // En grupp med en enda post är ingen grupp — den säger bara att posten är
   // ensam, och `dedupeByGroup` gör då ingenting.
-  if (rad.ids.length < 2) fel.push(`${rad.grupp}: en grupp med färre än två medlemmar är ingen grupp`);
+  //
+  // Kravet gäller gruppen SOM DEN BLIR, inte raden. Att lägga en post till i
+  // en grupp som redan har fem medlemmar är en rad med ett enda id, och den
+  // föll tidigare på det här villkoret — verktyget antog att varje grupp
+  // bildas från grunden.
+  const redanIGruppen = [...loften.values()].filter(
+    (p) => p.group_id === rad.grupp && (p.status ?? "aktiv") === "aktiv" && !rad.ids.includes(p.id),
+  ).length;
+  if (rad.ids.length + redanIGruppen < 2) {
+    fel.push(`${rad.grupp}: en grupp med färre än två medlemmar är ingen grupp`);
+  }
   if (rad.skal.trim().length < SKAL_MIN_TECKEN) {
     fel.push(`${rad.grupp}: skälet är för kort — rättelseloggen ska säga vad läsningen fann`);
   }

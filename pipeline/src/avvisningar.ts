@@ -22,6 +22,20 @@
  * Minnet säger aldrig nej åt en människa. Det säger «det här har vi sett förr,
  * och så här löd beslutet» — vilket är skillnaden mellan att slippa
  * dubbelarbete och att låsa in sig i ett gammalt beslut.
+ *
+ * **Tillägg 2026-08-24: samma mening på en ANNAN sida hos samma parti.**
+ * Beslutet ovan fattades innan A–Ö-katalogerna registrerades den 17 augusti,
+ * och de ändrade förutsättningen: partierna upprepar identiska meningar över
+ * sina egna politiksidor. «Reformera strandskyddet i grunden» avvisades från
+ * glesbygdssidan den 21 augusti och låg tillbaka i kön den 24, från
+ * strandskyddssidan. URL-nyckeln såg två skilda saker; det var en mening.
+ *
+ * Minnet håller därför ute en mening som avvisats från en ANNAN sida på samma
+ * värdnamn. Värdnamnet och inte partiet, därför att det är vad posten redan
+ * bär — de 649 poster som fanns när regeln skrevs har ingen partiuppgift, och
+ * en regel som bara gäller framåt hade inte fångat de fall som visade behovet.
+ * Utanför partiernas egna sajter — en nyhetsartikel, ett tal — gäller
+ * URL-nyckeln ensam som förut: samma mening i två tidningar är två källor.
  */
 import { createHash } from "node:crypto";
 import { normalizeForVerbatim } from "./gates.ts";
@@ -65,6 +79,29 @@ export function avvisningsnyckel(url: string | null | undefined, citat: string |
   return "av:" + createHash("sha256").update(`${adress}\n${text}`, "utf8").digest("hex").slice(0, 16);
 }
 
+/**
+ * Värdnamnet ur en adress, utan `www.`.
+ *
+ * Tomt när adressen inte går att läsa — då finns ingen värdnyckel, och
+ * uppslaget faller tillbaka på URL-nyckeln ensam.
+ */
+export function vardnamn(url: string | null | undefined): string {
+  try {
+    return new URL((url ?? "").trim()).hostname.replace(/^www\./u, "").toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+/** Citatet som minnet känner igen det, oberoende av var det stod. */
+export function citatnyckel(citat: string | null | undefined): string {
+  return normalizeForVerbatim(citat ?? "")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/gu, " ")
+    .trim();
+}
+
 /** Posten för en kandidat, hävd eller inte — eller `undefined` om den aldrig avvisats. */
 export function slaUpp(
   minne: Avvisning[],
@@ -72,7 +109,15 @@ export function slaUpp(
   citat: string | null | undefined,
 ): Avvisning | undefined {
   const n = avvisningsnyckel(url, citat);
-  return minne.find((a) => a.nyckel === n);
+  const exakt = minne.find((a) => a.nyckel === n);
+  if (exakt) return exakt;
+
+  // Samma mening, annan sida, samma värdnamn. Se docstringens tillägg.
+  const vard = vardnamn(url);
+  if (vard === "") return undefined;
+  const text = citatnyckel(citat);
+  if (text === "") return undefined;
+  return minne.find((a) => vardnamn(a.url) === vard && citatnyckel(a.citat) === text);
 }
 
 /**

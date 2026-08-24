@@ -159,3 +159,45 @@ describe("sänkningen när en grupp UTÖKAS", () => {
     assert.equal(sankningsdelta(rad, alla), 0);
   });
 });
+
+describe("tvåmedlemskravet gäller gruppen som den BLIR", () => {
+  const bestand = (...l: Grupplofte[]) => new Map(l.map((x) => [x.id, x]));
+
+  it("en ensam post i en tom grupp är ingen grupp", () => {
+    const r = provaGrupprad(
+      { grupp: "g-ny", ids: ["a"], skal: "x".repeat(50) },
+      bestand({ id: "a", status: "aktiv" }),
+    );
+    assert.equal(r.ok, false);
+    assert.match(r.fel.join(" "), /färre än två medlemmar/u);
+  });
+
+  /**
+   * Att lägga en post till i en befintlig grupp är en rad med ETT id. Den föll
+   * tidigare på tvåmedlemskravet, som räknade radens ids i stället för
+   * gruppens — verktyget antog att varje grupp bildas från grunden.
+   */
+  it("en ensam post till en grupp som redan har medlemmar godtas", () => {
+    const r = provaGrupprad(
+      { grupp: "g-finns", ids: ["c"], skal: "x".repeat(50) },
+      bestand(
+        { id: "a", status: "aktiv", group_id: "g-finns" },
+        { id: "b", status: "aktiv", group_id: "g-finns" },
+        { id: "c", status: "aktiv" },
+      ),
+    );
+    assert.deepEqual(r.fel, []);
+  });
+
+  it("tillbakadragna medlemmar räknas inte som sällskap", () => {
+    const r = provaGrupprad(
+      { grupp: "g-finns", ids: ["c"], skal: "x".repeat(50) },
+      bestand(
+        { id: "a", status: "tillbakadragen", group_id: "g-finns" },
+        { id: "c", status: "aktiv" },
+      ),
+    );
+    assert.equal(r.ok, false);
+    assert.match(r.fel.join(" "), /färre än två medlemmar/u);
+  });
+});

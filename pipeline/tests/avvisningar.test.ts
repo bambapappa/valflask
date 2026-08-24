@@ -1,4 +1,4 @@
-import { test } from "node:test";
+import { describe, it, test } from "node:test";
 import assert from "node:assert/strict";
 import {
   avvisningsnyckel,
@@ -78,4 +78,82 @@ test("en kandidat som aldrig avvisats släpps igenom", () => {
   const minne: Avvisning[] = [];
   assert.equal(arAvvisad(minne, URL_, CITAT), false);
   assert.equal(slaUpp(minne, URL_, CITAT), undefined);
+});
+
+describe("samma mening på en annan sida hos samma parti", () => {
+  const minne = [
+    {
+      nyckel: avvisningsnyckel("https://moderaterna.se/var-politik/glesbygd/", "Reformera strandskyddet i grunden."),
+      url: "https://moderaterna.se/var-politik/glesbygd/",
+      citat: "Reformera strandskyddet i grunden.",
+      skal: "dubblett av kö-posten från strandskyddssidan",
+      datum: "2026-08-21",
+    },
+  ];
+
+  /**
+   * Det verkliga fallet, 2026-08-24: meningen avvisades från glesbygdssidan den
+   * 21 augusti och låg tillbaka i kön den 24, från strandskyddssidan.
+   * URL-nyckeln såg två skilda saker; det var en mening.
+   */
+  it("hålls ute när den kommer från en annan sida på samma värdnamn", () => {
+    assert.equal(
+      arAvvisad(minne, "https://moderaterna.se/var-politik/strandskydd/", "Reformera strandskyddet i grunden."),
+      true,
+    );
+  });
+
+  it("uppslaget ger posten med sitt ursprungliga skäl och datum", () => {
+    const p = slaUpp(minne, "https://moderaterna.se/var-politik/strandskydd/", "Reformera strandskyddet i grunden.");
+    assert.equal(p?.datum, "2026-08-21");
+    assert.match(p!.skal, /strandskyddssidan/u);
+  });
+
+  it("www. och avslutande snedstreck spelar ingen roll", () => {
+    assert.equal(
+      arAvvisad(minne, "https://www.moderaterna.se/nagot-annat", "reformera  strandskyddet   i grunden!"),
+      true,
+    );
+  });
+
+  it("ett ANNAT parti hålls inte ute — samma mening hos två partier är två löften", () => {
+    assert.equal(
+      arAvvisad(minne, "https://www.centerpartiet.se/politik/strandskydd", "Reformera strandskyddet i grunden."),
+      false,
+    );
+  });
+
+  it("en hävd avvisning håller inte ute på värdnamnet heller", () => {
+    const havt = [{ ...minne[0]!, havd: { datum: "2026-08-22", skal: "står i valmanifestet" } }];
+    assert.equal(
+      arAvvisad(havt, "https://moderaterna.se/var-politik/strandskydd/", "Reformera strandskyddet i grunden."),
+      false,
+    );
+  });
+
+  it("en annan mening på samma sajt hålls inte ute", () => {
+    assert.equal(
+      arAvvisad(minne, "https://moderaterna.se/var-politik/strandskydd/", "Bygg ut kärnkraften."),
+      false,
+    );
+  });
+
+  it("en adress som inte går att läsa faller tillbaka på URL-nyckeln", () => {
+    assert.equal(arAvvisad(minne, "inte-en-adress", "Reformera strandskyddet i grunden."), false);
+  });
+
+  it("den exakta nyckeln väger tyngst när båda finns", () => {
+    const tva = [
+      minne[0]!,
+      {
+        nyckel: avvisningsnyckel("https://moderaterna.se/var-politik/strandskydd/", "Reformera strandskyddet i grunden."),
+        url: "https://moderaterna.se/var-politik/strandskydd/",
+        citat: "Reformera strandskyddet i grunden.",
+        skal: "eget skäl på den här sidan",
+        datum: "2026-08-23",
+      },
+    ];
+    const p = slaUpp(tva, "https://moderaterna.se/var-politik/strandskydd/", "Reformera strandskyddet i grunden.");
+    assert.equal(p?.datum, "2026-08-23");
+  });
 });
