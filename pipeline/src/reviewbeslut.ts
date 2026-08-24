@@ -24,6 +24,7 @@ export const VAL = [
   "godkann_belopp",
   "delat",
   "dubblett",
+  "dubblett_kalkyl",
   "ejlofte",
   "gallande",
   "oklart",
@@ -31,7 +32,7 @@ export const VAL = [
 export type Val = (typeof VAL)[number];
 
 /** De val som avvisar posten. De andra publicerar den, utom `oklart`. */
-export const AVVISAR: readonly Val[] = ["dubblett", "ejlofte", "gallande"];
+export const AVVISAR: readonly Val[] = ["dubblett", "dubblett_kalkyl", "ejlofte", "gallande"];
 
 export const SKAL_MIN_TECKEN = 25;
 
@@ -41,9 +42,15 @@ export interface Beslut {
   val: Val | null;
   not?: string;
   citat_da?: string;
+  /** Kö-postens basbelopp när beslutet togs. `null` = tom cell. */
+  bas_da?: number | null;
   belopp?: { low: number; bas: number; high: number } | null;
   grupp_id?: string | null;
   narmast_da?: string | null;
+  /** `dubblett_kalkyl`: det publicerade löfte som ska ta över kandidatens kostnad. */
+  kalkyl_till?: string | null;
+  /** Kandidatens kostnad, som den såg ut när beslutet togs. */
+  kostnad_da?: Record<string, unknown> | null;
   tid?: string;
 }
 
@@ -51,6 +58,8 @@ export interface Kopost {
   id: string;
   citat: string;
   harKostnad: boolean;
+  /** Kö-postens basbelopp just nu. Jämförs med det beslutet såg. */
+  bas?: number | null;
 }
 
 export interface Lofteslage {
@@ -106,6 +115,21 @@ export function provaBeslut(
     fel.push(`${namn}: citatet har ändrats sedan beslutet togs — läs om posten`);
   }
 
+  // «Som föreslaget» betyder det förslag människan SÅG. Har prissättningen
+  // hunnit skriva ett annat belopp sedan dess är det inte längre samma ja.
+  // Fällan är inte hypotetisk: kö-prissättningen satte belopp på 241 poster
+  // 2026-08-24, och beslut fattade före den körningen avsåg tomma celler.
+  if (b.val === "godkann" && b.bas_da !== undefined && post.bas !== undefined) {
+    const da = b.bas_da ?? null;
+    const nu = post.bas ?? null;
+    if (da !== nu) {
+      fel.push(
+        `${namn}: beloppet var ${da === null ? "tomt" : da} när beslutet togs och är ${nu === null ? "tomt" : nu} nu. ` +
+          "«Godkänn som föreslaget» gäller det förslag som lästes — läs om posten.",
+      );
+    }
+  }
+
   if (b.val === "godkann" && !post.harKostnad) {
     fel.push(
       `${namn}: posten saknar föreslagen kostnad, så «godkänn som föreslaget» har ingenting att godkänna. ` +
@@ -124,6 +148,18 @@ export function provaBeslut(
         `${namn}: ett belopp satt för hand måste bära sin uträkning. Anteckningen blir den texten, ` +
           `och den är ${(b.not ?? "").trim().length} tecken.`,
       );
+    }
+  }
+
+  // Flytten ändrar ett PUBLICERAT belopp. Att målet lever prövas här; att
+  // kostnaden håller prövas av `kalkylflytt.ts`, som äger den frågan.
+  if (b.val === "dubblett_kalkyl") {
+    if (!b.kalkyl_till) fel.push(`${namn}: valet flyttar en kalkyl men inget publicerat löfte pekades ut`);
+    else if (!loften.get(b.kalkyl_till)?.aktiv) {
+      fel.push(`${namn}: ${b.kalkyl_till} finns inte eller är inte aktivt — en indragen post publicerar ingenting`);
+    }
+    if (!post.harKostnad && !b.kostnad_da) {
+      fel.push(`${namn}: kandidaten har ingen kostnad att flytta`);
     }
   }
 
@@ -155,6 +191,12 @@ export function provaBeslut(
  */
 export function avvisningsskal(b: Beslut): string {
   const not = (b.not ?? "").trim();
+  if (b.val === "dubblett_kalkyl") {
+    const karna =
+      `Samma parti har redan åtagandet publicerat, i ${b.kalkyl_till}. Kö-postens uträkning var ` +
+      "bättre grundad än den som stod där, och är flyttad dit i stället för att kastas med posten.";
+    return not ? `${karna} ${not}` : karna;
+  }
   if (b.val === "dubblett") {
     const id = (b.narmast_da ?? "").split(":")[0];
     const kärna = id

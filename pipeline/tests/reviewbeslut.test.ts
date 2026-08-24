@@ -7,6 +7,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
+  AVVISAR,
   avvisningsskal,
   godkannandeArgument,
   provaBeslut,
@@ -156,5 +157,77 @@ describe("argumenten till approve", () => {
 
   it("ett nej är inget godkännande", () => {
     assert.throws(() => godkannandeArgument(b({ val: "dubblett" })), /inget godkännande/u);
+  });
+});
+
+describe("dubblett med flyttad kalkyl", () => {
+  const b2 = (o: Partial<Beslut> = {}): Beslut =>
+    ({ id: "abc123abc123", val: "dubblett_kalkyl", citat_da: CITAT, kalkyl_till: "p-2026-0001", ...o });
+
+  it("en flytt mot ett levande löfte godtas", () => {
+    assert.deepEqual(provaBeslut(b2(), ko(), loften()).fel, []);
+  });
+
+  it("utan utpekat löfte fälls raden", () => {
+    const p = provaBeslut(b2({ kalkyl_till: null }), ko(), loften());
+    assert.equal(p.ok, false);
+    assert.match(p.fel.join(" "), /inget publicerat löfte pekades ut/u);
+  });
+
+  it("mot ett indraget löfte fälls raden", () => {
+    const p = provaBeslut(b2(), ko(), loften(false));
+    assert.equal(p.ok, false);
+    assert.match(p.fel.join(" "), /inte aktivt/u);
+  });
+
+  it("utan kostnad finns ingenting att flytta", () => {
+    const p = provaBeslut(b2(), ko({ harKostnad: false }), loften());
+    assert.equal(p.ok, false);
+    assert.match(p.fel.join(" "), /ingen kostnad att flytta/u);
+  });
+
+  it("skälet namnger löftet kalkylen flyttades till", () => {
+    const skal = avvisningsskal(b2());
+    assert.match(skal, /p-2026-0001/u);
+    assert.match(skal, /bättre grundad/u);
+  });
+
+  it("valet räknas som en avvisning — kandidaten publiceras inte", () => {
+    assert.ok(AVVISAR.includes("dubblett_kalkyl"));
+  });
+});
+
+describe("«som föreslaget» gäller det förslag som lästes", () => {
+  /**
+   * Kö-prissättningen satte belopp på 241 poster 2026-08-24. Ett ja fattat före
+   * den körningen avsåg en tom cell, inte den siffra som står där nu.
+   */
+  it("ett belopp som ändrats sedan beslutet fäller raden", () => {
+    const p = provaBeslut(
+      { id: "abc123abc123", val: "godkann", citat_da: CITAT, bas_da: null },
+      new Map([["abc123abc123", { id: "abc123abc123", citat: CITAT, harKostnad: true, bas: 350 }]]),
+      loften(),
+    );
+    assert.equal(p.ok, false);
+    assert.match(p.fel.join(" "), /var tomt när beslutet togs och är 350 nu/u);
+  });
+
+  it("ett oförändrat belopp släpps igenom", () => {
+    const p = provaBeslut(
+      { id: "abc123abc123", val: "godkann", citat_da: CITAT, bas_da: 350 },
+      new Map([["abc123abc123", { id: "abc123abc123", citat: CITAT, harKostnad: true, bas: 350 }]]),
+      loften(),
+    );
+    assert.deepEqual(p.fel, []);
+  });
+
+  it("kontrollen gäller bara «som föreslaget» — ett eget belopp ersätter ju förslaget", () => {
+    const p = provaBeslut(
+      { id: "abc123abc123", val: "godkann_belopp", citat_da: CITAT, bas_da: null,
+        belopp: { low: 1, bas: 2, high: 3 }, not: "x".repeat(SKAL_MIN_TECKEN + 5) },
+      new Map([["abc123abc123", { id: "abc123abc123", citat: CITAT, harKostnad: true, bas: 350 }]]),
+      loften(),
+    );
+    assert.deepEqual(p.fel, []);
   });
 });
