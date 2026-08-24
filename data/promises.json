@@ -81624,14 +81624,14 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 0,
+      "msek_low": 1,
+      "msek_base": 10,
+      "msek_high": 50,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Kostnad för administrativ handläggning av enskild omprövning. Antalet berörda är okänt och osäkerheten stor.",
       "confidence": 0.3,
-      "calculation": "Omprövning av felaktigt indragna körkort är samma åtgärd som redan är prissatt i partiets löfte om att stoppa indragna körkort baserade på enbart PEth-tester, vars uträkning uttryckligen räknar in omprövningen av redan indragna körkort. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger.",
+      "calculation": "Antag 500–5000 ärenden, handläggning 5–10 timmar per ärende, á ca 1000 kr/tim ger 2,5–50 mkr. Bas 10 mkr (~1000 ärenden × 10 tkr).",
       "anchor_ids": []
     },
     "financing_claimed": {
@@ -81647,6 +81647,11 @@
         "date": "2026-08-23",
         "change": "Beloppet nollat, tidigare 10 miljoner kronor. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
         "commit": "aca4e89"
+      },
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Beloppet återställt till 10 miljoner kronor som engångspost. Posten nollades tidigare som del av partiets löfte om att stoppa PEth-grundade indragningar, men citaten visar två skilda åtgärder: det andra löftet stoppar framtida indragningar, det här omprövar redan gjorda. Det som var fel var att det andra löftets uträkning prissatte den här postens åtgärd; den uträkningen är rättad i samma pass. Uträkningen här är den ursprungliga."
       }
     ],
     "extraction": {
@@ -86624,16 +86629,14 @@
       "type": "utgift",
       "period": "per_ar",
       "msek_low": 0,
-      "msek_base": 5,
-      "msek_high": 50,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet är ett förbud/reglering (språkkrav). Den direkta statliga kostnaden för att införa och upprätthålla ett sådant krav är försumbar. Eventuella kostnader för språkutbildning eller administration….",
       "confidence": 0.65,
-      "calculation": "Löftet pekar ut en bestämd åtgärd — nationella språkkrav för personal i förskola och äldreomsorg — men anger ingen nivå, och nollningsregeln gäller bara löften som varken pekar ut en åtgärd eller anger en nivå. Beloppet är därför lånat från partiets eget löfte om språkkrav för pedagogisk personal i förskolan, som räknar fram sin nivå ur antalet anställda: flertalet kan visa språkbehärskning via befintlig behörighet, så den nya statliga kostnaden är regeländringen plus löpande tillsyn, några få miljoner kronor per år. Äldreomsorgsdelen prissätts inte här — den ligger på partiets egna löften om språkkrav och språkträning för personalen, och får inte dubbelräknas.",
-      "anchor_ids": [
-        "p-2026-2031"
-      ]
+      "calculation": "Löftet är en sammanfattning: «Säkerställa nationella språkkrav för personal i förskola och äldreomsorg». Båda delarna är egna löften hos partiet och prissatta där — förskoledelen som ett eget löfte om språkkrav för pedagogisk personal, äldreomsorgsdelen som ett eget löfte om språkkrav för anställda i äldreomsorgen med utbildningsinsatser. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll, och här gäller det åt andra hållet: det är helheten som inte får bära det delarna redan bär. Löftet står kvar och syns för läsaren.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -86658,6 +86661,11 @@
         "date": "2026-08-23",
         "commit": "5d9f194",
         "change": "Ankaret pekade på Moderaternas löfte om språkkrav inom äldreomsorgen, som drogs tillbaka samma dag — citatet angav ett ikraftträdande 1 juli 2026 och beskrev alltså redan beslutad politik. Beloppet är oförändrat, men lånet går nu till partiets eget löfte om språkkrav i förskolan, som står på samma nivå och räknar fram den ur antalet anställda. Ett ankare till ett indraget löfte är ett belopp utan källa."
+      },
+      {
+        "date": "2026-08-24",
+        "change": "Beloppet nollat, tidigare 5 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
       }
     ],
     "extraction": {
@@ -125025,8 +125033,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Samma parti säger samma sak två gånger: citatet lyder «Språkkrav och språkträning för personalen» — fyra ord utan sammanhang — och partiets andra löfte om språkkrav för anställda i äldreomsorgen säger samma sak med hela resonemanget: «Du ska kunna förstå vad personalen säger. Det handlar om trygghet och respekt. För att det ska krävs det pengar till utbildningsinsatser.» Båda står på 300 miljoner kronor per år och räknar fram beloppet ur antalet anställda i äldreomsorgen. Den med citatet och underlaget står kvar."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -135875,14 +135889,15 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 3,
-      "msek_base": 10,
-      "msek_high": 25,
+      "msek_low": 0,
+      "msek_base": 1,
+      "msek_high": 2,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Regeländringen i sig är nästan kostnadsfri; huvudkostnaden är engångsgranskning av befintliga indragningar enbart på PEth, i nivå med jämförbart löfte (10 msek). Samhällsföljder prissätts ej.",
       "confidence": 0.5,
-      "calculation": "Själva regeländringen (författningsarbete, vägledning till Transportstyrelsen): ~0–2 mkr engång. Omprövning av redan indragna körkort som enbart vilar på PEth: antag ~1 000–5 000 berörda ärenden × ca 3–5 tkr handläggning per ärende ≈ 3–25 mkr. Bas 10 mkr, ankrat i partiets eget löfte om omprövning av felaktigt indragna körkort, också 10 mkr. Löpande kostnad bedöms i princip neutral (färre indragningar, något mer utredning per misstänkt fall). Olycks- och hälsokonsekvenser är följder, inte statlig utgift, och lämnas okvantifierade."
+      "calculation": "Löftet är att stoppa framtida indragningar av körkort som enbart grundas på PEth-tester. Uträkningen prissatte tidigare även omprövningen av redan indragna körkort, men det är en annan åtgärd, som partiet lovar särskilt i sitt löfte om omprövning av felaktigt indragna körkort — där räknas den. En del av ett belopp som redan prissatts där det hör hemma prissätts till noll här: samma pengar får inte räknas två gånger. Kvar bär den här posten sin egen åtgärd, författningsarbetet och vägledningen till Transportstyrelsen, som är en engångskostnad kring en miljon kronor. Löpande kostnad bedöms neutral: färre indragningar men något mer utredning per misstänkt fall.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -135892,7 +135907,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-24",
+        "change": "Beloppet sänkt till 1 miljoner kronor, tidigare 10. Den del av löftet som faller under regeln är borttagen; resten står kvar. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
