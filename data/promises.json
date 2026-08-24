@@ -20202,7 +20202,7 @@
   },
   {
     "id": "p-2026-0463",
-    "group_id": "g-l-skattefritt-sparande",
+    "group_id": null,
     "title": "Skattefritt ISK-sparande upp till 500 000 kronor",
     "slug": "skattefritt-isk-sparande-upp-till-500-000-kronor",
     "parties": [
@@ -20224,14 +20224,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 4500,
-      "msek_high": 9000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Skattefritt sparande upp till partiets egen gräns på 500 000 kronor. Partiets tre löften om samma sak räknas en gång.",
       "confidence": 0.5,
-      "calculation": "Partiet anger själv gränsen i sitt konkreta löfte: sparande på investeringssparkonto blir skattefritt upp till 500 000 kronor. Staten förlorar den schablonskatt som i dag betalas på kapitalet under gränsen. Med omkring 3–4 miljoner sparare och i genomsnitt 200 000–400 000 kronor på kontot ligger merparten av kapitalet under gränsen, vilket ger ett bortfall kring 4,5 miljarder kronor per år. Partiets tre löften om skattefritt sparande är samma politik och räknas en gång och på samma grund.",
+      "calculation": "Löftet om skattefritt ISK-sparande upp till 500 000 kronor är den ena halvan av partiets större löfte om halverad statlig inkomstskatt OCH skattefritt ISK-sparande, vars citat rymmer båda delarna. Paketets belopp är i samma rättelse höjt så att det bär ISK-delen. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Löftet står kvar och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma.",
       "anchor_ids": []
     },
     "financing_claimed": {
@@ -20267,6 +20267,16 @@
         "date": "2026-08-23",
         "commit": "4f9112c",
         "change": "Beloppet återställt till 4 500 miljoner kronor per år. Posten nollades tidigare samma dag som en del av partiets större löfte om halverad statlig inkomstskatt och skattefritt ISK-sparande, men det löftets EGEN uträkning säger uttryckligen att den bara bär den statliga inkomstskatten och att ISK-delen prissätts här. Nollningen gjorde alltså att ISK-sparandet inte var prissatt någonstans hos partiet. Uträkningen är den ursprungliga."
+      },
+      {
+        "date": "2026-08-24",
+        "change": "Beloppet nollat, tidigare 4 500 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      },
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Gruppen med det andra partiets ISK-löfte är upplöst. Liberalernas ISK-del ligger nu inne i partiets paketlöfte, och en grupp kan bara räkna EN post en gång — den kan inte nå in i ett paket. Moderaternas löfte står därför för sig självt med sitt eget belopp. Följden är att samma politik syns två gånger i totalen, en gång inuti paketet och en gång hos Moderaterna, och det är priset för att det ena partiet buntar två reformer i ett löfte."
       }
     ],
     "extraction": {
@@ -27691,7 +27701,7 @@
   },
   {
     "id": "p-2026-0592",
-    "group_id": "g-l-skattefritt-sparande",
+    "group_id": null,
     "title": "Höjd gräns för skattefritt sparande på ISK till 500 000 kronor",
     "slug": "hojd-grans-for-skattefritt-sparande-pa-isk-till-500-000-kronor",
     "parties": [
@@ -27735,6 +27745,11 @@
         "date": "2026-08-04",
         "change": "Kostnadstypen rättad från utgift till intäktsminskning. Löftet sänker en skatt, det är ingen ny utgift, och sidan skrev därför fel sorts belopp. Beloppet och uträkningen är oförändrade. Typen blev fel när beloppet sattes för hand vid godkännandet: kommandot kunde ange belopp men inte kostnadstyp, och föll då tillbaka på utgift.",
         "commit": "15705e1962b8501d96a6cda4b33281a1792910dc"
+      },
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Gruppen med det andra partiets ISK-löfte är upplöst. Liberalernas ISK-del ligger nu inne i partiets paketlöfte, och en grupp kan bara räkna EN post en gång — den kan inte nå in i ett paket. Moderaternas löfte står därför för sig självt med sitt eget belopp. Följden är att samma politik syns två gånger i totalen, en gång inuti paketet och en gång hos Moderaterna, och det är priset för att det ena partiet buntar två reformer i ett löfte."
       }
     ],
     "extraction": {
@@ -55358,17 +55373,15 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 20000,
-      "msek_base": 30000,
-      "msek_high": 40000,
+      "msek_low": 24500,
+      "msek_base": 34500,
+      "msek_high": 44500,
       "basis": "llm_estimat",
       "basis_url": null,
-      "anchor_ids": [
-        "p-2026-0463"
-      ],
+      "anchor_ids": [],
       "method_note": "Två delar: ISK-delen sätts utifrån jämförbara löften till ca 4 500 mkr/år. Den halverade statliga inkomstskatten skattas på förvärvsinkomst 20→10 % med osäker skattebas.",
       "confidence": 0.4,
-      "calculation": "Posten bär bara den statliga inkomstskatten. ISK-delen prissätts på partiets eget löfte om skattefritt ISK-sparande upp till 500 000 kronor och räknas därför inte här. Statlig inkomstskatt: ca 1,1 miljoner betalande × 180–360 tkr överskjutande inkomst × 10 procent (halverad från 20) ≈ 19,8–39,6 mdkr. Avrundat till 20 000–40 000 mkr med 30 000 mkr som bas."
+      "calculation": "Löftet rymmer två delar, och citatet nämner båda: halverad statlig inkomstskatt och skattefritt sparande på investeringssparkonto upp till 500 000 kronor. Beloppet bär därför båda. Statlig inkomstskatt: cirka 1,1 miljoner betalande × 180–360 tusen kronor överskjutande inkomst × 10 procent (halverad från 20) ≈ 19,8–39,6 miljarder kronor. ISK: staten förlorar den schablonskatt som i dag betalas på kapitalet under gränsen; med omkring 3–4 miljoner sparare och i genomsnitt 200 000–400 000 kronor på kontot ligger merparten under gränsen, vilket ger ett bortfall kring 4,5 miljarder kronor per år. Tillsammans 24 500–44 500 miljoner kronor per år med 34 500 som bas. Partiets två separata löften om samma delar prissätts till noll för att inte räknas två gånger."
     },
     "financing_claimed": {
       "described": false,
@@ -55388,6 +55401,11 @@
         "date": "2026-08-22",
         "change": "Uträkningen lånar sitt belopp som riktmärke från ett annat publicerat löfte. Vilket det är står nu i ett eget fält, så att läsaren kan följa länken och en granskare kan pröva ankaret. Tidigare beskrevs det bara i löpande text, som inte får bära interna beteckningar. Beloppet är oförändrat.",
         "commit": "ad9d4e1d9c4f36bf66f2ec1cc3230314b7cb194a"
+      },
+      {
+        "date": "2026-08-24",
+        "commit": "0000000",
+        "change": "Beloppet höjt från 30 000 till 34 500 miljoner kronor per år (spannet 20 000–40 000 till 24 500–44 500). Uträkningen påstod att posten «bär bara den statliga inkomstskatten» och att ISK-delen prissattes på ett annat löfte  men citatet nämner båda delarna — «Halverad statlig inkomstskatt och 500.000 kronor skattefritt sparande på ISK». Posten är paketet och bär nu båda; partiets två separata löften om delarna är nollade i samma rättelse. Höjningen är ISK-delens 4 500 miljoner kronor per år  ordagrant den nollade postens."
       }
     ],
     "extraction": {
