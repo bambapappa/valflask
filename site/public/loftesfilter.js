@@ -24,6 +24,10 @@
     const html = document.documentElement;
     html.dataset.loftesfilterUnderlag = underlag;
     html.dataset.loftesfilterTyp = typ;
+    const viewKey = `${underlag}:${typ}`;
+    const views = [...document.querySelectorAll("[data-loftesfilter-vy]")];
+    views.forEach((view) => { view.hidden = view.dataset.loftesfilterVy !== viewKey; });
+    const activeView = views.find((view) => view.dataset.loftesfilterVy === viewKey);
     let visible = 0;
     document.querySelectorAll("[data-lofte-underlag][data-lofte-typ]").forEach((row) => {
       const show = (underlag === "alla" || row.dataset.lofteUnderlag === underlag) && (typ === "alla" || row.dataset.lofteTyp === typ);
@@ -33,7 +37,8 @@
     document.querySelectorAll("[data-loftesfilter-status]").forEach((status) => {
       status.firstChild.textContent = `${label(underlag, typ)} `;
     });
-    document.querySelectorAll("[data-loftesfilter-count]").forEach((count) => { count.textContent = String(visible); });
+    const viewCount = activeView?.dataset.loftesfilterVyAntal;
+    document.querySelectorAll("[data-loftesfilter-count]").forEach((count) => { count.textContent = viewCount ?? String(visible); });
     document.dispatchEvent(new CustomEvent("loftesfilter:andrat", { detail: { underlag, typ, visible } }));
   }
   function init() {

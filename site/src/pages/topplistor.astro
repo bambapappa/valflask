@@ -1,171 +1,50 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Loftesfilter from "../components/Loftesfilter.astro";
 import { getPromises, getParties } from "../lib/data";
 import { formatMsek } from "../lib/calc";
-import { promiseNetMsek, partyTotalMsek, getPromisesForParty, flasketPerRost, categoryBreakdown, groupedPromises } from "../lib/aggregates";
+import { promiseNetMsek, partyTotalMsek, flasketPerRost, categoryBreakdown, groupedPromises } from "../lib/aggregates";
+import { filtreraLoeften, filterNyckel, type Loeftesfilter } from "../lib/loftesfilter";
 
 const promises = getPromises();
 const parties = getParties();
-const active = promises.filter((p) => p.status !== 'tillbakadragen');
-
-// En post per politik, inte en per formulering: ett delat löfte tar en plats
-// och skriver ut alla partier som lovat det. Samma representant som summorna
-// räknar, så listan och totalen aldrig säger olika saker om samma grupp.
-const fetaste = groupedPromises(promises).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise));
-
-const partyTotals = parties.map((p) => ({
-  ...p,
-  total: partyTotalMsek(promises, p.code),
-  perVote: flasketPerRost(partyTotalMsek(promises, p.code), p.votes_2022),
-})).sort((a, b) => b.total - a.total);
-
-const partyPerVote = [...partyTotals].sort((a, b) => b.perVote - a.perVote);
-
-// Listan över frikostigaste politiker är NEDSLÄCKT (mänskligt beslut
-// 2026-08-09). Den rangordnade bara de personer som råkade stå i
-// data/people.json — sju stycken, varav två utan ett enda aktivt löfte —
-// medan 26 namngivna politiker bär minst ett. Tre av dem som saknades låg
-// högre än den som stod överst, störst på 693 mdkr mot tabellens 207. En
-// topplista som utelämnar sin egen etta är missvisande, och rätt botten är
-// ett fyllt personregister, inte en fotnot. Tabellen kommer tillbaka när
-// registret finns; tills dess visar vi hellre ingenting. Ingen uppgift är
-// ändrad — en maskinell tabell är släckt, och därför ingen rättelsenot.
-
-const categories = categoryBreakdown(active);
-const categorySorted = categories.map((c) => [c.category, c.totalMsek] as [string, number]);
-
-const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://utlovat.se/" },
-      { "@type": "ListItem", "position": 2, "name": "Topplistor", "item": "https://utlovat.se/topplistor" },
-    ],
-  },
+const filters: Loeftesfilter[] = [
+  { underlag: "parti", loftestyp: "reform" }, { underlag: "parti", loftestyp: "inriktning" }, { underlag: "parti", loftestyp: "alla" },
+  { underlag: "utlovat", loftestyp: "reform" }, { underlag: "utlovat", loftestyp: "inriktning" }, { underlag: "utlovat", loftestyp: "alla" },
+  { underlag: "alla", loftestyp: "reform" }, { underlag: "alla", loftestyp: "inriktning" }, { underlag: "alla", loftestyp: "alla" },
 ];
+const views = filters.map((filter) => {
+  const selected = filtreraLoeften(promises, filter);
+  const partyTotals = parties.map((p) => ({ ...p, total: partyTotalMsek(selected, p.code) }))
+    .sort((a, b) => b.total - a.total);
+  const partyPerVote = partyTotals.map((p) => ({ ...p, perVote: flasketPerRost(p.total, p.votes_2022) }))
+    .sort((a, b) => b.perVote - a.perVote);
+  return {
+    key: filterNyckel(filter), count: selected.filter((p) => p.status !== "tillbakadragen").length,
+    fetaste: groupedPromises(selected).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 10),
+    partyTotals, partyPerVote, categories: categoryBreakdown(selected),
+  };
+});
+const defaultKey = "parti:reform";
+const jsonLd = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
+  { "@type": "ListItem", position: 1, name: "Hem", item: "https://utlovat.se/" },
+  { "@type": "ListItem", position: 2, name: "Topplistor", item: "https://utlovat.se/topplistor" },
+] }];
 ---
-<Layout title="Topplistor — utlovat.se" description="Fetaste fläsket, fläskigaste partiet, dyraste kategorin. Rena datasorteringar." jsonLd={jsonLd} canonicalPath="/topplistor">
+<Layout title="Topplistor — utlovat.se" description="Löften, partier och kategorier sorterade efter valt beloppsunderlag och löftestyp." jsonLd={jsonLd} canonicalPath="/topplistor">
   <div class="page-content">
-    <div class="prosa-content prosa-content--centered">
-      <h1>Topplistor</h1>
-      <p>Bara sorterade siffror — vi har inte handplockat något. Samma metod för alla partier.</p>
-    </div>
-
-    <section class="sektion">
-      <h2>Fetaste fläsket</h2>
-      <p class="prosa-content listnot">Lovar flera partier samma sak går det bara att genomföra en gång, så det räknas en gång och tar en plats här. Alla partier bakom löftet står utskrivna.</p>
-      <ol class="promise-list">
-        {fetaste.slice(0, 10).map((g) => (
-          <li>
-            <a href={`/lofte/${g.promise.id}/${g.promise.slug}`}><strong>{g.promise.title}</strong></a>
-            <div class="etikett etikett--sub">
-              {g.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseNetMsek(g.promise))}</span>{g.shared && (<> · <span class="delat">delat löfte, {g.memberIds.length} formuleringar</span></>)}
-            </div>
-          </li>
-        ))}
-      </ol>
-    </section>
-
-    <section class="sektion sektion--lg">
-      <h2>Fläskigaste partiet (totalt)</h2>
-      <div class="datavy datavy--scroll">
-        <table>
-          <thead>
-            <tr>
-              <th class="radnr">#</th>
-              <th>Parti</th>
-              <th class="num">Totalt (mdkr)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {partyTotals.map((p, i) => (
-              <tr>
-                <td class="radnr">{i + 1}</td>
-                <td><a href={`/parti/${p.code}`}>{p.name}</a></td>
-                <td class="num belopp">{formatMsek(p.total)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div class="prosa-content prosa-content--centered"><h1>Topplistor</h1><p>Välj vilket material du vill jämföra. Vi blandar aldrig partiernas egna belopp med våra beräkningar utan att det syns.</p></div>
+    <Loftesfilter count={views.find((view) => view.key === defaultKey)!.count} />
+    {views.map((view) => (
+      <div data-loftesfilter-vy={view.key} data-loftesfilter-vy-antal={view.count} hidden={view.key !== defaultKey}>
+        <section class="sektion"><h2>Största löftena</h2><p class="prosa-content listnot">Delade löften räknas en gång. Partierna bakom löftet står utskrivna.</p>
+          <ol class="promise-list">{view.fetaste.map((g) => <li><a href={`/lofte/${g.promise.id}/${g.promise.slug}`}><strong>{g.promise.title}</strong></a><div class="etikett etikett--sub">{g.parties.map((c) => parties.find((p) => p.code === c)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: g.promise.cost.basis === "parti" }]}>{formatMsek(promiseNetMsek(g.promise), g.promise.cost.basis)}</span>{g.shared && <> · <span class="delat">delat löfte, {g.memberIds.length} formuleringar</span></>}</div></li>)}</ol>
+        </section>
+        <section class="sektion sektion--lg"><h2>Partier, totalt</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Parti</th><th class="num">Totalt</th></tr></thead><tbody>{view.partyTotals.map((p, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${p.code}`}>{p.name}</a></td><td class="num belopp">{formatMsek(p.total)}</td></tr>)}</tbody></table></div></section>
+        <section class="sektion sektion--lg"><h2>Partier, per röst</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Parti</th><th class="num">Kr per röst</th></tr></thead><tbody>{view.partyPerVote.map((p, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${p.code}`}>{p.name}</a></td><td class="num">{Math.round(p.perVote).toLocaleString("sv-SE")} kr</td></tr>)}</tbody></table></div></section>
+        <section class="sektion sektion--lg"><h2>Kategorier</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Kategori</th><th class="num">Totalt</th><th class="num">Löften</th></tr></thead><tbody>{view.categories.map((c, i) => <tr><td class="radnr">{i + 1}</td><td>{c.category}</td><td class="num belopp">{formatMsek(c.totalMsek)}</td><td class="num">{c.count}</td></tr>)}</tbody></table></div></section>
       </div>
-    </section>
-
-    <section class="sektion sektion--lg">
-      <h2>Fläskigaste partiet (per röst)</h2>
-      <div class="datavy datavy--scroll">
-        <table>
-          <thead>
-            <tr>
-              <th class="radnr">#</th>
-              <th>Parti</th>
-              <th class="num">Kr per röst</th>
-            </tr>
-          </thead>
-          <tbody>
-            {partyPerVote.map((p, i) => (
-              <tr>
-                <td class="radnr">{i + 1}</td>
-                <td><a href={`/parti/${p.code}`}>{p.name}</a></td>
-                <td class="num">{Math.round(p.perVote).toLocaleString('sv-SE')} kr</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="sektion sektion--lg">
-      <h2>Dyraste kategorin</h2>
-      <div class="datavy datavy--scroll">
-        <table>
-          <thead>
-            <tr>
-              <th class="radnr">#</th>
-              <th>Kategori</th>
-              <th class="num">Totalt (mdkr)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categorySorted.map(([cat, total], i) => (
-              <tr>
-                <td class="radnr">{i + 1}</td>
-                <td>{cat}</td>
-                <td class="num belopp">{formatMsek(total)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+    ))}
   </div>
 </Layout>
-
-<style>
-  .prosa-content--centered {
-    margin: 0 auto;
-  }
-  .listnot {
-    color: var(--text-svag);
-    font-size: var(--steg--1);
-    margin: 0 0 0.6rem;
-  }
-  /* Delandet märks med ord, aldrig med färg — samma regel som resten av
-     sajten: formen bär betydelsen, så den syns även i svartvitt. */
-  .delat {
-    font-family: var(--font-mono);
-    font-size: var(--steg--1);
-  }
-  .sektion {
-    margin-top: 1.5rem;
-  }
-  .sektion--lg {
-    margin-top: 2rem;
-  }
-  .datavy--scroll {
-    overflow-x: auto;
-  }
-  .etikett--sub {
-    margin-top: 0.15rem;
-  }
-</style>
+<style>.prosa-content--centered { margin: 0 auto; }.listnot { color: var(--text-svag); font-size: var(--steg--1); margin: 0 0 .6rem; }.sektion { margin-top: 1.5rem; }.sektion--lg { margin-top: 2rem; }.datavy--scroll { overflow-x: auto; }.etikett--sub { margin-top: .15rem; }.delat { font-family: var(--font-mono); font-size: var(--steg--1); }</style>
