@@ -58,7 +58,17 @@ export function provaGrupprad(
   }
   // En grupp med en enda post är ingen grupp — den säger bara att posten är
   // ensam, och `dedupeByGroup` gör då ingenting.
-  if (rad.ids.length < 2) fel.push(`${rad.grupp}: en grupp med färre än två medlemmar är ingen grupp`);
+  //
+  // Kravet gäller gruppen SOM DEN BLIR, inte raden. Att lägga en post till i
+  // en grupp som redan har fem medlemmar är en rad med ett enda id, och den
+  // föll tidigare på det här villkoret — verktyget antog att varje grupp
+  // bildas från grunden.
+  const redanIGruppen = [...loften.values()].filter(
+    (p) => p.group_id === rad.grupp && (p.status ?? "aktiv") === "aktiv" && !rad.ids.includes(p.id),
+  ).length;
+  if (rad.ids.length + redanIGruppen < 2) {
+    fel.push(`${rad.grupp}: en grupp med färre än två medlemmar är ingen grupp`);
+  }
   if (rad.skal.trim().length < SKAL_MIN_TECKEN) {
     fel.push(`${rad.grupp}: skälet är för kort — rättelseloggen ska säga vad läsningen fann`);
   }
@@ -82,6 +92,26 @@ export function sankning(medlemmar: readonly Grupplofte[]): number {
   if (medlemmar.length < 2) return 0;
   const varden = medlemmar.map(mandatperioden);
   return varden.reduce((a, b) => a + b, 0) - Math.max(...varden);
+}
+
+/**
+ * Hur mycket rikssumman sjunker av just DEN HÄR raden.
+ *
+ * `sankning()` svarar på vad en färdig grupp döljer, och det är rätt svar bara
+ * när gruppen bildas från grunden. Utökas en grupp som redan finns är en del av
+ * den sänkningen redan tagen: står tre löften i gruppen sedan tidigare räknas
+ * två av dem inte redan i dag, och raden får inte ta åt sig äran för det.
+ *
+ * Skillnaden är inte kosmetisk. Talet går rakt in i rättelsenotens mening om
+ * hur mycket totalen sjunker — det är ett publicerat påstående om vad
+ * ändringen gjorde.
+ */
+export function sankningsdelta(rad: Grupprad, alla: readonly Grupplofte[]): number {
+  const aktiv = (p: Grupplofte) => (p.status ?? "aktiv") === "aktiv";
+  const iGruppen = alla.filter((p) => p.group_id === rad.grupp && aktiv(p));
+  const nya = alla.filter((p) => rad.ids.includes(p.id) && p.group_id !== rad.grupp && aktiv(p));
+  const efter = [...iGruppen, ...nya];
+  return sankning(efter) - sankning(iGruppen);
 }
 
 /** Posten med sitt group_id och en historikpost som säger vad gruppen gör. */

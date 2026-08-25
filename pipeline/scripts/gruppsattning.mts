@@ -32,6 +32,7 @@ import {
   mandatperioden as period,
   provaGrupprad,
   sankning as sankningFor,
+  sankningsdelta,
   tillampa,
   type Grupplofte as Lofte,
   type Grupprad as Rad,
@@ -78,19 +79,27 @@ for (const rad of rader) for (const id of rad.ids) {
 
 let sankning = 0;
 for (const rad of rader) {
-  const med = rad.ids.map((i) => karta.get(i)).filter(Boolean) as Lofte[];
+  // Gruppen som den blir: raden plus dem som redan står i den. Utökas en
+  // befintlig grupp är det de sammanlagda medlemmarna som avgör vem som bär
+  // summan, inte bara de nytillkomna.
+  const redan = loften.filter((p) => p.group_id === rad.grupp && (p.status ?? "aktiv") === "aktiv");
+  const nya = rad.ids.map((i) => karta.get(i)).filter((p): p is Lofte => Boolean(p) && p!.group_id !== rad.grupp);
+  const med = [...redan, ...nya];
   if (med.length < 2) continue;
   const storst = Math.max(...med.map(period));
-  const bortraknat = sankningFor(med);
+  const bortraknat = sankningsdelta(rad, loften);
   sankning += bortraknat;
-  console.log(`${rad.grupp}  (${med.length} löften, ${bortraknat.toLocaleString("sv-SE")} msek räknas inte längre dubbelt)`);
+  const utokning = redan.length > 0 ? `utökas med ${nya.length}, blir ${med.length}` : `${med.length} löften`;
+  console.log(`${rad.grupp}  (${utokning}, ${bortraknat.toLocaleString("sv-SE")} msek räknas inte längre dubbelt)`);
   for (const p of med) {
     const bar = period(p) === storst ? " ← bär summan" : "";
-    console.log(`     ${p.id} [${(p.parties ?? []).join(",")}] ${period(p).toLocaleString("sv-SE").padStart(9)}  ${(p.title ?? "").slice(0, 54)}${bar}`);
+    const nyhet = redan.includes(p) ? "  " : "+ ";
+    console.log(`   ${nyhet}${p.id} [${(p.parties ?? []).join(",")}] ${period(p).toLocaleString("sv-SE").padStart(9)}  ${(p.title ?? "").slice(0, 54)}${bar}`);
   }
   console.log(`     skäl: ${rad.skal}`);
   console.log();
 }
+void sankningFor;
 
 if (fel.length > 0) {
   console.error(`FÄLLDA RADER (${fel.length}) — ingenting skrivet:`);
@@ -106,16 +115,30 @@ if (!varfor) { console.error("\n--skriv kräver --varfor."); process.exit(1); }
 const nya = loften.map((p) => {
   const rad = rader.find((r) => r.ids.includes(p.id));
   if (!rad) return p;
-  return tillampa(p, rad, rad.ids.map((i) => karta.get(i)!).filter(Boolean), datum);
+  // Den som redan står i gruppen får ingen ny historikpost — ingenting hände
+  // med den. Medlemsantalet i texten är däremot gruppens hela, inte radens.
+  if (p.group_id === rad.grupp) return p;
+  const helaGruppen = [
+    ...loften.filter((q) => q.group_id === rad.grupp && (q.status ?? "aktiv") === "aktiv"),
+    ...rad.ids.map((i) => karta.get(i)!).filter((q) => q && q.group_id !== rad.grupp),
+  ];
+  return tillampa(p, rad, helaGruppen, datum);
 });
+
+// En rad kan bilda en ny grupp eller utöka en som finns. Notens ord ska säga
+// vilket — «bildade» om en grupp som redan har medlemmar är ett påstående om
+// att politiken upptäcktes i dag, och det stämmer inte.
+const antalUtokade = rader.filter((r) => loften.some((p) => p.group_id === r.grupp)).length;
+const bildadeEllerUtokade =
+  antalUtokade === 0 ? "bildade" : antalUtokade === rader.length ? "utökade" : "bildade eller utökade";
 
 const rattelser = JSON.parse(readFileSync(join(DATA, "rattelser.json"), "utf8")) as unknown[];
 rattelser.push({
   date: datum,
   affects: `Löftessidorna för ${rader.flatMap((r) => r.ids).join(", ")}`,
   what:
-    `${rader.length} grupper bildade över ${rader.flatMap((r) => r.ids).length} löften. Samma politik hos ` +
-    "flera partier räknas nu en gång i stället för flera. Alla löften står kvar och syns med sina egna " +
+    `${rader.length} grupper ${bildadeEllerUtokade} över ${rader.flatMap((r) => r.ids).length} löften. Samma politik ` +
+    "räknas nu en gång i stället för flera. Alla löften står kvar och syns med sina egna " +
     `belopp; det som ändras är totalen, som sjunker med ${sankning.toLocaleString("sv-SE")} miljoner ` +
     "kronor för mandatperioden. " + rader.map((r) => r.skal).join(" "),
   why: varfor,
