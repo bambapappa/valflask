@@ -27,6 +27,7 @@
  * löften som avses, inte att provet faller bort.
  */
 import { LANAR_BELOPP, type Jamforbar } from "./ankarkravet.ts";
+import { nollskal } from "./utrakningen.ts";
 import { UTRAKNING_MAX_TECKEN } from "./kalkylflytt.ts";
 import { INTERN_BETECKNING } from "./publicerad-text.ts";
 
@@ -162,7 +163,26 @@ export function provaKoankarrad(
         );
       }
     }
-  } else if (LANAR_BELOPP.test(text) && (post.msek_base ?? 0) !== 0) {
+  }
+
+  // NOLLAN ÄR OCKSÅ EN PUBLICERAD SIFFRA, och måste bära sitt skäl i den text
+  // läsaren ser. Kontrollen `nollan_utan_skal` fäller annars posten — och den
+  // fäller den i SVEPET, alltså efter att raden redan skrivits. Att pröva
+  // samma sak här ger beskedet före skrivningen i stället för efter.
+  //
+  // `nollskal` är avsiktligt bred: en nollning som bär sitt skäl i egna ord ska
+  // inte fällas för att den valt andra ord än reglerna. Det som fälls är en
+  // nolla som inte namnger något skäl alls.
+  if ((post.msek_base ?? 0) === 0 && nollskal(text) === null) {
+    fel.push(
+      `${namn}: beloppet är noll och uträkningen namnger inget skäl som en nollning får vila på. ` +
+        "Skriv ut vilken regel som ger noll — lag eller förbud, utredning eller plan, omfördelning " +
+        "utan ny nettokostnad, bred uppräkning utan åtgärd, en del som redan prissatts på ett annat " +
+        "löfte, eller att underlaget inte räcker till en nivå.",
+    );
+  }
+
+  if (rad.ankare.trim() === "" && LANAR_BELOPP.test(text) && (post.msek_base ?? 0) !== 0) {
     // Omskrivningsraden ska ta bort lånepåståendet. Gör den inte det står
     // posten kvar med exakt det fel den skulle laga.
     fel.push(

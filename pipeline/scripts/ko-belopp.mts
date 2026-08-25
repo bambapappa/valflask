@@ -47,13 +47,30 @@ const loften = new Map<string, Loftesuppgift>(
   (JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Loftesuppgift[]).map((p) => [p.id, p]),
 );
 
-let satta = 0, skrivnaOm = 0;
+let satta = 0, skrivnaOm = 0, rattade = 0;
 const saknas: string[] = [];
 for (const b of beslut) {
   const post = perId.get(b.id);
   if (!post) continue;
   if (!b.belopp) { saknas.push(b.id); continue; }
+  // EN RÄTTAD UTRÄKNING SKRIVS INTE ÖVER. Granskarens anteckning blir postens
+  // uträkning, men anteckningen är skriven för att avgöra posten och inte för
+  // att läsas publikt — och den fälls ofta av kvalitetsfiltret. Rättelsen görs
+  // med `ko-ankare`, och en ny körning av det här steget skulle annars kasta
+  // den: femtiofyra nollor fick sitt skäl utskrivet 2026-08-25, och nästa
+  // ko-belopp hade lagt tillbaka arbetsanteckningarna i tysthet.
+  //
+  // Villkoret är att posten redan bär granskarens belopp OCH en annan text än
+  // anteckningen. Har granskaren ändrat sitt beslut sedan dess ändras beloppet,
+  // och då skrivs allt om — det är en ny läsning och ska slå igenom.
+  const fore = (post.cost ?? {}) as Record<string, unknown>;
   const omskriven = skrivOmBeteckningar((b.not ?? "").trim(), loften);
+  const redanRattad =
+    fore["basis"] === "granskare" &&
+    fore["msek_base"] === Math.round(b.belopp.bas) &&
+    typeof fore["calculation"] === "string" &&
+    fore["calculation"] !== omskriven.text;
+  if (redanRattad) { rattade += 1; continue; }
   const kostnad = koKostnad(post.cost as never, b.belopp, omskriven.text);
   if (omskriven.ankare.length > 0) kostnad["anchor_ids"] = omskriven.ankare;
   (post as { cost?: unknown }).cost = kostnad;
@@ -62,6 +79,7 @@ for (const b of beslut) {
 }
 
 console.log(`${beslut.length} beslut med eget belopp · ${satta} skrivna på kö-posten · ${skrivnaOm} noter med intern beteckning omskrivna` +
+  (rattade > 0 ? ` · ${rattade} lämnade orörda (uträkningen redan rättad)` : "") +
   (saknas.length > 0 ? ` · ${saknas.length} utan spann: ${saknas.slice(0, 5).join(", ")}` : ""));
 
 if (!skriv) { console.log("\nTorrkörning. Lägg till --skriv för att verkställa."); process.exit(0); }

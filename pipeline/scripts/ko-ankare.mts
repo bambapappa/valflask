@@ -87,7 +87,10 @@ for (const rad of attGora) {
   const ankaren = ankarlista(rad);
   const namn = ankaren.map((a) => `${a} (${malen.get(a)?.title?.slice(0, 34) ?? "?"})`).join(", ");
   console.log(`  ${rad.id}  ${c.msek_base} mkr ${c.period}`);
-  console.log(`     ${ankaren.length > 0 ? `ankare: ${namn}` : "uträkningen skrivs om, lånepåståendet försvinner"}`);
+  const omskrivning = (c.msek_base ?? 0) === 0
+    ? "uträkningen skrivs om och namnger regeln som ger noll"
+    : "uträkningen skrivs om, lånepåståendet försvinner";
+  console.log(`     ${ankaren.length > 0 ? `ankare: ${namn}` : omskrivning}`);
   console.log(`     ${rad.skal}`);
 }
 
