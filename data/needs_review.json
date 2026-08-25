@@ -981,36 +981,6 @@
   },
   {
     "candidate": {
-      "title": "Nationell strategi för enskilda vägar på landsbygden",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Ta fram en nationell strategi för de enskilda vägarna för att säkra funktionaliteten i lands- och glesbygd, då dessa är avgörande för näringsliv och boende.",
-      "category": "infrastruktur",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/vagar",
-    "articleTitle": "Vägar\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-1399",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 5,
-      "msek_base": 15,
-      "msek_high": 30,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Avser framtagande av nationell strategi, inte väginvesteringar. Jämförbar plan/utredning (SOU-storlek) kostar 5–30 mkr.",
-      "confidence": 0.5,
-      "calculation": "1 strategi/plan ≈ 1 utredning. SOU-liknande arbete: 5–30 mkr, bas 15 mkr. Inga investeringar i enskilda vägar ingår; de prissätts separat."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Skärpa klimatmålen och nå klimatneutralitet senast 2040",
       "parties": [
         "c"
@@ -1454,35 +1424,6 @@
       "calculation": "Ingen specificerad reform eller nivå anges. Jämförbara löften om kriminalvård/rehabilitering ligger på 25–800 mkr/år. Eftersom detta är ett inriktningslöfte sätts base till 0; high 800 mkr/år som övre osäkerhetsgräns."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1602 (250), p-2026-1638 (25), p-2026-0522 (800), p-2026-2493 (800), p-2026-1135 (800) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~800"
-  },
-  {
-    "candidate": {
-      "title": "Stärkt trygghet i utsatta områden med fler poliser och trygghetsvärdar",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Stärka tryggheten i utsatta områden med fler synliga poliser och trygghetsvärdar.",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/lag-och-ratt/gangkriminalitet",
-    "articleTitle": "Gängkriminalitet | Centerpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 100,
-      "msek_base": 250,
-      "msek_high": 500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Ingen partisiffra finns. Skattning utifrån antal utsatta områden och årskostnad per polis respektive trygghetsvärd.",
-      "confidence": 0.4,
-      "calculation": "~30 utsatta områden × 2–5 extra poliser = 60–150 poliser × ~1 mkr/år = 60–150 mkr. Trygghetsvärdar: 5–10 per område = 150–300 × 0,4–0,6 mkr = 60–180 mkr. Summa 120–330 mkr; spannet vidgas till 100–500 mkr för osäkerhet, bas 250 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1746 (0), p-2026-0398 (10), p-2026-0607 (0), p-2026-1361 (0), p-2026-2597 (0) ⚠ AVVIKER: belopp 250 men jämförbara ligger på 0"
   },
   {
     "candidate": {
@@ -2017,35 +1958,6 @@
       "calculation": "Ingen konkret reform eller nivå anges. Baserat på jämförbara löften (M:s löfte om säkerställa proportionerlig kamerabevakning som skyddar integritet m.fl.) ≈ 0 mkr. Osäkerhet: en mindre utredning/utbildning 0–10 mkr."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-2502 (0), p-2026-0603 (0), p-2026-0689 (0), p-2026-0895 (0), p-2026-0998 (30)"
-  },
-  {
-    "candidate": {
-      "title": "Inrätta ett statligt fastighetsbolag",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Inrätta ett statligt fastighetsbolag med uppdrag att förvärva eller bygga fastigheter i områden med socioekonomiska utmaningar, i syfte att bryta segregationen.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/bostad",
-    "articleTitle": "Bostad\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 500,
-      "msek_base": 1500,
-      "msek_high": 7500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Ingen volym angiven; skattar statens kapitalinsats i bolaget, inte hela fastighetsvärdet. Löpande drift antas finansieras av hyror.",
-      "confidence": 0.3,
-      "calculation": "Ingen volym angiven. Antar 500–5 000 bostäder, anskaffning/bygg 2–4 mkr/lgh, statlig kapitalinsats 20–50 % (rest lån). Bas: 1 500 lgh × 3 mkr × 33 % ≈ 1 500 mkr. Lågt: 500 × 2 × 50 % = 500 mkr. Högt: 5 000 × 3 × 50 % = 7 500 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0979 (20), p-2026-1050 (300), p-2026-0429 (60), p-2026-2898 (25), p-2026-1568 (10) ⚠ AVVIKER: 1500 avviker 60.0× från jämförbara (median 25)"
   },
   {
     "candidate": {
