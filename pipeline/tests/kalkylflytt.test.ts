@@ -89,14 +89,25 @@ describe("vad som måste stämma innan ett publicerat belopp rörs", () => {
   it("ett för kort skäl fälls", () => {
     const p = provaFlytt(rad({ skal: "bättre" }), mal());
     assert.equal(p.ok, false);
-    assert.match(p.fel.join(" "), /skälet är för kort/u);
+    assert.match(p.fel.join(" "), /rättelseloggen ska säga vad läsningen fann/u);
   });
 
-  it("en flytt som inte flyttar något fälls", () => {
+  /**
+   * Idempotens, inte ett fel. Kvalitetsfiltret stoppade passet 2026-08-25 efter
+   * att fem flyttar redan skrivits, och en omkörning ska inte kräva att
+   * beslutsfilen städas för hand.
+   */
+  it("en flytt som redan är gjord hoppas över, den fälls inte", () => {
     const m = mal({ cost: { ...rad().kostnad } });
     const p = provaFlytt(rad(), m);
+    assert.deepEqual(p.fel, []);
+    assert.match(p.hoppas ?? "", /redan flyttad/u);
+  });
+
+  it("en redan gjord flytt med trasigt skäl fälls ändå", () => {
+    const m = mal({ cost: { ...rad().kostnad } });
+    const p = provaFlytt(rad({ skal: "kort" }), m);
     assert.equal(p.ok, false);
-    assert.match(p.fel.join(" "), /redan desamma/u);
   });
 });
 
@@ -163,5 +174,50 @@ describe("vad flytten lämnar efter sig", () => {
 
   it("förändringen mäts över mandatperioden", () => {
     assert.equal(forandring(rad(), mal()), 1400);
+  });
+});
+
+describe("skälet skrivs i historiken och läses av besökaren", () => {
+  /**
+   * Hände 2026-08-25: avvisningsskälet återanvändes som skäl till flytten, och
+   * det skälet får bära löftets id — det går till `avvisade.json`. Historiken
+   * på det publicerade löftet får det inte. Meningen blev dessutom cirkulär:
+   * «publicerat, i p-2026-1268» stod I p-2026-1268.
+   */
+  it("ett löftes-id i skälet fälls", () => {
+    const p = provaFlytt(rad({ skal: "Samma parti har redan åtagandet publicerat, i p-2026-1813." }), mal());
+    assert.equal(p.ok, false);
+    assert.match(p.fel.join(" "), /intern beteckning/u);
+  });
+
+  it("ett grupp-id i skälet fälls", () => {
+    const p = provaFlytt(rad({ skal: "Hör till g-sankt-skatt-pa-arbete och räknas där." }), mal());
+    assert.equal(p.ok, false);
+    assert.match(p.fel.join(" "), /intern beteckning/u);
+  });
+
+  it("en kort not räcker — kärnan skrivs av flytten", () => {
+    const p = provaFlytt(rad({ skal: "utförligare kalkyl" }), mal());
+    assert.deepEqual(p.fel, []);
+    assert.match(flytta(mal(), rad({ skal: "utförligare kalkyl" }), "2026-08-25").history!.at(-1)!.change,
+      /granskningskön.*utförligare kalkyl/su);
+  });
+});
+
+describe("sorten följer beloppet", () => {
+  it("en inriktning som får ett belopp blir en reform", () => {
+    const m = mal({ loftestyp: "inriktning" });
+    assert.equal(flytta(m, rad(), "2026-08-25")["loftestyp"], "reform");
+  });
+
+  it("en reform förblir en reform", () => {
+    const m = mal({ loftestyp: "reform" });
+    assert.equal(flytta(m, rad(), "2026-08-25")["loftestyp"], "reform");
+  });
+
+  it("en inriktning som får en nolla förblir en inriktning", () => {
+    const m = mal({ loftestyp: "inriktning" });
+    const nollrad = rad({ kostnad: { ...rad().kostnad, msek_low: 0, msek_base: 0, msek_high: 0 } });
+    assert.equal(flytta(m, nollrad, "2026-08-25")["loftestyp"], "inriktning");
   });
 });

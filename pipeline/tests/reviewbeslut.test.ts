@@ -61,10 +61,17 @@ describe("citatet måste vara detsamma som när beslutet togs", () => {
 });
 
 describe("godkännandet", () => {
-  it("en post som lämnat kön går inte att godkänna", () => {
+  /**
+   * En post som lämnat kön är avgjord — av en tidigare körning eller av någon
+   * annan som satt samma dom. Att fälla hela passet för den vore att kräva att
+   * beslutsfilen städas för hand efter varje verkställighet, och filen är
+   * append-only med flit. Ändrat 2026-08-25, när ett halvkört pass inte gick
+   * att köra om.
+   */
+  it("en post som lämnat kön hoppas över, den fälls inte", () => {
     const p = provaBeslut(b(), new Map(), loften());
-    assert.equal(p.ok, false);
-    assert.match(p.fel.join(" "), /finns inte i kön/u);
+    assert.deepEqual(p.fel, []);
+    assert.match(p.hoppas ?? "", /redan avgjord/u);
   });
 
   it("«som föreslaget» kräver att det FINNS ett förslag", () => {
@@ -127,10 +134,30 @@ describe("avvisningen", () => {
     assert.deepEqual(p.fel, []);
   });
 
-  it("«inte ett löfte» utan skäl fälls", () => {
-    const p = provaBeslut(b({ val: "ejlofte", not: "nej" }), ko(), loften());
-    assert.equal(p.ok, false);
-    assert.match(p.fel.join(" "), /skäl som går att läsa/u);
+  /**
+   * Kravet gäller det SKÄL SOM SPARAS, inte noten. Nio av 338 beslut föll
+   * 2026-08-25 på ett notkrav med noter som «utförligare kalkyl» — kravet mätte
+   * fel sak. Varje val bär numera en genererad kärnmening, och noten läggs till.
+   */
+  it("en kort not räcker: kärnan bär skälet", () => {
+    const p = provaBeslut(b({ val: "ejlofte", not: "retorik" }), ko(), loften());
+    assert.deepEqual(p.fel, []);
+    const skal = avvisningsskal(b({ val: "ejlofte", not: "retorik" }));
+    assert.match(skal, /ingen utfästelse/u);
+    assert.match(skal, /retorik$/u);
+  });
+
+  it("kärnan ensam räcker när noten är tom", () => {
+    const p = provaBeslut(b({ val: "ejlofte", not: "" }), ko(), loften());
+    assert.deepEqual(p.fel, []);
+    assert.ok(avvisningsskal(b({ val: "ejlofte" })).length >= SKAL_MIN_TECKEN);
+  });
+
+  it("varje avvisande val har en kärna som går att läsa", () => {
+    for (const val of AVVISAR) {
+      const skal = avvisningsskal(b({ val, kalkyl_till: "p-2026-0001", narmast_da: "p-2026-0002:1" }));
+      assert.ok(skal.length >= SKAL_MIN_TECKEN, `${val}: «${skal}»`);
+    }
   });
 
   it("«oklart» prövas inte alls — det verkställs inte", () => {
@@ -148,10 +175,17 @@ describe("argumenten till approve", () => {
       ["abc123abc123", "--group", "p-2026-0001"]);
   });
 
-  it("ett handsatt belopp bär spannet och uträkningen", () => {
+  /**
+   * Beloppet skickas INTE med, och det är hela lösningen på de 231 beslut som
+   * satt fast. `ko-belopp` skriver granskarens tal och uträkning på kö-posten
+   * före svepet; `approve()` tar kostnaden som den står där. Skickades talet med
+   * skulle kostnaden byggas om ur beslutets råa anteckning — före omskrivningen
+   * av interna beteckningar — och prövningen beskriva en annan version.
+   */
+  it("ett handsatt belopp är bara id:t — talet står redan på kö-posten", () => {
     assert.deepEqual(
       godkannandeArgument(b({ val: "godkann_belopp", belopp: { low: 1, bas: 2, high: 3 }, not: "  skälet  " })),
-      ["abc123abc123", "1", "2", "3", "--calc", "skälet"],
+      ["abc123abc123"],
     );
   });
 
@@ -221,13 +255,31 @@ describe("«som föreslaget» gäller det förslag som lästes", () => {
     assert.deepEqual(p.fel, []);
   });
 
-  it("kontrollen gäller bara «som föreslaget» — ett eget belopp ersätter ju förslaget", () => {
-    const p = provaBeslut(
-      { id: "abc123abc123", val: "godkann_belopp", citat_da: CITAT, bas_da: null,
-        belopp: { low: 1, bas: 2, high: 3 }, not: "x".repeat(SKAL_MIN_TECKEN + 5) },
+  /**
+   * `bas_da`-kontrollen gäller bara «som föreslaget» — ett eget belopp ersätter
+   * ju förslaget. Men eftersom talet inte längre skickas med till `approve()`
+   * måste det stå PÅ kö-posten, och det är den kontrollen som tar vid: står ett
+   * annat tal där har `ko-belopp` inte körts, och godkännandet skulle publicera
+   * det gamla maskinberäknade beloppet i tysthet.
+   */
+  it("ett eget belopp kräver att kö-posten redan bär det", () => {
+    const beslut = {
+      id: "abc123abc123", val: "godkann_belopp" as const, citat_da: CITAT, bas_da: null,
+      belopp: { low: 1, bas: 2, high: 3 }, not: "x".repeat(SKAL_MIN_TECKEN + 5),
+    };
+    const medFel = provaBeslut(
+      beslut,
       new Map([["abc123abc123", { id: "abc123abc123", citat: CITAT, harKostnad: true, bas: 350 }]]),
       loften(),
     );
-    assert.deepEqual(p.fel, []);
+    assert.equal(medFel.ok, false);
+    assert.match(medFel.fel.join(" "), /Kör pnpm ko-belopp först/u);
+
+    const skrivet = provaBeslut(
+      beslut,
+      new Map([["abc123abc123", { id: "abc123abc123", citat: CITAT, harKostnad: true, bas: 2 }]]),
+      loften(),
+    );
+    assert.deepEqual(skrivet.fel, []);
   });
 });

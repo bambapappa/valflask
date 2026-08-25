@@ -7,7 +7,9 @@ import { avvisa, hav, slaUpp, type Avvisning } from "./avvisningar.ts";
 import { partiForUrl } from "./skordeordning.ts";
 import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
+import { LANAR_BELOPP } from "./ankarkravet.ts";
 import { svenskDag } from "./dagen.ts";
+import { harledLoftestyp } from "./loftestyp.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -276,6 +278,8 @@ export interface ReviewCandidate {
 }
 
 interface PromiseEntry {
+  /** Reform eller inriktning. Härleds ur citatet och prissättningen. */
+  loftestyp?: "reform" | "inriktning";
   id: string;
   group_id: string | null;
   title: string;
@@ -655,6 +659,46 @@ function approveLast(
     process.exit(1);
   }
 
+  // ETT LÅNAT BELOPP MÅSTE GÅ ATT FÖLJA, och det prövas HÄR — vid
+  // publiceringen — och inte först av ankarkravets grind i bygget.
+  //
+  // 45 löften godkändes 2026-08-25 med uträkningar som sade «jämförbart löfte
+  // anger 8 mdkr/år» utan att säga vilket, och landade rakt i ankarskulden.
+  // Skulden får bara krympa, så de gick inte att lägga till där — de måste
+  // skrivas om, en efter en, efter att de redan stod publicerade.
+  //
+  // `anchor_ids` är fältet som löser knuten: en maskinläsbar hänvisning som
+  // sajten renderar som länk, till skillnad från numret i prosan som spärren
+  // ovan fäller. Kö-prissättningen fyller det numera själv när den kan.
+  //
+  // GRUPPEN RÄKNAS SOM ANKARE, och det är inte en uppmjukning — det är samma
+  // regel som `lanarUtanSparbartAnkare` tillämpar på det publicerade beståndet.
+  // `group_id` och `cost.anchor_ids` är de två strukturerade fält kravet
+  // godtar: gruppen när det är SAMMA reform och beloppet ska räknas en gång,
+  // ankaret när det är ett ANNAT löfte vars belopp lånas som riktmärke.
+  // Grinden här läste bara det ena, och fällde därmed poster som den
+  // publicerade regeln släpper igenom — inklusive den tredje utvägen dess egen
+  // feltext pekar ut. Fem `delat`-beslut satt fast på just det 2026-08-25.
+  const ankare = (cost as { anchor_ids?: string[] }).anchor_ids ?? [];
+  const iGrupp = linkTo !== null && linkTo !== undefined && linkTo !== "";
+  if (
+    LANAR_BELOPP.test(cost.calculation ?? "") &&
+    (cost.msek_base ?? 0) !== 0 &&
+    ankare.length === 0 &&
+    !iGrupp
+  ) {
+    console.error(
+      "Uträkningen säger att beloppet är lånat från ett jämförbart löfte, men\n" +
+        "säger inte vilket. Ett lånat belopp utan spårbart ankare är ett tal\n" +
+        "läsaren inte kan följa till sin grund.\n\n" +
+        "  · sätt cost.anchor_ids på kö-posten, eller\n" +
+        "  · räkna om beloppet på egen grund och skriv om uträkningen, eller\n" +
+        "  · länka posten till samma grupp som löftet den lånar av (--group).\n\n" +
+        "Skriv INTE ut id:t i uträkningen — spärren ovan fäller det.",
+    );
+    process.exit(1);
+  }
+
   if (((cost.calculation ?? "").trim()) === "") {
     console.error(
       "Uträkningen saknas, och den visas publikt på löftessidan — ett belopp\n" +
@@ -688,6 +732,12 @@ function approveLast(
   const newPromise: PromiseEntry = {
     id: newId,
     group_id,
+    // Sorten härleds ur citatet och prissättningen, samma regel som resten av
+    // beståndet. Fältet sattes inte alls vid godkännandet: 164 löften
+    // publicerade 2026-08-25 kom ut utan sort, och utan den går en nolla inte
+    // att läsa — syns det inte om åtgärden är gratis eller om det inte finns
+    // någon åtgärd att prissätta? Sorten styr dessutom kopplingssteget.
+    loftestyp: harledLoftestyp(cand.quote ?? "", cost as never),
     title,
     slug: slugify(title),
     parties: cand.parties ?? [],
@@ -738,7 +788,11 @@ function approveLast(
     newPromise as unknown as Record<string, unknown>,
   );
   if (!grind.ok) {
-    console.error(`Godkännandet stoppades: posten ${grind.skal}`);
+    // Id:t och rubriken med: ett pass över hundratals beslut säger annars bara
+    // ATT något stoppades, och den som kör får leta för hand.
+    console.error(
+      `Godkännandet stoppades för ko:${reviewId(item)} «${title.slice(0, 60)}»: posten ${grind.skal}`,
+    );
     process.exit(1);
   }
 

@@ -29,6 +29,7 @@ import { join, resolve } from "node:path";
 import { estimateCost, type CostEstimate } from "../src/cost.ts";
 import { findComparableCosts, type ComparablePromiseLite } from "../src/similarity.ts";
 import { provaUtrakningen, type Invandning, type UtrakningsLofte } from "../src/utrakningen.ts";
+import { harledAnkare, LANAR_BELOPP } from "../src/ankarkravet.ts";
 import { internaBeteckningar } from "../src/publicerad-text.ts";
 import { OpenRouterClient, type LlmClient } from "../src/llm.ts";
 import { byggLed } from "../src/cli-run.ts";
@@ -207,7 +208,30 @@ async function kor(): Promise<void> {
       return false;
     }
 
-    const invandningar = provaEstimatet(p, est);
+    // ETT LÅNAT BELOPP MÅSTE GÅ ATT FÖLJA. Säger uträkningen att den lånar av
+    // ett jämförbart löfte ska `anchor_ids` peka ut vilket — annars bryter
+    // posten mot ankarkravet i samma stund den publiceras, och skriver
+    // modellen numret i prosan i stället fälls den av spärren mot interna
+    // beteckningar. Fältet är vägen mellan de två grinderna.
+    //
+    // Går ankaret inte att härleda ur uträkningens egna tal blir det en
+    // anmärkning i stället för en kostnad. Att gissa vilket av fem jämförbara
+    // löften ett tal kom från vore att skriva en härkomst läsaren inte kan
+    // lita på, och en falsk härkomst är sämre än ingen.
+    const ankare = harledAnkare(est.calculation, jamforbara);
+    const invandningar = [...provaEstimatet(p, est)];
+    if (LANAR_BELOPP.test(est.calculation ?? "") && (est.msek_base ?? 0) !== 0 && ankare.length === 0) {
+      invandningar.push({
+        kontroll: "lanar_utan_ankare",
+        roll: "journalisten",
+        invandning:
+          "Ni skriver att beloppet kommer från ett jämförbart löfte. Vilket? " +
+          "Utan det går talet inte att följa till sin grund.",
+        matt:
+          `Uträkningen säger att den lånar, basbeloppet är ${est.msek_base}, och inget av de ` +
+          `${jamforbara.length} jämförbara löftenas belopp står utskrivet i texten.`,
+      });
+    }
     if (invandningar.length > 0) {
       anmarkta++;
       console.log(
@@ -233,6 +257,7 @@ async function kor(): Promise<void> {
       basis: est.basis, basis_url: est.basis_url ?? null,
       method_note: est.method_note, confidence: est.confidence,
       calculation: est.calculation,
+      ...(ankare.length > 0 ? { anchor_ids: ankare } : {}),
     };
     p.costReason = `LLM-estimat (confidence ${est.confidence}) — bekräfta/justera belopp`;
     return true;

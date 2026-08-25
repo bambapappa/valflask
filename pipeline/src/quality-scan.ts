@@ -80,6 +80,13 @@ function parseSwedishNumber(raw: string): number | null {
  * första alternativet bara de tre första siffrorna i "1000" och läser talet
  * som 100.
  */
+/**
+ * OBS: mönstret bär en ALTERNATION PÅ TOPPNIVÅ. Varje inbäddning måste ligga i
+ * en grupp — `(${NUM_SRC})` eller `(?:${NUM_SRC})`. Utan den sprider sig
+ * alternationen till hela uttrycket: ett mönster skrivet `${NUM_SRC}\\s*%`
+ * betyder «tal ELLER tal ELLER ordet ett följt av procent», och matchar då
+ * nästan vad som helst.
+ */
 const NUM_SRC = `\\d{1,3}(?:[${SPACES}]\\d{3})+(?:,\\d+)?|\\d+(?:,\\d+)?|\\ben\\b|\\bett\\b`;
 
 /**
@@ -115,7 +122,8 @@ const RANGE = /\d\s*[–—-]\s*(?:[a-zà-öø-ÿ]+\s+)?\d/;
  * «En miljard kronor» tas också: talet skrivs lika ofta med ord som med siffra
  * när det är exakt ett.
  */
-const UNITS = "miljarder kronor|miljard kronor|miljoner kronor|miljon kronor|mdkr|mnkr|mn kr|msek|mkr";
+const UNITS =
+  "miljarder kronor|miljard kronor|miljoner kronor|miljon kronor|mdkr|mdr kr|mdr|mnkr|mn kr|msek|mkr";
 
 export function parseAmountsMsek(text: string): number[] {
   const re = new RegExp(`(${NUM_SRC})\\s*(${UNITS})`, "gi");
@@ -136,51 +144,255 @@ export function parseAmountsMsek(text: string): number[] {
   return out;
 }
 
+/**
+ * Enheterna som betyder miljarder, och de som betyder miljoner. Härledda ur
+ * `UNITS` och inte omskrivna för hand.
+ *
+ * VARFÖR DET MÅSTE VARA SÅ. `UNITS` byggdes ur datat sedan «mnkr», «mn kr» och
+ * «msek» visat sig saknas. Men `statedBaseMsek` och `sentenceScale` bar var sin
+ * EGEN, kortare lista — `miljarder kronor|miljoner kronor|mdkr|mkr` — och de
+ * uppdaterades aldrig. Följden var inte att beloppet lästes som saknat utan att
+ * det lästes FEL: en mening som säger «0,5–5 mdkr/år; bas 2 000 msek» hittade
+ * ingen enhet intill basbeloppet, föll tillbaka på meningens skala, såg bara
+ * «mdkr» och svarade 2 000 000. Fem av femton falska «belopp_avviker» 2026-08-25
+ * kom ur just den luckan, och alla fem gällde uträkningar som var rätt.
+ */
+const MILJARDENHETER = /^(miljard|mdkr|mdr)/i;
+const ENHET_ALT = UNITS.replace(/\s/gu, "\\s*");
+/** Bär meningen en miljonenhet? Då ska nakna tal inte skalas som miljarder. */
+const MILJONORD = new RegExp(`(?:${UNITS})`, "i");
+
 /** Meningar som drar en slutsats om beloppet. */
-const CONCLUSION = /\b(bas|basen|basbelopp|basbeloppet|basfall|basfallet|basantagand|basnivå|sammantaget|sammanlagt|totalt|totalkostnad|summan|summa|avrundat|avrundas)\b/i;
+const CONCLUSION =
+  /\b(bas|base|basen|basbelopp|basbeloppet|basfall|basfallet|basantagand|basnivå|mitten|mittpunkt|mittvärde|medelvärde|sammantaget|sammanlagt|totalt|totalkostnad|summan|summa|avrundat|avrundas)\b/i;
+
+/**
+ * Ungefärsmarkörer före ett tal. «bas ~30», «bas ca 1 100», «bas ≈ 500».
+ *
+ * Utan dem misslyckades mönstret på just de meningar som skriver ut ett spann
+ * och ett basbelopp i samma andetag — «Summa: låg ~5, bas ~30, hög ~100 msek» —
+ * och steg 2 tog då meningens enda enhetsbärande tal, alltså HÖGVÄRDET.
+ */
+const UNGEFAR = "(?:~|≈|ca\\.?|cirka|omkring|drygt|knappt)?\\s*";
 
 /** Uttryck där ett tal namnges som basbelopp utan att bära egen enhet. */
 const BARE_BASE_PATTERNS = [
-  new RegExp(`\\bbas(?:belopp|fall|nivå|antagande)?(?:et|en|t)?\\s*(?::|är|blir|sätts till|läggs på|sätts)?\\s*(${NUM_SRC})(?!\\s*(?:%|procent))`, "i"),
+  // Blicken framåt måste också hindra att TALET kortas av. `(?!\s*%)` ensam
+  // förkastar inte träffen — motorn backar och matchar en kortare siffra i
+  // stället: «Bas 25 %» gav basbeloppet 2, för efter tvåan står «5 %» och inte
+  // «%». Det larmade ×15 000 på ett löfte vars uträkning var riktig.
+  //
+  // «base» stavat på engelska tas med: prissättningen skriver det, och
+  // mönstret som bara kände «bas» lämnade meningen åt steg 2, som svarade med
+  // spannets lågvärde.
+  new RegExp(`(?<![a-zà-öø-ÿ-])base?(?:belopp|fall|nivå|antagande)?(?:et|en|t)?\\s*(?::|=|är|blir|sätts till|läggs på|sätts)?\\s*${UNGEFAR}(${NUM_SRC})(?!\\d|\\s*(?:%|procent))`, "i"),
+  // Basbeloppet uttryckt som en ANDEL, med svaret efter likhetstecknet: «Bas
+  // 25 % ≈ 30 000 mkr». Procentsatsen är inte beloppet — men meningen bär
+  // beloppet, och att bara förkasta träffen lämnade den åt steg 2.
+  new RegExp(`(?<![a-zà-öø-ÿ-])base?(?:belopp|fall|nivå|antagande)?(?:et|en|t)?\\s*(?::|=)?\\s*${UNGEFAR}(?:${NUM_SRC})\\s*(?:%|procent)\\w*\\s*(?:[≈=→]|ger|blir|motsvarar)\\s*${UNGEFAR}(${NUM_SRC})`, "i"),
   new RegExp(`(${NUM_SRC})\\s+som\\s+bas`, "i"),
   new RegExp(`\\bmed\\s+(${NUM_SRC})\\s+som\\s+basbelopp`, "i"),
   // "sammanlagt 8 miljoner per år" — summeringen bär enhet men inte ordet
   // "kronor", så den fastnade inte i beloppsläsaren och meningens ENDA
   // "miljoner kronor"-tal lästes som slutsats i stället.
   new RegExp(`\\b(?:sammanlagt|sammantaget|totalt|summan blir)\\s+(${NUM_SRC})\\s*(miljoner|miljarder)`, "i"),
+  // «= totalt ca 25 msek/år» — samma summering men med hela enhetslistan och
+  // ett ungefärstecken. Den gamla raden tog bara orden «miljoner|miljarder».
+  new RegExp(`(?:^|[^a-zà-öø-ÿ])(?:totalt|summa|sammanlagt|sammantaget)\\s+${UNGEFAR}(${NUM_SRC})\\s*(?:${ENHET_ALT})`, "i"),
+  // ETIKETTEN EFTER TALET: «450 miljoner kronor per år som basbelopp». Formen
+  // är lika vanlig som den omvända, och mönstret `(tal) som bas` krävde att de
+  // stod intill varandra — vilket de aldrig gör när talet bär sin enhet.
+  new RegExp(
+    `(${NUM_SRC})\\s*(miljoner|miljarder)?(?:\\s*kronor)?[^.,;\\d]{0,20}?\\bsom\\s+bas(?:belopp|nivå|fall)?\\b`,
+    "i",
+  ),
+  // Uppräkningen låg–mitt–hög med enheten först på slutet: «Sammanlagt: låg
+  // ~150, mitten ~500, hög ~1 200 msek». Bara det sista talet bär enhet, så
+  // steg 2 såg ett enda belopp och svarade med HÖGVÄRDET. Mittentalet är
+  // basbeloppet, och «mitten» är lika giltigt ord för det som «bas».
+  new RegExp(
+    `\\b(?:låg|lägst)\\w*[^.]{0,40}?\\b(?:bas\\w*|base|mitten|mittpunkt|mitt)\\b[^\\d)]{0,12}?${UNGEFAR}(${NUM_SRC})[^.]{0,40}?\\b(?:hög|högst)\\w*`,
+    "iu",
+  ),
 ];
+
+/** Mönstren som fångar en SUMMA, inte ett basbelopp. Se användningen nedan. */
+const ARTOTAL = new Set([BARE_BASE_PATTERNS[4], BARE_BASE_PATTERNS[5]]);
 
 function splitSentences(text: string): string[] {
   return text.split(/(?<=[.!?])\s+/).filter((s) => s.trim().length > 0);
 }
 
-/** Är meningen dominerad av miljarder? Då ska nakna tal skalas därefter. */
+/**
+ * Är meningen dominerad av miljarder? Då ska nakna tal skalas därefter.
+ *
+ * Miljonenheterna läses ur `UNITS`, så att «msek» och «mnkr» räknas som de
+ * miljonenheter de är. Gjorde de inte det skalades ett naket basbelopp i en
+ * mening som nämnde bägge tusenfalt.
+ */
 function sentenceScale(sentence: string): number {
-  return /miljarder\b|mdkr/i.test(sentence) && !/miljoner\b|mkr/i.test(sentence) ? 1000 : 1;
+  if (!/miljard\w*\b|mdkr/iu.test(sentence)) return 1;
+  const miljoner = [...sentence.matchAll(new RegExp(`(?:${UNITS})`, "giu"))].some(
+    (m) => !MILJARDENHETER.test(m[0]!),
+  );
+  return miljoner || /miljon\w*\b|mkr/iu.test(sentence) ? 1 : 1000;
 }
 
 /**
  * Meningar som redovisar ett FÖRKASTAT belopp. De nämner en siffra som
  * uttryckligen inte gäller, och att läsa den som basbelopp är ett falsklarm.
  */
-const REJECTED = /\b(avvisad|avvisades|förkastad|förkastades|tidigare uppskattning|tidigare belopp|tidigare beloppet|det tidigare|efterhandsberäkning|låg dessutom|stod på)\b/i;
+const REJECTED =
+  /\b(avvisad|avvisades|förkastad|förkastades|tidigare uppskattning|tidigare belopp|tidigare beloppet|det tidigare|efterhandsberäkning|låg dessutom|stod på)\b|räknas (?:därför )?inte(?:\s+med)?\b|ingår inte\b|tas inte med\b/iu;
 
 /**
  * Talet är en operand i en uträkning ("1 000 studenter à 50 000 kronor = …"),
  * inte uträkningens svar. Kollas på texten DIREKT EFTER träffen — samma tal
  * kan stå tidigare i meningen som operand utan att basbeloppet är det.
  */
-function isOperand(tail: string): boolean {
-  return /^[^.=\u00d7*]{0,15}?[\u00d7*=]/.test(tail) || /^[^.]{0,15}?\s\u00e0\s/.test(tail);
+/**
+ * Tidsord efter «per» eller «/». «300 mkr/år» är en TAKT och är basbeloppet;
+ * «1,2 mkr per barnmorska» är ett STYCKPRIS och är det inte.
+ */
+const TIDSORD = /^(år|åren|årligen|budgetår|månad\w*|vecka\w*|dag\w*|kvartal\w*|mandatperiod\w*)\b/iu;
+
+/**
+ * Bär talet en nämnare som inte är tid? Då är det ett styckpris.
+ *
+ * Samma fel som `isUnitPrice` fångar för kronor, men ett snäpp längre ut: ett
+ * styckpris skrivet i MILJONER. «Bas 300 ≈ 250 barnmorskor à 1,2 mkr» och
+ * «Basbeloppet är en miljon kronor per apotek, alltså 300 miljoner kronor per
+ * år» lästes bägge som att basbeloppet vore styckpriset — 1,2 respektive 1 —
+ * mot fältets 300. Det gav larm på ×250 och ×300 för löften som var rätt.
+ */
+function arStyckpris(efterEnheten: string): boolean {
+  const m = /^\s*(?:\/|per\b)\s*(.*)$/iu.exec(efterEnheten);
+  if (m === null) return false;
+  return !TIDSORD.test(m[1] ?? "");
 }
 
-/** Talet är ett styckpris, inte ett totalbelopp: "2 500 kr/förlossning". */
-function isUnitPrice(tail: string): boolean {
-  return /^\s*(kr|kronor)\s*(\/|per\b)/i.test(tail);
+/**
+ * Enheter som inte är pengar: talet är då en STORHET som räknas om till pengar
+ * längre fram i meningen.
+ */
+const STORHETSENHET =
+  /^\s*(?:[–-]\s*\d+(?:[.,]\d+)?\s*)?(GWh|TWh|kWh|MWh|ton|hektar|ha|kontor|platser|personer|elever|studenter|anställningar|anställda|årsarbetskraft\w*|årsarbetskrafter|tjänster|utredningar|centrum|ubåtar)\b/iu;
+
+/**
+ * Ledet talet står i: texten fram till nästa post i uppräkningen.
+ *
+ * Skiljetecknet måste vara ett SKILJETECKEN och inte en decimal. Ett led som
+ * klipptes vid varje komma slutade mitt i «1,5», och då fanns inget belopp kvar
+ * att läsa — «bas: 3 mdkr×1,5 %+15 mkr≈60 mkr» blev tomt i stället för 60.
+ * Svenska skriver decimaler med komma, så regeln är: komma, semikolon eller
+ * punkt som INTE följs av en siffra.
+ */
+function ledet(text: string): string {
+  const m = /[,;.](?!\d)/u.exec(text);
+  return m === null ? text : text.slice(0, m.index);
 }
+
+function isOperand(tail: string): boolean {
+  // Pilen och ungefärstecknet är operatorer i de här texterna precis som
+  // likhetstecknet: «Bas 100 GWh → 30 mkr» räknar om en storhet till pengar.
+  // Kände funktionen dem inte lästes 100 — antalet gigawattimmar — som ett
+  // belopp i miljoner kronor.
+  // Kommat och semikolonet avslutar ledet. «bas=10, hög=20 msek» bär ett
+  // likhetstecken efter basbeloppet, men det tecknet hör till NÄSTA post i
+  // uppräkningen — läste funktionen det som basbeloppets egen operator svarade
+  // den med högvärdet.
+  const led = ledet(tail);
+  // Aritmetiken följs alltid: ×, * och = räknar vidare på talet.
+  if (/^[^=\u00d7*]{0,15}?[\u00d7*=]/u.test(led)) return true;
+  if (/^.{0,15}?\s\u00e0\s/u.test(led)) return true;
+  // Pilen och ungefärstecknet följs BARA när talet bär en storhetsenhet, alltså
+  // när det inte är pengar: «Bas 100 GWh → 30 mkr». Utan det villkoret läste
+  // funktionen «Bas 300 ≈ 250 barnmorskor à 1,2 mkr» som att 300 var en
+  // mellanräkning och 1,2 svaret — men där är 300 svaret och resten dess
+  // härledning. Tecknet betyder «vilket är», inte «ger».
+  // «Bas: ~3–5 tjänster + systemkostnad ≈ 10 mkr/år»: talet är ett ANTAL och
+  // svaret står efter räkneoperatorn. Plustecknet räknas med här men inte i
+  // det generella fallet ovan — det är bara när talet bär en storhetsenhet vi
+  // vet att det inte redan är svaret.
+  return STORHETSENHET.test(tail) && /^.{0,40}?[\u2192\u2248+=]/u.test(led);
+}
+
+/**
+ * Talet står i KRONOR, inte i miljoner: "2 500 kr/förlossning", "Bas 10 000 kr".
+ *
+ * Snedstrecket krävdes förut, och det var för snävt. «Bas 10 000 kr.» är ett
+ * styckpris per deltagare skrivet utan nämnare, och lästes som basbeloppet
+ * 10 000 miljoner kronor — tiotusen gånger fel. Ett tal vars egen enhet är
+ * kronor är aldrig ett basbelopp i miljoner, med eller utan nämnare.
+ */
+function isUnitPrice(tail: string): boolean {
+  return /^\s*(kr|kronor)\b(?!\s*(?:i\s+)?(?:miljon|miljard))/iu.test(tail);
+}
+
+/**
+ * Svaret på uträkningen som talet ingår i: första penningbeloppet EFTER
+ * operatorn.
+ *
+ * Den gamla vägen tog meningens SISTA belopp, och det är rätt bara när
+ * meningen räknar en enda sak. Uträkningarna skriver oftast låg, bas och hög i
+ * samma mening — «Låg: 10×1=10 mkr/år, bas: 20×1.5=30 mkr/år, hög: 30×2=60
+ * mkr/år» — och då är sista beloppet HÖGVÄRDET. Fyra av femton falska larm
+ * 2026-08-25 var precis det: sökningen larmade på sina egna rätträknade löften,
+ * samma fälla som redan stod dokumenterad för det andra ledet i funktionen.
+ */
+/** Sista beloppet i texten som inte självt bär en nämnare skild från tid. */
+function sistaTotalbeloppet(text: string): number | null {
+  // Beloppet måste vara UTPEKAT som summan. Utan det kravet plockade
+  // återvinningen upp vad som helst som stod efter styckpriset — «Bas: ~4 100
+  // mkr per ubåt (två ubåtar ~8 200 mkr)» gav 8 200 fast löftet gäller EN ubåt.
+  // En parentes är en upplysning vid sidan av, inte uträkningens svar.
+  // `\b` biter inte efter å, ä eller ö — de är inte ordtecken i JavaScripts
+  // regexmotor. `\balltså\b` matchade därför ALDRIG, och återvinningen gav upp
+  // på just den vanligaste summeringsformen. Samma fälla står dokumenterad två
+  // gånger i den här filen, för skrytmönstret och för «återinföra»; den var
+  // aldrig lagad här.
+  const m0 = /(?:^|[^a-zà-öø-ÿ])(?:alltså|vilket ger|det ger|summa|summan|totalt|sammanlagt|sammantaget)(?![a-zà-öø-ÿ])|=/iu.exec(text);
+  if (m0 === null) return null;
+  const efter = text.slice(m0.index).replace(/\([^)]*\)/gu, " ");
+  const traffar = [...efter.matchAll(new RegExp(`(${NUM_SRC})\\s*(${ENHET_ALT})`, "giu"))].filter(
+    (m) => !arStyckpris(efter.slice((m.index ?? 0) + m[0].length)),
+  );
+  const sista = traffar[traffar.length - 1];
+  if (sista === undefined) return null;
+  const n = parseSwedishNumber(sista[1]!);
+  if (n === null) return null;
+  return MILJARDENHETER.test(sista[2]!) ? n * 1000 : n;
+}
+
+function operandSvar(sentence: string, fran: number): number | null {
+  // Kedjan slutar vid komma, semikolon eller punkt — där börjar nästa post i
+  // uppräkningen. Inom kedjan gäller det SISTA beloppet: «Bas: 50 kontor × 10
+  // mkr = 500 mkr/år» har svaret efter likhetstecknet, inte efter kryssbollen.
+  const kedja = ledet(sentence.slice(fran));
+  const traffar = [...kedja.matchAll(new RegExp(`(${NUM_SRC})\\s*(${ENHET_ALT})`, "giu"))];
+  const sista = traffar[traffar.length - 1];
+  if (sista === undefined) return null;
+  const n = parseSwedishNumber(sista[1]!);
+  if (n === null) return null;
+  return MILJARDENHETER.test(sista[2]!) ? n * 1000 : n;
+}
+
+/**
+ * En mening avfärdas också av NÄSTA mening, när den pekar tillbaka.
+ *
+ * «Samma budget vill slå ihop de riktade statsbidragen till ett sektorsbidrag
+ * på totalt 17 miljarder kronor. Den summan räknas inte: att lägga ihop pengar
+ * som redan betalas ut är omfördelning, inte ny kostnad.» Avfärdandet står i
+ * meningen EFTER beloppet — det är så man skriver — och en filtrering som bara
+ * läser den egna meningen tog 17 000 som basbelopp för ett löfte på 4 000.
+ */
+const AVFARDAR_FOREGAENDE =
+  /^\s*(?:den|det|denna|dessa|de)\s+[a-zà-öø-ÿ]+\s+(?:räknas|tas|ingår|används)\b[^.]*\binte\b/iu;
 
 export function statedBaseMsek(calculation: string): number | null {
-  const sentences = splitSentences(calculation)
+  const alla = splitSentences(calculation);
+  const sentences = alla
+    .filter((s, i) => !AVFARDAR_FOREGAENDE.test(alla[i + 1] ?? ""))
     .filter((s) => CONCLUSION.test(s))
     .filter((s) => !REJECTED.test(s));
   if (sentences.length === 0) return null;
@@ -198,16 +410,35 @@ export function statedBaseMsek(calculation: string): number | null {
       // "Bas 2 500 kr/förlossning" är ett styckpris, inte ett basbelopp i
       // miljoner. Det var den gamla sökningens mest kända falsklarm.
       const tail = sentence.slice((m.index ?? 0) + m[0].length);
+      // EN SUMMA SOM MENINGEN SJÄLV RÄKNAR OM. «Sammanlagt 150 miljarder
+      // kronor, spritt över 15–20 byggår, vilket ger omkring 8 500 miljoner
+      // kronor per år» — det är årsnivån som räknas mot mandatperioden, inte
+      // livstidssumman. Bara TOTALmönstren behandlas så: ett basbelopp följt av
+      // «vilket ger X över mandatperioden» är fortfarande basbeloppet.
+      if (ARTOTAL.has(pattern) && /vilket ger|det ger|spritt över|fördelat på|per år/iu.test(tail)) {
+        const svar = sistaTotalbeloppet(tail);
+        if (svar !== null) return svar;
+      }
       if (isUnitPrice(tail)) continue;
       // "Bas: 1 000 studenter à 50 000 kronor = 50 miljoner kronor" — talet
       // efter "Bas:" är då en OPERAND i uträkningen, inte svaret. Svaret står
       // efter likhetstecknet, så använd meningens sista penningbelopp.
       if (isOperand(tail)) {
-        const amounts = parseAmountsMsek(sentence);
-        const last = amounts[amounts.length - 1];
-        if (last !== undefined) return last;
+        const svar = operandSvar(sentence, (m.index ?? 0) + m[0].length);
+        if (svar !== null) return svar;
         continue;
       }
+      // ETT NAKET TAL ÄR INGET BELOPP OM MENINGEN INTE HANDLAR OM PENGAR.
+      // «Antag 10 000–20 000 nya första-anställningar/år (bas 15 000)» gav
+      // basbeloppet 15 000 miljoner kronor — det är antalet anställningar.
+      // Svaret stod i nästa mening: 15 000 × 94 tkr ≈ 1 400 mkr.
+      const harPengar = new RegExp(`(?:${ENHET_ALT})`, "iu").test(sentence);
+      // Och orden «en»/«ett» är räkneord bara intill en enhet. «basbeloppet är
+      // en grov placeringssiffra» lästes som basbeloppet 1.
+      const arRakneord = !/^(en|ett)$/iu.test(raw) ||
+        new RegExp(`\\b${raw}\\s*(?:${ENHET_ALT})`, "iu").test(sentence);
+      if (!harPengar || !arRakneord) continue;
+
       // Bär talet egen enhet fångas det redan av parseAmountsMsek — undvik
       // att skala det två gånger.
       // Bär basbeloppet en egen enhet ska DEN användas. Att i stället ta sista
@@ -215,10 +446,7 @@ export function statedBaseMsek(calculation: string): number | null {
       // basbeloppet vore 5 000 — sökningen larmade på sina egna rätträknade
       // löften.
       const withUnit = sentence.match(
-        new RegExp(
-          `${raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*(miljarder kronor|miljoner kronor|mdkr|mkr)`,
-          "i",
-        ),
+        new RegExp(`${raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*(${ENHET_ALT})`, "i"),
       );
       // Bär mönstret själv en enhet (grupp 2) gäller den. Annars den enhet som
       // står intill talet. Att i stället gissa ur meningen blev fel i en
@@ -226,9 +454,20 @@ export function statedBaseMsek(calculation: string): number | null {
       const patternUnit = m[2]?.toLowerCase();
       if (patternUnit === "miljarder") return n * 1000;
       if (patternUnit === "miljoner") return n;
-      const ownUnit = withUnit?.[1]?.toLowerCase();
+      const ownUnit = withUnit?.[1];
       if (ownUnit !== undefined) {
-        return ownUnit.startsWith("miljarder") || ownUnit === "mdkr" ? n * 1000 : n;
+        const efterEnheten = sentence.slice((withUnit.index ?? 0) + withUnit[0].length);
+        if (arStyckpris(efterEnheten)) {
+          // Styckpriset är inte svaret, men meningen bär det ofta ändå:
+          // «Basbeloppet är en miljon kronor per apotek, alltså 300 miljoner
+          // kronor per år». Ta då det sista beloppet som INTE självt är ett
+          // styckpris. Finns inget sådant avstår vi — ett uteblivet svar är
+          // ofarligt, ett fel svar är ett falsklarm.
+          const svar = sistaTotalbeloppet(efterEnheten);
+          if (svar !== null) return svar;
+          continue;
+        }
+        return MILJARDENHETER.test(ownUnit) ? n * 1000 : n;
       }
       return n * sentenceScale(sentence);
     }
@@ -454,7 +693,44 @@ const COMPLETED = [
   /(?:^|[\s(])än\s+någonsin|\baldrig\s+(förr|tidigare)\b|\bhögsta\s+någonsin/i,
 ];
 
-/** Markörer för åtagande om framtiden. */
+/**
+ * Substantiv på -het, -tet och -ing som ser ut som supinum men inte är det.
+ *
+ * Supinummönstret ovan tar «har» plus ett ord som slutar på -et, och «har
+ * möjlighet», «har rättighet», «har verksamhet» slutar alla så. De är
+ * SUBSTANTIV: «Garantera att public service har möjlighet att sända stora
+ * sportevenemang» lästes som genomförd politik därför att «möjlighet» råkar
+ * sluta på -het. Konstruktionen «har» + substantiv är inte perfekt.
+ */
+const SUBSTANTIV_PA_ET = /\b(har|hade)\s+(?:[a-zà-öø-ÿ]+\s+){0,2}[a-zà-öø-ÿ]{2,}(?:het|tet|itet)\b/i;
+
+/**
+ * Markörer för åtagande om framtiden.
+ *
+ * INFINITIVEN ÄR DEN VANLIGASTE LÖFTESFORMEN, och listan kände den inte.
+ * Partiernas A–Ö-sidor skriver punkt efter punkt i ren infinitiv — «Införa ett
+ * jobbat avdrag …», «Höja ersättningarna … då de har halkat efter», «Garantera
+ * att …» — och just de meningarna bär ofta en bisats i perfekt som beskriver
+ * BAKGRUNDEN, inte åtgärden. Utan infinitivmarkören lästes varje sådan punkt
+ * som skryt om genomförd politik: tre av kö-posterna 2026-08-25 föll så, och
+ * alla tre var löften om framtiden.
+ *
+ * Mönstret kräver att verbet inleder citatet — det är rubrikformen. En
+ * infinitiv mitt i en mening säger inget om vem som lovar vad.
+ *
+ * TVÅ SLAGS ORD SOM OCKSÅ SLUTAR PÅ -A undantas, och de är inte petitesser.
+ * BESTÄMD PLURAL slutar på «-arna», «-erna» eller «-orna», och där bor både
+ * partinamnen — Kristdemokraterna, Liberalerna, Moderaterna — och subjektet i
+ * den klassiska skrytmeningen: «Pensionsspararna har mer pengar på kontot än
+ * någonsin», ett citat som faktiskt drogs tillbaka. Ett mönster som tog varje
+ * inledande ord på -a hade gjort exakt de meningarna immuna mot kontrollen,
+ * och det är dem kontrollen finns för. Inget svenskt infinitiv slutar så.
+ * Determinanterna («alla», «detta», «flera») är den andra gruppen och räknas
+ * upp för hand; listan är kort och sluten.
+ */
+const BESTAMD_PLURAL = /^[a-zà-öø-ÿ]*[aeoäöu]rna$/iu;
+const DETERMINANT = /^(alla|andra|dessa|detta|flera|många|vissa|samma|sådana|varje|hela|olika|egna|nya|ingen|inga)$/i;
+
 const COMMITMENT = [
   /\b(vill|ska|bör|kommer att|kommer vi|lovar|tänker|avser|föreslår|vi ämnar)\b/i,
   // `\b` biter inte före å/ä/ö — de är inte ordtecken i JavaScripts regexmotor,
@@ -468,10 +744,33 @@ const COMMITMENT = [
   /\bska (bli|få|kunna|vara)\b/i,
 ];
 
+/** Inleds citatet av ett verb i infinitiv? Det är partiernas punktform. */
+export function inledsAvInfinitiv(quote: string): boolean {
+  const m = /^\s*(?:att\s+)?([a-zà-öø-ÿ]{3,})\b/iu.exec(quote);
+  const ord = m?.[1];
+  if (ord === undefined) return false;
+  if (!/(?:a|ra|ås)$/iu.test(ord)) return false;
+  return !BESTAMD_PLURAL.test(ord) && !DETERMINANT.test(ord);
+}
+
 export function looksLikeCompletedPolicy(quote: string): boolean {
-  const completed = COMPLETED.some((re) => re.test(quote));
+  // Supinumträffen räknas inte när ordet är ett substantiv på -het: se
+  // SUBSTANTIV_PA_ET. Bär citatet BÅDE en äkta supinumform och ett sådant
+  // substantiv står träffen kvar — det är bara den ensamma -het-träffen som
+  // aldrig var en verbform.
+  const completed = COMPLETED.some((re, i) =>
+    i === 0 ? re.test(quote) && !enbartSubstantiv(quote) : re.test(quote),
+  );
   if (!completed) return false;
+  if (inledsAvInfinitiv(quote)) return false;
   return !COMMITMENT.some((re) => re.test(quote));
+}
+
+/** Är den enda supinumträffen i citatet ett substantiv på -het? */
+function enbartSubstantiv(quote: string): boolean {
+  if (!SUBSTANTIV_PA_ET.test(quote)) return false;
+  const utan = quote.replace(new RegExp(SUBSTANTIV_PA_ET.source, "gi"), " ");
+  return !COMPLETED[0]!.test(utan);
 }
 
 /**

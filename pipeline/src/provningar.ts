@@ -159,6 +159,39 @@ function standpunktensBesked(obj: Record<string, unknown>): {
 }
 
 /**
+ * En kö-post läst i samma form som löftet den blir.
+ *
+ * Speglar `kopost_som_lofte()` i `logg.py`, som är det svepet hashar. Finns här
+ * för att grinden ska kunna räkna FRAM samma hash innan något skrivs, i stället
+ * för att upptäcka skillnaden inne i `approve()` — som avslutar processen och
+ * alltså lämnar passet halvskrivet.
+ *
+ * Fälten är de `review.ts` sätter vid ett godkännande, och bara de. Ändras
+ * beloppet eller gruppen vid godkännandet ändras hashen, och då SKA prövningen
+ * räknas om: den beskrev en annan version. Vägen runt det är inte en mjukare
+ * grind utan att sätta belopp och grupp PÅ kö-posten före svepet — se
+ * `kobelopp.ts` och `kogrupp.ts`.
+ */
+export function kopostSomLofte(post: {
+  articleUrl?: string | null;
+  articleTitle?: string | null;
+  group_id?: string | null;
+  candidate?: { quote?: string | null; title?: string | null; parties?: string[] | null } | null;
+  cost?: unknown;
+}): Record<string, unknown> {
+  const cand = post.candidate ?? {};
+  return {
+    quote: cand.quote ?? "",
+    title: cand.title ?? post.articleTitle ?? "Okänt löfte",
+    parties: cand.parties ?? [],
+    status: "aktiv",
+    group_id: post.group_id ?? null,
+    source: { url: post.articleUrl },
+    cost: post.cost ?? {},
+  };
+}
+
+/**
  * Nyckeln för en post i Fläskvågens granskningskö.
  *
  * Kön har inga id — `needs_review.json` adresseras med index, och indexet
