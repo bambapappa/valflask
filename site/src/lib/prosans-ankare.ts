@@ -680,25 +680,27 @@ export const ANKARE: Ankare[] = [
   },
 
   {
-    id: "metod-nio-av-tio-prislappar",
+    id: "metod-atta-av-tio-prislappar",
     sida: METOD,
     pastaende:
-      "<strong>Nio av tio prislappar, och texten som förklarar dem.</strong>",
+      "<strong>Åtta av tio prislappar, och texten som förklarar dem.</strong>",
     // Andelen står i klartext på sidan och är ett påstående om datat. Den var
     // «de flesta» förut, vilket bär allt mellan 51 och 99 procent, och sedan
     // «fyra av fem». Andelen STIGER när kön betas av: kö-posterna bär
     // modellens uppskattning, och ett godkännande som inte ändrar beloppet
     // behåller den. 2026-08-22 publicerades 501 löften ur kön och andelen gick
-    // från 79 till 90 procent. Provet fångade det, och sidan skrevs om åt det
-    // hållet som är mindre smickrande — det är hela poängen med ankaret.
+    // från 79 till 90 procent. När beståndet senare växte till 3 211 aktiva
+    // löften föll andelen till 82 procent; påståendet är därför åter åtta av
+    // tio. Provet ska följa mätningen, även när det innebär en mindre
+    // smickrande formulering.
     prov: () => {
       const a = aktiva();
       const andel = a.filter((p) => p.cost?.basis === "llm_estimat").length / a.length;
-      return andel >= 0.85 && andel < 0.95;
+      return andel >= 0.8 && andel < 0.85;
     },
     fallprov:
-      "Sätt basis till granskare på hälften av löftena — provet faller, och «nio av tio» ska då skrivas om.",
-    matt: "2 480 av 2 740 = 90 % 2026-08-22",
+      "Sätt basis till granskare på hälften av löftena — provet faller, och «åtta av tio» ska då skrivas om.",
+    matt: "2 636 av 3 211 = 82 % 2026-08-25",
   },
   {
     id: "metod-forslagen-kontrolleras-av-oberoende",
