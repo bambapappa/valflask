@@ -61,10 +61,17 @@ describe("citatet måste vara detsamma som när beslutet togs", () => {
 });
 
 describe("godkännandet", () => {
-  it("en post som lämnat kön går inte att godkänna", () => {
+  /**
+   * En post som lämnat kön är avgjord — av en tidigare körning eller av någon
+   * annan som satt samma dom. Att fälla hela passet för den vore att kräva att
+   * beslutsfilen städas för hand efter varje verkställighet, och filen är
+   * append-only med flit. Ändrat 2026-08-25, när ett halvkört pass inte gick
+   * att köra om.
+   */
+  it("en post som lämnat kön hoppas över, den fälls inte", () => {
     const p = provaBeslut(b(), new Map(), loften());
-    assert.equal(p.ok, false);
-    assert.match(p.fel.join(" "), /finns inte i kön/u);
+    assert.deepEqual(p.fel, []);
+    assert.match(p.hoppas ?? "", /redan avgjord/u);
   });
 
   it("«som föreslaget» kräver att det FINNS ett förslag", () => {
@@ -127,10 +134,30 @@ describe("avvisningen", () => {
     assert.deepEqual(p.fel, []);
   });
 
-  it("«inte ett löfte» utan skäl fälls", () => {
-    const p = provaBeslut(b({ val: "ejlofte", not: "nej" }), ko(), loften());
-    assert.equal(p.ok, false);
-    assert.match(p.fel.join(" "), /skäl som går att läsa/u);
+  /**
+   * Kravet gäller det SKÄL SOM SPARAS, inte noten. Nio av 338 beslut föll
+   * 2026-08-25 på ett notkrav med noter som «utförligare kalkyl» — kravet mätte
+   * fel sak. Varje val bär numera en genererad kärnmening, och noten läggs till.
+   */
+  it("en kort not räcker: kärnan bär skälet", () => {
+    const p = provaBeslut(b({ val: "ejlofte", not: "retorik" }), ko(), loften());
+    assert.deepEqual(p.fel, []);
+    const skal = avvisningsskal(b({ val: "ejlofte", not: "retorik" }));
+    assert.match(skal, /ingen utfästelse/u);
+    assert.match(skal, /retorik$/u);
+  });
+
+  it("kärnan ensam räcker när noten är tom", () => {
+    const p = provaBeslut(b({ val: "ejlofte", not: "" }), ko(), loften());
+    assert.deepEqual(p.fel, []);
+    assert.ok(avvisningsskal(b({ val: "ejlofte" })).length >= SKAL_MIN_TECKEN);
+  });
+
+  it("varje avvisande val har en kärna som går att läsa", () => {
+    for (const val of AVVISAR) {
+      const skal = avvisningsskal(b({ val, kalkyl_till: "p-2026-0001", narmast_da: "p-2026-0002:1" }));
+      assert.ok(skal.length >= SKAL_MIN_TECKEN, `${val}: «${skal}»`);
+    }
   });
 
   it("«oklart» prövas inte alls — det verkställs inte", () => {

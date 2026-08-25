@@ -21,7 +21,14 @@
 import { internaBeteckningar } from "./publicerad-text.ts";
 
 export const UTRAKNING_MAX_TECKEN = 800;
-export const SKAL_MIN_TECKEN = 25;
+/**
+ * Skälet är människans TILLÄGG, inte hela meningen.
+ *
+ * `flytta()` skriver kärnan — vad som hände och varför — och skälet läggs till
+ * efter den. Kravet är därför lågt: «utförligare kalkyl» är ett fullgott
+ * tillägg till en mening som redan förklarar sig.
+ */
+export const SKAL_MIN_TECKEN = 8;
 
 export interface Kostnad {
   type?: string | null;
@@ -38,6 +45,7 @@ export interface Kostnad {
 export interface Malpost {
   id: string;
   status?: string;
+  loftestyp?: string;
   title?: string;
   parties?: readonly string[];
   cost?: Kostnad | null;
@@ -56,7 +64,12 @@ export interface Flyttrad {
   skal: string;
 }
 
-export interface Provning { ok: boolean; fel: string[] }
+export interface Provning {
+  ok: boolean;
+  fel: string[];
+  /** Satt när flytten redan är gjord: inget att göra, och inget fel. */
+  hoppas?: string;
+}
 
 /** Vad posten bidrar med till en total, över mandatperioden. */
 export const mandatperioden = (c: Kostnad | null | undefined): number =>
@@ -97,6 +110,19 @@ export function provaFlytt(rad: Flyttrad, mal: Malpost | undefined): Provning {
     fel.push(`${namn}: publicerad text bär interna beteckningar — ${interna.join(", ")}`);
   }
 
+  // Skälet hamnar i HISTORIKEN på det publicerade löftet, och den läses av
+  // besökaren. Ett löftes-id där är samma fel som i uträkningen — och det var
+  // exakt det som hände 2026-08-25, när avvisningsskälet (som får bära id, för
+  // det går till avvisade.json) återanvändes som historiktext på sex löften.
+  // Meningen blev dessutom cirkulär: «publicerat, i p-2026-1268» stod I
+  // p-2026-1268.
+  if (/\bp-20\d\d-\d{4}\b|\bk-20\d\d-\d{4}\b|\bg-[a-z0-9-]{6,}\b/u.test(rad.skal)) {
+    fel.push(
+      `${namn}: skälet bär en intern beteckning, och det skrivs i historiken som läsaren ser. ` +
+        "Beskriv löftet med ord i stället för med numret.",
+    );
+  }
+
   // Byter period eller kostnadstyp är det inte samma siffra längre, och då
   // ska bytet stå utskrivet. Annars ser läsaren ett tal röra sig utan att
   // något säger att enheten bytts under det.
@@ -112,15 +138,21 @@ export function provaFlytt(rad: Flyttrad, mal: Malpost | undefined): Provning {
   }
 
   if (rad.skal.trim().length < SKAL_MIN_TECKEN) {
-    fel.push(`${namn}: skälet är för kort — rättelseloggen ska säga vad läsningen fann`);
+    fel.push(
+      `${namn}: skälet är ${rad.skal.trim().length} tecken och rättelseloggen ska säga vad läsningen fann. ` +
+        "Anroparen ska skicka en genererad kärnmening plus människans not, aldrig noten ensam.",
+    );
   }
 
-  // En flytt som inte flyttar något är en rättelsenot om ingenting.
+  // Bär målet redan exakt den här kostnaden och uträkningen ÄR flytten gjord.
+  // Det är idempotens, inte ett fel: ett avbrutet pass ska gå att köra om utan
+  // att beslutsfilen städas för hand. Hände 2026-08-25, när kvalitetsfiltret
+  // stoppade passet efter att fem flyttar redan skrivits.
   if (
     mandatperioden(ny) === mandatperioden(gammal) &&
     (ny.calculation ?? "").trim() === (gammal.calculation ?? "").trim()
   ) {
-    fel.push(`${namn}: kostnaden och uträkningen är redan desamma — det finns ingenting att flytta`);
+    return { ok: fel.length === 0, fel, hoppas: `${namn}: kostnaden är redan flyttad` };
   }
 
   return { ok: fel.length === 0, fel };
@@ -134,11 +166,16 @@ export const forandring = (rad: Flyttrad, mal: Malpost): number =>
 export function flytta<T extends Malpost>(mal: T, rad: Flyttrad, datum: string): T {
   const gammal = mal.cost ?? {};
   const ny = rad.kostnad;
+  // Ett basbelopp gör en inriktning till en reform. Samma regel som
+  // ankarsättningen följer: en inriktning säger vart partiet vill, inte med
+  // vilket medel — bär posten ett belopp finns det en åtgärd att prissätta.
+  const bytteSort = mal["loftestyp"] === "inriktning" && (ny.msek_base ?? 0) !== 0;
   const enhet = (c: Kostnad) => (c.period === "per_ar" ? "miljoner kronor per år" : "miljoner kronor");
   const fore = gammal.msek_base ?? 0;
   const efter = ny.msek_base ?? 0;
   return {
     ...mal,
+    ...(bytteSort ? { loftestyp: "reform" } : {}),
     cost: {
       ...gammal,
       type: ny.type ?? gammal.type,

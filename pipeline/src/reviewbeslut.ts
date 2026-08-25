@@ -70,6 +70,8 @@ export interface Lofteslage {
 export interface Provning {
   ok: boolean;
   fel: string[];
+  /** Satt när beslutet inte går att verkställa men heller inte är fel. */
+  hoppas?: string;
 }
 
 /**
@@ -101,13 +103,12 @@ export function provaBeslut(
   }
   if (b.val === "oklart") return { ok: true, fel: [] };
 
+  // En post som lämnat kön är varken ett fel eller något att göra. Den är
+  // avgjord — av en tidigare körning, eller av någon annan som satt samma dom.
+  // Att fälla hela passet för den vore att kräva att beslutsfilen städas för
+  // hand efter varje verkställighet, och filen är append-only med flit.
   const post = ko.get(b.id);
-  if (!post) {
-    return {
-      ok: false,
-      fel: [`${namn}: finns inte i kön längre — posten är redan avgjord, eller kön är ombyggd`],
-    };
-  }
+  if (!post) return { ok: true, fel: [], hoppas: `${namn}: finns inte i kön längre — redan avgjord` };
 
   // Beslutet bär citatet som det såg ut då. Har texten ändrats sedan dess
   // gällde beslutet något annat, och då ska raden läsas om — inte verkställas.
@@ -184,30 +185,43 @@ export function provaBeslut(
 }
 
 /**
- * Skälet som följer med en avvisning.
+ * Skälet som följer med en avvisning: en genererad kärna plus människans not.
  *
- * En dubblett får det publicerade löftets id inskrivet. Utan det säger skälet
- * «dubblett» och ingenting mer, och nästa läsare måste göra om uppslaget.
+ * VARFÖR KÄRNAN GENERERAS. Skälet hamnar i `avvisade.json` och läses av nästa
+ * människa som möter samma mening i skörden. Ett skäl som bara lyder «retorik»
+ * säger ingenting till den läsaren. Men att kräva en lång not av den som avgör
+ * är fel väg: den som betat av trehundra rader skriver «retorik» därför att det
+ * ÄR skälet, och resten är ord som går att generera.
+ *
+ * Så varje val bär sin egen kärnmening, och noten läggs till. En dubblett får
+ * dessutom det publicerade löftets id inskrivet — utan det måste nästa läsare
+ * göra om uppslaget.
+ *
+ * Mätt 2026-08-25: nio av 338 beslut föll på ett notkrav på 25 tecken, med
+ * noter som «utförligare kalkyl» och «tydligare kalkyl». Kravet mätte fel sak.
  */
-export function avvisningsskal(b: Beslut): string {
-  const not = (b.not ?? "").trim();
-  if (b.val === "dubblett_kalkyl") {
-    const karna =
-      `Samma parti har redan åtagandet publicerat, i ${b.kalkyl_till}. Kö-postens uträkning var ` +
-      "bättre grundad än den som stod där, och är flyttad dit i stället för att kastas med posten.";
-    return not ? `${karna} ${not}` : karna;
-  }
-  if (b.val === "dubblett") {
+const KARNA: Partial<Record<Val, (b: Beslut) => string>> = {
+  dubblett: (b) => {
     const id = (b.narmast_da ?? "").split(":")[0];
-    const kärna = id
+    return id
       ? `Samma parti har redan åtagandet publicerat, i ${id}.`
       : "Samma parti har redan åtagandet publicerat.";
-    return not ? `${kärna} ${not}` : kärna;
-  }
-  if (b.val === "gallande" && not) {
-    return `Beskriver politik som redan gäller, alltså inget nytt åtagande för mandatperioden. ${not}`;
-  }
-  return not;
+  },
+  dubblett_kalkyl: (b) =>
+    `Samma parti har redan åtagandet publicerat, i ${b.kalkyl_till}. Kö-postens uträkning var ` +
+    "bättre grundad än den som stod där, och är flyttad dit i stället för att kastas med posten.",
+  ejlofte: () =>
+    "Citatet bär ingen utfästelse: det är retorik, en problembeskrivning eller någon annans ord, " +
+    "och inte ett åtagande partiet gör.",
+  gallande: () =>
+    "Beskriver politik som redan gäller, alltså inget nytt åtagande för mandatperioden.",
+};
+
+export function avvisningsskal(b: Beslut): string {
+  const not = (b.not ?? "").trim();
+  const karna = KARNA[b.val as Val]?.(b) ?? "";
+  if (karna === "") return not;
+  return not === "" ? karna : `${karna} ${not}`;
 }
 
 /** Argumenten `approve()` ska ha för ett godkännande. */

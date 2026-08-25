@@ -8,6 +8,7 @@ import { partiForUrl } from "./skordeordning.ts";
 import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
 import { svenskDag } from "./dagen.ts";
+import { harledLoftestyp } from "./loftestyp.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -276,6 +277,8 @@ export interface ReviewCandidate {
 }
 
 interface PromiseEntry {
+  /** Reform eller inriktning. Härleds ur citatet och prissättningen. */
+  loftestyp?: "reform" | "inriktning";
   id: string;
   group_id: string | null;
   title: string;
@@ -688,6 +691,12 @@ function approveLast(
   const newPromise: PromiseEntry = {
     id: newId,
     group_id,
+    // Sorten härleds ur citatet och prissättningen, samma regel som resten av
+    // beståndet. Fältet sattes inte alls vid godkännandet: 164 löften
+    // publicerade 2026-08-25 kom ut utan sort, och utan den går en nolla inte
+    // att läsa — syns det inte om åtgärden är gratis eller om det inte finns
+    // någon åtgärd att prissätta? Sorten styr dessutom kopplingssteget.
+    loftestyp: harledLoftestyp(cand.quote ?? "", cost as never),
     title,
     slug: slugify(title),
     parties: cand.parties ?? [],
@@ -738,7 +747,11 @@ function approveLast(
     newPromise as unknown as Record<string, unknown>,
   );
   if (!grind.ok) {
-    console.error(`Godkännandet stoppades: posten ${grind.skal}`);
+    // Id:t och rubriken med: ett pass över hundratals beslut säger annars bara
+    // ATT något stoppades, och den som kör får leta för hand.
+    console.error(
+      `Godkännandet stoppades för ko:${reviewId(item)} «${title.slice(0, 60)}»: posten ${grind.skal}`,
+    );
     process.exit(1);
   }
 
