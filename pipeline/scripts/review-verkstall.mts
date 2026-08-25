@@ -24,6 +24,7 @@ import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { approve, reject, reviewId, type ReviewCandidate } from "../src/review.ts";
 import { konyckel, lasProvningar } from "../src/provningar.ts";
+import { LANAR_BELOPP } from "../src/ankarkravet.ts";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { svenskDag } from "../src/dagen.ts";
 import {
@@ -151,6 +152,14 @@ if (flyttarKvar.length < flyttar.length) {
     if (traff === undefined) utanProvning.push(`${b.id} (oprövad)`);
     else if (!["haller", "haller-med-forbehall"].includes(traff.utfall)) {
       utanProvning.push(`${b.id} (${traff.utfall})`);
+    }
+    // Ett lånat belopp utan ankare fälls av `approve()` — som avslutar
+    // processen och alltså inte går att fånga. Samma kontroll här, före
+    // skrivningen, så passet inte halvkörs på nytt.
+    const c = (post.cost ?? {}) as Record<string, unknown>;
+    const ankare = (c["anchor_ids"] as string[] | undefined) ?? [];
+    if (LANAR_BELOPP.test(String(c["calculation"] ?? "")) && (c["msek_base"] ?? 0) !== 0 && ankare.length === 0) {
+      utanProvning.push(`${b.id} (lånar utan ankare)`);
     }
   }
   if (utanProvning.length > 0) {
