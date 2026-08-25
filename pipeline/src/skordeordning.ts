@@ -24,6 +24,20 @@
  * svälts helt — och när täckningen jämnat ut sig blandas partierna om vart
  * annat av sig själva. Artiklar utan parti (riksdagen, medier) rörs inte:
  * de ligger i en senare prioritetsgrupp och har ingen täckning att jämna ut.
+ *
+ * RUNDGÅNG (2026-08-25). Regeln har en baksida som syns när en katalog ska
+ * betas av: täckningstalet räknar ALLA sidor vi läst hos partiet, inte hur
+ * mycket som återstår. Liberalerna låg på 616 lästa sidor — flest av alla — och
+ * deras sextio olästa katalogsidor fick därför sämst rang i varje körning,
+ * samtidigt som det nästan bara var L och C som hade något oläst kvar. Fyra
+ * extra körningar flyttade backlogen från 185 sidor till 183.
+ *
+ * Med `rundgang` faller täckningstalet bort och bara artikelns nummer inom sitt
+ * parti räknas: första nya artikeln hos varje parti först, sedan den andra hos
+ * varje, och så vidare. Det är fortfarande rättvist — varje parti får lika
+ * många platser per körning — men det straffar inte ett parti för en stor
+ * katalog vi redan läst. Läget är till för att TÖMMA en backlog och ska stängas
+ * av när den är tom: över tid är det täckningen som ska jämnas ut, inte takten.
  */
 
 /**
@@ -93,6 +107,7 @@ export function ordnaEfterTackning<T>(
   urlAv: (a: T) => string,
   prioAv: (a: T) => number,
   last: ReadonlyMap<string, number>,
+  val: { rundgang?: boolean } = {},
 ): T[] {
   const rakning = new Map<string, number>();
   const rangad = artiklar
@@ -103,7 +118,8 @@ export function ordnaEfterTackning<T>(
       if (parti === null) return { ...post, parti, rang: Number.MAX_SAFE_INTEGER };
       const nr = rakning.get(parti) ?? 0;
       rakning.set(parti, nr + 1);
-      return { ...post, parti, rang: (last.get(parti) ?? 0) + nr };
+      // I rundgång väger bara numret inom partiet: ett varv per parti i taget.
+      return { ...post, parti, rang: val.rundgang === true ? nr : (last.get(parti) ?? 0) + nr };
     });
 
   return rangad

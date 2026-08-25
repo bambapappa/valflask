@@ -132,11 +132,18 @@ export async function runPipeline(
   //
   // Ordnas EFTER dedup: rangen ska räknas på de sidor vi faktiskt ska
   // behandla, inte på allt som hämtades och redan var sett.
+  // SKORD_RUNDGANG=1 stänger av täckningsvägningen för den här körningen och
+  // låter partierna gå varv om varv i stället. Läget är till för att tömma en
+  // katalogbacklog — se docstringen i `skordeordning.ts` — och ska stängas av
+  // när den är tom.
+  const rundgang = process.env["SKORD_RUNDGANG"] === "1";
+  if (rundgang) console.log("[skörd] rundgång: täckningsvägningen är avstängd för den här körningen");
   const newArticles = ordnaEfterTackning(
     oordnade,
     (a) => a.url,
     prio,
     laststTal(existingSeen),
+    { rundgang },
   );
 
   // Kapa PROCESS-budgeten på nya artiklar (inte på hämtade). URL-sortering ovan
