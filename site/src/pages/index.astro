@@ -3,165 +3,86 @@ import Layout from "../layouts/Layout.astro";
 import Lopsedel from "../components/Lopsedel.astro";
 import GapMatare from "../components/GapMatare.astro";
 import MetodLank from "../components/MetodLank.astro";
+import Loftesfilter from "../components/Loftesfilter.astro";
 import { getPromises, getParties, getConstants, getChangelog } from "../lib/data";
-import { totalFlasket, financingGap, formatMsek, formatMsekShort, countPromises, dataHash, formatDateShort } from "../lib/calc";
-import { maskeraText } from "../lib/mask";
+import { totalFlasket, formatMsek, countPromises, dataHash, formatDateShort } from "../lib/calc";
 import { partyTotalMsek, promiseNetMsek, groupedPromises } from "../lib/aggregates";
 import { tackningensTal, sidorFor } from "../lib/tackningens-tal";
+import { filtreraLoeften, filterNyckel, type Loeftesfilter } from "../lib/loftesfilter";
 
 const promises = getPromises();
 const parties = getParties();
 const constants = getConstants();
 const changelog = getChangelog();
-const flasket = totalFlasket(promises);
-const gap = financingGap(promises);
-const total = formatMsek(flasket);
-const totalShort = formatMsekShort(flasket);
-const count = countPromises(promises);
 const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 const hash = dataHash(changelog);
 const tackning = tackningensTal();
-
-
-const partyRows = parties.map((p) => ({
-  code: p.code,
-  name: p.name,
-  total: partyTotalMsek(promises, p.code),
-  color: p.color,
-})).sort((a, b) => b.total - a.total);
-const baseUrl = "https://utlovat.se";
-const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "utlovat.se",
-    "url": baseUrl,
-    "description": "Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför valet 2026.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": `${baseUrl}/sok`,
-      "query": "required name=search_term_string",
-    },
-  },
+const filters: Loeftesfilter[] = [
+  { underlag: "parti", loftestyp: "reform" }, { underlag: "parti", loftestyp: "inriktning" }, { underlag: "parti", loftestyp: "alla" },
+  { underlag: "utlovat", loftestyp: "reform" }, { underlag: "utlovat", loftestyp: "inriktning" }, { underlag: "utlovat", loftestyp: "alla" },
+  { underlag: "alla", loftestyp: "reform" }, { underlag: "alla", loftestyp: "inriktning" }, { underlag: "alla", loftestyp: "alla" },
 ];
+const views = filters.map((filter) => {
+  const selected = filtreraLoeften(promises, filter);
+  const partyRows = parties.map((p) => ({
+    code: p.code,
+    name: p.name,
+    total: partyTotalMsek(selected, p.code),
+    count: selected.filter((promise) => promise.parties.includes(p.code) && promise.status !== "tillbakadragen").length,
+  })).sort((a, b) => b.total - a.total);
+  return {
+    key: filterNyckel(filter),
+    count: countPromises(selected),
+    flasket: totalFlasket(selected),
+    partyRows,
+    dyraste: groupedPromises(selected).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 5),
+    senaste: selected.filter((p) => p.status !== "tillbakadragen").sort((a, b) => b.date_stated.localeCompare(a.date_stated)).slice(0, 5),
+  };
+});
+const defaultKey = "parti:reform";
+const defaultView = views.find((view) => view.key === defaultKey)!;
+const baseUrl = "https://utlovat.se";
+const jsonLd = [{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "utlovat.se",
+  "url": baseUrl,
+  "description": "Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför valet 2026.",
+  "potentialAction": { "@type": "SearchAction", "target": `${baseUrl}/sok`, "query": "required name=search_term_string" },
+}];
 ---
-<Layout title={`Riksdagspartiernas vallöften 2026 kostar ${totalShort} mdkr — utlovat.se`} description={`Riksdagspartiernas vallöften 2026 kostar hittills ${totalShort} mdkr för mandatperioden. Oberoende, källspårad sammanställning.`} ogImage="/og/start.png" hasTaxameter={true} jsonLd={jsonLd} canonicalPath="/">
+<Layout title="Riksdagspartiernas vallöften 2026 — utlovat.se" description="Filtrera riksdagspartiernas vallöften 2026 efter partiernas egna belopp, Utlovat.se:s beräkningar och löftestyp." ogImage="/og/start.png" hasTaxameter={true} jsonLd={jsonLd} canonicalPath="/">
   <div class="page-content">
     <section class="oversikt" aria-label="Välj vad du vill undersöka">
       <p class="etikett oversikt__kicker">Välj vad du vill undersöka</p>
       <h1 class="oversikt__rubrik">Tre sätt att granska politiken</h1>
       <p class="oversikt__ingress">Utlovat.se samlar löften, ståndpunkter och handlingar. Samma källkrav gäller oavsett parti. Vi visar underlaget och låter dig dra slutsatsen.</p>
       <div class="valkort-grid">
-        <a class="valkort valkort--markerad" href="#loften">
-          <p class="etikett">Fläskvågen</p>
-          <h2>Löften och kostnader</h2>
-          <p>Se vallöften, öppna uträkningar och uppskattad kostnad för mandatperioden.</p>
-          <span class="etikett">Utforska löftena ↓</span>
-        </a>
-        <a class="valkort" href="/fragor">
-          <p class="etikett">Frågevågen</p>
-          <h2>Frågor och ståndpunkter</h2>
-          <p>Jämför partiernas egna svar och källor i tio sakfrågor.</p>
-          <span class="etikett">Öppna frågorna →</span>
-        </a>
-        <a class="valkort" href="/handlingsvagen/">
-          <p class="etikett">Handlingsvågen</p>
-          <h2>Handlingar i riksdagen</h2>
-          <p>Sök bland partiernas och ledamöternas faktiska riksdagshandlingar.</p>
-          <span class="etikett">Öppna handlingarna →</span>
-        </a>
+        <a class="valkort valkort--markerad" href="#loften"><p class="etikett">Fläskvågen</p><h2>Löften och kostnader</h2><p>Se vallöften, öppna uträkningar och uppskattad kostnad för mandatperioden.</p><span class="etikett">Utforska löftena ↓</span></a>
+        <a class="valkort" href="/fragor"><p class="etikett">Frågevågen</p><h2>Frågor och ståndpunkter</h2><p>Jämför partiernas egna svar och källor i tio sakfrågor.</p><span class="etikett">Öppna frågorna →</span></a>
+        <a class="valkort" href="/handlingsvagen/"><p class="etikett">Handlingsvågen</p><h2>Handlingar i riksdagen</h2><p>Sök bland partiernas och ledamöternas faktiska riksdagshandlingar.</p><span class="etikett">Öppna handlingarna →</span></a>
       </div>
-      <div class="oversikt__verktyg etikett">
-        <a href="/sok">Sök på hela utlovat.se</a>
-        <a href="/handlingsvagen/amnen">Sök ord i riksdagens handlingar</a>
-        <a href="https://valtris.utlovat.se/">Spela Valtris<span aria-hidden="true"> ↗</span></a>
-        <a href="https://rostfiske.utlovat.se/">Spela Röstfiske<span aria-hidden="true"> ↗</span></a>
-      </div>
+      <div class="oversikt__verktyg etikett"><a href="/sok">Sök på hela utlovat.se</a><a href="/handlingsvagen/amnen">Sök ord i riksdagens handlingar</a><a href="https://valtris.utlovat.se/">Spela Valtris<span aria-hidden="true"> ↗</span></a><a href="https://rostfiske.utlovat.se/">Spela Röstfiske<span aria-hidden="true"> ↗</span></a></div>
     </section>
 
     <div id="loften" class="ankare-offset"></div>
-    <Lopsedel total={total} subtitle="Valfläsket hittills" count={count} date="2026" taxameterValue={flasket} headingLevel="h2" />
-
-    <div class="prosa-content prosa-content--centered">
-      <p>Riksdagspartiernas vallöften 2026 kostar hittills <strong class="num belopp">{totalShort} mdkr</strong> för de fyra åren 2027–2030, fördelat på {count} löften från åtta partier.</p>
-    </div>
-
+    <Loftesfilter count={defaultView.count} />
     <MetodLank />
+    {views.map((view) => (
+      <div data-loftesfilter-vy={view.key} data-loftesfilter-vy-antal={view.count} hidden={view.key !== defaultKey}>
+        <Lopsedel total={formatMsek(view.flasket)} subtitle="Valfläsket hittills" count={view.count} date="2026" taxameterValue={view.flasket} headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
+        <div class="prosa-content prosa-content--centered"><p>Riksdagspartiernas valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(view.flasket)}</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften från åtta partier.</p></div>
+        <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} reformutrymmeSource={constants.reformutrymme_msek_per_ar.source_url} partiBelopp={view.key.startsWith("parti:")} />
 
-    <GapMatare flasket={flasket} reformutrymme={reformutrymme} reformutrymmeSource={constants.reformutrymme_msek_per_ar.source_url} />
+        <section class="sektion"><h2>Fläsk per parti</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Parti</th><th class="num">Totalt (mdkr)</th><th class="num">Löften</th><th class="num">Sidor lästa</th></tr></thead><tbody>
+          {view.partyRows.map((row, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${row.code}`}>{row.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(row.total)}</td><td class="num">{row.count}</td><td class="num">{sidorFor(tackning, row.code)}</td></tr>)}
+        </tbody></table></div><p class="tackningsnot">Sista kolumnen är hur många sidor vi hunnit läsa på partiets egen webbplats. Den är ett insamlingsmått och ändras därför inte med löftesurvalet. <a href="/metod#tackning">Så jämnar vi ut det</a>.</p></section>
 
-    <section class="sektion">
-      <h2>Fläsk per parti</h2>
-      <div class="datavy datavy--scroll">
-        <table>
-          <thead>
-            <tr>
-              <th class="radnr">#</th>
-              <th>Parti</th>
-              <th class="num">Totalt (mdkr)</th>
-              <th class="num">Löften</th>
-              <th class="num">Sidor lästa</th>
-            </tr>
-          </thead>
-          <tbody>
-            {partyRows.map((row, i) => (
-              <tr>
-                <td class="radnr">{i + 1}</td>
-                <td><a href={`/parti/${row.code}`}>{row.name}</a></td>
-                <td class="num belopp">{formatMsek(row.total)}</td>
-                <td class="num">{promises.filter((p) => p.parties.includes(row.code) && p.status !== 'tillbakadragen').length}</td>
-                <td class="num">{sidorFor(tackning, row.code)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <section class="sektion"><h2>Dyraste löftena</h2><ol class="promise-list">{view.dyraste.map(({ promise: p, parties: gp }) => <li><a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a><div class="etikett etikett--sub">{gp.map((code) => parties.find((party) => party.code === code)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: p.cost.basis === "parti" }]}>{formatMsek(promiseNetMsek(p), p.cost.basis)}</span></div></li>)}</ol></section>
+
+        <section class="sektion"><h2>Senaste löften</h2><ol class="promise-list">{view.senaste.map((p) => <li><a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a><div class="etikett etikett--sub">{p.parties.map((code) => parties.find((party) => party.code === code)?.name).join(", ")} · {formatDateShort(p.date_stated)}</div></li>)}</ol></section>
       </div>
-      <p class="tackningsnot">
-        Sista kolumnen är hur många sidor vi hunnit läsa på partiets egen
-        webbplats. Den står där för att de två talen före den inte går att
-        jämföra utan den: ett parti vi läst mer av får fler löften och en högre
-        summa, utan att ha lovat mer. <a href="/metod#tackning">Så jämnar vi ut det</a>.
-      </p>
-    </section>
-
-    <section class="sektion">
-      <h2>Dyraste löftena</h2>
-      <ol class="promise-list">
-        {groupedPromises(promises)
-          .sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise))
-          .slice(0, 5)
-          .map(({ promise: p, parties: gp }) => (
-            <li>
-              <a href={`/lofte/${p.id}/${p.slug}`}>
-                <strong>{p.title}</strong>
-              </a>
-              <div class="etikett etikett--sub">
-                {gp.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · <span class="num belopp">{formatMsek(promiseNetMsek(p), p.cost.basis)}</span>
-              </div>
-            </li>
-          ))}
-      </ol>
-    </section>
-
-    <section class="sektion">
-      <h2>Senaste löften</h2>
-      <ol class="promise-list">
-        {promises
-          .filter((p) => p.status !== 'tillbakadragen')
-          .sort((a, b) => b.date_stated.localeCompare(a.date_stated))
-          .slice(0, 5)
-          .map((p) => (
-            <li>
-              <a href={`/lofte/${p.id}/${p.slug}`}>
-                <strong>{p.title}</strong>
-              </a>
-              <div class="etikett etikett--sub">
-                {p.parties.map((c) => parties.find((pp) => pp.code === c)?.name).join(', ')} · {formatDateShort(p.date_stated)}
-              </div>
-            </li>
-          ))}
-      </ol>
-    </section>
+    ))}
   </div>
 </Layout>
 
@@ -173,23 +94,9 @@ const jsonLd = [
   .oversikt__verktyg { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; border-bottom: var(--linje-sektion); padding: 1rem 0; }
   .oversikt__verktyg a { min-height: 44px; display: inline-flex; align-items: center; }
   .ankare-offset { scroll-margin-top: 1rem; }
-  .prosa-content--centered {
-    margin: 1.5rem auto;
-  }
-  .sektion {
-    margin-top: 2rem;
-  }
-  .datavy--scroll {
-    overflow-x: auto;
-  }
-  .etikett--sub {
-    margin-top: 0.15rem;
-  }
-  .tackningsnot {
-    font-family: var(--font-mono);
-    font-size: var(--steg--1);
-    color: var(--dis);
-    line-height: var(--radavstand-mono);
-    margin-top: 0.6rem;
-  }
+  .prosa-content--centered { margin: 1.5rem auto; }
+  .sektion { margin-top: 2rem; }
+  .datavy--scroll { overflow-x: auto; }
+  .etikett--sub { margin-top: 0.15rem; }
+  .tackningsnot { font-family: var(--font-mono); font-size: var(--steg--1); color: var(--dis); line-height: var(--radavstand-mono); margin-top: 0.6rem; }
 </style>

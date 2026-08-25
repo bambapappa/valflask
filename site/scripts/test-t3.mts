@@ -193,7 +193,7 @@ for (const f of htmlFiles) {
 }
 check("zero <style> elements in dist HTML", styleElemCount === 0, `found ${styleElemCount}`);
 
-// Part 9: data-taxameter on start page with correct value
+// Part 9: data-taxameter on start page follows the documented default filter
 console.log("\n--- Taxameter ---");
 const startPage = resolve(DIST_DIR, "index.html");
 let taxameterOk = false;
@@ -202,14 +202,12 @@ if (existsSync(startPage)) {
   const match = content.match(/data-taxameter="(\d+(?:\.\d+)?)"/);
   if (match) {
     const val = parseFloat(match[1]);
-    // Speglar aggregates.totalFlasket: tillbakadragna löften filtreras bort
-    // FÖRST, därefter grupp-dedup (en grupp räknas en gång, representerad av
-    // den medlem som bär HÖGST belopp för mandatperioden, lika belopp bryts på
-    // id). Ordningen spelar roll — görs dedupen före aktiv-filtret kan ett
-    // tillbakadraget löfte representera sin grupp, och totalen avviker från
-    // sajtens. Representanten valdes tidigare på lägst id, vilket lät ett
-    // nollat riktningslöfte dra ned gruppens verkliga belopp till noll.
-    const aktiva = data.filter((p: any) => p.status !== "tillbakadragen");
+    // Startsidan börjar med partiernas egna belopp för reformlöften. Detta
+    // filter ska tillämpas före grupperingen: vid "båda" skulle en medlem
+    // från ett annat beloppsunderlag annars kunna bli grupprepresentant.
+    const aktiva = data.filter((p: any) =>
+      p.status !== "tillbakadragen" && p.cost.basis === "parti" && p.loftestyp === "reform",
+    );
     const total = (p: any) => p.cost.msek_base * (p.cost.period === "per_ar" ? 4 : 1);
     const rep = new Map<string, any>();
     for (const p of aktiva) {
@@ -236,7 +234,7 @@ if (existsSync(startPage)) {
 } else {
   fail("start page index.html not found");
 }
-check("data-taxameter with correct flasket total on start page", taxameterOk);
+check("data-taxameter följer startsidans standardurval", taxameterOk);
 
 // Part 10: kombinator bundle size ≤ 25 kB
 console.log("\n--- Kombinator bundle size ---");

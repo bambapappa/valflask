@@ -205,7 +205,7 @@ const alla = getPromises();
   );
   check(
     "partisidans belopp står bakom bärarprövningen",
-    /bearerId\s*&&\s*bearerId\s*!==\s*p\.id/.test(parti) && /bearer\s*$|bearer\s*\n\s*\?/m.test(parti),
+    /bearerId\s*&&\s*bearerId\s*!==\s*p\.id/.test(parti) && /bearer\s*\?/.test(parti),
     "beloppet ser ut att visas på varje medlem igen",
   );
 }
@@ -323,7 +323,7 @@ const alla = getPromises();
 
   // Och mot mallen: räkningen ska faktiskt visas.
   const parti = readFileSync(new URL("../src/pages/parti/[kod].astro", import.meta.url), "utf8");
-  check("partisidan visar vad siffran vilar på", /partyCoverage\(/.test(parti) && /Vad siffran vilar på/.test(parti));
+  check("partisidan visar vad urvalet vilar på", /partyCoverage\(/.test(parti) && /Vad urvalet vilar på/.test(parti));
   check(
     "koncentrationen skrivs ut när tre löften bär över sjuttio procent",
     /topp3Andel\s*>=\s*0\.7/.test(parti),

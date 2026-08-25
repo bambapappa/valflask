@@ -1,5 +1,6 @@
 import { filtreraLoeften, matcharLoeftesfilter } from "../src/lib/loftesfilter.ts";
-import { getPromises, type PromisePost } from "../src/lib/data.ts";
+import { getParties, getPromises, type PromisePost } from "../src/lib/data.ts";
+import { getPromisesForParty } from "../src/lib/aggregates.ts";
 
 let errors = 0;
 function check(name: string, ok: boolean, detail = ""): void {
@@ -42,5 +43,12 @@ check("publicerade löften delas exakt mellan partiets och Utlovat.se:s belopp",
   const combined = filtreraLoeften(published, { underlag: "alla", loftestyp: typ }).length;
   return party + utlovat === combined;
 }));
+check("varje partis urval delas utan bortfall eller överlapp", getParties().every((party) => ["reform", "inriktning", "alla"].every((loftestyp) => {
+  const typ = loftestyp as "reform" | "inriktning" | "alla";
+  const own = getPromisesForParty(filtreraLoeften(published, { underlag: "parti", loftestyp: typ }), party.code).length;
+  const estimated = getPromisesForParty(filtreraLoeften(published, { underlag: "utlovat", loftestyp: typ }), party.code).length;
+  const combined = getPromisesForParty(filtreraLoeften(published, { underlag: "alla", loftestyp: typ }), party.code).length;
+  return own + estimated === combined;
+})));
 
 if (errors) process.exit(1);

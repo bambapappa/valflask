@@ -2754,3 +2754,27 @@ där läsarens webbläsare står.
 inte ensam skydda detta kontrakt. Att proxyköra sökningen genom utlovat.se hade
 undvikit CORS och CSP men lagt till en serverdel för ett problem som bara kräver
 att den beslutade säkerhetspolicyn faktiskt levereras.
+## 2026-08-25 — Löftestal följer alltid samma urval
+
+**Gäller:** Fläskvågen. Frågevågen och Handlingsvågen saknar de berörda
+kostnads- och löftessummorna. Det publicerade löftesbeståndet ändras inte.
+
+**Beslut (produktbeslut från ansvarig 2026-08-25):** när läsaren väljer
+beloppsunderlag eller löftestyp på startsidan, topplistorna eller en partisida
+ska alla löftesrelaterade tal på den sidan räknas ur exakt det urvalet. Det
+omfattar totalsumma, antal löften, kronor per röst där måttet finns,
+källtäckning, kategorier och löftesrader. Att bara filtrera tabellen medan
+rubriken visar en annan population är missvisande.
+
+**Avgränsning:** frågevågens besked, valmanifestets faktarad och källraden är
+inte löftessummor och påverkas inte. Mätaren mot reformutrymmet är en
+rikssiffra; den räknas om för samma urval över samtliga partier och märks
+uttryckligen som sådan.
+
+**Genomförande:** startsidan, topplistorna och varje partisida bygger nio
+statiska vyer (tre beloppsunderlag × tre löftestyper). Klienten visar en vy i
+taget, så rubrik och varje tabell delar samma förberäknade population.
+Utlovat.se:s beräkningar och "Båda" fortsätter att kräva den befintliga
+kvitteringen. De två diskreta valen presenteras som segmenterade beslutsrader,
+inte som en slider: en slider skulle felaktigt antyda en skala mellan kategorier
+som inte går att blanda gradvis.

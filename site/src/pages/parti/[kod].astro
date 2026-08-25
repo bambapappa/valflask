@@ -8,12 +8,12 @@ import Dela from "../../components/Dela.astro";
 import Loftesfilter from "../../components/Loftesfilter.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
 import { formatMsek, formatMsekShort } from "../../lib/calc";
-import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseNetMsek, groupBearersForParty, partyCoverage } from "../../lib/aggregates";
+import { partyTotalMsek, getPromisesForParty, totalFlasket, categoryBreakdown, flasketPerRost, promiseNetMsek, groupBearersForParty, partyCoverage } from "../../lib/aggregates";
+import { filtreraLoeften, filterNyckel, type Loeftesfilter } from "../../lib/loftesfilter";
 import { getIssuesFile, getStances, cellFor, emptyCellText, statementById, POSITION_LABEL } from "../../lib/stances";
 
 export function getStaticPaths() {
-  const parties = getParties();
-  return parties.map((p) => ({ params: { kod: p.code } }));
+  return getParties().map((p) => ({ params: { kod: p.code } }));
 }
 
 const { kod } = Astro.params;
@@ -21,35 +21,38 @@ const promises = getPromises();
 const parties = getParties();
 const constants = getConstants();
 const party = parties.find((p) => p.code === kod)!;
-const partyPromises = getPromisesForParty(promises, kod);
-// Alla löften står kvar i listan — varje citat är ett eget belägg med egen
-// källa. Men samma politik kostar en gång, så beloppet visas bara på det
-// löfte som bär det i summan; övriga medlemmar pekar dit. Utan det adderade
-// listan till mer än rubriken sa (för C: 1 724 mot 1 018 mdkr, 2026-08-03).
-//
-// Beloppet visas med TECKEN: en besparing drar ner partiets summa och ska
-// synas som ett minus, inte som en kostnad. Kolumnen stod tidigare som ren
-// "Kostnad" med ett positivt tal även för besparingar, så en besparing på
-// 600 miljoner (p-2026-0349) såg ut att kosta lika mycket.
-const bearers = groupBearersForParty(promises, kod);
 const promiseById = new Map(promises.map((p) => [p.id, p]));
-const promiseRows = partyPromises.map((p) => {
-  const bearerId = p.group_id ? bearers.get(p.group_id) : undefined;
-  const bearer = bearerId && bearerId !== p.id ? promiseById.get(bearerId) : undefined;
-  return { p, bearer, underlag: p.cost.basis === "parti" ? "parti" : "utlovat" };
+const filters: Loeftesfilter[] = [
+  { underlag: "parti", loftestyp: "reform" }, { underlag: "parti", loftestyp: "inriktning" }, { underlag: "parti", loftestyp: "alla" },
+  { underlag: "utlovat", loftestyp: "reform" }, { underlag: "utlovat", loftestyp: "inriktning" }, { underlag: "utlovat", loftestyp: "alla" },
+  { underlag: "alla", loftestyp: "reform" }, { underlag: "alla", loftestyp: "inriktning" }, { underlag: "alla", loftestyp: "alla" },
+];
+const views = filters.map((filter) => {
+  const selected = filtreraLoeften(promises, filter);
+  const partyPromises = getPromisesForParty(selected, kod!);
+  const bearers = groupBearersForParty(selected, kod!);
+  const promiseRows = partyPromises.map((p) => {
+    const bearerId = p.group_id ? bearers.get(p.group_id) : undefined;
+    const bearer = bearerId && bearerId !== p.id ? promiseById.get(bearerId) : undefined;
+    return { p, bearer, underlag: p.cost.basis === "parti" ? "parti" : "utlovat" };
+  });
+  const tackning = partyCoverage(selected, kod!);
+  return {
+    key: filterNyckel(filter),
+    count: partyPromises.length,
+    total: partyTotalMsek(selected, kod!),
+    perRost: flasketPerRost(partyTotalMsek(selected, kod!), party.votes_2022),
+    flasket: totalFlasket(selected),
+    categories: categoryBreakdown(partyPromises),
+    promiseRows,
+    tackning,
+    andelEgna: tackning.antal > 0 ? Math.round((100 * tackning.egna) / tackning.antal) : 0,
+    koncentrerat: tackning.topp3Andel >= 0.7,
+  };
 });
-const total = partyTotalMsek(promises, kod);
-const flasket = totalFlasket(promises);
-const gap = financingGap(promises);
+const defaultKey = "parti:reform";
+const defaultView = views.find((view) => view.key === defaultKey)!;
 const reformutrymme = constants.reformutrymme_msek_per_ar.value;
-const perRost = flasketPerRost(total, party.votes_2022);
-const categories = categoryBreakdown(partyPromises);
-// Underlaget bakom siffran: hur brett det är, och hur mycket som hänger på de
-// största löftena. Talen skiljer sig kraftigt mellan partierna, och det syns
-// inte i ett totalbelopp.
-const tackning = partyCoverage(promises, kod);
-const andelEgna = tackning.antal > 0 ? Math.round((100 * tackning.egna) / tackning.antal) : 0;
-const koncentrerat = tackning.topp3Andel >= 0.7;
 const canonicalPath = `/parti/${kod}`;
 const issuesFile = getIssuesFile();
 const stances = getStances();
@@ -60,204 +63,87 @@ const stanceRows = issuesFile.issues.flatMap((issue) =>
     return { issue, sq, cell, st };
   }),
 );
-const hasLlm = partyPromises.some((p) => p.cost.basis === 'llm_estimat');
-const pageTitle = hasLlm
-  ? `Vad kostar ${party.name}s vallöften 2026? ≈ ${formatMsekShort(total)} mdkr — utlovat.se`
-  : `Vad kostar ${party.name}s vallöften 2026? ${formatMsekShort(total)} mdkr — utlovat.se`;
-
-const jsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://utlovat.se/" },
-      { "@type": "ListItem", "position": 2, "name": party.name, "item": `https://utlovat.se${canonicalPath}` },
-    ],
-  },
-];
+const pageTitle = `${party.name}s vallöften 2026 — utlovat.se`;
+const jsonLd = [{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Hem", "item": "https://utlovat.se/" },
+    { "@type": "ListItem", "position": 2, "name": party.name, "item": `https://utlovat.se${canonicalPath}` },
+  ],
+}];
 ---
-<Layout title={pageTitle} description={`${party.name}s vallöften 2026 kostar ${formatMsekShort(total)} mdkr för mandatperioden. Oberoende, källspårad.`} ogImage={`/og/parti-${kod}.png`} jsonLd={jsonLd} canonicalPath={canonicalPath}>
+<Layout title={pageTitle} description={`Filtrera ${party.name}s vallöften 2026 efter partiets egna belopp, Utlovat.se:s beräkningar och löftestyp.`} ogImage={`/og/parti-${kod}.png`} jsonLd={jsonLd} canonicalPath={canonicalPath}>
   <div class="page-content">
-    <Lopsedel total={formatMsek(total)} subtitle={party.name.toUpperCase()} count={partyPromises.length} date="2026" />
-
-    <div class="prosa-content prosa-content--centered">
-      <p><strong>{party.name}s</strong> vallöften 2026 kostar hittills <strong class="num belopp">{formatMsekShort(total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {partyPromises.length} löften. Fläsk per röst: <strong class="num belopp">{Math.round(perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
-      <p class="manifest-status">{party.manifest_2026}</p>
-    </div>
-
-    <section class="sektion prosa-content prosa-content--centered underlag">
-      <h2>Vad siffran vilar på</h2>
-      <p>
-        {tackning.antal} löften från {tackning.kallor} olika källor.
-        <strong>{andelEgna} %</strong> av dem är hämtade från {party.name}s egna kanaler;{" "}
-        {tackning.antal - tackning.egna === 0
-          ? "inga kommer från medier eller riksdagens handlingar"
-          : `${tackning.antal - tackning.egna} kommer från medier, riksdagens handlingar eller video`}.
-        {tackning.senaste && <> Det senaste löftet är uttalat {tackning.senaste}.</>}
-      </p>
-      {koncentrerat && (
-        <p class="varning">
-          De tre största löftena bär <strong>{Math.round(tackning.topp3Andel * 100)} %</strong> av summan,
-          det största ensamt {Math.round(tackning.storstaAndel * 100)} %. Ett enskilt estimat väger alltså
-          tungt här — läs uträkningarna bakom dem innan du jämför partier.
-        </p>
-      )}
-      <p class="notis">
-        Vi räknar bara det partiet självt har lovat, med ordagrant citat och källa. Ett parti som
-        publicerar mer material får därför fler löften här — det säger något om underlaget, inte om
-        hur mycket partiet vill spendera.
-      </p>
-    </section>
-
+    <div class="prosa-content prosa-content--centered"><h1>{party.name}</h1><p class="manifest-status">{party.manifest_2026}</p></div>
+    <Loftesfilter count={defaultView.count} />
     <MetodLank />
 
-    <GapMatare flasket={flasket} reformutrymme={reformutrymme} />
+    {views.map((view) => (
+      <div data-loftesfilter-vy={view.key} data-loftesfilter-vy-antal={view.count} hidden={view.key !== defaultKey}>
+        <Lopsedel total={formatMsek(view.total)} subtitle={party.name.toUpperCase()} count={view.count} date="2026" headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
 
-    <section class="sektion">
-      <h2>Kategorifördelning</h2>
-      <div class="datavy datavy--scroll">
-        <table>
-          <thead>
-            <tr>
-              <th class="radnr">#</th>
-              <th>Kategori</th>
-              <th class="num">Totalt (mdkr)</th>
-              <th class="num">Löften</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map((cat, i) => (
-              <tr>
-                <td class="radnr">{i + 1}</td>
-                <td>{cat.category}</td>
-                <td class="num belopp">{formatMsek(cat.totalMsek)}</td>
-                <td class="num">{cat.count}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+        <div class="prosa-content prosa-content--centered">
+          <p><strong>{party.name}s</strong> valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsekShort(view.total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften. Fläsk per röst: <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{Math.round(view.perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
+        </div>
 
-    <section class="sektion">
-      <h2>{party.name}:s löften</h2>
-      <Loftesfilter count={partyPromises.length} />
-      <div class="datavy datavy--scroll">
-        <table>
-          <thead>
-            <tr>
-              <th class="radnr">#</th>
-              <th>Löfte</th>
-              <th>Kategori</th>
-              <th>Typ</th>
-              <th>Beloppsunderlag</th>
-              <th class="num">Kostnad, minus för besparing</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {promiseRows.map(({ p, bearer, underlag }, i) => (
-              <tr data-lofte-underlag={underlag} data-lofte-typ={p.loftestyp}>
-                <td class="radnr">{i + 1}</td>
-                <td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td>
-                <td>{p.category}</td>
-                <td>{p.loftestyp === "reform" ? "Reform" : "Inriktning/policy"}</td>
-                <td>{underlag === "parti" ? "Partiet" : "Utlovat.se"}</td>
-                <td class:list={["num", "belopp", { partibelopp: underlag === "parti" }]}>
-                  {bearer
-                    ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span>
-                    : formatMsek(promiseNetMsek(p), p.cost.basis)}
-                </td>
-                <td>{p.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <section class="sektion prosa-content prosa-content--centered underlag">
+          <h2>Vad urvalet vilar på</h2>
+          {view.tackning.antal > 0 ? <p>
+            {view.tackning.antal} löften från {view.tackning.kallor} olika källor.
+            <strong>{view.andelEgna} %</strong> av dem är hämtade från {party.name}s egna kanaler;{" "}
+            {view.tackning.antal - view.tackning.egna === 0
+              ? "inga kommer från medier eller riksdagens handlingar"
+              : `${view.tackning.antal - view.tackning.egna} kommer från medier, riksdagens handlingar eller video`}.
+            {view.tackning.senaste && <> Det senaste löftet är uttalat {view.tackning.senaste}.</>}
+          </p> : <p>Det finns inga löften för detta urval.</p>}
+          {view.koncentrerat && <p class="varning">De tre största löftena bär <strong>{Math.round(view.tackning.topp3Andel * 100)} %</strong> av summan, det största ensamt {Math.round(view.tackning.storstaAndel * 100)} %. Ett enskilt estimat väger alltså tungt här — läs uträkningarna bakom dem innan du jämför partier.</p>}
+          <p class="notis">Urvalet gäller bara det partiet självt har lovat, med ordagrant citat och källa. Ett parti som publicerar mer material får därför fler löften här — det säger något om underlaget, inte om hur mycket partiet vill spendera.</p>
+        </section>
+
+        <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} partiBelopp={view.key.startsWith("parti:")} />
+        <p class="prosa-content totalscope">Mätaren gäller samtliga partiers löften i samma urval. Talen ovan gäller enbart {party.name}.</p>
+
+        <section class="sektion">
+          <h2>Kategorifördelning</h2>
+          <div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Kategori</th><th class="num">Totalt (mdkr)</th><th class="num">Löften</th></tr></thead><tbody>
+            {view.categories.map((cat, i) => <tr><td class="radnr">{i + 1}</td><td>{cat.category}</td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(cat.totalMsek)}</td><td class="num">{cat.count}</td></tr>)}
+          </tbody></table></div>
+        </section>
+
+        <section class="sektion">
+          <h2>{party.name}:s löften</h2>
+          <div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Löfte</th><th>Kategori</th><th>Typ</th><th>Beloppsunderlag</th><th class="num">Kostnad, minus för besparing</th><th>Status</th></tr></thead><tbody>
+            {view.promiseRows.map(({ p, bearer, underlag }, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td><td>{p.category}</td><td>{p.loftestyp === "reform" ? "Reform" : "Inriktning/policy"}</td><td>{underlag === "parti" ? "Partiet" : "Utlovat.se"}</td><td class:list={["num", "belopp", { partibelopp: underlag === "parti" }]}>{bearer ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span> : formatMsek(promiseNetMsek(p), p.cost.basis)}</td><td>{p.status}</td></tr>)}
+          </tbody></table></div>
+        </section>
       </div>
-    </section>
+    ))}
 
     <section class="sektion" id="besked">
       <h2>Besked i de stora frågorna</h2>
       <p class="prosa-content beskednot">Ur <a href="/fragor">Frågevågen</a> — partiets senaste besked per delfråga, med ordagrant citat, källa och arkivkopia på frågesidan. Samma bevakning för alla åtta partier.</p>
-      <div class="datavy datavy--scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Fråga</th>
-              <th>Delfråga</th>
-              <th>Besked</th>
-              <th class="num">Datum</th>
-            </tr>
-          </thead>
-          <tbody>
-            {stanceRows.map(({ issue, sq, cell, st }) => (
-              <tr>
-                <td><a href={`/fraga/${issue.slug}#${sq.id}-${kod}`}>{issue.title}</a></td>
-                <td>{sq.text}</td>
-                <td class="num beskedcell">{st ? POSITION_LABEL[cell!.current.position] : <span class="tomcell">{emptyCellText(cell?.last_searched ?? null)}</span>}</td>
-                <td class="num">{st?.date_stated ?? "—"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <div class="datavy datavy--scroll"><table><thead><tr><th>Fråga</th><th>Delfråga</th><th>Besked</th><th class="num">Datum</th></tr></thead><tbody>
+        {stanceRows.map(({ issue, sq, cell, st }) => <tr><td><a href={`/fraga/${issue.slug}#${sq.id}-${kod}`}>{issue.title}</a></td><td>{sq.text}</td><td class="num beskedcell">{st ? POSITION_LABEL[cell!.current.position] : <span class="tomcell">{emptyCellText(cell?.last_searched ?? null)}</span>}</td><td class="num">{st?.date_stated ?? "—"}</td></tr>)}
+      </tbody></table></div>
     </section>
 
     <KallRad source={`${party.name}:s valprogram`} />
-
-    <Dela path={canonicalPath} title={pageTitle} text={`${party.name}s vallöften 2026 väger ${formatMsekShort(total)} mdkr. Källspårat på utlovat.se`} />
+    <Dela path={canonicalPath} title={pageTitle} text={`${party.name}s vallöften 2026 — källspårat på utlovat.se`} />
   </div>
 </Layout>
 
 <style>
-  /* Ett löfte som räknas i ett annat visar var, inte ett belopp. Ingen färg —
-     texten säger det själv, så det syns även i svartvitt och för den som
-     lyssnar på sidan. */
-  .raknas {
-    font-family: var(--font-mono);
-    font-size: var(--steg--1);
-    color: var(--text-svag);
-    white-space: normal;
-  }
-
-  .manifest-status {
-    font-size: 0.85rem;
-    color: var(--farg-text-svag, #666);
-    font-style: italic;
-  }
-
-  .prosa-content--centered {
-    margin: 1.5rem auto;
-  }
-  .underlag p {
-    margin: 0 0 0.5rem;
-  }
-  /* Varningen bär sin betydelse i orden, aldrig i färgen — samma regel som
-     resten av sajten, så den syns även i svartvitt och för den som inte
-     skiljer färger. */
-  .underlag .varning {
-    border-left: 3px solid var(--linje);
-    padding-left: 0.75rem;
-  }
-  .underlag .notis {
-    color: var(--text-svag);
-    font-size: var(--steg--1);
-  }
-  .sektion {
-    margin-top: 2rem;
-  }
-  .datavy--scroll {
-    overflow-x: auto;
-  }
-  .beskednot {
-    font-size: 0.9rem;
-    color: var(--grafit);
-  }
-  .beskedcell {
-    font-weight: 700;
-  }
-  .tomcell {
-    font-weight: 400;
-    color: var(--dis);
-  }
+  .raknas { font-family: var(--font-mono); font-size: var(--steg--1); color: var(--text-svag); white-space: normal; }
+  .manifest-status { font-size: 0.85rem; color: var(--farg-text-svag, #666); font-style: italic; }
+  .prosa-content--centered { margin: 1.5rem auto; }
+  .underlag p { margin: 0 0 0.5rem; }
+  .underlag .varning { border-left: 3px solid var(--linje); padding-left: 0.75rem; }
+  .underlag .notis { color: var(--text-svag); font-size: var(--steg--1); }
+  .totalscope { color: var(--text-svag); font-size: var(--steg--1); margin-top: 0.5rem; }
+  .sektion { margin-top: 2rem; }
+  .datavy--scroll { overflow-x: auto; }
+  .beskednot { font-size: 0.9rem; color: var(--grafit); }
+  .beskedcell { font-weight: 700; }
+  .tomcell { font-weight: 400; color: var(--dis); }
 </style>
