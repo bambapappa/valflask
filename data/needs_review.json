@@ -142,7 +142,12 @@
       "basis_url": null,
       "method_note": "Ankrarat mot jämförbara kärnkraftslöften (~2000 msek/år). Prissätter statens stöd (riskkrediter, förstudier, ev. samfinansiering), inte kraftverkens totala investering som bärs av bolagen.",
       "confidence": 0.45,
-      "calculation": "Nytt kärnkraftsbyggande finansieras huvudsakligen av bolagen (t.ex. Vattenfall); statens nya nettokostnad utgörs av förstudier/tillståndsprocesser, riskkreditgarantiers riskkostnad och eventuell samfinansiering eller kapitaltillskott. Jämförbara löften om ny kärnkraft (kd, sd) ligger på ~2000 msek/år. Antagande: 0,5–5 mdkr/år i statligt stöd beroende på projektets fas; bas 2000 msek/år i linje med jämförbara löften. Fulla reaktorinvesteringar (tiotals mdkr per reaktor) och SMR-utveckling är inte en direkt statlig utgift och räknas därför inte med."
+      "calculation": "Nytt kärnkraftsbyggande finansieras huvudsakligen av bolagen (t.ex. Vattenfall); statens nya nettokostnad utgörs av förstudier/tillståndsprocesser, riskkreditgarantiers riskkostnad och eventuell samfinansiering eller kapitaltillskott. Jämförbara löften om ny kärnkraft (kd, sd) ligger på ~2000 msek/år. Antagande: 0,5–5 mdkr/år i statligt stöd beroende på projektets fas; bas 2000 msek/år i linje med jämförbara löften. Fulla reaktorinvesteringar (tiotals mdkr per reaktor) och SMR-utveckling är inte en direkt statlig utgift och räknas därför inte med.",
+      "anchor_ids": [
+        "p-2026-0109",
+        "p-2026-0551",
+        "p-2026-0820"
+      ]
     },
     "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0342 (0), p-2026-0109 (2000), p-2026-0820 (2000), p-2026-0551 (2000), p-2026-0667 (0)"
   },
@@ -319,7 +324,8 @@
       "confidence": 0.4,
       "calculation": "Dagens reseavdrag används av ca 1,3–1,5 milj deklaranter med snittavdrag ca 5–6 tkr, total ca 7–9 mdkr/år i sänkta skatteintäkter. Löftet ersätter systemet med ett avståndsbaserat avdrag som gynnar långpendlare: antag 0,4–0,8 milj berörda × extra avdrag 3 000–8 000 kr ≈ 1,2–6,4 mdkr ytterligare sänkta intäkter, delvis motverkat av mindre avdrag för kortpendlare när nuvarande system byts ut. Netto för staten ≈ 0,5–4,5 mdkr/år; bas 2 000 msek motsvarar en reform i storlek med tidigare större utbyggnader av reseavdraget."
     },
-    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.4) — omkörd efter haveri, bekräfta/justera belopp",
+    "group_id": "g-p-2026-0460"
   },
   {
     "candidate": {
@@ -568,36 +574,6 @@
   },
   {
     "candidate": {
-      "title": "Staten ska ta huvudansvaret för skolan",
-      "parties": [
-        "v"
-      ],
-      "person": null,
-      "quote": "Vänsterpartiet vill att staten tar tillbaka huvudansvaret för skolorna från kommunerna.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/skolan/",
-    "articleTitle": "Skolan – Vänsterpartiet",
-    "duplicateOf": "p-2026-0395",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 3500,
-      "msek_high": 6000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Full övertagning är en överföring från kommunerna, inte ny statlig kostnad. Här prissätts nettoökningen: utjämning, kvalitetssatsningar och administration, i linje med liknande löften på 3–4 mdkr/år.",
-      "confidence": 0.4,
-      "calculation": "Skolans totala drift är en kommunal utgift som staten tar över – bruttoflödet räknas inte som ny kostnad. Ny nettokostnad antas vara 1–2 % av skolkostnaden (över 200 mdkr) för utjämning/kvalitet plus administration: ~200–400 mdkr × 1–2 % ≈ 2 000–6 000 mkr/år. Bas 3 500 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Göra det enklare och mer attraktivt för skogs- och markägare att skydda värdefull natur och hotade arter",
       "parties": [
         "mp"
@@ -682,36 +658,6 @@
       "confidence": 0.9,
       "calculation": "EU-handelskrav miljö/rättigheter: EU-pådrivning — noll.",
       "anchor_ids": []
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Stärka polisens arbete mot hatbrott och extremistiska miljöer",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Stärka polisens arbete mot hatbrott och extremistiska miljöer och öka skyddet för gudstjänstlokaler och utsatta grupper",
-      "category": "rättsväsende",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/politik/extremism",
-    "articleTitle": "Extremism – Liberalerna",
-    "duplicateOf": "p-2026-1755",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 30,
-      "msek_base": 75,
-      "msek_high": 200,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet saknar belopp. Skattningen utgår från liknande polissatsningar (30–50 mkr/år) plus skydd av gudstjänstlokaler. Hög osäkerhet.",
-      "confidence": 0.3,
-      "calculation": "Jämförbara satsningar på hatbrottsarbete ligger på 30–50 mkr/år. Skydd av gudstjänstlokaler och utsatta grupper (säkerhetsåtgärder, polisiär närvaro) uppskattas till 20–150 mkr/år. Totalt 30–200 mkr/år; bas 75 mkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   },
@@ -998,36 +944,6 @@
   },
   {
     "candidate": {
-      "title": "Arbeta för en barnmorska per födande kvinna",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Arbeta för en barnmorska per födande kvinna",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/politik/forlossningsvard",
-    "articleTitle": "Förlossningsvård – Liberalerna",
-    "duplicateOf": "p-2026-1661",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 150,
-      "msek_base": 300,
-      "msek_high": 450,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Uppskattning utifrån antal förlossningar och extra barnmorsketid per födande; jämförbara löften ligger 200–500 mkr/år.",
-      "confidence": 0.5,
-      "calculation": "~110 000 förlossningar/år × 2–5 tim extra barnmorskestöd à 400–600 kr/tim ≈ 90–330 mkr. Med hänsyn till bemanning, övertid och jämförbara löften sätts spannet 150–450 mkr/år, bas 300 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Förbjuda religiösa friskolor och utländskt ägande",
       "parties": [
         "l"
@@ -1101,36 +1017,6 @@
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/dubbdack-och-vinterdack",
     "articleTitle": "Dubbdäck och vinterdäck | Centerpartiet",
     "duplicateOf": "p-2026-0745"
-  },
-  {
-    "candidate": {
-      "title": "Återinföra avgiftsfri tandvård upp till 23 år",
-      "parties": [
-        "mp"
-      ],
-      "person": null,
-      "quote": "Miljöpartiet vill därför återinföra avgiftsfri tandvård för unga vuxna till och med 23 år.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.mp.se/politik/tandvard/",
-    "articleTitle": "Miljöpartiets tandsvårdspolitik",
-    "duplicateOf": "p-2026-0494",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 700,
-      "msek_base": 1000,
-      "msek_high": 1500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Utökar fri tandvård från 19 till 23 år. Skattning utifrån fyra årskullar och genomsnittlig tandvårdskostnad; i linje med V:s löfte på 1 000 mkr/år.",
-      "confidence": 0.6,
-      "calculation": "4 årskullar (20–23 år) × ~115 000 personer = ~460 000. Genomsnittlig tandvårdskostnad 1 500–2 500 kr/person/år → 460 000 × 2 000 ≈ 920 mkr. Avrundat till 1 000 mkr; spann 700–1 500 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1238,36 +1124,6 @@
       "calculation": "Modellen tas främst fram inom Regeringskansliets ordinarie beredning: 0 mkr. Om den kräver en separat SOU: 1 utredning × 5–15 mkr ≈ 5–15 mkr. Bas 0 eftersom löftet liknar andra nationella modell-/strategilöften som prissatts till 0."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Krav på språkkunskaper och samhällsorientering för medborgarskap",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Ställa krav på språkkunskaper och samhällsorientering för att kunna bli medborgare",
-      "category": "migration",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/integration",
-    "articleTitle": "Integration | Centerpartiet",
-    "duplicateOf": "p-2026-0837",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 20,
-      "msek_base": 30,
-      "msek_high": 50,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Direkt kostnad för provadministration och handläggning vid medborgarskapsärenden. Beloppet ligger i linje med jämförbart löfte om språk- och samhällsprov. Samhällsföljder ingår inte.",
-      "confidence": 0.5,
-      "calculation": "Antag 60 000–80 000 medborgarskapsärenden/år. Direkt kostnad för prov, rättning och handläggning ~300–600 kr/ärende = 18–48 mkr/år. Lägg till utveckling och uppföljning ~5–10 mkr/år. Avrundat till 20–50 mkr/år, bas 30 mkr i linje med tidigare löfte om samma typ av prov."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1450,36 +1306,6 @@
       "confidence": 0.5
     },
     "costReason": "Låg kostnadssäkerhet: 0.5 — jämförbara: p-2026-1408 (3000), p-2026-1310 (1000), p-2026-1100 (3000), p-2026-0336 (50000), p-2026-0599 (1250) ⚠ AVVIKER: 500 avviker 6.0× från jämförbara (median 3000)"
-  },
-  {
-    "candidate": {
-      "title": "Öronmärka upp till 50 miljarder kronor till det civila försvaret",
-      "parties": [
-        "m"
-      ],
-      "person": null,
-      "quote": "Av detta öronmärks upp till 50 miljarder kronor specifikt för det civila försvaret",
-      "category": "försvar",
-      "amount_in_text_msek": 50000,
-      "financing_mentioned": true
-    },
-    "failures": [],
-    "articleUrl": "https://moderaterna.se/var-politik/sakerhetspolitik/",
-    "articleTitle": "Säkerhetspolitik | Moderaterna",
-    "duplicateOf": "(denna körning)",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 37500,
-      "msek_base": 50000,
-      "msek_high": 67500,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "confidence": 0.5,
-      "calculation": "Partiet anger själv beloppet i källtexten: 50 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 37 500–67 500 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1754,37 +1580,8 @@
       "confidence": 0.4,
       "calculation": "Ca 230 000 personer med sjuk- och aktivitetsersättning × genomsnittlig årsersättning ca 120 000 kr ≈ 27,6 mdkr. En höjning med 5 % ≈ 1,4 mdkr, med 10 % ≈ 2,8 mdkr. Spann 1,0–3,0 mdkr, bas 1,5 mdkr."
     },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Garantera en fast läkarkontakt",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Garantera en fast läkarkontakt för alla invånare för att öka tryggheten, kontinuiteten och kvaliteten i din vård.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/sjukvard",
-    "articleTitle": "Sjukvård\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-0357",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 5000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Jämförbart löfte om fast läkarkontakt för alla har uppskattats till 3 000 mkr/år. Osäkerhet kring utformning och finansiering ger brett spann.",
-      "confidence": 0.4,
-      "calculation": "Bas: 3 000 mkr/år från jämförbart löfte. Lågt: 1 500 mkr/år om garantin i huvudsak uppnås genom omfördelning av befintliga läkare. Högt: 5 000 mkr/år om det krävs nyanställningar och ökad läkartid. Spannet avspeglar osäkerhet i åtgärdens utformning."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp",
+    "group_id": "g-p-2026-0449"
   },
   {
     "candidate": {
@@ -1814,36 +1611,6 @@
       "calculation": "Att ta fram bindande riktvärden kräver en utredning och föreskriftsarbete, uppskattningsvis 0–10 mkr engång. Inga stora årliga kostnader för staten."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1006 (0), p-2026-1037 (0), p-2026-1853 (0), p-2026-0723 (0), p-2026-1913 (0)"
-  },
-  {
-    "candidate": {
-      "title": "Införa fast läkarkontakt",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Skapa kontinuitet och trygghet genom en namngiven läkare på vårdcentralen.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/sjukvard-halsa-och-omvard",
-    "articleTitle": "Sjukvård, hälsa och omvård\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-0357",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 2000,
-      "msek_base": 3000,
-      "msek_high": 5000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Uppskattning utifrån jämförbart löfte om fast läkarkontakt för alla (3 000 mkr/år) och behov av fler läkare i primärvården. Avser statens kostnad för reformen.",
-      "confidence": 0.4,
-      "calculation": "Ca 10 mn listade patienter. För fast läkarkontakt med kontinuitet krävs uppskattningsvis 1 500–2 500 fler läkare à 1,2–1,5 mkr/år ≈ 2–4 mdkr. Riktmärke från annat partis löfte: 3 000 mkr/år. Intervall 2 000–5 000 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -2268,37 +2035,6 @@
   },
   {
     "candidate": {
-      "title": "Utökad rätt till förskola till 30 timmar",
-      "parties": [
-        "l"
-      ],
-      "person": null,
-      "quote": "Utöka rätten till förskola för barn till föräldralediga och arbetslösa till 30 timmar per vecka",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.liberalerna.se/politik/familjepolitik",
-    "articleTitle": "Familjepolitik – Liberalerna",
-    "duplicateOf": "p-2026-2264",
-    "duplicateReason": "samma uttryck: «rätten försko», «barn föräld», «föräld arbets», «arbets timmar», «timmar vecka»",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 800,
-      "msek_base": 1500,
-      "msek_high": 3000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Avser statsbidrag till kommuner för utökad tid. Skattning utifrån antal berörda barn och marginell förskolekostnad, inte samhällsföljder.",
-      "confidence": 0.4,
-      "calculation": "Barn 1–5: ~550 000. Berörda barn till föräldralediga/arbetslösa: ~60 000–90 000; 70–80 % utnyttjar utökningen ≈ 45 000–70 000. Utökning 15 h/vecka × 45 veckor = 675 h/år. Marginell kostnad 40–80 kr/h (befintliga lokaler, extra personal) ≈ 27 000–54 000 kr/barn/år. Totalt ≈ 45 000 × 27 000 = 1 200 mkr till 70 000 × 54 000 = 3 800 mkr. Bas 1 500 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
       "title": "Göra ekocid till ett internationellt brott",
       "parties": [
         "s"
@@ -2382,39 +2118,11 @@
       "method_note": "(belopp satt av granskare)",
       "confidence": 0.9,
       "calculation": "Flyget via EU-utsläppsrätter: EU-regelnivå, ingen direkt svensk statsutgift — noll. Jämför C:s L:s löfte om införliva flyget i EU:s utsläppshandelssystem (annat parti).",
-      "anchor_ids": []
+      "anchor_ids": [
+        "p-2026-2535"
+      ]
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1773 (0)"
-  },
-  {
-    "candidate": {
-      "title": "Stärka Industriklivet och Klimatklivet",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Stärka och utveckla Industriklivet och Klimatklivet för att främja industrins övergång till fossilfria processer och produktion.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/utslapp",
-    "articleTitle": "Utsläpp\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-0621",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2000,
-      "msek_high": 3000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Inget eget belopp anges. Skattningen utgår från att båda programmen redan har miljardanslag och att en förstärkning av båda hamnar i nivå med liknande löften från andra partier.",
-      "confidence": 0.4,
-      "calculation": "Klimatklivet och Industriklivet har vardera årliga anslag i miljardklassen. En bred förstärkning av båda programmen uppskattas till 1–3 mdkr/år i ökad utlysningstakt och projektstöd. Bas 2 mdkr/år, spann 1–3 mdkr/år."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -2697,7 +2405,7 @@
       "basis_url": null,
       "method_note": "Ingen nivå angiven. Uppskattning utifrån befintlig svensk klimatbiståndsvolym (~5 mdkr) och en höjning på 5–20 %. Osäkerhet pga vagt löfte.",
       "confidence": 0.35,
-      "calculation": "Antag befintligt klimatbistånd ca 5 000 mkr/år. En ökning med 5 % = 250 mkr, 10 % = 500 mkr, 20 % = 1 000 mkr. Bas 10 % ≈ 500 mkr/år. Jämförbara löften ligger 0–1 000 mkr/år."
+      "calculation": "Antag befintligt klimatbistånd ca 5 000 mkr/år. En ökning med 5 % = 250 mkr, 10 % = 500 mkr, 20 % = 1 000 mkr. Bas 10 % ≈ 500 mkr/år."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2039 (0), p-2026-2343 (5), p-2026-1110 (0), p-2026-2029 (0), p-2026-1378 (1000) ⚠ AVVIKER: belopp 500 men jämförbara ligger på 0"
   },
@@ -2759,36 +2467,6 @@
       "calculation": "Ingen beräkning – löftet anger ingen avgränsad åtgärd, nivå eller målgrupp. Enligt kostnadsregeln om breda uppräkningslöften behandlas det som inriktningslöfte med base 0; eventuella kostnader prissätts på partiers specifika löften."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Garantera fast läkarkontakt",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Garantera en fast läkarkontakt för att öka kontinuiteten och minska risken för onödigt långa väntetider i primärvården.",
-      "category": "välfärd",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/vardkoer",
-    "articleTitle": "Vårdköer\n| Socialdemokraterna",
-    "duplicateOf": "p-2026-0357",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 4500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Uppskattning utifrån jämförbart löfte om fast läkarkontakt för alla (~3 000 mkr/år); osäkerhet kring hur många som saknar kontakt och vilken vårdnivå som ingår.",
-      "confidence": 0.4,
-      "calculation": "Antag cirka 10 miljoner invånare som omfattas av garantin. Merkostnad per invånare och år för utökad läkartid, samordning och administration uppskattas till 150–450 kr. 10 000 000 × 150 kr = 1 500 mkr; × 450 kr = 4 500 mkr. Bas 300 kr ger 3 000 mkr/år, i linje med tidigare uppskattning för liknande löfte."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -3514,36 +3192,6 @@
       "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
-  },
-  {
-    "candidate": {
-      "title": "Stärka sex- och samlevnadsundervisningen i skolan",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "Stärka sex- och samlevnadsundervisningen i skolan för att tidigt bygga en kultur som bygger på jämställdhet och samtycke.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/lag-och-ratt/sexualbrott",
-    "articleTitle": "Sexualbrott | Centerpartiet",
-    "duplicateOf": "p-2026-2330",
-    "cost": {
-      "type": "utgift",
-      "period": "engang",
-      "msek_low": 25,
-      "msek_base": 40,
-      "msek_high": 60,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Löftet saknar belopp. Jämförbara satsningar på sex- och samlevnadsundervisning har skattats till 40–50 mkr; antar en engångsinsats för fortbildning och material.",
-      "confidence": 0.4,
-      "calculation": "Jämförbar satsning på stärkt sex- och samlevnadsundervisning ≈ 40 mkr; en bredare kompetenssatsning ≈ 50 mkr/år. För en engångsinsats med osäkerhet: 40 mkr ± 15 mkr → 25–60 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -6393,35 +6041,6 @@
       "confidence": 0.9,
       "anchor_ids": []
     }
-  },
-  {
-    "candidate": {
-      "title": "Fler flexibla skyddsformer för natur",
-      "parties": [
-        "c"
-      ],
-      "person": null,
-      "quote": "göra det enklare för skogsägare att själva ta initiativ till att skydda natur, med fler och mer flexibla skyddsformer.",
-      "category": "klimat-miljö",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske/skog",
-    "articleTitle": "Skog | Centerpartiet",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 150,
-      "msek_base": 300,
-      "msek_high": 600,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Vagt löfte utan belopp; skattat mot jämförbart löfte om ökat naturskydd (300 mkr/år). Areal- och ersättningsantaganden i calculation.",
-      "confidence": 0.3,
-      "calculation": "Antag 50 000–150 000 ha/år nytt skydd via flexibla avtal; ersättning 2 000–6 000 kr/ha → 100–900 mkr/år. Baserat på jämförbart löfte om ökat naturskydd: 300 mkr/år som base. Avrundat till 150–600 mkr."
-    },
-    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1553 (900), p-2026-1102 (300), p-2026-1030 (0)"
   },
   {
     "candidate": {

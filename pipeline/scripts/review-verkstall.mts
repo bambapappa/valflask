@@ -23,7 +23,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { approve, reject, reviewId, type ReviewCandidate } from "../src/review.ts";
-import { konyckel, lasProvningar } from "../src/provningar.ts";
+import { kanon, konyckel, kopostSomLofte, lasProvningar } from "../src/provningar.ts";
+import { harledGrupp } from "../src/kogrupp.ts";
 import { LANAR_BELOPP } from "../src/ankarkravet.ts";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { svenskDag } from "../src/dagen.ts";
@@ -87,6 +88,7 @@ const koKarta = new Map<string, Kopost>(
 const loften = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Array<{
   id: string;
   status?: string;
+  group_id?: string | null;
 }>;
 const lofteKarta = new Map<string, Lofteslage>(
   loften.map((p) => [p.id, { id: p.id, aktiv: (p.status ?? "aktiv") === "aktiv" }]),
@@ -137,9 +139,45 @@ if (flyttarKvar.length < flyttar.length) {
 // mitt i skrivningen: 2026-08-25 hann 22 avvisningar bli gjorda innan det
 // första godkännandet stoppades, och passet lämnade datat halvskrivet — precis
 // det skriptets eget huvud lovar att undvika.
+/**
+ * Rader som kvalitetsfiltret håller tillbaka: id → skälet, i klartext.
+ *
+ * DE ÄR ETT UPPEHÅLL, INTE ETT FEL. Skriptets huvudregel — faller en rad skrivs
+ * ingenting — finns för att ett HALVT verkställt pass lämnar kön i ett läge
+ * ingen beslutat om. En rad som hålls tillbaka här skrivs aldrig alls: den
+ * plockas bort före första skrivningen och ligger kvar i kön precis som förut.
+ * Regeln skyddar alltså ingenting genom att fälla passet — den gör bara att en
+ * enda oprövad post spärrar varje annan.
+ *
+ * Priset var mätbart: 81 poster med en invändning att besvara höll 13
+ * färdigprövade beslut ogjorda, och den siffran minskar bara när någon läser
+ * invändningarna en efter en. Det som fortfarande fäller passet är rader som är
+ * MOTSÄGELSEFULLA — citatet har ändrats, beloppet är ett annat, målet finns
+ * inte. De betyder att beslutet gäller något annat än det ser ut att gälla, och
+ * då ska det läsas om, inte hoppas över.
+ */
+const hallna = new Map<string, string>();
 {
   const provningar = lasProvningar(DATA);
-  const utanProvning: string[] = [];
+
+  /**
+   * Kö-posten med den grupp `approve()` faktiskt kommer att sätta.
+   *
+   * Kö-postens eget `group_id` räcker inte att lita på: `godkannandeArgument`
+   * skickar `--group` ur BESLUTET, och `approve()` härleder gruppen ur målet.
+   * Har `ko-grupp` inte körts — eller körts med raden undantagen — står
+   * kö-posten grupplös medan godkännandet grupperar den, och hashen som prövas
+   * här är inte den `approve()` räknar. Då släpps posten igenom av grinden och
+   * fälls inne i skrivningen, som avslutar processen. Exakt det halvskrivna
+   * pass hela skriptet är byggt för att undvika.
+   */
+  const medGruppen = (post: ReviewCandidate, b: Beslut): ReviewCandidate => {
+    if (b.val !== "delat" || !b.grupp_id) return post;
+    const mal = loften.find((p) => p.id === b.grupp_id);
+    if (mal === undefined) return post;
+    return { ...post, group_id: harledGrupp(mal) } as ReviewCandidate;
+  };
+
   for (const b of attGoraForhands) {
     if (AVVISAR.includes(b.val as Val)) continue;
     const post = ko.find((p) => reviewId(p) === b.id);
@@ -149,29 +187,56 @@ if (flyttarKvar.length < flyttar.length) {
     // passet på nytt, en post längre fram.
     const nycklar = [`ko:${reviewId(post)}`, konyckel(post.articleUrl, post.candidate?.quote ?? "")];
     const traff = nycklar.map((n) => provningar.get(n)).find((x) => x !== undefined);
-    if (traff === undefined) utanProvning.push(`${b.id} (oprövad)`);
+    if (traff === undefined) hallna.set(b.id, "oprövad");
     else if (!["haller", "haller-med-forbehall"].includes(traff.utfall)) {
-      utanProvning.push(`${b.id} (${traff.utfall})`);
+      hallna.set(b.id, traff.utfall);
+    } else if (traff.underlag_hash !== kanon("lofte", kopostSomLofte(medGruppen(post, b)))) {
+      // DEN TREDJE GRINDEN, och den som saknades. `provningsGrind` prövar inte
+      // bara att prövningen finns och höll, utan att den beskriver DEN HÄR
+      // versionen — hashen av citat, rubrik, parter, status, grupp, källa och
+      // kostnad. Prövades bara de två första halvskrevs passet en post längre
+      // fram, inne i `approve()`, som avslutar processen.
+      //
+      // Sjutton `delat`-beslut föll här 2026-08-25 utan att någon grind sa det:
+      // gruppen sattes vid godkännandet, prövningen var skriven mot en grupplös
+      // version, och hasharna kunde omöjligt stämma. `ko-grupp` och `ko-belopp`
+      // finns för att den här raden inte ska behöva bli röd.
+      hallna.set(b.id, "prövningen beskriver en annan version — kör ko-grupp/ko-belopp och svep om kön");
     }
     // Ett lånat belopp utan ankare fälls av `approve()` — som avslutar
     // processen och alltså inte går att fånga. Samma kontroll här, före
-    // skrivningen, så passet inte halvkörs på nytt.
+    // skrivningen, så passet inte halvkörs på nytt. Gruppen räknas som ankare,
+    // precis som i `lanarUtanSparbartAnkare`: `group_id` och `cost.anchor_ids`
+    // är de två strukturerade fält ankarkravet godtar.
     const c = (post.cost ?? {}) as Record<string, unknown>;
     const ankare = (c["anchor_ids"] as string[] | undefined) ?? [];
-    if (LANAR_BELOPP.test(String(c["calculation"] ?? "")) && (c["msek_base"] ?? 0) !== 0 && ankare.length === 0) {
-      utanProvning.push(`${b.id} (lånar utan ankare)`);
+    const iGrupp = b.val === "delat" || ((post as { group_id?: string | null }).group_id ?? null) !== null;
+    if (
+      LANAR_BELOPP.test(String(c["calculation"] ?? "")) &&
+      (c["msek_base"] ?? 0) !== 0 &&
+      ankare.length === 0 &&
+      !iGrupp
+    ) {
+      hallna.set(b.id, "lånar ett belopp utan spårbart ankare");
     }
   }
-  if (utanProvning.length > 0) {
-    fel.push(
-      `${utanProvning.length} godkännanden avser poster som kvalitetsfiltret inte släpper igenom. ` +
-        "Kör svepet över kön först:\n" +
-        "    cd pipeline && pnpm utrakningen -- --ko --json /tmp/ko.json\n" +
-        "    python3 <handoff>/.claude/skills/haller-det/scripts/svep-till-provning.py <valflask> \\\n" +
-        "        --loften --ko --utrakningen /tmp/ko.json --ut /tmp/l.json\n" +
-        `  Först: ${utanProvning.slice(0, 5).join(", ")}`,
-    );
+}
+
+if (hallna.size > 0) {
+  const per = new Map<string, string[]>();
+  for (const [id, skal] of hallna) {
+    if (!per.has(skal)) per.set(skal, []);
+    per.get(skal)!.push(id);
   }
+  console.log(`\n${hallna.size} beslut hålls tillbaka av kvalitetsfiltret och ligger kvar i kön:`);
+  for (const [skal, ids] of [...per].sort((a, b) => b[1].length - a[1].length)) {
+    console.log(`  ${String(ids.length).padStart(4)}  ${skal}`);
+    console.log(`        ${ids.slice(0, 6).join(", ")}${ids.length > 6 ? ` … (+${ids.length - 6})` : ""}`);
+  }
+  console.log(
+    "  Var och en bär en mätt invändning som någon ska besvara. Rättelsen görs med\n" +
+      "  skillen fa-det-att-halla, och posten prövas om.",
+  );
 }
 
 if (flyttarKvar.length > 0) {
@@ -192,7 +257,7 @@ for (const [v, n] of [...per].sort(([a], [b2]) => a.localeCompare(b2))) {
   console.log(`  ${String(n).padStart(4)}  ${v}`);
 }
 
-const attGora = attGoraForhands;
+const attGora = attGoraForhands.filter((b) => !hallna.has(b.id));
 const godkanns = attGora.filter((b) => !AVVISAR.includes(b.val as Val));
 const nyaKronor = godkanns.reduce((n, b) => {
   const post = ko.find((p) => reviewId(p) === b.id);
@@ -201,11 +266,12 @@ const nyaKronor = godkanns.reduce((n, b) => {
 }, 0);
 console.log(
   `\n${beslut.length} beslut · ${godkanns.length} publiceras · ${attGora.length - godkanns.length} avvisas` +
-    (hoppade.size > 0 ? ` · ${hoppade.size} hoppas över (redan avgjorda)` : ""),
+    (hoppade.size > 0 ? ` · ${hoppade.size} hoppas över (redan avgjorda)` : "") +
+    (hallna.size > 0 ? ` · ${hallna.size} hålls tillbaka av filtret` : ""),
 );
 console.log(`Rikssumman före: ${aggregates.totalFlasket(loften).toLocaleString("sv-SE")} msek`);
 console.log(`De godkända bär: ${nyaKronor.toLocaleString("sv-SE")} msek över mandatperioden`);
-console.log(`Kön är ${ko.length} poster; ${ko.length - beslut.length} blir kvar.`);
+console.log(`Kön är ${ko.length} poster; ${ko.length - attGora.length} blir kvar.`);
 
 if (fel.length > 0) {
   console.error(`\nFÄLLDA RADER (${fel.length}) — ingenting skrivet:`);

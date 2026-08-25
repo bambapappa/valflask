@@ -129,9 +129,12 @@ export function harledAnkare(
   if (!LANAR_BELOPP.test(text)) return [];
 
   // Talen som står i texten, normaliserade till miljoner kronor. «8 mdkr» och
-  // «8 000 mkr» är samma tal och ska matcha samma ankare.
+  // «8 000 mkr» är samma tal och ska matcha samma ankare. «msek» räknas med
+  // därför att prissättningen faktiskt skriver så — fältnamnet läcker in i
+  // prosan — och ett ankare som inte känner igen enheten hittade inget att
+  // peka på i just de texterna.
   const tal = new Set<number>();
-  for (const m of text.matchAll(/(\d[\d\s\u00a0]*(?:[.,]\d+)?)\s*(mdkr|miljard\w*|mkr|miljon\w*)/giu)) {
+  for (const m of text.matchAll(/(\d[\d\s\u00a0]*(?:[.,]\d+)?)\s*(mdkr|miljard\w*|mkr|msek|miljon\w*)/giu)) {
     const rå = Number(m[1]!.replace(/[\s\u00a0]/gu, "").replace(",", "."));
     if (!Number.isFinite(rå)) continue;
     tal.add(/^m(d|iljard)/iu.test(m[2]!) ? rå * 1000 : rå);

@@ -670,8 +670,23 @@ function approveLast(
   // `anchor_ids` är fältet som löser knuten: en maskinläsbar hänvisning som
   // sajten renderar som länk, till skillnad från numret i prosan som spärren
   // ovan fäller. Kö-prissättningen fyller det numera själv när den kan.
+  //
+  // GRUPPEN RÄKNAS SOM ANKARE, och det är inte en uppmjukning — det är samma
+  // regel som `lanarUtanSparbartAnkare` tillämpar på det publicerade beståndet.
+  // `group_id` och `cost.anchor_ids` är de två strukturerade fält kravet
+  // godtar: gruppen när det är SAMMA reform och beloppet ska räknas en gång,
+  // ankaret när det är ett ANNAT löfte vars belopp lånas som riktmärke.
+  // Grinden här läste bara det ena, och fällde därmed poster som den
+  // publicerade regeln släpper igenom — inklusive den tredje utvägen dess egen
+  // feltext pekar ut. Fem `delat`-beslut satt fast på just det 2026-08-25.
   const ankare = (cost as { anchor_ids?: string[] }).anchor_ids ?? [];
-  if (LANAR_BELOPP.test(cost.calculation ?? "") && (cost.msek_base ?? 0) !== 0 && ankare.length === 0) {
+  const iGrupp = linkTo !== null && linkTo !== undefined && linkTo !== "";
+  if (
+    LANAR_BELOPP.test(cost.calculation ?? "") &&
+    (cost.msek_base ?? 0) !== 0 &&
+    ankare.length === 0 &&
+    !iGrupp
+  ) {
     console.error(
       "Uträkningen säger att beloppet är lånat från ett jämförbart löfte, men\n" +
         "säger inte vilket. Ett lånat belopp utan spårbart ankare är ett tal\n" +

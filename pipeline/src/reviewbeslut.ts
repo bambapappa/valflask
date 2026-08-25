@@ -150,6 +150,17 @@ export function provaBeslut(
           `och den är ${(b.not ?? "").trim().length} tecken.`,
       );
     }
+    // BELOPPET SKA REDAN STÅ PÅ KÖ-POSTEN. `godkannandeArgument` skickar inte
+    // längre med talet till `approve()` — kostnaden tas som den står i kön, för
+    // det är den versionen prövningen är skriven mot. Står ett annat tal där
+    // har `ko-belopp` inte körts, och godkännandet skulle publicera det gamla
+    // maskinberäknade beloppet i tysthet.
+    if (t && post.bas !== undefined && (post.bas ?? null) !== Math.round(t.bas)) {
+      fel.push(
+        `${namn}: kö-posten står på ${post.bas === null ? "inget belopp" : `${post.bas} mkr`} men beslutet säger ` +
+          `${Math.round(t.bas)}. Kör pnpm ko-belopp först — beloppet ska stå på kö-posten innan prövningen svepts.`,
+      );
+    }
   }
 
   // Flytten ändrar ett PUBLICERAT belopp. Att målet lever prövas här; att
@@ -228,9 +239,11 @@ export function avvisningsskal(b: Beslut): string {
 export function godkannandeArgument(b: Beslut): string[] {
   if (b.val === "godkann") return [b.id];
   if (b.val === "delat") return [b.id, "--group", b.grupp_id!];
-  if (b.val === "godkann_belopp") {
-    const t = b.belopp!;
-    return [b.id, String(t.low), String(t.bas), String(t.high), "--calc", (b.not ?? "").trim()];
-  }
+  // Beloppet skickas INTE med. `ko-belopp` har redan skrivit granskarens tal och
+  // uträkning på kö-posten, och `approve()` tar kostnaden som den står där.
+  // Skickades talet med skulle `approve()` bygga om kostnaden ur beslutets råa
+  // anteckning — före omskrivningen av interna beteckningar — och prövningen,
+  // som svepts mot kö-posten, skulle beskriva en annan version.
+  if (b.val === "godkann_belopp") return [b.id];
   throw new Error(`${b.id}: ${b.val} är inget godkännande`);
 }

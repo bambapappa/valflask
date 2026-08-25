@@ -29,6 +29,7 @@
       "verifyReason": { "type": "string" },
       "costReason": { "type": "string" },
       "cost": {},
+      "group_id": { "type": ["string", "null"] },
       "duplicateOf": { "type": "string" },
       "duplicateReason": { "type": "string" }
     }

@@ -175,10 +175,17 @@ describe("argumenten till approve", () => {
       ["abc123abc123", "--group", "p-2026-0001"]);
   });
 
-  it("ett handsatt belopp bär spannet och uträkningen", () => {
+  /**
+   * Beloppet skickas INTE med, och det är hela lösningen på de 231 beslut som
+   * satt fast. `ko-belopp` skriver granskarens tal och uträkning på kö-posten
+   * före svepet; `approve()` tar kostnaden som den står där. Skickades talet med
+   * skulle kostnaden byggas om ur beslutets råa anteckning — före omskrivningen
+   * av interna beteckningar — och prövningen beskriva en annan version.
+   */
+  it("ett handsatt belopp är bara id:t — talet står redan på kö-posten", () => {
     assert.deepEqual(
       godkannandeArgument(b({ val: "godkann_belopp", belopp: { low: 1, bas: 2, high: 3 }, not: "  skälet  " })),
-      ["abc123abc123", "1", "2", "3", "--calc", "skälet"],
+      ["abc123abc123"],
     );
   });
 
@@ -248,13 +255,31 @@ describe("«som föreslaget» gäller det förslag som lästes", () => {
     assert.deepEqual(p.fel, []);
   });
 
-  it("kontrollen gäller bara «som föreslaget» — ett eget belopp ersätter ju förslaget", () => {
-    const p = provaBeslut(
-      { id: "abc123abc123", val: "godkann_belopp", citat_da: CITAT, bas_da: null,
-        belopp: { low: 1, bas: 2, high: 3 }, not: "x".repeat(SKAL_MIN_TECKEN + 5) },
+  /**
+   * `bas_da`-kontrollen gäller bara «som föreslaget» — ett eget belopp ersätter
+   * ju förslaget. Men eftersom talet inte längre skickas med till `approve()`
+   * måste det stå PÅ kö-posten, och det är den kontrollen som tar vid: står ett
+   * annat tal där har `ko-belopp` inte körts, och godkännandet skulle publicera
+   * det gamla maskinberäknade beloppet i tysthet.
+   */
+  it("ett eget belopp kräver att kö-posten redan bär det", () => {
+    const beslut = {
+      id: "abc123abc123", val: "godkann_belopp" as const, citat_da: CITAT, bas_da: null,
+      belopp: { low: 1, bas: 2, high: 3 }, not: "x".repeat(SKAL_MIN_TECKEN + 5),
+    };
+    const medFel = provaBeslut(
+      beslut,
       new Map([["abc123abc123", { id: "abc123abc123", citat: CITAT, harKostnad: true, bas: 350 }]]),
       loften(),
     );
-    assert.deepEqual(p.fel, []);
+    assert.equal(medFel.ok, false);
+    assert.match(medFel.fel.join(" "), /Kör pnpm ko-belopp först/u);
+
+    const skrivet = provaBeslut(
+      beslut,
+      new Map([["abc123abc123", { id: "abc123abc123", citat: CITAT, harKostnad: true, bas: 2 }]]),
+      loften(),
+    );
+    assert.deepEqual(skrivet.fel, []);
   });
 });
