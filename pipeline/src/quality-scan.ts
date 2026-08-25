@@ -455,7 +455,7 @@ export function statedBaseMsek(calculation: string): number | null {
       if (patternUnit === "miljarder") return n * 1000;
       if (patternUnit === "miljoner") return n;
       const ownUnit = withUnit?.[1];
-      if (ownUnit !== undefined) {
+      if (withUnit && ownUnit !== undefined) {
         const efterEnheten = sentence.slice((withUnit.index ?? 0) + withUnit[0].length);
         if (arStyckpris(efterEnheten)) {
           // Styckpriset är inte svaret, men meningen bär det ofta ändå:

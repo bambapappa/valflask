@@ -65,7 +65,14 @@ const malen = new Map<string, Ankarmal>(
     id: string; status?: string; title?: string; cost?: { msek_base?: number; period?: string; type?: string };
   }>).map((p) => [
     p.id,
-    { id: p.id, status: p.status, title: p.title, msek_base: p.cost?.msek_base ?? 0, period: p.cost?.period, type: p.cost?.type },
+    {
+      id: p.id,
+      msek_base: p.cost?.msek_base ?? 0,
+      ...(p.status !== undefined ? { status: p.status } : {}),
+      ...(p.title !== undefined ? { title: p.title } : {}),
+      ...(p.cost?.period !== undefined ? { period: p.cost.period } : {}),
+      ...(p.cost?.type !== undefined ? { type: p.cost.type } : {}),
+    },
   ]),
 );
 
