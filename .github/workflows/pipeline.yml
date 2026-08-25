@@ -29,6 +29,10 @@ on:
         type: choice
         options: ["", primar, sekundar, extra]
         default: ""
+      rundgang:
+        description: "Rundgång: låt partierna varvas i stället för att det minst lästa går först. För att TÖMMA en katalogbacklog — stäng av när den är tom."
+        type: boolean
+        default: false
 permissions:
   contents: write
   issues: write
@@ -121,6 +125,11 @@ jobs:
           # Kastar om kedjans ordning för EN körning, utan att röra
           # variablerna. Tomt = vanlig ordning (primär → sekundär → extra).
           LLM_FORST: ${{ inputs.forst }}
+          # Stänger av täckningsvägningen i skördeordningen för EN körning.
+          # Se docstringen i pipeline/src/skordeordning.ts: täckningstalet
+          # räknar allt vi läst hos partiet, inte vad som är kvar, så det parti
+          # som har oläst kvar kan vara just det som får sämst rang.
+          SKORD_RUNDGANG: ${{ inputs.rundgang && '1' || '' }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
           # Frågevågen PÅ som default (mänskligt beslut 2026-07-11); stäng av genom att
           # sätta repovariabeln STANCES_ENABLED=false. STANCES_MODE osatt = review

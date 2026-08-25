@@ -4,7 +4,7 @@
  * Proven är skrivna mot det fel som faktiskt inträffade — KD:s katalog åt hela
  * budgeten varje körning i bokstavsordning — och inte mot funktionens form.
  */
-import { test } from "node:test";
+import { describe, it, test } from "node:test";
 import assert from "node:assert/strict";
 import {
   laststTal,
@@ -133,4 +133,52 @@ test("samma indata ger samma ordning", () => {
   const ett = ordnaEfterTackning(artiklar, url, nolla, last);
   const tva = ordnaEfterTackning([...artiklar].reverse(), url, nolla, last);
   assert.deepEqual(ett, tva, "ordningen får inte bero på hur artiklarna råkade komma in");
+});
+
+describe("rundgång: täckningen väger inte", () => {
+  const artiklar = [
+    { url: "https://www.liberalerna.se/politik/monarki" },
+    { url: "https://www.liberalerna.se/politik/vindkraft" },
+    { url: "https://www.liberalerna.se/politik/kultur" },
+    { url: "https://www.centerpartiet.se/centerpartiets-politik/skatt" },
+    { url: "https://www.centerpartiet.se/centerpartiets-politik/vard" },
+  ];
+  // L har läst mycket mer än C — och är just det parti som har oläst kvar.
+  const last = new Map([["l", 616], ["c", 245]]);
+
+  it("utan rundgång går det minst lästa partiet först, hela vägen", () => {
+    const ut = ordnaEfterTackning(artiklar, (a) => a.url, () => 0, last).map((a) => a.url);
+    assert.match(ut[0]!, /centerpartiet/u);
+    assert.match(ut[1]!, /centerpartiet/u);
+    assert.match(ut[2]!, /liberalerna/u);
+  });
+
+  /**
+   * Det verkliga fallet 2026-08-25: fyra extra körningar flyttade backlogen två
+   * sidor, därför att partiet med oläst kvar också var det vi läst mest hos.
+   */
+  it("med rundgång varvas partierna — en var, sedan nästa", () => {
+    const ut = ordnaEfterTackning(artiklar, (a) => a.url, () => 0, last, { rundgang: true }).map((a) => a.url);
+    assert.match(ut[0]!, /centerpartiet/u);
+    assert.match(ut[1]!, /liberalerna/u);
+    assert.match(ut[2]!, /centerpartiet/u);
+    assert.match(ut[3]!, /liberalerna/u);
+    assert.match(ut[4]!, /liberalerna/u);
+  });
+
+  it("prioritetsgrupperna respekteras även i rundgång", () => {
+    const blandat = [
+      { url: "https://www.liberalerna.se/politik/monarki", p: 0 },
+      { url: "https://data.riksdagen.se/dokument/HD1", p: 1 },
+    ];
+    const ut = ordnaEfterTackning(blandat, (a) => a.url, (a) => a.p, last, { rundgang: true }).map((a) => a.url);
+    assert.match(ut[0]!, /liberalerna/u);
+    assert.match(ut[1]!, /riksdagen/u);
+  });
+
+  it("samma indata ger samma ordning", () => {
+    const a = ordnaEfterTackning(artiklar, (x) => x.url, () => 0, last, { rundgang: true });
+    const b = ordnaEfterTackning(artiklar, (x) => x.url, () => 0, last, { rundgang: true });
+    assert.deepEqual(a, b);
+  });
 });
