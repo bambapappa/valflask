@@ -3,9 +3,11 @@ interface Props {
   flasket: number;
   reformutrymme: number | "VERIFIERA";
   reformutrymmeSource?: string | null;
+  /** När urvalet bara består av partiernas egna belopp ska totalsiffran synas utan grind. */
+  partiBelopp?: boolean;
 }
 
-const { flasket, reformutrymme, reformutrymmeSource } = Astro.props;
+const { flasket, reformutrymme, reformutrymmeSource, partiBelopp = false } = Astro.props;
 const hasRef = reformutrymme !== "VERIFIERA" && typeof reformutrymme === "number";
 const ref4 = hasRef ? (reformutrymme as number) * 4 : 0;
 const perYearMdkr = hasRef ? Math.round((reformutrymme as number) / 1000) : 0;
@@ -42,12 +44,12 @@ const overcovered = hasRef && flasket < ref4;
     </div>
   )}
   <div class="gapmatare__legend">
-    <span class="num">Löftena: <span class="belopp">{flasketMdkr} mdkr</span></span>
-    <span class="num">{hasRef ? (<>Att satsa (4 år): <span class="belopp">{ref4Mdkr} mdkr</span></>) : 'Att satsa: siffra saknas'}</span>
+    <span class="num">Löftena: <span class:list={["belopp", { partibelopp: partiBelopp }]}>{flasketMdkr} mdkr</span></span>
+    <span class="num">{hasRef ? (<>Att satsa (4 år): <span class:list={["belopp", { partibelopp: partiBelopp }]}>{ref4Mdkr} mdkr</span></>) : 'Att satsa: siffra saknas'}</span>
   </div>
   {hasRef && gap > 0 && (
     <div class="etikett gapmatare__gap">
-      <span class="markering">GAP <span class="belopp">≈ {(gap / 1000).toFixed(0)} MDKR</span></span>
+      <span class="markering">GAP <span class:list={["belopp", { partibelopp: partiBelopp }]}>≈ {(gap / 1000).toFixed(0)} MDKR</span></span>
     </div>
   )}
   {overcovered && (

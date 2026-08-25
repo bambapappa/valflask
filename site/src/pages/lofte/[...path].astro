@@ -40,6 +40,8 @@ const personName = promise.person?.name || null;
 const comparisons = computeComparisons(promise, constants);
 const canonicalPath = `/lofte/${promise.id}/${promise.slug}`;
 const totalBasis = promise.cost.basis;
+const arPartibelopp = promise.cost.basis === "parti";
+const underlagsetikett = arPartibelopp ? "PARTIETS EGET BELOPP" : "UTLOVAT.SE:S BERÄKNING";
 
 // formatMsek bär redan "≈ " vid llm_estimat (tidigare mall dubblerade tecknet).
 const pageTitle = promisePageTitle(promise.title, formatMsek(promiseTotalMsek(promise), totalBasis));
@@ -77,6 +79,7 @@ const jsonLd = [
       <ArendeHuvud id={promise.id} dateStated={promise.date_stated} domain={promise.source.domain} status={promise.status} />
 
       <h1>{promise.title}</h1>
+      <p class="etikett loften-underlag">{promise.loftestyp === "reform" ? "REFORMLÖFTE" : "INRIKTNINGS-/POLICYLÖFTE"} · {underlagsetikett}</p>
 
       {(promise.status === 'uppdaterad' || promise.status === 'tillbakadragen') && (
         <div class="stampel-wrap">
@@ -85,7 +88,7 @@ const jsonLd = [
       )}
 
       <p class="lofte-summary">
-        {partyNames} lovar {promise.title.toLowerCase()}. {beloppsord}: <strong class="num belopp">{total}</strong> för de fyra åren 2027–2030.
+        {partyNames} lovar {promise.title.toLowerCase()}. {beloppsord}: <strong class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{total}</strong> för de fyra åren 2027–2030.
       </p>
 
       <Citat
@@ -119,10 +122,10 @@ const jsonLd = [
               <tr>
                 <td>{formatCostType(promise.cost.type)}</td>
                 <td>{promise.cost.period === 'per_ar' ? 'per år' : 'engång'}</td>
-                <td class="num belopp">{promise.cost.msek_low.toLocaleString('sv-SE')}</td>
-                <td class="num belopp">{promise.cost.msek_base.toLocaleString('sv-SE')}</td>
-                <td class="num belopp">{promise.cost.msek_high.toLocaleString('sv-SE')}</td>
-                <td class="num belopp">{formatMsek(promiseTotalMsek(promise), promise.cost.basis)}</td>
+                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{promise.cost.msek_low.toLocaleString('sv-SE')}</td>
+                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{promise.cost.msek_base.toLocaleString('sv-SE')}</td>
+                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{promise.cost.msek_high.toLocaleString('sv-SE')}</td>
+                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{formatMsek(promiseTotalMsek(promise), promise.cost.basis)}</td>
               </tr>
             </tbody>
           </table>
@@ -228,6 +231,7 @@ const jsonLd = [
   .stampel-wrap {
     margin: 0.5rem 0;
   }
+  .loften-underlag { margin: 0.75rem 0; }
   .lofte-summary {
     margin-bottom: var(--mellanrum);
   }

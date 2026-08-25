@@ -6,13 +6,15 @@ interface Props {
   date?: string;
   taxameterValue?: number;
   headingLevel?: "h1" | "h2";
+  /** Partiets egna belopp är synliga även när Utlovat.se:s estimat är låsta. */
+  partiBelopp?: boolean;
 }
-const { total, subtitle, count, date, taxameterValue, headingLevel = "h1" } = Astro.props;
+const { total, subtitle, count, date, taxameterValue, headingLevel = "h1", partiBelopp = false } = Astro.props;
 const Heading = headingLevel;
 ---
 <div class="platta lopsedel">
   <Heading class="lopsedel__title">{subtitle || 'FLÄSKVÅGEN'}</Heading>
-  <div class="num-stor belopp" {...(taxameterValue != null ? { "data-taxameter": String(taxameterValue) } : {})}>{total}</div>
+  <div class:list={["num-stor", "belopp", { partibelopp: partiBelopp }]} {...(taxameterValue != null ? { "data-taxameter": String(taxameterValue) } : {})}>{total}</div>
   <div class="lopsedel__meta">
     för de fyra åren 2027–2030{count ? ` · ${count} löften` : ''}{date ? ` · ${date}` : ''}
   </div>

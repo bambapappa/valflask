@@ -1,0 +1,63 @@
+---
+/**
+ * Samma filter renderas där sajten visar flera löften. Javaskriptet sparar
+ * läsarens val och synkar alla filter på sidan. Belopp från Utlovat.se öppnar
+ * den befintliga godkännanderutan innan de kan väljas.
+ */
+interface Props {
+  count: number;
+}
+const { count } = Astro.props;
+---
+<form class="loftesfilter" data-loftesfilter aria-label="Filtrera löften">
+  <p class="etikett loftesfilter__rubrik">Välj urval</p>
+  <fieldset class="loftesfilter__grupp">
+    <legend><span>1.</span> Beloppsunderlag</legend>
+    <div class="loftesfilter__segment" role="radiogroup" aria-label="Beloppsunderlag">
+      <label><input type="radio" name="underlag" value="parti" checked /><span>Partiernas egna belopp</span></label>
+      <label><input type="radio" name="underlag" value="utlovat" /><span>Utlovat.se:s beräkningar</span></label>
+      <label><input type="radio" name="underlag" value="alla" /><span>Båda</span></label>
+    </div>
+  </fieldset>
+  <p class="loftesfilter__forklaring">Utgångspunkten är alltid partiernas egna belopp. Många löften saknar en sådan uppgift. Då redovisar vi, när det går, en separat uppskattning av vad genomförandet kan kosta. Den visas först när du väljer Utlovat.se:s beräkningar och låser upp estimaten.</p>
+  <fieldset class="loftesfilter__grupp">
+    <legend><span>2.</span> Typ av löfte</legend>
+    <div class="loftesfilter__segment" role="radiogroup" aria-label="Typ av löfte">
+      <label><input type="radio" name="loftestyp" value="reform" checked /><span>Reformlöften</span></label>
+      <label><input type="radio" name="loftestyp" value="inriktning" /><span>Inriktning och policy</span></label>
+      <label><input type="radio" name="loftestyp" value="alla" /><span>Alla löften</span></label>
+    </div>
+  </fieldset>
+  <p class="loftesfilter__status" data-loftesfilter-status>Visar partiernas egna belopp för reformlöften. <span data-loftesfilter-count>{count}</span> löften.</p>
+</form>
+
+<style>
+  .loftesfilter {
+    border: 1px solid var(--linje);
+    border-bottom: var(--linje-sektion);
+    display: grid;
+    gap: 1rem;
+    margin: 1.75rem 0;
+    padding: 1rem;
+    position: relative;
+  }
+  .loftesfilter::before { background: var(--gul); content: ""; height: 3px; left: -1px; position: absolute; top: -1px; width: 4rem; }
+  .loftesfilter__rubrik { margin: 0; }
+  .loftesfilter__grupp { border: 0; margin: 0; padding: 0; }
+  .loftesfilter legend { font-family: var(--font-mono); font-size: var(--steg--1); font-weight: 700; margin-bottom: 0.45rem; padding: 0; text-transform: uppercase; }
+  .loftesfilter legend span { color: var(--text-svag); margin-right: 0.35rem; }
+  .loftesfilter__segment { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .loftesfilter label { cursor: pointer; font-family: var(--font-mono); font-size: var(--steg--1); position: relative; }
+  .loftesfilter input { block-size: 1px; clip: rect(0 0 0 0); inline-size: 1px; overflow: hidden; position: absolute; white-space: nowrap; }
+  .loftesfilter label span { align-items: center; border: 1px solid var(--linje); display: flex; min-height: 2.5rem; padding: 0.35rem 0.65rem; transition: background-color 120ms ease, color 120ms ease; }
+  .loftesfilter input:checked + span { background: var(--svarta); border-color: var(--svarta); color: var(--papper); font-weight: 700; }
+  .loftesfilter input:focus-visible + span { outline: 3px solid var(--gul); outline-offset: 2px; }
+  .loftesfilter label:hover span { border-color: var(--svarta); }
+  .loftesfilter__forklaring { color: var(--text-svag); font-size: var(--steg--1); line-height: 1.5; margin: -0.25rem 0 0; max-width: 68ch; }
+  .loftesfilter__status { border-top: 1px solid var(--linje-svag); color: var(--text-svag); font-size: var(--steg--1); margin: 0; padding-top: 0.75rem; }
+  @media (max-width: 38rem) {
+    .loftesfilter { padding: 0.9rem; }
+    .loftesfilter__segment { display: grid; grid-template-columns: 1fr; }
+    .loftesfilter label span { justify-content: space-between; }
+  }
+</style>

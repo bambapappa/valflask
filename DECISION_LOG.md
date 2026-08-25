@@ -21,6 +21,31 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-25 — Löftesurvalet skiljer mellan partiets belopp, egna beräkningar och löftestyp
+
+**Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga kostnadsbelopp
+att dela efter underlag. Det publicerade beståndet ändras inte.
+
+**Beslut (mänskligt beslut 2026-08-25):** Listan på varje partisida kan
+filtreras på två oberoende axlar: **beloppsunderlag** — partiets eget belopp,
+Utlovat.se:s beräkning eller båda — och **löftestyp** — reform, inriktning och
+policy eller alla. Grundläget är reformlöften med partiernas egna belopp.
+Väljer läsaren Utlovat.se:s beräkningar används den befintliga kvitteringen av
+att dessa belopp är uppskattningar. Ett enskilt löfte märks samtidigt med båda
+uppgifterna, och partiets eget belopp kan läsas utan kvittering.
+
+**Motiv:** Ett nollat inriktningslöfte är fortfarande ett löfte, men det tränger
+undan konkreta reformer när läsaren försöker se vilka belopp ett parti själv
+har angett. Samtidigt är partiets belopp och en redaktionell beräkning olika
+slags uppgifter. Att visa dem som om de vore samma tal är som att blanda en
+offert med vår egen kalkyl av samma arbete: båda är relevanta, men läsaren ska
+kunna välja vilken fråga som besvaras.
+
+**Förkastade alternativ:** ett enda filter för "kostar/noll" (blandar ihop
+löftets form med vem som satt beloppet); att dölja inriktningslöften helt (de
+är fortsatt relevanta och ska vara valbara); att låsa upp alla belopp när
+partiets egna visas (skulle kringgå kvitteringen för Utlovat.se:s beräkningar).
+
 ## 2026-08-22 — Paritetsfel mäts av ett rapporterande svep med en kö som kvitteras
 
 **Gäller:** Fläskvågen. Frågevågen och Handlingsvågen rörs inte — svepet
@@ -2729,3 +2754,27 @@ där läsarens webbläsare står.
 inte ensam skydda detta kontrakt. Att proxyköra sökningen genom utlovat.se hade
 undvikit CORS och CSP men lagt till en serverdel för ett problem som bara kräver
 att den beslutade säkerhetspolicyn faktiskt levereras.
+## 2026-08-25 — Löftestal följer alltid samma urval
+
+**Gäller:** Fläskvågen. Frågevågen och Handlingsvågen saknar de berörda
+kostnads- och löftessummorna. Det publicerade löftesbeståndet ändras inte.
+
+**Beslut (produktbeslut från ansvarig 2026-08-25):** när läsaren väljer
+beloppsunderlag eller löftestyp på startsidan, topplistorna eller en partisida
+ska alla löftesrelaterade tal på den sidan räknas ur exakt det urvalet. Det
+omfattar totalsumma, antal löften, kronor per röst där måttet finns,
+källtäckning, kategorier och löftesrader. Att bara filtrera tabellen medan
+rubriken visar en annan population är missvisande.
+
+**Avgränsning:** frågevågens besked, valmanifestets faktarad och källraden är
+inte löftessummor och påverkas inte. Mätaren mot reformutrymmet är en
+rikssiffra; den räknas om för samma urval över samtliga partier och märks
+uttryckligen som sådan.
+
+**Genomförande:** startsidan, topplistorna och varje partisida bygger nio
+statiska vyer (tre beloppsunderlag × tre löftestyper). Klienten visar en vy i
+taget, så rubrik och varje tabell delar samma förberäknade population.
+Utlovat.se:s beräkningar och "Båda" fortsätter att kräva den befintliga
+kvitteringen. De två diskreta valen presenteras som segmenterade beslutsrader,
+inte som en slider: en slider skulle felaktigt antyda en skala mellan kategorier
+som inte går att blanda gradvis.
