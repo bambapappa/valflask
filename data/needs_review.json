@@ -21124,5 +21124,1575 @@
       "calculation": "Ingen konkret åtgärd angiven, endast målformulering om trygghet och säkerhet. Enligt avgränsningsregeln för breda inriktningslöften sätts base till 0 för att undvika dubbelräkning med specifika förslag."
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-2446 (5000), p-2026-2764 (15), p-2026-0851 (0), p-2026-2502 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~7.5"
+  },
+  {
+    "candidate": {
+      "title": "Bibliotek som plats för information och bildning",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill att biblioteken ska vara en plats där man ska kunna få hjälp att söka information, och stöd att bildas och utbildas.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/bibliotek",
+    "articleTitle": "Bibliotek – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Bygga ut utbildningar som kombinerar språk och yrke",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Bygga ut kombinationsutbildningar där yrkesutbildning kombineras med språkstudier (SFI) för att stärka integrationen och skapa snabba vägar till jobb.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/yrkesutbildning",
+    "articleTitle": "Yrkesutbildning\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 500,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet anger ingen nivå. Skattning utifrån antal nya utbildningsplatser och genomsnittlig kostnad per deltagare för kombinationsutbildning.",
+      "confidence": 0.4,
+      "calculation": "Antag utbyggnad med 3 000–8 000 nya platser per år. Kombinationsutbildning (SFI + yrkesutbildning) kostar staten uppskattningsvis 50–150 tkr per deltagare. 3 000 × 50 tkr = 150 mkr; 8 000 × 150 tkr = 1 200 mkr. Bas: 5 000 × 100 tkr = 500 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1270 (0), p-2026-2040 (800), p-2026-1743 (0), p-2026-0726 (0), p-2026-0684 (75) ⚠ AVVIKER: belopp 500 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Moderaterna vill avskaffa mängdrabatten under nästa mandatperiod",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Därför röstade Moderaterna ja till att slopa mängdrabatten och har som vallöfte att mängdrabatten avskaffas under nästa mandatperiod.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/ogonblicket-nar-magdalena-andersson-rostade-for-att-behalla-mangdrabatten/",
+    "articleTitle": "Ögonblicket när Magdalena Andersson röstade för att behålla mängdrabatten | Moderaterna",
+    "duplicateOf": "p-2026-0709"
+  },
+  {
+    "candidate": {
+      "title": "Socialdemokraterna lovar riva upp beslut om slopad mängdrabatt",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Direkt efter voteringen i riksdagen meddelade Socialdemokraterna att de lovar att riva upp beslut om slopad mängdrabatt om de vinner valet.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/nyhet/ogonblicket-nar-magdalena-andersson-rostade-for-att-behalla-mangdrabatten/",
+    "articleTitle": "Ögonblicket när Magdalena Andersson röstade för att behålla mängdrabatten | Moderaterna",
+    "verifyReason": "Citatet finns i källtexten och partiet (S) är korrekt angivet eftersom löftet tillskrivs Socialdemokraterna. Källtexten är dock från Moderaternas webbplats, en politisk motståndare, och är en andrahandskarakterisering av vad Socialdemokraterna påstås ha lovat. Det finns risk för vinkling eller felaktig återgivning av Socialdemokraternas faktiska position, varför löftet bör granskas mot en primärkälla från Socialdemokraterna innan publicering."
+  },
+  {
+    "candidate": {
+      "title": "Flytta bevisbördan till staten för kommunala undantag",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "kommunen beviljas undantag om inte staten offentligt motiverar varför regeln är nödvändig.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/frikommuner",
+    "articleTitle": "Frikommuner | Centerpartiet",
+    "duplicateOf": "p-2026-1648",
+    "duplicateReason": "samma uttryck: «kommun bevilj», «bevilj undant», «undant staten», «staten offent», «offent motive», «motive varför», «varför regeln», «regeln nödvän»"
+  },
+  {
+    "candidate": {
+      "title": "Stärka skyddet mot diskriminering och funkofobi",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "stärka skyddet mot diskriminering och funkofobi",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/funktionsratt",
+    "articleTitle": "Funktionsrätt | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; direkt kostnad för lagändring är försumbar. Eventuella framtida åtgärder prissätts på specifika löften.",
+      "confidence": 0.3,
+      "calculation": "Ingen specificerad reform eller nivå anges. Jämförbara löften om diskrimineringsskydd och hatbrottslagstiftning har satts till 0 mkr. Enligt regel 13 prissätts breda inriktningslöften till 0 för att undvika dubbelräkning."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1136 (0), p-2026-2003 (0), p-2026-1704 (0), p-2026-2917 (200), p-2026-1459 (200)"
+  },
+  {
+    "candidate": {
+      "title": "Göra cykeln till ett nationellt transportslag",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Uppgradera cykeln till att bli ett nationellt transportslag och anta nationella mål för ökad cykling detta för att regeringen cykelpolitik är obefintlig och det bedrivs ingen politik för att göra det enklare att cykla i Sverige.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/cykel",
+    "articleTitle": "Cykel | Centerpartiet",
+    "duplicateOf": "p-2026-1676",
+    "duplicateReason": "samma uttryck: «uppgra cykeln», «cykeln nation», «nation transp», «transp anta», «anta nation», «nation ökad», «ökad cyklin»"
+  },
+  {
+    "candidate": {
+      "title": "Förenkla för kommuner att bygga cykelvägar",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Förenkla för kommuner att bygga cykelvägar genom att se över väglagen, så att de får större rätt att själva anlägga cykelinfrastruktur, även längs statliga vägar.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/cykel",
+    "articleTitle": "Cykel | Centerpartiet",
+    "duplicateOf": "p-2026-1908",
+    "duplicateReason": "samma uttryck: «bygga cykelv», «förenk kommun», «kommun bygga»"
+  },
+  {
+    "candidate": {
+      "title": "Underlätta att kombinera cykel och kollektivtrafik",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Göra det lättare att kombinera cykel och kollektivtrafik genom att uppmuntra regioner och tågoperatörer att förbättra möjligheterna att ta med cykeln ombord.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/cykel",
+    "articleTitle": "Cykel | Centerpartiet",
+    "duplicateOf": "p-2026-1677",
+    "duplicateReason": "samma uttryck: «kombin cykel», «cykel kollek»"
+  },
+  {
+    "candidate": {
+      "title": "Modernisera trafikreglerna för cyklister",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Modernisera trafikreglerna så att kommuner kan tillåta cykling mot trafiken på enkelriktade gator och möjliggör högersvängar vid rödljus, där det kan ske på ett säkert sätt.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/cykel",
+    "articleTitle": "Cykel | Centerpartiet",
+    "duplicateOf": "p-2026-1678",
+    "duplicateReason": "samma uttryck: «tillåt cyklin», «möjlig högers», «högers rödlju»"
+  },
+  {
+    "candidate": {
+      "title": "Öka kapaciteten för godstrafik på järnväg",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Öka kapaciteten för gods.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs (kortare tillåts bara om citatet är en hel, unik punkt på partiets egen sida)"
+      }
+    ],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/jarnvag",
+    "articleTitle": "Järnväg | Centerpartiet"
+  },
+  {
+    "candidate": {
+      "title": "Nationell hamnstrategi",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Att Sverige ska ta fram en nationell hamnstrategi.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/sjofart-och-hamnar",
+    "articleTitle": "Sjöfart och hamnar | Centerpartiet",
+    "duplicateOf": "p-2026-1890"
+  },
+  {
+    "candidate": {
+      "title": "Ge städer och regioner makt att införa trängselskatt",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Centerpartiet vill ge städer och regioner makten att själva införa trängselskatt, baserat på en enkel och enhetlig nationell modell.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/trangselskatt-och-miljozoner",
+    "articleTitle": "Trängselskatt och miljözoner | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bemyndigandelag som ger kommuner/regioner rätt att införa trängselskatt. Statens direkta kostnad är försumbar; framtagande av enhetlig modell ryms i ordinarie beredning.",
+      "confidence": 0.4,
+      "calculation": "Reformen är en lagändring utan direkt statlig utgift. Ingen ny anslagspost eller transferering; eventuellt modellarbete sker inom befintlig myndighets- och departementsorganisation. Därför sätts kostnaden till 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2678 (0), p-2026-2679 (0), p-2026-2536 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Ändra lagen för lokala beslut om trängselskatter",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Vi vill ändra lagen så att ett beslut om att införa trängselskatter, miljözoner och miljöavgifter kan fattas lokalt, utan att varje enskilt fall måste godkännas av riksdagen.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/trangselskatt-och-miljozoner",
+    "articleTitle": "Trängselskatt och miljözoner | Centerpartiet",
+    "duplicateOf": "p-2026-2678",
+    "duplicateReason": "samma uttryck: «trängs miljöz», «miljöz miljöa»"
+  },
+  {
+    "candidate": {
+      "title": "Genomföra Sverigelyft för Sveriges vägar",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Centerpartiet vill genomföra ett Sverigelyft för Sveriges vägar.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/vagar-och-vagunderhall",
+    "articleTitle": "Vägar och vägunderhåll | Centerpartiet",
+    "duplicateOf": "p-2026-1871"
+  },
+  {
+    "candidate": {
+      "title": "Långsiktig plan för trygga vägar",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Centerpartiet vill byta lappa-och-laga mot en långsiktig plan som gör vägarna trygga igen.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/infrastruktur-och-transporter/vagar-och-vagunderhall",
+    "articleTitle": "Vägar och vägunderhåll | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp. Planarbete ryms i befintlig förvaltning; specifika vägsatsningar prissätts i separata löften.",
+      "confidence": 0.4,
+      "calculation": "Ingen ny statlig utgift kan beräknas: löftet är en plan utan nivå. Enligt avgränsningsregeln kostar statens eget planarbete 0. Jämförbara vägsatsningar, t.ex. ett annat centerlöfte om enskilda vägar, ligger kring 300 mkr/år men prissätts på det specifika löftet, inte här."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1892 (0), p-2026-1371 (150), p-2026-2862 (300) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
+  },
+  {
+    "candidate": {
+      "title": "Håll plast, läkemedel och skräp borta från vattnen",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Plast, läkemedel och skräp ska inte hamna i våra vatten.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/hav",
+    "articleTitle": "Havsmiljö – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; kostnad ej kvantifierbar. Prissätts till 0 för att undvika dubbelräkning med specifika löften.",
+      "confidence": 0.1,
+      "calculation": "Löftet anger inget konkret åtagande eller belopp. Som brett inriktningslöfte sätts kostnaden till 0; eventuella åtgärder prissätts i partiers specifika löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Skydda människor från utnyttjande i relation",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Skydda människor från att utnyttjas eller fara illa i en relation.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/anhoriginvandring",
+    "articleTitle": "Anhöriginvandring | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp; prissätts till 0 för att undvika dubbelräkning med specifika löften.",
+      "confidence": 0.1,
+      "calculation": "Ingen konkret åtgärd angiven. Jämförbart löfte om stärkt skydd mot våld i relation har satts till 0 mkr. Därför sätts även detta till 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-2695 (0), p-2026-2693 (500), p-2026-2759 (3), p-2026-2279 (300), p-2026-2335 (10) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~10"
+  },
+  {
+    "candidate": {
+      "title": "Låt företag avgöra vilken kompetens de behöver anställa",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Låta företag avgöra vilken kompetens de behöver anställa från hela världen.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/arbetskraftinvandring",
+    "articleTitle": "Arbetskraftinvandring | Centerpartiet",
+    "duplicateOf": "p-2026-2698",
+    "duplicateReason": "samma uttryck: «företa avgöra», «avgöra vilken», «vilken kompet», «kompet behöve», «behöve anstäl», «anstäl hela», «hela världe»"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa fusk och utnyttjande av arbetskraft",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Stoppa fusk och utnyttjande av arbetskraft",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/arbetskraftinvandring",
+    "articleTitle": "Arbetskraftinvandring | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är ett inriktningsmål utan konkret åtgärd eller belopp. Base sätts till 0; eventuella åtgärder prissätts på specifika löften för att undvika dubbelräkning.",
+      "confidence": 0.1,
+      "calculation": "Ingen konkret reform, målgrupp eller nivå anges. Att stoppa fusk kan innebära tillsyn eller reglering, men kostnaden kan inte uppskattas utan en specificerad åtgärd. Därför sätts hela intervallet till 0 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-2695 (0), p-2026-2690 (0), p-2026-0842 (15)"
+  },
+  {
+    "candidate": {
+      "title": "Gör Sverige attraktivt för internationella talanger",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Göra Sverige mer attraktivt för internationella talanger, experter och entreprenörer.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/arbetskraftinvandring",
+    "articleTitle": "Arbetskraftinvandring | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; kostnader prissätts på specifika löften för att undvika dubbelräkning.",
+      "confidence": 0.3,
+      "calculation": "Bred målsättning utan utpekad reform. Ingen ny statlig utgift kan härledas direkt; sätts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1976 (15), p-2026-2688 (0), p-2026-2246 (50), p-2026-2279 (300), p-2026-0530 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~15"
+  },
+  {
+    "candidate": {
+      "title": "Utöka och förbättra samhällsinformationen som ges tidigt i asylprocessen",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Utöka och förbättra samhällsinformationen som ges tidigt i asylprocessen.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/asylprocessen",
+    "articleTitle": "Asylprocessen | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 30,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning utifrån antal asylsökande och kostnad per informationsinsats; jämförbar satsning på asylinformation/rättssäkerhet ligger runt 30 mkr/år.",
+      "confidence": 0.4,
+      "calculation": "Antag 10 000–20 000 asylsökande/år × 1 000–3 000 kr/person för informationssamtal, tolk och material = 10–60 mkr/år. Bas 30 mkr motsvarar en utökad satsning i nivå med liknande kvalitetshöjande åtgärd."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2315 (30), p-2026-2703 (0), p-2026-0079 (1000), p-2026-2099 (0), p-2026-2691 (250)"
+  },
+  {
+    "candidate": {
+      "title": "Verkställa utvisningar snabbare och effektivare",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Verkställa utvisningar snabbare och effektivare.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/asylprocessen",
+    "articleTitle": "Asylprocessen | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå; uppskattning utifrån volym och enhetskostnad för verkställighet. Osäkerhet p.g.a. oklar ambitionsnivå.",
+      "confidence": 0.3,
+      "calculation": "Antag 1 000–5 000 fler verkställda utvisningar per år. Kostnad per ärende 50–100 tkr för transport, förvar och personal → 50–500 mkr/år. Bas 150 mkr för ett måttligt tillskott; stor osäkerhet i volym och dygnskostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2428 (450), p-2026-2134 (150), p-2026-0081 (15), p-2026-2335 (10), p-2026-0744 (0) ⚠ AVVIKER: 150 avviker 10.0× från jämförbara (median 15)"
+  },
+  {
+    "candidate": {
+      "title": "Omvandla etableringsbidrag till etableringslån",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "göra om etableringsbidraget till ett etableringslån, likt studielånet, för att stärka drivkraften till självförsörjning.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/integration",
+    "articleTitle": "Integration | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadsanrop misslyckades — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Satsa på fler sommarkurser vid högskolor och universitet",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "En satsning på fler sommarkurser vid högskolor och universitet skulle få en rad positiva effekter.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/hogre-utbildning",
+    "articleTitle": "Högre utbildning – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 120,
+      "msek_high": 250,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar angiven nivå. Skattning utifrån antal nya sommarkursplatser och kostnad per helårsstudent; osäkerheten ligger i att ingen omfattning anges.",
+      "confidence": 0.3,
+      "calculation": "Antag att en typisk 7,5 hp-sommarkurs motsvarar 1/8 helårsstudieplats. Årskostnad per helårsstudent antas vara 75–100 tkr, dvs 9–13 tkr per kursplats. Om satsningen rör 5 000–20 000 nya platser blir kostnaden 50–250 mkr/år. Bas 120 mkr motsvarar cirka 12 000 platser à 10 tkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2044 (600), p-2026-1743 (0), p-2026-0155 (1500), p-2026-2878 (60), p-2026-0014 (2700) ⚠ AVVIKER: 120 avviker 5.0× från jämförbara (median 600)"
+  },
+  {
+    "candidate": {
+      "title": "Bryta könssegregationen på arbetsmarknaden",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Bryta könssegregationen på svensk arbetsmarknad genom att uppmuntra till friare utbildnings- och yrkesval, redan från skolåldern.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jamstalldhet/kvotering",
+    "articleTitle": "Kvotering | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp: 'uppmuntra friare val' är inget enskilt åtagande. Prissätts till 0; ev. konkreta väglednings- eller kampanjsatsningar prissätts separat.",
+      "confidence": 0.4,
+      "calculation": "Löftet anger ingen åtgärd med definierad kostnad — varken en utökad studie- och yrkesvägledning, en kampanj eller ett bidrag. Enligt regeln för breda inriktningslöften sätts base 0. Spannet upp till ~100 mkr/år rymmer en rimlig övre gräns om löftet senare konkretiseras som informationssatsningar och förstärkt vägledning i skolan (jämförbara informations-/vägledningssatsningar ligger i storleksordningen tiotals till ~100 mkr/år). Jämförbart publicerat löfte om breda skol- och arbetsmarknadssatsningar är prissatt till 0 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2012 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Fördubbla stödet till Ukraina till en procent av BNP",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Centerpartiet är det enda parti som föreslår att Sverige framöver fördubblar stödet till Ukraina till en procent av BNP, cirka 75 miljarder kronor årligen, och att den nivån ligger fast tills Ryssland förlorat och Ukraina vunnit kriget.",
+      "category": "försvar",
+      "amount_in_text_msek": 75000,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb",
+    "articleTitle": "Jobb | Centerpartiet",
+    "duplicateOf": "p-2026-0384"
+  },
+  {
+    "candidate": {
+      "title": "Värna asylrätten och fokusera på dem som behöver hjälp mest",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Asylrätten ska värnas och vi ska fokusera på dem som behöver vår hjälp mest.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/invandring",
+    "articleTitle": "Invandring – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; prissätts till 0 för att undvika dubbelräkning av eventuella specifika asylförslag.",
+      "confidence": 0.2,
+      "calculation": "Löftet anger ingen bestämd reform, målgrupp eller kostnad. Som bred inriktning utan utpekad åtgärd sätts statlig nettokostnad till 0 msek. Eventuella konkreta delar prissätts separat på respektive löfte."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1259 (0), p-2026-2687 (0), p-2026-1992 (0), p-2026-1321 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Låta fristående aktörer ta över all jobbförmedling",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Låta fristående aktörer ta över matchningen.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/arbetsformedlingen",
+    "articleTitle": "Arbetsförmedlingen | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 100,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Prissatt som netto: upphandling, uppföljning och omställning när matchningen flyttas från Arbetsförmedlingen till fristående aktörer; ej omfördelning av befintlig myndighetsbudget.",
+      "confidence": 0.3,
+      "calculation": "Löftet saknar belopp. Att flytta matchningen till fristående aktörer är i grunden en omfördelning av Arbetsförmedlingens befintliga resurser — därför prissatt som netto, inte brutto. Ny statlig kostnad = upphandlingsprocesser, kontraktsstyrning, kvalitetsuppföljning och omställning (IT, avgångar). Antaganden: löpande administration och upphandlad styrning ~50–150 msek/år, plus eventuell prestationsbaserad ersättning till aktörerna utöver vad intern verksamhet ersatt ~0–400 msek/år, delvis motverkad av att den interna verksamheten krymper. Base 100 msek/år, spann 0–600 beroende på ersättningsmodell. Samhällseffekter (matchningskvalitet, sysselsättning) ej prissatta."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Införa resultatbaserad ersättning för jobbförmedlare",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Jobbförmedlarna får betalt efter hur väl de lyckas få ut människor i varaktigt arbete, med extra ersättning för de som står längst ifrån arbetsmarknaden.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/arbetsformedlingen",
+    "articleTitle": "Arbetsförmedlingen | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet anger ingen nivå. Uppskattningen avser extra resultatbonus till upphandlade jobbförmedlare för deltagare långt från arbetsmarknaden.",
+      "confidence": 0.35,
+      "calculation": "Antag 40 000–80 000 deltagare/år hos upphandlade jobbförmedlare, varav 20–30 % står långt från arbetsmarknaden, och extra resultatbonus på 10 000–25 000 kr per person som når varaktigt arbete. Låg: 40 000 × 20 % × 15 000 ≈ 120 mkr. Hög: 80 000 × 30 % × 25 000 ≈ 600 mkr. Bas 250 mkr. Osäkerheten är stor eftersom varken antal eller ersättningsnivå anges."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2788 (150), p-2026-0578 (15), p-2026-0572 (400), p-2026-0716 (400), p-2026-2781 (400)"
+  },
+  {
+    "candidate": {
+      "title": "Vildsvinsstammen ska minska",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vildsvinsstammen ska minska.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 3 ord — minst 5 krävs (kortare tillåts bara om citatet är en hel, unik punkt på partiets egen sida)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/jakt",
+    "articleTitle": "Jakt – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Värna och utveckla den svenska modellen",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Värna och utveckla den svenska modellen där parterna gör upp om villkoren på arbetsmarknaden.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/arbetsratt-och-fackforening",
+    "articleTitle": "Arbetsrätt och fackförening | Centerpartiet",
+    "duplicateOf": "p-2026-1452"
+  },
+  {
+    "candidate": {
+      "title": "Rikta sänkningen mot unga med ingångslöner och långtidsarbetslösa",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Sänkningen ska särskilt riktas mot unga med ingångslöner och personer som varit arbetslösa länge.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/ingangsjobb",
+    "articleTitle": "Ingångsjobb | Centerpartiet",
+    "duplicateOf": "p-2026-0257",
+    "duplicateReason": "samma uttryck: «varit arbets», «arbets länge»"
+  },
+  {
+    "candidate": {
+      "title": "Åtgärda eftersatt underhåll och påskynda ERTMS",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Eftersatt underhåll ska vara åtgärdat på ett par decennier, omkring 80 procent av nya investeringar går till järnväg och införandet av det nya signalsystemet ERTMS påskyndas.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/jarnvag",
+    "articleTitle": "Järnväg – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Nästa regering ska inte höja företagens kostnader",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Att nästa regering inte höjer företagens kostnader och gör det dyrare att anställa.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/karensavdraget",
+    "articleTitle": "Karensavdraget | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp. Att inte höja kostnader innebär ingen ny statlig utgift; eventuella sänkningar prissätts på egna löften.",
+      "confidence": 0.2,
+      "calculation": "Löftet är ett åtagande att avstå från att höja företagens kostnader och anställningskostnader. Det ger varken en ny utgift eller en intäktsminskning i sig. Uppskattad direkt statlig kostnad: 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1539 (0), p-2026-2851 (10000), p-2026-2418 (0), p-2026-0695 (7500), p-2026-0143 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Företagens kostnader för att anställa ska minska",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Att företagens kostnader för att anställa måste minska för att jobben ska bli fler",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/karensavdraget",
+    "articleTitle": "Karensavdraget | Centerpartiet",
+    "duplicateOf": "p-2026-1539"
+  },
+  {
+    "candidate": {
+      "title": "Driva på för stärkt djurskydd i Europa",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Sverige ska driva på för att stärka djurskyddet i hela Europa.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/jordbruk",
+    "articleTitle": "Jordbruk – Liberalerna",
+    "duplicateOf": "p-2026-2065"
+  },
+  {
+    "candidate": {
+      "title": "Inför tidsgränser vid djurtransporter",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Det ska finnas tidsgränser vid djurtransporter.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/jordbruk",
+    "articleTitle": "Jordbruk – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 3,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Tillsynskostnad för reglering; liknande löfte uppskattat till 3 mkr/år. Osäkerhet om omfattning.",
+      "confidence": 0.3,
+      "calculation": "Tidsgränser vid djurtransporter är en reglering. Direkt statlig kostnad uppstår främst för tillsyn och administration. En liknande uppskattning för begränsade djurtransporter har satts till 3 mkr/år. Med osäkerhet om hur långtgående regler och kontrollinsatser som krävs sätts spannet 0–10 mkr/år, bas 3 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2381 (3), p-2026-2802 (0), p-2026-1401 (0), p-2026-1556 (0), p-2026-2467 (0) ⚠ AVVIKER: belopp 3 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Inför en skattefri grundlön",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Centerpartiet vill införa en skattefri grundlön.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/skattefri-grundlon",
+    "articleTitle": "Skattefri grundlön | Centerpartiet",
+    "duplicateOf": "(denna körning)"
+  },
+  {
+    "candidate": {
+      "title": "Sänk skatten kraftigt för låg- och medelinkomsttagare",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Skatten sänks kraftigt för låg- och medelinkomsttagare.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/skattefri-grundlon",
+    "articleTitle": "Skattefri grundlön | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0056 (17000), p-2026-0868 (600), p-2026-1650 (0), p-2026-1558 (30), p-2026-2416 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~30"
+  },
+  {
+    "candidate": {
+      "title": "Liberalerna: Sverige ska nå klimatmålen och utsläppen ska bort",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Sverige ska nå klimatmålen. Utsläppen ska bort. De fossila bränslena ska bort.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/klimatet",
+    "articleTitle": "Klimatet behöver en effektiv politik. Liberalerna är alliansens grönaste röst!",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Kostnad kan inte beräknas; specifika reformer prissätts i egna löften för att undvika dubbelräkning.",
+      "confidence": 0.1,
+      "calculation": "Målformulering om att nå klimatmål och fasa ut fossila bränslen. Inga specificerade styrmedel, investeringar eller tidplaner. Därför sätts kostnaden till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0409 (15), p-2026-1990 (0), p-2026-2667 (0), p-2026-0087 (0), p-2026-1544 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Sänka skatten på att anställa unga genom permanenta sänkningar av arbetsgivaravgifterna",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Sänka skatten på att anställa unga. Vi vill införa breda och permanenta sänkningar av arbetsgivaravgifterna för unga, särskilt för de med lägre löner.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/ungdomsarbetsloshet",
+    "articleTitle": "Ungdomsarbetslöshet | Centerpartiet",
+    "duplicateOf": "p-2026-2776",
+    "duplicateReason": "samma uttryck: «införa breda», «breda perman», «perman sänkni», «sänkni arbets», «unga särski», «särski lägre», «lägre löner»"
+  },
+  {
+    "candidate": {
+      "title": "Modernisera lärlingsutbildningarna för att stärka kopplingen mellan skola och arbetsliv",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Modernisera lärlingsutbildningarna så att de blir en självklar väg till jobb för fler. Företag som anställer en lärling ska få mer inflytande över utbildningen, det stärker kopplingen mellan skola och verklighet.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/ungdomsarbetsloshet",
+    "articleTitle": "Ungdomsarbetslöshet | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet anger ingen nivå. Skattningen utgår från befintliga lärlingsstöd och jämförbara satsningar; osäkerheten är stor.",
+      "confidence": 0.3,
+      "calculation": "Antag cirka 10 000 lärlingar och en ambitionshöjning på 10–60 tkr per lärling och år → 100–600 mkr/år. Bas 300 mkr motsvarar 30 tkr per lärling, i linje med ett annat partis lärlingslöfte på 300 mkr/år (nivån lånad som riktmärke)."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2503 (0), p-2026-2775 (0), p-2026-0922 (300), p-2026-2372 (0), p-2026-1718 (0) ⚠ AVVIKER: belopp 300 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Stärka yrkesprogrammen på gymnasiet så att de leder till jobb som finns",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Stärka yrkesprogrammen. Yrkesutbildningarna på gymnasiet ska leda till jobb som faktiskt finns och praktisk talang ska väga lika tungt som betyg",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jobb/ungdomsarbetsloshet",
+    "articleTitle": "Ungdomsarbetslöshet | Centerpartiet",
+    "duplicateOf": "p-2026-2777",
+    "duplicateReason": "samma uttryck: «yrkesu gymnas», «gymnas leda», «leda jobb», «jobb faktis», «faktis finns», «finns prakti», «prakti talang», «talang väga», «väga lika», «lika tungt», «tungt betyg»"
+  },
+  {
+    "candidate": {
+      "title": "Akut krisstöd på en halv miljard kronor till lantbruket",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "föreslår Centerpartiet ett akut krisstöd på en halv miljard kronor till Sveriges bönder redan i år, och ett långsiktigt jordbruksavdrag för skattereduktion",
+      "category": "övrigt",
+      "amount_in_text_msek": 500,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske",
+    "articleTitle": "Jordbruk, skog, jakt och fiske | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 375,
+      "msek_base": 500,
+      "msek_high": 675,
+      "basis": "parti",
+      "basis_url": null,
+      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
+      "calculation": "Partiet anger själv beloppet i källtexten: 500 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 375–675 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
+      "confidence": 0.5
+    },
+    "costReason": "Låg kostnadssäkerhet: 0.5 — jämförbara: p-2026-1310 (1000), p-2026-1408 (3000), p-2026-1100 (3000), p-2026-0336 (50000), p-2026-0599 (1250) ⚠ AVVIKER: 500 avviker 6.0× från jämförbara (median 3000)"
+  },
+  {
+    "candidate": {
+      "title": "Ny Viltmyndighet för hållbar viltförvaltning",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Genom att ge jägare och markägare större inflytande och inrätta en ny Viltmyndighet, vill vi säkerställa en hållbar viltförvaltning.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske",
+    "articleTitle": "Jordbruk, skog, jakt och fiske | Centerpartiet",
+    "duplicateOf": "p-2026-2809",
+    "duplicateReason": "samma uttryck: «jägare markäg», «markäg större», «större inflyt»"
+  },
+  {
+    "candidate": {
+      "title": "Kraftigt minskad vildsvinsstam till hållbar nivå",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Centerpartiet vill kraftigt minska vildsvinsstammen till en hållbar nivå.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske",
+    "articleTitle": "Jordbruk, skog, jakt och fiske | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Mål utan konkret åtgärd eller belopp; prissätts som inriktningslöfte. Jämförbara 'verka för'-löften bedöms till 0 msek.",
+      "confidence": 0.3,
+      "calculation": "Ingen konkret åtgärd angiven, inget belopp. Eventuella åtgärder såsom jaktincitament eller skyddsjakt prissätts först när de specificeras; här blir statlig kostnad 0 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0881 (0), p-2026-0339 (150), p-2026-1443 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Lättare att få uppgifter raderade",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Det ska också vara lättare att få uppgifter raderade i samband med att kundrelationen upphör.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/konsumenters-rattigheter",
+    "articleTitle": "Konsumenters rättigheter – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regelförändring utan direkt statlig utgift; tillsyn och beredning ryms inom befintliga myndighetsresurser. Likt löfte om att byta bank (0 msek).",
+      "confidence": 0.3,
+      "calculation": "Åtgärden är en rättighetsförstärkning i linje med GDPR. Ingen ny statlig kostnad eller IT-investering identifierad; base 0 msek. Hög osäkerhet om eventuella framtida tillsynskostnader, men de bedöms rymmas inom IMY:s nuvarande uppdrag."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1089 (0), p-2026-0908 (150) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~75"
+  },
+  {
+    "candidate": {
+      "title": "Säkerställa likvärdiga och rättssäkra djurskyddskontroller i hela landet",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Säkerställa likvärdiga och rättssäkra djurskyddskontroller i hela landet.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske/djurskydd-och-djurhalsa",
+    "articleTitle": "Djurskydd och djurhälsa | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 25,
+      "msek_base": 50,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Liknar tidigare löften om stärkta djurskyddskontroller; uppskattning baserad på att länsstyrelserna får utökad tillsynskapacitet och samordning.",
+      "confidence": 0.4,
+      "calculation": "Jämförbar satsning på djurskyddstillsyn ligger kring 50 mkr/år. Rimligt spann: 10–40 nya inspektörer × ~0,8–1,2 mkr i lönekostnad inkl. overhead, plus utbildning och gemensamma system, ger cirka 25–100 mkr/år. Bas 50 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2875 (50), p-2026-1841 (0), p-2026-1716 (15), p-2026-1926 (50), p-2026-2606 (0) ⚠ AVVIKER: 50 avviker 3.3× från jämförbara (median 15)"
+  },
+  {
+    "candidate": {
+      "title": "Säkra tillgången till veterinärer i hela landet dygnet runt",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Säkra tillgången till veterinärer i hela landet, dygnet runt.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske/djurskydd-och-djurhalsa",
+    "articleTitle": "Djurskydd och djurhälsa | Centerpartiet",
+    "duplicateOf": "p-2026-2787",
+    "duplicateReason": "samma uttryck: «tillgå veteri», «veteri hela», «landet dygnet»"
+  },
+  {
+    "candidate": {
+      "title": "Underlätta för fler att utbilda sig till veterinär och djurskötare",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "underlätta för fler att utbilda sig till veterinär och djurskötare för att möta bristen på kompetens.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske/djurskydd-och-djurhalsa",
+    "articleTitle": "Djurskydd och djurhälsa | Centerpartiet",
+    "duplicateOf": "p-2026-2789",
+    "duplicateReason": "samma uttryck: «underl utbild», «utbild veteri», «veteri djursk», «djursk möta», «möta briste», «briste kompet»"
+  },
+  {
+    "candidate": {
+      "title": "Möjliggöra en ökad och mer flexibel jakt på säl och skarv för att skydda fiskbestånden",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Möjliggöra en ökad och mer flexibel jakt på säl och skarv för att skydda fiskbestånden.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske/fiske",
+    "articleTitle": "Fiske | Centerpartiet",
+    "duplicateOf": "p-2026-2826",
+    "duplicateReason": "samma uttryck: «skarv skydda», «skydda fiskbe»"
+  },
+  {
+    "candidate": {
+      "title": "Underlätta för unga att starta fiskeföretag och främja fisketurism med gårdsbutiker, rökerier och restauranger",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Underlätta för unga att starta fiskeföretag och främja fisketurism med gårdsbutiker, rökerier och restauranger.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske/fiske",
+    "articleTitle": "Fiske | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan angivet belopp eller instrument. Närmast ett inriktningslöfte; direkta regeländringar kostar nära 0, men ett framtida stödprogram skulle kunna nå jämförbar nivå med landsbygdslån…",
+      "confidence": 0.3,
+      "calculation": "Bas 0 enligt regeln för breda inriktningslöften: ingen konkret åtgärd, nivå eller mottagare anges. Övre delen av intervallet illustrerar ett möjligt stödprogram: ~200 nya företag × 100–300 tkr = 20–60 mkr/år, och jämförbara landsbygdsstöd ligger kring 150 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0367 (150), p-2026-0808 (0), p-2026-0882 (0), p-2026-2754 (500), p-2026-0557 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Minska statlig styrning av kulturen och öka kulturskapares inflytande",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Idag består den statliga kulturpolitiken av små öronmärkta påsar – vi vill att staten ska styra mindre och att kulturskapare ska få mer att säga till om vad som ska få stöd.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/kultur",
+    "articleTitle": "Kultur – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte om minskad statlig styrning och ökat kulturskaparinflytande; ingen konkret åtgärd eller nivå anges. Motsvarande löften om ökat inflytande bedöms till 0.",
+      "confidence": 0.2,
+      "calculation": "Löftet anger ingen ny utgift, sänkt skatt eller besparing. Det rör omfördelning av befintliga kulturanslag. Enligt regel 13 behandlas det som inriktningslöfte med base 0. Ingen dubbelräkning med specifika kulturförslag."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1031 (0), p-2026-0427 (400), p-2026-2809 (0), p-2026-1013 (0), p-2026-1884 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Goda villkor för kulturföretagande och skatteregler som gynnar gåvor och sponsring",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Det ska finnas goda villkor för kulturföretagande, skatteregler bör gynna gåvor och sponsring.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/kultur",
+    "articleTitle": "Kultur – Liberalerna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp. Eventuell skatteutgift ska prissättas på partis specifika förslag, inte här. [period satt till engang: engångssignal i löftet]",
+      "confidence": 0.2,
+      "calculation": "Ingen konkret reform specificerad: varken avdragsform, tak eller målgrupp anges. Jämförbara skatteförenklingslöften utan nivå uppskattas till 0. Därför sätts kostnaden till 0 för att undvika dubbelräkning."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1524 (0), p-2026-2505 (1000), p-2026-1528 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Trygghetssystem ska fungera för kulturarbetare",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Sjukförsäkringar och andra trygghetssystem måste fungera för kulturarbetare.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/kultur",
+    "articleTitle": "Kultur – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt inriktningslöfte utan konkret åtgärd eller belopp. Kostnad prissätts på specifika förslag, inte här.",
+      "confidence": 0.1,
+      "calculation": "Ingen nivå eller åtgärd anges. Löftet är en allmän målsättning; base sätts till 0 för att undvika dubbelräkning."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1723 (0), p-2026-1432 (0), p-2026-1138 (10)"
+  },
+  {
+    "candidate": {
+      "title": "Prioritera läsning i hela skolsystemet",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Läsning ska prioriteras i hela skolsystemet.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/kultur",
+    "articleTitle": "Kultur – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp. Ingen ny statlig kostnad kan beräknas; eventuella kostnader prissätts i specifika åtgärder.",
+      "confidence": 0.2,
+      "calculation": "Löftet anger ingen konkret reform, målgrupp eller nivå. 'Prioriteras' kan tolkas som omfördelning inom befintlig skolbudget, inte som ny statlig utgift. Därför sätts kostnaden till 0 mkr och osäkerheten hanteras genom låg konfidens."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0560 (0), p-2026-1012 (0), p-2026-0464 (0), p-2026-0783 (0), p-2026-2242 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Säkra principen om armlängds avstånd",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Principen om armlängds avstånd ska gälla och säkras, det vill säga att det är kulturskapare som fattar de konstnärliga besluten, inte politiker.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/kultur",
+    "articleTitle": "Kultur – Liberalerna",
+    "duplicateOf": "p-2026-2780"
+  },
+  {
+    "candidate": {
+      "title": "Förenkla och förtydliga regler för stallbyggen och ekonomibyggnader",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Förenkla och förtydliga reglerna för att bygga stallar och andra ekonomibyggnader.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske/hastnaringen",
+    "articleTitle": "Hästnäringen | Centerpartiet",
+    "duplicateOf": "p-2026-1800"
+  },
+  {
+    "candidate": {
+      "title": "Se över tillståndsreglerna för hästhållning",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Se över tillståndsreglerna för hästhållning så de blir mer ändamålsenliga och förutsägbara.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske/hastnaringen",
+    "articleTitle": "Hästnäringen | Centerpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avser enbart själva översynen/utredningen av tillståndsreglerna, inte framtida regeländringar eller administrativa effekter.",
+      "confidence": 0.4,
+      "calculation": "En statlig utredning av tillståndsregler för hästhållning uppskattas till 5–30 mkr beroende på utredningens bredd och tidplan. Bas 15 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1090 (0), p-2026-1042 (60)"
+  },
+  {
+    "candidate": {
+      "title": "Ta krafttag mot smuggling av sällskapsdjur",
+      "parties": [
+        "c"
+      ],
+      "person": null,
+      "quote": "Ta krafttag mot smuggling av sällskapsdjur till och inom Europa.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/jordbruk-skog-jakt-och-fiske/internationellt-djurskydd",
+    "articleTitle": "Internationellt djurskydd | Centerpartiet",
+    "duplicateOf": "p-2026-2806"
+  },
+  {
+    "candidate": {
+      "title": "Gymnasieutbildning till hantverksyrken ska ske som lärlingsutbildning",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Gymnasieutbildning till hantverksyrken ska därför ske som lärlingsutbildning.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/larlingar",
+    "articleTitle": "Lärlingar – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 450,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Antagande om antal berörda elever på hantverksprogrammet och merpris för lärlingsform; osäker politik med stort tolkningsutrymme. Jämförbar lärlingssatsning har legat runt 300 mkr/år.",
+      "confidence": 0.4,
+      "calculation": "Berörda elever på hantverksprogrammet uppskattas till 4 000–8 000. Lärlingsformens merpris sätts till 20–50 kkr/elev/år för handledarersättning, administration och utrustning. Lägre: 4 000×20 kkr≈80, avrundat 100 mkr. Bas: 6 000×40 kkr≈240, avrundat 250 mkr. Högre: 8 000×50 kkr≈400, avrundat 450 mkr. Beloppet ligger i samma storleksordning som en tidigare satsning på lärlingsutbildningar. Befintlig skolform antas ersättas, och endast nettokostnadsökningen prissätts."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0922 (300), p-2026-2107 (180)"
+  },
+  {
+    "candidate": {
+      "title": "Lärlingsutbildning som alternativ till gymnasieskolans yrkesprogram",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Lärlingsutbildning ska vara ett alternativ till gymnasieskolans yrkesprogram för hantverksyrken där undervisningen i huvudsak är förlagd ute på företagen.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/larlingar",
+    "articleTitle": "Lärlingar – Liberalerna",
+    "duplicateOf": "(denna körning)"
+  },
+  {
+    "candidate": {
+      "title": "Lärlingar ska kunna anställas av sin arbetsgivare under utbildningstiden",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Lärlingar ska kunna anställas av sin arbetsgivare under utbildningstiden.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/larlingar",
+    "articleTitle": "Lärlingar – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring/avreglering som tillåter anställning av lärlingar under utbildningstid; ingen direkt ny statlig utgift. Eventuella följder kvantifieras inte.",
+      "confidence": 0.3,
+      "calculation": "Regeländring utan direkt utbetalning från staten. Enligt avgränsningsregeln för lag- och regleringsåtgärder sätts direkt kostnad till 0 mkr; eventuella framtida effekter på lärlingsstöd lämnas utanför."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1718 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta en särskild gymnasial lärlingsanställning",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "En särskild anställningsform, gymnasial lärlingsanställning, som kan användas av arbetsgivare som utbildar en lärling bör inrättas.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/larlingar",
+    "articleTitle": "Lärlingar – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 150,
+      "msek_base": 300,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning grundad på statlig ersättning till arbetsgivare för gymnasiala lärlingsanställningar; den rena lagformen i sig skulle kosta nära noll.",
+      "confidence": 0.3,
+      "calculation": "Antag 5 000–15 000 pågående lärlingsanställningar och 20–40 tkr/år i statligt stöd per lärling: 5 000×20=100 mkr, 15 000×40=600 mkr. Bas 8 000×35≈280 mkr, avrundat till 300 mkr. Beloppet ligger i linje med liknande lärlingssatsningar på 300–1 000 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0922 (300), p-2026-2180 (1000)"
+  },
+  {
+    "candidate": {
+      "title": "Ersättning för handledning och förhöjt studiebidrag för lärlingar",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Arbetsplatser som tar emot en lärling får ersättning för handledning, medan lärlingen får förhöjt studiebidrag och ersättning för resor och måltider.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/larlingar",
+    "articleTitle": "Lärlingar – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Underlaget anger inga belopp eller antal; skattning utifrån lärlingsvolym och tre stödkomponenter. Osäkerhet hög.",
+      "confidence": 0.3,
+      "calculation": "Antag 5 000–15 000 gymnasiala lärlingar (bas 8 000). Per lärling: handledningsersättning 5–15 tkr/år, förhöjt studiebidrag cirka 1 tkr/mån i 9 mån = 5–15 tkr/år, resor och måltider 5–15 tkr/år. Bas: 8 000 × (10 000+9 000+8 000) ≈ 216 mkr. Låg: 5 000 × 15 000 = 75 mkr. Hög: 15 000 × 45 000 = 675 mkr; avrundat till 100/250/500 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0566 (5), p-2026-2738 (400)"
   }
 ]
