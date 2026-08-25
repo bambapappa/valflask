@@ -732,7 +732,11 @@ const BESTAMD_PLURAL = /^[a-zà-öø-ÿ]*[aeoäöu]rna$/iu;
 const DETERMINANT = /^(alla|andra|dessa|detta|flera|många|vissa|samma|sådana|varje|hela|olika|egna|nya|ingen|inga)$/i;
 
 const COMMITMENT = [
-  /\b(vill|ska|bör|kommer att|kommer vi|lovar|tänker|avser|föreslår|vi ämnar)\b/i,
+  // «måste» är lika mycket ett åtagande som «ska» i partiernas prosa, och det
+  // saknades: «Personer med nedsatt arbetsförmåga … måste kunna pröva att
+  // jobba» lästes som genomförd politik, eftersom «har nedsatt» ser ut som
+  // perfekt medan «nedsatt» här är ett adjektiv.
+  /\b(vill|ska|bör|måste|kommer att|kommer vi|lovar|tänker|avser|föreslår|vi ämnar)\b/iu,
   // `\b` biter inte före å/ä/ö — de är inte ordtecken i JavaScripts regexmotor,
   // så `\båterinföra\b` matchade ALDRIG «att återinföra» men däremot
   // «Xåterinföra». Mönstret var alltså dött åt rätt håll och levande åt fel.
