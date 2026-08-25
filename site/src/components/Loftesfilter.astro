@@ -1,0 +1,44 @@
+---
+/**
+ * Samma filter renderas där sajten visar flera löften. Javaskriptet sparar
+ * läsarens val och synkar alla filter på sidan. Belopp från Utlovat.se öppnar
+ * den befintliga godkännanderutan innan de kan väljas.
+ */
+interface Props {
+  count: number;
+}
+const { count } = Astro.props;
+---
+<form class="loftesfilter" data-loftesfilter aria-label="Filtrera löften">
+  <p class="etikett loftesfilter__rubrik">Välj urval</p>
+  <fieldset>
+    <legend>Beloppsunderlag</legend>
+    <label><input type="radio" name="underlag" value="parti" checked /> Partiernas egna belopp</label>
+    <label><input type="radio" name="underlag" value="utlovat" /> Utlovat.se:s beräkningar</label>
+    <label><input type="radio" name="underlag" value="alla" /> Båda</label>
+  </fieldset>
+  <fieldset>
+    <legend>Typ av löfte</legend>
+    <label><input type="radio" name="loftestyp" value="reform" checked /> Reformlöften</label>
+    <label><input type="radio" name="loftestyp" value="inriktning" /> Inriktnings- och policylöften</label>
+    <label><input type="radio" name="loftestyp" value="alla" /> Alla löften</label>
+  </fieldset>
+  <p class="loftesfilter__status" data-loftesfilter-status>Visar partiernas egna belopp för reformlöften. <span data-loftesfilter-count>{count}</span> löften.</p>
+</form>
+
+<style>
+  .loftesfilter {
+    border-top: var(--linje-sektion);
+    border-bottom: var(--linje-sektion);
+    display: grid;
+    gap: 0.8rem;
+    margin: 1.5rem 0;
+    padding: 1rem 0;
+  }
+  .loftesfilter__rubrik { margin: 0; }
+  .loftesfilter fieldset { border: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin: 0; padding: 0; }
+  .loftesfilter legend { font-family: var(--font-mono); font-size: var(--steg--1); font-weight: 700; margin-bottom: 0.35rem; }
+  .loftesfilter label { font-family: var(--font-mono); font-size: var(--steg--1); }
+  .loftesfilter input { accent-color: var(--svarta); }
+  .loftesfilter__status { color: var(--text-svag); font-size: var(--steg--1); margin: 0; }
+</style>

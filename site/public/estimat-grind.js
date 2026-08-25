@@ -57,6 +57,10 @@
       delete html.dataset.estimat;
     }
 
+    // Löftesfiltret ber om samma kvittering i stället för att skapa en andra
+    // dialog. När läsaren godkänt återställs det val filtret väntade på.
+    document.addEventListener("estimat:oppna", () => oppna());
+
     document.addEventListener("click", (e) => {
       const el = e.target;
       if (!el || !el.closest) return;

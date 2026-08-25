@@ -21,6 +21,31 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-25 — Löftesurvalet skiljer mellan partiets belopp, egna beräkningar och löftestyp
+
+**Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga kostnadsbelopp
+att dela efter underlag. Det publicerade beståndet ändras inte.
+
+**Beslut (mänskligt beslut 2026-08-25):** Listan på varje partisida kan
+filtreras på två oberoende axlar: **beloppsunderlag** — partiets eget belopp,
+Utlovat.se:s beräkning eller båda — och **löftestyp** — reform, inriktning och
+policy eller alla. Grundläget är reformlöften med partiernas egna belopp.
+Väljer läsaren Utlovat.se:s beräkningar används den befintliga kvitteringen av
+att dessa belopp är uppskattningar. Ett enskilt löfte märks samtidigt med båda
+uppgifterna, och partiets eget belopp kan läsas utan kvittering.
+
+**Motiv:** Ett nollat inriktningslöfte är fortfarande ett löfte, men det tränger
+undan konkreta reformer när läsaren försöker se vilka belopp ett parti själv
+har angett. Samtidigt är partiets belopp och en redaktionell beräkning olika
+slags uppgifter. Att visa dem som om de vore samma tal är som att blanda en
+offert med vår egen kalkyl av samma arbete: båda är relevanta, men läsaren ska
+kunna välja vilken fråga som besvaras.
+
+**Förkastade alternativ:** ett enda filter för "kostar/noll" (blandar ihop
+löftets form med vem som satt beloppet); att dölja inriktningslöften helt (de
+är fortsatt relevanta och ska vara valbara); att låsa upp alla belopp när
+partiets egna visas (skulle kringgå kvitteringen för Utlovat.se:s beräkningar).
+
 ## 2026-08-22 — Paritetsfel mäts av ett rapporterande svep med en kö som kvitteras
 
 **Gäller:** Fläskvågen. Frågevågen och Handlingsvågen rörs inte — svepet

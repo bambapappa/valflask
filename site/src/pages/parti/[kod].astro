@@ -5,6 +5,7 @@ import GapMatare from "../../components/GapMatare.astro";
 import MetodLank from "../../components/MetodLank.astro";
 import KallRad from "../../components/KallRad.astro";
 import Dela from "../../components/Dela.astro";
+import Loftesfilter from "../../components/Loftesfilter.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
 import { formatMsek, formatMsekShort } from "../../lib/calc";
 import { partyTotalMsek, getPromisesForParty, financingGap, totalFlasket, categoryBreakdown, flasketPerRost, promiseNetMsek, groupBearersForParty, partyCoverage } from "../../lib/aggregates";
@@ -35,7 +36,7 @@ const promiseById = new Map(promises.map((p) => [p.id, p]));
 const promiseRows = partyPromises.map((p) => {
   const bearerId = p.group_id ? bearers.get(p.group_id) : undefined;
   const bearer = bearerId && bearerId !== p.id ? promiseById.get(bearerId) : undefined;
-  return { p, bearer };
+  return { p, bearer, underlag: p.cost.basis === "parti" ? "parti" : "utlovat" };
 });
 const total = partyTotalMsek(promises, kod);
 const flasket = totalFlasket(promises);
@@ -140,6 +141,7 @@ const jsonLd = [
 
     <section class="sektion">
       <h2>{party.name}:s löften</h2>
+      <Loftesfilter count={partyPromises.length} />
       <div class="datavy datavy--scroll">
         <table>
           <thead>
@@ -147,17 +149,21 @@ const jsonLd = [
               <th class="radnr">#</th>
               <th>Löfte</th>
               <th>Kategori</th>
+              <th>Typ</th>
+              <th>Beloppsunderlag</th>
               <th class="num">Kostnad, minus för besparing</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {promiseRows.map(({ p, bearer }, i) => (
-              <tr>
+            {promiseRows.map(({ p, bearer, underlag }, i) => (
+              <tr data-lofte-underlag={underlag} data-lofte-typ={p.loftestyp}>
                 <td class="radnr">{i + 1}</td>
                 <td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td>
                 <td>{p.category}</td>
-                <td class="num belopp">
+                <td>{p.loftestyp === "reform" ? "Reform" : "Inriktning/policy"}</td>
+                <td>{underlag === "parti" ? "Partiet" : "Utlovat.se"}</td>
+                <td class:list={["num", "belopp", { partibelopp: underlag === "parti" }]}>
                   {bearer
                     ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span>
                     : formatMsek(promiseNetMsek(p), p.cost.basis)}
