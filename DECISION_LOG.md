@@ -21,6 +21,24 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-25 — AI-metoden använder den uppmätta andelen prissatta löften
+
+**Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga prislappar i
+detta register. Det publicerade löftesbeståndet ändras inte.
+
+**Beslut (mänskligt beslut 2026-08-25):** Metodsidan och dess FAQ säger att en
+språkmodell föreslår **åtta av tio** prislappar, inte nio av tio.
+
+**Motiv:** 2 636 av 3 211 aktiva löften (82,1 %) har underlaget
+`llm_estimat`. Åtta av tio beskriver den uppmätta andelen; nio av tio skulle
+kräva minst 90 %. Metodtexten ska följa det mätbara beståndet och testas mot
+intervallet 80–85 %.
+
+**Förkastat alternativ:** behålla formuleringen nio av tio (ett offentligt
+påstående som datat inte längre bär); ändra grund eller belopp för att passa
+texten (det skulle förvanska registret).
+
+
 ## 2026-08-25 — Löftesurvalet skiljer mellan partiets belopp, egna beräkningar och löftestyp
 
 **Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga kostnadsbelopp
