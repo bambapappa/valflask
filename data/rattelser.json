@@ -1202,27 +1202,27 @@
     "affects": "Löftessidorna för p-2026-2927, p-2026-2933, p-2026-2934, p-2026-2940, p-2026-2941, p-2026-2944, p-2026-2948, p-2026-2951, p-2026-2953, p-2026-2954, p-2026-2955, p-2026-2957, p-2026-2968, p-2026-2975, p-2026-2982, p-2026-2984, p-2026-2992, p-2026-2995, p-2026-3001, p-2026-3013, p-2026-3025, p-2026-3034, p-2026-3048, p-2026-3049, p-2026-3055, p-2026-3058, p-2026-3082 — uträkningens grund",
     "what": "27 uträkningar som lånade ett belopp ur ett annat löfte har fått sin grund utskriven: 27 pekar nu ut löftet de lånar av, 0 visade sig vara samma reform och räknas nu en gång, och 0 har fått en uträkning som står på egen aritmetik. Inget basbelopp har ändrats av själva kopplingen.",
     "why": "45 löften publicerades ur granskningskön 2026-08-25 med uträkningar som säger att beloppet är lånat av ett jämförbart löfte utan att säga vilket. För 27 av dem står det lånade talet utskrivet i uträkningen och bärs av exakt ett av de jämförbara löftena — ankaret pekar därför dit, och läsaren får en länk i stället för ett tal utan grund. Källan är lagad i samma pass: kö-prissättningen fyller numera anchor_ids själv när den kan, och godkännandet vägrar publicera ett lånat belopp utan ankare.",
-    "commit": "0000000"
+    "commit": "41b4a264"
   },
   {
     "date": "2026-08-25",
     "affects": "Löftessidorna för p-2026-2599, p-2026-2924, p-2026-2928, p-2026-2950, p-2026-2958, p-2026-2987, p-2026-3008, p-2026-3021 — uträkningens grund",
     "what": "8 uträkningar som lånade ett belopp ur ett annat löfte har fått sin grund utskriven: 0 pekar nu ut löftet de lånar av, 0 visade sig vara samma reform och räknas nu en gång, och 8 har fått en uträkning som står på egen aritmetik. Inget basbelopp har ändrats av själva kopplingen.",
     "why": "Åtta av de 45 löften som publicerades ur granskningskön 2026-08-25 räknade fram sitt eget belopp och nämnde ett jämförbart löfte bara som efterkontroll. Lånepåståendet är struket ur uträkningarna; siffrorna står kvar oförändrade, för de kom aldrig från jämförelsen. De övriga tio vilar faktiskt på ett annat löftes tal och behöver ett ankare eller en nolla med utskrivet skäl.",
-    "commit": "0000000"
+    "commit": "41b4a264"
   },
   {
     "date": "2026-08-25",
     "affects": "p-2026-2949, p-2026-2966, p-2026-2990, p-2026-2991, p-2026-3003, p-2026-3029, p-2026-3039, p-2026-3064, p-2026-3068, p-2026-3071 — 10 löften nollade",
     "what": "10 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 10 enligt regeln att en åtgärd utan nivå som beståndet saknar ankare för prissätts till noll. Beloppen är nollade. Uträkningarna skriver ut vilken regel som gäller. C minskar med 3 200 miljoner kronor, L minskar med 2 852 miljoner kronor, M minskar med 15 miljoner kronor, S minskar med 7 000 miljoner kronor. Summan för alla partier minskar med 13 067 miljoner kronor för mandatperioden.",
     "why": "Tio av de 45 löften som publicerades ur granskningskön 2026-08-25 fick sitt belopp ur ett jämförbart löfte som inte går att peka ut. Talet står i uträkningen men bärs inte av något löfte i beståndet — jämförelsen gjordes mot ett bestånd som sedan ändrats, och härkomsten är därmed borta. Ett tal utan spårbar grund är ett tal läsaren inte kan följa, och regeln säger då noll med skälet utskrivet. Källan är lagad i samma pass: kö-prissättningen fyller numera anchor_ids själv, och godkännandet vägrar publicera ett lånat belopp utan ankare.",
-    "commit": "0000000"
+    "commit": "41b4a264"
   },
   {
     "date": "2026-08-25",
     "affects": "p-2026-3061, p-2026-3062, p-2026-3067, p-2026-3072, p-2026-3075, p-2026-3078 — 6 löften nollade",
     "what": "6 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 6 enligt regeln att utredningar och planer prissätts till noll. Beloppen är nollade. Uträkningarna skriver ut vilken regel som gäller. L minskar med 15 miljoner kronor, M minskar med 60 miljoner kronor, S minskar med 70 miljoner kronor. Summan för alla partier minskar med 145 miljoner kronor för mandatperioden.",
     "why": "Sex löften publicerades ur granskningskön med ett belopp trots att citatet bara lovar en utredning, en översyn eller en löpande utvärdering. Regeln är fastställd sedan tidigare: utredningen prissätts, inte den politik den kan leda till.",
-    "commit": "0000000"
+    "commit": "41b4a264"
   }
 ]
