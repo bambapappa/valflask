@@ -7,6 +7,7 @@ import { avvisa, hav, slaUpp, type Avvisning } from "./avvisningar.ts";
 import { partiForUrl } from "./skordeordning.ts";
 import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
+import { LANAR_BELOPP } from "./ankarkravet.ts";
 import { svenskDag } from "./dagen.ts";
 import { harledLoftestyp } from "./loftestyp.ts";
 
@@ -654,6 +655,31 @@ function approveLast(
         interna.map((r) => `  ${r}`).join("\n") +
         "\n\nSkriv hänvisningen så att en läsare förstår den — «partiets löfte om\n" +
         "ett sektorsbidrag för skolans personal», inte numret.",
+    );
+    process.exit(1);
+  }
+
+  // ETT LÅNAT BELOPP MÅSTE GÅ ATT FÖLJA, och det prövas HÄR — vid
+  // publiceringen — och inte först av ankarkravets grind i bygget.
+  //
+  // 45 löften godkändes 2026-08-25 med uträkningar som sade «jämförbart löfte
+  // anger 8 mdkr/år» utan att säga vilket, och landade rakt i ankarskulden.
+  // Skulden får bara krympa, så de gick inte att lägga till där — de måste
+  // skrivas om, en efter en, efter att de redan stod publicerade.
+  //
+  // `anchor_ids` är fältet som löser knuten: en maskinläsbar hänvisning som
+  // sajten renderar som länk, till skillnad från numret i prosan som spärren
+  // ovan fäller. Kö-prissättningen fyller det numera själv när den kan.
+  const ankare = (cost as { anchor_ids?: string[] }).anchor_ids ?? [];
+  if (LANAR_BELOPP.test(cost.calculation ?? "") && (cost.msek_base ?? 0) !== 0 && ankare.length === 0) {
+    console.error(
+      "Uträkningen säger att beloppet är lånat från ett jämförbart löfte, men\n" +
+        "säger inte vilket. Ett lånat belopp utan spårbart ankare är ett tal\n" +
+        "läsaren inte kan följa till sin grund.\n\n" +
+        "  · sätt cost.anchor_ids på kö-posten, eller\n" +
+        "  · räkna om beloppet på egen grund och skriv om uträkningen, eller\n" +
+        "  · länka posten till samma grupp som löftet den lånar av (--group).\n\n" +
+        "Skriv INTE ut id:t i uträkningen — spärren ovan fäller det.",
     );
     process.exit(1);
   }

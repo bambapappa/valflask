@@ -25,7 +25,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash } from "../src/publish.ts";
-import { ankarbrott } from "../src/ankarkravet.ts";
+import { ankarbrott, lanarUtanSparbartAnkare } from "../src/ankarkravet.ts";
 import { provaRad, tillampa, type Ankarrad, type Lofte, type Utfall } from "../src/ankarpasset.ts";
 import { svenskDag } from "../src/dagen.ts";
 
@@ -79,7 +79,16 @@ for (const rad of rader) {
     fel.push(`${rad.id}: okänt utfall "${rad.utfall}" — ankare, grupp eller egen`);
     continue;
   }
-  if (!iSkulden.has(rad.id)) fel.push(`${rad.id} står inte i ankarskulden`);
+  // Villkoret var «står i facit», och det stängde ute den post som behöver
+  // passet mest: den som PRECIS brutit mot kravet. Facit är en fryst lista över
+  // gammal skuld och får bara krympa — ny skuld hamnar aldrig där, och kan
+  // alltså aldrig betas av. 45 löften publicerades 2026-08-25 rakt in i det
+  // läget. Villkoret är nu att posten faktiskt bryter mot kravet: gammal skuld
+  // och ny lagas med samma verktyg.
+  const post = perId.get(rad.id);
+  if (!iSkulden.has(rad.id) && !(post !== undefined && lanarUtanSparbartAnkare(post))) {
+    fel.push(`${rad.id} bryter inte mot ankarkravet — det finns ingenting att laga`);
+  }
   fel.push(...provaRad(rad, perId).fel);
 }
 
@@ -102,7 +111,16 @@ if (fel.length > 0) {
   process.exit(1);
 }
 
-console.log(`\n${rader.length} poster · skulden ${skuld.count} → ${skuld.count - rader.length}`);
+// Raderna kan röra både frysta poster och ny skuld. Att dra radantalet från
+// facitets tal gav «77 → 50» för 27 rader som inte stod i facit alls.
+{
+  const frysta = rader.filter((r) => iSkulden.has(r.id)).length;
+  const nya = rader.length - frysta;
+  console.log(
+    `\n${rader.length} poster · frysta skulden ${skuld.count} → ${skuld.count - frysta}` +
+      (nya > 0 ? ` · ${nya} rader lagar skuld som uppstått efter frysningen` : ""),
+  );
+}
 
 if (!skriv) {
   console.log("\nIngenting skrivet. Kör med --skriv för att verkställa.");

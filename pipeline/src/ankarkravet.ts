@@ -53,7 +53,7 @@
  */
 
 /** Uträkningen säger att beloppet kommer från ett annat löfte. */
-const LANAR_BELOPP =
+export const LANAR_BELOPP =
   /jämförbar\w*\s+(?:löfte|löften|investering|reform|post|åtgärd|satsning|strategiuppdrag)|liknande löfte|motsvarande löfte|annat löfte|andra löften|jämförbara löften/iu;
 
 export interface AnkarPost {
@@ -90,4 +90,55 @@ export function ankarbrott(poster: readonly AnkarPost[]): string[] {
     .filter((p) => p.status === "aktiv" && lanarUtanSparbartAnkare(p))
     .map((p) => p.id)
     .sort();
+}
+
+
+/** Ett jämförbart löfte som prissättningen hade framför sig. */
+export interface Jamforbar {
+  id: string;
+  msek_base: number;
+  period?: string;
+}
+
+/**
+ * Vilket jämförbart löfte uträkningen faktiskt lånade av — om det går att veta.
+ *
+ * VARFÖR DEN BEHÖVS. Kö-prissättningen ger modellen upp till fem jämförbara
+ * löften och modellen skriver «jämförbart löfte anger 8 mdkr/år» utan att säga
+ * VILKET. Skriver den ut numret fälls den av spärren mot interna beteckningar i
+ * publicerad text; skriver den inte ut det bryter posten mot ankarkravet så
+ * fort den publiceras. Kön kunde alltså inte producera ett lånat belopp som
+ * klarade båda grinderna — 45 löften publicerades 2026-08-25 rakt in i
+ * ankarskulden.
+ *
+ * Fältet `anchor_ids` är vägen ut: det är en maskinläsbar hänvisning som sajten
+ * renderar som en länk, och det är inte publicerad prosa.
+ *
+ * HUR ANKARET HITTAS. Beloppet. Står ett av de jämforbara löftenas basbelopp
+ * utskrivet i uträkningen är det det löftet talet kommer från. Matchar FLERA
+ * eller INGET returneras en tom lista — och då ska posten inte få någon
+ * kostnad alls. Att gissa vilket av fem löften ett tal kom från vore att
+ * skriva en hänvisning läsaren inte kan lita på, och en falsk härkomst är
+ * sämre än ingen.
+ */
+export function harledAnkare(
+  calculation: string | null | undefined,
+  jamforbara: readonly Jamforbar[],
+): string[] {
+  const text = calculation ?? "";
+  if (!LANAR_BELOPP.test(text)) return [];
+
+  // Talen som står i texten, normaliserade till miljoner kronor. «8 mdkr» och
+  // «8 000 mkr» är samma tal och ska matcha samma ankare.
+  const tal = new Set<number>();
+  for (const m of text.matchAll(/(\d[\d\s\u00a0]*(?:[.,]\d+)?)\s*(mdkr|miljard\w*|mkr|miljon\w*)/giu)) {
+    const rå = Number(m[1]!.replace(/[\s\u00a0]/gu, "").replace(",", "."));
+    if (!Number.isFinite(rå)) continue;
+    tal.add(/^m(d|iljard)/iu.test(m[2]!) ? rå * 1000 : rå);
+  }
+  if (tal.size === 0) return [];
+
+  const traffar = jamforbara.filter((j) => tal.has(j.msek_base));
+  const unika = [...new Set(traffar.map((t) => t.id))];
+  return unika.length === 1 ? unika : [];
 }
