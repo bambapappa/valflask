@@ -3397,5 +3397,106 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-nettonoll",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sverige ska ha nettonollutsläpp 2045 – målet ligger fast",
+      "party": "c",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/klimat",
+    "articleTitle": "Klimat | Centerpartiet",
+    "runId": "run-2026-08-26-07-25"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-reduktionsplikt",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Centerpartiet vill avveckla reduktionsplikten och i stället införa ett nytt system som styr mot inblandning av förnybart.",
+      "party": "c",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/klimat",
+    "articleTitle": "Klimat | Centerpartiet",
+    "runId": "run-2026-08-26-07-25"
+  },
+  {
+    "candidate": {
+      "stance_id": "mp-barn-kriminalitet-1",
+      "party": "mp",
+      "question_id": "skola-lovskola",
+      "quote": "Vi vill stoppa nyrekryteringen till gängen genom tidiga och samordnade insatser. Skola, socialtjänst och polis måste samverka för att kunna sätta in riktade insatser för barn i riskzonen.",
+      "source": "https://www.mp.se/politik/barns-rattigheter/",
+      "condition_note": null,
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: / must have required property 'subquestion_id'; / must have required property 'position'; / must NOT have additional properties; / must NOT have additional properties; / must NOT have additional properties"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/barn-och-barnratt/",
+    "articleTitle": "Miljöpartiets barnrättspolitik",
+    "runId": "run-2026-08-26-07-25"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "skola-vinst",
+      "stance": "nej",
+      "quote": "Partiet presenterar samtidigt flera förslag för att stoppa vinstuttag, stärka statens ansvar och minska skolsegregationen.",
+      "condition_note": null,
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: / must have required property 'party'; / must have required property 'position'; / must NOT have additional properties"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/betyg",
+    "articleTitle": "Betyg\n| Socialdemokraterna",
+    "runId": "run-2026-08-26-07-25"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-matmoms",
+      "party": "m",
+      "position": "villkorat",
+      "condition_note": "Moderaterna är beredda att förlänga matmomsnedgången om omvärldsläget kräver det och svenska familjers plånböcker fortsatt pressas av dålig konjunktur.",
+      "quote": "Sänkningen på matmomsen är tillfällig. Moderaterna är beredda att förlänga den om omvärldsläget kräver det och svenska familjers plånböcker fortsatt pressas av dålig konjunktur.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/matpriser/",
+    "articleTitle": "Matpriser | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/matpriser/",
+    "archiveUrl": "https://web.archive.org/web/20260826112602/https://moderaterna.se/var-politik/matpriser/",
+    "dateStated": "2026-08-26",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-26-07-25",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet bekräftar att sänkningen är tillfällig och att M villkorat kan 'förlänga' den, vilket är en förlängning av den beslutade tillfälliga ordningen — inte ett besked i avgränsningsfrågan om sänkningen ska göras permanent, så 'villkorat' kräver en välvillig tolkning citatet inte bär."
+      }
+    ],
+    "verifyReason": "Citatet bekräftar att sänkningen är tillfällig och att M villkorat kan 'förlänga' den, vilket är en förlängning av den beslutade tillfälliga ordningen — inte ett besked i avgränsningsfrågan om sänkningen ska göras permanent, så 'villkorat' kräver en välvillig tolkning citatet inte bär."
   }
 ]
