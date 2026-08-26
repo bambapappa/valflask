@@ -3498,5 +3498,78 @@
       }
     ],
     "verifyReason": "Citatet bekräftar att sänkningen är tillfällig och att M villkorat kan 'förlänga' den, vilket är en förlängning av den beslutade tillfälliga ordningen — inte ett besked i avgränsningsfrågan om sänkningen ska göras permanent, så 'villkorat' kräver en välvillig tolkning citatet inte bär."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "c",
+      "position": "villkorat",
+      "condition_note": "Vinstutdelning ska förbjudas endast vid kvalitetsbrister upptäckta av Skolinspektionen.",
+      "quote": "förbjuda vinstutdelning vid kvalitetsbrister. Om Skolinspektionen upptäcker allvarliga brister ska pengarna användas för att åtgärda problemen, inte delas ut till ägarna.",
+      "person": null
+    },
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/utbildning/friskolor",
+    "articleTitle": "Friskolor | Centerpartiet",
+    "sourceUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/utbildning/friskolor",
+    "archiveUrl": null,
+    "dateStated": "2026-08-26",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-26-20-11",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-ko",
+      "party": "c",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "slopa dagens kösystem. Vi vill införa ett gemensamt och transparent skolval för alla. Det gör valfriheten verklig och stoppar möjligheten att ställa barn i kö från födseln.",
+      "person": null
+    },
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/utbildning/friskolor",
+    "articleTitle": "Friskolor | Centerpartiet",
+    "sourceUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/utbildning/friskolor",
+    "archiveUrl": null,
+    "dateStated": "2026-08-26",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-26-20-11",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-bemanning",
+      "party": "c",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Införa ett tak på max tio olika medarbetare i hemtjänsten per tvåveckorsperiod.",
+      "person": null
+    },
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/vard-och-omsorg/aldreomsorg",
+    "articleTitle": "Äldreomsorg | Centerpartiet",
+    "sourceUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/vard-och-omsorg/aldreomsorg",
+    "archiveUrl": null,
+    "dateStated": "2026-08-26",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-26-20-11",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet handlar om en kontinuitetsgräns (max tio olika medarbetare per tvåveckorsperiod i hemtjänsten), inte om en nationell bemanningsnorm, så 'ja'-positionen på delfrågan följer inte av citatet ensamt."
+      }
+    ],
+    "verifyReason": "Citatet handlar om en kontinuitetsgräns (max tio olika medarbetare per tvåveckorsperiod i hemtjänsten), inte om en nationell bemanningsnorm, så 'ja'-positionen på delfrågan följer inte av citatet ensamt."
   }
 ]
