@@ -17,7 +17,8 @@ if (!existsSync(src)) {
 // WebMCP-klienten har inga importberoenden. Node tar bort TypeScript-typerna
 // direkt, vilket gör den här nödvändiga klientbyggnaden oberoende av Astro- och
 // esbuild-installationen. Bygget behåller ändå en storleksgrind.
-writeFileSync(out, stripTypeScriptTypes(readFileSync(src, "utf8")), "utf8");
+const compiled = stripTypeScriptTypes(readFileSync(src, "utf8")).replace(/[\t ]+$/gm, "");
+writeFileSync(out, compiled, "utf8");
 
 const size = statSync(out).size;
 console.log(`webmcp.js: ${size} bytes (${(size / 1024).toFixed(1)} kB)`);
