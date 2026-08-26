@@ -3571,5 +3571,120 @@
       }
     ],
     "verifyReason": "Citatet handlar om en kontinuitetsgräns (max tio olika medarbetare per tvåveckorsperiod i hemtjänsten), inte om en nationell bemanningsnorm, så 'ja'-positionen på delfrågan följer inte av citatet ensamt."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-nettonull",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "vi måste sluta använda fossila bränslen om vi ska nå målet om nettonollutsläpp senast 2045",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G6",
+        "reason": "Okänd delfråga: sq-klimat-nettonull"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/energi-2",
+    "articleTitle": "Energi – Liberalerna",
+    "runId": "run-2026-08-26-22-05"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Liberalerna vill bland annat se åtgärder för att minska stöket i klassrummen till ett förstatligande av skolan, en reform av skolans styrning som även innebär att staten tar över ansvaret för finansieringen av kommunala och fristående skolor.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/lararna-2",
+    "articleTitle": "Lärare – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/lararna-2",
+    "archiveUrl": null,
+    "dateStated": "2026-05-04",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-26-22-05",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi vill förstatliga de kommunala skolorna så att alla elever får en bra utbildning, oavsett var i landet de bor.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/skola",
+    "articleTitle": "Skola – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/skola",
+    "archiveUrl": null,
+    "dateStated": "2026-08-24",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-26-22-05",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi gillar vanligtvis konkurrens men i skolan vill vi fasa ut vinstintresset då dagens friskolesystemet inte lyckas ta till vara marknadskrafternas styrka på ett för skolan tillfredsställande sätt.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/skola",
+    "articleTitle": "Skola – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/skola",
+    "archiveUrl": null,
+    "dateStated": "2026-08-24",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-26-22-05",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-ko",
+      "party": "l",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Många friskolor använder sig av kötid vid urval av elever. Vi anser att kötiden ska vara maximalt ett år så att alla har en rimlig chans att komma in.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/skolvalet",
+    "articleTitle": "Skolvalet – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/skolvalet",
+    "archiveUrl": null,
+    "dateStated": "2025-05-16",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-26-22-05",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
