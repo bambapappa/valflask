@@ -33,6 +33,10 @@ on:
         description: "Rundgång: låt partierna varvas i stället för att det minst lästa går först. För att TÖMMA en katalogbacklog — stäng av när den är tom."
         type: boolean
         default: false
+      kallor:
+        description: "Riktad körning: kommaseparerad lista feed-id ur sources.yaml (t.ex. l-politik-sitemap,c-politik-sitemap). Tomt = alla feeds som vanligt."
+        type: string
+        default: ""
 permissions:
   contents: write
   issues: write
@@ -130,6 +134,7 @@ jobs:
           # räknar allt vi läst hos partiet, inte vad som är kvar, så det parti
           # som har oläst kvar kan vara just det som får sämst rang.
           SKORD_RUNDGANG: ${{ inputs.rundgang && '1' || '' }}
+          SKORD_KALLOR: ${{ inputs.kallor }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
           # Frågevågen PÅ som default (mänskligt beslut 2026-07-11); stäng av genom att
           # sätta repovariabeln STANCES_ENABLED=false. STANCES_MODE osatt = review
