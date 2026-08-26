@@ -200,6 +200,11 @@ async function init() {
   const partyMap = new Map(summaryData.parties.map((p) => [p.code, p]));
   const checkboxes = container.querySelectorAll<HTMLInputElement>('input[name="party"]');
 
+  // WebMCP:s jämförelseverktyg skickar användaren hit med en synlig,
+  // delbar URL. Samma väg fungerar förstås lika bra för en människa.
+  const requested = new Set(new URLSearchParams(window.location.search).get("parties")?.split(",") ?? []);
+  checkboxes.forEach((cb) => { cb.checked = requested.has(cb.value); });
+
   function render() {
     const checked = Array.from(checkboxes).filter((cb) => cb.checked).map((cb) => cb.value);
     if (checked.length === 0) {
@@ -249,6 +254,7 @@ async function init() {
   }
 
   checkboxes.forEach((cb) => cb.addEventListener("change", render));
+  if (requested.size > 0) render();
 }
 
 document.addEventListener("DOMContentLoaded", init);
