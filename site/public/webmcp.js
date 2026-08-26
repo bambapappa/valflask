@@ -7,25 +7,20 @@
  * kan granska exakt samma underlag.
  */
 
-                                                                          
-                                                                                                                                                                                                                                       
-                                                                                                      
-                                                                                                                               
-                                                                                                                  
-                                                                                                                                                                  
+
+
+
+
+
+
 
 const appDocument = document                                                                                    ;
 const partyNames                         = { s: "Socialdemokraterna", m: "Moderaterna", sd: "Sverigedemokraterna", c: "Centerpartiet", v: "Vänsterpartiet", kd: "Kristdemokraterna", l: "Liberalerna", mp: "Miljöpartiet" };
 
-function unwrap   (value         )    {
-  const body = value                ;
-  return body.data ?? value     ;
-}
-
 async function getJson   (path        )             {
   const response = await fetch(path, { headers: { Accept: "application/json" } });
   if (!response.ok) throw new Error(`Kunde inte läsa ${path} (${response.status}).`);
-  return unwrap   (await response.json());
+  return await response.json()     ;
 }
 
 function formatMsek(value        )         {
@@ -35,7 +30,12 @@ function formatMsek(value        )         {
 }
 
 function sourceLabel(source        )         {
-  return source.domain || new URL(source.url).hostname;
+  if (source.domain) return source.domain;
+  try {
+    return new URL(source.url).hostname;
+  } catch {
+    return "källa";
+  }
 }
 
 function el                                       (tag   , text         )                           {
@@ -95,18 +95,23 @@ function showEvidenceBoard(evidence            , dataHash         )       {
   board.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-async function searchEvidence(input                                                                                                          ) {
+async function searchEvidence(input                                                                                                                                          ) {
   const partyCodes = new Set(input.party_codes ?? []);
   const kind = input.kind ?? "alla";
   const max = Math.max(1, Math.min(input.max_results ?? 12, 20));
   const category = input.category?.trim().toLowerCase();
-  const [promises, stances, issuesResponse, integrity] = await Promise.all([
-    getJson               ("/api/v1/promises.json"), getJson              ("/api/v1/stances.json"),
+  const [promisesResponse, stancesResponse, issuesResponse, integrity] = await Promise.all([
+    getJson                         ("/api/v1/promises.json"), getJson                           ("/api/v1/stances.json"),
     getJson                     ("/api/v1/issues.json"), getJson                       ("/api/v1/integrity.json"),
   ]);
+  const promises = promisesResponse.data;
+  const stances = stancesResponse.stances;
+  if (!Array.isArray(promises) || !Array.isArray(stances) || !Array.isArray(issuesResponse.issues)) {
+    throw new Error("Utlovats publicerade API-svar har oväntat format.");
+  }
   const evidence             = [];
   if (kind === "alla" || kind === "loften") for (const promise of promises) {
-    if (promise.status === "tillbakadragen" || (partyCodes.size && !promise.parties.some((code) => partyCodes.has(code))) || (category && promise.category.toLowerCase() !== category)) continue;
+    if (promise.status === "tillbakadragen" || (partyCodes.size && !promise.parties.some((code) => partyCodes.has(code))) || (category && promise.category.toLowerCase() !== category) || (input.require_archive_copy && !promise.source.archive_url)) continue;
     const multiplier = promise.cost.period === "per_ar" ? 4 : 1;
     evidence.push({ kind: "lofte", title: promise.title, party_codes: promise.parties, quote: promise.quote, date: promise.date_stated, source: promise.source, page_url: `/lofte/${promise.id}/${promise.slug}`, detail: `Kostnadsintervall för mandatperioden: ${formatMsek(promise.cost.msek_low * multiplier)}–${formatMsek(promise.cost.msek_high * multiplier)}.` });
   }
@@ -116,7 +121,7 @@ async function searchEvidence(input                                             
       if (partyCodes.size && !partyCodes.has(cell.party)) continue;
       const context = subquestions.get(cell.subquestion_id);
       const statement = cell.statements.find((item) => item.id === cell.current.statement_id);
-      if (!context || !statement || (category && context.issue.category.toLowerCase() !== category)) continue;
+      if (!context || !statement || (category && context.issue.category.toLowerCase() !== category) || (input.require_archive_copy && !statement.source.archive_url)) continue;
       evidence.push({ kind: "besked", title: `${context.issue.title}: ${context.text}`, party_codes: [cell.party], quote: statement.quote, date: statement.date_stated, source: statement.source, page_url: `/fraga/${context.issue.slug}#${cell.subquestion_id}-${cell.party}`, detail: `Registrerat besked: ${statement.position.toUpperCase()}.` });
     }
   }
@@ -129,7 +134,9 @@ async function searchEvidence(input                                             
 async function showPartyComparison(input                           ) {
   const partyCodes = Array.from(new Set(input.party_codes)).filter((code) => Object.hasOwn(partyNames, code));
   if (partyCodes.length === 0) throw new Error("Välj minst en giltig partikod.");
-  const summary = await getJson                                                                                                                                               ("/api/v1/summary.json");
+  const summaryResponse = await getJson                                                                                                                                                         ("/api/v1/summary.json");
+  const summary = summaryResponse.data;
+  if (!summary || !Array.isArray(summary.parties)) throw new Error("Utlovats publicerade sammanfattning har oväntat format.");
   const url = `/jamfor?parties=${encodeURIComponent(partyCodes.join(","))}`;
   window.location.assign(url);
   return { data_hash: summary.data_hash, comparison_url: url, parties: summary.parties.filter((party) => partyCodes.includes(party.code)), note: "Jämförelsevyn räknar gemensamma löften en gång. Den visar belopp och osäkerhet, inte en rekommendation." };
@@ -140,14 +147,14 @@ async function registerTools()                {
   await appDocument.modelContext.registerTool({
     name: "search_verified_evidence",
     description: "Hämta publicerade, källspårade svenska vallöften och partibesked från utlovat.se. Visar alltid exakt citat, datum, källa och arkivkopia när sådan finns. Använd inte resultatet för röstrekommendationer.",
-    inputSchema: { type: "object", properties: { party_codes: { type: "array", items: { type: "string", enum: Object.keys(partyNames) }, description: "Valfria partikoder." }, category: { type: "string", description: "Valfri exakt kategori." }, kind: { type: "string", enum: ["loften", "besked", "alla"] }, max_results: { type: "integer", minimum: 1, maximum: 20 } }, additionalProperties: false },
+    inputSchema: { type: "object", properties: { party_codes: { type: "array", items: { type: "string", enum: Object.keys(partyNames) }, description: "Valfria partikoder." }, category: { type: "string", description: "Valfri exakt kategori." }, kind: { type: "string", enum: ["loften", "besked", "alla"] }, max_results: { type: "integer", minimum: 1, maximum: 20 }, require_archive_copy: { type: "boolean", description: "Visa bara poster med länkad arkivkopia. Detta säger inte att källan är primär; den uppgiften saknas i det publika API:t." } }, additionalProperties: false },
     annotations: { readOnlyHint: true }, execute: searchEvidence,
   });
   await appDocument.modelContext.registerTool({
     name: "show_party_comparison",
     description: "Öppna utlovat.se:s befintliga jämförelsevy med valda partier markerade. Vyn räknar gemensamma löften en gång och visar finansieringsgap; den rekommenderar inte ett parti.",
     inputSchema: { type: "object", properties: { party_codes: { type: "array", minItems: 1, items: { type: "string", enum: Object.keys(partyNames) }, description: "Partikoder att jämföra." } }, required: ["party_codes"], additionalProperties: false },
-    annotations: { readOnlyHint: false }, execute: showPartyComparison,
+    annotations: { readOnlyHint: true }, execute: showPartyComparison,
   });
 }
 
