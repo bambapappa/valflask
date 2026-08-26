@@ -390,6 +390,17 @@ html:not([data-estimat="pa"]) .lopsedel .belopp {
 html:not([data-estimat="pa"]) .belopp * {
   color: transparent !important;
 }
+/* Partiets egna belopp är ett direkt källpåstående och ska kunna läsas utan
+   att läsaren först godkänner Utlovat.se:s beräkningar. */
+html:not([data-estimat="pa"]) .belopp.partibelopp,
+html:not([data-estimat="pa"]) .belopp.partibelopp * {
+  background: transparent;
+  color: inherit !important;
+  cursor: inherit;
+  padding: 0;
+  -webkit-user-select: auto;
+  user-select: auto;
+}
 
 /* Knapp som låser upp beloppen (i löpsedeln); syns bara i maskat läge. */
 .grind-oppna {
