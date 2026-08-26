@@ -21,6 +21,28 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-26 — WebMCP visar underlag utan att dra en politisk slutsats
+
+**Gäller:** Fläskvågen och Frågevågen. Handlingsvågen har inte ett eget
+WebMCP-verktyg i detta snitt. Det publicerade beståndet ändras inte.
+
+**Beslut:** Sajtverktygen får bara läsa de publika API-svaren. Varje träff i
+bevisbrädet bär det exakta citatet, datumet, källadressen och arkivkopian när
+den finns. Verktyget får filtrera på arkivkopia, men får inte kalla en källa
+primärkälla eftersom den uppgiften saknas i det publika API:t. Jämförelse-
+verktyget öppnar bara den befintliga, synliga jämförelsevyn och märks som
+läsande.
+
+**Motiv:** WebMCP ska göra samma underlag synligt för agenten och läsaren, som
+en gemensam marginal bredvid källtexten — inte skapa ett nytt facit. Den
+verkliga API-formen testas mot den publicerade klienten, så ett antagande om
+ett datakuvert inte tyst kan göra bevisbrädet tomt.
+
+**Förkastade alternativ:** röstrekommendationer eller partipoäng (flyttar
+slutsatsen från läsaren); en ny privat backend (ger två sanningar om samma
+underlag); att märka arkiverade källor som primärkällor utan ett sådant fält i
+datat.
+
 ## 2026-08-25 — AI-metoden använder den uppmätta andelen prissatta löften
 
 **Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga prislappar i
