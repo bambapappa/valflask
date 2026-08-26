@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
-import { LiveSource, type SourceConfig } from "./fetch.ts";
+import { LiveSource, type SourceConfig, type SourceFeed } from "./fetch.ts";
 import { OpenRouterClient, type LlmLed } from "./llm.ts";
 import { createArchiveFn } from "./archive.ts";
 import { runPipeline, type PipelineContext } from "./index.ts";
@@ -11,6 +11,23 @@ const DATA_DIR = resolve(process.cwd(), "../data");
 function getEnv(env: NodeJS.ProcessEnv, name: string): string | undefined {
   const v = env[name];
   return v && v.trim() !== "" ? v.trim() : undefined;
+}
+
+/**
+ * Filtrerar feeds mot SKORD_KALLOR — en kommaseparerad lista feed-id.
+ *
+ * Tomt/osatt värde ger alla feeds tillbaka orört, precis som utan flaggan.
+ * Ett värde som inte matchar NÅGOT id är ett stavfel, inte en tom körning —
+ * den ska stoppa körningen med besked, inte tyst hämta noll sidor.
+ */
+export function valjFeeds(feeds: readonly SourceFeed[], kallorRaw: string | undefined): SourceFeed[] {
+  if (!kallorRaw) return [...feeds];
+  const villa = new Set(kallorRaw.split(",").map((s) => s.trim()).filter((s) => s !== ""));
+  const valda = feeds.filter((f) => villa.has(f.id));
+  if (valda.length === 0) {
+    throw new Error(`SKORD_KALLOR="${kallorRaw}" matchar inget feed-id i sources.yaml.`);
+  }
+  return valda;
 }
 
 /**
@@ -209,10 +226,22 @@ export function buildContextFromEnv(
     throw new Error("sources.yaml: tom allowlist_domains.");
   }
 
+  // SKORD_KALLOR: en riktad körning mot namngivna feed-id, i stället för hela
+  // sources.yaml. Budgeten (maxNewArticles) delas annars på alla feeds i tur och
+  // ordning, och en katalogbacklog hos ett enda parti får bara sin andel — även
+  // med SKORD_RUNDGANG på, som bara jämnar ut ordningen INOM den delade budgeten.
+  // Sätts flaggan töms budgeten mot exakt de feeds som anges, tills backlogen är
+  // slut. En körningsinput, inte en repovariabel: den går inte att glömma på.
+  const kallorRaw = getEnv(env, "SKORD_KALLOR");
+  const feeds = valjFeeds(config.feeds, kallorRaw);
+  if (kallorRaw) {
+    console.log(`[skörd] riktad körning: ${feeds.length} feed(s) — ${feeds.map((f) => f.id).join(", ")}`);
+  }
+
   const llm = new OpenRouterClient({ led: byggLed(env, { extract, verify, copy }) });
 
   const articleSource = new LiveSource({
-    feeds: config.feeds,
+    feeds,
     limits: config.limits,
     cacheDir: opts.cacheDir ?? null,
   });

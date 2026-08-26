@@ -1,7 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { buildContextFromEnv, byggLed } from "../src/cli-run.ts";
-import type { SourceConfig } from "../src/fetch.ts";
+import { buildContextFromEnv, byggLed, valjFeeds } from "../src/cli-run.ts";
+import type { SourceConfig, SourceFeed } from "../src/fetch.ts";
 
 const config: SourceConfig = {
   allowlist_domains: ["data.riksdagen.se", "www.dn.se"],
@@ -144,6 +144,55 @@ describe("cli-run buildContextFromEnv", () => {
       }),
       /allowlist/,
     );
+  });
+
+  // SKORD_KALLOR: en riktad körning som bara läser namngivna feeds. Utan den
+  // delar en katalogbacklog hos ETT parti budgeten med alla andra feeds i
+  // sources.yaml — även med SKORD_RUNDGANG på.
+  it("SKORD_KALLOR osatt lämnar alla feeds orörda", () => {
+    const ctx = buildContextFromEnv(baseEnv as NodeJS.ProcessEnv, opts);
+    assert.ok(ctx.articleSource);
+  });
+
+  it("kastar när SKORD_KALLOR inte matchar något feed-id", () => {
+    assert.throws(
+      () => buildContextFromEnv(envWith({ SKORD_KALLOR: "finns-inte" }), opts),
+      /SKORD_KALLOR.*matchar inget feed-id/u,
+    );
+  });
+
+  it("SKORD_KALLOR med ett giltigt id bygger ändå en giltig körning", () => {
+    const ctx = buildContextFromEnv(envWith({ SKORD_KALLOR: "dn" }), opts);
+    assert.ok(ctx.articleSource, "en riktad körning ska fortfarande ge en fungerande källa");
+  });
+});
+
+describe("valjFeeds", () => {
+  const feeds: SourceFeed[] = [
+    { id: "l-politik-sitemap", type: "sitemap", url: "https://www.liberalerna.se/sitemap.xml" },
+    { id: "c-politik-sitemap", type: "sitemap", url: "https://www.centerpartiet.se/sitemap.xml" },
+    { id: "dn", type: "rss", url: "https://www.dn.se/rss/politik" },
+  ];
+
+  it("utan SKORD_KALLOR: alla feeds orörda, i samma ordning", () => {
+    assert.deepEqual(valjFeeds(feeds, undefined), feeds);
+  });
+
+  it("tom sträng räknas som osatt", () => {
+    assert.deepEqual(valjFeeds(feeds, ""), feeds);
+  });
+
+  it("filtrerar till namngivna id, mellanslag runt kommatecken tolereras", () => {
+    const valda = valjFeeds(feeds, "l-politik-sitemap, c-politik-sitemap");
+    assert.deepEqual(valda.map((f) => f.id), ["l-politik-sitemap", "c-politik-sitemap"]);
+  });
+
+  it("ett enda id ger en enda feed", () => {
+    assert.deepEqual(valjFeeds(feeds, "dn").map((f) => f.id), ["dn"]);
+  });
+
+  it("kastar — inte tyst noll — när inget id matchar", () => {
+    assert.throws(() => valjFeeds(feeds, "stavfel-har"), /SKORD_KALLOR="stavfel-har"/u);
   });
 });
 
