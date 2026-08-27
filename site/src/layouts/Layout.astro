@@ -37,16 +37,17 @@ interface Props {
   hasTaxameter?: boolean;
   jsonLd?: object | object[];
   canonicalPath?: string;
+  lang?: "sv" | "en";
 }
 
 const canonicalBase = Astro.site?.origin ?? "https://utlovat.se";
-const { title, description = "Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften.", ogImage = "/og/start.png", hasTaxameter = false, jsonLd, canonicalPath } = Astro.props;
+const { title, description = "Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften.", ogImage = "/og/start.png", hasTaxameter = false, jsonLd, canonicalPath, lang = "sv" } = Astro.props;
 const ogImageUrl = ogImage.startsWith("https://") ? ogImage : `${canonicalBase}${ogImage}`;
 const canonicalUrl = canonicalPath ? `${canonicalBase}${canonicalPath}` : new URL(Astro.url.pathname, canonicalBase).href;
 const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 <!DOCTYPE html>
-<html lang="sv">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -63,7 +64,7 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <meta property="og:url" content={canonicalUrl} />
   <meta property="og:site_name" content="utlovat.se" />
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="sv_SE" />
+  <meta property="og:locale" content={lang === "en" ? "en_US" : "sv_SE"} />
   <meta property="twitter:title" content={title} />
   <meta property="twitter:description" content={description} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -91,6 +92,7 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   <KostnadsGrind />
   <script is:inline src="/estimat-grind.js"></script>
   <script is:inline src="/loftesfilter.js"></script>
+  <script is:inline src="/webmcp.js"></script>
   {hasTaxameter && <script is:inline src="/taxameter.js"></script>}
 </body>
 </html>

@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Granska med mig — utlovat.se",
+    "url": "https://utlovat.se/granska",
+    "description": "Ett källspårat granskningskort för människa och agent. Det visar belägg och luckor utan röstrekommendationer.",
+  },
+];
+---
+<Layout
+  title="Granska med mig — utlovat.se"
+  description="Bygg ett källspårat granskningskort med publicerade citat, originalkällor, arkivkopior och synliga luckor."
+  jsonLd={jsonLd}
+  canonicalPath="/granska"
+>
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <div class="etikett">WEBMCP-DEMO · MÄNNISKA + AGENT</div>
+      <h1>Granska med mig</h1>
+      <p>
+        Här blir en fråga till ett underlag som går att kontrollera: citat, datum,
+        källa, arkivkopia och det som saknas i urvalet. Agenten sorterar — du drar
+        slutsatsen.
+      </p>
+    </div>
+
+    <section class="webmcp-brief" aria-live="polite" aria-label="Granskningskort">
+      <div id="webmcp-brief-outlet">
+        <p class="webmcp-brief__empty">
+          Be en agent att bygga ett granskningskort för en sakfråga och några partier.
+          Kortet fylls här med samma publicerade underlag som agenten får läsa.
+        </p>
+      </div>
+    </section>
+
+    <section class="prosa-content webmcp-demo-guide" aria-labelledby="sa-fungerar-det">
+      <h2 id="sa-fungerar-det">Tre steg, samma bevis</h2>
+      <ol>
+        <li>Be om en neutral fråga, till exempel: <em>”Jämför S, M och V om skolan. Visa bara arkiverade citat.”</em></li>
+        <li>Agenten bygger kortet och pekar ut vilka poster som matchar — och vilka partier som inte har en träff i just urvalet.</li>
+        <li>Öppna citatet, källan eller arkivkopian själv. Dela sedan länken om någon annan ska kunna granska samma avgränsning.</li>
+      </ol>
+      <p class="webmcp-demo-guide__note">
+        En tom ruta är inte ett omdöme om ett parti. Den betyder bara att sökningen
+        inte hittade en publicerad post som matchar de valda orden och filtren.
+      </p>
+    </section>
+  </div>
+</Layout>

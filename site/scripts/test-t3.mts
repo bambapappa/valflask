@@ -58,8 +58,9 @@ for (const [dataFile, schemaFile] of Object.entries(schemaFiles)) {
   }
 }
 
-// Part 2: HTML lang="sv"
-console.log("\n--- HTML: lang=\"sv\" ---");
+// Part 2: HTML language. Utlovat is Swedish; /webmcp is the deliberately
+// narrow English contest entry and must not silently make the rest bilingual.
+console.log("\n--- HTML: declared language ---");
 
 function findHtmlFiles(dir: string): string[] {
   const results: string[] = [];
@@ -80,14 +81,18 @@ let langOk = 0;
 let langFail = 0;
 for (const f of htmlFiles) {
   const content = readFileSync(f, "utf8");
-  if (content.includes('lang="sv"')) {
+  const relativePath = f.replace(DIST_DIR, "");
+  const expectedLanguage = relativePath === "/webmcp/index.html" ? "en" : "sv";
+  if (content.includes(`lang="${expectedLanguage}"`)) {
     langOk++;
   } else {
     langFail++;
-    fail(`Missing lang="sv": ${f.replace(DIST_DIR, "")}`);
+    fail(`Missing lang="${expectedLanguage}": ${relativePath}`);
   }
 }
-check(`lang="sv" on all HTML pages`, langFail === 0, `${langOk} ok, ${langFail} missing`);
+check("declared language on all HTML pages", langFail === 0, `${langOk} ok, ${langFail} missing`);
+const webmcpHtml = readFileSync(resolve(DIST_DIR, "webmcp/index.html"), "utf8");
+check("WebMCP-demon förklarar synliga estimat utan svensk kvitteringsruta", webmcpHtml.includes("Cost ranges are shown directly on this challenge page") && webmcpHtml.includes("Utlovat.se estimate"));
 
 // Part 3: tabular-nums in CSS or HTML
 console.log("\n--- tabular-nums ---");

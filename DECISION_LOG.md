@@ -21,6 +21,152 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-26 — WebMCP visar underlag utan att dra en politisk slutsats
+
+**Gäller:** Fläskvågen och Frågevågen. Handlingsvågen har inte ett eget
+WebMCP-verktyg i detta snitt. Det publicerade beståndet ändras inte.
+
+**Beslut:** Sajtverktygen får bara läsa de publika API-svaren. Varje träff i
+bevisbrädet bär det exakta citatet, datumet, källadressen och arkivkopian när
+den finns. Verktyget får filtrera på arkivkopia, men får inte kalla en källa
+primärkälla eftersom den uppgiften saknas i det publika API:t. Jämförelse-
+verktyget öppnar bara den befintliga, synliga jämförelsevyn och märks som
+läsande. Granskningskortet delar enbart sitt urval i länken — partier,
+sökord, posttyp och arkivfilter — och räknar fram träffarna igen från det
+publicerade underlaget. Det visar alltid dataversionen, antalet träffar per
+parti och en uttrycklig förklaring när en part är tom i just urvalet.
+
+**Motiv:** WebMCP ska göra samma underlag synligt för agenten och läsaren, som
+en gemensam marginal bredvid källtexten — inte skapa ett nytt facit. Den
+verkliga API-formen testas mot den publicerade klienten, så ett antagande om
+ett datakuvert inte tyst kan göra bevisbrädet tomt. En delbar avgränsning är
+värdefullare än en skärmbild av ett tillfälligt resultat: den går att läsa om,
+men dess hash visar samtidigt om det underliggande beståndet har ändrats.
+
+**Förkastade alternativ:** röstrekommendationer eller partipoäng (flyttar
+slutsatsen från läsaren); en ny privat backend (ger två sanningar om samma
+underlag); att märka arkiverade källor som primärkällor utan ett sådant fält i
+datat; att lägga själva bevisen i länken (gör URL:en skör och blandar ett
+delningsurval med en fryst kopia av datat).
+
+## 2026-08-27 — Granskningskortet skiljer belägg, arkivbrist och sökt men otydligt besked
+
+**Gäller:** Fläskvågen och Frågevågen. Det publicerade beståndet ändras inte.
+
+**Beslut:** Ett parti med en cell där `inget_tydligt_besked` är registrerat
+visas inte längre som en anonym nollträff. Kortet anger att beskedet är
+registrerat och när frågan senast söktes. När läsaren kräver arkivkopia visar
+kortet också om det finns belägg som just saknar sådan kopia. Kategori blir
+ett uttryckligt, delbart filter i kortets URL. Neutrala svenska
+frågeformuleringar tar bort vanliga frågeord och godtar enkel bestämd form
+som `skolan`/`skola`, men hela sökfrasen visas fortfarande för läsaren. En
+årlig kostnad visar både multiplikatorn och att intervallet bygger på ett
+fyraårigt mandatperiodsantagande; en engångskostnad räknas inte om.
+
+**Motiv:** Ett tomrum kan vara tre olika saker: inget belägg i urvalet,
+ett registrerat otydligt besked eller belägg som ett snävare arkivkrav valt
+bort. De får inte smälta samman till samma formulering. En delad länk är bara
+granskningsbar om den återställer alla filter. Ändringen följer en oberoende
+testning av samma publika API-ytor och testas i den byggda klienten.
+
+**Förkastade alternativ:** att skapa en källa eller ett citat åt ett otydligt
+besked (datat bär bara position och sökdatum); att tolka ett filtrerat bortfall
+som frånvaro av politik; full språkmodellstolkning av sökfrasen i webbläsaren
+(skulle göra urvalet svårare att reproducera).
+
+## 2026-08-27 — Tävlingsdemon visar belopp utan popup, med synlig grund
+
+**Gäller:** Fläskvågen — men endast dess kostnadsuppgifter i den engelska WebMCP-ingången `/webmcp`. Svenska publika vyer och deras befintliga kvittering för Utlovat.se:s beräkningar ändras inte. Det publicerade beståndet ändras inte.
+
+**Beslut (mänskligt beslut 2026-08-27):** I tävlingsdemon visas
+kostnadsintervall direkt, utan den svenska popupen. Ett belopp som inte är
+partiets eget får alltid `≈`, sitt intervall och en engelsk rad som säger
+"Utlovat.se estimate" eller "Utlovat.se calculation" samt att intervallet
+inte är ett faktum. Partiets egna belopp märks som sådana.
+
+**Motiv:** Juryn ska kunna följa människa–agent-flödet utan ett onödigt
+avbrott. Den synliga märkningen gör skillnaden mellan en parts uppgift och
+Utlovat.se:s beräkning läsbar i varje resultat, i stället för att gömma den
+bakom en engångsdialog.
+
+**Förkastat alternativ:** att slå på estimaten globalt (skulle ändra de
+svenska publika vyernas etablerade läsval); att visa Utlovat.se:s beräkningar
+utan ≈, intervall och underlag (skulle få en uppskattning att se ut som facit).
+
+## 2026-08-27 — Bevisbordet delar data men inte människans slutsats
+
+**Gäller:** Fläskvågen och Frågevågen. Det publicerade beståndet ändras inte.
+
+**Beslut:** Alla WebMCP-läsverktyg delar en sidlokal cache av de fyra publika
+API-svaren; en andra sökning eller ett andra kort hämtar inte om löftesfilen.
+Ett nytt bevisbord och ett delat granskningskort är alltid `unverified` tills
+en människa i den synliga sidan själv har kryssat i att underlaget lästs.
+Statusverktyget får bara läsa den markeringen och kan aldrig sätta den.
+
+**Motiv:** Samma data ska visas för agent och människa utan att kostnaden växer
+med antalet verktyg. Den aktuella WebMCP-klienten registrerar
+`document.modelContext.registerTool`, men saknar både `provideContext()` och
+`requestUserInteraction()`; `provideContext()` är dessutom borttagen ur den
+nuvarande specifikationen. En synlig, agent-icke-skrivbar markering är därför
+ärligare än att låtsas att en ej tillgänglig API-spärr bekräftar läsning.
+
+**Förkastade alternativ:** lägga en fejkad kvittering i verktygssvaret
+(agenten skulle då kunna intyga sin egen granskning); låta varje verktyg ladda
+ned samma data på nytt; bero på ett äldre, borttaget `provideContext()`-API.
+
+## 2026-08-27 — Löftespåraren visar kedjan men dömer inte utfallet
+
+**Gäller:** Fläskvågen och Handlingsvågen. Frågevågen och det publicerade
+beståndet ändras inte.
+
+**Beslut:** Det publika API:t projicerar de aktiva, redan granskade
+kopplingarna från löfte till riksdagshandling. `trace_promise` visar löftets
+exakta citat, partiets källa, arkivkopia när den finns, handlingens egen källa
+och den registrerade kopplingsnoten. På en öppen löftessida finns samma
+läsverktyg utan att agenten anger id:t. Resultatet säger uttryckligen att det
+inte avgör om löftet hölls eller bröts.
+
+**Motiv:** Evidenskedjan är användbar först när läsaren kan följa varje led
+själv. Ett domsord skulle däremot blanda ihop den kontrollerade kopplingen
+mellan ett löfte och en handling med den politiska slutsats som Utlovat.se
+inte har mandat att dra.
+
+**Förkastade alternativ:** att skeppa Handlingsvågens råa 17 MB-handlingsfil
+till klienten; att använda maskinens riktning som ett automatiskt omdöme; att
+bygga Motbevisaren här. Den senare är beslutad som ett framtida internt verktyg
+och är inte del av den publika demonstrationen eller tävlingsbidraget.
+
+## 2026-08-27 — Tävlingsingången är engelskspråkig, underlaget är svenskt
+
+**Gäller:** Fläskvågen och Frågevågen. Handlingsvågens läsdata kan synas via
+löftespåraren, men dess egen läsargränssnitt ändras inte.
+
+**Beslut:** `/webmcp` är en separat engelskspråkig ingång till
+tävlingsdemonstrationen. Den har `lang="en"`, engelska verktygsbeskrivningar
+och förklarar att originalcitaten är svenska. Resten av utlovat.se förblir
+svenskspråkigt och testas uttryckligen som sådant.
+
+**Motiv:** En tävlingsjury måste kunna förstå metod och säkerhetsgräns utan en
+översättningstjänst, medan citatet måste återges ordagrant från den publicerade
+svenska källan. Ett enda engelskt förklaringslager bevarar båda egenskaperna.
+
+**Förkastade alternativ:** att översätta hela sajten under tävlingsperioden
+(stort läsarprojekt utan ny evidens); att översätta citaten och därmed skapa en
+andra, mindre kontrollerbar formulering av underlaget.
+
+## 2026-08-27 — Koden publiceras under Apache-2.0
+
+**Gäller:** Fläskvågen, Frågevågen och Handlingsvågen. Licensvillkoren för
+publicerade data och innehåll ändras inte.
+
+**Beslut:** Rotfilen `LICENSE` använder Apache License 2.0. Utlovat.se:s
+publicerade data och innehåll fortsätter att anges som CC BY 4.0 där de
+publiceras.
+
+**Motiv:** Apache-2.0 är valflasks etablerade kodlicens och tävlingsreglerna
+kräver en synlig open-source-licens i det publika källkodsförrådet. En
+kodlicens ersätter inte data- eller innehållslicensen.
+
 ## 2026-08-25 — AI-metoden använder den uppmätta andelen prissatta löften
 
 **Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga prislappar i

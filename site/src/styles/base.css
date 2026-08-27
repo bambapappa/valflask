@@ -240,6 +240,60 @@ button[aria-pressed="true"], .knapp[aria-pressed="true"] {
   color: var(--papper);
 }
 
+/* ── WebMCP: gemensamt bevisbräde ───────────────────────────────────────
+ * Ytan fylls av webmcp.js med samma citerade poster som agenten får läsa.
+ * Den använder bara klasser; CSP tillåter inte inline-stilar. */
+#webmcp-evidence-board {
+  position: fixed;
+  z-index: 20;
+  right: 1rem;
+  bottom: 1rem;
+  width: min(34rem, calc(100vw - 2rem));
+  max-height: min(42rem, calc(100vh - 2rem));
+  overflow: auto;
+  background: var(--papper);
+  color: var(--svarta);
+  border: var(--linje-tabell-ytter);
+  box-shadow: 0 0 0 4px var(--papper), 0 0 0 5px var(--svarta);
+  padding: 1rem;
+}
+#webmcp-evidence-board h2 { font-size: var(--steg-2); margin: 0; }
+.webmcp-evidence-board__header { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+.webmcp-evidence-board__header button { min-height: 2.25rem; padding: 0.3rem 0.6rem; }
+.webmcp-evidence-board__note, .webmcp-evidence-board__hash { font-family: var(--font-mono); font-size: var(--steg--1); color: var(--dis); }
+.webmcp-evidence-board__acknowledgement { display: block; border-top: var(--linje-under); margin-top: 1rem; padding-top: 0.9rem; font-family: var(--font-mono); font-size: var(--steg--1); color: var(--grafit); }
+.webmcp-evidence-board__acknowledgement input { margin-right: 0.45rem; }
+.webmcp-evidence-board__list { margin: 1rem 0; padding: 0; list-style: none; }
+.webmcp-evidence-board__list li { border-top: var(--linje-under); padding: 0.75rem 0; }
+.webmcp-evidence-board__list strong { display: block; margin: 0.25rem 0; }
+.webmcp-evidence-board__list blockquote { margin: 0.5rem 0; font-style: italic; }
+.webmcp-evidence-board__list p { margin: 0.35rem 0; }
+@media (max-width: 40rem) { #webmcp-evidence-board { right: 0.5rem; bottom: 0.5rem; width: calc(100vw - 1rem); max-height: calc(100vh - 1rem); } }
+
+/* ── WebMCP: delbart granskningskort ─────────────────────────────────── */
+.webmcp-brief {
+  max-width: 68rem;
+  margin: 2rem auto;
+  border: 2px solid var(--svarta);
+  background: var(--papper);
+  box-shadow: 0.5rem 0.5rem 0 var(--svarta);
+  padding: clamp(1rem, 3vw, 2rem);
+}
+.webmcp-brief__header h2 { margin: 0.4rem 0; font-size: clamp(2rem, 5vw, 3.75rem); line-height: 0.98; }
+.webmcp-brief__header p { margin-bottom: 1.5rem; color: var(--grafit); }
+.webmcp-brief__coverage { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 0.5rem; list-style: none; padding: 0; margin: 1.25rem 0; }
+.webmcp-brief__coverage li { border: var(--linje-under); padding: 0.6rem; min-height: 4.5rem; display: flex; flex-direction: column; justify-content: space-between; gap: 0.5rem; }
+.webmcp-brief__coverage strong { font-family: var(--font-mono); font-size: var(--steg--1); text-transform: uppercase; letter-spacing: var(--sparrning-etikett); }
+.webmcp-brief__coverage span { font-size: var(--steg--1); color: var(--grafit); }
+.webmcp-brief__gap { border-left: 0.35rem solid var(--svarta); background: var(--gul); padding: 0.8rem 1rem; font-family: var(--font-mono); font-size: var(--steg--1); }
+.webmcp-brief h3 { margin-top: 2rem; }
+.webmcp-brief__footer { border-top: var(--linje-under); display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1.5rem; padding-top: 1rem; }
+.webmcp-brief__footer p, .webmcp-brief__empty, .webmcp-demo-guide__note { font-family: var(--font-mono); font-size: var(--steg--1); color: var(--grafit); }
+.webmcp-demo-guide { margin-top: 3rem; }
+.webmcp-demo-guide li { margin: 0.75rem 0; }
+.webmcp-demo-guide__note { border-top: var(--linje-under); padding-top: 1rem; }
+@media (max-width: 40rem) { .webmcp-brief__footer { align-items: flex-start; flex-direction: column; } }
+
 /* ── Citat: bevismaterialet ── */
 blockquote {
   font-style: italic;

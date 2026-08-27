@@ -23,6 +23,7 @@ const jsonLd = [
       { "@type": "DataDownload", "name": "parties.json", "contentUrl": "https://utlovat.se/api/v1/parties.json", "encodingFormat": "application/json" },
       { "@type": "DataDownload", "name": "issues.json", "contentUrl": "https://utlovat.se/api/v1/issues.json", "encodingFormat": "application/json" },
       { "@type": "DataDownload", "name": "stances.json", "contentUrl": "https://utlovat.se/api/v1/stances.json", "encodingFormat": "application/json" },
+      { "@type": "DataDownload", "name": "promise-traces.json", "contentUrl": "https://utlovat.se/api/v1/promise-traces.json", "encodingFormat": "application/json" },
       { "@type": "DataDownload", "name": "constants.json", "contentUrl": "https://utlovat.se/api/v1/constants.json", "encodingFormat": "application/json" },
     ],
   },
@@ -87,6 +88,10 @@ const jsonLd = [
             <tr>
               <td><code>/api/v1/integrity.json</code></td>
               <td>Dataintegritet: sha256 av kanonisk promises.json + per fil (stances, issues)</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/promise-traces.json</code></td>
+              <td>Granskade kedjor från löfte till riksdagshandling, med källor och arkivkopior när de finns — utan dom om löftet hölls eller bröts</td>
             </tr>
           </tbody>
         </table>
