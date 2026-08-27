@@ -91,6 +91,8 @@ for (const f of htmlFiles) {
   }
 }
 check("declared language on all HTML pages", langFail === 0, `${langOk} ok, ${langFail} missing`);
+const webmcpHtml = readFileSync(resolve(DIST_DIR, "webmcp/index.html"), "utf8");
+check("WebMCP-demon förklarar synliga estimat utan svensk kvitteringsruta", webmcpHtml.includes("Cost ranges are shown directly on this challenge page") && webmcpHtml.includes("Utlovat.se estimate"));
 
 // Part 3: tabular-nums in CSS or HTML
 console.log("\n--- tabular-nums ---");

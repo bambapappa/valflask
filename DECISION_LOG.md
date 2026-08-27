@@ -74,6 +74,25 @@ besked (datat bär bara position och sökdatum); att tolka ett filtrerat bortfal
 som frånvaro av politik; full språkmodellstolkning av sökfrasen i webbläsaren
 (skulle göra urvalet svårare att reproducera).
 
+## 2026-08-27 — Tävlingsdemon visar belopp utan popup, med synlig grund
+
+**Gäller:** Fläskvågen — men endast dess kostnadsuppgifter i den engelska WebMCP-ingången `/webmcp`. Svenska publika vyer och deras befintliga kvittering för Utlovat.se:s beräkningar ändras inte. Det publicerade beståndet ändras inte.
+
+**Beslut (mänskligt beslut 2026-08-27):** I tävlingsdemon visas
+kostnadsintervall direkt, utan den svenska popupen. Ett belopp som inte är
+partiets eget får alltid `≈`, sitt intervall och en engelsk rad som säger
+"Utlovat.se estimate" eller "Utlovat.se calculation" samt att intervallet
+inte är ett faktum. Partiets egna belopp märks som sådana.
+
+**Motiv:** Juryn ska kunna följa människa–agent-flödet utan ett onödigt
+avbrott. Den synliga märkningen gör skillnaden mellan en parts uppgift och
+Utlovat.se:s beräkning läsbar i varje resultat, i stället för att gömma den
+bakom en engångsdialog.
+
+**Förkastat alternativ:** att slå på estimaten globalt (skulle ändra de
+svenska publika vyernas etablerade läsval); att visa Utlovat.se:s beräkningar
+utan ≈, intervall och underlag (skulle få en uppskattning att se ut som facit).
+
 ## 2026-08-27 — Bevisbordet delar data men inte människans slutsats
 
 **Gäller:** Fläskvågen och Frågevågen. Det publicerade beståndet ändras inte.
