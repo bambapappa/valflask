@@ -593,3 +593,45 @@ describe("tomt svar är inget svar", () => {
     await assert.rejects(c.complete("p", { model: "m" }), /finish_reason: okänt/);
   });
 });
+
+describe("avhugget svar är inte heller ett svar", () => {
+  /** Modellen hann skriva ett giltigt prefix innan taket tog slut. */
+  function avhugget(text: string): Response {
+    return resp(200, {
+      choices: [{ message: { content: text }, finish_reason: "length" }],
+    });
+  }
+  const ledet = [{ namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" }];
+
+  it("gör om det avhuggna svaret i stället för att lämna det vidare", async () => {
+    // Det halva svaret är giltig JSON som tvärt tar slut. Det lämnades vidare
+    // som om det vore ett svar, föll på JSON.parse i extract.ts, och det felet
+    // är inte retrybart — sidan lästes om i varje körning med samma utgång.
+    let calls = 0;
+    const httpFetch = async () =>
+      ++calls === 1 ? avhugget('{"promises":[{"title":"halv') : ok('{"ja":true}');
+    const c = new OpenRouterClient({ led: ledet, httpFetch, ...fast });
+    assert.equal(await c.complete("p", { model: "m" }), '{"ja":true}');
+    assert.equal(calls, 2);
+  });
+
+  it("bär med hur långt modellen hann", async () => {
+    const c = new OpenRouterClient({
+      led: ledet,
+      httpFetch: async () => avhugget('{ "promises'),
+      ...fast,
+    });
+    await assert.rejects(c.complete("p", { model: "m" }), /finish_reason: length, 11 tecken/);
+  });
+
+  it("rör inte ett helt svar som råkar sluta på taket", async () => {
+    // `finish_reason: length` på ett svar som ändå är komplett ska inte
+    // fällas — det är taket som är knappt, inte svaret som är trasigt.
+    const c = new OpenRouterClient({
+      led: ledet,
+      httpFetch: async () => resp(200, { choices: [{ message: { content: "klart" } }] }),
+      ...fast,
+    });
+    assert.equal(await c.complete("p", { model: "m" }), "klart");
+  });
+});
