@@ -31,17 +31,23 @@ bevisbrädet bär det exakta citatet, datumet, källadressen och arkivkopian nä
 den finns. Verktyget får filtrera på arkivkopia, men får inte kalla en källa
 primärkälla eftersom den uppgiften saknas i det publika API:t. Jämförelse-
 verktyget öppnar bara den befintliga, synliga jämförelsevyn och märks som
-läsande.
+läsande. Granskningskortet delar enbart sitt urval i länken — partier,
+sökord, posttyp och arkivfilter — och räknar fram träffarna igen från det
+publicerade underlaget. Det visar alltid dataversionen, antalet träffar per
+parti och en uttrycklig förklaring när en part är tom i just urvalet.
 
 **Motiv:** WebMCP ska göra samma underlag synligt för agenten och läsaren, som
 en gemensam marginal bredvid källtexten — inte skapa ett nytt facit. Den
 verkliga API-formen testas mot den publicerade klienten, så ett antagande om
-ett datakuvert inte tyst kan göra bevisbrädet tomt.
+ett datakuvert inte tyst kan göra bevisbrädet tomt. En delbar avgränsning är
+värdefullare än en skärmbild av ett tillfälligt resultat: den går att läsa om,
+men dess hash visar samtidigt om det underliggande beståndet har ändrats.
 
 **Förkastade alternativ:** röstrekommendationer eller partipoäng (flyttar
 slutsatsen från läsaren); en ny privat backend (ger två sanningar om samma
 underlag); att märka arkiverade källor som primärkällor utan ett sådant fält i
-datat.
+datat; att lägga själva bevisen i länken (gör URL:en skör och blandar ett
+delningsurval med en fryst kopia av datat).
 
 ## 2026-08-25 — AI-metoden använder den uppmätta andelen prissatta löften
 
