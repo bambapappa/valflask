@@ -74,6 +74,27 @@ besked (datat bär bara position och sökdatum); att tolka ett filtrerat bortfal
 som frånvaro av politik; full språkmodellstolkning av sökfrasen i webbläsaren
 (skulle göra urvalet svårare att reproducera).
 
+## 2026-08-27 — Bevisbordet delar data men inte människans slutsats
+
+**Gäller:** Fläskvågen och Frågevågen. Det publicerade beståndet ändras inte.
+
+**Beslut:** Alla WebMCP-läsverktyg delar en sidlokal cache av de fyra publika
+API-svaren; en andra sökning eller ett andra kort hämtar inte om löftesfilen.
+Ett nytt bevisbord och ett delat granskningskort är alltid `unverified` tills
+en människa i den synliga sidan själv har kryssat i att underlaget lästs.
+Statusverktyget får bara läsa den markeringen och kan aldrig sätta den.
+
+**Motiv:** Samma data ska visas för agent och människa utan att kostnaden växer
+med antalet verktyg. Den aktuella WebMCP-klienten registrerar
+`document.modelContext.registerTool`, men saknar både `provideContext()` och
+`requestUserInteraction()`; `provideContext()` är dessutom borttagen ur den
+nuvarande specifikationen. En synlig, agent-icke-skrivbar markering är därför
+ärligare än att låtsas att en ej tillgänglig API-spärr bekräftar läsning.
+
+**Förkastade alternativ:** lägga en fejkad kvittering i verktygssvaret
+(agenten skulle då kunna intyga sin egen granskning); låta varje verktyg ladda
+ned samma data på nytt; bero på ett äldre, borttaget `provideContext()`-API.
+
 ## 2026-08-27 — Koden publiceras under Apache-2.0
 
 **Gäller:** Fläskvågen, Frågevågen och Handlingsvågen. Licensvillkoren för

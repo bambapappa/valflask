@@ -261,6 +261,8 @@ button[aria-pressed="true"], .knapp[aria-pressed="true"] {
 .webmcp-evidence-board__header { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
 .webmcp-evidence-board__header button { min-height: 2.25rem; padding: 0.3rem 0.6rem; }
 .webmcp-evidence-board__note, .webmcp-evidence-board__hash { font-family: var(--font-mono); font-size: var(--steg--1); color: var(--dis); }
+.webmcp-evidence-board__acknowledgement { display: block; border-top: var(--linje-under); margin-top: 1rem; padding-top: 0.9rem; font-family: var(--font-mono); font-size: var(--steg--1); color: var(--grafit); }
+.webmcp-evidence-board__acknowledgement input { margin-right: 0.45rem; }
 .webmcp-evidence-board__list { margin: 1rem 0; padding: 0; list-style: none; }
 .webmcp-evidence-board__list li { border-top: var(--linje-under); padding: 0.75rem 0; }
 .webmcp-evidence-board__list strong { display: block; margin: 0.25rem 0; }

@@ -37,6 +37,7 @@ const responses: Record<string, unknown> = {
   "/api/v1/summary.json": { data: { data_hash: "h".repeat(64), parties: [{ code: "s", name: "Socialdemokraterna", total_msek: 400, promises_count: 1, financing_gap_msek: 0 }] } },
 };
 let navigationUrl = "";
+const fetches: Record<string, number> = {};
 const document = {
   modelContext: { registerTool: async (tool: Tool) => { registered.set(tool.name, tool); } },
   createElement: () => node(),
@@ -47,7 +48,10 @@ const document = {
 
 runInNewContext(client, {
   document,
-  fetch: async (path: string) => ({ ok: true, json: async () => responses[path] }),
+  fetch: async (path: string) => {
+    fetches[path] = (fetches[path] ?? 0) + 1;
+    return { ok: true, json: async () => responses[path] };
+  },
   window: { location: { assign: (url: string) => { navigationUrl = url; } } },
   console, URL, URLSearchParams, Object, Map, Set, Promise, Array, Math,
 });
@@ -58,11 +62,13 @@ await new Promise((resolve) => setTimeout(resolve, 0));
 const evidenceTool = registered.get("search_verified_evidence");
 const briefTool = registered.get("build_research_brief");
 const comparisonTool = registered.get("show_party_comparison");
-check("registrerar tre läsande verktyg", registered.size === 3 && evidenceTool?.annotations.readOnlyHint === true && briefTool?.annotations.readOnlyHint === true && comparisonTool?.annotations.readOnlyHint === true);
+const evidenceStatusTool = registered.get("get_evidence_board_status");
+check("registrerar fyra läsande verktyg", registered.size === 4 && evidenceTool?.annotations.readOnlyHint === true && briefTool?.annotations.readOnlyHint === true && comparisonTool?.annotations.readOnlyHint === true && evidenceStatusTool?.annotations.readOnlyHint === true);
 if (evidenceTool) {
   const result = await evidenceTool.execute({ party_codes: ["s"], kind: "alla", max_results: 12 });
   check("läser API-kuvertens faktiska former", result.result_count === 2 && Array.isArray(result.evidence));
   check("visar samma citat på bevisbrädet", Boolean(board));
+  check("märker nytt underlag som overifierat tills en människa kvitterar", (result.evidence_review as { status?: string }).status === "unverified");
   check("gör mandatperiodsantagandet synligt", (result.evidence as Array<{ detail: string }>).some((item) => item.detail.includes("årlig kostnad × 4") && item.detail.includes("fyraårigt mandatperiodsantagande")));
   const archived = await evidenceTool.execute({ party_codes: ["s"], kind: "alla", require_archive_copy: true });
   check("kan kräva arkivkopia utan att kalla den primärkälla", archived.result_count === 1 && String(archived.note).includes("inte en röstrekommendation"));
@@ -86,4 +92,11 @@ if (comparisonTool) {
 } else {
   check("jämförelseverktyget finns", false);
 }
+if (evidenceStatusTool) {
+  const result = await evidenceStatusTool.execute({});
+  check("statusverktyget faller säkert tillbaka till overifierat", result.status === "unverified");
+} else {
+  check("statusverktyget finns", false);
+}
+check("återanvänder de delade bevis-API-svaren mellan verktyg", ["/api/v1/promises.json", "/api/v1/stances.json", "/api/v1/issues.json", "/api/v1/integrity.json"].every((path) => fetches[path] === 1));
 if (errors) process.exit(1);
