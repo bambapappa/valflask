@@ -3686,5 +3686,70 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "party": "l",
+      "question_id": "sq-energi-karnkraft",
+      "position": "ja",
+      "quote": "L driver på för att regeringen ska fatta beslut om ny kärnkraft och för att subventioner ska betalas ut.",
+      "condition_note": null,
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: / must have required property 'subquestion_id'; / must NOT have additional properties"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/karnkraft",
+    "articleTitle": "Kärnkraft – Liberalerna",
+    "runId": "run-2026-08-26-23-44"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Förstatliga skolan. Vi vill förstatliga de kommunala skolorna så att alla elever får en bra utbildning, oavsett var i landet de bor.",
+      "person": {
+        "name": null,
+        "role": null
+      }
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: /person/name must be string; /person/role must be string"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/skola",
+    "articleTitle": "Skola – Liberalerna",
+    "runId": "run-2026-08-26-23-44"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-ekonomi-inkomstskatt",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sänka skatten för alla som arbetar och halvera den statliga inkomstskatten",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/ekonomi",
+    "articleTitle": "Ekonomi – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/ekonomi",
+    "archiveUrl": null,
+    "dateStated": "2026-08-25",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-26-23-44",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
