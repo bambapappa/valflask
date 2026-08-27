@@ -95,6 +95,46 @@ nuvarande specifikationen. En synlig, agent-icke-skrivbar markering är därför
 (agenten skulle då kunna intyga sin egen granskning); låta varje verktyg ladda
 ned samma data på nytt; bero på ett äldre, borttaget `provideContext()`-API.
 
+## 2026-08-27 — Löftespåraren visar kedjan men dömer inte utfallet
+
+**Gäller:** Fläskvågen och Handlingsvågen. Frågevågen och det publicerade
+beståndet ändras inte.
+
+**Beslut:** Det publika API:t projicerar de aktiva, redan granskade
+kopplingarna från löfte till riksdagshandling. `trace_promise` visar löftets
+exakta citat, partiets källa, arkivkopia när den finns, handlingens egen källa
+och den registrerade kopplingsnoten. På en öppen löftessida finns samma
+läsverktyg utan att agenten anger id:t. Resultatet säger uttryckligen att det
+inte avgör om löftet hölls eller bröts.
+
+**Motiv:** Evidenskedjan är användbar först när läsaren kan följa varje led
+själv. Ett domsord skulle däremot blanda ihop den kontrollerade kopplingen
+mellan ett löfte och en handling med den politiska slutsats som Utlovat.se
+inte har mandat att dra.
+
+**Förkastade alternativ:** att skeppa Handlingsvågens råa 17 MB-handlingsfil
+till klienten; att använda maskinens riktning som ett automatiskt omdöme; att
+bygga Motbevisaren här. Den senare är beslutad som ett framtida internt verktyg
+och är inte del av den publika demonstrationen eller tävlingsbidraget.
+
+## 2026-08-27 — Tävlingsingången är engelskspråkig, underlaget är svenskt
+
+**Gäller:** Fläskvågen och Frågevågen. Handlingsvågens läsdata kan synas via
+löftespåraren, men dess egen läsargränssnitt ändras inte.
+
+**Beslut:** `/webmcp` är en separat engelskspråkig ingång till
+tävlingsdemonstrationen. Den har `lang="en"`, engelska verktygsbeskrivningar
+och förklarar att originalcitaten är svenska. Resten av utlovat.se förblir
+svenskspråkigt och testas uttryckligen som sådant.
+
+**Motiv:** En tävlingsjury måste kunna förstå metod och säkerhetsgräns utan en
+översättningstjänst, medan citatet måste återges ordagrant från den publicerade
+svenska källan. Ett enda engelskt förklaringslager bevarar båda egenskaperna.
+
+**Förkastade alternativ:** att översätta hela sajten under tävlingsperioden
+(stort läsarprojekt utan ny evidens); att översätta citaten och därmed skapa en
+andra, mindre kontrollerbar formulering av underlaget.
+
 ## 2026-08-27 — Koden publiceras under Apache-2.0
 
 **Gäller:** Fläskvågen, Frågevågen och Handlingsvågen. Licensvillkoren för
