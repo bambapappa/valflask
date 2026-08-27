@@ -3923,5 +3923,70 @@
     "articleUrl": "https://www.liberalerna.se/politik/ostersjon",
     "articleTitle": "Östersjön – Liberalerna",
     "runId": "run-2026-08-27-12-07"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-atervandring",
+      "party": "m",
+      "position": "ja",
+      "quote": "Moderaterna har kraftigt höjt återvandringsbidraget för att hjälpa den som vill återvända till sitt hemland.",
+      "condition": null,
+      "condition_note": null,
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: / must NOT have additional properties"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/atervandring/",
+    "articleTitle": "Återvandring | Moderaterna",
+    "runId": "run-2026-08-27-19-03"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft-stod",
+      "party": "mp",
+      "position": "nej",
+      "condition": null,
+      "quote": "Inte bygga ny kärnkraft. Ny kärnkraft är alldeles för dyrt och tar för lång tid att bygga.",
+      "person": null,
+      "condition_note": null
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: / must NOT have additional properties"
+      }
+    ],
+    "articleUrl": "https://www.mp.se/politik/karnkraft/",
+    "articleTitle": "Miljöpartiets energipolitik",
+    "runId": "run-2026-08-27-19-03"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "avskaffa marknadsskolan och stoppa vinstjakten",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-presenterar-valmanifestet-sverige-vinner-pa-gron-politik/",
+    "articleTitle": "Miljöpartiets valmanifest: Klimat, jämlikhet och natur",
+    "sourceUrl": "https://www.mp.se/just-nu/miljopartiet-presenterar-valmanifestet-sverige-vinner-pa-gron-politik/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-10",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "GLM-5.3-Flash",
+    "runId": "run-2026-08-27-19-03",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet blandar friskolors existens ('avskaffa marknadsskolan', som ligger utanför frågans avgränsning) med den vaga sloganen 'stoppa vinstjakten', som varken specificerar lagstiftning om vinstutdelning eller låter ett ja följa utan välvillig tolkning."
+      }
+    ],
+    "verifyReason": "Citatet blandar friskolors existens ('avskaffa marknadsskolan', som ligger utanför frågans avgränsning) med den vaga sloganen 'stoppa vinstjakten', som varken specificerar lagstiftning om vinstutdelning eller låter ett ja följa utan välvillig tolkning."
   }
 ]
