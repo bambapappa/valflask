@@ -27,7 +27,7 @@ function node(): Record<string, unknown> {
   };
 }
 const responses: Record<string, unknown> = {
-  "/api/v1/promises.json": { data: [{ id: "p-2026-0001", title: "Ett löfte", slug: "ett-lofte", parties: ["s"], quote: "Vi lovar", date_stated: "2026-01-02", category: "skola", status: "aktiv", source: { url: "https://example.test/lofte", domain: "example.test", archive_url: "https://archive.test/lofte" }, cost: { msek_low: 100, msek_high: 200, period: "per_ar" } }] },
+  "/api/v1/promises.json": { data: [{ id: "p-2026-0001", title: "Ett löfte", slug: "ett-lofte", parties: ["s"], quote: "Vi lovar", date_stated: "2026-01-02", category: "skola", status: "aktiv", source: { url: "https://example.test/lofte", domain: "example.test", archive_url: "https://archive.test/lofte" }, cost: { msek_low: 100, msek_high: 200, period: "per_ar", basis: "llm_estimat" } }] },
   "/api/v1/stances.json": { stances: [
     { party: "s", subquestion_id: "sq-1", current: { statement_id: "st-1", position: "ja" }, statements: [{ id: "st-1", position: "ja", quote: "Vi säger ja", date_stated: "2026-01-03", source: { url: "https://example.test/besked", domain: "example.test", archive_url: null } }] },
     { party: "m", subquestion_id: "sq-1", current: { statement_id: null, position: "inget_tydligt_besked" }, statements: [], last_searched: "2026-08-26" },
@@ -130,5 +130,22 @@ if (currentQuestionTool) {
   check("frågesidan registrerar ett verktyg som återanvänder sidans sakfråga", String(result.brief_url).includes("query=Skolan") && questionNavigation === result.brief_url);
 } else {
   check("frågesidans kontextuella verktyg finns", false);
+}
+
+const contestRegistered = new Map<string, Tool>();
+runInNewContext(client, {
+  document: { ...document, modelContext: { registerTool: async (tool: Tool) => { contestRegistered.set(tool.name, tool); } } },
+  fetch: async (path: string) => ({ ok: true, json: async () => responses[path] }),
+  window: { location: { pathname: "/webmcp", search: "", assign: () => undefined } },
+  console, URL, URLSearchParams, Object, Map, Set, Promise, Array, Math,
+});
+await new Promise((resolve) => setTimeout(resolve, 10));
+const contestSearch = contestRegistered.get("search_verified_evidence");
+if (contestSearch) {
+  const result = await contestSearch.execute({ party_codes: ["s"], kind: "loften" });
+  const detail = (result.evidence as Array<{ detail: string }>)[0]?.detail ?? "";
+  check("den engelska tävlingsdemon visar estimat direkt men med ≈, intervall och underlag", detail.includes("≈") && detail.includes("Utlovat.se estimate") && detail.includes("four-year term"));
+} else {
+  check("tävlingssidans sökverktyg finns", false);
 }
 if (errors) process.exit(1);

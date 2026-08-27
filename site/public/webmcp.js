@@ -68,7 +68,19 @@ function formatMsek(value        )         {
     : `${value.toLocaleString("sv-SE")} mkr`;
 }
 
+function englishCostBasis(basis         )         {
+  if (basis === "parti") return "Party’s own amount.";
+  if (basis === "llm_estimat") return "Utlovat.se estimate — published range, not a fact.";
+  return "Utlovat.se calculation — published range, not a fact.";
+}
+
 function costIntervalDetail(cost                     )         {
+  const estimated = cost.basis !== "parti";
+  const marker = estimated ? "≈ " : "";
+  if (isEnglishContestEntry()) {
+    if (cost.period === "per_ar") return `Cost range for a four-year term: ${marker}${formatMsek(cost.msek_low * mandatePeriodYears)}–${formatMsek(cost.msek_high * mandatePeriodYears)} (annual cost × ${mandatePeriodYears}). Basis: ${englishCostBasis(cost.basis)}`;
+    return `Cost range: ${marker}${formatMsek(cost.msek_low)}–${formatMsek(cost.msek_high)} (one-off cost). Basis: ${englishCostBasis(cost.basis)}`;
+  }
   if (cost.period === "per_ar") return `Kostnadsintervall för mandatperioden: ${formatMsek(cost.msek_low * mandatePeriodYears)}–${formatMsek(cost.msek_high * mandatePeriodYears)} (årlig kostnad × ${mandatePeriodYears}; fyraårigt mandatperiodsantagande).`;
   return `Kostnadsintervall: ${formatMsek(cost.msek_low)}–${formatMsek(cost.msek_high)} (engångskostnad).`;
 }

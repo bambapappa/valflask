@@ -7,7 +7,7 @@
  */
 
 type Source = { url: string; domain: string; archive_url: string | null };
-type PromiseItem = { id: string; title: string; slug: string; parties: string[]; quote: string; date_stated: string; category: string; status: string; source: Source; cost: { msek_low: number; msek_high: number; period: string } };
+type PromiseItem = { id: string; title: string; slug: string; parties: string[]; quote: string; date_stated: string; category: string; status: string; source: Source; cost: { msek_low: number; msek_high: number; period: string; basis?: string } };
 type Statement = { id: string; quote: string; date_stated: string; source: Source; position: string };
 type StanceCell = { party: string; subquestion_id: string; current: { statement_id: string | null; position: string }; statements: Statement[]; last_searched?: string };
 type Issue = { title: string; slug: string; category: string; subquestions: Array<{ id: string; text: string }> };
@@ -68,7 +68,19 @@ function formatMsek(value: number): string {
     : `${value.toLocaleString("sv-SE")} mkr`;
 }
 
+function englishCostBasis(basis?: string): string {
+  if (basis === "parti") return "Party’s own amount.";
+  if (basis === "llm_estimat") return "Utlovat.se estimate — published range, not a fact.";
+  return "Utlovat.se calculation — published range, not a fact.";
+}
+
 function costIntervalDetail(cost: PromiseItem["cost"]): string {
+  const estimated = cost.basis !== "parti";
+  const marker = estimated ? "≈ " : "";
+  if (isEnglishContestEntry()) {
+    if (cost.period === "per_ar") return `Cost range for a four-year term: ${marker}${formatMsek(cost.msek_low * mandatePeriodYears)}–${formatMsek(cost.msek_high * mandatePeriodYears)} (annual cost × ${mandatePeriodYears}). Basis: ${englishCostBasis(cost.basis)}`;
+    return `Cost range: ${marker}${formatMsek(cost.msek_low)}–${formatMsek(cost.msek_high)} (one-off cost). Basis: ${englishCostBasis(cost.basis)}`;
+  }
   if (cost.period === "per_ar") return `Kostnadsintervall för mandatperioden: ${formatMsek(cost.msek_low * mandatePeriodYears)}–${formatMsek(cost.msek_high * mandatePeriodYears)} (årlig kostnad × ${mandatePeriodYears}; fyraårigt mandatperiodsantagande).`;
   return `Kostnadsintervall: ${formatMsek(cost.msek_low)}–${formatMsek(cost.msek_high)} (engångskostnad).`;
 }
