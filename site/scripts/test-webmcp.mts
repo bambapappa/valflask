@@ -28,7 +28,10 @@ function node(): Record<string, unknown> {
 }
 const responses: Record<string, unknown> = {
   "/api/v1/promises.json": { data: [{ id: "p-1", title: "Ett löfte", slug: "ett-lofte", parties: ["s"], quote: "Vi lovar", date_stated: "2026-01-02", category: "skola", status: "aktiv", source: { url: "https://example.test/lofte", domain: "example.test", archive_url: "https://archive.test/lofte" }, cost: { msek_low: 100, msek_high: 200, period: "per_ar" } }] },
-  "/api/v1/stances.json": { stances: [{ party: "s", subquestion_id: "sq-1", current: { statement_id: "st-1" }, statements: [{ id: "st-1", position: "ja", quote: "Vi säger ja", date_stated: "2026-01-03", source: { url: "https://example.test/besked", domain: "example.test", archive_url: null } }] }] },
+  "/api/v1/stances.json": { stances: [
+    { party: "s", subquestion_id: "sq-1", current: { statement_id: "st-1", position: "ja" }, statements: [{ id: "st-1", position: "ja", quote: "Vi säger ja", date_stated: "2026-01-03", source: { url: "https://example.test/besked", domain: "example.test", archive_url: null } }] },
+    { party: "m", subquestion_id: "sq-1", current: { statement_id: null, position: "inget_tydligt_besked" }, statements: [], last_searched: "2026-08-26" },
+  ] },
   "/api/v1/issues.json": { issues: [{ title: "Skolan", slug: "skolan", category: "skola", subquestions: [{ id: "sq-1", text: "Mer skola?" }] }] },
   "/api/v1/integrity.json": { data_hash: "h".repeat(64) },
   "/api/v1/summary.json": { data: { data_hash: "h".repeat(64), parties: [{ code: "s", name: "Socialdemokraterna", total_msek: 400, promises_count: 1, financing_gap_msek: 0 }] } },
@@ -62,14 +65,17 @@ if (evidenceTool) {
   check("visar samma citat på bevisbrädet", Boolean(board));
   const archived = await evidenceTool.execute({ party_codes: ["s"], kind: "alla", require_archive_copy: true });
   check("kan kräva arkivkopia utan att kalla den primärkälla", archived.result_count === 1 && String(archived.note).includes("inte en röstrekommendation"));
+  const archiveGap = await evidenceTool.execute({ party_codes: ["s"], kind: "besked", require_archive_copy: true });
+  check("redovisar belägg som faller på arkivkravet", (archiveGap.archive_excluded_by_party as Record<string, number>).s === 1);
 } else {
   check("sökverktyget finns", false);
 }
 if (briefTool) {
-  const result = await briefTool.execute({ party_codes: ["s", "m"], query: "skola", kind: "alla", require_archive_copy: true });
+  const result = await briefTool.execute({ party_codes: ["s", "m"], category: "skola", query: "Jämför S och M om skolan", kind: "alla", require_archive_copy: true });
   const missing = result.missing_party_codes;
-  check("granskningskortet söker i publicerad text och visar luckan", result.evidence_count === 1 && Array.isArray(missing) && missing.includes("m"));
-  check("granskningskortet har en delbar, filtrerad länk", String(result.brief_url).startsWith("/granska?parties=s%2Cm&query=skola") && navigationUrl === result.brief_url);
+  check("granskningskortet tolkar en neutral frågeformulering", result.evidence_count === 1 && Array.isArray(missing) && missing.includes("m"));
+  check("granskningskortet redovisar registrerat otydligt besked", Array.isArray(result.recorded_no_clear) && result.recorded_no_clear.some((item: { party_code: string }) => item.party_code === "m"));
+  check("granskningskortet har en delbar länk med hela urvalet", String(result.brief_url).includes("category=skola") && String(result.brief_url).includes("query=J%C3%A4mf%C3%B6r") && navigationUrl === result.brief_url);
 } else {
   check("granskningsverktyget finns", false);
 }
