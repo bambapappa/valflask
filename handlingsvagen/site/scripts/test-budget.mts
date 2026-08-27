@@ -23,7 +23,14 @@ function storlek(v: unknown): number {
   return Buffer.byteLength(JSON.stringify(v));
 }
 
-grind("summary.json", storlek(buildSummary()), 100 * KB);
+// Höjt 100 → 200 KB den 2026-08-27. Datat har vuxit ~4x sedan taket sattes
+// (kopplingar 786 → 1228, ~3 340 publicerade löften totalt) genom den
+// avsiktliga ikappskörden av A–Ö-katalogerna — inte genom bloat i formen:
+// raderna bär fortfarande bara id/titel/kategori/celler/fasetter, ingen
+// citattext. summary.json mätte 132,7 KB vid höjningen; 200 KB ger
+// utrymme för fortsatt skörd fram till valet utan att behöva höjas igen
+// varje vecka.
+grind("summary.json", storlek(buildSummary()), 200 * KB);
 grind("sok-index.json", storlek(buildSokIndex()), 400 * KB);
 // Märkningen av den breda träfflistan. Hänger på kopplingarna, inte på
 // nyckelordsindexet, och mäts därför utanför blocket längre ner.
