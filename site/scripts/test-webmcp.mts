@@ -33,7 +33,7 @@ const responses: Record<string, unknown> = {
   "/api/v1/integrity.json": { data_hash: "h".repeat(64) },
   "/api/v1/summary.json": { data: { data_hash: "h".repeat(64), parties: [{ code: "s", name: "Socialdemokraterna", total_msek: 400, promises_count: 1, financing_gap_msek: 0 }] } },
 };
-let comparisonUrl = "";
+let navigationUrl = "";
 const document = {
   modelContext: { registerTool: async (tool: Tool) => { registered.set(tool.name, tool); } },
   createElement: () => node(),
@@ -45,16 +45,17 @@ const document = {
 runInNewContext(client, {
   document,
   fetch: async (path: string) => ({ ok: true, json: async () => responses[path] }),
-  window: { location: { assign: (url: string) => { comparisonUrl = url; } } },
-  console, URL, Object, Map, Set, Promise, Array, Math,
+  window: { location: { assign: (url: string) => { navigationUrl = url; } } },
+  console, URL, URLSearchParams, Object, Map, Set, Promise, Array, Math,
 });
 await Promise.resolve();
 await Promise.resolve();
 await new Promise((resolve) => setTimeout(resolve, 0));
 
 const evidenceTool = registered.get("search_verified_evidence");
+const briefTool = registered.get("build_research_brief");
 const comparisonTool = registered.get("show_party_comparison");
-check("registrerar två läsande verktyg", registered.size === 2 && evidenceTool?.annotations.readOnlyHint === true && comparisonTool?.annotations.readOnlyHint === true);
+check("registrerar tre läsande verktyg", registered.size === 3 && evidenceTool?.annotations.readOnlyHint === true && briefTool?.annotations.readOnlyHint === true && comparisonTool?.annotations.readOnlyHint === true);
 if (evidenceTool) {
   const result = await evidenceTool.execute({ party_codes: ["s"], kind: "alla", max_results: 12 });
   check("läser API-kuvertens faktiska former", result.result_count === 2 && Array.isArray(result.evidence));
@@ -64,9 +65,17 @@ if (evidenceTool) {
 } else {
   check("sökverktyget finns", false);
 }
+if (briefTool) {
+  const result = await briefTool.execute({ party_codes: ["s", "m"], query: "skola", kind: "alla", require_archive_copy: true });
+  const missing = result.missing_party_codes;
+  check("granskningskortet söker i publicerad text och visar luckan", result.evidence_count === 1 && Array.isArray(missing) && missing.includes("m"));
+  check("granskningskortet har en delbar, filtrerad länk", String(result.brief_url).startsWith("/granska?parties=s%2Cm&query=skola") && navigationUrl === result.brief_url);
+} else {
+  check("granskningsverktyget finns", false);
+}
 if (comparisonTool) {
   const result = await comparisonTool.execute({ party_codes: ["s"] });
-  check("jämförelsen läser sitt API-kuvert och öppnar den synliga vyn", comparisonUrl === "/jamfor?parties=s" && Array.isArray(result.parties));
+  check("jämförelsen läser sitt API-kuvert och öppnar den synliga vyn", navigationUrl === "/jamfor?parties=s" && Array.isArray(result.parties));
 } else {
   check("jämförelseverktyget finns", false);
 }
