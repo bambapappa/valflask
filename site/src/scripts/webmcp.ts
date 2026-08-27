@@ -16,15 +16,44 @@ type NoClearPosition = { party_code: string; title: string; page_url: string; la
 type PartyCoverage = { archive_excluded_count: number; no_clear_positions: NoClearPosition[] };
 type SearchInput = { party_codes?: string[]; category?: string; query?: string; kind?: "loften" | "besked" | "alla"; max_results?: number; require_archive_copy?: boolean };
 type BriefInput = { party_codes: string[]; category?: string; query: string; kind?: "loften" | "besked" | "alla"; max_results?: number; require_archive_copy?: boolean };
+type PublishedEvidenceData = { promises: PromiseItem[]; stances: StanceCell[]; issues: Issue[]; dataHash: string };
 
 const appDocument = document as Document & { modelContext?: { registerTool: (tool: unknown) => Promise<void> } };
 const partyNames: Record<string, string> = { s: "Socialdemokraterna", m: "Moderaterna", sd: "Sverigedemokraterna", c: "Centerpartiet", v: "Vänsterpartiet", kd: "Kristdemokraterna", l: "Liberalerna", mp: "Miljöpartiet" };
 const mandatePeriodYears = 4;
+let publishedEvidenceData: Promise<PublishedEvidenceData> | undefined;
+let evidenceReview = { dataHash: "", acknowledged: false };
 
 async function getJson<T>(path: string): Promise<T> {
   const response = await fetch(path, { headers: { Accept: "application/json" } });
   if (!response.ok) throw new Error(`Kunde inte läsa ${path} (${response.status}).`);
   return await response.json() as T;
+}
+
+/**
+ * All WebMCP read tools use the same immutable static files for the lifetime
+ * of a loaded page. Share one in-flight/result cache so a second card does not
+ * download the 5+ MB promises file again. A deployed data update creates a
+ * new document, which naturally starts with a fresh cache.
+ */
+async function getPublishedEvidenceData(): Promise<PublishedEvidenceData> {
+  if (!publishedEvidenceData) {
+    publishedEvidenceData = Promise.all([
+      getJson<{ data: PromiseItem[] }>("/api/v1/promises.json"),
+      getJson<{ stances: StanceCell[] }>("/api/v1/stances.json"),
+      getJson<{ issues: Issue[] }>("/api/v1/issues.json"),
+      getJson<{ data_hash: string }>("/api/v1/integrity.json"),
+    ]).then(([promisesResponse, stancesResponse, issuesResponse, integrity]) => {
+      if (!Array.isArray(promisesResponse.data) || !Array.isArray(stancesResponse.stances) || !Array.isArray(issuesResponse.issues)) {
+        throw new Error("Utlovats publicerade API-svar har oväntat format.");
+      }
+      return { promises: promisesResponse.data, stances: stancesResponse.stances, issues: issuesResponse.issues, dataHash: integrity.data_hash };
+    }).catch((error) => {
+      publishedEvidenceData = undefined;
+      throw error;
+    });
+  }
+  return await publishedEvidenceData;
 }
 
 function formatMsek(value: number): string {
@@ -106,6 +135,27 @@ function evidenceList(evidence: Evidence[]): HTMLOListElement {
   return list;
 }
 
+function evidenceAcknowledgement(dataHash: string): HTMLElement {
+  evidenceReview = { dataHash, acknowledged: false };
+  const acknowledgement = el("label");
+  acknowledgement.className = "webmcp-evidence-board__acknowledgement";
+  const input = el("input");
+  input.type = "checkbox";
+  input.addEventListener("change", () => { evidenceReview.acknowledged = input.checked; });
+  acknowledgement.append(input, document.createTextNode(" Jag har själv läst underlaget ovan. Agentens resultat är annars märkt som overifierat."));
+  return acknowledgement;
+}
+
+function evidenceReviewStatus(): { status: "unverified" | "human_acknowledged"; data_hash: string | null; note: string } {
+  return {
+    status: evidenceReview.acknowledged ? "human_acknowledged" : "unverified",
+    data_hash: evidenceReview.dataHash || null,
+    note: evidenceReview.acknowledged
+      ? "En människa har markerat att underlaget lästs i den synliga vyn. Markeringen är en upplysning, inte ett politiskt omdöme."
+      : "Ingen mänsklig läskvittering finns för det synliga underlaget. Behandla resultatet som overifierat tills källorna har lästs.",
+  };
+}
+
 function showEvidenceBoard(evidence: Evidence[], dataHash?: string): void {
   let board = document.getElementById("webmcp-evidence-board");
   if (!board) {
@@ -129,6 +179,7 @@ function showEvidenceBoard(evidence: Evidence[], dataHash?: string): void {
     hash.className = "webmcp-evidence-board__hash";
     board.append(hash);
   }
+  board.append(evidenceAcknowledgement(dataHash ?? ""));
   board.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -137,17 +188,7 @@ async function collectEvidence(input: SearchInput): Promise<{ evidence: Evidence
   const partyCodes = new Set(selectedCodes);
   const kind = input.kind ?? "alla";
   const category = input.category?.trim().toLowerCase();
-  const [promisesResponse, stancesResponse, issuesResponse, integrity] = await Promise.all([
-    getJson<{ data: PromiseItem[] }>("/api/v1/promises.json"),
-    getJson<{ stances: StanceCell[] }>("/api/v1/stances.json"),
-    getJson<{ issues: Issue[] }>("/api/v1/issues.json"),
-    getJson<{ data_hash: string }>("/api/v1/integrity.json"),
-  ]);
-  const promises = promisesResponse.data;
-  const stances = stancesResponse.stances;
-  if (!Array.isArray(promises) || !Array.isArray(stances) || !Array.isArray(issuesResponse.issues)) {
-    throw new Error("Utlovats publicerade API-svar har oväntat format.");
-  }
+  const { promises, stances, issues, dataHash } = await getPublishedEvidenceData();
   const evidence: Evidence[] = [];
   const coverage = Object.fromEntries(selectedCodes.map((code) => [code, { archive_excluded_count: 0, no_clear_positions: [] }])) as Record<string, PartyCoverage>;
   const markArchiveExcluded = (codes: string[]): void => {
@@ -163,7 +204,7 @@ async function collectEvidence(input: SearchInput): Promise<{ evidence: Evidence
     evidence.push({ kind: "lofte", title: promise.title, party_codes: promise.parties, quote: promise.quote, date: promise.date_stated, source: promise.source, page_url: `/lofte/${promise.id}/${promise.slug}`, category: promise.category, detail: costIntervalDetail(promise.cost) });
   }
   if (kind === "alla" || kind === "besked") {
-    const subquestions = new Map(issuesResponse.issues.flatMap((issue) => issue.subquestions.map((sq) => [sq.id, { issue, text: sq.text }] as const)));
+    const subquestions = new Map(issues.flatMap((issue) => issue.subquestions.map((sq) => [sq.id, { issue, text: sq.text }] as const)));
     for (const cell of stances) {
       if (partyCodes.size && !partyCodes.has(cell.party)) continue;
       const context = subquestions.get(cell.subquestion_id);
@@ -186,7 +227,7 @@ async function collectEvidence(input: SearchInput): Promise<{ evidence: Evidence
     }
   }
   evidence.sort((a, b) => b.date.localeCompare(a.date));
-  return { evidence, dataHash: integrity.data_hash, coverage };
+  return { evidence, dataHash, coverage };
 }
 
 function limitedEvidence(input: SearchInput, evidence: Evidence[]): Evidence[] {
@@ -237,7 +278,7 @@ function renderResearchBrief(input: BriefInput, evidence: Evidence[], dataHash: 
   outlet.append(coverage);
   const gap = el("p", "Ingen träff betyder inte att ett parti saknar åsikt eller politik. Det betyder bara att den inte finns i just detta sökurval av publicerade poster.");
   gap.className = "webmcp-brief__gap";
-  outlet.append(gap, el("h3", `Belägg (${shown.length} av ${evidence.length})`), evidenceList(shown));
+  outlet.append(gap, el("h3", `Belägg (${shown.length} av ${evidence.length})`), evidenceList(shown), evidenceAcknowledgement(dataHash));
   const footer = el("footer");
   footer.className = "webmcp-brief__footer";
   footer.append(el("p", `Dataversion: ${dataHash}`));
@@ -257,7 +298,7 @@ async function searchEvidence(input: SearchInput) {
   const collected = await collectEvidence(input);
   const result = limitedEvidence(input, collected.evidence);
   showEvidenceBoard(result, collected.dataHash);
-  return { data_hash: collected.dataHash, result_count: result.length, evidence: result, recorded_no_clear: Object.values(collected.coverage).flatMap((item) => item.no_clear_positions), archive_excluded_by_party: Object.fromEntries(Object.entries(collected.coverage).map(([code, item]) => [code, item.archive_excluded_count])), note: "Endast publicerade och källspårade poster visas. Registrerade 'inget tydligt besked' redovisas separat. Resultatet är inte en röstrekommendation." };
+  return { data_hash: collected.dataHash, result_count: result.length, evidence: result, recorded_no_clear: Object.values(collected.coverage).flatMap((item) => item.no_clear_positions), archive_excluded_by_party: Object.fromEntries(Object.entries(collected.coverage).map(([code, item]) => [code, item.archive_excluded_count])), evidence_review: evidenceReviewStatus(), note: "Endast publicerade och källspårade poster visas. Registrerade 'inget tydligt besked' redovisas separat. Resultatet är inte en röstrekommendation." };
 }
 
 async function buildResearchBrief(input: BriefInput) {
@@ -269,7 +310,11 @@ async function buildResearchBrief(input: BriefInput) {
   const missingPartyCodes = parties.filter((code) => !collected.evidence.some((item) => item.party_codes.includes(code)));
   const briefUrl = researchBriefUrl({ ...input, party_codes: parties });
   window.location.assign(briefUrl);
-  return { data_hash: collected.dataHash, brief_url: briefUrl, evidence_count: collected.evidence.length, displayed_evidence_count: evidence.length, missing_party_codes: missingPartyCodes, recorded_no_clear: Object.values(collected.coverage).flatMap((item) => item.no_clear_positions), archive_excluded_by_party: Object.fromEntries(Object.entries(collected.coverage).map(([code, item]) => [code, item.archive_excluded_count])), note: "Kortet visar belägg, registrerade otydliga besked och tomrum sida vid sida. Det avgör inte vilket parti som är bäst." };
+  return { data_hash: collected.dataHash, brief_url: briefUrl, evidence_count: collected.evidence.length, displayed_evidence_count: evidence.length, missing_party_codes: missingPartyCodes, recorded_no_clear: Object.values(collected.coverage).flatMap((item) => item.no_clear_positions), archive_excluded_by_party: Object.fromEntries(Object.entries(collected.coverage).map(([code, item]) => [code, item.archive_excluded_count])), evidence_review: { status: "unverified", data_hash: collected.dataHash, note: "Granskningskortet öppnas i den synliga vyn. Ingen mänsklig läskvittering finns ännu." }, note: "Kortet visar belägg, registrerade otydliga besked och tomrum sida vid sida. Det avgör inte vilket parti som är bäst." };
+}
+
+async function getEvidenceBoardStatus() {
+  return evidenceReviewStatus();
 }
 
 async function showPartyComparison(input: { party_codes: string[] }) {
@@ -319,6 +364,12 @@ async function registerTools(): Promise<void> {
     description: "Öppna utlovat.se:s befintliga jämförelsevy med valda partier markerade. Vyn räknar gemensamma löften en gång och visar finansieringsgap; den rekommenderar inte ett parti.",
     inputSchema: { type: "object", properties: { party_codes: { type: "array", minItems: 1, items: { type: "string", enum: Object.keys(partyNames) }, description: "Partikoder att jämföra." } }, required: ["party_codes"], additionalProperties: false },
     annotations: { readOnlyHint: true }, execute: showPartyComparison,
+  });
+  await appDocument.modelContext.registerTool({
+    name: "get_evidence_board_status",
+    description: "Läs om människan har markerat att det synliga bevisbordet har lästs. Ett omarkerat bord är alltid overifierat. Statusen är inte en bedömning av parti eller politik.",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+    annotations: { readOnlyHint: true }, execute: getEvidenceBoardStatus,
   });
 }
 
