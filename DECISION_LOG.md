@@ -59,7 +59,9 @@ registrerat och när frågan senast söktes. När läsaren kräver arkivkopia vi
 kortet också om det finns belägg som just saknar sådan kopia. Kategori blir
 ett uttryckligt, delbart filter i kortets URL. Neutrala svenska
 frågeformuleringar tar bort vanliga frågeord och godtar enkel bestämd form
-som `skolan`/`skola`, men hela sökfrasen visas fortfarande för läsaren.
+som `skolan`/`skola`, men hela sökfrasen visas fortfarande för läsaren. En
+årlig kostnad visar både multiplikatorn och att intervallet bygger på ett
+fyraårigt mandatperiodsantagande; en engångskostnad räknas inte om.
 
 **Motiv:** Ett tomrum kan vara tre olika saker: inget belägg i urvalet,
 ett registrerat otydligt besked eller belägg som ett snävare arkivkrav valt
