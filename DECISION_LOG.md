@@ -49,6 +49,29 @@ underlag); att märka arkiverade källor som primärkällor utan ett sådant fä
 datat; att lägga själva bevisen i länken (gör URL:en skör och blandar ett
 delningsurval med en fryst kopia av datat).
 
+## 2026-08-27 — Granskningskortet skiljer belägg, arkivbrist och sökt men otydligt besked
+
+**Gäller:** Fläskvågen och Frågevågen. Det publicerade beståndet ändras inte.
+
+**Beslut:** Ett parti med en cell där `inget_tydligt_besked` är registrerat
+visas inte längre som en anonym nollträff. Kortet anger att beskedet är
+registrerat och när frågan senast söktes. När läsaren kräver arkivkopia visar
+kortet också om det finns belägg som just saknar sådan kopia. Kategori blir
+ett uttryckligt, delbart filter i kortets URL. Neutrala svenska
+frågeformuleringar tar bort vanliga frågeord och godtar enkel bestämd form
+som `skolan`/`skola`, men hela sökfrasen visas fortfarande för läsaren.
+
+**Motiv:** Ett tomrum kan vara tre olika saker: inget belägg i urvalet,
+ett registrerat otydligt besked eller belägg som ett snävare arkivkrav valt
+bort. De får inte smälta samman till samma formulering. En delad länk är bara
+granskningsbar om den återställer alla filter. Ändringen följer en oberoende
+testning av samma publika API-ytor och testas i den byggda klienten.
+
+**Förkastade alternativ:** att skapa en källa eller ett citat åt ett otydligt
+besked (datat bär bara position och sökdatum); att tolka ett filtrerat bortfall
+som frånvaro av politik; full språkmodellstolkning av sökfrasen i webbläsaren
+(skulle göra urvalet svårare att reproducera).
+
 ## 2026-08-25 — AI-metoden använder den uppmätta andelen prissatta löften
 
 **Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga prislappar i

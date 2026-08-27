@@ -9,11 +9,13 @@
 type Source = { url: string; domain: string; archive_url: string | null };
 type PromiseItem = { id: string; title: string; slug: string; parties: string[]; quote: string; date_stated: string; category: string; status: string; source: Source; cost: { msek_low: number; msek_high: number; period: string } };
 type Statement = { id: string; quote: string; date_stated: string; source: Source; position: string };
-type StanceCell = { party: string; subquestion_id: string; current: { statement_id: string | null }; statements: Statement[] };
+type StanceCell = { party: string; subquestion_id: string; current: { statement_id: string | null; position: string }; statements: Statement[]; last_searched?: string };
 type Issue = { title: string; slug: string; category: string; subquestions: Array<{ id: string; text: string }> };
 type Evidence = { kind: "lofte" | "besked"; title: string; party_codes: string[]; quote: string; date: string; source: Source; page_url: string; detail: string; category: string };
+type NoClearPosition = { party_code: string; title: string; page_url: string; last_searched?: string };
+type PartyCoverage = { archive_excluded_count: number; no_clear_positions: NoClearPosition[] };
 type SearchInput = { party_codes?: string[]; category?: string; query?: string; kind?: "loften" | "besked" | "alla"; max_results?: number; require_archive_copy?: boolean };
-type BriefInput = { party_codes: string[]; query: string; kind?: "loften" | "besked" | "alla"; max_results?: number; require_archive_copy?: boolean };
+type BriefInput = { party_codes: string[]; category?: string; query: string; kind?: "loften" | "besked" | "alla"; max_results?: number; require_archive_copy?: boolean };
 
 const appDocument = document as Document & { modelContext?: { registerTool: (tool: unknown) => Promise<void> } };
 const partyNames: Record<string, string> = { s: "Socialdemokraterna", m: "Moderaterna", sd: "Sverigedemokraterna", c: "Centerpartiet", v: "Vänsterpartiet", kd: "Kristdemokraterna", l: "Liberalerna", mp: "Miljöpartiet" };
@@ -53,15 +55,28 @@ function normalise(value: string): string {
   return value.toLocaleLowerCase("sv-SE").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
+const swedishQueryStopWords = new Set(["att", "bara", "de", "den", "det", "en", "ett", "for", "fran", "har", "hur", "i", "jamfor", "med", "mot", "och", "om", "pa", "parti", "partier", "partierna", "som", "vad", "visa"]);
+
+function queryTermGroups(query?: string): string[][] {
+  return normalise(query ?? "").split(/[^a-z0-9]+/)
+    .filter((term) => term.length > 1 && !swedishQueryStopWords.has(term))
+    .map((term) => {
+      const forms = [term];
+      if (term.endsWith("en") && term.length > 4) forms.push(term.slice(0, -2));
+      else if (term.endsWith("n") && term.length > 4) forms.push(term.slice(0, -1));
+      return Array.from(new Set(forms));
+    });
+}
+
 function queryTerms(query?: string): string[] {
-  return normalise(query ?? "").split(/[^a-z0-9]+/).filter((term) => term.length > 1);
+  return queryTermGroups(query).flat();
 }
 
 function matchesQuery(query: string | undefined, ...fields: string[]): boolean {
-  const terms = queryTerms(query);
-  if (terms.length === 0) return true;
+  const groups = queryTermGroups(query);
+  if (groups.length === 0) return true;
   const haystack = normalise(fields.join(" "));
-  return terms.every((term) => haystack.includes(term));
+  return groups.every((forms) => forms.some((term) => haystack.includes(term)));
 }
 
 function selectedPartyCodes(codes: string[] | undefined): string[] {
@@ -111,8 +126,9 @@ function showEvidenceBoard(evidence: Evidence[], dataHash?: string): void {
   board.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-async function collectEvidence(input: SearchInput): Promise<{ evidence: Evidence[]; dataHash: string }> {
-  const partyCodes = new Set(selectedPartyCodes(input.party_codes));
+async function collectEvidence(input: SearchInput): Promise<{ evidence: Evidence[]; dataHash: string; coverage: Record<string, PartyCoverage> }> {
+  const selectedCodes = selectedPartyCodes(input.party_codes);
+  const partyCodes = new Set(selectedCodes);
   const kind = input.kind ?? "alla";
   const category = input.category?.trim().toLowerCase();
   const [promisesResponse, stancesResponse, issuesResponse, integrity] = await Promise.all([
@@ -127,10 +143,19 @@ async function collectEvidence(input: SearchInput): Promise<{ evidence: Evidence
     throw new Error("Utlovats publicerade API-svar har oväntat format.");
   }
   const evidence: Evidence[] = [];
+  const coverage = Object.fromEntries(selectedCodes.map((code) => [code, { archive_excluded_count: 0, no_clear_positions: [] }])) as Record<string, PartyCoverage>;
+  const markArchiveExcluded = (codes: string[]): void => {
+    for (const code of codes) if (coverage[code]) coverage[code].archive_excluded_count++;
+  };
   if (kind === "alla" || kind === "loften") for (const promise of promises) {
-    if (promise.status === "tillbakadragen" || (partyCodes.size && !promise.parties.some((code) => partyCodes.has(code))) || (category && promise.category.toLowerCase() !== category) || (input.require_archive_copy && !promise.source.archive_url) || !matchesQuery(input.query, promise.title, promise.category, promise.quote)) continue;
+    const matchingPartyCodes = promise.parties.filter((code) => !partyCodes.size || partyCodes.has(code));
+    if (promise.status === "tillbakadragen" || matchingPartyCodes.length === 0 || (category && promise.category.toLowerCase() !== category) || !matchesQuery(input.query, promise.title, promise.category, promise.quote)) continue;
+    if (input.require_archive_copy && !promise.source.archive_url) {
+      markArchiveExcluded(matchingPartyCodes);
+      continue;
+    }
     const multiplier = promise.cost.period === "per_ar" ? 4 : 1;
-    evidence.push({ kind: "lofte", title: promise.title, party_codes: promise.parties, quote: promise.quote, date: promise.date_stated, source: promise.source, page_url: `/lofte/${promise.id}/${promise.slug}`, category: promise.category, detail: `Kostnadsintervall för mandatperioden: ${formatMsek(promise.cost.msek_low * multiplier)}–${formatMsek(promise.cost.msek_high * multiplier)}.` });
+    evidence.push({ kind: "lofte", title: promise.title, party_codes: promise.parties, quote: promise.quote, date: promise.date_stated, source: promise.source, page_url: `/lofte/${promise.id}/${promise.slug}`, category: promise.category, detail: `Kostnadsintervall för mandatperioden: ${formatMsek(promise.cost.msek_low * multiplier)}–${formatMsek(promise.cost.msek_high * multiplier)} (fyra år, 2027–2030).` });
   }
   if (kind === "alla" || kind === "besked") {
     const subquestions = new Map(issuesResponse.issues.flatMap((issue) => issue.subquestions.map((sq) => [sq.id, { issue, text: sq.text }] as const)));
@@ -138,12 +163,25 @@ async function collectEvidence(input: SearchInput): Promise<{ evidence: Evidence
       if (partyCodes.size && !partyCodes.has(cell.party)) continue;
       const context = subquestions.get(cell.subquestion_id);
       const statement = cell.statements.find((item) => item.id === cell.current.statement_id);
-      if (!context || !statement || (category && context.issue.category.toLowerCase() !== category) || (input.require_archive_copy && !statement.source.archive_url) || !matchesQuery(input.query, context.issue.title, context.issue.category, context.text, statement.quote)) continue;
-      evidence.push({ kind: "besked", title: `${context.issue.title}: ${context.text}`, party_codes: [cell.party], quote: statement.quote, date: statement.date_stated, source: statement.source, page_url: `/fraga/${context.issue.slug}#${cell.subquestion_id}-${cell.party}`, category: context.issue.category, detail: `Registrerat besked: ${statement.position.toUpperCase()}.` });
+      if (!context || (category && context.issue.category.toLowerCase() !== category)) continue;
+      const title = `${context.issue.title}: ${context.text}`;
+      const pageUrl = `/fraga/${context.issue.slug}#${cell.subquestion_id}-${cell.party}`;
+      if (!statement) {
+        if (cell.current.position === "inget_tydligt_besked" && matchesQuery(input.query, context.issue.title, context.issue.category, context.text) && coverage[cell.party]) {
+          coverage[cell.party].no_clear_positions.push({ party_code: cell.party, title, page_url: pageUrl, last_searched: cell.last_searched });
+        }
+        continue;
+      }
+      if (!matchesQuery(input.query, context.issue.title, context.issue.category, context.text, statement.quote)) continue;
+      if (input.require_archive_copy && !statement.source.archive_url) {
+        markArchiveExcluded([cell.party]);
+        continue;
+      }
+      evidence.push({ kind: "besked", title, party_codes: [cell.party], quote: statement.quote, date: statement.date_stated, source: statement.source, page_url: pageUrl, category: context.issue.category, detail: `Registrerat besked: ${statement.position.toUpperCase()}.` });
     }
   }
   evidence.sort((a, b) => b.date.localeCompare(a.date));
-  return { evidence, dataHash: integrity.data_hash };
+  return { evidence, dataHash: integrity.data_hash, coverage };
 }
 
 function limitedEvidence(input: SearchInput, evidence: Evidence[]): Evidence[] {
@@ -155,13 +193,22 @@ function researchBriefUrl(input: BriefInput): string {
   const params = new URLSearchParams();
   params.set("parties", selectedPartyCodes(input.party_codes).join(","));
   params.set("query", input.query.trim());
+  if (input.category?.trim()) params.set("category", input.category.trim().toLowerCase());
   params.set("kind", input.kind ?? "alla");
   params.set("max", String(Math.max(1, Math.min(input.max_results ?? 12, 20))));
   if (input.require_archive_copy) params.set("arkiv", "1");
   return `/granska?${params.toString()}`;
 }
 
-function renderResearchBrief(input: BriefInput, evidence: Evidence[], dataHash: string): void {
+function coverageText(count: number, coverage: PartyCoverage | undefined, requiresArchive: boolean): string {
+  if (count > 0) return `${count} belagda poster i detta urval`;
+  if (requiresArchive && coverage && coverage.archive_excluded_count > 0) return `Har ${coverage.archive_excluded_count} belagd${coverage.archive_excluded_count === 1 ? " post" : "a poster"} i urvalet, men utan arkivkopia`;
+  const noClear = coverage?.no_clear_positions[0];
+  if (noClear) return `Inget tydligt besked registrerat${noClear.last_searched ? ` · senast sökt ${noClear.last_searched}` : ""}`;
+  return "Ingen träff i detta avgränsade underlag";
+}
+
+function renderResearchBrief(input: BriefInput, evidence: Evidence[], dataHash: string, coverageByParty: Record<string, PartyCoverage>): void {
   const outlet = document.getElementById("webmcp-brief-outlet");
   if (!outlet) return;
   const parties = selectedPartyCodes(input.party_codes);
@@ -171,14 +218,15 @@ function renderResearchBrief(input: BriefInput, evidence: Evidence[], dataHash: 
   header.className = "webmcp-brief__header";
   const label = el("div", "GRANSKNINGSKORT · INGEN RÖSTREKOMMENDATION");
   label.className = "etikett";
-  header.append(label, el("h2", input.query.trim()), el("p", `Urval: ${parties.map((code) => partyNames[code]).join(", ")} · ${input.kind ?? "alla"} · ${input.require_archive_copy ? "bara arkivkopior" : "arkivkopior när de finns"}.`));
+  const category = input.category?.trim() ? ` · kategori: ${input.category.trim()}` : "";
+  header.append(label, el("h2", input.query.trim()), el("p", `Urval: ${parties.map((code) => partyNames[code]).join(", ")} · ${input.kind ?? "alla"}${category} · ${input.require_archive_copy ? "bara arkivkopior; andra belägg kan finnas utan kopia" : "arkivkopior när de finns"}.`));
   outlet.append(header);
   const coverage = el("ul");
   coverage.className = "webmcp-brief__coverage";
   for (const code of parties) {
     const count = evidence.filter((item) => item.party_codes.includes(code)).length;
     const item = el("li");
-    item.append(el("strong", partyNames[code]), el("span", count === 0 ? "Ingen träff i detta avgränsade underlag" : `${count} belagda poster i detta urval`));
+    item.append(el("strong", partyNames[code]), el("span", coverageText(count, coverageByParty[code], Boolean(input.require_archive_copy))));
     coverage.append(item);
   }
   outlet.append(coverage);
@@ -204,7 +252,7 @@ async function searchEvidence(input: SearchInput) {
   const collected = await collectEvidence(input);
   const result = limitedEvidence(input, collected.evidence);
   showEvidenceBoard(result, collected.dataHash);
-  return { data_hash: collected.dataHash, result_count: result.length, evidence: result, note: "Endast publicerade och källspårade poster visas. Resultatet är inte en röstrekommendation." };
+  return { data_hash: collected.dataHash, result_count: result.length, evidence: result, recorded_no_clear: Object.values(collected.coverage).flatMap((item) => item.no_clear_positions), archive_excluded_by_party: Object.fromEntries(Object.entries(collected.coverage).map(([code, item]) => [code, item.archive_excluded_count])), note: "Endast publicerade och källspårade poster visas. Registrerade 'inget tydligt besked' redovisas separat. Resultatet är inte en röstrekommendation." };
 }
 
 async function buildResearchBrief(input: BriefInput) {
@@ -216,7 +264,7 @@ async function buildResearchBrief(input: BriefInput) {
   const missingPartyCodes = parties.filter((code) => !collected.evidence.some((item) => item.party_codes.includes(code)));
   const briefUrl = researchBriefUrl({ ...input, party_codes: parties });
   window.location.assign(briefUrl);
-  return { data_hash: collected.dataHash, brief_url: briefUrl, evidence_count: collected.evidence.length, displayed_evidence_count: evidence.length, missing_party_codes: missingPartyCodes, note: "Kortet visar belägg och tomrum sida vid sida. Det avgör inte vilket parti som är bäst." };
+  return { data_hash: collected.dataHash, brief_url: briefUrl, evidence_count: collected.evidence.length, displayed_evidence_count: evidence.length, missing_party_codes: missingPartyCodes, recorded_no_clear: Object.values(collected.coverage).flatMap((item) => item.no_clear_positions), archive_excluded_by_party: Object.fromEntries(Object.entries(collected.coverage).map(([code, item]) => [code, item.archive_excluded_count])), note: "Kortet visar belägg, registrerade otydliga besked och tomrum sida vid sida. Det avgör inte vilket parti som är bäst." };
 }
 
 async function showPartyComparison(input: { party_codes: string[] }) {
@@ -237,14 +285,14 @@ function briefInputFromUrl(): BriefInput | undefined {
   const query = params.get("query")?.trim() ?? "";
   if (partyCodes.length === 0 || queryTerms(query).length === 0) return undefined;
   const kind = params.get("kind");
-  return { party_codes: partyCodes, query, kind: kind === "loften" || kind === "besked" ? kind : "alla", max_results: Number(params.get("max")) || 12, require_archive_copy: params.get("arkiv") === "1" };
+  return { party_codes: partyCodes, query, category: params.get("category")?.trim() || undefined, kind: kind === "loften" || kind === "besked" ? kind : "alla", max_results: Number(params.get("max")) || 12, require_archive_copy: params.get("arkiv") === "1" };
 }
 
 async function loadSharedBrief(): Promise<void> {
   const input = briefInputFromUrl();
   if (!input) return;
   const collected = await collectEvidence(input);
-  renderResearchBrief(input, collected.evidence, collected.dataHash);
+  renderResearchBrief(input, collected.evidence, collected.dataHash, collected.coverage);
 }
 
 async function registerTools(): Promise<void> {
@@ -257,8 +305,8 @@ async function registerTools(): Promise<void> {
   });
   await appDocument.modelContext.registerTool({
     name: "build_research_brief",
-    description: "Bygg ett delbart granskningskort på utlovat.se för en sakfråga och valda partier. Kortet visar publicerade citat, källor, arkivkopior och vilka partier som saknar träff i just urvalet. Det gör ingen röstrekommendation och påstår inte att en tom träff saknar politik.",
-    inputSchema: { type: "object", properties: { party_codes: { type: "array", minItems: 1, items: { type: "string", enum: Object.keys(partyNames) }, description: "Partikoder som människan vill granska sida vid sida." }, query: { type: "string", minLength: 2, description: "Sakfråga eller neutralt sökord, till exempel 'skola' eller 'sjukvård'." }, kind: { type: "string", enum: ["loften", "besked", "alla"] }, max_results: { type: "integer", minimum: 1, maximum: 20 }, require_archive_copy: { type: "boolean", description: "Visa bara poster med länkad arkivkopia, utan att kalla dem primärkällor." } }, required: ["party_codes", "query"], additionalProperties: false },
+    description: "Bygg ett delbart granskningskort på utlovat.se för en sakfråga och valda partier. Kortet visar publicerade citat, källor, arkivkopior, registrerade otydliga besked och vilka partier som saknar träff i just urvalet. Det gör ingen röstrekommendation och påstår inte att en tom träff saknar politik.",
+    inputSchema: { type: "object", properties: { party_codes: { type: "array", minItems: 1, items: { type: "string", enum: Object.keys(partyNames) }, description: "Partikoder som människan vill granska sida vid sida." }, category: { type: "string", description: "Valfri exakt kategori. Följer alltid med i den delbara länken." }, query: { type: "string", minLength: 2, description: "Sakfråga eller neutralt sökord, till exempel 'skola' eller 'sjukvård'. Vanliga frågeord ignoreras." }, kind: { type: "string", enum: ["loften", "besked", "alla"] }, max_results: { type: "integer", minimum: 1, maximum: 20 }, require_archive_copy: { type: "boolean", description: "Visa bara poster med länkad arkivkopia, utan att kalla dem primärkällor. Kortet anger när belägg finns men saknar arkivkopia." } }, required: ["party_codes", "query"], additionalProperties: false },
     annotations: { readOnlyHint: true }, execute: buildResearchBrief,
   });
   await appDocument.modelContext.registerTool({
