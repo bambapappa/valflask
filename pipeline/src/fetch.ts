@@ -930,6 +930,16 @@ export function loadSeen(path: string): Map<string, string> {
 
 const USER_AGENT = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 
+/**
+ * Jämförbar form av en adress. Katalogen och våra egna listor är oense om
+ * avslutande snedstreck — samma sida skrivs `…/politik/jakt` på ett ställe och
+ * `…/politik/jakt/` på ett annat. Utan den här utjämningen missar ett riktat
+ * urval sidan det pekar på, tyst.
+ */
+function kalUrl(url: string): string {
+  return url.trim().replace(/\/+$/u, "");
+}
+
 export class LiveSource implements ArticleSource {
   private feeds: SourceFeed[];
   private limits: SourceConfig["limits"];
@@ -944,6 +954,14 @@ export class LiveSource implements ArticleSource {
    */
   private robotsPagaende: Map<string, Promise<RobotsRule[]>>;
   private stats: Map<string, number>;
+  /**
+   * Adresserna körningen ska begränsas till, eller null för alla.
+   *
+   * Filtret sätts INTE på artiklarna efteråt utan på länklistan, innan
+   * sidkropparna hämtas: att läsa 127 sidor för att sedan kasta 125 är ingen
+   * riktad körning. Se `hamtaSidor`.
+   */
+  private urlar: ReadonlySet<string> | null;
 
   private now: () => Date;
 
@@ -953,11 +971,16 @@ export class LiveSource implements ArticleSource {
     httpFetch?: HttpFetchFn;
     cacheDir?: string | null;
     userAgent?: string;
+    /** Begränsar körningen till exakta adresser. Tom/utelämnad = alla. */
+    urlar?: readonly string[];
     /** Injicerbar klocka (test-determinism för färskhetsspärren på följda PDF:er). */
     now?: () => Date;
   }) {
     this.feeds = opts.feeds;
     this.limits = opts.limits;
+    this.urlar = opts.urlar && opts.urlar.length > 0
+      ? new Set(opts.urlar.map(kalUrl))
+      : null;
     this.httpFetch = opts.httpFetch ?? globalThis.fetch.bind(globalThis);
     this.cacheDir = opts.cacheDir ?? null;
     this.userAgent = opts.userAgent ?? USER_AGENT;
@@ -992,6 +1015,10 @@ export class LiveSource implements ArticleSource {
 
         for (const article of feedArticles) {
           if (article.text.length < this.limits.min_chars) continue;
+          // RSS, page och riksdagen går inte genom `hamtaSidor` och har alltså
+          // inte mött filtret än. Utan den här raden skulle ett riktat urval
+          // tyst släppa igenom allt från just de källtyperna.
+          if (this.urlar && !this.urlar.has(kalUrl(article.url))) continue;
           articles.push({ ...article, feedType: feed.type });
         }
 
@@ -1054,11 +1081,15 @@ export class LiveSource implements ArticleSource {
    * undersida får aldrig ta med sig resten av källan.
    */
   private async hamtaSidor(
-    lankar: readonly string[],
+    allaLankar: readonly string[],
     feedId: string,
     ordet: string,
     etagCache: Map<string, CacheEntry>,
   ): Promise<NormalizedArticle[]> {
+    // Riktad körning: skär bort adresserna innan de hämtas, inte efteråt.
+    const lankar = this.urlar
+      ? allaLankar.filter((l) => this.urlar!.has(kalUrl(l)))
+      : allaLankar;
     const svar = await kartaSamtidigt(
       lankar,
       this.limits.samtidiga_hamtningar ?? 1,
