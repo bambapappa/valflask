@@ -6,6 +6,80 @@
 
 utlovat.se granskar partierna öppet och spårbart. Allvar i siffrorna, torr humor i glasyren.
 
+## WebMCP demo — evidence, not a verdict
+
+**Live URL for WebMCP judges:** [utlovat.se/webmcp](https://utlovat.se/webmcp/).
+It was tested live in ChatGPT's in-app browser and registers its tools through
+the WebMCP browser API, including in Google Chrome when WebMCP is enabled.
+The entry page and tool descriptions are in English; the underlying published
+Swedish quotes remain in their original language so that they can be checked
+against their sources.
+
+### Why WebMCP fits this use case
+
+Election evidence is most useful when the person and the agent inspect the
+same material. WebMCP lets an agent retrieve only Utlovat.se's published,
+source-traceable evidence and place it in the site's visible evidence board,
+instead of producing an opaque political summary in a separate chat.
+
+Together, a person and an agent can:
+
+- search published promises and party positions by a neutral Swedish topic,
+  party and archive-copy requirement;
+- assemble a shareable research brief that shows exact quotes, dates, sources,
+  archive copies when available, recorded unclear positions and bounded gaps;
+- follow one promise from its published source to linked, human-reviewed
+  parliamentary actions; and
+- let the person read the visible sources and mark the board as read. Until
+  then its status remains `unverified`; the agent can read that status but
+  cannot set it.
+
+The tools do not recommend a party, score parties or decide whether a promise
+was kept. A blank result is described as a gap in the selected material, not
+as proof that a party lacks a policy.
+
+### Implementation and tested tools
+
+The browser client registers read-only tools through
+[`document.modelContext.registerTool`](site/src/scripts/webmcp.ts). It uses the
+same public static Utlovat.se API data as the visible site — no separate
+WebMCP backend and no private political dataset.
+
+The English contest entry registers five global tools:
+
+- `search_verified_evidence`
+- `build_research_brief`
+- `show_party_comparison`
+- `get_evidence_board_status`
+- `trace_promise`
+
+Two contextual tools appear after navigation: `trace_current_promise` on a
+promise page and `build_current_question_brief` on an issue page. The
+generated browser client and its independent retest are covered by
+[`test-webmcp.mts`](site/scripts/test-webmcp.mts) and
+[`test-webmcp-retest.mts`](site/scripts/test-webmcp-retest.mts). The live URL
+was tested in ChatGPT's in-app browser on 2026-08-27.
+
+### Run locally
+
+The complete source code and the assets needed to build the demo are in this
+repository. With a current Node.js release and pnpm installed:
+
+```bash
+git clone https://github.com/bambapappa/valflask.git
+cd valflask/site
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Open the local `/webmcp/` page. It renders in a normal browser; the tools are
+registered when the browser provides WebMCP. To build and run the site checks:
+
+```bash
+pnpm build
+pnpm test
+```
+
 ## Tre vågar
 
 Repot rymmer hela tjänsten. De tre vågarna delar infrastruktur, bygge och domän.
@@ -55,4 +129,7 @@ ops/              drift och lanseringsrutiner
 
 ## Licens & kontakt
 
-Data: **CC BY 4.0** — ange "utlovat.se" som källa. · [Om projektet](https://utlovat.se/om) · press: hej@utlovat.se
+Koden är **[Apache-2.0](LICENSE)**. Rotfilen `LICENSE` är den licens GitHub
+identifierar som Apache-2.0 och visar i repots About-metadata. Publicerade
+data och innehåll är **CC BY 4.0** — ange "utlovat.se" som källa. ·
+[Om projektet](https://utlovat.se/om) · press: hej@utlovat.se
