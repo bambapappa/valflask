@@ -20482,5 +20482,109 @@
     "articleTitle": "Yttrandefrihet – Liberalerna",
     "duplicateOf": "p-2026-2057",
     "duplicateReason": "samma uttryck: «allvar fall», «rösträ minist»"
+  },
+  {
+    "candidate": {
+      "title": "Utbyggnad av yrkeshögskolan med fler platser",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "För att öka kompetensen i Sverige och se till att fler kommer ut på arbetsmarknaden vill Liberalerna fortsätta att bygga ut den framgångsrika Yrkeshögskolan med fler platser.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/vuxenutbildning",
+    "articleTitle": "Vuxenutbildning – Liberalerna",
+    "duplicateOf": "p-2026-2964"
+  },
+  {
+    "candidate": {
+      "title": "Ny yrkesskola för vuxna på gymnasial nivå",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi vill införa en yrkesutbildning för vuxna motsvarande gymnasial nivå med stort inslag av arbetsplatsförlagt lärande, yrkesskola, med yrkeshögskolan som modell.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/vuxenutbildning",
+    "articleTitle": "Vuxenutbildning – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 600,
+      "msek_base": 1000,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning utifrån jämförbara yrkesskolelöften och yrkeshögskolans kostnadsnivå; ingen egen nivå angiven i löftet.",
+      "confidence": 0.5,
+      "calculation": "Antag ~10 000 helårsstudieplatser för vuxna × 60–150 tkr per plats i statlig finansiering (utbildning, APL, administration; studiestöd ej inräknat) ≈ 600–1 500 mkr/år. Bas 1 000 mkr, i linje med andra partiers liknande yrkesskolelöften."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-3090 (1000), p-2026-3430 (300), p-2026-2180 (1000)"
+  },
+  {
+    "candidate": {
+      "title": "Rätt för alla att läsa in behörighet på Komvux",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill att alla ska ha rätt att läsa in grundläggande och särskild behörighet på Komvux.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/vuxenutbildning",
+    "articleTitle": "Vuxenutbildning – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 600,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Beräknar extra antal helårsstudieplatser på Komvux när behörighetsrätten breddas. Stor osäkerhet om efterfrågan och utnyttjandegrad hos grupper som idag inte studerar.",
+      "confidence": 0.4,
+      "calculation": "Uppskattar 5 000–25 000 nya helårsdeltagare per år utöver dagens komvux. Kostnad per helårsstudieplats antas 50–70 tkr. 5 000 × 50 tkr ≈ 250 mkr; 25 000 × 70 tkr ≈ 1 750 mkr. Centralt fall 10 000 × 60 tkr ≈ 600 mkr. Intervall avrundas till 300–1 200 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2970 (600), p-2026-1034 (550), p-2026-2323 (15), p-2026-2122 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Skattelättnader för individuella kompetenskonton",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Genom skattelättnader vill vi uppmuntra arbetsmarknadens parter att bygga upp individuella kompetenskonton att använda vid vidareutbildning och omskolning.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/vuxenutbildning",
+    "articleTitle": "Vuxenutbildning – Liberalerna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 250,
+      "msek_base": 700,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp; skattelättnadens utformning okänd. Skattat på deltagarandel, årlig avsättning och netto skattebortfall. Osäkerheten är stor.",
+      "confidence": 0.3,
+      "calculation": "5,2 mn sysselsatta × 5–10 % deltagare (260–520 tkr) × 5–10 tkr i årlig avsättning × 20–30 % netto skattebortfall efter framtida beskattning ≈ 260–1 560 mkr. Bas 700 mkr motsvarar ~350 tkr deltagare × 8 tkr × 25 %."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
   }
 ]
