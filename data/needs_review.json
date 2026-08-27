@@ -19829,5 +19829,565 @@
       "calculation": "Utredning + lagstiftning + myndighetsanpassning, uppskattat 10–50 mkr, baserat på liknande reformer."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2338 (30), p-2026-0015 (30), p-2026-0470 (0), p-2026-3373 (0), p-2026-0983 (5) ⚠ AVVIKER: 20 avviker 4.0× från jämförbara (median 5)"
+  },
+  {
+    "candidate": {
+      "title": "Införa lag om biblioteksfrid",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Den som upprepade gånger stör andra måste därför kunna nekas tillträde. Vi vill därför ha en lag om biblioteksfrid.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/bibliotek",
+    "articleTitle": "Bibliotek – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Införa euron i Sverige",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Det handlar om ekonomi, men framför allt om trygghet, lojalitet och vilken gemenskap vi vill tillhöra. Därför är det självklart för Liberalerna att vi vill ha ett fullt EU-medlemskap – och införa euron i Sverige.",
+      "category": "övrigt",
+      "amount_in_msek": null,
+      "financing": false
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: / must have required property 'amount_in_text_msek'; / must have required property 'financing_mentioned'; / must NOT have additional properties; / must NOT have additional properties"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/euron",
+    "articleTitle": "Euron – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Införa en euro-option",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill ha en euro-option, att Sverige omedelbart påbörjar de förberedelser som krävs för att snabbt kunna införa euron.",
+      "category": "övrigt",
+      "amount_in_msek": null,
+      "financing": false
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: / must have required property 'amount_in_text_msek'; / must have required property 'financing_mentioned'; / must NOT have additional properties; / must NOT have additional properties"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/euron",
+    "articleTitle": "Euron – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Satsa på tydligare karriärvägar för forskare",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Tydligare karriärvägar och möjlighet att bygga upp egen forskning är några satsningar för bättre resultat.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/forskning",
+    "articleTitle": "Forskning – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en inriktning utan konkret åtgärd, nivå eller belopp. Direkt kostnad för tydligare karriärvägar via regelverk är försumbar; eventuella nya forskningsmedel prissätts i specifika löften.",
+      "confidence": 0.2,
+      "calculation": "Ingen utpekad reform, omfattning eller ersättningsnivå anges. Som förliknande 'tydligare'-löften rör det sig om regleringsändringar utan direkt statlig kostnad. Därför sätts kostnaden till 0 mkr; nya forskartjänster eller forskningsbidrag skulle vara en separat ospecificerad satsning."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-1519 (0), p-2026-2023 (0), p-2026-0071 (0), p-2026-2406 (5), p-2026-2878 (60)"
+  },
+  {
+    "candidate": {
+      "title": "Möjlighet till extra år i lågstadiet för elever som halkar efter",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Elever som halkar efter tidigt ska också kunna gå ett extra år i lågstadiet för att få bättre förutsättningar att lyckas längre fram.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/grundskolan",
+    "articleTitle": "Grundskolan – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 450,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Uppskattning av statlig kompensation till kommuner för extra läsår. Osäkert antal elever och kommunal kostnad per elev; spannet är brett.",
+      "confidence": 0.4,
+      "calculation": "~110 000 elever per årskull. Antag 2–5 % av en årskull tar ett extra lågstadieår: 2 200–5 500 elever/år. Kommunal grundskolekostnad ca 120–150 tkr/elev/år. 2 200×120 tkr ≈ 260 mkr; 5 500×150 tkr ≈ 825 mkr. Bas: 3 500×130 tkr ≈ 455 mkr, avrundat till 450 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2045 (500), p-2026-1034 (550), p-2026-3410 (0), p-2026-0064 (1600), p-2026-2482 (15)"
+  },
+  {
+    "candidate": {
+      "title": "Prioritera småskaligt och kustnära fiske",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Småskaligt och kustnära fiske skapar fler nyttor än bara fångsterna och ska prioriteras.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/hav",
+    "articleTitle": "Havsmiljö – Liberalerna",
+    "duplicateOf": "p-2026-1369"
+  },
+  {
+    "candidate": {
+      "title": "Skatteregler som gynnar gåvor och sponsring",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "skatteregler bör gynna gåvor och sponsring.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/kultur",
+    "articleTitle": "Kultur – Liberalerna",
+    "duplicateOf": "p-2026-3207",
+    "duplicateReason": "samma uttryck: «skatte gynna», «gynna gåvor», «gåvor sponsr»"
+  },
+  {
+    "candidate": {
+      "title": "Säkra armlängds avstånd i kulturpolitiken",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Principen om armlängds avstånd ska gälla och säkras",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/kultur",
+    "articleTitle": "Kultur – Liberalerna",
+    "duplicateOf": "p-2026-3429",
+    "duplicateReason": "samma uttryck: «avstån gälla», «gälla säkras»"
+  },
+  {
+    "candidate": {
+      "title": "Ge polisen och tullen vassare verktyg mot människohandel",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi vill också ge polisen och tullen vassare och kraftfullare verktyg för att gripa in mot de organiserade ligor som ofta ligger bakom människohandeln.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/manniskohandel",
+    "articleTitle": "Människohandel – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Lämna en värld i ekologisk balans till kommande generationer",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi ska lämna en värld i ekologisk balans till kommande generationer.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/miljo-och-natur",
+    "articleTitle": "Miljö och natur – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred inriktning utan konkret åtgärd eller belopp. Prissätts som inriktningslöfte, de kostnadsbärande delarna hanteras i specifika löften.",
+      "confidence": 0,
+      "calculation": "Ingen beräkning – inriktningslöfte utan specificerad åtgärd."
+    },
+    "costReason": "LLM-estimat (confidence 0) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Gör skolan till en frizon från fördomar och hat",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Skolan ska vara en frizon från fördomar och hat.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/rasism",
+    "articleTitle": "Rasism – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar saknade giltiga tal — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1550 (1200) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1200"
+  },
+  {
+    "candidate": {
+      "title": "Ta vara på alla individers och företags utvecklingskraft",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi ska ta vara på alla individers och företags utvecklingskraft i Sverige.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/regional-utveckling",
+    "articleTitle": "Regional utveckling – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred vision utan konkret åtgärd; inriktningslöfte enligt regel 13. Inga nya statliga utgifter kan prissättas.",
+      "confidence": 0.1,
+      "calculation": "Löftet anger ingen specifik reform, målgrupp eller nivå. Som inriktningslöfte sätts kostnaden till 0 mkr; eventuella delåtgärder prissätts på egna löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1237 (0), p-2026-1487 (400), p-2026-2324 (15), p-2026-3245 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~7.5"
+  },
+  {
+    "candidate": {
+      "title": "Möjlighet att bo och arbeta på landsbygden med samhällsservice",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Alla ska ha möjlighet att bo och arbeta på landsbygden och samtidigt ha tillgång till grundläggande samhällsservice.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/regional-utveckling",
+    "articleTitle": "Regional utveckling – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Specifika reformer prissätts i separata löften.",
+      "confidence": 0.1,
+      "calculation": "Ingen kostnad beräknad – löftet är en allmän målsättning utan utpekad åtgärd. Enligt regel 13 sätts base till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-0785 (0), p-2026-2435 (0), p-2026-1721 (0), p-2026-0267 (300), p-2026-0365 (300)"
+  },
+  {
+    "candidate": {
+      "title": "Spelpaus som villkor för försörjningsstöd och skuldsanering",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "I syfte att stävja missbruket är det viktigt att spelpaus införs som villkor för att ta emot försörjningsstöd. Även skuldsanering bör kräva spelpaus för individen i fråga.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/spelmissbruk",
+    "articleTitle": "Spelmissbruk – Liberalerna",
+    "duplicateOf": "p-2026-2109"
+  },
+  {
+    "candidate": {
+      "title": "Införa varningstexter på spelreklam",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Det kan finnas behov av att införa varningstexter, likt dem som appliceras på tobak och alkohol, som en obligatorisk del av spelreklam, oavsett medium.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/spelmissbruk",
+    "articleTitle": "Spelmissbruk – Liberalerna",
+    "verifyReason": "Citatet återfinns ordagrant i källtexten på liberalerna.se och partitillhörigheten (L/Liberalerna) stämmer. Uttalandet är dock kraftigt försvagat ('Det kan finnas behov av att införa...', inramat av 'utesluter inte fler åtgärder') och uttrycker snarare öppenhet för en möjlig åtgärd än ett tydligt löfte; rubriken 'Införa varningstexter på spelreklam' framstår därför starkare än vad källtexten ger stöd för. Ingen summa nämns i vare sig kandidat eller källa. Pga tveksamhet om löfteskaraktären krävs manuell granskning."
+  },
+  {
+    "candidate": {
+      "title": "Främja självreglering av spelreklam",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "För att motverka att fler fastnar i ett spelberoende, som i sin tur kan leda till spelmissbruk, anser Liberalerna att branschen i högre utsträckning bör främja en självreglering av spelreklam.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/spelmissbruk",
+    "articleTitle": "Spelmissbruk – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en inriktning att främja branschens självreglering av spelreklam, utan konkret åtgärd, utredning eller belopp. Direkt statlig kostnad saknas; administration ryms inom befintlig tillsyn.",
+      "confidence": 0.2,
+      "calculation": "Ingen ny statlig utgift kan beräknas. Självreglering sker på branschens initiativ. Eventuellt stöd kan hanteras inom befintlig myndighets verksamhet (beredningsarbete → 0 enligt regel 17). Estimaten sätts till 0 med osäkerhet 0,1."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp — jämförbara: p-2026-0881 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Tillåt byggande strandnära vid lågt exploateringstryck",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "där exploateringstrycket inte är så hårt måste det bli tillåtet att bygga strandnära.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/strandskydd",
+    "articleTitle": "Strandskydd – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring i strandskyddet; direkt statlig kostnad är försumbar. Samhällsföljder som byggande och kommunala intäkter lämnas okvantifierade.",
+      "confidence": 0.5,
+      "calculation": "Åtgärden är en regeländring (tillåta strandnära byggande vid lågt exploateringstryck). Ingen ny statlig transferering eller myndighet inrättas; beredning sker inom Regeringskansliet. Därför sätts direkt kostnad till 0 mkr. Eventuella kostnader för prövning ligger hos kommunerna, inte staten."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-1258 (0), p-2026-3119 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Satsa på bättre studiemedel",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill fortsätta satsa på bättre studiemedel så att fler kan studera mer.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/studiemedel",
+    "articleTitle": "Studiemedel – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Individanpassad SFI-undervisning",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "SFI-undervisningen måste individanpassas mer.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet har 4 ord — minst 5 krävs (kortare tillåts bara om citatet är en hel, unik punkt på partiets egen sida)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/svenska-spraket",
+    "articleTitle": "Svenska språket – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Gör tandvårdens finansiering mer lik sjukvårdens",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi vill att tandvårdens finansiering stegvis ska bli mer lik den i övriga hälso- och sjukvården",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/tandvard",
+    "articleTitle": "Tandvård – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; kostnaden prissätts på specifika delreformer.",
+      "confidence": 0.1,
+      "calculation": "Ingen beräkning – löftet anger ingen nivå eller åtgärd, behandlas som inriktning."
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-1205 (500), p-2026-1644 (250) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~375"
+  },
+  {
+    "candidate": {
+      "title": "Inför testverksamhet med tandvård i vårdkedjan",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Det behöver införas testverksamhet där tandvården integreras i vårdkedjan och mobil tandvård.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/tandvard",
+    "articleTitle": "Tandvård – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 20,
+      "msek_base": 40,
+      "msek_high": 80,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Testverksamhet, ej permanent reform. Kostnad för pilotprojekt med mobil tandvård och integrering i vårdkedjan, inkl. utvärdering.",
+      "confidence": 0.3,
+      "calculation": "Antag 2–3 regioner under 2 år, 10–20 mkr per region och år för mobil tandvård och integrering, plus utvärdering 5–10 mkr: 2*2*15 + 7 ≈ 67 mkr, spann 20–80 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0925 (200), p-2026-0489 (4600), p-2026-2949 (0), p-2026-2650 (4600), p-2026-3303 (1000) ⚠ AVVIKER: 40 avviker 25.0× från jämförbara (median 1000)"
+  },
+  {
+    "candidate": {
+      "title": "Åldersgränser ska noggrant uppehållas så att barn och unga inte ges tillgång till tobaksvaror",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Ett stort ansvar ligger på att åldersgränser noggrant uppehålls, så att barn och unga inte ges tillgång till tobaksvaror.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/tobak",
+    "articleTitle": "Tobak – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet innebär ingen ny statlig utgift; det handlar om att upprätthålla befintliga åldersgränser inom ramen för nuvarande tillsynsverksamhet.",
+      "confidence": 0.3,
+      "calculation": "Ingen ny åtgärd med kostnad; befintlig tillsyn."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2088 (0), p-2026-1189 (0), p-2026-1055 (0), p-2026-0587 (0), p-2026-2751 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Reparera skador i små vattendrag",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Åtgärder behövs, särskilt i små vattendrag, för att reparera det som förstörts.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/vattenkraft",
+    "articleTitle": "Vattenkraft – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 300,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Jämfört med liknande löften om restaurering och sanering av vattendrag från MP och M. Löftet är vagt formulerat, så osäkerheten är stor.",
+      "confidence": 0.3,
+      "calculation": "Medelvärde av MP:s 350 mkr/år och M:s 250 mkr/år för liknande åtgärder: (350+250)/2 = 300 mkr/år. Intervall 200-400 baserat på osäkerhet."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0663 (350), p-2026-2285 (250), p-2026-2047 (0), p-2026-0878 (0), p-2026-0162 (0) ⚠ AVVIKER: belopp 300 men jämförbara ligger på 0"
   }
 ]
