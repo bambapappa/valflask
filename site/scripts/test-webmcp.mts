@@ -63,6 +63,7 @@ if (evidenceTool) {
   const result = await evidenceTool.execute({ party_codes: ["s"], kind: "alla", max_results: 12 });
   check("läser API-kuvertens faktiska former", result.result_count === 2 && Array.isArray(result.evidence));
   check("visar samma citat på bevisbrädet", Boolean(board));
+  check("gör mandatperiodsantagandet synligt", (result.evidence as Array<{ detail: string }>).some((item) => item.detail.includes("årlig kostnad × 4") && item.detail.includes("fyraårigt mandatperiodsantagande")));
   const archived = await evidenceTool.execute({ party_codes: ["s"], kind: "alla", require_archive_copy: true });
   check("kan kräva arkivkopia utan att kalla den primärkälla", archived.result_count === 1 && String(archived.note).includes("inte en röstrekommendation"));
   const archiveGap = await evidenceTool.execute({ party_codes: ["s"], kind: "besked", require_archive_copy: true });

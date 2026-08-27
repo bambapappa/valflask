@@ -19,6 +19,7 @@ type BriefInput = { party_codes: string[]; category?: string; query: string; kin
 
 const appDocument = document as Document & { modelContext?: { registerTool: (tool: unknown) => Promise<void> } };
 const partyNames: Record<string, string> = { s: "Socialdemokraterna", m: "Moderaterna", sd: "Sverigedemokraterna", c: "Centerpartiet", v: "Vänsterpartiet", kd: "Kristdemokraterna", l: "Liberalerna", mp: "Miljöpartiet" };
+const mandatePeriodYears = 4;
 
 async function getJson<T>(path: string): Promise<T> {
   const response = await fetch(path, { headers: { Accept: "application/json" } });
@@ -30,6 +31,11 @@ function formatMsek(value: number): string {
   return value >= 1000
     ? `${(value / 1000).toLocaleString("sv-SE", { maximumFractionDigits: 1 })} mdkr`
     : `${value.toLocaleString("sv-SE")} mkr`;
+}
+
+function costIntervalDetail(cost: PromiseItem["cost"]): string {
+  if (cost.period === "per_ar") return `Kostnadsintervall för mandatperioden: ${formatMsek(cost.msek_low * mandatePeriodYears)}–${formatMsek(cost.msek_high * mandatePeriodYears)} (årlig kostnad × ${mandatePeriodYears}; fyraårigt mandatperiodsantagande).`;
+  return `Kostnadsintervall: ${formatMsek(cost.msek_low)}–${formatMsek(cost.msek_high)} (engångskostnad).`;
 }
 
 function sourceLabel(source: Source): string {
@@ -154,8 +160,7 @@ async function collectEvidence(input: SearchInput): Promise<{ evidence: Evidence
       markArchiveExcluded(matchingPartyCodes);
       continue;
     }
-    const multiplier = promise.cost.period === "per_ar" ? 4 : 1;
-    evidence.push({ kind: "lofte", title: promise.title, party_codes: promise.parties, quote: promise.quote, date: promise.date_stated, source: promise.source, page_url: `/lofte/${promise.id}/${promise.slug}`, category: promise.category, detail: `Kostnadsintervall för mandatperioden: ${formatMsek(promise.cost.msek_low * multiplier)}–${formatMsek(promise.cost.msek_high * multiplier)} (fyra år, 2027–2030).` });
+    evidence.push({ kind: "lofte", title: promise.title, party_codes: promise.parties, quote: promise.quote, date: promise.date_stated, source: promise.source, page_url: `/lofte/${promise.id}/${promise.slug}`, category: promise.category, detail: costIntervalDetail(promise.cost) });
   }
   if (kind === "alla" || kind === "besked") {
     const subquestions = new Map(issuesResponse.issues.flatMap((issue) => issue.subquestions.map((sq) => [sq.id, { issue, text: sq.text }] as const)));
