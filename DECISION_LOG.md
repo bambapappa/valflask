@@ -74,6 +74,19 @@ besked (datat bär bara position och sökdatum); att tolka ett filtrerat bortfal
 som frånvaro av politik; full språkmodellstolkning av sökfrasen i webbläsaren
 (skulle göra urvalet svårare att reproducera).
 
+## 2026-08-27 — Koden publiceras under Apache-2.0
+
+**Gäller:** Fläskvågen, Frågevågen och Handlingsvågen. Licensvillkoren för
+publicerade data och innehåll ändras inte.
+
+**Beslut:** Rotfilen `LICENSE` använder Apache License 2.0. Utlovat.se:s
+publicerade data och innehåll fortsätter att anges som CC BY 4.0 där de
+publiceras.
+
+**Motiv:** Apache-2.0 är valflasks etablerade kodlicens och tävlingsreglerna
+kräver en synlig open-source-licens i det publika källkodsförrådet. En
+kodlicens ersätter inte data- eller innehållslicensen.
+
 ## 2026-08-25 — AI-metoden använder den uppmätta andelen prissatta löften
 
 **Gäller:** Fläskvågen. Frågevågen och Handlingsvågen har inga prislappar i
