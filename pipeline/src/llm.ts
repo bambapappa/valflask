@@ -386,6 +386,29 @@ export class OpenRouterClient implements LlmClient {
             const skal = typeof val?.finish_reason === "string" ? val.finish_reason : "okänt";
             throw new Error(`Tomt svar från modellen (finish_reason: ${skal})`);
           }
+          // ETT HALVT SVAR ÄR INTE HELLER ETT SVAR.
+          //
+          // Vakten ovan fångar bara det TOMMA svaret. Slår modellen i taket
+          // efter att ha hunnit skriva några tecken kommer ett giltigt
+          // prefix tillbaka — `{"promises":[{"title":"…` — som ser ut som ett
+          // svar men aldrig går att tolka. Det kastades vidare hit, föll på
+          // JSON.parse i extract.ts, och det felet är INTE retrybart: sidan
+          // markerades aldrig som sedd och lästes om i varje efterföljande
+          // körning, med samma utgång.
+          //
+          // Mätt 2026-08-27: elva L-sidor satt fast i den loopen och åt upp
+          // körningens budget, medan katalogens sista sidor aldrig hanns med.
+          // Råsvaren var alla giltig JSON som tvärt tog slut — ett av dem
+          // efter blott `{ "promises`.
+          //
+          // Retrybart av samma skäl som det tomma svaret: ett omförsök kan
+          // hamna under taket, och nästa led i kedjan kan ha annan budget.
+          if (val?.finish_reason === "length") {
+            throw new Error(
+              `Avhugget svar från modellen (finish_reason: length, ${content.length} tecken) — ` +
+                `höj LLM_MAX_TOKENS om det upprepas`,
+            );
+          }
           // ETT LYCKAT FALL IGENOM SKA SYNAS.
           //
           // Tidigare kastades `felPerEndpoint` bort så fort ett senare led
