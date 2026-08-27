@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { buildContextFromEnv, byggLed, valjFeeds } from "../src/cli-run.ts";
+import { buildContextFromEnv, byggLed, valjFeeds, valjUrlar } from "../src/cli-run.ts";
 import type { SourceConfig, SourceFeed } from "../src/fetch.ts";
 
 const config: SourceConfig = {
@@ -193,6 +193,29 @@ describe("valjFeeds", () => {
 
   it("kastar — inte tyst noll — när inget id matchar", () => {
     assert.throws(() => valjFeeds(feeds, "stavfel-har"), /SKORD_KALLOR="stavfel-har"/u);
+  });
+});
+
+describe("valjUrlar", () => {
+  it("utan SKORD_URLAR blir listan tom — hela urvalet gäller", () => {
+    assert.deepEqual(valjUrlar(undefined), []);
+    assert.deepEqual(valjUrlar(""), []);
+  });
+
+  it("delar på komma och tål mellanslag runt", () => {
+    assert.deepEqual(
+      valjUrlar("https://a.se/x, https://b.se/y"),
+      ["https://a.se/x", "https://b.se/y"],
+    );
+  });
+
+  it("kastar på något som inte är en adress", () => {
+    // Tyst filtrering hade gett en tom skörd som rapporterar sig klar.
+    assert.throws(() => valjUrlar("l-politik-sitemap"), /ingen giltig adress/u);
+  });
+
+  it("kastar på fel protokoll", () => {
+    assert.throws(() => valjUrlar("file:///etc/passwd"), /varken http eller https/u);
   });
 });
 

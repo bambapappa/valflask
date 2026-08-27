@@ -31,6 +31,32 @@ export function valjFeeds(feeds: readonly SourceFeed[], kallorRaw: string | unde
 }
 
 /**
+ * Läser SKORD_URLAR — en kommaseparerad lista exakta adresser.
+ *
+ * Tomt/osatt ger en tom lista: körningen tar hela urvalet, som utan flaggan.
+ *
+ * En adress som inte är en adress är ett stavfel, och ett stavfel ska stoppa
+ * körningen. Alternativet är värre än ett fel: filtret matchar då ingenting,
+ * skörden blir tom, och körningen rapporterar glatt att den är klar.
+ */
+export function valjUrlar(urlarRaw: string | undefined): string[] {
+  if (!urlarRaw) return [];
+  const delar = urlarRaw.split(",").map((s) => s.trim()).filter((s) => s !== "");
+  for (const del of delar) {
+    let parsad: URL;
+    try {
+      parsad = new URL(del);
+    } catch {
+      throw new Error(`SKORD_URLAR: "${del}" är ingen giltig adress.`);
+    }
+    if (parsad.protocol !== "http:" && parsad.protocol !== "https:") {
+      throw new Error(`SKORD_URLAR: "${del}" är varken http eller https.`);
+    }
+  }
+  return delar;
+}
+
+/**
  * Anropskedjans tre led. Varje led har sin egen adress, sin egen nyckel och
  * sina egna modellnamn — inget om leverantörerna finns i koden, så en
  * leverantör byts ut genom att ändra variabler.
@@ -238,12 +264,22 @@ export function buildContextFromEnv(
     console.log(`[skörd] riktad körning: ${feeds.length} feed(s) — ${feeds.map((f) => f.id).join(", ")}`);
   }
 
+  // SKORD_URLAR: ännu snävare än SKORD_KALLOR — exakta adresser i stället för
+  // hela källor. Finns för svansen: när en katalog är läst så när som på en
+  // handfull sidor är det slöseri att gå igenom hela källan för deras skull.
+  const urlarRaw = getEnv(env, "SKORD_URLAR");
+  const urlar = valjUrlar(urlarRaw);
+  if (urlar.length > 0) {
+    console.log(`[skörd] riktade adresser: ${urlar.length} st — ${urlar.join(", ")}`);
+  }
+
   const llm = new OpenRouterClient({ led: byggLed(env, { extract, verify, copy }) });
 
   const articleSource = new LiveSource({
     feeds,
     limits: config.limits,
     cacheDir: opts.cacheDir ?? null,
+    urlar,
   });
 
   const now = opts.now ?? new Date();

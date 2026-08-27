@@ -37,6 +37,10 @@ on:
         description: "Riktad körning: kommaseparerad lista feed-id ur sources.yaml (t.ex. l-politik-sitemap,c-politik-sitemap). Tomt = alla feeds som vanligt."
         type: string
         default: ""
+      urlar:
+        description: "Ännu snävare: kommaseparerad lista EXAKTA adresser (t.ex. https://www.liberalerna.se/politik/jakt). Tomt = hela urvalet. Kombineras med kallor för att slippa läsa katalogen."
+        type: string
+        default: ""
 permissions:
   contents: write
   issues: write
@@ -135,6 +139,7 @@ jobs:
           # som har oläst kvar kan vara just det som får sämst rang.
           SKORD_RUNDGANG: ${{ inputs.rundgang && '1' || '' }}
           SKORD_KALLOR: ${{ inputs.kallor }}
+          SKORD_URLAR: ${{ inputs.urlar }}
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
           # Frågevågen PÅ som default (mänskligt beslut 2026-07-11); stäng av genom att
           # sätta repovariabeln STANCES_ENABLED=false. STANCES_MODE osatt = review
