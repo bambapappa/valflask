@@ -3751,5 +3751,47 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "fraga_id": "sq-skola-vinst",
+      "position": "ja",
+      "citat": "Vi liberaler vill göra om friskolesystemet från grunden genom att fasa ut vinstintresset ur skolväsendet",
+      "condition_note": null,
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G1",
+        "reason": "Schemafel: / must have required property 'subquestion_id'; / must have required property 'party'; / must have required property 'quote'; / must NOT have additional properties; / must NOT have additional properties"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/friskolor",
+    "articleTitle": "Friskolor – Liberalerna",
+    "runId": "run-2026-08-27-01-28"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "c",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Partiet vill bygga ut fossilfri elproduktion, inklusive vindkraft, solenergi och kärnkraft på marknadsmässiga villkor utan statliga subventioner.",
+      "person": null
+    },
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/vad-tycker-centerpartiet",
+    "articleTitle": "Vad tycker Centerpartiet? | Centerpartiet",
+    "sourceUrl": "https://www.centerpartiet.se/centerpartiets-politik/vad-tycker-centerpartiet",
+    "archiveUrl": null,
+    "dateStated": "2026-08-27",
+    "extractModel": "deepseek-v4-flash",
+    "verifyModel": "glm-5.2",
+    "runId": "run-2026-08-27-01-28",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
