@@ -27,13 +27,14 @@ function node(): Record<string, unknown> {
   };
 }
 const responses: Record<string, unknown> = {
-  "/api/v1/promises.json": { data: [{ id: "p-1", title: "Ett löfte", slug: "ett-lofte", parties: ["s"], quote: "Vi lovar", date_stated: "2026-01-02", category: "skola", status: "aktiv", source: { url: "https://example.test/lofte", domain: "example.test", archive_url: "https://archive.test/lofte" }, cost: { msek_low: 100, msek_high: 200, period: "per_ar" } }] },
+  "/api/v1/promises.json": { data: [{ id: "p-2026-0001", title: "Ett löfte", slug: "ett-lofte", parties: ["s"], quote: "Vi lovar", date_stated: "2026-01-02", category: "skola", status: "aktiv", source: { url: "https://example.test/lofte", domain: "example.test", archive_url: "https://archive.test/lofte" }, cost: { msek_low: 100, msek_high: 200, period: "per_ar" } }] },
   "/api/v1/stances.json": { stances: [
     { party: "s", subquestion_id: "sq-1", current: { statement_id: "st-1", position: "ja" }, statements: [{ id: "st-1", position: "ja", quote: "Vi säger ja", date_stated: "2026-01-03", source: { url: "https://example.test/besked", domain: "example.test", archive_url: null } }] },
     { party: "m", subquestion_id: "sq-1", current: { statement_id: null, position: "inget_tydligt_besked" }, statements: [], last_searched: "2026-08-26" },
   ] },
   "/api/v1/issues.json": { issues: [{ title: "Skolan", slug: "skolan", category: "skola", subquestions: [{ id: "sq-1", text: "Mer skola?" }] }] },
   "/api/v1/integrity.json": { data_hash: "h".repeat(64) },
+  "/api/v1/promise-traces.json": { data: { "p-2026-0001": { actions: [{ connection_id: "p-2026-0001:h-1", recorded_relation: "stodjer", link_evidence_quote: "Riksdagens ord", method_note: null, reviewed_by_human: true, action: { id: "h-1", kind: "motion", title: "En riksdagshandling", date: "2026-02-01", body: "Riksdagen", document_id: "M2026/1", parties: ["s"], source_url: "https://riksdagen.example/h-1", archive_url: null } }], correction_count: 0 } } },
   "/api/v1/summary.json": { data: { data_hash: "h".repeat(64), parties: [{ code: "s", name: "Socialdemokraterna", total_msek: 400, promises_count: 1, financing_gap_msek: 0 }] } },
 };
 let navigationUrl = "";
@@ -52,18 +53,20 @@ runInNewContext(client, {
     fetches[path] = (fetches[path] ?? 0) + 1;
     return { ok: true, json: async () => responses[path] };
   },
-  window: { location: { assign: (url: string) => { navigationUrl = url; } } },
+  window: { location: { pathname: "/lofte/p-2026-0001/ett-lofte", assign: (url: string) => { navigationUrl = url; } } },
   console, URL, URLSearchParams, Object, Map, Set, Promise, Array, Math,
 });
 await Promise.resolve();
 await Promise.resolve();
-await new Promise((resolve) => setTimeout(resolve, 0));
+await new Promise((resolve) => setTimeout(resolve, 10));
 
 const evidenceTool = registered.get("search_verified_evidence");
 const briefTool = registered.get("build_research_brief");
 const comparisonTool = registered.get("show_party_comparison");
 const evidenceStatusTool = registered.get("get_evidence_board_status");
-check("registrerar fyra läsande verktyg", registered.size === 4 && evidenceTool?.annotations.readOnlyHint === true && briefTool?.annotations.readOnlyHint === true && comparisonTool?.annotations.readOnlyHint === true && evidenceStatusTool?.annotations.readOnlyHint === true);
+const traceTool = registered.get("trace_promise");
+const currentTraceTool = registered.get("trace_current_promise");
+check("registrerar fem globala och ett kontextuellt läsverktyg", registered.size === 6 && evidenceTool?.annotations.readOnlyHint === true && briefTool?.annotations.readOnlyHint === true && comparisonTool?.annotations.readOnlyHint === true && evidenceStatusTool?.annotations.readOnlyHint === true && traceTool?.annotations.readOnlyHint === true && currentTraceTool?.annotations.readOnlyHint === true);
 if (evidenceTool) {
   const result = await evidenceTool.execute({ party_codes: ["s"], kind: "alla", max_results: 12 });
   check("läser API-kuvertens faktiska former", result.result_count === 2 && Array.isArray(result.evidence));
@@ -98,5 +101,34 @@ if (evidenceStatusTool) {
 } else {
   check("statusverktyget finns", false);
 }
+if (traceTool) {
+  const result = await traceTool.execute({ promise_id: "p-2026-0001" });
+  check("löftespåraren visar löfte, källa och riksdagshandling utan utfallsdom", result.promise && Array.isArray(result.parliamentary_actions) && (result.parliamentary_actions as Array<{ action: { document_id: string } }>)[0]?.action.document_id === "M2026/1" && String(result.note).includes("ingen bedömning"));
+} else {
+  check("löftespåraren finns", false);
+}
+if (currentTraceTool) {
+  const result = await currentTraceTool.execute({});
+  check("sidans löftespårare använder bara löftet i den öppna URL:en", (result.promise as { id?: string }).id === "p-2026-0001");
+} else {
+  check("sidans löftespårare finns", false);
+}
 check("återanvänder de delade bevis-API-svaren mellan verktyg", ["/api/v1/promises.json", "/api/v1/stances.json", "/api/v1/issues.json", "/api/v1/integrity.json"].every((path) => fetches[path] === 1));
+
+const questionRegistered = new Map<string, Tool>();
+let questionNavigation = "";
+runInNewContext(client, {
+  document: { ...document, modelContext: { registerTool: async (tool: Tool) => { questionRegistered.set(tool.name, tool); } } },
+  fetch: async (path: string) => ({ ok: true, json: async () => responses[path] }),
+  window: { location: { pathname: "/fraga/skolan", assign: (url: string) => { questionNavigation = url; } } },
+  console, URL, URLSearchParams, Object, Map, Set, Promise, Array, Math,
+});
+await new Promise((resolve) => setTimeout(resolve, 10));
+const currentQuestionTool = questionRegistered.get("build_current_question_brief");
+if (currentQuestionTool) {
+  const result = await currentQuestionTool.execute({ party_codes: ["s"] });
+  check("frågesidan registrerar ett verktyg som återanvänder sidans sakfråga", String(result.brief_url).includes("query=Skolan") && questionNavigation === result.brief_url);
+} else {
+  check("frågesidans kontextuella verktyg finns", false);
+}
 if (errors) process.exit(1);

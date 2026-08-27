@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const jsonLd = [{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Evidence, not a verdict — Utlovat.se WebMCP demo",
+  url: "https://utlovat.se/webmcp",
+  description: "A human-and-agent research surface for Swedish election promises, with quoted sources and visible uncertainty.",
+}];
+---
+<Layout
+  lang="en"
+  title="Evidence, not a verdict — Utlovat.se"
+  description="A WebMCP research surface where an agent sorts published Swedish election evidence and the person makes the political judgement."
+  canonicalPath="/webmcp"
+  jsonLd={jsonLd}
+>
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <div class="etikett">WEBMCP CHALLENGE · HUMAN + AGENT</div>
+      <h1>Evidence, not a verdict</h1>
+      <p>
+        Ask an agent to compare published Swedish election promises. It can sort
+        exact quotes, dates, original sources, archive copies and visible gaps.
+        It cannot recommend a party or turn a missing result into a political claim.
+      </p>
+    </div>
+
+    <section class="webmcp-brief" aria-live="polite" aria-label="Research brief">
+      <div id="webmcp-brief-outlet">
+        <p class="webmcp-brief__empty">
+          Ask the agent to build a research brief for an issue and selected parties.
+          The same published evidence appears here for the person to inspect.
+        </p>
+      </div>
+    </section>
+
+    <section class="prosa-content webmcp-demo-guide" aria-labelledby="how-it-works">
+      <h2 id="how-it-works">One question, shared evidence</h2>
+      <ol>
+        <li>Ask a neutral question, for example: <em>“Compare S, M and V on schools. Show archived quotes only.”</em></li>
+        <li>The agent creates a brief and reports both matches and limits in this exact selection.</li>
+        <li>Open the source or archive yourself. Until you mark the board as read, every result remains <code>unverified</code>.</li>
+      </ol>
+      <p class="webmcp-demo-guide__note">
+        The published source material is Swedish. “No match” means no matching
+        published item in this bounded search—not that a party has no policy.
+      </p>
+      <p><a href="/granska">Open the Swedish research view</a></p>
+    </section>
+  </div>
+</Layout>

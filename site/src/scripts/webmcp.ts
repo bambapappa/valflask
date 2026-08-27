@@ -17,12 +17,18 @@ type PartyCoverage = { archive_excluded_count: number; no_clear_positions: NoCle
 type SearchInput = { party_codes?: string[]; category?: string; query?: string; kind?: "loften" | "besked" | "alla"; max_results?: number; require_archive_copy?: boolean };
 type BriefInput = { party_codes: string[]; category?: string; query: string; kind?: "loften" | "besked" | "alla"; max_results?: number; require_archive_copy?: boolean };
 type PublishedEvidenceData = { promises: PromiseItem[]; stances: StanceCell[]; issues: Issue[]; dataHash: string };
+type PromiseTraceAction = { connection_id: string; recorded_relation: "stodjer" | "motverkar"; link_evidence_quote: string; reviewed_by_human: boolean; action: { id: string; kind: string; title: string; date: string; body: string | null; document_id: string; parties: string[]; source_url: string; archive_url: string | null } };
+type PromiseTrace = { actions: PromiseTraceAction[]; correction_count: number };
 
 const appDocument = document as Document & { modelContext?: { registerTool: (tool: unknown) => Promise<void> } };
 const partyNames: Record<string, string> = { s: "Socialdemokraterna", m: "Moderaterna", sd: "Sverigedemokraterna", c: "Centerpartiet", v: "Vänsterpartiet", kd: "Kristdemokraterna", l: "Liberalerna", mp: "Miljöpartiet" };
 const mandatePeriodYears = 4;
 let publishedEvidenceData: Promise<PublishedEvidenceData> | undefined;
 let evidenceReview = { dataHash: "", acknowledged: false };
+
+function isEnglishContestEntry(): boolean {
+  return window.location.pathname === "/webmcp";
+}
 
 async function getJson<T>(path: string): Promise<T> {
   const response = await fetch(path, { headers: { Accept: "application/json" } });
@@ -183,6 +189,39 @@ function showEvidenceBoard(evidence: Evidence[], dataHash?: string): void {
   board.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function showPromiseTraceBoard(promise: PromiseItem, trace: PromiseTrace, dataHash: string): void {
+  showEvidenceBoard([{
+    kind: "lofte", title: promise.title, party_codes: promise.parties, quote: promise.quote,
+    date: promise.date_stated, source: promise.source, page_url: `/lofte/${promise.id}/${promise.slug}`,
+    category: promise.category, detail: "Löftets källa och arkivkopia visas ovan. Kedjan nedan återger publicerade riksdagshandlingar utan en dom om utfallet.",
+  }], dataHash);
+  const board = document.getElementById("webmcp-evidence-board");
+  if (!board) return;
+  board.append(el("h3", "Riksdagshandlingar i den publicerade kedjan"));
+  if (trace.actions.length === 0) {
+    board.append(el("p", "Ingen aktiv, publicerad koppling till en riksdagshandling finns i detta underlag."));
+    return;
+  }
+  const list = el("ol");
+  list.className = "webmcp-evidence-board__list";
+  for (const item of trace.actions) {
+    const row = el("li");
+    const action = item.action;
+    const links = el("p");
+    links.append(link(action.source_url, `Riksdagens källa: ${action.document_id || action.id}`));
+    if (action.archive_url) links.append(document.createTextNode(" · "), link(action.archive_url, "arkivkopia"));
+    row.append(
+      el("div", `${action.kind.toUpperCase()} · ${action.date}${action.body ? ` · ${action.body}` : ""}`),
+      el("strong", action.title),
+      el("blockquote", `”${item.link_evidence_quote}”`),
+      el("p", `Granskad koppling: ${item.recorded_relation}. Detta är kopplingens registrerade relation, inte en dom om löftet hölls eller bröts.`),
+      links,
+    );
+    list.append(row);
+  }
+  board.append(list);
+}
+
 async function collectEvidence(input: SearchInput): Promise<{ evidence: Evidence[]; dataHash: string; coverage: Record<string, PartyCoverage> }> {
   const selectedCodes = selectedPartyCodes(input.party_codes);
   const partyCodes = new Set(selectedCodes);
@@ -243,7 +282,7 @@ function researchBriefUrl(input: BriefInput): string {
   params.set("kind", input.kind ?? "alla");
   params.set("max", String(Math.max(1, Math.min(input.max_results ?? 12, 20))));
   if (input.require_archive_copy) params.set("arkiv", "1");
-  return `/granska?${params.toString()}`;
+  return `${isEnglishContestEntry() ? "/webmcp" : "/granska"}?${params.toString()}`;
 }
 
 function coverageText(count: number, coverage: PartyCoverage | undefined, requiresArchive: boolean): string {
@@ -328,8 +367,50 @@ async function showPartyComparison(input: { party_codes: string[] }) {
   return { data_hash: summary.data_hash, comparison_url: url, parties: summary.parties.filter((party) => partyCodes.includes(party.code)), note: "Jämförelsevyn räknar gemensamma löften en gång. Den visar belopp och osäkerhet, inte en rekommendation." };
 }
 
+async function tracePromise(input: { promise_id: string }) {
+  const promiseId = input.promise_id.trim();
+  const { promises, dataHash } = await getPublishedEvidenceData();
+  const promise = promises.find((item) => item.id === promiseId);
+  if (!promise) throw new Error("Löftet finns inte i Utlovats publicerade API.");
+  const traces = await getJson<{ data: Record<string, PromiseTrace> }>("/api/v1/promise-traces.json");
+  const trace = traces.data[promiseId] ?? { actions: [], correction_count: 0 };
+  const shownActions = trace.actions.slice(0, 10);
+  showPromiseTraceBoard(promise, { ...trace, actions: shownActions }, dataHash);
+  return {
+    data_hash: dataHash,
+    promise: { id: promise.id, title: promise.title, quote: promise.quote, date: promise.date_stated, source: promise.source, page_url: `/lofte/${promise.id}/${promise.slug}` },
+    parliamentary_action_count: trace.actions.length,
+    parliamentary_actions: shownActions.map(({ connection_id, recorded_relation, link_evidence_quote, reviewed_by_human, action }) => ({ connection_id, recorded_relation, link_evidence_quote, reviewed_by_human, action })),
+    correction_count: trace.correction_count,
+    evidence_review: evidenceReviewStatus(),
+    note: `Visar ${shownActions.length} av ${trace.actions.length} riksdagshandlingar i kedjan löfte → källa → arkiv → riksdagshandling. Den gör ingen bedömning av om löftet hölls eller bröts.`,
+  };
+}
+
+function currentPromiseId(): string | undefined {
+  return window.location.pathname.match(/^\/lofte\/(p-\d{4}-\d{4})(?:\/|$)/)?.[1];
+}
+
+async function traceCurrentPromise() {
+  const promiseId = currentPromiseId();
+  if (!promiseId) throw new Error("Den här sidan gäller inte ett publicerat löfte.");
+  return await tracePromise({ promise_id: promiseId });
+}
+
+function currentQuestionSlug(): string | undefined {
+  return window.location.pathname.match(/^\/fraga\/([^/]+)(?:\/|$)/)?.[1];
+}
+
+async function buildCurrentQuestionBrief(input: Omit<BriefInput, "query" | "category">) {
+  const slug = currentQuestionSlug();
+  const { issues } = await getPublishedEvidenceData();
+  const issue = issues.find((item) => item.slug === slug);
+  if (!issue) throw new Error("Den här frågesidan finns inte i Utlovats publicerade API.");
+  return await buildResearchBrief({ ...input, query: issue.title, category: issue.category });
+}
+
 function briefInputFromUrl(): BriefInput | undefined {
-  if (window.location.pathname !== "/granska") return undefined;
+  if (window.location.pathname !== "/granska" && window.location.pathname !== "/webmcp") return undefined;
   const params = new URLSearchParams(window.location.search);
   const partyCodes = selectedPartyCodes(params.get("parties")?.split(","));
   const query = params.get("query")?.trim() ?? "";
@@ -347,30 +428,67 @@ async function loadSharedBrief(): Promise<void> {
 
 async function registerTools(): Promise<void> {
   if (typeof appDocument.modelContext?.registerTool !== "function") return;
+  const english = isEnglishContestEntry();
   await appDocument.modelContext.registerTool({
     name: "search_verified_evidence",
-    description: "Hämta publicerade, källspårade svenska vallöften och partibesked från utlovat.se. Visar alltid exakt citat, datum, källa och arkivkopia när sådan finns. Sökningen matchar bara ord i det publicerade underlaget. Använd inte resultatet för röstrekommendationer.",
+    description: english
+      ? "Read published Swedish election promises and party positions from Utlovat.se. Return exact quotes, dates, sources and archive copies when available. Search only the published material; never use it to recommend a party."
+      : "Hämta publicerade, källspårade svenska vallöften och partibesked från utlovat.se. Visar alltid exakt citat, datum, källa och arkivkopia när sådan finns. Sökningen matchar bara ord i det publicerade underlaget. Använd inte resultatet för röstrekommendationer.",
     inputSchema: { type: "object", properties: { party_codes: { type: "array", items: { type: "string", enum: Object.keys(partyNames) }, description: "Valfria partikoder." }, category: { type: "string", description: "Valfri exakt kategori." }, query: { type: "string", description: "Valfritt ämne eller sökord. Matchas bara mot publicerad rubrik, kategori, delfråga och citat." }, kind: { type: "string", enum: ["loften", "besked", "alla"] }, max_results: { type: "integer", minimum: 1, maximum: 20 }, require_archive_copy: { type: "boolean", description: "Visa bara poster med länkad arkivkopia. Detta säger inte att källan är primär; den uppgiften saknas i det publika API:t." } }, additionalProperties: false },
     annotations: { readOnlyHint: true }, execute: searchEvidence,
   });
   await appDocument.modelContext.registerTool({
     name: "build_research_brief",
-    description: "Bygg ett delbart granskningskort på utlovat.se för en sakfråga och valda partier. Kortet visar publicerade citat, källor, arkivkopior, registrerade otydliga besked och vilka partier som saknar träff i just urvalet. Det gör ingen röstrekommendation och påstår inte att en tom träff saknar politik.",
+    description: english
+      ? "Build a visible, shareable research brief for an issue and selected parties. It shows published quotes, sources, archive copies, recorded unclear positions and bounded gaps. It never recommends a party or treats a blank result as no policy."
+      : "Bygg ett delbart granskningskort på utlovat.se för en sakfråga och valda partier. Kortet visar publicerade citat, källor, arkivkopior, registrerade otydliga besked och vilka partier som saknar träff i just urvalet. Det gör ingen röstrekommendation och påstår inte att en tom träff saknar politik.",
     inputSchema: { type: "object", properties: { party_codes: { type: "array", minItems: 1, items: { type: "string", enum: Object.keys(partyNames) }, description: "Partikoder som människan vill granska sida vid sida." }, category: { type: "string", description: "Valfri exakt kategori. Följer alltid med i den delbara länken." }, query: { type: "string", minLength: 2, description: "Sakfråga eller neutralt sökord, till exempel 'skola' eller 'sjukvård'. Vanliga frågeord ignoreras." }, kind: { type: "string", enum: ["loften", "besked", "alla"] }, max_results: { type: "integer", minimum: 1, maximum: 20 }, require_archive_copy: { type: "boolean", description: "Visa bara poster med länkad arkivkopia, utan att kalla dem primärkällor. Kortet anger när belägg finns men saknar arkivkopia." } }, required: ["party_codes", "query"], additionalProperties: false },
     annotations: { readOnlyHint: true }, execute: buildResearchBrief,
   });
   await appDocument.modelContext.registerTool({
     name: "show_party_comparison",
-    description: "Öppna utlovat.se:s befintliga jämförelsevy med valda partier markerade. Vyn räknar gemensamma löften en gång och visar finansieringsgap; den rekommenderar inte ett parti.",
+    description: english
+      ? "Open Utlovat.se's existing comparison view with selected parties. It counts shared promises once and shows financing gaps; it does not recommend a party."
+      : "Öppna utlovat.se:s befintliga jämförelsevy med valda partier markerade. Vyn räknar gemensamma löften en gång och visar finansieringsgap; den rekommenderar inte ett parti.",
     inputSchema: { type: "object", properties: { party_codes: { type: "array", minItems: 1, items: { type: "string", enum: Object.keys(partyNames) }, description: "Partikoder att jämföra." } }, required: ["party_codes"], additionalProperties: false },
     annotations: { readOnlyHint: true }, execute: showPartyComparison,
   });
   await appDocument.modelContext.registerTool({
     name: "get_evidence_board_status",
-    description: "Läs om människan har markerat att det synliga bevisbordet har lästs. Ett omarkerat bord är alltid overifierat. Statusen är inte en bedömning av parti eller politik.",
+    description: english
+      ? "Read whether the person has marked the visible evidence board as read. An unchecked board is always unverified. This status is not a judgement about a party or policy."
+      : "Läs om människan har markerat att det synliga bevisbordet har lästs. Ett omarkerat bord är alltid overifierat. Statusen är inte en bedömning av parti eller politik.",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
     annotations: { readOnlyHint: true }, execute: getEvidenceBoardStatus,
   });
+  await appDocument.modelContext.registerTool({
+    name: "trace_promise",
+    description: english
+      ? "Trace one published promise to its source, archive copy and reviewed parliamentary actions. Return the evidence chain only; never decide whether the promise was kept or broken."
+      : "Följ ett publicerat löfte till dess källa, arkivkopia och granskade riksdagshandlingar. Visar bara evidenskedjan och dömer aldrig om löftet hölls eller bröts.",
+    inputSchema: { type: "object", properties: { promise_id: { type: "string", pattern: "^p-\\d{4}-\\d{4}$", description: "Utlovats publicerade löftes-id, till exempel p-2026-0001." } }, required: ["promise_id"], additionalProperties: false },
+    annotations: { readOnlyHint: true }, execute: tracePromise,
+  });
+  if (currentPromiseId()) {
+    await appDocument.modelContext.registerTool({
+      name: "trace_current_promise",
+      description: english
+        ? "Trace the promise currently open on this page to its source, archive copy and reviewed parliamentary actions. It never decides whether it was kept or broken."
+        : "Följ löftet på den öppna sidan till dess källa, arkivkopia och granskade riksdagshandlingar. Verktyget dömer aldrig om löftet hölls eller bröts.",
+      inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      annotations: { readOnlyHint: true }, execute: traceCurrentPromise,
+    });
+  }
+  if (currentQuestionSlug()) {
+    await appDocument.modelContext.registerTool({
+      name: "build_current_question_brief",
+      description: english
+        ? "Build a visible research brief for the issue currently open on this page and selected parties. It preserves visible gaps and never recommends a party."
+        : "Bygg ett synligt granskningskort för sakfrågan på den öppna sidan och valda partier. Verktyget redovisar luckor och rekommenderar aldrig ett parti.",
+      inputSchema: { type: "object", properties: { party_codes: { type: "array", minItems: 1, items: { type: "string", enum: Object.keys(partyNames) }, description: "Partikoder som ska visas sida vid sida." }, kind: { type: "string", enum: ["loften", "besked", "alla"] }, max_results: { type: "integer", minimum: 1, maximum: 20 }, require_archive_copy: { type: "boolean", description: "Visa bara poster med länkad arkivkopia." } }, required: ["party_codes"], additionalProperties: false },
+      annotations: { readOnlyHint: true }, execute: buildCurrentQuestionBrief,
+    });
+  }
 }
 
 void registerTools().catch((error) => console.warn("WebMCP kunde inte initieras", error));
