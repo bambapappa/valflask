@@ -27,7 +27,7 @@ let publishedEvidenceData: Promise<PublishedEvidenceData> | undefined;
 let evidenceReview = { dataHash: "", acknowledged: false };
 
 function isEnglishContestEntry(): boolean {
-  return window.location.pathname === "/webmcp";
+  return window.location.pathname === "/webmcp" || window.location.pathname === "/webmcp/";
 }
 
 async function getJson<T>(path: string): Promise<T> {

@@ -27,7 +27,7 @@ let publishedEvidenceData                                            ;
 let evidenceReview = { dataHash: "", acknowledged: false };
 
 function isEnglishContestEntry()          {
-  return window.location.pathname === "/webmcp";
+  return window.location.pathname === "/webmcp" || window.location.pathname === "/webmcp/";
 }
 
 async function getJson   (path        )             {
