@@ -30,6 +30,8 @@ const responses: Record<string, unknown> = {
   "/api/v1/promises.json": { data: [
     { id: "p-2026-0001", title: "Ett löfte", slug: "ett-lofte", parties: ["s"], quote: "Vi lovar", date_stated: "2026-01-02", category: "skola", status: "aktiv", source: { url: "https://example.test/lofte", domain: "example.test", archive_url: "https://archive.test/lofte" }, cost: { msek_low: 100, msek_high: 200, period: "per_ar", basis: "llm_estimat" } },
     { id: "p-2026-0002", title: "Bygga fler bostäder", slug: "bygga-fler-bostader", parties: ["s"], quote: "Vi ska bygga fler bostäder.", date_stated: "2026-01-04", category: "bostad", status: "aktiv", source: { url: "https://example.test/bostad", domain: "example.test", archive_url: "https://archive.test/bostad" }, cost: { msek_low: 0, msek_high: 0, period: "engang", basis: "parti" } },
+    { id: "p-2026-0003", title: "Stärk sjukvården", slug: "stark-sjukvarden", parties: ["s"], quote: "Sjukvården ska få fler medarbetare.", date_stated: "2026-01-05", category: "välfärd", status: "aktiv", source: { url: "https://example.test/sjukvard", domain: "example.test", archive_url: "https://archive.test/sjukvard" }, cost: { msek_low: 0, msek_high: 0, period: "engang", basis: "parti" } },
+    { id: "p-2026-0004", title: "Stärk energipolitiken", slug: "stark-energipolitiken", parties: ["s"], quote: "Sverige behöver mer fossilfri energi.", date_stated: "2026-01-06", category: "klimat-miljö", status: "aktiv", source: { url: "https://example.test/energi", domain: "example.test", archive_url: "https://archive.test/energi" }, cost: { msek_low: 0, msek_high: 0, period: "engang", basis: "parti" } },
   ] },
   "/api/v1/stances.json": { stances: [
     { party: "s", subquestion_id: "sq-1", current: { statement_id: "st-1", position: "ja" }, statements: [{ id: "st-1", position: "ja", quote: "Vi säger ja", date_stated: "2026-01-03", source: { url: "https://example.test/besked", domain: "example.test", archive_url: null } }] },
@@ -72,12 +74,12 @@ const currentTraceTool = registered.get("trace_current_promise");
 check("registrerar fem globala och ett kontextuellt läsverktyg", registered.size === 6 && evidenceTool?.annotations.readOnlyHint === true && briefTool?.annotations.readOnlyHint === true && comparisonTool?.annotations.readOnlyHint === true && evidenceStatusTool?.annotations.readOnlyHint === true && traceTool?.annotations.readOnlyHint === true && currentTraceTool?.annotations.readOnlyHint === true);
 if (evidenceTool) {
   const result = await evidenceTool.execute({ party_codes: ["s"], kind: "alla", max_results: 12 });
-  check("läser API-kuvertens faktiska former", result.result_count === 3 && Array.isArray(result.evidence));
+  check("läser API-kuvertens faktiska former", result.result_count === 5 && Array.isArray(result.evidence));
   check("visar samma citat på bevisbrädet", Boolean(board));
   check("märker nytt underlag som overifierat tills en människa kvitterar", (result.evidence_review as { status?: string }).status === "unverified");
   check("gör mandatperiodsantagandet synligt", (result.evidence as Array<{ detail: string }>).some((item) => item.detail.includes("årlig kostnad × 4") && item.detail.includes("fyraårigt mandatperiodsantagande")));
   const archived = await evidenceTool.execute({ party_codes: ["s"], kind: "alla", require_archive_copy: true });
-  check("kan kräva arkivkopia utan att kalla den primärkälla", archived.result_count === 2 && String(archived.note).includes("inte en röstrekommendation"));
+  check("kan kräva arkivkopia utan att kalla den primärkälla", archived.result_count === 4 && String(archived.note).includes("inte en röstrekommendation"));
   const archiveGap = await evidenceTool.execute({ party_codes: ["s"], kind: "besked", require_archive_copy: true });
   check("redovisar belägg som faller på arkivkravet", (archiveGap.archive_excluded_by_party as Record<string, number>).s === 1);
 } else {
@@ -91,6 +93,12 @@ if (briefTool) {
   check("granskningskortet har en delbar länk med hela urvalet", String(result.brief_url).includes("category=skola") && String(result.brief_url).includes("query=J%C3%A4mf%C3%B6r") && navigationUrl === result.brief_url);
   const englishResult = await briefTool.execute({ party_codes: ["m", "s", "v"], query: "housing costs and building more homes" });
   check("engelsk bostadsfråga använder fasta svenska ämnesalias", englishResult.evidence_count === 1 && Array.isArray(englishResult.missing_party_codes) && englishResult.missing_party_codes.includes("m") && englishResult.missing_party_codes.includes("v") && String(englishResult.brief_url).includes("query=housing+costs+and+building+more+homes"));
+  const healthcareResult = await briefTool.execute({ party_codes: ["s"], query: "What does S propose for healthcare and nursing staff?" });
+  check("fri engelsk vårdfråga använder ämnesalias och frågeord", healthcareResult.evidence_count === 1 && String(healthcareResult.brief_url).includes("query=What+does+S+propose+for+healthcare+and+nursing+staff"));
+  const energyResult = await briefTool.execute({ party_codes: ["s"], query: "Compare S policies on electricity, nuclear power and the grid." });
+  check("fri engelsk energifråga använder flera synonymer för samma sakområde", energyResult.evidence_count === 1);
+  const schoolResult = await briefTool.execute({ party_codes: ["s"], query: "What is S plan for teachers and students?" });
+  check("fri engelsk skolfråga använder vardagliga ämnesord", schoolResult.evidence_count === 2);
 } else {
   check("granskningsverktyget finns", false);
 }

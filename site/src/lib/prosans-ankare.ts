@@ -934,12 +934,13 @@ export const ANKARE: Ankare[] = [
     id: "webmcp-fixed-english-aliases",
     sida: "site/src/pages/webmcp.astro",
     pastaende:
-      "Common English topic words use a small, fixed Swedish matching list; all returned quotes and sources remain Swedish.",
+      "Common English topic words use a fixed Swedish matching list; all returned quotes and sources remain Swedish.",
     prov: () => {
       const client = repofil("site/src/scripts/webmcp.ts");
       return client.includes("const englishQueryAliases") &&
-        client.includes("housing: [\"bostad\", \"boende\"]") &&
-        client.includes("building: [\"bygg\", \"bygga\"]") &&
+        client.includes("housing: [\"bostad\"]") &&
+        client.includes("healthcare: [\"sjukvard\"]") &&
+        client.includes("electricity: [\"energi\"]") &&
         client.includes("englishQueryAliases[term]");
     },
     fallprov:
