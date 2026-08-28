@@ -21,6 +21,29 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-28 — Kostnadsförslag och mänsklig kontroll hålls isär i metodankaret
+
+**Gäller:** Fläskvågen. Inga publicerade löften, belopp eller källor ändras.
+
+**Beslut:** Metodtexten behålls: en dator kan föreslå en egen uppskattning,
+men den kontrollerar aldrig om prislappen publiceras. Prosankaret
+`metod-prislappen-ingen-dator` mäter därför publiceringsspärren i stället för
+vilken modellroll som får läsa kostnadsunderlaget. Det kräver både att
+kostnadssteget går genom `ctx.models.kostnad` och att pipelinen inte kan fylla
+`processedCandidates`, som är vägen till publicering.
+
+**Motiv:** När kostnadsrollen gjordes separat föll det gamla ankaret. Det
+testade fel sak: om någon modell alls läste beloppet, trots att metoden redan
+öppet säger att en språkmodell föreslår uppskattningar. Det som läsaren
+faktiskt lovas är att förslaget inte blir publicerat utan mänskligt beslut.
+Att behålla den falska kopplingen skulle göra en sann metodtext till en
+releaseblockerare varje gång modellrollen förbättras.
+
+**Förkastade alternativ:** skriva om metodtexten till att en dator aldrig får
+föreslå ett belopp (osant och i konflikt med AI-avsnittet); återställa den
+separata kostnadsrollen (löser inte ankarets begreppsfel); göra prosagrinden
+blind för kostnadssteget (tar bort kontrollen i stället för att mäta rätt sak).
+
 ## 2026-08-26 — WebMCP visar underlag utan att dra en politisk slutsats
 
 **Gäller:** Fläskvågen och Frågevågen. Handlingsvågen har inte ett eget
