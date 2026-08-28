@@ -4133,5 +4133,119 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-straffalder",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sänka straffbarhetsåldern för de allvarligaste brotten och avskaffa ungdomsreduktionen för 18–20-åringarna.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/gangkriminalitet-gangvald/",
+    "articleTitle": "Gängkriminalitet/Gängvåld | Moderaterna",
+    "runId": "run-2026-08-28-11-13"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-mininiva",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Värna asylrätten samtidigt som Sverige under överskådlig tid har en stram migrationspolitik i linje med EU:s miniminivåer.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G6",
+        "reason": "Okänd delfråga: sq-migration-mininiva"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/invandring-och-integration",
+    "articleTitle": "Invandring och integration\n| Socialdemokraterna",
+    "runId": "run-2026-08-28-11-13"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Socialdemokraterna vill införa nationella språkkrav i välfärden. Målet är att stärka kvaliteten och tryggheten – och möta både arbetslöshet och stora rekryteringsbehov.",
+      "person": {
+        "name": "Lawen Redar",
+        "role": "integrationspolitisk talesperson för Socialdemokraterna"
+      }
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/pension",
+    "articleTitle": "Pension\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/pension",
+    "archiveUrl": null,
+    "dateStated": "2026-08-21",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-28-11-13",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-lonegolv",
+      "party": "m",
+      "position": "villkorat",
+      "condition_note": "Lönekraven ska bestå i skärpt form, men med möjlighet till undantag för bristyrken.",
+      "quote": "Det ska finnas möjlighet till undantag från de skärpta lönekraven för bristyrken, så att Sverige kan attrahera den kompetens som arbetsmarknaden behöver.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/invandring/",
+    "articleTitle": "Invandring | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/invandring/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-05",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-28-11-13",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-straffalder",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sänkningen av straffbarhetsåldern är tillfällig och gäller bara de allvarligaste brotten såsom mord och grov våldtäkt.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/lag-och-ordning-2/",
+    "articleTitle": "Lag och ordning | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/lag-och-ordning-2/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-27",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-28-11-13",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet beskriver sänkningen som tillfällig och begränsad till de allvarligaste brotten, men det uttalar inte explicit att Moderaterna vill sänka straffmyndighetsåldern; ett ja kräver välvillig tolkning."
+      }
+    ],
+    "verifyReason": "Citatet beskriver sänkningen som tillfällig och begränsad till de allvarligaste brotten, men det uttalar inte explicit att Moderaterna vill sänka straffmyndighetsåldern; ett ja kräver välvillig tolkning."
   }
 ]
