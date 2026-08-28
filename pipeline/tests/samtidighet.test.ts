@@ -128,7 +128,7 @@ function makeContext(
       mode: "review",
       archiveFn: mockArchive,
       samtidigaArtiklar,
-      models: { extract: "mock-extract", verify: "mock-verify", copy: "mock-copy" },
+      models: { extract: "mock-extract", verify: "mock-verify", copy: "mock-copy", kostnad: "mock-extract" },
     },
   };
 }

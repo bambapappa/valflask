@@ -54,6 +54,13 @@ export interface PipelineContext {
     extract: string;
     verify: string;
     copy: string;
+    /**
+     * Kostnadssteget. Egen roll sedan 2026-08-28 — den delade tidigare modell
+     * med utvinningen, och statsfinansiella uppskattningar gjordes därför av
+     * den modell som valts för att läsa text ur sidor. Ärver `extract` när
+     * MODEL_KOSTNAD inte är satt.
+     */
+    kostnad: string;
   };
   /**
    * Frågevågen (SPEC-FRAGEVAGEN §5): ståndpunktspasset körs ENDAST när
@@ -359,7 +366,7 @@ export async function runPipeline(
             { title: accepted.title, category: accepted.category },
             comparablePool,
           );
-          const cost = await estimateCost(accepted, ctx.llm, ctx.models.extract, comparables);
+          const cost = await estimateCost(accepted, ctx.llm, ctx.models.kostnad, comparables);
           // ALLT går till granskningskön. Ingen kandidat publiceras av en körning.
           //
           // Mänskligt beslut 2026-08-18, som ersätter hybrid-routningen från
