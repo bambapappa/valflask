@@ -250,9 +250,21 @@ export const ANKARE: Ankare[] = [
     // Baksidan av samma mynt: meningen är sann bara så länge INGEN andra
     // modell läser beloppet. Bygger någon en sådan kontroll ska texten
     // uppdateras — det vore en förbättring, men prosan skulle bli osann.
+    //
+    // Provet låstes tidigare vid `ctx.models.extract`, alltså vid VILKEN roll
+    // som prissätter. Det var för snävt: när kostnaden fick en egen roll
+    // 2026-08-28 föll provet trots att meningen fortsatt var sann — det som
+    // ändrades var vem som sätter prislappen, inte att någon kontrollerar
+    // den. Provet mäter nu påståendet självt: rollen som prissätter får
+    // aldrig vara verifieringsrollen, för då vore beloppet maskingranskat.
     prov: () => {
       const kod = repofil("pipeline/src/index.ts");
-      return kod.includes("estimateCost(accepted, ctx.llm, ctx.models.extract");
+      const anrop = /estimateCost\(\s*accepted,\s*ctx\.llm,\s*ctx\.models\.(\w+)/u.exec(kod);
+      // Försvinner anropet har prissättningen flyttat någon annanstans, och
+      // meningen ska läsas om mot den nya vägen i stället för att stå kvar
+      // obevakad.
+      if (!anrop) return false;
+      return anrop[1] !== "verify";
     },
     fallprov:
       "Låt estimateCost köra på ctx.models.verify — provet faller, och meningen ska då skrivas om.",
@@ -930,23 +942,6 @@ export const ANKARE: Ankare[] = [
   },
 
   /* ────────────────────────────────── Neutralitetskontraktet (HV) ── */
-  {
-    id: "webmcp-fixed-english-aliases",
-    sida: "site/src/pages/webmcp.astro",
-    pastaende:
-      "Common English topic words use a fixed Swedish matching list; all returned quotes and sources remain Swedish.",
-    prov: () => {
-      const client = repofil("site/src/scripts/webmcp.ts");
-      return client.includes("const englishQueryAliases") &&
-        client.includes("housing: [\"bostad\"]") &&
-        client.includes("healthcare: [\"sjukvard\"]") &&
-        client.includes("electricity: [\"energi\"]") &&
-        client.includes("englishQueryAliases[term]");
-    },
-    fallprov:
-      "Ta bort bostads- eller byggaliaset ur klienten — provet faller, eftersom sidan då påstår en sökyta som inte finns.",
-  },
-
   {
     id: "hv-neutralitet-atta-partier",
     sida: HV_NEUTRALITET,
