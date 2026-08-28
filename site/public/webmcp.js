@@ -422,7 +422,7 @@ async function buildCurrentQuestionBrief(input                                  
 }
 
 function briefInputFromUrl()                         {
-  if (window.location.pathname !== "/granska" && window.location.pathname !== "/webmcp") return undefined;
+  if (!["/granska", "/granska/", "/webmcp", "/webmcp/"].includes(window.location.pathname)) return undefined;
   const params = new URLSearchParams(window.location.search);
   const partyCodes = selectedPartyCodes(params.get("parties")?.split(","));
   const query = params.get("query")?.trim() ?? "";
