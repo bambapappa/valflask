@@ -489,7 +489,7 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
           allowlist: ["svt.se"],
           mode: "auto",
           archiveFn: mockArchive,
-          models: { extract: "a", verify: "b", copy: "c" },
+          models: { extract: "a", verify: "b", copy: "c", kostnad: "a" },
           stancesEnabled,
           stancesMode,
         });

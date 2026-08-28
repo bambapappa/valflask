@@ -12126,7 +12126,7 @@
   },
   {
     "id": "p-2026-0321",
-    "group_id": null,
+    "group_id": "g-mp-sverigekortet",
     "title": "Med vårt Sverigekort kan du resa fritt på all kollektivtrafik i hela landet till en billig penning",
     "slug": "med-vart-sverigekort-kan-du-resa-fritt-pa-all-kollektivtrafik-i-hela-landet-till-en-billig-penning",
     "parties": [
@@ -12173,6 +12173,11 @@
         "date": "2026-07-28",
         "change": "Beloppet oförändrat, 8 000 miljoner kronor per år, men löftet har fått den öppna uträkning det saknade. Uträkningen bygger på partiets egna priser — 499 respektive 249 kronor i månaden — och skriver ut att antalet resenärer med periodkort är vår uppskattning och inte partiets.",
         "commit": "eef139da93b69ae2b2a05f193f8e6dfa150c3c93"
+      },
+      {
+        "date": "2026-08-28",
+        "commit": "0000000",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten räknas därför inte in i totalen, men står kvar med sitt eget belopp på sin sida. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget."
       }
     ],
     "extraction": {
@@ -143996,7 +144001,7 @@
   },
   {
     "id": "p-2026-2930",
-    "group_id": null,
+    "group_id": "g-mp-sverigekortet",
     "title": "Införa Sverigekortet för kollektivtrafik",
     "slug": "infora-sverigekortet-for-kollektivtrafik",
     "parties": [
@@ -144015,14 +144020,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 25000,
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning utifrån att en nationell biljett för alla åldrar är bredare än löftet om gratis kollektivtrafik för unga/studenter (2,1 mdkr/år). Baserat på 2–3 miljoner kortköpare och subvention…",
       "confidence": 0.3,
-      "calculation": "Antag 2,5 miljoner kortköpare (ca 25 % av befolkningen), subvention i snitt 500 kr/mån mot dagens månadskort ~1 000 kr. 2,5 m × 500 kr × 12 = 15 mdkr/år. Spann 5–25 mdkr beroende på prisnivå och anslutning."
+      "calculation": "Sverigekortet är redan prissatt på Miljöpartiets eget löfte om samma kort, det som anger priserna: 499 kronor i månaden för vuxna och 249 kronor för unga, studenter och pensionärer, vilket ger omkring 8 000 miljoner kronor per år. Det här löftet är samma kort hämtat från partiets politiksida, och prissätts till noll eftersom samma pengar inte får räknas två gånger. Beloppet står där partiets egen prissättning finns. Löftet står kvar och syns för läsaren — det är bara summan som flyttats dit den hör hemma.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -144032,7 +144038,18 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-28",
+        "commit": "0000000",
+        "change": "Löftet ingår nu i en grupp med 1 annat eller andra löften som lovar samma sak. Fläskvågen räknar gruppen en gång, och gruppens största post bär summan — den här posten är den största och bär den. Handlingsvågen fäller fortfarande en dom per löfte, så partiet svarar för sitt eget."
+      },
+      {
+        "date": "2026-08-28",
+        "change": "Beloppet nollat, tidigare 15 000 miljoner kronor per år. En del av ett paket som redan prissatts på paketets eget löfte prissätts till noll: samma pengar får inte räknas två gånger. Delen står kvar som löfte och syns för läsaren — det är bara beloppet som flyttats dit det hör hemma. Regeln är fastställd sedan tidigare; posten hade undgått den.",
+        "commit": "0000000"
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",

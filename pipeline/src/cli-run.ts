@@ -88,6 +88,7 @@ const LED_ORDNING = [
 export function byggLed(
   env: NodeJS.ProcessEnv,
   roller: Record<string, string>,
+  valfria: ReadonlySet<string> = new Set(),
 ): LlmLed[] {
   const forst = getEnv(env, "LLM_FORST")?.toLowerCase();
   if (forst && !LED_ORDNING.some((l) => l.nyckel === forst)) {
@@ -114,8 +115,20 @@ export function byggLed(
     for (const [roll, primarModell] of Object.entries(roller)) {
       const namn = `MODEL_${roll.toUpperCase()}${spec.suffix}`;
       const varde = getEnv(env, namn);
-      if (!varde) saknade.push(namn);
-      else modeller[primarModell] = varde;
+      if (varde) modeller[primarModell] = varde;
+      // EN VALFRI ROLL FÄLLER INTE LEDET. Kostnadsrollen tillkom när de tre
+      // andra redan var satta i alla led, och att kräva den överallt hade
+      // stoppat pipelinen tills varje led fått sin variabel. Saknas den lånar
+      // ledet sin egen utvinningsmodell — samma modell som gjorde jobbet före
+      // rollen fanns, alltså oförändrat beteende tills någon sätter variabeln.
+      else if (!valfria.has(roll)) saknade.push(namn);
+    }
+    for (const roll of valfria) {
+      const primarModell = roller[roll];
+      if (primarModell !== undefined && modeller[primarModell] === undefined) {
+        const lanad = modeller[roller["extract"]!];
+        if (lanad !== undefined) modeller[primarModell] = lanad;
+      }
     }
 
     // Tre lägen, och skillnaden mellan dem är viktig:
@@ -131,7 +144,11 @@ export function byggLed(
     // pipelinen hade kastat vid nästa körning bara för att det extra ledets
     // nycklar finns för matchningens räkning.
     const antalModeller = Object.keys(modeller).length;
-    const antalSatta = 2 + Object.keys(roller).length - saknade.length;
+    // Bara de OBLIGATORISKA rollerna räknas här. Räknas de valfria med blir
+    // ett helt osatt led aldrig noll, och då faller det på "halvt
+    // konfigurerat" i stället för att hoppas över tyst.
+    const obligatoriska = Object.keys(roller).filter((r) => !valfria.has(r));
+    const antalSatta = 2 + obligatoriska.length - saknade.length;
     if (antalSatta === 0) continue;
     if (baseUrl && apiKey && antalModeller === 0) {
       console.warn(
@@ -216,9 +233,21 @@ export function buildContextFromEnv(
   const extract = getEnv(env, "MODEL_EXTRACT");
   const verify = getEnv(env, "MODEL_VERIFY");
   const copy = getEnv(env, "MODEL_COPY");
+  // KOSTNADEN ÄR EN EGEN ROLL SEDAN 2026-08-28. Den delade tidigare modell
+  // med utvinningen — inte av ett val, utan för att `estimateCost` fick
+  // `models.extract` inskickad. Följden var att statsfinansiella
+  // uppskattningar gjordes av den snabbaste modellen i kedjan, vald för att
+  // läsa text ur sidor. Genomgången av A-gruppen samma dag fann just de fel
+  // det ger: engångsbelopp prissatta per år gånger fyra, spann som inte
+  // hänger ihop med sin egen uträkning, och tal som är rätt räknade på fel
+  // politik.
+  //
+  // Osatt betyder oförändrat: rollen faller tillbaka på utvinningsmodellen,
+  // precis som förut. Sätts MODEL_KOSTNAD byter bara kostnadssteget modell.
   if (!extract) throw new Error("Saknad miljövariabel: MODEL_EXTRACT");
   if (!verify) throw new Error("Saknad miljövariabel: MODEL_VERIFY");
   if (!copy) throw new Error("Saknad miljövariabel: MODEL_COPY");
+  const kostnad = getEnv(env, "MODEL_KOSTNAD") ?? extract;
   if (extract === verify) {
     throw new Error(
       "MODEL_VERIFY måste vara en annan modell än MODEL_EXTRACT (§20: oberoende verifiering).",
@@ -273,7 +302,9 @@ export function buildContextFromEnv(
     console.log(`[skörd] riktade adresser: ${urlar.length} st — ${urlar.join(", ")}`);
   }
 
-  const llm = new OpenRouterClient({ led: byggLed(env, { extract, verify, copy }) });
+  const llm = new OpenRouterClient({
+    led: byggLed(env, { extract, verify, copy, kostnad }, new Set(["kostnad"])),
+  });
 
   const articleSource = new LiveSource({
     feeds,
@@ -300,7 +331,7 @@ export function buildContextFromEnv(
     maxNewArticles: config.limits.max_articles_per_run,
     samtidigaArtiklar: config.limits.samtidiga_artiklar,
     archiveFn: createArchiveFn(),
-    models: { extract, verify, copy },
+    models: { extract, verify, copy, kostnad },
   };
 }
 
@@ -316,7 +347,8 @@ async function main(): Promise<void> {
 
   console.log(
     `Körning ${ctx.runId} | läge=${ctx.mode} | stances=${ctx.stancesEnabled ? `PÅ (${ctx.stancesMode})` : "av"} | feeds=${config.feeds.length} | ` +
-      `extract=${ctx.models.extract} verify=${ctx.models.verify} copy=${ctx.models.copy}`,
+      `extract=${ctx.models.extract} verify=${ctx.models.verify} copy=${ctx.models.copy} ` +
+      `kostnad=${ctx.models.kostnad}${ctx.models.kostnad === ctx.models.extract ? " (ärvd)" : ""}`,
   );
 
   const result = await runPipeline(ctx);

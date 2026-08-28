@@ -122,6 +122,7 @@ function makeContext(
       extract: "mock-extract",
       verify: "mock-verify",
       copy: "mock-copy",
+      kostnad: "mock-kostnad",
     },
   };
 }
@@ -430,7 +431,7 @@ describe("B: page-artiklar prioriteras och ändrat innehåll processas om", () =
         mode: "review",
         maxNewArticles: 1,
         archiveFn: mockArchive,
-        models: { extract: "m", verify: "m", copy: "m" },
+        models: { extract: "m", verify: "m", copy: "m", kostnad: "m" },
       });
       const urls = Object.values(
         JSON.parse(readFileSync(join(tmp, "seen.json"), "utf8")) as Record<string, string>,
@@ -461,7 +462,7 @@ describe("B: page-artiklar prioriteras och ändrat innehåll processas om", () =
         allowlist: ALLOWLIST,
         mode: "review" as const,
         archiveFn: mockArchive,
-        models: { extract: "m", verify: "m", copy: "m" },
+        models: { extract: "m", verify: "m", copy: "m", kostnad: "m" },
       };
       const v1 = pageArticle("Vi lovar att bygga ut järnvägen i hela landet.");
 
@@ -518,7 +519,7 @@ describe("Resiliens: failade artiklar markeras inte sedda (retas nästa körning
         allowlist: ALLOWLIST,
         mode: "review",
         archiveFn: mockArchive,
-        models: { extract: "m", verify: "m", copy: "m" },
+        models: { extract: "m", verify: "m", copy: "m", kostnad: "m" },
       });
       assert.equal(result.errors.length, 1, "artikel A felade");
       const urls = Object.values(

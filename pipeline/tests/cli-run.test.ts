@@ -43,6 +43,9 @@ describe("cli-run buildContextFromEnv", () => {
       extract: "deepseek-v4-pro",
       verify: "kimi-k2.7",
       copy: "glm-5.1",
+      // Osatt MODEL_KOSTNAD ärver utvinningen — samma modell som gjorde
+      // kostnadssteget innan rollen fanns.
+      kostnad: "deepseek-v4-pro",
     });
     assert.deepEqual([...ctx.allowlist], ["data.riksdagen.se", "www.dn.se"]);
     assert.equal(ctx.maxNewArticles, 10);
@@ -305,3 +308,73 @@ describe("varningen mäter bristen på modellreserv, inte mönstret", () => {
   });
 });
 
+
+/**
+ * Kostnadsrollen — egen modell för kostnadssteget.
+ *
+ * Uppskattningarna gjordes av utvinningsmodellen, inte för att någon valt det
+ * utan för att `estimateCost` fick `models.extract` inskickad. Rollen finns
+ * för att den ska gå att välja. Provet låser fast det som gör den ofarlig att
+ * införa: **osatt betyder oförändrat**. Kedjan är konfigurerad för tre roller
+ * i drift, och en fjärde obligatorisk roll hade stoppat pipelinen tills varje
+ * led fått sin variabel.
+ */
+describe("kostnadsrollen", () => {
+  const bas = {
+    LLM_BASE_URL: "https://led1",
+    LLM_API_KEY: "nyckel-1",
+    MODEL_EXTRACT: "utvinnaren",
+    MODEL_VERIFY: "granskaren",
+    MODEL_COPY: "skribenten",
+  };
+
+  it("ärver utvinningsmodellen när MODEL_KOSTNAD inte är satt", () => {
+    const led = byggLed(bas, { extract: "utvinnaren", verify: "granskaren", copy: "skribenten", kostnad: "utvinnaren" }, new Set(["kostnad"]));
+    assert.equal(led.length, 1);
+    assert.equal(led[0]!.modell!["utvinnaren"], "utvinnaren");
+  });
+
+  it("byter modell för kostnadssteget när variabeln är satt", () => {
+    const e = { ...bas, MODEL_KOSTNAD: "raknaren" };
+    const led = byggLed(e, { extract: "utvinnaren", verify: "granskaren", copy: "skribenten", kostnad: "raknaren" }, new Set(["kostnad"]));
+    assert.equal(led[0]!.modell!["raknaren"], "raknaren", "kostnadssteget kör sin egen modell");
+    assert.equal(led[0]!.modell!["utvinnaren"], "utvinnaren", "utvinningen är orörd");
+  });
+
+  it("ett led utan egen kostnadsmodell lånar sin egen utvinningsmodell, inte primärens", () => {
+    // Kärnan: reservledet ska inte få primärens modellsträng skickad till en
+    // leverantör som inte känner igen den. Det var felet som gav 4xx när
+    // rollerna infördes, och det får inte komma tillbaka via kostnadsrollen.
+    const e = {
+      ...bas,
+      MODEL_KOSTNAD: "raknaren",
+      LLM_ZAI_BASE_URL: "https://led3",
+      LLM_ZAI_API_KEY: "nyckel-3",
+      MODEL_EXTRACT_ZAI: "zai-utvinnare",
+      MODEL_VERIFY_ZAI: "zai-granskare",
+      MODEL_COPY_ZAI: "zai-skribent",
+    };
+    const led = byggLed(e, { extract: "utvinnaren", verify: "granskaren", copy: "skribenten", kostnad: "raknaren" }, new Set(["kostnad"]));
+    const extra = led.find((l) => l.namn === "extra")!;
+    assert.equal(extra.modell!["raknaren"], "zai-utvinnare", "ledet lånar SIN modell");
+    assert.notEqual(extra.modell!["raknaren"], "raknaren", "aldrig primärens sträng");
+  });
+
+  it("ett led som saknar allt hoppas fortfarande över tyst", () => {
+    // Räknas de valfria rollerna som obligatoriska blir ett bortvalt led
+    // aldrig "helt osatt", och då kastar bygget i stället för att hoppa.
+    const led = byggLed(bas, { extract: "utvinnaren", verify: "granskaren", copy: "skribenten", kostnad: "raknaren" }, new Set(["kostnad"]));
+    assert.equal(led.length, 1, "de två osatta leden är bortvalda, inte trasiga");
+  });
+
+  it("buildContextFromEnv låter kostnaden falla tillbaka på utvinningen", () => {
+    const ctx = buildContextFromEnv({ ...bas }, { config, dataDir: "/tmp" });
+    assert.equal(ctx.models.kostnad, "utvinnaren");
+  });
+
+  it("buildContextFromEnv plockar upp MODEL_KOSTNAD", () => {
+    const ctx = buildContextFromEnv({ ...bas, MODEL_KOSTNAD: "raknaren" }, { config, dataDir: "/tmp" });
+    assert.equal(ctx.models.kostnad, "raknaren");
+    assert.equal(ctx.models.extract, "utvinnaren", "utvinningen är orörd");
+  });
+});

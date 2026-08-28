@@ -1245,5 +1245,19 @@
     "what": "1 löften har fått uträkningen omskriven. Beloppen är oförändrade — det är bara texten som förklarar hur de räknats fram som ändrats. Sista meningen i fältet var ett äldre utkast med ett annat spann än det som faktiskt publicerats, och den motsade alla tre talen.",
     "why": "Kvalitetssökningen efter löften där beloppsfältet och uträkningen säger olika saker lästes om efter att mätningen lagats. Av tolv fällda löften var elva falsklarm; det här var det enda äkta.",
     "commit": "6066ff7d"
+  },
+  {
+    "date": "2026-08-28",
+    "affects": "Löftessidorna för p-2026-0321, p-2026-2930",
+    "what": "1 grupper bildade över 2 löften. Samma politik räknas nu en gång i stället för flera. Alla löften står kvar och syns med sina egna belopp; det som ändras är totalen, som sjunker med 32 000 miljoner kronor för mandatperioden. samma nationella kollektivtrafikbiljett, skordad fran talet och fran politiksidan",
+    "why": "Samma MP-loefte om en nationell kollektivtrafikbiljett, skoerdat tva ganger: en gang ur Almedalstalet och en gang ur politiksidan. Ogrupperat raknades 92 mdkr for en biljett.",
+    "commit": "0000000"
+  },
+  {
+    "date": "2026-08-28",
+    "affects": "p-2026-2930 — 1 löften nollade",
+    "what": "1 löften stod på ett belopp som kostnadsreglerna säger ska vara noll: 1 enligt regeln att en del av ett redan prissatt paket prissätts till noll. Beloppen är nollade. Uträkningarna skriver ut vilken regel som gäller. MP minskar med 28 000 miljoner kronor. Summan för alla partier minskar med 28 000 miljoner kronor för mandatperioden.",
+    "why": "Partiets egen prissattning trumfar var uppskattning. Sverigekortet var publicerat tva ganger: en gang ur sommartalet dar MP sjalv anger 499 och 249 kronor i manaden (8 000 mkr/ar) och en gang ur politiksidan med vart eget estimat pa 15 000 mkr/ar, byggt pa ett antagande om 2,5 miljoner kortkopare som inte finns i partiets text. Loftena ar grupperade i samma commit; har flyttas beloppet till den post som bar partiets egna siffror.",
+    "commit": "0000000"
   }
 ]
