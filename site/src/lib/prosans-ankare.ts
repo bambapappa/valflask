@@ -247,15 +247,21 @@ export const ANKARE: Ankare[] = [
     sida: METOD,
     pastaende:
       "<strong>Själva prislappen kontrolleras inte av en dator alls.</strong>",
-    // Baksidan av samma mynt: meningen är sann bara så länge INGEN andra
-    // modell läser beloppet. Bygger någon en sådan kontroll ska texten
-    // uppdateras — det vore en förbättring, men prosan skulle bli osann.
+    // «Kontrolleras» är här beslutet om publicering, inte om en dator får
+    // föreslå en beräkning. `estimateCost` använder redan en språkmodell när
+    // källan saknar belopp; kandidatens prislapp blir ändå aldrig publik direkt.
+    // Det gamla provet blandade ihop de två och föll när kostnadsrollen blev
+    // separat. Här mäts i stället den faktiska spärren i pipelinen: inget
+    // kostnadsförslag får fylla publiceringslistan.
     prov: () => {
       const kod = repofil("pipeline/src/index.ts");
-      return kod.includes("estimateCost(accepted, ctx.llm, ctx.models.extract");
+      return (
+        kod.includes("const cost = await estimateCost(accepted, ctx.llm, ctx.models.kostnad") &&
+        !/processedCandidates\.push\s*\(/u.test(kod)
+      );
     },
     fallprov:
-      "Låt estimateCost köra på ctx.models.verify — provet faller, och meningen ska då skrivas om.",
+      "Lägg tillbaka processedCandidates.push i pipelinen — provet faller, för då kan datorns kostnadsförslag publiceras utan mänsklig kontroll.",
   },
   {
     id: "metod-talade-kallor-tidpunkt",
