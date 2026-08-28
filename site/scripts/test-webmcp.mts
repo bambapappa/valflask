@@ -149,4 +149,19 @@ if (contestSearch) {
 } else {
   check("tävlingssidans sökverktyg finns", false);
 }
+
+let sharedBriefRendered = false;
+const sharedBriefOutlet = { ...node(), replaceChildren: () => { sharedBriefRendered = true; } };
+runInNewContext(client, {
+  document: {
+    ...document,
+    modelContext: { registerTool: async () => undefined },
+    getElementById: (id: string) => id === "webmcp-brief-outlet" ? sharedBriefOutlet : id === "webmcp-evidence-board" ? board : undefined,
+  },
+  fetch: async (path: string) => ({ ok: true, json: async () => responses[path] }),
+  window: { location: { pathname: "/webmcp/", search: "?parties=s,m&query=skola&kind=alla&max=12", assign: () => undefined } },
+  console, URL, URLSearchParams, Object, Map, Set, Promise, Array, Math,
+});
+await new Promise((resolve) => setTimeout(resolve, 10));
+check("det kanoniska snedstrecket laddar ett delat granskningskort", sharedBriefRendered);
 if (errors) process.exit(1);
