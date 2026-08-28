@@ -74,6 +74,29 @@ besked (datat bär bara position och sökdatum); att tolka ett filtrerat bortfal
 som frånvaro av politik; full språkmodellstolkning av sökfrasen i webbläsaren
 (skulle göra urvalet svårare att reproducera).
 
+## 2026-08-28 — Engelska ämnesord matchas mot en fast svensk lista
+
+**Gäller:** Fläskvågen och Frågevågen, endast fria textfrågor i WebMCP:s
+engelska tävlingsingång. Det publicerade beståndet ändras inte.
+
+**Beslut (mänskligt beslut 2026-08-28):** Vanliga engelska ämnesord får ett
+litet, fast svenskt alternativ i klientens textmatchning. Originalfrågan
+bevaras i det delbara granskningskortet, och citat, källor och arkivkopior
+översätts aldrig. Engelska funktionsord och ordet "costs" används inte som
+extra sakfilter; kostnadsintervallet visas ändå för varje matchat löfte.
+
+**Motiv:** Ett oskriptat jurytest med “housing costs and building more homes”
+gav noll träffar eftersom den publika texten är svensk. Det är en språklig
+begränsning i urvalet, inte ett politiskt tomrum. En liten, synlig lista gör
+vanliga engelska frågor användbara utan att samma sökning blir svår att
+upprepa eller granska.
+
+**Förkastade alternativ:** en språkmodell eller extern översättning av
+sökfrasen (resultatet skulle inte vara reproducerbart från koden); översätta
+eller skriva om citat och källor (skulle skapa ett nytt publicerat underlag);
+lägga till partibundna eller politiskt tolkande synonymer; låta nollträffen
+stå som om den beskrev partiernas politik.
+
 ## 2026-08-27 — Tävlingsdemon visar belopp utan popup, med synlig grund
 
 **Gäller:** Fläskvågen — men endast dess kostnadsuppgifter i den engelska WebMCP-ingången `/webmcp`. Svenska publika vyer och deras befintliga kvittering för Utlovat.se:s beräkningar ändras inte. Det publicerade beståndet ändras inte.

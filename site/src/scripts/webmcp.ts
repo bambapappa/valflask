@@ -109,12 +109,25 @@ function normalise(value: string): string {
 }
 
 const swedishQueryStopWords = new Set(["att", "bara", "de", "den", "det", "en", "ett", "for", "fran", "har", "hur", "i", "jamfor", "med", "mot", "och", "om", "pa", "parti", "partier", "partierna", "som", "vad", "visa"]);
+const englishQueryStopWords = new Set(["a", "an", "and", "are", "by", "compare", "cost", "costs", "for", "from", "in", "more", "of", "on", "show", "the", "to", "with"]);
+const englishQueryAliases: Record<string, string[]> = {
+  building: ["bygg", "bygga"], build: ["bygg", "bygga"],
+  climate: ["klimat", "miljo"], crime: ["brott", "kriminal"],
+  defence: ["forsvar", "sakerhet"], defense: ["forsvar", "sakerhet"],
+  education: ["skola", "utbildning"], elderly: ["aldre", "aldreomsorg"],
+  energy: ["energi"], employment: ["jobb", "arbete", "arbetsmarknad"],
+  health: ["sjukvard", "vard"], healthcare: ["sjukvard", "vard"],
+  home: ["bostad", "boende"], homes: ["bostad", "boende"], housing: ["bostad", "boende"],
+  immigration: ["invandring", "migration", "integration"], jobs: ["jobb", "arbete", "arbetsmarknad"],
+  nurse: ["vardpersonal"], nurses: ["vardpersonal"], nursing: ["vardpersonal"], staff: ["vardpersonal"],
+  school: ["skola", "utbildning"], schools: ["skola", "utbildning"], work: ["jobb", "arbete", "arbetsmarknad"],
+};
 
 function queryTermGroups(query?: string): string[][] {
   return normalise(query ?? "").split(/[^a-z0-9]+/)
-    .filter((term) => term.length > 1 && !swedishQueryStopWords.has(term))
+    .filter((term) => term.length > 1 && !swedishQueryStopWords.has(term) && !englishQueryStopWords.has(term))
     .map((term) => {
-      const forms = [term];
+      const forms = [term, ...(englishQueryAliases[term] ?? [])];
       if (term.endsWith("en") && term.length > 4) forms.push(term.slice(0, -2));
       else if (term.endsWith("n") && term.length > 4) forms.push(term.slice(0, -1));
       return Array.from(new Set(forms));
@@ -444,7 +457,7 @@ async function registerTools(): Promise<void> {
   await appDocument.modelContext.registerTool({
     name: "search_verified_evidence",
     description: english
-      ? "Read published Swedish election promises and party positions from Utlovat.se. Return exact quotes, dates, sources and archive copies when available. Search only the published material; never use it to recommend a party."
+      ? "Read published Swedish election promises and party positions from Utlovat.se. Common English topic words use a small, fixed Swedish matching list; returned quotes and sources remain Swedish. Return exact quotes, dates, sources and archive copies when available. Search only the published material; never use it to recommend a party."
       : "Hämta publicerade, källspårade svenska vallöften och partibesked från utlovat.se. Visar alltid exakt citat, datum, källa och arkivkopia när sådan finns. Sökningen matchar bara ord i det publicerade underlaget. Använd inte resultatet för röstrekommendationer.",
     inputSchema: { type: "object", properties: { party_codes: { type: "array", items: { type: "string", enum: Object.keys(partyNames) }, description: "Valfria partikoder." }, category: { type: "string", description: "Valfri exakt kategori." }, query: { type: "string", description: "Valfritt ämne eller sökord. Matchas bara mot publicerad rubrik, kategori, delfråga och citat." }, kind: { type: "string", enum: ["loften", "besked", "alla"] }, max_results: { type: "integer", minimum: 1, maximum: 20 }, require_archive_copy: { type: "boolean", description: "Visa bara poster med länkad arkivkopia. Detta säger inte att källan är primär; den uppgiften saknas i det publika API:t." } }, additionalProperties: false },
     annotations: { readOnlyHint: true }, execute: searchEvidence,
@@ -452,7 +465,7 @@ async function registerTools(): Promise<void> {
   await appDocument.modelContext.registerTool({
     name: "build_research_brief",
     description: english
-      ? "Build a visible, shareable research brief for an issue and selected parties. It shows published quotes, sources, archive copies, recorded unclear positions and bounded gaps. It never recommends a party or treats a blank result as no policy."
+      ? "Build a visible, shareable research brief for an issue and selected parties. Common English topic words use a small, fixed Swedish matching list; returned quotes and sources remain Swedish. It shows published quotes, sources, archive copies, recorded unclear positions and bounded gaps. It never recommends a party or treats a blank result as no policy."
       : "Bygg ett delbart granskningskort på utlovat.se för en sakfråga och valda partier. Kortet visar publicerade citat, källor, arkivkopior, registrerade otydliga besked och vilka partier som saknar träff i just urvalet. Det gör ingen röstrekommendation och påstår inte att en tom träff saknar politik.",
     inputSchema: { type: "object", properties: { party_codes: { type: "array", minItems: 1, items: { type: "string", enum: Object.keys(partyNames) }, description: "Partikoder som människan vill granska sida vid sida." }, category: { type: "string", description: "Valfri exakt kategori. Följer alltid med i den delbara länken." }, query: { type: "string", minLength: 2, description: "Sakfråga eller neutralt sökord, till exempel 'skola' eller 'sjukvård'. Vanliga frågeord ignoreras." }, kind: { type: "string", enum: ["loften", "besked", "alla"] }, max_results: { type: "integer", minimum: 1, maximum: 20 }, require_archive_copy: { type: "boolean", description: "Visa bara poster med länkad arkivkopia, utan att kalla dem primärkällor. Kortet anger när belägg finns men saknar arkivkopia." } }, required: ["party_codes", "query"], additionalProperties: false },
     annotations: { readOnlyHint: true }, execute: buildResearchBrief,

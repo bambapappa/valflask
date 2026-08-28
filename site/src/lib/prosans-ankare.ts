@@ -931,6 +931,22 @@ export const ANKARE: Ankare[] = [
 
   /* ────────────────────────────────── Neutralitetskontraktet (HV) ── */
   {
+    id: "webmcp-fixed-english-aliases",
+    sida: "site/src/pages/webmcp.astro",
+    pastaende:
+      "Common English topic words use a small, fixed Swedish matching list; all returned quotes and sources remain Swedish.",
+    prov: () => {
+      const client = repofil("site/src/scripts/webmcp.ts");
+      return client.includes("const englishQueryAliases") &&
+        client.includes("housing: [\"bostad\", \"boende\"]") &&
+        client.includes("building: [\"bygg\", \"bygga\"]") &&
+        client.includes("englishQueryAliases[term]");
+    },
+    fallprov:
+      "Ta bort bostads- eller byggaliaset ur klienten — provet faller, eftersom sidan då påstår en sökyta som inte finns.",
+  },
+
+  {
     id: "hv-neutralitet-atta-partier",
     sida: HV_NEUTRALITET,
     pastaende: "Samma regler för alla åtta partier, utan undantag.",
