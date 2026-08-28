@@ -21,6 +21,29 @@ beståndet vara kontrollerat i **varje** våg raden nämner. Grinden
 
 ---
 
+## 2026-08-28 — Engelska partinamn är inte extra sakfilter när partier redan valts
+
+**Gäller:** Fläskvågen och Frågevågen, endast fria engelska frågor i WebMCP.
+Det publicerade beståndet ändras inte.
+
+**Beslut:** När ett WebMCP-anrop redan har valt partier med `party_codes`
+ignoreras vanliga engelska namnord för just de partierna i fritextsökningen.
+Exempelvis blir “Moderate and Social Democratic” inget krav på att de svenska
+citaten innehåller de engelska orden; sjukvårdsorden matchas fortsatt mot den
+fasta svenska listan. Utan valt parti förblir ordet ett vanligt sökord, så
+exempelvis “green” filtreras inte bort generellt.
+
+**Motiv:** Liveprovet med M/S visade 13 belägg för “healthcare and nursing
+staff” men noll när samma fråga också namngav de redan valda partierna.
+Partifiltret är redan exakt och strukturerat; att dessutom kräva engelska
+partinamn i svenska citat gjorde ett neutralt jurytest missvisande tomt.
+
+**Förkastade alternativ:** lägga engelska partinamn i den globala
+stopplistan (skulle kunna släppa igenom oönskade träffar i andra frågor);
+översätta hela frågan med extern tjänst eller språkmodell (gör urvalet mindre
+reproducerbart); matcha engelska partinamn i svenskt källmaterial (saknar
+stöd i underlaget).
+
 ## 2026-08-28 — Kostnadsförslag och mänsklig kontroll hålls isär i metodankaret
 
 **Gäller:** Fläskvågen. Inga publicerade löften, belopp eller källor ändras.
