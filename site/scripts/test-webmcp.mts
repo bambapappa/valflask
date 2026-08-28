@@ -95,6 +95,8 @@ if (briefTool) {
   check("engelsk bostadsfråga använder fasta svenska ämnesalias", englishResult.evidence_count === 1 && Array.isArray(englishResult.missing_party_codes) && englishResult.missing_party_codes.includes("m") && englishResult.missing_party_codes.includes("v") && String(englishResult.brief_url).includes("query=housing+costs+and+building+more+homes"));
   const healthcareResult = await briefTool.execute({ party_codes: ["s"], query: "What does S propose for healthcare and nursing staff?" });
   check("fri engelsk vårdfråga använder ämnesalias och frågeord", healthcareResult.evidence_count === 1 && String(healthcareResult.brief_url).includes("query=What+does+S+propose+for+healthcare+and+nursing+staff"));
+  const namedHealthcareResult = await briefTool.execute({ party_codes: ["m", "s"], query: "Compare Moderate and Social Democratic commitments on healthcare and nursing staff." });
+  check("fria engelska frågor ignorerar redan valda partinamn", namedHealthcareResult.evidence_count === 1 && Array.isArray(namedHealthcareResult.missing_party_codes) && namedHealthcareResult.missing_party_codes.includes("m") && String(namedHealthcareResult.brief_url).includes("query=Compare+Moderate+and+Social+Democratic"));
   const energyResult = await briefTool.execute({ party_codes: ["s"], query: "Compare S policies on electricity, nuclear power and the grid." });
   check("fri engelsk energifråga använder flera synonymer för samma sakområde", energyResult.evidence_count === 1);
   const schoolResult = await briefTool.execute({ party_codes: ["s"], query: "What is S plan for teachers and students?" });

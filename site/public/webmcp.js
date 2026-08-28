@@ -126,9 +126,26 @@ const englishQueryAliases                           = {
   elderly: ["aldre"], older: ["aldre"], pensioner: ["aldre"], pensioners: ["aldre"], senior: ["aldre"], seniors: ["aldre"],
 };
 
-function queryTermGroups(query         )             {
+// Ignorera bara namn för partier som redan valts strukturerat.
+const englishPartyNameTerms                           = {
+  m: ["moderate", "moderates"],
+  s: ["social", "democrat", "democrats", "democratic"],
+  sd: ["sweden", "swedish", "democrat", "democrats"],
+  c: ["centre", "center"],
+  v: ["left"],
+  kd: ["christian", "democrat", "democrats"],
+  l: ["liberal", "liberals"],
+  mp: ["green"],
+};
+
+function selectedEnglishPartyNameTerms(codes           )              {
+  return new Set((codes ?? []).flatMap((code) => englishPartyNameTerms[code] ?? []));
+}
+
+function queryTermGroups(query         , partyCodes           )             {
+  const partyNameTerms = selectedEnglishPartyNameTerms(partyCodes);
   return normalise(query ?? "").split(/[^a-z0-9]+/)
-    .filter((term) => term.length > 1 && !swedishQueryStopWords.has(term) && !englishQueryStopWords.has(term))
+    .filter((term) => term.length > 1 && !swedishQueryStopWords.has(term) && !englishQueryStopWords.has(term) && !partyNameTerms.has(term))
     .map((term) => {
       const forms = [term, ...(englishQueryAliases[term] ?? [])];
       if (term.endsWith("en") && term.length > 4) forms.push(term.slice(0, -2));
@@ -137,12 +154,12 @@ function queryTermGroups(query         )             {
     });
 }
 
-function queryTerms(query         )           {
-  return queryTermGroups(query).flat();
+function queryTerms(query         , partyCodes           )           {
+  return queryTermGroups(query, partyCodes).flat();
 }
 
-function matchesQuery(query                    , ...fields          )          {
-  const groups = queryTermGroups(query);
+function matchesQuery(query                    , partyCodes                      , ...fields          )          {
+  const groups = queryTermGroups(query, partyCodes);
   if (groups.length === 0) return true;
   const haystack = normalise(fields.join(" "));
   return groups.every((forms) => forms.some((term) => haystack.includes(term)));
@@ -263,7 +280,7 @@ async function collectEvidence(input             )                              
   };
   if (kind === "alla" || kind === "loften") for (const promise of promises) {
     const matchingPartyCodes = promise.parties.filter((code) => !partyCodes.size || partyCodes.has(code));
-    if (promise.status === "tillbakadragen" || matchingPartyCodes.length === 0 || (category && promise.category.toLowerCase() !== category) || !matchesQuery(input.query, promise.title, promise.category, promise.quote)) continue;
+    if (promise.status === "tillbakadragen" || matchingPartyCodes.length === 0 || (category && promise.category.toLowerCase() !== category) || !matchesQuery(input.query, selectedCodes, promise.title, promise.category, promise.quote)) continue;
     if (input.require_archive_copy && !promise.source.archive_url) {
       markArchiveExcluded(matchingPartyCodes);
       continue;
@@ -280,12 +297,12 @@ async function collectEvidence(input             )                              
       const title = `${context.issue.title}: ${context.text}`;
       const pageUrl = `/fraga/${context.issue.slug}#${cell.subquestion_id}-${cell.party}`;
       if (!statement) {
-        if (cell.current.position === "inget_tydligt_besked" && matchesQuery(input.query, context.issue.title, context.issue.category, context.text) && coverage[cell.party]) {
+        if (cell.current.position === "inget_tydligt_besked" && matchesQuery(input.query, selectedCodes, context.issue.title, context.issue.category, context.text) && coverage[cell.party]) {
           coverage[cell.party].no_clear_positions.push({ party_code: cell.party, title, page_url: pageUrl, last_searched: cell.last_searched });
         }
         continue;
       }
-      if (!matchesQuery(input.query, context.issue.title, context.issue.category, context.text, statement.quote)) continue;
+      if (!matchesQuery(input.query, selectedCodes, context.issue.title, context.issue.category, context.text, statement.quote)) continue;
       if (input.require_archive_copy && !statement.source.archive_url) {
         markArchiveExcluded([cell.party]);
         continue;
@@ -371,7 +388,7 @@ async function searchEvidence(input             ) {
 async function buildResearchBrief(input            ) {
   const parties = selectedPartyCodes(input.party_codes);
   if (parties.length === 0) throw new Error("Välj minst ett giltigt parti.");
-  if (queryTerms(input.query).length === 0) throw new Error("Skriv en sakfråga eller ett sökord för granskningskortet.");
+  if (queryTerms(input.query, parties).length === 0) throw new Error("Skriv en sakfråga eller ett sökord för granskningskortet.");
   const collected = await collectEvidence(input);
   const evidence = limitedEvidence(input, collected.evidence);
   const missingPartyCodes = parties.filter((code) => !collected.evidence.some((item) => item.party_codes.includes(code)));
@@ -442,7 +459,7 @@ function briefInputFromUrl()                         {
   const params = new URLSearchParams(window.location.search);
   const partyCodes = selectedPartyCodes(params.get("parties")?.split(","));
   const query = params.get("query")?.trim() ?? "";
-  if (partyCodes.length === 0 || queryTerms(query).length === 0) return undefined;
+  if (partyCodes.length === 0 || queryTerms(query, partyCodes).length === 0) return undefined;
   const kind = params.get("kind");
   return { party_codes: partyCodes, query, category: params.get("category")?.trim() || undefined, kind: kind === "loften" || kind === "besked" ? kind : "alla", max_results: Number(params.get("max")) || 12, require_archive_copy: params.get("arkiv") === "1" };
 }
