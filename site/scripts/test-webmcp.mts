@@ -14,7 +14,7 @@ check("den publicerade klienten är byggd från TypeScript-källan", client === 
 check("klienten innehåller ingen rad med enbart blanktecken", !/^[\t ]+$/m.test(client));
 check("använder bara publika API-ytor", !client.includes("OPENAI_API_KEY") && client.includes('"/api/v1/promises.json"'));
 
-type Tool = { name: string; annotations: { readOnlyHint: boolean }; execute: (input: Record<string, unknown>) => Promise<Record<string, unknown>> };
+type Tool = { name: string; description: string; annotations: { readOnlyHint: boolean }; execute: (input: Record<string, unknown>) => Promise<Record<string, unknown>> };
 const registered = new Map<string, Tool>();
 let board: { id?: string } | undefined;
 function node(): Record<string, unknown> {
@@ -136,7 +136,7 @@ const contestRegistered = new Map<string, Tool>();
 runInNewContext(client, {
   document: { ...document, modelContext: { registerTool: async (tool: Tool) => { contestRegistered.set(tool.name, tool); } } },
   fetch: async (path: string) => ({ ok: true, json: async () => responses[path] }),
-  window: { location: { pathname: "/webmcp", search: "", assign: () => undefined } },
+  window: { location: { pathname: "/webmcp/", search: "", assign: () => undefined } },
   console, URL, URLSearchParams, Object, Map, Set, Promise, Array, Math,
 });
 await new Promise((resolve) => setTimeout(resolve, 10));
@@ -144,6 +144,7 @@ const contestSearch = contestRegistered.get("search_verified_evidence");
 if (contestSearch) {
   const result = await contestSearch.execute({ party_codes: ["s"], kind: "loften" });
   const detail = (result.evidence as Array<{ detail: string }>)[0]?.detail ?? "";
+  check("den kanoniska engelska tävlingsadressen registrerar engelsk verktygstext", contestSearch.description.includes("Read published Swedish election promises"));
   check("den engelska tävlingsdemon visar estimat direkt men med ≈, intervall och underlag", detail.includes("≈") && detail.includes("Utlovat.se estimate") && detail.includes("four-year term"));
 } else {
   check("tävlingssidans sökverktyg finns", false);
