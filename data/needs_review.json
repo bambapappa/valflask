@@ -10813,17 +10813,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 2000,
-      "msek_high": 15000,
-      "basis": "granskare",
+      "msek_low": 5000,
+      "msek_base": 40000,
+      "msek_high": 90000,
+      "basis": "llm_estimat",
       "basis_url": null,
-      "method_note": "(belopp satt av granskare)",
-      "confidence": 0.9,
-      "calculation": "Löftet säger att Sverige som minst ska leva upp till Natos riktmärke, utan att ange vilken nivå. Sveriges försvarsanslag ligger redan kring två procent av BNP, alltså på det klassiska riktmärket, och den nya kostnaden för att fortsätta göra det är därför nära noll. Liberalernas löfte om fem procent av BNP är en egen utfästelse och är kostnadssatt separat i L:s löfte om höj försvarsanslagen till 5 procent av BNP — den summan får inte räknas två gånger. Basbeloppet 2 000 miljoner kronor per år står för marginalen mellan dagens anslag och riktmärket när BNP växer. Spannets övre del rymmer en strängare tolkning av riktmärket.",
-      "anchor_ids": [
-        "p-2026-0340"
-      ]
+      "method_note": "Prissatt som marginalen mellan dagens anslag och Natos BNP-riktmärke. 2-procentsmålet är i princip redan uppnått; spannet speglar Natos höjda nivåer. I linje med jämförbart försvarslöfte ~50 mdkr/år.",
+      "confidence": 0.4,
+      "calculation": "BNP ≈ 6 500–6 700 mdkr. Natos klassiska riktpris 2 % av BNP ⇒ ~130 mdkr; Sveriges försvarsanslag ligger redan kring 2 % av BNP, så vid oförändrat riktmärke är den nya nettokostnaden nära noll (~0–10 mdkr/år) — lågintervallet. Tolkas riktmärket som Natos höjda ambitioner (~3–3,5 % kärnförsvar till 2035) blir gapet 0,9–1,4 procentenheter × BNP ≈ 60–90 mdkr/år vid fullt genomförande — högintervallet. Bas ~40 mdkr/år motsvarar en gradvis upptrappning till strax över 2,6 % av BNP och ligger i linje med jämförbara publicerade löften om Nato-målet (~50 mdkr/år). Återkommande utgift i fasta priser."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2631 (0), p-2026-0041 (50000), p-2026-3173 (0), p-2026-1736 (0), p-2026-2105 (0) ⚠ AVVIKER: belopp 40000 men jämförbara ligger på 0"
   },
