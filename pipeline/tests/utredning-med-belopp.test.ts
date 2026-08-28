@@ -111,3 +111,46 @@ describe("skulden i beståndet", () => {
     assert.deepEqual(onodiga, [], `Dessa fälls inte längre och ska strykas ur facit: ${onodiga.join(", ")}`);
   });
 });
+
+/**
+ * Plural-utredningar är någon annans arbete, inte partiets löfte.
+ *
+ * Mönstret `utred\p{L}*` fångade också substantivet i plural, och det betyder
+ * nästan alltid brottsutredningar eller myndighetsärenden som pågår — inte en
+ * statlig utredning som partiet lovar att tillsätta.
+ *
+ * Fallet som avgjorde: Liberalernas löfte om «ett europeiskt FBI och en
+ * europeisk åklagarmyndighet som kan jobba på riktigt med att samordna
+ * utredningar av människohandel» flaggades som ett utredningslöfte. Följer man
+ * flaggan nollas ett institutionslöfte på 50 miljoner kronor per år — för att
+ * ett substantiv delar stam med ett verb.
+ */
+describe("utredningar i plural är inte ett utredningslöfte", () => {
+  it("tiger om brottsutredningar någon annan ska samordna", () => {
+    assert.equal(
+      utredningUtanAtgard(
+        "Vi vill ha ett europeiskt FBI och en europeisk åklagarmyndighet som kan jobba på riktigt med att samordna utredningar av människohandel.",
+      ),
+      null,
+    );
+  });
+
+  it("tiger också om den bestämda pluralformen", () => {
+    assert.equal(utredningUtanAtgard("Polisen ska få bättre verktyg i utredningarna."), null);
+  });
+
+  it("fångar fortfarande verbet — det är där löftet sitter", () => {
+    assert.equal(utredningUtanAtgard("Vi vill utreda möjligheten att dela pensionsrätter."), "utreda");
+    assert.equal(utredningUtanAtgard("Frågan ska utredas ordentligt."), "utredas");
+  });
+
+  it("fångar fortfarande singularformen, bestämd och obestämd", () => {
+    assert.equal(utredningUtanAtgard("Utredningen ska lämna förslag före valet."), "Utredningen");
+    assert.ok(utredningUtanAtgard("Vi vill tillsätta en statlig utredning."));
+  });
+
+  it("rör inte översyn och utvärdering", () => {
+    assert.equal(utredningUtanAtgard("Se över bostadsbidraget."), "Se över");
+    assert.equal(utredningUtanAtgard("Göra en översyn av mervärdesskattelagen."), "översyn");
+  });
+});
