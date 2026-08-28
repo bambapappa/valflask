@@ -34,15 +34,16 @@
     "articleTitle": "Solenergi\n| Socialdemokraterna",
     "cost": {
       "type": "intäktsminskning",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 4000,
       "msek_base": 8000,
       "msek_high": 16000,
-      "basis": "llm_estimat",
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Tillfällig sänkning av bensin- och dieselskatt. Uppskattning baserad på årlig volym och antagen sänkning per liter. Osäkerhet i nivå och varaktighet.",
-      "confidence": 0.3,
-      "calculation": "Årlig volym bensin+diesel ~7,5–9 mdkr liter. Antagen sänkning 0,5–2 kr/liter. Kostnad = volym × sänkning: 7,5 mdkr × 0,5 kr = 3,75 mdkr; 8 mdkr × 1 kr = 8 mdkr; 9 mdkr × 2 kr = 18 mdkr. Avrundat till 4 000–16 000 mkr. Moms på punktskatten ej inräknad."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Årlig volym bensin och diesel är omkring 7,5–9 miljarder liter. En sänkning på 0,5–2 kronor per liter ger 4 000–16 000 miljoner kronor, med 8 000 miljoner som mittvärde. Löftet säger uttryckligen att sänkningen är tillfällig, och den räknas därför som ett engångsbelopp i stället för en årlig kostnad genom hela mandatperioden.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0810 (22000), p-2026-1341 (0), p-2026-1904 (7000), p-2026-1024 (20000), p-2026-1366 (0)"
   },
@@ -93,14 +94,15 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 10000,
-      "msek_base": 100000,
-      "msek_high": 300000,
-      "basis": "llm_estimat",
+      "msek_low": 500,
+      "msek_base": 5000,
+      "msek_high": 40000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet anger ingen nivå. Skattningen baseras på kostnader för nya stambanor och uppgraderingar i Sverige; mycket stor osäkerhet.",
-      "confidence": 0.2,
-      "calculation": "Antag 50–100 mil ny/uppgraderad järnväg för att knyta ihop Stockholm–Oslo och Stockholm–Köpenhamn. Ny höghastighetsbana 150–250 mkr/km, uppgradering 50–100 mkr/km. 500 km ny bana ≈ 75–125 mdkr, 500 km uppgradering ≈ 25–50 mdkr. Totalt ≈ 100–175 mdkr. Spannet vidgas till 10–300 mdkr för att täcka allt från mindre åtgärder till full utbyggnad."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Löftet säger att de skandinaviska huvudstäderna ska knytas samman med goda järnvägsförbindelser. Det pekar inte ut någon bana, någon sträckning eller något årtal, och att prissätta det som femtio mil ny höghastighetsbana vore att kostnadssätta en politik partiet inte har lovat. Basbeloppet 5 000 miljoner kronor står för ett upprustningsprogram på befintliga stråk mot Oslo och Köpenhamn — kapacitet, hastighetshöjning och gränsöverskridande trafik. Spannets övre del, 40 000 miljoner, rymmer tolkningen att ny bana faktiskt byggs.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
   },
@@ -122,14 +124,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 10000,
-      "msek_high": 30000,
-      "basis": "llm_estimat",
+      "msek_low": 2500,
+      "msek_base": 5000,
+      "msek_high": 15000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Mål utan finansiering; avser årlig statlig subvention vid full målvolym. CCS-infångning kostar 500–1500 kr/ton; statlig andel antas 50–100%.",
-      "confidence": 0.3,
-      "calculation": "Partiets siffra: 20 Mt/år till 2035 (10 Mt/år 2030). 20 000 000 ton × 500–1 500 kr/ton = 10 000–30 000 mkr/år. Med 50–100 % statlig subventionsandel = 5 000–30 000 mkr/år. Bas: 20 000 000 × 1 000 kr × 50 % = 10 000 mkr/år."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Partiet anger själv målen: tio miljoner ton koldioxid infångat till 2030 och tjugo miljoner ton till 2035. Inom mandatperioden är det tiomiljonersmålet som gäller, inte tjugo. Tio miljoner ton gånger 500–1 500 kronor per ton ger 5 000–15 000 miljoner kronor per år i total kostnad, och med en statlig subventionsandel på omkring hälften landar basbeloppet på 5 000 miljoner kronor per år. Tjugomiljonersmålet ligger efter perioden och räknas inte här.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1446 (0), p-2026-2341 (5) ⚠ AVVIKER: 10000 avviker 4000.0× från jämförbara (median 2.5)"
   },
@@ -368,14 +371,15 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 8000,
-      "msek_base": 12000,
-      "msek_high": 16000,
-      "basis": "llm_estimat",
+      "msek_low": 3000,
+      "msek_base": 6000,
+      "msek_high": 13000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Uppskattning baserad på jämförbara löften om avveckling av reavinstskatt; ingen egen siffra i löftet.",
-      "confidence": 0.5,
-      "calculation": "Jämförbara löften anger 13 500 mkr/år (full avveckling) och 3 000 mkr/år (sänkning). Antar att full avveckling kostar 8 000–16 000 mkr/år, bas 12 000 mkr."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Jämförbara löften värderar en full avveckling av reavinstskatten vid bostadsförsäljning till omkring 13 500 miljoner kronor per år. Löftet här säger stegvis avveckling, alltså att skatten fasas ut under perioden i stället för att tas bort på en gång. Genomsnittskostnaden per år under mandatperioden blir därför ungefär halva slutnivån. Basbeloppet 6 000 miljoner kronor per år motsvarar en jämn utfasning; spannets övre del rymmer en snabbare avveckling.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0711 (13500), p-2026-1068 (3000)"
   },
@@ -6223,15 +6227,16 @@
     "articleTitle": "Kriget i Ukraina | Centerpartiet",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 2700,
-      "msek_base": 4500,
+      "msek_base": 5000,
       "msek_high": 9500,
-      "basis": "llm_estimat",
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Materieldonation av stridsfly prissatt som värdet av donerade Gripen C/D i linje med andra länders flygdonationer till Ukraina, plus start av pilotutbildning. Löftet anger inget antal flygplan —…",
-      "confidence": 0.4,
-      "calculation": "Antag 8–16 donerade Gripen C/D (skvadron eller större paket) à ~300–500 mkr per plan (värdet på begagnat stridsflyg, jämförbart med F16-donationer från Danmark/Norge/Nederländerna): ≈ 2 400–8 000 mkr. Storskalig pilotutbildning från 2026: 20–40 piloters konvertering med flygtimmar (~50–100 tkr/timme), simulatorer, markpersonal och infrastruktur ≈ 300–1 500 mkr. Totalt ≈ 2 700–9 500 mkr, bas 4 500 mkr. Antal flygplan och piloter är mitt antagande — löftet anger inga nivåer. Redovisas som engångskostnad för paketet; utbildningen löper även på senare år men dominerande kostnaden är flygplanen."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Åtta till sexton donerade JAS Gripen C/D à omkring 300–500 miljoner kronor styck, jämförbart med de danska, norska och nederländska F16-donationerna, ger 2 400–8 000 miljoner kronor. Storskalig konverteringsutbildning av tjugo till fyrtio ukrainska stridspiloter kostar ytterligare några hundra miljoner. Basbeloppet 5 000 miljoner kronor. Det är en donation av befintlig materiel och en utbildningsinsats med start 2026 — ett engångsbelopp, inte en årlig kostnad.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2523 (0) ⚠ AVVIKER: belopp 4500 men jämförbara ligger på 0"
   },
@@ -9178,14 +9183,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 4600,
+      "msek_low": 1000,
+      "msek_base": 3000,
       "msek_high": 6000,
-      "basis": "llm_estimat",
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet är vagt (långsiktigt mål) men avser en konkret reform. Jämförbara löften från flera partier anger ca 4,6 mdkr/år för ett högkostnadsskydd i tandvården, så jag använder det som riktmärke.",
-      "confidence": 0.4,
-      "calculation": "Flera partiers löften om högkostnadsskydd för tandvård anger ca 4,6 mdkr/år (t.ex. maxtak 1450 kr/år). Detta löfte anger ingen nivå men samma reform, så base sätts till 4,6 mdkr. Spann 3–6 mdkr för osäkerhet kring utformning och utnyttjande."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Jämförbara löften om att föra in tandvården i sjukvårdens högkostnadsskydd värderas till omkring 4 600 miljoner kronor per år vid full reform. Löftet här säger att det är målet på lång sikt, alltså inte ett åtagande att genomföra reformen under mandatperioden. Basbeloppet 3 000 miljoner kronor per år står för de steg som faktiskt hinns med. Spannets övre del rymmer en full reform.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2949 (0), p-2026-2650 (4600), p-2026-0484 (4600), p-2026-2947 (2000), p-2026-0489 (4600)"
   },
@@ -9792,14 +9798,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 3000,
-      "msek_high": 6000,
-      "basis": "llm_estimat",
+      "msek_low": 700,
+      "msek_base": 1500,
+      "msek_high": 4000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Löftet saknar belopp. Ankrat mot jämförbara löften om ökat vägunderhåll (~1,4 mdr/år) och typiska extraanslag till vägdrift. Återkommande utgift; nivån är lånad, inte partiets egen.",
-      "confidence": 0.4,
-      "calculation": "Löftet anger ingen nivå, bara riktningen 'ökat vägunderhåll'. Jämförbart vagt löfte om mer vägunderhåll är estimerat till ~1 400 msek/år; statens vägdrift och underhåll ligger samlat på tiotals miljarder per år, så en prioriterad ökning rimligen 1–6 mdr/år extra. Sätter låg 1 500 (i linje med jämförbart löfte), bas 3 000, hög 6 000 msek/år. Nivån är lånad från jämförbara löften eftersom partiet inte anger någon egen summa; hastighetsbeslutet ersätts snarare än att dubbelräknas som besparing."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Löftet anger ingen nivå, bara riktningen: ökat vägunderhåll i stället för sänkta hastigheter. Ett jämförbart vagt löfte om mer vägunderhåll är värderat till omkring 1 400 miljoner kronor per år, och basbeloppet sätts till 1 500 miljoner kronor per år för att ligga i linje med det. Spannets övre del rymmer en större omprioritering inom väganslaget.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2923 (354000), p-2026-2953 (1400) ⚠ AVVIKER: 3000 avviker 59.2× från jämförbara (median 177700)"
   },
@@ -10022,15 +10029,16 @@
     "articleTitle": "Lärare – Liberalerna",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 1000,
-      "msek_base": 2500,
-      "msek_high": 5000,
-      "basis": "llm_estimat",
+      "period": "engang",
+      "msek_low": 2000,
+      "msek_base": 5000,
+      "msek_high": 12000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Förstatligande är främst omfördelning kommun→stat; beloppet avser nettokostnad: omställning, statlig administration och viss nivåförstärkning, ankrat mot jämförbara skolfinansieringslöften (~1–4…",
-      "confidence": 0.35,
-      "calculation": "Skolans totala drift (~250–300 mdkr/år) betalas redan via kommuner och skolpeng — att staten tar över ansvaret är i huvudsak omfördelning, inte ny statskostnad (nettoprincipen). Prissatt marginal: omställning till statlig styrning (nya system, utbyggd myndighetsadministration, avvecklad dubbeladministration) ~0,2–0,5 mdkr/år i drift plus engångskostnader, samt en förmodad medföljande nivåförstärkning i samband med reformen ~0,5–3 mdkr/år. Sammanlagt återkommande ~1–4 mdkr/år, i linje med jämförbara löften om att staten tar större ansvar för skolans finansiering (≈1–4 mdkr/år)."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Skolans drift kostar omkring 250–300 miljarder kronor per år och betalas redan via kommunerna och skolpengen. Att staten tar över huvudmannaskapet flyttar pengarna, det skapar dem inte, så nettoprincipen gäller: bara omställningen prissätts. Basbeloppet 5 000 miljoner kronor står för nya system, utbyggd myndighetsorganisation och övergångsersättning till kommunerna. Det är en engångskostnad för själva reformen, inte en löpande utgift.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0382 (300), p-2026-1543 (4000), p-2026-3300 (1100), p-2026-0430 (150), p-2026-2478 (4000)"
   },
@@ -10805,14 +10813,17 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 5000,
-      "msek_base": 40000,
-      "msek_high": 90000,
-      "basis": "llm_estimat",
+      "msek_low": 0,
+      "msek_base": 2000,
+      "msek_high": 15000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Prissatt som marginalen mellan dagens anslag och Natos BNP-riktmärke. 2-procentsmålet är i princip redan uppnått; spannet speglar Natos höjda nivåer. I linje med jämförbart försvarslöfte ~50 mdkr/år.",
-      "confidence": 0.4,
-      "calculation": "BNP ≈ 6 500–6 700 mdkr. Natos klassiska riktpris 2 % av BNP ⇒ ~130 mdkr; Sveriges försvarsanslag ligger redan kring 2 % av BNP, så vid oförändrat riktmärke är den nya nettokostnaden nära noll (~0–10 mdkr/år) — lågintervallet. Tolkas riktmärket som Natos höjda ambitioner (~3–3,5 % kärnförsvar till 2035) blir gapet 0,9–1,4 procentenheter × BNP ≈ 60–90 mdkr/år vid fullt genomförande — högintervallet. Bas ~40 mdkr/år motsvarar en gradvis upptrappning till strax över 2,6 % av BNP och ligger i linje med jämförbara publicerade löften om Nato-målet (~50 mdkr/år). Återkommande utgift i fasta priser."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Löftet säger att Sverige som minst ska leva upp till Natos riktmärke, utan att ange vilken nivå. Sveriges försvarsanslag ligger redan kring två procent av BNP, alltså på det klassiska riktmärket, och den nya kostnaden för att fortsätta göra det är därför nära noll. Liberalernas löfte om fem procent av BNP är en egen utfästelse och är kostnadssatt separat i L:s löfte om höj försvarsanslagen till 5 procent av BNP — den summan får inte räknas två gånger. Basbeloppet 2 000 miljoner kronor per år står för marginalen mellan dagens anslag och riktmärket när BNP växer. Spannets övre del rymmer en strängare tolkning av riktmärket.",
+      "anchor_ids": [
+        "p-2026-0340"
+      ]
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2631 (0), p-2026-0041 (50000), p-2026-3173 (0), p-2026-1736 (0), p-2026-2105 (0) ⚠ AVVIKER: belopp 40000 men jämförbara ligger på 0"
   },
@@ -13601,7 +13612,20 @@
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/regional-utveckling",
     "articleTitle": "Regional utveckling – Liberalerna",
-    "verifyReason": "Citatet återges ordagrant i källtexten och partitillhörigheten (Liberalerna, liberalerna.se) stämmer. Inga belopp anges i texten och ingen finansiering nämns, vilket är konsistent med extraktionen. Dock är formuleringen en generell principförklaring om riktning ('sänkta skatter och mindre byråkrati') utan konkret åtgärd, nivå eller tidsram — det är tveksamt om det håller som ett kontrollerbart vallöfte, varför manuell bedömning rekommenderas."
+    "verifyReason": "Citatet återges ordagrant i källtexten och partitillhörigheten (Liberalerna, liberalerna.se) stämmer. Inga belopp anges i texten och ingen finansiering nämns, vilket är konsistent med extraktionen. Dock är formuleringen en generell principförklaring om riktning ('sänkta skatter och mindre byråkrati') utan konkret åtgärd, nivå eller tidsram — det är tveksamt om det håller som ett kontrollerbart vallöfte, varför manuell bedömning rekommenderas.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Löftet anger riktningen — sänkta skatter och mindre byråkrati — men varken vilken skatt, vilken nivå eller vilket år. Det finns inget att räkna på och det prissätts till noll. Partiets konkreta skattelöften kostnadssätts var för sig; att sätta ett belopp här skulle räkna dem en gång till.",
+      "confidence": 0.9,
+      "anchor_ids": []
+    }
   },
   {
     "candidate": {
@@ -13896,7 +13920,20 @@
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/skogen",
     "articleTitle": "Skogen – Liberalerna",
-    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON).",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Att stärka skogsägares äganderätt och brukanderätt är en regeländring och prissätts till noll. Den kostar staten ingenting i sig. Skulle ändringen föra med sig ersättningsrätt vid intrång är det ett eget åtagande som kostnadssätts där det utlovas.",
+      "confidence": 0.9,
+      "anchor_ids": []
+    }
   },
   {
     "candidate": {
@@ -15256,7 +15293,20 @@
     "failures": [],
     "articleUrl": "https://www.liberalerna.se/politik/prostitution",
     "articleTitle": "Prostitution – Liberalerna",
-    "verifyReason": "Citatet återges ordagrant och partiet stämmer (källan är liberalerna.se, partiets officiella politiksidan). Formuleringen 'vi behöver mer kunskap om prostitutionens orsaker och hur den kan bekämpas' är dock ett vagt konstaterande av behov, utan konkret åtgärd, åtgärdspunkt eller mätbar förändring. Det är gränsfall för vad som utgör ett vallöfte och bör bedömas manuellt."
+    "verifyReason": "Citatet återges ordagrant och partiet stämmer (källan är liberalerna.se, partiets officiella politiksidan). Formuleringen 'vi behöver mer kunskap om prostitutionens orsaker och hur den kan bekämpas' är dock ett vagt konstaterande av behov, utan konkret åtgärd, åtgärdspunkt eller mätbar förändring. Det är gränsfall för vad som utgör ett vallöfte och bör bedömas manuellt.",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 40,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Löftet är att bygga kunskap om prostitutionens orsaker och hur den kan bekämpas, inte att genomföra en åtgärd. Det prissätts därför som ett utredningsuppdrag i statlig utredningsstorlek — sekretariat, sakkunniga och kunskapssammanställning. Basbeloppet 15 miljoner kronor ligger i nivå med de skoldådskommissioner som kostnadssatts på samma grund.",
+      "confidence": 0.9,
+      "anchor_ids": []
+    }
   },
   {
     "candidate": {
@@ -15686,14 +15736,15 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 5000,
-      "msek_base": 15000,
-      "msek_high": 30000,
-      "basis": "llm_estimat",
+      "msek_low": 2000,
+      "msek_base": 6000,
+      "msek_high": 20000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Investeringslöfte utan nivå. Uppskattning baserad på att förstärka delar av vägnätet för tyngre fordon, liknande Trafikverkets bärighetssatsningar. Jämförbart löfte om tillåtelse av längre fordon är…",
-      "confidence": 0.3,
-      "calculation": "Antag att 10 000–20 000 km av det statliga vägnätet (10–20 % av ca 100 000 km) behöver förstärkning. Kostnad 1–2 mkr/km för bärighet och broar → 10–40 mdkr. Bas 15 mdkr (15 000 km × 1 mkr)."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Att rusta vägnätet så att det bär tyngre och längre fordon är i praktiken fortsatt utbyggnad av bärighetsklass BK4, ett pågående program som kostar omkring en miljard kronor per år. Basbeloppet 6 000 miljoner kronor står för en förstärkt satsning under mandatperioden — vägar och broar på de tyngst trafikerade stråken. Spannets övre del rymmer en bredare upprustning av tio till tjugo tusen kilometer statlig väg.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1712 (0) ⚠ AVVIKER: belopp 15000 men jämförbara ligger på 0"
   },
@@ -15993,14 +16044,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 7000,
-      "msek_high": 15000,
-      "basis": "llm_estimat",
+      "msek_low": 500,
+      "msek_base": 2000,
+      "msek_high": 8000,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Vagt löfte utan nivå. Tolkat som riktat statsbidrag till kommuner/regioner för löne- och karriärslyft i kvinnodominerade välfärdsyrken. Osäkerhet är stor; arbetsmarknadens parter sätter faktiska…",
-      "confidence": 0.3,
-      "calculation": "Antag 500 000–1 000 000 anställda i kvinnodominerade välfärdsyrken. Löneökning 500–1 500 kr/mån = 6 000–18 000 kr/år/person: 500 000×6 000 = 3 000 mkr och 1 000 000×18 000 = 18 000 mkr. Karriärtjänster ger ytterligare kostnad. Bas ~7 000 mkr som mittpunkt, spann 3 000–15 000 mkr."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.9,
+      "calculation": "Staten sätter inte lönerna i kvinnodominerade välfärdsyrken — de är kommunala och regionala och bestäms i avtal mellan parterna. Statens kostnad uppstår i det löftet faktiskt kan besluta om: statligt finansierade karriärtjänster, i stil med förstelärarreformen som kostar omkring 1 500 miljoner kronor per år. Basbeloppet 2 000 miljoner kronor per år står för en bredare karriärtjänstreform. Spannets övre del rymmer riktade statsbidrag till lönesatsningar.",
+      "anchor_ids": []
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0129 (10000)"
   },
@@ -17984,14 +18036,17 @@
     "cost": {
       "type": "utgift",
       "period": "engang",
-      "msek_low": 22500,
-      "msek_base": 30000,
-      "msek_high": 40500,
-      "basis": "parti",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 30 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 22 500–40 500 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
-      "confidence": 0.5
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Löftet anger var pengarna ska komma ifrån — Svenska kraftnäts intäkter — inte vad de ska gå till. Det är en finansieringsanvisning, inte ett nytt åtagande. Nollan vilar på dubbelräkning: åtgärden pengarna ska finansiera, statligt stöd för energieffektivisering, är redan prissatt på partiets eget löfte om statligt stöd på 60 procent. Att sätta ett belopp också på finansieringssidan vore att räkna samma politik två gånger.",
+      "confidence": 0.9,
+      "anchor_ids": [
+        "p-2026-2239"
+      ]
     },
     "costReason": "Låg kostnadssäkerhet: 0.5 — jämförbara: p-2026-3076 (15), p-2026-1378 (1000), p-2026-1905 (100000), p-2026-2229 (70000), p-2026-2989 (300) ⚠ AVVIKER: 30000 avviker 30.0× från jämförbara (median 1000)"
   },
@@ -18952,7 +19007,20 @@
     "failures": [],
     "articleUrl": "https://www.mp.se/politik/jamstalldhet/",
     "articleTitle": "Miljöpartiets jämställdhetspolitik",
-    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON).",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 80,
+      "msek_high": 200,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Avgiftsbefrielsen i sig är en liten post: omkring 20 000 vårdbesök efter sexuella övergrepp per år à en patientavgift kring 300 kronor ger ungefär 6 miljoner kronor per år. Kostnaden ligger i den andra halvan av löftet, att vården ska vara likvärdig i hela landet, vilket kräver specialistmottagning med kompetens dygnet runt i samtliga 21 regioner. Basbeloppet 80 miljoner kronor per år är satt i nivå med jämförbara nationella vårdprogram: löftet om ett nationellt program för förlossningsvården, kostnadssatt till 50 miljoner kronor per år, och löftet om stärkt sexualundervisning och tillgång till preventivmedel, satt till 200 miljoner per år.",
+      "confidence": 0.9,
+      "anchor_ids": []
+    }
   },
   {
     "candidate": {
