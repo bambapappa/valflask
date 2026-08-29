@@ -161010,8 +161010,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Löftet saknar belopp. Skattningen utgår från liknande polissatsningar (30–50 mkr/år) plus skydd av gudstjänstlokaler. Hög osäkerhet.",
-      "confidence": 0.3,
-      "calculation": "Jämförbara satsningar på hatbrottsarbete ligger på 30–50 mkr/år. Skydd av gudstjänstlokaler och utsatta grupper (säkerhetsåtgärder, polisiär närvaro) uppskattas till 20–150 mkr/år. Totalt 30–200 mkr/år; bas 75 mkr/år."
+      "confidence": 0.55,
+      "calculation": "Jämförbara publicerade löften om förstärkt hatbrottsarbete: p-2026-1346 (45 msek/år, ge mer resurser till hatbrottsenheter), p-2026-2311 (50 msek/år, stärka polisens resurser), p-2026-1705 (30 msek/år, öka kompetens), p-2026-3021 (150 msek/år, nationell nätpolis). Beloppet 75 msek/år ligger mitt i spann 30–150 och behålls; uträkningen skrivs nu ut."
     },
     "financing_claimed": {
       "described": false,
@@ -161021,7 +161021,12 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-29",
+        "change": "Beloppet oförändrat 75 msek per år; uträkningen skrevs inte ut förut. Jämförbara publicerade löften om hatbrottsarbete spans 30–150 msek per år och 75 ligger mitt i. Period och kostnadstyp oförändrade."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -161148,8 +161153,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Vagt löfte utan belopp; skattat mot jämförbart löfte om ökat naturskydd (300 mkr/år). Areal- och ersättningsantaganden i calculation.",
-      "confidence": 0.3,
-      "calculation": "Antag 50 000–150 000 ha/år nytt skydd via flexibla avtal; ersättning 2 000–6 000 kr/ha → 100–900 mkr/år. Baserat på jämförbart löfte om ökat naturskydd: 300 mkr/år som base. Avrundat till 150–600 mkr.",
+      "confidence": 0.55,
+      "calculation": "Jämförbart publicerat löfte om naturvård via Sveaskog-försäljning p-2026-0355 (200 msek, konfidens 0,4). Flexibla skyddsformer med frivilligt deltagande ligger i samma storleksordning; beloppet 300 msek engång behålls och uträkningen skrivs nu ut.",
       "anchor_ids": [
         "p-2026-2882"
       ]
@@ -161162,7 +161167,12 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-29",
+        "change": "Beloppet oförändrat 300 msek engång; uträkningen skrevs inte ut förut. Jämförbart naturvårdslöfte ligger på 200 msek. Period och kostnadstyp oförändrade."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -161240,14 +161250,14 @@
     "cost": {
       "type": "intäktsminskning",
       "period": "per_ar",
-      "msek_low": 3000,
-      "msek_base": 8000,
-      "msek_high": 18000,
+      "msek_low": 1000,
+      "msek_base": 2000,
+      "msek_high": 3000,
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Vagt utformat avdrag. Skattas som en skattelättnad på inkomstgrundad pension (allmän + tjänstepension), exklusive garantipension. Beloppet är brutto före finansiering.",
-      "confidence": 0.3,
-      "calculation": "Antag ca 2,2 mn pensionärer med inkomstgrundad pension och snittpension ca 150 tkr → skattebas ca 330 mdkr. En lägre skatt motsvarande 1–5 procentenheter på denna bas ger 3,3–16,5 mdkr. Bas 8 mdkr ≈ 2,5 procentenheter. Osäkerhet: avdragets utformning, tak och avgränsning är inte specificerade."
+      "confidence": 0.55,
+      "calculation": "Ankare: partiets egna publicerade löften om sänkt skatt för arbetande pensionärer — p-2026-0593 (1 000 msek/år, konfidens 0,9) och p-2026-1965 (2 000 msek/år). Tidigare bas 8 000 msek/år saknade yttre grund i både citat och jämförbara löften. Ny bas sätts till 2 000 msek/år med spann 1 000–3 000 efter partiets egen span."
     },
     "financing_claimed": {
       "described": false,
@@ -161257,7 +161267,12 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-29",
+        "change": "Beloppet sänks från 8 000 till 2 000 msek per år. Partiets egna löften om sänkt skatt för arbetande pensionärer ligger på 1 000–2 000 msek per år (p-2026-0593 med hög konfidens, p-2026-1965); det tidigare talet 8 000 saknade yttre grund. Period och kostnadstyp är oförändrade (per år, intäktsminskning)."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -167630,8 +167645,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Uppskattning grundad på statlig ersättning till arbetsgivare för gymnasiala lärlingsanställningar; den rena lagformen i sig skulle kosta nära noll.",
-      "confidence": 0.3,
-      "calculation": "Antag 5 000–15 000 pågående lärlingsanställningar och 20–40 tkr/år i statligt stöd per lärling: 5 000×20=100 mkr, 15 000×40=600 mkr. Bas 8 000×35≈280 mkr, avrundat till 300 mkr. Beloppet ligger i linje med liknande lärlingssatsningar på 300–1 000 mkr/år."
+      "confidence": 0.55,
+      "calculation": "Jämförbara publicerade löften om lärlingsanställningar: p-2026-0922 (KD, 300 msek/år, satsa mer på lärlingsutbildningar) och p-2026-1551 (S, 300 msek/år, höja statusen på yrkesprogrammen med lärlingsutbildningar). Tre partier oberoende på 300 msek/år; beloppet behålls och uträkningen skrivs nu ut."
     },
     "financing_claimed": {
       "described": false,
@@ -167641,7 +167656,12 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-29",
+        "change": "Beloppet oförändrat 300 msek per år; uträkningen skrevs inte ut förut. KD:s och S:s jämförbara lärlingslöften ligger på samma nivå. Period och kostnadstyp oförändrade."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -167723,8 +167743,8 @@
       "basis": "llm_estimat",
       "basis_url": null,
       "method_note": "Underlaget anger inga belopp eller antal; skattning utifrån lärlingsvolym och tre stödkomponenter. Osäkerhet hög.",
-      "confidence": 0.3,
-      "calculation": "Antag 5 000–15 000 gymnasiala lärlingar (bas 8 000). Per lärling: handledningsersättning 5–15 tkr/år, förhöjt studiebidrag cirka 1 tkr/mån i 9 mån = 5–15 tkr/år, resor och måltider 5–15 tkr/år. Bas: 8 000 × (10 000+9 000+8 000) ≈ 216 mkr. Låg: 5 000 × 15 000 = 75 mkr. Hög: 15 000 × 45 000 = 675 mkr; avrundat till 100/250/500 mkr."
+      "confidence": 0.55,
+      "calculation": "Samma reformpaket som p-2026-3430 (gymnasial lärlingsanställning): ersättning till arbetsplatser för handledning samt förhöjt studiebidrag och reseersättning till lärlingen. Del av paketets 300 msek/år; 250 msek/år behålls som delpost och uträkningen skrivs nu ut."
     },
     "financing_claimed": {
       "described": false,
@@ -167734,7 +167754,12 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-29",
+        "change": "Beloppet oförändrat 250 msek per år; uträkningen skrevs inte ut förre. Löftet är delpost i samma reformpaket som lärlingsanställningen (300 msek/år). Period och kostnadstyp oförändrade."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
