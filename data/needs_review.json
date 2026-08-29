@@ -28,7 +28,8 @@
       "calculation": "Att inte beskatta den som utnyttjas i prostitution är en regeländring i skattelagstiftningen. Uteblivna skatteintäkter är försumbara — Skatteverket beskattar i dag mycket få sådana fall — och åtgärden prissätts därför till noll. Brottsofferstatusen med rätt till skydd och rehabilitering är en annan sak och prissätts där den utlovas.",
       "confidence": 0.9,
       "anchor_ids": []
-    }
+    },
+    "group_id": "g-p-2026-3028"
   },
   {
     "candidate": {
@@ -200,7 +201,7 @@
       "basis_url": null,
       "method_note": "Reglering som sådan saknar direkt statskostnad; beloppet avser själva åtgärden, inte följderna. Kostnad för fler rektorer landar på kommuner och friskolehuvudmän. high rymmer ev. kompenserande…",
       "confidence": 0.45,
-      "calculation": "Löftet inför en föreskrift om max antal medarbetare per rektor. Själva regleringen kostar staten i princip noll (kostnadsregeln om lagar, förbud och regleringar: lagändringens direkta kostnad är försumbar, beredning sker i Regeringskansliets befintliga organisation, kostnadsregeln om statens eget beredningsarbete). Effekten — att skolhuvudmän måste anställa fler rektorer — är en kostnad för kommuner och friskolor, dvs. en omfördelning till huvudmännen, inte en ny statlig utgift. Uppskattning av kommunal kostnad som sanity check: några tusen skolenheter × 0,5–1 extra rektor à ~1 mkr/år ≈ 1–3 mdkr — men detta betalas av huvudmännen och prissätts inte här. Spannets high (~300 msek/år) rymmer endast möjligheten att staten väljer att kompensera små enheter med riktade bidrag; inget sådant ingår i löftet, därför base 0."
+      "calculation": "Löftet inför en föreskrift om max antal medarbetare per rektor. Regleringen i sig kostar staten i princip noll — kostnadsregeln om lagar, förbud och regleringar, och kostnadsregeln om statens eget beredningsarbete, eftersom beredningen sker i Regeringskansliets befintliga organisation. Effekten, att skolhuvudmännen måste anställa fler rektorer, är en kostnad för kommuner och friskolor: en omfördelning till huvudmännen, inte en ny statlig utgift. Som rimlighetskontroll: några tusen skolenheter × 0,5–1 extra rektor à ~1 mkr/år ≈ 1–3 miljarder, men det betalas av huvudmännen och prissätts inte här. Spannets högvärde, ~300 msek/år, rymmer bara möjligheten att staten kompenserar små enheter med riktade bidrag; inget sådant ingår i löftet, och basbeloppet är därför 0."
     },
     "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp"
   },
@@ -377,7 +378,9 @@
       "method_note": "(belopp satt av granskare)",
       "calculation": "En bortre gräns på 30 dagar till specialiserad barn- och ungdomspsykiatri kräver mer kapacitet än i dag, där väntetiderna på många håll är flera månader. Basbeloppet 1 200 miljoner kronor per år för utbyggd bemanning, i nivå med jämförbara löften om kortare BUP-köer.",
       "confidence": 0.9,
-      "anchor_ids": []
+      "anchor_ids": [
+        "p-2026-3992"
+      ]
     }
   },
   {
@@ -495,7 +498,8 @@
       "calculation": "Citatet räknar upp flera förslag — slopad anställningsskatt, sänkta skatter på arbete, en ny regelförenklingsmyndighet och bättre matchning — utan att ange nivå för något av dem. En sådan uppräkning prissätts till noll; delarna kostnadssätts på partiets egna löften om var och en.",
       "confidence": 0.9,
       "anchor_ids": []
-    }
+    },
+    "group_id": "g-p-2026-2868"
   },
   {
     "candidate": {
@@ -613,7 +617,8 @@
       "calculation": "Saneringen av förorenad mark finansieras i dag med omkring 800 miljoner kronor per år via Naturvårdsverket, och det finns tusentals objekt kvar. Löftet ökar takten utan att ange nivå. Basbeloppet 500 miljoner kronor per år som tillägg.",
       "confidence": 0.9,
       "anchor_ids": []
-    }
+    },
+    "group_id": "g-p-2026-2101"
   },
   {
     "candidate": {
@@ -705,7 +710,8 @@
       "calculation": "Beredskapslager för samhällsviktiga varor — livsmedel, läkemedel, drivmedel och sjukvårdsmateriel — kräver både inköp och lagerhållning. Sverige byggde ned sina beredskapslager under 1990-talet och bygger nu upp dem igen. Basbeloppet 1 500 miljoner kronor per år under uppbyggnadsskedet.",
       "confidence": 0.9,
       "anchor_ids": []
-    }
+    },
+    "group_id": "g-p-2026-2255"
   },
   {
     "candidate": {
@@ -736,7 +742,8 @@
       "calculation": "Löftet har tre delar: säkrad tillgång till östrogenplåster och andra läkemedel, förbättrad klimakterierådgivning i vården och ökad kunskap. Klimakteriebesvär rör en stor grupp — omkring 500 000 kvinnor är i klimakteriet vid varje tidpunkt — men insatsen är rådgivning och läkemedelsförsörjning, inte behandling av alla. Basbeloppet 100 miljoner kronor per år.",
       "confidence": 0.9,
       "anchor_ids": []
-    }
+    },
+    "group_id": "g-p-2026-2111"
   },
   {
     "candidate": {
@@ -795,7 +802,8 @@
       "calculation": "Löftet har två delar. Att minska regelbördan är en regeländring utan egen kostnad. Investeringar i forskning och förädling är däremot en utgift: den jordbruksinriktade forskningen finansieras i dag med ett par hundra miljoner kronor per år genom forskningsråden. Basbeloppet 200 miljoner kronor per år för forskningsdelen.",
       "confidence": 0.9,
       "anchor_ids": []
-    }
+    },
+    "group_id": "g-p-2026-3037"
   },
   {
     "candidate": {
