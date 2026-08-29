@@ -154,8 +154,19 @@ export function utpekadAtgard(quote: string): string | null {
  * 2 713 i dag, och ingenting mätte ledet däremellan — C2 skrev ut att luckan
  * fanns: «ingen kontroll mäter det ledet, så nästa skörd kan göra om det».
  */
+// `utredningar` och `utredningarna` star INTE med. I plural betyder ordet
+// nastan alltid brottsutredningar eller myndighetsarenden som pagar - arbete
+// nagon annan gor - och inte en statlig utredning som partiet lovar att
+// tillsatta. Liberalernas lofte om ett europeiskt FBI "som kan jobba pa
+// riktigt med att samordna utredningar av manniskohandel" flaggades som ett
+// utredningslofte och skulle ha nollats: ett institutionslofte pa 50 mkr/ar
+// hade forsvunnit for att ett substantiv delar stam med ett verb.
+//
+// Singularformerna star kvar. "En utredning tillsatts", "utredningen ska se
+// over" - dar ar utredningen sjalva loftet, och det ar det kontrollen finns
+// for.
 const UTREDNINGSORD =
-  /(?<!\p{L})(utred\p{L}*|se över|ser över|översyn|översynen|kartlägg\p{L}*|utvärder\p{L}*|handlingsplan)(?!\p{L})|tillsätta?s?\s+(?:en\s+)?(?:ny\s+)?(?:statlig\s+)?(?:utredning|kommission|kommitté|utvärdering)|ta fram (?:en |ett )?(?:plan|strategi)/iu;
+  /(?<!\p{L})(utred(?!ningar(?:na)?(?!\p{L}))\p{L}*|se över|ser över|översyn|översynen|kartlägg\p{L}*|utvärder\p{L}*|handlingsplan)(?!\p{L})|tillsätta?s?\s+(?:en\s+)?(?:ny\s+)?(?:statlig\s+)?(?:utredning|kommission|kommitté|utvärdering)|ta fram (?:en |ett )?(?:plan|strategi)/iu;
 
 /**
  * Åtgärder som gör att ett löfte lovar mer än utredningen.
