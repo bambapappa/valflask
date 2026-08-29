@@ -11678,14 +11678,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 300,
-      "msek_base": 650,
-      "msek_high": 1000,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Avskaffad mängdrabatt: kostnaden är fler anstaltsdygn. Delat löfte — samma politik räknas en gång och vilar på samma uträkning.",
-      "confidence": 0.4,
-      "calculation": "Att avskaffa mängdrabatten betyder längre fängelsestraff för den som döms för flera brott, och kostnaden är fler anstaltsdygn. Antag att omkring 2 000–4 000 personer per år får sitt straff förlängt med 90–180 dagar. Med en dygnskostnad på 500–800 kronor ger det 2 000 × 90 × 500 ≈ 90 miljoner kronor i den lägre änden och 4 000 × 180 × 800 ≈ 580 miljoner i den högre. Med häktesplatser och den utbyggnad av anstalter som krävs avrundas spannet till 300–1 000 miljoner kronor per år, med 650 som basbelopp. Samma politik hos flera partier räknas en gång och vilar på samma uträkning."
+      "msek_low": 9225,
+      "msek_base": 12300,
+      "msek_high": 16605,
+      "basis": "parti",
+      "basis_url": "https://moderaterna.se/var-politik/mangdrabatt/",
+      "method_note": "Partiets eget belopp, per år vid full effekt.",
+      "confidence": 0.7,
+      "calculation": "Moderaterna skriver på sin sida om mängdrabatten: «Hela reformen beräknas kosta cirka 47 miljarder kronor per år när den fått full effekt, varav 12,3 miljarder avser mängdrabatten specifikt.» Siffran saknades i arkivkopian från den 17 augusti och har tillkommit efter det, så den är kontrollerad mot den levande sidan. Partiets tal gäller framför vårt. Den tidigare siffran, 650 miljoner kronor per år, var vår egen och vilade på en dygnskostnad om 500–800 kronor, medan registret annars räknar 3 500 kronor per fängelsedygn. Partiet anger också att reformen ska vara genomförd senast den 1 januari 2029. Spannet är vårt och inte partiets, satt för att källtexten anger en nivå utan att skriva ut hur den fasas in. Basbeloppet är 12 300 miljoner kronor per år.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -11705,6 +11706,11 @@
         "date": "2026-07-28",
         "change": "Beloppet omräknat från 1 500 till 650 miljoner kronor per år, så att det stämmer med uträkningen i samma fält: den räknade fram 90–580 miljoner och avrundade spannet till 300–1 000, medan beloppsfältet stod på 1 500 — över hela det räknade spannet.",
         "commit": "c91c98bbc1c3a0add1c4bdc3fcd0911f81dd3455"
+      },
+      {
+        "date": "2026-08-29",
+        "commit": "0000000",
+        "change": "Beloppet höjdes 2026-08-29 från 650 till 12 300 miljoner kronor per år. Moderaterna har lagt ut ett eget tal för reformen på sin sida om mängdrabatten, och partiets siffra gäller framför vår. Samma sida anger att reformen ska vara genomförd senast den 1 januari 2029. Citatet och källan är oförändrade — det är prislappen som ändrats, inte vad partiet lovat."
       }
     ],
     "extraction": {
@@ -20282,14 +20288,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 300,
-      "msek_base": 650,
-      "msek_high": 1000,
-      "basis": "llm_estimat",
+      "msek_low": 9225,
+      "msek_base": 12300,
+      "msek_high": 16605,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Avskaffad mängdrabatt: kostnaden är fler anstaltsdygn. Delat löfte — samma politik räknas en gång och vilar på samma uträkning.",
-      "confidence": 0.4,
-      "calculation": "Att avskaffa mängdrabatten betyder längre fängelsestraff för den som döms för flera brott, och kostnaden är fler anstaltsdygn. Antag att omkring 2 000–4 000 personer per år får sitt straff förlängt med 90–180 dagar. Med en dygnskostnad på 500–800 kronor ger det 2 000 × 90 × 500 ≈ 90 miljoner kronor i den lägre änden och 4 000 × 180 × 800 ≈ 580 miljoner i den högre. Med häktesplatser och den utbyggnad av anstalter som krävs avrundas spannet till 300–1 000 miljoner kronor per år, med 650 som basbelopp. Samma politik hos flera partier räknas en gång och vilar på samma uträkning."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.5,
+      "calculation": "Samma politik som Moderaternas löfte om slopad mängdrabatt, och samma politik ska kosta lika och räknas en gång. Liberalerna anger inget eget belopp, så det enda tal ett parti publicerat för reformen används. Moderaterna skriver på sin sida om mängdrabatten: «Hela reformen beräknas kosta cirka 47 miljarder kronor per år när den fått full effekt, varav 12,3 miljarder avser mängdrabatten specifikt.» Talet är Moderaternas och inte Liberalernas, och står här för att omfattningen är densamma. Den tidigare siffran, 650 miljoner kronor per år, var vår egen och vilade på en dygnskostnad om 500–800 kronor, medan registret annars räknar 3 500 kronor per fängelsedygn. Basbeloppet är 12 300 miljoner kronor per år.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -20309,6 +20316,11 @@
         "date": "2026-07-28",
         "change": "Beloppet omräknat från 1 500 till 650 miljoner kronor per år, harmoniserat med gruppens andra löfte om samma sak. De två löftena vilade på olika uträkningar med olika storleksordningar; båda bygger nu på antalet extra anstaltsdygn.",
         "commit": "c91c98bbc1c3a0add1c4bdc3fcd0911f81dd3455"
+      },
+      {
+        "date": "2026-08-29",
+        "commit": "0000000",
+        "change": "Beloppet höjdes 2026-08-29 från 650 till 12 300 miljoner kronor per år. Gruppen slopad mängdrabatt prissätts efter det enda tal ett parti publicerat för reformen, och det är Moderaternas. Talet är inte Liberalernas eget."
       }
     ],
     "extraction": {
@@ -34250,14 +34262,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 300,
-      "msek_base": 650,
-      "msek_high": 1300,
+      "msek_low": 60,
+      "msek_base": 200,
+      "msek_high": 570,
       "basis": "granskare",
       "basis_url": null,
       "method_note": "(belopp satt av granskare)",
-      "calculation": "Samma politik som Moderaternas och Liberalernas löften om slopad mängdrabatt, som båda står på 650 miljoner kronor per år i samma grupp. Samma politik ska kosta lika och räknas en gång.",
-      "confidence": 0.9
+      "calculation": "Löftet gäller mängdrabatten för sexualbrott, inte mängdrabatten i stort, och prissätts för sin egen omfattning i stället för att bära hela reformens kostnad. Moderaternas tal för hela reformen, 12 300 miljoner kronor per år, avser alla brottstyper och skulle överdriva det här åtagandet. Kostnaden är fler anstaltsdygn för den som döms för flera sexualbrott. Antag att 100–300 personer per år får sitt straff förlängt med 6–18 månader. Med registrets dygnskostnad om 3 500 kronor ger det 100 × 180 × 3 500 ≈ 63 miljoner kronor i den lägre änden och 300 × 540 × 3 500 ≈ 567 miljoner i den högre. Antalen är antaganden och inte hämtade ur en källa som räknat fallen, så säkerheten är låg. Avrundat 60–570 miljoner kronor per år, med 200 som basbelopp.",
+      "confidence": 0.35,
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -34267,7 +34280,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-29",
+        "commit": "0000000",
+        "change": "Beloppet räknades om 2026-08-29 från 650 till 200 miljoner kronor per år. Löftet gäller bara sexualbrott och ska inte bära hela reformens kostnad. Det räknas om för sin egen omfattning med registrets dygnskostnad om 3 500 kronor i stället för de 500–800 kronor den gamla uträkningen använde."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -35928,14 +35947,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 300,
-      "msek_base": 650,
-      "msek_high": 1000,
+      "msek_low": 9225,
+      "msek_base": 12300,
+      "msek_high": 16605,
       "basis": "granskare",
       "basis_url": null,
-      "method_note": "Samma politik som Moderaternas, Liberalernas och Socialdemokraternas löften om slopad mängdrabatt, i samma grupp. Gruppen använder 300–1 000 miljoner kronor per år med bas 650 och räknas en gång.",
-      "confidence": 0.65,
-      "calculation": "Samma politik som Moderaternas, Liberalernas och Socialdemokraternas löften om slopad mängdrabatt, i samma grupp. Gruppen använder 300–1 000 miljoner kronor per år med bas 650 och räknas en gång."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.5,
+      "calculation": "Samma politik som Moderaternas löfte om slopad mängdrabatt, och samma politik ska kosta lika och räknas en gång. Kristdemokraterna anger inget eget belopp, så det enda tal ett parti publicerat för reformen används. Moderaterna skriver på sin sida om mängdrabatten: «Hela reformen beräknas kosta cirka 47 miljarder kronor per år när den fått full effekt, varav 12,3 miljarder avser mängdrabatten specifikt.» Talet är Moderaternas och inte Kristdemokraternas, och står här för att omfattningen är densamma. Den tidigare siffran, 650 miljoner kronor per år, var vår egen och vilade på en dygnskostnad om 500–800 kronor, medan registret annars räknar 3 500 kronor per fängelsedygn. Basbeloppet är 12 300 miljoner kronor per år.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -35945,7 +35965,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-29",
+        "commit": "0000000",
+        "change": "Beloppet höjdes 2026-08-29 från 650 till 12 300 miljoner kronor per år. Gruppen slopad mängdrabatt prissätts efter det enda tal ett parti publicerat för reformen, och det är Moderaternas. Talet är inte Kristdemokraternas eget."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -121077,14 +121103,15 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 300,
-      "msek_base": 650,
-      "msek_high": 1300,
-      "basis": "llm_estimat",
+      "msek_low": 190,
+      "msek_base": 700,
+      "msek_high": 1890,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Beloppet avser kriminalvårdens och rättsväsendets bruttokostnad, inte lagstiftningen i sig. Liknande förslag om avskaffad mängdrabatt har skattats kring 650 mkr; här rör det sig om ungdomsreduktion…",
-      "confidence": 0.45,
-      "calculation": "Jämförbara förslag om slopad mängdrabbat skattas till ~650 mkr/år. Ungdomsrabatten för 18–20 berör färre fall men skärper strafflängden, medan sänkt straggbarhetsgrad för de allra grövsta brotten kan öka antalet frihetsberövade. Spann anger 0,5–2 × 650 = 325–1300, avrundat till 300–1300; median 650 mkr/år."
+      "method_note": "(belopp satt av granskare)",
+      "confidence": 0.35,
+      "calculation": "Beloppet var tidigare härlett som en multipel av vår egen uppskattning för slopad mängdrabatt. Den uppskattningen är utbytt mot Moderaternas eget belopp, och härledningen vilade därmed på ett ankare som inte längre finns. Kostnaden räknas i stället ur egna steg: fler anstaltsdygn när straffrabatten för 18–20-åringar tas bort och straffbarhetsåldern sänks. Antag att 300–1 000 personer per år får sitt straff förlängt med 6–18 månader. Med registrets dygnskostnad om 3 500 kronor ger det 300 × 180 × 3 500 ≈ 190 miljoner kronor i den lägre änden och 1 000 × 540 × 3 500 ≈ 1 890 miljoner i den högre. Antalen är antaganden, så säkerheten är låg. Basbeloppet är 700 miljoner kronor per år.",
+      "anchor_ids": []
     },
     "financing_claimed": {
       "described": false,
@@ -121094,7 +121121,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-08-29",
+        "commit": "0000000",
+        "change": "Uträkningen skrevs om 2026-08-29. Beloppet var härlett som en multipel av vår egen uppskattning för slopad mängdrabatt, 650 miljoner kronor. Den siffran är utbytt mot Moderaternas eget belopp för den reformen, och härledningen hängde därmed i luften. Löftet räknas nu ur egna steg med registrets dygnskostnad, vilket ger 700 i stället för 650 miljoner kronor per år."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
