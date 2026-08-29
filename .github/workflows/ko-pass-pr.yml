@@ -88,9 +88,34 @@ jobs:
           jq -n --arg t "$rubrik" --arg h "$GREN" --rawfile b /tmp/pr-body.md \
             '{title:$t, head:$h, base:"main", body:$b, draft:false}' > /tmp/pr.json
 
-          nummer=$(api POST "/pulls" -d @/tmp/pr.json | jq -r '.number // empty')
+          # SVARET SKA STÅ I LOGGEN. Fram till 2026-08-29 slukade `jq -r
+          # '.number // empty'` hela felkroppen, och steget skrev bara «Kunde
+          # inte öppna PR». Larmet bad läsaren hämta API-svaret ur loggen — men
+          # svaret fanns inte där. Elva dygn av larm gick därför inte att
+          # avgöra: tolv körningar i rad föll utan att någon kunde se på vad.
+          svar=$(api POST "/pulls" -d @/tmp/pr.json)
+          nummer=$(printf '%s' "$svar" | jq -r '.number // empty')
+
           if [ -z "$nummer" ]; then
+            fel=$(printf '%s' "$svar" | jq -r '[.message, (.errors[]?.message)] | map(select(.)) | join(" · ")')
+
+            # Grenen är redan inne. Passet pushar flera gånger, och en push som
+            # inte bär något nytt mot main är inget fel — det är «inget att
+            # göra». Att larma på den hade lärt läsaren att ignorera larmet.
+            case "$fel" in
+              *"No commits between"*)
+                echo "$GREN bär inget nytt mot main — ingen PR behövs."
+                exit 0
+                ;;
+              *"pull request already exists"*)
+                echo "En PR finns redan för $GREN — inget att göra."
+                exit 0
+                ;;
+            esac
+
             echo "Kunde inte öppna PR för $GREN." >&2
+            echo "GitHub svarade: ${fel:-<ingen message i svaret>}" >&2
+            printf 'Hela svaret:\n%s\n' "$svar" >&2
             exit 1
           fi
           echo "Öppnade PR #$nummer för $GREN."
