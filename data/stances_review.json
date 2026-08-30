@@ -4247,5 +4247,54 @@
       }
     ],
     "verifyReason": "Citatet beskriver sänkningen som tillfällig och begränsad till de allvarligaste brotten, men det uttalar inte explicit att Moderaterna vill sänka straffmyndighetsåldern; ett ja kräver välvillig tolkning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Samtidigt måste den som arbetar nära en patient eller en äldre person kunna kommunicera på svenska.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-28-s-vallofte-en-ny-sprakpolitik",
+    "articleTitle": "S vallöfte: En ny språkpolitik\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-28-s-vallofte-en-ny-sprakpolitik",
+    "archiveUrl": null,
+    "dateStated": "2026-08-28",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-30-13-46",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+      }
+    ],
+    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-akassa",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Skriv under namninsamlingen för att stärka a-kassan, höja taket och se till att fler omfattas av en trygg omställningsförsäkring som går att leva på.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/a-kassa",
+    "articleTitle": "A-kassa\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/a-kassa",
+    "archiveUrl": null,
+    "dateStated": "2026-08-27",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-30-13-46",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]

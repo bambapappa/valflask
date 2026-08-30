@@ -119,5 +119,754 @@
       "confidence": 0.9,
       "anchor_ids": []
     }
+  },
+  {
+    "candidate": {
+      "title": "Öka kvaliteten inom SFI genom intensivutbildning och hårdare reglering av distansundervisning",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Öka kvaliteten inom SFI genom att förbättra möjligheterna till intensivutbildning och reglera distansundervisningen hårdare.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-28-s-vallofte-en-ny-sprakpolitik",
+    "articleTitle": "S vallöfte: En ny språkpolitik\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-3317 (0), p-2026-4132 (0), p-2026-0804 (0), p-2026-4122 (400), p-2026-3746 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Bygga ut kombinationsutbildningar och införa nationella arbetsprover i svenska inom välfärdens kontaktyrken",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill bygga ut kombinationsutbildningar där svenska och yrkesutbildning går hand i hand och införa nationella arbetsprover i svenska vid nyrekrytering till välfärdens kontaktyrken.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-28-s-vallofte-en-ny-sprakpolitik",
+    "articleTitle": "S vallöfte: En ny språkpolitik\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 400,
+      "msek_base": 1000,
+      "msek_high": 2200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Utbyggnad av kombinationsutbildningar ankras mot jämförbart löfte om tvåårig yrkesskola med svenska (~1 mdkr/år); nationella arbetsprover är en mindre tilläggspost. Skalan på utbyggnaden är osäker.",
+      "confidence": 0.45,
+      "calculation": "Kombinationsutbildningar: antagande ~5 000–15 000 nya studieplatser i vuxenutbildning där svenska kombineras med yrkesämnen × ~100–150 tkr/plats/år ≈ 500–2 250 mkr/år; bas ~950 mkr/år i linje med jämförbart löfte om yrkesskola med svenskfokus. Nationella arbetsprover i svenska vid nyrekrytering: framtagning, administration och kvalitetssäkring ~30–80 mkr/år. Totalt: bas ~1 000 mkr/år, spann 400–2 200 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-2242 (0), p-2026-4143 (250), p-2026-2526 (0), p-2026-2023 (0), p-2026-2180 (1000) ⚠ AVVIKER: belopp 1000 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Införa intensivsvenska på lågstadiet för elever som behöver det",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Därför vill vi införa intensivsvenska på lågstadiet för de elever som behöver det.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-28-s-vallofte-en-ny-sprakpolitik",
+    "articleTitle": "S vallöfte: En ny språkpolitik\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-2265"
+  },
+  {
+    "candidate": {
+      "title": "Införa stopplag för privatiseringar av systemviktig sjukvård",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Socialdemokraterna vill också införa en stopplag för privatiseringar av systemviktig sjukvård.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-28-s-vallofte-vard-ska-ges-efter-behov-inte-planbok",
+    "articleTitle": "S vallöfte: Vård ska ges efter behov inte plånbok\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Stopplag är en reglering; den direkta statliga kostnaden är försumbar. Uteblivna utförsäljningar är en omfördelning mellan aktörer, inte en ny statlig utgift.",
+      "confidence": 0.65,
+      "calculation": "Löftet innebär en lag som förbjuder privatisering av systemviktig sjukvård. Beredningen sker i Regeringskansliet av redan finansierad personal (ingen ny utgift), och tillämpningen sker inom befintlig tillsyn. Direkta kostnader ≈ 0 mkr. Att vården förblir offentlig är en omfördelning mellan stat, regioner och privata aktörer — inte en ny statlig nettokostnad — och prissätts därför inte enligt avgränsningsreglerna."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-3965 (0), p-2026-3657 (50), p-2026-0105 (0), p-2026-0013 (0), p-2026-1910 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Skärpa straffen för grov kvinnofridskränkning",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Teresa Carvalho",
+        "role": "rättspolitisk talesperson"
+      },
+      "quote": "Socialdemokraterna vill skärpa straffen för grov kvinnofridskränkning.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-30-s-gar-till-val-pa-fem-reformer-for-att-bekampa-mans-vald-mot-kvinnor",
+    "articleTitle": "S går till val på fem reformer för att bekämpa mäns våld mot kvinnor\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-2511"
+  },
+  {
+    "candidate": {
+      "title": "Fördubbla minsta prövotiden för sexualbrott och brott inom mäns våld mot kvinnor",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Teresa Carvalho",
+        "role": "rättspolitisk talesperson"
+      },
+      "quote": "Partiet vill också fördubbla den minsta prövotiden, från två till fyra år, för män som dömts för sexualbrott eller brott som faller inom mäns våld mot kvinnor.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-30-s-gar-till-val-pa-fem-reformer-for-att-bekampa-mans-vald-mot-kvinnor",
+    "articleTitle": "S går till val på fem reformer för att bekämpa mäns våld mot kvinnor\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-2905"
+  },
+  {
+    "candidate": {
+      "title": "Införa möjlighet till områdesarrest för män som utgör särskilt allvarligt hot",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Teresa Carvalho",
+        "role": "rättspolitisk talesperson"
+      },
+      "quote": "För män som bedöms utgöra ett särskilt allvarligt hot vill Socialdemokraterna införa möjlighet till områdesarrest.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-30-s-gar-till-val-pa-fem-reformer-for-att-bekampa-mans-vald-mot-kvinnor",
+    "articleTitle": "S går till val på fem reformer för att bekämpa mäns våld mot kvinnor\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 75,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring som ger möjlighet till preventiv frihetsberövande; ingen belagd siffra för antal berörda eller övervakningskostnad, så basen sätts till 0. Spannet täcker eventuell driftskostnad.",
+      "confidence": 0.35,
+      "calculation": "Områdesarrest införs genom lagstiftning; beredningen sker i befintlig statlig organisation (0). Reell kostnad uppstår först i drift: övervakning av berörda män (elektronisk bevakning, handläggning, domstolsprövning). Löftet anger inget belopp och belagta källor saknas för båda ändar — antalet berörda och en dygnskostnad — och antaget antal × antagen kostnad är två gissningar, varför basen sätts till 0. Högvärdet ~75 msek speglar ett generöst scenario: elektronisk bevakning av några hundra personer året runt (~200 pers × 365 dygn × ~500–700 kr/dygn ≈ 35–50 mkr) plus administration och domstolsärenden. Det är en möjlig driftskostnad som inte kan beläggas, inte en samhällsföljd."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0458 (250), p-2026-0896 (0), p-2026-0372 (150), p-2026-3167 (0), p-2026-1345 (250) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
+  },
+  {
+    "candidate": {
+      "title": "Införa en samlad brottsofferlag",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Teresa Carvalho",
+        "role": "rättspolitisk talesperson"
+      },
+      "quote": "Socialdemokraterna vill också införa en samlad brottsofferlag.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-30-s-gar-till-val-pa-fem-reformer-for-att-bekampa-mans-vald-mot-kvinnor",
+    "articleTitle": "S går till val på fem reformer för att bekämpa mäns våld mot kvinnor\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagstiftningslöfte utan nivå: en samlad lag kodifierar sannolikt befintliga brottsofferrättigheter. Direkt statlig kostnad nära noll; beredning sker i befintlig organisation. Ej nya förmåner.",
+      "confidence": 0.5,
+      "calculation": "Löftet är att införa en lag, inte en förmån med belopp. En samlad brottsofferlag sammanför sannolikt gällande regler (målsägandebiträde, brottsskadeersättning, skadestånd) i en kodifikation. Beredningen av en lagändring sker inom Regeringskansliets och myndigheters befintliga resurser, vilket ger base 0 msek. Spannet upp till 20 msek (engång) täcker ev. en fristående utredning, informationsinsatser och mindre systemanpassningar hos domstolar och myndigheter. Utökade ersättningar eller stöd till brottsoffer nämns inte med nivå i löftetexten och prissätts därför inte här."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa nedläggningen av skyddade boenden och säkra skyddet för våldsutsatta kvinnor och barn",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Teresa Carvalho",
+        "role": "rättspolitisk talesperson"
+      },
+      "quote": "Stoppa nedläggningen av skyddade boenden och säkra skyddet för våldsutsatta kvinnor och barn.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-30-s-gar-till-val-pa-fem-reformer-for-att-bekampa-mans-vald-mot-kvinnor",
+    "articleTitle": "S går till val på fem reformer för att bekämpa mäns våld mot kvinnor\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inget belopp i löftet; prissatt som statligt driftstöd för att hålla hotade skyddade boenden öppna. Anpassat till jämförbara löften (200–650 msek/år); smalare än att ta halva totalkostnaden.",
+      "confidence": 0.45,
+      "calculation": "Löftet anger ingen nivå. Antagande: ca 130–200 kvinnojourer/skyddade boenden i landet, varav en minoritet (10–30) hotas av nedläggning pga finansieringsgap. Driftskostnad per boende ca 3–8 msek/år → gap för hotade boenden ca 30–240 msek/år. Jämförbara löften om skyddade boenden ligger på 200–650 msek/år; detta löfte avser att bibehålla snarare än expandera verksamheten, vilket ger en nivå i nedre-mellersta delen av spannet. Base 250 msek/år motsvarar ett statligt tillskott som täcker finansieringsgapet plus marginal för tryggad drift. Osäkerheten speglar att varken antalet hotade boenden eller gapets storlek specificeras i löftet."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0872 (0), p-2026-0446 (650), p-2026-0799 (200), p-2026-1205 (500), p-2026-3788 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Höja taket i a-kassan och stärka omställningsförsäkringen",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Skriv under namninsamlingen för att stärka a-kassan, höja taket och se till att fler omfattas av en trygg omställningsförsäkring som går att leva på.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/a-kassa",
+    "articleTitle": "A-kassa\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 1000,
+      "msek_base": 2000,
+      "msek_high": 4000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Takhöjning i a-kassan utan angiven nivå; prissatt mot senaste faktiska takhöjningens kostnad. Smalare än löftet om 80-procentig ersättning; omställningsförsäkringen utan nivå ger bredd uppåt.",
+      "confidence": 0.4,
+      "calculation": "Löftet anger ingen nivå. Anknyter till senaste genomförda takhöjningen i a-kassan (910 till 1200 kr/dag, permanentad 2022), som grovt kostade staten cirka 1,5–2,5 mdkr/år. Rimlig mekanism: 200 000–300 000 a-kassamottagare per månad, varav ca 30–40 % har inkomst över taket, extra ersättning upp till några tusen kr/månad per person. 'Stärka omställningsförsäkringen' saknar nivå och täcks av spannets övre del. Bas 2 000 mkr/år, spann 1 000–4 000 mkr/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1005 (0), p-2026-3874 (400), p-2026-0428 (4000), p-2026-0884 (0), p-2026-1019 (4000) ⚠ AVVIKER: 2000 avviker 5.0× från jämförbara (median 400)"
+  },
+  {
+    "candidate": {
+      "title": "Höjda och breddade sanktionsavgifter för arbetsmiljöbrott",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Höja och bredda sanktionsavgifterna för arbetsmiljöbrott.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/arbetsmiljo",
+    "articleTitle": "Arbetsmiljö\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-1072",
+    "duplicateReason": "samma uttryck: «höja bredda», «bredda sankti», «sankti arbets»"
+  },
+  {
+    "candidate": {
+      "title": "Tillfällig skatt på storbankernas övervinster",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Skatten vi föreslår är en tillfällig skatt på storbankernas övervinster – inte på vanliga hushåll.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/banker/fakta-om-bankskatt-och-bolaneskatt",
+    "articleTitle": "Fakta om bankskatt och bolåneskatt\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-1904"
+  },
+  {
+    "candidate": {
+      "title": "S vill inte höja skatten på drivmedel",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Inte höja skatten på drivmedel",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/branslepriser",
+    "articleTitle": "Bränslepriser\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-1425"
+  },
+  {
+    "candidate": {
+      "title": "S vill minska beroendet av oljestater och öka egna biobränslen",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Minska beroendet av oljestater och öka egna biobränslen",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/branslepriser",
+    "articleTitle": "Bränslepriser\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtagande eller belopp; prissätts därför till 0. De kostsamma delarna (t.ex. produktionsstöd till biobränslen) prissätts på partiets specifika löften. Spannet…",
+      "confidence": 0.3,
+      "calculation": "Citatet anger ingen åtgärd, nivå eller mottagare — endast en målsättning om minskat oljeberoende och mer svenska biobränslen. Enligt regeln för breda sammanfattningslöften sätts basen till 0. Övre gränten hämtad från jämförbara publicerade löften om biobränslefrämjande (ca 5–800 msek/år), med hänsyn till att konkreta delåtaganden riskerar dubbelräkning om de prissätts separat."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1474 (200), p-2026-2519 (500), p-2026-2355 (5), p-2026-1126 (800), p-2026-2397 (5) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~200"
+  },
+  {
+    "candidate": {
+      "title": "S vill göra det möjligt för vanliga familjer att skaffa elbil",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Göra det möjligt för vanliga familjer att skaffa elbil",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/branslepriser",
+    "articleTitle": "Bränslepriser\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-3084"
+  },
+  {
+    "candidate": {
+      "title": "S vill införa Sverigebränsle för att dämpa prissvängningar",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Sverigebränsle för att dämpa prissvängningar",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/branslepriser",
+    "articleTitle": "Bränslepriser\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 20,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Marknadsåtgärd för prisstabilisering: beloppet avser bara uppbyggnad/drift av mekanismen. Dämpade bränslepriser eller fondförluster är överföringar/svåröverskådliga följder som lämnas okvantifierade.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ingen nivå eller mekanism. 'Sverigebränsle' tolkas som en statlig inköps-/stabiliseringsordning för drivmedel. Direkt statlig kostnad = att bygga upp och driva mekanismen: en mindre statlig enhet med ~10–30 anställda, upphandling, transaktions- och eventuella lagerkostnader ≈ 10–100 mkr/år. Själva prisdämpningen är en omfördelning mellan stat, bolag och konsumenter: köps bränsle billigt och säljs dyrt kan ordningen gå runt, vid prisfall uppstår förluster — det är en risk/följd, inte en planerad utgift, och kvantifieras inte. Jämförbara löften i kategorin ligger på 0–300 mkr/år, vilket stödjer en låg nivå."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1672 (0), p-2026-2333 (10), p-2026-1527 (0), p-2026-0469 (800), p-2026-2474 (300)"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa storskaligt industrifiske av sill och strömming i Östersjön",
+      "parties": [
+        "s"
+      ],
+      "person": {
+        "name": "Tobias Baudin",
+        "role": "partisekreterare"
+      },
+      "quote": "Socialdemokraterna går till val på att stoppa det storskaliga industrifisket av sill och strömming i Östersjön.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/branslepriser/fakta-om-socialdemokraternas-politik-kring-drivmedelsskatt",
+    "articleTitle": "Fakta om Socialdemokraternas politik kring drivmedelsskatt\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-2795"
+  },
+  {
+    "candidate": {
+      "title": "Ge lärare i idrott och hälsa bättre fortbildning i inkluderande arbetssätt",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Samtidigt ska lärare i idrott och hälsa få bättre fortbildning i inkluderande arbetssätt och anpassad undervisning.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/anpassad-skola",
+    "articleTitle": "Anpassad skola – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 75,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Smal fortbildningssatsning för en specifik lärarkategori; prissatt per deltagande lärare med kurs- och vikariekostnad, väsentligt smalare än breda fortbildningslöften för alla lågstadielärare.",
+      "confidence": 0.4,
+      "calculation": "Uppskattat antal lärare som undervisar i idrott och hälsa i grund- och gymnasieskolan: ~8 000–12 000. Deltagandegrad i frivillig fortbildning: 50–70 %. Kostnad per deltagare för fortbildningsdagar inkl. vikarieersättning och kursavgift: ~5 000–15 000 kr. 8 000–12 000 × 0,5–0,7 × 5 000–15 000 kr ≈ 20–130 mkr. Bas 75 msek ≈ 10 000 lärare × 60 % deltagande × ~12 000 kr per lärare. Löftet anger ingen nivå, så spannet är brett; jämförbart bredare löfte om fortbildning för alla lågstadielärare ligger avsevärt högre."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-4005 (0), p-2026-3029 (0), p-2026-0066 (450), p-2026-1974 (0) ⚠ AVVIKER: belopp 75 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Betyg och nationella prov tidigt i grundskolan",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Därför vill Liberalerna ha både betyg och nationella prov tidigt i grundskolan.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/betyg-och-nationella-prov",
+    "articleTitle": "Betyg och nationella prov – Liberalerna",
+    "duplicateOf": "p-2026-2361"
+  },
+  {
+    "candidate": {
+      "title": "Ändra skolpengen och stärka kommunernas tillsyn",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Gör om skolpengen så att fristående förskolor får ersättning för uppdrag som de inte har.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
+    "articleTitle": "Förskola\n| Socialdemokraterna",
+    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+  },
+  {
+    "candidate": {
+      "title": "Säkra barnomsorg på obekväma arbetstider",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Säkerställa att barnomsorg på kvällar, nätter och helger (obekväm arbetstid) finns tillgänglig för dem som behöver det.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/forskola",
+    "articleTitle": "Förskola\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 500,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Riktat statsbidrag för att säkra omsorg på obekväm arbetstid; mellan jämförbara löften om fler kommuner (lågt) och lagstadgad rätt (högt). Vag formulering ger låg säkerhet.",
+      "confidence": 0.35,
+      "calculation": "~550 000 förskolebarn × 1–2 % med behov av omsorg kväll/natt/helg ≈ 5 000–11 000 barn. Ungefär hälften saknar i dag tillgång → 3 000–6 000 nya platser. Merkostnad per plats (låga barngrupper, obekväm bemanning) ~100 000–250 000 kr/år. 3 000–6 000 × 100 000–250 000 kr ≈ 300–1 500 msek/år. Bas 500 msek då staten sannolikt delar kostnad med kommunerna och utnyttjandet kan bli lägre; låg gräns närmare en ren stimulansanslag."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-4104 (25), p-2026-0912 (9000), p-2026-2891 (0), p-2026-1203 (1800), p-2026-2872 (0) ⚠ AVVIKER: 500 avviker 20.0× från jämförbara (median 25)"
+  },
+  {
+    "candidate": {
+      "title": "Använda beslagtagna brottsmedel för att satsa på brottsdrabbade områden",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Införa en förverkandefond där pengar från beslagtagna brottsvinster kan användas till satsningar i brottsdrabbade områden och civilsamhället.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/gangkriminalitet",
+    "articleTitle": "Gängkriminalitet\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-3411",
+    "duplicateReason": "samma uttryck: «pengar beslag», «beslag brotts», «använd satsni», «satsni brotts», «brotts område», «område civils»"
+  },
+  {
+    "candidate": {
+      "title": "Mer resurser och fler lärare i skolan för trygghet och studiero",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Mer resurser och fler lärare i skolan för att säkra trygghet och studiero samt att alla elever får det stöd de behöver.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/grundskola",
+    "articleTitle": "Grundskola\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-1516"
+  },
+  {
+    "candidate": {
+      "title": "Humanitär nödhjälp ska nå civilbefolkningen i Gaza",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Att biståndsorganisationer ska kunna verka i Gaza och att humanitär nödhjälp når civilbefolkning.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/israel-och-palestina",
+    "articleTitle": "Israel och Palestina\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-1582"
+  },
+  {
+    "candidate": {
+      "title": "Förbjuda import av bosättarvaror till Sverige",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Att regeringen tar initiativ till en nationell lagstiftning för att förbjuda import av bosättarvaror till Sverige.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/israel-och-palestina",
+    "articleTitle": "Israel och Palestina\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-1817",
+    "duplicateReason": "samma uttryck: «förbju import», «import bosätt», «bosätt sverig»"
+  },
+  {
+    "candidate": {
+      "title": "Underlätta för att döma krigsförbrytare",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Att stöd till insamling av uppgifter som underlättar för domstolarna att döma krigsförbrytare.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/israel-och-palestina",
+    "articleTitle": "Israel och Palestina\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 25,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar belopp; prissatt som återkommande stöd/bidrag till bevisinsamling om krigsförbrytelser, i linje med små rättsväsendelöften. Avser själva stödet, inte rättsprocesserna.",
+      "confidence": 0.35,
+      "calculation": "Ingen nivå anges i löftet. Antagande: statligt stöd (bidrag eller anslag) till organisationer/myndigheter som samlar in bevis om krigsförbrytelser – vittnesmål, dokumentation, utredningsstöd. Jämförbara små rättsväsendelöften ligger runt 5–15 msek; internationell bevisinsamling bedöms något dyrare. Skattning: ca 10–60 msek/år, bas ~25 msek. Spannet speglar att omfattning, mottagare och utnyttjande är okända."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-1968 (0), p-2026-1531 (5), p-2026-2712 (300), p-2026-4030 (15)"
+  },
+  {
+    "candidate": {
+      "title": "Kraftig minskning av skarv genom licensjakt och oljering",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Verka för en effektiv förvaltning och kraftig minskning av skarv genom att exempelvis införa licensjakt på skarv och oljering av skarvägg, till följd av skarvens påverkan på fiskebestånden.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/jakt--och-viltvard",
+    "articleTitle": "Jakt- och viltvård\n| Socialdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 2,
+      "msek_high": 8,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringsåtgärd: licensjakt och oljering är i grunden regeländringar; statens direkta kostnad är främst administration och ev. små förvaltningsmedel. Jämförbart löfte om licensjakt prissattes till 0.",
+      "confidence": 0.35,
+      "calculation": "Licensjakt på skarv införs via jaktförordningen — ingen större ny statlig utgift utöver länsstyrelsernas administration av licenser (~1–3 msek/år). Oljering av skarvägg kan kräva små medel för material och samordning om den inte sköts ideellt av jägare/markägare (~0–5 msek). Effekter på fiskebestånd och fisket är samhällsföljder, inte statlig utgift, och räknas inte. Totalt spann 0–8 msek, bas 2 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-3918 (0), p-2026-3882 (3000), p-2026-3517 (0) ⚠ AVVIKER: belopp 2 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Införa ett nationellt förlossningsvårdsprogram",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill därför införa ett nationellt förlossningsvårdsprogram för att skapa en mer jämlik vård i hela Sverige.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/forlossningsvard",
+    "articleTitle": "Förlossningsvård – Liberalerna",
+    "duplicateOf": "p-2026-2554"
+  },
+  {
+    "candidate": {
+      "title": "En barnmorska per födande kvinna",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vårt mål är att varje födande kvinna ska ha tillgång till en barnmorska under förlossningen, oavsett var i landet hon bor.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/forlossningsvard",
+    "articleTitle": "Förlossningsvård – Liberalerna",
+    "duplicateOf": "p-2026-3288"
+  },
+  {
+    "candidate": {
+      "title": "Satsa på långsiktiga och bra villkor för forskare",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Om Sverige ska vara en kunskapsnation också i framtiden måste vi satsa på långsiktiga och bra villkor för forskare.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/forskning",
+    "articleTitle": "Forskning – Liberalerna",
+    "duplicateOf": "p-2026-4063"
+  },
+  {
+    "candidate": {
+      "title": "Göra klimatomställningen rättvis för vanligt folk och företag",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Se till att klimatomställningen fungerar för både vanligt folk och företag i hela landet.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/klimat-och-miljo",
+    "articleTitle": "Klimat och miljö\n| Socialdemokraterna",
+    "duplicateOf": "p-2026-3534"
+  },
+  {
+    "candidate": {
+      "title": "Inrätta en ny barnhälsa som social stödfunktion",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi vill också inrätta en ny social stödfunktion i form av en barnhälsa som ska arbeta aktivt med att identifiera normbrytande beteende eller språksvårigheter, samt ha ett nära samarbete med socialtjänsten.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/forskolan",
+    "articleTitle": "Förskolan – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 200,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp eller nivå. Tolkat som statsbidrag för lokal barnhälsopersonal i kommunerna; bred spanne pga okänd skala — från smal funktion till nära en tjänst per kommun.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ingen nivå eller omfattning. Antagande: barnhälsa som lokal funktion med personal som aktivt träffar barn (socialsekreterare/psykolog/curator), kostnad ~0,8–1 msek per tjänst inkl. lokaler och stöd. ~290 kommuner; full utbyggnad med 1–3 tjänster per kommun ≈ 250–900 mkr/år. Med gradvis införande, att mindre kommuner delar personal och begränsad utnyttjandegrad: låg ~50 mkr (försiktig start/smal tolkning), bas ~200 mkr (~1 tjänst per kommun i snitt), hög ~500 mkr. Osäkerheten är stor eftersom partiet inte anger skala eller organisation."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-3052 (20), p-2026-0979 (20), p-2026-1050 (300), p-2026-0429 (60), p-2026-2898 (25) ⚠ AVVIKER: 200 avviker 8.0× från jämförbara (median 25)"
+  },
+  {
+    "candidate": {
+      "title": "Starka arbetsmarknadsparter och heltäckande branschanpassade kollektivavtal",
+      "parties": [
+        "s"
+      ],
+      "person": null,
+      "quote": "Vi vill att arbetsmarknadens parter, såväl arbetsgivarorganisationer som fackförbund, ska ha många medlemmar, vara starka och träffa heltäckande, branschanpassade kollektivavtal.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/kollektivavtal",
+    "articleTitle": "Kollektivavtal\n| Socialdemokraterna",
+    "verifyReason": "Citatet uttrycker en önskan om att arbetsmarknadens parter ska vara starka och träffa kollektivavtal, men det är inte ett konkret, mätbart löfte. Tveksamt om det ska räknas som ett vallöfte."
   }
 ]
