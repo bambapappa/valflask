@@ -24,7 +24,7 @@
       "basis_url": null,
       "method_note": "Löftet anger ingen nivå. Jämförbara forskningssatsningar ligger 40–300 msek/år; antibiotikaforskning är ett smalt men prioriterat område.",
       "confidence": 0.4,
-      "calculation": "Baserat på jämförbara löften: gruvforskning 40 msek/år, livsmedelsforskning 50 msek/år, AI-forskning 300 msek/år. Antibiotikaforskning är smalare än AI men bredare än gruv. Antar 50 msek/år som bas, spann 20–150 för osäkerhet."
+      "calculation": "Statliga satsningar på ett enskilt forskningsområde ligger i storleksordningen tiotals till ett par hundra miljoner kronor per år. Antibiotikaforskning är ett smalare fält än artificiell intelligens men bredare än gruvforskning, och hamnar därför i den nedre delen av det intervallet. Antagandet är vårt: basbeloppet är 50 miljoner kronor per år, med spannet 20–150 för osäkerheten i hur stort programmet blir."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0791 (40), p-2026-0938 (0), p-2026-2345 (0), p-2026-3037 (50), p-2026-2987 (300)"
   },
@@ -55,7 +55,8 @@
       "confidence": 0.35,
       "calculation": "A-kassan har grovt 150 000–200 000 ersättningsmottagare vid en given tidpunkt, ersättning upp mot ~1 200 kr/dag. Antagen initialhöjning ~10 % under första ~100 dagarna: ~300 000 nya arbetslöshetsperioder per år × 50–100 dagar × 100–200 kr/dag ≈ 1,5–6 mdkr brutto, men många korta perioder ligger under taket → ~1–2,5 mdkr. Motpost snabbare avtrappning efter dag 100: ~60 000–80 000 långtidsarbetslösa × 100–200 kr/dag lägre ≈ 1–1,5 mdkr besparing. Netto ≈ 0,1–1,5 mdkr/år, bas ~0,5 mdkr i linje med jämförbart löfte om i princip samma reform. Spannet är brett eftersom citatet anger inga nivåer alls."
     },
-    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2238 (2400), p-2026-0697 (7000), p-2026-0448 (3000), p-2026-2736 (500), p-2026-2807 (0) ⚠ AVVIKER: 500 avviker 4.8× från jämförbara (median 2400)"
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2238 (2400), p-2026-0697 (7000), p-2026-0448 (3000), p-2026-2736 (500), p-2026-2807 (0) ⚠ AVVIKER: 500 avviker 4.8× från jämförbara (median 2400)",
+    "group_id": "g-p-2026-2736"
   },
   {
     "candidate": {
@@ -82,7 +83,10 @@
       "basis_url": null,
       "method_note": "Löftet saknar nivå; prissatt som expansion av Yrkesvux och kompletterande pedagogutbildningar, grovt 1 000–3 500 platser à ~100–150 tkr/plats i statsbidrag.",
       "confidence": 0.35,
-      "calculation": "Löftet anger inget belopp. Antagande: staten finansierar fler utbildningsplatser i Yrkesvux och kompletterande utbildningar för pedagoger/barnskötare. Kostnad per plats i vuxen yrkesutbildning uppskattas till ~100–150 tkr/år i statsbidrag. ~1 000 platser × ~100 tkr ≈ 100 msek; ~3 000 platser × ~150 tkr ≈ 450 msek. Bas ~250 msek ≈ 2 000 platser × ~125 tkr. Osäkerheten ligger främst i antalet platser; ett jämförbart löfte om utbildningsplatser i ett mindre yrkesfält landade på ~60 msek, men pedagogfältet är betydligt större, vilket motiverar högre nivå."
+      "calculation": "Löftet anger inget belopp. Antagande: staten finansierar fler utbildningsplatser i Yrkesvux och kompletterande utbildningar för pedagoger/barnskötare. Kostnad per plats i vuxen yrkesutbildning uppskattas till ~100–150 tkr/år i statsbidrag. ~1 000 platser × ~100 tkr ≈ 100 msek; ~3 000 platser × ~150 tkr ≈ 450 msek. Bas ~250 msek ≈ 2 000 platser × ~125 tkr. Osäkerheten ligger främst i antalet platser; ett jämförbart löfte om utbildningsplatser i ett mindre yrkesfält landade på ~60 msek, men pedagogfältet är betydligt större, vilket motiverar högre nivå.",
+      "anchor_ids": [
+        "p-2026-2878"
+      ]
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-1616 (600), p-2026-0705 (0), p-2026-0704 (0), p-2026-2878 (60), p-2026-3131 (0) ⚠ AVVIKER: belopp 250 men jämförbara ligger på 0"
   },
@@ -111,7 +115,7 @@
       "basis_url": null,
       "method_note": "Regeländring av betygssystemet; direkt kostnad är reviderade kriterier, information och ev. fortbildning, inte samhällseffekterna.",
       "confidence": 0.5,
-      "calculation": "Borttagning av godkäntgräns och fler betygssteg under E är i grunden en regeländring (kostnadsregeln om lagar, förbud och regleringar). Ny statlig kostnad uppstår främst för reviderade betygskriterier/kursplaner, informationsmaterial till skolor, ev. lärarfortbildning och anpassning av betygsstöd — i storleksordningen ett tiotal msek som engångskostnad, i linje med jämförbart reformlöfte om lärarutbildningen (~5 msek engång). Bas 5 msek, spann 0–20 msek; påverkadeffekter på elever/lärande prissätts ej."
+      "calculation": "Borttagen godkäntgräns och fler betygssteg under E är i grunden en regeländring, och kostnadsregeln om lagar, förbud och regleringar sätter den till noll. Ny statlig kostnad uppstår främst för reviderade betygskriterier och kursplaner, informationsmaterial till skolor, lärarfortbildning och anpassning av betygsstödet — i storleksordningen ett tiotal miljoner kronor som engångskostnad. Basbeloppet är 5 miljoner kronor, spannet 0–20. Effekter på elever och lärande prissätts inte."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0067 (5), p-2026-0500 (1000), p-2026-3171 (0), p-2026-2768 (300), p-2026-0064 (1600) ⚠ AVVIKER: 5 avviker 60.0× från jämförbara (median 300)"
   },
@@ -140,7 +144,10 @@
       "basis_url": null,
       "method_note": "Löftet anger ingen nivå; uppskattning baserad på jämförbart löfte om stärkt basfinansiering (600 mkr/år) och bredare forskningssatsning (1500 mkr/år).",
       "confidence": 0.4,
-      "calculation": "Basanslag till universitet: jämförbart löfte om stärkt basfinansiering anger 600 mkr/år; ett annat löfte om forskning anger 1500 mkr/år. Eftersom detta löfte är vagt sätts base till 600 mkr/år, spann 300–1200 mkr/år för att täcka osäkerhet."
+      "calculation": "Basanslag till universitet: jämförbart löfte om stärkt basfinansiering anger 600 mkr/år; ett annat löfte om forskning anger 1500 mkr/år. Eftersom detta löfte är vagt sätts base till 600 mkr/år, spann 300–1200 mkr/år för att täcka osäkerhet.",
+      "anchor_ids": [
+        "p-2026-2044"
+      ]
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2044 (600), p-2026-3405 (0), p-2026-1743 (0), p-2026-3256 (0), p-2026-0155 (1500) ⚠ AVVIKER: belopp 600 men jämförbara ligger på 0"
   },
@@ -169,7 +176,7 @@
       "basis": "granskare",
       "basis_url": null,
       "method_note": "(belopp satt av granskare)",
-      "calculation": "Missbruksvården är delad mellan region och kommun och är underdimensionerad. Löftet stärker både den förebyggande delen och vården. Basbeloppet 500 miljoner kronor per år i riktat statsbidrag, i nivå med jämförbara satsningar på beroendevård.",
+      "calculation": "Missbruksvården är delad mellan region och kommun och är underdimensionerad, och löftet stärker både den förebyggande delen och vården. Löftet anger ingen nivå, så beloppet är vårt antagande: ett riktat statsbidrag i storleksordningen en halv miljard kronor per år. Basbeloppet är 500 miljoner kronor per år.",
       "confidence": 0.9,
       "anchor_ids": []
     }
@@ -199,7 +206,10 @@
       "basis_url": null,
       "method_note": "Vagt löfte utan belopp. Antar statlig ersättning till apotek för rådgivningsbesök samt utbildning/auktorisering; själva regeländringen är i princip kostnadsfri.",
       "confidence": 0.4,
-      "calculation": "~1 300 apotek × 500–2 000 statligt ersatta rådgivningsbesök/år × 200–300 kr/besök ≈ 130–780 msek. Justerat ned för trög start, delvis regional finansiering och att endast enklare åkommor omfattas → spannet 50–375 msek, bas 150 msek vid måttligt utnyttjande. Utbildnings- och auktoriseringsinsatser ryms inom spannet. Löftet anger ingen nivå; antagandena är mina egna, ankrade mot jämförbar satsning på första linjen (~500 msek/år)."
+      "calculation": "~1 300 apotek × 500–2 000 statligt ersatta rådgivningsbesök/år × 200–300 kr/besök ≈ 130–780 msek. Justerat ned för trög start, delvis regional finansiering och att endast enklare åkommor omfattas → spannet 50–375 msek, bas 150 msek vid måttligt utnyttjande. Utbildnings- och auktoriseringsinsatser ryms inom spannet. Löftet anger ingen nivå; antagandena är mina egna, ankrade mot jämförbar satsning på första linjen (~500 msek/år).",
+      "anchor_ids": [
+        "p-2026-2135"
+      ]
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2135 (500) ⚠ AVVIKER: 150 avviker 3.3× från jämförbara (median 500)"
   },
@@ -228,7 +238,7 @@
       "basis_url": null,
       "method_note": "Prissatt som framtagandet av en nationell strategi (engång, SOU-storlek); konkreta verktyg och stöd är framtida politik som inte räknas här. I linje med liknande strategilöften ~0 mkr.",
       "confidence": 0.35,
-      "calculation": "Löftets konkreta åtagande är att ta fram en nationell strategi för egenvård. Sådant utrednings-/beredningsarbete utförs till stor del inom befintlig statlig personalkostnad; återstående direkta kostnader (underlagsinsamling, kommunikation, eventuella enkla digitala verktyg) uppskattas till 0–25 mkr som engångskostnad, bas ~5 mkr. Jämförbara löften om nationella strategier har prissatts till ~0 mkr, vilket styrker en låg nivå. Själva verktygen och stödet till invånare är politik som strategin kan leda fram till och prissätts inte här för att undvika dubbelräkning."
+      "calculation": "Löftets konkreta åtagande är att ta fram en nationell strategi för egenvård. Sådant utrednings- och beredningsarbete utförs till stor del inom befintlig statlig personalkostnad, vilket kostnadsregeln om utrednings- och planlöften säger. Återstående direkta kostnader — underlagsinsamling, kommunikation och enkla digitala verktyg — uppskattas till 0–25 miljoner kronor som engångskostnad, med 5 miljoner som basbelopp. Verktygen och stödet till invånare är politik som strategin kan leda fram till och prissätts inte här, för att undvika dubbelräkning."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2380 (0), p-2026-0444 (0), p-2026-2314 (30), p-2026-2479 (0), p-2026-0442 (800) ⚠ AVVIKER: belopp 5 men jämförbara ligger på 0"
   },
@@ -257,7 +267,7 @@
       "basis_url": null,
       "method_note": "Inget belopp anges. Nationellt forskningsprogram prissätts som årligt anslag för målinriktad forskning; jämförbara nationella programlöften ligger runt 50 msek/år, forskningsprogram kan vara större.",
       "confidence": 0.5,
-      "calculation": "Ett tioårigt nationellt forskningsprogram finansieras normalt via anslag för målinriktad forskning, historiskt i storleksordningen tiotals till ett par hundra mkr/år. Antagande: 50–200 mkr/år (bas 100 mkr/år), dvs. ca 0,5–2 mdkr totalt över tio år. Jämförbara löften om nationella program (t.ex. förlossningsvård, exitprogram) ligger kring 50 mkr/år, vilket styrker nedre spannet; basen ligger högre eftersom forskningsanslag brukar vara volymmässigt större än drifts-/organisationsprogram."
+      "calculation": "Ett tioårigt nationellt forskningsprogram finansieras normalt via anslag för målinriktad forskning, historiskt i storleksordningen tiotals till ett par hundra miljoner kronor per år. Nedre delen av spannet motsvarar ett organisations- eller driftsprogram; basen ligger högre eftersom forskningsanslag brukar vara volymmässigt större. Antagandet är vårt: 50–200 miljoner kronor per år, alltså ungefär 0,5–2 miljarder över tio år, med 100 miljoner kronor per år som basbelopp."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-1502 (15), p-2026-2554 (50), p-2026-0802 (5), p-2026-2307 (50), p-2026-1690 (0) ⚠ AVVIKER: 100 avviker 6.7× från jämförbara (median 15)"
   },
@@ -286,7 +296,7 @@
       "basis_url": null,
       "method_note": "Vagt löfte utan nivå. Skattat utifrån utbildningskostnader för fler läkare/sjuksköterskor och jämförbara primärvårdssatsningar; stora osäkerheter i antal.",
       "confidence": 0.35,
-      "calculation": "Antag 300–800 fler läkarstudenter/år × 5,5 år × ~150 tkr = 250–660 mkr/år. ST-läkare: 200–500 platser × ~700 tkr = 140–350 mkr/år. Sjuksköterskor: 500–1 500 fler/år × 3 år × ~80 tkr = 120–360 mkr/år. Vårdcentraler: 20–100 nya med statsbidrag 1–5 mkr/år = 20–500 mkr/år. Summa ~530–1 870 mkr/år; avrundat till 500–3 000, bas 1 500. Jämförbart löfte om 4 500 fler allmänläkare har skattats till ~3 mdkr/år."
+      "calculation": "Antag 300–800 fler läkarstudenter per år × 5,5 år × ~150 tkr = 250–660 mkr/år. ST-läkare: 200–500 platser × ~700 tkr = 140–350 mkr/år. Sjuksköterskor: 500–1 500 fler per år × 3 år × ~80 tkr = 120–360 mkr/år. Vårdcentraler: 20–100 nya med statsbidrag 1–5 mkr/år = 20–500 mkr/år. Summan blir ungefär 530–1 870 miljoner kronor per år, avrundat till spannet 500–3 000 med 1 500 som basbelopp."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0399 (3150), p-2026-1047 (0), p-2026-1695 (800), p-2026-1501 (250), p-2026-2109 (200) ⚠ AVVIKER: 1500 avviker 6.0× från jämförbara (median 250)"
   },
@@ -315,7 +325,7 @@
       "basis_url": null,
       "method_note": "Rätt till avlastning vägs mot dagens kommunala anhörigstöd och statsbidrag i samma storleksordning som jämförbara välfärdslöften; beloppet är statens nya nettokostnad via ökade statsbidrag, inte…",
       "confidence": 0.4,
-      "calculation": "Utgångspunkt: ca 1,3 mn anhöriga vårdar närstående; avlastning når idag en minoritet av dem. Antag att en legal rätt höjer utnyttjandet med ~50 000–150 000 personer × 10–25 tkr/år i kommunal avlastning (hemtjänsttimmar/korttid) ≈ 500–3 750 mkr brutto. Enligt nettoprincipen betalar staten bara den ökade marginalen via kompenserande statsbidrag, satt till ~25–50 % av brutto, anknytet till att dagens anhörigstödsbidrag ligger på några hundra mkr/år och jämförbara löften om nya individrätter i välfärden (350–1 800 msek/år). Ger spannet 300–1 600 med bas 900 msek/år. Osäkerheten ligger i utnyttjandegrad och statens ersättningsandelsnivå."
+      "calculation": "Utgångspunkt: ungefär 1,3 miljoner anhöriga vårdar en närstående, och avlastning når i dag en minoritet av dem. Antag att en legal rätt höjer utnyttjandet med 50 000–150 000 personer × 10–25 tkr per år i kommunal avlastning, alltså 500–3 750 miljoner kronor brutto. Enligt nettoprincipen betalar staten bara den ökade marginalen via kompenserande statsbidrag, satt till 25–50 procent av brutto — dagens anhörigstödsbidrag ligger på några hundra miljoner kronor per år. Det ger spannet 300–1 600 med 900 miljoner kronor per år som basbelopp. Osäkerheten ligger i utnyttjandegraden och i statens ersättningsandel."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0722 (0), p-2026-1203 (1800), p-2026-1813 (350), p-2026-0378 (0), p-2026-1181 (0) ⚠ AVVIKER: belopp 900 men jämförbara ligger på 0"
   },
@@ -344,7 +354,7 @@
       "basis_url": null,
       "method_note": "Lagändring som ger socialtjänsten (kommunal) en ny möjlighet — själva åtgärden är nästan kostnadsfri för staten. Spannet rymmer ev. implementeringsstöd, vägledning och utbildning…",
       "confidence": 0.35,
-      "calculation": "Löftet är en regeländring: beredning sker inom befintlig statsförvaltning (~0 msek). Rimliga nya statliga poster är vägledningsmaterial, fortbildning för socialsekreterare och ev. små statliga stöd — grovt 0–60 msek/år, bas 15 msek i linje med jämförbara löften om nya myndighetsverktyg. Faktiska omplaceringar (specialskola/annan skola) är kommunalt finansierade omfördelningar och prissätts inte här."
+      "calculation": "Löftet är en regeländring, och beredningen sker inom befintlig statsförvaltning till noll kronor. Rimliga nya statliga poster är vägledningsmaterial, fortbildning för socialsekreterare och mindre statliga stöd — grovt 0–60 miljoner kronor per år. Antagandet är vårt och vilar inte på en räknad källa; basbeloppet är 15 miljoner kronor per år. Faktiska omplaceringar till specialskola eller annan skola är kommunalt finansierade omfördelningar och prissätts inte här."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2482 (15), p-2026-2045 (500) ⚠ AVVIKER: 15 avviker 17.2× från jämförbara (median 257.5)"
   },
@@ -365,7 +375,7 @@
     "articleTitle": "Religiösa friskolor – Liberalerna",
     "cost": {
       "type": "utgift",
-      "period": "per_ar",
+      "period": "engang",
       "msek_low": 5,
       "msek_base": 25,
       "msek_high": 70,
@@ -373,7 +383,7 @@
       "basis_url": null,
       "method_note": "Lagstiftningsförbud: beloppet avser åtgärdens direkta kostnad (omställning, ev. övergångsstöd), ej samhälls- eller kommunaleffekter av nedläggningar. Nivå liknar jämförbara förbudslöften.",
       "confidence": 0.45,
-      "calculation": "Förbud genomförs via lagändring: beredning i Regeringskansliet sker inom befintlig personal (0 mkr). Nya direkta kostnader utgörs främst av omställning vid införandet: grovt 50–100 berörda religiösa friskolor × 0,2–0,5 mkr i ev. övergångsstöd till huvudmän/kommuner ≈ 10–50 mkr, plus information, rådgivning och förstärkt tillsyn under övergångsåren ≈ 5–10 mkr. Totalt ca 15–60 mkr engång; bas ~25 mkr i linje med jämförbara löften om förbud mot religiösa friskolor. Att elever flyttar till kommunal skola är omfördelning — skolpengen följer eleven — och prissätts inte som ny statlig nettokostnad."
+      "calculation": "Förbudet genomförs via lagändring, och beredningen i Regeringskansliet sker inom befintlig personal till noll kronor. Nya direkta kostnader utgörs främst av omställningen vid införandet: grovt 50–100 berörda religiösa friskolor × 0,2–0,5 miljoner kronor i övergångsstöd till huvudmän och kommuner, alltså 10–50 miljoner, plus information, rådgivning och förstärkt tillsyn under övergångsåren på 5–10 miljoner. Totalt 15–60 miljoner kronor som engångskostnad, med 25 miljoner som basbelopp. Att elever flyttar till kommunal skola är en omfördelning — skolpengen följer eleven — och prissätts inte som ny statlig nettokostnad."
     },
     "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-2338 (30), p-2026-0015 (30), p-2026-3390 (0), p-2026-1519 (0), p-2026-0545 (0) ⚠ AVVIKER: belopp 25 men jämförbara ligger på 0"
   },
@@ -402,7 +412,10 @@
       "basis_url": null,
       "method_note": "Jämför med Vänsterpartiets satsning på 30 msek/år för femicid-paket i rättskedjan; uppskattar liknande kostnad för utbildning och kunskapshöjande insatser.",
       "confidence": 0.6,
-      "calculation": "Baserat på jämförbart löfte om 30 msek/år, justerat för osäkerhet: 20–50 msek/år."
+      "calculation": "Baserat på jämförbart löfte om 30 msek/år, justerat för osäkerhet: 20–50 msek/år.",
+      "anchor_ids": [
+        "p-2026-1630"
+      ]
     },
     "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-1630 (30)"
   },
@@ -431,7 +444,7 @@
       "basis_url": null,
       "method_note": "Organisatorisk förändring inom vården; direkt kostnad för utbildning och anpassning. Jämför med liknande löfte om avskaffat vårdval inom missbruksvården (2 mkr engång).",
       "confidence": 0.3,
-      "calculation": "Uppskattning baserad på jämförbart löfte (2 mkr) plus osäkerhet för utbildningsinsatser och IT-anpassning, spann 0–10 mkr."
+      "calculation": "Löftet anger ingen nivå. Åtgärden är en rutinändring i primärvården som genomförs med vägledning och anpassning av IT-stöd; den nya statliga kostnaden är begränsad till det. Antagandet är vårt och vilar inte på en räknad källa: spannet 0–10 miljoner kronor som engångskostnad, med 2 miljoner som basbelopp."
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2867 (0), p-2026-0011 (3000), p-2026-0918 (10), p-2026-1869 (2), p-2026-0267 (300) ⚠ AVVIKER: 2 avviker 5.0× från jämförbara (median 10)"
   },
@@ -460,7 +473,10 @@
       "basis_url": null,
       "method_note": "Uppskattning baserad på jämförbart löfte från annat parti om 20 msek/år för parasport, men bredare åtgärder (tillgänglighet, information) ger högre intervall.",
       "confidence": 0.3,
-      "calculation": "Jämförbart löfte anger 20 msek/år för parasport. MP:s förslag är bredare och inkluderar tillgänglighet och information, så vi uppskattar 20-50 msek/år, med bas 35 msek/år."
+      "calculation": "Jämförbart löfte anger 20 msek/år för parasport. MP:s förslag är bredare och inkluderar tillgänglighet och information, så vi uppskattar 20-50 msek/år, med bas 35 msek/år.",
+      "anchor_ids": [
+        "p-2026-1573"
+      ]
     },
     "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1573 (20), p-2026-0657 (0), p-2026-1950 (5), p-2026-2781 (400), p-2026-1710 (300)"
   },
@@ -490,10 +506,11 @@
       "basis": "granskare",
       "basis_url": null,
       "method_note": "(belopp satt av granskare)",
-      "calculation": "Partiet anger själv antalet: minst 10 000 elever om året. En hågkomstresa till Förintelsens minnesplatser med lärare kostar i storleksordningen 8 000–15 000 kronor per deltagare med resa, boende och guidning. 10 000 elever gånger 10 000 kronor ger 100 miljoner kronor per år, och lärarnas medverkan ligger i spannets övre del.",
+      "calculation": "Partiet anger själv antalet: minst 10 000 elever om året. En hågkomstresa till Förintelsens minnesplatser med lärare kostar i storleksordningen 8 000–15 000 kronor per deltagare med resa, boende och guidning. 10 000 elever gånger 10 000 kronor ger 100 miljoner kronor per år, och lärarnas medverkan ligger i spannets övre del. Partiet har samtidigt lovat att dubbla statens anslag till hågkomstresor från 8 till 16 miljoner kronor per år. De två beskeden gäller samma program men går inte ihop: 16 miljoner delat på 10 000 elever blir 1 600 kronor per deltagare, ungefär en sjättedel av vad en resa kostar. Beloppet här följer den volym partiet lovat, inte det anslag partiet budgeterat. Basbeloppet är 100 miljoner kronor per år.",
       "confidence": 0.9,
       "anchor_ids": []
-    }
+    },
+    "group_id": "g-p-2026-0571"
   },
   {
     "candidate": {
@@ -523,7 +540,9 @@
       "method_note": "(belopp satt av granskare)",
       "calculation": "En lagstadgad garanti om 30 dagar till första besök och 30 dagar till behandling inom barn- och ungdomspsykiatrin kräver mer kapacitet än i dag, där väntetiderna på många håll är flera månader. Basbeloppet 1 200 miljoner kronor per år för utbyggd bemanning, i nivå med jämförbara löften om kortare BUP-köer.",
       "confidence": 0.9,
-      "anchor_ids": []
+      "anchor_ids": [
+        "p-2026-3992"
+      ]
     }
   },
   {
@@ -551,7 +570,10 @@
       "basis_url": null,
       "method_note": "Samma åtgärd som jämförbara löften om livsmedelsberedskap och beredskapslager (500–2000 msek/år). Bred formulering utan nivå; beloppet avser statens kostnad för lager och stöd, inte samhällsföljder.",
       "confidence": 0.4,
-      "calculation": "Vag löftestext utan belopp, men 'bygga upp beredskapslager' är en konkret åtgärd. Jämförbara löften om livsmedelsberedskap ligger på 500–2000 msek/år. Egen grov kalkyl: spannmålsreserv ~250 000 ton (ca 3 månaders livsmedelskonsumtion) × ~2 500 kr/ton ≈ 600 mkr engångsuppbyggnad, plus drift/rotation ~100 mkr/år; stöd till jordbrukets konkurrenskraft ~200–500 mkr/år. Botten ~300–800 mkr/år, men löftet är bredare (även insatsvaror och handelsberoende) → 500–2500 msek/år, bas 1000."
+      "calculation": "Vag löftestext utan belopp, men 'bygga upp beredskapslager' är en konkret åtgärd. Jämförbara löften om livsmedelsberedskap ligger på 500–2000 msek/år. Egen grov kalkyl: spannmålsreserv ~250 000 ton (ca 3 månaders livsmedelskonsumtion) × ~2 500 kr/ton ≈ 600 mkr engångsuppbyggnad, plus drift/rotation ~100 mkr/år; stöd till jordbrukets konkurrenskraft ~200–500 mkr/år. Botten ~300–800 mkr/år, men löftet är bredare (även insatsvaror och handelsberoende) → 500–2500 msek/år, bas 1000.",
+      "anchor_ids": [
+        "p-2026-1592"
+      ]
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1621 (500), p-2026-1592 (2000), p-2026-2838 (0), p-2026-2255 (2000), p-2026-2946 (2000) ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-2796 (300000), p-2026-2877 (65000), p-2026-0041 (50000), p-2026-3280 (50000), p-2026-2255 (2000). Är delarna redan prissatta ska detta löfte sättas till 0."
   },
