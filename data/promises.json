@@ -203844,5 +203844,337 @@
       "verified_by": "owner",
       "run_id": "review-2026-08-30T12"
     }
+  },
+  {
+    "id": "p-2026-4208",
+    "group_id": null,
+    "loftestyp": "reform",
+    "title": "Nationell strategi för egenvård med bättre verktyg och stöd",
+    "slug": "nationell-strategi-for-egenvard-med-battre-verktyg-och-stod",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Ge människor bättre verktyg och stöd för egenvård genom en nationell strategi.",
+    "date_stated": "2026-08-30",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/vard-och-omsorg/folkhalsa",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-30T12:08:29.171Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 25,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Prissatt som framtagandet av en nationell strategi (engång, SOU-storlek); konkreta verktyg och stöd är framtida politik som inte räknas här. I linje med liknande strategilöften ~0 mkr.",
+      "confidence": 0.35,
+      "calculation": "Löftets konkreta åtagande är att ta fram en nationell strategi för egenvård. Sådant utrednings- och beredningsarbete utförs till stor del inom befintlig statlig personalkostnad, vilket kostnadsregeln om utrednings- och planlöften säger. Återstående direkta kostnader — underlagsinsamling, kommunikation och enkla digitala verktyg — uppskattas till 0–25 miljoner kronor som engångskostnad, med 5 miljoner som basbelopp. Verktygen och stödet till invånare är politik som strategin kan leda fram till och prissätts inte här, för att undvika dubbelräkning."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-30T12"
+    }
+  },
+  {
+    "id": "p-2026-4209",
+    "group_id": null,
+    "loftestyp": "reform",
+    "title": "Ge apoteken utökad roll som första linjens rådgivare",
+    "slug": "ge-apoteken-utokad-roll-som-forsta-linjens-radgivare",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Ge apoteken en utökad roll i hälso- och sjukvårdssystemet som en första linjens rådgivare för enklare åkommor.",
+    "date_stated": "2026-08-30",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/vard-och-omsorg/apotek",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-30T12:08:29.374Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 375,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp. Antar statlig ersättning till apotek för rådgivningsbesök samt utbildning/auktorisering; själva regeländringen är i princip kostnadsfri.",
+      "confidence": 0.4,
+      "calculation": "~1 300 apotek × 500–2 000 statligt ersatta rådgivningsbesök/år × 200–300 kr/besök ≈ 130–780 msek. Justerat ned för trög start, delvis regional finansiering och att endast enklare åkommor omfattas → spannet 50–375 msek, bas 150 msek vid måttligt utnyttjande. Utbildnings- och auktoriseringsinsatser ryms inom spannet. Löftet anger ingen nivå; antagandena är mina egna, ankrade mot jämförbar satsning på första linjen (~500 msek/år).",
+      "anchor_ids": [
+        "p-2026-2135"
+      ]
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-30T12"
+    }
+  },
+  {
+    "id": "p-2026-4210",
+    "group_id": null,
+    "loftestyp": "reform",
+    "title": "Stärka förebyggande arbete och missbruksvård",
+    "slug": "starka-forebyggande-arbete-och-missbruksvard",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Stärka det förebyggande arbetet och missbruksvården.",
+    "date_stated": "2026-08-30",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/vard-och-omsorg/alkoholpolitik",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-30T12:08:29.582Z"
+    },
+    "category": "välfärd",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 500,
+      "msek_high": 1500,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Missbruksvården är delad mellan region och kommun och är underdimensionerad, och löftet stärker både den förebyggande delen och vården. Löftet anger ingen nivå, så beloppet är vårt antagande: ett riktat statsbidrag i storleksordningen en halv miljard kronor per år. Basbeloppet är 500 miljoner kronor per år.",
+      "confidence": 0.9,
+      "anchor_ids": []
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-30T12"
+    }
+  },
+  {
+    "id": "p-2026-4211",
+    "group_id": null,
+    "loftestyp": "reform",
+    "title": "Öka andelen direkta anslag till universitet och högskolor",
+    "slug": "oka-andelen-direkta-anslag-till-universitet-och-hogskolor",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Öka andelen direkta anslag (basanslag) för att kunna ge universitet och högskolor större frihet att planera långsiktigt, anställa fler lärare och utveckla utbildningar som är mer kostsamma men nödvändiga, såsom inom STEM.",
+    "date_stated": "2026-08-30",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/utbildning/hogre-utbildning",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-30T12:08:29.759Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 300,
+      "msek_base": 600,
+      "msek_high": 1200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet anger ingen nivå; uppskattning baserad på jämförbart löfte om stärkt basfinansiering (600 mkr/år) och bredare forskningssatsning (1500 mkr/år).",
+      "confidence": 0.4,
+      "calculation": "Basanslag till universitet: jämförbart löfte om stärkt basfinansiering anger 600 mkr/år; ett annat löfte om forskning anger 1500 mkr/år. Eftersom detta löfte är vagt sätts base till 600 mkr/år, spann 300–1200 mkr/år för att täcka osäkerhet.",
+      "anchor_ids": [
+        "p-2026-2044"
+      ]
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-30T12"
+    }
+  },
+  {
+    "id": "p-2026-4212",
+    "group_id": null,
+    "loftestyp": "reform",
+    "title": "Reformera betygsystemet och ta bort skarpa godkäntgränsen",
+    "slug": "reformera-betygsystemet-och-ta-bort-skarpa-godkantgransen",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Reformera betygsystemet genom att ta bort den skarpa gränsen för godkänt och införa fler betygssteg under betyget E, så att alla elevers ansträngning räknas.",
+    "date_stated": "2026-08-30",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/utbildning/grundskola",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-30T12:08:29.913Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring av betygssystemet; direkt kostnad är reviderade kriterier, information och ev. fortbildning, inte samhällseffekterna.",
+      "confidence": 0.5,
+      "calculation": "Borttagen godkäntgräns och fler betygssteg under E är i grunden en regeländring, och kostnadsregeln om lagar, förbud och regleringar sätter den till noll. Ny statlig kostnad uppstår främst för reviderade betygskriterier och kursplaner, informationsmaterial till skolor, lärarfortbildning och anpassning av betygsstödet — i storleksordningen ett tiotal miljoner kronor som engångskostnad. Basbeloppet är 5 miljoner kronor, spannet 0–20. Effekter på elever och lärande prissätts inte."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-30T12"
+    }
+  },
+  {
+    "id": "p-2026-4213",
+    "group_id": null,
+    "loftestyp": "reform",
+    "title": "Fler utbildningsvägar för behöriga pedagoger och barnskötare",
+    "slug": "fler-utbildningsvagar-for-behoriga-pedagoger-och-barnskotare",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Vi vill satsa på fler utbildningsvägar för att öka andelen behöriga pedagoger och barnskötare, bland annat genom Yrkesvux och kompletterande utbildningar.",
+    "date_stated": "2026-08-30",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/utbildning/fritids",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-30T12:08:30.059Z"
+    },
+    "category": "utbildning",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 450,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar nivå; prissatt som expansion av Yrkesvux och kompletterande pedagogutbildningar, grovt 1 000–3 500 platser à ~100–150 tkr/plats i statsbidrag.",
+      "confidence": 0.35,
+      "calculation": "Löftet anger inget belopp. Antagande: staten finansierar fler utbildningsplatser i Yrkesvux och kompletterande utbildningar för pedagoger/barnskötare. Kostnad per plats i vuxen yrkesutbildning uppskattas till ~100–150 tkr/år i statsbidrag. ~1 000 platser × ~100 tkr ≈ 100 msek; ~3 000 platser × ~150 tkr ≈ 450 msek. Bas ~250 msek ≈ 2 000 platser × ~125 tkr. Osäkerheten ligger främst i antalet platser; ett jämförbart löfte om utbildningsplatser i ett mindre yrkesfält landade på ~60 msek, men pedagogfältet är betydligt större, vilket motiverar högre nivå.",
+      "anchor_ids": [
+        "p-2026-2878"
+      ]
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-30T12"
+    }
+  },
+  {
+    "id": "p-2026-4214",
+    "group_id": null,
+    "loftestyp": "reform",
+    "title": "Ökad forskning om nya antibiotikapreparat",
+    "slug": "okad-forskning-om-nya-antibiotikapreparat",
+    "parties": [
+      "c"
+    ],
+    "person": null,
+    "quote": "Driva på för ökad forskning kring nya antibiotikapreparat och alternativa behandlingsmetoder för att ligga steget före resistensutvecklingen.",
+    "date_stated": "2026-08-30",
+    "source": {
+      "url": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/mat-och-livsmedelsproduktion/antibiotika",
+      "domain": "centerpartiet.se",
+      "archive_url": null,
+      "fetched_at": "2026-08-30T12:08:30.250Z"
+    },
+    "category": "övrigt",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 20,
+      "msek_base": 50,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet anger ingen nivå. Jämförbara forskningssatsningar ligger 40–300 msek/år; antibiotikaforskning är ett smalt men prioriterat område.",
+      "confidence": 0.4,
+      "calculation": "Statliga satsningar på ett enskilt forskningsområde ligger i storleksordningen tiotals till ett par hundra miljoner kronor per år. Antibiotikaforskning är ett smalare fält än artificiell intelligens men bredare än gruvforskning, och hamnar därför i den nedre delen av det intervallet. Antagandet är vårt: basbeloppet är 50 miljoner kronor per år, med spannet 20–150 för osäkerheten i hur stort programmet blir."
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-08-30T12"
+    }
   }
 ]
