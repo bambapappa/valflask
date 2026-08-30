@@ -180,7 +180,40 @@ for (const issue of issues) {
       skipped++;
       continue;
     }
-    const res = approve([String(index)], DATA_DIR);
+    // GRUPPEN LIGGER PÅ KÖ-POSTEN, OCH DEN MÅSTE FÖLJA MED HIT.
+    // `ko-grupp` skriver `group_id` på posten FÖRE godkännandet, eftersom
+    // fältet ingår i prövningens hash — sätts gruppen först vid godkännandet
+    // beskriver prövningen en annan version och grinden fäller posten. Svepet
+    // läste den aldrig tillbaka: 2026-08-30 publicerades sex poster med
+    // `group_id: null` trots att kö-posten bar sin grupp, och ingenting sa
+    // ifrån. Kommentarsvägen skickar `--group`; den här gjorde det inte.
+    //
+    // `approve` tar en MEDLEM av gruppen, inte gruppens id, och återanvänder
+    // medlemmens `group_id`. Därför slås en medlem upp i stället för att
+    // gruppens id räknas om ur namnet — en namngiven grupp som
+    // `g-slopa-mangdrabatt` fungerar då likadant som `g-p-2026-0123`.
+    const args = [String(index)];
+    const gruppen = (entry as { group_id?: string | null }).group_id;
+    if (gruppen) {
+      const publicerade = JSON.parse(
+        readFileSync(join(DATA_DIR, "promises.json"), "utf8"),
+      ) as Array<{ id: string; group_id?: string | null; status?: string }>;
+      const medlem = publicerade.find((p) => p.group_id === gruppen && p.status === "aktiv");
+      if (!medlem) {
+        notifications.push({
+          number: issue.number,
+          body:
+            `⚠️ Kö-posten bär gruppen \`${gruppen}\`, men inget aktivt löfte står i den. ` +
+            "Gruppen kan inte sättas, och posten publiceras inte utan den — " +
+            "annars räknas samma politik två gånger. Kontrollera målet.",
+          removeLabel: APPROVE_LABEL,
+        });
+        skipped++;
+        continue;
+      }
+      args.push("--group", medlem.id);
+    }
+    const res = approve(args, DATA_DIR);
     notifications.push({
       number: issue.number,
       body: `✅ Publicerad via etikett som **${res.id}** — "${res.title}", ${res.msekBase} msek. Livesajten uppdateras vid nästa bygge.`,
