@@ -4394,5 +4394,78 @@
       }
     ],
     "verifyReason": "Citatet 'Sverige ska nå klimatmålen' stödjer att partiet vill att målet om nettonollutsläpp till 2045 ska ligga fast, eftersom klimatmålen inkluderar detta mål."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-huvudman",
+      "party": "v",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "För att bryta utvecklingen vill Vänsterpartiet ge regionerna tillbaka kontrollen över vården.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/stoppa-graddfilerna-i-varden-den-som-behover-vard-mest-ska-fa-den-forst/",
+    "articleTitle": "Stoppa gräddfilerna i vården – den som behöver vård mest ska få den först – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/nyheter/stoppa-graddfilerna-i-varden-den-som-behover-vard-mest-ska-fa-den-forst/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-31",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-31-16-07",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet säger att Vänsterpartiet vill ge regionerna tillbaka kontrollen över vården, vilket direkt motsäger ett statligt övertagande och bekräftar deras nej-position."
+      }
+    ],
+    "verifyReason": "Citatet säger att Vänsterpartiet vill ge regionerna tillbaka kontrollen över vården, vilket direkt motsäger ett statligt övertagande och bekräftar deras nej-position."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-akassa",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Därför föreslår Vänsterpartiet att: Den högsta dagpenningen och grundbeloppet höjs.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/a-kassa/",
+    "articleTitle": "A-kassa – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/a-kassa/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-31",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-31-16-07",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Alla äldre ska kunna förstå och kommunicera med personalen. Därför har vi infört språkkrav i äldreomsorgen från den 1 juli 2026.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/aldres-villkor-och-pensioner/",
+    "articleTitle": "Äldres villkor och pensioner",
+    "sourceUrl": "https://moderaterna.se/var-politik/aldres-villkor-och-pensioner/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-27",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-31-16-07",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
