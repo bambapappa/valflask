@@ -4296,5 +4296,53 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-huvudman",
+      "party": "kd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Kristdemokraternas besked är tydligt: Sverige behöver genomföra den största vårdreformen i modern tid. Sverige behöver ett nationellt styre av vården inte 21 olika.",
+      "person": null
+    },
+    "articleUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-08-26-21-anledningar-att-avskaffa-regionerna",
+    "articleTitle": "21 anledningar att avskaffa regionerna | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/arkiv/nyheter/2026/2026-08-26-21-anledningar-att-avskaffa-regionerna",
+    "archiveUrl": null,
+    "dateStated": "2026-08-26",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-30-22-40",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-put",
+      "party": "kd",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Den som beviljas asyl ska få ett tillfälligt uppehållstillstånd under tre år",
+      "person": null
+    },
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asyl",
+    "articleTitle": "Asyl | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/asyl",
+    "archiveUrl": null,
+    "dateStated": "2026-08-30",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-30-22-40",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
