@@ -2126,5 +2126,498 @@
       "calculation": "Löftet anger ingen nivå. Antaganden: (1) Utåtriktande socialt arbete, stödjourer och skyddat boende för prostitutionsoffer — antas nå några hundra personer plus löpande verksamhet: ~5–15 msek/år. (2) Förstärkta statsbidrag till ideella organisationer och kommuner i linje med jämförbara löften om stöd till utsatta grupper: ~5–15 msek/år. (3) Ökat internationellt arbete mot sexhandel (samarbete, projekt, eventuell biståndskoppling): ~5–20 msek/år. Summerat ~10–50 msek/år, bas ~20 msek/år. Osäkerheten är stor eftersom varken åtgärder eller nivå specificeras; spannet speglar att omfattningen kan vara allt från smärre anslagsökningar till betydligt bredare satsning."
     },
     "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-3056 (15), p-2026-0602 (0), p-2026-2633 (0), p-2026-1839 (0), p-2026-2975 (500) ⚠ AVVIKER: belopp 20 men jämförbara ligger på 0 ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-0697 (7000), p-2026-2427 (4000), p-2026-0399 (3150), p-2026-4148 (3000), p-2026-4142 (2500). Är delarna redan prissatta ska detta löfte sättas till 0."
+  },
+  {
+    "candidate": {
+      "title": "Utbilda fler inom teknik, matematik och naturvetenskap",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Dessutom behöver Sverige utbilda fler människor inom teknik, matematik och naturvetenskap för att stärka konkurrenskraften på lång sikt.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/ai",
+    "articleTitle": "AI och teknikutveckling – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred inriktning utan konkret åtagande eller belopp; kostsamma delar prissätts på partiets specifika löften och dubbelräknas inte här.",
+      "confidence": 0.4,
+      "calculation": "Citatet är en allmän önskan om fler utbildade i STEM, utan angiven åtgärd, nivå eller finansiering. Enligt regeln för breda sammanfattningslöften prissätts det som inriktningslöfte till 0 mkr; konkreta reformer (t.ex. nya platser eller utbildningsbidrag) skulle behöva egna löften för att kunna uppskattas."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-3317 (0), p-2026-2717 (0), p-2026-3131 (0), p-2026-2242 (0), p-2026-3400 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Öka inhemsk produktion av biobränslen i stället för import",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Det måste ändras. Det är inte rimligt att Sverige importerar biobränslen.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/biobranslen",
+    "articleTitle": "Biobränslen – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 700,
+      "msek_high": 1500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå; prissatt som statligt stöd till utbyggnad av inhemsk biobränsleproduktion, i linje med jämförbara löften (200–2000 msek/år).",
+      "confidence": 0.35,
+      "calculation": "Löftet anger ingen nivå, mekanism eller belopp — bara målet att öka inhemsk produktion i stället för import. Rimligt instrument: produktions-/investeringstöd till biogas- och biodrivmedelsanläggningar. Jämförbara löften om svensk biobränsleproduktion ligger på 200–2000 msek/år, flertalet 500–1000. Bas 700 msek/år speglar ett medelstort stöd; låg 200 motsvarar smal avrop av anläggningar, hög 1500 bred utbyggnad i nivå med de mest ambitiösa jämförelselöftena. Osäkerheten är stor eftersom mekanismen inte specificeras."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-1126 (800), p-2026-1378 (1000), p-2026-1474 (200), p-2026-2519 (500), p-2026-0333 (2000)"
+  },
+  {
+    "candidate": {
+      "title": "Värna det kommunala vetot vid etablering av vindkraftsparker",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Samtidigt värnar vi det kommunala vetot vid etablering av vindkraftsparker.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/glesbygd",
+    "articleTitle": "Glesbygd – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Status quolöfte: att behålla gällande kommunalt veto är en lagreglering utan ny direkt statskostnad. Effekter på vindkraftsutbyggnaden är samhällsföljder, inte statliga utgifter.",
+      "confidence": 0.65,
+      "calculation": "Löftet innebär att värna (behålla) det befintliga kommunala vetot vid etablering av vindkraftsparker, som redan finns i gällande rätt via det kommunala planmonopolet. Ingen ny utgift, inget nytt bidrag eller program uppstår — statens direkta kostnad är noll. Eventuella följder (utebliven eller ökad vindkraftsutbyggnad, ändrad elproduktion) är omfördelningar eller samhällsföljder och prissätts inte. Jämförbart löfte om att värna strandskyddet bedöms på samma sätt."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-3598 (0), p-2026-3987 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Ökat samarbete mellan polis och Migrationsverket",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Det behövs ett ökat samarbete mellan polis och Migrationsverket.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/invandring",
+    "articleTitle": "Invandring – Liberalerna",
+    "verifyReason": "Citatet finns i källtexten och partiet (Liberalerna) stämmer, men formuleringen 'Det behövs' är vag och inte ett tydligt åtagande. Det är en policyposition snarare än ett konkret vallöfte, så det bör granskas närmare."
+  },
+  {
+    "candidate": {
+      "title": "Förbättra vården genom ökad digitalisering",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill förbättra vården genom ökad digitalisering.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/e-halsa",
+    "articleTitle": "E-hälsa | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd, nivå eller belopp; basen sätts till 0 enligt regeln för breda önskelöften. Spannet speglar osäkerhet om framtida specifika digitaliseringssatsningar.",
+      "confidence": 0.4,
+      "calculation": "Citatet är en allmän inriktning ('förbättra vården genom ökad digitalisering') utan utpekad åtgärd, nivå eller belopp. Basen sätts därför till 0 — konkreta delar (t.ex. distansvård, gemensamma journalsystem, AI-stöd) prissätts i partiets specifika löften och dubbelräknas inte här. Högvärdet (~100 msek/år) speglar att en modest nationell digitaliseringssatsning skulle kunna ingå om löftet senare specificeras, men inget sådant åtagande finns i texten."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-4025 (1500), p-2026-2259 (1500), p-2026-4076 (150), p-2026-2312 (40), p-2026-3453 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~150"
+  },
+  {
+    "candidate": {
+      "title": "Minskat näringsläckage – näringen ska tillbaka till åkern",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Näringen ska tillbaka till åkern.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/jordbruk",
+    "articleTitle": "Jordbruk – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Sloganliknande inriktningslöfte utan utpekad åtgärd eller nivå; prissatt som inriktningslöfte. Spannet rymmer ev. framtida stöd till näringsåtervinning, men inget konkret åtagande finns i texten.",
+      "confidence": 0.3,
+      "calculation": "Citatet anger bara en målsättning (kretslopp av växtnäring) utan belopp, verktyg eller nivå. Enligt reglerna för breda inriktningslöften sätts base till 0. Ett brett spann upp till ~20 msek/år rymmer hypotetiska stödåtgärder (t.ex. stöd till avloppsslam- eller urinåtervinning), men underlaget räcker inte för att hävda en faktisk kostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-3584 (0)"
+  },
+  {
+    "candidate": {
+      "title": "KD vill sänka skatten på el ytterligare",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Under mandatperioden har vi sänkt skatten på el med 20 % och vill sänka den ytterligare.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/elpriser",
+    "articleTitle": "Elpriser | Kristdemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "engang",
+      "msek_low": 800,
+      "msek_base": 2000,
+      "msek_high": 3000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Utan angiven ny nivå prissatt som vad senaste steget (20 %-sänkningen av elskatten) kostade staten. Intäktsminskning, fasta priser, före beteende effekter. [period satt till engang: engångssignal i löftet]",
+      "confidence": 0.4,
+      "calculation": "Mätstock: mandatperiodens 20 %-sänkning ≈ ~5,8 öre/kWh på normaltaxan (~29,2 öre). Skattepliktig el till normaltaxa (hushåll + service utanför norra Sverige; industri och norrland betalar 0,5 öre) grovt 45–55 TWh/år → intäktsbortfall ≈ 2,6–3,2 mdr/år. Löftet anger ingen ny nivå; 'ytterligare' antas motsvara ca 30–100 % av förra steget: låg ~0,8 mdr, bas ~2 mdr, hög ~3 mdr/år. Partiets egen siffra saknas — alla nivåer är mina antaganden, ej partiets."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0631 (17000), p-2026-1679 (0), p-2026-0597 (0), p-2026-0633 (800), p-2026-2416 (0) ⚠ AVVIKER: belopp 2000 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Se över och minska elprisområdena",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Därutöver behöver vi se över våra elprisområden och minska dem.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/elpriser",
+    "articleTitle": "Elpriser | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringsändring: färre elprisområden är en marknadsdesignändring med nära noll direkt statskostnad. 'Se över' tolkas som en utredning. Prisutjämning mellan områden är omfördelning, ej statskostnad.",
+      "confidence": 0.4,
+      "calculation": "Att minska antalet elprisområden (idag fyra, SE1–SE4) är en ändring av marknadsregler — ingen direkt statsutgift utöver eventuell utredning. 'Se över' antas motsvara en SOU-utredning: sekretariat ~5–8 personer × 1–1,5 år ≈ 5–20 mkr engång. Systemändringar hos nätaktörer och elbörs bärs av självfinansierade aktörer via nättariffer, inte statsbudgeten. Low = 0 om arbetet sker inom Regeringskansliets befintliga organisation. Prisutjämning mellan norr och söder är en överföring mellan konsumenter/producenter, inte en statlig kostnad, och lämnas okvantifierad."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1744 (5), p-2026-1512 (0), p-2026-1389 (0) ⚠ AVVIKER: belopp 5 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Se över skatter och avgifter på el inklusive elnätsavgifter",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi ser även över skatter och avgifter på el, bland annat har vi stoppat kravet på införandet av effektavgifterna och ser samtidigt över elnätsavgifterna huruvida de är skäliga eller inte.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/elpriser",
+    "articleTitle": "Elpriser | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 3,
+      "msek_base": 10,
+      "msek_high": 25,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är att se över skatter/avgifter på el och elnätsavgifter — prissatt som en utredningskostnad, inte som eventuella framtida sänkningar. Stoppet av effektavgifter är en regleringsändring utan…",
+      "confidence": 0.4,
+      "calculation": "Det konkreta åtagandet är en översyn/utredning av elnätsavgifternas skälighet, i SOU-storlek: sekretariat och underlag ~5–20 mkr, plus viss analys på myndigheter ≈ 3–25 mkr engång. Eventuella framtida sänkningar av elskatter eller nätsavgifter är beslut som inte fattats och prissätts inte här; stoppat effektavgiftskrav är redan genomfört och saknar ny kostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1650 (0), p-2026-3764 (0), p-2026-0792 (15), p-2026-3507 (0), p-2026-2416 (0) ⚠ AVVIKER: belopp 10 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Djuromsorg och miljöhänsyn i världsklass ska fortsätta",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Sverige ska fortsätta ha en djuromsorg och miljöhänsyn i världsklass.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/livsmedel",
+    "articleTitle": "Livsmedel – Liberalerna",
+    "verifyReason": "Uttalandet är en allmän målsättning om att Sverige ska fortsätta ha djuromsorg och miljöhänsyn i världsklass. Det är en policyposition från Liberalerna, men det saknar konkreta åtgärder eller mätbara löften, vilket gör det tveksamt att klassa som ett tydligt vallöfte. Partiet är korrekt och inget belopp nämns."
+  },
+  {
+    "candidate": {
+      "title": "Matavfall ska bli biogas",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Mat som ändå blir avfall ska bli biogas.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/livsmedel",
+    "articleTitle": "Livsmedel – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 250,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Målförklaring utan angiven åtgärd eller nivå; prissatt som inriktningslöfte. Ett jämförbart löfte om bättre tillvaratagande av matavfall bedömdes till 0 msek/år. Spannet täcker eventuell framtida…",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ett mål (matavfall ska bli biogas) men ingen åtgärd, nivå eller finansiering. Separat insamling och rötning av matavfall drivs redan idag till stor del av kommuner och avfallsaktörer, och ökad rötning är delvis en omfördelning snarare än en ny statlig nettokostnad. Utan konkret styrmedel (bidrag, krav, upphandling) saknas grund för en bruttokostnad, därför sätts basen till 0. Övre gränsen ~250 msek/år speglar ett rimligt spann för statligt investerings- eller driftsstöd till rötanläggningar om politiken senare konkretiseras, i linje med att ett jämförbart biogaslöfte skattats till ~1 000 msek/år men detta löfte är smalare (endast matavfall, inget belopp, ingen åtgärd)."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-4154 (0), p-2026-2518 (1000), p-2026-2224 (2500) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1000"
+  },
+  {
+    "candidate": {
+      "title": "Utveckla EU:s migrationspakt och stärka skyddet av den gemensamma yttre gränsen",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "EU:s migrationspakt behöver utvecklas och stärka skyddet av vår gemensamma yttre gräns.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/eus-migrationspakt",
+    "articleTitle": "EU:s migrationspakt | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte på EU-nivå utan konkret åtgärd eller belopp; gränsåtgärder finansieras via EU:s budget. Kostsamma delar prissätts på partiets konkreta löften.",
+      "confidence": 0.35,
+      "calculation": "Löftet anger ingen konkret åtgärd, nivå eller belopp — bara att migrationspakten 'behöver utvecklas'. Jämförbara löften (implementera EU:s migrationspakt, stärk EU:s asylpolitik) har prissatts till 0. Gränskyddet finansieras via EU:s budget där Sverige redan betalar sin andel (~2–3 %), så svensk ny kostnad är i princip noll. Ev. marginella nationella insatser (personal till gemensamma operationer, nationell samordning) ger spännvidd 0–50 mkr/år. Bas 0: inriktningslöfte, kostsamma delar prissätts separat."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2701 (15), p-2026-3319 (0), p-2026-0784 (600), p-2026-1260 (0), p-2026-0075 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stärka EU:s yttre gräns för att skapa förutsättningar för integration",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "EU:s yttre gräns behöver stärkas, för att skapa förutsättningar att klara integrationen med jobb, språk och ett gemensamt etiskt modersmål.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/eus-migrationspakt",
+    "articleTitle": "EU:s migrationspakt | Kristdemokraterna",
+    "verifyReason": "Uttalandet är en policyposition ('behöver stärkas') snarare än ett konkret, mätbart vallöfte. Det saknar specifik åtgärd, tidsram och finansiering. Partiet är korrekt (KD), men löfteskaraktären är otydlig."
+  },
+  {
+    "candidate": {
+      "title": "Värna om allemansrätten",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Allemansrätten har stor betydelse och den ska vi vara rädda om.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/miljo-och-natur",
+    "articleTitle": "Miljö och natur – Liberalerna",
+    "duplicateOf": "p-2026-2449"
+  },
+  {
+    "candidate": {
+      "title": "Fiskekvoter i det lägsta spannet enligt ICES rekommendationer",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill att kvoternas storlek ska ligga i det lägsta spannet enligt de rekommendationer som det vetenskapliga rådet ICES anger.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/fiske",
+    "articleTitle": "Fiske | Kristdemokraterna",
+    "duplicateOf": "p-2026-0762",
+    "duplicateReason": "samma uttryck: «kristd kvoter», «kvoter storle», «storle ligga», «ligga lägsta», «lägsta spanne», «spanne enligt», «enligt rekomm», «rekomm vetens», «vetens rådet», «rådet ices», «ices anger»"
+  },
+  {
+    "candidate": {
+      "title": "Endast kvoter som bidrar till beståndstillväxt ska tillåtas",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Enbart kvoter som med marginal bidrar till tillväxt i bestånden ska vara tillåtna att sätta.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/fiske",
+    "articleTitle": "Fiske | Kristdemokraterna",
+    "duplicateOf": "p-2026-0762",
+    "duplicateReason": "samma uttryck: «enbart kvoter», «kvoter margin», «margin bidrar», «bidrar tillvä», «tillvä bestån», «bestån tillåt», «tillåt sätta»"
+  },
+  {
+    "candidate": {
+      "title": "Kommuner och regioner bör få möjlighet att upphandla regional flygtrafik",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kommuner och regioner bör ha möjlighet att upphandla regional flygtrafik.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/flygtrafik",
+    "articleTitle": "Flygtrafik | Kristdemokraterna",
+    "duplicateOf": "p-2026-2536"
+  },
+  {
+    "candidate": {
+      "title": "Värna folkhögskolornas frihet och ge dem långsiktiga ekonomiska förutsättningar",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Vi vill värna folkhögskolornas frihet och ge dem långsiktiga ekonomiska förutsättningar.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/folkhogskolor",
+    "articleTitle": "Folkhögskolor | Kristdemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp; prissätts därför till 0. En framtida konkret höjning av folkhögskolans statsbidrag skulle kunna ligga i spannet, men dubbelräknas inte här.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ingen specifik åtgärd, nivå eller summa — endast en ambition om 'långsiktiga ekonomiska förutsättningar'. Enligt regeln för breda inriktningslöften sätts basen till 0. Folkhögskolans sammanlagda statsbidrag uppgår till storleksordningen ett fåtal miljarder kronor per år, så en rimlig framtida uppräkning skulle kunna motsvara tiotals till hundratals msek, vilket avspeglas i spannets övre gräns. Kostsamma specifika delar ska prissättas på partiets konkreta löften, inte här."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0769 (0), p-2026-1935 (40), p-2026-3941 (0), p-2026-0316 (0), p-2026-3618 (300)"
+  },
+  {
+    "candidate": {
+      "title": "Dela intjänad pension under småbarnsåren lika mellan föräldrarna",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "För att undvika pensionsfällor beroende på ojämnt uttag av föräldraledighet vill Kristdemokraterna dessutom att all intjänad pension under småbarnsåren ska delas lika mellan barnets föräldrar.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foraldraforsakring",
+    "articleTitle": "Föräldraförsäkring | Kristdemokraterna",
+    "duplicateOf": "p-2026-0859",
+    "duplicateReason": "samma uttryck: «intjän pensio», «pensio småbar», «småbar delas», «lika barnet», «barnet föräld», «undvik pensio», «pensio beroen», «uttag föräld»"
+  },
+  {
+    "candidate": {
+      "title": "Sverige ska bidra till fredsfrämjande och konfliktförebyggande insatser inom FN",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Sverige ska bidra till fredsfrämjande, säkerhetsfrämjande och konfliktförebyggande insatser inom FN",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/forenta-nationerna-fn",
+    "articleTitle": "Förenta Nationerna (FN) | Kristdemokraterna",
+    "duplicateOf": "p-2026-2284"
+  },
+  {
+    "candidate": {
+      "title": "Förbättra företagsklimatet med konkurrenskraftiga skatter och minskat regelkrångel",
+      "parties": [
+        "kd"
+      ],
+      "person": null,
+      "quote": "Kristdemokraterna vill förbättra företagsklimatet bland annat genom konkurrenskraftiga skatter, minskat regelkrångel och lägre trösklar för att starta och driva företag.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/foretagande",
+    "articleTitle": "Företagande | Kristdemokraterna",
+    "duplicateOf": "p-2026-0776",
+    "duplicateReason": "samma uttryck: «kristd förbät», «förbät företa», «regelk lägre», «lägre tröskl», «tröskl starta»"
   }
 ]

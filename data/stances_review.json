@@ -4344,5 +4344,55 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-reduktionsplikt",
+      "party": "kd",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Reduktionsplikt samt höga drivmedelsskatter på dem som inte har andra alternativ än bilen leder enbart till omfördelning av pengar från landsbygdsbor till staten, men ingen minskning av utsläppen på global nivå.",
+      "person": null
+    },
+    "articleUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/drivmedelspriser",
+    "articleTitle": "Drivmedelspriser | Kristdemokraterna",
+    "sourceUrl": "https://kristdemokraterna.se/var-politik/politik-a-till-o/drivmedelspriser",
+    "archiveUrl": null,
+    "dateStated": "2026-08-31",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-31-05-21",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet är allmänt kritiskt mot reduktionsplikten men svarar inte på den specifika frågan om en höjning under mandatperioden; ett nej kräver tolkning."
+      }
+    ],
+    "verifyReason": "Citatet är allmänt kritiskt mot reduktionsplikten men svarar inte på den specifika frågan om en höjning under mandatperioden; ett nej kräver tolkning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-nettonoll",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sverige ska nå klimatmålen. Utsläppen ska bort. De fossila bränslena ska bort.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/klimatet",
+    "articleTitle": "Klimatet behöver en effektiv politik. Liberalerna är alliansens grönaste röst!",
+    "sourceUrl": "https://www.liberalerna.se/politik/klimatet",
+    "archiveUrl": null,
+    "dateStated": "2025-06-05",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-08-31-05-21",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet 'Sverige ska nå klimatmålen' stödjer att partiet vill att målet om nettonollutsläpp till 2045 ska ligga fast, eftersom klimatmålen inkluderar detta mål."
+      }
+    ],
+    "verifyReason": "Citatet 'Sverige ska nå klimatmålen' stödjer att partiet vill att målet om nettonollutsläpp till 2045 ska ligga fast, eftersom klimatmålen inkluderar detta mål."
   }
 ]
