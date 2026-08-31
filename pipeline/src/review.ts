@@ -7,7 +7,7 @@ import { avvisa, hav, slaUpp, type Avvisning } from "./avvisningar.ts";
 import { partiForUrl } from "./skordeordning.ts";
 import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
-import { LANAR_BELOPP } from "./ankarkravet.ts";
+import { LANAR_BELOPP, barBelopp } from "./ankarkravet.ts";
 import { svenskDag } from "./dagen.ts";
 import { harledLoftestyp } from "./loftestyp.ts";
 
@@ -683,7 +683,12 @@ function approveLast(
   const iGrupp = linkTo !== null && linkTo !== undefined && linkTo !== "";
   if (
     LANAR_BELOPP.test(cost.calculation ?? "") &&
-    (cost.msek_base ?? 0) !== 0 &&
+    // HELA SPANNET, INTE BARA BASBELOPPET. Grinden läste `msek_base` medan det
+    // publicerade provet läser `barBelopp` — alltså om NÅGOT av låg, bas eller
+    // hög är skilt från noll. Godkännandet var därmed lösare än provet det ska
+    // skydda: 2026-08-29 publicerades 21 nollor med ett spann över noll, och
+    // main föll på ankarkravet i samma stund. Samma funktion på båda sidor.
+    barBelopp({ id: "ko", cost }) &&
     ankare.length === 0 &&
     !iGrupp
   ) {

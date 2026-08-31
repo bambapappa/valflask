@@ -18,7 +18,16 @@ permissions:
   pages: write
   id-token: write
 concurrency:
-  group: pages
+  # PAGES-GRUPPEN SERIALISERAR DEPLOYEN, INTE PROVEN. Fram till 2026-08-29 delade
+  # varje PR-körning grupp med mains pushar, och main tar emot bot-pushar med
+  # några minuters mellanrum. En PR-körning som köade bakom dem ströks så snart
+  # nästa push köade — och en struken kontroll är inte en godkänd kontroll, så
+  # med kravet på gröna kontroller blir PR:en omöjlig att slå ihop.
+  #
+  # Deployen sker bara på main (deploy-pages är villkorad på det), så PR-körningar
+  # behöver inte dela kö med den. Varje gren får sin egen grupp; main behåller
+  # 'pages' och därmed sin serialisering.
+  group: ${{ github.ref == 'refs/heads/main' && 'pages' || format('pages-{0}', github.ref) }}
   cancel-in-progress: false
 jobs:
   test-pipeline:

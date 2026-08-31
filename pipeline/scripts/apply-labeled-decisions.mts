@@ -180,7 +180,55 @@ for (const issue of issues) {
       skipped++;
       continue;
     }
-    const res = approve([String(index)], DATA_DIR);
+    // GRUPPEN LIGGER PÅ KÖ-POSTEN, OCH DEN MÅSTE FÖLJA MED HIT.
+    // `ko-grupp` skriver `group_id` på posten FÖRE godkännandet, eftersom
+    // fältet ingår i prövningens hash — sätts gruppen först vid godkännandet
+    // beskriver prövningen en annan version och grinden fäller posten. Svepet
+    // läste den aldrig tillbaka: 2026-08-30 publicerades sex poster med
+    // `group_id: null` trots att kö-posten bar sin grupp, och ingenting sa
+    // ifrån. Kommentarsvägen skickar `--group`; den här gjorde det inte.
+    //
+    // `approve` tar en MEDLEM av gruppen, inte gruppens id, och återanvänder
+    // medlemmens `group_id`. Därför slås en medlem upp i stället för att
+    // gruppens id räknas om ur namnet — en namngiven grupp som
+    // `g-slopa-mangdrabatt` fungerar då likadant som `g-p-2026-0123`.
+    const args = [String(index)];
+    const gruppen = (entry as { group_id?: string | null }).group_id;
+    if (gruppen) {
+      const publicerade = JSON.parse(
+        readFileSync(join(DATA_DIR, "promises.json"), "utf8"),
+      ) as Array<{ id: string; group_id?: string | null; status?: string }>;
+      // EN NY GRUPP HAR ÄNNU INGEN MEDLEM. `approve --group <mal>` är det som
+      // SKAPAR gruppen genom att sätta `group_id` på målet, så uppslaget på en
+      // befintlig medlem hittar ingenting första gången. `ko-grupp` namnger en
+      // ny grupp `g-<mal>`, och då är målet utläsbart ur namnet. Två fall,
+      // i den här ordningen:
+      //   1. gruppen finns redan (även namngiven, som g-slopa-mangdrabatt)
+      //      → skicka en aktiv medlem, så återanvänds medlemmens group_id
+      //   2. gruppen är ny och heter g-<löftes-id> → skicka det löftet
+      // Faller båda vet vi inte vad posten ska länkas till, och då publiceras
+      // den inte. Mätt 2026-08-30: kontrollen kunde bara det första fallet, och
+      // stoppade två poster vars mål levde och var helt i sin ordning.
+      const nyttMal = /^g-(p-\d{4}-\d{4})$/.exec(gruppen)?.[1];
+      const medlem =
+        publicerade.find((p) => p.group_id === gruppen && p.status === "aktiv") ??
+        publicerade.find((p) => p.id === nyttMal && p.status === "aktiv");
+      if (!medlem) {
+        notifications.push({
+          number: issue.number,
+          body:
+            `⚠️ Kö-posten bär gruppen \`${gruppen}\`, men varken ett aktivt löfte i gruppen ` +
+            "eller ett aktivt mål utläst ur gruppens namn går att hitta. Gruppen kan inte " +
+            "sättas, och posten publiceras inte utan den — annars räknas samma politik " +
+            "två gånger. Kontrollera målet.",
+          removeLabel: APPROVE_LABEL,
+        });
+        skipped++;
+        continue;
+      }
+      args.push("--group", medlem.id);
+    }
+    const res = approve(args, DATA_DIR);
     notifications.push({
       number: issue.number,
       body: `✅ Publicerad via etikett som **${res.id}** — "${res.title}", ${res.msekBase} msek. Livesajten uppdateras vid nästa bygge.`,

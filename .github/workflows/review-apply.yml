@@ -63,7 +63,19 @@ jobs:
             fi
             git reset --hard origin/main
             (cd pipeline && node --import tsx/esm scripts/apply-labeled-decisions.mts apply)
-            git add data/
+            # LÄSKOPIAN FÖLJER LÖFTENA, OCH SVEPET PUBLICERAR LÖFTEN.
+            # Handlingsvågen läser sin egen kopia av Fläskvågens löften, och
+            # `vendorkopia.test.ts` fäller den så snart den glidit. Svepet
+            # byggde den aldrig om: varje bunt godkännanden lämnade main röd,
+            # och den schemalagda pipelinen kör sina prov FÖRE sin egen
+            # ombyggnad — så den föll på en kopia svepet gjort gammal.
+            # Mätt 2026-08-30, efter fyra bunter på en dag.
+            #
+            # Bygget är billigt och idempotent: gör svepet ingenting ändras
+            # ingenting, och `git diff --cached` nedan avgör som förut om något
+            # ska committas.
+            node --experimental-strip-types handlingsvagen/pipeline/scripts/bygg-vendor.mts
+            git add data/ handlingsvagen/data/
             if git diff --cached --quiet; then
               echo "Inga dataändringar (inga etikettbeslut att exekvera)."
               exit 0
