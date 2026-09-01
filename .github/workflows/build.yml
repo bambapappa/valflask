@@ -45,8 +45,28 @@ jobs:
       - name: Install pipeline dependencies
         run: pnpm install --frozen-lockfile
         working-directory: pipeline
+      # De fallna proven skrivs SIST, och det är hela poängen.
+      #
+      # Sviten har över tusen prov och utskriften blir omkring tiotusen rader.
+      # Jobbloggen går bara att läsa 5 000 rader från slutet, så ett fel mitt i
+      # sviten hamnar utom synhåll: körningen säger ATT något föll, inte VAD.
+      #
+      # Mätt 2026-09-01: «1 115 prov, 2 fällda» var allt som gick att nå. Det
+      # tog två körningar, en omkörning och sex misslyckade försök att
+      # återskapa felet lokalt innan orsaken kunde pekas ut — och den pekades
+      # ut genom att ta bort den misstänkta konstruktionen, inte genom att läsa
+      # felet.
+      #
+      # Sammanfattningen körs med `if: failure()` och lägger sig alltså efter
+      # allt annat i loggen. En grön körning skriver ingenting.
       - name: Run pipeline tests
-        run: pnpm test
+        run: |
+          set -o pipefail
+          pnpm test 2>&1 | tee "$RUNNER_TEMP/tap-pipeline.txt"
+        working-directory: pipeline
+      - name: Vilka prov föll
+        if: failure()
+        run: node --import tsx/esm scripts/fallda-prov.mts "$RUNNER_TEMP/tap-pipeline.txt"
         working-directory: pipeline
       - name: Typecheck pipeline
         run: pnpm typecheck
