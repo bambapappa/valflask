@@ -115,14 +115,37 @@ jobs:
           done
           echo "Push misslyckades efter 5 försök."
           exit 1
+      # `if: always()` — och det är hela poängen med steget.
+      #
+      # Handlern svarar med ett grönt jobb och en förklarande kommentar när
+      # beslutet inte går att verkställa. Men EN väg gör det inte:
+      # kvalitetsfiltret inne i `approve()` avslutar processen med kod 1. Då
+      # faller steget ovan, det här steget hoppas över, och issuet får ingen
+      # kommentar alls — kommandot ligger kvar och ser besvarat ut.
+      #
+      # Mätt 2026-09-01: fyra `/godkänn` föll på att prövningens hash beskrev
+      # en annan version av posten. Alla fyra körningar blev röda, alla fyra
+      # issues tysta, och det syntes bara för att någon läste körningarnas
+      # utfall efteråt. Samma tystnad som `ej_behorig` finns för att stoppa,
+      # bara en annan väg in i den.
+      #
+      # Nu svarar steget även när beslutet föll. Saknas `result` är det
+      # körningen som brutit, inte handlern — och då säger kommentaren det och
+      # pekar på körningen, i stället för att ingenting sägs.
       - name: Reply and close issue
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
           RESULT: ${{ steps.decision.outputs.result }}
           MESSAGE: ${{ steps.decision.outputs.message }}
           ISSUE: ${{ github.event.issue.number }}
+          KORNING: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           case "$RESULT" in
+            "")
+              gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body \
+                "⚠️ Kommandot ovan **exekverades inte** — körningen bröt innan beslutet skrevs. Kön är oförändrad och posten väntar fortfarande på ett beslut. Skälet står i [körningen]($KORNING)."
+              ;;
             approved)
               gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body "✅ $MESSAGE"
               gh issue close "$ISSUE" --repo "$GITHUB_REPOSITORY" --reason completed
