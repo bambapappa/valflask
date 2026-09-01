@@ -437,6 +437,7 @@ export function importVallen(opts: {
 
   const existingLite: ExistingPromiseLite[] = existingPromises.map((p) => ({
     id: p.id, title: p.title, parties: p.parties, category: p.category, group_id: p.group_id,
+    status: p.status,
     quote: p.quote,
   }));
 

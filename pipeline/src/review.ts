@@ -274,6 +274,13 @@ export interface ReviewCandidate {
    * två löftena bredvid varandra, och då ska skälet stå i granskningen.
    */
   duplicateReason?: string;
+  /**
+   * Målet för dubblettflaggan är tillbakadraget. Då är kandidaten inte en
+   * dublett — det publicerade finns inte längre — utan ett nytt löfte att
+   * pröva. Flaggan behålls ändå, för den varnar för att kandidaten kan
+   * återinföra något som medvetet drogs in.
+   */
+  duplicateWithdrawn?: boolean;
   cost?: CostShape;
 }
 

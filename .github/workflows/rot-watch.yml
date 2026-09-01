@@ -33,7 +33,12 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           token: ${{ steps.app-token.outputs.token }}
-          persist-credentials: true
+          # INGA sparade uppgifter — samma rättelse som pipeline.yml redan
+          # bär. Checkouten skriver annars in jobbstart-tokenen i git-configen,
+          # och den vinner över den färska token som sätts i origin-URL:en
+          # före pushen. Bara commit-steget rör origin, och det bär sin egen
+          # färska token i URL:en.
+          persist-credentials: false
       - uses: pnpm/action-setup@v4  # samma pin-undantag som pipeline.yml (2026-06-15)
         with:
           version: 9
@@ -56,9 +61,28 @@ jobs:
       - name: Källröta-kontroll — Fläskvågen
         run: pnpm promises:rot-check --fynd-ar-data
         working-directory: pipeline
+      # App-tokens lever 1 h. Rötkontrollen öppnar varenda publicerad källa i
+      # båda vågarna och tar långt mer än så: 2026-08-31 tog Fläskvågens steg
+      # ensamt 4 h 21 min, och jobbstart-tokenen var död i tre och en halv
+      # timme när pushen kom (run 33385464556, larm #6611). Veckans hela
+      # rötmätning — 3 474 rader — commitades och kastades. Mynta därför en
+      # FÄRSK token efter kontrollstegen, precis före commit/push. Samma
+      # rättelse som pipeline.yml fick efter run 28673246764.
+      - name: Mint fresh push token
+        id: push-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Commit data if changed
+        env:
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          # Peka om origin till den färska tokenen. Checkouten sparar inga
+          # uppgifter (se persist-credentials ovan), så det här är de enda
+          # inloggningsuppgifter git har att gå på.
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           git add data/stances.json data/promises.json data/changelog.json
           if git diff --cached --quiet; then
             echo "Inga dataändringar — inget att committa."
@@ -82,7 +106,20 @@ jobs:
               echo "Push lyckades (försök $forsok)."
               exit 0
             fi
-            git rebase --abort 2>/dev/null || true
+            # Skilj kapplöpning från konflikt. En kapplöpning löser sig av att
+            # försöka igen; en konflikt gör det aldrig, och att snurra på den
+            # döljer vad som hände. Samma uppdelning som pipeline.yml.
+            if git rev-parse --verify --quiet REBASE_HEAD >/dev/null; then
+              konflikter=$(git diff --name-only --diff-filter=U | tr '\n' ' ')
+              git rebase --abort 2>/dev/null || true
+              if [ -n "$konflikter" ]; then
+                echo "Rebasen föll på en KONFLIKT i: $konflikter"
+                echo "Det är inte en kapplöpning och löser sig inte av fler försök."
+                echo "Veckans rötmätning är INTE pushad. Lös för hand och kontrollera att"
+                echo "sista changelog-postens data_hash matchar computeDataHash(promises.json)."
+                exit 1
+              fi
+            fi
             echo "Push-försök $forsok misslyckades (main har troligen gått vidare). Försöker igen..."
             sleep $((forsok * 5))
           done
