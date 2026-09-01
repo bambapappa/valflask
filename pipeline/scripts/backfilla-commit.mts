@@ -31,6 +31,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash } from "../src/publish.ts";
+import { stampla } from "../src/backfillen.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const argv = process.argv.slice(2);
@@ -47,77 +48,31 @@ if (!kort || !/^[0-9a-f]{7,40}$/u.test(kort)) {
 const filer = ["promises.json", "rattelser.json", "changelog.json"] as const;
 
 /**
- * Platshållarna som redan låg i den senast committade versionen.
+ * Den senast committade versionen av filen, tolkad — eller `null` när det inte
+ * finns någon. `null` betyder «allt i trädet är ditt».
  *
- * De är någon annans halvfärdiga par. Räknas de som dina tillskrivs de en
- * commit de inte kom ur — ett falskt påstående om var en ändring kommer
- * ifrån, och just det som gjorde att 389 stämplades i stället för 2.
- *
- * Jämförelsen görs på INNEHÅLL, inte på ordning. En tidig variant räknade hur
- * många platshållare HEAD hade och hoppade över så många i trädet — men det
- * antar att dina egna ligger sist. Lägger du en historikpost på ett tidigt
- * löfte hoppas din egen över och någon annans stämplas i stället: precis det
- * felet, med omvänt tecken. Nyckeln är i stället posten själv, serialiserad,
- * räknad som en multimängd så att två likalydande poster inte slår ihop.
+ * Regeln för vad som är ditt bor i `src/backfillen.ts` och prövas där, utan
+ * git och utan delprocess. Det här är bara hämtningen.
  */
-function redanICommittat(): Map<string, Map<string, number>> {
-  const ut = new Map<string, Map<string, number>>();
-  for (const f of filer) {
-    const räknare = new Map<string, number>();
-    ut.set(f, räknare);
-    let text: string;
-    try {
-      text = execFileSync("git", ["show", `HEAD:data/${f}`], { encoding: "utf8", maxBuffer: 1 << 30 });
-    } catch {
-      // Filen är ny i det här trädet — då är allt i den ditt.
-      continue;
-    }
-    samla(JSON.parse(text), räknare);
-  }
-  return ut;
-}
-
-/** Varje objekt som bär en platshållare, serialiserat, med antal. */
-function samla(o: unknown, ut: Map<string, number>): void {
-  if (Array.isArray(o)) {
-    for (const x of o) samla(x, ut);
-  } else if (o && typeof o === "object") {
-    const r = o as Record<string, unknown>;
-    if (r["commit"] === "0000000") {
-      const n = JSON.stringify(r);
-      ut.set(n, (ut.get(n) ?? 0) + 1);
-    }
-    for (const v of Object.values(r)) samla(v, ut);
+function committat(fil: string): unknown | null {
+  if (alla) return null;
+  try {
+    return JSON.parse(
+      execFileSync("git", ["show", `HEAD:data/${fil}`], { encoding: "utf8", maxBuffer: 1 << 30 }),
+    );
+  } catch {
+    // Filen är ny i det här trädet — då är allt i den ditt.
+    return null;
   }
 }
-
-const fore = alla ? null : redanICommittat();
-
-let bytta = 0;
-let hoppade = 0;
-const ersatt = (o: unknown, andras: Map<string, number> | undefined): void => {
-  if (Array.isArray(o)) {
-    for (const x of o) ersatt(x, andras);
-  } else if (o && typeof o === "object") {
-    const r = o as Record<string, unknown>;
-    if (r["commit"] === "0000000") {
-      const n = JSON.stringify(r);
-      const kvar = andras?.get(n) ?? 0;
-      if (kvar > 0) {
-        andras!.set(n, kvar - 1);
-        hoppade += 1;
-      } else {
-        r["commit"] = kort;
-        bytta += 1;
-      }
-    }
-    for (const v of Object.values(r)) ersatt(v, andras);
-  }
-};
 
 const innehall = new Map(filer.map((f) => [f, JSON.parse(readFileSync(join(DATA, f), "utf8"))]));
+let bytta = 0;
+let hoppade = 0;
 for (const f of filer) {
-  ersatt(innehall.get(f), fore?.get(f));
+  const r = stampla(innehall.get(f), committat(f), kort);
+  bytta += r.bytta;
+  hoppade += r.hoppade;
 }
 
 if (hoppade > 0) {
