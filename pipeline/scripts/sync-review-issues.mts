@@ -15,7 +15,7 @@
  *
  * Miljö: GITHUB_TOKEN (issues:write), GITHUB_REPOSITORY ("ägare/repo").
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { reviewId, type ReviewCandidate } from "../src/review.ts";
 import { ankarflagga } from "../src/utrakningen.ts";
@@ -46,20 +46,28 @@ async function api(path: string, init?: RequestInit): Promise<unknown> {
   return res.json();
 }
 
-/** Alla review-id:n som redan har ett issue (öppet eller stängt). */
-async function existingIssueIds(): Promise<Set<string>> {
-  const ids = new Set<string>();
+/**
+ * Alla review-id:n som redan har ett issue, delade på öppna och STÄNGDA.
+ *
+ * Skillnaden är hela poängen med `avgjorda` nedan: ett stängt issue betyder att
+ * en människa redan sagt ja eller nej till just den posten.
+ */
+async function existingIssueIds(): Promise<{ alla: Set<string>; stangda: Set<string> }> {
+  const alla = new Set<string>();
+  const stangda = new Set<string>();
   for (let page = 1; page <= 20; page++) {
     const batch = (await api(
       `/repos/${repo}/issues?labels=${encodeURIComponent(LABEL)}&state=all&per_page=100&page=${page}`,
-    )) as Array<{ title: string }>;
+    )) as Array<{ title: string; state: string }>;
     for (const issue of batch) {
       const m = issue.title.match(/^\[review ([0-9a-f]{12})\]/u);
-      if (m) ids.add(m[1]!);
+      if (!m) continue;
+      alla.add(m[1]!);
+      if (issue.state === "closed") stangda.add(m[1]!);
     }
     if (batch.length < 100) break;
   }
-  return ids;
+  return { alla, stangda };
 }
 
 /** Öppna review-issues med nummer + review-id (för vaktmästarstädningen). */
@@ -194,10 +202,36 @@ function issueBody(entry: ReviewCandidate, id: string): string {
   return lines.join("\n");
 }
 
-const items = JSON.parse(readFileSync(join(DATA_DIR, "needs_review.json"), "utf8")) as ReviewCandidate[];
-console.log(`Kön: ${items.length} poster. Hämtar befintliga issues …`);
-const existing = await existingIssueIds();
-console.log(`Redan issue-satta: ${existing.size}.`);
+const alla = JSON.parse(readFileSync(join(DATA_DIR, "needs_review.json"), "utf8")) as ReviewCandidate[];
+console.log(`Kön: ${alla.length} poster. Hämtar befintliga issues …`);
+const { alla: existing, stangda } = await existingIssueIds();
+console.log(`Redan issue-satta: ${existing.size} (varav ${stangda.size} stängda).`);
+
+/**
+ * Poster som redan är AVGJORDA rensas ur kön.
+ *
+ * Synken öppnar med flit aldrig om ett stängt issue — ett avgjort beslut ska
+ * inte återuppstå för att kandidaten skördas igen. Men posten blev kvar i
+ * `needs_review.json`, och då fanns den bara på ett ställe: i filen. Den syntes
+ * aldrig som ett issue, ingen kunde besluta om den, och varje mätning som
+ * räknade på filen räknade fel. Mätt 2026-08-31: 163 poster i filen mot 158
+ * öppna issues, och `67c94b110b6b` (S, «Införa en svensk maffialag») låg kvar
+ * trots att issue #4416 avgjordes den 25 augusti.
+ *
+ * Beslutet står kvar i git och i det stängda issuet — det är det som gör
+ * rensningen ofarlig. Kön ska visa vad som väntar på ett beslut, ingenting
+ * annat.
+ */
+const avgjorda = alla.filter((e) => stangda.has(reviewId(e)));
+const items = alla.filter((e) => !stangda.has(reviewId(e)));
+if (avgjorda.length > 0) {
+  writeFileSync(join(DATA_DIR, "needs_review.json"), `${JSON.stringify(items, null, 2)}\n`);
+  console.log(`Rensade ${avgjorda.length} redan avgjorda poster ur kön:`);
+  for (const e of avgjorda) {
+    const c = (e.candidate ?? {}) as { title?: string; parties?: string[] };
+    console.log(`  ${reviewId(e)} ${(c.parties ?? ["?"]).join(",")} — ${c.title ?? "okänd"}`);
+  }
+}
 
 let created = 0;
 for (const entry of items) {

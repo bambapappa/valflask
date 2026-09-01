@@ -178,6 +178,20 @@ jobs:
             --promises ../../data/promises.json --parties ../../data/parties.json
           node --experimental-strip-types scripts/domar.mts --promises ../../data/promises.json
         working-directory: handlingsvagen/pipeline
+      # Review-kön → GitHub-issues (ett per post; beslut via review.yml).
+      # Idempotent och best-effort — issue-synk får aldrig fälla datakörningen.
+      #
+      # Ligger FÖRE commit-steget sedan 2026-09-01. Synken rensar numera poster
+      # som redan är avgjorda ur `needs_review.json`, och låg den efter committen
+      # skrevs den rensningen aldrig ner: filen behöll posterna, och kön i filen
+      # gled isär från kön på GitHub (163 mot 158 den 31 augusti). Steget är
+      # `continue-on-error`, så en trasig synk stoppar fortfarande ingen data.
+      - name: Sync review-kö till issues
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node --import tsx/esm scripts/sync-review-issues.mts
+        working-directory: pipeline
       # App-tokens lever 1 h. Pipelinesteget kan ta längre (första manifest-
       # körningen tog 71 min) — då är jobbstart-tokenen död vid push och datan
       # går förlorad (run 28673246764). Mynta därför en FÄRSK token efter
@@ -245,14 +259,6 @@ jobs:
           done
           echo "Push misslyckades efter 5 försök."
           exit 1
-      # Review-kön → GitHub-issues (ett per post; beslut via review.yml).
-      # Idempotent och best-effort — issue-synk får aldrig fälla datakörningen.
-      - name: Sync review-kö till issues
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: node --import tsx/esm scripts/sync-review-issues.mts
-        working-directory: pipeline
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
           name: run-report
