@@ -22296,14 +22296,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 600,
-      "msek_base": 1000,
-      "msek_high": 1500,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Avgiftsfri tandvård till och med 23 års ålder: de årskullar som tillkommer över dagens gräns. Staten kompenserar regionerna för den nya uppgiften.",
-      "confidence": 0.45,
-      "calculation": "Löftet återinför avgiftsfri tandvård till och med det år man fyller 23. Det som tillkommer är årskullarna över dagens gräns, omkring fyra till fem årskullar eller 450 000–600 000 personer. Med en årlig tandvårdskostnad på 1 500–3 000 kronor per person blir kostnaden 675–1 800 miljoner kronor per år. Basfallet räknar 500 000 personer à 2 000 kronor, alltså omkring 1 000 miljoner kronor per år. Tandvården för unga sköts av regionerna, men en ändrad åldersgräns i lagen ger dem en ny uppgift som staten ska kompensera för, så kostnaden hamnar i statens budget."
+      "msek_low": 400,
+      "msek_base": 500,
+      "msek_high": 650,
+      "basis": "parti",
+      "basis_url": "https://www.vansterpartiet.se/nyheter/vansterpartiet-presenterar-ungdomspaketet-5-miljarder-for-studerande-och-unga/",
+      "method_note": "Partiets egen siffra: cirka 500 miljoner kronor för att återställa den fria tandvården för unga. Läses som en årlig nivå. Spannet bär bara ordet «cirka» — basbeloppet är partiets och byts inte ut mot ett eget.",
+      "confidence": 0.6,
+      "calculation": "Vänsterpartiet anger själv kostnaden. I Ungdomspaketet, under rubriken «Fri tandvård för unga», står: «Den fria tandvården för unga återställs, till en kostnad av cirka 500 miljoner kronor.» Den siffran är partiets och räknas som den står. Basbeloppet sätts därför till 500 miljoner kronor per år. Spannet 400–650 speglar enbart osäkerheten i ordet «cirka», inte en egen uppskattning av åtgärden. Det tidigare beloppet, 1 000 miljoner kronor, var ett modellestimat som gjordes innan partiets egen siffra var känd."
     },
     "financing_claimed": {
       "described": false,
@@ -22318,6 +22318,11 @@
         "date": "2026-07-28",
         "change": "Beloppet justerat från 600 till 1 000 miljoner kronor per år, så att det stämmer med uträkningen i samma fält: den räknade fram omkring 1 000 miljoner kronor i basfallet och spannet 600–1 500, medan beloppsfältet stod på 600 och taket på 1 000. Uträkningen skriver nu också ut varför kostnaden hamnar hos staten fast tandvården sköts av regionerna.",
         "commit": "b29a5ad06fd9c2bd8905a5d42d78e5114bbd7231"
+      },
+      {
+        "date": "2026-09-01",
+        "commit": "0000000",
+        "change": "Beloppet sänkt från 1 000 till 500 miljoner kronor per år, och basen ändrad från modellestimat till partiets egen siffra. Vänsterpartiet anger själv cirka 500 miljoner kronor för att återställa den fria tandvården för unga, i Ungdomspaketet den 26 augusti 2026. Regeln är att partiets egen siffra gäller och aldrig byts mot en egen. Uppmärksammat i genomgången av granskningskön, där en kandidat bar partiets siffra."
       }
     ],
     "extraction": {
