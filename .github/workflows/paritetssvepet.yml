@@ -34,7 +34,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           token: ${{ steps.app-token.outputs.token }}
-          persist-credentials: true
+          # Se h2-svep.yml: inga sparade uppgifter, färsk token i origin-URL:en.
+          persist-credentials: false
       - uses: pnpm/action-setup@v4  # samma pin-undantag som pipeline.yml (2026-06-15)
         with:
           version: 9
@@ -50,9 +51,19 @@ jobs:
         id: svep
         run: pnpm paritetssvepet -- --skriv | tee /tmp/paritet.txt
         working-directory: pipeline
+      # App-tokens lever en timme — mynta en färsk precis före pushen.
+      - name: Mint fresh push token
+        id: push-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Commit kön if changed
+        env:
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           git add data/paritetskon.json
           if git diff --cached --quiet; then
             echo "Kön ser likadan ut som förra veckan — inget att committa."

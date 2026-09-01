@@ -115,7 +115,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           token: ${{ steps.token.outputs.token }}
-          persist-credentials: true
+          # Se h2-svep.yml och calculation-backfill.yml: samma form överallt.
+          persist-credentials: false
       - name: Hämta dataartifact
         uses: actions/download-artifact@v4
         with:
@@ -124,8 +125,11 @@ jobs:
           run-id: ${{ inputs.source_run_id != '' && inputs.source_run_id || github.run_id }}
           github-token: ${{ github.token }}
       - name: Applicera och pusha
+        env:
+          PUSH_TOKEN: ${{ steps.token.outputs.token }}
         run: |
           git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           for f in needs_review.json ko_prissattning_anmarkningar.json; do
             src="$(find artifact-data -name "$f" | head -1)"
             [ -n "$src" ] && cp "$src" "data/$f" && echo "applicerade data/$f"

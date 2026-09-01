@@ -35,7 +35,8 @@ jobs:
         with:
           ref: main
           token: ${{ steps.app-token.outputs.token }}
-          persist-credentials: true
+          # Se h2-svep.yml: inga sparade uppgifter, färsk token i origin-URL:en.
+          persist-credentials: false
       - uses: pnpm/action-setup@v4
         with:
           version: 9
@@ -45,13 +46,22 @@ jobs:
       - name: Install pipeline deps
         run: pnpm install --frozen-lockfile
         working-directory: pipeline
+      # App-tokens lever en timme — mynta en färsk precis före pushen.
+      - name: Mint fresh push token
+        id: push-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Apply decisions and push (omgörs från färsk main tills push lyckas)
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NOTIFY_FILE: ${{ runner.temp }}/notify.json
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "utlovat-bot"
           git config user.email "bot@utlovat.se"
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           for attempt in 1 2 3 4 5; do
             # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
             # gammalt träd, och då kan en misslyckad push se ut som

@@ -13,37 +13,75 @@
  * publicerar den hashen som datats fingeravtryck, så en glömd omräkning är ett
  * publicerat felaktigt påstående om vilket data läsaren ser.
  * `tests/fingeravtrycket.test.ts` fäller det numera.
+ *
+ * **BARA DINA EGNA PLATSHÅLLARE.** Skriptet stämplade tidigare varenda
+ * `0000000` i filen med samma hash, oavsett vem som skrivit den. Ett par
+ * sessioner hann inte sitt andra steg, och 376 främmande platshållare låg
+ * kvar i trädet — ett anrop hade då tillskrivit dem alla en commit de inte
+ * kom ur, och gjort 376 falska påståenden om var en ändring kommer ifrån.
+ * Det upptäcktes 2026-09-01, när skriptet stämplade 389 i stället för 2 och
+ * fick backas.
+ *
+ * Nu jämförs mot HEAD: bara platshållare som INTE fanns i den senast
+ * committade versionen räknas som dina. Fanns de redan är de någon annans
+ * halvfärdiga par, och de rörs inte — de rättas med en härledning ur
+ * historien, som `--alla-fran <fil>` tar emot.
  */
+import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash } from "../src/publish.ts";
+import { stampla } from "../src/backfillen.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
-const kort = process.argv.slice(2).find((a) => !a.startsWith("--"));
+const argv = process.argv.slice(2);
+const kort = argv.find((a) => !a.startsWith("--"));
+// Nödutgång för den som medvetet vill stämpla allt, t.ex. i en engångsrättelse.
+// Måste skrivas ut — tystnaden var felet.
+const alla = argv.includes("--aven-andras");
 
 if (!kort || !/^[0-9a-f]{7,40}$/u.test(kort)) {
   console.error("Ange commit-hashen: pnpm backfilla-commit <kort-hash>");
   process.exit(1);
 }
 
-let bytta = 0;
-const ersatt = (o: unknown): void => {
-  if (Array.isArray(o)) {
-    for (const x of o) ersatt(x);
-  } else if (o && typeof o === "object") {
-    const r = o as Record<string, unknown>;
-    for (const [k, v] of Object.entries(r)) {
-      if (k === "commit" && v === "0000000") {
-        r[k] = kort;
-        bytta += 1;
-      } else ersatt(v);
-    }
-  }
-};
-
 const filer = ["promises.json", "rattelser.json", "changelog.json"] as const;
+
+/**
+ * Den senast committade versionen av filen, tolkad — eller `null` när det inte
+ * finns någon. `null` betyder «allt i trädet är ditt».
+ *
+ * Regeln för vad som är ditt bor i `src/backfillen.ts` och prövas där, utan
+ * git och utan delprocess. Det här är bara hämtningen.
+ */
+function committat(fil: string): unknown | null {
+  if (alla) return null;
+  try {
+    return JSON.parse(
+      execFileSync("git", ["show", `HEAD:data/${fil}`], { encoding: "utf8", maxBuffer: 1 << 30 }),
+    );
+  } catch {
+    // Filen är ny i det här trädet — då är allt i den ditt.
+    return null;
+  }
+}
+
 const innehall = new Map(filer.map((f) => [f, JSON.parse(readFileSync(join(DATA, f), "utf8"))]));
-for (const f of filer) ersatt(innehall.get(f));
+let bytta = 0;
+let hoppade = 0;
+for (const f of filer) {
+  const r = stampla(innehall.get(f), committat(f), kort);
+  bytta += r.bytta;
+  hoppade += r.hoppade;
+}
+
+if (hoppade > 0) {
+  console.log(
+    `${hoppade} platshållare lämnade orörda — de låg redan i HEAD och är alltså inte dina.\n` +
+      "  De är någon annans halvfärdiga par och rättas med en härledning ur historien.\n" +
+      "  Vill du ändå stämpla dem: --aven-andras (och skriv ut varför).",
+  );
+}
 
 // Ordningen spelar roll: hashen ska räknas på löftena EFTER bytet.
 const loften = innehall.get("promises.json") as unknown[];
