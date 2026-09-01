@@ -13,6 +13,43 @@ permissions:
 # körningar är säkra: handlern görs om från färsk main tills pushen lyckas,
 # och en redan hanterad post svarar "redan hanterad" i stället för dubbelkörs.
 jobs:
+  # En tyst avvisning är värre än ett felsvar.
+  #
+  # Grinden på `handle` släpper bara ägarens kommandon, och när den fäller
+  # något händer INGENTING: körningen står som «skipped», kommentaren ligger
+  # kvar och ser besvarad ut, och den som skrev den tror att beslutet är
+  # fattat. Mätt 2026-09-01: fyrtio `/avvisa` postades av `claude[bot]`
+  # (author_association `NONE` — inte samma identitet som ägarens
+  # GitHub-verktyg). Alla fyrtio hoppades över, kön var oförändrad, och det
+  # syntes bara för att någon läste körningarnas utfall efteråt. Hade ingen
+  # gjort det vore fyrtio beslut rapporterade som fattade utan att vara det.
+  #
+  # Jobbet nedan svarar i stället. Det rör ingen data och kan inte fatta
+  # något beslut — det säger bara att kommandot inte gjorde något, och varför.
+  # Svaret börjar inte med «/», så det kan inte utlösa sig självt.
+  #
+  # Villkoret är med flit `handle`:s spegelbild: samma två krav, motsatt
+  # behörighetsjämförelse. `tests/review-grinden.test.ts` mäter att de
+  # förblir varandras spegelbild, så att ett `/`-kommando på ett kö-issue
+  # alltid träffar exakt ett av jobben och aldrig faller mellan dem.
+  ej_behorig:
+    if: >
+      contains(github.event.issue.labels.*.name, 'review-kö') &&
+      github.event.comment.author_association != 'OWNER' &&
+      startsWith(github.event.comment.body, '/')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Säg att kommandot inte exekverades
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          FORFATTARE: ${{ github.event.comment.user.login }}
+        run: |
+          gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body \
+            "⚠️ Kommandot ovan **exekverades inte**. Review-beslut tas bara emot från repots ägare, och kommentaren kom från \`$FORFATTARE\`. Kön är oförändrad och posten väntar fortfarande på ett beslut."
+
   handle:
     if: >
       contains(github.event.issue.labels.*.name, 'review-kö') &&
