@@ -157313,9 +157313,9 @@
       "msek_high": 0,
       "basis": "granskare",
       "basis_url": null,
-      "method_note": "(belopp satt av granskare)",
+      "method_note": "Straffskärpning med angiven nivå: straffen ska dubblas för en avgränsad brottstyp. Åtgärden är en verklig statlig utgift, men beloppet skrivs inte ut eftersom aritmetiken saknar yttre källa i båda ändar. Basen står därför på noll.",
       "confidence": 0.9,
-      "calculation": "Straffskärpning utan nivå och ingen publicerad motsvarighet hittad. Direkt statskostnad försumbar — 0 engång.",
+      "calculation": "Löftet anger en nivå: straffen ska dubblas för brott som ingått som ett led i allvarlig brottslighet och innefattat skjutvapen eller sprängämne på allmän plats. Fler och längre fängelsedygn är en verklig kostnad för staten, inte en samhällsföljd som lämnas utanför — nollningsregeln för lagändringar gäller alltså inte här. Beloppet skrivs ändå inte ut, för aritmetiken kräver en yttre källa i båda ändar: ett belagt antal domar eller fängelseår för just den här avgränsade brottstypen, och en belagd dygnskostnad i kriminalvården. Det första saknas. Ett antaget antal gånger en antagen dygnskostnad är två gissningar som multipliceras, och det skriver vi inte ut som en prislapp. Åtgärden borde alltså kosta, men underlaget räcker inte, och basbeloppet sätts till noll.",
       "anchor_ids": []
     },
     "financing_claimed": {
@@ -157331,6 +157331,11 @@
         "date": "2026-09-01",
         "commit": "c4525151",
         "change": "Citatet byttes 2026-09-01 mot en annan lydelse på samma sida, hämtad ur källan och kontrollerad ord för ord. Beloppet, källan och bedömningen är oförändrade."
+      },
+      {
+        "date": "2026-09-01",
+        "commit": "0000000",
+        "change": "Uträkningen omskriven. Beloppet är oförändrat noll, men skälet är rättat. Den gamla texten sade «straffskärpning utan nivå» — vilket citatet motsäger sedan det byttes till partiets åtagande — och «direkt statskostnad försumbar», vilket strider mot regeln att en straffskärpning är en verklig statlig utgift. Rätt skäl är att åtgärden borde kosta men att aritmetiken saknar yttre källa i båda ändar."
       }
     ],
     "extraction": {
