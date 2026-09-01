@@ -42,13 +42,21 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
           ref: ${{ github.event.repository.default_branch }}
-          persist-credentials: true
+          # Se h2-svep.yml: inga sparade uppgifter, färsk token i origin-URL:en.
+          persist-credentials: false
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
         with:
           node-version: 22
       - name: Install pipeline deps
         run: npm ci
         working-directory: handlingsvagen/pipeline
+      # App-tokens lever en timme — mynta en färsk precis före pushen.
+      - name: Mint fresh push token
+        id: push-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Execute decision and push
         id: decision
         # Kommentar/titel går som miljövariabler in i Node — ALDRIG
@@ -59,9 +67,11 @@ jobs:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           for attempt in 1 2 3 4 5; do
             # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
             # gammalt träd, och då kan en misslyckad push se ut som

@@ -67,7 +67,8 @@ jobs:
         with:
           ref: main
           token: ${{ steps.app-token.outputs.token }}
-          persist-credentials: true
+          # Se h2-svep.yml: inga sparade uppgifter, färsk token i origin-URL:en.
+          persist-credentials: false
       - uses: pnpm/action-setup@v4
         with:
           version: 9
@@ -77,6 +78,13 @@ jobs:
       - name: Install pipeline deps
         run: pnpm install --frozen-lockfile
         working-directory: pipeline
+      # App-tokens lever en timme — mynta en färsk precis före pushen.
+      - name: Mint fresh push token
+        id: push-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Execute decision and push
         id: decision
         # Kommentar/titel går som miljövariabler in i Node — ALDRIG interpolerade
@@ -86,9 +94,11 @@ jobs:
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           COMMENT_BODY: ${{ github.event.comment.body }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "utlovat-bot"
           git config user.email "bot@utlovat.se"
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           for attempt in 1 2 3 4 5; do
             # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
             # gammalt träd, och då kan en misslyckad push se ut som
@@ -100,7 +110,19 @@ jobs:
             fi
             git reset --hard origin/main
             (cd pipeline && node --import tsx/esm scripts/handle-review-comment.mts)
-            git add data/
+            # LÄSKOPIAN FÖLJER LÖFTENA, OCH ETT GODKÄNNANDE PUBLICERAR ETT LÖFTE.
+            # Handlingsvågen läser sin egen kopia av Fläskvågens löften, och
+            # `laskopian.test.ts` fäller den så snart den glidit. Samma rättelse
+            # gjordes i review-apply.yml 2026-08-30, men BARA där — och den här
+            # workflown publicerar löften på precis samma sätt. Fyra godkännanden
+            # via issue-kommentar lämnade main röd 2026-09-01, och felet syntes
+            # först när någon körde provsviten.
+            #
+            # Bygget är billigt och idempotent: kopian härleds ur promises.json,
+            # så ändrades inget löfte ändras ingenting här, och `git diff
+            # --cached` nedan avgör som förut om något ska committas.
+            node --experimental-strip-types handlingsvagen/pipeline/scripts/bygg-vendor.mts
+            git add data/ handlingsvagen/data/
             if git diff --cached --quiet; then
               echo "Inga dataändringar (fel-/hjälpsvar eller redan hanterad)."
               exit 0

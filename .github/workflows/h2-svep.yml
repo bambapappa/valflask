@@ -33,7 +33,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           token: ${{ steps.app-token.outputs.token }}
-          persist-credentials: true
+          # INGA sparade uppgifter — samma rättelse som pipeline.yml. Checkouten
+          # skriver annars in jobbstart-tokenen i git-configen, och den vinner
+          # över den färska token som sätts i origin-URL:en före pushen. Tokenen
+          # lever en timme; blir körningen längre skickar git den döda tokenen.
+          persist-credentials: false
       - uses: pnpm/action-setup@v4  # samma pin-undantag som pipeline.yml (2026-06-15)
         with:
           version: 9
@@ -48,9 +52,21 @@ jobs:
       - name: Kör om H2 mot riksdagens källor
         run: pnpm h2-svep
         working-directory: handlingsvagen/pipeline
+      # App-tokens lever en timme. Mynta en färsk precis före pushen, så att
+      # längden på steget ovan aldrig kan göra tokenen död vid pushen.
+      - name: Mint fresh push token
+        id: push-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
       - name: Commit svepet if changed
+        env:
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          # Checkouten sparar inga uppgifter, så det här är de enda git har.
+          git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           git add handlingsvagen/data/h2-svepet.json
           if git diff --cached --quiet; then
             echo "Svepet gav samma bild som förra veckan — inget att committa."
