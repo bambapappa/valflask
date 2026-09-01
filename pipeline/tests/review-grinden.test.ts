@@ -86,6 +86,26 @@ describe("review-grinden avvisar aldrig ett kommando tyst", () => {
     assert.doesNotMatch(kommandon, /\bgit\s+(push|commit)\b/u, "svaret ändrar ingen data");
   });
 
+  it("svarssteget körs även när beslutet föll — annars blir issuet tyst", () => {
+    // Den andra vägen in i samma tystnad. `handle` svarar med grön körning och
+    // förklarande kommentar när kommandot är fel skrivet, men kvalitetsfiltret
+    // inne i `approve()` avslutar processen med kod 1. Utan `if: always()`
+    // hoppas svarssteget då över: rött jobb, tyst issue, kommando som ser
+    // besvarat ut. Fyra godkännanden gick den vägen 2026-09-01.
+    //
+    // FÄLLS AV: att ta bort `if: always()` från svarssteget, eller att ta bort
+    // grenen som svarar när `result` är tom.
+    const steg = (jobben()["handle"]!.steps ?? []) as Array<{ name?: string; if?: string; run?: string }>;
+    const svar = steg.find((s) => /gh issue comment/u.test(s.run ?? ""));
+    assert.ok(svar, "hittade inget steg som svarar på issuet");
+    assert.equal(svar!.if, "always()", "svaret måste köras även när beslutssteget föll");
+    assert.match(
+      svar!.run ?? "",
+      /^\s*""\)/mu,
+      "det ska finnas en gren för tomt resultat — då bröt körningen och issuet ska få veta det",
+    );
+  });
+
   it("svaret kan inte utlösa sig självt", () => {
     const j = jobben()["ej_behorig"]!;
     const kropp = (j.steps ?? []).map((s) => s.run ?? "").join("\n");
