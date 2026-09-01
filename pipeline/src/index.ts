@@ -182,6 +182,7 @@ export async function runPipeline(
     category: p.category,
     group_id: p.group_id,
     quote: p.quote,
+    status: p.status,
   }));
   // Riktmärken för kostnadsankring: befintliga löften med sitt belopp, så ett
   // nytt LLM-estimat hamnar i samma storleksordning som liknande politik.
@@ -242,11 +243,40 @@ export async function runPipeline(
     return { dup, politikDup };
   };
 
+  /**
+   * Levande löften först, indragna bara som sista utväg.
+   *
+   * Ett tillbakadraget löfte är inte publicerat: det kan varken dubbleras
+   * eller ingå i en grupp, och en kandidat som pekar på ett sådant ska prövas
+   * som ett nytt löfte. Kollarna läste ändå hela beståndet, och i kön
+   * 2026-08-31 pekade 13 av 78 flaggor på indragna löften. Sex av dem hade en
+   * LEVANDE tvilling: p-2026-2949 och p-2026-2448 drogs själva in som
+   * dubbletter av p-2026-2947 och p-2026-2922, som bär kalkylerna — kollen
+   * stannade vid den döda kopian och kom aldrig fram till den levande.
+   *
+   * Träffen kastas inte, för den bär en varning värd att se: kandidaten kan
+   * vara på väg att återinföra något som medvetet dragits in. Den märks i
+   * stället, så granskningen ser skillnaden i stället för att gissa.
+   */
+  const hittaDublettMedStatus = (
+    accepted: ExtractionCandidate,
+    pool: ExistingPromiseLite[],
+  ) => {
+    const levande = pool.filter((e) => e.status !== "tillbakadragen");
+    const iLevande = hittaDublett(accepted, levande);
+    if (iLevande.dup) return { ...iLevande, indraget: false };
+    const indragna = pool.filter((e) => e.status === "tillbakadragen");
+    if (indragna.length === 0) return { ...iLevande, indraget: false };
+    const iIndragna = hittaDublett(accepted, indragna);
+    return { ...iIndragna, indraget: iIndragna.dup !== null };
+  };
+
   const dublettpost = (
     accepted: ExtractionCandidate,
     article: NormalizedArticle,
     dup: ExistingPromiseLite,
     politikDup: ReturnType<typeof findPolicyDuplicate>,
+    indraget = false,
   ): NeedsReviewEntry => ({
     candidate: accepted,
     failures: [],
@@ -259,6 +289,11 @@ export async function runPipeline(
     ...(politikDup && dup.id === politikDup.match.id
       ? { duplicateReason: politikDup.reason }
       : {}),
+    // Målet är indraget: kandidaten är alltså INTE en dublett — det
+    // publicerade finns inte längre — utan ska prövas som ett nytt löfte.
+    // Flaggan står kvar ändå, för den säger att kandidaten kan återinföra
+    // något som medvetet drogs in.
+    ...(indraget ? { duplicateWithdrawn: true } : {}),
   });
 
   /** Vad en artikel lämnar ifrån sig ur det samtidiga passet. */
@@ -350,11 +385,11 @@ export async function runPipeline(
           // ordningen är känd, alltså i sammanfogningen — de kostar ett
           // estimat som den sekventiella koden slapp. De är sällsynta, och
           // priset är att takten aldrig påverkar utfallet.
-          const tidig = hittaDublett(accepted, poolVidStart);
+          const tidig = hittaDublettMedStatus(accepted, poolVidStart);
           if (tidig.dup) {
             ut.kandidater.push({
               sort: "ko",
-              post: dublettpost(accepted, article, tidig.dup, tidig.politikDup),
+              post: dublettpost(accepted, article, tidig.dup, tidig.politikDup, tidig.indraget),
             });
             continue;
           }
@@ -495,9 +530,9 @@ export async function runPipeline(
       // Samma kandidat som passerade beståndskollen ovan prövas nu mot poolen
       // som växer under körningen — det är här två artiklar i SAMMA körning som
       // bär samma löfte skiljs åt, och den första i indataordning vinner.
-      const { dup, politikDup } = hittaDublett(k.accepted, dedupPool);
+      const { dup, politikDup, indraget } = hittaDublettMedStatus(k.accepted, dedupPool);
       if (dup) {
-        reviewItems.push(dublettpost(k.accepted, ut.article, dup, politikDup));
+        reviewItems.push(dublettpost(k.accepted, ut.article, dup, politikDup, indraget));
         continue;
       }
       dedupPool.push({
@@ -507,6 +542,8 @@ export async function runPipeline(
         category: k.accepted.category,
         group_id: null,
         quote: k.accepted.quote,
+        // En kandidat ur den här körningen är per definition inte indragen.
+        status: "aktiv",
       });
       reviewItems.push(k.post);
     }

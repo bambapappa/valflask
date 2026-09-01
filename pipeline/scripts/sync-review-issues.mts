@@ -93,9 +93,21 @@ function issueBody(entry: ReviewCandidate, id: string): string {
   if (entry.costReason) reasons.push(`**Kostnad**: ${entry.costReason}`);
   if (entry.manualReason) reasons.push(`**Manuell**: ${entry.manualReason}`);
   if (entry.duplicateOf) {
+    // Ett indraget mål vänder på beslutet: det publicerade finns inte längre,
+    // så kandidaten är ingen dublett utan ett nytt löfte att pröva. Står det
+    // under samma rubrik som en äkta dublett läses den som en avvisning, och
+    // så avvisades den 2026-08-31 i ett beslutsunderlag som räknade tretton
+    // sådana som dubletter.
     reasons.push(
-      `**Möjlig dublett av** \`${entry.duplicateOf}\`` +
-        (entry.duplicateReason ? ` — ${entry.duplicateReason}` : ""),
+      entry.duplicateWithdrawn
+        ? `**Målet är tillbakadraget** — \`${entry.duplicateOf}\` är indraget, ` +
+          `så det här är INTE en dublett utan ett nytt löfte att pröva. Läs varför ` +
+          `målet drogs in innan du dömer: gäller skälet kandidaten också ska den ` +
+          `avvisas på samma grund, och drogs målet in som dubblett ska kandidaten ` +
+          `prövas mot den levande tvillingen i stället.` +
+          (entry.duplicateReason ? ` (Flaggan läste: ${entry.duplicateReason}.)` : "")
+        : `**Möjlig dublett av** \`${entry.duplicateOf}\`` +
+          (entry.duplicateReason ? ` — ${entry.duplicateReason}` : ""),
     );
   }
 

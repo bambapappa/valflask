@@ -42,6 +42,7 @@ describe("findQuoteDuplicate — samma citat är samma yttrande", () => {
       parties: ["mp"],
       category: "transport",
       group_id: null,
+      status: "aktiv",
       quote: sverigekortet,
     },
   ];
@@ -97,6 +98,7 @@ describe("findQuoteDuplicate — samma citat är samma yttrande", () => {
         parties: ["s"],
         category: "skola",
         group_id: null,
+        status: "aktiv",
         quote: "Vi vill förbjuda religiösa friskolor.",
       },
     ];
@@ -114,7 +116,7 @@ describe("findQuoteDuplicate — samma citat är samma yttrande", () => {
 
   it("för kort citat jämförs inte — två partier kan säga 'det ska bort'", () => {
     const kort: ExistingPromiseLite[] = [
-      { id: "p-1", title: "t", parties: ["s"], category: "välfärd", group_id: null, quote: "Det ska bort." },
+      { id: "p-1", title: "t", parties: ["s"], category: "välfärd", group_id: null, status: "aktiv", quote: "Det ska bort." },
     ];
     assert.equal(findQuoteDuplicate({ quote: "Det ska bort." }, kort), null);
   });
@@ -136,6 +138,7 @@ describe("findPossibleDuplicate", () => {
       parties: ["s"],
       category: "välfärd",
       group_id: null,
+      status: "aktiv",
       quote: "Vi vill höja a-kassan till nittio procent av lönen.",
     },
   ];
@@ -173,6 +176,7 @@ describe("findCrossPartyDuplicate — samma politik hos annat parti (R3)", () =>
       parties: ["l"],
       category: "försvar",
       group_id: null,
+      status: "aktiv",
       quote: "Liberalerna vill höja försvarsanslagen till fem procent av BNP.",
     },
     {
@@ -181,6 +185,7 @@ describe("findCrossPartyDuplicate — samma politik hos annat parti (R3)", () =>
       parties: ["s"],
       category: "välfärd",
       group_id: null,
+      status: "aktiv",
       quote: "Den orättvisan vill vi ta bort, karensavdraget ska avskaffas helt.",
     },
   ];
@@ -191,6 +196,38 @@ describe("findCrossPartyDuplicate — samma politik hos annat parti (R3)", () =>
       existing,
     );
     assert.equal(d?.id, "p-2026-0340");
+  });
+
+  // Det skarpa fallet, mätt i kön 2026-08-31: S:s «Nej till marknadshyror»
+  // flaggades mot M:s «Nej till bolåneskatt». Jaccard landar på 0,50 — väl över
+  // tröskeln 0,35 — men de två delade orden är `nej` och `till`. Hela likheten
+  // är satsbindningen, och sakfrågorna har ingenting med varandra att göra.
+  //
+  // FÄLLS AV: att ta bort kravet på ett delat innehållsord i
+  // findCrossPartyDuplicate. Då är titellikheten ensam ansvarig igen och
+  // paret flaggas på nytt.
+  it("två titlar som bara delar satsbindning flaggas inte («Nej till …»)", () => {
+    const bolaneskatt: ExistingPromiseLite[] = [
+      {
+        id: "p-2026-1314",
+        title: "Nej till bolåneskatt",
+        parties: ["m"],
+        category: "skatter",
+        group_id: null,
+        status: "aktiv",
+        quote: "Vi säger nej till bolåneskatt",
+      },
+    ];
+    assert.equal(
+      titleSimilarity("Nej till marknadshyror", "Nej till bolåneskatt") >= 0.35,
+      true,
+      "förutsättningen: titellikheten ensam räcker över tröskeln",
+    );
+    const d = findCrossPartyDuplicate(
+      { title: "Nej till marknadshyror", parties: ["s"], category: "skatter" },
+      bolaneskatt,
+    );
+    assert.equal(d, null, "delade orden är «nej» och «till» — det är form, inte politik");
   });
 
   it("SAMMA parti flaggas INTE här (intra-parti hanteras av findPossibleDuplicate)", () => {
@@ -385,6 +422,7 @@ describe("findPolicyDuplicate — samma uppgift, inte samma text", () => {
       parties: ["kd"],
       category: "utbildning",
       group_id: null,
+      status: "aktiv",
       quote:
         "Vi vill införa en lag om max 12 barn i småbarnsgrupperna, och max 15 barn i storbarnsgrupperna i förskolan.",
     },
@@ -394,6 +432,7 @@ describe("findPolicyDuplicate — samma uppgift, inte samma text", () => {
       parties: ["kd"],
       category: "migration",
       group_id: null,
+      status: "aktiv",
       quote:
         "För att motverka irreguljär migration och människosmuggling samt skydda de allra mest utsatta, vill Kristdemokraterna att olika system för säkra och lagliga vägar blir den huvudsakliga metoden att söka asyl i Sverige.",
     },
@@ -403,6 +442,7 @@ describe("findPolicyDuplicate — samma uppgift, inte samma text", () => {
       parties: ["kd"],
       category: "migration",
       group_id: null,
+      status: "aktiv",
       quote:
         "För att Frontex ska kunna lösa sina uppgifter i framtiden krävs ett tydligare mandat och en utvecklad förmåga. Detta innebär bland annat att EU:s gemensamma gränsövervakning succesivt ska stärkas och antalet gränspoliser växa till 30 000 på sikt.",
     },
@@ -412,6 +452,7 @@ describe("findPolicyDuplicate — samma uppgift, inte samma text", () => {
       parties: ["s"],
       category: "utbildning",
       group_id: null,
+      status: "aktiv",
       quote: "Vi vill se ett tak på 12 barn i småbarnsgrupperna i förskolan.",
     },
   ];
@@ -486,6 +527,7 @@ describe("findPolicyDuplicate — samma uppgift, inte samma text", () => {
         parties: ["kd"],
         category: "välfärd",
         group_id: null,
+        status: "aktiv",
         quote:
           "Kristdemokraterna vill införa en äldreboendegaranti som innebär att personer över 85 år får rätt till plats.",
       },
@@ -508,6 +550,7 @@ describe("findPolicyDuplicate — samma uppgift, inte samma text", () => {
       parties: ["kd"],
       category: "övrigt",
       group_id: null,
+      status: "aktiv",
       quote: `Vi vill satsa 15 miljarder kronor på område nummer ${i} under mandatperioden.`,
     }));
     const träff = findPolicyDuplicate(

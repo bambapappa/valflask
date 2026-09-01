@@ -12,6 +12,14 @@ export interface ExistingPromiseLite {
   group_id: string | null;
   /** Citatet löftet vilar på — nyckeln i den exakta dublettkollen nedan. */
   quote: string;
+  /**
+   * `aktiv` eller `tillbakadragen`. Fältet är obligatoriskt med flit: det
+   * saknades här medan `ComparablePromiseLite` bar det, och därför kunde
+   * dublettkollarna inte ens uttrycka «målet är indraget». Följden var mätbar
+   * — 13 av 78 flaggor i kön 2026-08-31 pekade på tillbakadragna löften, och
+   * sex av dem hade en levande tvilling som kollen aldrig kom fram till.
+   */
+  status: string;
 }
 
 export interface DupKey {
@@ -29,6 +37,28 @@ function tokens(s: string): Set<string> {
       .split(/\s+/)
       .filter((w) => w.length > 2),
   );
+}
+
+/**
+ * Delar de två titlarna minst ett ord som bär politik?
+ *
+ * Jaccard räknar alla ord lika, och två titlar kan därför nå över tröskeln på
+ * enbart satsbindning. Mätt: «Nej till marknadshyror» (S) och «Nej till
+ * bolåneskatt» (M) delar `nej` och `till`, landar på 0,50 — väl över
+ * tvärpartitröskeln 0,35 — och flaggades som samma politik. Hela likheten var
+ * formen; ingenting var sakfrågan. Marknadshyror och bolåneskatt har inte med
+ * varandra att göra, och partiet som citatet angriper var det parti flaggan
+ * pekade på.
+ *
+ * Kravet använder politikkollens egen stympning (`innehallsord`): ord kortare
+ * än fyra tecken och ren satsbindning faller bort, resten möts i böjning. Det
+ * rubbar inte trösklarna 0,3/0,35 — det lägger till ett villkor som en äkta
+ * dublett alltid uppfyller. Flaggskeppsfallet L/C «5 procent av BNP» delar
+ * `procen` och passerar; formparen gör det inte.
+ */
+function delarInnehall(a: string, b: string): boolean {
+  const bOrd = new Set(innehallsord(b));
+  return innehallsord(a).some((w) => bOrd.has(w));
 }
 
 /** Jaccard-likhet (0–1) på ordmängder — robust mot ordföljd och småord. */
@@ -58,6 +88,7 @@ export function findPossibleDuplicate(
   for (const e of existing) {
     if (e.category !== candidate.category) continue;
     if (!e.parties.some((p) => cparties.has(p))) continue;
+    if (!delarInnehall(candidate.title, e.title)) continue;
     const sim = titleSimilarity(candidate.title, e.title);
     if (sim >= bestSim) {
       best = e;
@@ -161,6 +192,7 @@ export function findCrossPartyDuplicate(
   for (const e of existing) {
     if (e.category !== candidate.category) continue;
     if (e.parties.some((p) => cparties.has(p))) continue; // intra-parti hanteras ovan
+    if (!delarInnehall(candidate.title, e.title)) continue;
     const sim = titleSimilarity(candidate.title, e.title);
     if (sim >= bestSim) {
       best = e;
