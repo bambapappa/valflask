@@ -221,7 +221,8 @@ export interface Bytesrad {
 export function rattelsePost(
   byten: Bytesrad[],
   datum: string,
-): { date: string; affects: string; what: string; why: string; commit: string } {
+  orsak: string,
+): { date: string; affects: string; what: string; why: string; orsak: string; commit: string } {
   const ider = [...new Set(byten.map((b) => b.lofte.id))].sort();
   const undantag = byten.filter((b) => b.byte.fragmentSkal).length;
   const reparerade = byten.filter((b) => b.gammaltCitatSaknasIKallan).length;
@@ -270,6 +271,8 @@ export function rattelsePost(
       varforFlyttad +
       varforReparad +
       "Beloppet och bedömningen är oförändrade — det är citatet som bytt mening, inte prislappen.",
+    orsak,
+
     // Backfillas i en andra commit, samma mönster som övriga dataändringar.
     commit: "0000000",
   };

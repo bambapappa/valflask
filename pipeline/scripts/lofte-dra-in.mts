@@ -22,6 +22,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
+import { lasOrsak, ORSAKKODER } from "../src/orsakkoder.ts";
 import {
   draIn,
   grupperSomByterBarare,
@@ -56,6 +57,12 @@ const datum = svenskDag();
 
 const [listfil] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const skriv = process.argv.includes("--skriv");
+const orsakArg = lasOrsak(process.argv);
+if (orsakArg === null) {
+  console.error("En rättelsepost kräver --orsak med en av koderna (grind: rattelseschema.test.ts):");
+  for (const k of ORSAKKODER) console.error(`  ${k}`);
+  process.exit(1);
+}
 
 if (!listfil) {
   console.error("Ange en fil med en rad per löfte: <löftes-id><TAB><skäl>");
@@ -160,6 +167,7 @@ const post = rattelsePost(
   rader.map((r) => ({ lofte: byId.get(r.id)!, skal: r.skal })),
   datum,
   { partier, riket, grupperSomBytteBarare },
+  orsakArg,
 );
 console.log(`\nRättelsepost som skrivs:\n  ${post.affects}\n  ${post.what}`);
 

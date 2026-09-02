@@ -24,6 +24,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
+import { lasOrsak, ORSAKKODER } from "../src/orsakkoder.ts";
 import { paverkan, provaAnkarrad, rattelsePost, satt, type Ankarrad, type Lofte } from "../src/ankarsattning.ts";
 import { taLaset } from "../src/datalas.ts";
 import { svenskDag } from "../src/dagen.ts";
@@ -39,6 +40,12 @@ const { totalFlasket, partyTotalMsek } = aggregates;
 const DATA_DIR = join(import.meta.dirname, "../../data");
 const datum = svenskDag();
 const argv = process.argv.slice(2);
+const orsakArg = lasOrsak(process.argv);
+if (orsakArg === null) {
+  console.error("En rättelsepost kräver --orsak med en av koderna (grind: rattelseschema.test.ts):");
+  for (const k of ORSAKKODER) console.error(`  ${k}`);
+  process.exit(1);
+}
 const skriv = argv.includes("--skriv");
 const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const varfor = varde("--varfor");
@@ -114,6 +121,7 @@ const post = rattelsePost(
   rader.map((r) => ({ lofte: byId.get(r.id)!, ankare: byId.get(r.ankare)! })),
   datum,
   { partier, riket },
+  orsakArg,
 );
 if (varfor) post.why = varfor;
 console.log(`\nRättelsepost som skrivs:\n  ${post.affects}\n  ${post.what}`);

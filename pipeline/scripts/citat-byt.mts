@@ -25,6 +25,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { LiveSource } from "../src/fetch.ts";
+import { lasOrsak, ORSAKKODER } from "../src/orsakkoder.ts";
 import { normalizeForVerbatim } from "../src/gates.ts";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { kanon, lasProvningar } from "../src/provningar.ts";
@@ -36,6 +37,12 @@ const datum = svenskDag();
 
 const [listfil] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const skriv = process.argv.includes("--skriv");
+const orsakArg = lasOrsak(process.argv);
+if (orsakArg === null) {
+  console.error("En rättelsepost kräver --orsak med en av koderna (grind: rattelseschema.test.ts):");
+  for (const k of ORSAKKODER) console.error(`  ${k}`);
+  process.exit(1);
+}
 
 if (!listfil) {
   console.error("Ange en fil med en rad per byte: <löftes-id><TAB><nytt citat>[<TAB><skäl>]");
@@ -156,7 +163,7 @@ if (fallna.length > 0) {
   process.exit(1);
 }
 
-const post = rattelsePost(gjorda, datum);
+const post = rattelsePost(gjorda, datum, orsakArg);
 console.log(`\nRättelsepost som skrivs:\n  ${post.affects}`);
 
 if (inaktuella.length > 0) {
