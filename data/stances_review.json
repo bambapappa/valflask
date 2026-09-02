@@ -4467,5 +4467,221 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-mininiva",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Värna asylrätten samtidigt som Sverige under överskådlig tid ska ha en stram migrationspolitik i enlighet med EU:s miniminivåer.",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G6",
+        "reason": "Okänd delfråga: sq-migration-mininiva"
+      }
+    ],
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/asyl",
+    "articleTitle": "Asyl\n| Socialdemokraterna",
+    "runId": "run-2026-09-01-22-33"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Miljöpartiet vill investera mer i skola, vård och gemensam välfärd, avskaffa marknadsskolan och stoppa vinstjakten.",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-presenterar-valmanifestet-sverige-vinner-pa-gron-politik/",
+    "articleTitle": "Miljöpartiets valmanifest: Klimat, jämlikhet och natur",
+    "sourceUrl": "https://www.mp.se/just-nu/miljopartiet-presenterar-valmanifestet-sverige-vinner-pa-gron-politik/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-10",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-01-22-33",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet blandar 'stoppa vinstjakten' med 'avskaffa marknadsskolan', vilket går utöver delfrågans avgränsning till enbart vinstutdelning."
+      }
+    ],
+    "verifyReason": "Citatet blandar 'stoppa vinstjakten' med 'avskaffa marknadsskolan', vilket går utöver delfrågans avgränsning till enbart vinstutdelning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-akassa",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Partiet vill bland annat höja taket och grundbeloppet i a-kassan",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/nyheter/vansterpartiet-vill-starka-a-kassan-trygghet-nar-jobbet-forsvinner/",
+    "articleTitle": "Vänsterpartiet vill stärka a-kassan: trygghet när jobbet försvinner – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/nyheter/vansterpartiet-vill-starka-a-kassan-trygghet-nar-jobbet-forsvinner/",
+    "archiveUrl": null,
+    "dateStated": "2026-09-01",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-01-22-33",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi säger nej till vinster i den svenska skolan!",
+      "person": {
+        "name": "Daniel",
+        "role": "språkrör, Miljöpartiet"
+      }
+    },
+    "articleUrl": "https://www.mp.se/just-nu/sprakrorens-sommartal-2026/",
+    "articleTitle": "Språkrörens sommartal 2026 | Miljöpartiet",
+    "sourceUrl": "https://www.mp.se/just-nu/sprakrorens-sommartal-2026/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-12",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-01-22-33",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-akassa",
+      "party": "v",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Den högsta dagpenningen och grundbeloppet höjs.",
+      "person": null
+    },
+    "articleUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/a-kassa/",
+    "articleTitle": "A-kassa – Vänsterpartiet",
+    "sourceUrl": "https://www.vansterpartiet.se/var-politik/politik-a-o/a-kassa/",
+    "archiveUrl": "https://web.archive.org/web/20260902004506/https://www.vansterpartiet.se/var-politik/politik-a-o/a-kassa/",
+    "dateStated": "2026-09-01",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-01-22-33",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vinstförbud i skola och förskola",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-09-01-s-presenterar-valprogram-for-2026",
+    "articleTitle": "S presenterar valprogram för 2026\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-09-01-s-presenterar-valprogram-for-2026",
+    "archiveUrl": null,
+    "dateStated": "2026-09-01",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-01-22-33",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Regeringens friskoleförslag räcker inte – Miljöpartiet kräver vinstförbud",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/brobyggare-pa-skolor-i-utsatta-omraden/",
+    "articleTitle": "Miljöpartiet vill anställa brobyggare på skolor i utsatta områden | Miljöpartiet",
+    "sourceUrl": "https://www.mp.se/politik/brobyggare-pa-skolor-i-utsatta-omraden/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-23",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-01-22-33",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-straffalder",
+      "party": "mp",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Om barn begår allvarliga brott ska det självklart få konsekvenser, men barn ska inte sitta i fängelse.",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/brottsbekampning-och-forebyggande/",
+    "articleTitle": "Miljöpartiet brottsförebyggande och brottsbekämpande",
+    "sourceUrl": "https://www.mp.se/politik/brottsbekampning-och-forebyggande/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-24",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-01-22-33",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet uttalar sig allmänt om att barn inte ska fängslas men adresserar inte det specifika förslaget att sänka straffmyndighetsåldern till 14 år, varför det inte kan anses vara ett besked i frågan."
+      }
+    ],
+    "verifyReason": "Citatet uttalar sig allmänt om att barn inte ska fängslas men adresserar inte det specifika förslaget att sänka straffmyndighetsåldern till 14 år, varför det inte kan anses vara ett besked i frågan."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-reduktionsplikt",
+      "party": "m",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Reduktionsplikten ska utformas så att den inte leder till onödigt höga drivmedelspriser eller försämrar konkurrenskraften för hushåll och företag. Därför vill vi inte höja reduktionsplikten i nuläget.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/drivmedelspriser/",
+    "articleTitle": "Drivmedelspriser | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/drivmedelspriser/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-31",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-01-22-33",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
