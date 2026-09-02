@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://utlovat.se/schemas/needs_review.schema.json",
   "title": "Behöver granskning",
-  "description": "Poster som inte passerat grindarna (§7). Publiceras ALDRIG på sajten. Schemat speglar NeedsReviewEntry i pipeline/src/publish.ts.",
+  "description": "Poster som inte passerat grindarna (§7). Publiceras ALDRIG på sajten. Schemat speglar ReviewCandidate i pipeline/src/review.ts, och speglingen mäts av tests/schema-mot-koden.test.ts — ett fält som läggs till i koden utan att läggas till här fäller provet redan innan pipelinen hinner skriva det.",
   "type": "array",
   "items": {
     "type": "object",
@@ -28,10 +28,12 @@
       "articleTitle": { "type": "string" },
       "verifyReason": { "type": "string" },
       "costReason": { "type": "string" },
+      "manualReason": { "type": "string" },
       "cost": {},
       "group_id": { "type": ["string", "null"] },
       "duplicateOf": { "type": "string" },
-      "duplicateReason": { "type": "string" }
+      "duplicateReason": { "type": "string" },
+      "duplicateWithdrawn": { "type": "boolean" }
     }
   }
 }
