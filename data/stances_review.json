@@ -4822,5 +4822,33 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-straffalder",
+      "party": "mp",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Att vi inte accepterar en politik som kastar barn i fängelse.",
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör, Miljöpartiet de gröna"
+      }
+    },
+    "articleUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "articleTitle": "Daniel Helldéns tal i Almedalen 2026",
+    "sourceUrl": "https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "archiveUrl": "https://web.archive.org/web/20260902195802/https://www.mp.se/just-nu/daniel-helldens-almedalstal/",
+    "dateStated": "2026-09-02",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-02-19-21",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet är ett allmänt ställningstagande mot att barn hamnar i fängelse, men det nämner inte specifikt sänkningen av straffmyndighetsåldern till 14 år och kräver tolkning för att bli ett nej på den avgränsade frågan."
+      }
+    ],
+    "verifyReason": "Citatet är ett allmänt ställningstagande mot att barn hamnar i fängelse, men det nämner inte specifikt sänkningen av straffmyndighetsåldern till 14 år och kräver tolkning för att bli ett nej på den avgränsade frågan."
   }
 ]
