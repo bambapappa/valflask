@@ -97,3 +97,29 @@ describe("backfillen rör bara dina egna platshållare", () => {
     assert.match(skript, /\bstampla\(/u, "och faktiskt anropa den");
   });
 });
+
+/**
+ * Jämförelsen ska gå mot commitens FÖRÄLDER, inte mot HEAD.
+ *
+ * `stampla` är ren och prövas ovan med båda sidor inskickade. Felet låg inte i
+ * regeln utan i VAD som skickades in: skriptet hämtade `HEAD:data/…`, men
+ * backfillen körs efter dataändringens commit, så HEAD är just den commiten och
+ * bär dina egna platshållare. Regeln svarade alltså rätt på fel fråga, och
+ * skriptet stämplade noll — fem av fem egna vid första verkliga körningen.
+ *
+ * Provet läser skriptets källa i stället för att starta git i en delprocess, av
+ * samma skäl som står överst i filen.
+ *
+ * FÄLLS AV: att byta tillbaka till `HEAD:` eller till någon annan revision än
+ * commitens förälder.
+ */
+it("backfillen jämför mot commitens förälder", () => {
+  const kalla = readFileSync(join(import.meta.dirname, "..", "scripts", "backfilla-commit.mts"), "utf8");
+  const anrop = /execFileSync\("git", \["show", `([^`]+)`\]/u.exec(kalla);
+  assert.ok(anrop, "hittade inte uppslaget mot git — har anropet skrivits om?");
+  assert.equal(
+    anrop[1],
+    "${kort}^:data/${fil}",
+    "uppslaget ska gå mot commitens förälder; mot HEAD räknas dina egna platshållare som andras",
+  );
+});

@@ -22,10 +22,14 @@
  * Det upptäcktes 2026-09-01, när skriptet stämplade 389 i stället för 2 och
  * fick backas.
  *
- * Nu jämförs mot HEAD: bara platshållare som INTE fanns i den senast
- * committade versionen räknas som dina. Fanns de redan är de någon annans
- * halvfärdiga par, och de rörs inte — de rättas med en härledning ur
+ * Nu jämförs mot commitens FÖRÄLDER: bara platshållare som INTE fanns i
+ * versionen före din ändring räknas som dina. Fanns de redan är de någon
+ * annans halvfärdiga par, och de rörs inte — de rättas med en härledning ur
  * historien, som `--alla-fran <fil>` tar emot.
+ *
+ * Jämförelsen gick först mot HEAD, och det var fel: backfillen körs EFTER
+ * dataändringens commit, så HEAD är just den commiten och bär dina egna
+ * platshållare. Fem av fem räknades som andras vid första verkliga körningen.
  */
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -48,8 +52,19 @@ if (!kort || !/^[0-9a-f]{7,40}$/u.test(kort)) {
 const filer = ["promises.json", "rattelser.json", "changelog.json"] as const;
 
 /**
- * Den senast committade versionen av filen, tolkad — eller `null` när det inte
- * finns någon. `null` betyder «allt i trädet är ditt».
+ * Filen som den såg ut FÖRE din dataändring — eller `null` när det inte finns
+ * någon sådan version. `null` betyder «allt i trädet är ditt».
+ *
+ * **Jämförelsen går mot commitens FÖRÄLDER, inte mot HEAD.** Tvåcommit-mönstret
+ * är: först committas dataändringen med platshållaren, sedan körs backfillen
+ * med den commitens hash. Vid det laget ÄR dina platshållare i HEAD — HEAD är
+ * ju just den commiten. Jämfördes det mot HEAD räknades varenda egen
+ * platshållare som någon annans, och skriptet stämplade noll utan att något
+ * annat än en rad i utskriften sa ifrån.
+ *
+ * Mätt 2026-09-02, på det första par som kördes efter att jämförelsen infördes:
+ * fem egna platshållare, noll stämplade. Föräldern är rätt jämförelse och den
+ * enda som svarar på frågan skriptet ställer — vad fanns här innan du skrev?
  *
  * Regeln för vad som är ditt bor i `src/backfillen.ts` och prövas där, utan
  * git och utan delprocess. Det här är bara hämtningen.
@@ -58,10 +73,10 @@ function committat(fil: string): unknown | null {
   if (alla) return null;
   try {
     return JSON.parse(
-      execFileSync("git", ["show", `HEAD:data/${fil}`], { encoding: "utf8", maxBuffer: 1 << 30 }),
+      execFileSync("git", ["show", `${kort}^:data/${fil}`], { encoding: "utf8", maxBuffer: 1 << 30 }),
     );
   } catch {
-    // Filen är ny i det här trädet — då är allt i den ditt.
+    // Filen är ny, eller commiten saknar förälder — då är allt i den ditt.
     return null;
   }
 }
@@ -77,7 +92,7 @@ for (const f of filer) {
 
 if (hoppade > 0) {
   console.log(
-    `${hoppade} platshållare lämnade orörda — de låg redan i HEAD och är alltså inte dina.\n` +
+    `${hoppade} platshållare lämnade orörda — de fanns före din ändring och är alltså inte dina.\n` +
       "  De är någon annans halvfärdiga par och rättas med en härledning ur historien.\n" +
       "  Vill du ändå stämpla dem: --aven-andras (och skriv ut varför).",
   );
