@@ -1,6 +1,6 @@
 {
   "syfte": "Nollade reformlöften som liknar ett prissatt löfte hos ett annat parti. Rapporterande kö, aldrig en spärr: varje rad ska läsas och kvitteras, och «olika åtgärder» är ett fullgott svar. Se pipeline/src/pariteten.ts.",
-  "kord": "2026-08-26",
+  "kord": "2026-09-02",
   "fynd": [
     {
       "nyckel": "p-2026-2945→p-2026-0336",
@@ -77,28 +77,6 @@
       }
     },
     {
-      "nyckel": "p-2026-2431→p-2026-2931",
-      "nollat": "p-2026-2431",
-      "nollat_rubrik": "Fortsätta stötta Ukraina ekonomiskt och militärt",
-      "nollat_partier": [
-        "m"
-      ],
-      "prissatt": "p-2026-2931",
-      "prissatt_rubrik": "Fortsatt militärt, ekonomiskt och humanitärt stöd till Ukraina",
-      "prissatt_partier": [
-        "s"
-      ],
-      "msek_base": 12000,
-      "period": "per_ar",
-      "kategori": "försvar",
-      "delade_ord": [
-        "ekonomiskt",
-        "militärt"
-      ],
-      "rubriklikhet": 0.4,
-      "funnen": "2026-08-26"
-    },
-    {
       "nyckel": "p-2026-2417→p-2026-0465",
       "nollat": "p-2026-2417",
       "nollat_rubrik": "Sänka skatten med 5 000 kronor för vanlig familj och införa barnavdrag",
@@ -143,28 +121,6 @@
         "arbetsgivaravgift"
       ],
       "rubriklikhet": 0.333,
-      "funnen": "2026-08-26"
-    },
-    {
-      "nyckel": "p-2026-2949→p-2026-2650",
-      "nollat": "p-2026-2949",
-      "nollat_rubrik": "Högkostnadsskydd för tandvård",
-      "nollat_partier": [
-        "s"
-      ],
-      "prissatt": "p-2026-2650",
-      "prissatt_rubrik": "Stärka högkostnadsskyddet för tandvården",
-      "prissatt_partier": [
-        "mp"
-      ],
-      "msek_base": 4600,
-      "period": "per_ar",
-      "kategori": "välfärd",
-      "delade_ord": [
-        "högkostnadsskydd",
-        "tandvård"
-      ],
-      "rubriklikhet": 0.75,
       "funnen": "2026-08-26"
     },
     {
@@ -214,6 +170,27 @@
         "skal": "C omfördelar pengar inom skolans befintliga finansiering till huvudmän som anställer behöriga lärare; MP lägger till statliga medel ovanpå. En omfördelning inom systemet och ett tillskott till systemet kostar olika av rätt skäl.",
         "datum": "2026-08-22"
       }
+    },
+    {
+      "nyckel": "p-2026-3950→p-2026-0428",
+      "nollat": "p-2026-3950",
+      "nollat_rubrik": "Höja pensionsavgiften, införa gas vid hög avkastning och se över förskottsräntan",
+      "nollat_partier": [
+        "s"
+      ],
+      "prissatt": "p-2026-0428",
+      "prissatt_rubrik": "Höja pensionsavgift och bostadstillägg/garantipension",
+      "prissatt_partier": [
+        "mp"
+      ],
+      "msek_base": 4000,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "pensionsavgift"
+      ],
+      "rubriklikhet": 0.25,
+      "funnen": "2026-09-02"
     },
     {
       "nyckel": "p-2026-2192→p-2026-2237",
@@ -318,6 +295,69 @@
         "skal": "Motsatta politiker, inte samma. Miljöpartiet lovar att INTE bygga ny kärnkraft; Sverigedemokraterna lovar att bygga den med statligt stöd. Att avstå från en investering och att göra den kan omöjligt kosta lika.",
         "datum": "2026-08-23"
       }
+    },
+    {
+      "nyckel": "p-2026-3540→p-2026-1529",
+      "nollat": "p-2026-3540",
+      "nollat_rubrik": "Styrmedel för omställning till cirkulär ekonomi",
+      "nollat_partier": [
+        "c"
+      ],
+      "prissatt": "p-2026-1529",
+      "prissatt_rubrik": "Ökat stöd till elektrifiering och energieffektivisering för industrins omställning",
+      "prissatt_partier": [
+        "mp"
+      ],
+      "msek_base": 1000,
+      "period": "per_ar",
+      "kategori": "klimat-miljö",
+      "delade_ord": [
+        "omställning"
+      ],
+      "rubriklikhet": 0.25,
+      "funnen": "2026-09-02"
+    },
+    {
+      "nyckel": "p-2026-0722→p-2026-4205",
+      "nollat": "p-2026-0722",
+      "nollat_rubrik": "Utreda införande av stöd för anhöriga till äldre (VAF)",
+      "nollat_partier": [
+        "kd"
+      ],
+      "prissatt": "p-2026-4205",
+      "prissatt_rubrik": "Rätt till avlastning för anhöriga",
+      "prissatt_partier": [
+        "l"
+      ],
+      "msek_base": 900,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "anhöriga"
+      ],
+      "rubriklikhet": 0.3,
+      "funnen": "2026-09-02"
+    },
+    {
+      "nyckel": "p-2026-1047→p-2026-3768",
+      "nollat": "p-2026-1047",
+      "nollat_rubrik": "Krav på läkare och sjuksköterskor dygnet runt",
+      "nollat_partier": [
+        "s"
+      ],
+      "prissatt": "p-2026-3768",
+      "prissatt_rubrik": "Utbilda fler läkare och sjuksköterskor för att lösa personalbristen",
+      "prissatt_partier": [
+        "c"
+      ],
+      "msek_base": 800,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "sjukskötersk"
+      ],
+      "rubriklikhet": 0.25,
+      "funnen": "2026-09-02"
     },
     {
       "nyckel": "p-2026-3075→p-2026-2970",
@@ -431,6 +471,70 @@
       "funnen": "2026-08-26"
     },
     {
+      "nyckel": "p-2026-3513→p-2026-0529",
+      "nollat": "p-2026-3513",
+      "nollat_rubrik": "Skärpa försörjningskravet vid anhöriginvandring",
+      "nollat_partier": [
+        "kd"
+      ],
+      "prissatt": "p-2026-0529",
+      "prissatt_rubrik": "Avskaffa försörjningskravet vid anhöriginvandring helt",
+      "prissatt_partier": [
+        "mp"
+      ],
+      "msek_base": 400,
+      "period": "per_ar",
+      "kategori": "migration",
+      "delade_ord": [
+        "anhöriginvandring",
+        "försörjningskrav"
+      ],
+      "rubriklikhet": 0.5,
+      "funnen": "2026-09-02"
+    },
+    {
+      "nyckel": "p-2026-1454→p-2026-4190",
+      "nollat": "p-2026-1454",
+      "nollat_rubrik": "Minska regelbördan och ersätt detaljstyrning med resultatorienterade kontroller",
+      "nollat_partier": [
+        "c"
+      ],
+      "prissatt": "p-2026-4190",
+      "prissatt_rubrik": "Minska regelbördan och investera i forskning och förädling",
+      "prissatt_partier": [
+        "m"
+      ],
+      "msek_base": 200,
+      "period": "per_ar",
+      "kategori": "övrigt",
+      "delade_ord": [
+        "regelbördan"
+      ],
+      "rubriklikhet": 0.273,
+      "funnen": "2026-09-02"
+    },
+    {
+      "nyckel": "p-2026-2106→p-2026-4190",
+      "nollat": "p-2026-2106",
+      "nollat_rubrik": "Investera i AI och ny industriteknologi",
+      "nollat_partier": [
+        "s"
+      ],
+      "prissatt": "p-2026-4190",
+      "prissatt_rubrik": "Minska regelbördan och investera i forskning och förädling",
+      "prissatt_partier": [
+        "m"
+      ],
+      "msek_base": 200,
+      "period": "per_ar",
+      "kategori": "övrigt",
+      "delade_ord": [
+        "investera"
+      ],
+      "rubriklikhet": 0.286,
+      "funnen": "2026-09-02"
+    },
+    {
       "nyckel": "p-2026-2792→p-2026-0048",
       "nollat": "p-2026-2792",
       "nollat_rubrik": "Utvärdera riktlinjerna för endometriosvård",
@@ -478,6 +582,69 @@
       "funnen": "2026-08-26"
     },
     {
+      "nyckel": "p-2026-3886→p-2026-1104",
+      "nollat": "p-2026-3886",
+      "nollat_rubrik": "Våtmarker och bevattningsdammar utan strandskydd",
+      "nollat_partier": [
+        "l"
+      ],
+      "prissatt": "p-2026-1104",
+      "prissatt_rubrik": "Återställ och anlägg våtmarker",
+      "prissatt_partier": [
+        "s"
+      ],
+      "msek_base": 200,
+      "period": "per_ar",
+      "kategori": "klimat-miljö",
+      "delade_ord": [
+        "våtmark"
+      ],
+      "rubriklikhet": 0.286,
+      "funnen": "2026-09-02"
+    },
+    {
+      "nyckel": "p-2026-3991→p-2026-2866",
+      "nollat": "p-2026-3991",
+      "nollat_rubrik": "Skärpta straff, svartlistning av fuskföretag och införande av maffialag",
+      "nollat_partier": [
+        "s"
+      ],
+      "prissatt": "p-2026-2866",
+      "prissatt_rubrik": "Skärpta straff, obligatorisk fotboja och stöd till kvinnojourer",
+      "prissatt_partier": [
+        "c"
+      ],
+      "msek_base": 200,
+      "period": "per_ar",
+      "kategori": "rättsväsende",
+      "delade_ord": [
+        "skärpta"
+      ],
+      "rubriklikhet": 0.25,
+      "funnen": "2026-09-02"
+    },
+    {
+      "nyckel": "p-2026-3150→p-2026-3876",
+      "nollat": "p-2026-3150",
+      "nollat_rubrik": "Skärpta straff för omsorgspersonal som våldtar äldre",
+      "nollat_partier": [
+        "m"
+      ],
+      "prissatt": "p-2026-3876",
+      "prissatt_rubrik": "Särskilda domartjänster samt skärpta straff för sexualbrott",
+      "prissatt_partier": [
+        "l"
+      ],
+      "msek_base": 150,
+      "period": "per_ar",
+      "kategori": "rättsväsende",
+      "delade_ord": [
+        "skärpta"
+      ],
+      "rubriklikhet": 0.273,
+      "funnen": "2026-09-02"
+    },
+    {
       "nyckel": "p-2026-3322→p-2026-1951",
       "nollat": "p-2026-3322",
       "nollat_rubrik": "Skärp kontrollen av djurskyddslagar och EU-regler",
@@ -497,6 +664,50 @@
       ],
       "rubriklikhet": 0.286,
       "funnen": "2026-08-26"
+    },
+    {
+      "nyckel": "p-2026-3572→p-2026-2468",
+      "nollat": "p-2026-3572",
+      "nollat_rubrik": "Jobbstimulans vid övergång från bistånd till arbete",
+      "nollat_partier": [
+        "c"
+      ],
+      "prissatt": "p-2026-2468",
+      "prissatt_rubrik": "Säkra övergången från BUP till vuxenpsykiatrin",
+      "prissatt_partier": [
+        "mp"
+      ],
+      "msek_base": 150,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "övergång"
+      ],
+      "rubriklikhet": 0.3,
+      "funnen": "2026-09-02"
+    },
+    {
+      "nyckel": "p-2026-3777→p-2026-1466",
+      "nollat": "p-2026-3777",
+      "nollat_rubrik": "Kvinnors deltagande i fredsprocesser enligt FN:s resolution 1325",
+      "nollat_partier": [
+        "c"
+      ],
+      "prissatt": "p-2026-1466",
+      "prissatt_rubrik": "Stärka kvinnors roll i fredsprocesser enligt FN-resolution 1325",
+      "prissatt_partier": [
+        "s"
+      ],
+      "msek_base": 150,
+      "period": "per_ar",
+      "kategori": "övrigt",
+      "delade_ord": [
+        "fredsprocess",
+        "kvinnors",
+        "resolution"
+      ],
+      "rubriklikhet": 0.625,
+      "funnen": "2026-09-02"
     },
     {
       "nyckel": "p-2026-0530→p-2026-0498",
@@ -524,6 +735,48 @@
         "skal": "Var man ansöker mot vem som får stanna. Miljöpartiets löfte gäller att vissa anhöriga får ansöka inifrån Sverige i stället för att resa ut — en handläggningsregel. Centerpartiets gäller att fler unga vuxna beviljas uppehållstillstånd, alltså fler personer i landet med statliga kostnader.",
         "datum": "2026-08-23"
       }
+    },
+    {
+      "nyckel": "p-2026-1424→p-2026-3949",
+      "nollat": "p-2026-1424",
+      "nollat_rubrik": "Motverka ofrivillig ensamhet bland äldre genom nationell strategi",
+      "nollat_partier": [
+        "l"
+      ],
+      "prissatt": "p-2026-3949",
+      "prissatt_rubrik": "Motverka ofrivillig ensamhet genom satsningar på civilsamhällets mötesplatser",
+      "prissatt_partier": [
+        "s"
+      ],
+      "msek_base": 100,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "ofrivillig"
+      ],
+      "rubriklikhet": 0.364,
+      "funnen": "2026-09-02"
+    },
+    {
+      "nyckel": "p-2026-2247→p-2026-3655",
+      "nollat": "p-2026-2247",
+      "nollat_rubrik": "Utreda för- och nackdelar med brukarrum och drug checking",
+      "nollat_partier": [
+        "s"
+      ],
+      "prissatt": "p-2026-3655",
+      "prissatt_rubrik": "Utreda och införa konsumtionsrum (brukarrum)",
+      "prissatt_partier": [
+        "c"
+      ],
+      "msek_base": 100,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "brukarrum"
+      ],
+      "rubriklikhet": 0.3,
+      "funnen": "2026-09-02"
     },
     {
       "nyckel": "p-2026-3444→p-2026-3289",
@@ -573,6 +826,27 @@
       }
     },
     {
+      "nyckel": "p-2026-4002→p-2026-0596",
+      "nollat": "p-2026-4002",
+      "nollat_rubrik": "Skärpta straff för hatbrott i skolmiljö",
+      "nollat_partier": [
+        "l"
+      ],
+      "prissatt": "p-2026-0596",
+      "prissatt_rubrik": "Skärpta straff för överträdelser av kontaktförbud",
+      "prissatt_partier": [
+        "m"
+      ],
+      "msek_base": 70,
+      "period": "per_ar",
+      "kategori": "rättsväsende",
+      "delade_ord": [
+        "skärpta"
+      ],
+      "rubriklikhet": 0.429,
+      "funnen": "2026-09-02"
+    },
+    {
       "nyckel": "p-2026-1250→p-2026-3307",
       "nollat": "p-2026-1250",
       "nollat_rubrik": "Sänk trösklarna för förstagångsköpare",
@@ -612,28 +886,6 @@
         "sociala"
       ],
       "rubriklikhet": 0.25,
-      "funnen": "2026-08-26"
-    },
-    {
-      "nyckel": "p-2026-1628→p-2026-3036",
-      "nollat": "p-2026-1628",
-      "nollat_rubrik": "Öka sanktionerna mot Ryssland och oligarkerna",
-      "nollat_partier": [
-        "s"
-      ],
-      "prissatt": "p-2026-3036",
-      "prissatt_rubrik": "Skärpa sanktionerna mot Ryssland och stoppa skuggflottan i Östersjön",
-      "prissatt_partier": [
-        "v"
-      ],
-      "msek_base": 50,
-      "period": "per_ar",
-      "kategori": "försvar",
-      "delade_ord": [
-        "ryssland",
-        "sanktion"
-      ],
-      "rubriklikhet": 0.4,
       "funnen": "2026-08-26"
     },
     {
@@ -731,6 +983,28 @@
       "funnen": "2026-08-26"
     },
     {
+      "nyckel": "p-2026-0874→p-2026-3849",
+      "nollat": "p-2026-0874",
+      "nollat_rubrik": "Utreda snabbspår till svenskt medborgarskap",
+      "nollat_partier": [
+        "m"
+      ],
+      "prissatt": "p-2026-3849",
+      "prissatt_rubrik": "Språkkrav för svenskt medborgarskap",
+      "prissatt_partier": [
+        "l"
+      ],
+      "msek_base": 30,
+      "period": "per_ar",
+      "kategori": "migration",
+      "delade_ord": [
+        "medborgarskap",
+        "svenskt"
+      ],
+      "rubriklikhet": 0.286,
+      "funnen": "2026-09-02"
+    },
+    {
       "nyckel": "p-2026-1152→p-2026-3310",
       "nollat": "p-2026-1152",
       "nollat_rubrik": "Utveckla könstillhörighetslagen och utred tredje juridiskt kön",
@@ -749,27 +1023,6 @@
         "juridiskt"
       ],
       "rubriklikhet": 0.364,
-      "funnen": "2026-08-26"
-    },
-    {
-      "nyckel": "p-2026-3150→p-2026-3048",
-      "nollat": "p-2026-3150",
-      "nollat_rubrik": "Skärpta straff för omsorgspersonal som våldtar äldre",
-      "nollat_partier": [
-        "m"
-      ],
-      "prissatt": "p-2026-3048",
-      "prissatt_rubrik": "Vassare verktyg för polisen och skärpta straff för gängbrott",
-      "prissatt_partier": [
-        "c"
-      ],
-      "msek_base": 30,
-      "period": "per_ar",
-      "kategori": "rättsväsende",
-      "delade_ord": [
-        "skärpta"
-      ],
-      "rubriklikhet": 0.25,
       "funnen": "2026-08-26"
     },
     {
@@ -821,6 +1074,28 @@
       }
     },
     {
+      "nyckel": "p-2026-1392→p-2026-4104",
+      "nollat": "p-2026-1392",
+      "nollat_rubrik": "Kommunerna ska vara skyldiga att erbjuda förskola under obekväm arbetstid",
+      "nollat_partier": [
+        "v"
+      ],
+      "prissatt": "p-2026-4104",
+      "prissatt_rubrik": "Fler kommuner ska erbjuda barnomsorg på obekväm arbetstid",
+      "prissatt_partier": [
+        "m"
+      ],
+      "msek_base": 25,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "arbetstid",
+        "obekväm"
+      ],
+      "rubriklikhet": 0.417,
+      "funnen": "2026-09-02"
+    },
+    {
       "nyckel": "p-2026-3422→p-2026-0919",
       "nollat": "p-2026-3422",
       "nollat_rubrik": "Intensifiera arbetet mot sexualbrott och våld i nära relationer",
@@ -842,6 +1117,27 @@
       "funnen": "2026-08-26"
     },
     {
+      "nyckel": "p-2026-0444→p-2026-3684",
+      "nollat": "p-2026-0444",
+      "nollat_rubrik": "Ta fram nationell strategi för kompetensförsörjning i vården",
+      "nollat_partier": [
+        "mp"
+      ],
+      "prissatt": "p-2026-3684",
+      "prissatt_rubrik": "Nationell strategi för likvärdigt anhörigstöd",
+      "prissatt_partier": [
+        "c"
+      ],
+      "msek_base": 15,
+      "period": "engang",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "strategi"
+      ],
+      "rubriklikhet": 0.375,
+      "funnen": "2026-09-02"
+    },
+    {
       "nyckel": "p-2026-1399→p-2026-3372",
       "nollat": "p-2026-1399",
       "nollat_rubrik": "Nationell strategi för vätgasinfrastruktur",
@@ -860,28 +1156,6 @@
         "strategi"
       ],
       "rubriklikhet": 0.429,
-      "funnen": "2026-08-26"
-    },
-    {
-      "nyckel": "p-2026-1465→p-2026-2665",
-      "nollat": "p-2026-1465",
-      "nollat_rubrik": "Utveckla och återinföra feministisk utrikespolitik",
-      "nollat_partier": [
-        "s"
-      ],
-      "prissatt": "p-2026-2665",
-      "prissatt_rubrik": "Feministisk utrikespolitik för kvinnors och flickors rättigheter",
-      "prissatt_partier": [
-        "mp"
-      ],
-      "msek_base": 15,
-      "period": "engang",
-      "kategori": "övrigt",
-      "delade_ord": [
-        "feministisk",
-        "utrikespolitik"
-      ],
-      "rubriklikhet": 0.333,
       "funnen": "2026-08-26"
     },
     {
@@ -927,6 +1201,27 @@
       "funnen": "2026-08-26"
     },
     {
+      "nyckel": "p-2026-4097→p-2026-3056",
+      "nollat": "p-2026-4097",
+      "nollat_rubrik": "Analys av stödinsatser mot hedersrelaterat våld och omvändelseförsök",
+      "nollat_partier": [
+        "m"
+      ],
+      "prissatt": "p-2026-3056",
+      "prissatt_rubrik": "Ökat stöd till organisationer mot hedersrelaterat våld",
+      "prissatt_partier": [
+        "l"
+      ],
+      "msek_base": 15,
+      "period": "per_ar",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "hedersrelaterat"
+      ],
+      "rubriklikhet": 0.273,
+      "funnen": "2026-09-02"
+    },
+    {
       "nyckel": "p-2026-2195→p-2026-3101",
       "nollat": "p-2026-2195",
       "nollat_rubrik": "Höja försörjningskravet för arbetskraftsinvandrare",
@@ -967,32 +1262,6 @@
       ],
       "rubriklikhet": 0.375,
       "funnen": "2026-08-26"
-    },
-    {
-      "nyckel": "p-2026-2546→p-2026-2329",
-      "nollat": "p-2026-2546",
-      "nollat_rubrik": "Minska överimplementeringen av EU-regler",
-      "nollat_partier": [
-        "l"
-      ],
-      "prissatt": "p-2026-2329",
-      "prissatt_rubrik": "Minska svensk överimplementering av EU-regler via Implementeringsrådet",
-      "prissatt_partier": [
-        "m"
-      ],
-      "msek_base": 10,
-      "period": "per_ar",
-      "kategori": "övrigt",
-      "delade_ord": [
-        "överimplementering"
-      ],
-      "rubriklikhet": 0.5,
-      "funnen": "2026-08-22",
-      "kvittens": {
-        "utfall": "olika_atgarder",
-        "skal": "Ett mål mot ett organ. Båda vill minska överimplementeringen av EU-regler, men Moderaternas löfte namnger Implementeringsrådet och prissätter dess bemanning — fem till tio årsarbetskrafter — medan Liberalernas lovar utfallet utan att peka ut något organ. Ett stående råd är en verklig löpande kostnad; en ambition att färre regler ska överimplementeras är det inte.",
-        "datum": "2026-08-23"
-      }
     },
     {
       "nyckel": "p-2026-2488→p-2026-2392",
@@ -1042,6 +1311,27 @@
       ],
       "rubriklikhet": 0.25,
       "funnen": "2026-08-26"
+    },
+    {
+      "nyckel": "p-2026-2380→p-2026-4208",
+      "nollat": "p-2026-2380",
+      "nollat_rubrik": "Ta fram en nationell strategi för fysisk aktivitet och minskat stillasittande",
+      "nollat_partier": [
+        "mp"
+      ],
+      "prissatt": "p-2026-4208",
+      "prissatt_rubrik": "Nationell strategi för egenvård med bättre verktyg och stöd",
+      "prissatt_partier": [
+        "c"
+      ],
+      "msek_base": 5,
+      "period": "engang",
+      "kategori": "välfärd",
+      "delade_ord": [
+        "strategi"
+      ],
+      "rubriklikhet": 0.286,
+      "funnen": "2026-09-02"
     },
     {
       "nyckel": "p-2026-2966→p-2026-2343",
