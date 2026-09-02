@@ -19,6 +19,24 @@
  *   npm run handlingsklass                 # utskrift, summering per slag
  *   npm run handlingsklass -- --skriv      # uppdaterar data/handlingsklass.json
  *   npm run handlingsklass -- --slag bara_anslag --idn
+ *   npm run handlingsklass -- --ko --skriv # mät kön i stället för det publicerade
+ *
+ * **`--ko` mäter kopplingskön, och det är hela skälet till att flaggan finns.**
+ * Godkännandet vägrar släppa igenom en koppling som inte gått genom
+ * kvalitetsfiltret, och prövningen skrivs ur den här mätningen — men mätningen
+ * lästes bara ur `kopplingar.json`, alltså först efter godkännandet. Ordningen
+ * gick inte ihop: filtret ligger före beslutet, mätningen låg efter. Följden
+ * blev mätbar: 2026-09-02 hade 0 av 318 förslag i kön en prövning, och
+ * godkännandevägen föll på samtliga.
+ *
+ * Fläskvågens kö fick sin motsvarighet (`pnpm utrakningen -- --ko`) redan
+ * 2026-08-12. Det här är samma sak för Handlingsvågen: kö-posten mäts i den
+ * form den kommer att publiceras, med exakt samma kontroller, och nyckeln blir
+ * `ko:<koppling-id>` — den prövningen skrivs mot och som godkännandet godtar.
+ *
+ * Kartan skrivs till en EGEN fil, `data/handlingsklass-ko.json`. Kön och det
+ * publicerade är två olika bestånd; skrevs de till samma fil hade en kö-mätning
+ * tyst kastat den publicerade kartan, som `svep-till-provning.py` läser.
  *
  * **Verktyget avgör inget.** Att ett citat står i brödtexten betyder att
  * kopplingen ska vägas om, inte att den ska bort — handlingen finns, den är
@@ -28,7 +46,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
-import type { KopplingPost } from "../src/granskning.ts";
+import { kopplingId, type KopplingPost } from "../src/granskning.ts";
 import { normalizeForVerbatim } from "../src/citatgrind.ts";
 import { fetchYrkanden, fetchDokumentText, fetchUtskottspunkter } from "../src/riksdagen.ts";
 import { fragansLydelser } from "../src/fragans-lydelse.ts";
@@ -42,14 +60,18 @@ import {
 import { cachat, politeFetch } from "./kallcache.mts";
 
 const rot = resolve(import.meta.dirname, "../..");
-const kopplingar: KopplingPost[] = JSON.parse(readFileSync(resolve(rot, "data/kopplingar.json"), "utf8"));
-const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
-const handlingPerId = new Map(handlingar.map((h) => [h.id, h]));
-
 const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 const visaIdn = argv.includes("--idn");
+const koLage = argv.includes("--ko");
 const bara = argv.includes("--slag") ? argv[argv.indexOf("--slag") + 1] : undefined;
+
+const KALLA = koLage ? "data/kopplingsforslag.json" : "data/kopplingar.json";
+const UT = koLage ? "data/handlingsklass-ko.json" : "data/handlingsklass.json";
+
+const kopplingar: KopplingPost[] = JSON.parse(readFileSync(resolve(rot, KALLA), "utf8"));
+const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
+const handlingPerId = new Map(handlingar.map((h) => [h.id, h]));
 
 /** En kopplings plats i kartan. */
 interface Kartpost {
@@ -83,7 +105,20 @@ interface Kartpost {
 }
 
 const kartan: Kartpost[] = [];
-const aktiva = kopplingar.filter((k) => k.status === "aktiv");
+// Kö-posterna har ingen status — de är förslag, inte kopplingar. Filtret på
+// "aktiv" gäller därför bara det publicerade beståndet; körs det över kön
+// faller varje post bort och kartan blir tom.
+const aktiva = koLage ? kopplingar : kopplingar.filter((k) => k.status === "aktiv");
+
+/**
+ * Postens plats i kartan.
+ *
+ * En publicerad koppling bär sitt id. En kö-post har inget — id:t mintas först
+ * i beslutet — så nyckeln härleds ur mål och handling, exakt som `kopplingId`
+ * i granskningen och `koforslagId` i kvalitetsfiltret räknar den. Det är den
+ * nyckeln prövningen skrivs mot, och den godkännandet slår upp.
+ */
+const nyckeln = (k: KopplingPost): string => (koLage ? `ko:${kopplingId(k)}` : k.id);
 
 let n = 0;
 for (const k of aktiva) {
@@ -91,20 +126,20 @@ for (const k of aktiva) {
   const dokId = k.bevis.kalla_dok_id ?? h?.dok_id ?? "";
   if (++n % 100 === 0) console.error(`  ${n}/${aktiva.length}`);
   if (h === undefined || dokId === "") {
-    console.error(`  ${k.id}: handlingen saknar dokument-id — hoppas över`);
+    console.error(`  ${nyckeln(k)}: handlingen saknar dokument-id — hoppas över`);
     continue;
   }
 
   const text = await cachat(`text-${dokId}`, () => fetchDokumentText(politeFetch, dokId));
   if (text === null) {
-    console.error(`  ${k.id}: ${dokId} gick inte att hämta — ingenting prövat`);
+    console.error(`  ${nyckeln(k)}: ${dokId} gick inte att hämta — ingenting prövat`);
     continue;
   }
   const citat = normalizeForVerbatim(k.bevis.citat);
   const ordagrant = citat !== "" && normalizeForVerbatim(text).includes(citat);
 
   const post: Kartpost = {
-    koppling: k.id,
+    koppling: nyckeln(k),
     ...(k.promise_id === undefined ? {} : { promise_id: k.promise_id }),
     handling: k.handling_id,
     dok_id: dokId,
@@ -157,7 +192,9 @@ for (const k of aktiva) {
 
 // ─────────────────────────────────────────────────────────────── utskrift ──
 
-console.log(`\n${kartan.length} aktiva kopplingar lästa mot sina källdokument.`);
+console.log(
+  `\n${kartan.length} ${koLage ? "kö-poster" : "aktiva kopplingar"} lästa mot sina källdokument.`,
+);
 const inteOrdagrant = kartan.filter((p) => !p.ordagrant);
 console.log(
   inteOrdagrant.length === 0
@@ -199,9 +236,8 @@ for (const [slag, poster] of [...perSlag].sort((a, b) => b[1].length - a[1].leng
 }
 
 if (skriv) {
-  const fil = resolve(rot, "data/handlingsklass.json");
-  writeFileSync(fil, JSON.stringify(kartan, null, 2) + "\n");
-  console.log(`\nSkrivet: data/handlingsklass.json (${kartan.length} poster)`);
+  writeFileSync(resolve(rot, UT), JSON.stringify(kartan, null, 2) + "\n");
+  console.log(`\nSkrivet: ${UT} (${kartan.length} poster)`);
 } else {
-  console.log("\nIngenting skrivet. Kör med --skriv för att uppdatera data/handlingsklass.json.");
+  console.log(`\nIngenting skrivet. Kör med --skriv för att uppdatera ${UT}.`);
 }
