@@ -23,6 +23,8 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { lasProvningar } from "../src/provningar.ts";
+import { koforslagId, konyckel, reviewNyckel } from "../src/provningar.ts";
+import { vantan, domVantan, type Kopost } from "../src/kovantan.ts";
 import {
   domSkulden,
   kopplingsSaker,
@@ -81,6 +83,51 @@ console.log("\n  aktuella = prövade, och saken har inte ändrats sedan dess");
 console.log("  gamla    = prövade, men beloppet, citatet eller riktningen har ändrats efteråt");
 console.log("  oprövade = har aldrig gått genom filtret\n");
 
+// ── Köerna ────────────────────────────────────────────────────────────────
+//
+// Tabellen ovan räknar det publicerade. Den svarade 0 oprövade medan 623
+// köposter var oprövade och godkännandevägen föll på varenda en — måttet var
+// rätt på sin egen fråga och blint för den här. Se `kovantan.ts`.
+const kopplingskon: Kopost[] = las<{
+  promise_id?: string;
+  stance_id?: string;
+  handling_id: string;
+  skapad?: string;
+}>(join(HV_DATA, "kopplingsforslag.json")).map((k) => ({
+  nyckel: `ko:${koforslagId(k)}`,
+  skapad: k.skapad,
+}));
+// Granskningskön bär inget datum på posten, så den går att räkna men inte att
+// vänta på. Talet skrivs ut ändå — en känd lucka går att lita på, en dold
+// gör det inte.
+const granskningskon = las<{
+  articleUrl?: string;
+  articleTitle?: string;
+  candidate?: { quote?: string; title?: string };
+}>(join(DATA, "needs_review.json")).map((it) => ({
+  nyckel: konyckel(it.articleUrl, it.candidate?.quote),
+  rubriknyckel: reviewNyckel(it.articleUrl, it.candidate?.title ?? it.articleTitle),
+  skapad: null,
+}));
+const harProvning = (nyckel: string) => provningar.has(nyckel);
+const koVantan = vantan(kopplingskon, harProvning, new Date());
+// En kö-post i granskningskön hittas under TVÅ nycklar — citatets och
+// rubrikens — så uppslaget måste pröva båda. Räknas bara den ena ser femton
+// prövade poster ut som noll; det hände i mätningen som inledde det här
+// passet, och siffran fick rättas i efterhand.
+const granskningsOprovade = granskningskon.filter(
+  (post) => !harProvning(post.nyckel) && !harProvning(post.rubriknyckel),
+).length;
+console.log("  Köerna — det som väntar på ett beslut:");
+console.log(
+  `    kopplingskön     ${koVantan.summa - koVantan.oprovade} av ${koVantan.summa} prövade` +
+    (koVantan.dagar === null ? "" : ` · äldsta oprövade har väntat ${koVantan.dagar} dygn`),
+);
+console.log(
+  `    granskningskön   ${granskningskon.length - granskningsOprovade} av ${granskningskon.length} prövade` +
+    " · posterna bär inget datum, så väntan går inte att mäta\n",
+);
+
 if (!process.argv.includes("--tak")) process.exit(0);
 
 let rott = false;
@@ -132,6 +179,18 @@ if (dom.rattade.length > 0) {
       "facit/provningsskulden.json:\n" +
       dom.rattade.map((id) => `  ${id}`).join("\n"),
   );
+}
+
+// Led 3: en köpost får inte ligga oprövad i veckor.
+//
+// Antalet duger inte som tak — kön fylls på schemalagt, så ett tak på antalet
+// hade fällt bygget varje dygn och blivit brus. Väntan är måttet: ett förslag
+// som kom i natt ska inte vara prövat i morse, men ett som legat en vecka
+// betyder att passet slutat köras.
+const komdom = domVantan(koVantan, "kopplingskön");
+if (!komdom.ok) {
+  console.error(`\n${komdom.skal}`);
+  rott = true;
 }
 
 if (rott) process.exit(1);
