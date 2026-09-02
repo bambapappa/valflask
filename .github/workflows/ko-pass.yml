@@ -1,0 +1,131 @@
+name: ko-pass
+# Prövar båda köerna genom kvalitetsfiltret, schemalagt.
+#
+# Godkännandet släpper inte igenom något som inte gått genom filtret. Kön fylls
+# på schemalagt — foreslag varje dygn 07:00, skörden måndagar 04:00 — medan
+# prövningen kördes för hand. Skillnaden byggde upp 623 oprövade köposter på en
+# vecka, och godkännandevägen föll på varenda en utan att något sa ifrån.
+#
+# **Att det här alls går att schemalägga är nytt.** Kö-passet antogs kräva en
+# session med omdöme, och en schemalagd session fastnade på en behörighetsfråga
+# ingen besvarar klockan fem på morgonen. Men antagandet gällde BESLUTEN. Själva
+# prövningen är deterministiska skript hela vägen — mätning, härledning,
+# skrivning, export — och de behöver ingen modell.
+#
+# **Passet beslutar ingenting.** Det pushar en gren; `ko-pass-pr.yml` öppnar
+# PR:en; en människa slår ihop den. Godkännandet av enskilda poster är kvar hos
+# ägaren. Samma delning som gällt sedan 2026-08-09.
+on:
+  schedule:
+    # En timme efter foreslag-körningen, så dygnets nya förslag är med.
+    - cron: "0 8 * * *"
+  workflow_dispatch: {}
+  pull_request:
+    # Ändras passet självt ska ändringen köras — som torrkörning, utan att något
+    # skrivs. Utan det är en ändring i passet oprövad tills nästa natt.
+    paths:
+      - ".github/workflows/ko-pass.yml"
+      - "pipeline/scripts/ko-pass.sh"
+permissions:
+  contents: read
+concurrency:
+  group: ko-pass
+  cancel-in-progress: false
+jobs:
+  prova:
+    runs-on: ubuntu-latest
+    steps:
+      # Bot-appen, inte jobbets egen token: passet läser och skriver i det
+      # PRIVATA handoff-repot, där skripten och granskningsloggen bor.
+      # `repositories` mintar en token som når båda repona — appen måste vara
+      # installerad på handoff, och är den inte det faller det här steget med
+      # ett tydligt fel i stället för att gå vidare halvvägs.
+      - name: Mint bot app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            valflask
+            handoff
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
+      - name: Hämta det privata repot
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          repository: ${{ github.repository_owner }}/handoff
+          path: handoff
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Install handlingsvagen deps
+        run: npm ci
+        working-directory: handlingsvagen/pipeline
+      # App-tokens lever en timme, och passet hämtar dokument över nätet innan
+      # det skriver. Färsk token precis före — samma skäl som i pipeline.yml.
+      - name: Mint fresh push token
+        id: push-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            valflask
+            handoff
+      - name: Kör passet
+        env:
+          HANDOFF: ${{ github.workspace }}/handoff
+          VALFLASK: ${{ github.workspace }}
+          PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
+          AGARE: ${{ github.repository_owner }}
+          # En PR-körning är alltid en torrkörning: ingenting skrivs, inget
+          # pushas. Det som prövas är att passet GÅR — mätningarna, härledningen
+          # och att token når det privata repot.
+          TORR: ${{ github.event_name == 'pull_request' && '--torr' || '' }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "utlovat-bot"
+          git config --global user.email "bot@utlovat.se"
+          bas="https://x-access-token:${PUSH_TOKEN}@github.com/${AGARE}"
+          git -C "$GITHUB_WORKSPACE" remote set-url origin "$bas/valflask.git"
+          git -C "$GITHUB_WORKSPACE/handoff" remote set-url origin "$bas/handoff.git"
+          bash pipeline/scripts/ko-pass.sh ${TORR}
+
+  # Ett pass som slutar köras säger inte ifrån själv, och kön växer under tiden
+  # utan att skilja sig från "inget att göra". Delad implementation i larm.yml.
+  larm:
+    needs: [prova]
+    if: failure() && github.event_name != 'pull_request'
+    permissions:
+      contents: read
+      issues: write
+    uses: ./.github/workflows/larm.yml
+    with:
+      rubrik: "Det schemalagda kö-passet"
+      etikett: "larm-ko-pass"
+      atgard: |
+            Kö-passet föll, och köerna slutar därför gå att godkänna så snart
+            väntegrinden slår till — fem dygn.
+
+            Faller det på att hämta det privata repot är det bot-appens
+            installation: den måste nå handoff, inte bara valflask.
+
+            Faller exporten på att poster skulle försvinna ur facit är det
+            INTE något som ska forceras. Läs vilka poster det gäller; de var
+            prövade en gång och saknar nu sitt underlag.
+
+            Passet går att köra för hand: `pipeline/scripts/ko-pass.sh --torr`
+            visar vad det skulle göra utan att skriva något.
