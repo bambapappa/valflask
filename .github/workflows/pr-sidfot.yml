@@ -1,0 +1,50 @@
+name: pr-sidfot
+# Tar bort sidfoten «genererad med» ur PR-beskrivningen.
+#
+# Repot är publikt och PR-texten är projektets ansikte utåt. Sidfoten säger
+# vilket verktyg som kört, inte vad ändringen gör — och den skrivs inte av den
+# som skriver texten: den läggs på SERVERSIDAN när PR:en skapas, efter att
+# texten lämnat sessionen. Varken en skriven regel eller `attribution.pr` i
+# .claude/settings.json når därför dit. Det här arbetsflödet gör det.
+#
+# INGEN CIRKEL: skrivningen sker bara när regeln faktiskt tog bort något, och
+# en städad beskrivning träffar inte regeln en andra gång. En tom uppdatering
+# hade skapat en ny `edited`-händelse och kört arbetsflödet mot sig självt.
+#
+# Städningen är snäv med flit — bara en sidfot sist i texten, i en känd form.
+# En rad mitt i brödtexten är något en människa ska titta på, inte något ett
+# arbetsflöde ska redigera bort i tysthet. Regeln och dess prov ligger i
+# pipeline/src/prtexten.ts.
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+permissions:
+  contents: read
+  pull-requests: write
+concurrency:
+  # En PR i taget: två körningar som skriver samma beskrivning kan skriva över
+  # varandra. Köade dubbletter är ofarliga att slänga — regeln är idempotent.
+  group: pr-sidfot-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  stada:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 22
+      - name: Install pipeline deps
+        run: pnpm install --frozen-lockfile
+        working-directory: pipeline
+      - name: Ta bort sidfoten
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: node --import tsx/esm scripts/pr-sidfot.mts
+        working-directory: pipeline
