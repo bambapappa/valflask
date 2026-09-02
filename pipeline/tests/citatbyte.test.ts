@@ -156,6 +156,7 @@ test("rättelseposten namnger varje berört löfte i affects — noten på löft
       { lofte: { id: "p-2026-0001", quote: "c" }, byte: { id: "p-2026-0001", citat: "d" } },
     ],
     "2026-08-15",
+    "annat",
   );
   assert.ok(post.affects.includes("p-2026-0001"));
   assert.ok(post.affects.includes("p-2026-0002"));
@@ -166,6 +167,7 @@ test("rättelseposten skiljer en lagad avskrift från ett byte av mening", () =>
   const bara_flyttad = rattelsePost(
     [{ lofte: { id: "p-2026-0001", quote: "a" }, byte: { id: "p-2026-0001", citat: "b" } }],
     "2026-08-15",
+    "annat",
   );
   const bara_reparerad = rattelsePost(
     [
@@ -176,6 +178,7 @@ test("rättelseposten skiljer en lagad avskrift från ett byte av mening", () =>
       },
     ],
     "2026-08-15",
+    "annat",
   );
   assert.ok(bara_flyttad.what.includes("annan mening"));
   assert.ok(!bara_flyttad.what.includes("avskriften"));
@@ -192,6 +195,7 @@ test("rättelseposten räknar undantagen och säger att de togs på ett mänskli
       },
     ],
     "2026-08-15",
+    "annat",
   );
   assert.ok(post.what.includes("1 av dem"));
   assert.ok(post.what.includes("mänskligt beslut"));

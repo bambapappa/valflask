@@ -128,7 +128,8 @@ export function rattelsePost(
   rader: Indragningsrad_[],
   datum: string,
   summor: { partier: Map<string, number>; riket: number; grupperSomBytteBarare: string[] },
-): { date: string; affects: string; what: string; why: string; commit: string } {
+  orsak: string,
+): { date: string; affects: string; what: string; why: string; orsak: string; commit: string } {
   const ider = [...new Set(rader.map((r) => r.lofte.id))].sort();
   const partitext = [...summor.partier.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
@@ -154,6 +155,8 @@ export function rattelsePost(
       "har lovat samma sak en gång till, eller citatet visade sig inte bära det åtagande vi läste " +
       "in i det. Politiken försvinner inte ur granskningen om den står kvar någon annanstans; det " +
       "är dubbelräkningen som försvinner.",
+    orsak,
+
     // Backfillas i en andra commit, samma mönster som övriga dataändringar.
     commit: "0000000",
   };

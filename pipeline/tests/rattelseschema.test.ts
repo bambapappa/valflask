@@ -16,6 +16,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { ORSAK_FRAN, ORSAKKODER } from "../src/orsakkoder.ts"; // ORSAK_FRAN = 2026-09-02: fem 09-01-poster skrevs före fältet
 
 const FIL = resolve(import.meta.dirname, "../../data/rattelser.json");
 /** Fälten `rattelsenoter.ts` läser direkt. Ingen post får sakna dem. */
@@ -28,6 +29,15 @@ const KRAV = ["date", "affects", "what"] as const;
  * fryst, så nästa post utan `why` kräver ett medvetet beslut.
  */
 const UTAN_WHY_TAK = 1;
+
+/**
+ * `orsak` — läslig orsakskod från ANDRINGARNA-ANALYS-2026-09-01 (handoff).
+ *
+ * Alla 191 poster som fanns när fältet infördes saknar det; de är skrivna
+ * innan koderna fanns och skrivs inte om. Tuset är fryst på noll krav för
+ * poster från och med 2026-09-01 — nya poster SKA bära en orsak, och en
+ * orsak som inte är en av koderna är ett schemafel, inte en smakfråga.
+ */
 
 /**
  * Rättelser som rör en hel sida i stället för en enskild post.
@@ -68,6 +78,38 @@ describe("rättelseloggens schema", () => {
       utan.length <= UTAN_WHY_TAK,
       `${utan.length} rättelser saknar \`why\`, taket är ${UTAN_WHY_TAK}. En rättelse utan skäl\n` +
         "är en tyst rättelse med en tidsstämpel.",
+    );
+  });
+
+  it("poster från och med 2026-09-01 bär en orsakskod", () => {
+    const nya = poster.filter((p) => typeof p.date === "string" && p.date >= ORSAK_FRAN);
+    const utan = nya.filter((p) => typeof p.orsak !== "string" || (p.orsak as string).trim() === "");
+    assert.ok(
+      utan.length === 0,
+      `${utan.length} rättelser från och med ${ORSAK_FRAN} saknar \`orsak\`:\n` +
+        utan.map((p) => `  ${String(p.date)} — ${String(p.affects).slice(0, 60)}`).join("\n") +
+        "\nOrsakskoderna står i rattelser.schema.json; utan dem är nästa mönsteranalys" +
+        " ett regex-bygge i stället för en uppslagning.",
+    );
+
+    const ogiltiga = nya
+      .filter((p) => typeof p.orsak === "string")
+      .filter((p) => !(ORSAKKODER as readonly string[]).includes(p.orsak as string));
+    assert.ok(
+      ogiltiga.length === 0,
+      `${ogiltiga.length} rättelser bär en orsak som inte är en av koderna:\n` +
+        ogiltiga.map((p) => `  ${String(p.date)}: «${String(p.orsak)}»`).join("\n"),
+    );
+  });
+
+  it("orsak-provet biter mot ett infört fel", () => {
+    const felaktig = { date: "2026-09-02", affects: "p-2026-0001", what: "…", why: "…" } as Record<string, unknown>;
+    assert.equal(typeof felaktig.orsak, "undefined", "post utan orsak ska vara ett brott");
+
+    const felkod = { date: "2026-09-02", orsak: "D2 källdjup" } as Record<string, unknown>;
+    assert.ok(
+      !(ORSAKKODER as readonly string[]).includes(felkod.orsak as string),
+      "en intern delta-kod (D2) är inte en läslig orsakskod och ska falla",
     );
   });
 

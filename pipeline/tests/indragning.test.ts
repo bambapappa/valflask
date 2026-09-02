@@ -77,6 +77,7 @@ test("rättelseposten bär de mätta talen och namnger varje löfte", () => {
     [{ lofte: { id: "p-2026-0002", parties: ["kd"] }, skal: SKAL }],
     "2026-08-15",
     { partier: new Map([["kd", 160]]), riket: 160, grupperSomBytteBarare: [] },
+    "annat",
   );
   assert.ok(post.affects.includes("p-2026-0002"));
   assert.ok(post.what.includes("KD minskar med 160 miljoner kronor"));
@@ -89,12 +90,12 @@ test("bytt gruppbärare skrivs ut i rättelseposten, och utelämnas när det int
     partier: new Map(),
     riket: 0,
     grupperSomBytteBarare: ["g-a"],
-  });
+  }, "annat");
   const utan = rattelsePost([{ lofte: { id: "p-2026-0002" }, skal: SKAL }], "2026-08-15", {
     partier: new Map(),
     riket: 0,
     grupperSomBytteBarare: [],
-  });
+  }, "annat");
   assert.ok(med.what.includes("delat löfte bytte"));
   assert.ok(!utan.what.includes("delat löfte bytte"));
 });

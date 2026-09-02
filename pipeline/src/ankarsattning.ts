@@ -179,7 +179,8 @@ export function rattelsePost(
   rader: { lofte: Lofte; ankare: Lofte }[],
   datum: string,
   summor: { partier: Map<string, number>; riket: number },
-): { date: string; affects: string; what: string; why: string; commit: string } {
+  orsak: string,
+): { date: string; affects: string; what: string; why: string; orsak: string; commit: string } {
   const ider = [...new Set(rader.map((r) => r.lofte.id))].sort();
   const partitext = [...summor.partier.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
@@ -200,6 +201,8 @@ export function rattelsePost(
       "länge lånet står utskrivet. Posterna hittades när paritetskön betades: samma politik stod på noll " +
       "hos det ena partiet och på ett räknat belopp hos det andra, och skillnaden följde inte vad " +
       "partierna lovat utan bara vilken post som råkade räknas.",
+    orsak,
+
     commit: "0000000",
   };
 }

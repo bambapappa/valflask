@@ -255,7 +255,8 @@ export function rattelsePost(
   rader: { lofte: Lofte; rad: Nollrad }[],
   datum: string,
   summor: { partier: Map<string, number>; riket: number },
-): { date: string; affects: string; what: string; why: string; commit: string } {
+  orsak: string,
+): { date: string; affects: string; what: string; why: string; orsak: string; commit: string } {
   const ider = [...new Set(rader.map((r) => r.lofte.id))].sort();
   const partitext = [...summor.partier.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
@@ -292,6 +293,8 @@ export function rattelsePost(
       "Reglerna är fastställda sedan tidigare och står i projektets metodbeskrivning. De som " +
       `tillämpats här är: ${[...perRegel.keys()].map((r) => REGLER[r]).join(" ")} ` +
       "Ingen bedömning av politiken har ändrats — bara vilken regel som gäller för dess prislapp.",
+    orsak,
+
     commit: "0000000",
   };
 }
