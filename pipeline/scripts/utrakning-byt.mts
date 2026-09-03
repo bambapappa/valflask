@@ -27,6 +27,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
+import { lasOrsak, ORSAKKODER } from "../src/orsakkoder.ts";
 import { svenskDag } from "../src/dagen.ts";
 import {
   provaUtrakningsrad,
@@ -45,6 +46,16 @@ const datum = svenskDag();
 
 if (!fil) {
   console.error("Ange en fil: <id>\\t<ny uträkning>\\t<skäl>. Se skriptets huvud.");
+  process.exit(1);
+}
+
+// En rättelsepost ska bära sin orsak. Kravet lades 2026-09-02 på de fyra
+// verktyg som då skrev rättelser, men det här skriver också en — och luckan
+// syntes först när grinden fällde den första posten som gick igenom här.
+const orsakArg = lasOrsak(process.argv);
+if (skriv && orsakArg === null) {
+  console.error("En rättelsepost kräver --orsak med en av koderna (grind: rattelseschema.test.ts):");
+  for (const k of ORSAKKODER) console.error(`  · ${k}`);
   process.exit(1);
 }
 
@@ -96,7 +107,7 @@ const nya = loften.map((p) => {
 });
 
 const rattelser = JSON.parse(readFileSync(join(DATA, "rattelser.json"), "utf8")) as unknown[];
-// Fälten är `date`/`affects`/`what`/`why` och inget annat — se rubrik-byt.
+// Fälten är `date`/`affects`/`what`/`why`/`orsak` och inget annat — se rubrik-byt.
 rattelser.push({
   date: datum,
   affects: `Löftessidorna för ${rader.map((r) => r.id).join(", ")}`,
@@ -108,6 +119,7 @@ rattelser.push({
     `det är bara texten som förklarar hur de räknats fram som ändrats. ` +
     rader.map((r) => r.skal.replace(/\.?$/u, ".")).join(" "),
   why: varfor,
+  orsak: orsakArg,
   commit: "0000000",
 });
 

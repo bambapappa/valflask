@@ -89548,7 +89548,7 @@
       ],
       "method_note": "Skärpta straff för brott mot barn. Prissatt på samma nivå som ett annat partis löfte om samma brottstyp.",
       "confidence": 0.65,
-      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Det tidigare beloppet lades på samma nivå som ett annat partis löfte om samma brottstyp, utan att antalet fall eller straffökningen räknades fram. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
+      "calculation": "Åtgärden borde kosta. Fler och längre fängelsedygn är en verklig statlig utgift, inte en samhällsföljd, så regeln att en lagändring kostar noll gäller inte en straffskärpning. Beloppet står ändå på noll, därför att underlaget inte räcker till en nivå: aritmetiken kräver en yttre källa i båda ändar — ett belagt antal domar eller fängelseår för just de här brotten, och en belagd dygnskostnad i kriminalvården — och den första saknas. Det tidigare beloppet lades på samma nivå som ett annat partis löfte om samma brottstyp, utan att antalet fall eller straffökningen räknades fram. Ett antaget antal gånger en antagen dygnskostnad är två gissningar som multipliceras, och en påhittad siffra vore sämre än en nolla med skälet utskrivet. Går antalet att belägga ska beloppet sättas."
     },
     "financing_claimed": {
       "described": false,
@@ -89573,6 +89573,11 @@
         "date": "2026-08-23",
         "change": "Uträkningen omskriven. Nollan står kvar, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Beloppet ska sättas den dag en källa bär både antalet fall och priset.",
         "commit": "5de68fb"
+      },
+      {
+        "date": "2026-09-02",
+        "change": "Uträkningen omskriven. Beloppet står stilla på noll, men skälet är nu utskrivet i regelns egna ord: åtgärden borde kosta — en straffskärpning undantas från nollningsregeln för lagändringar — och nollan vilar på att underlaget inte räcker till en nivå. Den förra texten sa samma sak i andra ord och namngav därför inget av de skäl en nollning får vila på.",
+        "commit": "896f2fd0"
       }
     ],
     "extraction": {
@@ -125289,7 +125294,7 @@
       "basis_url": null,
       "method_note": "Straffskärpning är en lagändring; direkt statlig kostnad är försumbar. Fängelsevistelser kan öka men är en osäker följd, ej prissatt.",
       "confidence": 0.3,
-      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Citatet säger «de här straffen kommer vi att höja» utan att i sig namnge vilka. Utan brottstyper går varken antalet fall eller straffökningen att räkna fram. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
+      "calculation": "Åtgärden borde kosta. Fler och längre fängelsedygn är en verklig statlig utgift, inte en samhällsföljd, så regeln att en lagändring kostar noll gäller inte en straffskärpning. Beloppet står ändå på noll, därför att underlaget inte räcker till en nivå. Citatet säger «de här straffen kommer vi att höja» utan att i sig namnge vilka, och utan brottstyper finns varken ett antal domar att belägga eller en straffökning att räkna på. Ett antaget antal gånger en antagen dygnskostnad är två gissningar som multipliceras. Namnger partiet brottstyperna, och går antalet domar att belägga, ska beloppet sättas."
     },
     "financing_claimed": {
       "described": false,
@@ -125304,6 +125309,11 @@
         "date": "2026-08-23",
         "change": "Uträkningen omskriven. Beloppet är oförändrat noll, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Samma skäl står nu på alla löften om skärpta straff som saknar räknelig grund.",
         "commit": "55db959"
+      },
+      {
+        "date": "2026-09-02",
+        "change": "Uträkningen omskriven. Beloppet står stilla på noll, men skälet är nu utskrivet i regelns egna ord: åtgärden borde kosta, och nollan vilar på att underlaget inte räcker till en nivå — citatet namnger inte brottstyperna, så varken antalet domar eller straffökningen går att belägga.",
+        "commit": "896f2fd0"
       }
     ],
     "extraction": {
@@ -128037,7 +128047,7 @@
       "basis_url": null,
       "method_note": "Indexering av befintliga statsbidrag innebär ingen ny kostnad i sig; det är en automatisk uppräkning som redan sker i viss mån. Kostnaden uppstår endast om indexeringen innebär en höjning utöver…",
       "confidence": 0.3,
-      "calculation": "Löftet pekar ut en bestämd åtgärd — statsbidragen till välfärden ska indexeras efter demografi och prisutveckling — men anger ingen nivå. Beloppet är därför lånat från Socialdemokraternas löfte om en bottenplatta för välfärden med inflationsuppräknade statsbidrag, som står på fyra miljarder kronor per år. Samma politik ska kosta lika, och det är det enda löftet i beståndet som prissätter just en indexering av statsbidragen. Lånet har ett förbehåll: det här löftet indexerar också efter DEMOGRAFI, alltså efter hur många som behöver välfärden, medan ankaret bara räknar upp med priserna. En demografisk indexering växer snabbare än en prisindexering, så fyra miljarder är sannolikt ett golv snarare än en mittpunkt. Löftet anger ingen nivå som låter oss räkna fram hur mycket högre.",
+      "calculation": "Löftet pekar ut en bestämd åtgärd — statsbidragen till välfärden ska indexeras efter demografi och prisutveckling — men anger ingen nivå. Beloppet, 4 000 mkr per år med spannet 2 000–8 000, är därför lånat från Socialdemokraternas löfte om en bottenplatta för välfärden med inflationsuppräknade statsbidrag, som står på just 4 000 mkr. Samma politik ska kosta lika, och det är det enda löftet i beståndet som prissätter en indexering av statsbidragen. Lånet har ett förbehåll: det här löftet indexerar också efter DEMOGRAFI, alltså efter hur många som behöver välfärden, medan ankaret bara räknar upp med priserna. En demografisk indexering växer snabbare, så 4 000 mkr är sannolikt ett golv snarare än en mittpunkt.",
       "anchor_ids": [
         "p-2026-1561"
       ]
@@ -128055,6 +128065,11 @@
         "date": "2026-08-23",
         "change": "Beloppet höjt från noll till 4 000 miljoner kronor per år. Löftet pekar ut en bestämd åtgärd utan att ange en nivå, och nollningsregeln gäller bara löften som varken pekar ut en åtgärd eller anger en nivå. Beloppet är lånat från ett jämförbart löfte som räknar fram sin siffra, och lånet står utskrivet i uträkningen. Sorten ändras samtidigt från inriktning till reform: ett inriktningslöfte bär aldrig ett basbelopp, och posten stod som inriktning bara därför att den var nollad.",
         "commit": "71430d2"
+      },
+      {
+        "date": "2026-09-02",
+        "change": "Uträkningen omskriven. Beloppet står stilla på 4 000 mkr per år, men uträkningen skrev summan med bokstäver och namngav aldrig siffran — läsaren kunde inte följa den. Nu står 4 000 mkr och spannet utskrivna. Förbehållet om att demografisk indexering växer snabbare än prisindexering står kvar.",
+        "commit": "896f2fd0"
       }
     ],
     "extraction": {
@@ -140710,7 +140725,7 @@
       "basis_url": null,
       "method_note": "Straffskärpningar ger främst kostnader i Kriminalvården. Uppskattning utifrån antal extra fängelseår; jämförbara löften ligger på 25–130 mkr/år.",
       "confidence": 0.4,
-      "calculation": "En straffskärpning kostar rimligtvis staten pengar: fler och längre fängelsestraff belastar Kriminalvården, och den kostnaden är statens egen. Beloppet står ändå på noll, och skälet är att den inte går att räkna trovärdigt här. Det tidigare beloppet vilade på antagandet att skärpningen ger 30–150 extra fängelseår. Priset per fängelseplats är känt, men antalet är en ren gissning, och hela beloppet följer av den. En påhittad siffra vore sämre än en nolla med skälet utskrivet. Går kostnaden att räkna ur källor som bär både antalet fall och priset per fängelsedygn ska beloppet sättas — så är det gjort på de löften där sådana källor finns."
+      "calculation": "Åtgärden borde kosta. Fler och längre fängelsedygn är en verklig statlig utgift, inte en samhällsföljd, så regeln att en lagändring kostar noll gäller inte en straffskärpning. Beloppet står ändå på noll, därför att underlaget inte räcker till en nivå. Aritmetiken kräver en yttre källa i båda ändar: ett belagt antal domar eller fängelseår, och en belagd dygnskostnad i kriminalvården. Priset per fängelseplats är känt, men antalet är det inte — det tidigare beloppet vilade på antagandet att skärpningen ger 30–150 extra fängelseår, och hela summan följde av den gissningen. Ett antaget antal gånger en känd dygnskostnad är fortfarande en gissning. Går antalet att belägga ska beloppet sättas."
     },
     "financing_claimed": {
       "described": false,
@@ -140730,6 +140745,11 @@
         "date": "2026-08-23",
         "change": "Uträkningen omskriven. Nollan står kvar, men skälet är rättat: det är inte att kriminalvårdens kostnad är en följd som inte prissätts, utan att den inte går att räkna trovärdigt för det här löftet. Beloppet ska sättas den dag en källa bär både antalet fall och priset.",
         "commit": "5de68fb"
+      },
+      {
+        "date": "2026-09-02",
+        "change": "Uträkningen omskriven. Beloppet står stilla på noll, men skälet är nu utskrivet i regelns egna ord: åtgärden borde kosta, och nollan vilar på att underlaget inte räcker till en nivå. Att de 30–150 extra fängelseåren var en gissning står nu utskrivet i stället för underförstått.",
+        "commit": "896f2fd0"
       }
     ],
     "extraction": {
