@@ -98,6 +98,13 @@ if git -C "$HANDOFF" diff --cached --quiet; then
   echo "  Inga nya loggrader."
 else
   git -C "$HANDOFF" commit -q -m "granskningslogg: kö-passet $DAG"
+  # Hämta först. Tavlan och loggen ligger i samma repo, och en människa som
+  # redigerar tavlan medan passet kör är det normala, inte undantaget. Utan
+  # rebasen avvisas pushen som non-fast-forward och hela passet faller efter
+  # att allt arbete redan är gjort — mätt 2026-09-03, när loggen var skriven
+  # och exporten klar innan pushen föll. Loggen är append-only, så en rebase
+  # kan inte skriva över någon annans rader.
+  git -C "$HANDOFF" pull -q --rebase origin main
   git -C "$HANDOFF" push -q origin HEAD:main
 fi
 
@@ -111,9 +118,11 @@ python3 "$SKILL/logg.py" "$HANDOFF" export --valflask "$VALFLASK"
 
 # ── 5. Pusha grenen. ko-pass-pr.yml öppnar PR:en. ───────────────────────────
 #
-# Grennamnet är inte fritt: `ko-pass-pr.yml` lyssnar på `claude/ko-pass-**`.
+# Grennamnet är inte fritt: `ko-pass-pr.yml` lyssnar på `arbete/ko-pass-**`.
+# Det hette `claude/ko-pass-*` och bytte prefix 2026-09-03: ett grennamn ska
+# inte peka ut vilket verktyg som körde passet.
 steg "Pushar grenen"
-GREN="claude/ko-pass-$DAG"
+GREN="arbete/ko-pass-$DAG"
 git -C "$VALFLASK" checkout -q -B "$GREN"
 git -C "$VALFLASK" add data/provningar.json handlingsvagen/data/handlingsklass-ko.json
 if git -C "$VALFLASK" diff --cached --quiet; then

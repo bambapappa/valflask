@@ -13,7 +13,7 @@ name: ko-pass-pr
 on:
   push:
     branches:
-      - "claude/ko-pass-**"
+      - "arbete/ko-pass-**"
 permissions:
   contents: read
 concurrency:
@@ -138,7 +138,7 @@ jobs:
       etikett: "larm-ko-pass-pr"
       atgard: |
             Kö-passet har pushat en gren men PR:en öppnades inte, så arbetet
-            ligger osynligt i grenen. Titta först efter grenen `claude/ko-pass-*`
+            ligger osynligt i grenen. Titta först efter grenen `arbete/ko-pass-*`
             och öppna PR:en för hand — innehållet är inte förlorat.
 
             Faller steget på behörighet är det bot-appen: den måste kunna skriva
