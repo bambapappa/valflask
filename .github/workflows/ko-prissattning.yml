@@ -128,7 +128,7 @@ jobs:
         env:
           PUSH_TOKEN: ${{ steps.token.outputs.token }}
         run: |
-          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          git config user.name "bambapappa" && git config user.email "hej@utlovat.se"
           git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           for f in needs_review.json ko_prissattning_anmarkningar.json; do
             src="$(find artifact-data -name "$f" | head -1)"

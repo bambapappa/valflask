@@ -14,8 +14,8 @@ jobs:
           fetch-depth: 0
       - name: Configure git
         run: |
-          git config user.name "utlovat-bot"
-          git config user.email "bot@utlovat.se"
+          git config user.name "bambapappa"
+          git config user.email "hej@utlovat.se"
       - name: Create annotated tag
         run: |
           TAG="release/v$(date +%Y-%m-%d)"

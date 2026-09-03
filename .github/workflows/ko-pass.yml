@@ -97,8 +97,8 @@ jobs:
           TORR: ${{ github.event_name == 'pull_request' && '--torr' || '' }}
         run: |
           set -euo pipefail
-          git config --global user.name "utlovat-bot"
-          git config --global user.email "bot@utlovat.se"
+          git config --global user.name "bambapappa"
+          git config --global user.email "hej@utlovat.se"
           bas="https://x-access-token:${PUSH_TOKEN}@github.com/${AGARE}"
           git -C "$GITHUB_WORKSPACE" remote set-url origin "$bas/valflask.git"
           git -C "$GITHUB_WORKSPACE/handoff" remote set-url origin "$bas/handoff.git"

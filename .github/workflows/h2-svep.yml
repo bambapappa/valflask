@@ -64,7 +64,7 @@ jobs:
         env:
           PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
-          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          git config user.name "bambapappa" && git config user.email "hej@utlovat.se"
           # Checkouten sparar inga uppgifter, så det här är de enda git har.
           git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           git add handlingsvagen/data/h2-svepet.json

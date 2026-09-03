@@ -109,8 +109,8 @@ jobs:
           PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           set -uo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "bambapappa"
+          git config user.email "hej@utlovat.se"
           # Peka om origin till den färska token. Checkoutens inskrivna
           # uppgifter är utgångna vid det här laget.
           git remote set-url origin \

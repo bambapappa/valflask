@@ -206,8 +206,8 @@ jobs:
         env:
           PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
-          git config user.name "utlovat-bot"
-          git config user.email "bot@utlovat.se"
+          git config user.name "bambapappa"
+          git config user.email "hej@utlovat.se"
           # Peka om origin till den färska tokenen. Checkouten sparar inga
           # uppgifter (se persist-credentials ovan), så det här är de enda
           # inloggningsuppgifter git har att gå på.

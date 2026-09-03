@@ -613,7 +613,7 @@ jobs:
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
       - name: Commit data if changed
         run: |
-          git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
+          git config user.name "bambapappa" && git config user.email "hej@utlovat.se"
           git add data/ && git diff --cached --quiet || git commit -m "data: pipeline run ${{ github.run_id }}"
           git push
       - uses: actions/upload-artifact@<PINNA-TILL-COMMIT-SHA>

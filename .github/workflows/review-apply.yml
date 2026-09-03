@@ -59,8 +59,8 @@ jobs:
           NOTIFY_FILE: ${{ runner.temp }}/notify.json
           PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
-          git config user.name "utlovat-bot"
-          git config user.email "bot@utlovat.se"
+          git config user.name "bambapappa"
+          git config user.email "hej@utlovat.se"
           git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
           for attempt in 1 2 3 4 5; do
             # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
