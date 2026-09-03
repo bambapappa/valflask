@@ -47,10 +47,18 @@ steg "Mäter kopplingskön mot källdokumenten"
 
 # ── 2. Härled prövningarna ur mätningarna ───────────────────────────────────
 #
-# Arkivkontrollen ligger med flit inte här. Den öppnar 3 602 ögonblicksbilder i
-# artigt tempo och tar timmar, och när nätet inte når arkivet svarar den
-# `oavgjort` — vilket mäter uppkopplingen och inte kopiorna. Arkivraden hamnar
-# därför i `oprovat`: en känd lucka går att lita på.
+# Arkivkontrollen ligger med flit inte här. Den öppnar drygt tolvhundra
+# ögonblicksbilder i artigt tempo och tar timmar — det är skälet, och det räcker
+# som skäl för att hålla den utanför ett nattligt pass.
+#
+# Skälet stod tidigare som «nätet når inte arkivet». Det var fel, och rättades
+# 2026-09-03 när kontrollen kördes med normal åtkomst: enstaka läsningar går
+# fint även från en trång miljö, och sparandet fungerar från en maskin som når
+# arkivet. Det som fallerar i en trång miljö är svepet i skala — arkivet stryper
+# — och det syns då som `oavgjort` på nästan varenda post. `oavgjort` mäter
+# alltså uppkopplingen och inte kopiorna, vilket var rätt slutsats av fel skäl.
+#
+# Arkivraden hamnar därför i `oprovat`: en känd lucka går att lita på.
 steg "Härleder prövningar"
 python3 "$SKILL/svep-till-provning.py" "$VALFLASK" --loften --ko \
   --utrakningen "$UT/utrakningen-ko.json" --ut "$UT/provningar-loften.json"
@@ -122,8 +130,9 @@ en människa, och sammanslagningen av den här grenen likaså.
 Grinden läser data/provningar.json från main, så etikettbesluten fungerar
 först när det här är inne.
 
-Arkivraden står som oprövad: arkivkontrollen går på nätet och hör inte
-hemma i ett schemalagt pass.
+Arkivraden står som oprövad: arkivkontrollen öppnar drygt tolvhundra
+ögonblicksbilder och tar timmar, och hör därför inte hemma i ett
+schemalagt pass. Den körs för sig.
 EOF
 git -C "$VALFLASK" push -q --force-with-lease origin "HEAD:$GREN"
 echo "  Pushad: $GREN"
