@@ -803,9 +803,17 @@ export const ANKARE: Ankare[] = [
     // Inrömmelsen ska stå kvar så länge robotar skriver till kodförrådet.
     // Slutar de göra det ska texten skrivas om till det bättre — och då
     // faller provet och tvingar fram omskrivningen.
+    //
+    // Provet läste förut namnet på identiteten arbetsflödet committar som.
+    // Det mätte fel sak: ett namnbyte hade fällt provet fast robotarna
+    // pushade precis lika mycket som förut, och enligt raden ovan skulle
+    // sidan då ha slutat be om ursäkt för något den fortfarande gör. Ett
+    // namn är inte det påståendet handlar om. Nu mäts det som gör
+    // inrömmelsen sann: arbetsflödet pushar, och det startas av ett schema
+    // och inte av en människa.
     prov: () => {
       const wf = repofil(".github/workflows/rot-watch.yml");
-      return wf.includes("git push") && wf.includes("utlovat-bot");
+      return wf.includes("git push") && /^\s*schedule:/mu.test(wf);
     },
     fallprov:
       "Ta bort robotens pushar ur arbetsflödena — provet faller, och sidan ska då sluta be om ursäkt för dem.",
