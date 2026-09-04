@@ -58,7 +58,7 @@ jobs:
         with:
           node-version: 22
       - name: Install pipeline deps
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit --no-fund --fetch-timeout=60000 --fetch-retry-maxtimeout=20000
         working-directory: handlingsvagen/pipeline
       - name: Arkivskörd + verifiering
         id: arkiv
