@@ -5255,5 +5255,53 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-miniminiva",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Moderaterna vill att asylinvandringen till Sverige fortsatt ska vara restriktiv och att den asylrelaterade migrationspolitiken ska vara i enlighet med EU:s miniminivå.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/invandring/",
+    "articleTitle": "Invandring | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/invandring/",
+    "archiveUrl": "https://web.archive.org/web/20260904204203/https://moderaterna.se/var-politik/invandring/",
+    "dateStated": "2026-09-04",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-04-18-57",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Bland förslagen finns att: förstatliga skolan och ta större hänsyn till små skolors förutsättningar",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-skapa-ett-lyft-for-norra-sverige",
+    "articleTitle": "Liberalerna vill skapa ett lyft för norra Sverige – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/nyheter/liberalerna-vill-skapa-ett-lyft-for-norra-sverige",
+    "archiveUrl": null,
+    "dateStated": "2026-09-04",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-04-18-57",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
