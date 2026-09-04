@@ -200,3 +200,69 @@ test("rättelseposten räknar undantagen och säger att de togs på ett mänskli
   assert.ok(post.what.includes("1 av dem"));
   assert.ok(post.what.includes("mänskligt beslut"));
 });
+
+test("ett källbyte flyttar löftet till den nya sidan och nollar arkivkopian", () => {
+  const lofte = {
+    id: "p-2026-0001",
+    quote: "Gammal lydelse.",
+    history: [],
+    source: {
+      url: "https://www.exempelpartiet.se/politik/gammal",
+      domain: "exempelpartiet.se",
+      archive_url: "https://web.archive.org/web/2026/gammal",
+      fetched_at: "2026-01-01T00:00:00.000Z",
+    },
+  };
+  const nytt = bytCitat(
+    lofte,
+    { id: "p-2026-0001", citat: "Ny lydelse med nivån i.", kalla: "https://www.exempelpartiet.se/politik/ny" },
+    "2026-09-05",
+    "2026-09-05T10:00:00.000Z",
+  );
+  assert.equal(nytt.source.url, "https://www.exempelpartiet.se/politik/ny");
+  assert.equal(nytt.source.domain, "exempelpartiet.se");
+  // Den gamla ögonblicksbilden visar en annan sida och bevisar ingenting om den nya.
+  assert.equal(nytt.source.archive_url, null);
+  assert.equal(nytt.source.fetched_at, "2026-09-05T10:00:00.000Z");
+  const not = (nytt.history.at(-1) as { change: string }).change;
+  assert.match(not, /Citatet och källan byttes/u);
+  assert.match(not, /Arkivkopian är nollställd/u);
+  // Det gamla citatet står kvar i historiken via den gamla adressen.
+  assert.match(not, /politik\/gammal/u);
+});
+
+test("ett vanligt citatbyte rör inte källan", () => {
+  const lofte = {
+    id: "p-2026-0002",
+    quote: "Gammal lydelse.",
+    history: [],
+    source: {
+      url: "https://www.exempelpartiet.se/politik/sidan",
+      domain: "exempelpartiet.se",
+      archive_url: "https://web.archive.org/web/2026/sidan",
+      fetched_at: "2026-01-01T00:00:00.000Z",
+    },
+  };
+  const nytt = bytCitat(lofte, { id: "p-2026-0002", citat: "Ny lydelse." }, "2026-09-05");
+  assert.equal(nytt.source.archive_url, "https://web.archive.org/web/2026/sidan");
+  assert.equal(nytt.source.fetched_at, "2026-01-01T00:00:00.000Z");
+  assert.doesNotMatch((nytt.history.at(-1) as { change: string }).change, /källan byttes/u);
+});
+
+test("rättelseposten säger att källan bytts, och för hur många", () => {
+  const post = rattelsePost(
+    [
+      {
+        lofte: { id: "p-2026-0001", quote: "a" },
+        byte: { id: "p-2026-0001", citat: "b", kalla: "https://www.exempelpartiet.se/ny" },
+      },
+      { lofte: { id: "p-2026-0002", quote: "c" }, byte: { id: "p-2026-0002", citat: "d" } },
+    ],
+    "2026-09-05",
+    "läsmetod — dubblett i annan lydelse syns bara vid genomläsning",
+  );
+  assert.match(post.affects, /varav 1 med ny källa/u);
+  assert.match(post.what, /en annan av partiets sidor/u);
+  assert.match(post.what, /Arkivkopian är nollställd/u);
+  assert.match(post.why, /belägget starkare/u);
+});
