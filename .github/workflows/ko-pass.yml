@@ -71,7 +71,7 @@ jobs:
         run: pnpm install --frozen-lockfile
         working-directory: pipeline
       - name: Install handlingsvagen deps
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit --no-fund --fetch-timeout=60000 --fetch-retry-maxtimeout=20000
         working-directory: handlingsvagen/pipeline
       # App-tokens lever en timme, och passet hämtar dokument över nätet innan
       # det skriver. Färsk token precis före — samma skäl som i pipeline.yml.
