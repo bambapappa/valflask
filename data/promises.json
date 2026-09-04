@@ -3376,7 +3376,7 @@
       "m"
     ],
     "person": null,
-    "quote": "Återupprätta arbetslinjen genom att sänka skatten för alla som arbetar – framför allt för låg- och medelinkomsttagare.",
+    "quote": "Återupprätta arbetslinjen genom att sänka skatten för alla som arbetar och har arbetat, med upp till 1 000 kr i månaden – framför allt för låg- och medelinkomsttagare.",
     "date_stated": "2026-06-27",
     "source": {
       "url": "https://moderaterna.se/var-politik/jobb-och-arbetsmarknad/",
@@ -3413,6 +3413,11 @@
         "date": "2026-07-27",
         "change": "Prissatt på ett grundat underlag: det tionde jobbskatteavdraget i budgeten för 2026 kostade 17,36 miljarder kronor per år, och basbeloppet är därför 17 000 i stället för 20 000 miljoner kronor per år. Grupplänkat med ett annat partis löfte om samma skattesänkning, som bara kan genomföras en gång.",
         "commit": "d6aafbdcda27751b366a957063bde4b525cdcfba"
+      },
+      {
+        "date": "2026-09-04",
+        "commit": "0000000",
+        "change": "Citatet byttes 2026-09-04 mot en annan lydelse på samma sida, hämtad ur källan och kontrollerad ord för ord. Beloppet, källan och bedömningen är oförändrade."
       }
     ],
     "extraction": {
@@ -151868,7 +151873,7 @@
       "s"
     ],
     "person": null,
-    "quote": "Uppmuntra fler att tipsa polisen om illegala vapen",
+    "quote": "Införa ett system med tipspengar för att belöna den som lämnar information till polisen som leder till att olagliga vapen kan omhändertas.",
     "date_stated": "2026-08-25",
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/vapen",
@@ -151897,7 +151902,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-09-04",
+        "commit": "0000000",
+        "change": "Citatet byttes 2026-09-04 mot en annan lydelse på samma sida, hämtad ur källan och kontrollerad ord för ord. Beloppet, källan och bedömningen är oförändrade."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -153472,7 +153483,7 @@
       "s"
     ],
     "person": null,
-    "quote": "Vi vill reglera små klasser för små barn och finansiera det med skolkoncernernas vinster.",
+    "quote": "Därför vill vi genomföra en småskolereform med små klasser för små barn. Bindande regler ska införas med maximalt 12 elever per lärare i de yngre årskurserna.",
     "date_stated": "2026-08-25",
     "source": {
       "url": "https://www.socialdemokraterna.se/var-politik/a-till-o/skola-och-utbildning",
@@ -153484,14 +153495,14 @@
     "cost": {
       "type": "utgift",
       "period": "per_ar",
-      "msek_low": 1500,
-      "msek_base": 2500,
-      "msek_high": 4000,
-      "basis": "llm_estimat",
+      "msek_low": 1800,
+      "msek_base": 2100,
+      "msek_high": 2600,
+      "basis": "granskare",
       "basis_url": null,
-      "method_note": "Avser statens bruttoanslag för att reglera maxstorlek i tidiga skolår; finansiering via skolkoncernvinster redovisas separat. Osäkert målvärde och åldersspann.",
+      "method_note": "Beloppet vilar på partiets egen siffra för hur många lärare reformen kräver; lönekostnaden per lärare är vår. (belopp satt av granskare)",
       "confidence": 0.3,
-      "calculation": "Antag ~400 000 elever i förskoleklass–åk 3, snitt 20/klass. Sänkt max till 15 ger ~5 000–7 000 extra lärare × 600 tkr ≈ 1 500–4 000 mkr/år. Jämför S:s löfte om reglera bemanningen för små barngrupper och hög personaltäthet i förskolan.",
+      "calculation": "Partiet anger själv vad reformen kräver: «resurser för att anställa över 3 000 fler lärare i lågstadiet». Den siffran är partiets och byts inte mot en egen härledning ur elevantal och klasstorlek. 3 000 lärare till en lönekostnad om cirka 700 000 kronor per år inklusive arbetsgivaravgifter ger 2 100 miljoner kronor per år. Spannet 1 800–2 600 speglar att lönekostnaden per lärare varierar och att «över 3 000» är ett golv, inte ett tak. Lönekostnaden är vår uppskattning; antalet lärare är partiets.",
       "anchor_ids": [
         "p-2026-1493"
       ]
@@ -153504,7 +153515,18 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-09-04",
+        "commit": "0000000",
+        "change": "Citatet byttes 2026-09-04 mot en annan lydelse på samma sida, hämtad ur källan och kontrollerad ord för ord. Beloppet, källan och bedömningen är oförändrade."
+      },
+      {
+        "date": "2026-09-04",
+        "commit": "0000000",
+        "change": "Beloppet är omräknat på partiets egen siffra. Den tidigare uträkningen härledde 5 000–7 000 nya lärare ur elevantal och klasstorlek och landade på 2 500 miljoner kronor per år. Partiet skriver själv att reformen kräver över 3 000 fler lärare i lågstadiet, och regeln är att partiets egen siffra gäller före vår uppskattning. 3 000 lärare gånger cirka 700 000 kronor ger 2 100 miljoner kronor per år."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",

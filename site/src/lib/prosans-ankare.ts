@@ -689,7 +689,7 @@ export const ANKARE: Ankare[] = [
     id: "metod-atta-av-tio-prislappar",
     sida: METOD,
     pastaende:
-      "<strong>Åtta av tio prislappar, och texten som förklarar dem.</strong>",
+      "<strong>Knappt åtta av tio prislappar, och texten som förklarar dem.</strong>",
     // Andelen står i klartext på sidan och är ett påstående om datat. Den var
     // «de flesta» förut, vilket bär allt mellan 51 och 99 procent, och sedan
     // «fyra av fem». Andelen STIGER när kön betas av: kö-posterna bär
@@ -698,15 +698,17 @@ export const ANKARE: Ankare[] = [
     // från 79 till 90 procent. När beståndet senare växte till 3 211 aktiva
     // löften föll andelen till 82 procent; påståendet är därför åter åtta av
     // tio. Provet ska följa mätningen, även när det innebär en mindre
-    // smickrande formulering.
+    // smickrande formulering. 2026-09-04 gick 126 lästa kö-poster ut med
+    // granskarsatta belopp och andelen föll från 82 till 79 procent; «åtta av
+    // tio» blev därför «knappt åtta av tio», och bandet flyttades med.
     prov: () => {
       const a = aktiva();
       const andel = a.filter((p) => p.cost?.basis === "llm_estimat").length / a.length;
-      return andel >= 0.8 && andel < 0.85;
+      return andel >= 0.75 && andel < 0.8;
     },
     fallprov:
       "Sätt basis till granskare på hälften av löftena — provet faller, och «åtta av tio» ska då skrivas om.",
-    matt: "2 636 av 3 211 = 82 % 2026-08-25",
+    matt: "2 936 av 3 728 = 79 % 2026-09-04",
   },
   {
     id: "metod-forslagen-kontrolleras-av-oberoende",
