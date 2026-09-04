@@ -260,6 +260,16 @@ async function main() {
   }
   console.log(`OG: ${issuesFile.issues.length} issue images`);
 
+  // Löftesbilderna är 4 094 av 4 113 och tar 123 av stegets 124 sekunder.
+  // De behövs i det som driftsätts, inte för att avgöra om en gren håller:
+  // koden som räknar dem har en egen grind (`test-og.mts`) som körs före
+  // bygget, och T1 kräver bara start- och partibilderna. Därför hoppas de på
+  // PR-körningar. Mätt 2026-09-04.
+  if (process.env.OG_UTAN_LOFTEN === "1") {
+    console.log("OG: löftesbilderna hoppade (OG_UTAN_LOFTEN=1)");
+    return;
+  }
+
   for (const p of promises) {
     const total = promiseTotalMsek(p);
 

@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import type { Kallandring, Kallstatus } from "./source-link.ts";
 import { resolve } from "node:path";
 
@@ -6,8 +6,35 @@ function getDataDir(): string {
   return resolve(process.cwd(), "../data");
 }
 
+/**
+ * Läst och parsad data, sparad på filens ändringstid.
+ *
+ * Utan den här kartan läste och parsade varje anrop om filen från disk. Det
+ * kostar lite för en sida och mycket för ett bygge: `promises.json` är 8,3 MB
+ * och tar omkring 26 ms att läsa och parsa, och den lästes minst två gånger
+ * per löftessida — en gång i sidan, en gång i layouten som omsluter varje
+ * sida. Med 4 094 löftessidor gick omkring 210 av byggets 433 sekunder åt
+ * till att läsa samma fil om igen, och kostnaden växte med kvadraten på
+ * antalet löften. Mätt 2026-09-04.
+ *
+ * Nyckeln är ändringstiden, inte bara filnamnet, så att utvecklingsservern
+ * ser en ändrad datafil direkt. `statSync` kostar mikrosekunder mot de 26
+ * millisekunderna.
+ *
+ * DEN HÄR KARTAN DELAS MELLAN SIDOR. Den som muterar det som kommer ut —
+ * `sort()` och `reverse()` muterar på plats — ändrar det för alla andra
+ * sidor i samma bygge. Kopiera först: `[...getPromises()].sort(...)`.
+ */
+const cache = new Map<string, { mtimeMs: number; data: unknown }>();
+
 export function loadData<T>(filename: string): T {
-  return JSON.parse(readFileSync(resolve(getDataDir(), filename), "utf8"));
+  const sokvag = resolve(getDataDir(), filename);
+  const mtimeMs = statSync(sokvag).mtimeMs;
+  const traff = cache.get(sokvag);
+  if (traff && traff.mtimeMs === mtimeMs) return traff.data as T;
+  const data = JSON.parse(readFileSync(sokvag, "utf8"));
+  cache.set(sokvag, { mtimeMs, data });
+  return data as T;
 }
 
 export interface PromisePost {

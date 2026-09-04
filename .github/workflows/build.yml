@@ -28,7 +28,11 @@ concurrency:
   # behöver inte dela kö med den. Varje gren får sin egen grupp; main behåller
   # 'pages' och därmed sin serialisering.
   group: ${{ github.ref == 'refs/heads/main' && 'pages' || format('pages-{0}', github.ref) }}
-  cancel-in-progress: false
+  # Main avbryts aldrig — en avbruten push dit lämnar deployen halvgjord.
+  # En PR-gren avbryts när en ny push kommer: den gamla körningen prövar en
+  # version som ingen längre tänker slå ihop, och att låta den gå ut innebär
+  # att vänta sexton minuter på ett svar om fel innehåll.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   test-pipeline:
     runs-on: ubuntu-latest
@@ -193,6 +197,11 @@ jobs:
       - name: Build site + OG images
         run: pnpm build
         working-directory: site
+        env:
+          # PR-körningen bygger sajten fullt ut men hoppar de 4 094
+          # löftesbilderna. De behövs i det som driftsätts, inte för att
+          # avgöra om grenen håller.
+          OG_UTAN_LOFTEN: ${{ github.event_name == 'pull_request' && '1' || '0' }}
       - name: Run T1 (build output)
         run: pnpm test:t1
         working-directory: site
