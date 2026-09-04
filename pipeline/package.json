@@ -49,6 +49,7 @@
     "stances:skeleton": "node --import tsx/esm scripts/stances-skeleton.mts",
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
+    "avvisa-lista": "node --import tsx/esm scripts/avvisa-lista.mts",
     "utrakningen": "node --import tsx/esm scripts/utrakningen.mts"
   },
   "dependencies": {
