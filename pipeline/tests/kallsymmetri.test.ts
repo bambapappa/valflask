@@ -15,10 +15,16 @@
  * påminnelse, och påminnelser åldras. Det här är grinden.
  *
  * VAD PROVET INTE KRÄVER. Inte lika många sidor per parti — hur mycket ett
- * parti skriver ut är partiets eget val, och SD:s "Vad vi vill" ÄR sex sidor.
- * Kravet är att varje parti har minst en väg in till sin politik, så att
- * skillnaden i täckning speglar vad partierna publicerat och inte vilka
- * sajter vi råkat registrera.
+ * parti skriver ut är partiets eget val. Kravet är att varje parti har minst en
+ * väg in till sin politik, så att skillnaden i täckning speglar vad partierna
+ * publicerat och inte vilka sajter vi råkat registrera.
+ *
+ * OCH DET RÄCKER INTE, vilket mättes 2026-09-05. Här stod tidigare att SD:s
+ * "Vad vi vill" ÄR sex sidor, som exempel på att ett lågt tal kan vara partiets
+ * eget val. Sidorna var sex, men partiets politik-A–Ö låg på en annan sökväg:
+ * 245 sidor under /a-till-o/ som mönstret aldrig kunde se. Provet var grönt hela
+ * tiden, för SD hade en väg in — den ledde bara till en bråkdel av politiken.
+ * En väg in mäter att kranen finns, inte hur mycket som rinner igenom.
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";
