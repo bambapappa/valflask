@@ -30,7 +30,25 @@ function storlek(v: unknown): number {
 // citattext. summary.json mätte 132,7 KB vid höjningen; 200 KB ger
 // utrymme för fortsatt skörd fram till valet utan att behöva höjas igen
 // varje vecka.
-grind("summary.json", storlek(buildSummary()), 200 * KB);
+//
+// HÖJT 200 → 240 KB DEN 2026-09-05, och "utan att behöva höjas igen varje
+// vecka" höll i nio dagar. Måttet steg 132,7 → 200,1 KB på den tiden, av
+// kopplingsköerna: 633 rader i rutnätet mot 612 samma morgon. Formen är
+// oförändrad — fortfarande ingen citattext, fortfarande bara det raden behöver.
+//
+// VAR FETTET SITTER, mätt 2026-09-05 så att nästa höjning kan avslås med en
+// siffra i handen: celler 24 %, titel 22 %, och de tre fasettlistorna
+// (dokumenttyper, motionstyper, riksmoten) 22 % — 28,9 KB av 200,1. Fasetterna
+// är fyra, tre respektive fem möjliga värden som skrivs ut som ord på varje
+// rad. Ordbokskodning av dem är den strukturella nedskärningen, och den ska
+// göras INNAN taket höjs en tredje gång. Ingen extern konsument läser
+// api/hv/summary.json — den byggs av index.astro och är inte dokumenterad på
+// api-sidan — så formen går att ändra utan att bryta något löfte till läsaren.
+//
+// Sverigedemokraternas A–Ö öppnas i samma veva (245 nya sidor), men rutnätet
+// växer med KOPPLINGAR och inte med löften, så den skörden slår igenom här
+// först när kopplingsförslagen för de nya löftena börjar godkännas.
+grind("summary.json", storlek(buildSummary()), 240 * KB);
 grind("sok-index.json", storlek(buildSokIndex()), 400 * KB);
 // Märkningen av den breda träfflistan. Hänger på kopplingarna, inte på
 // nyckelordsindexet, och mäts därför utanför blocket längre ner.

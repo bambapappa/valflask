@@ -167504,7 +167504,7 @@
       "l"
     ],
     "person": null,
-    "quote": "Vi vill att alla i landet ska vara garanterade grundläggande tjänster i hemtjänsten.",
+    "quote": "Vi vill att alla i landet ska vara garanterade grundläggande tjänster i hemtjänsten. Tjänster såsom att få komma ut i friska luften, ha tillgång till sociala aktiviteter och få mat lagad i hemmet.",
     "date_stated": "2026-08-25",
     "source": {
       "url": "https://www.liberalerna.se/politik/hemtjanst",
@@ -167534,7 +167534,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-09-05",
+        "commit": "82abd784",
+        "change": "Citatet byttes 2026-09-05 mot en annan lydelse på samma sida, hämtad ur källan och kontrollerad ord för ord. Beloppet, källan och bedömningen är oförändrade."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -213761,6 +213767,52 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-09-05T16"
+    }
+  },
+  {
+    "id": "p-2026-4372",
+    "group_id": null,
+    "loftestyp": "reform",
+    "title": "Tydligare information om produkters miljö- och klimatpåverkan",
+    "slug": "tydligare-information-om-produkters-miljo-och-klimatpaverkan",
+    "parties": [
+      "l"
+    ],
+    "person": null,
+    "quote": "Därför vill Liberalerna att produkters miljö- och klimatpåverkan ska framgå tydligare.",
+    "date_stated": "2026-09-05",
+    "source": {
+      "url": "https://www.liberalerna.se/politik/cirkular-ekonomi",
+      "domain": "liberalerna.se",
+      "archive_url": null,
+      "fetched_at": "2026-09-05T20:58:52.842Z"
+    },
+    "category": "klimat-miljö",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Löftet är ett informationskrav: produkters miljö- och klimatpåverkan ska framgå tydligare. Regeländringar prissätts till noll — löftet hålls av regeln, och beredningen sker i Regeringskansliets och de berörda myndigheternas befintliga organisation. Kostnaden för att ta fram och visa uppgifterna faller på den som säljer produkten, inte på staten, och en märkning av det här slaget beslutas dessutom till stor del på EU-nivå. Partiets publicerade löfte om tydligare märkning av livsmedel är prissatt till noll på samma grund.",
+      "confidence": 0.9
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-09-05T20"
     }
   }
 ]
