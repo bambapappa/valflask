@@ -5521,5 +5521,126 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi har tillsammans med regeringen fortsatt satsningen Äldreomsorgslyftet, som innebär stöd till kommuner för att kompetensutveckla personal inom äldreomsorgen. Sverigedemokraterna och regeringen har också tagit initiativ till hårdare språkkrav.",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/a-till-o/aldrevard/",
+    "articleTitle": "Äldrevård | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/a-till-o/aldrevard/",
+    "archiveUrl": "https://web.archive.org/web/20260905224344/https://www.sd.se/a-till-o/aldrevard/",
+    "dateStated": "2026-06-12",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-05-22-02",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-jobb-lonegolv",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Enligt en uppgörelse mellan Sverigedemokraterna och regeringen ska lönen för en arbetskraftsinvandrare vara minst 90 % av medianlönen i Sverige, alltså ungefär 34 000 kr i månaden före skatt. Detta behövs för att förhindra lönedumpning och missbruk av systemet.",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/a-till-o/arbetskraftinvandring/",
+    "articleTitle": "Arbetskraftinvandring | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/a-till-o/arbetskraftinvandring/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-12",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-05-22-02",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-miniminiva",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Möjligheten för asylsökande att ordna eget boende (EBO) ska upphöra och mottagandesystemet ska anpassas till EU:s miniminivå.",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/a-till-o/asylinvandring/",
+    "articleTitle": "Asylinvandring | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/a-till-o/asylinvandring/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-12",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-05-22-02",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet nämner endast att mottagandesystemet ska anpassas till EU:s miniminivå, inte hela asyllagstiftningen. Delfrågan avser specifikt om hela asyllagstiftningen ska ligga på miniminivå, så citatet är inte tillräckligt direkt kopplat till frågans avgränsning."
+      }
+    ],
+    "verifyReason": "Citatet nämner endast att mottagandesystemet ska anpassas till EU:s miniminivå, inte hela asyllagstiftningen. Delfrågan avser specifikt om hela asyllagstiftningen ska ligga på miniminivå, så citatet är inte tillräckligt direkt kopplat till frågans avgränsning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-atervandring",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Som ett led i detta har vi drivit igenom kraftigt höjda återvandringsbidrag (upp till 350 000 kr per vuxen) för att göra det mer attraktivt att lämna Sverige på eget initiativ.",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/a-till-o/atervandring/",
+    "articleTitle": "Återvandring | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/a-till-o/atervandring/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-12",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-05-22-02",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-klimat-reduktionsplikt",
+      "party": "sd",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Sverigedemokraterna vill avskaffa reduktionsplikten helt",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/a-till-o/jimmiepriser-vid-pump/",
+    "articleTitle": "Jimmiepriser vid pump | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/a-till-o/jimmiepriser-vid-pump/",
+    "archiveUrl": "https://web.archive.org/web/20260905224626/https://www.sd.se/a-till-o/jimmiepriser-vid-pump/",
+    "dateStated": "2026-06-12",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-05-22-02",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
