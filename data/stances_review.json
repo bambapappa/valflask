@@ -5303,5 +5303,103 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Miljöpartiet vill avskaffa marknadsskolan, låta vinster från skattefinansierad välfärd stanna i välfärden och ge alla en jämlik välfärd.",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/vinster-i-valfarden/",
+    "articleTitle": "Miljöpartiets - Vinster i välfärden",
+    "sourceUrl": "https://www.mp.se/politik/vinster-i-valfarden/",
+    "archiveUrl": "https://web.archive.org/web/20260904235358/https://www.mp.se/politik/vinster-i-valfarden/",
+    "dateStated": "2026-06-26",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-04-22-18",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "m",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Det viktiga är kvaliteten, inte om en skola som levererar hög kvalitet går med vinst.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/skola-och-utbildning/",
+    "articleTitle": "Skola och utbildning | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/skola-och-utbildning/",
+    "archiveUrl": null,
+    "dateStated": "2026-08-27",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-04-22-18",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet uttrycker att kvalitet är viktigare än vinst och att en skola med hög kvalitet får gå med vinst, vilket stödjer en nej-position mot förbud eller begränsning av vinstutdelning."
+      }
+    ],
+    "verifyReason": "Citatet uttrycker att kvalitet är viktigare än vinst och att en skola med hög kvalitet får gå med vinst, vilket stödjer en nej-position mot förbud eller begränsning av vinstutdelning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Språkkravet inom äldreomsorgen, som började gälla den 1 juli 2026 är därför en mycket viktig åtgärd för att förbättra villkoren för seniorer.",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/sprakkrav-2/",
+    "articleTitle": "Språkkrav | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/sprakkrav-2/",
+    "archiveUrl": null,
+    "dateStated": "2026-09-01",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-04-22-18",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-lag-straffalder",
+      "party": "m",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Sänka straffbarhetsåldern för de allvarligaste brotten",
+      "person": null
+    },
+    "articleUrl": "https://moderaterna.se/var-politik/straff-2/",
+    "articleTitle": "Straff | Moderaterna",
+    "sourceUrl": "https://moderaterna.se/var-politik/straff-2/",
+    "archiveUrl": null,
+    "dateStated": "2026-07-20",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-04-22-18",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet uttrycker en allmän vilja att sänka straffbarhetsåldern för de allvarligaste brotten men anger inte den specifika nivån 14 år eller propositionen, så det ger inget besked på delfrågan."
+      }
+    ],
+    "verifyReason": "Citatet uttrycker en allmän vilja att sänka straffbarhetsåldern för de allvarligaste brotten men anger inte den specifika nivån 14 år eller propositionen, så det ger inget besked på delfrågan."
   }
 ]
