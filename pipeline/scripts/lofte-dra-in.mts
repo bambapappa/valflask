@@ -24,6 +24,7 @@ import { join } from "node:path";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { lasOrsak, ORSAKKODER } from "../src/orsakkoder.ts";
 import {
+  avvisningarForIndragna,
   draIn,
   grupperSomByterBarare,
   provaIndragning,
@@ -31,6 +32,7 @@ import {
   type Indragningsrad,
 } from "../src/indragning.ts";
 import { beroendeAv, type Ankarlofte } from "../src/ankaren.ts";
+import { avvisa, type Avvisning } from "../src/avvisningar.ts";
 import { taLaset } from "../src/datalas.ts";
 import { pathToFileURL } from "node:url";
 import { svenskDag } from "../src/dagen.ts";
@@ -169,7 +171,15 @@ const post = rattelsePost(
   { partier, riket, grupperSomBytteBarare },
   orsakArg,
 );
+const minnesposter = avvisningarForIndragna(loften, rader);
 console.log(`\nRättelsepost som skrivs:\n  ${post.affects}\n  ${post.what}`);
+console.log(
+  `\nAvvisningsminnet: ${minnesposter.length} av ${rader.length} meningar skrivs in, så att` +
+    " nästa skörd inte lägger tillbaka dem." +
+    (minnesposter.length < rader.length
+      ? `\n⚠ ${rader.length - minnesposter.length} saknar adress eller citat och går inte att minnas — de kan skördas på nytt.`
+      : ""),
+);
 
 if (!skriv) {
   console.log("\ntorrkörning — lägg till --skriv för att verkställa.");
@@ -198,12 +208,24 @@ changelog.push({
   timestamp: new Date().toISOString(),
 });
 
+// AVVISNINGSMINNET. Utan den här raden hittar nästa skörd samma mening på
+// samma sida och lägger tillbaka den i kön — 138 av 575 poster i kön 2026-09-04
+// var just sådana återkomster.
+let minne: Avvisning[] = [];
+try {
+  minne = JSON.parse(readFileSync(join(DATA_DIR, "avvisade.json"), "utf8")) as Avvisning[];
+} catch {
+  minne = [];
+}
+for (const m of minnesposter) minne = avvisa(minne, m.url, m.citat, m.skal, datum);
+
 writeFileSync(join(DATA_DIR, "promises.json"), JSON.stringify(nya, null, 2) + "\n");
 writeFileSync(join(DATA_DIR, "rattelser.json"), JSON.stringify([...rattelser, post], null, 2) + "\n");
 writeFileSync(join(DATA_DIR, "changelog.json"), JSON.stringify(changelog, null, 2) + "\n");
+writeFileSync(join(DATA_DIR, "avvisade.json"), JSON.stringify(minne, null, 2) + "\n");
 
 slappLas();
-console.log("\nskrivet: promises.json, rattelser.json, changelog.json");
+console.log("\nskrivet: promises.json, rattelser.json, changelog.json, avvisade.json");
 console.log(
   "Kvar att göra för hand:\n" +
     "  · backfilla den riktiga commit-hashen i historikposterna och i rättelseposten,\n" +

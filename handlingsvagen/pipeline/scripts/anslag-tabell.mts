@@ -11,6 +11,14 @@
  *   npm run anslag-tabell -- --klass-a            # alla med bara anslagsyrkande
  *   npm run anslag-tabell -- k-2026-0674 --allt   # hela tabellen, inte bara träffarna
  *   npm run anslag-tabell -- --klass-a --json rader.json   # mätvärdena, maskinläsbart
+ *   npm run anslag-tabell -- --ko --klass-a               # samma fråga, ställd om KÖN
+ *
+ * **`--ko` läser kopplingskön i stället för det publicerade.** Verktyget byggdes för
+ * att laga 103 redan godkända kopplingar, och kunde därför bara svara på frågan
+ * EFTER beslutet. Kön 2026-09-05 hade sex anslagskopplingar där tabellraden avgjorde
+ * saken, och tabellerna fick hämtas för hand vid sidan av verktyget. Med flaggan
+ * ställs frågan innan kopplingen godkänns, vilket är den ordning beslutet b-0039
+ * förutsätter: raden ska ligga bredvid löftet när någon avgör posten.
  *
  * `--json` finns för att prövningen ska kunna vila på mätvärden i stället för
  * på en utskrift någon läst. Utan den måste varje invändning om en anslagsrad
@@ -28,7 +36,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
-import type { KopplingPost } from "../src/granskning.ts";
+import { kopplingId, type KopplingPost } from "../src/granskning.ts";
 import {
   parseAnslagstabell,
   narmastLoftetMedPoang,
@@ -38,7 +46,16 @@ import {
 import { cachat, hamtaJson } from "./kallcache.mts";
 
 const rot = resolve(import.meta.dirname, "../..");
-const kopplingar: KopplingPost[] = JSON.parse(readFileSync(resolve(rot, "data/kopplingar.json"), "utf8"));
+/** Kön eller det publicerade — flaggan avgör, och den läses före allt annat. */
+const kon = process.argv.slice(2).includes("--ko");
+const kopplingsfil = kon ? "data/kopplingsforslag.json" : "data/kopplingar.json";
+/**
+ * Kö-poster saknar id — det mintas i beslutet — så de får sitt stabila kö-id här.
+ * Samma id som `npm run granska -- list` skriver ut, och som godkännandet tar.
+ */
+const kopplingar: KopplingPost[] = (
+  JSON.parse(readFileSync(resolve(rot, kopplingsfil), "utf8")) as KopplingPost[]
+).map((k) => (kon ? { ...k, id: kopplingId(k as never) } : k));
 const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
 
 /**
@@ -124,16 +141,27 @@ function skrivRad(r: Anslagsrad): string {
  * ett urval på det plockar 670 kopplingar i stället för 99.
  */
 function klassAIdn(): string[] {
-  const fil = resolve(rot, "data/handlingsklass.json");
+  const fil = resolve(rot, kon ? "data/handlingsklass-ko.json" : "data/handlingsklass.json");
   if (!existsSync(fil)) {
-    console.error("data/handlingsklass.json saknas. Kör: npm run handlingsklass -- --skriv");
+    console.error(
+      kon
+        ? "data/handlingsklass-ko.json saknas. Kör: npm run handlingsklass -- --ko --skriv"
+        : "data/handlingsklass.json saknas. Kör: npm run handlingsklass -- --skriv",
+    );
     process.exit(1);
   }
   const karta: Array<{ koppling: string; motionsslag?: string; i_handlingen?: boolean | null }> =
     JSON.parse(readFileSync(fil, "utf8"));
+  // I KÖN GÄLLER INTE VILLKORET OM BRÖDTEXT. En kö-post bär alltid yrkandet som
+  // bevis — citatet är hämtat ur yrkandelistan, så `i_handlingen` är sant för
+  // varje post. Villkoret finns för det publicerade, där ett citat ur
+  // brödtexten är just det som ska prövas mot tabellen. Frågan här är en annan
+  // och kommer före: har motionen bara anslagsyrkanden, så att yrkandet inte
+  // säger vad den föreslår? Bär tabellen saken byts beviset i beslutet; bär den
+  // inte ska posten avvisas. Höll villkoret kvar här valde svepet noll poster.
   return karta
-    .filter((p) => p.motionsslag === "bara_anslag" && p.i_handlingen !== true)
-    .map((p) => p.koppling);
+    .filter((p) => p.motionsslag === "bara_anslag" && (kon || p.i_handlingen !== true))
+    .map((p) => (kon ? p.koppling.replace(/^ko:/u, "") : p.koppling));
 }
 
 const valda = klassA ? klassAIdn() : idn;
@@ -150,7 +178,7 @@ let saknas = 0;
 for (const id of valda) {
   const k = kopplingar.find((x) => x.id === id);
   if (!k) {
-    console.log(`\n${id}  ⚠ finns inte i kopplingar.json`);
+    console.log(`\n${id}  ⚠ finns inte i ${kopplingsfil}`);
     continue;
   }
   const h = handlingPerId.get(k.handling_id);

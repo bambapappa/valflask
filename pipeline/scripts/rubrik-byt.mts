@@ -2,7 +2,11 @@
  * Byter rubrik på redan publicerade löften — en läst hög i en körning.
  *
  *   pnpm rubrik-byt -- <fil>                       # torrkörning, alltid först
- *   pnpm rubrik-byt -- <fil> --skriv --varfor "…"
+ *   pnpm rubrik-byt -- <fil> --skriv --varfor "…" --orsak <kod>
+ *
+ * Rubriken står på löftessidan, så bytet är en rättelse. Posten i
+ * `data/rattelser.json` bär en orsakskod som alla andra rättelser sedan
+ * 2026-09-02 — utan den fälls datat av rättelseschemats grind.
  *
  * En rad per byte, tre fält åtskilda av tabb:
  *
@@ -25,12 +29,14 @@ import { join } from "node:path";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { provaRad, tillampa, type Rubrikpost, type Rubrikrad } from "../src/rubrikbyte.ts";
 import { svenskDag } from "../src/dagen.ts";
+import { lasOrsak, ORSAKKODER } from "../src/orsakkoder.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const varfor = varde("--varfor");
+const orsakArg = lasOrsak(process.argv);
 const fil = argv.find((a) => !a.startsWith("--") && a !== varfor);
 const datum = svenskDag();
 
@@ -75,6 +81,13 @@ if (!skriv) {
   console.log("\nIngenting skrivet. Kör med --skriv för att verkställa.");
   process.exit(0);
 }
+if (orsakArg === null) {
+  console.error(
+    "\nEn rättelsepost kräver --orsak med en av koderna (grind: rattelseschema.test.ts):",
+  );
+  for (const k of ORSAKKODER) console.error(`  ${k}`);
+  process.exit(1);
+}
 if (!varfor) {
   console.error("\n--skriv kräver --varfor: rättelseloggen ska säga varför högen lästes.");
   process.exit(1);
@@ -100,6 +113,7 @@ rattelser.push({
     .map((r) => `Rubriken «${karta.get(r.id)?.title ?? "—"}» är utbytt mot «${r.rubrik}» — ${r.skal}.`)
     .join(" "),
   why: varfor,
+  orsak: orsakArg,
   commit: "0000000",
 });
 
