@@ -43,6 +43,8 @@ interface Lofte {
   id: string;
   status?: string;
   group_id?: string | null;
+  quote?: string;
+  source?: { url?: string };
   history?: unknown[];
 }
 
@@ -160,4 +162,48 @@ export function rattelsePost(
     // Backfillas i en andra commit, samma mönster som övriga dataändringar.
     commit: "0000000",
   };
+}
+
+
+/**
+ * Indragningen som poster i avvisningsminnet.
+ *
+ * **Varför den finns.** En avvisad köpost lämnar ett spår — `review.ts` skriver
+ * i `avvisade.json`, och nästa skörd hittar meningen och lägger den inte
+ * tillbaka. En INDRAGNING gjorde inte det. Löftet försvann ur beståndet, men
+ * meningen stod kvar på partiets sida, och skörden hade ingenting som sa att vi
+ * redan läst och förkastat den.
+ *
+ * Kostnaden är mätt två gånger. Kön 2026-09-04 bar 138 poster som var ordagrant
+ * återkomster av indragna löften — spärren hade hållit ute var fjärde post i
+ * hela kön. Kön 2026-09-05 bar tre till, två av dem ordagrant samma citat som
+ * det indragna löftet.
+ *
+ * Skälet som skrivs in är indragningens eget, med en inledning som säger vad
+ * som hände: den som slår upp posten om ett halvår ska se att meningen en gång
+ * var publicerad, inte tro att den avvisades direkt ur kön.
+ *
+ * Ren logik: minnet läses och skrivs av anroparen.
+ */
+export function avvisningarForIndragna(
+  loften: Lofte[],
+  rader: Indragningsrad[],
+): Array<{ url: string; citat: string; skal: string }> {
+  const byId = new Map(loften.map((l) => [l.id, l]));
+  const ut: Array<{ url: string; citat: string; skal: string }> = [];
+  for (const rad of rader) {
+    const lofte = byId.get(rad.id);
+    const url = lofte?.source?.url?.trim() ?? "";
+    const citat = lofte?.quote?.trim() ?? "";
+    // Utan adress eller citat finns ingen nyckel att minnas posten på. Det är
+    // inte ett fel som ska stoppa indragningen — löftet dras in ändå — men
+    // spärren kan då inte hålla meningen ute, och anroparen säger det.
+    if (url === "" || citat === "") continue;
+    ut.push({
+      url,
+      citat,
+      skal: `Löftet publicerades och drogs sedan tillbaka: ${rad.skal.trim()}`,
+    });
+  }
+  return ut;
 }

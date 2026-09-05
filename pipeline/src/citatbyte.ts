@@ -36,6 +36,23 @@ export interface Byte {
   id: string;
   citat: string;
   /**
+   * Ny källadress, när den bättre lydelsen står på en ANNAN av partiets sidor.
+   *
+   * VARFÖR FÄLTET FINNS. Genomgången av hela löfteskön 2026-09-04 fann sexton
+   * köposter som bar ett bättre citat för ett redan publicerat löfte — oftast
+   * med partiets egen siffra i. Tretton av dem gick inte att verkställa: den
+   * bättre meningen stod på en annan av partiets sidor än den källa löftet
+   * citerade, och verktyget hämtade bara löftets egen källa. Enda utvägarna var
+   * att dra in löftet och publicera ett nytt, eller att låta den sämre lydelsen
+   * stå kvar. Båda är sämre än att byta källan och säga det.
+   *
+   * Byts källan är det en STÖRRE rättelse än ett citatbyte: belägget byts, inte
+   * bara vilken mening vi visar. Därför nollas arkivkopian — den är en
+   * ögonblicksbild av den GAMLA sidan och bevisar ingenting om den nya — och
+   * historikposten och rättelseposten säger båda att källan bytts.
+   */
+  kalla?: string;
+  /**
    * Skälet till att ett citat som INTE är en hel mening i källan ändå får
    * bytas in.
    *
@@ -170,29 +187,60 @@ export function provaByte(
 }
 
 /** Spåret bytet lämnar i löftets historik — bytet får aldrig vara osynligt. */
-export function bytesnot(byte: Byte, datum: string): string {
-  const bas =
-    `Citatet byttes ${datum} mot en annan lydelse på samma sida, hämtad ur källan och ` +
-    "kontrollerad ord för ord. Beloppet, källan och bedömningen är oförändrade.";
+export function bytesnot(byte: Byte, datum: string, gammalKalla?: string): string {
+  const bas = byte.kalla
+    ? `Citatet och källan byttes ${datum}. Den nya lydelsen står på ${byte.kalla} och är hämtad ` +
+      "därifrån och kontrollerad ord för ord; den bär åtagandet eller nivån tydligare än den " +
+      `mening vi visade förut${gammalKalla ? ` från ${gammalKalla}` : ""}. Arkivkopian är nollställd ` +
+      "och hämtas om för den nya sidan — den gamla ögonblicksbilden visar en annan sida. " +
+      "Beloppet och bedömningen är oförändrade."
+    : `Citatet byttes ${datum} mot en annan lydelse på samma sida, hämtad ur källan och ` +
+      "kontrollerad ord för ord. Beloppet, källan och bedömningen är oförändrade.";
   return byte.fragmentSkal
     ? `${bas} Citatet bär inte hela meningen det är hämtat ur, och togs in på ett mänskligt ` +
         `beslut: ${byte.fragmentSkal}`
     : bas;
 }
 
+/** Värdnamnet utan `www.`, tomt när adressen inte går att tolka. */
+export function domanFor(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./u, "");
+  } catch {
+    return "";
+  }
+}
+
 /** Löftet med sitt nya citat och en egen historikpost, enligt tvåcommit-mönstret. */
-export function bytCitat<T extends { quote: string; history?: unknown[] }>(
-  lofte: T,
-  byte: Byte,
-  datum: string,
-): T {
+export function bytCitat<
+  T extends {
+    quote: string;
+    history?: unknown[];
+    source?: { url?: string; domain?: string; archive_url?: string | null; fetched_at?: string };
+  },
+>(lofte: T, byte: Byte, datum: string, nu: string = new Date().toISOString()): T {
+  const gammalKalla = lofte.source?.url;
   return {
     ...lofte,
     quote: byte.citat,
+    ...(byte.kalla
+      ? {
+          source: {
+            ...(lofte.source ?? {}),
+            url: byte.kalla,
+            domain: domanFor(byte.kalla),
+            // Den gamla kopian är en ögonblicksbild av den gamla sidan och
+            // bevisar ingenting om den nya. Nollan gör att arkivsteget hämtar
+            // om den vid nästa körning — samma väg som ett nytt löfte tar.
+            archive_url: null,
+            fetched_at: nu,
+          },
+        }
+      : {}),
     history: [
       ...(lofte.history ?? []),
       // Backfillas i en andra commit, samma mönster som övriga dataändringar.
-      { date: datum, commit: "0000000", change: bytesnot(byte, datum) },
+      { date: datum, commit: "0000000", change: bytesnot(byte, datum, gammalKalla) },
     ],
   };
 }
@@ -227,6 +275,7 @@ export function rattelsePost(
   const undantag = byten.filter((b) => b.byte.fragmentSkal).length;
   const reparerade = byten.filter((b) => b.gammaltCitatSaknasIKallan).length;
   const flyttade = byten.length - reparerade;
+  const kallbyten = byten.filter((b) => b.byte.kalla).length;
 
   const flyttadText =
     flyttade > 0
@@ -241,6 +290,13 @@ export function rattelsePost(
       ? `För ${reparerade} ${reparerade === 1 ? "löfte" : "löften"} gick det gamla citatet inte ` +
         "längre att hitta ord för ord i källan. Meningen är densamma — det är avskriften som är " +
         "lagad, hämtad på nytt ur sidan."
+      : "";
+
+  const kallText =
+    kallbyten > 0
+      ? ` För ${kallbyten} av dem pekar löftet nu på en annan av partiets sidor: den bättre ` +
+        "lydelsen stod där, inte på den sida vi citerade förut. Arkivkopian är nollställd och " +
+        "hämtas om för den nya sidan."
       : "";
 
   const paUndantagText =
@@ -262,14 +318,21 @@ export function rattelsePost(
 
   return {
     date: datum,
-    affects: `${ider.join(", ")} — ${byten.length} ${byten.length === 1 ? "citat" : "citat"} utbytta`,
+    affects:
+      `${ider.join(", ")} — ${byten.length} citat utbytta` +
+      (kallbyten > 0 ? `, varav ${kallbyten} med ny källa` : ""),
     what:
       [flyttadText, reparadText].filter(Boolean).join(" ") +
       " Varje nytt citat är hämtat ur källan och kontrollerat ord för ord." +
+      kallText +
       paUndantagText,
     why:
       varforFlyttad +
       varforReparad +
+      (kallbyten > 0
+        ? "En källa byts bara när partiet självt säger samma sak tydligare på en annan av sina " +
+          "sidor; löftet är detsamma, belägget starkare. "
+        : "") +
       "Beloppet och bedömningen är oförändrade — det är citatet som bytt mening, inte prislappen.",
     orsak,
 

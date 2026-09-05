@@ -2,7 +2,12 @@
  * Sätter `group_id` på löften som lovar samma sak.
  *
  *   pnpm gruppsattning -- <fil>                       # torrkörning, alltid först
- *   pnpm gruppsattning -- <fil> --skriv --varfor "…"
+ *   pnpm gruppsattning -- <fil> --skriv --varfor "…" --orsak <kod>
+ *
+ * Grupperingen flyttar en publicerad summa och är därför en rättelse. Posten i
+ * `data/rattelser.json` bär en orsakskod som alla andra rättelser sedan
+ * 2026-09-02 — utan den fälls datat av rättelseschemats grind, vilket det gjorde
+ * första gången verktyget kördes efter att koden infördes.
  *
  * En rad per grupp, fälten åtskilda av tabb:
  *
@@ -28,6 +33,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { svenskDag } from "../src/dagen.ts";
+import { lasOrsak, ORSAKKODER } from "../src/orsakkoder.ts";
 import {
   mandatperioden as period,
   provaGrupprad,
@@ -43,6 +49,7 @@ const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const varfor = varde("--varfor");
+const orsakArg = lasOrsak(process.argv);
 const fil = argv.find((a) => !a.startsWith("--") && a !== varfor);
 const datum = svenskDag();
 
@@ -110,6 +117,13 @@ if (fel.length > 0) {
 console.log(`${rader.length} grupper · rikssumman sjunker med ${sankning.toLocaleString("sv-SE")} msek för mandatperioden`);
 
 if (!skriv) { console.log("\nIngenting skrivet. Kör med --skriv för att verkställa."); process.exit(0); }
+if (orsakArg === null) {
+  console.error(
+    "\nEn rättelsepost kräver --orsak med en av koderna (grind: rattelseschema.test.ts):",
+  );
+  for (const k of ORSAKKODER) console.error(`  ${k}`);
+  process.exit(1);
+}
 if (!varfor) { console.error("\n--skriv kräver --varfor."); process.exit(1); }
 
 const nya = loften.map((p) => {
@@ -142,6 +156,7 @@ rattelser.push({
     `belopp; det som ändras är totalen, som sjunker med ${sankning.toLocaleString("sv-SE")} miljoner ` +
     "kronor för mandatperioden. " + rader.map((r) => r.skal).join(" "),
   why: varfor,
+  orsak: orsakArg,
   commit: "0000000",
 });
 

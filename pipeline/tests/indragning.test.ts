@@ -6,7 +6,9 @@ import {
   grupperSomByterBarare,
   provaIndragning,
   rattelsePost,
+  avvisningarForIndragna,
 } from "../src/indragning.ts";
+import { arAvvisad, avvisa } from "../src/avvisningar.ts";
 
 const SKAL =
   "Samma parti lovar samma sak på en annan sida, och den posten bär hela åtagandet med nivån utskriven.";
@@ -98,4 +100,56 @@ test("bytt gruppbärare skrivs ut i rättelseposten, och utelämnas när det int
   }, "annat");
   assert.ok(med.what.includes("delat löfte bytte"));
   assert.ok(!utan.what.includes("delat löfte bytte"));
+});
+
+test("indragningen lämnar spår i avvisningsminnet — annars skördas meningen på nytt", () => {
+  const loften = [
+    {
+      id: "p-2026-0001",
+      status: "aktiv",
+      quote: "Vi vill sänka skatten på arbete.",
+      source: { url: "https://exempelpartiet.se/politik/skatt" },
+    },
+  ];
+  const poster = avvisningarForIndragna(loften, [
+    { id: "p-2026-0001", skal: "Samma parti lovar samma sak i en tydligare form på en annan sida." },
+  ]);
+  assert.equal(poster.length, 1);
+  assert.equal(poster[0]!.url, "https://exempelpartiet.se/politik/skatt");
+  assert.equal(poster[0]!.citat, "Vi vill sänka skatten på arbete.");
+  // Skälet ska säga att meningen VARIT publicerad, inte bara avvisad ur kön.
+  assert.match(poster[0]!.skal, /publicerades och drogs sedan tillbaka/u);
+  assert.match(poster[0]!.skal, /tydligare form/u);
+});
+
+test("ett löfte utan adress eller citat går inte att minnas — och stoppar inte indragningen", () => {
+  const loften = [
+    { id: "p-2026-0002", status: "aktiv", quote: "En mening.", source: { url: "" } },
+    { id: "p-2026-0003", status: "aktiv", source: { url: "https://exempelpartiet.se/a" } },
+  ];
+  const poster = avvisningarForIndragna(loften, [
+    { id: "p-2026-0002", skal: "Ett skäl som är långt nog för att duga i rättelseloggen." },
+    { id: "p-2026-0003", skal: "Ett skäl som är långt nog för att duga i rättelseloggen." },
+  ]);
+  assert.deepEqual(poster, []);
+});
+
+test("minnet känner igen den indragna meningen efteråt", () => {
+  const loften = [
+    {
+      id: "p-2026-0004",
+      status: "aktiv",
+      quote: "Reformera strandskyddet i grunden.",
+      source: { url: "https://exempelpartiet.se/politik/glesbygd" },
+    },
+  ];
+  const poster = avvisningarForIndragna(loften, [
+    { id: "p-2026-0004", skal: "Samma mening står som eget löfte på partiets strandskyddssida." },
+  ]);
+  let minne: Parameters<typeof arAvvisad>[0] = [];
+  for (const p of poster) minne = avvisa(minne, p.url, p.citat, p.skal, "2026-09-05");
+  // Samma sida.
+  assert.equal(arAvvisad(minne, "https://exempelpartiet.se/politik/glesbygd", "Reformera strandskyddet i grunden."), true);
+  // Samma mening, annan sida hos samma parti — regeln från 2026-08-24.
+  assert.equal(arAvvisad(minne, "https://exempelpartiet.se/politik/strandskydd", "Reformera strandskyddet i grunden."), true);
 });
