@@ -205,7 +205,7 @@ test("ett källbyte flyttar löftet till den nya sidan och nollar arkivkopian", 
   const lofte = {
     id: "p-2026-0001",
     quote: "Gammal lydelse.",
-    history: [],
+    history: [] as Array<{ change: string }>,
     source: {
       url: "https://www.exempelpartiet.se/politik/gammal",
       domain: "exempelpartiet.se",
@@ -235,7 +235,7 @@ test("ett vanligt citatbyte rör inte källan", () => {
   const lofte = {
     id: "p-2026-0002",
     quote: "Gammal lydelse.",
-    history: [],
+    history: [] as Array<{ change: string }>,
     source: {
       url: "https://www.exempelpartiet.se/politik/sidan",
       domain: "exempelpartiet.se",
