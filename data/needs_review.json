@@ -7036,5 +7036,2630 @@
       "calculation": "Löftet anger ingen nivå, summa eller specifik åtgärd — endast avsikten att 'utveckla samverkan'. Jämförbara samarbetslöften prissätts till 0. Diplomatiska kontakter, avtal och samordning utförs av redan anställd personal inom befintliga anslag, vilket ger en ny nettokostnad ≈ 0 mkr/år. Ett litet spann uppåt (5 mkr) lämnar rum för ev. mindre medel till nya samarbetsinitiativ eller utbyte."
     },
     "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-2495 (0), p-2026-2305 (50), p-2026-3176 (0), p-2026-3266 (0), p-2026-1152 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Endast svenska medborgare ska ha rösträtt i allmänna val",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Således borde endast svenska medborgare ha rösträtt i allmänna val.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/rostratt/",
+    "articleTitle": "Rösträtt | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring i rösträttslagstiftning. Direkt kostnad för staten är i princip noll; ev. engångskostnad för omställning av röstlängder och information. Samhällsföljder kvantifieras ej.",
+      "confidence": 0.65,
+      "calculation": "Löftet är en lagändring: ta bort rösträtt för utländska medborgare i kommun- och regionval. Själva åtgärden kräver ingen ny statlig utgift löpande — röstlängder och valadministration drivs redan. Ev. engångskostnad: justeringar i Valmyndighetens register, röstlängdsarbete och information till väljare, grovt 0–5 msek. Uteblivna röster eller politiska följder är inte en statlig kostnad och prissätts inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-2352 (5), p-2026-1840 (0), p-2026-0857 (0), p-2026-2057 (0), p-2026-3870 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Ingen rösträtt i svenska val för tredjelandsmedborgare och statslösa",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Medborgare från andra länder eller statslösa bör dock överhuvudtaget inte få rösta i några svenska val.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/rostratt/",
+    "articleTitle": "Rösträtt | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring som inskränker rösträtten. Direkta kostnader är beredning i befintlig organisation och ev. mindre omställning av röstlängd/IT — i princip noll. Beloppet avser åtgärden, inte…",
+      "confidence": 0.65,
+      "calculation": "Att ta bort rösträtten för tredjelandsmedborgare och statslösa är en ren lagändring. Beredningen sker i Regeringskansliet och Valmyndighetens befintliga organisation → ingen ny statlig utgift (base 0). Eventuella engångskostnader för omställning av röstlängdsregister, IT-system och information till väljare uppskattas öppet till högst ~5 msek. Minderutgifter för valsedlar och valadministration är en följd av åtgärden och prissätts inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0515 (500), p-2026-3266 (0), p-2026-3275 (0), p-2026-4157 (0), p-2026-4187 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Behåll och stärk de regionala flygplatserna med långsiktiga statliga villkor",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill behålla och stärka de regionala flygplatserna, till exempel Bromma flygplats, eftersom de behövs för jobb, sjukvårdstransporter, polisflyg och vår beredskap.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sakra-regionala-flygplatser/",
+    "articleTitle": "Säkra regionala flygplatser | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 25,
+      "msek_base": 150,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ingen nivå anges. 'Stärk' tolkas som att bibehålla/höja statligt stöd till regionala flygplatser; att behålla Bromma är i sig ett beslut, ingen ny utgift.",
+      "confidence": 0.35,
+      "calculation": "Löftet anger inget belopp. Ankrar på att staten historiskt lämnat drifts- och investeringsstöd till regionala flygplatser i storleksordningen någon till några hundratal miljoner kronor per år. Antagande: ca 20 regionala flygplatser × 5–10 mkr/st i statligt stöd ≈ 100–200 mkr/år som bas; spänn 25–400 mkr för osäkerhet i ambitionsnivå. Bromma drivs av statliga Swedavia och att hålla den öppen är ingen ny budgetutgift, medan 'långsiktiga statliga villkor' och 'stärka' antas innebåra fortsatt/ökat stöd."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2534 (0), p-2026-2621 (450), p-2026-3243 (0), p-2026-1112 (822), p-2026-2096 (250)"
+  },
+  {
+    "candidate": {
+      "title": "Nationell vattensamordning och effektivare statliga insatser mot kommunerna",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill därför se en nationell vattensamordning och att statens insatser gentemot kommunerna ska bli mer effektiva.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/samlad-nationell-myndighet-for-vattentjanster/",
+    "articleTitle": "Samlad nationell myndighet för vattentjänster | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 40,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan belopp: samordning och effektivisering av befintliga statliga vatteninsatser. Base 0; ev. nytt samordningsorgan med medel ryms i spannet.",
+      "confidence": 0.45,
+      "calculation": "Löftet anger ingen nivå, inget belopp och ingen utpekad åtgärd med egen kostnad — det är en önskan om nationell samordning samt effektivare statliga insatser mot kommunerna. Samordning inom statens befintliga organisation är ingen ny nettoutgift (ordinarie beredningsarbete), därför base 0. Om vattensamordningen senare byggs ut som en ny myndighetsfunktion eller med statsbidragsmedel kan det kosta några tiotal mkr/år, vilket avspeglas i high. Jämförbara nationella strategi- och samordningslöften har prissatts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-2375 (0), p-2026-2621 (450), p-2026-1526 (300), p-2026-1890 (0), p-2026-1924 (400) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~300"
+  },
+  {
+    "candidate": {
+      "title": "Sänka kostnaderna för resor och godstransporter till och från Gotland",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill sänka kostnaderna för resor och godstransporter till och från Gotland så att det ska vara möjligt att bo, arbeta och driva företag på ön utan orimligt höga priser.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sank-priset-pa-gotlandsfarjan-rimliga-villkor-for-boende-och-foretag/",
+    "articleTitle": "Sänk priset på Gotlandsfärjan: rimliga villkor för boende och företag | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 300,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar nivå och mekanism; antar att prissänkningen sker via höjt statligt driftsstöd till Gotlandstrafiken. Beloppet avser subventionen, inte samhällsföljder.",
+      "confidence": 0.35,
+      "calculation": "Gotlandstrafiken: grovt ~1,5 mln passagerare och flera hundratusen fordon/år; operatörens sammanlagda intäkter uppskattas till ~1–1,5 mdkr. En märkbar prissänkning (20–30 %) motsvarar ~250–450 mkr/år i intäktbortfall som staten får kompensera. Alternativ beräkning: 1,5 mln resor × 100–250 kr lägre pris ≈ 150–375 mkr, plus fraktstöd (uppskattningsvis 30–50 tkr lastbilsresor × 1–3 tkr) ≈ 50–150 mkr. Sammanlagt ~200–500 mkr/år; bas 300 mkr. Osäkerhet: mekanism (driftsstöd vs. skattelättnad) och prissänkningsgrad är inte angiven i löftet."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2647 (0), p-2026-3807 (0), p-2026-3905 (0), p-2026-2936 (20000) ⚠ AVVIKER: belopp 300 men jämförbara ligger på 0 ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-2420 (5000), p-2026-1017 (3000), p-2026-0951 (3). Är delarna redan prissatta ska detta löfte sättas till 0."
+  },
+  {
+    "candidate": {
+      "title": "SD vill att Sverige inför nationella sanktioner när EU:s gemensamma sanktioner inte räcker",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "EU:s gemensamma sanktioner är många gånger inte tillräckliga och det finns ett behov av att Sverige går före precis som exempelvis Litauen har gjort och inför nationella sanktioner när det finns sådant behov.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sanktioner/",
+    "articleTitle": "Sanktioner | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 15,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte om nationell sanktionslagstiftning; beredning och tillämpning sker i befintlig organisation. Beloppet avser åtgärdens direkta kostnad, inte samhällsföljder av sanktioner.",
+      "confidence": 0.4,
+      "calculation": "Löftet anger inget belopp, ingen ny myndighet och ingen särskild finansiering — det handlar om att lagstifta om nationella sanktioner (jmf Litauen). Lagberedning görs i Regeringskansliet och tillämpning ligger hos befintliga myndigheter (strategisk produkttillsyn, polis, tull), vilket inte är en ny statlig utgift. Sanktionernas effekter på svensk export eller företag är följer, inte statlig kostnad, och prissätts inte. Base 0 avspeglar att åtgärdens direkta kostnad är försumbar; övre spannet (~15 msek/år) täcker ett ev. litet sekretariat för listföring och handläggning om riksdagen anslår medel. Underlaget är tunt eftersom löftet är vagt."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2184 (0), p-2026-1944 (60), p-2026-0112 (0), p-2026-1889 (0), p-2026-1885 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Införa ett pedofilregister",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill införa ett pedofilregister så att vanliga människor kan undvika dessa och förhindra att de arbetar på platser där det finns barn.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sexualbrott-mot-barn/",
+    "articleTitle": "Sexualbrott mot barn | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 25,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Själva registret är främst en IT- och förvaltningslösning; beloppet avser bygge/drift av registret och tillsyn av arbetsförbud, inte samhällseffekter. Osäkerheten är hög eftersom omfattningen är…",
+      "confidence": 0.35,
+      "calculation": "Ett register byggs som IT-system med löpande förvaltning: utveckling engångsvis ~20–80 mkr spritt över år, drift/behörighetsprövning/ärendehantering ~5–20 personer à ~1 mkr ≈ 5–20 mkr/år, plus tillsyn av att dömda inte arbetar bland barn. Sammantaget ~10–60 mkr/år, bas ~25 mkr. Ingen belagd myndighetssiffra finns; antagandena är egna grova uppskattningar i storleksordning jämförbara med tidigare publicerade uppskattningar av liknande registerlöften."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2303 (50), p-2026-3475 (0), p-2026-4226 (0) ⚠ AVVIKER: belopp 25 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Göra om förtalslagstiftningen så att det blir lagligt att varna för pedofiler",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill även göra om förtalslagstiftningen så att det blir lagligt att varna för pedofiler.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sexualbrott-mot-barn/",
+    "articleTitle": "Sexualbrott mot barn | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring utan egen budgetkostnad; beredning sker inom kansliets löpande arbete. Ev. särskild utredning kan kosta några msek. Jämförbart löfte om förtalsöversyn prissatt till noll.",
+      "confidence": 0.65,
+      "calculation": "Att göra om förtalslagstiftningen är en ren lagändring: inga nya bidrag, ingen myndighetsutbyggnad, ingen ny utgift. Beredningen görs av redan anställda tjänstemän i Regeringskansliet → bas 0 msek. Om reformen kräver en särskild utredning med sekretariat tillkommer i storleksordningen 5–10 mkr engång, därför high=10. Följder av lagen (att varna blir lagligt, ev. skadestånds- eller rättsprocesser) är överföringar/samhällseffekter mellan privatpersoner, inte statlig nettoutgift, och prissätts inte enligt avgränsningsreglerna."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-1180 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Låsa in personer som tittar på övergreppsmaterial på obestämd tid",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Personer som tittar på övergreppsmaterial skall låsas in på obestämd tid till dess att återfallsrisken är obefintlig.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sexualbrott-mot-barn/",
+    "articleTitle": "Sexualbrott mot barn | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Obestämd låsning ger fler fängelsedygn – en verklig statlig utgift – men löftet saknar belagt antal domar och belagd dygnskostnad, så beloppet kan inte beräknas tillförlitligt; base sätts till 0.",
+      "confidence": 0.2,
+      "calculation": "Åtgärden borde kosta: alla dömda för visning av övergreppsmaterial hålls fängslade tills återfallsrisken bedöms obefintlig, vilket kan innebära mycket långa förvaringstider i kriminalvård. Kostnad = antal dömda per år × extra dygn × dygnskostnad. För straffskärpningar krävs enligt reglerna yttre källa i båda ändar: belagt antal domar/fängelseår OCH belagd dygnskostnad i kriminalvården. Löftet anger ingen av dem och jag saknar belagda siffror att luta mot; två gissningar multiplicerade är sämre än ingen siffra, så base = 0. High speglar endast att en verklig implementering plausibelt skulle kosta hundratals mkr per år – ingen beräkning, bara en osäker övre gräns."
+    },
+    "costReason": "LLM-estimat (confidence 0.2) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Ge polisen rätt till brottsprovokation och avlyssning av misstänkta pedofiler",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Utöver detta så jobbar vi med ytterligare förslag som ger polisen rätt till brottsprovokation samt möjlighet att avlyssna misstänkta pedofiler.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sexualbrott-mot-barn/",
+    "articleTitle": "Sexualbrott mot barn | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 15,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring; direkt kostnad för åtgärden är försumbar och bereds inom befintlig organisation. Följder prissätts inte. Jämförbart löfte om hemlig avlyssning mot gängen sattes till 0.",
+      "confidence": 0.55,
+      "calculation": "Löftet är en lagändring: brottsprovokation tillåts och avlyssningsmöjligheten utökas för misstänkta pedofiler. Lagberedningen sköts av anställd personal i Regeringskansliet och polisen → ingen ny statlig utgift. Eventuell marginell implementering (utbildning, teknik, tillsyn) kan kosta någon till enstaka miljon, därför spannet 0–15 mkr engång. Fler utredningar, gripanden och fällande domar är följer av verktygen, inte nya statliga utgifter, och lämnas okvantifierade enligt avgränsningsreglerna."
+    },
+    "costReason": "LLM-estimat (confidence 0.55) — bekräfta/justera belopp — jämförbara: p-2026-3324 (0), p-2026-0924 (50), p-2026-4262 (0), p-2026-1969 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stärka kraven och tydliggöra målen inom SFI",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill stärka kraven och tydliggöra målen inom SFI.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sfi/",
+    "articleTitle": "SFI | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Tydligare mål och skärpta krav i SFI är en styr- och regeländring som tas fram i Skolverkets befintliga organisation. Direkt kostnad ≈ 0; spannet rymmer ev. material- och informationssatsningar.",
+      "confidence": 0.5,
+      "calculation": "Löftet avser reviderade mål och skärpta krav för SFI — inga nya statsmedel eller nivåer utlovas. Mål- och kursplansrevidering utförs av Skolverket inom befintlig organisation → ny statlig utgift ≈ 0. Eventuella engångskostnader för studiematerial, information till anordnare och uppföljning: 0–20 mkr. Ett jämförbart granskat löfte om SFI-kvalitet via hårdare reglering prissattes till 0, vilket stöder basen 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-3012 (150), p-2026-4220 (0), p-2026-2330 (40), p-2026-2962 (1000), p-2026-3291 (40) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~40"
+  },
+  {
+    "candidate": {
+      "title": "SD vill förändra kriterierna för vad som räknas som självförsörjande",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill förändra kriterierna för vad som räknas som självförsörjande.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sjalvforsorjning/",
+    "articleTitle": "Självförsörjning | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kriterie-/definitionsändring: direkt statlig kostnad i princip noll. Ev. små engångskostnader för administration. Följder av ändrade kriterier (antal tillstånd, försörjningsstöd) prissätts inte.",
+      "confidence": 0.6,
+      "calculation": "Löftet är en definitionsändring av vad som räknas som självförsörjande — en regeländring, inte en ny utgiftspost. Beredning sker i Regeringskansliet och tillämpning inom Migrationsverkets befintliga organisation → 0 msek. Osäkerhetsbuffert 0–10 msek för ev. engångskostnader (uppdaterade handböcker, IT-anpassningar, utbildning av handläggare). Följder av strängare eller mildrade kriterier — antal beviljade permanenta uppehållstillstånd, försörjningsstöd, kommunala kostnader — är omfördelningar eller svåröverskådliga effekter och kvantifieras inte här."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-2540 (0), p-2026-1618 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Gör sjukförsäkringens regelverk mer flexibelt med möjlighet till stegvis återgång i arbete",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Regelverket behöver göras mer flexibelt så att både individens behov och arbetsförmåga kan tas tillvara, exempelvis genom möjligheten till en stegvis återgång i arbete.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sjukforsakringen/",
+    "articleTitle": "Sjukförsäkringen | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 10,
+      "msek_base": 40,
+      "msek_high": 120,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring i sjukförsäkringen; prissatt som Försäkringskassans omställning och löpande administration, inte samhällseffekter. Löftet är vagt, osäkerheten stor.",
+      "confidence": 0.35,
+      "calculation": "Stegvis återgång i arbete kräver ny handläggning i Försäkringskassan. Antag ~30 000–80 000 ärenden med deltidsjukpenning/ård, extra handläggningstid ~1–2 tim/ärende à ~600–800 kr ≈ 20–130 mkr/år löpande, plus engångsvis IT/omställning ~20–50 mkr. Base ~40 mkr/år ligger nära jämförbart löfte om flexibel återgång via deltidsjobb (~50 mkr/år). Nettoeffekten på utbetalda sjukpenningar (fler arbetar deltid) är osäker och kan delvis motverka kostnaden men räknas inte in här."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-3560 (50), p-2026-2435 (0), p-2026-2131 (0), p-2026-2015 (50), p-2026-4059 (0) ⚠ AVVIKER: belopp 40 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Fokusera på tidiga, effektiva och väl samordnade rehabiliteringsinsatser",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "För att fler ska kunna återgå i arbete behöver fokus ligga på tidiga, effektiva och väl samordnade rehabiliteringsinsatser.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sjukforsakringen/",
+    "articleTitle": "Sjukförsäkringen | Sverigedemokraterna",
+    "verifyReason": "Uttalandet är en policyinriktning från Sverigedemokraterna om att fokusera på rehabiliteringsinsatser, men det saknar konkret åtgärd, tidsram och finansiering. Det är tveksamt om det uppfyller kriterierna för ett tydligt, verifierbart vallöfte."
+  },
+  {
+    "candidate": {
+      "title": "Stärk och prioritera forskningen om orsaker, prevention och behandlingsmodeller",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "En central del i detta är att stärka och prioritera forskningen kring orsaker, prevention och effektiva behandlingsmodeller.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sjukforsakringen/",
+    "articleTitle": "Sjukförsäkringen | Sverigedemokraterna",
+    "verifyReason": "Uttalandet är en avsiktsförklaring från SD att stärka och prioritera forskning, men det är vagt formulerat och saknar konkreta åtaganden eller mätbara mål, vilket gör att det kan vara tveksamt att klassa som ett tydligt vallöfte."
+  },
+  {
+    "candidate": {
+      "title": "Statligt helhetsansvar för hälso- och sjukvården på sikt",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill på sikt se ett statligt helhetsansvar för hälso- och sjukvården.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sjukvard/",
+    "articleTitle": "Sjukvård | Sverigedemokraterna",
+    "duplicateOf": "p-2026-0585",
+    "duplicateWithdrawn": true
+  },
+  {
+    "candidate": {
+      "title": "Tydligare nationell styrning och skarpare krav på regionerna",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Till dess verkar vi för en tydligare nationell styrning och skarpare krav på regionerna.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sjukvard/",
+    "articleTitle": "Sjukvård | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: skarpare krav på regioner realiseras via lag, direktiv och befintlig tillsyn — ingen ny statlig utgift; spannet rymmer ev. utökad uppföljning.",
+      "confidence": 0.5,
+      "calculation": "Löftet anger ingen konkret åtgärd med egen kostnad, endast inriktning ('verkar vi för'). Tydligare nationell styrning och skarpare krav på regionerna genomförs typiskt genom lagändringar, regleringsbrev och uppdrag till befintliga myndigheter (Socialstyrelsen, IVO m.fl.) — beredningen ligger i ordinarie statlig personalkostnad, direkt kostnad ≈ 0. Kostnader som hamnar på regionerna är inte en ny statlig utgift. Övre spannet (~20 mkr/år) rymmer eventuell utökad nationell uppföljning, mätning eller tillsnsfunktion."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-3043 (30), p-2026-2611 (0), p-2026-2380 (0), p-2026-4191 (100), p-2026-4208 (5) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~5"
+  },
+  {
+    "candidate": {
+      "title": "Pengar till vård, personal och patientmöten i stället för administration",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Pengar ska gå till vård, personal och patientmöten och inte till växande administration.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sjukvard/",
+    "articleTitle": "Sjukvård | Sverigedemokraterna",
+    "verifyReason": "Formuleringen är ett principiellt åtagande om att pengar ska gå till vård, personal och patientmöten snarare än administration. Den är dock vag och saknar konkret mätbar utformning, vilket gör det tveksamt om den ska räknas som ett tydligt vallöfte. Partiet (SD) stämmer med källtexten och inget belopp nämns."
+  },
+  {
+    "candidate": {
+      "title": "Staten ska ta ett betydligt starkare grepp om sjukvårdens samordning",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Staten måste ta ett betydligt starkare grepp om samordningen, så att resurser används effektivt och vården blir mer likvärdig över hela landet.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sjukvard/",
+    "articleTitle": "Sjukvård | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte om starkare statlig styrning av vårdsamordning, utan konkret åtgärd eller belopp. Basen noll; spannet rymmer ev. nya samordningsorgan.",
+      "confidence": 0.45,
+      "calculation": "Citatet anger ingen konkret åtgärd, nivå eller belopp — bara att staten ska 'ta ett betydligt starkare grepp om samordningen' för effektivitet och likvärdighet. Breda inriktningslöften prissätts till 0; ett jämförbart löfte om samordning mellan vård och sociala insatser har prissatts till 0. Skulle löftet förverkligas genom nya nationella samordningsorgan, gemensamma IT-system eller utjämningsfunktioner kan det tillkomma en mindre administrativ kostnad, grovt 0–100 msek/år. Kostsamma delar som ökad statlig finansiering av vården prissätts på partiets specifika löften och dubbelräknas inte här."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-4159 (3000), p-2026-1644 (250), p-2026-3567 (0), p-2026-3195 (0), p-2026-3579 (0)"
+  },
+  {
+    "candidate": {
+      "title": "SD vill införa en effektiviseringsminister – Hushållsminister – under finansdepartementet",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill införa en effektiviseringsminister.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skattesloseri-hushallsminister/",
+    "articleTitle": "Skatteslöseri – effektiviseringsminister | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3,
+      "msek_base": 8,
+      "msek_high": 15,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avviker från jämförelselöftet: detta är en smal organisatorisk åtgärd (en ny ministerpost), inte en ny skatt. Kostnaden är ministerns närmsta stab; departementsarbetet utförs av befintliga tjänstemän.",
+      "confidence": 0.55,
+      "calculation": "Ny ministerpost inom befintligt Regeringskansli. Statsrådslön ~2,2 mkr/år + statssekreterare ~1,5 mkr + 2–4 politiska medarbetare (presstalesperson, sakkunniga) à ~1–1,5 mkr + sociala avgifter och lokaler → ~5–15 mkr/år. Underliggande berednings- och utredningsarbete görs av Finansdepartementets redan anställda tjänstemän och prissätts till 0 enligt principen om statens eget beredningsarbete. Osäkerheten ligger i hur stor stab som knyts till posten."
+    },
+    "costReason": "LLM-estimat (confidence 0.55) — bekräfta/justera belopp — jämförbara: p-2026-0633 (800) ⚠ AVVIKER: 8 avviker 100.0× från jämförbara (median 800)"
+  },
+  {
+    "candidate": {
+      "title": "Fullständig redovisning av skatteutgifter för maximal transparens",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill se att redovisningen av skatteutgifter utvecklas så att de kompletteras med fullständiga uppgifter avseende arbetsmarknadsåtgärder och inkomst- och mervärdesskatt i syfte att skapa maximal transparens.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skattetransparens/",
+    "articleTitle": "Skattetransparens | Sverigedemokraterna",
+    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+  },
+  {
+    "candidate": {
+      "title": "Ökad skattetransparens på lönebesked och årsvis sammanställning på slutskattebeskedet",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna ser därför ett behov av ökad medvetenhet om skatter genom ökad transparens på lönebeskeden månadsvis, inklusive sociala avgifter samt en total sammanställning av de skatter och sociala avgifter i kronor som varje individ betalat in på det årliga slutskattebeskedet.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skattetransparens/",
+    "articleTitle": "Skattetransparens | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Huvudkostnaden är engångsändring i Skatteverkets system för att sammanställa skatter och sociala avgifter per individ på slutskattebeskedet. Kravet på lönebeskedens innehåll är en reglering av…",
+      "confidence": 0.45,
+      "calculation": "Löftet har två delar: (1) krav på transparens på lönebesked — en lagreglering riktad mot arbetsgivare; statens kostnad är beredningsarbete inom Regeringskansliet/myndighet, vilket ligger i befintlig personalkostnad ≈ 0. (2) Årlig sammanställning i kronor på slutskattebeskedet — kräver att Skatteverket bygger ut sina system; uppgifter om sociala avgifter per individ finns sedan AGI-reformen, så det är främst en presentations- och ITändring. Modifika­tionsprojekt av den storleken vid en myndighet bedöms kosta ca 5–50 mkr engång, med löpande drift på några mkr/år som inte prissätts separat. Base 15 mkr sätts i nedre delen eftersom dataunderlaget redan finns."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Kvitton ska visa punktskatters andel av slutpriset",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "På ett liknande sätt behöver kvitton bli mer transparenta avseende punktskatters del av slutpriset.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skattetransparens/",
+    "articleTitle": "Skattetransparens | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering av kvittoinnehåll: statens direkta kostnad är nära noll (beredning i befintlig organisation). Ev. informationsinsats till handeln ger litet engångsbelopp. Prissätter åtgärden, inte…",
+      "confidence": 0.6,
+      "calculation": "Löftet är ett transparenskrav på kvitton — en lag-/regleringsändring. Beredning och regelutformning sker inom Regeringskansliets och Skatteverkets befintliga verksamhet → ingen ny statlig utgift, bas 0 mkr. Enda tänkbara nya kostnaden är en informationsinsats riktad till handel och kassasystemleverantörer vid införandet, grovt 0–10 mkr engångs, vilket utgör spannets övre gräns. Konsumentpåverkan och administrativ börda för företag är följer, inte statlig utgift, och prissätts inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "SD vill att skolor alltid ska erbjuda en kötträtt, en vegetarisk rätt och specialkost vid medicinska behov",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill därför att skolor alltid ska erbjuda en kötträtt och en vegetarisk rätt samt specialkost vid medicinska behov.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skolmat/",
+    "articleTitle": "Skolmat | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringsändring av skolmåltidskrav; måltidskostnaden bärs av kommuner, inte staten. Beloppet avser själva åtgärden (regeländringen), inte kommunernas ökade matkostnader.",
+      "confidence": 0.65,
+      "calculation": "Löftet är ett krav i skollag/skolmåltidsregler: skolor ska erbjuda kötträtt, vegetarisk rätt och specialkost vid medicinskt behov. Skolmåltider finansieras av kommunerna (respektive skolhuvudmannen), så merkostnaden för fler rätter hamnar inte på staten. Statens direkta kostnad är beredning av författningsändring i Regeringskansliet, som utförs av redan anställd personal ≈ 0 mkr. Eventuell vägledning till huvudmän kan tas fram av Skolverket inom befintlig verksamhet. Upp till ~10 mkr i spannet för ev. små engångsinsatser (vägledningsmaterial, uppföljning). Kommunernas ökade matkostnad är en följd av regeln, inte en ny statlig utgift, och lämnas medvetet okvantifierad."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-1204 (80), p-2026-1519 (0), p-2026-1437 (60), p-2026-0066 (450) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~70"
+  },
+  {
+    "candidate": {
+      "title": "Skolpengen ska följa eleven och vara lika för alla skolor",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna anser att skolpengen ska följa eleven och vara lika för alla skolor.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skolpeng/",
+    "articleTitle": "Skolpeng | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Principlöfte om skolpengens utformning. Att göra nivån lika för alla skolor är främst omfördelning mellan huvudmän, inte ny statlig utgift; endast ev. omställningskostnader prissätts.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger en princip: skolpengen ska följa eleven och vara lika för alla skolor. Att utjämna nivåer mellan kommunala skolor och friskolor flyttar pengar mellan huvudmän (kommun respektive friskolehuvudman), vilket enligt netto-principen inte är en ny statlig kostnad. Ingen nivå, summa eller konkret åtgärd med eget pris anges i löftet. Kvar blir ev. administrativa omställningskostnader om systemet omformas (omfördelningsregler, IT, övergångsperiod), grovt 0–100 msek engång. Base 0 eftersom den direkta statliga kostnaden bedöms försumbar; osäkerheten ligger i om en systemomläggning kräver medel. Jämförbara skolpengslöften om omfördelning har prissatts till 0, vilket stödjer lågt belopp."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0366 (500), p-2026-0500 (1000), p-2026-3811 (60), p-2026-3649 (0), p-2026-4339 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~60"
+  },
+  {
+    "candidate": {
+      "title": "Ersättningen till skolor ska utgå från elevernas behov och vara rättvis oavsett huvudman",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Ersättningen till skolor ska utgå från elevernas behov och vara rättvis oavsett huvudman.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skolpeng/",
+    "articleTitle": "Skolpeng | Sverigedemokraterna",
+    "verifyReason": "Uttalandet är en principförklaring om hur skolpengen bör utformas, men det saknar konkret åtgärd eller mätbart mål. Det kan betraktas som ett vallöfte, men är vagt formulerat; rekommenderar granskning."
+  },
+  {
+    "candidate": {
+      "title": "Göra det möjligt att införa skoluniform på frivillig basis",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill därför göra det möjligt att införa skoluniform på frivillig basis.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skoluniform/",
+    "articleTitle": "Skoluniform | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Permissiv lagändring som tillåter frivilliga skoluniformer; ingen statlig finansiering utlovas. Prissatt som åtgärden själv, inte uniformskostnader som bärs av familjer/skolor.",
+      "confidence": 0.65,
+      "calculation": "Löftet är en regeländring: skolor tillåts frivilligt införa skoluniform. Beredningen sker inom Regeringskansliets befintliga personal → 0 kr. Ingen statsfinansiering eller bidrag utlovas i löftet. Eventuell vägledning/information till huvudmän kan kosta några mkr engångs, därav spannet 0–5 mkr. Uniformskostnader är en privat/kommunal kostnad, inte en ny statlig utgift."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0352 (1500), p-2026-3379 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~750"
+  },
+  {
+    "candidate": {
+      "title": "SD vill värna valfriheten inom skolvalet och säkerställa att systemet är rättvist och transparent",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill värna valfriheten men också säkerställa att systemet är rättvist och transparent.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skolval/",
+    "articleTitle": "Skolval | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: att 'värna' befintligt skolval och säkerställa rättvisa/transparens är en princip utan ny åtgärd eller belopp; kostsamma reformer prissätts på separata löften.",
+      "confidence": 0.5,
+      "calculation": "Löftet anger ingen konkret åtgärd, nivå eller belopp — 'värna valfriheten' är att behålla dagens skolval och 'rättvist och transparent' en principdeklaration. Eventuell granskning eller information om skolvalet skötas inom Skolverkets och kommunernas befintliga uppdrag utan nya statsmedel. Konkreta reformer (t.ex. ett gemensamt nationellt skolval, som i ett jämförbart löfte prissatts till ca 60 mkr engång) prissätts på partiets specifika löften och dubbelräknas inte här. Bas 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-4167 (60), p-2026-4133 (0), p-2026-2503 (0), p-2026-0499 (0), p-2026-0698 (500)"
+  },
+  {
+    "candidate": {
+      "title": "Bevara 30- och 50-årsreglerna för äldre fordon",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Därför vill vi bevara 30- och 50-årsreglerna, som innebär skattebefrielse och besiktningsbefrielse för äldre fordon.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/skydda-motorkulturen-stoppa-tvangsskrotning/",
+    "articleTitle": "Skydda motorkulturen: stoppa tvångsskrotning | Sverigedemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 350,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bevarande av befintliga regler = ingen ny utgift utan utebliven fordonsskatt jämfört med motvärlden att lagen tas bort. Besiktningsbefrielsen är kostnadsneutral för staten då besiktning betalas…",
+      "confidence": 0.45,
+      "calculation": "Fordon över 30 år är befriade från fordonsskatt. Antagande: ca 250 000–400 000 äldre fordon (personbilar, mc, lättare lastbilar) omfattas × ca 1 000–2 000 kr utebliven fordonsskatt per fordon och år ≈ 250–800 mkr/år. Bas: ~350 000 fordon × ~1 000–1 500 kr ≈ 350 msek/år. Besiktningsdelen ger ingen statlig intäktsförändring eftersom besiktningen utförs av privata stationer."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-1070 (700), p-2026-0345 (20000), p-2026-2720 (30000), p-2026-3756 (1500) ⚠ AVVIKER: 350 avviker 30.7× från jämförbara (median 10750)"
+  },
+  {
+    "candidate": {
+      "title": "Förbud mot slöja i förskola, grundskola och hela offentliga sektorn",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill införa ett förbud mot slöja i förskola och grundskola samt i all offentlig sektor.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sloja-i-skolan-och-offentlig-verksamhet/",
+    "articleTitle": "Slöja i skolan och offentlig verksamhet | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Förbud/reglering: direkta kostnaden är lagändringen, beredd i befintlig statlig organisation ≈ 0. Samhällsföljder prissätts inte.",
+      "confidence": 0.65,
+      "calculation": "Löftet är ett förbud (reglering), inte en utgiftspost. Direkta kostnaden = lagstiftning + ev. information. Beredningen görs av Regeringskansliet och berörda myndigheters befintliga personal → ingen ny statlig utgift, base 0. Eventuellt informationsmaterial till förskolor, skolor och offentliga arbetsgivare: ~0–10 mkr engång. Följder som att anställda lämnar yrket, rekryteringskostnader eller tvister är beteende-/omfördelningsföljder — inte statens nya nettokostnad — och lämnas okvantifierade."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Sänkta sjuklönekostnader för små företag samt stabil energi, kompetens, infrastruktur och stöd till Ung Företagsamhet",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi driver även sänkta sjuklönekostnader för små företag, stabil energiförsörjning, stärkt kompetensförsörjning, bättre infrastruktur och ökat stöd till Ung Företagsamhet.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/smaforetagande/",
+    "articleTitle": "Småföretagande | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred uppräkning av fem politikområden utan belopp eller enskilt åtagande; inriktningslöfte. Kostsamma delar prissätts i separata löften. Spannet fångar ev. höjt UF-stöd.",
+      "confidence": 0.35,
+      "calculation": "Citatet räknar i en mening upp fem områden utan nivåer: sjuklöneavlastning för småföretag, energi, kompetensförsörjning, infrastruktur och stöd till Ung Företagsamhet. Inget belopp anges, så basen sätts till 0 enligt regeln för breda summeringslöften — sjuklöneavlastning och infrastruktur prissätts i partiets specifika löften. Övre spannet ~30 msek speglar att 'ökat stöd till Ung Företagsamhet' kan innebära en måttlig höjning av ett befintligt smalt statsbidrag (organisationsstöd i tiomiljonklassen), men ingen nivå anges i citatet."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2706 (0), p-2026-0776 (0), p-2026-3257 (0), p-2026-2451 (5), p-2026-2822 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stärkta resurser till rättsväsendet och skärpta straff för mängdbrott",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Trygghet är avgörande: resurserna till rättsväsendet stärks och straffen för mängdbrott skärps.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/smaforetagande/",
+    "articleTitle": "Småföretagande | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 50,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp. Resursdelen satts i storleksordning som liknande publicerade rättslöften (tiotal–ett par hundra msek/år); själva straffskärpningen oprissatt då belagt underlag saknas.",
+      "confidence": 0.25,
+      "calculation": "Två delar: (1) 'Resurserna till rättsväsendet stärks' utan nivå — jämförbara löften om polis-/rättsväsendeförstärkningar ligger runt 30–200 msek/år; jag antar en modest förstärkning i nedre delen av det spannet → base ~50 msek/år. (2) Skärpta straff för mängdbrott: fler frihetsberövanden är en verklig statlig kostnad, men utan belagt antal domar/fängelsedagar och belagd dygnskostnad i båda ändar sätts den delen till 0 — två gissningar multiplicerade är sämre än ingen siffra. Spannet 0–200 speglar att ingen nivå anges."
+    },
+    "costReason": "LLM-estimat (confidence 0.25) — bekräfta/justera belopp — jämförbara: p-2026-2866 (200), p-2026-3048 (30), p-2026-1022 (0), p-2026-0708 (0), p-2026-0596 (70)"
+  },
+  {
+    "candidate": {
+      "title": "Offensiv politik för att minska administrativa kostnader och motverka myndighetsaktivism",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Därför driver vi en offensiv politik för att minska administrativa kostnader och motverka myndighetsaktivism som hämmar företagandet.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/smaforetagande/",
+    "articleTitle": "Småföretagande | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan konkret åtgärd eller belopp. Direkta kostnader för avreglering är försumbara; minskade företagskostnader är inte en statlig utgift.",
+      "confidence": 0.65,
+      "calculation": "Citatet är en inriktningsförklaring: 'offensiv politik för att minska administrativa kostnader och motverka myndighetsaktivism'. Ingen utpekad åtgärd, nivå, belopp eller mottagare anges. Enligt reglerna för breda sammanfattande löften prissätts inriktningen till 0 mkr — konkreta delåtgärder (specifika avskaffade krav, utredningar m.m.) prissätts på partiets egna löften och dubbelräknas inte här. Minskade administrativa kostnader för företag är en omfördelnings-/följdeffekt, inte en ny statlig utgift, och statens eget beredningsarbete sker inom befintlig organisation."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-2542 (15), p-2026-3502 (0), p-2026-0916 (20), p-2026-0781 (0), p-2026-3576 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Sänka ISK-skatten och underlätta skattereglerna för småsparare",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Bland annat genom att sänka ISK-skatten, göra det enklare att flytta exempelvis tjänstepensioner samt främja investeringsklimatet genom att underlätta skattereglerna med både kapitalförsörjning och riskkapital.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/smasparare/",
+    "articleTitle": "Småsparare | Sverigedemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 800,
+      "msek_base": 2000,
+      "msek_high": 4000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Intäktsminskning: sänkt ISK-skatt. Ingen nivå i löftet; ankrat i storleksordningen av senaste faktiska sänkningen av schablonintäkten. Övriga delar (flytt av tjänstepension, enklare regler) är…",
+      "confidence": 0.45,
+      "calculation": "ISK-sparandet uppskattas till ~1 400–1 700 mdkr. Schablonintäkten ligger nyligen kring ~1,66% med 30% skattesats → statens intäkt ~7–8,5 mdkr/år. Löftet anger ingen nivå; antagen sänkning av schablonintäkten med ~0,2–0,8 procentenhet (t.ex. mot golvet 1,25% eller strax under): 1 500 mdkr × 0,2–0,8% × 30% ≈ 0,9–3,6 mdkr/år. Bas ~2 000 msek ≈ 0,45 pp sänkning. Ökat sparande till ISK kan delvis motverka bortfallet. Övriga delar av löftet (enklare flytt av tjänstepension, förenklade regler för riskkapital) bedöms som förenklingar utan väsentlig direkt statlig kostnad."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-3207 (0), p-2026-3859 (0), p-2026-2505 (1000), p-2026-1342 (0), p-2026-1538 (0) ⚠ AVVIKER: belopp 2000 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Göra det lättare att inrätta specialklasser",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill göra det lättare att inrätta specialklasser där elever kan få anpassad undervisning.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/specialklass/",
+    "articleTitle": "Specialklass | Sverigedemokraterna",
+    "duplicateOf": "p-2026-3379"
+  },
+  {
+    "candidate": {
+      "title": "Stoppa illegala spelbolag och arbeta aktivt mot spelberoende",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Illegala spelbolag ska stoppas och samhället ska jobba aktivt mot spelberoende.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/spelpolitik/",
+    "articleTitle": "Spelpolitik | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Att stoppa illegala spel är en regleringsåtgärd och 'jobba aktivt mot spelberoende' ett inriktningslöfte utan belopp; direkt ny statlig kostnad nära noll, spannet täcker ev. små…",
+      "confidence": 0.4,
+      "calculation": "Löftet saknar belopp och utpekad åtgärd. 'Stoppa illegala spelbolag' genomförs via lag, tillsyn och betalningsblockering inom Spelinspektionens och polisens befintliga organisation — ingen ny nettoutgift, base 0. 'Jobba aktivt mot spelberoende' är en inriktning; kostsamma delar (behandling, prevention) prissätts i partiets specifika löften, inte här. High 50 msek täcker osäkerheten kring ev. modesta nya tillsyns- eller informationsinsatser."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2885 (200), p-2026-3054 (20), p-2026-2713 (0), p-2026-2884 (0), p-2026-3391 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Tydligt reglerad och inte påträngande spelreklam",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Spelreklam ska vara tydligt reglerad och inte påträngande.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/spelpolitik/",
+    "articleTitle": "Spelpolitik | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 15,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Reglering av spelreklam sker genom lagstiftning; direkt statlig kostnad är i princip noll. Beloppet avser själva åtgärden, inte samhällsföljder eller spelbolags intäkter.",
+      "confidence": 0.65,
+      "calculation": "Löftet är av förbuds-/regleringstyp: tydligare regler och begränsningar för spelreklam genomförs via lagändring. Beredningen görs inom Regeringskansliets och berörda myndigheters (Spelinspektionen, Konsumentverket) befintliga organisation, vilket inte ger en ny statlig utgift. En eventuell mindre förstärkning av tillsynen kan kosta enstaka mkr per år, därav ett smalt spann uppåt. Minskade reklamintäkter för medier eller spelbolag samt minskat spelande är omfördelningar och samhällsföljder, inte statliga utgifter, och prissätts därför inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-4129 (0), p-2026-0881 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stärk verktyget Spelpaus",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Verktyg som Spelpaus ska stärkas, så att det är enkelt att ta en paus från spel när det behövs.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/spelpolitik/",
+    "articleTitle": "Spelpolitik | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 3,
+      "msek_base": 10,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Smal åtgärd: stärkande av befintligt statligt självavstängningsverktyg (IT-utveckling, drift, information). Beloppet avser verktyget i sig, inte spelmarknadens eller folkhälsans effekter.",
+      "confidence": 0.35,
+      "calculation": "Spelpaus är ett befintligt register hos spelinspektionen. Antaganden: vidareutveckling (t.ex. enklare avstängning via app/BankID, fler valmöjligheter, bättre bevakning) ~5–20 msek initialt; löpande drift, underhåll och informationsinsatser ~2–10 msek/år. Normaliserat som återkommande kostnad ger det låg ~3, bas ~10, hög ~30 msek/år. Löftet anger ingen egen nivå, därför bred spannlåda och låg konfidens."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-3892 (0), p-2026-2314 (30), p-2026-3798 (350), p-2026-4208 (5), p-2026-2277 (400) ⚠ AVVIKER: 10 avviker 3.0× från jämförbara (median 30)"
+  },
+  {
+    "candidate": {
+      "title": "Höja svenskans status och skydda svenska språket i lag",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill höja svenskans status och skydda språket i lag.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sprak/",
+    "articleTitle": "Språk | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en inriktning om lagstiftning; själva lagändringen kostar staten nästan inget. Spannet rymmer ev. utrednings-/informationsarbete.",
+      "confidence": 0.4,
+      "calculation": "Att skydda svenska språket i lag är en lagändring: beredning sker inom Regeringskansliets befintliga organisation (regel 17) och ger ingen ny statlig utgift, därför base 0. I spannet ingår möjligheten av en språklagsutredning eller liknande förberedande arbete, grovt 5–10 mkr som engångskostnad. Jämförbara löften om värn om svenska institutioner har prissatts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-3266 (0), p-2026-4157 (0), p-2026-4187 (0), p-2026-3870 (0), p-2026-0515 (500)"
+  },
+  {
+    "candidate": {
+      "title": "Svenska som självklart språk även inom högre utbildning",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Svenska ska vara det självklara språket i Sverige, även inom högre utbildning.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sprak/",
+    "articleTitle": "Språk | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: princip om svenska i högre utbildning utan konkret åtgärd eller belopp. Språkkrav är reglering med försumbar direkt statlig kostnad; jämförbart löfte prissattes till 0.",
+      "confidence": 0.4,
+      "calculation": "Löftet anger ingen åtgärd, nivå eller medel — endast principen att svenska ska vara det självklara språket även i högre utbildning. Enligt reglerna för breda inriktningslöften sätts base till 0; kostsamma delar (översättning av läromedel, språkkrav på lärare, stöd till svenskspråkig undervisning) skulle prissättas på partiets specifika löften om sådana finns, för att undvika dubbelräkning. Ett i sak identiskt löfte om svenska språkets ställning inom akademin har prissatts till 0. Spannet 0–30 msek rymmer ev. mindre stöd (t.ex. medel till svenskspråkigt kursmaterial) om politiken senare konkretiseras; universitetens egna omställningskostnader är omfördelning inom befintliga anslag, inte ny statlig utgift."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-3128 (500), p-2026-3059 (15), p-2026-2964 (800), p-2026-4143 (250), p-2026-4217 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~250"
+  },
+  {
+    "candidate": {
+      "title": "Språkkrav för personal inom vård, skola och omsorg",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Den som arbetar inom vård, skola och omsorg måste ha goda kunskaper i det svenska språket.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sprakkrav-inom-valfarden/",
+    "articleTitle": "Språkkrav inom välfärden | Sverigedemokraterna",
+    "verifyReason": "Uttalandet är en principiell ståndpunkt om att personal inom vård, skola och omsorg ska ha goda svenskkunskaper, men det är inte formulerat som ett konkret vallöfte med åtgärd. Partiet (SD) och källtexten stämmer, men det är tveksamt om detta ska klassas som ett vallöfte."
+  },
+  {
+    "candidate": {
+      "title": "Bygga ut utbildningen av sjöbefäl och skapa bättre villkor för svensk flagg",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill bygga ut utbildningen av sjöbefäl och skapa bättre villkor så att fler fartyg kan segla under svensk kompetens och svensk flagg.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/stark-svensk-sjofart/",
+    "articleTitle": "Stärk svensk sjöfart | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 100,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp. Utbildningsdelen prissätts via antagna extra studieplatser i den lilla sjöbefälsnischen; 'bättre villkor för svensk flagg' är ospecificerad och får bara måttligt utrymme…",
+      "confidence": 0.35,
+      "calculation": "Sjöbefälsutbildning är en liten nisch: Chalmers och Linné tar grovt 100–150 nya studenter/år. En fördubbling av intaget ≈ 100–150 extra platser × ~120–150 tkr/år ≈ 15–25 msek/år. Därtill praktikplatser ombord och simulatorinvesteringar, grovt 10–50 msek. 'Bättre villkor för svensk flagg' tolkas som måttliga stöd-/skatteåtgärder utan angiven nivå, grovt 5–200 msek/år. Summa ≈ 30–300 msek/år, bas ~100 msek/år. Alla siffror är egna antaganden; partiet anger ingen nivå."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-4005 (0), p-2026-2040 (800), p-2026-3128 (500), p-2026-0726 (0), p-2026-1270 (0) ⚠ AVVIKER: belopp 100 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Samordna miljöregler internationellt så att svensk sjöfart inte missgynnas",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill också att miljöregler som påverkar konkurrenskraften samordnas internationellt så att svenska regler inte missgynnar svensk sjöfart.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/stark-svensk-sjofart/",
+    "articleTitle": "Stärk svensk sjöfart | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: samordning av miljöregler drivs i befintliga internationella forum (IMO/EU) av redan anställd personal — ingen ny statlig utgift. Spannet täcker ev. små delegationskostnader.",
+      "confidence": 0.5,
+      "calculation": "Löftet innehåller ingen åtgärd med egna medel: att verka för internationellt samordnade miljöregler är diplomatiskt arbete som utförs av Regeringskansliet/UD inom befintliga anslag, t.ex. genom IMO och EU. Statens eget berednings- och förhandlingsarbete är ingen ny utgift, vilket ger base 0. High om 5 msek/år rymmer eventuella marginella kostnader som extra delegationer eller mötesvärdskap. Jämförbara löften om internationellt miljösamarbete har prissatts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-2537 (0), p-2026-2198 (0), p-2026-2319 (20), p-2026-3326 (0), p-2026-3878 (3)"
+  },
+  {
+    "candidate": {
+      "title": "Behålla statligt ägande i viktiga bolag för nationell kontroll",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill behålla statligt ägande i viktiga bolag för att säkra nationens kontroll över centrala funktioner och naturresurser.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/statliga-foretag/",
+    "articleTitle": "Statliga företag | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Status quo-löfte: att behålla bolag staten redan äger skapar ingen ny utgift. Ägarförvaltningen är redan finansierad; ev. kapitaltillskott är separata löften.",
+      "confidence": 0.65,
+      "calculation": "Löftet innebär att staten behåller bolag den redan äger — ingen försäljning, ingen ny investering. Den löpande ägarförvaltningen ligger redan i statens befintliga myndighetsbudgetar, så den marginella nettoförändringen är noll. Jämförbara löften om att förändra statligt ägande har prissatts till 0–10 msek i administrativa kostnader; att helt avstå från förändring är billigare än så. Framtida kapitaltillskott eller nyförvärv för att säkra kontrollandelar skulle utgöra egna separata löften och dubbelräknas inte här. Därför base 0 och spannet 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0941 (10), p-2026-2585 (500), p-2026-4137 (0), p-2026-3307 (60), p-2026-0674 (10) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~10"
+  },
+  {
+    "candidate": {
+      "title": "Genomlysning av statliga bolagsportföljen med syfte att sälja bolag",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Därför vill vi göra en genomlysning av hela den statliga bolagsportföljen i syfte att sälja bolag och stärka styrningen av strategiska bolag som LKAB och Vattenfall.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/statliga-foretag/",
+    "articleTitle": "Statliga företag | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är genomlysningen, prissatt som SOU-utredning. Eventuella försäljningar är framtida politik som ger intäkter, inte kostnad här. Avviker från jämförelselöftena (0 mkr) som gäller själva ägandet.",
+      "confidence": 0.6,
+      "calculation": "Genomlysning av hela den statliga bolagsportföljen (~50 bolag, bl.a. LKAB och Vattenfall) bedöms som en utredning i SOU-storlek med sekretariat och externa värderings-/samhällsanalyser: ~5–30 mkr engång, bas 15 mkr. Löftets direkta åtagande är granskningen; beslut att sälja bolag är framtida separat politik (och skulle snarast ge staten intäkter). Stärkt styrning av strategiska bolag sköts inom befintlig ägarförvaltning."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-4136 (0), p-2026-4135 (0), p-2026-1263 (0), p-2026-4289 (0), p-2026-1116 (500) ⚠ AVVIKER: belopp 15 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Nej till kvotering i statliga styrelser",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi säger nej till kvotering i statliga styrelser då vi anser att kompetens ska styra.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/statliga-foretag/",
+    "articleTitle": "Statliga företag | Sverigedemokraterna",
+    "duplicateOf": "p-2026-2730"
+  },
+  {
+    "candidate": {
+      "title": "Införa statligt huvudmannaskap för skolan",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill därför införa ett statligt huvudmannaskap för skolan.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/statligt-huvudmannaskap/",
+    "articleTitle": "Statligt huvudmannaskap | Sverigedemokraterna",
+    "duplicateOf": "p-2026-1373"
+  },
+  {
+    "candidate": {
+      "title": "Stimulera mer klassisk och traditionell arkitektur",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill stimulera mer klassisk/traditionell arkitektur och menar att det finns ett folkligt stöd för mer ornamentik, igenkännliga stadsmiljöer och traditionella formspråk.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/stimulera-klassisk-arkitektur/",
+    "articleTitle": "Stimulera klassisk arkitektur | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 25,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan belopp; tolkas som reglering/planering med försumbar direkt kostnad. Spannet täcker ev. framtida stimulansprogram. Samhällsföljder av formspråkskrav prissätts ej.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ingen åtgärd, nivå eller belopp — bara en inriktning mot klassiskt/traditionellt formspråk. Troligaste utförandet är ändrade plan- och byggregler samt estetiska krav i detaljplaner, vilket i sig är en försumbar direkt statlig kostnad (regelarbete utförs inom befintlig organisation). En eventuell framtida konkretisering — stimulansbidrag, designprogram eller utredning om arkitekturpolitik — skulle landa i storleksordningen 10–25 mkr. Därför base 0 med osäkerhet uppåt; jämförbara löften om att 'stimulera X' utan belopp har prissatts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-3663 (0), p-2026-2249 (50), p-2026-2794 (0), p-2026-3613 (0), p-2026-3821 (15)"
+  },
+  {
+    "candidate": {
+      "title": "Offentliga aktörer ska kunna efterfråga klassiska kvaliteter i byggande",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Särskilt offentliga aktörer ska kunna efterfråga klassiska kvaliteter i större utsträckning och regelverket ska inte missgynna traditionellt byggande.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/stimulera-klassisk-arkitektur/",
+    "articleTitle": "Stimulera klassisk arkitektur | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 15,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringsändring i upphandling och byggregler; direkt statlig kostnad för själva åtgärden är försumbar. Högre byggkostnader om aktörer väljer klassiska kvaliteter är en följd av frivilliga val…",
+      "confidence": 0.6,
+      "calculation": "Löftet innebär att regelverket ändras så att offentliga aktörer får efterfråga klassiska kvaliteter och att traditionellt byggande inte missgynnas. Själva åtgärden är en lag- och regeländring som bereds inom Regeringskansliet och befintliga myndigheter — ingen ny statlig utgift. Eventuellt högre byggkostnader när kommuner och staten väljer klassiska material är en följd av frivilliga upphandlingsval, inte en pålagd kostnad, och lämnas okvantifierad. Övre spannet (~15 msek) täcker en möjlig utredning av upphandlingsreglerna och mindre administrativ omställning."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-2685 (0), p-2026-3356 (0), p-2026-1125 (15), p-2026-0367 (150), p-2026-0584 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Förstärka Kemikalieinspektionen och Tullverket mot farliga produkter vid gränsen",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill att Kemikalieinspektionen ska förstärka och prioritera sitt arbete mot import av farliga ämnen och produkter, samtidigt som Tullverket tillförs resurser för att möjliggöra fler och effektivare kontroller.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/stoppa-farliga-produkter-vid-gransen/",
+    "articleTitle": "Stoppa farliga produkter vid gränsen | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 25,
+      "msek_base": 60,
+      "msek_high": 130,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet ger uttryckligen nya medel till två myndigheter — verklig utgift, ej ren reglering som jämförbara förbudslöften. Ingen nivå anges; estimatet bygger på antal nya tjänster.",
+      "confidence": 0.35,
+      "calculation": "Inget belopp i löftet. Antagande om förstärkning i personal: Kemikalieinspektionen ~10–25 nya tjänster för importkontroll av farliga ämnen à ~1 mkr/år inkl. omkostnad ≈ 10–25 mkr; Tullverket ~25–70 nya kontrolltjänster à ~1 mkr/år ≈ 25–70 mkr; utrustning, labb och IT ≈ 5–20 mkr. Totalt ≈ 40–115 mkr/år, bas ~60 mkr. Delen 'förstärka och prioritera' kan delvis ske genom omprioritering inom befintliga anslag, vilket ger lägre nivå — därför brett spann och låg konfidens."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2047 (0), p-2026-0420 (0), p-2026-0354 (0), p-2026-2681 (0), p-2026-3525 (0) ⚠ AVVIKER: belopp 60 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Skärpa kontrollerna mot olagliga transporter, cabotagefusk och brott mot kör- och vilotidsreglerna",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna anser att det är nödvändigt att skärpa kontrollerna mot olagliga transporter, cabotagefusk och brott mot kör- och vilotidsreglerna.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/stoppa-fusket-i-yrkestrafiken/",
+    "articleTitle": "Stoppa fusket i yrkestrafiken | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 60,
+      "msek_base": 120,
+      "msek_high": 220,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Skärpta transportkontroller tolkas som fler kontrollinspektörer och kontrolltimmar; i linje med jämförbart löfte om åkerikontroller (~150 msek/år). Avser nya kontrollresurser, inte samhällseffekter.",
+      "confidence": 0.4,
+      "calculation": "'Skärpa kontrollerna' antas kräva utökad kontrollverksamhet: ~50–150 extra heltidstjänster (inspektörer/handläggare hos Transportstyrelsen och polis) à ~0,9–1,2 msek/år inkl. lokaler, IT och drift ≈ 45–180 msek/år, plus viss kontrollutrustning. Ett snarlikt löfte om kontroller mot fusk i åkeribranschen prissattes till ~150 msek/år, vilket styr mot övre halvan av spannet. Löftet anger ingen nivå, därför bred osäkerhet. Base 120 msek/år, spann 60–220 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1570 (60), p-2026-1713 (150), p-2026-3040 (40), p-2026-2804 (80), p-2026-3444 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Kommunerna ska äga frågan om strandskydd",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi tycker att kommunerna ska äga frågan om strandskydd och att det är en av pusselbitarna för att öka inflyttningen men också behålla medborgare i glesbygdskommuner.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/strandskydd/",
+    "articleTitle": "Strandskydd | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringsändring: beslutsrätten om strandskydd flyttas från länsstyrelse till kommun. Ingen ny statlig nettokostnad — arbetet flyttas mellan nivåer (regel 9 och 11).",
+      "confidence": 0.65,
+      "calculation": "Löftet innebär en lagändring som decentraliserar strandskyddsbeslut till kommunerna. Själva åtgärden (ändrad beslutsordning) kostar staten i princip noll: länsstyelsernas minskade handläggning vägs mot kommunernas ökade, vilket är en omfördelning mellan förvaltningsnivåer — inte en ny statlig utgift. Eventuell omställning/utbildning sker inom befintlig organisation. Jämförbara strandskyddslöften (avskaffa, bevara, ersätta med strandlov) har alla prissatts till 0 msek; detta löfte är en variant av samma typ av regleringsändring och läggs i samma storleksordning."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0880 (0), p-2026-2477 (0), p-2026-2735 (0), p-2026-3987 (0), p-2026-2449 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Reformera systemet för studieförbunden i grunden",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill reformera systemet för studieförbunden i grunden.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/studieforbund/",
+    "articleTitle": "Studieförbund | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 60,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå eller utpekad åtgärd. En systemreform är främst nya regler och omfördelning av befintliga anslag — beloppet avser bara utredning och omställning, inte pengaflöden som flyttas…",
+      "confidence": 0.3,
+      "calculation": "Ingen nivå eller åtgärd anges. Antagande: studieförbundens stöd (folkbildningsanslag, storleksordningen 1–2 mdkr/år) finns redan i statens budget — en grundreform omfördelar medel snarare än tillför nya (nettoregel). Direkt kostnad för själva reformen: utredning i SOU-storlek ~5–15 msek + omställning, nya fördelningsreglar, eventuellt IT-stöd ~0–45 msek, engångsvis ≈ 0–60 msek, bas 10 msek. Jämförbara systemreformer (skolpeng) prissattes till nära 0; ett separat löfte om förstärkt statsbidrag till studieförbund är en annan, dyrare åtgärd och dubbelräknas inte här. Stor osäkerhet eftersom reformens innehåll inte specificeras."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1669 (0), p-2026-0500 (1000), p-2026-0526 (0), p-2026-0705 (0), p-2026-1347 (300) ⚠ AVVIKER: belopp 10 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Flytta statsbidragen från Folkbildningsrådet till en oberoende myndighet och premiera kvalitet",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Därför driver vi frågan om att statsbidragen ska flyttas från Folkbildningsrådet till en oberoende myndighet samt att bidragsmodellen ska utformas så att den premierar kvalitet i stället för enbart inrapporterade timmar.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/studieforbund/",
+    "articleTitle": "Studieförbund | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 25,
+      "msek_high": 80,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avser omställningen (ny myndighet, IT, överföring av bidragshanteringen) — inte de statsbidrag som redan betalas ut. Modellbytet omdirigerar befintliga medel, ingen ny bruttokostnad.",
+      "confidence": 0.4,
+      "calculation": "Folkbildningens statsbidrag flyttas bara mellan huvudmän (Folkbildningsrådet → ny myndighet) och mottagarna är desamma → nettoeffekt löpande ≈ 0 enligt principen om omfördelning. Kvalitetspremien omfördelar samma pott, inget höjt belopp lovas. Ny statlig kostnad är engångsinsatsen: rekrytering av myndighetsledning och stab, lokaler, IT-system samt upbyggnad av underlag för kvalitetsbaserad fördelning, eventuell dubbel administration under övergångsperiod. Svenska myndighetsombildningar och systembyten av denna storlek brukar landa i tiotals miljoner kronor. Estimat: 5–80 mkr engång, bas ~25 mkr. Löpande drift ersätter Folkbildningsrådets befintliga administrationskostnad → ingen ny årlig nettoutgift."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-0500 (1000), p-2026-1347 (300), p-2026-1483 (150), p-2026-1518 (150), p-2026-4019 (0) ⚠ AVVIKER: 25 avviker 6.0× från jämförbara (median 150)"
+  },
+  {
+    "candidate": {
+      "title": "SD vill säkerställa att studiestödet går till personer som bedriver seriösa studier",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill därför säkerställa att studiestödet går till personer som bedriver seriösa studier.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/studiestod/",
+    "articleTitle": "Studiestöd | Sverigedemokraterna",
+    "verifyReason": "Uttalandet är en allmän policyformulering från SD:s hemsida om att säkerställa att studiestödet går till seriösa studier. Det saknar konkret åtgärd eller mätbart mål, vilket gör det tveksamt att klassa som ett tydligt vallöfte. Partiet är korrekt angivet och inget belopp nämns."
+  },
+  {
+    "candidate": {
+      "title": "Insatser inom suicidprevention ska riktas till högriskgrupper som unga män och personer med samsjuklighet",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Insatserna ska riktas dit de gör störst skillnad, exempelvis till högriskgrupper som unga män och personer med samsjuklighet, samtidigt som stödet ska vara tillgängligt för alla i riskzonen.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/suicidprevention/",
+    "articleTitle": "Suicidprevention | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: styrning av suicidpreventiva insatser mot högriskgrupper, ingen nivå eller medel anges. Omfördelning inom befintliga anslag är ingen ny nettoKostnad; spannet rymmer ev. små riktade…",
+      "confidence": 0.4,
+      "calculation": "Löftet anger riktning — att suicidpreventiva insatser ska prioriteras till grupper som unga män och personer med samsjuklighet — men nämner ingen konkret åtgärd, belopp eller nivå. Att rikta om redan finansierade insatser är omfördelning, inte en ny statlig utgift (netto ~0). High-end (~50 msek/år) rymmer tolkningen att 'insatser' innebär mindre riktade satsningar, t.ex. utbildning och outreach mot unga män i riskzon — vida under det jämförbara löftet om lokalt suicidprevention i alla kommuner (~250 msek/år), som är ett bredare finansieringsåtagande. Base 0 eftersom själva prioriteringen inte binder nya medel; kostsamma delar prissätts påpartiets specifika löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-3795 (250), p-2026-2050 (75), p-2026-3249 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~75"
+  },
+  {
+    "candidate": {
+      "title": "SD vill ge svenska kronan grundlagsskydd",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi föreslår därför att den svenska kronan ges ett tydligt grundlagsskydd.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/svenska-kronan/",
+    "articleTitle": "Svenska kronan | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Grundlagsändring: att skriva in kronan i regeringsformen är i sig i princip kostnadsfritt — beredning och riksdagsbehandling sker inom ordinarie verksamhet. Beloppet avser själva åtgärden, inte…",
+      "confidence": 0.65,
+      "calculation": "Löftet är en lagtextändring: kronan förs in i regeringsformen som skyddad valuta. Direkt kostnad = beredning i Regeringskansliet och riksdagens två beslut med mellanliggande val, allt utfört av redan anställd personal → 0 msek. Osäkerhetsmarginal upp till ~5 msek för eventuell juridisk utredning eller remissrunda. Ekonomiska följder av ett framtida euro-medlemskap eller valutapolitik prissätts inte — det är effekter, inte statens nya utgift."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-2053 (0), p-2026-3870 (0), p-2026-0515 (500), p-2026-1296 (0), p-2026-2369 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Övervägande delen av undervisningen i svenska skolor ska ske på svenska",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill därför att den övervägande delen av undervisningen i svenska skolor ska ske på svenska.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/svenska-spraket-i-skolan/",
+    "articleTitle": "Svenska språket i skolan | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 2,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Språkkrav på undervisningen är en reglering; beloppet avser bara statens direkta kostnad (regeländring, vägledning, tillsyn), inte samhällseffekter. Jämförbart med partiövergripande löften om…",
+      "confidence": 0.3,
+      "calculation": "Löftet genomförs via skollags-/läroplansändring: beredning i Regeringskansliet och Skolverket (regel 17 → 0), men viss kostnad för vägledningsmaterial, information till huvudmän och ev. kompetensstöd ~0–5 mkr engång. Jämförbara löften om minimikrav på andel undervisning på svenska ligger runt ~3 mkr engång, vilket styr basen. Följder för modersmålsundervisning och nyanlända elevers undervisning är omfördelning/ej kvantifierad samhällseffekt och ingår inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-3921 (0), p-2026-2640 (3), p-2026-0107 (2700), p-2026-2125 (100), p-2026-2981 (400) ⚠ AVVIKER: 2 avviker 50.0× från jämförbara (median 100)"
+  },
+  {
+    "candidate": {
+      "title": "Inför typgodkänt småhus \"Sverigehuset\" för snabbare och billigare småhusbyggande",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill införa “Sverigehuset” som ett typgodkänt småhus i traditionell svensk stil, tänkt att kunna byggas i hela landet för att pressa kostnader och öka takten i småhusbyggandet.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sverigehuset/",
+    "articleTitle": "Sverigehuset | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 5,
+      "msek_high": 25,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringsåtgärd: prissatt är bara den direkta engångskostnaden för att ta fram husdesign och typgodkännandeförfarande. Billigare och snabbare byggande är samhällsföljder, inte statlig utgift.",
+      "confidence": 0.4,
+      "calculation": "Löftet är huvudsakligen en regeländring (typgodkännande av en husmodell). Statens direkta kostnad: framtagning av design och teknisk dokumentation samt eventuell prototyp/test — engångsarbete i storleksordningen 0–25 msek, bas 5 msek. Löpande handläggning antas avgiftsfinansierad som vid befintliga typgodkännanden. Kostnadspress på byggen är en följd för köpare, inte en ny statsutgift, och prissätts inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-3105 (0), p-2026-4134 (30), p-2026-1963 (1000), p-2026-3138 (0), p-2026-2748 (0) ⚠ AVVIKER: belopp 5 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Enklare och mer förutsägbar väg genom regelverk för standardiserade hustyper",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill att standardiserade hustyper ska kunna få en enklare, mer förutsägbar väg genom regelverk och tillstånd, med fokus på att minska krångel och osäkerhet för den som vill bygga.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sverigehuset/",
+    "articleTitle": "Sverigehuset | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 15,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regelförenkling/avreglering: enklare tillståndsväg för standardiserade hustyper. Direkt statlig kostnad är försumbar — beredning sker i befintlig organisation. Spannet täcker ev. små…",
+      "confidence": 0.65,
+      "calculation": "Löftet är en avreglering: standardiserade hustyper ska få en enklare, mer förutsägbar väg genom tillståndsprocessen. Lagändringen bereds inom Regeringskansliets och berörda myndigheters befintliga organisation → 0 msek i ny statlig kostnad. Eventuella tilläggskostnader för genomförande (vägledningsmaterial, ev. digital handläggningsstöd hos Boverket/kommuner) uppskattas till högst ~15 msek engång. Lägre byggkostnader eller kortare väntetider för enskilda byggare är samhällsföljder, inte statliga utgifter, och prissätts inte."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-2794 (0), p-2026-3105 (0), p-2026-2810 (50), p-2026-0855 (0), p-2026-2506 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Mer byggbar mark genom reformerat strandskydd och omprövade riksintressen",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "I vårt förslag kopplas Sverigehuset också till en bredare reformagenda: mer byggbar mark (t.ex. reformerat strandskydd) och minskade/omprövade riksintressen där byggbehov är stort.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/sverigehuset/",
+    "articleTitle": "Sverigehuset | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring (strandskydd, riksintressen). Direkt statlig kostnad är i praktiken beredningsarbete i befintlig organisation ≈ 0; ökat byggande är en samhällsföljd, inte statlig utgift.",
+      "confidence": 0.65,
+      "calculation": "Reform av strandskyddet och omprövning av riksintressen är lag- och regeländringar. Beredning och lagarbete utförs av Regeringskansliet och berörda myndigheter inom befintliga personalkostnader → 0 msek. Eventuell framtidsutredning med tillhörande sekretariat kan kosta ca 5–10 mkr engång, vilket motiverar spannets övre gräns. Mer byggbar mark leder till ökat byggande, men exploateringsintäkter och ökat bostadsbyggande är följder/omfördelningar — inte en ny statlig nettokostnad — och lämnas okvantifierade enligt avgränsningsreglerna. I linje med jämförbara löften om strandskydds- och riksintresse­reformer som prissatts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0854 (0), p-2026-2602 (0), p-2026-0855 (0), p-2026-2843 (0), p-2026-2945 (0)"
+  },
+  {
+    "candidate": {
+      "title": "SD vill utöka tiotandvården till fler åtgärder och större åldersgrupper",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Patienten kommer även i framtiden att behöva betala en del av kostnaden, men vi ser gärna att tiotandvården omfattar fler åtgärder och större åldersgrupper.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/tandvard/",
+    "articleTitle": "Tandvård | Sverigedemokraterna",
+    "verifyReason": "Uttalandet är en avsiktsförklaring från SD att utöka tiotandvården, men formuleringen 'vi ser gärna' är svagare än ett tydligt löfte. Inget belopp anges. Parti och citat stämmer, men granskning rekommenderas."
+  },
+  {
+    "candidate": {
+      "title": "Kriminalisera medlemskap i kriminella sammanslutningar och straffa hårdare",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill att det även ska vara ett brott i sig att vara med i en kriminell sammanslutning och att dessa brott skall dömas särskilt hårt.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/terrorism/",
+    "articleTitle": "Terrorism | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Kriminalisering via lag; direkt kostnad nära noll. Hårdare straff bör ge fler fängelsedygn men brottet är nytt – inget belagt antal domar och ingen belagd dygnskostnad, så basen sätts till 0.",
+      "confidence": 0.35,
+      "calculation": "Löftet = ny brottsrubricering (medlemskap i kriminell sammanslutning) + skärpt straffnivå. Lagstiftningen i sig ger ingen ny utgift: beredning sker inom Regeringskansliet och polis/åklagare/domstolar verkställer inom befintlig organisation. Fler och längre fängelsedygn är en reell statlig kostnad, men underlagen saknas i båda ändarna: brottet finns inte än, så det finns inget belagt antal dömda eller fängelseår, och ingen extern belagd dygnskostnad används här. Ett antaget antal gängmedlemmar × antagen strafftid × antagen dygnskostnad vore tre gissningar multiplicerade – därför base 0. High ~150 msek/år rymmer tänkbar ökad beläggning i kriminalvården och belastning i rättskedjan, i linje med jämförbara estimat för samma politik."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0786 (0), p-2026-3082 (3), p-2026-0534 (150), p-2026-4324 (0), p-2026-3165 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Sverige ska samarbeta med NATO och EU för att gripa misstänkta terrorister",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "I förekommande fall skall Sverige arbeta tillsammans med våra allierade i NATO, EU och övriga världen för att hitta och gripa misstänkta terrorister.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/terrorism/",
+    "articleTitle": "Terrorism | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: samarbetet med NATO/EU sker redan via SÄPO, polis och Europol i befintlig organisation. Ingen ny åtgärd eller finansiering anges i löftet.",
+      "confidence": 0.5,
+      "calculation": "Löftet anger ingen ny myndighet, inget belopp och ingen konkret åtgärd — bara att Sverige 'i förekommande fall' ska samarbeta med allierade för att hitta och gripa misstänkta terrorister. Sådant samarbete (Europol, Interpol, NATO-kanaler) bedrivs redan av SÄPO, polisen och UD med befintlig personal och budget; gripanden utförs av nationell polis inom nuvarande resurser. Ingen ny statlig nettokostnad identifieras, därför base 0. Övre spannet (10 msek) rymmer ev. marginella extra samordningsresurser om samarbetet intensifieras, men inget i löftet pekar på nya medel."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-3780 (0), p-2026-1643 (30), p-2026-0120 (0), p-2026-4095 (0), p-2026-2892 (1500)"
+  },
+  {
+    "candidate": {
+      "title": "SD vill införa tiggeriförbud och lättare utvisa tiggarligor",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigdemokraterna vill införa ett tiggeriförbud i Sverige och göra det lättare att utvisa hitresta tiggarligor även om dessa är EU-medborgare.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/tiggeri/",
+    "articleTitle": "Tiggeri | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagförbud prissätts till nästan 0; ev. polisinsatser och utvisningar är svåröverskådliga följer som lämnas okvantifierade.",
+      "confidence": 0.65,
+      "calculation": "Tiggeriförbudet är en lagändring: beredningen sker inom Regeringskansliets och myndigheters befintliga organisation, dvs. ingen ny statsutgift (~0 mkr). Lättare utvisning av tiggarligor är en regeländring; en ev. ökad utvisningsvolym är en följd av lagen utan belagt underlag för antal berörda eller styckkostnad, och kvantifieras därför inte. Jämförbara regleringslöften (kameror på brottsutsatta platser, vräkningsregler) har prissatts till 0. Spannet uppåt (10 mkr) täcker ev. marginell administration kring undantag/tillstånd."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-3199 (0), p-2026-1967 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Sverige ska ha hög banksäkerhet och inte skapa finansiellt utanförskap",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverige ska ha hög banksäkerhet och inte försätta oskyldiga människor i finansiellt utanförskap!",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/tillgang-till-bankkonton-och-banksakerhet/",
+    "articleTitle": "Tillgång till bankkonton och banksäkerhet | Sverigedemokraterna",
+    "verifyReason": "Citatet är korrekt och partiet stämmer, men formuleringen är allmän och det saknas konkreta åtgärder, så det kan behöva granskas om det ska klassas som ett specifikt vallöfte."
+  },
+  {
+    "candidate": {
+      "title": "Banker ska tillämpa reglerna riskbaserat och individuellt innan konton nekas eller sägs upp",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Bankerna bör tillämpa reglerna riskbaserat och individuellt innan de nekar eller säger upp konton.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/tillgang-till-bankkonton-och-banksakerhet/",
+    "articleTitle": "Tillgång till bankkonton och banksäkerhet | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regelförändring riktad mot bankerna. Statens direkta kostnad är nära noll; beloppet avser själva åtgärden, inte bankernas utökade kontroll eller effekter för kunder.",
+      "confidence": 0.6,
+      "calculation": "Löftet är en regleringsändring: banker ska tillämpa reglerna riskbaserat och individuellt innan konton nekas eller sägs upp. Statens direkta kostnad är beredning av lagändring/vägledning, vilket sker inom Regeringskansliets och Finansinspektionens befintliga organisation ≈ 0 msek. Utökade kontroller hos bankerna är en följd för bankerna, inte en statlig utgift. Spannet upp till ~5 msek täcker ev. engångsinsats för ny vägledning eller tillsynsmaterial. Base 0 eftersom lagändringens direkta kostnad är försumbar."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "SD vill sänka skattetrycken, förenkla regler och förkorta tillståndsprocesser",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi kommer fortsätta driva på för att sänka skattetrycken både för privatpersoner och företag, minimera byråkratiska hinder från EU, öka incitamenten att gå från bidrag till arbete, genomföra regelförenkling, förkorta tillståndsprocesser samt underlätta för FoU-intensiv näringsverksamhet.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/tillvaxtatgarder/",
+    "articleTitle": "Tillväxtåtgärder | Sverigedemokraterna",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte som uppräknar flera politikområden utan enskilt åtagande eller belopp. De kostsamma delarna (skattesänkningar, regelförenkling) prissätts på partiets specifika löften.",
+      "confidence": 0.5,
+      "calculation": "Löftet listar många riktningar (sänkt skattetryck, mindre EU-byråkrati, bidrag-till-arbete, regelförenkling, kortare tillståndsprocesser, FoU) men anger ingen konkret åtgärd, nivå eller mottagargrupp. Enligt regeln för breda sammanfattande löften prissätts detta som inriktningslöfte till 0 msek. Skulle partiet senare lägga specifika löften om t.ex. en viss skattesänkning eller en bestämd förenkling prissätts dessa separat — att baka in dem här skulle riskera dubbelräkning. Jämförbara förenklingslöften utan nivå har också prissatts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-1538 (0), p-2026-1216 (0), p-2026-0176 (0), p-2026-0157 (0), p-2026-0902 (100)"
+  },
+  {
+    "candidate": {
+      "title": "Sänka skatten på snus och höja den för cigaretter",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Därför vill vi sänka skatten på snus och höja den för cigaretter.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/tobak-och-andra-nikotinprodukter/",
+    "articleTitle": "Tobak och andra nikotinprodukter | Sverigedemokraterna",
+    "duplicateOf": "(denna körning)"
+  },
+  {
+    "candidate": {
+      "title": "SD vill ge staten tydliga verktyg att stänga ned religiös verksamhet som utgör hot",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "vi vill därför ge staten tydliga verktyg för att kunna stänga ned religiös verksamhet som utgör ett sådant hot.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/trossamfund/",
+    "articleTitle": "Trossamfund | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 15,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring som ger staten nya nedstängningsverktyg; direkt kostnad ligger i befintlig myndighetsorganisation och är försumbar. Beloppet avser åtgärden, inte samhällsföljder.",
+      "confidence": 0.65,
+      "calculation": "Regleringslöfte: staten får verktyg att stänga religiös verksamhet som utgör hot. Själva åtgärden är en lagändring — beredning i Regeringskansliet och handläggning hos länsstyrelser/domstolar sker inom befintlig organisation ≈ 0 mkr. Ev. marginell ärendehantering och ev. tillsynsinsats upp till ~15 mkr/år som osäkerhetsmarginal. Värdet av nedstängda verksamheter eller utebliven verksamhet är en samhällsföljd, inte en ny statlig utgift, och lämnas okvantifierat. I linje med jämförbara löften om 'fler verktyg' till polis och tillsynsmyndigheter som prissatts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-1967 (0), p-2026-0035 (600), p-2026-3461 (0), p-2026-2597 (0), p-2026-3189 (0)"
+  },
+  {
+    "candidate": {
+      "title": "SD vill minska statens ekonomiska stöd till trossamfunden",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "På sikt vill vi minska statens ekonomiska stöd till trossamfunden, så att de i högre grad finansieras genom sina egna medlemmar medan statens roll främst bör vara att erbjuda hjälp med avgiftsinsamling.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/trossamfund/",
+    "articleTitle": "Trossamfund | Sverigedemokraterna",
+    "cost": {
+      "type": "besparing",
+      "period": "per_ar",
+      "msek_low": 30,
+      "msek_base": 60,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Besparing: minskat statligt stöd till trossamfund (i dag grovt ca 100 msek/år). Löftet anger ingen nivå; 'på sikt' och 'i högre grad' tolkas som partiell utfasning, inte fullt avskaffande.",
+      "confidence": 0.35,
+      "calculation": "Befintligt statligt stöd till trossamfund uppgår grovt till ca 100 msek per år. Löftet pekar ut åtgärden (minska stödet) men ingen nivå, och 'på sikt' samt 'i högre grad finansieras av medlemmar' tyder på gradvis partiell utfasning snarare än fullt stopp. Antagande: reduktion på 30–100 % av stödet → ca 30–100 msek lägre årlig statlig utgift, bas ca 60 % ≈ 60 msek. Statens kvarvarande roll (hjälp med avgiftsinsamling) antas skötas inom befintlig myndighetsorganisation till försumbar extra kostnad. Osäkerheten ligger i andelen som fasas ut och takten; därför brett spann och låg konfidens."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-0425 (200), p-2026-0848 (16000), p-2026-2714 (0), p-2026-0630 (0), p-2026-3308 (0) ⚠ AVVIKER: belopp 60 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Stärka tryggheten och disciplinen i skolan genom tydliga ordningsregler och konsekvenser vid regelbrott",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill därför stärka tryggheten och disciplinen i skolan genom tydliga ordningsregler, höga förväntningar och konsekvenser vid regelbrott.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/trygghet-och-studiero/",
+    "articleTitle": "Trygghet och studiero | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte om regelverk: tydliga ordningsregler och konsekvenser styrs via skollag och skolornas befintliga arbete, utan nya statliga medel. Beloppet avser själva åtgärden, ej samhällsföljder.",
+      "confidence": 0.6,
+      "calculation": "Löftet anger varken belopp eller åtgärd med medel. Ordningsregler krävs redan enligt skollagen; skärpta konsekvenser vid regelbrott är en lagändring som bereds inom Regeringskansliets befintliga organisation, vilket ger 0 i ny statlig utgift. Ev. implementeringsstöd till skolor (information, fortbildning) skulle kunna kosta upp mot ~20 mkr som engångsinsats, men inget sådant åtagande finns i löftet. Jämförbara publicerade löften om konsekvenstrappa i skollagen och förväntansdokument med konsekvenser har prissatts till 0 msek, vilket styrker bas 0. Osäkerheten ligger i spannet 0–20 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-3681 (0), p-2026-0068 (0), p-2026-2330 (40), p-2026-3291 (40), p-2026-0464 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Utökade medel till Tullpersonalen för att skala upp verksamheten",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Därför vill vi att Tullpersonalen ska få utökade medel för att kunna skala upp deras redan väl genomförda verksamhet.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/tullens-verksamhet/",
+    "articleTitle": "Tullens verksamhet | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 100,
+      "msek_base": 250,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Bred medelökning till Tullverket utan angiven nivå; tolkat som 10–20 % mer driftskapacitet. Smalare tullöften ligger lägre; detta gäller hela verksamheten.",
+      "confidence": 0.4,
+      "calculation": "Tullverket har i storleksordningen ~2 000 anställda. 'Skala upp verksamheten' tolkas som 10–20 % ökad kapacitet: ~200–400 nya tjänster à ~0,8–1,2 mkr fullkostnad ≈ 160–480 mkr/år, plus teknik och utrustning. Ett jämförbart men smalare löfte om riktade tullresurser mot djursmuggling ligger på ~25 msek/år; detta löfte gäller hela myndigheten och bedöms betydligt större. Bas 250 msek, spann 100–500 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-4034 (35), p-2026-0035 (600), p-2026-2806 (25), p-2026-0686 (0), p-2026-2189 (300) ⚠ AVVIKER: 250 avviker 7.1× från jämförbara (median 35)"
+  },
+  {
+    "candidate": {
+      "title": "Bättre lokaler, utökade befogenheter, fler scanners och fler anställda inom tullen",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Där ingår bättre lokaler för personalen, utökade befogenheter, fler scanners, bättre utrustning och möjlighet att anställa fler.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/tullens-verksamhet/",
+    "articleTitle": "Tullens verksamhet | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 200,
+      "msek_base": 400,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Stärker Tullverket: personal, scanners, lokaler, utrustning. Inga nivåer angivna; baseras på antagen personalökning och scannerinvesteringar. Befogenhetsändringen i sig är närmast kostnadsfri.",
+      "confidence": 0.45,
+      "calculation": "Tullverket har ~2 000 anställda. Antagen utökning 100–300 tjänster × ~0,9–1,1 msek/år (lön, lokaler, IT) ≈ 100–330 msek/år. Scanners: mobila ~10–20 msek/st, fasta ~50–150 msek/st; 3–10 enheter annualiserat ≈ 30–150 msek/år. Lokalombyggnader och övrig utrustning ≈ 50–150 msek/år. Summerat ≈ 200–600 msek/år; bas 400 msek i linje med jämförbara trygghetssatsningar (150–600 msek/år)."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-2189 (300), p-2026-0035 (600), p-2026-4034 (35), p-2026-1637 (150), p-2026-2893 (7000) ⚠ BRED UPPRÄKNING: ser ut som en sammanfattning av flera åtaganden — kontrollera överlapp mot partiets egna löften i samma kategori: p-2026-1914 (4000), p-2026-3489 (2500), p-2026-0513 (1500), p-2026-0514 (300), p-2026-0534 (150). Är delarna redan prissatta ska detta löfte sättas till 0."
+  },
+  {
+    "candidate": {
+      "title": "SD vill att Sverige arbetar för att ETS2 avskaffas eller att lant- och skogsbruk undantas",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverige bör arbeta för att ETS2 avskaffas men i annat fall att lant- och skogsbruk undantas från systemet.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/undanta-de-grona-naringarna-fran-ets2/",
+    "articleTitle": "Undanta de gröna näringarna från ETS2 | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Diplomatisk förhandlingsposition i EU: advocacy sker med befintlig personal, ingen ny statlig utgift. Följder av ett avskaffat ETS2 (lägre bränslepriser, uteblivna intäkter) är EU-nivåeffekter, inte…",
+      "confidence": 0.65,
+      "calculation": "Löftet är att Sverige ska driva en linje i EU-samarbetet (avskaffa ETS2 eller undanta lant- och skogsbruk). Sådan pådrivan sköts av regeringskansli, ambassader och befintliga förhandlare → 0 mkr i ny statlig utgift. I högspannet ryms ev. fristående utredning/analysuppdrag om några mkr. Uteblivna framtida ETS2-intäkter eller lägre bränslepriser är omfördelningar/följder på EU-nivå, inte en ny svensk statsutgift, och tas därför inte med."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-1527 (0), p-2026-2474 (300), p-2026-3452 (0), p-2026-3586 (0), p-2026-2475 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Staten ska prioritera drift och underhåll framför dyra prestigeprojekt",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna anser att staten ska prioritera drift och underhåll framför dyra prestigeprojekt.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/underhall-forst-plogning-i-tid-och-tag-som-haller-tiden/",
+    "articleTitle": "Underhåll först: plogning i tid och tåg som håller tiden | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: prioritering av drift/underhåll framför prestigeprojekt är omfördelning inom befintliga anslag, ingen ny nettokostnad. Konkreta underhållssatsningar prissätts separat.",
+      "confidence": 0.5,
+      "calculation": "Citatet anger ingen nivå och ingen utpekad åtgärd, bara en prioriteringsordning inom infrastrukturbudgeten. Att flytta medel från nya prestigeprojekt till drift och underhåll är en omfördelning mellan budgetposter — inte en ny statlig utgift. Partiets konkreta löften om underhållssatsningar prissätts på separata löften och dubbelräknas inte här. Alla belopp sätts därför till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-2926 (210000), p-2026-3438 (0), p-2026-2440 (0), p-2026-2932 (10000), p-2026-2424 (4000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~4000"
+  },
+  {
+    "candidate": {
+      "title": "Vägar ska plogas i tid och järnvägen underhållas för punktliga tåg",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vägar ska plogas och halkbekämpas i tid och järnvägen ska underhållas så att fler tåg kommer fram punktligt.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/underhall-forst-plogning-i-tid-och-tag-som-haller-tiden/",
+    "articleTitle": "Underhåll först: plogning i tid och tåg som håller tiden | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 800,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: vinterväghållning och järnvägsunderhåll är redan finansierade via Trafikverket; ingen nivå eller höjning anges. Ev. anslagshöjningar prissätts på partiets specifika löften, inte här.",
+      "confidence": 0.45,
+      "calculation": "Löftet är ett kvalitetsmål (ploga i tid, punktliga tåg) utan angiven höjning eller ny åtgärd; verksamheten ligger redan i Trafikverkets befintliga anslag → base 0. Om det ändå tolkas som krav på förstärkt underhåll: vinterväghållning ~2–3 mdkr/år, 10–20 % högre standard ≈ 200–600 mkr; järnvägsunderhåll ~10 mdkr/år, +1–2 % för punktlighet ≈ 100–200 mkr. High ~800 mkr som försiktigt tak; osäkerheten är stor."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-2932 (10000), p-2026-3403 (0), p-2026-3415 (0), p-2026-1871 (0), p-2026-3807 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Särskilda bolånelösningar för unga och förstagångsköpare",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill inrätta särskilda bolånelösningar för unga och förstagångsköpare, med inspiration från modeller i andra länder (t.ex. norska bospar-/ungdomslåneupplägg).",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/ungdomslan-for-bostader/",
+    "articleTitle": "Ungdomslån för bostäder | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Statliga bolånelösningar: nettokostnad = räntesubvention, kreditförluster och administration — ej utlånat kapital som återbetalas. Bredare än jämförbart startlån (60 mkr/år).",
+      "confidence": 0.35,
+      "calculation": "Statens nettokostnad för statligt stödda lån är subventionselementet, inte det utlånade beloppet (lånen återbetalas). Antag 5 000–20 000 stödda lån/år à ~1–1,5 mkr → utlåningsvolym 5–30 mdkr/år. Räntesubvention 0,5–2 % av volymen + kreditförluster + administration ≈ 50–400 mkr/år. Norska förebilder (Husbanken/BSU) har begränsad nettokostnad eftersom kapitalet återkommer; en svensk sparmodell med statligt bidrag eller skatteavdrag skulle kunna ligga i övre spannet. Jämförbart svenskt löfte om statligt startlån estimeras till 60 mkr/år — detta löfte är bredare (både unga och förstagångsköpare, 'lösningar' i plural) men vagt angivet, därför base 150 mkr/år med stort osäkerhetsspann."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-1250 (0), p-2026-3307 (60), p-2026-4246 (0), p-2026-0427 (550), p-2026-2979 (400)"
+  },
+  {
+    "candidate": {
+      "title": "SD vill tillåta prospektering efter uran och andra kritiska metaller",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Därför vill vi tillåta prospektering efter uran och andra kritiska metaller.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/uranbrytning/",
+    "articleTitle": "Uranbrytning | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 5,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regleringsändring som upphäver förbud; direkt statlig kostnad försumbar. Prospektering finansieras av företag, inte staten. Beloppet avser åtgärden, inte samhällsföljderna.",
+      "confidence": 0.6,
+      "calculation": "Löftet är en lagändring (tillåta uranprospektering i minerallagen). Beredningen sker i Regeringskansliets befintliga organisation → 0 msek. Själva prospekteringen utförs och betalas av gruvföretag; statens tillståndshandläggning (Bergsstaten/SGU) är avgiftsfinansierad. Eventuell marginell extra handläggningskapacitet uppskattas till högst några msek/år. Intäkter eller kostnader från eventuell framtida gruvdrift, miljöprövning med mera är följer, inte ny statlig utgift för åtgärden."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-2348 (5), p-2026-3954 (0), p-2026-0647 (0), p-2026-0556 (0), p-2026-0558 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Utvisning vid brott ska kunna ske vid alla domar där fängelsestraff ingår i straffskalan",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Utvisning på grund av brott ska kunna ske vid alla domar där fängelsestraff ingår i straffskalan.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/utvisning-vid-brott/",
+    "articleTitle": "Utvisning vid brott | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring: utvisning möjlig vid fler brottmål. Själva lagändringen kostar staten i praktiken noll; följderna (förvar, verkställighet, besparingar) är svåröverskådliga och prissätts inte.",
+      "confidence": 0.65,
+      "calculation": "Löftet är en lagändring som utvidgar domstolars möjlighet att utvisa vid brott där fängelse ingår i straffskalan. Enligt principen för förbud- och regleringslöften prissätts den direkta kostnaden för själva åtgärden: beredningen sker inom Regeringskansliets och Migrationsverkets befintliga organisation ≈ 0 mkr. De faktiska nettoföljderna — fler utvisningsärenden, förvarstid och verkställighet, men även besparingar när dömda personer lämnar landet och inte avtjänar straff i svensk kriminalvård — saknar belagt underlag och lämnas okvantifierade. Jämförbara utvisningslöften har prissatts till 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0744 (0), p-2026-3193 (0), p-2026-0077 (1000), p-2026-3216 (0), p-2026-3447 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Åklagare ska vara skyldiga att yrka på utvisning när förutsättningarna är uppfyllda",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Om förutsättningarna för utvisning är uppfyllda ska åklagarna vara skyldiga att yrka på det.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/utvisning-vid-brott/",
+    "articleTitle": "Utvisning vid brott | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lagändring som ålägger åklagare yrkesplikt — ingen egen budgetpost. Direkt kostnad nära noll; fler utvisningsprocesser är en följd som lämnas okvantifierad.",
+      "confidence": 0.6,
+      "calculation": "Åtgärden är en regeländring: åklagare blir skyldiga att yrka utvisning när förutsättningarna finns. Lagarbetet sker i befintlig organisation (Regeringskansliet, Åklagarmyndigheten) → ingen ny statlig utgift, base 0. Fler yrkanden kan i princip öka antalet utvisningsmål i domstol och verkställigheter, men varken antalet extra fall eller kostnaden per fall är belagd; två gissningar multipliceras inte till en siffra. High 30 msek/år täcker eventuell marginalkostnad för domstol och förvar. Jämförbara löften om utvisningsregler är prissatta till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-3193 (0), p-2026-0077 (1000), p-2026-3216 (0), p-2026-3447 (0), p-2026-2134 (150)"
+  },
+  {
+    "candidate": {
+      "title": "Prövning av hinder för utvisning ska ske först efter avtjänat straff",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Till skillnad från tidigare ska prövningen om det föreligger hinder för utvisning ske först efter avtjänat straff.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/utvisning-vid-brott/",
+    "articleTitle": "Utvisning vid brott | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring i migrationsrättsligt förfarande; statens direkta kostnad är nära noll. Effekter på förvarstid och utvisningsutfall är svåröverskådliga följder som inte prissätts.",
+      "confidence": 0.6,
+      "calculation": "Löftet ändrar tidpunkten för prövningen av utvisningshinder (till efter avtjänat straff). Det är en förfarandereglering: antalet ändras inte, prövningen sker med befintlig personal vid Migrationsverket/Kriminalvården och lagberedningen ligger i Regeringskansliets ordinarie arbete. Direkt ny utgift ≈ 0 mkr. Spannet (upp till ca 20 mkr) täcker eventuell engångsomställning av ärendehantering och IT-system. Följder som längre förvarstid eller ändrade utvisningsutfall är svåröverskådliga beteendeeffekter som lämnas okvantifierade."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-3193 (0), p-2026-2134 (150), p-2026-0744 (0), p-2026-0077 (1000), p-2026-3216 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Utvisningsprövning ska tydligare beakta brottets allvarsgrad och ta mindre hänsyn till anknytning",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Prövningen ska tydligare beakta brottets allvarsgrad och ta mindre hänsyn till eventuell anknytning till Sverige.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/utvisning-vid-brott/",
+    "articleTitle": "Utvisning vid brott | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Avviker från jämförbara löften: praxis-/lagändring i utvisningsprövning, inte en förmånsutvidgning. Direkt kostnad nära noll (beredning i befintlig organisation); underlag för följkostnader saknas.",
+      "confidence": 0.45,
+      "calculation": "Åtgärden ändrar rättsliga prövningsgrunder vid utvisning efter brott (brottets allvar vägs tyngre, anknytning lättare). Själva åtgärden är en lagtext-/praxisändring som bereds i Regeringskansliet och tillämpas av Migrationsverket och domstol inom befintliga resurser → ingen ny direkt statlig utgift, base 0. Eventuella kostnader vid fler utvisningsbeslut (förvar, verkställighet, fler överklaganden) kräver ett belagt antal extra fall för att beräknas; sådant underlag saknas och två gissningar multipliceras inte. Spannet 0–50 msek täcker eventuell marginell meradministration hos berörda myndigheter."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0524 (1000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1000"
+  },
+  {
+    "candidate": {
+      "title": "Skärpta straff för grova och upprepade våldsbrott samt stärkt stöd till skyddade boenden",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill se skärpta straff för grova och upprepade våldsbrott, stärkt stöd till skyddade boenden samt bättre samordning mellan polis, socialtjänst och rättsväsende.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vald-i-nara-relationer/",
+    "articleTitle": "Våld i nära relationer | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Straffskärpning saknar belagt antal domar och dygnskostnad, därför base 0 enligt regeln om yttre källor; stödet till skyddade boenden är utan nivå och inget belopp anges. Spannet täcker eventuell…",
+      "confidence": 0.3,
+      "calculation": "Skärpta straff för grova våldsbrott: fler fängelsedygn är en verklig statlig utgift, men utan belagt antal aktuella domar/fängelseår och belagd dygnskostnad i kriminalvården kan ingen ärlig aritmetik göras – två gissningar multiplicerade är värre än ingen siffra. Stärkt stöd till skyddade boenden anges utan nivå eller antal enheter och går inte att kvantifiera. Samordning polis/socialtjänst utförs inom befintliga organisationer. Base 0; högvärde ~100 msek som rimlig takkostnad om boendestödet utökas kraftigt."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-2866 (200), p-2026-0708 (0), p-2026-3876 (150), p-2026-3048 (30), p-2026-1022 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~30"
+  },
+  {
+    "candidate": {
+      "title": "Utländska medborgare som begår grova våldsbrott ska utvisas",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Utländska medborgare som begår grova våldsbrott ska utvisas.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vald-i-nara-relationer/",
+    "articleTitle": "Våld i nära relationer | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-2167 (0), p-2026-0744 (0), p-2026-2354 (5), p-2026-0078 (1200), p-2026-0077 (1000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~5"
+  },
+  {
+    "candidate": {
+      "title": "Hårdare kontroller för att förhindra välfärdsbrottslighet",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Kontrollerna måste bli ännu hårdare så att samhället kan förhindra denna typ av brottslighet.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/valfardsbrottslighet/",
+    "articleTitle": "Välfärdsbrottslighet | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 400,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå; prissatt som förstärkt kontroll-/utredningskapacitet hos berörda myndigheter, i nivå med jämförbart löfte om kontroll av välfärdsutbetalningar. Lågt low-värde täcker att…",
+      "confidence": 0.4,
+      "calculation": "Löftet saknar nivå och åtgärdslista. Antagande: 'hårdare kontroller' ≈ fler granskare/utredare hos bl.a. Försäkringskassan, Skatteverket, ekobrottsbekämpning och tillsynsmyndigheter. ~50–300 extraårsjobb à ~1,2–1,5 mkr fullkostnad ≈ 60–450 mkr/år, ev. plus engångsinvestering i dataanalys/IT. Bas ~150 mkr/år anpassad till jämförbart publicerat löfte om förstärkt kontroll av välfärdsutbetalningar (~150 mkr/år). Om åtgärden främst blir regeländringar kan kostnaden ligga nära noll — avspeglas i low. Endast statens nya kostnad för kontrollen; förebyggda bedrägeribetalningar är en följd och räknas inte som intäkt här."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-3017 (150), p-2026-2913 (2400), p-2026-0836 (0), p-2026-2276 (1700), p-2026-2377 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Kraftiga lättnader för legala vapenägare under mandatperioden",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "När mandatperioden är slut kommer vi ha genomfört kraftiga lättnader för legala vapenägare.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vapenagare/",
+    "articleTitle": "Vapenägare | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Lättnader för legala vapenägare är en regeländring; statens direkta kostnad är i princip försumbar. Skiljer sig från straffskärpningar som ger verkliga fängelsekostnader. Beloppet avser bara…",
+      "confidence": 0.5,
+      "calculation": "Löftet innebär förenklade regler för legala vapenägare (t.ex. licensprövning, förvaring, vapentyper). Sådana lagändringar bereds inom Regeringskansliet och Polismyndighetens befintliga organisation → ingen ny statlig utgift (base 0). Möjliga mindre engångskostnader: uppdaterade IT-system, föreskriftsarbete, information till licensinnehavare ≈ 0–30 msek, vilket motiverar spannets övre gräns. Samhällseffekter av lättnaderna (t.ex. olyckor eller illegal spridning) kvantifieras ej enligt avgränsningsreglerna."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-0709 (200) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~200"
+  },
+  {
+    "candidate": {
+      "title": "Ändrade krav för innehav av helautomatiska vapen och enhandsvapen",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Bland annat ändras kraven för innehav av helautomatiska vapen och enhandsvapen från synnerliga till särskilda skäl.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vapenagare/",
+    "articleTitle": "Vapenägare | Sverigedemokraterna",
+    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+  },
+  {
+    "candidate": {
+      "title": "Slopa femårstillicenserna för vapen och ersätta med administrativ tillsyn",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Femårstillicenserna slopas och ersätts av ett administrativt tillsynsförfarande.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vapenagare/",
+    "articleTitle": "Vapenägare | Sverigedemokraterna",
+    "verifyReason": "Verifieringsanalys misslyckades (ogiltig JSON)."
+  },
+  {
+    "candidate": {
+      "title": "Införa det europeiska skjutvapenpasset för jägare och sportskyttar",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Det europeiska skjutvapenpasset införs för både jägare och sportskyttar.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vapenagare/",
+    "articleTitle": "Vapenägare | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Flytta hanteringen av vapenlicenser från Polisen till annan myndighet",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Framöver vill vi att hanteringen av vapenlicenser flyttas från Polisen till en annan myndighet.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vapenagare/",
+    "articleTitle": "Vapenägare | Sverigedemokraterna",
+    "verifyReason": "Inget vallöfte kunde identifieras i den givna texten."
+  },
+  {
+    "candidate": {
+      "title": "Noggrann statlig kontroll av krigsmaterielexport",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Krigsmaterielexporten måste kombineras med noggrann statlig kontroll.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vapenexport/",
+    "articleTitle": "Vapenexport | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan nivå eller åtgärd; krigsmaterielkontrollen sköts av ISP inom befintlig ram. Direkt ny kostnad ≈ 0; spannet rymmer bara eventuell mindre tillsynsförstärkning.",
+      "confidence": 0.45,
+      "calculation": "Löftet anger varken belopp, antal eller konkret åtgärd. Krigsmaterielexporten kontrolleras redan av Inspektionen för strategiska produkter inom befintlig anslagsram, och myndigheters eget berednings- och tillsynsarbete räknas inte som ny utgift. Base 0 enligt reglerna för regleringsåtgärder utan specificerad resurs. High ~20 msek/år rymmer en hypotetisk förstärkning med ca 10–20 inspektörer/utredare inkl. lokaler och omkostnader om kontrollen byggdes ut, men inget i löftet specificerar det. Jämförbara löften om skärpad export- och datakontroll är prissatta till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-1303 (0), p-2026-4109 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stärka kompetensen hos myndigheten som kontrollerar krigsmateriel",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Kontrollen av krigsmateriel behöver bli mer effektiv genom bland annat stärka kompetensen hos myndigheten som kontrollerar dessa produkter.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vapenexport/",
+    "articleTitle": "Vapenexport | Sverigedemokraterna",
+    "verifyReason": "Uttalandet är en policyposition från SD:s officiella sida, men det är vagt formulerat ('behöver bli mer effektiv') och saknar konkreta åtaganden eller mätbara mål. Det kan tolkas som ett löfte att stärka myndighetens kompetens, men är inte tillräckligt precist för att entydigt klassas som ett vallöfte. Partiet är korrekt och inget belopp nämns."
+  },
+  {
+    "candidate": {
+      "title": "Värna småföretagande inom krigsmaterielområdet",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Småföretagande inom detta område behöver också värnas så att nya idéer kan växa och inte onödig byråkrati hindrar företagande.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vapenexport/",
+    "articleTitle": "Vapenexport | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan belopp eller konkret åtgärd: avsikt att underlätta för småföretag och minska byråkrati inom krigsmateriel. Direkt statlig kostnad i sig försumbar.",
+      "confidence": 0.3,
+      "calculation": "Löftet anger ingen åtgärd, nivå eller belopp — endast en allmän inriktning om att värna småföretagande och motverka onödig byråkrati inom krigsmaterielområdet. Förenklingar och avregleringar har i sig ingen nämnvärd direkt statlig kostnad, och eventuellt beredningsarbete sker inom befintlig organisation. Framtida stöd till småföretag i försvarsindustrin (bidrag, upphandlingsstöd) skulle kunna kosta tiotals miljoner årligen, men inget sådant är specificerat i löftet. Därför base 0; spannet lämnar utrymme för eventuella specifika åtgärder om de senare konkretiseras."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Utreda arrendeavtalsmodell för elledningar och vinstdelning mellan kraftbolag och markägare",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi vill utreda en modell som bygger på arrendeavtal för elledningar samt utreda möjligheten till vinstdelning mellan kraftbolagen och de markägare som drabbas av ledningsintrång.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/varna-aganderatten/",
+    "articleTitle": "Värna äganderätten | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 10,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är att utreda en arrende-/vinstdelningsmodell; prissatt som en SOU-utredning (engångskostnad). Själva vinstdelningen är en överföring mellan bolag och markägare, inte en statlig utgift.",
+      "confidence": 0.6,
+      "calculation": "Utredning med mindre sekretariat: ~3–5 personer under 12–18 månader (löner, lokaler, remissbearbetning, eventuell extern expertis) ≈ 5–20 mkr engångskostnad; bas ~10 mkr motsvarar en normal SOU. En framtida vinstdelningsmodell flyttar pengar mellan kraftbolag och markägare och är inte en ny statlig utgift, så den prissätts inte här."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Utreda stärkta veteranförmåner för dem som inte kan försörja sig",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Vi har också tittat på möjligheterna till att utreda stärkta veteranförmåner för de som genom sin tjänstgöring för freden inte har möjlighet att försörja sig.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/veteraner/",
+    "articleTitle": "Veteraner | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 12,
+      "msek_high": 25,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är att utreda stärkta veteranförmåner; prissatt som en SOU-utredning (engångskostnad), inte den framtida förmånshöjningen.",
+      "confidence": 0.4,
+      "calculation": "Citatet lovar en utredning, inte en färdig reform. En statlig SOU-utredning med sekretariat (ca 3–5 personer under 1–2 år) kostar normalt 5–30 mkr som engångskostnad; basen ~12 mkr motsvarar ett medelstort sekretariat under drygt ett år. Formuleringen är vag ('tittat på möjligheterna till att utreda'), vilket ger låg säkerhet. Eventuella framtida veteranförmåner prissätts inte här — de är en möjlig följd av utredningen, inte löftet i sig."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "SD motsätter sig statliga subventioner till vindkraften",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "För att värna svensk konkurrenskraft och elsystemets stabilitet krävs mer planerbar kraftproduktion, varför vi motsätter oss statliga subventioner till vindkraften.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/vindkraft/",
+    "articleTitle": "Vindkraft | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Positionslöfte: att motsätta sig subventioner kostar staten inget direkt, och pågående direkta vindkraftssubventioner i statsbudgeten saknas. Effekter på elsystemet är följder, inte utgift.",
+      "confidence": 0.65,
+      "calculation": "Löftet är ett motstånd mot framtida utgifter, inte ett åtagande att spendera. Direkta statsbudgetmedel till vindkraftsproduktion finns i nuläget inte i nämnvärd omfattning (elcertifikatsystemet finansieras via elräkningen, inte statsbudgeten), så det finns inget befintligt stöd att dra in. Direkt kostnad för att inte bevilja subventioner ≈ 0 mkr/år. Eventuellt utebliven vindkraftsutbyggnad eller förändrad elproduktion är samhällsföljder, inte nya statliga nettokostnader, och prissätts enligt reglerna inte här."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-2433 (0), p-2026-2211 (15000), p-2026-2583 (0), p-2026-2475 (0), p-2026-2929 (15000)"
+  },
+  {
+    "candidate": {
+      "title": "Tvååriga yrkesprogram med frivilligt tredje år för högskolebehörighet",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill därför införa tvååriga yrkesprogram med möjlighet att läsa in högskolebehörighet under ett frivilligt tredje år.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/a-till-o/yrkesprogram/",
+    "articleTitle": "Yrkesprogram | Sverigedemokraterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 20,
+      "msek_base": 80,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Omläggning av befintliga yrkesprogram – inga nya platser; elevår ökar ej, statens netto ≈ 0. Kostnad: övergång, fortbildning, läromedel. Därför lägre än jämförelselöftet om kortare utbildningar.",
+      "confidence": 0.35,
+      "calculation": "Reformen omstrukturerar befintliga yrkesprogram (ungefär 40 % av gymnasieeleverna) snarare än att skapa nya platser: tvåårig kärna + frivilligt tredje år ger i praktiken oförändrat antal elevår – de som vill ha högskolebehörighet läser år tre som i dag, övriga slutar tidigare (en möjlig besparing som ej prissatts här). Statens nya nettokostnad är själva genomförandet: reviderade ämnes- och kursplaner, lärarfortbildning, läromedel, information samt övergångsstöd till huvudmän under infasning. Tidigare större gymnasiereformer har typiskt fått riktade genomförandemedel i storleksordningen tiotals upp till ett par hundra mkr. Estimat: 20–200 msek som engångskostnad, bas 80 msek; löpande drift ligger inom befintlig per-elev-finansiering av gymnasiet."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-3631 (60), p-2026-2958 (1000) ⚠ AVVIKER: 80 avviker 6.6× från jämförbara (median 530)"
   }
 ]

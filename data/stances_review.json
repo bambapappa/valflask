@@ -5642,5 +5642,78 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-huvudman",
+      "party": "sd",
+      "position": "villkorat",
+      "condition_note": "SD vill se statligt helhetsansvar endast på sikt; till dess för partiet tydligare nationell styrning och skarpare krav på regionerna.",
+      "quote": "Sverigedemokraterna vill på sikt se ett statligt helhetsansvar för hälso- och sjukvården. Till dess verkar vi för en tydligare nationell styrning och skarpare krav på regionerna.",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/a-till-o/sjukvard/",
+    "articleTitle": "Sjukvård | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/a-till-o/sjukvard/",
+    "archiveUrl": "https://web.archive.org/web/20260906110644/https://www.sd.se/a-till-o/sjukvard/",
+    "dateStated": "2026-06-12",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-06-11-19",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet tar direkt ställning till huvudmannaskapet: SD vill på sikt ha ett statligt helhetsansvar för hälso- och sjukvården, men tills vidare nationell styrning och krav på regionerna. Det ger ett villkorat/inriktat svar på delfrågan och attribueras korrekt till SD."
+      }
+    ],
+    "verifyReason": "Citatet tar direkt ställning till huvudmannaskapet: SD vill på sikt ha ett statligt helhetsansvar för hälso- och sjukvården, men tills vidare nationell styrning och krav på regionerna. Det ger ett villkorat/inriktat svar på delfrågan och attribueras korrekt till SD."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Under 2026 skärps språkkraven inom äldreomsorgen i enlighet med Tidöavtalet. För oss i Sverigedemokraterna är detta ett första viktigt steg.",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/a-till-o/sprakkrav-inom-valfarden/",
+    "articleTitle": "Språkkrav inom välfärden | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/a-till-o/sprakkrav-inom-valfarden/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-12",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-06-11-19",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "sd",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Dagens system med många kommunala huvudmän har bidragit till stora skillnader mellan skolor i olika delar av landet. Sverigedemokraterna vill därför införa ett statligt huvudmannaskap för skolan.",
+      "person": null
+    },
+    "articleUrl": "https://www.sd.se/a-till-o/statligt-huvudmannaskap/",
+    "articleTitle": "Statligt huvudmannaskap | Sverigedemokraterna",
+    "sourceUrl": "https://www.sd.se/a-till-o/statligt-huvudmannaskap/",
+    "archiveUrl": "https://web.archive.org/web/20260906121149/https://www.sd.se/a-till-o/statligt-huvudmannaskap/",
+    "dateStated": "2026-06-12",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-06-11-19",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
