@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { gunzipSync } from "node:zlib";
 import { DATE_WINDOW_DAYS, type NormalizedArticle } from "./gates.ts";
 import { kartaSamtidigt } from "./samtidigt.ts";
+import { kanoniskAdress } from "./adressen.ts";
 
 /* ──────────────────────── ArticleSource (M2 injicerbart gränssnitt) ── */
 
@@ -887,14 +888,42 @@ export function sha256(input: string): string {
 }
 
 /**
- * Seen-nyckel för en artikel. RSS/API: sha256(url) — en URL är en artikel.
- * Page-artiklar bär contentHash: nyckeln blir sha256(url + "\n" + contentHash),
+ * Seen-nyckel för en artikel. RSS/API: sha256(adress) — en adress är en artikel.
+ * Page-artiklar bär contentHash: nyckeln blir sha256(adress + "\n" + contentHash),
  * så samma sida med NYTT innehåll får ny nyckel och processas om (B:s löpande
  * bevakning av manifest), medan oförändrat innehåll är sett och hoppas över.
  * Ompublicering av redan fångade löften stoppas nedströms av dublettkollen
  * (findPossibleDuplicate → review med duplicateOf), aldrig av seen.
+ *
+ * Adressen räknas i sin jämförbara form (`kanoniskAdress`): `sd.se/x` och
+ * `www.sd.se/x` är samma sida och ska läsas en gång. Registret bär fortfarande
+ * källans egen adress som VÄRDE — det är bara nyckeln som är utjämnad.
  */
 export function seenKey(article: Pick<NormalizedArticle, "url" | "contentHash">): string {
+  const adress = kanoniskAdress(article.url);
+  return article.contentHash
+    ? sha256(`${adress}\n${article.contentHash}`)
+    : sha256(adress);
+}
+
+/**
+ * Nyckeln samma artikel hade FÖRE kanoniseringen (2026-09-06).
+ *
+ * Registret har 5 857 poster skrivna med den gamla nyckeln, och de flesta
+ * adresser ändrar form — ett avslutande snedstreck räcker. Byts formeln utan
+ * det här skulle var och en av dem se ny ut, och nästa körning läsa om hela
+ * beståndet: tusentals sidor och lika många LLM-anrop för att lära sig det vi
+ * redan vet.
+ *
+ * Posterna går inte att räkna om i efterhand. Nyckeln till en page-artikel är
+ * hashad över adress OCH innehåll, och innehållshashen sparas ingenstans utom
+ * i nyckeln själv. Därför är det här ingen migrering utan ett tillägg som får
+ * ligga kvar: en artikel är sedd om den står under någon av de två nycklarna,
+ * och nya poster skrivs alltid under den kanoniska.
+ */
+export function seenKeyForeKanoniseringen(
+  article: Pick<NormalizedArticle, "url" | "contentHash">,
+): string {
   return article.contentHash
     ? sha256(`${article.url}\n${article.contentHash}`)
     : sha256(article.url);
@@ -908,7 +937,10 @@ export function dedup(
   const seen = new Map(existingSeen);
   for (const article of articles) {
     const hash = seenKey(article);
-    if (!seen.has(hash)) {
+    // Två nycklar, ett svar: den kanoniska och den registret kan ha sedan före
+    // kanoniseringen. Se `seenKeyForeKanoniseringen` för varför den gamla inte
+    // går att räkna bort.
+    if (!seen.has(hash) && !seen.has(seenKeyForeKanoniseringen(article))) {
       newArticles.push(article);
       seen.set(hash, article.url);
     }
@@ -929,16 +961,6 @@ export function loadSeen(path: string): Map<string, string> {
 /* ──────────────────────── LiveSource (skarp fetch) ── */
 
 const USER_AGENT = "UtlovatBot/1.0 (+https://utlovat.se/om)";
-
-/**
- * Jämförbar form av en adress. Katalogen och våra egna listor är oense om
- * avslutande snedstreck — samma sida skrivs `…/politik/jakt` på ett ställe och
- * `…/politik/jakt/` på ett annat. Utan den här utjämningen missar ett riktat
- * urval sidan det pekar på, tyst.
- */
-function kalUrl(url: string): string {
-  return url.trim().replace(/\/+$/u, "");
-}
 
 export class LiveSource implements ArticleSource {
   private feeds: SourceFeed[];
@@ -979,7 +1001,7 @@ export class LiveSource implements ArticleSource {
     this.feeds = opts.feeds;
     this.limits = opts.limits;
     this.urlar = opts.urlar && opts.urlar.length > 0
-      ? new Set(opts.urlar.map(kalUrl))
+      ? new Set(opts.urlar.map(kanoniskAdress))
       : null;
     this.httpFetch = opts.httpFetch ?? globalThis.fetch.bind(globalThis);
     this.cacheDir = opts.cacheDir ?? null;
@@ -1018,7 +1040,7 @@ export class LiveSource implements ArticleSource {
           // RSS, page och riksdagen går inte genom `hamtaSidor` och har alltså
           // inte mött filtret än. Utan den här raden skulle ett riktat urval
           // tyst släppa igenom allt från just de källtyperna.
-          if (this.urlar && !this.urlar.has(kalUrl(article.url))) continue;
+          if (this.urlar && !this.urlar.has(kanoniskAdress(article.url))) continue;
           articles.push({ ...article, feedType: feed.type });
         }
 
@@ -1088,7 +1110,7 @@ export class LiveSource implements ArticleSource {
   ): Promise<NormalizedArticle[]> {
     // Riktad körning: skär bort adresserna innan de hämtas, inte efteråt.
     const lankar = this.urlar
-      ? allaLankar.filter((l) => this.urlar!.has(kalUrl(l)))
+      ? allaLankar.filter((l) => this.urlar!.has(kanoniskAdress(l)))
       : allaLankar;
     const svar = await kartaSamtidigt(
       lankar,
