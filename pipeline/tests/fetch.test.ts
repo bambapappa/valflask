@@ -4,6 +4,7 @@ import { readFileSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
+import { kanoniskAdress } from "../src/adressen.ts";
 import {
   parseRobotsTxt,
   isPathAllowed,
@@ -551,7 +552,11 @@ describe("LiveSource med mock-HTTP", () => {
     const rss = { url: "https://x.se/manifest/" };
     assert.equal(seenKey(v1), seenKey({ ...v1 }), "samma innehåll ⇒ samma nyckel");
     assert.notEqual(seenKey(v1), seenKey(v2), "ändrat innehåll ⇒ ny nyckel ⇒ omprocessas");
-    assert.equal(seenKey(rss), sha256(rss.url), "utan contentHash: som förut (RSS/API)");
+    assert.equal(
+      seenKey(rss),
+      sha256(kanoniskAdress(rss.url)),
+      "utan contentHash: hash över adressen ensam (RSS/API)",
+    );
   });
 
   test("page-källa hämtar PDF-manifest: text, dehyphenering, metadata", async () => {

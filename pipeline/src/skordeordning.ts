@@ -40,6 +40,8 @@
  * av när den är tom: över tid är det täckningen som ska jämnas ut, inte takten.
  */
 
+import { kanoniskAdress } from "./adressen.ts";
+
 /**
  * Partiernas egna domäner. Enda syftet är att räkna täckning per parti —
  * G2:s allowlist och G3:s citatgolv har sina egna listor i sources.yaml.
@@ -77,13 +79,16 @@ export function partiForUrl(url: string): string | null {
  *
  * seen är hash → adress. Adressen är det enda som säger vems sida det var,
  * och den räknas en gång per unik adress: samma sida som ändrats och hämtats
- * om är fortfarande EN sida vi läst.
+ * om är fortfarande EN sida vi läst. Unik i `kanoniskAdress` mening — samma
+ * sida under `sd.se` och `www.sd.se` är en sida, precis som `partiForUrl`
+ * nedan alltid har läst den. Räknas den som två blir täckningen för hög, och
+ * partiet får för få platser i nästa körning.
  */
 export function laststTal(seen: ReadonlyMap<string, string>): Map<string, number> {
   const tal = new Map<string, number>();
   const raknade = new Set<string>();
   for (const url of seen.values()) {
-    const nyckel = url.replace(/\/$/u, "");
+    const nyckel = kanoniskAdress(url);
     if (raknade.has(nyckel)) continue;
     raknade.add(nyckel);
     const parti = partiForUrl(url);
