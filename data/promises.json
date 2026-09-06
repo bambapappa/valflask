@@ -224633,8 +224633,14 @@
     },
     "comparisons": [],
     "quip": null,
-    "status": "aktiv",
-    "history": [],
+    "status": "tillbakadragen",
+    "history": [
+      {
+        "date": "2026-09-06",
+        "commit": "0000000",
+        "change": "Löftet är tillbakadraget: Partiet skriver på sin egen sida om aktiemarknaden att sänkningen av ISK-skatten redan är gjord under den här mandatperioden. Meningen vi citerade räknar upp åtgärder som partiet både har drivit och vill fortsätta driva, och ISK-sänkningen hör till det som redan är gjort. Ett löfte om nästa mandatperiod går därför inte att läsa ut ur citatet."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -227378,6 +227384,53 @@
       "model": "review",
       "verified_by": "owner",
       "run_id": "review-2026-09-06T15"
+    }
+  },
+  {
+    "id": "p-2026-4665",
+    "group_id": null,
+    "loftestyp": "reform",
+    "title": "SD vill slopa elektronikskatten",
+    "slug": "sd-vill-slopa-elektronikskatten",
+    "parties": [
+      "sd"
+    ],
+    "person": null,
+    "quote": "Sverigedemokraterna vill slopa elektronikskatten. Grundläggande för ekonomiska styrmedel är att de måste utformas på ett sådant sätt att de medför en tydlig miljönytta och inte på ett orimligt sätt slår mot svenska företag eller svenska konsumenter.",
+    "date_stated": "2026-09-06",
+    "source": {
+      "url": "https://www.sd.se/a-till-o/elektronikskatten/",
+      "domain": "sd.se",
+      "archive_url": null,
+      "fetched_at": "2026-09-06T18:24:28.368Z"
+    },
+    "category": "skatter",
+    "cost": {
+      "type": "intäktsminskning",
+      "period": "per_ar",
+      "msek_low": 1500,
+      "msek_base": 1800,
+      "msek_high": 2000,
+      "basis": "granskare",
+      "basis_url": null,
+      "method_note": "(belopp satt av granskare)",
+      "calculation": "Elektronikskatten är kemikalieskatten på viss hemelektronik. Skattens totala intäkter uppgick 2022 till omkring 1 800 mkr enligt Riksrevisionens granskning, och löftet avskaffar hela skatten — inte bara delar av den. Statens intäktsbortfall motsvarar därför i huvudsak skattens hela intäkt: bas 1 800 mkr per år, med spannet 1 500–2 000 för att intäkten rört sig sedan 2022. Beloppet avser åtgärden, inte dess följder: att hemelektronik kan bli billigare för hushållen är en följd av att skatten tas bort, inte en statlig utgift.",
+      "confidence": 0.9,
+      "anchor_ids": []
+    },
+    "financing_claimed": {
+      "described": false,
+      "summary": null,
+      "msek": null
+    },
+    "comparisons": [],
+    "quip": null,
+    "status": "aktiv",
+    "history": [],
+    "extraction": {
+      "model": "review",
+      "verified_by": "owner",
+      "run_id": "review-2026-09-06T18"
     }
   }
 ]
