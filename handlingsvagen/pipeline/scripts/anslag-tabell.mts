@@ -186,7 +186,11 @@ for (const id of valda) {
   // stället för att låta tabellen se ut som ett svar på ingen fråga.
   const p = k.promise_id === undefined ? undefined : loftePerId.get(k.promise_id);
   const matning: Matning = {
-    koppling: id,
+    // Nyckeln ska gå att foga ihop med `handlingsklass-ko.json` och med
+    // prövningssvepet, och de skriver kö-poster med `ko:` framför. Argumentet
+    // på kommandoraden bär inte prefixet — det är ett id man ska kunna skriva
+    // av — så det läggs på här, där raden blir data.
+    koppling: kon ? `ko:${id}` : id,
     promise_id: k.promise_id ?? null,
     parties: p?.parties ?? [],
     riktning: (k as { riktning?: string }).riktning ?? null,

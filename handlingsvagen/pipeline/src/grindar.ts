@@ -12,6 +12,7 @@
  * slinka igenom. Skiftläge bevaras: ordagrant är ordagrant.
  */
 
+import { amnesyrkandetsSkal, riktningslostAmnesyrkande } from "./amnesyrkande.ts";
 import { aktorsPartier, type Handling } from "./handlingar.ts";
 import type { Riktning } from "./domar.ts";
 
@@ -236,6 +237,11 @@ function grindH4(_f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
  * angiven, metodnot ifylld, rimlig confidence, motionstyp satt för motioner.
  * Själva bedömningen att riktningen FÖLJER av dokumentets text görs av
  * människan i H6; vid tvekan ingen koppling — tomma celler är ärliga.
+ *
+ * Ett led är sedan 2026-09-06 mekaniskt: ett yrkande som bara namnger ett ämne
+ * («om kärnkraft», «om public service») kan inte bära någon riktning alls, och
+ * då finns ingenting för människan att bedöma. Regeln står i
+ * `src/amnesyrkande.ts` med sina fyra fribiljetter och sin mätning.
  */
 function grindH5(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
   const fel: GrindFel[] = [];
@@ -253,6 +259,9 @@ function grindH5(f: KopplingsForslag, ctx: GrindKontext): GrindFel[] {
   }
   if (!f.promise_id && !f.stance_id) {
     fel.push({ grind: "H5", reason: "Förslaget pekar varken på löfte eller ståndpunkt" });
+  }
+  if (riktningslostAmnesyrkande(f.bevis.citat)) {
+    fel.push({ grind: "H5", reason: amnesyrkandetsSkal(f.bevis.citat) });
   }
   return fel;
 }

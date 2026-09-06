@@ -31,6 +31,13 @@ import {
   skrivSokning, serialiseraSokregister, TOMT_SOKREGISTER, type Sokregister,
 } from "../src/provade.ts";
 import { svenskDag } from "../../../pipeline/src/dagen.ts";
+import {
+  korningensRad,
+  laggTill,
+  raknaKorningen,
+  serienssammanfattning,
+  type Riktningslogg,
+} from "../src/riktningsfordelningen.ts";
 
 interface KoPost extends KopplingsForslag {
   skapad: string;
@@ -188,6 +195,11 @@ async function main() {
   }
 
   const runId = `foreslag-${svenskDag()}`;
+  // Riktningen per förslag, för mätningen av om motorn bara hittar stöd.
+  // Modellens ja räknas även när grindarna fäller det: det är frågan vi
+  // ställer som mäts, inte vad som råkade ta sig igenom.
+  const riktningsutfall: Array<{ riktning: KopplingsForslag["riktning"]; iKon: boolean }> = [];
+  const riktningsloggPath = resolve(rot, "data/riktningsfordelningen.json");
   let nya = 0;
   let parFel = 0;
   let parKlara = 0;
@@ -242,9 +254,11 @@ async function main() {
           continue;
         }
         if (grindfel.length > 0) {
+          riktningsutfall.push({ riktning: forslag.riktning, iKon: false });
           console.log(`  ${handling.id}: fälld av ${grindfel.map((f) => f.grind).join(",")} — ${grindfel[0]!.reason}`);
           continue;
         }
+        riktningsutfall.push({ riktning: forslag.riktning, iKon: true });
         ko.push({ ...forslag, skapad: new Date().toISOString(), extraction: { model, verified_by: null, run_id: runId } });
         nya += 1;
         console.log(`  ${handling.id}: förslag i kö (${forslag.riktning}, conf ${forslag.confidence})`);
@@ -269,7 +283,18 @@ async function main() {
     sparaKo();
     sparaProvade();
     sparaSokregister();
+    // Kvoten stödjer/motverkar, en rad per körning. Skrivs även när körningen
+    // inte gav något förslag — en tom körning är också ett mätvärde, och en
+    // serie med hål i går inte att läsa som en serie.
+    const loggen: Riktningslogg = existsSync(riktningsloggPath)
+      ? JSON.parse(readFileSync(riktningsloggPath, "utf8"))
+      : [];
+    const post = raknaKorningen(runId, svenskDag(), riktningsutfall);
+    const uppdaterad = laggTill(loggen, post);
+    writeFileSync(riktningsloggPath, JSON.stringify(uppdaterad, null, 2) + "\n");
     console.log(`klart: ${nya} nya förslag → ${koPath} (väntar på mänskligt beslut)`);
+    console.log(korningensRad(post));
+    console.log(`serien: ${serienssammanfattning(uppdaterad)}`);
     if (parFel > 0) {
       console.error(`obs: ${parFel} par föll på fel under körningen — en omkörning prövar dem igen`);
       process.exitCode = 1;

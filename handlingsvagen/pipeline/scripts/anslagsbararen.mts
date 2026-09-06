@@ -10,11 +10,22 @@
  *   npm run anslagsbararen -- --matning rader.json
  *   npm run anslagsbararen -- --matning rader.json --json utfall.json
  *   npm run anslagsbararen -- --matning rader.json --skriv
+ *   npm run anslagsbararen -- --ko --matning rader.json --skriv
  *
  * `--skriv` gör två saker och bara två: skriver tabellraden i motiveringen för
  * de kopplingar som bär, och drar in de som faller med skälet skrivet på var och
  * en. Båda är rättelser av publicerat material, så körningen skriver också
  * **en** post i `data/rattelser.json` — rättelser samlas.
+ *
+ * **`--ko` ställer samma fråga om kön, före beslutet.** Beslutet 2026-08-07
+ * förutsätter att tabellraden ligger bredvid löftet när någon avgör posten, men
+ * verktyget kunde bara svara efter godkännandet: raden hämtades för hand vid
+ * sidan av kedjan, och genomgången 2026-09-06 fick lägga två anslagsyrkanden åt
+ * sidan i stället för att avgöra dem. I kö-läget skrivs raden in i kö-postens
+ * egen motivering, och då är den med när posten godkänns. Ingenting är
+ * publicerat i det läget, så körningen skriver **ingen** rättelsepost och drar
+ * inte in någonting — en kö-post som inte bär avvisas av den som beslutar, och
+ * körningen skriver ut vilka de är.
  *
  * **Skriptet läser inte löftet.** Om ett löfte består i pengar eller i en regel
  * står i `data/loftets-slag.json`, skrivet av en människa med skälet utskrivet.
@@ -29,7 +40,7 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import type { KopplingPost } from "../src/granskning.ts";
+import { kopplingId, type KoPost, type KopplingPost } from "../src/granskning.ts";
 import type { Anslagsrad } from "../src/anslagstabell.ts";
 import {
   provaAnslagsbararen,
@@ -46,6 +57,8 @@ const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
 const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const skriv = argv.includes("--skriv");
+/** Kön eller det publicerade — flaggan läses före allt annat, som i anslag-tabell. */
+const kon = argv.includes("--ko");
 const jsonUt = varde("--json");
 const matningsfil = varde("--matning");
 const datum = svenskDag();
@@ -56,8 +69,8 @@ if (matningsfil === undefined) {
 }
 
 const matningar: Anslagsmatning[] = JSON.parse(readFileSync(resolve(matningsfil), "utf8"));
-const kopplingarPath = resolve(rot, "data/kopplingar.json");
-const kopplingar: KopplingPost[] = JSON.parse(readFileSync(kopplingarPath, "utf8"));
+const kopplingarPath = resolve(rot, kon ? "data/kopplingsforslag.json" : "data/kopplingar.json");
+const kopplingar: Array<KopplingPost | KoPost> = JSON.parse(readFileSync(kopplingarPath, "utf8"));
 const rattelserPath = resolve(rot, "data/rattelser.json");
 
 interface Lasning {
@@ -229,12 +242,16 @@ if (!skriv) {
   process.exit(0);
 }
 
-const perId = new Map(kopplingar.map((k) => [k.id, k]));
+// Nyckeln är den mätningen bär: ett publicerat k-nummer, eller — i kö-läget —
+// samma hash av mål och handling som `anslag-tabell -- --ko` räknade.
+const perId = new Map(
+  kopplingar.map((k) => [kon ? `ko:${kopplingId(k as KoPost)}` : (k as KopplingPost).id, k]),
+);
 const rorda: string[] = [];
 const berordaLoften = new Set<string>();
 
 for (const r of barLoftet) {
-  const k = perId.get(r.koppling);
+  const k = perId.get(r.koppling) as KopplingPost | KoPost | undefined;
   const rad = radPerId.get(r.koppling);
   if (!k || !rad) continue;
   // Läsningens skäl följer med in i motiveringen när det finns ett. Utan det
@@ -255,12 +272,15 @@ for (const r of barLoftet) {
   // står utanför yrkandena, och den grunden ska gå att pröva utan att läsa
   // löptext. Se src/brodtextspar.ts.
   k.bevis = { ...k.bevis, brodtext_oppen: "anslagsrad" };
-  rorda.push(k.id);
+  rorda.push(r.koppling);
   if (k.promise_id) berordaLoften.add(k.promise_id);
 }
 
-for (const r of drasIn) {
-  const k = perId.get(r.koppling);
+// En kö-post är ett förslag, inte något publicerat: den kan inte dras in, för
+// den har aldrig synts. Den avvisas av den som beslutar, och körningen nöjer sig
+// med att säga vilka det gäller.
+for (const r of kon ? [] : drasIn) {
+  const k = perId.get(r.koppling) as KopplingPost | undefined;
   if (!k) continue;
   // Samma form som de 53 tidigare indragningarna: statusen plus ett eget
   // `indragen`-fält med datum och skäl. Skälet i motiveringen räcker inte —
@@ -272,6 +292,17 @@ for (const r of drasIn) {
 }
 
 writeFileSync(kopplingarPath, JSON.stringify(kopplingar, null, 2) + "\n");
+
+// Ingenting av det här är publicerat i kö-läget, och en rättelsenot om något
+// ingen läsare sett vore en osann uppgift i den offentliga rättelseloggen.
+if (kon) {
+  console.log(`\nSkrivet: data/kopplingsforslag.json — ${rorda.length} kö-poster har fått anslagsraden i motiveringen`);
+  if (drasIn.length > 0) {
+    console.log(`\nDe ${drasIn.length} som inte bär löftet — de avgörs av den som beslutar, inget är rört:`);
+    for (const r of drasIn) console.log(`  ${r.koppling}  ${r.promise_id}  ${r.utfall}: ${r.innebord}`);
+  }
+  process.exit(0);
+}
 
 /** En rättelsepost för hela genomgången — rättelser samlas. */
 const rattelser = JSON.parse(readFileSync(rattelserPath, "utf8")) as unknown[];
