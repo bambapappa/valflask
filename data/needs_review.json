@@ -267,5 +267,163 @@
     "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/anhoriginvandring",
     "articleTitle": "Anhöriginvandring | Centerpartiet",
     "duplicateOf": "p-2026-2864"
+  },
+  {
+    "candidate": {
+      "title": "Kickstarta nya stambanor i södra Sverige med Jönköping som nav",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill att nästa regering omedelbart återupptar planeringen av sammanhängande nya stambanor i södra Sverige, med Jönköping som nav.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-lovar-en-renassans-for-jarnvagen/",
+    "articleTitle": "Miljöpartiet lovar en renässans för järnvägen genom storsatsningar.",
+    "duplicateOf": "p-2026-3976",
+    "duplicateReason": "samma uttryck: «miljöp nästa», «nästa regeri»"
+  },
+  {
+    "candidate": {
+      "title": "Kraftigt ökade medel till järnvägsunderhåll i statlig regi",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör för Miljöpartiet"
+      },
+      "quote": "Miljöpartiet vill återta underhållet i statlig regi, kraftigt öka medlen till järnvägsunderhåll och ta tillbaka hela underhållsskulden under nuvarande planperiod, det vill säga under 20230-talet.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-lovar-en-renassans-for-jarnvagen/",
+    "articleTitle": "Miljöpartiet lovar en renässans för järnvägen genom storsatsningar.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 2000,
+      "msek_base": 4000,
+      "msek_high": 7000,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Återtag i statlig regi är omfördelning (≈0). Kostnaden är kraftigt höjda underhållsmedel plus nedbringning av underhållsskulden (tiotals mdkr) över planperioden; i storlek med partiets löfte om 35 %…",
+      "confidence": 0.45,
+      "calculation": "Järnvägens drift- och underhållsbudget är i storleksordningen 10–12 mdkr/år. Underhållsskulden diskuteras i tiotals miljarder; antag 20–60 mdkr som ska tas bort under planperioden (~10 år) ≈ 2–6 mdkr/år i extra insatser. 'Kraftigt ökade medel' tolkas som 20–35 % höjning (~2–4 mdkr/år), men del av det överlappar partiets separata löfte om 35 % mer underhåll, så dubbelräkning undviks. Ny statlig nettokostnad ≈ 2–7 mdkr/år, bas 4 mdkr. Återtagandet till statlig regi i sig prissätts till 0 — pengarna flyttas mellan aktörer (nettoprincipen)."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-1371 (150), p-2026-1791 (0), p-2026-3295 (3500), p-2026-3980 (1200) ⚠ AVVIKER: 4000 avviker 5.9× från jämförbara (median 675)"
+  },
+  {
+    "candidate": {
+      "title": "Järnvägen ska få en egen myndighet",
+      "parties": [
+        "mp"
+      ],
+      "person": {
+        "name": "Daniel Helldén",
+        "role": "språkrör för Miljöpartiet"
+      },
+      "quote": "Miljöpartiet vill dessutom att järnvägen får en egen myndighet.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-lovar-en-renassans-for-jarnvagen/",
+    "articleTitle": "Miljöpartiet lovar en renässans för järnvägen genom storsatsningar.",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 50,
+      "msek_base": 250,
+      "msek_high": 600,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Prissatt som engångskostnad för att bilda en ny järnvägsmyndighet genom ombildning av Trafikverket; löpande drift är omfördelning, inte ny statlig kostnad.",
+      "confidence": 0.3,
+      "calculation": "Utpekad åtgärd: bryta ut järnvägen ur Trafikverket till egen myndighet. Själva tåg-/banverksamheten drivs vidare oförändrad, så den nya statliga kostnaden är i princip etableringen: separation av IT-system, kontor, ny ledning/styrelse, rekrytering och överföringsprojekt. Ombildningar av större myndigheter brukar landa i storleksordningen tiotals till ett par hundra miljoner; IT-tung separation kan dra upp det. Antagande: ~50–600 mkr engång, mittpunkt ~250 mkr. Löpande merkostnad för dubbla stödfunktioner (~50–150 mkr/år) är osäker och marginal samt mest omfördelning, därför prissatt till 0 och endast nämnd här."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-1274 (0), p-2026-1871 (0), p-2026-4565 (0), p-2026-4644 (0), p-2026-2232 (0) ⚠ AVVIKER: belopp 250 men jämförbara ligger på 0"
+  },
+  {
+    "candidate": {
+      "title": "Införa nollvision för tågförseningar och inställda tåg",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet vill också införa en nollvision för tågförseningar och inställda tåg.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-lovar-en-renassans-for-jarnvagen/",
+    "articleTitle": "Miljöpartiet lovar en renässans för järnvägen genom storsatsningar.",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "En nollvision är ett inriktningsmål; själva direktåtgärden (mål i myndighetsstyrning) kostar i princip noll. Kostsamma åtgärder för att nå målet, som banunderhåll och nya stambanor, prissätts i…",
+      "confidence": 0.5,
+      "calculation": "Att införa en nollvision innebär i sak ett mål i Trafikverkets styrning/anslagsstyrning — utförs inom befintlig organisation enligt regel om statens eget beredningsarbete, dvs. ingen ny utgift (base 0). Spannet 0–50 msek rymmer ev. viss målföljning, punktlighetsredovisning eller koordineringsinsatser utöver ordinarie verksamhet. De verkliga kostnaderna för att faktiskt nå noll (underhållslyft, kapacitetsinvesteringar, reservlok) är följdåtgärder som prissätts på partiets utpekade löften om bl.a. nya stambanor, inte här."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-4337 (0), p-2026-2093 (1500), p-2026-2645 (300000), p-2026-0618 (300), p-2026-2930 (10000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1500"
+  },
+  {
+    "candidate": {
+      "title": "Automatisk ersättning vid förseningar och stopp för force majeure-kryphål",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Partiet vill samtidigt stärka tågresenärernas rättigheter genom automatisk ersättning vid förseningar, tydligare ersättningsregler och ta bort kryphålet som gör att tågbolag kan åberopa force majeure för att slippa ersätta resenärer vid förseningar.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/just-nu/miljopartiet-lovar-en-renassans-for-jarnvagen/",
+    "articleTitle": "Miljöpartiet lovar en renässans för järnvägen genom storsatsningar.",
+    "duplicateOf": "p-2026-4337",
+    "duplicateReason": "samma uttryck: «automa ersätt», «ersätt försen»"
+  },
+  {
+    "candidate": {
+      "title": "Miljöpartiet lovar en renässans för järnvägen",
+      "parties": [
+        "mp"
+      ],
+      "person": null,
+      "quote": "Miljöpartiet lovar en renässans för järnvägen",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.mp.se/politik/social-rattvisa/",
+    "articleTitle": "Social rättvisa | Miljöpartiet",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan utpekad åtgärd eller belopp — 'renässans' är en ramsa av flera järnvägssatsningar. De kostsamma delarna (underhåll, nya banor) prissätts i partiets specifika löften och…",
+      "confidence": 0.4,
+      "calculation": "Citatet anger ingen enskild åtgärd, nivå eller belopp — bara en övergripande vision om järnvägens renässans. Enligt regeln för breda sammanfattningslöften sätts därför base 0. Jämförbara breda järnvägslöften (t.ex. upprustning och nya stambanor utan belopp) har prissatts likadant, med 0, medan konkreta delar som underhållsskulden hanteras separat. Inget underlag finns för att lyfta fram ett eget belopp ur texten."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1871 (0), p-2026-2441 (70000), p-2026-3265 (0), p-2026-2932 (10000), p-2026-4383 (0)"
   }
 ]
