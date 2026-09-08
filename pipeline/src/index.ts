@@ -5,6 +5,7 @@ import type { ArticleSource, SourceConfig, SourceFeed } from "./fetch.ts";
 import { dedup, loadSeen, seenKey } from "./fetch.ts";
 import { laststTal, ordnaEfterTackning } from "./skordeordning.ts";
 import { kartaSamtidigt } from "./samtidigt.ts";
+import { korutfall, type Artikelmatning, type Kormatning } from "./korutfall.ts";
 import { extractFromArticle } from "./extract.ts";
 import { runGates, type ExtractionCandidate, type NormalizedArticle } from "./gates.ts";
 import { verifyCandidate, type VerifyResult } from "./verify.ts";
@@ -74,6 +75,7 @@ export interface PipelineContext {
 }
 
 export interface PipelineResult {
+  runStats: Kormatning;
   promises: PipelinePromise[];
   needsReview: NeedsReviewEntry[];
   errors: Array<{ url: string; error: string }>;
@@ -667,14 +669,35 @@ export async function runPipeline(
     console.warn("Veckokrönika hoppades över:", e instanceof Error ? e.message : e);
   }
 
-  writeRunReport(ctx, {
-    processed: publishResult.promises.length,
-    review: publishResult.needsReview.length,
-    errors: errors.length,
-    dataHash: publishResult.dataHash,
-  });
+  const bySource: Record<string, Artikelmatning> = {};
+  const source = (a: NormalizedArticle): Artikelmatning => {
+    const key = `${a.domain}/${a.feedType ?? "okand"}`;
+    return bySource[key] ??= { fetched: 0, unseen: 0, attempted: 0, succeeded: 0, failed: 0 };
+  };
+  for (const a of articles) source(a).fetched += 1;
+  for (const a of newArticles) source(a).unseen += 1;
+  for (const ut of utfall) {
+    const m = source(ut.article);
+    m.attempted += 1;
+    if (ut.fel) m.failed += 1;
+    else m.succeeded += 1;
+  }
+  const runStats: Kormatning = {
+    fetched: articles.length,
+    unseen: newArticles.length,
+    attempted: utfall.length,
+    succeeded: utfall.filter((ut) => !ut.fel).length,
+    failed: errors.length,
+    reviewCandidates: reviewItems.length,
+    publishedAdded: publishResult.changelogEntry.added.length,
+    publishedTotal: publishResult.promises.length,
+    queuedTotal: publishResult.needsReview.length,
+    bySource,
+  };
+  writeRunReport(ctx, runStats, publishResult.dataHash);
 
   return {
+    runStats,
     promises: publishResult.promises,
     needsReview: publishResult.needsReview,
     errors,
@@ -752,7 +775,8 @@ export async function runDryRunFetch(
 
 function writeRunReport(
   ctx: PipelineContext,
-  stats: { processed: number; review: number; errors: number; dataHash: string | null },
+  stats: Kormatning,
+  dataHash: string,
 ): void {
   const reportDir = `${ctx.outputDir}/../.report`;
   try {
@@ -763,6 +787,8 @@ function writeRunReport(
         {
           run_id: ctx.runId,
           timestamp: ctx.now.toISOString(),
+          outcome: korutfall(stats),
+          dataHash,
           ...stats,
         },
         null,
