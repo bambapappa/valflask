@@ -263,8 +263,9 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: run-report
+          include-hidden-files: true
           path: |
-            .report/
+            .report/*.json
             data/needs_review.json
             data/stances_review.json
             data/seen.json

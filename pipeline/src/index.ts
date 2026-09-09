@@ -691,7 +691,7 @@ export async function runPipeline(
     reviewCandidates: reviewItems.length,
     publishedAdded: publishResult.changelogEntry.added.length,
     publishedTotal: publishResult.promises.length,
-    queuedTotal: publishResult.needsReview.length,
+    queuedTotal: publishResult.queuedTotal,
     bySource,
   };
   writeRunReport(ctx, runStats, publishResult.dataHash);
