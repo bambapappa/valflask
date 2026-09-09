@@ -91,6 +91,24 @@ test("tom eller självmotsägande mätning får inte bli ett lyckat pass", () =>
   assert.throws(() => korutfall({ fetched: 1, unseen: 1, attempted: 1, succeeded: 1, failed: 1 } as Kormatning), /går inte ihop/u);
 });
 
+test("köbeståndet mäter sparad verklig kö efter rensning även utan nya kandidater", async () => {
+  await medKorning(async (ctx, root) => {
+    const queue = JSON.parse(readFileSync(join(repo, "data/needs_review.json"), "utf8"));
+    const pending = queue.find((r: any) => r.articleUrl !== p.source.url && r.candidate?.quote);
+    assert.ok(pending, "provet behöver en verklig väntande post");
+    const published = { candidate: { title: p.title, quote: p.quote }, failures: [],
+      articleUrl: p.source.url, articleTitle: p.title };
+    writeFileSync(join(ctx.dataDir, "needs_review.json"), JSON.stringify([pending, published]));
+    const result = await runPipeline(ctx);
+    const saved = JSON.parse(readFileSync(join(ctx.dataDir, "needs_review.json"), "utf8"));
+    assert.deepEqual(saved, [pending]);
+    assert.equal(result.runStats.reviewCandidates, 0);
+    assert.equal(result.runStats.queuedTotal, saved.length);
+    const report = JSON.parse(readFileSync(join(root, ".report/utfallsprov.json"), "utf8"));
+    assert.equal(report.queuedTotal, saved.length);
+  });
+});
+
 test("arbetsflödet döljer inte processfel och sparar rapporten även när körningen faller", () => {
   const text = readFileSync(join(repo, ".github/workflows/pipeline.yml"), "utf8");
   function kontrollera(raw: string) {
@@ -103,12 +121,20 @@ test("arbetsflödet döljer inte processfel och sparar rapporten även när kör
     const artifact = steps.find((s: any) => s.with?.name === "run-report");
     assert.ok(artifact);
     assert.match(artifact.if, /!cancelled\(\)/u);
-    assert.ok(artifact.with.path.split("\n").includes(".report/"));
-    assert.ok(artifact.with.path.includes("data/needs_review.json"));
+    assert.equal(artifact.with["include-hidden-files"], true);
+    assert.deepEqual(artifact.with.path.trim().split("\n"), [
+      ".report/*.json", "data/needs_review.json", "data/stances_review.json", "data/seen.json",
+    ]);
   }
   kontrollera(text);
   assert.throws(() => kontrollera(""));
   const broken = text.replace('if: ${{ !cancelled() }}', 'if: ${{ success() }}');
   assert.notEqual(broken, text);
   assert.throws(() => kontrollera(broken));
+  const hidden = text.replace("include-hidden-files: true", "include-hidden-files: false");
+  assert.notEqual(hidden, text);
+  assert.throws(() => kontrollera(hidden));
+  const broad = text.replace(".report/*.json", ".report/");
+  assert.notEqual(broad, text);
+  assert.throws(() => kontrollera(broad));
 });

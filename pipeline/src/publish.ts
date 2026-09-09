@@ -111,6 +111,7 @@ export interface PublishInput {
 export interface PublishResult {
   promises: PipelinePromise[];
   needsReview: NeedsReviewEntry[];
+  queuedTotal: number;
   dataHash: string;
   changelogEntry: ChangelogEntry;
 }
@@ -421,6 +422,7 @@ export function publish(input: PublishInput): PublishResult {
   return {
     promises: allPromises,
     needsReview: reviewItems,
+    queuedTotal: stadadReview.length,
     dataHash,
     changelogEntry,
   };
