@@ -425,5 +425,999 @@
       "calculation": "Citatet anger ingen enskild åtgärd, nivå eller belopp — bara en övergripande vision om järnvägens renässans. Enligt regeln för breda sammanfattningslöften sätts därför base 0. Jämförbara breda järnvägslöften (t.ex. upprustning och nya stambanor utan belopp) har prissatts likadant, med 0, medan konkreta delar som underhållsskulden hanteras separat. Inget underlag finns för att lyfta fram ett eget belopp ur texten."
     },
     "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1871 (0), p-2026-2441 (70000), p-2026-3265 (0), p-2026-2932 (10000), p-2026-4383 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Gå vidare med förslagen mot arbetslivskriminalitet för att stänga ute oseriösa aktörer",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill gå vidare med förslagen från Delegationen mot arbetslivskriminalitet för att stänga ute oseriösa aktörer från arbetsmarknaden.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/arbetsmiljo/",
+    "articleTitle": "Arbetsmiljö | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 50,
+      "msek_base": 150,
+      "msek_high": 300,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet saknar belopp. Delegationens förslag är till stor del regel- och sanktionsändringar, men genomförandet kräver nya tillsynsresurser hos myndigheter. Jämförbara löften ligger på 100–200…",
+      "confidence": 0.4,
+      "calculation": "Delegationens förslag består mest av lag- och sanktionsändringar (låg direkt kostnad), men ett genomförande kräver utökade tillsyns- och utredningsresurser hos bl.a. polis, Arbetsmiljöverket och Skatteverket: grovt 50–200 nya tjänster à ~1–1,5 msek/år inkl. lokaler och system ≈ 50–300 msek/år. Jämförbara publicerade löften om kraftsamling mot arbetslivskriminalitet uppskattas till 100–200 msek/år, vilket stödjer mitt spanns mitt. Bas 150 msek/år, spann 50–300 msek/år. Löftet anger ingen egen nivå, så hela beloppet är min uppskattning."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2287 (200), p-2026-4373 (0), p-2026-4392 (100)"
+  },
+  {
+    "candidate": {
+      "title": "Stärka anställdas möjlighet till förebyggande behandling via arbetsgivaren",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill därför stärka anställdas möjlighet till förebyggande behandling via arbetsgivaren.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/arbetsmiljo/",
+    "articleTitle": "Arbetsmiljö | Moderaterna",
+    "duplicateOf": "p-2026-2801",
+    "duplicateReason": "samma uttryck: «stärka anstäl», «anstäl möjlig», «föreby behand», «behand arbets»"
+  },
+  {
+    "candidate": {
+      "title": "Satsa på friskvård och kunskap om kvinnors hälsa i arbetslivet",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill även satsa på friskvård och kunskap om kvinnors hälsa i arbetslivet, till exempel rörande klimakteriet.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/arbetsmiljo/",
+    "articleTitle": "Arbetsmiljö | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 5,
+      "msek_base": 40,
+      "msek_high": 120,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Vagt löfte utan belopp. Tolkat som kunskaps-/informationsinsatser och friskvårdssatsning för kvinnors hälsa i arbetslivet; jämförbara löften landar 0–150 msek/år.",
+      "confidence": 0.35,
+      "calculation": "Löftet anger ingen nivå i kronor. Antagande: statlig satsning på informationskampanjer, utbildning av arbetsgivare och vårdpersonal (t.ex. om klimakteriet) samt ev. riktade friskvårdsmedel. Sådana insatser kostar typiskt tiotals mkr/år; jämförbara löften om kvinnors hälsa och kunskap landar 0–150 msek/år. Bas 40 msek/år ≈ medelstor kunskapssatsning; low 5 (minimal kampanj), high 120 (i nivå med forskningsprioriteringar). Stor osäkerhet eftersom löftet är vagt."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-2028 (0), p-2026-0052 (150), p-2026-3667 (120), p-2026-0507 (0), p-2026-4076 (150) ⚠ AVVIKER: 40 avviker 3.0× från jämförbara (median 120)"
+  },
+  {
+    "candidate": {
+      "title": "Sverige ska tillhöra världens tio ledande AI-nationer",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill att Sverige ska tillhöra världens tio ledande AI-nationer.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/artificiell-intelligens-ai/",
+    "articleTitle": "Artificiell intelligens (AI) | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: en målsättning om ranking utan konkret åtgärd eller belopp. Själva målet kostar inget; eventuella AI-satsningar prissätts i separata löften.",
+      "confidence": 0.65,
+      "calculation": "Löftet anger endast en ambition att Sverige ska tillhöra världens tio ledande AI-nationer — ingen åtgärd, nivå eller belopp specificeras. En målsättning om ranking är i sig en politisk inriktning utan direkt statlig utgift. Konkreta åtgärder som skulle kunna driva utvecklingen (forskning, utbildning, beräkningskapacitet) antas ligga i partiets specifika löften och prissätts där för att undvika dubbelräkning. Estimat: 0 msek."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-3174 (0), p-2026-3313 (0), p-2026-3366 (0), p-2026-2825 (0), p-2026-2790 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Snabbare AI-användning i offentlig sektor",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill se snabbare användning av AI inom offentlig sektor, från handläggning till bedrägeribekämpning inom välfärden, samtidigt som rättssäkerhet och integritet värnas.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/artificiell-intelligens-ai/",
+    "articleTitle": "Artificiell intelligens (AI) | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd eller belopp; basen sätts till 0. Kostsamma AI-satsningar prissätts på separata specifika löften.",
+      "confidence": 0.4,
+      "calculation": "Löftet anger ingen nivå, summa eller bestämd åtgärd — bara en ambition om snabbare AI-användning inom offentlig sektor (handläggning, bedrägeribekämpning). Enligt reglerna för breda inriktningslöften sätts basen till 0. Spannet uppåt (till ca 100 msek/år) speglar att framtida konkreta AI-satsningar — verktygsupphandling, utbildning, infrastruktur — kan kosta, men sådana prissätts på partiets specifika löften för att undvika dubbelräkning. Jämförbart löfte om ny teknik för smartare offentlig sektor har prissatts till 0."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1276 (0), p-2026-1193 (150), p-2026-2340 (6), p-2026-4186 (0), p-2026-1564 (0)"
+  },
+  {
+    "candidate": {
+      "title": "EU:s AI-regelverk ska bli mer innovationsvänligt",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill också att EU:s AI-regelverk blir mer innovationsvänligt.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/artificiell-intelligens-ai/",
+    "articleTitle": "Artificiell intelligens (AI) | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Önskan om omförhandling av EU:s AI-förordning är en regeländring, inte en statlig utgift. Beloppet avser själva åtgärden, inte samhällsföljder.",
+      "confidence": 0.65,
+      "calculation": "Löftet är en inriktningsförändring av EU-reglering: påverkan sker genom Sveriges arbete i EU:s institutioner. Beredningen görs av Regeringskansliets befintliga personal, ingen ny statlig utgift uppstår. Direkt kostnad för åtgärden är försumbar, base 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-4630 (0), p-2026-0855 (0), p-2026-1044 (0), p-2026-2506 (0), p-2026-1147 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Stärka civilsamhällets långsiktiga förutsättningar att verka",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Stärka civilsamhällets långsiktiga förutsättningar att verka, göra det enklare för människor att engagera sig ideellt och ge organisationerna bättre möjligheter att bidra till gemenskap, samhällsutveckling och stöd till utsatta människor.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/civilsamhalle/",
+    "articleTitle": "Civilsamhälle | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Brett inriktningslöfte utan utpekad åtgärd eller belopp. Kostsamma delar (t.ex. specifika bidrag till ideella organisationer) prissätts i partiets konkreta löften och dubbelräknas inte här.",
+      "confidence": 0.4,
+      "calculation": "Löftet är en allmän målsättning om att stärka civilsamhällets förutsättningar, utan någon bestämd åtgärd, nivå eller belopp. Enligt regeln för breda sammanfattande löften prissätts det som inriktningslöfte till 0 msek. Eventuella framtida statsbidragshöjningar eller regeländringar för ideella sektorn saknar angiven nivå och kan inte skattas ärligt från detta citat — de hanteras där de specificeras."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-2731 (0), p-2026-2812 (0), p-2026-4493 (0), p-2026-4436 (0), p-2026-2525 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Fortsätta verka för att offentliga medel går till verksamheter som respekterar demokratiska värderingar",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Fortsätta verka för att offentliga medel går till verksamheter som delar och respekterar samhällets grundläggande demokratiska värderingar.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/civilsamhalle/",
+    "articleTitle": "Civilsamhälle | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: 'fortsätta verka för' demokrativillkor för offentliga medel, utan åtgärd eller belopp. Villkor på bidrag är omfördelning av befintliga medel, inte ny statlig kostnad. Jämförbara…",
+      "confidence": 0.5,
+      "calculation": "Löftet innehåller ingen konkret åtgärd, nivå eller belopp — bara en inriktning att offentliga medel ska gå till verksamheter med demokratisk värdegrund. Att styra om eller sätta villkor på befintliga bidrag är omfördelning, inte en ny statlig utgift; ev. kontroll/tillsyn kan skötas inom myndigheters befintliga organisation. Base 0; spannet (0–10 msek) täcker ev. marginell administration. De kostsamma delarna, om några, prissätts på konkreta separata löften."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-2056 (0), p-2026-3198 (0), p-2026-4519 (0), p-2026-4318 (0), p-2026-1125 (15)"
+  },
+  {
+    "candidate": {
+      "title": "Se över möjligheten till breddat gåvoskatteavdrag",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Se över möjligheten till breddat gåvoskatteavdrag.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/civilsamhalle/",
+    "articleTitle": "Civilsamhälle | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadssvar ej tolkbart (ogiltig JSON) — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-4371 (150), p-2026-4304 (0) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~75"
+  },
+  {
+    "candidate": {
+      "title": "Satsa 100 miljoner kronor per år på idrott i utanförskapsområden",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Därför satsar vi 100 miljoner kronor per år på idrott i utanförskapsområden genom Idrottsklivet för ökad rörelseglädje, trygghet och inkludering.",
+      "category": "övrigt",
+      "amount_in_text_msek": 100,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/civilsamhalle/",
+    "articleTitle": "Civilsamhälle | Moderaterna",
+    "duplicateOf": "p-2026-3501",
+    "duplicateReason": "samma tal: 100 miljon · samma uttryck: «kronor idrott»"
+  },
+  {
+    "candidate": {
+      "title": "Fortsatt bredbandsutbyggnad i hela landet som nationell infrastruktur",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill att bredbandsutbyggnaden fortsätter i hela landet och klassas som nationell infrastruktur, samt att kommunala stadsnät ska kunna bygga fiber över kommungränser utan att lokaliseringsprincipen sätter stopp.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/digitalisering-2/",
+    "articleTitle": "Digitalisering | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 500,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Fortsatt stöd = befintlig nivå, ingen ny nettokostnad; klassning som nationell infrastruktur och regeländring för stadsnätens fiberbyggande kostar i sig ~0. Spannet täcker eventuell ökad statlig…",
+      "confidence": 0.5,
+      "calculation": "Löftet består av: (1) klassa bredband som nationell infrastruktur — ett ställningstagande/beslut utan egen utgiftspost; (2) ändra lokaliseringsprincipen så kommunala stadsnät får bygga fiber över kommungränser — lagändring vars direkta kostnad är försumbar, medan marknads- och beteendeeffekter lämnas okvantifierade; (3) 'fortsatt' utbyggnad i hela landet — inget nytt åtagande utöver befintligt statligt stöd, dvs. nettoförändring ~0 mot dagens budget. Osäkerhet: skulle klassningen i praktiken innebära ökad statlig medfinansiering av fiber till svårbyggda områden kan tillskottet landa på 0–500 mkr/år; tak satt mot jämförbart löfte om ökade statliga bredbandsinvesteringar (~800 msek/år), som dock är en tydlig höjning som detta löfte inte lovar."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-3905 (0), p-2026-1890 (0), p-2026-1924 (400), p-2026-0656 (0), p-2026-1112 (822)"
+  },
+  {
+    "candidate": {
+      "title": "Starkare nationellt digitaliseringsledarskap och nytt konkret digitaliseringsmål",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill se ett starkare nationellt digitaliseringsledarskap och ett nytt digitaliseringsmål som är konkret och mätbart, i stället för dagens vaga målformulering.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/digitalisering-2/",
+    "articleTitle": "Digitalisering | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan belopp: nytt mål och starkare ledarskap sker i befintlig förvaltning. Spannet rymmer ev. ny samordningsfunktion.",
+      "confidence": 0.6,
+      "calculation": "Löftet anger ingen konkret åtgärd, nivå eller belopp — det handlar om att formulera ett nytt mätbart digitaliseringsmål och stärka nationellt ledarskap/samordning. Målformulering och beredning utförs av Regeringskansliet och befintliga myndigheter, vilket inte ger en ny statlig utgift (base 0). Om 'starkare ledarskap' skulle tolkas som en ny samordningsfunktion eller ett råd med eget sekretariat kan det kosta tiotals mkr per år, vilket avspeglas i high (~50 msek)."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-3803 (12), p-2026-4545 (0), p-2026-1856 (0), p-2026-1100 (3000), p-2026-2369 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Säkerställa god mobiltäckning och fortsatt 5G-utbyggnad i hela landet",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill också säkerställa god mobiltäckning och fortsatt 5G-utbyggnad i hela landet, med samverkan mellan stat, kommun och näringsliv.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/digitalisering-2/",
+    "articleTitle": "Digitalisering | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 150,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte: 5G-utbyggnaden drivs kommersiellt av operatörer, statens roll beskrivs som samverkan. Base 0; spannet rymmer ev. riktat täckningsstöd till glesbygd.",
+      "confidence": 0.35,
+      "calculation": "Löftet saknar nivå och konkret statligt åtagande: 'säkerställa god mobiltäckning och fortsatt 5G-utbyggnad' med 'samverkan mellan stat, kommun och näringsliv'. Utbyggnaden finansieras av teleoperatörer (näringsliv), inte staten. Statens direkta insats = tillstånd, frekvenshantering och samordning inom befintliga myndigheter ≈ 0 msek. Ett framtida riktat stöd till vitområden skulle historiskt ligga på tiotals till ca 150 msek/år — det utgör high; base 0 eftersom inget sådant åtagande finns i löftet."
+    },
+    "costReason": "LLM-estimat (confidence 0.35) — bekräfta/justera belopp — jämförbara: p-2026-3454 (0), p-2026-1339 (0), p-2026-1924 (400), p-2026-2522 (0), p-2026-2208 (300)"
+  },
+  {
+    "candidate": {
+      "title": "Barnfamiljer ska få behålla ytterligare 5 000 kronor mer i månaden",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Därför vill vi under nästa mandatperiod att en barnfamilj ska få behålla ytterligare 5 000 kronor mer i plånboken varje månad.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/familj-och-foraldraskap/",
+    "articleTitle": "Familj och föräldraskap | Moderaterna",
+    "duplicateOf": "p-2026-0631"
+  },
+  {
+    "candidate": {
+      "title": "Göra förskolan avgiftsfri och utöka skattefritt ISK-sparande till 500 000 kronor",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill också göra förskolan avgiftsfri och utöka det skattefria sparandet på ISK till 500 000 kronor.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/familj-och-foraldraskap/",
+    "articleTitle": "Familj och föräldraskap | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "LLM-kostnadsanrop misslyckades — belopp MÅSTE sättas manuellt.",
+      "confidence": 0.1
+    },
+    "costReason": "LLM-estimat (confidence 0.1) — bekräfta/justera belopp — jämförbara: p-2026-3287 (1000), p-2026-4479 (30), p-2026-1728 (2200), p-2026-0128 (1575), p-2026-3495 (18000) ⚠ AVVIKER: satt till 0 men jämförbara ligger på ~1575"
+  },
+  {
+    "candidate": {
+      "title": "Offentligt finansierade syskonförsök via IVF och översyn av villkoren för äggfrysning",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "För att fler småsyskon ska komma till världen vill vi att syskonförsök via IVF ska finansieras offentligt och att villkoren för äggfrysning ska ses över.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/familj-och-foraldraskap/",
+    "articleTitle": "Familj och föräldraskap | Moderaterna",
+    "duplicateOf": "p-2026-4319"
+  },
+  {
+    "candidate": {
+      "title": "Bygglovsfria villor och radhus samt reformerat strandskydd",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Villor och radhus bör kunna byggas utan bygglov och strandskyddet ska reformeras så att fler kan bo vid kusten eller vid en av Sveriges alla sjöar.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/familj-och-foraldraskap/",
+    "articleTitle": "Familj och föräldraskap | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ren avreglering: lagändringar utan direkt statlig kostnad; ev. vägledning täcks av befintliga medel. Beloppet avser åtgärden, inte samhällsföljder.",
+      "confidence": 0.6,
+      "calculation": "Löftet är två regeländringar: bygglovsbefrielse för villor/radhus samt reformerat strandskydd. Beredningen sker i Regeringskansliet och hos Boverket inom befintlig organisation → ingen ny statlig utgift (base 0). Bygglovsavgifter och bygglovstillsyn är kommunala, så staten varken sparar eller förlorar pengar direkt. High täcker osäkerhet för ev. vägledningsmaterial, ändrade tillsynssystem eller statligt stöd till kommunal detaljplanering i strandnära lägen om sådana läggs till senare. Jämförbart publicerat löfte om strandskyddsreform är prissatt till 0 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-4514 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Dubblera antalet dubbeldagar från 60 till 120 dagar",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill dubblera antalet dubbeldagar från 60 till 120 dagar.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/familj-och-foraldraskap/",
+    "articleTitle": "Familj och föräldraskap | Moderaterna",
+    "duplicateOf": "p-2026-2886"
+  },
+  {
+    "candidate": {
+      "title": "Skapa nya handelsförbindelser världen över",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna kommer fortsätta att hålla frihandel högt inom utrikespolitiken och vi kommer ständigt arbeta för att skapa nya handelsförbindelse med andra länder världen över för att på så vis uppnå mer samarbete och välstånd och därmed också mindre konflikt.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/frihandel/",
+    "articleTitle": "Frihandel | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte om frihandel och nya handelsförbindelser utan konkret åtagande. Handelsförhandlingar är EU-kompetens; svenskt arbete sker i befintlig organisation.",
+      "confidence": 0.65,
+      "calculation": "Löftet är en bred inriktning: 'ständigt arbeta för nya handelsförbindelser' anger ingen åtgärd, nivå eller belopp. Handelsförhandlingar med tredjeländer sköts av EU-kommissionen, och svenskt främjande av handelsrelationer görs av utrikesförvaltningens och Regeringskansliets redan finansierade personal. Nya statliga nettokostnader uppstår först om särskilda exportfrämjande satsningar eller handelsdelegationer beslutas med egna medel — sådana prissätts på konkreta löften. Bas 0; spannet rymmer eventuell marginell kostnad för framtida initiativ."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp"
+  },
+  {
+    "candidate": {
+      "title": "Översyn av regelverket för ledsagning",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "En översyn av regelverket är nödvändig.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://moderaterna.se/var-politik/funktionsratt/",
+    "articleTitle": "Funktionsrätt | Moderaterna"
+  },
+  {
+    "candidate": {
+      "title": "Statligt huvudmannaskap för assistansen inom LSS",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Moderaterna vill att staten tar över huvudmannaskapet för assistansen inom LSS. Assistansen måste bli mer jämlik över landet.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/funktionsratt/",
+    "articleTitle": "Funktionsrätt | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 10,
+      "msek_high": 100,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Övertagande av huvudmannaskap är främst omfördelning — staten betalar redan större delen via assistansersättning och utjämning. Prissatt: övergång och administration, ej bruttoflödet eller…",
+      "confidence": 0.4,
+      "calculation": "Assistans över 20 h/vecka beslutas idag av kommunerna men finansieras till största delen redan av staten (assistansersättning + utjämningssystemet). Att staten tar över huvudmannaskapet flyttar beslut och administration, inte betalningsansvaret — ny nettokostnad är övergång (IT, ärendeöverföring från ca 290 kommuner) och eventuell mer administration hos Försäkringskassan, delvis motverkad av kommunala besparingar. Jämförbara löften om statligt huvudmannaskap ligger på 0–10 msek/år. 'Mer jämlik över landet' antas inte innebära höjda assistansnivåer; i så fall är effekten okvantifierad. Spannet 0–100 msek/år täcker osäkerheten i administration och övergång."
+    },
+    "costReason": "LLM-estimat (confidence 0.4) — bekräfta/justera belopp — jämförbara: p-2026-1568 (10), p-2026-3441 (0), p-2026-1416 (600), p-2026-1852 (0), p-2026-2008 (2000)"
+  },
+  {
+    "candidate": {
+      "title": "Ny LSS-lagstiftning på plats under nästa mandatperiod",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "För att skapa ett tydligare och bättre system, som ser till att den enskildes behov står i centrum, vill vi under nästa mandatperiod få en ny LSS-lagstiftning på plats.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/funktionsratt/",
+    "articleTitle": "Funktionsrätt | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 5,
+      "msek_base": 15,
+      "msek_high": 30,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är en lagreform utan angiven nivå; prissatt som engångskostnad för utredningsarbete i SOU-storlek. Lagens sakliga effekter specificeras inte och prissätts inte.",
+      "confidence": 0.3,
+      "calculation": "Att få en ny LSS-lag på plats kräver normalt en särskild utredning med eget sekretariat innan proposition: typiskt ~10–30 msek engång för en större välfärdslag. Beredning i Regeringskansliet och riksdagsbehandling sker inom befintlig personal (0). Löftet anger ingen nivå på förändrade rätter eller stöd, så eventuella sakliga effekter av den nya lagen (t.ex. ändrade insatser eller bedömningar) prissätts inte — endast själva lagstiftningsarbetet. Spannet speglar osäkerhet om utredningens omfattning och om delar av arbetet redan pågår."
+    },
+    "costReason": "LLM-estimat (confidence 0.3) — bekräfta/justera belopp — jämförbara: p-2026-0100 (17000), p-2026-2625 (0) ⚠ AVVIKER: 15 avviker 566.7× från jämförbara (median 8500)"
+  },
+  {
+    "candidate": {
+      "title": "Utveckla lönestöden och stärka stödet från Arbetsförmedlingen",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Därför vill vi utveckla lönestöden, stärka stödet från Arbetsförmedlingen och göra det lättare att ta steget från daglig verksamhet eller Samhall till ett reguljärt arbete.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/funktionsratt/",
+    "articleTitle": "Funktionsrätt | Moderaterna",
+    "verifyReason": "Texten innehåller inget specifikt belopp i miljoner kronor och ingen finansieringsinformation."
+  },
+  {
+    "candidate": {
+      "title": "Införa nationell jobb-bonus i stället för habiliteringsersättning",
+      "parties": [
+        "m"
+      ],
+      "person": null,
+      "quote": "Vi vill också införa en nationell jobb-bonus i stället för dagens habiliteringsersättning, så att den som provar att arbeta inte ska riskera sitt socialförsäkringsskydd.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://moderaterna.se/var-politik/funktionsratt/",
+    "articleTitle": "Funktionsrätt | Moderaterna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Ersätter en befintlig, idag kommunal ersättning — främst en omfördelning till staten, ingen ny nettokostnad. Beloppet avser åtgärden, inte samhällsföljder.",
+      "confidence": 0.55,
+      "calculation": "Habiliteringsersättningen betalas idag av kommunerna. Att byta den mot en nationell jobb-bonus flyttar betalningsansvaret till staten men skapar ingen ny statlig nettokostnad om ersättningsnivån är oförändrad (netto, inte brutto). Ny kostnad blir endast administration och omställning hos Försäkringskassan samt eventuell ökad generositet eller utnyttjande — därför base 0 med osäkerhet uppåt i spannet. Ett jämförbart publicerat löfte om i princip samma reform är prissatt till 0 msek/år."
+    },
+    "costReason": "LLM-estimat (confidence 0.55) — bekräfta/justera belopp — jämförbara: p-2026-3442 (0), p-2026-2479 (0), p-2026-1191 (300), p-2026-3684 (15), p-2026-0444 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Max 20 elever per klass och upprättad status för lärare",
+      "parties": [
+        "l"
+      ],
+      "person": {
+        "name": "Simona Mohamsson",
+        "role": "partiledare, Liberalerna"
+      },
+      "quote": "Man ska rösta på Liberalerna för att man vill få ordning i skolan, max 20 elever per klass och upprättad status för lärare.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/liberalerna-far-43-procent-i-ny-opinionsmatning-fran-novus",
+    "articleTitle": "Liberalerna får 4,3 procent i ny opinionsmätning från Novus – Liberalerna",
+    "duplicateOf": "p-2026-3943",
+    "duplicateReason": "samma tal: 20 elever · samma uttryck: «rösta libera», «libera ordnin», «ordnin skolan», «skolan elever», «klass upprät», «upprät status», «status lärare»"
+  },
+  {
+    "candidate": {
+      "title": "Polisen ska kunna utge sig för att vara barn under 15 år på nätet",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Polisen ska kunna utge sig för att vara barn under 15 år på nätet för att identifiera personer som misstänks för sexualbrott mot barn.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/regeringen-nya-verktyg-for-att-bekampa-sexualbrott-mot-barn",
+    "articleTitle": "​R​egeringen: ​nya verktyg ​för att bekämpa sexualbrott mot barn – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Polisen ska kunna framställa och dela fiktiva barnpornografiska bilder",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Polisen ska kunna framställa och dela fiktiva barnpornografiska bilder för att kunna ta sig in i slutna forum där övergrepp mot barn sker och material delas.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/regeringen-nya-verktyg-for-att-bekampa-sexualbrott-mot-barn",
+    "articleTitle": "​R​egeringen: ​nya verktyg ​för att bekämpa sexualbrott mot barn – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 10,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Regeländring som ger polisen en ny metod; direkt kostnad närmast noll. Ev. träning och verktyg sker inom polisens befintliga organisation.",
+      "confidence": 0.65,
+      "calculation": "Löftet är en lagändring: ett undantag som låter polisen framställa fiktivt material för infiltration. Beredningen sker i Regeringskansliet och eventuell träning hos polisen internt — inga nya statsutgifter. Jämförbara löften om nya polismetoder (drönare i fler fall, infiltratörer på nätet) prissätts till 0. Högvärdet täcker ev. små kostnader för verktyg och utbildning."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-0819 (0), p-2026-4291 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Ny lag om särskilda provokativa åtgärder för brottsbekämpande myndigheter",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "En ny lag om särskilda provokativa åtgärder som tydliggör när polisen och andra brottsbekämpande myndigheter får använda metoden i pågående förundersökningar.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/regeringen-nya-verktyg-for-att-bekampa-sexualbrott-mot-barn",
+    "articleTitle": "​R​egeringen: ​nya verktyg ​för att bekämpa sexualbrott mot barn – Liberalerna",
+    "verifyReason": "Texten är en nyhet från Liberalernas hemsida om regeringens förslag, inte ett tydligt vallöfte från partiet. Den beskriver ett pågående lagförslag utan att formulera ett åtagande inför val."
+  },
+  {
+    "candidate": {
+      "title": "Fiktiva fordonsuppgifter ska kunna användas av myndigheterna",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Fiktiva fordonsuppgifter ska kunna användas så att polisen och andra berörda myndigheter kan arbeta med fordon som inte enkelt kan kopplas till myndigheten.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/nyheter/regeringen-nya-verktyg-for-att-bekampa-sexualbrott-mot-barn",
+    "articleTitle": "​R​egeringen: ​nya verktyg ​för att bekämpa sexualbrott mot barn – Liberalerna",
+    "verifyReason": "Kandidaten är inte ett vallöfte utan en nyhet från Liberalerna om ett regeringsförslag (lagrådsremiss) gällande polisens verktyg mot sexualbrott på nätet. Dessutom innehåller titeln en felaktig omskrivning ('fordonsuppgifter' istället för 'barnpornografiska bilder'), vilket indikerar en extraktionsfel."
+  },
+  {
+    "candidate": {
+      "title": "Utbilda fler ingenjörer i STEM-ämnena",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Sverige behöver fler ingenjörer i världsklass för att klara kompetensförsörjningen och stärka konkurrenskraften. Vi måste utbilda fler i STEM-ämnena (Science, Technology, Engineering & Maths).",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/forskning",
+    "articleTitle": "Forskning – Liberalerna",
+    "duplicateOf": "p-2026-2717",
+    "duplicateReason": "samma uttryck: «utbild stem», «stem ämnena», «ämnena scienc», «scienc techno», «techno engine», «engine maths»"
+  },
+  {
+    "candidate": {
+      "title": "EU ska bygga en robust gemensam försvarspolitik som komplement till Nato",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill dessutom att EU bygger en robust gemensam försvarspolitik som komplement till Nato.",
+      "category": "försvar",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/forsvar",
+    "articleTitle": "Försvar – Liberalerna",
+    "duplicateOf": "p-2026-3725",
+    "duplicateReason": "samma uttryck: «försva komple», «komple nato»"
+  },
+  {
+    "candidate": {
+      "title": "Inga utsatta områden i Sverige 2030",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vårt mål är tydligt, Sverige ska inte ha några utsatta områden 2030.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/integration",
+    "articleTitle": "Integration – Liberalerna",
+    "duplicateOf": "p-2026-1746",
+    "duplicateWithdrawn": true
+  },
+  {
+    "candidate": {
+      "title": "Återkalla permanenta uppehållstillstånd",
+      "parties": [
+        "sd"
+      ],
+      "person": null,
+      "quote": "Sverigedemokraterna vill återkalla permanenta uppehållstillstånd.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.sd.se/vad-vi-vill/",
+    "articleTitle": "Vad vi vill | Sverigedemokraterna",
+    "duplicateOf": "p-2026-1060",
+    "duplicateReason": "samma uttryck: «sverig återka», «återka perman»"
+  },
+  {
+    "candidate": {
+      "title": "Införa tillfälligt totalstopp för bottentrålning i Östersjön",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill också se ett tillfälligt totalstopp för bottentrålning i Östersjön för att skydda känsliga bottnar och ge ekosystemen möjlighet att återhämta sig.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/ostersjon",
+    "articleTitle": "Östersjön – Liberalerna",
+    "duplicateOf": "p-2026-3723",
+    "duplicateReason": "samma uttryck: «tillfä totals», «totals botten», «botten östers»"
+  },
+  {
+    "candidate": {
+      "title": "Stöd till organisationer som bekämpar intolerans",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Många organisationer arbetar aktivt för att bekämpa olika former av intolerans. Det viktiga arbetet behöver stöd.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/rasism",
+    "articleTitle": "Rasism – Liberalerna",
+    "verifyReason": "Uttalandet är ett allmänt konstaterande att organisationernas arbete behöver stöd, inte ett konkret vallöfte om att Liberalerna ska ge stöd."
+  },
+  {
+    "candidate": {
+      "title": "Införa ett totalt stopp för religiösa friskolor",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna föreslår en ny lagstiftning som förhindrar religiösa friskolor från att bedriva undervisning inom det svenska skolväsendet.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/religiosa-friskolor",
+    "articleTitle": "Religiösa friskolor – Liberalerna",
+    "duplicateOf": "p-2026-4203"
+  },
+  {
+    "candidate": {
+      "title": "Avveckla befintliga religiösa friskolor under ordnade former",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "De skolor som redan finns ska avvecklas under ordnade former.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/religiosa-friskolor",
+    "articleTitle": "Religiösa friskolor – Liberalerna",
+    "duplicateOf": "(denna körning)"
+  },
+  {
+    "candidate": {
+      "title": "Ge Skolinspektionen bättre verktyg mot religiös indoktrinering",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill ge Skolinspektionen bättre verktyg för att upptäcka och förhindra religiös indoktrinering.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/religiosa-friskolor",
+    "articleTitle": "Religiösa friskolor – Liberalerna",
+    "duplicateOf": "p-2026-4149",
+    "duplicateReason": "samma uttryck: «skolin bättre», «religi indokt»"
+  },
+  {
+    "candidate": {
+      "title": "Öppna för skolor med särskilda minoritetsprofiler för nationella minoriteter",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill därför öppna för skolor med särskilda minoritetsprofiler.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/religiosa-friskolor",
+    "articleTitle": "Religiösa friskolor – Liberalerna",
+    "duplicateOf": "p-2026-3920",
+    "duplicateReason": "samma uttryck: «öppna skolor», «skolor särski», «särski minori»"
+  },
+  {
+    "candidate": {
+      "title": "Genomföra en bred skattereform som förenklar skattesystemet",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill därför genomföra en bred skattereform som gör systemet enklare, mer transparent och bättre anpassad till dagens ekonomi.",
+      "category": "skatter",
+      "amount_in_text_msek": null,
+      "financing_mentioned": true
+    },
+    "failures": [
+      {
+        "gate": "G3",
+        "reason": "Citatet återfinns inte ordagrant i källtexten (whitespace-normaliserad jämförelse)"
+      }
+    ],
+    "articleUrl": "https://www.liberalerna.se/politik/skatter",
+    "articleTitle": "Skatter – Liberalerna"
+  },
+  {
+    "candidate": {
+      "title": "Skattefritt ISK-sparande upp till 500 000 kronor",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna vill införa skattefritt sparande på ISK upp till 500 000 kronor.",
+      "category": "skatter",
+      "amount_in_text_msek": 0.5,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/skatter",
+    "articleTitle": "Skatter – Liberalerna",
+    "duplicateOf": "p-2026-0463"
+  },
+  {
+    "candidate": {
+      "title": "Stärka skogens roll i klimatomställningen",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Stärka skogens roll i klimatomställningen",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/skogen",
+    "articleTitle": "Skogen – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 200,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktningslöfte utan konkret åtgärd, nivå eller belopp. Jämförbara skogs-/klimatlöften utan belopp prissätts till 0; konkreta delåtgärder prissätts i separata löften och dubbelräknas inte här.",
+      "confidence": 0.5,
+      "calculation": "Formuleringen är en bred målsättning ('stärka skogens roll i klimatomställningen') utan angiven åtgärd, mottagare eller belopp. Enligt reglerna för sammanfattande önskelöften sätts basen till 0. Eventuella kostsamma delar (t.ex. bidrag till klimatanpassat skogsbruk, utbildning eller forskning) antas prissättas i partiets specifika löften. Spannet 0–200 msek rymmer enbart ev. mindre medel som rådgivning/information om det senare konkretiseras."
+    },
+    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp — jämförbara: p-2026-2816 (0), p-2026-2818 (0), p-2026-3258 (0), p-2026-1905 (100000), p-2026-3363 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Försäkringskassan ska vara lyhörd och använda skattebetalarnas pengar rättssäkert och effektivt",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Målet är att Försäkringskassan ska vara lyhörd mot den enskilde, samtidigt som skattebetalarnas pengar används rättssäkert och effektivt.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/socialforsakring",
+    "articleTitle": "Socialförsäkringar – Liberalerna",
+    "verifyReason": "Uttalandet är en allmän målsättning utan konkret åtagande, inte ett vallöfte."
+  },
+  {
+    "candidate": {
+      "title": "Stor satsning på solenergi för ökad solkraft",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Liberalerna har därför initierat en stor satsning på solenergi för ökad solkraft.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/solenergi",
+    "articleTitle": "Solenergi – Liberalerna",
+    "verifyReason": "Kandidaten beskriver en redan initierad satsning ('har initierat') snarare än ett framtida åtagande, vilket inte uppfyller kriterierna för ett vallöfte."
   }
 ]
