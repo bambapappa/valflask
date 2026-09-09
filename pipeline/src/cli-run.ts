@@ -5,6 +5,7 @@ import { LiveSource, type SourceConfig, type SourceFeed } from "./fetch.ts";
 import { OpenRouterClient, type LlmLed } from "./llm.ts";
 import { createArchiveFn } from "./archive.ts";
 import { runPipeline, type PipelineContext } from "./index.ts";
+import { korutfall, sammanfattaKorning } from "./korutfall.ts";
 
 const DATA_DIR = resolve(process.cwd(), "../data");
 
@@ -351,29 +352,20 @@ async function main(): Promise<void> {
       `kostnad=${ctx.models.kostnad}${ctx.models.kostnad === ctx.models.extract ? " (ärvd)" : ""}`,
   );
 
-  const result = await runPipeline(ctx);
+  await koraPipeline(ctx);
+}
 
-  console.log(
-    `Klart: ${result.promises.length} publicerade, ${result.needsReview.length} till review, ` +
-      `${result.errors.length} fel.`,
-  );
+export async function koraPipeline(ctx: PipelineContext): Promise<void> {
+  const result = await runPipeline(ctx);
+  console.log(sammanfattaKorning(result.runStats));
   for (const e of result.errors.slice(0, 10)) {
     console.error(`  FEL ${e.url}: ${e.error}`);
   }
 
-  // Transienta LLM-fel (rate limit/timeout) ska INTE göra körningen röd — det
-  // ger larm-trötthet och misconfig döljs. Failade artiklar är osedda och retas
-  // nästa körning; ihållande avbrott syns via stale-banner/UptimeRobot (§15).
-  // Endast konfigfel (saknad env, trasig sources.yaml) avslutar med kod 1 — det
-  // sköts av buildContextFromEnv som kastar och fångas i main().
-  if (
-    result.promises.length === 0 &&
-    result.needsReview.length === 0 &&
-    result.errors.length > 0
-  ) {
-    console.warn(
-      "Varning: inga kandidater producerade men fel uppstod (sannolikt rate limit/timeout). " +
-        "Failade artiklar provas om nästa körning. Körningen markeras INTE misslyckad.",
+  if (korutfall(result.runStats) !== "klar") {
+    throw new Error(
+      `${result.runStats.failed} av ${result.runStats.attempted} artiklar misslyckades. ` +
+      "De är fortfarande osedda och behöver provas igen. Delresultat finns i körningens arbetskatalog.",
     );
   }
 }
