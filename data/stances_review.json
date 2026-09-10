@@ -5814,5 +5814,99 @@
       }
     ],
     "verifyReason": "Citatet är hämtat direkt från källtexten och bekräftar att Sverigedemokraterna vill återkalla permanenta uppehållstillstånd och att tillfälliga ska vara huvudregel. Detta stöder partiets position 'nej' på frågan om permanenta uppehållstillstånd åter ska vara huvudregel."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-migration-återvandring",
+      "party": "c",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "att den som får avslag ska få aktivt stöd för ett snabbt återvändande",
+      "person": null
+    },
+    "failures": [
+      {
+        "gate": "G6",
+        "reason": "Okänd delfråga: sq-migration-återvandring"
+      }
+    ],
+    "articleUrl": "https://www.centerpartiet.se/centerpartiets-politik/centerpartiets-politik-a-o/integration-och-migration/asylprocessen",
+    "articleTitle": "Asylprocessen | Centerpartiet",
+    "runId": "run-2026-09-09-12-55"
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Småskolereformen ska bland annat finansieras genom att överkompensationen i skolpengen till friskolor tas bort",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-05-01-s-gar-till-val-pa-smaskolereform-med-sma-klasser-for-sma-barn",
+    "articleTitle": "S går till val på småskolereform med små klasser för små barn\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-05-01-s-gar-till-val-pa-smaskolereform-med-sma-klasser-for-sma-barn",
+    "archiveUrl": null,
+    "dateStated": "2026-05-01",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-09-12-55",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet nämner endast att överkompensationen i skolpengen till friskolor tas bort som en finansieringsåtgärd, men det säger inget om att förbjuda eller begränsa vinstutdelning från friskolekoncerner. Därmed stödjer det inte direkt påståendet."
+      }
+    ],
+    "verifyReason": "Citatet nämner endast att överkompensationen i skolpengen till friskolor tas bort som en finansieringsåtgärd, men det säger inget om att förbjuda eller begränsa vinstutdelning från friskolekoncerner. Därmed stödjer det inte direkt påståendet."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "ett förstatligande av skolan, en reform av skolans styrning som även innebär att staten tar över ansvaret för finansieringen av kommunala och fristående skolor",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/lararna-2",
+    "articleTitle": "Lärare – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/lararna-2",
+    "archiveUrl": null,
+    "dateStated": "2026-05-04",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-09-22-28",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet uttrycker tydligt ett förstatligande av skolan och att staten tar över ansvaret, vilket direkt besvarar delfrågan med ja."
+      }
+    ],
+    "verifyReason": "Citatet uttrycker tydligt ett förstatligande av skolan och att staten tar över ansvaret, vilket direkt besvarar delfrågan med ja."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-huvudman",
+      "party": "l",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Kommunpolitiker ska inte kunna nedprioritera skolan eller låta kvaliteten skilja sig för mycket mellan olika delar av Sverige. Därför vill vi flytta ansvaret från kommunerna till staten.",
+      "person": null
+    },
+    "articleUrl": "https://www.liberalerna.se/politik/skola",
+    "articleTitle": "Skola – Liberalerna",
+    "sourceUrl": "https://www.liberalerna.se/politik/skola",
+    "archiveUrl": "https://web.archive.org/web/20260909235430/https://www.liberalerna.se/politik/skola",
+    "dateStated": "2026-08-24",
+    "extractModel": "GLM-5.3-Flash",
+    "verifyModel": "deepseek-v4-flash-0731",
+    "runId": "run-2026-09-09-22-28",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet anger uttryckligen att partiet vill flytta ansvaret från kommunerna till staten, vilket direkt stödjer påståendet att Liberalerna vill att staten tar över huvudmannaskapet för skolan."
+      }
+    ],
+    "verifyReason": "Citatet anger uttryckligen att partiet vill flytta ansvaret från kommunerna till staten, vilket direkt stödjer påståendet att Liberalerna vill att staten tar över huvudmannaskapet för skolan."
   }
 ]
