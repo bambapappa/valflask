@@ -2,9 +2,13 @@
 import { execFileSync } from "node:child_process";
 import { byggUnderlagsregister } from "../src/underlagsregister.ts";
 import { byggPubliceringspaket } from "../src/publiceringspaket.ts";
+import { publiceringsvy } from "../src/publiceringsvy.ts";
 
 try {
-  const [repo, fore, efter, ...extra] = process.argv.slice(2);
+  const args = process.argv.slice(2);
+  const somHtml = args.at(-1) === "--html";
+  if (somHtml) args.pop();
+  const [repo, fore, efter, ...extra] = args;
   if (!repo || !fore || !efter || extra.length) throw new Error("Ange <repo> <före-revision> <efter-revision>");
   const git = (...args: string[]) => execFileSync("git", ["-C", repo, ...args], {
     encoding: "utf8", maxBuffer: 128 * 1024 * 1024,
@@ -21,8 +25,8 @@ try {
       standpunkter: rader("data/stances.json"), kopplingar: rader("handlingsvagen/data/kopplingar.json"),
       handlingar: rader("handlingsvagen/data/handlingar.json") });
   };
-  process.stdout.write(JSON.stringify(byggPubliceringspaket(foreRevision, efterRevision,
-    las(foreRevision), las(efterRevision)), null, 2) + "\n");
+  const paket = byggPubliceringspaket(foreRevision, efterRevision, las(foreRevision), las(efterRevision));
+  process.stdout.write(somHtml ? publiceringsvy(paket) : JSON.stringify(paket, null, 2) + "\n");
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));
   process.exitCode = 1;
