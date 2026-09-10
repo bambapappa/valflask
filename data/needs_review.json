@@ -1322,27 +1322,6 @@
   },
   {
     "candidate": {
-      "title": "Från marknadsskola till kunskapsskola",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Från marknadsskola till kunskapsskola.",
-      "category": "utbildning",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [
-      {
-        "gate": "G3",
-        "reason": "Citatet har 4 ord — minst 5 krävs (kortare tillåts bara om citatet är en hel, unik punkt på partiets egen sida)"
-      }
-    ],
-    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
-    "articleTitle": "Val 2026\n| Socialdemokraterna"
-  },
-  {
-    "candidate": {
       "title": "Liberalerna vill rulla tillbaka personliga elevdatorer och surfplattor i grundskolan",
       "parties": [
         "l"
@@ -1461,35 +1440,6 @@
       "calculation": "Löftet är en regeländring (skärmförbud i fritids), inte en utbyggnad eller förmån. Statens direkta kostnad ≈ 0: regelarbete och tillsyn sker i befintlig organisation. Följder som alternativa aktiviteter eller mer personal är kommunala eller svåröverskådliga och prissätts inte. High rymmer hypotetiskt engångsstöd: ~5 000 fritidsenheter × 10–20 tkr material ≈ 50–100 msek."
     },
     "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0559 (0), p-2026-0432 (400), p-2026-1245 (0), p-2026-3644 (0), p-2026-3645 (3800)"
-  },
-  {
-    "candidate": {
-      "title": "Pressa bankerna så att bolåneräntan sänks",
-      "parties": [
-        "s"
-      ],
-      "person": null,
-      "quote": "Vi vill pressa bankerna så att din bolåneränta sänks.",
-      "category": "skatter",
-      "amount_in_text_msek": null,
-      "financing_mentioned": false
-    },
-    "failures": [],
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/banker/fakta-om-bankskatt-och-bolaneskatt",
-    "articleTitle": "Fakta om bankskatt och bolåneskatt\n| Socialdemokraterna",
-    "cost": {
-      "type": "utgift",
-      "period": "per_ar",
-      "msek_low": 0,
-      "msek_base": 0,
-      "msek_high": 10,
-      "basis": "llm_estimat",
-      "basis_url": null,
-      "method_note": "Marknadsåtgärd: politisk press på bankerna. Direkt statlig kostnad nära noll; sänkta räntor är en överföring bank→hushåll, ej statlig utgift. Belopp avser åtgärden, inte samhällsföljderna.",
-      "confidence": 0.5,
-      "calculation": "Löftet är en marknadsåtgärd: staten pressar bankerna politiskt, ev. med hot om reglering. Själva åtgärdens direkta kostnad ≈ 0 — utförs inom befintlig beredning och myndighetsorganisation. En sänkt bolåneränta flyttar pengar från bankintäkter till hushåll, en omfördelning mellan aktörer — inte en ny statlig utgift. Sekundära effekter (ex. minskade räntedrag kan ge staten mer skatt) lämnas okvantifierade. High ~10 msek täcker ev. utredning om bankmarginaler eller ett förstärkt tillsynsmandat."
-    },
-    "costReason": "LLM-estimat (confidence 0.5) — bekräfta/justera belopp"
   },
   {
     "candidate": {
@@ -1704,5 +1654,233 @@
       "calculation": "Löftet anger inga nivåer alls — varken storlek på jobbskattesänkning eller miljöskattehöjning. En skatteväxling är designad att vara intäkteneutral: intäktsminskningen vägs upp av intäktsökningen. Utan nettoutrymme i löftet blir statens nya kostnad 0 msek. Partiets specifika löften om t.ex. sänkta skatter eller höjda miljöskatter prissätts var för sig och ska inte dubbelräknas här."
     },
     "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-1161 (0), p-2026-2071 (0), p-2026-2416 (0), p-2026-0157 (0), p-2026-1425 (0)"
+  },
+  {
+    "candidate": {
+      "title": "Införa en svensk modell för sociala bostäder – behovsbostäder",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "vill vi införa en svensk modell för sociala bostäder – behovsbostäder",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/bostad",
+    "articleTitle": "Bostad – Liberalerna",
+    "duplicateOf": "p-2026-1667",
+    "duplicateReason": "samma uttryck: «modell social», «social bostäd», «bostäd behovs»"
+  },
+  {
+    "candidate": {
+      "title": "Sverige ska ha livskraftiga stammar av de fem stora rovdjuren",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Sverige ska ha livskraftiga stammar av björn, järv, lo, varg och kungsörn.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/rovdjur",
+    "articleTitle": "Rovdjur – Liberalerna",
+    "duplicateOf": "p-2026-3919",
+    "duplicateReason": "samma uttryck: «sverig livskr», «livskr stamma», «björn järv», «järv varg», «varg kungsö»"
+  },
+  {
+    "candidate": {
+      "title": "Översyn av regelverket för inre vattenvägar",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "En översyn av regelverket för inre vattenvägar, t. ex. pråmtrafiken, bör ses över.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/sjofart",
+    "articleTitle": "Sjöfart – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "engang",
+      "msek_low": 4,
+      "msek_base": 10,
+      "msek_high": 20,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet avser en översyn av regelverket för inre vattenvägar; prissatt som en utredning i SOU-storlek. Politiken översynen kan leda till prissätts inte här.",
+      "confidence": 0.45,
+      "calculation": "Antagande: en statlig översyn med litet sekretariat (2–4 personer) under 1–2 år, inkl. underlagsstudier och remissarbete, kostar typiskt ~5–20 mkr som engångskostnad; bas 10 mkr motsvarar en medelstor utredning. Löftet innehåller ingen ny infrastruktur, subvention eller ändrad avgift — bara själva granskningen av regelverket. Jämförbara löften om faktiska satsningar på inre vattenvägar (~100 mkr/år) avser annan, större politik och ligger utanför detta löfte."
+    },
+    "costReason": "LLM-estimat (confidence 0.45) — bekräfta/justera belopp — jämförbara: p-2026-0904 (100), p-2026-1114 (0) ⚠ AVVIKER: 10 avviker 5.0× från jämförbara (median 50)"
+  },
+  {
+    "candidate": {
+      "title": "Mer tid för patienter och anhöriga i vården",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Tid ska finnas för patienter och för anhöriga.",
+      "category": "välfärd",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/sjukvard",
+    "articleTitle": "Sjukvård – Liberalerna",
+    "verifyReason": "Citatet är en allmän målsättning från Liberalernas sjukvårdspolitik, inte ett konkret, mätbart vallöfte med åtgärd eller tidsram. Det kan tolkas som ett löfte om mer tid i vården, men formuleringen är vag och svår att följa upp, vilket gör att den bör granskas extra."
+  },
+  {
+    "candidate": {
+      "title": "Klasstak på max 20 elever per klass",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Införa tak på max 20 elever per klass. Mindre klasser leder till ökad studiero och bättre skolresultat.",
+      "category": "utbildning",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/skola",
+    "articleTitle": "Skola – Liberalerna",
+    "duplicateOf": "p-2026-0391"
+  },
+  {
+    "candidate": {
+      "title": "Staten ska bara äga företag i undantagsfall – det statliga ägandet ska minskas",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Staten ska bara äga företag i undantagsfall. Det statliga ägandet ska minskas och i vissa fall helt avvecklas.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/statliga-foretag",
+    "articleTitle": "Statliga företag – Liberalerna",
+    "duplicateOf": "p-2026-3887",
+    "duplicateReason": "samma uttryck: «ägande minska», «minska vissa», «vissa fall», «fall helt», «helt avveck»"
+  },
+  {
+    "candidate": {
+      "title": "Svenska för föräldralediga inom ramen för Öppna förskolan",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Även föräldralediga ska lära sig svenska, vi vill se till att det finns svenska för föräldralediga, till exempel inom ramen för Öppna förskolan.",
+      "category": "migration",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/svenska-spraket",
+    "articleTitle": "Svenska språket – Liberalerna",
+    "duplicateOf": "p-2026-4143",
+    "duplicateReason": "samma uttryck: «finns svensk», «svensk föräld», «föräld exempe», «exempe inom», «ramen öppna», «öppna försko»"
+  },
+  {
+    "candidate": {
+      "title": "Motsätta sig kvoter för europeiskt material i public service",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vi motsätter oss att införa kvoter om hur mycket europeiskt material som ska produceras och sändas i public service.",
+      "category": "övrigt",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/upphovsratten",
+    "articleTitle": "Upphovsrätt – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 0,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Löftet är ett motstånd mot en reglering (kvotkrav), inte en åtgärd. Att inte införa kvoter kostar staten ingenting direkt; beloppet avser ståndpunkten, inte eventuella medieföljder.",
+      "confidence": 0.65,
+      "calculation": "Ingen ny statlig utgift: löftet innebär att en tänkt reglering inte genomförs. Ingen administration, inga bidrag och ingen lagändring som kräver medel. Direkt kostnad ≈ 0 mkr/år. Jämförbara public service-löften ligger på 0 mkr."
+    },
+    "costReason": "LLM-estimat (confidence 0.65) — bekräfta/justera belopp — jämförbara: p-2026-1652 (0), p-2026-0022 (0), p-2026-0877 (0), p-2026-1091 (0), p-2026-4561 (10)"
+  },
+  {
+    "candidate": {
+      "title": "Bekämpa hedersrelaterat våld och förtryck",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Hedersrelaterat våld och förtryck ska bekämpas.",
+      "category": "rättsväsende",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/utsatta-omraden",
+    "articleTitle": "Utsatta områden – Liberalerna",
+    "duplicateOf": "p-2026-4328"
+  },
+  {
+    "candidate": {
+      "title": "Rusta och förstärka vägnätet rejält",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Vägnätet måste rustas och förstärkas rejält.",
+      "category": "infrastruktur",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/vagar",
+    "articleTitle": "Vägar – Liberalerna",
+    "duplicateOf": "p-2026-3809",
+    "duplicateReason": "samma uttryck: «vägnät rustas», «rustas förstä»"
+  },
+  {
+    "candidate": {
+      "title": "Miljöåtgärder i första hand i den småskaliga vattenkraften",
+      "parties": [
+        "l"
+      ],
+      "person": null,
+      "quote": "Det betyder att åtgärderna i första hand ska göras i den småskaliga vattenkraften.",
+      "category": "klimat-miljö",
+      "amount_in_text_msek": null,
+      "financing_mentioned": false
+    },
+    "failures": [],
+    "articleUrl": "https://www.liberalerna.se/politik/vattenkraft",
+    "articleTitle": "Vattenkraft – Liberalerna",
+    "cost": {
+      "type": "utgift",
+      "period": "per_ar",
+      "msek_low": 0,
+      "msek_base": 0,
+      "msek_high": 50,
+      "basis": "llm_estimat",
+      "basis_url": null,
+      "method_note": "Inriktning om var miljöåtgärder ska ske först; kostnaden bärs av kraftverksägare via tillståndsprövning, inte av staten. Statens direkta kostnad försumbar.",
+      "confidence": 0.6,
+      "calculation": "Löftet styr bara prioritering: miljöåtgärder (fisktrappor, minimitappning m.m.) ska i första hand genomföras i småskalig vattenkraft. Sådana åtgärder finansieras normalt av kraftverksägarna inom vattendomstolsprocessen — inte av statsbudgeten. Statens egen insats är prövning och tillsyn som sköts av befintlig personal hos domstolar och länsstyrelser, alltså ingen ny utgift. Base 0. High (~50 msek/år) rymmer en eventuell framtida statlig stödpott eller ersättning till små kraftverksägare, men något sådant anges inte i löftet."
+    },
+    "costReason": "LLM-estimat (confidence 0.6) — bekräfta/justera belopp — jämförbara: p-2026-0109 (2000), p-2026-2672 (0), p-2026-4080 (0), p-2026-2358 (5), p-2026-2537 (0)"
   }
 ]
