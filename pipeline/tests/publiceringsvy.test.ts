@@ -38,3 +38,22 @@ test("verklig post visas före och efter med säker återgivning av källtext", 
   assert.throws(() => publiceringsvy(andrat), /ogiltigt/);
   assert.throws(() => publiceringsvy({} as any));
 });
+
+
+test("filändringar utanför postregistren syns och binds till paketets hash", () => {
+  const promise = JSON.parse(readFileSync(new URL("../../data/promises.json", import.meta.url), "utf8"))[0];
+  const posts = [{ slag: "lofte" as const, id: promise.id, innehall: promise, beroenden: [] }];
+  const filer = { sokvagar: ["data/parties.json"], patch: '<script>ändrad text</script>' };
+  const paket = byggPubliceringspaket("a".repeat(40), "b".repeat(40), posts, posts, filer);
+  const vy = publiceringsvy(paket);
+  assert.ok(vy.includes("1 ändrade filer"));
+  assert.ok(vy.includes("data/parties.json"));
+  assert.ok(vy.includes("&lt;script&gt;ändrad text&lt;/script&gt;"));
+  assert.ok(!vy.includes("<script>"));
+  assert.ok(vy.includes("Inga ändringar i de fyra postregistren"));
+  const andrat = structuredClone(paket);
+  andrat.filer!.patch = "annan text";
+  assert.throws(() => publiceringsvy(andrat), /ogiltigt/);
+  const utan = publiceringsvy(byggPubliceringspaket("a".repeat(40), "b".repeat(40), posts, posts));
+  assert.ok(utan.includes("räcker inte för publiceringsbeslut"));
+});

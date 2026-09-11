@@ -32,6 +32,10 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
     assert.equal(paket.foreRevision, revision);
     assert.equal(paket.efterRevision, revision);
     assert.ok(paket.antalEfter > 0);
+    assert.equal(paket.summor.fore.revision, revision);
+    assert.equal(paket.summor.efter.revision, revision);
+    assert.deepEqual(paket.filer, { sokvagar: [], patch: "" });
+    assert.equal(readFileSync(join(dir, "ok/andringar.patch"), "utf8"), paket.filer.patch);
     assert.equal(readFileSync(join(dir, "ok/granska.html"), "utf8"), publiceringsvy(paket));
     await kontrolleraPubliceringsartefakt(fil, manifest, { repo: "bambapappa/valflask", revision,
       korning: "123", forsok: 1, artefaktId: "456", pakethash: paket.hash });

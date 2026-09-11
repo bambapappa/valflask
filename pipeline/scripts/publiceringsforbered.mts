@@ -30,12 +30,17 @@ try {
     "pipeline/scripts/publiceringspaket.mts", ".", fore, revision], {
     encoding: "utf8", maxBuffer: 256 * 1024 * 1024,
   }));
+  if (!paket.filer) throw new Error("Fullständig filjämförelse saknas");
+  if (!paket.summor) throw new Error("Summor före och efter saknas");
+  const vy = publiceringsvy(paket);
   const manifest = await bindPubliceringsartefakt(fil, { repo, revision, korning, forsok, artefaktId, pakethash: paket.hash });
   mkdirSync(ut, { recursive: true });
   writeFileSync(join(ut, "paket.json"), JSON.stringify(paket, null, 2));
-  writeFileSync(join(ut, "granska.html"), publiceringsvy(paket));
+  writeFileSync(join(ut, "granska.html"), vy);
+  writeFileSync(join(ut, "andringar.patch"), paket.filer.patch);
   writeFileSync(join(ut, "manifest.json"), JSON.stringify(manifest, null, 2));
   const besked = `Granska underlaget i artefakten publiceringsunderlag-${korning}-${forsok}.\n\n` +
+    `Läs både poständringarna och filjämförelsen i granska.html. Hela filjämförelsen finns även i andringar.patch.\n\n` +
     `Godkänn endast efter granskning. Klistra då in följande i GitHubs godkännandekommentar:\n\n` +
     `Godkänn publiceringspaket ${manifest.hash}\n`;
   writeFileSync(join(ut, "LAS-MIG.txt"), besked);

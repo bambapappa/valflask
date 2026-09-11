@@ -2,6 +2,8 @@
 import { execFileSync } from "node:child_process";
 import { byggUnderlagsregister } from "../src/underlagsregister.ts";
 import { byggPubliceringspaket } from "../src/publiceringspaket.ts";
+import { lasPubliceringssummor } from "../src/publiceringssummor.ts";
+import { lasPubliceringsfiler } from "../src/publiceringsfiler.ts";
 import { publiceringsvy } from "../src/publiceringsvy.ts";
 
 try {
@@ -25,7 +27,9 @@ try {
       standpunkter: rader("data/stances.json"), kopplingar: rader("handlingsvagen/data/kopplingar.json"),
       handlingar: rader("handlingsvagen/data/handlingar.json") });
   };
-  const paket = byggPubliceringspaket(foreRevision, efterRevision, las(foreRevision), las(efterRevision));
+  const paket = byggPubliceringspaket(foreRevision, efterRevision, las(foreRevision), las(efterRevision),
+    lasPubliceringsfiler(repo, foreRevision, efterRevision),
+    { fore: lasPubliceringssummor(repo, foreRevision), efter: lasPubliceringssummor(repo, efterRevision) });
   process.stdout.write(somHtml ? publiceringsvy(paket) : JSON.stringify(paket, null, 2) + "\n");
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));

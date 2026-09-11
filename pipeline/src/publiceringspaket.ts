@@ -1,6 +1,9 @@
 import { createHash } from "node:crypto";
 import { bindUnderlag, kanoniskJson, underlagsnyckel, type BundetUnderlag, type Underlagspost } from "./underlagsversion.ts";
 
+import type { Publiceringssummor } from "./publiceringssummor.ts";
+import type { Filjamforelse } from "./publiceringsfiler.ts";
+
 export interface Publiceringsandring {
   rot: string;
   sort: "tillagd" | "borttagen" | "andrad";
@@ -11,9 +14,13 @@ export interface Publiceringsandring {
 
 /** Jämför lagrade sakunderlag. Paketet intygar varken sakriktighet eller godkännande. */
 export function byggPubliceringspaket(foreRevision: string, efterRevision: string,
-  fore: readonly Underlagspost[], efter: readonly Underlagspost[]) {
+  fore: readonly Underlagspost[], efter: readonly Underlagspost[], filer: Filjamforelse | null = null,
+  summor: { fore: Publiceringssummor; efter: Publiceringssummor } | null = null) {
   for (const revision of [foreRevision, efterRevision]) {
     if (!/^[a-f0-9]{40}$/.test(revision)) throw new Error("Ange fullständiga commit-identiteter");
+  }
+  if (summor && (summor.fore.revision !== foreRevision || summor.efter.revision !== efterRevision)) {
+    throw new Error("Summeringens revision skiljer sig från publiceringspaketet");
   }
   const indexera = (register: readonly Underlagspost[]) => {
     if (!register.length) throw new Error("Tomt underlagsregister");
@@ -51,7 +58,7 @@ export function byggPubliceringspaket(foreRevision: string, efterRevision: strin
     fore: tidigare.has(rot) ? bindUnderlag(rot, fore) : null,
     efter: senare.has(rot) ? bindUnderlag(rot, efter) : null,
   }));
-  const payload = { version: "publiceringspaket/1" as const, foreRevision, efterRevision,
-    antalFore: fore.length, antalEfter: efter.length, andringar };
+  const payload = { version: "publiceringspaket/2" as const, foreRevision, efterRevision,
+    antalFore: fore.length, antalEfter: efter.length, andringar, filer, summor };
   return { ...payload, hash: createHash("sha256").update(kanoniskJson(payload)).digest("hex") };
 }
