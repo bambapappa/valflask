@@ -12,8 +12,13 @@ export function kontrolleraPubliceringsbeslut(miljo: any, historik: unknown, man
   const tillatna = new Set(regel.reviewers.filter((r: any) => r.type === "User" &&
     r.reviewer?.type === "User" && Number.isSafeInteger(r.reviewer.id)).map((r: any) => r.reviewer.id));
   const kommentar = `Godkänn publiceringspaket ${manifestHash}`;
-  const beslut = historik.filter((r: any) => r?.comment === kommentar &&
-    Array.isArray(r.environments) && r.environments.some((e: any) => e.id === miljo.id));
+  const miljoBeslut = historik.filter((r: any) => Array.isArray(r?.environments) &&
+    r.environments.some((e: any) => e?.id === miljo.id));
+  // Historiken saknar tidsordning per försök. Efter en avvisning krävs en ny körning.
+  if (miljoBeslut.some((r: any) => r.state !== "approved")) {
+    throw new Error("Avvisat eller okänt beslut finns för miljön; starta en ny körning");
+  }
+  const beslut = miljoBeslut.filter((r: any) => r.comment === kommentar);
   // Utan händelsetid går motstridiga eller flera händelser inte att ordna säkert.
   if (beslut.length !== 1) throw new Error("Ett entydigt godkännande av exakt publiceringspaket saknas");
   const rad = beslut[0] as any;

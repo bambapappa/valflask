@@ -24,4 +24,7 @@ test("endast utsedd användares entydiga godkännande av exakt manifest accepter
   }
   assert.throws(() => kontrolleraPubliceringsbeslut(miljo, [rad], "b".repeat(64)));
   assert.throws(() => kontrolleraPubliceringsbeslut(miljo, [rad, rad], hash));
+  // En avvisning behöver inte upprepa godkännandets kontrollsumma.
+  assert.throws(() => kontrolleraPubliceringsbeslut(miljo,
+    [rad, { ...rad, state: "rejected", comment: "Fel period i underlaget" }], hash));
 });
