@@ -4,6 +4,19 @@ import { readFileSync } from "node:fs";
 import { byggPubliceringspaket } from "../src/publiceringspaket.ts";
 import { publiceringsvy } from "../src/publiceringsvy.ts";
 
+test("borttaget beroende redovisas utan att påstå att dess post raderats", () => {
+  const promises = JSON.parse(readFileSync(new URL("../../data/promises.json", import.meta.url), "utf8"));
+  const fore = promises.slice(0, 2).map((p: any) => ({ slag: "lofte" as const,
+    id: p.id, innehall: p, beroenden: [] as string[] }));
+  assert.equal(fore.length, 2);
+  fore[0].beroenden = [`lofte:${fore[1].id}`];
+  const efter = structuredClone(fore);
+  efter[0].beroenden = [];
+  const vy = publiceringsvy(byggPubliceringspaket("a".repeat(40), "b".repeat(40), fore, efter));
+  assert.ok(vy.includes("Ingår inte längre som beroende"));
+  assert.ok(!vy.includes("Fältet borttaget"));
+});
+
 test("verklig post visas före och efter med säker återgivning av källtext", () => {
   const promise = JSON.parse(readFileSync(new URL("../../data/promises.json", import.meta.url), "utf8"))[0];
   assert.ok(promise.id);

@@ -22,6 +22,9 @@ export function publiceringsvy(paket: Paket): string {
     const index = (p: typeof andring.fore) => new Map((p?.poster ?? []).map((x) => [`${x.slag}:${x.id}`, x.innehall]));
     const fore = index(andring.fore), efter = index(andring.efter);
     return [...new Set([...fore.keys(), ...efter.keys()])].sort().map((id) => {
+      if (id !== andring.rot && (!fore.has(id) || !efter.has(id))) {
+        return `<h3>${html(id)}</h3><p>${fore.has(id) ? "Ingår inte längre som beroende i detta underlag." : "Ingår nu som beroende i detta underlag."} Detta säger inte att posten har lagts till eller tagits bort ur beståndet.</p>`;
+      }
       const a = fore.get(id) ?? {}, b = efter.get(id) ?? {};
       const nycklar = [...new Set([...Object.keys(a), ...Object.keys(b)])].sort().filter((k) =>
         !(k in a) || !(k in b) || kanoniskJson(a[k]) !== kanoniskJson(b[k]));
