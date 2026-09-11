@@ -17,6 +17,9 @@ test("verklig post visas före och efter med säker återgivning av källtext", 
   assert.ok(vy.includes("&lt;script&gt;"));
   assert.ok(!vy.includes("<script>"));
   assert.ok(vy.includes("Före") && vy.includes("Efter"));
+  assert.ok(vy.includes('<th scope="row">Rubrik</th>'));
+  assert.ok(!vy.includes('<th scope="row">Historik</th>'));
+  assert.ok(vy.indexOf("Ändrat fält") < vy.indexOf("Visa hela underlaget"));
   const andrat = structuredClone(paket);
   andrat.andringar[0]!.efter!.poster[0]!.innehall.title = "Utbytt efter granskning";
   assert.throws(() => publiceringsvy(andrat), /ogiltigt/);
