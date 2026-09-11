@@ -15,7 +15,9 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
   try {
     // Nätgränsen ersätts; Git läser fortfarande repots riktiga commit och data.
     writeFileSync(join(dir, "git"), `#!${process.execPath}\nconst {spawnSync}=require('node:child_process'); if(process.argv[2]==='fetch')process.exit(0); const r=spawnSync(${JSON.stringify(git)},process.argv.slice(2),{stdio:'inherit'}); process.exit(r.status??1);\n`);
-    writeFileSync(join(dir, "gh"), `#!${process.execPath}\nif(process.env.PROV_NATFEL)process.exit(1); const path=process.argv[3]; let svar; if(path.includes('/statuses?'))svar=process.env.PROV_INGEN_DRIFT?[]:[{state:'success'}]; else svar=[{id:123,sha:${JSON.stringify(revision)}}]; console.log(JSON.stringify(svar));\n`);
+    const drift = JSON.parse(readFileSync(new URL("./fixtures/publiceringsdrift.json", import.meta.url), "utf8"))[0];
+    drift.commitOid = revision;
+    writeFileSync(join(dir, "gh"), `#!${process.execPath}\nif(process.env.PROV_NATFEL)process.exit(1); if(!process.argv.includes('--paginate')||!process.argv.includes('--slurp'))process.exit(2); const n=${JSON.stringify(drift)}; if(process.env.PROV_INGEN_DRIFT){n.state='INACTIVE';n.latestStatus.state='INACTIVE';} console.log(JSON.stringify([{data:{repository:{deployments:{totalCount:1,nodes:[n],pageInfo:{hasNextPage:false,endCursor:'sista'}}}}}]));\n`);
     for (const name of ["git", "gh"]) chmodSync(join(dir, name), 0o755);
     const fil = join(repo, "data/promises.json");
     const summary = join(dir, "summary.md");
@@ -30,6 +32,8 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
     const paket = JSON.parse(readFileSync(join(dir, "ok/paket.json"), "utf8"));
     const manifest = JSON.parse(readFileSync(join(dir, "ok/manifest.json"), "utf8"));
     assert.equal(paket.foreRevision, revision);
+    assert.equal(paket.driftbas.revision, revision);
+    assert.equal(paket.driftbas.deploymentId, String(drift.databaseId));
     assert.equal(paket.efterRevision, revision);
     assert.ok(paket.antalEfter > 0);
     assert.equal(paket.summor.fore.revision, revision);

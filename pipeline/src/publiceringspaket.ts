@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { bindUnderlag, kanoniskJson, underlagsnyckel, type BundetUnderlag, type Underlagspost } from "./underlagsversion.ts";
 
+import type { Publiceringsbas } from "./publiceringsbas.ts";
 import type { Publiceringssummor } from "./publiceringssummor.ts";
 import type { Filjamforelse } from "./publiceringsfiler.ts";
 
@@ -59,6 +60,24 @@ export function byggPubliceringspaket(foreRevision: string, efterRevision: strin
     efter: senare.has(rot) ? bindUnderlag(rot, efter) : null,
   }));
   const payload = { version: "publiceringspaket/2" as const, foreRevision, efterRevision,
-    antalFore: fore.length, antalEfter: efter.length, andringar, filer, summor };
+    antalFore: fore.length, antalEfter: efter.length, andringar, filer, summor, driftbas: null as Publiceringsbas | null };
   return { ...payload, hash: createHash("sha256").update(kanoniskJson(payload)).digest("hex") };
+}
+
+
+export function kontrolleraPubliceringspaket(paket: ReturnType<typeof byggPubliceringspaket>): void {
+  const { hash, ...innehall } = paket;
+  if (paket.version !== "publiceringspaket/2" || !Array.isArray(paket.andringar) ||
+      !paket.antalFore || !paket.antalEfter ||
+      createHash("sha256").update(kanoniskJson(innehall)).digest("hex") !== hash) {
+    throw new Error("Publiceringspaketets innehåll eller hash är ogiltigt");
+  }
+}
+
+export function bindPubliceringsbas(paket: ReturnType<typeof byggPubliceringspaket>, bas: Publiceringsbas) {
+  kontrolleraPubliceringspaket(paket);
+  if (paket.foreRevision !== bas.revision) throw new Error("Publiceringsbasen motsvarar inte granskningspaketet");
+  const { hash: tidigareHash, ...innehall } = paket;
+  const bundet = { ...innehall, driftbas: { ...bas } };
+  return { ...bundet, hash: createHash("sha256").update(kanoniskJson(bundet)).digest("hex") };
 }

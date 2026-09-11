@@ -300,7 +300,7 @@ jobs:
         run: |
           gh run download "$GITHUB_RUN_ID" --name "github-pages-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --dir "$RUNNER_TEMP/pages"
           gh run download "$GITHUB_RUN_ID" --name "publiceringsunderlag-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --dir "$RUNNER_TEMP/underlag"
-          node --experimental-strip-types pipeline/scripts/publiceringskontroll.mts "$RUNNER_TEMP/pages/artifact.tar" "$RUNNER_TEMP/underlag/manifest.json"
+          node --experimental-strip-types pipeline/scripts/publiceringskontroll.mts "$RUNNER_TEMP/pages/artifact.tar" "$RUNNER_TEMP/underlag/manifest.json" "$RUNNER_TEMP/underlag/paket.json"
       - id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128
         with:

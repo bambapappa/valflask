@@ -2,12 +2,16 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { kontrolleraPubliceringsartefakt, type Publiceringsartefakt } from "../src/publiceringsartefakt.ts";
+import { lasPubliceringsbas } from "../src/publiceringsbas.ts";
+import { kontrolleraPubliceringspaket } from "../src/publiceringspaket.ts";
 import { kontrolleraPubliceringsbeslut } from "../src/publiceringsbeslut.ts";
 
 try {
-  const [fil, manifestfil, ...extra] = process.argv.slice(2);
-  if (!fil || !manifestfil || extra.length) throw new Error("Ange artefaktfil och manifestfil");
+  const [fil, manifestfil, paketfil, ...extra] = process.argv.slice(2);
+  if (!fil || !manifestfil || !paketfil || extra.length) throw new Error("Ange artefaktfil, manifestfil och paketfil");
   const manifest: Publiceringsartefakt = JSON.parse(readFileSync(manifestfil, "utf8"));
+  const paket = JSON.parse(readFileSync(paketfil, "utf8"));
+  kontrolleraPubliceringspaket(paket);
   const repo = process.env.GITHUB_REPOSITORY;
   const korning = process.env.GITHUB_RUN_ID;
   const revision = process.env.GITHUB_SHA;
@@ -19,6 +23,8 @@ try {
   await kontrolleraPubliceringsartefakt(fil, manifest, {
     repo, korning, revision, forsok, artefaktId: manifest.artefaktId, pakethash: manifest.pakethash,
   });
+  if (paket.hash !== manifest.pakethash || paket.efterRevision !== revision || !paket.filer || !paket.summor ||
+      !paket.driftbas || paket.driftbas.revision !== paket.foreRevision) throw new Error("Granskningspaketet motsvarar inte publiceringsmanifestet");
   const api = (path: string) => JSON.parse(execFileSync("gh", ["api", path], {
     encoding: "utf8", maxBuffer: 16 * 1024 * 1024, timeout: 30_000,
     stdio: ["ignore", "pipe", "pipe"],
@@ -38,6 +44,8 @@ try {
   const miljo = api(`repos/${repo}/environments/github-pages`);
   const historik = api(`repos/${repo}/actions/runs/${korning}/approvals`);
   const granskare = kontrolleraPubliceringsbeslut(miljo, historik, manifest.hash);
+  const bas = lasPubliceringsbas(repo);
+  if (bas.revision !== paket.foreRevision) throw new Error("Sajten har fått en annan version sedan underlaget skapades; nytt granskningspaket krävs");
   console.log(`Publiceringspaket ${manifest.hash} godkänt av ${granskare}. Artefakt: ${namn}.`);
 } catch (error) {
   // HTTP-fel kan innehålla intern tjänstedata. Publicera inte råa svar eller token.

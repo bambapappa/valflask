@@ -23,6 +23,7 @@ test("det verkliga byggflödet kontrollerar samma artefaktnamn innan Pages kan p
   assert.equal(jobb.steps[deploy].if, undefined);
   assert.equal(jobb.steps[deploy].with.artifact_name, upload.with.name);
   assert.ok(jobb.steps[check].run.includes('"github-pages-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"'));
+  assert.ok(jobb.steps[check].run.includes('"$RUNNER_TEMP/underlag/paket.json"'));
   assert.equal(flow.permissions.actions, "read");
   assert.equal(flow.permissions.deployments, "read");
 });

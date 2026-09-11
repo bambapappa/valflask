@@ -1,6 +1,5 @@
-import { createHash } from "node:crypto";
 import { kanoniskJson } from "./underlagsversion.ts";
-import type { byggPubliceringspaket } from "./publiceringspaket.ts";
+import { kontrolleraPubliceringspaket, type byggPubliceringspaket } from "./publiceringspaket.ts";
 
 type Paket = ReturnType<typeof byggPubliceringspaket>;
 const html = (value: string) => value.replace(/[&<>"']/g, (c) =>
@@ -8,12 +7,8 @@ const html = (value: string) => value.replace(/[&<>"']/g, (c) =>
 
 /** Visar hela det lagrade ändringsunderlaget utan att intyga sakprövning eller beslut. */
 export function publiceringsvy(paket: Paket): string {
-  const { hash, ...innehall } = paket;
-  if (paket.version !== "publiceringspaket/2" || !Array.isArray(paket.andringar) ||
-      !paket.antalFore || !paket.antalEfter ||
-      createHash("sha256").update(kanoniskJson(innehall)).digest("hex") !== hash) {
-    throw new Error("Publiceringspaketets innehåll eller hash är ogiltigt");
-  }
+  kontrolleraPubliceringspaket(paket);
+  const { hash } = paket;
   const visa = (value: unknown) => html(JSON.stringify(value, null, 2));
   const etiketter: Record<string, string> = { title: "Rubrik", cost: "Kostnad och uträkning",
     source: "Källa", party: "Parti", parties: "Partier", status: "Status", promise_type: "Löftestyp",
@@ -86,6 +81,7 @@ table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{vertical-alig
 </style><main><h1>Underlag inför publicering</h1>
 <p>Detta är en jämförelse av lagrat underlag. Den visar inte att uppgifterna är korrekta eller att en människa har godkänt publiceringen.</p>
 <dl><dt>Föregående revision</dt><dd><code>${html(paket.foreRevision)}</code></dd>
+${paket.driftbas ? `<dt>Föregående lyckade publicering</dt><dd>${html(paket.driftbas.publiceradVid)} · ${html(paket.driftbas.deploymentId)}</dd>` : ""}
 <dt>Föreslagen revision</dt><dd><code>${html(paket.efterRevision)}</code></dd>
 <dt>Paketets kontrollsumma</dt><dd><code>${html(hash)}</code></dd></dl>
 <p>${paket.andringar.length} berörda poster. Registret innehåller ${paket.antalFore} poster före och ${paket.antalEfter} efter.</p>
