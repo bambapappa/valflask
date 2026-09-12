@@ -9,7 +9,7 @@ import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
 import { LANAR_BELOPP, barBelopp } from "./ankarkravet.ts";
 import { svenskDag } from "./dagen.ts";
-import { forberedLoftesforslag, tillampaLoftesforslag, type PromiseEntry } from "./loftesforslag.ts";
+import { forberedLoftesforslag, tillampaLoftesforslag, type PromiseEntry, type FrystLoftesforslag } from "./loftesforslag.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -356,10 +356,7 @@ function list(dataDir: string = DATA_DIR): void {
   console.log(`Totalt: ${items.length} post(er) i needs_review.`);
 }
 
-export function approve(
-  rawArgs: string[],
-  dataDir: string = DATA_DIR,
-): { id: string; title: string; msekBase: number } {
+function lasGodkannandeArgument(rawArgs: string[]) {
   // Plocka ut --group <id> / --group=<id> (länkning av dublett), --calc <text>
   // (uträkningen bakom ett belopp satt för hand), --typ <kostnadstyp> och
   // --period <per_ar|engang> ur
@@ -440,18 +437,41 @@ export function approve(
     args.push(a);
   }
 
-  // Ingen skrivning medan sviten muterar data/ — dess återställning skulle ta
-  // bort den utan ett ord. Se datalas.ts för vad det kostade.
+  return [args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag] as const;
+}
+
+export function approve(
+  rawArgs: string[],
+  dataDir: string = DATA_DIR,
+): { id: string; title: string; msekBase: number } {
   const slappLas = taLaset(dataDir, "review approve");
   try {
-    return approveLast(dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag);
+    return approveLast(dataDir, ...lasGodkannandeArgument(rawArgs));
   } finally {
     slappLas();
   }
 }
 
-/** Själva godkännandet. Bruten ur `approve` bara för att låset ska ha ett finally. */
-function approveLast(
+/** Samma kontroller som godkännandet, utan att ändra sakdata. */
+export function prepare(rawArgs: string[], dataDir: string = DATA_DIR): FrystLoftesforslag {
+  const slappLas = taLaset(dataDir, "review prepare");
+  try {
+    return forberedLast(dataDir, ...lasGodkannandeArgument(rawArgs)).forslag;
+  } finally {
+    slappLas();
+  }
+}
+
+/** En befintlig fil får aldrig ersättas av ett nytt granskningsförslag. */
+export function prepareToFile(rawArgs: string[], file: string, dataDir: string = DATA_DIR): FrystLoftesforslag {
+  if (!file?.trim()) throw new Error("Ange fil för granskningsförslaget");
+  const forslag = prepare(rawArgs, dataDir);
+  writeFileSync(file, JSON.stringify(forslag, null, 2) + "\n", { flag: "wx" });
+  return forslag;
+}
+
+/** Förbereder slutformen efter de befintliga käll- och kostnadskontrollerna. */
+function forberedLast(
   dataDir: string,
   args: string[],
   linkTo: string | undefined,
@@ -461,7 +481,7 @@ function approveLast(
   basisUrlFlag: string | undefined,
   periodFlag: string | undefined,
   noteFlag: string | undefined,
-): { id: string; title: string; msekBase: number } {
+) {
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
   const index = loesKoArgument(items, args[0]);
 
@@ -675,6 +695,25 @@ function approveLast(
 
   const befintliga = loadJson<PromiseEntry[]>(join(dataDir, "promises.json"));
   const forslag = forberedLoftesforslag(item, cost, befintliga, linkTo, new Date());
+  return { forslag, befintliga, item, items, index, cost };
+}
+
+/** Själva godkännandet. Bruten ur `approve` bara för att låset ska ha ett finally. */
+function approveLast(
+  dataDir: string,
+  args: string[],
+  linkTo: string | undefined,
+  calculationFlag: string | undefined,
+  typFlag: string | undefined,
+  basisFlag: string | undefined,
+  basisUrlFlag: string | undefined,
+  periodFlag: string | undefined,
+  noteFlag: string | undefined,
+): { id: string; title: string; msekBase: number } {
+  const { forslag, befintliga, item, items, index, cost } = forberedLast(
+    dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag,
+  );
+  const cand = item.candidate;
   const newPromise = forslag.nyttLofte;
   const { id: newId, title, group_id } = newPromise;
 
@@ -919,6 +958,12 @@ switch (command) {
     reject(String(index), args.slice(1).join(" "));
     break;
   }
+  case "prepare": {
+    if (!args[0] || !args[1]) throw new Error("Användning: pnpm review prepare <fil.json> <post> [kostnadsargument]");
+    const forslag = prepareToFile(args.slice(1), args[0]);
+    console.log(`Granskningsförslag sparat: ${args[0]} (${forslag.hash}). Inget godkännande eller publicering.`);
+    break;
+  }
   case "approve":
     if (!args[0]) {
       console.error(
@@ -954,7 +999,8 @@ switch (command) {
     add(args[0]);
     break;
   default:
-    console.log("Användning: pnpm review <list|approve|reject|add>");
+    console.log("Användning: pnpm review <list|prepare|approve|reject|add>");
+    console.log("  prepare <fil.json> <post> [kostnadsargument]  Spara förslag för prövning, utan godkännande");
     console.log("  list                         Visa poster i needs_review");
     console.log("  approve <post> [low base high] [--group p-XXXX]  Godkänn; kostnad; länka dublett");
     console.log("           [--typ <kostnadstyp>] [--period <per_ar|engang>] [--basis <källnivå>]");
