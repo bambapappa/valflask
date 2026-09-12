@@ -12,27 +12,23 @@ on:
       - "handlingsvagen/data/provade-par.json"
   pull_request:
     branches: [main]
-  workflow_dispatch: {}
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+    inputs:
+      publicera:
+        description: "Förbered en extra publiceringsomgång för mänsklig granskning"
+        type: boolean
+        default: false
 permissions:
   contents: read
-  pages: write
-  id-token: write
+  actions: read
+  deployments: read
 concurrency:
-  # PAGES-GRUPPEN SERIALISERAR DEPLOYEN, INTE PROVEN. Fram till 2026-08-29 delade
-  # varje PR-körning grupp med mains pushar, och main tar emot bot-pushar med
-  # några minuters mellanrum. En PR-körning som köade bakom dem ströks så snart
-  # nästa push köade — och en struken kontroll är inte en godkänd kontroll, så
-  # med kravet på gröna kontroller blir PR:en omöjlig att slå ihop.
-  #
-  # Deployen sker bara på main (deploy-pages är villkorad på det), så PR-körningar
-  # behöver inte dela kö med den. Varje gren får sin egen grupp; main behåller
-  # 'pages' och därmed sin serialisering.
-  group: ${{ github.ref == 'refs/heads/main' && 'pages' || format('pages-{0}', github.ref) }}
-  # Main avbryts aldrig — en avbruten push dit lämnar deployen halvgjord.
-  # En PR-gren avbryts när en ny push kommer: den gamla körningen prövar en
-  # version som ingen längre tänker slå ihop, och att låta den gå ut innebär
-  # att vänta sexton minuter på ett svar om fel innehåll.
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  # Publiceringsomgångar väntar i egen kö. Pushar och PR:er kan fortsätta
+  # prövas medan ett oföränderligt paket väntar på mänsklig granskning.
+  group: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.publicera)) && 'pages' || format('prov-{0}', github.ref) }}
+  cancel-in-progress: ${{ !(github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.publicera))) }}
 jobs:
   test-pipeline:
     runs-on: ubuntu-latest
@@ -114,6 +110,8 @@ jobs:
         working-directory: handlingsvagen/pipeline
 
   build-and-test:
+    outputs:
+      publicera: ${{ steps.publiceringsunderlag.outputs.publicera }}
     runs-on: ubuntu-latest
     needs: [test-pipeline, test-handlingsvagen]
     steps:
@@ -260,26 +258,65 @@ jobs:
           test -f site/dist/handlingsvagen/index.html
           echo "Handlingsvågen: $(find site/dist/handlingsvagen -name '*.html' | wc -l) sidor i utdatan."
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
+        id: pages-artifact
         with:
           path: site/dist
+          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 7
+      - name: Förbered granskningsunderlag eller PR-prov
+        id: publiceringsunderlag
+        if: github.event_name == 'pull_request' || (github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.publicera)))
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTEFAKT_ID: ${{ steps.pages-artifact.outputs.artifact_id }}
+          PUBLICERA: ${{ inputs.publicera }}
+        run: node --experimental-strip-types pipeline/scripts/publiceringsforbered.mts "$RUNNER_TEMP/artifact.tar" "$ARTEFAKT_ID" "$RUNNER_TEMP/publiceringsunderlag"
+      - name: Spara granskningsunderlaget
+        if: steps.publiceringsunderlag.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: publiceringsunderlag-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/publiceringsunderlag
+          if-no-files-found: error
+          retention-days: 7
 
   deploy-pages:
     needs: build-and-test
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && needs.build-and-test.outputs.publicera == 'true'
+    permissions:
+      contents: read
+      actions: read
+      deployments: read
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 22
+      - name: Kontrollera exakt artefakt och granskningsbeslut
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PUBLICERA: ${{ inputs.publicera }}
+        run: |
+          gh run download "$GITHUB_RUN_ID" --name "github-pages-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --dir "$RUNNER_TEMP/pages"
+          gh run download "$GITHUB_RUN_ID" --name "publiceringsunderlag-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --dir "$RUNNER_TEMP/underlag"
+          node --experimental-strip-types pipeline/scripts/publiceringskontroll.mts "$RUNNER_TEMP/pages/artifact.tar" "$RUNNER_TEMP/underlag/manifest.json" "$RUNNER_TEMP/underlag/paket.json"
       - id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
 
   # IndexNow: pinga Bing (→ Copilot/ChatGPT-sök) m.fl. med de sidor som ändrats,
   # EFTER att sajten (och nyckelfilen) är live. Använder bara Node-inbyggda API:er
   # (ingen install). Icke-blockerande — får aldrig påverka deploy-status.
   indexnow:
     needs: deploy-pages
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -288,16 +325,16 @@ jobs:
         with:
           node-version: 22
       - name: Submit changed URLs to IndexNow
-        run: node --experimental-strip-types scripts/indexnow-submit.mts
+        run: node --experimental-strip-types scripts/indexnow-submit.mts --all
         working-directory: site
 
   # Ett rött test här stoppar hela driftsättningen tyst: main tar emot data som
   # vanligt medan sajten inte byggs om. Det hände 2026-08-03 och kostade en dag.
-  # Bara push till main larmar — en röd PR-körning har redan en människa som
+  # Fel på main larmar även för schemalagda omgångar; en PR har redan någon som
   # tittar på den. Delad implementation i larm.yml; lägg aldrig en kopia här.
   larm:
     needs: [test-pipeline, test-handlingsvagen, build-and-test, deploy-pages]
-    if: failure() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: failure() && github.ref == 'refs/heads/main'
     permissions:
       contents: read
       issues: write
@@ -306,8 +343,8 @@ jobs:
       rubrik: "Bygget av sajten"
       etikett: "larm-build"
       atgard: |
-        Sajten är INTE ombyggd, och det syns inte på utlovat.se — den visar
-        förra bygget. Läs vilket jobb som föll:
+        Den här körningen misslyckades. Sajten visar senast publicerade
+        version; vanliga pushar publicerar inte. Läs vilket jobb som föll:
 
         - `test-pipeline` / `test-handlingsvagen`: ett test föll. Kör
           `pnpm test` i `pipeline/` respektive `npm test` i
