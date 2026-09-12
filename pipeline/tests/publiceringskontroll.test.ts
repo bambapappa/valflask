@@ -31,7 +31,7 @@ test("kommandot läser artefakt och GitHub-svar; nätfel och fel försök ger av
     const user = { id: 1234, login: "granskare", type: "User" };
     const svar = {
       "repos/bambapappa/valflask/actions/runs/123": { id: 123, head_sha: id.revision,
-        run_attempt: 1, repository: { full_name: id.repo }, head_branch: "main" },
+        run_attempt: 1, event: "schedule", repository: { full_name: id.repo }, head_branch: "main" },
       "repos/bambapappa/valflask/actions/artifacts/456": { id: 456, name: "github-pages-123-1",
         expired: false, workflow_run: { id: 123, head_sha: id.revision } },
       "repos/bambapappa/valflask/environments/github-pages": { id: 789, name: "github-pages",
@@ -44,13 +44,15 @@ test("kommandot läser artefakt och GitHub-svar; nätfel och fel försök ger av
     writeFileSync(gh, `#!${process.execPath}\nconst svar=${JSON.stringify(svar)}; if(process.env.PROV_NATFEL)process.exit(1); let s=svar[process.argv[3]]; if(process.argv[3]==='graphql'){s=${JSON.stringify(driftSvar)}; if(process.env.PROV_ANDRAD_BAS)s[0].data.repository.deployments.nodes[0].commitOid='b'.repeat(40);} if(!s)process.exit(2); console.log(JSON.stringify(s));\n`);
     chmodSync(gh, 0o755);
     const env = { ...process.env, PATH: `${dir}:${process.env.PATH}`, GITHUB_REPOSITORY: id.repo,
-      GITHUB_RUN_ID: id.korning, GITHUB_SHA: id.revision, GITHUB_RUN_ATTEMPT: "1", GITHUB_REF: "refs/heads/main" };
+      GITHUB_RUN_ID: id.korning, GITHUB_SHA: id.revision, GITHUB_RUN_ATTEMPT: "1", GITHUB_REF: "refs/heads/main", GITHUB_EVENT_NAME: "schedule" };
     const kor = (extra = {}) => spawnSync(process.execPath, ["--import", "tsx/esm",
       "scripts/publiceringskontroll.mts", fil, path, paketfil], { cwd: resolve(import.meta.dirname, ".."),
       env: { ...env, ...extra }, encoding: "utf8" });
     const ok = kor();
     assert.equal(ok.status, 0, ok.stderr);
     assert.match(ok.stdout, /github-pages-123-1/);
+    assert.equal(kor({ GITHUB_EVENT_NAME: "push" }).status, 1);
+    assert.equal(kor({ GITHUB_EVENT_NAME: "workflow_dispatch", PUBLICERA: "false" }).status, 1);
     assert.equal(kor({ GITHUB_RUN_ATTEMPT: "2" }).status, 1);
     const byttBas = kor({ PROV_ANDRAD_BAS: "1" });
     assert.equal(byttBas.status, 1);

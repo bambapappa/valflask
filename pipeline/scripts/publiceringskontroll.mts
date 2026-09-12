@@ -2,6 +2,7 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { kontrolleraPubliceringsartefakt, type Publiceringsartefakt } from "../src/publiceringsartefakt.ts";
+import { arPubliceringsomgang } from "../src/publiceringsomgang.ts";
 import { lasPubliceringsbas } from "../src/publiceringsbas.ts";
 import { kontrolleraPubliceringspaket } from "../src/publiceringspaket.ts";
 import { kontrolleraPubliceringsbeslut } from "../src/publiceringsbeslut.ts";
@@ -19,6 +20,9 @@ try {
   if (!repo || !korning || !revision || process.env.GITHUB_REF !== "refs/heads/main") {
     throw new Error("Kontrollen kräver huvudgrenens GitHub-körning");
   }
+  if (!arPubliceringsomgang(process.env.GITHUB_EVENT_NAME ?? "", process.env.GITHUB_REF ?? "", process.env.PUBLICERA ?? "")) {
+    throw new Error("Körningen är inte en begärd publiceringsomgång");
+  }
   // Miljöidentiteter valideras innan de får bilda API-sökvägar.
   await kontrolleraPubliceringsartefakt(fil, manifest, {
     repo, korning, revision, forsok, artefaktId: manifest.artefaktId, pakethash: manifest.pakethash,
@@ -31,7 +35,7 @@ try {
   }));
   const run = api(`repos/${repo}/actions/runs/${korning}`);
   if (String(run.id) !== korning || run.head_sha !== revision || run.run_attempt !== forsok ||
-      run.repository?.full_name !== repo || run.head_branch !== "main") {
+      run.repository?.full_name !== repo || run.head_branch !== "main" || run.event !== process.env.GITHUB_EVENT_NAME) {
     throw new Error("GitHub-körningen motsvarar inte publiceringsmanifestet");
   }
   const artefakt = api(`repos/${repo}/actions/artifacts/${manifest.artefaktId}`);

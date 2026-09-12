@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { bindPubliceringsartefakt } from "../src/publiceringsartefakt.ts";
 import { lasPubliceringsbas } from "../src/publiceringsbas.ts";
 import { bindPubliceringsbas } from "../src/publiceringspaket.ts";
+import { arPubliceringsomgang } from "../src/publiceringsomgang.ts";
 import { publiceringsvy } from "../src/publiceringsvy.ts";
 
 try {
@@ -30,11 +31,17 @@ try {
   writeFileSync(join(ut, "granska.html"), vy);
   writeFileSync(join(ut, "andringar.patch"), paket.filer.patch);
   writeFileSync(join(ut, "manifest.json"), JSON.stringify(manifest, null, 2));
+  const omgang = arPubliceringsomgang(process.env.GITHUB_EVENT_NAME ?? "", process.env.GITHUB_REF ?? "", process.env.PUBLICERA ?? "");
+  const publicera = omgang && paket.filer.sokvagar.length > 0;
+  const beslutstext = publicera
+    ? `Godkänn endast efter granskning. Klistra då in följande i GitHubs godkännandekommentar:\n\nGodkänn publiceringspaket ${manifest.hash}\n`
+    : omgang ? "Inga filer har ändrats sedan föregående publicering. Inget godkännande begärs.\n"
+      : "Detta är ett provunderlag. Denna körning får inte publicera och inget godkännande begärs.\n";
   const besked = `Granska underlaget i artefakten publiceringsunderlag-${korning}-${forsok}.\n\n` +
     `Läs både poständringarna och filjämförelsen i granska.html. Hela filjämförelsen finns även i andringar.patch.\n\n` +
-    `Godkänn endast efter granskning. Klistra då in följande i GitHubs godkännandekommentar:\n\n` +
-    `Godkänn publiceringspaket ${manifest.hash}\n`;
+    beslutstext;
   writeFileSync(join(ut, "LAS-MIG.txt"), besked);
+  if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `publicera=${publicera}\n`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, besked);
 } catch (error) {
   console.error(error instanceof Error && !("status" in error) ? error.message : "Publiceringsunderlaget kunde inte skapas");
