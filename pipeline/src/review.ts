@@ -9,7 +9,7 @@ import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
 import { LANAR_BELOPP, barBelopp } from "./ankarkravet.ts";
 import { svenskDag } from "./dagen.ts";
-import { harledLoftestyp } from "./loftestyp.ts";
+import { forberedLoftesforslag, tillampaLoftesforslag, type PromiseEntry } from "./loftesforslag.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -284,38 +284,6 @@ export interface ReviewCandidate {
   cost?: CostShape;
 }
 
-interface PromiseEntry {
-  /** Reform eller inriktning. Härleds ur citatet och prissättningen. */
-  loftestyp?: "reform" | "inriktning";
-  id: string;
-  group_id: string | null;
-  title: string;
-  slug: string;
-  parties: string[];
-  person: { name: string; role: string } | null;
-  quote: string;
-  date_stated: string;
-  source: { url: string; domain: string; archive_url: string | null; fetched_at: string };
-  category: string;
-  cost: Record<string, unknown>;
-  financing_claimed: Record<string, unknown>;
-  comparisons: string[];
-  quip: string | null;
-  status: string;
-  history: unknown[];
-  extraction: Record<string, unknown>;
-}
-
-function slugify(title: string): string {
-  const s = title
-    .toLowerCase()
-    .replace(/[åä]/g, "a")
-    .replace(/ö/g, "o")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  return s.length > 0 ? s : "lofte";
-}
-
 function loadJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
 }
@@ -341,14 +309,6 @@ function appendChangelog(dataDir: string, entry: ChangelogEntry): void {
   }
   log.push(entry);
   saveJson(path, log);
-}
-
-function domainOf(url: string): string {
-  try {
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return ""; // manuell källa kan vara fritext (t.ex. "SVT Aktuellt, rikssänt")
-  }
 }
 
 function list(dataDir: string = DATA_DIR): void {
@@ -394,14 +354,6 @@ function list(dataDir: string = DATA_DIR): void {
   }
 
   console.log(`Totalt: ${items.length} post(er) i needs_review.`);
-}
-
-function nextId(promises: PromiseEntry[]): string {
-  const maxNum = promises.reduce((max, p) => {
-    const m = p.id.match(/^p-2026-(\d+)$/);
-    return m ? Math.max(max, parseInt(m[1]!, 10)) : max;
-  }, 0);
-  return `p-2026-${String(maxNum + 1).padStart(4, "0")}`;
 }
 
 export function approve(
@@ -721,72 +673,10 @@ function approveLast(
     process.exit(1);
   }
 
-  const promises = loadJson<PromiseEntry[]>(join(dataDir, "promises.json"));
-  const newId = nextId(promises);
-  const title = cand.title ?? item.articleTitle ?? "Okänt löfte";
-
-  // Dublettlänkning: dela group_id med målet (R3 räknar gruppen en gång).
-  let group_id: string | null = null;
-  let groupTargetModified = false;
-  if (linkTo) {
-    const target = promises.find((p) => p.id === linkTo);
-    if (!target) {
-      console.error(`Hittade inget löfte att länka till: ${linkTo}`);
-      process.exit(1);
-    }
-    group_id = target.group_id ?? `g-${linkTo}`;
-    if (!target.group_id) {
-      target.group_id = group_id;
-      groupTargetModified = true;
-    }
-  }
-
-  const newPromise: PromiseEntry = {
-    id: newId,
-    group_id,
-    // Sorten härleds ur citatet och prissättningen, samma regel som resten av
-    // beståndet. Fältet sattes inte alls vid godkännandet: 164 löften
-    // publicerade 2026-08-25 kom ut utan sort, och utan den går en nolla inte
-    // att läsa — syns det inte om åtgärden är gratis eller om det inte finns
-    // någon åtgärd att prissätta? Sorten styr dessutom kopplingssteget.
-    loftestyp: harledLoftestyp(cand.quote ?? "", cost as never),
-    title,
-    slug: slugify(title),
-    parties: cand.parties ?? [],
-    person: cand.person ?? null,
-    quote: cand.quote ?? "",
-    date_stated: svenskDag(),
-    source: {
-      url: item.articleUrl,
-      domain: domainOf(item.articleUrl),
-      // Fylls av arkiv-backfillsteget (scripts/archive-backfill.mts) vid nästa
-      // pipelinekörning — SPEC §6.2 "nytt försök nästa run tills satt".
-      archive_url: null,
-      fetched_at: new Date().toISOString(),
-    },
-    category: cand.category ?? "övrigt",
-    cost: { ...cost },
-    // Beloppet i citatet är INTE en finansieringsuppgift. Fältet fylldes förut
-    // med `amount_in_text_msek`, och då hamnade ISK-gränsen på 500 000 kronor,
-    // barnavdragets 10 000 per barn och ett anslag på 16 miljoner i fältet för
-    // vad partiet säger att löftet finansieras med — och drogs av från vad
-    // partiernas löften kostar. Beskriver löftet ingen finansiering är fältet
-    // tomt (rättat på p-2026-0463, p-2026-0465 och p-2026-0571).
-    financing_claimed: {
-      described: false,
-      summary: null,
-      msek: null,
-    },
-    comparisons: [],
-    quip: null,
-    status: "aktiv",
-    history: [],
-    extraction: {
-      model: "review",
-      verified_by: "owner",
-      run_id: `review-${new Date().toISOString().slice(0, 13)}`,
-    },
-  };
+  const befintliga = loadJson<PromiseEntry[]>(join(dataDir, "promises.json"));
+  const forslag = forberedLoftesforslag(item, cost, befintliga, linkTo, new Date());
+  const newPromise = forslag.nyttLofte;
+  const { id: newId, title, group_id } = newPromise;
 
   // Kvalitetsfiltret, som grind. Hashen räknas på löftet som det FAKTISKT
   // kommer att publiceras — inte på kö-posten — så ett belopp satt för hand
@@ -808,8 +698,7 @@ function approveLast(
     process.exit(1);
   }
 
-  promises.push(newPromise);
-  promises.sort((a, b) => a.id.localeCompare(b.id));
+  const promises = tillampaLoftesforslag(forslag, befintliga, item, forslag.hash);
   const remaining = items.filter((_, i) => i !== index);
 
   saveJson(join(dataDir, "promises.json"), promises);
@@ -820,10 +709,10 @@ function approveLast(
   appendChangelog(dataDir, {
     run_id: `review-${newId}`,
     added: [newId],
-    updated: groupTargetModified ? [linkTo!] : [],
+    updated: forslag.gruppandring ? [forslag.gruppandring.id] : [],
     retracted: [],
     data_hash: computeDataHash(promises),
-    timestamp: new Date().toISOString(),
+    timestamp: forslag.tidpunkt,
   });
 
   const linkNote = group_id ? ` [länkad till group ${group_id}]` : "";
