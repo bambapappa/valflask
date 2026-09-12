@@ -9,6 +9,8 @@ import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
 import { LANAR_BELOPP, barBelopp } from "./ankarkravet.ts";
 import { svenskDag } from "./dagen.ts";
+import { byggSakunderlag, sakprovningsBeredskap, type Sakprovning, type Sakreferens } from "./sakprovning.ts";
+import { kanoniskJson } from "./underlagsversion.ts";
 import { forberedLoftesforslag, tillampaLoftesforslag, type PromiseEntry, type FrystLoftesforslag } from "./loftesforslag.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
@@ -440,13 +442,22 @@ function lasGodkannandeArgument(rawArgs: string[]) {
   return [args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag] as const;
 }
 
+export interface Beslutsunderlag {
+  forslag: FrystLoftesforslag;
+  provning: Sakprovning;
+  aktuellaReferenser: Sakreferens[];
+  /** Hashen för den fullständiga prövning som beslutet avser. */
+  provningshash: string;
+}
+
 export function approve(
   rawArgs: string[],
   dataDir: string = DATA_DIR,
+  beslutsunderlag?: Beslutsunderlag,
 ): { id: string; title: string; msekBase: number } {
   const slappLas = taLaset(dataDir, "review approve");
   try {
-    return approveLast(dataDir, ...lasGodkannandeArgument(rawArgs));
+    return approveLast(dataDir, beslutsunderlag, ...lasGodkannandeArgument(rawArgs));
   } finally {
     slappLas();
   }
@@ -701,6 +712,7 @@ function forberedLast(
 /** Själva godkännandet. Bruten ur `approve` bara för att låset ska ha ett finally. */
 function approveLast(
   dataDir: string,
+  beslutsunderlag: Beslutsunderlag | undefined,
   args: string[],
   linkTo: string | undefined,
   calculationFlag: string | undefined,
@@ -710,9 +722,11 @@ function approveLast(
   periodFlag: string | undefined,
   noteFlag: string | undefined,
 ): { id: string; title: string; msekBase: number } {
-  const { forslag, befintliga, item, items, index, cost } = forberedLast(
+  const { forslag: nyberett, befintliga, item, items, index, cost } = forberedLast(
     dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag,
   );
+  // Kostnadsargumenten prövas även när en tidigare slutform används.
+  const forslag = beslutsunderlag?.forslag ?? nyberett;
   const cand = item.candidate;
   const newPromise = forslag.nyttLofte;
   const { id: newId, title, group_id } = newPromise;
@@ -736,6 +750,20 @@ function approveLast(
     );
     process.exit(1);
   }
+
+  if (!beslutsunderlag) {
+    throw new Error("Godkännandet kräver sparat löftesförslag och separat sakprövning; äldre prövningsindex räcker inte.");
+  }
+  if (createHash("sha256").update(kanoniskJson(beslutsunderlag.provning)).digest("hex") !== beslutsunderlag.provningshash) {
+    throw new Error("Sakprövningen matchar inte beslutets prövningshash");
+  }
+  const forvantatForslag = forberedLoftesforslag(item, cost, befintliga, linkTo, new Date(forslag.tidpunkt));
+  if (forvantatForslag.hash !== forslag.hash) {
+    throw new Error("Godkännandets argument eller underlag skiljer sig från det sparade förslaget");
+  }
+  const aktuellt = byggSakunderlag(forslag, befintliga, item, beslutsunderlag.aktuellaReferenser);
+  const beredskap = sakprovningsBeredskap(beslutsunderlag.provning, aktuellt);
+  if (!beredskap.klar) throw new Error(`Sakprövningen är inte klar: ${beredskap.hinder.join("; ")}`);
 
   const promises = tillampaLoftesforslag(forslag, befintliga, item, forslag.hash);
   const remaining = items.filter((_, i) => i !== index);
@@ -962,6 +990,12 @@ switch (command) {
     if (!args[0] || !args[1]) throw new Error("Användning: pnpm review prepare <fil.json> <post> [kostnadsargument]");
     const forslag = prepareToFile(args.slice(1), args[0]);
     console.log(`Granskningsförslag sparat: ${args[0]} (${forslag.hash}). Inget godkännande eller publicering.`);
+    break;
+  }
+  case "approve-reviewed": {
+    if (!args[0] || !args[1]) throw new Error("Användning: pnpm review approve-reviewed <beslutsunderlag.json> <post> [kostnadsargument]");
+    const underlag = loadJson<Beslutsunderlag>(args[0]);
+    approve(args.slice(1), DATA_DIR, underlag);
     break;
   }
   case "approve":

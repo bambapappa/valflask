@@ -1,10 +1,11 @@
+import { godkannMedTestunderlag as approve } from "./fixtures/provat-beslutsunderlag.ts";
 import { it } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { forberedLoftesforslag, tillampaLoftesforslag, type PromiseEntry } from "../src/loftesforslag.ts";
-import { approve, type ReviewCandidate } from "../src/review.ts";
+import { type ReviewCandidate } from "../src/review.ts";
 import { kanon, konyckel } from "../src/provningar.ts";
 
 const data = join(import.meta.dirname, "../../data");
