@@ -31,6 +31,7 @@ export interface Provning {
   datum: string;
   utfall: Utfall;
   underlag_hash: string;
+  bedomningsomfang?: unknown;
 }
 
 /** Utfall som släpper igenom. Se modulkommentaren — förbehåll är inget hinder. */
@@ -314,6 +315,16 @@ export function provningsGrind(
         "    python3 <handoff>/.claude/skills/haller-det/scripts/underlag.py <valflask> " +
         `${nycklar[0]}\n` +
         "  och skriv prövningen med logg.py skriv, följt av logg.py export.",
+    };
+  }
+  // Det nya exportformatet beskriver maskinellt förarbete. Något format
+  // för fullständig sakprövning är ännu inte infört; okänd form får inte
+  // bli godkänd genom att ett fält eller en etikett råkar vara ifyllt.
+  if (Object.prototype.hasOwnProperty.call(träff, "bedomningsomfang")) {
+    return {
+      ok: false,
+      skal: "underlaget har en uttrycklig bedömningsomfattning som inte styrker fullständig sakprövning. " +
+        "Maskinella kontroller räcker inte som sakbedömning. En separat prövning av påståendet och dess belägg krävs före godkännande.",
     };
   }
   if (!SLAPPER_IGENOM.includes(träff.utfall)) {
