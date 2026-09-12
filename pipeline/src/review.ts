@@ -9,7 +9,9 @@ import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
 import { LANAR_BELOPP, barBelopp } from "./ankarkravet.ts";
 import { svenskDag } from "./dagen.ts";
-import { harledLoftestyp } from "./loftestyp.ts";
+import { byggSakunderlag, sakprovningsBeredskap, type Sakprovning, type Sakreferens } from "./sakprovning.ts";
+import { kanoniskJson } from "./underlagsversion.ts";
+import { forberedLoftesforslag, tillampaLoftesforslag, type PromiseEntry, type FrystLoftesforslag } from "./loftesforslag.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -284,38 +286,6 @@ export interface ReviewCandidate {
   cost?: CostShape;
 }
 
-interface PromiseEntry {
-  /** Reform eller inriktning. Härleds ur citatet och prissättningen. */
-  loftestyp?: "reform" | "inriktning";
-  id: string;
-  group_id: string | null;
-  title: string;
-  slug: string;
-  parties: string[];
-  person: { name: string; role: string } | null;
-  quote: string;
-  date_stated: string;
-  source: { url: string; domain: string; archive_url: string | null; fetched_at: string };
-  category: string;
-  cost: Record<string, unknown>;
-  financing_claimed: Record<string, unknown>;
-  comparisons: string[];
-  quip: string | null;
-  status: string;
-  history: unknown[];
-  extraction: Record<string, unknown>;
-}
-
-function slugify(title: string): string {
-  const s = title
-    .toLowerCase()
-    .replace(/[åä]/g, "a")
-    .replace(/ö/g, "o")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  return s.length > 0 ? s : "lofte";
-}
-
 function loadJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
 }
@@ -341,14 +311,6 @@ function appendChangelog(dataDir: string, entry: ChangelogEntry): void {
   }
   log.push(entry);
   saveJson(path, log);
-}
-
-function domainOf(url: string): string {
-  try {
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return ""; // manuell källa kan vara fritext (t.ex. "SVT Aktuellt, rikssänt")
-  }
 }
 
 function list(dataDir: string = DATA_DIR): void {
@@ -396,18 +358,7 @@ function list(dataDir: string = DATA_DIR): void {
   console.log(`Totalt: ${items.length} post(er) i needs_review.`);
 }
 
-function nextId(promises: PromiseEntry[]): string {
-  const maxNum = promises.reduce((max, p) => {
-    const m = p.id.match(/^p-2026-(\d+)$/);
-    return m ? Math.max(max, parseInt(m[1]!, 10)) : max;
-  }, 0);
-  return `p-2026-${String(maxNum + 1).padStart(4, "0")}`;
-}
-
-export function approve(
-  rawArgs: string[],
-  dataDir: string = DATA_DIR,
-): { id: string; title: string; msekBase: number } {
+function lasGodkannandeArgument(rawArgs: string[]) {
   // Plocka ut --group <id> / --group=<id> (länkning av dublett), --calc <text>
   // (uträkningen bakom ett belopp satt för hand), --typ <kostnadstyp> och
   // --period <per_ar|engang> ur
@@ -488,18 +439,50 @@ export function approve(
     args.push(a);
   }
 
-  // Ingen skrivning medan sviten muterar data/ — dess återställning skulle ta
-  // bort den utan ett ord. Se datalas.ts för vad det kostade.
+  return [args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag] as const;
+}
+
+export interface Beslutsunderlag {
+  forslag: FrystLoftesforslag;
+  provning: Sakprovning;
+  aktuellaReferenser: Sakreferens[];
+  /** Hashen för den fullständiga prövning som beslutet avser. */
+  provningshash: string;
+}
+
+export function approve(
+  rawArgs: string[],
+  dataDir: string = DATA_DIR,
+  beslutsunderlag?: Beslutsunderlag,
+): { id: string; title: string; msekBase: number } {
   const slappLas = taLaset(dataDir, "review approve");
   try {
-    return approveLast(dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag);
+    return approveLast(dataDir, beslutsunderlag, ...lasGodkannandeArgument(rawArgs));
   } finally {
     slappLas();
   }
 }
 
-/** Själva godkännandet. Bruten ur `approve` bara för att låset ska ha ett finally. */
-function approveLast(
+/** Samma kontroller som godkännandet, utan att ändra sakdata. */
+export function prepare(rawArgs: string[], dataDir: string = DATA_DIR): FrystLoftesforslag {
+  const slappLas = taLaset(dataDir, "review prepare");
+  try {
+    return forberedLast(dataDir, ...lasGodkannandeArgument(rawArgs)).forslag;
+  } finally {
+    slappLas();
+  }
+}
+
+/** En befintlig fil får aldrig ersättas av ett nytt granskningsförslag. */
+export function prepareToFile(rawArgs: string[], file: string, dataDir: string = DATA_DIR): FrystLoftesforslag {
+  if (!file?.trim()) throw new Error("Ange fil för granskningsförslaget");
+  const forslag = prepare(rawArgs, dataDir);
+  writeFileSync(file, JSON.stringify(forslag, null, 2) + "\n", { flag: "wx" });
+  return forslag;
+}
+
+/** Förbereder slutformen efter de befintliga käll- och kostnadskontrollerna. */
+function forberedLast(
   dataDir: string,
   args: string[],
   linkTo: string | undefined,
@@ -509,7 +492,7 @@ function approveLast(
   basisUrlFlag: string | undefined,
   periodFlag: string | undefined,
   noteFlag: string | undefined,
-): { id: string; title: string; msekBase: number } {
+) {
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
   const index = loesKoArgument(items, args[0]);
 
@@ -721,72 +704,32 @@ function approveLast(
     process.exit(1);
   }
 
-  const promises = loadJson<PromiseEntry[]>(join(dataDir, "promises.json"));
-  const newId = nextId(promises);
-  const title = cand.title ?? item.articleTitle ?? "Okänt löfte";
+  const befintliga = loadJson<PromiseEntry[]>(join(dataDir, "promises.json"));
+  const forslag = forberedLoftesforslag(item, cost, befintliga, linkTo, new Date());
+  return { forslag, befintliga, item, items, index, cost };
+}
 
-  // Dublettlänkning: dela group_id med målet (R3 räknar gruppen en gång).
-  let group_id: string | null = null;
-  let groupTargetModified = false;
-  if (linkTo) {
-    const target = promises.find((p) => p.id === linkTo);
-    if (!target) {
-      console.error(`Hittade inget löfte att länka till: ${linkTo}`);
-      process.exit(1);
-    }
-    group_id = target.group_id ?? `g-${linkTo}`;
-    if (!target.group_id) {
-      target.group_id = group_id;
-      groupTargetModified = true;
-    }
-  }
-
-  const newPromise: PromiseEntry = {
-    id: newId,
-    group_id,
-    // Sorten härleds ur citatet och prissättningen, samma regel som resten av
-    // beståndet. Fältet sattes inte alls vid godkännandet: 164 löften
-    // publicerade 2026-08-25 kom ut utan sort, och utan den går en nolla inte
-    // att läsa — syns det inte om åtgärden är gratis eller om det inte finns
-    // någon åtgärd att prissätta? Sorten styr dessutom kopplingssteget.
-    loftestyp: harledLoftestyp(cand.quote ?? "", cost as never),
-    title,
-    slug: slugify(title),
-    parties: cand.parties ?? [],
-    person: cand.person ?? null,
-    quote: cand.quote ?? "",
-    date_stated: svenskDag(),
-    source: {
-      url: item.articleUrl,
-      domain: domainOf(item.articleUrl),
-      // Fylls av arkiv-backfillsteget (scripts/archive-backfill.mts) vid nästa
-      // pipelinekörning — SPEC §6.2 "nytt försök nästa run tills satt".
-      archive_url: null,
-      fetched_at: new Date().toISOString(),
-    },
-    category: cand.category ?? "övrigt",
-    cost: { ...cost },
-    // Beloppet i citatet är INTE en finansieringsuppgift. Fältet fylldes förut
-    // med `amount_in_text_msek`, och då hamnade ISK-gränsen på 500 000 kronor,
-    // barnavdragets 10 000 per barn och ett anslag på 16 miljoner i fältet för
-    // vad partiet säger att löftet finansieras med — och drogs av från vad
-    // partiernas löften kostar. Beskriver löftet ingen finansiering är fältet
-    // tomt (rättat på p-2026-0463, p-2026-0465 och p-2026-0571).
-    financing_claimed: {
-      described: false,
-      summary: null,
-      msek: null,
-    },
-    comparisons: [],
-    quip: null,
-    status: "aktiv",
-    history: [],
-    extraction: {
-      model: "review",
-      verified_by: "owner",
-      run_id: `review-${new Date().toISOString().slice(0, 13)}`,
-    },
-  };
+/** Själva godkännandet. Bruten ur `approve` bara för att låset ska ha ett finally. */
+function approveLast(
+  dataDir: string,
+  beslutsunderlag: Beslutsunderlag | undefined,
+  args: string[],
+  linkTo: string | undefined,
+  calculationFlag: string | undefined,
+  typFlag: string | undefined,
+  basisFlag: string | undefined,
+  basisUrlFlag: string | undefined,
+  periodFlag: string | undefined,
+  noteFlag: string | undefined,
+): { id: string; title: string; msekBase: number } {
+  const { forslag: nyberett, befintliga, item, items, index, cost } = forberedLast(
+    dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag,
+  );
+  // Kostnadsargumenten prövas även när en tidigare slutform används.
+  const forslag = beslutsunderlag?.forslag ?? nyberett;
+  const cand = item.candidate;
+  const newPromise = forslag.nyttLofte;
+  const { id: newId, title, group_id } = newPromise;
 
   // Kvalitetsfiltret, som grind. Hashen räknas på löftet som det FAKTISKT
   // kommer att publiceras — inte på kö-posten — så ett belopp satt för hand
@@ -808,8 +751,21 @@ function approveLast(
     process.exit(1);
   }
 
-  promises.push(newPromise);
-  promises.sort((a, b) => a.id.localeCompare(b.id));
+  if (!beslutsunderlag) {
+    throw new Error("Godkännandet kräver sparat löftesförslag och separat sakprövning; äldre prövningsindex räcker inte.");
+  }
+  if (createHash("sha256").update(kanoniskJson(beslutsunderlag.provning)).digest("hex") !== beslutsunderlag.provningshash) {
+    throw new Error("Sakprövningen matchar inte beslutets prövningshash");
+  }
+  const forvantatForslag = forberedLoftesforslag(item, cost, befintliga, linkTo, new Date(forslag.tidpunkt));
+  if (forvantatForslag.hash !== forslag.hash) {
+    throw new Error("Godkännandets argument eller underlag skiljer sig från det sparade förslaget");
+  }
+  const aktuellt = byggSakunderlag(forslag, befintliga, item, beslutsunderlag.aktuellaReferenser);
+  const beredskap = sakprovningsBeredskap(beslutsunderlag.provning, aktuellt);
+  if (!beredskap.klar) throw new Error(`Sakprövningen är inte klar: ${beredskap.hinder.join("; ")}`);
+
+  const promises = tillampaLoftesforslag(forslag, befintliga, item, forslag.hash);
   const remaining = items.filter((_, i) => i !== index);
 
   saveJson(join(dataDir, "promises.json"), promises);
@@ -820,10 +776,10 @@ function approveLast(
   appendChangelog(dataDir, {
     run_id: `review-${newId}`,
     added: [newId],
-    updated: groupTargetModified ? [linkTo!] : [],
+    updated: forslag.gruppandring ? [forslag.gruppandring.id] : [],
     retracted: [],
     data_hash: computeDataHash(promises),
-    timestamp: new Date().toISOString(),
+    timestamp: forslag.tidpunkt,
   });
 
   const linkNote = group_id ? ` [länkad till group ${group_id}]` : "";
@@ -1030,6 +986,18 @@ switch (command) {
     reject(String(index), args.slice(1).join(" "));
     break;
   }
+  case "prepare": {
+    if (!args[0] || !args[1]) throw new Error("Användning: pnpm review prepare <fil.json> <post> [kostnadsargument]");
+    const forslag = prepareToFile(args.slice(1), args[0]);
+    console.log(`Granskningsförslag sparat: ${args[0]} (${forslag.hash}). Inget godkännande eller publicering.`);
+    break;
+  }
+  case "approve-reviewed": {
+    if (!args[0] || !args[1]) throw new Error("Användning: pnpm review approve-reviewed <beslutsunderlag.json> <post> [kostnadsargument]");
+    const underlag = loadJson<Beslutsunderlag>(args[0]);
+    approve(args.slice(1), DATA_DIR, underlag);
+    break;
+  }
   case "approve":
     if (!args[0]) {
       console.error(
@@ -1065,7 +1033,8 @@ switch (command) {
     add(args[0]);
     break;
   default:
-    console.log("Användning: pnpm review <list|approve|reject|add>");
+    console.log("Användning: pnpm review <list|prepare|approve|reject|add>");
+    console.log("  prepare <fil.json> <post> [kostnadsargument]  Spara förslag för prövning, utan godkännande");
     console.log("  list                         Visa poster i needs_review");
     console.log("  approve <post> [low base high] [--group p-XXXX]  Godkänn; kostnad; länka dublett");
     console.log("           [--typ <kostnadstyp>] [--period <per_ar|engang>] [--basis <källnivå>]");

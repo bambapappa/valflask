@@ -1,3 +1,4 @@
+import { godkannMedTestunderlag as approve } from "./fixtures/provat-beslutsunderlag.ts";
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { mkdtempSync, writeFileSync, readFileSync, rmSync } from "node:fs";
@@ -8,7 +9,6 @@ import {
   parseReviewCommand,
   reviewId,
   findIndexByReviewId,
-  approve,
   type ReviewCandidate,
 } from "../src/review.ts";
 import { computeDataHash } from "../src/publish.ts";

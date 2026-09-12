@@ -6,6 +6,6 @@
  * den här i stället och läser utfallskoden — så det som prövas är att grinden
  * verkligen sitter i godkännandevägen, inte bara att den fungerar för sig.
  */
-import { approve } from "../../src/review.ts";
+import { godkannMedTestunderlag as approve } from "./provat-beslutsunderlag.ts";
 
 approve(["0"], process.argv[2]!);
