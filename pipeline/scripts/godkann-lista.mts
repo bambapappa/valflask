@@ -23,8 +23,9 @@
  */
 import { readFileSync } from "node:fs";
 import { join, resolve, dirname } from "node:path";
-import { approve, reviewId } from "../src/review.ts";
-import { forprovaGodkannandelista, kontrolleraListansForelage } from "../src/godkannandelista.ts";
+import { reviewId } from "../src/review.ts";
+import { forberedGodkannandelista } from "../src/godkannandelista.ts";
+import { skrivFilpaket } from "../src/datatransaktion.ts";
 import type { Beslutsunderlag, ReviewCandidate } from "../src/review.ts";
 
 const fil = process.argv[2];
@@ -74,13 +75,8 @@ const beslut = rader.map((r) => {
   if (r.group) args.push("--group", r.group);
   return { args, underlag, provningshash: r.provningshash };
 });
-const fore = forprovaGodkannandelista(beslut, DATA_DIR);
+const paket = forberedGodkannandelista(beslut, DATA_DIR);
 console.log(`${rader.length} rader förprövade i isolerad kopia. ${skriv ? "SKRIVER." : "Inga sakdata skrivna — kör om med --skriv."}`);
 if (!skriv) process.exit(0);
-kontrolleraListansForelage(DATA_DIR, fore);
-let n = 0;
-for (const b of beslut) {
-  approve(b.args, DATA_DIR, b.underlag, b.provningshash);
-  n++;
-}
-console.log(`${n} av ${rader.length} godkända.`);
+skrivFilpaket(DATA_DIR, paket);
+console.log(`${rader.length} av ${rader.length} godkända.`);

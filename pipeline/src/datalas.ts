@@ -31,6 +31,11 @@ import { readFileSync, writeFileSync, existsSync, rmSync, mkdirSync } from "node
 import { join } from "node:path";
 
 export const LASFIL = ".datalas";
+export const TRANSAKTION = ".datatransaktion";
+
+function kravIngenTransaktion(dataDir: string): void {
+  if (existsSync(join(dataDir, TRANSAKTION))) throw new Error("data/ har en oavslutad transaktion; återställ filpaketet före nästa skrivning");
+}
 
 export interface Lasinnehav {
   /** Vad som håller låset, i klartext: «sviten i site/», «review approve». */
@@ -96,7 +101,7 @@ function medLasbyte<T>(dataDir: string, arbete: () => T): T {
 }
 
 export function lasinnehav(dataDir: string): Lasinnehav | null {
-  return medLasbyte(dataDir, () => lasinnehavLast(dataDir));
+  return medLasbyte(dataDir, () => { kravIngenTransaktion(dataDir); return lasinnehavLast(dataDir); });
 }
 
 /** Låset i klartext, för ett felmeddelande någon ska kunna handla på. */
@@ -117,8 +122,18 @@ export function lastext(innehav: Lasinnehav): string {
  * ett `process.exit()` mitt i en grind inte lämnar katalogen låst.
  */
 export function taLaset(dataDir: string, hallare: string): () => void {
+  return taLasetInternt(dataDir, hallare, false);
+}
+
+/** Endast för återställning från den beständiga transaktionsjournalen. */
+export function taAterstallningslas(dataDir: string): () => void {
+  return taLasetInternt(dataDir, "återställning av filpaket", true);
+}
+
+function taLasetInternt(dataDir: string, hallare: string, aterstallning: boolean): () => void {
   const vag = lasvag(dataDir);
   medLasbyte(dataDir, () => {
+    if (!aterstallning) kravIngenTransaktion(dataDir);
     const innehav = lasinnehavLast(dataDir);
     if (innehav) throw new Error(lastext(innehav));
     writeFileSync(

@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { skapaFilpaket, type Filpaket } from "./datatransaktion.ts";
 import type { Beslutsunderlag } from "./review.ts";
 import { kanoniskJson } from "./underlagsversion.ts";
 
@@ -27,7 +28,7 @@ function hash(lage: Record<string, string | null>): string {
 }
 
 /** Samma skrivväg körs sekventiellt i en engångskopia; originalfilerna ändras inte. */
-export function forprovaGodkannandelista(rader: readonly Listgodkannande[], dataDir: string): string {
+export function forberedGodkannandelista(rader: readonly Listgodkannande[], dataDir: string): Filpaket {
   if (!Array.isArray(rader) || rader.length === 0) throw new Error("Godkännandelistan är tom");
   const lage = lasLage(dataDir);
   const dir = mkdtempSync(join(tmpdir(), "godkannandelista-"));
@@ -46,10 +47,14 @@ export function forprovaGodkannandelista(rader: readonly Listgodkannande[], data
         throw new Error(`Förprövningen stoppades på rad ${i + 1}; inga originaldata skrivna. ${r.error?.message ?? r.stderr}`);
       }
     }
-    return hash(lage);
+    return skapaFilpaket(lage, lasLage(dir));
   } finally { rmSync(dir, { recursive: true, force: true }); }
 }
 
 export function kontrolleraListansForelage(dataDir: string, forvantadHash: string): void {
   if (hash(lasLage(dataDir)) !== forvantadHash) throw new Error("Listans föreläge ändrades efter förprövningen; kör hela förprövningen igen");
+}
+
+export function forprovaGodkannandelista(rader: readonly Listgodkannande[], dataDir: string): string {
+  return hash(forberedGodkannandelista(rader, dataDir).fore);
 }
