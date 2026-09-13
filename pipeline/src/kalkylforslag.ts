@@ -1,3 +1,6 @@
+import { readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { taLaset } from "./datalas.ts";
 import { createHash } from "node:crypto";
 import { kanoniskJson } from "./underlagsversion.ts";
 import { flytta, provaFlytt, type Flyttrad } from "./kalkylflytt.ts";
@@ -53,4 +56,19 @@ export function tillampaKalkylforslag(forslag: FrystKalkylforslag, loften: Promi
   const aktuellt = forberedKalkylforslag(forslag.rad, loften, kopost, new Date(forslag.tidpunkt));
   if (aktuellt.hash !== sparad) throw new Error("Kalkylförslagets föreläge eller slutform har ändrats");
   return structuredClone(loften.map((p) => p.id === forslag.nyttLofte.id ? forslag.nyttLofte : p));
+}
+
+/** Sparar ett privat förslag utan att ändra kö eller publicerade poster. */
+export function forberedKalkylTillFil(dataDir: string, id: string, mal: string, skal: string, fil: string): FrystKalkylforslag {
+  const slapp = taLaset(dataDir, "förbered kalkylförslag");
+  try {
+    const loften = JSON.parse(readFileSync(join(dataDir, "promises.json"), "utf8")) as PromiseEntry[];
+    const ko = JSON.parse(readFileSync(join(dataDir, "needs_review.json"), "utf8")) as ReviewCandidate[];
+    const poster = ko.filter((p) => reviewId(p) === id);
+    if (poster.length !== 1 || !poster[0]!.cost) throw new Error("Kräver en entydig köpost med kostnad");
+    const post = poster[0]!;
+    const forslag = forberedKalkylforslag({ fran: id, till: mal, skal, kostnad: { ...post.cost! } }, loften, post, new Date());
+    writeFileSync(fil, JSON.stringify(forslag, null, 2) + "\n", { flag: "wx", mode: 0o600 });
+    return forslag;
+  } finally { slapp(); }
 }
