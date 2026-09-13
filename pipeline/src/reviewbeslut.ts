@@ -1,3 +1,4 @@
+import type { Kalkylbeslutsunderlag } from "./kalkylbeslut.ts";
 import type { Beslutsunderlag } from "./review.ts";
 /**
  * Besluten från Avgörandets review-spår, prövade innan något verkställs.
@@ -54,6 +55,8 @@ export interface Beslut {
   kostnad_da?: Record<string, unknown> | null;
   tid?: string;
   underlagsfil?: string;
+  kalkylunderlagsfil?: string;
+  kalkylbeslutsunderlag?: Kalkylbeslutsunderlag;
   beslutsunderlag?: Beslutsunderlag;
   provningshash?: string;
 }

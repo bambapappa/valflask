@@ -10,6 +10,7 @@ if (!fil) throw new Error("Ange beslutsfilen: pnpm review-verkstall <beslutsfil>
 const rader = readFileSync(resolve(fil), "utf8").split("\n").filter((r) => r.trim()).map((r) => {
   const b = JSON.parse(r) as Beslut;
   if (b.underlagsfil) b.beslutsunderlag = JSON.parse(readFileSync(resolve(dirname(fil), b.underlagsfil), "utf8"));
+  if (b.kalkylunderlagsfil) b.kalkylbeslutsunderlag = JSON.parse(readFileSync(resolve(dirname(fil), b.kalkylunderlagsfil), "utf8"));
   return b;
 }).filter((b) => (b.spar ?? "review") === "review");
 const dir = join(import.meta.dirname, "../../data");

@@ -1,3 +1,4 @@
+import { provatKalkylunderlag } from "./fixtures/provat-kalkylunderlag.ts";
 import { it } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync, mkdtempSync, rmSync, mkdirSync, cpSync, symlinkSync } from "node:fs";
@@ -28,6 +29,17 @@ function init(dir: string): Beslut[] {
     { id: reviewId(items[1]!), val: "delat", grupp_id: target.id, beslutsunderlag: underlag, provningshash: underlag.provningshash },
   ];
 }
+function kalkylrad(dir: string): Beslut {
+  const k = items[2]!;
+  const best = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8"));
+  const mal = best.find((p: { status: string; loftestyp: string; parties: string[]; person: unknown; cost: { calculation: string } }) =>
+    p.status === "aktiv" && p.loftestyp === "reform" && JSON.stringify(p.person ?? null) === JSON.stringify(k.candidate.person ?? null) &&
+    JSON.stringify([...p.parties].sort()) === JSON.stringify([...(k.candidate.parties ?? [])].sort()) && p.cost.calculation !== k.cost!.calculation);
+  assert.ok(mal);
+  const rad = { fran: reviewId(k), till: mal.id, kostnad: { ...k.cost! }, skal: "Tekniskt prov; period och kostnadstyp följer den nya kalkylen." };
+  const u = provatKalkylunderlag(rad, best, k);
+  return { id: rad.fran, val: "dubblett_kalkyl", kalkyl_till: rad.till, kostnad_da: rad.kostnad, not: rad.skal, kalkylbeslutsunderlag: u, provningshash: u.provningshash };
+}
 it("avvisning och godkännande förprövas tillsammans och skriver exakt paket", () => {
   const dir = mkdtempSync(join(tmpdir(), "blandat-"));
   try {
@@ -46,8 +58,7 @@ it("fel efter kalkylflytt och avvisning lämnar alla originalfiler orörda", () 
   try {
     const beslut = init(dir);
     beslut[1]!.provningshash = "0".repeat(64);
-    beslut.unshift({ id: reviewId(items[2]!), val: "dubblett_kalkyl", kalkyl_till: target.id,
-      kostnad_da: { ...target.cost, calculation: "Prov av överförd kalkyl, ingen sakbedömning." }, not: "Tekniskt prov av kalkylflytt" });
+    beslut.unshift(kalkylrad(dir));
     const fore = lasFillage(dir, VERKSTALLFILER);
     assert.throws(() => forberedReviewverkstall(beslut, dir), (error: Error) => /inga originaldata skrivna/u.test(error.message) && /Avbröt efter 2 av 3/u.test(error.message));
     assert.deepEqual(lasFillage(dir, VERKSTALLFILER), fore);
@@ -80,6 +91,18 @@ it("verklig CLI för blandade beslut torrkör, stoppar sent fel och skriver gilt
     beslut[1]!.provningshash = hash; save(); const good = run(true); assert.equal(good.status, 0, good.stderr);
     assert.equal(JSON.parse(readFileSync(join(dir, "needs_review.json"), "utf8")).length, 1);
     assert.equal(JSON.parse(readFileSync(join(dir, "avvisade.json"), "utf8")).length, 1);
+    const kalkyl = kalkylrad(dir), u = kalkyl.kalkylbeslutsunderlag!;
+    writeFileSync(join(root, "kalkylunderlag.json"), JSON.stringify(u));
+    delete kalkyl.kalkylbeslutsunderlag;
+    beslut.splice(0, beslut.length, kalkyl); save();
+    const innanKalkyl = lasFillage(dir, VERKSTALLFILER);
+    const saknat = run(true); assert.notEqual(saknat.status, 0); assert.match(saknat.stderr, /Kalkylflytt kräver/u);
+    assert.deepEqual(lasFillage(dir, VERKSTALLFILER), innanKalkyl);
+    kalkyl.kalkylunderlagsfil = "kalkylunderlag.json"; save();
+    const kalkylOk = run(true); assert.equal(kalkylOk.status, 0, kalkylOk.stderr);
+    const efterKalkyl = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8"));
+    assert.deepEqual(efterKalkyl.find((p: { id: string }) => p.id === kalkyl.kalkyl_till), u.forslag.nyttLofte);
+    assert.equal(JSON.parse(readFileSync(join(dir, "needs_review.json"), "utf8")).length, 0);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
@@ -87,13 +110,12 @@ it("kalkylflyttens ändrade löfte, rättelse och avvisning finns i samma paket"
   const dir = mkdtempSync(join(tmpdir(), "kalkylpaket-"));
   try {
     const beslut = init(dir).slice(0, 1);
-    beslut.unshift({ id: reviewId(items[2]!), val: "dubblett_kalkyl", kalkyl_till: target.id,
-      kostnad_da: { ...target.cost, calculation: "Prov av överförd kalkyl, ingen sakbedömning." }, not: "Tekniskt prov av kalkylflytt" });
+    beslut.unshift(kalkylrad(dir));
     const fore = lasFillage(dir, VERKSTALLFILER);
     const paket = forberedReviewverkstall(beslut, dir);
     assert.deepEqual(lasFillage(dir, VERKSTALLFILER), fore);
-    const efter = JSON.parse(paket.efter["promises.json"]!).find((p: { id: string }) => p.id === target.id);
-    assert.equal(efter.cost.calculation, "Prov av överförd kalkyl, ingen sakbedömning.");
+    const efter = JSON.parse(paket.efter["promises.json"]!).find((p: { id: string }) => p.id === beslut[0]!.kalkyl_till);
+    assert.equal(efter.cost.calculation, items[2]!.cost!.calculation);
     assert.equal(JSON.parse(paket.efter["rattelser.json"]!).length, 1);
     assert.equal(JSON.parse(paket.efter["avvisade.json"]!).length, 2);
     assert.equal(JSON.parse(paket.efter["needs_review.json"]!).length, 1);

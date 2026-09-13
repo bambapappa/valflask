@@ -1,3 +1,5 @@
+import { tillampaProvatKalkylbeslut } from "./kalkylbeslut.ts";
+import type { PromiseEntry } from "./loftesforslag.ts";
 /**
  * Verkställer Avgörandets review-beslut: publicerar kön eller avvisar den.
  *
@@ -29,7 +31,6 @@ import { LANAR_BELOPP } from "../src/ankarkravet.ts";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { svenskDag } from "../src/dagen.ts";
 import {
-  flytta,
   forandring,
   provaFlytt,
   type Flyttrad,
@@ -284,7 +285,10 @@ if (flyttarKvar.length > 0) {
   for (const f of flyttarKvar) {
     const i = loftenNu.findIndex((p) => p.id === f.till);
     riket += forandring(f, loftenNu[i]!);
-    loftenNu[i] = flytta(loftenNu[i]!, f, datum);
+    const beslut = attGora.find((b) => b.id === f.fran)!;
+    const kandidat = ko.find((p) => reviewId(p) === f.fran)!;
+    loftenNu = tillampaProvatKalkylbeslut(f, loftenNu as unknown as PromiseEntry[], kandidat,
+      beslut.kalkylbeslutsunderlag, beslut.provningshash) as unknown as Malpost[];
     rorda.push(f.till);
   }
   writeFileSync(join(DATA, "promises.json"), JSON.stringify(loftenNu, null, 2) + "\n");
