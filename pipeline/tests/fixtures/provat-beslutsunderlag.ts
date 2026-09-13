@@ -27,5 +27,6 @@ export function provatBeslutsunderlag(args: string[], dir: string): Beslutsunder
 }
 
 export function godkannMedTestunderlag(args: string[], dir: string) {
-  return approve(args, dir, provatBeslutsunderlag(args, dir));
+  const underlag = provatBeslutsunderlag(args, dir);
+  return approve(args, dir, underlag, underlag.provningshash);
 }

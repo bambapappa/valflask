@@ -45,17 +45,20 @@ it("ändrad prövning, ändrat referensmaterial och oavgjort stoppar före skriv
   const { dir, underlag } = badda();
   try {
     const before = files.map((f) => readFileSync(join(dir, f)));
+    assert.throws(() => approve(args, dir, underlag), /separata prövningshash saknas/);
     const changed = structuredClone(underlag);
     changed.provning.bedomningar[0]!.motivering += " Ändrad.";
-    assert.throws(() => approve(args, dir, changed), /prövningshash/);
-    assert.throws(() => approve([...args, "--calc", "Ändrad beräkningsgrund."], dir, underlag), /argument eller underlag/);
+    assert.throws(() => approve(args, dir, changed, underlag.provningshash), /prövningshash/);
+    assert.throws(() => approve([...args, "--calc", "Ändrad beräkningsgrund."], dir, underlag, underlag.provningshash), /argument eller underlag/);
+    changed.provningshash = createHash("sha256").update(kanoniskJson(changed.provning)).digest("hex");
+    assert.throws(() => approve(args, dir, changed, underlag.provningshash), /avser en annan prövning/);
     const ref = structuredClone(underlag);
     ref.aktuellaReferenser[0]!.innehall += " Ändrat.";
-    assert.throws(() => approve(args, dir, ref), /annat underlag/);
+    assert.throws(() => approve(args, dir, ref, underlag.provningshash), /annat underlag/);
     const open = structuredClone(underlag);
     open.provning.bedomningar[0]!.utfall = "oavgjort";
     open.provningshash = createHash("sha256").update(kanoniskJson(open.provning)).digest("hex");
-    assert.throws(() => approve(args, dir, open), /oavgjort/);
+    assert.throws(() => approve(args, dir, open, open.provningshash), /oavgjort/);
     files.forEach((f, i) => assert.deepEqual(readFileSync(join(dir, f)), before[i], f));
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
@@ -65,7 +68,7 @@ it("godkännandet skriver exakt den tidigare sparade slutformen trots senare klo
   try {
     const saved = JSON.parse(JSON.stringify(underlag));
     t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-09-20T12:00:00Z") });
-    approve(args, dir, saved);
+    approve(args, dir, saved, underlag.provningshash);
     const after = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8"));
     assert.deepEqual(after.find((p: { id: string }) => p.id === saved.forslag.nyttLofte.id), saved.forslag.nyttLofte);
     assert.deepEqual(after.find((p: { id: string }) => p.id === target.id), saved.forslag.gruppandring);

@@ -454,10 +454,11 @@ export function approve(
   rawArgs: string[],
   dataDir: string = DATA_DIR,
   beslutsunderlag?: Beslutsunderlag,
+  beslutetsProvningshash?: string,
 ): { id: string; title: string; msekBase: number } {
   const slappLas = taLaset(dataDir, "review approve");
   try {
-    return approveLast(dataDir, beslutsunderlag, ...lasGodkannandeArgument(rawArgs));
+    return approveLast(dataDir, beslutsunderlag, beslutetsProvningshash, ...lasGodkannandeArgument(rawArgs));
   } finally {
     slappLas();
   }
@@ -713,6 +714,7 @@ function forberedLast(
 function approveLast(
   dataDir: string,
   beslutsunderlag: Beslutsunderlag | undefined,
+  beslutetsProvningshash: string | undefined,
   args: string[],
   linkTo: string | undefined,
   calculationFlag: string | undefined,
@@ -753,6 +755,11 @@ function approveLast(
 
   if (!beslutsunderlag) {
     throw new Error("Godkännandet kräver sparat löftesförslag och separat sakprövning; äldre prövningsindex räcker inte.");
+  }
+  // Referensen kommer från beslutskällan, inte från filen som kontrolleras.
+  if (!/^[0-9a-f]{64}$/u.test(beslutetsProvningshash ?? "") ||
+      beslutetsProvningshash !== beslutsunderlag.provningshash) {
+    throw new Error("Beslutets separata prövningshash saknas eller avser en annan prövning");
   }
   if (createHash("sha256").update(kanoniskJson(beslutsunderlag.provning)).digest("hex") !== beslutsunderlag.provningshash) {
     throw new Error("Sakprövningen matchar inte beslutets prövningshash");
@@ -993,9 +1000,9 @@ switch (command) {
     break;
   }
   case "approve-reviewed": {
-    if (!args[0] || !args[1]) throw new Error("Användning: pnpm review approve-reviewed <beslutsunderlag.json> <post> [kostnadsargument]");
+    if (!args[0] || !args[1] || !args[2]) throw new Error("Användning: pnpm review approve-reviewed <beslutsunderlag.json> <beslutets-prövningshash> <post> [kostnadsargument]");
     const underlag = loadJson<Beslutsunderlag>(args[0]);
-    approve(args.slice(1), DATA_DIR, underlag);
+    approve(args.slice(2), DATA_DIR, underlag, args[1]);
     break;
   }
   case "approve":
