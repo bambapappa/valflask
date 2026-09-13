@@ -21,8 +21,13 @@
  * process som inte längre finns räknas som släppt — annars hade en avbruten
  * körning låst katalogen tills någon rensade för hand, och den som rensar för
  * hand slutar snart läsa vad låset säger.
+ *
+ * Låsbytet serialiseras av katalogen `.datalas-byte`. Ett avbrott inne i
+ * låsbytet lämnar den kvar och stoppar nya skrivare. Kontrollera då att inga
+ * processer använder katalogen innan spärren återställs; den tas aldrig bort
+ * enbart för att tid har gått. Oläslig processidentitet kräver också kontroll.
  */
-import { readFileSync, writeFileSync, existsSync, rmSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, rmSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 
 export const LASFIL = ".datalas";
@@ -57,22 +62,41 @@ function lever(pid: number): boolean {
  * Ett lås vars innehavare är död städas undan här, så att nästa läsare möter en
  * fri katalog i stället för ett spöke.
  */
-export function lasinnehav(dataDir: string): Lasinnehav | null {
+function lasinnehavLast(dataDir: string): Lasinnehav | null {
   const vag = lasvag(dataDir);
   if (!existsSync(vag)) return null;
   let innehav: Lasinnehav;
   try {
     innehav = JSON.parse(readFileSync(vag, "utf8")) as Lasinnehav;
   } catch {
-    // Ett oläsligt lås är inte ett lås. Ta bort det och gå vidare.
-    rmSync(vag, { force: true });
-    return null;
+    throw new Error("data/ har en oläslig låsfil; kontrollera innehavaren innan låset återställs");
   }
-  if (!Number.isInteger(innehav.pid) || !lever(innehav.pid)) {
+  if (!Number.isInteger(innehav.pid) || innehav.pid <= 0) {
+    throw new Error("data/ har en låsfil utan giltig processidentitet");
+  }
+  if (!lever(innehav.pid)) {
     rmSync(vag, { force: true });
     return null;
   }
   return innehav;
+}
+
+/** Serialiserar läsning, städning av döda lås och ny låstagning. */
+function medLasbyte<T>(dataDir: string, arbete: () => T): T {
+  const vakt = join(dataDir, ".datalas-byte");
+  try { mkdirSync(vakt); }
+  catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "EEXIST") {
+      throw new Error("data/ har ett pågående eller avbrutet låsbyte; försök igen och kontrollera processerna om spärren kvarstår");
+    }
+    throw error;
+  }
+  try { return arbete(); }
+  finally { rmSync(vakt, { recursive: true }); }
+}
+
+export function lasinnehav(dataDir: string): Lasinnehav | null {
+  return medLasbyte(dataDir, () => lasinnehavLast(dataDir));
 }
 
 /** Låset i klartext, för ett felmeddelande någon ska kunna handla på. */
@@ -93,19 +117,22 @@ export function lastext(innehav: Lasinnehav): string {
  * ett `process.exit()` mitt i en grind inte lämnar katalogen låst.
  */
 export function taLaset(dataDir: string, hallare: string): () => void {
-  const innehav = lasinnehav(dataDir);
-  if (innehav) throw new Error(lastext(innehav));
-
   const vag = lasvag(dataDir);
-  writeFileSync(
+  medLasbyte(dataDir, () => {
+    const innehav = lasinnehavLast(dataDir);
+    if (innehav) throw new Error(lastext(innehav));
+    writeFileSync(
     vag,
     JSON.stringify({ hallare, pid: process.pid, sedan: new Date().toISOString() }, null, 2) + "\n",
-  );
+    { flag: "wx" },
+    );
+  });
 
   let slappt = false;
   const slapp = () => {
     if (slappt) return;
     slappt = true;
+    process.removeListener("exit", slapp);
     // Släpp bara VÅRT lås: har någon annan hunnit ta det är det inte vårt att ta bort.
     try {
       const nu = JSON.parse(readFileSync(vag, "utf8")) as Lasinnehav;
@@ -125,8 +152,12 @@ export function taLaset(dataDir: string, hallare: string): () => void {
  * skymmer beskedet.
  */
 export function kravFrittData(dataDir: string): void {
-  const innehav = lasinnehav(dataDir);
-  if (!innehav) return;
-  console.error(lastext(innehav));
+  try {
+    const innehav = lasinnehav(dataDir);
+    if (!innehav) return;
+    console.error(lastext(innehav));
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : String(error));
+  }
   process.exit(1);
 }
