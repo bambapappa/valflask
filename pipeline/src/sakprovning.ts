@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { bindUnderlag, kanoniskJson, sammaUnderlag, type BundetUnderlag } from "./underlagsversion.ts";
 import { byggUnderlagsregister } from "./underlagsregister.ts";
 import { tillampaLoftesforslag, type FrystLoftesforslag, type PromiseEntry } from "./loftesforslag.ts";
+import { tillampaKalkylforslag, type FrystKalkylforslag } from "./kalkylforslag.ts";
 import type { ReviewCandidate } from "./review.ts";
 
 export interface Sakreferens {
@@ -12,7 +13,7 @@ export interface Sakreferens {
 }
 export interface Sakunderlag {
   version: "sakunderlag/1";
-  forslag: FrystLoftesforslag;
+  forslag: FrystLoftesforslag | FrystKalkylforslag;
   poster: BundetUnderlag;
   referenser: Sakreferens[];
   hash: string;
@@ -62,12 +63,14 @@ function referenser(referenser: readonly Sakreferens[]): Sakreferens[] {
 
 /** Binder sparad slutform och rekursiva grupp-/ankarberoenden; hämtar inga källor. */
 export function byggSakunderlag(
-  forslag: FrystLoftesforslag,
+  forslag: FrystLoftesforslag | FrystKalkylforslag,
   loften: PromiseEntry[],
   kopost: ReviewCandidate,
   material: readonly Sakreferens[],
 ): Sakunderlag {
-  const efter = tillampaLoftesforslag(forslag, loften, kopost, forslag.hash);
+  const efter = forslag.version === "kalkylforslag/1"
+    ? tillampaKalkylforslag(forslag, loften, kopost, forslag.hash)
+    : tillampaLoftesforslag(forslag, loften, kopost, forslag.hash);
   const register = byggUnderlagsregister({
     loften: efter as unknown as Record<string, unknown>[],
     handlingar: [], kopplingar: [], standpunkter: [],
