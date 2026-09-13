@@ -15,15 +15,17 @@
  * `calc` krävs så snart ett belopp sätts — ett belopp utan uträkning publiceras
  * inte.
  *
- * TORRKÖRNING ÄR STANDARD: utan `--skriv` prövas bara att raderna går att läsa
- * och att varje id finns i kön.
+ * Varje rad kräver underlagsfil och separat provningshash från beslutet.
+ * TORRKÖRNING ÄR STANDARD: utan `--skriv` prövas att raderna går att läsa
+ * och att varje beslut går att verkställa, i listans ordning, i en isolerad kopia.
  *
  *   pnpm godkann-lista -- <fil.json> [--skriv]
  */
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve, dirname } from "node:path";
 import { approve, reviewId } from "../src/review.ts";
-import type { ReviewCandidate } from "../src/review.ts";
+import { forprovaGodkannandelista, kontrolleraListansForelage } from "../src/godkannandelista.ts";
+import type { Beslutsunderlag, ReviewCandidate } from "../src/review.ts";
 
 const fil = process.argv[2];
 const skriv = process.argv.includes("--skriv");
@@ -34,8 +36,9 @@ if (!fil) {
 
 type Rad = {
   id: string; low?: number; base?: number; high?: number;
-  typ?: string; period?: string; basis?: string; calc?: string; note?: string; group?: string;
+  typ?: string; period?: string; basis?: string; basis_url?: string; calc?: string; note?: string; group?: string;
   titel?: string;
+  underlagsfil: string; provningshash: string;
 };
 const rader = JSON.parse(readFileSync(fil, "utf8")) as Rad[];
 
@@ -54,20 +57,30 @@ if (utanCalc.length > 0) {
   process.exit(1);
 }
 
-console.log(`${rader.length} rader. ${skriv ? "SKRIVER." : "Torrkörning — kör om med --skriv."}`);
-if (!skriv) process.exit(0);
-
-let n = 0;
-for (const r of rader) {
+const DATA_DIR = join(import.meta.dirname, "../../data");
+const beslut = rader.map((r) => {
+  if (!r.underlagsfil || !/^[0-9a-f]{64}$/u.test(r.provningshash ?? "")) {
+    throw new Error(`Beslutet ${r.id} saknar underlagsfil eller separat prövningshash`);
+  }
+  const underlag = JSON.parse(readFileSync(resolve(dirname(fil), r.underlagsfil), "utf8")) as Beslutsunderlag;
   const args: string[] = [r.id];
   if (r.base !== undefined) args.push(String(r.low ?? r.base), String(r.base), String(r.high ?? r.base));
   if (r.calc) args.push("--calc", r.calc);
   if (r.typ) args.push("--typ", r.typ);
   if (r.period) args.push("--period", r.period);
   if (r.basis) args.push("--basis", r.basis);
+  if (r.basis_url) args.push("--basis-url", r.basis_url);
   if (r.note) args.push("--note", r.note);
   if (r.group) args.push("--group", r.group);
-  approve(args);
+  return { args, underlag, provningshash: r.provningshash };
+});
+const fore = forprovaGodkannandelista(beslut, DATA_DIR);
+console.log(`${rader.length} rader förprövade i isolerad kopia. ${skriv ? "SKRIVER." : "Inga sakdata skrivna — kör om med --skriv."}`);
+if (!skriv) process.exit(0);
+kontrolleraListansForelage(DATA_DIR, fore);
+let n = 0;
+for (const b of beslut) {
+  approve(b.args, DATA_DIR, b.underlag, b.provningshash);
   n++;
 }
 console.log(`${n} av ${rader.length} godkända.`);
