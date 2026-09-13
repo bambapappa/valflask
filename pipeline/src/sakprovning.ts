@@ -3,6 +3,7 @@ import { bindUnderlag, kanoniskJson, sammaUnderlag, type BundetUnderlag } from "
 import { byggUnderlagsregister } from "./underlagsregister.ts";
 import { tillampaLoftesforslag, type FrystLoftesforslag, type PromiseEntry } from "./loftesforslag.ts";
 import { tillampaKalkylforslag, type FrystKalkylforslag } from "./kalkylforslag.ts";
+import { tillampaUtrakningsforslag, type FrystUtrakningsforslag } from "./utrakningsforslag.ts";
 import type { ReviewCandidate } from "./review.ts";
 
 export interface Sakreferens {
@@ -13,7 +14,7 @@ export interface Sakreferens {
 }
 export interface Sakunderlag {
   version: "sakunderlag/1";
-  forslag: FrystLoftesforslag | FrystKalkylforslag;
+  forslag: FrystLoftesforslag | FrystKalkylforslag | FrystUtrakningsforslag;
   poster: BundetUnderlag;
   referenser: Sakreferens[];
   hash: string;
@@ -71,6 +72,16 @@ export function byggSakunderlag(
   const efter = forslag.version === "kalkylforslag/1"
     ? tillampaKalkylforslag(forslag, loften, kopost, forslag.hash)
     : tillampaLoftesforslag(forslag, loften, kopost, forslag.hash);
+  return bindSlutform(forslag, efter, material);
+}
+
+/** Befintliga löftens textändring behöver ingen påhittad köpost. */
+export function byggUtrakningsunderlag(forslag: FrystUtrakningsforslag, loften: PromiseEntry[], material: readonly Sakreferens[]): Sakunderlag {
+  const efter = tillampaUtrakningsforslag(forslag, loften, forslag.hash);
+  return bindSlutform(forslag, efter, material);
+}
+
+function bindSlutform(forslag: Sakunderlag["forslag"], efter: PromiseEntry[], material: readonly Sakreferens[]): Sakunderlag {
   const register = byggUnderlagsregister({
     loften: efter as unknown as Record<string, unknown>[],
     handlingar: [], kopplingar: [], standpunkter: [],
