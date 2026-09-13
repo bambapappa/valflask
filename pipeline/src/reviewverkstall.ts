@@ -51,13 +51,18 @@ const aggregates = (await import(
   pathToFileURL(join(import.meta.dirname, "../../site/src/lib/aggregates.ts")).href
 )) as { totalFlasket: (p: unknown[]) => number };
 
-export async function verkstallReviewKopia(rader: Beslut[], DATA: string): Promise<void> {
-const skriv = true;
-const beslut = senaste(rader).filter((b) => b.val !== "oklart");
-if (beslut.length === 0) {
-  console.log("Inga beslut att verkställa.");
-  process.exit(0);
+export interface Verkstallrapport {
+  version: "verkstallrapport/1";
+  utforda: { id: string; val: Val }[];
+  hallna: { id: string; skal: string }[];
+  hoppade: string[];
+  oavgjorda: string[];
 }
+export async function verkstallReviewKopia(rader: Beslut[], DATA: string): Promise<Verkstallrapport> {
+const aktuella = senaste(rader);
+const oavgjorda = aktuella.filter((b) => b.val === "oklart").map((b) => b.id);
+const beslut = aktuella.filter((b) => b.val !== "oklart");
+if (beslut.length === 0) return { version: "verkstallrapport/1", utforda: [], hallna: [], hoppade: [], oavgjorda };
 
 const ko = JSON.parse(readFileSync(join(DATA, "needs_review.json"), "utf8")) as ReviewCandidate[];
 const koKarta = new Map<string, Kopost>(
@@ -265,11 +270,6 @@ if (fel.length > 0) {
   process.exit(1);
 }
 
-if (!skriv) {
-  console.log("\nTorrkörning. Lägg till --skriv för att verkställa.");
-  process.exit(0);
-}
-
 // ── Verkställigheten ─────────────────────────────────────────────────────
 // En post i taget, och varje `approve`/`reject` plockar bort den ur kön. Går
 // något sönder mitt i ska utskriften säga exakt hur långt den kom — annars
@@ -328,7 +328,7 @@ try {
   }
 } catch (e) {
   console.error(`\nAvbröt efter ${gjorda} av ${attGora.length}: ${(e as Error).message}`);
-  console.error("De redan verkställda ligger kvar. Ta bort deras rader ur beslutsfilen innan du kör om.");
+  console.error("Den isolerade kopian kasseras. Originaldata och beslutsfil ska lämnas orörda.");
   process.exit(1);
 }
 
@@ -337,5 +337,13 @@ console.log("Kvar att göra för hand:");
 console.log("  · backfilla commit-hashen (pnpm backfilla-commit) i andra commiten");
 console.log("  · bygg om läskopian i Handlingsvågen");
 console.log("  · stäng de issues som avser de avgjorda posterna");
+
+return {
+  version: "verkstallrapport/1",
+  utforda: attGora.map((b) => ({ id: b.id, val: b.val as Val })),
+  hallna: [...hallna].map(([id, skal]) => ({ id, skal })),
+  hoppade: [...hoppade],
+  oavgjorda,
+};
 
 }

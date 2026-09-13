@@ -1,7 +1,7 @@
 /** Förprövar hela beslutsordningen och skriver dess färdiga filpaket. */
 import { readFileSync } from "node:fs";
 import { join, resolve, dirname } from "node:path";
-import { forberedReviewverkstall } from "../src/reviewverkstallpaket.ts";
+import { forberedReviewverkstallMedRapport } from "../src/reviewverkstallpaket.ts";
 import { skrivFilpaket } from "../src/datatransaktion.ts";
 import type { Beslut } from "../src/reviewbeslut.ts";
 const args = process.argv.slice(2);
@@ -13,7 +13,12 @@ const rader = readFileSync(resolve(fil), "utf8").split("\n").filter((r) => r.tri
   return b;
 }).filter((b) => (b.spar ?? "review") === "review");
 const dir = join(import.meta.dirname, "../../data");
-const paket = forberedReviewverkstall(rader, dir);
+const { paket, rapport } = forberedReviewverkstallMedRapport(rader, dir);
+console.log(`Förprövning: ${rapport.utforda.length} att verkställa, ${rapport.hallna.length} hålls tillbaka, ${rapport.hoppade.length} finns inte längre i kön, ${rapport.oavgjorda.length} oavgjorda.`);
+for (const b of rapport.utforda) console.log(`  Att verkställa: ${b.id} — ${b.val}`);
+for (const b of rapport.hallna) console.log(`  Hålls tillbaka: ${b.id} — ${b.skal}`);
+for (const id of rapport.hoppade) console.log(`  Finns inte i kön: ${id}`);
+for (const id of rapport.oavgjorda) console.log(`  Oavgjord: ${id}`);
 if (!args.includes("--skriv")) {
   console.log("Hela beslutsordningen förprövad i isolerad kopia. Inga originaldata skrivna.");
 } else {

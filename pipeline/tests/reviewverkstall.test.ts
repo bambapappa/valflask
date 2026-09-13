@@ -7,7 +7,7 @@ import { spawnSync } from "node:child_process";
 import { reviewId, type ReviewCandidate } from "../src/review.ts";
 import { kanon, konyckel } from "../src/provningar.ts";
 import { provatBeslutsunderlag } from "./fixtures/provat-beslutsunderlag.ts";
-import { forberedReviewverkstall, VERKSTALLFILER } from "../src/reviewverkstallpaket.ts";
+import { forberedReviewverkstall, forberedReviewverkstallMedRapport, VERKSTALLFILER } from "../src/reviewverkstallpaket.ts";
 import { lasFillage, skrivFilpaket } from "../src/datatransaktion.ts";
 import type { Beslut } from "../src/reviewbeslut.ts";
 const data = new URL("../../data/", import.meta.url);
@@ -71,6 +71,8 @@ it("verklig CLI för blandade beslut torrkör, stoppar sent fel och skriver gilt
     const save = () => writeFileSync(fil, beslut.map((b) => JSON.stringify(b)).join("\n"));
     const run = (skriv = false) => spawnSync(process.execPath, ["--import", "tsx/esm", "scripts/review-verkstall.mts", fil, ...(skriv ? ["--skriv"] : [])], { cwd: pipeline, encoding: "utf8" });
     save(); const dry = run(); assert.equal(dry.status, 0, dry.stderr);
+    assert.match(dry.stdout, /Förprövning: 2 att verkställa, 0 hålls tillbaka/u);
+    assert.match(dry.stdout, /Att verkställa:.*ejlofte/u);
     assert.deepEqual(lasFillage(dir, VERKSTALLFILER), fore);
     const hash = beslut[1]!.provningshash!; beslut[1]!.provningshash = "0".repeat(64); save();
     const bad = run(true); assert.notEqual(bad.status, 0); assert.match(bad.stderr, /prövningshash/u);
@@ -95,5 +97,36 @@ it("kalkylflyttens ändrade löfte, rättelse och avvisning finns i samma paket"
     assert.equal(JSON.parse(paket.efter["rattelser.json"]!).length, 1);
     assert.equal(JSON.parse(paket.efter["avvisade.json"]!).length, 2);
     assert.equal(JSON.parse(paket.efter["needs_review.json"]!).length, 1);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+it("rapporten skiljer utförda, tillbakahållna, saknade och oavgjorda beslut", () => {
+  const dir = mkdtempSync(join(tmpdir(), "verkstallrapport-"));
+  try {
+    const beslut = init(dir);
+    writeFileSync(join(dir, "provningar.json"), JSON.stringify({ poster: [] }));
+    beslut.push({ id: "finns-inte", val: "ejlofte" }, { id: reviewId(items[2]!), val: "oklart" });
+    const fore = lasFillage(dir, VERKSTALLFILER);
+    const { paket, rapport } = forberedReviewverkstallMedRapport(beslut, dir);
+    assert.deepEqual(rapport, {
+      version: "verkstallrapport/1",
+      utforda: [{ id: beslut[0]!.id, val: "ejlofte" }],
+      hallna: [{ id: beslut[1]!.id, skal: "oprövad" }],
+      hoppade: ["finns-inte"],
+      oavgjorda: [reviewId(items[2]!)],
+    });
+    assert.deepEqual(lasFillage(dir, VERKSTALLFILER), fore);
+    assert.equal(JSON.parse(paket.efter["needs_review.json"]!).length, 2);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+it("enbart oavgjorda beslut ger explicit rapport och identiska före-/efterfiler", () => {
+  const dir = mkdtempSync(join(tmpdir(), "verkstall-oavgjort-"));
+  try {
+    init(dir);
+    const { paket, rapport } = forberedReviewverkstallMedRapport([{ id: reviewId(items[0]!), val: "oklart" }], dir);
+    assert.deepEqual(paket.efter, paket.fore);
+    assert.deepEqual(rapport.utforda, []);
+    assert.deepEqual(rapport.hallna, []);
+    assert.deepEqual(rapport.oavgjorda, [reviewId(items[0]!)]);
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
