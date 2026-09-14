@@ -52,6 +52,7 @@
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
     "godkann-lista": "node --import tsx/esm scripts/godkann-lista.mts",
+    "godkann-paket": "node --import tsx/esm scripts/godkann-paket.mts",
     "avvisa-lista": "node --import tsx/esm scripts/avvisa-lista.mts",
     "utrakningen": "node --import tsx/esm scripts/utrakningen.mts"
   },
