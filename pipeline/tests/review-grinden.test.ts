@@ -34,7 +34,7 @@ const WORKFLOW = join(import.meta.dirname, "..", "..", ".github", "workflows", "
 interface Jobb {
   if?: string;
   permissions?: Record<string, string>;
-  steps?: Array<{ run?: string }>;
+  steps?: Array<{ run?: string; env?: Record<string, string> }>;
 }
 
 function jobben(): Record<string, Jobb> {
@@ -84,6 +84,19 @@ describe("review-grinden avvisar aldrig ett kommando tyst", () => {
     const kommandon = (j.steps ?? []).map((s) => s.run ?? "").join("\n");
     assert.match(kommandon, /gh issue comment/u, "jobbet ska faktiskt säga ifrån");
     assert.doesNotMatch(kommandon, /\bgit\s+(push|commit)\b/u, "svaret ändrar ingen data");
+  });
+
+  it("beslutssteget binder GitHubs aktör, behörighetsrelation och händelselänk", () => {
+    const steg = (jobben()["handle"]!.steps ?? []).find((s) => /handle-review-comment/u.test(s.run ?? ""));
+    assert.ok(steg, "hittade inte beslutssteget");
+    assert.deepEqual(
+      Object.keys(steg!.env ?? {}).filter((k) => k.startsWith("DECISION_")).sort(),
+      ["DECISION_ACTOR", "DECISION_ASSOCIATION", "DECISION_REF"],
+    );
+    const handler = readFileSync(join(import.meta.dirname, "..", "scripts", "handle-review-comment.mts"), "utf8");
+    assert.match(handler, /decisionAssociation !== "OWNER"/u);
+    assert.match(handler, /decisionActor/u);
+    assert.match(handler, /decisionRef/u);
   });
 
   it("svarssteget körs även när beslutet föll — annars blir issuet tyst", () => {
