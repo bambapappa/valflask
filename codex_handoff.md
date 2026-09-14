@@ -61,8 +61,9 @@ Kontrollerat mot GitHub 2026-09-15:
   och 1 överhoppat. Typkontroll, ordgrind och `git diff --check` passerade.
 - Avsiktligt felprov: när bindningen mellan bedömare och GitHub-aktör togs
   bort föll det riktade regressionsprovet; efter återställning passerade det.
-- GitHubs `test-handlingsvagen` är godkänd. `test-pipeline` körde fortfarande
-  när denna fil skrevs och får inte räknas som godkänd förrän den är klar.
+- GitHubs `test-pipeline` och `test-handlingsvagen` är godkända för revisionen.
+  `build-and-test` körde fortfarande vid den sista kontrollen och ska
+  kontrolleras på nytt innan grenen bedöms som helt grön.
 - PR 406 är öppen på exakt revision
   `9025e7a00b6623790a2c440e822fabecaa133557`; dess test är godkänt.
 - Inga sakdata ändrades, inga verkliga granskningsbeslut skapades och inget av
