@@ -85,7 +85,7 @@ for (const rad of rader) {
   sedda.add(rad.id);
   const lofte = byId.get(rad.id);
   const ankare = byId.get(rad.ankare);
-  const r = provaAnkarrad(lofte, ankare, rad);
+  const r = provaAnkarrad(lofte, ankare, rad, loften);
   console.log(`\n${rad.id} [${lofte?.parties?.join(",") ?? "?"}] ${(lofte?.title ?? "").slice(0, 52)}`);
   console.log(`  ankare: ${rad.ankare} [${ankare?.parties?.join(",") ?? "?"}] ${ankare?.cost.msek_base ?? "?"} ${ankare?.cost.period ?? ""}`);
   if (r.ok) console.log(`  ✓ går att prissätta · +${paverkan(ankare!).toLocaleString("sv-SE")} mkr för mandatperioden`);
