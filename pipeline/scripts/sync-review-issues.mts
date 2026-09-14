@@ -2,10 +2,8 @@
  * Synkar review-kön (data/needs_review.json) till GitHub-issues: ETT issue per
  * kö-post, så ägaren kan besluta direkt i GitHub-gränssnittet:
  *
- *   /godkänn                      ja — föreslagen kostnad tas som den är
- *   /godkänn 500 1000 2000        ja med ändrade belopp (msek: low base high)
- *   /godkänn --group p-2026-0123  ja, länka som dublett (delad group_id)
- *   /avvisa <skäl>                nej
+ *   förberett beslutspaket        ja — exakt förslag och sakprövning
+ *   /avvisa <skäl>                nej genom verifierat avvisningspaket
  *
  * Besluten exekveras av .github/workflows/review.yml. Varje issue bär postens
  * review-id i titeln ([review <id>]) — stabilt även när kö-index förskjuts.
@@ -173,10 +171,10 @@ function issueBody(entry: ReviewCandidate, id: string): string {
       lines.push(`<sub>platshållare: ${fmtMsek(c.msek_low)} / ${fmtMsek(c.msek_base)} / ${fmtMsek(c.msek_high)} · ${c.method_note || ""}</sub>`);
     }
     lines.push("");
-    lines.push("Godkännandet kräver båda:");
+    lines.push("Det förberedda godkännandepaketet måste bära båda:");
     lines.push("");
     lines.push("```");
-    lines.push("/godkänn <low> <base> <high>");
+    lines.push("belopp: <low> <base> <high>");
     lines.push("Uträkning: …");
     lines.push("```");
     if (cand.amount_in_text_msek != null) {
@@ -191,14 +189,13 @@ function issueBody(entry: ReviewCandidate, id: string): string {
     lines.push("");
   }
   lines.push(`### Ditt beslut`);
-  lines.push("| Beslut | Snabbast (etikett — funkar i bulk från listvyn) | Kommentar |");
-  lines.push("|---|---|---|");
-  lines.push("| ✅ Ja | sätt `beslut:godkänn` | `/godkänn` |");
-  lines.push("| ✏️ Ja, med ändrat belopp | — | `/godkänn <low> <base> <high>` (msek) |");
-  if (entry.duplicateOf) lines.push(`| 🔗 Ja, länka som dublett | — | \`/godkänn --group ${entry.duplicateOf}\` |`);
-  lines.push("| ❌ Nej | sätt `beslut:avvisa` | `/avvisa <skäl>` |");
+  lines.push("Ett godkännande kräver ett redan sparat löftesförslag, fullständig sakprövning " +
+    "och en separat prövningshash från beslutet. Använd det förberedda beslutspaketet; " +
+    "en kommentar eller etikett får inte bygga underlaget efter att beslutet tagits.");
   lines.push("");
-  lines.push(`<sub>review-id \`${id}\` · beslutet exekveras av review-workflown och committas till main — full spårbarhet i git + detta issue.</sub>`);
+  lines.push("Ett avslag kan anges med etiketten `beslut:avvisa` eller kommentaren `/avvisa <skäl>`. ");
+  lines.push("");
+  lines.push(`<sub>review-id \`${id}\` · ett verkställt beslut ska vara spårbart till detta issue och sitt exakta paket.</sub>`);
   return lines.join("\n");
 }
 
