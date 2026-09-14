@@ -1,6 +1,7 @@
 import { it } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, writeFileSync, mkdtempSync, rmSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdtempSync, rmSync, mkdirSync, cpSync, symlinkSync, statSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { forberedUtrakningspaket, kontrolleraUtrakningspaket, verkstallUtrakningspaket, utrakningspakethash, UTRAKNINGSFILER, type Utrakningsindata, type Utrakningspaket } from "../src/utrakningspaket.ts";
@@ -17,6 +18,38 @@ const indata: Utrakningsindata = {
 };
 const fore = { "promises.json": JSON.stringify(loften), "rattelser.json": "[]", "changelog.json": "[]" };
 const nu = new Date("2026-09-14T10:00:00Z");
+it("verklig CLI kräver privat paket, klar prövning och externt beslut", () => {
+  const root = mkdtempSync(join(tmpdir(), "utrakningscli-")), d = join(root, "data"), pipe = join(root, "pipeline");
+  try {
+    mkdirSync(d); mkdirSync(join(pipe, "scripts"), { recursive: true });
+    for (const n of ["src", "schemas", "prompts"]) cpSync(join(import.meta.dirname, "..", n), join(pipe, n), { recursive: true });
+    cpSync(join(import.meta.dirname, "../package.json"), join(pipe, "package.json"));
+    cpSync(join(import.meta.dirname, "../scripts/utrakning-byt.mts"), join(pipe, "scripts/utrakning-byt.mts"));
+    symlinkSync(join(import.meta.dirname, "../node_modules"), join(pipe, "node_modules"), "dir");
+    for (const [n, s] of Object.entries(fore)) writeFileSync(join(d, n), s);
+    const input = join(root, "indata.json"), output = join(root, "paket.json");
+    writeFileSync(input, JSON.stringify(indata));
+    const run = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx/esm", "scripts/utrakning-byt.mts", ...args], { cwd: pipe, encoding: "utf8" });
+    let r = run("forbered", input, output); assert.equal(r.status, 0, r.stderr);
+    assert.equal(statSync(output).mode & 0o777, 0o600);
+    const sparat = readFileSync(output, "utf8");
+    assert.notEqual(run("forbered", input, output).status, 0);
+    assert.equal(readFileSync(output, "utf8"), sparat);
+    assert.notEqual(run("kontroll", output).status, 0);
+    assert.notEqual(run(input, "--skriv", "--varfor", "test").status, 0);
+    assert.deepEqual(lasFillage(d, UTRAKNINGSFILER), fore);
+    const p = formatprov(JSON.parse(sparat) as Utrakningspaket);
+    writeFileSync(output, JSON.stringify(p));
+    r = run("kontroll", output); assert.equal(r.status, 0, r.stderr); assert.ok(r.stdout.includes(utrakningspakethash(p)));
+    assert.notEqual(run("verkstall", output, "0".repeat(64), "--skriv").status, 0);
+    assert.notEqual(run("verkstall", output, utrakningspakethash(p)).status, 0);
+    assert.deepEqual(lasFillage(d, UTRAKNINGSFILER), fore);
+    r = run("verkstall", output, utrakningspakethash(p), "--skriv"); assert.equal(r.status, 0, r.stderr);
+    assert.deepEqual(lasFillage(d, UTRAKNINGSFILER), p.filer.efter);
+    assert.notEqual(run("verkstall", output, utrakningspakethash(p), "--skriv").status, 0);
+    assert.deepEqual(lasFillage(d, UTRAKNINGSFILER), p.filer.efter);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
 function formatprov(p: Utrakningspaket): Utrakningspaket {
   const c = structuredClone(p);
   for (const prov of c.provningar) {
