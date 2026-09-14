@@ -11,6 +11,20 @@ const mal = loften.find((p) => p.status === "aktiv" && p.cost.msek_base === 0)!;
 assert.ok(mal);
 const rad = { id: mal.id, utrakning: "Tekniskt prov av en ändrad uträkning. Beloppet är 0 miljoner kronor.", skal: "Tekniskt kontraktsprov som inte utgör en sakbedömning av löftet." };
 const nu = new Date("2026-09-13T17:00:00Z");
+it("samtidiga gruppändringar binds till gemensam slutform och ogiltiga syskon stoppas", () => {
+  const grupp = structuredClone(loften.slice(0, 2));
+  for (const p of grupp) { p.status = "aktiv"; p.group_id = "g-formatprov"; p.cost.msek_base = 0; }
+  const forslag = grupp.map((p, i) => forberedUtrakningsforslag({ ...rad, id: p.id, utrakning: `Tekniskt grupprov ${i}. Bas 0 miljoner kronor.` }, grupp, nu));
+  const fore = JSON.stringify(grupp);
+  const u = byggUtrakningsunderlag(forslag[0]!, grupp, [], [forslag[1]!]);
+  for (const f of forslag) assert.deepEqual(u.poster.poster.find((p) => p.slag === "lofte" && p.id === f.rad.id)?.innehall, f.nyttLofte);
+  assert.notEqual(u.hash, byggUtrakningsunderlag(forslag[0]!, grupp, []).hash);
+  assert.throws(() => byggUtrakningsunderlag(forslag[0]!, grupp, [], [forslag[0]!]), /Dubblerad/u);
+  assert.throws(() => byggUtrakningsunderlag(forslag[0]!, grupp, [], [forslag[1]!, forslag[1]!]), /Dubblerad/u);
+  const fel = structuredClone(forslag[1]!); fel.nyttLofte.title += " ändrad";
+  assert.throws(() => byggUtrakningsunderlag(forslag[0]!, grupp, [], [fel]), /ändrats/u);
+  assert.equal(JSON.stringify(grupp), fore);
+});
 it("fryser befintligt löfte med historik utan att ändra aktör, kostnad eller original", () => {
   const fore = JSON.stringify(loften), f = forberedUtrakningsforslag(rad, loften, nu);
   const efter = tillampaUtrakningsforslag(JSON.parse(JSON.stringify(f)), loften, f.hash);

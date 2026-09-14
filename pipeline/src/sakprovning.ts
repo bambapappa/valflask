@@ -76,8 +76,15 @@ export function byggSakunderlag(
 }
 
 /** Befintliga löftens textändring behöver ingen påhittad köpost. */
-export function byggUtrakningsunderlag(forslag: FrystUtrakningsforslag, loften: PromiseEntry[], material: readonly Sakreferens[]): Sakunderlag {
-  const efter = tillampaUtrakningsforslag(forslag, loften, forslag.hash);
+export function byggUtrakningsunderlag(forslag: FrystUtrakningsforslag, loften: PromiseEntry[], material: readonly Sakreferens[], samtidiga: readonly FrystUtrakningsforslag[] = []): Sakunderlag {
+  let efter = tillampaUtrakningsforslag(forslag, loften, forslag.hash);
+  const ids = new Set([forslag.rad.id]);
+  for (const andra of samtidiga) {
+    if (ids.has(andra.rad.id)) throw new Error("Dubblerad ändring i sakunderlag");
+    ids.add(andra.rad.id);
+    tillampaUtrakningsforslag(andra, loften, andra.hash);
+    efter = efter.map((p) => p.id === andra.rad.id ? andra.nyttLofte : p);
+  }
   return bindSlutform(forslag, efter, material);
 }
 
