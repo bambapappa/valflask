@@ -8,7 +8,7 @@ import { svenskDag } from "./dagen.ts";
 export const AVVISNINGSFILER = ["needs_review.json", "avvisade.json"] as const;
 export const AVVISNINGSSKAL_MIN_TECKEN = 25;
 export interface Avvisningsrad { id: string; skal: string }
-export interface Avvisningsbeslut { bedomare: string; utfall: "avvisa"; motivering: string; forslagshash: string }
+export interface Avvisningsbeslut { bedomare: string; utfall: "avvisa"; motivering: string; forslagshash: string; kalla: { system: "github"; association: "OWNER"; handelse: string } }
 export interface Avvisningspaket { version: "avvisningspaket/1"; tidpunkt: string; rader: Avvisningsrad[]; kandidater: ReviewCandidate[]; beslut: Avvisningsbeslut | null; filer: Filpaket }
 export function avvisningspakethash(p: Avvisningspaket): string { return createHash("sha256").update(kanoniskJson(p)).digest("hex"); }
 function lista<T>(f: Fillage, n: string): T[] { const t = f[n]; if (typeof t !== "string") throw new Error(`Fil saknas: ${n}`); const v: unknown = JSON.parse(t); if (!Array.isArray(v)) throw new Error(`Kräver lista: ${n}`); return v as T[]; }
@@ -33,8 +33,10 @@ export function kontrolleraAvvisningspaket(p: Avvisningspaket, aktuellt: Fillage
   const nytt = forberedAvvisningspaket(p.rader, aktuellt, new Date(p.tidpunkt));
   if (kanoniskJson({ ...p, beslut: null }) !== kanoniskJson(nytt)) throw new Error("Avvisningens slutform eller kandidater har ändrats");
   const b = p.beslut, fh = forslagshash({ version: p.version, tidpunkt: p.tidpunkt, rader: p.rader, kandidater: p.kandidater });
-  if (!b || Object.keys(b).sort().join(",") !== "bedomare,forslagshash,motivering,utfall" || b.utfall !== "avvisa" ||
-      !b.bedomare?.trim() || b.motivering?.trim().length < AVVISNINGSSKAL_MIN_TECKEN || b.forslagshash !== fh) {
+  if (!b || Object.keys(b).sort().join(",") !== "bedomare,forslagshash,kalla,motivering,utfall" || b.utfall !== "avvisa" ||
+      !b.bedomare?.trim() || b.motivering?.trim().length < AVVISNINGSSKAL_MIN_TECKEN || b.forslagshash !== fh ||
+      Object.keys(b.kalla ?? {}).sort().join(",") !== "association,handelse,system" || b.kalla.system !== "github" ||
+      b.kalla.association !== "OWNER" || !/^https:\/\/github\.com\//u.test(b.kalla.handelse)) {
     throw new Error("Ett separat mänskligt avslagsbeslut saknas eller gäller annat förslag");
   }
 }
