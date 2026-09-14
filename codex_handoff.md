@@ -12,7 +12,7 @@ Slutföra den fullständiga processförändringen för utlovat.se i `bambapappa/
 - Ändrade bakåtfyllningen så att både nära och avvikande estimat sparas som granskningsförslag.
 - Skyddade artefaktimporten från att skriva över publicerade löften, rättelselogg eller körlogg.
 - Lade till checkpointing, deduplicering och kontroll av ändrat föreläge.
-- Lade till `utrakningsforslag/1` och `utrakningspaket/1` för ändringar av befintlig uträkningstext, inklusive exakt före-/efterläge, rättelsepost och körlogg.
+- Lade till och pushade `utrakningsforslag/1` för befintlig uträkningstext, med fryst före-/slutform och historik. `utrakningspaket/1` är inte med i den pushade revisionen.
 - Lade till tester för normalfall, felaktiga underlag, manipulerade hashar, samtidiga gruppändringar, CLI-flöden och avsiktliga regressioner.
 - Uppdaterade överlämningsplan och `haller-det`-skill med begränsningar och nästa steg.
 
@@ -20,13 +20,17 @@ Slutföra den fullständiga processförändringen för utlovat.se i `bambapappa/
 
 Senast dokumenterade kodrevision är `03518b3c` på utkast-PR 8702. Senast dokumenterade fulla pipelinekörning: 1 233 tester, 1 232 godkända, 0 fel och 1 befintligt överhoppat. Typkontroll och ordgrind passerade. Ändringarna är inte mergade eller aktiverade i produktion. Den lokala huvudgrenen stod vid revision `6041fcca` när denna fil skrevs; kontrollera alltid aktuell PR- och CI-status innan du fortsätter.
 
+Kontrollerat mot GitHub 2026-09-14: PR 8702 är öppen och ett utkast, med full revision `03518b3cad84f06858cc2f22268ef74a472b2f59` på `arbete/sakprovningsgrind`. GitHubs main är `9bd99330a2a8154872c3edf311d809b64397c6f5`. Lokal main har därefter fått överlämningscommitten `401698f0`, men ligger efter GitHub och ska inte tvångspushas.
+
+Efter den pushade revisionen implementerades lokalt `utrakningspaket.ts`, en ersättande `scripts/utrakning-byt.mts`, stöd för flera ändrade gruppmedlemmars slutläge i `sakprovning.ts` och `tests/utrakningspaket.test.ts`. Typkontroll och fyra riktade prov passerade enligt denna sessions verktygsutskrift. Full testsvit, avsiktligt felprov och commit/push slutfördes inte för dessa ändringar. Den temporära arbetskopian `/private/tmp/valflask-sakprovningsgrind` saknas nu; Git markerar den som `prunable`. Räkna därför inte denna senare kod som bevarad eller levererad. Återskapa den från sessionshistoriken och verifiera på nytt om ingen annan kopia kan återfinnas.
+
 ## Next task
 
-Migrera `pipeline/scripts/utrakning-byt.mts` helt till `utrakningspaket/1`: privat förberedelse, separat sakprövningsfil, extern pakethash och journalförd verkställning av exakt de tre granskade filerna. Ta bort den gamla direkta skrivvägen. Lägg till ett verkligt CLI-test som visar oförändrat original vid varje fel, kör full pipeline, typecheck och ordgrind, uppdatera PR 8702 och överlämningen och pusha revisionen.
+Återställ först en arbetskopia från `arbete/sakprovningsgrind` vid den verifierade PR-revisionen. Kontrollera om den opushade paketimplementationen finns bevarad någon annanstans; annars återskapa den från denna sessions tidigare kod och prov. Migrera sedan `pipeline/scripts/utrakning-byt.mts` helt till `utrakningspaket/1`: privat förberedelse, separat sakprövning, extern hash för hela paketet och journalförd verkställning av exakt `promises.json`, `rattelser.json` och `changelog.json`. Ta bort den gamla direkta skrivvägen. Varje sakprövning måste se alla samtidigt ändrade gruppmedlemmars slutläge. Prova verklig CLI, oförändrade original vid fel, manipulerade loggar och omkörning; kör full pipeline, typecheck, ordgrind och avsiktligt felprov. Uppdatera PR 8702 och överlämningen och pusha revisionen.
 
 ## Known issues
 
-- Den äldre `utrakning-byt`-skrivaren kan fortfarande skriva direkt; det nya paketbiblioteket är ännu inte den enda skrivvägen.
+- Den pushade `utrakning-byt`-skrivaren kan fortfarande skriva direkt; paketbiblioteket och dess CLI-ersättning finns inte i den verifierade Git-revisionen.
 - Övriga skrivvägar för ankarsättning, nollning, sortering, grupper, citat, rubriker, indragningar och avvisningar är inte fullt migrerade till samma versionsbundna beslutspaket.
 - Modellnamn och formatversion binder ännu inte exakt prompt- och estimatorversion.
 - Artefaktimporten skyddar Actions-flödet men är inte en generell låsning för samtidiga lokala skrivare.
