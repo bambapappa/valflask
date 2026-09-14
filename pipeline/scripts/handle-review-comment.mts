@@ -75,7 +75,7 @@ if (cmd.action === "reject") {
     utfall: "avvisa",
     motivering: cmd.reason,
     forslagshash: avvisningsforslagshash(paket),
-    kalla: { system: "github", association: "OWNER", handelse: decisionRef },
+    kalla: { system: "github", association: "OWNER", actor: decisionActor, handelse: decisionRef },
   };
   verkstallAvvisningspaket(DATA_DIR, paket, avvisningspakethash(paket));
   const t = entry.candidate?.title ?? entry.articleTitle ?? "(okänd)";

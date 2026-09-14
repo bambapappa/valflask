@@ -8,8 +8,8 @@
  *
  * "Ja med ändrade belopp" kräver fortfarande kommentar (/godkänn låg bas hög) —
  * belopp går inte att uttrycka i en etikett. Etiketter kan bara sättas av
- * användare med triage-behörighet (= ägaren i detta repo), så etikettens
- * närvaro ÄR auktorisationen.
+ * användare med triage-behörighet. Närvaron räcker därför inte som beslut:
+ * den senaste etiketteringshändelsen måste kunna bindas till repots ägare.
  *
  * TVÅ FASER (så att en omgjord push aldrig tappar beslut):
  *   apply  — muterar data/ och skriver planerade issue-notifieringar till
@@ -24,10 +24,12 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   approve,
-  reject,
   findIndexByReviewId,
   type ReviewCandidate,
 } from "../src/review.ts";
+import { lasFillage } from "../src/datatransaktion.ts";
+import { AVVISNINGSFILER, avvisningsforslagshash, avvisningspakethash, forberedAvvisningspaket, verkstallAvvisningspaket } from "../src/avvisningspaket.ts";
+import { verifieraEtikettbeslut, type GitHubEtiketthandelse } from "../src/github-etikettbeslut.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 const QUEUE_LABEL = "review-kö";
@@ -37,10 +39,11 @@ const API = "https://api.github.com";
 
 const token = process.env.GITHUB_TOKEN;
 const repo = process.env.GITHUB_REPOSITORY;
+const repoOwner = process.env.GITHUB_REPOSITORY_OWNER;
 const notifyFile = process.env.NOTIFY_FILE;
 const mode = process.argv[2] ?? "apply";
-if (!token || !repo || !notifyFile) {
-  console.error("Kräver GITHUB_TOKEN, GITHUB_REPOSITORY och NOTIFY_FILE.");
+if (!token || !repo || !repoOwner || !notifyFile) {
+  console.error("Kräver GITHUB_TOKEN, GITHUB_REPOSITORY, GITHUB_REPOSITORY_OWNER och NOTIFY_FILE.");
   process.exit(1);
 }
 
@@ -116,6 +119,17 @@ await api(`/repos/${repo}/labels`, {
 
 interface Issue { number: number; title: string; labels: Array<{ name: string }> }
 
+async function verifieradEtikett(issue: Issue, namn: string): Promise<{ actor: string; handelse: string } | null> {
+  const handelser: GitHubEtiketthandelse[] = [];
+  for (let page = 1; page <= 20; page++) {
+    const { json } = await api(`/repos/${repo}/issues/${issue.number}/events?per_page=100&page=${page}`);
+    const batch = json as GitHubEtiketthandelse[];
+    handelser.push(...batch);
+    if (batch.length < 100) break;
+  }
+  return verifieraEtikettbeslut(handelser, namn, repoOwner!, repo!, issue.number);
+}
+
 const issues: Issue[] = [];
 for (let page = 1; page <= 20; page++) {
   const { json } = await api(
@@ -148,6 +162,18 @@ for (const issue of issues) {
     continue;
   }
 
+  const beslutsnamn = wantsReject ? REJECT_LABEL : APPROVE_LABEL;
+  const etikettbeslut = await verifieradEtikett(issue, beslutsnamn);
+  if (!etikettbeslut) {
+    notifications.push({
+      number: issue.number,
+      body: `⚠️ Etiketten \`${beslutsnamn}\` saknar en verifierad etiketteringshändelse från repots ägare. Ingen data ändrades.`,
+      removeLabel: beslutsnamn,
+    });
+    skipped++;
+    continue;
+  }
+
   // Kön läses om per beslut — index förskjuts när tidigare poster tas bort.
   const items = JSON.parse(readFileSync(join(DATA_DIR, "needs_review.json"), "utf8")) as ReviewCandidate[];
   const index = findIndexByReviewId(items, id);
@@ -162,7 +188,12 @@ for (const issue of issues) {
   }
 
   if (wantsReject) {
-    const { title } = reject(String(index), "avvisad via etikett", DATA_DIR);
+    const skal = "Avvisad genom verifierat etikettbeslut i GitHub.";
+    const paket = forberedAvvisningspaket([{ id, skal }], lasFillage(DATA_DIR, AVVISNINGSFILER), new Date());
+    paket.beslut = { bedomare: etikettbeslut.actor, utfall: "avvisa", motivering: skal,
+      forslagshash: avvisningsforslagshash(paket), kalla: { system: "github", association: "OWNER", actor: etikettbeslut.actor, handelse: etikettbeslut.handelse } };
+    verkstallAvvisningspaket(DATA_DIR, paket, avvisningspakethash(paket));
+    const title = items[index]!.candidate?.title ?? items[index]!.articleTitle ?? "(okänd)";
     notifications.push({
       number: issue.number,
       body: `❌ Avvisad via etikett: "${title}"`,
