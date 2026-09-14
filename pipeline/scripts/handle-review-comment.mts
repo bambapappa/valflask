@@ -10,7 +10,6 @@
 import { appendFileSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
-  approve,
   parseReviewCommand,
   findIndexByReviewId,
   type ReviewCandidate,
@@ -53,7 +52,8 @@ const cmd = parseReviewCommand(body);
 if (!cmd) {
   output(
     "error",
-    "Oklart kommando. Använd `/godkänn`, `/godkänn <low> <base> <high>` (tre tal i msek), `/godkänn --group p-2026-XXXX`, `/godkänn ... --typ <utgift|intäktsminskning|besparing|intäktsökning>` eller `/avvisa <skäl>`. Skriver du ett eget belopp: lägg till en rad som börjar `Uträkning:` med resonemanget bakom det, så visas det på löftessidan.",
+    "Oklart kommando. Ett avslag anges med `/avvisa <skäl>`. Ett godkännande kräver ett " +
+      "redan förberett beslutspaket med fullständig sakprövning och separat prövningshash.",
   );
   process.exit(0);
 }
@@ -83,40 +83,10 @@ if (cmd.action === "reject") {
   process.exit(0);
 }
 
-// approve — validera det CLI:t annars process.exit(1):ar på, med vänligt svar.
-if (!entry.cost && !cmd.amounts) {
-  output("error", "Posten saknar föreslagen kostnad — ange belopp: `/godkänn <low> <base> <high>` (msek).");
-  process.exit(0);
-}
-if (cmd.group) {
-  // approve() process.exit(1):ar på okänt länkmål — förvalidera med vänligt svar.
-  const promises = JSON.parse(
-    readFileSync(join(DATA_DIR, "promises.json"), "utf8"),
-  ) as Array<{ id: string }>;
-  if (!promises.some((p) => p.id === cmd.group)) {
-    output("error", `Hittar inget löfte med id ${cmd.group} att länka till — kontrollera id:t.`);
-    process.exit(0);
-  }
-}
-
-const cliArgs: string[] = [String(index)];
-if (cmd.amounts) cliArgs.push(...cmd.amounts.map(String));
-if (cmd.group) cliArgs.push("--group", cmd.group);
-if (cmd.costType) cliArgs.push("--typ", cmd.costType);
-if (cmd.period) cliArgs.push("--period", cmd.period);
-// Texten efter kommandoraden blir uträkningen bakom beloppet och visas publikt.
-if (cmd.calculation) cliArgs.push("--calc", cmd.calculation);
-
-try {
-  const res = approve(cliArgs, DATA_DIR);
-  const saknarUtrakning =
-    cmd.amounts && !cmd.calculation
-      ? " Beloppet är satt för hand utan uträkning — lägg till en rad som börjar `Uträkning:` nästa gång, så syns resonemanget på löftessidan."
-      : "";
-  output(
-    "approved",
-    `Publicerad som **${res.id}** — "${res.title}", ${res.msekBase} msek${cmd.group ? ` (länkad till ${cmd.group})` : ""}. Livesajten uppdateras vid nästa bygge.${saknarUtrakning}`,
-  );
-} catch (e) {
-  output("error", `Kunde inte godkänna: ${e instanceof Error ? e.message : e}`);
-}
+output(
+  "error",
+  "Godkännandet verkställdes inte. Ett ja måste avse ett redan sparat löftesförslag, " +
+    "en fullständig sakprövning och beslutets separata prövningshash. Använd det förberedda " +
+    "beslutspaketet; issue-kommentaren ensam får inte skapa underlaget efter beslutet.",
+);
+process.exit(0);
