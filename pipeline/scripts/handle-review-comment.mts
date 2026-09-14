@@ -32,6 +32,14 @@ function output(result: "approved" | "rejected" | "error", message: string): voi
 
 const title = process.env.ISSUE_TITLE ?? "";
 const body = process.env.COMMENT_BODY ?? "";
+const decisionActor = process.env.DECISION_ACTOR ?? "";
+const decisionAssociation = process.env.DECISION_ASSOCIATION ?? "";
+const decisionRef = process.env.DECISION_REF ?? "";
+
+if (decisionAssociation !== "OWNER" || !decisionActor || !/^https:\/\/github\.com\//u.test(decisionRef)) {
+  output("error", "Beslutets verifierade GitHub-identitet eller händelsereferens saknas. Ingen ändring gjord.");
+  process.exit(0);
+}
 
 const idMatch = title.match(/^\[review ([0-9a-f]{12})\]/u);
 if (!idMatch) {
