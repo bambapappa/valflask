@@ -12,6 +12,7 @@ import { svenskDag } from "./dagen.ts";
 import { byggSakunderlag, sakprovningsBeredskap, type Sakprovning, type Sakreferens } from "./sakprovning.ts";
 import { kanoniskJson } from "./underlagsversion.ts";
 import { forberedLoftesforslag, tillampaLoftesforslag, type PromiseEntry, type FrystLoftesforslag } from "./loftesforslag.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "./datatransaktion.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -800,38 +801,30 @@ export function reject(
   reason: string,
   dataDir: string = DATA_DIR,
 ): { title: string } {
-  // Samma skäl som i `approve`: sviten återställer data/ ur en säkerhetskopia,
-  // och en avvisning skriven under tiden försvinner spårlöst.
-  const slappLas = taLaset(dataDir, "review reject");
-  try {
-    return rejectLast(indexStr, reason, dataDir);
-  } finally {
-    slappLas();
-  }
-}
-
-/** Själva avvisningen. Bruten ur `reject` bara för att låset ska ha ett finally. */
-function rejectLast(indexStr: string, reason: string, dataDir: string): { title: string } {
-  const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
+  const filer = ["needs_review.json", "avvisade.json"] as const;
+  const fore = lasFillage(dataDir, filer);
+  if (typeof fore["needs_review.json"] !== "string") throw new Error("Saknar needs_review.json");
+  const items = JSON.parse(fore["needs_review.json"]) as ReviewCandidate[];
   const index = loesKoArgument(items, indexStr);
 
   const item = items[index]!;
   const title = item.candidate?.title ?? item.articleTitle ?? "(okänd)";
   const remaining = items.filter((_, i) => i !== index);
-  saveJson(join(dataDir, "needs_review.json"), remaining);
 
   // Avvisningen ska lämna spår. Utan minnet hittar nästa skörd samma mening i
   // samma dokument och lägger in den på nytt — det hände tre gånger i rad i
   // början av augusti. Mänskligt beslut 2026-08-09; se `avvisningar.ts`.
   const url = item.articleUrl ?? "";
   const citat = item.candidate?.quote ?? "";
+  let avvisadeEfter = fore["avvisade.json"] ?? null;
   if (url !== "" && citat !== "") {
-    const minne = lasAvvisade(dataDir);
-    saveJson(
-      join(dataDir, "avvisade.json"),
-      avvisa(minne, url, citat, reason, svenskDag()),
-    );
+    const minne = typeof fore["avvisade.json"] === "string" ? JSON.parse(fore["avvisade.json"]) as Avvisning[] : [];
+    avvisadeEfter = JSON.stringify(avvisa(minne, url, citat, reason, svenskDag()), null, 2) + "\n";
   }
+  skrivFilpaket(dataDir, skapaFilpaket(fore, {
+    "needs_review.json": JSON.stringify(remaining, null, 2) + "\n",
+    "avvisade.json": avvisadeEfter,
+  }));
   console.log(`Avvisad: "${title}" — ${reason}`);
   return { title };
 }
