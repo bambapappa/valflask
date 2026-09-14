@@ -152,3 +152,14 @@ describe("uträkningens längd prövas innan något skrivs", () => {
     assert.deepEqual(r.fel.filter((f) => /tecken/u.test(f)), []);
   });
 });
+
+describe("partiets egen siffra", () => {
+  const bas = { id: "p-2026-9998", status: "aktiv", quote: "Vi satsar 2 miljarder kronor på reformen.", cost: { msek_low: 1500, msek_base: 2000, msek_high: 2500, period: "per_ar" } } as Lofte;
+  const rad = { id: bas.id, regel: "lagandring" as const, utrakning: "Lagändringen håller löftet och prissätts till noll eftersom den direkta kostnaden är försumbar.", skal: "Tekniskt prov av spärren för partiets uttryckliga belopp i citatet." };
+  it("stoppar nollning när citatet anger belopp", () => {
+    const p = provaNollrad(bas, rad); assert.equal(p.ok, false); assert.match(p.fel.join(" "), /partiets egen siffra/u);
+  });
+  it("tillåter dubblettregeln eftersom gruppens bärande post behåller beloppet", () => {
+    assert.equal(provaNollrad(bas, { ...rad, regel: "dubbelrakning" }).fel.some((f) => /partiets egen siffra/u.test(f)), false);
+  });
+});
