@@ -236,7 +236,7 @@ export function parseReviewCommand(body: string): ReviewCommand | null {
   const reject = line.match(/^\/(?:avvisa|reject)\b(.*)$/iu);
   if (reject) {
     const reason = reject[1]!.trim();
-    return { action: "reject", reason: reason === "" ? "avvisad via review-issue" : reason };
+    return { action: "reject", reason: reason === "" ? "Avvisad via review-issue utan angivet särskilt skäl." : reason };
   }
   return null;
 }

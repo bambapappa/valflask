@@ -11,11 +11,12 @@ import { appendFileSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   approve,
-  reject,
   parseReviewCommand,
   findIndexByReviewId,
   type ReviewCandidate,
 } from "../src/review.ts";
+import { lasFillage } from "../src/datatransaktion.ts";
+import { AVVISNINGSFILER, avvisningsforslagshash, avvisningspakethash, forberedAvvisningspaket, verkstallAvvisningspaket } from "../src/avvisningspaket.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -68,7 +69,16 @@ if (index < 0) {
 const entry = items[index]!;
 
 if (cmd.action === "reject") {
-  const { title: t } = reject(String(index), cmd.reason, DATA_DIR);
+  const paket = forberedAvvisningspaket([{ id, skal: cmd.reason }], lasFillage(DATA_DIR, AVVISNINGSFILER), new Date());
+  paket.beslut = {
+    bedomare: decisionActor,
+    utfall: "avvisa",
+    motivering: cmd.reason,
+    forslagshash: avvisningsforslagshash(paket),
+    kalla: { system: "github", association: "OWNER", handelse: decisionRef },
+  };
+  verkstallAvvisningspaket(DATA_DIR, paket, avvisningspakethash(paket));
+  const t = entry.candidate?.title ?? entry.articleTitle ?? "(okänd)";
   output("rejected", `Avvisad: "${t}" — ${cmd.reason}`);
   process.exit(0);
 }

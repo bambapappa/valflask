@@ -134,7 +134,7 @@ describe("parseReviewCommand — issue-kommentar till beslut", () => {
     });
     assert.deepEqual(parseReviewCommand("/avvisa"), {
       action: "reject",
-      reason: "avvisad via review-issue",
+      reason: "Avvisad via review-issue utan angivet särskilt skäl.",
     });
   });
 
