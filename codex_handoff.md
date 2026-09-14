@@ -2,47 +2,141 @@
 
 ## Current task
 
-Slutföra den fullständiga processförändringen för utlovat.se i `bambapappa/valflask`: faktakontroll av löften, kopplingar, grupper, dubbletter, beräkningar och aktörsnivåer samt ett automatiserat insamlings-, bedömnings- och publiceringsflöde där en människa godkänner före publicering.
+Slutföra den fullständiga tillits- och processförändringen för utlovat.se i
+`bambapappa/valflask`. Uppdraget omfattar saklig kontroll av löften,
+kopplingar, grupper, dubbletter, beräkningar och aktörsnivåer samt ett flöde
+från insamling via kvalitetssäkring till publicering med så liten manuell
+insats som möjligt. En verklig människa ska fortfarande granska och godkänna
+det exakta material som publiceras.
+
+Kodspåret ligger i utkast-PR 8702 på grenen `arbete/sakprovningsgrind`.
+Projektets gemensamma plan och arbetsläge ligger i `bambapappa/handoff`, PR
+406, på grenen `arbete/maskinell-provningsomfattning`.
 
 ## Completed
 
-- Införde frysta, versionsbundna löftes- och kalkylförslag som binder föreläge, slutform, aktör, kostnad och historik.
-- Införde separat sakprövning med tio moment som börjar som `oavgjorda` och kräver spårbara referenser.
-- Kopplade kalkylflyttar i `review-verkstall` till fryst kalkylförslag, sakprövning och extern beslutshash.
-- Ändrade bakåtfyllningen så att både nära och avvikande estimat sparas som granskningsförslag.
-- Skyddade artefaktimporten från att skriva över publicerade löften, rättelselogg eller körlogg.
-- Lade till checkpointing, deduplicering och kontroll av ändrat föreläge.
-- Lade till och pushade `utrakningsforslag/1` för befintlig uträkningstext, med fryst före-/slutform och historik. `utrakningspaket/1` är inte med i den pushade revisionen.
-- Lade till tester för normalfall, felaktiga underlag, manipulerade hashar, samtidiga gruppändringar, CLI-flöden och avsiktliga regressioner.
-- Uppdaterade överlämningsplan och `haller-det`-skill med begränsningar och nästa steg.
+- Införde frysta, versionsbundna löftes-, kalkyl-, uträknings- och
+  löftestypsförslag som binder föreläge, avsett slutläge och innehållshash.
+- Införde separat sakprövning med tio moment. Momenten börjar som oavgjorda
+  och kräver spårbara referenser.
+- Införde fullständiga beslutspaket som binder `promises.json`,
+  `rattelser.json` och `changelog.json` till samma externa beslutshash.
+- Migrerade `utrakning-byt` och `sortbyte` från direkt skrivning till flödet
+  förbered, kontrollera och verkställ. Deras gamla direkta skrivvägar är
+  borttagna.
+- Säkerställde att samtidiga gruppändringar prövas mot gruppens gemensamma
+  slutläge.
+- Krävde uttryckliga numeriska nollor för låg-, bas- och högvärde innan ett
+  löfte får klassas som inriktningslöfte.
+- Ändrade bakåtfyllningen så att både närliggande och avvikande kalkyler
+  sparas som granskningsförslag i stället för att godkännas automatiskt.
+- Skyddade artefaktimporten från att skriva över publicerade löften,
+  rättelselogg eller körlogg. Importen fyller endast granskningskön.
+- Lade till kontroller för ändrat föreläge, paketmanipulation, omkörning,
+  låsning och bevarade original vid fel.
+- Uppdaterade genomförandeplanen och arbetsinstruktionen för sakprövning med
+  de nya kontrakten och kvarvarande begränsningar.
+
+Den senaste bevarade kodrevisionen är
+`9f0b876b8e048242a5bf30e77905605860181f83`. För den revisionen passerade den
+lokala fulla pipelinesviten med 1 245 tester: 1 244 godkända, 0 fel och 1
+befintligt överhoppat. Typkontroll och ordgrind passerade. Ett avsiktligt fel,
+där en extern hashreferens togs bort, fällde två av tre riktade tester; efter
+återställning passerade testerna igen.
+
+Den senaste bevarade revisionen i handoff-repot är
+`9e4f541151e0e634635f4e5147456932bdc8181b`.
 
 ## Current status
 
-Senast dokumenterade kodrevision är `03518b3c` på utkast-PR 8702. Senast dokumenterade fulla pipelinekörning: 1 233 tester, 1 232 godkända, 0 fel och 1 befintligt överhoppat. Typkontroll och ordgrind passerade. Ändringarna är inte mergade eller aktiverade i produktion. Den lokala huvudgrenen stod vid revision `6041fcca` när denna fil skrevs; kontrollera alltid aktuell PR- och CI-status innan du fortsätter.
+Kontrollerat mot GitHub 2026-09-14:
 
-Kontrollerat mot GitHub 2026-09-14: PR 8702 är öppen och ett utkast, med full revision `03518b3cad84f06858cc2f22268ef74a472b2f59` på `arbete/sakprovningsgrind`. GitHubs main är `9bd99330a2a8154872c3edf311d809b64397c6f5`. Lokal main har därefter fått överlämningscommitten `401698f0`, men ligger efter GitHub och ska inte tvångspushas.
+- PR 8702 är öppen som utkast och pekar på exakt kodrevision `9f0b876b`.
+- `test-handlingsvagen` är godkänd för revisionen. `test-pipeline` körde
+  fortfarande vid kontrollen och får därför inte beskrivas som godkänd ännu.
+- PR 406 i handoff-repot är öppen och pekar på exakt revision `9e4f541`.
+- PR 8703 innehåller denna fil. Kontrollerna var godkända före denna
+  uppdatering och körs på nytt efter push.
 
-Efter den pushade revisionen implementerades lokalt `utrakningspaket.ts`, en ersättande `scripts/utrakning-byt.mts`, stöd för flera ändrade gruppmedlemmars slutläge i `sakprovning.ts` och `tests/utrakningspaket.test.ts`. Typkontroll och fyra riktade prov passerade enligt denna sessions verktygsutskrift. Full testsvit, avsiktligt felprov och commit/push slutfördes inte för dessa ändringar. Den temporära arbetskopian `/private/tmp/valflask-sakprovningsgrind` saknas nu; Git markerar den som `prunable`. Räkna därför inte denna senare kod som bevarad eller levererad. Återskapa den från sessionshistoriken och verifiera på nytt om ingen annan kopia kan återfinnas.
+Inget i PR 8702 är mergat eller aktiverat i produktion. Ingen faktisk
+sakgranskning eller mänsklig attest har genomförts genom det nya flödet.
 
 ## Next task
 
-Återställ först en arbetskopia från `arbete/sakprovningsgrind` vid den verifierade PR-revisionen. Kontrollera om den opushade paketimplementationen finns bevarad någon annanstans; annars återskapa den från denna sessions tidigare kod och prov. Migrera sedan `pipeline/scripts/utrakning-byt.mts` helt till `utrakningspaket/1`: privat förberedelse, separat sakprövning, extern hash för hela paketet och journalförd verkställning av exakt `promises.json`, `rattelser.json` och `changelog.json`. Ta bort den gamla direkta skrivvägen. Varje sakprövning måste se alla samtidigt ändrade gruppmedlemmars slutläge. Prova verklig CLI, oförändrade original vid fel, manipulerade loggar och omkörning; kör full pipeline, typecheck, ordgrind och avsiktligt felprov. Uppdatera PR 8702 och överlämningen och pusha revisionen.
+Implementera ankarsättning som nästa sammanhållna enhet i PR 8702.
+
+1. Registrera arbetet under "Pågår just nu" i handoff-repots
+   `projekt/utlovat/HANDOFF.md` och pusha anspråket före kodändringen.
+2. Inför ett fryst `ankarforslag` som binder hela löftesbeståndet,
+   målpostens exakta föreläge, ankarets exakta föreläge och målpostens exakta
+   slutläge.
+3. Stoppa indirekta ankarkedjor som återkommer till målposten, inte bara den
+   direkta tvåpostscykel som den nuvarande koden upptäcker.
+4. Kräv att målposten har ett uttryckligt nollspann och att ankarets låg-,
+   bas- och högvärde är ändliga, ordnade och har positiv bas.
+5. Bind ankarets sakunderlag, rättelsepost och körlogg till ett fullständigt
+   beslutspaket med extern beslutshash.
+6. Migrera `pipeline/scripts/ankarsattning.mts` till förbered, kontrollera och
+   verkställ under lås. Ta bort den direkta skrivvägen.
+7. Prova verklig CLI i isolerad kopia, manipulerat paket, ändrat föreläge,
+   indirekt cykel, omkörning och oförändrade original vid fel. Kör därefter
+   full pipelinesvit, typkontroll, ordgrind och ett avsiktligt felprov.
+8. Pusha kodrevisionen, uppdatera PR 8702 och dokumentera verifieringsutfallet
+   i PR 406.
+
+Efter ankarsättningen är den rekommenderade ordningen: paketera nollning,
+paketera avvisning och återstående direkta skrivare, införa gemensamma
+paketbyggare där kontrakten är kända, och därefter köra den faktiska
+innehållsrevisionen samt mäta insamlingens täckning och bedömningens
+felutfall.
 
 ## Known issues
 
-- Den pushade `utrakning-byt`-skrivaren kan fortfarande skriva direkt; paketbiblioteket och dess CLI-ersättning finns inte i den verifierade Git-revisionen.
-- Övriga skrivvägar för ankarsättning, nollning, sortering, grupper, citat, rubriker, indragningar och avvisningar är inte fullt migrerade till samma versionsbundna beslutspaket.
-- Modellnamn och formatversion binder ännu inte exakt prompt- och estimatorversion.
-- Artefaktimporten skyddar Actions-flödet men är inte en generell låsning för samtidiga lokala skrivare.
-- Tester med syntetiska sakbedömningar visar kontrakt och felhantering, inte att källor eller politiska påståenden är sakligt sanna.
-- Ingen mänsklig attest har skapats eller får påstås vara gjord. Produktionsflödet kräver fortfarande verklig mänsklig granskning före publicering.
-- Den fullständiga genomgången av innehåll, insamlingskvalitet, bedömningskvalitet och automatiseringsgrad är inte färdig.
+- Ankarsättningens nuvarande skript kontrollerar materialet före låsning och
+  skriver flera filer i följd. Det kan därför verkställa ett gammalt
+  föreläge eller lämna en delvis genomförd ändring.
+- Ankarsättningen upptäcker bara en direkt tvåpostscykel. Längre cykler är
+  ännu inte uttryckligen stoppade i skrivvägen.
+- Skrivvägar för nollning, avvisning, grupper, citat, rubriker och
+  indragningar är inte fullt migrerade till versionsbundna beslutspaket.
+- Modellnamn och formatversion binder ännu inte exakt prompt- och
+  estimatorversion.
+- Artefaktimportens skydd gäller Actions-flödet och är inte en generell
+  transaktion för alla samtidiga lokala skrivare.
+- Den fullständiga sakliga genomgången av löften, kopplingar, grupper,
+  dubbletter, beräkningar, partital, inriktningslöften och aktörsnivåer är
+  inte utförd. Proven visar kontrakt och felhantering, inte att källorna eller
+  de politiska påståendena är sanna.
+- Insamlingsprocessens täckning, falska negativa fynd och källprioritering är
+  ännu inte mätta mot ett oberoende stickprov.
+- Bedömningsprocessens träffsäkerhet och graden av möjlig säker automation är
+  ännu inte mätta mot dubbel mänsklig bedömning.
+- Ingen faktisk mänsklig attest har skapats. Produktionsflödet måste verifiera
+  identiteten bakom beslutet och det exakta beslutspaketet före publicering.
+- PR 8519 har en känd konflikt som ska hanteras vid ett senare tillfälle.
+- PR 8702:s beskrivning behöver uppdateras med de senaste uträknings- och
+  löftestypspaketen samt aktuella provtal.
+- PR 406 är fortfarande öppen. Kontrollera dess blandade historik och
+  aktuella diff före eventuell sammanslagning.
 
 ## Important decisions
 
-- Närhet mellan ett nytt och ett gammalt belopp är aldrig ett godkännande; båda går till granskning.
-- Ett förslag får inte ändra publicerade data utan separat sakprövning, extern beslutshash och exakt föreläge.
-- Rättelse- och körlogg ska ingå i samma beslutspaket som den publicerade ändringen.
-- Saknade eller oavgjorda belägg ska lämnas oavgjorda i stället för att fyllas i.
-- Syntetiska testbedömningar är endast testdata och får aldrig användas som faktisk attest.
-- Kod-PR får öppnas som utkast, men merge och produktionspublicering är fortfarande ett mänskligt beslut.
+- Närhet mellan ett nytt och ett gammalt belopp är aldrig ett godkännande;
+  båda ska bli granskningsförslag.
+- Ett förslag får inte ändra publicerade data utan separat sakprövning,
+  extern beslutshash och exakt överensstämmande föreläge.
+- Publicerad data, offentlig rättelselogg och körlogg ska ingå i samma
+  beslutspaket.
+- Saknade eller oavgjorda belägg ska förbli oavgjorda.
+- Partiets egen siffra ska användas när den finns. Ett löfte med egen siffra
+  får inte nollas som inriktningslöfte.
+- Ett inriktningslöfte ska bära rätt typ och ett uttryckligt nollspann.
+- Partikopplingar och ledamotskopplingar ska prövas som skilda
+  aktörshandlingar.
+- Syntetiska testbedömningar visar endast systemets kontrakt och får aldrig
+  användas som faktisk attest.
+- En människa ska godkänna det hashbundna slutpaketet före publicering; en
+  modell eller automatisk kontroll får förbereda underlaget men inte utge sig
+  för att vara den människan.
+- Kod-PR får öppnas som utkast, men merge och produktionspublicering är ett
+  mänskligt beslut.
