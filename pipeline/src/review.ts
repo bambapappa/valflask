@@ -521,8 +521,8 @@ function forberedLast(
       `Källan tillhör ett annat parti. Löftet tillskrivs ${tillskrivna.join("/")}, men\n` +
         `${item.articleUrl}\nligger på ${kallansParti}:s egen sajt — det är motståndarens\n` +
         "beskrivning av partiet, inte partiets eget ord.\n\n" +
-        "Hitta partiets egen källa, eller avvisa posten:\n" +
-        `  pnpm review reject ${index} "källan är ett annat partis sajt"`,
+        "Hitta partiets egen källa, eller förbered ett granskningsbundet avslag med:\n" +
+        "  pnpm avvisa-lista forbered <rader.json> <privat-paket.json>",
     );
     process.exit(1);
   }
@@ -978,12 +978,11 @@ switch (command) {
     break;
   }
   case "reject-id": {
-    const index = resolveIdOrExit(args[0]);
-    if (!args[1]) {
-      console.error("Användning: pnpm review reject-id <review-id> <orsak>");
-      process.exit(1);
-    }
-    reject(String(index), args.slice(1).join(" "));
+    console.error(
+      "Direktavslag är avstängt. Använd pnpm avvisa-lista forbered, kontroll och verkstall " +
+      "så att köpost, skäl, verifierad beslutskälla och hela filpaketet binds till samma beslut.",
+    );
+    process.exit(1);
     break;
   }
   case "prepare": {
@@ -1023,24 +1022,22 @@ switch (command) {
     break;
   }
   case "reject":
-    if (!args[0] || !args[1]) {
-      console.error("Användning: pnpm review reject <post> <orsak>  (<post> = review-id eller index)");
-      process.exit(1);
-    }
-    reject(args[0], args.slice(1).join(" "));
+    console.error(
+      "Direktavslag är avstängt. Använd pnpm avvisa-lista forbered, kontroll och verkstall " +
+      "så att köpost, skäl, verifierad beslutskälla och hela filpaketet binds till samma beslut.",
+    );
+    process.exit(1);
     break;
   case "add":
     add(args[0]);
     break;
   default:
-    console.log("Användning: pnpm review <list|prepare|approve|reject|add>");
+    console.log("Användning: pnpm review <list|prepare|approve|add>");
     console.log("  prepare <fil.json> <post> [kostnadsargument]  Spara förslag för prövning, utan godkännande");
     console.log("  list                         Visa poster i needs_review");
     console.log("  approve <post> [low base high] [--group p-XXXX]  Godkänn; kostnad; länka dublett");
     console.log("           [--typ <kostnadstyp>] [--period <per_ar|engang>] [--basis <källnivå>]");
-    console.log("  reject <post> <orsak>        Avvisa post\n" +
-      "  <post> är ett review-id (tolv tecken ur listningen) eller ett index.\n" +
-      "  Skriv id. Index flyttar sig så snart en post ovanför avgörs.");
+    console.log("  avslag                       Använd pnpm avvisa-lista forbered, kontroll och verkstall");
     console.log("  avvisade                     Visa avvisningsminnet");
     console.log("  hav <nyckel> <skäl>          Häv en avvisning så posten kan komma tillbaka");
     console.log("  add <fil.json>               Lägg in ett manuellt inrapporterat löfte för granskning");
