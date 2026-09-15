@@ -49,23 +49,34 @@ läsordningen. Kod-PR:n får inte slås ihop utan mänskligt beslut.
 - Migrerade avslag via etikett i kodrevision `6e527c11`. Skriptet läser hela
   den paginerade issue-historiken, kräver att den senaste beslutsetiketten
   sattes av repots ägare och binder samma aktör till beslutspaketet.
-- Pushade projektstatusen till handoff-revision `9025e7a`.
+- Stängde `review reject` och `review reject-id` i `03d4d8f6`. De kan inte
+  längre avvisa utan det fullständiga paketflödet.
+- Stängde de oförberedda GitHub-godkännandena i `c1e00857`. Kommentar- och
+  etikettvägarna kan inte längre anropa äldre `approve()` utan obligatoriskt
+  beslutsunderlag, och nya review-issues annonserar inte ett ogiltigt
+  godkännandekommando.
+- Införde `godkannandepaket/1` och CLI:n `godkann-paket` i `2bbc02a4`.
+  Paketet binder fullständiga förslag, sakprövningar, provningshashar, exakt
+  filpaket, beslut och verifierad GitHub-källa. Verkligt CLI-prov täcker
+  förberedelse, privat filrättighet, kontroll, fel hash, ändrat föreläge och
+  exakt skrivning.
+- Pushade projektstatusen till handoff-revision `eb2f789`.
 
 ## Current status
 
 Kontrollerat mot GitHub 2026-09-15:
 
 - PR 8702 är öppen som utkast på exakt revision
-  `6e527c11d75532299ec6c0686c371945aa61d80e`.
-- Lokal full pipelinesvit för revisionen: 1 263 tester, 1 262 godkända, 0 fel
+  `2bbc02a4e95ed57fa07a13fcc64d2b75b013648c`.
+- Lokal full pipelinesvit för revisionen: 1 269 tester, 1 268 godkända, 0 fel
   och 1 överhoppat. Typkontroll, ordgrind och `git diff --check` passerade.
-- Avsiktligt felprov: när bindningen mellan bedömare och GitHub-aktör togs
-  bort föll det riktade regressionsprovet; efter återställning passerade det.
+- Avsiktligt felprov: när kravet på matchande extern slutpaketshash togs bort
+  föll det riktade regressionsprovet; efter återställning passerade det.
 - GitHubs `test-pipeline` och `test-handlingsvagen` är godkända för revisionen.
   `build-and-test` körde fortfarande vid den sista kontrollen och ska
   kontrolleras på nytt innan grenen bedöms som helt grön.
-- PR 406 är öppen på exakt revision
-  `9025e7a00b6623790a2c440e822fabecaa133557`; dess test är godkänt.
+- PR 406 är öppen på exakt revision `eb2f789`; den nya dokumentrevisionen ska
+  läsas av i GitHub.
 - Inga sakdata ändrades, inga verkliga granskningsbeslut skapades och inget av
   processutkastet är mergat eller aktiverat i produktion.
 
@@ -78,34 +89,39 @@ Lokala arbetskopior:
 
 ## Next task
 
-Stäng den sista äldre direkta avslagsvägen i `pipeline/src/review.ts`.
+Implementera den privata producenten och GitHub-bryggan för ett redan
+förberett `godkannandepaket/1`.
 
-1. Registrera ett nytt anspråk under "Pågår just nu" i
-   `projekt/utlovat/HANDOFF.md` och pusha det före kodändringen.
-2. Ta bort eller spärra CLI-kommandona `review reject` och `review reject-id`
-   så att de inte längre kan anropa `reject()` utan ett granskningspaket.
-   Hänvisa användaren till `avvisa-lista forbered`, `kontroll` och `verkstall`.
-3. Lägg ett regressionsprov som fäller om en körbar CLI- eller workflowväg
-   åter kan avvisa utan `avvisningspaket/1`, verifierad beslutskälla och extern
-   pakethash. Biblioteksfunktionen får finnas kvar för paketens isolerade
-   beräkning, men ska inte vara en fristående beslutskälla.
-4. Kör riktade prov, full pipeline, typkontroll, ordgrind och ett avsiktligt
-   felprov. Pusha till PR 8702 och uppdatera PR 406.
+1. Registrera och pusha ett nytt anspråk i `projekt/utlovat/HANDOFF.md`.
+2. Lägg en bindningsfunktion i `pipeline/src/godkannandepaket.ts` som kräver
+   `association=OWNER`, GitHub-händelselänk, samma bedömare och aktör samt
+   exakt matchning mot `godkannandeforslagshash(paket)`.
+3. Utöka kommandotolken med `/godkänn paket <64 hextecken>` och behåll äldre
+   ja-former spärrade.
+4. Låt kommentarhanteraren konsumera en uttryckligen angiven privat paketfil
+   eller workflow-artefakt. Saknad fil, fel issue, fel hash, fel aktör eller
+   ändrat föreläge ska ge fel utan skrivning.
+5. Låt människans GitHub-händelse bindas till det frysta förslagets hash;
+   beräkna sedan slutpaketets hash och verkställ exakt `Filpaket`.
+6. Koppla den privata handoff-workflowen till producenten. Fulla sakprövningar
+   får aldrig läggas i publika valflask.
+7. Prova giltig väg, saknad artefakt, gammalt kommando, fel hash, fel issue,
+   fel aktör, ändrad sakprövning, ändrat föreläge och omkörning. Kör sedan full
+   pipeline, typkontroll, ordgrind, `git diff --check` och avsiktligt felprov.
 
-När avvisningen är helt stängd är nästa sammanhållna etapp att inventera och
-migrera återstående direkta skrivare för grupper, citat, rubriker och
-indragningar. Därefter måste den faktiska innehållsrevisionen och de
-representativa kvalitetsmätningarna genomföras; beslutspaketen gör processen
-säkrare men bevisar inte att innehållet är sant.
+Därefter återstår direkta skrivare för grupper, citat, rubriker och
+indragningar, den faktiska innehållsrevisionen och oberoende mätningar av
+insamling och bedömning.
 
 ## Known issues
 
-- `review reject` och `review reject-id` kan fortfarande avvisa direkt utan
-  fullständigt beslutspaket.
-- Godkännande via `handle-review-comment` och `apply-labeled-decisions` går
-  fortfarande genom den äldre `approve()`-vägen. Den måste granskas mot det
-  nya obligatoriska beslutsunderlaget och får inte antas fungera korrekt bara
-  för att avslagsvägen nu är paketerad.
+- Det finns ännu ingen privat producent som gör verkliga fullständiga
+  sakprövningar till `godkannandepaket/1`, och ingen GitHub-konsument binder
+  människans hash till den verifierade händelsen. De äldre ja-vägarna stoppar
+  därför avsiktligt.
+- Slutpaketets hash omfattar beslutet och kan först beräknas efter händelsen.
+  Människans handling ska därför avse det frysta obeslutade paketets hash;
+  slutpaketshashen skyddar integriteten efter bindningen.
 - Direkta skrivare för grupper, citat, rubriker och indragningar är inte fullt
   migrerade till samma versionsbundna paketkontrakt.
 - Modellnamn och formatversion binder ännu inte exakt prompt- och
