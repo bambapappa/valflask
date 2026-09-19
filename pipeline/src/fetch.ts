@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { gunzipSync } from "node:zlib";
 import { DATE_WINDOW_DAYS, type NormalizedArticle } from "./gates.ts";
 import { kartaSamtidigt } from "./samtidigt.ts";
+import { parseRetryAfterMs } from "./takten.ts";
 import { kanoniskAdress } from "./adressen.ts";
 
 /* ──────────────────────── ArticleSource (M2 injicerbart gränssnitt) ── */
@@ -98,6 +99,15 @@ export interface SourceConfig {
     samtidiga_artiklar?: number;
     /** Hur många sidor som hämtas samtidigt inom en källa. Odefinierat = 1. */
     samtidiga_hamtningar?: number;
+    /**
+     * Hur många gånger en sida provas om när värden svarar 429. Odefinierat
+     * = 2, alltså tre försök totalt.
+     *
+     * Bara 429 provas om. En taktspärr säger "kom tillbaka strax" och är
+     * det enda svaret där ett omförsök är både artigt och meningsfullt;
+     * 403, 404 och 5xx är besked, och att mala på dem vore att tjata.
+     */
+    hamtning_omforsok?: number;
   };
 }
 
@@ -962,6 +972,16 @@ export function loadSeen(path: string): Map<string, string> {
 
 const USER_AGENT = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 
+/**
+ * Tak för hur länge hämtningen väntar ut en taktspärr, per försök.
+ *
+ * Trettio sekunder är samma storleksordning som sidhämtningens egen timeout.
+ * En värd som ber oss vänta längre än så får vänta till nästa körning i
+ * stället — körningen har 120 sidor att hinna med, och en enda spärr ska
+ * inte kunna lägga beslag på hela budgeten.
+ */
+const MAX_TAKTVANTAN_MS = 30_000;
+
 export class LiveSource implements ArticleSource {
   private feeds: SourceFeed[];
   private limits: SourceConfig["limits"];
@@ -986,6 +1006,7 @@ export class LiveSource implements ArticleSource {
   private urlar: ReadonlySet<string> | null;
 
   private now: () => Date;
+  private sleep: (ms: number) => Promise<void>;
 
   constructor(opts: {
     feeds: SourceFeed[];
@@ -997,6 +1018,8 @@ export class LiveSource implements ArticleSource {
     urlar?: readonly string[];
     /** Injicerbar klocka (test-determinism för färskhetsspärren på följda PDF:er). */
     now?: () => Date;
+    /** Injicerbar väntan, så att avbackningen går att mäta utan att testet sover. */
+    sleep?: (ms: number) => Promise<void>;
   }) {
     this.feeds = opts.feeds;
     this.limits = opts.limits;
@@ -1007,6 +1030,7 @@ export class LiveSource implements ArticleSource {
     this.cacheDir = opts.cacheDir ?? null;
     this.userAgent = opts.userAgent ?? USER_AGENT;
     this.now = opts.now ?? (() => new Date());
+    this.sleep = opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)));
     this.robotsCache = new Map();
     this.robotsPagaende = new Map();
     this.stats = new Map();
@@ -1173,11 +1197,25 @@ export class LiveSource implements ArticleSource {
       if (cached.lastModified) headers["If-Modified-Since"] = cached.lastModified;
     }
 
-    const res = await this.httpFetch(url, {
-      headers,
-      signal: AbortSignal.timeout(30000),
-      redirect: "follow",
-    });
+    // 429 PROVAS OM. En taktspärr är inget besked om att sidan saknas eller
+    // är stängd för oss — den säger "kom tillbaka strax". Att kasta den som
+    // vilket fel som helst kostade ungefär två tredjedelar av moderaterna.se
+    // i varje körning från 2026-09-15: 68 av körning 35427897952:s 73 spärrar
+    // låg där, och sidorna var förlorade tills nästa dygn. Värdens egen
+    // Retry-After gäller före vår backoff, kapad så att en orimlig siffra
+    // inte lägger hela körningen på is.
+    const tak = this.limits.hamtning_omforsok ?? 2;
+    let res!: Response;
+    for (let forsok = 0; ; forsok++) {
+      res = await this.httpFetch(url, {
+        headers,
+        signal: AbortSignal.timeout(30000),
+        redirect: "follow",
+      });
+      if (res.status !== 429 || forsok >= tak) break;
+      const ra = parseRetryAfterMs(res.headers.get("retry-after"), MAX_TAKTVANTAN_MS);
+      await this.sleep(ra ?? Math.min(MAX_TAKTVANTAN_MS, 1000 * 2 ** forsok));
+    }
 
     if (res.status === 304) return null;
 

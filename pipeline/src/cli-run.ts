@@ -67,10 +67,36 @@ export function valjUrlar(urlarRaw: string | undefined): string[] {
  * modellerna: `MODEL_COPY`, `MODEL_COPY_FALLBACK`, `MODEL_COPY_ZAI`.
  */
 const LED_ORDNING = [
-  { namn: "primär", nyckel: "primar", url: "LLM_BASE_URL", key: "LLM_API_KEY", suffix: "" },
-  { namn: "sekundär", nyckel: "sekundar", url: "LLM_FALLBACK_BASE_URL", key: "LLM_FALLBACK_API_KEY", suffix: "_FALLBACK" },
-  { namn: "extra", nyckel: "extra", url: "LLM_ZAI_BASE_URL", key: "LLM_ZAI_API_KEY", suffix: "_ZAI" },
+  { namn: "primär", nyckel: "primar", url: "LLM_BASE_URL", key: "LLM_API_KEY", huvuden: "LLM_HUVUDEN", suffix: "" },
+  { namn: "sekundär", nyckel: "sekundar", url: "LLM_FALLBACK_BASE_URL", key: "LLM_FALLBACK_API_KEY", huvuden: "LLM_FALLBACK_HUVUDEN", suffix: "_FALLBACK" },
+  { namn: "extra", nyckel: "extra", url: "LLM_ZAI_BASE_URL", key: "LLM_ZAI_API_KEY", huvuden: "LLM_ZAI_HUVUDEN", suffix: "_ZAI" },
 ] as const;
+
+/**
+ * Tolkar ett ledas huvud-variabel: ett huvud per rad, `namn: värde`.
+ *
+ * Formen är vald för att den ska gå att skriva i en repovariabel utan att
+ * citattecken och klammer ställer till det. En rad utan kolon är ett
+ * misstag och stoppar körningen — ett huvud som leverantören kräver ska
+ * inte tyst utebli, för då kommer felet i stället som ett 4xx mitt i en
+ * skörd.
+ */
+function tolkaHuvuden(varde: string | undefined, variabel: string): Record<string, string> | undefined {
+  if (!varde) return undefined;
+  const ut: Record<string, string> = {};
+  for (const rad of varde.split("\n")) {
+    const trimmad = rad.trim();
+    if (trimmad === "") continue;
+    const delare = trimmad.indexOf(":");
+    if (delare <= 0) {
+      throw new Error(
+        `${variabel}: raden "${trimmad}" saknar kolon. Skriv ett huvud per rad, "namn: värde".`,
+      );
+    }
+    ut[trimmad.slice(0, delare).trim()] = trimmad.slice(delare + 1).trim();
+  }
+  return Object.keys(ut).length > 0 ? ut : undefined;
+}
 
 /**
  * Bygger kedjan ur miljön.
@@ -166,7 +192,14 @@ export function byggLed(
       );
     }
 
-    led.push({ namn: spec.namn, baseUrl: baseUrl!, apiKey: apiKey!, modell: modeller });
+    const huvuden = tolkaHuvuden(getEnv(env, spec.huvuden), spec.huvuden);
+    led.push({
+      namn: spec.namn,
+      baseUrl: baseUrl!,
+      apiKey: apiKey!,
+      modell: modeller,
+      ...(huvuden ? { huvuden } : {}),
+    });
   }
 
   if (led.length === 0) {
