@@ -94,6 +94,9 @@ jobs:
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           COMMENT_BODY: ${{ github.event.comment.body }}
+          DECISION_ACTOR: ${{ github.event.comment.user.login }}
+          DECISION_ASSOCIATION: ${{ github.event.comment.author_association }}
+          DECISION_REF: ${{ github.event.comment.html_url }}
           PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "utlovat-bot"

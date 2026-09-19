@@ -13,6 +13,7 @@
     "calc:backfill": "node --import tsx/esm scripts/calculation-backfill.mts",
     "check-t7": "node --import tsx/esm scripts/check-t7.mts",
     "citat-byt": "node --import tsx/esm scripts/citat-byt.mts",
+    "data-aterstall": "node --import tsx/esm scripts/data-aterstall.mts",
     "datumgrind:om": "node --import tsx/esm scripts/datumgrind-omprovning.mts",
     "film:arkiv": "node --import tsx/esm scripts/film-arkiv.mts",
     "fingeravtryck": "node --import tsx/esm scripts/fingeravtrycket.mts",
@@ -20,6 +21,7 @@
     "gruppharledning": "node --import tsx/esm scripts/gruppharledning.mts",
     "gruppsattning": "node --import tsx/esm scripts/gruppsattning.mts",
     "import:vallen": "node --import tsx/esm src/cli-import-vallen.ts",
+    "kalkyl-forbered": "node --import tsx/esm scripts/kalkyl-forbered.mts",
     "kallans:alder": "node --import tsx/esm scripts/kallans-alder.mts",
     "ko-belopp": "node --import tsx/esm scripts/ko-belopp.mts",
     "ko-grupp": "node --import tsx/esm scripts/ko-grupp.mts",
@@ -50,6 +52,7 @@
     "test": "node --import tsx/esm --test \"tests/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
     "godkann-lista": "node --import tsx/esm scripts/godkann-lista.mts",
+    "godkann-paket": "node --import tsx/esm scripts/godkann-paket.mts",
     "avvisa-lista": "node --import tsx/esm scripts/avvisa-lista.mts",
     "utrakningen": "node --import tsx/esm scripts/utrakningen.mts"
   },
