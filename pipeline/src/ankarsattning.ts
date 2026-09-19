@@ -72,6 +72,7 @@ export function provaAnkarrad(
   lofte: Lofte | undefined,
   ankare: Lofte | undefined,
   rad: Ankarrad,
+  alla: readonly Lofte[] = [],
 ): Ankarprovning {
   const fel: string[] = [];
   if (!lofte) return { ok: false, fel: [`${rad.id} finns inte i promises.json`] };
@@ -86,9 +87,42 @@ export function provaAnkarrad(
     fel.push(`${rad.id}: ankaret ${rad.ankare} pekar tillbaka hit — två poster kan inte låna av varandra`);
   }
 
+  // Följ hela kedjan. En cykel kan annars döljas bakom ett eller flera
+  // mellanankare och ändå sakna en självständig beräkning i botten.
+  if (alla.length > 0) {
+    const perId = new Map(alla.map((p) => [p.id, p]));
+    const besokta = new Set<string>();
+    const stack = [...(ankare.cost.anchor_ids ?? [])];
+    while (stack.length > 0) {
+      const id = stack.pop()!;
+      if (id === rad.id) {
+        fel.push(`${rad.id}: ankarkedjan från ${rad.ankare} pekar tillbaka till målposten`);
+        break;
+      }
+      if (besokta.has(id)) continue;
+      besokta.add(id);
+      const nasta = perId.get(id);
+      if (!nasta) {
+        fel.push(`${rad.id}: ankarkedjan hänvisar till det saknade löftet ${id}`);
+        continue;
+      }
+      stack.push(...(nasta.cost.anchor_ids ?? []));
+    }
+  }
+
+  const malspann = [lofte.cost.msek_low, lofte.cost.msek_base, lofte.cost.msek_high];
+  if (!malspann.every((v) => typeof v === "number" && Number.isFinite(v) && v === 0)) {
+    fel.push(`${rad.id} måste ha ett uttryckligt nollspann före ankarsättning`);
+  }
   const bas = lofte.cost.msek_base ?? 0;
   if (bas !== 0) {
     fel.push(`${rad.id} står redan på ${bas} — verktyget sätter ett belopp på en nolla, det ändrar inget befintligt`);
+  }
+  const ankarspann = [ankare.cost.msek_low, ankare.cost.msek_base, ankare.cost.msek_high];
+  if (!ankarspann.every((v) => typeof v === "number" && Number.isFinite(v)) ||
+      (ankare.cost.msek_low as number) > (ankare.cost.msek_base as number) ||
+      (ankare.cost.msek_base as number) > (ankare.cost.msek_high as number)) {
+    fel.push(`${rad.id}: ankaret ${rad.ankare} måste ha ett ändligt och ordnat kostnadsspann`);
   }
   const ankarbas = ankare.cost.msek_base ?? 0;
   if (ankarbas <= 0) {
