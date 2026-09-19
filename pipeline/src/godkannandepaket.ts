@@ -47,6 +47,36 @@ export function godkannandepakethash(paket: Godkannandepaket): string {
   return hash(paket);
 }
 
+/** Anroparen verifierar händelsen mot GitHub; paketfilen är ingen identitetskälla. */
+export function bindGitHubGodkannande(
+  paket: Godkannandepaket,
+  forslagshash: string,
+  kalla: { system: string; association: string; actor: string; handelse: string },
+  motivering: string,
+): Godkannandepaket {
+  if (paket.beslut !== null) throw new Error("Paketet har redan ett beslut");
+  if (!/^[0-9a-f]{64}$/u.test(forslagshash) || forslagshash !== godkannandeforslagshash(paket)) {
+    throw new Error("GitHub-godkännandet gäller inte det frysta förslaget");
+  }
+  if (
+    kalla?.system !== "github" || kalla.association !== "OWNER" ||
+    typeof kalla.actor !== "string" || !kalla.actor.trim() ||
+    typeof kalla.handelse !== "string" ||
+    !/^https:\/\/github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+\/issues\/[1-9][0-9]*#issuecomment-[1-9][0-9]*$/u.test(kalla.handelse) ||
+    typeof motivering !== "string" || motivering.trim().length < GODKANNANDE_MIN_TECKEN
+  ) throw new Error("GitHub-godkännandet saknar giltig beslutskälla eller motivering");
+  return {
+    ...structuredClone(paket),
+    beslut: {
+      bedomare: kalla.actor,
+      utfall: "godkann",
+      motivering,
+      forslagshash,
+      kalla: { system: "github", association: "OWNER", actor: kalla.actor, handelse: kalla.handelse },
+    },
+  };
+}
+
 export function forberedGodkannandepaket(
   rader: readonly Listgodkannande[],
   dataDir: string,
@@ -77,7 +107,8 @@ export function kontrolleraGodkannandepaket(paket: Godkannandepaket, dataDir: st
     Object.keys(beslut).sort().join(",") !== "bedomare,forslagshash,kalla,motivering,utfall" ||
     beslut.utfall !== "godkann" ||
     !beslut.bedomare?.trim() ||
-    beslut.motivering?.trim().length < GODKANNANDE_MIN_TECKEN ||
+    typeof beslut.motivering !== "string" ||
+    beslut.motivering.trim().length < GODKANNANDE_MIN_TECKEN ||
     beslut.forslagshash !== godkannandeforslagshash(paket) ||
     Object.keys(beslut.kalla ?? {}).sort().join(",") !== "actor,association,handelse,system" ||
     beslut.kalla.system !== "github" ||

@@ -9,6 +9,7 @@ import { reviewId, type ReviewCandidate } from "../src/review.ts";
 import { provatBeslutsunderlag } from "./fixtures/provat-beslutsunderlag.ts";
 import {
   forberedGodkannandepaket,
+  bindGitHubGodkannande,
   godkannandeforslagshash,
   godkannandepakethash,
   verkstallGodkannandepaket,
@@ -60,6 +61,25 @@ it("binder förslag, sakprövning, slutform och verifierad mänsklig beslutskäl
     const utkast = forberedGodkannandepaket([{ args, underlag, provningshash: underlag.provningshash }], dir, new Date("2026-09-15T08:00:00Z"));
     assert.throws(() => verkstallGodkannandepaket(dir, utkast, godkannandepakethash(utkast)), /mänskligt godkännande/u);
     const paket = klart(utkast);
+    const kalla = paket.beslut!.kalla;
+    const motivering = paket.beslut!.motivering;
+    const bundet = bindGitHubGodkannande(utkast, godkannandeforslagshash(utkast), kalla, motivering);
+    assert.deepEqual(bundet, paket);
+    assert.equal(utkast.beslut, null);
+    assert.notEqual(bundet.rader, utkast.rader);
+    assert.throws(() => bindGitHubGodkannande(paket, godkannandeforslagshash(paket), kalla, motivering), /redan/u);
+    assert.throws(() => bindGitHubGodkannande(utkast, "0".repeat(64), kalla, motivering), /frysta förslaget/u);
+    for (const handelse of ["", "https://github.com/", "https://github.com/test/repo/issues/1", "https://github.com.evil.test/test/repo/issues/1#issuecomment-1"]) {
+      assert.throws(() => bindGitHubGodkannande(utkast, godkannandeforslagshash(utkast), { ...kalla, handelse }, motivering), /beslutskälla/u);
+    }
+    for (const actor of ["", "   "]) {
+      assert.throws(() => bindGitHubGodkannande(utkast, godkannandeforslagshash(utkast), { ...kalla, actor }, motivering), /beslutskälla/u);
+    }
+    assert.throws(() => bindGitHubGodkannande(utkast, godkannandeforslagshash(utkast), { ...kalla, association: "MEMBER" }, motivering), /beslutskälla/u);
+    assert.throws(() => bindGitHubGodkannande(utkast, godkannandeforslagshash(utkast), kalla, ""), /motivering/u);
+    const utanMotivering = structuredClone(paket);
+    utanMotivering.beslut!.motivering = null as unknown as string;
+    assert.throws(() => verkstallGodkannandepaket(dir, utanMotivering, godkannandepakethash(utanMotivering)), /mänskligt godkännande/u);
     const felActor = structuredClone(paket);
     felActor.beslut!.kalla.actor = "annat-konto";
     assert.throws(() => verkstallGodkannandepaket(dir, felActor, godkannandepakethash(felActor)), /mänskligt godkännande/u);
