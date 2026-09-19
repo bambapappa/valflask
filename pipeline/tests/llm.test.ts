@@ -635,3 +635,126 @@ describe("avhugget svar är inte heller ett svar", () => {
     assert.equal(await c.complete("p", { model: "m" }), "klart");
   });
 });
+
+/* ──────────────────────── Extra huvuden per led ── */
+
+describe("Ledets egna huvuden", () => {
+  /**
+   * Bakgrund: opencode började 2026-09-19 svara HTTP 400 `MissingSessionID`
+   * på `zen/go`-endpointen — "Request is missing x-opencode-session and
+   * cannot be routed efficiently". 34 anrop föll på det i körning
+   * 35428438621. Huvudet är leverantörens, inte pipelinens, så det
+   * konfigureras per led i stället för att skrivas in i koden.
+   */
+  it("skickar ledets huvuden med anropet", async () => {
+    let sedda: Record<string, string> = {};
+    const httpFetch = async (_u: string, init?: RequestInit) => {
+      sedda = (init?.headers ?? {}) as Record<string, string>;
+      return ok("OK");
+    };
+    const c = new OpenRouterClient({
+      led: [{
+        namn: "primär",
+        baseUrl: "https://opencode.ai/zen/go/v1",
+        apiKey: "k",
+        huvuden: { "x-opencode-session": "utlovat-pipeline" },
+      }],
+      httpFetch,
+      ...fast,
+    });
+    await c.complete("p", { model: "m" });
+    assert.equal(sedda["x-opencode-session"], "utlovat-pipeline");
+  });
+
+  it("ett led utan huvuden skickar bara de vanliga", async () => {
+    let sedda: Record<string, string> = {};
+    const httpFetch = async (_u: string, init?: RequestInit) => {
+      sedda = (init?.headers ?? {}) as Record<string, string>;
+      return ok("OK");
+    };
+    const c = new OpenRouterClient({
+      led: [{ namn: "primär", baseUrl: "https://openrouter.ai/api/v1", apiKey: "k" }],
+      httpFetch,
+      ...fast,
+    });
+    await c.complete("p", { model: "m" });
+    assert.deepEqual(Object.keys(sedda).sort(), ["Authorization", "Content-Type"]);
+  });
+
+  /**
+   * NYCKELN FÅR ALDRIG GÅ ATT SKRIVA ÖVER UTIFRÅN. Huvudena läggs på före
+   * Authorization, så att en felskriven variabel inte kan tysta bort
+   * nyckeln och skicka anropet oautentiserat — eller, värre, ersätta den
+   * med någon annans.
+   */
+  it("huvuden kan inte skriva över Authorization", async () => {
+    let sedda: Record<string, string> = {};
+    const httpFetch = async (_u: string, init?: RequestInit) => {
+      sedda = (init?.headers ?? {}) as Record<string, string>;
+      return ok("OK");
+    };
+    const c = new OpenRouterClient({
+      led: [{
+        namn: "primär",
+        baseUrl: "https://opencode.ai/zen/go/v1",
+        apiKey: "rätt-nyckel",
+        huvuden: { Authorization: "Bearer fel-nyckel", "Content-Type": "text/plain" },
+      }],
+      httpFetch,
+      ...fast,
+    });
+    await c.complete("p", { model: "m" });
+    assert.equal(sedda["Authorization"], "Bearer rätt-nyckel");
+    assert.equal(sedda["Content-Type"], "application/json");
+  });
+
+  /**
+   * `{körning}` finns för routnings- och sessionshuvuden: värdet ska vara
+   * stabilt genom en körning men inte återanvändas mellan körningar. Utan
+   * platshållaren hade varje körning behövt en ny variabel, och med ett
+   * fast värde hade alla körningar delat session.
+   */
+  it("{körning} byts mot ett id som är samma genom hela körningen", async () => {
+    const sedda: string[] = [];
+    const httpFetch = async (_u: string, init?: RequestInit) => {
+      sedda.push((init?.headers as Record<string, string>)["x-opencode-session"]!);
+      return ok("OK");
+    };
+    const c = new OpenRouterClient({
+      led: [{
+        namn: "primär",
+        baseUrl: "https://opencode.ai/zen/go/v1",
+        apiKey: "k",
+        huvuden: { "x-opencode-session": "utlovat-{körning}" },
+      }],
+      httpFetch,
+      ...fast,
+    });
+    await c.complete("a", { model: "m" });
+    await c.complete("b", { model: "m" });
+    assert.equal(sedda.length, 2);
+    assert.equal(sedda[0], sedda[1], "samma id genom körningen");
+    assert.match(sedda[0]!, /^utlovat-[0-9a-f]{16}$/);
+  });
+
+  it("två klienter får olika {körning}-id", async () => {
+    const sedda: string[] = [];
+    const httpFetch = async (_u: string, init?: RequestInit) => {
+      sedda.push((init?.headers as Record<string, string>)["x-opencode-session"]!);
+      return ok("OK");
+    };
+    const bygg = () => new OpenRouterClient({
+      led: [{
+        namn: "primär",
+        baseUrl: "https://opencode.ai/zen/go/v1",
+        apiKey: "k",
+        huvuden: { "x-opencode-session": "{körning}" },
+      }],
+      httpFetch,
+      ...fast,
+    });
+    await bygg().complete("a", { model: "m" });
+    await bygg().complete("b", { model: "m" });
+    assert.notEqual(sedda[0], sedda[1]);
+  });
+});

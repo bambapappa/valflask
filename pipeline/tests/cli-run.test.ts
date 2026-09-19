@@ -378,3 +378,67 @@ describe("kostnadsrollen", () => {
     assert.equal(ctx.models.extract, "utvinnaren", "utvinningen är orörd");
   });
 });
+
+/* ──────────────────────── Ledens egna huvuden ── */
+
+describe("byggLed läser ledets extra huvuden", () => {
+  const roller = { extract: "m-extract", verify: "m-verify", copy: "m-copy" };
+  const bas = {
+    LLM_BASE_URL: "https://opencode.ai/zen/go/v1",
+    LLM_API_KEY: "k",
+    MODEL_EXTRACT: "glm-5.3-flash",
+    MODEL_VERIFY: "muse-spark-1.3-contributor",
+    MODEL_COPY: "glm-5.3-flash",
+  };
+
+  it("tolkar 'namn: värde' till huvuden på rätt led", () => {
+    const led = byggLed(
+      { ...bas, LLM_HUVUDEN: "x-opencode-session: utlovat-{körning}" } as NodeJS.ProcessEnv,
+      roller,
+    );
+    assert.deepEqual(led[0]!.huvuden, { "x-opencode-session": "utlovat-{körning}" });
+  });
+
+  it("tar flera huvuden, ett per rad", () => {
+    const led = byggLed(
+      { ...bas, LLM_HUVUDEN: "x-ett: 1\nx-tva: 2\n" } as NodeJS.ProcessEnv,
+      roller,
+    );
+    assert.deepEqual(led[0]!.huvuden, { "x-ett": "1", "x-tva": "2" });
+  });
+
+  it("utan variabel sätts inga huvuden", () => {
+    const led = byggLed({ ...bas } as NodeJS.ProcessEnv, roller);
+    assert.equal(led[0]!.huvuden, undefined);
+  });
+
+  /**
+   * En felskriven variabel ska stoppa körningen, inte tyst skicka anropet
+   * utan huvudet. Det var precis den tysta degraderingen som lät kedjan stå
+   * trasig i drift utan att synas.
+   */
+  it("kastar på en rad utan kolon", () => {
+    assert.throws(
+      () => byggLed({ ...bas, LLM_HUVUDEN: "x-opencode-session" } as NodeJS.ProcessEnv, roller),
+      /LLM_HUVUDEN/,
+    );
+  });
+
+  it("varje led har sin egen variabel", () => {
+    const led = byggLed(
+      {
+        ...bas,
+        LLM_ZAI_BASE_URL: "https://api.z.ai/v1",
+        LLM_ZAI_API_KEY: "z",
+        MODEL_EXTRACT_ZAI: "glm-5.3",
+        MODEL_VERIFY_ZAI: "glm-5.3",
+        MODEL_COPY_ZAI: "glm-5.3",
+        LLM_HUVUDEN: "x-opencode-session: a",
+        LLM_ZAI_HUVUDEN: "x-zai: b",
+      } as NodeJS.ProcessEnv,
+      roller,
+    );
+    assert.deepEqual(led.find((l) => l.namn === "primär")!.huvuden, { "x-opencode-session": "a" });
+    assert.deepEqual(led.find((l) => l.namn === "extra")!.huvuden, { "x-zai": "b" });
+  });
+});
