@@ -57,3 +57,11 @@ it("ingen GitHub-konsument anropar den äldre direkta godkännandevägen", () =>
   assert.doesNotMatch(synk, /beslut:godkänn/u);
   assert.doesNotMatch(synk, /\/godkänn/u);
 });
+
+it("workflowen lämnar issue och användartyp från samma verifierade GitHub-händelse", () => {
+  const flow = readFileSync(new URL("../../.github/workflows/review.yml", import.meta.url), "utf8");
+  assert.ok(flow.includes("ISSUE_NUMBER: ${{ github.event.issue.number }}"));
+  assert.ok(flow.includes("DECISION_ACTOR_TYPE: ${{ github.event.comment.user.type }}"));
+  assert.ok(flow.includes("DECISION_ACTOR: ${{ github.event.comment.user.login }}"));
+  assert.ok(flow.includes("DECISION_REF: ${{ github.event.comment.html_url }}"));
+});

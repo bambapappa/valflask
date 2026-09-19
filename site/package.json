@@ -40,5 +40,10 @@
     "esbuild": "0.28.2",
     "pagefind": "^1.5.2",
     "typescript": "^5.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "fflate@>=0.7.0 <0.7.5": "0.7.5"
+    }
   }
 }

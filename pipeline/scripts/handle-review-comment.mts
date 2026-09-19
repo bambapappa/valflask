@@ -7,7 +7,7 @@
  *
  *   result: approved | rejected | error
  */
-import { appendFileSync, readFileSync } from "node:fs";
+import { appendFileSync, readFileSync, realpathSync } from "node:fs";
 import { join, resolve, relative, isAbsolute } from "node:path";
 import { bindGithubGodkannande, godkannandepakethash, verkstallGodkannandepaket, type Godkannandepaket } from "../src/godkannandepaket.ts";
 import {
@@ -73,7 +73,7 @@ if (cmd.action === "approve-package") {
   try {
     const fil = process.env.GODKANNANDEPAKET_FIL;
     if (!fil) throw new Error("Privat paketfil saknas");
-    const inomRepo = relative(resolve(DATA_DIR, ".."), resolve(fil));
+    const inomRepo = relative(realpathSync(resolve(DATA_DIR, "..")), realpathSync(fil));
     if (!inomRepo.startsWith(".." + "/") && !isAbsolute(inomRepo)) {
       throw new Error("Paketfilen måste ligga privat utanför kodrepot");
     }

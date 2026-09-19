@@ -94,6 +94,8 @@ jobs:
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           COMMENT_BODY: ${{ github.event.comment.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          DECISION_ACTOR_TYPE: ${{ github.event.comment.user.type }}
           DECISION_ACTOR: ${{ github.event.comment.user.login }}
           DECISION_ASSOCIATION: ${{ github.event.comment.author_association }}
           DECISION_REF: ${{ github.event.comment.html_url }}
