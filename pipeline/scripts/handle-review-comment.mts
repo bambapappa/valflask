@@ -8,7 +8,8 @@
  *   result: approved | rejected | error
  */
 import { appendFileSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve, relative, isAbsolute } from "node:path";
+import { bindGithubGodkannande, godkannandepakethash, verkstallGodkannandepaket, type Godkannandepaket } from "../src/godkannandepaket.ts";
 import {
   parseReviewCommand,
   findIndexByReviewId,
@@ -67,6 +68,29 @@ if (index < 0) {
   process.exit(0);
 }
 const entry = items[index]!;
+
+if (cmd.action === "approve-package") {
+  try {
+    const fil = process.env.GODKANNANDEPAKET_FIL;
+    if (!fil) throw new Error("Privat paketfil saknas");
+    const inomRepo = relative(resolve(DATA_DIR, ".."), resolve(fil));
+    if (!inomRepo.startsWith(".." + "/") && !isAbsolute(inomRepo)) {
+      throw new Error("Paketfilen måste ligga privat utanför kodrepot");
+    }
+    const paket = bindGithubGodkannande(JSON.parse(readFileSync(fil, "utf8")) as Godkannandepaket, {
+      repository: process.env.GITHUB_REPOSITORY ?? "",
+      issue: Number(process.env.ISSUE_NUMBER), reviewId: id,
+      actor: decisionActor, actorType: process.env.DECISION_ACTOR_TYPE ?? "",
+      association: decisionAssociation, handelse: decisionRef, forslagshash: cmd.hash,
+    });
+    verkstallGodkannandepaket(DATA_DIR, paket, godkannandepakethash(paket));
+    output("approved", "Det exakta beslutspaketet har verkställts. Publicering prövas separat.");
+  } catch {
+    // Privat sakunderlag och filinnehåll får inte hamna i det publika issuets svar.
+    output("error", "Godkännandepaketet kunde inte verifieras. Kontrollera privat fil, hash, issue, beslutsaktör och oförändrat föreläge. Ingen publicering har gjorts.");
+  }
+  process.exit(0);
+}
 
 if (cmd.action === "reject") {
   const paket = forberedAvvisningspaket([{ id, skal: cmd.reason }], lasFillage(DATA_DIR, AVVISNINGSFILER), new Date());

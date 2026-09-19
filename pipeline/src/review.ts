@@ -158,6 +158,7 @@ export type ReviewCommand =
       costType?: Kostnadstyp;
       period?: Period;
     }
+  | { action: "approve-package"; hash: string }
   | { action: "reject"; reason: string };
 
 /**
@@ -176,6 +177,8 @@ export type ReviewCommand =
 export function parseReviewCommand(body: string): ReviewCommand | null {
   const text = (body ?? "").trim();
   const line = text.split("\n", 1)[0]!.trim();
+  const paket = line.match(/^\/(?:godkänn|godkann|approve) paket ([0-9a-f]{64})$/u);
+  if (paket) return { action: "approve-package", hash: paket[1]! };
   // Uträkningen bakom ett eget belopp anges med en rad som börjar "Uträkning:".
   // Den visas PUBLIKT på löftessidan, så den måste vara uttryckligen märkt —
   // annars hade vilken kommentar som helst under kommandot hamnat på sajten.

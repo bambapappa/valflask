@@ -96,3 +96,47 @@ export function verkstallGodkannandepaket(dataDir: string, paket: Godkannandepak
   kontrolleraGodkannandepaket(paket, dataDir);
   skrivFilpaket(dataDir, paket.filer);
 }
+
+export interface GithubGodkannande {
+  repository: string;
+  issue: number;
+  reviewId: string;
+  actor: string;
+  actorType: string;
+  association: string;
+  handelse: string;
+  forslagshash: string;
+}
+
+/** Anroparen hämtar identiteten ur GitHubs verifierade händelse, aldrig ur paketet. */
+export function bindGithubGodkannande(paket: Godkannandepaket, event: GithubGodkannande): Godkannandepaket {
+  if (paket.beslut !== null) throw new Error("Paketet har redan ett beslut");
+  const url = new URL(event.handelse);
+  if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(event.repository) ||
+      !Number.isSafeInteger(event.issue) || event.issue < 1 ||
+      url.origin !== "https://github.com" || url.username || url.password || url.search ||
+      url.pathname !== `/${event.repository}/issues/${event.issue}` ||
+      !/^#issuecomment-[1-9][0-9]*$/u.test(url.hash)) {
+    throw new Error("Beslutets händelse gäller inte angivet repo och issue");
+  }
+  if (event.association !== "OWNER" || event.actorType !== "User" ||
+      !event.actor || event.actor.toLowerCase() !== event.repository.split("/")[0]!.toLowerCase()) {
+    throw new Error("Beslutet måste komma från repots mänskliga ägare");
+  }
+  if (!/^[0-9a-f]{64}$/u.test(event.forslagshash) || event.forslagshash !== godkannandeforslagshash(paket)) {
+    throw new Error("Beslutets hash gäller inte det frysta förslaget");
+  }
+  // Ett kö-issue kan bara besluta sin egen post. Samlade paket har separat beslutsväg.
+  if (!/^[0-9a-f]{12}$/u.test(event.reviewId) || paket.rader.length !== 1 ||
+      paket.rader[0]?.args[0] !== event.reviewId) {
+    throw new Error("Paketet gäller inte issue-postens stabila review-id");
+  }
+  const result = structuredClone(paket);
+  result.beslut = {
+    bedomare: event.actor, utfall: "godkann",
+    motivering: "Uttryckligt godkännande av det frysta paketet via GitHub-kommentar.",
+    forslagshash: event.forslagshash,
+    kalla: { system: "github", association: "OWNER", actor: event.actor, handelse: event.handelse },
+  };
+  return result;
+}
