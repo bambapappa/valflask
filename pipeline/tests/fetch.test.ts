@@ -1168,3 +1168,123 @@ describe("LiveSource med mock-HTTP", () => {
     assert.ok(articles[0]!.text.length >= 100, `Textlängd: ${articles[0]!.text.length}`);
   });
 });
+
+/* ──────────────────────── Avbackning på 429 ── */
+
+describe("LiveSource backar av på 429", () => {
+  /**
+   * Bakgrund: moderaterna.se svarade 429 på ungefär två tredjedelar av
+   * sidorna i varje körning från 2026-09-15 och framåt — 68 av 73 i körning
+   * 35427897952. Hämtningen kastade då sidan direkt: ett `throw` på allt som
+   * inte var `ok`. En taktspärr är inte ett trasigt dokument, den är ett
+   * "kom tillbaka strax", och skillnaden kostade oss sidorna varje gång.
+   */
+  const robots = (url: string) =>
+    url.includes("robots.txt")
+      ? new Response("User-agent: *\nAllow: /", { status: 200 })
+      : null;
+
+  const sida = (text: string) =>
+    new Response(`<html><head><title>T</title></head><body><p>${text}</p></body></html>`, {
+      status: 200,
+      headers: { "content-type": "text/html" },
+    });
+
+  function bygg(mock: HttpFetchFn, sovit: number[]) {
+    return new LiveSource({
+      feeds: [{
+        id: "test",
+        type: "index",
+        url: "https://testpartiet.se/politik/",
+        article_pattern: "^/politik/",
+      }],
+      limits: { max_articles_per_run: 50, min_chars: 10, hamtning_omforsok: 3 },
+      httpFetch: mock,
+      sleep: async (ms: number) => { sovit.push(ms); },
+    });
+  }
+
+  test("en 429 följs av ett nytt försök som lyckas", async () => {
+    const sovit: number[] = [];
+    let forsok = 0;
+    const mock: HttpFetchFn = async (url) => {
+      const r = robots(url);
+      if (r) return r;
+      if (url.endsWith("/politik/")) {
+        return sida('<a href="/politik/skatter">Skatter</a>');
+      }
+      forsok++;
+      if (forsok === 1) return new Response("slow down", { status: 429 });
+      return sida("Vi vill sänka skatten på arbete rejält och varaktigt.");
+    };
+
+    const artiklar = await bygg(mock, sovit).fetch();
+    assert.equal(forsok, 2, "sidan provas om efter 429");
+    assert.equal(artiklar.length, 1, "sidan räddas av omförsöket");
+    assert.ok(sovit.length >= 1, "det sovs mellan försöken");
+  });
+
+  /** Leverantörens egen Retry-After gäller före vår egen backoff. */
+  test("Retry-After styr väntan", async () => {
+    const sovit: number[] = [];
+    let forsok = 0;
+    const mock: HttpFetchFn = async (url) => {
+      const r = robots(url);
+      if (r) return r;
+      if (url.endsWith("/politik/")) {
+        return sida('<a href="/politik/skatter">Skatter</a>');
+      }
+      forsok++;
+      if (forsok === 1) {
+        return new Response("slow down", { status: 429, headers: { "retry-after": "2" } });
+      }
+      return sida("Vi vill sänka skatten på arbete rejält och varaktigt.");
+    };
+
+    await bygg(mock, sovit).fetch();
+    assert.equal(sovit[0], 2000, `Retry-After: 2 ⇒ 2000 ms, fick ${sovit[0]}`);
+  });
+
+  /**
+   * Avbackningen får inte bli ett sätt att mala vidare i all oändlighet mot
+   * en sajt som säger ifrån. Tar försöken slut hoppas sidan över precis som
+   * förut — en trasig undersida tar aldrig med sig resten av källan.
+   */
+  test("envis 429 ger upp och hoppar över sidan", async () => {
+    const sovit: number[] = [];
+    let forsok = 0;
+    const mock: HttpFetchFn = async (url) => {
+      const r = robots(url);
+      if (r) return r;
+      if (url.endsWith("/politik/")) {
+        return sida('<a href="/politik/skatter">Skatter</a>');
+      }
+      forsok++;
+      return new Response("slow down", { status: 429 });
+    };
+
+    const artiklar = await bygg(mock, sovit).fetch();
+    assert.equal(artiklar.length, 0, "sidan hoppas över");
+    assert.equal(forsok, 4, "ett försök + tre omförsök");
+  });
+
+  /** 403 är ett besked, inte en takt. Det ska inte provas om. */
+  test("403 provas inte om", async () => {
+    const sovit: number[] = [];
+    let forsok = 0;
+    const mock: HttpFetchFn = async (url) => {
+      const r = robots(url);
+      if (r) return r;
+      if (url.endsWith("/politik/")) {
+        return sida('<a href="/politik/skatter">Skatter</a>');
+      }
+      forsok++;
+      return new Response("nope", { status: 403 });
+    };
+
+    const artiklar = await bygg(mock, sovit).fetch();
+    assert.equal(artiklar.length, 0);
+    assert.equal(forsok, 1, "403 provas en gång, inte fyra");
+    assert.equal(sovit.length, 0, "ingen väntan på ett nej");
+  });
+});

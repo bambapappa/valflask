@@ -1,3 +1,7 @@
+import { randomBytes } from "node:crypto";
+
+import { parseRetryAfterMs } from "./takten.ts";
+
 export interface LlmOptions {
   systemPrompt?: string;
   /**
@@ -34,16 +38,6 @@ export interface LlmClient {
 
 type HttpFetch = (url: string, init?: RequestInit) => Promise<Response>;
 
-/** Tolkar Retry-After (sekunder eller HTTP-datum) till ms, kapat. */
-function parseRetryAfterMs(h: string | null, capMs: number): number | null {
-  if (!h) return null;
-  const secs = Number(h);
-  if (Number.isFinite(secs)) return Math.min(capMs, Math.max(0, secs * 1000));
-  const date = Date.parse(h);
-  if (Number.isFinite(date)) return Math.min(capMs, Math.max(0, date - Date.now()));
-  return null;
-}
-
 /**
  * Värdnamnet ur en endpoint-URL, för felmeddelanden. Bara värden — aldrig
  * sökvägen, och aldrig nyckeln: felet hamnar i körningsloggen, som är
@@ -74,6 +68,24 @@ export interface LlmLed {
    * den. Saknas en nyckel skickas strängen som den är.
    */
   modell?: Record<string, string>;
+  /**
+   * Extra HTTP-huvuden som just det här ledet kräver, utöver de vanliga.
+   *
+   * Finns för att leverantörerna begär olika saker och ingen av dem ska stå
+   * skriven i koden — samma skäl som att adress, nyckel och modellnamn
+   * kommer utifrån. Opencode började 2026-09-19 kräva `x-opencode-session`
+   * på sin `zen/go`-endpoint och svarade annars HTTP 400 `MissingSessionID`;
+   * hade huvudet skrivits in här hade nästa leverantörsbyte krävt en
+   * kodändring igen.
+   *
+   * Värdet `{körning}` byts mot ett id som är samma genom hela körningen men
+   * nytt för nästa. Det är vad ett sessions- eller routningshuvud vill ha:
+   * ett fast värde hade lagt alla körningar i samma session, och ett nytt
+   * per anrop hade gjort huvudet meningslöst.
+   *
+   * `Authorization` och `Content-Type` går inte att skriva över härifrån.
+   */
+  huvuden?: Record<string, string>;
 }
 
 export class OpenRouterClient implements LlmClient {
@@ -111,6 +123,11 @@ export class OpenRouterClient implements LlmClient {
    * numret säger bara "konto 1" och "konto 2".
    */
   private kontonummer = new Map<string, number>();
+  /**
+   * Körningens id, för `{körning}` i ledens huvuden. Sätts en gång per
+   * klient — det är den livslängd en "körning" har härinne.
+   */
+  private korningsId = randomBytes(8).toString("hex");
 
   constructor(opts: {
     /**
@@ -185,6 +202,21 @@ export class OpenRouterClient implements LlmClient {
     return `${ep.url}\u0000${ep.model}\u0000konto${n}`;
   }
 
+  /**
+   * Ledets extra huvuden, med `{körning}` utbytt mot körningens id.
+   *
+   * Utbytet sker här och inte vid uppstart, eftersom id:t hör till klienten:
+   * samma konfiguration ska ge ett nytt id nästa gång pipelinen startar.
+   */
+  private ledhuvuden(huvuden?: Record<string, string>): Record<string, string> {
+    if (!huvuden) return {};
+    const ut: Record<string, string> = {};
+    for (const [namn, varde] of Object.entries(huvuden)) {
+      ut[namn] = varde.replaceAll("{körning}", this.korningsId);
+    }
+    return ut;
+  }
+
   private backoff(attempt: number): number {
     return (
       this.baseDelayMs * 2 ** attempt +
@@ -242,6 +274,7 @@ export class OpenRouterClient implements LlmClient {
       url: `${l.baseUrl}/chat/completions`,
       key: l.apiKey,
       model: l.modell?.[primaryModel] ?? primaryModel,
+      huvuden: l.huvuden,
     }));
 
     // Ett fel PER endpoint, inte ett gemensamt. Tidigare låg det en enda
@@ -273,6 +306,10 @@ export class OpenRouterClient implements LlmClient {
           const res = await this.httpFetch(ep.url, {
             method: "POST",
             headers: {
+              // Ledets egna huvuden läggs FÖRST, så att de två nedanför
+              // alltid vinner. En felskriven variabel ska inte kunna tysta
+              // bort nyckeln och skicka anropet oautentiserat.
+              ...this.ledhuvuden(ep.huvuden),
               "Content-Type": "application/json",
               Authorization: `Bearer ${ep.key}`,
             },
