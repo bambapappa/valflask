@@ -1,3 +1,4 @@
+import { tillampaCitatforslag, type FrystCitatforslag } from "./citatforslag.ts";
 import { createHash } from "node:crypto";
 import { bindUnderlag, kanoniskJson, sammaUnderlag, type BundetUnderlag } from "./underlagsversion.ts";
 import { byggUnderlagsregister } from "./underlagsregister.ts";
@@ -21,7 +22,7 @@ export interface Sakreferens {
 }
 export interface Sakunderlag {
   version: "sakunderlag/1";
-  forslag: FrystLoftesforslag | FrystKalkylforslag | FrystUtrakningsforslag | FrystSortforslag | FrystAnkarforslag | FrystNollforslag | FrystRubrikforslag | FrystGruppforslag;
+  forslag: FrystLoftesforslag | FrystKalkylforslag | FrystUtrakningsforslag | FrystSortforslag | FrystAnkarforslag | FrystNollforslag | FrystRubrikforslag | FrystCitatforslag | FrystGruppforslag;
   poster: BundetUnderlag;
   referenser: Sakreferens[];
   hash: string;
@@ -105,6 +106,18 @@ export function byggRubrikunderlag(forslag: FrystRubrikforslag, loften: PromiseE
     efter = efter.map((p) => p.id === andra.rad.id ? andra.nyttLofte : p);
   }
   return bindSlutform(forslag, efter, material);
+}
+
+export function byggCitatunderlag(forslag: FrystCitatforslag, loften: PromiseEntry[], material: readonly Sakreferens[], samtidiga: readonly FrystCitatforslag[] = []): Sakunderlag {
+  let efter = tillampaCitatforslag(forslag, loften, forslag.hash);
+  const ids = new Set([forslag.rad.id]);
+  for (const andra of samtidiga) {
+    if (ids.has(andra.rad.id)) throw new Error("Dubblerad ändring i sakunderlag");
+    ids.add(andra.rad.id);
+    tillampaCitatforslag(andra, loften, andra.hash);
+    efter = efter.map((p) => p.id === andra.rad.id ? andra.nyttLofte : p);
+  }
+  return bindSlutform(forslag, efter, [...material, { id: "hamtad-kalla", slag: "kalla", adress: forslag.kalla.url, innehall: forslag.kalla.text }]);
 }
 
 export function byggGruppunderlag(forslag: FrystGruppforslag, loften: PromiseEntry[], material: readonly Sakreferens[], samtidiga: readonly FrystGruppforslag[] = []): Sakunderlag {
