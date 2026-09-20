@@ -91,8 +91,9 @@ describe("review-grinden avvisar aldrig ett kommando tyst", () => {
     assert.ok(steg, "hittade inte beslutssteget");
     assert.deepEqual(
       Object.keys(steg!.env ?? {}).filter((k) => k.startsWith("DECISION_")).sort(),
-      ["DECISION_ACTOR", "DECISION_ASSOCIATION", "DECISION_REF"],
+      ["DECISION_ACTOR", "DECISION_ACTOR_TYPE", "DECISION_ASSOCIATION", "DECISION_REF"],
     );
+    assert.equal(steg!.env?.DECISION_ACTOR_TYPE, "${{ github.event.comment.user.type }}");
     const handler = readFileSync(join(import.meta.dirname, "..", "scripts", "handle-review-comment.mts"), "utf8");
     assert.match(handler, /decisionAssociation !== "OWNER"/u);
     assert.match(handler, /decisionActor/u);
@@ -112,6 +113,8 @@ describe("review-grinden avvisar aldrig ett kommando tyst", () => {
     const svar = steg.find((s) => /gh issue comment/u.test(s.run ?? ""));
     assert.ok(svar, "hittade inget steg som svarar på issuet");
     assert.equal(svar!.if, "always()", "svaret måste köras även när beslutssteget föll");
+    assert.match(svar!.run ?? "", /if \[ "\$DECISION_OUTCOME" != "success" \]/u);
+    assert.ok((svar!.run ?? "").indexOf('exit 0') < (svar!.run ?? "").indexOf('case "$RESULT"'), "misslyckad push får inte gå vidare till godkännande eller stängning");
     assert.match(
       svar!.run ?? "",
       /^\s*""\)/mu,

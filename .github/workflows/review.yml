@@ -78,6 +78,38 @@ jobs:
       - name: Install pipeline deps
         run: pnpm install --frozen-lockfile
         working-directory: pipeline
+      - name: Läs paketkommandot
+        id: paketkommando
+        working-directory: pipeline
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: |
+          node --import tsx/esm --input-type=module -e '
+            import { appendFileSync } from "node:fs";
+            import { parseReviewCommand } from "./src/review.ts";
+            const c = parseReviewCommand(process.env.COMMENT_BODY ?? "");
+            appendFileSync(process.env.GITHUB_OUTPUT, `hamta=${c?.action === "approve-package"}\n`);
+          '
+      - name: Läsbehörighet för privat paket
+        if: steps.paketkommando.outputs.hamta == 'true'
+        id: privat-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ vars.GRANSKNINGSREPO_NAMN }}
+          permission-actions: read
+      - name: Hämta verifierat privat paket
+        if: steps.paketkommando.outputs.hamta == 'true'
+        id: privat-paket
+        working-directory: pipeline
+        env:
+          GH_TOKEN: ${{ steps.privat-token.outputs.token }}
+          GRANSKNINGSREPO: ${{ github.repository_owner }}/${{ vars.GRANSKNINGSREPO_NAMN }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: node --import tsx/esm scripts/hamta-godkannandepaket.mts
       # App-tokens lever en timme — mynta en färsk precis före pushen.
       - name: Mint fresh push token
         id: push-token
@@ -99,6 +131,7 @@ jobs:
           DECISION_ACTOR: ${{ github.event.comment.user.login }}
           DECISION_ASSOCIATION: ${{ github.event.comment.author_association }}
           DECISION_REF: ${{ github.event.comment.html_url }}
+          GODKANNANDEPAKET_FIL: ${{ steps.privat-paket.outputs.paketfil }}
           PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
         run: |
           git config user.name "utlovat-bot"
@@ -163,11 +196,17 @@ jobs:
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
+          DECISION_OUTCOME: ${{ steps.decision.outcome }}
           RESULT: ${{ steps.decision.outputs.result }}
           MESSAGE: ${{ steps.decision.outputs.message }}
           ISSUE: ${{ github.event.issue.number }}
           KORNING: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          if [ "$DECISION_OUTCOME" != "success" ]; then
+            gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body \
+              "⚠️ Beslutets körning slutfördes inte. Issuet lämnas öppet. Kontrollera [körningen]($KORNING) innan beslutet görs om."
+            exit 0
+          fi
           case "$RESULT" in
             "")
               gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body \
