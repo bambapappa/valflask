@@ -1,6 +1,6 @@
 /** API-svar läses från den aktuella körningen; inga beslut skapas här. */
-export function kontrolleraPubliceringsbeslut(miljo: any, historik: unknown, manifestHash: string): string {
-  if (!/^[a-f0-9]{64}$/.test(manifestHash) || !Number.isSafeInteger(miljo?.id) ||
+export function kontrolleraPubliceringsbeslut(miljo: any, historik: unknown, manifestHash: string, provningsHash: string): string {
+  if (!/^[a-f0-9]{64}$/.test(manifestHash) || !/^[a-f0-9]{64}$/.test(provningsHash) || !Number.isSafeInteger(miljo?.id) ||
       miljo.id < 1 || miljo.name !== "github-pages" || miljo.can_admins_bypass !== false ||
       !Array.isArray(miljo.protection_rules) || !Array.isArray(historik)) {
     throw new Error("Miljöskydd eller granskningshistorik saknas");
@@ -11,7 +11,7 @@ export function kontrolleraPubliceringsbeslut(miljo: any, historik: unknown, man
   }
   const tillatna = new Set(regel.reviewers.filter((r: any) => r.type === "User" &&
     r.reviewer?.type === "User" && Number.isSafeInteger(r.reviewer.id)).map((r: any) => r.reviewer.id));
-  const kommentar = `Godkänn publiceringspaket ${manifestHash}`;
+  const kommentar = `Godkänn publiceringspaket ${manifestHash} med sakprövning ${provningsHash}`;
   const miljoBeslut = historik.filter((r: any) => Array.isArray(r?.environments) &&
     r.environments.some((e: any) => e?.id === miljo.id));
   // Historiken saknar tidsordning per försök. Efter en avvisning krävs en ny körning.

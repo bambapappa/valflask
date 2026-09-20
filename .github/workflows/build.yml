@@ -298,14 +298,35 @@ jobs:
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
         with:
           node-version: 22
+      - name: Hämta offentligt publiceringsunderlag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download "$GITHUB_RUN_ID" --name "github-pages-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --dir "$RUNNER_TEMP/pages"
+          gh run download "$GITHUB_RUN_ID" --name "publiceringsunderlag-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --dir "$RUNNER_TEMP/underlag"
+      - name: Läsbehörighet för privat sakprövning
+        id: privat-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ vars.GRANSKNINGSREPO_NAMN }}
+          permission-actions: read
+      - name: Hämta verifierad privat sakprövning
+        id: privat-provning
+        env:
+          GH_TOKEN: ${{ steps.privat-token.outputs.token }}
+          GRANSKNINGSREPO: ${{ github.repository_owner }}/${{ vars.GRANSKNINGSREPO_NAMN }}
+          PUBLICERINGSMANIFEST_FIL: ${{ runner.temp }}/underlag/manifest.json
+          PUBLICERINGSPAKET_FIL: ${{ runner.temp }}/underlag/paket.json
+        run: node --experimental-strip-types pipeline/scripts/hamta-publiceringsprovning.mts
       - name: Kontrollera exakt artefakt och granskningsbeslut
         env:
           GH_TOKEN: ${{ github.token }}
           PUBLICERA: ${{ inputs.publicera }}
-        run: |
-          gh run download "$GITHUB_RUN_ID" --name "github-pages-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --dir "$RUNNER_TEMP/pages"
-          gh run download "$GITHUB_RUN_ID" --name "publiceringsunderlag-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --dir "$RUNNER_TEMP/underlag"
-          node --experimental-strip-types pipeline/scripts/publiceringskontroll.mts "$RUNNER_TEMP/pages/artifact.tar" "$RUNNER_TEMP/underlag/manifest.json" "$RUNNER_TEMP/underlag/paket.json"
+          PUBLICERINGSPROVNING_FIL: ${{ steps.privat-provning.outputs.paketfil }}
+        run: node --experimental-strip-types pipeline/scripts/publiceringskontroll.mts "$RUNNER_TEMP/pages/artifact.tar" "$RUNNER_TEMP/underlag/manifest.json" "$RUNNER_TEMP/underlag/paket.json"
       - id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
         with:

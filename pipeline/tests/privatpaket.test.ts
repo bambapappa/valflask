@@ -1,7 +1,7 @@
 import { it } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { privatPaketnamn, valjPrivatArtefakt, kontrolleraPrivatKorning, kontrolleraPrivatZip } from "../src/privatpaket.ts";
+import { privatPaketnamn, valjPrivatArtefakt, privatPubliceringsnamn, valjPrivatPubliceringsprovning, kontrolleraPrivatKorning, kontrolleraPrivatZip } from "../src/privatpaket.ts";
 
 const hash = "a".repeat(64), sha = "b".repeat(40), bytes = Buffer.from("syntetiskt zip-prov");
 const artifact = { id: 1, name: privatPaketnamn(2, hash), expired: false, size_in_bytes: bytes.length, digest: `sha256:${createHash("sha256").update(bytes).digest("hex")}`, workflow_run: { id: 3, head_branch: "main", head_sha: sha, repository_id: 4, head_repository_id: 4 } };
@@ -21,4 +21,15 @@ it("kontrollerar hämtade byte mot separat kontrollsumma och storlek", () => {
   kontrolleraPrivatZip(artifact, bytes);
   assert.throws(() => kontrolleraPrivatZip(artifact, Buffer.from("ändrat")));
   assert.throws(() => kontrolleraPrivatZip({ ...artifact, digest: `sha256:${"0".repeat(64)}` }, bytes));
+});
+
+it("publiceringsprövning kräver eget manifestnamn och egen producent", () => {
+  const a = { ...artifact, name: privatPubliceringsnamn(hash) };
+  assert.deepEqual(valjPrivatPubliceringsprovning([a], hash), a);
+  assert.throws(() => valjPrivatPubliceringsprovning([artifact], hash));
+  assert.throws(() => valjPrivatPubliceringsprovning([a, a], hash));
+  assert.throws(() => kontrolleraPrivatKorning(a, run, "publiceringsprovning"));
+  const producer = { ...run, path: ".github/workflows/publiceringsprovning.yml" };
+  kontrolleraPrivatKorning(a, producer, "publiceringsprovning");
+  assert.throws(() => kontrolleraPrivatKorning(a, producer));
 });

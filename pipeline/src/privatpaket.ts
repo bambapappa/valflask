@@ -16,6 +16,10 @@ export function privatPaketnamn(issue: number, hash: string): string {
 
 export function valjPrivatArtefakt(artefakter: PrivatArtefakt[], issue: number, hash: string): PrivatArtefakt {
   const namn = privatPaketnamn(issue, hash);
+  return valjMedNamn(artefakter, namn);
+}
+
+function valjMedNamn(artefakter: PrivatArtefakt[], namn: string): PrivatArtefakt {
   const val = artefakter.filter(a => a.name === namn && a.expired === false);
   if (val.length !== 1) throw new Error("Exakt en giltig privat paketartefakt krävs");
   const a = val[0]!;
@@ -25,9 +29,9 @@ export function valjPrivatArtefakt(artefakter: PrivatArtefakt[], issue: number, 
   return a;
 }
 
-export function kontrolleraPrivatKorning(a: PrivatArtefakt, run: PrivatKorning): void {
+export function kontrolleraPrivatKorning(a: PrivatArtefakt, run: PrivatKorning, typ: "godkannandepaket" | "publiceringsprovning" = "godkannandepaket"): void {
   const w = a.workflow_run;
-  if (run.id !== w.id || run.path !== ".github/workflows/godkannandepaket.yml" ||
+  if (run.id !== w.id || run.path !== `.github/workflows/${typ}.yml` ||
       run.event !== "workflow_dispatch" || run.status !== "completed" || run.conclusion !== "success" ||
       run.head_branch !== "main" || w.head_branch !== "main" || !/^[0-9a-f]{40}$/u.test(run.head_sha) || run.head_sha !== w.head_sha ||
       !Number.isSafeInteger(run.repository?.id) || run.repository.id < 1 ||
@@ -40,4 +44,12 @@ export function kontrolleraPrivatZip(a: PrivatArtefakt, bytes: Buffer): void {
   if (bytes.length !== a.size_in_bytes || `sha256:${createHash("sha256").update(bytes).digest("hex")}` !== a.digest) {
     throw new Error("Hämtad privat artefakt stämmer inte med GitHubs kontrollsumma");
   }
+}
+
+export function privatPubliceringsnamn(manifesthash: string): string {
+  if (!/^[0-9a-f]{64}$/u.test(manifesthash)) throw new Error("Ogiltig manifestidentitet");
+  return `publiceringsprovning-${manifesthash}`;
+}
+export function valjPrivatPubliceringsprovning(artefakter: PrivatArtefakt[], manifesthash: string): PrivatArtefakt {
+  return valjMedNamn(artefakter, privatPubliceringsnamn(manifesthash));
 }

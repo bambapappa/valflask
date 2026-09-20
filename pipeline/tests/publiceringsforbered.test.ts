@@ -65,7 +65,9 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
     await kontrolleraPubliceringsartefakt(fil, manifest, { repo: "bambapappa/valflask", revision,
       korning: "123", forsok: 1, artefaktId: "456", pakethash: paket.hash });
     const besked = readFileSync(join(dir, "ok/LAS-MIG.txt"), "utf8");
-    assert.ok(besked.includes(`Godkänn publiceringspaket ${manifest.hash}`));
+    assert.ok(besked.includes(`Manifest: ${manifest.hash}`));
+    assert.ok(besked.includes("både detta manifest och sakprövningens hash"));
+    assert.ok(!besked.includes(`Godkänn publiceringspaket ${manifest.hash}`));
     assert.equal(readFileSync(summary, "utf8"), besked);
     for (const [name, extra] of Object.entries({ saknad: { PROV_INGEN_DRIFT: "1" }, natfel: { PROV_NATFEL: "1" }, forsok: { GITHUB_RUN_ATTEMPT: "0" } })) {
       const result = run(name, extra);

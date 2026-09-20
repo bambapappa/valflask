@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { forberedPubliceringsprovning, publiceringsprovningshash } from "../src/publiceringsprovning.ts";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { mkdtempSync, readFileSync, writeFileSync, chmodSync, rmSync } from "node:fs";
@@ -28,6 +30,10 @@ test("kommandot läser artefakt och GitHub-svar; nätfel och fel försök ger av
     const manifest = await bindPubliceringsartefakt(fil, id);
     const path = join(dir, "manifest.json");
     writeFileSync(path, JSON.stringify(manifest));
+    const provning = forberedPubliceringsprovning(paket, manifest.hash, {});
+    const provningshash = publiceringsprovningshash(provning);
+    const privatfil = join(dir, "privat.json");
+    writeFileSync(privatfil, JSON.stringify(provning));
     const user = { id: 1234, login: "granskare", type: "User" };
     const svar = {
       "repos/bambapappa/valflask/actions/runs/123": { id: 123, head_sha: id.revision,
@@ -38,17 +44,33 @@ test("kommandot läser artefakt och GitHub-svar; nätfel och fel försök ger av
         can_admins_bypass: false, protection_rules: [{ type: "required_reviewers",
           reviewers: [{ type: "User", reviewer: user }] }] },
       "repos/bambapappa/valflask/actions/runs/123/approvals": [{ state: "approved", user,
-        comment: `Godkänn publiceringspaket ${manifest.hash}`, environments: [{ id: 789 }] }],
+        comment: `Godkänn publiceringspaket ${manifest.hash} med sakprövning ${provningshash}`, environments: [{ id: 789 }] }],
     };
+    const zipfil = join(dir, "provning.zip");
+    execFileSync("python3", ["-c", "import sys,zipfile; z=zipfile.ZipFile(sys.argv[1],'w'); z.write(sys.argv[2],'paket.json'); z.close()", zipfil, privatfil]);
+    const zip = readFileSync(zipfil), privateRepo = "syntetiskt-testkonto/privat";
+    const artifact = { id: 7, name: `publiceringsprovning-${manifest.hash}`, expired: false, size_in_bytes: zip.length, digest: `sha256:${createHash("sha256").update(zip).digest("hex")}`, workflow_run: { id: 8, head_branch: "main", head_sha: "c".repeat(40), repository_id: 9, head_repository_id: 9 } };
+    const privateRun = { id: 8, path: ".github/workflows/publiceringsprovning.yml", event: "workflow_dispatch", status: "completed", conclusion: "success", head_branch: "main", head_sha: "c".repeat(40), repository: { id: 9 }, head_repository: { id: 9 } };
+    Object.assign(svar, { [`repos/${privateRepo}/actions/artifacts?name=${artifact.name}&per_page=100`]: [{ artifacts: [artifact] }], [`repos/${privateRepo}/actions/runs/8`]: privateRun });
     const gh = join(dir, "gh");
-    writeFileSync(gh, `#!${process.execPath}\nconst svar=${JSON.stringify(svar)}; if(process.env.PROV_NATFEL)process.exit(1); let s=svar[process.argv[3]]; if(process.argv[3]==='graphql'){s=${JSON.stringify(driftSvar)}; if(process.env.PROV_ANDRAD_BAS)s[0].data.repository.deployments.nodes[0].commitOid='b'.repeat(40);} if(!s)process.exit(2); console.log(JSON.stringify(s));\n`);
+    writeFileSync(gh, `#!${process.execPath}\nconst svar=${JSON.stringify(svar)}; if(process.env.PROV_NATFEL)process.exit(1); if(process.argv[3]===${JSON.stringify(`repos/${privateRepo}/actions/artifacts/7/zip`)}){const z=Buffer.from(${JSON.stringify(zip.toString("base64"))},"base64");if(process.env.PROV_TRASIGZIP)z[0]^=1;process.stdout.write(z);process.exit(0);} let s=svar[process.argv[3]]; if(process.argv[3]==='graphql'){s=${JSON.stringify(driftSvar)}; if(process.env.PROV_ANDRAD_BAS)s[0].data.repository.deployments.nodes[0].commitOid='b'.repeat(40);} if(!s)process.exit(2); console.log(JSON.stringify(s));\n`);
     chmodSync(gh, 0o755);
     const env = { ...process.env, PATH: `${dir}:${process.env.PATH}`, GITHUB_REPOSITORY: id.repo,
-      GITHUB_RUN_ID: id.korning, GITHUB_SHA: id.revision, GITHUB_RUN_ATTEMPT: "1", GITHUB_REF: "refs/heads/main", GITHUB_EVENT_NAME: "schedule" };
-    const kor = (extra = {}) => spawnSync(process.execPath, ["--import", "tsx/esm",
+      GITHUB_RUN_ID: id.korning, GITHUB_SHA: id.revision, GITHUB_RUN_ATTEMPT: "1", GITHUB_REF: "refs/heads/main", GITHUB_EVENT_NAME: "schedule", PUBLICERINGSPROVNING_FIL: privatfil };
+    const kor = (extra = {}) => spawnSync(process.execPath, ["--experimental-strip-types",
       "scripts/publiceringskontroll.mts", fil, path, paketfil], { cwd: resolve(import.meta.dirname, ".."),
       env: { ...env, ...extra }, encoding: "utf8" });
-    const ok = kor();
+    assert.equal(kor({ PUBLICERINGSPROVNING_FIL: "" }).status, 1);
+    writeFileSync(privatfil, '{"Privat resonemang som inte får läcka":');
+    const trasigt = kor(); assert.equal(trasigt.status, 1); assert.doesNotMatch(trasigt.stderr, /Privat resonemang/);
+    writeFileSync(privatfil, JSON.stringify(provning));
+    const outputs = join(dir, "private-output");
+    const hamta = (extra = {}) => spawnSync(process.execPath, ["--experimental-strip-types", "scripts/hamta-publiceringsprovning.mts"], { cwd: resolve(import.meta.dirname, ".."), encoding: "utf8", env: { ...env, RUNNER_TEMP: dir, GITHUB_OUTPUT: outputs, GRANSKNINGSREPO: privateRepo, PUBLICERINGSMANIFEST_FIL: path, PUBLICERINGSPAKET_FIL: paketfil, ...extra } });
+    assert.equal(hamta({ PROV_TRASIGZIP: "1" }).status, 1);
+    const transport = hamta(); assert.equal(transport.status, 0, transport.stderr);
+    const transporterad = readFileSync(outputs, "utf8").trim().split("=")[1]!;
+    assert.deepEqual(JSON.parse(readFileSync(transporterad, "utf8")), provning);
+    const ok = kor({ PUBLICERINGSPROVNING_FIL: transporterad });
     assert.equal(ok.status, 0, ok.stderr);
     assert.match(ok.stdout, /github-pages-123-1/);
     assert.equal(kor({ GITHUB_EVENT_NAME: "push" }).status, 1);

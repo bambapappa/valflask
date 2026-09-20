@@ -22,7 +22,15 @@ test("det verkliga byggflödet kontrollerar samma artefaktnamn innan Pages kan p
   assert.equal(jobb.steps[check]["continue-on-error"], undefined);
   assert.equal(jobb.steps[deploy].if, undefined);
   assert.equal(jobb.steps[deploy].with.artifact_name, upload.with.name);
-  assert.ok(jobb.steps[check].run.includes('"github-pages-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"'));
+  const download = jobb.steps.findIndex((s: any) => s.run?.includes('"github-pages-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"'));
+  const privat = jobb.steps.findIndex((s: any) => s.id === "privat-provning");
+  assert.ok(download >= 0 && download < privat && privat < check);
+  assert.ok(jobb.steps[privat].run.includes("hamta-publiceringsprovning.mts"));
+  assert.equal(jobb.steps[privat]["continue-on-error"], undefined);
+  assert.equal(jobb.steps[check].env.PUBLICERINGSPROVNING_FIL, "${{ steps.privat-provning.outputs.paketfil }}");
+  const token = jobb.steps.find((s: any) => s.id === "privat-token");
+  assert.equal(token.with["permission-actions"], "read");
+  assert.equal(token.with.repositories, "${{ vars.GRANSKNINGSREPO_NAMN }}");
   assert.ok(jobb.steps[check].run.includes('"$RUNNER_TEMP/underlag/paket.json"'));
   assert.equal(flow.on.workflow_dispatch.inputs.publicera.type, "boolean");
   assert.equal(flow.on.workflow_dispatch.inputs.publicera.default, false);

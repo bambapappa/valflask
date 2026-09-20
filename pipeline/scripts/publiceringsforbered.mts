@@ -34,7 +34,7 @@ try {
   const omgang = arPubliceringsomgang(process.env.GITHUB_EVENT_NAME ?? "", process.env.GITHUB_REF ?? "", process.env.PUBLICERA ?? "");
   const publicera = omgang && paket.filer.sokvagar.length > 0;
   const beslutstext = publicera
-    ? `Godkänn endast efter granskning. Klistra då in följande i GitHubs godkännandekommentar:\n\nGodkänn publiceringspaket ${manifest.hash}\n`
+    ? `Manifest: ${manifest.hash}\nFörbered och granska den separata privata sakprövningen innan publicering godkänns. Använd sedan den kombinerade godkännandetexten därifrån; den måste binda både detta manifest och sakprövningens hash.\n`
     : omgang ? "Inga filer har ändrats sedan föregående publicering. Inget godkännande begärs.\n"
       : "Detta är ett provunderlag. Denna körning får inte publicera och inget godkännande begärs.\n";
   const besked = `Granska underlaget i artefakten publiceringsunderlag-${korning}-${forsok}.\n\n` +

@@ -1,6 +1,8 @@
 /** Kontrollera en nedladdad Pages-artefakt mot aktuellt GitHub-beslut. */
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
+import { resolve, relative, isAbsolute } from "node:path";
+import { kontrolleraPubliceringsprovning, publiceringsprovningshash, type Publiceringsprovning } from "../src/publiceringsprovning.ts";
 import { kontrolleraPubliceringsartefakt, type Publiceringsartefakt } from "../src/publiceringsartefakt.ts";
 import { arPubliceringsomgang } from "../src/publiceringsomgang.ts";
 import { lasPubliceringsbas } from "../src/publiceringsbas.ts";
@@ -47,7 +49,20 @@ try {
   }
   const miljo = api(`repos/${repo}/environments/github-pages`);
   const historik = api(`repos/${repo}/actions/runs/${korning}/approvals`);
-  const granskare = kontrolleraPubliceringsbeslut(miljo, historik, manifest.hash);
+  let provningshash: string;
+  try {
+    const fil = process.env.PUBLICERINGSPROVNING_FIL;
+    if (!fil) throw new Error("Privat fil saknas");
+    const rot = realpathSync(resolve(import.meta.dirname, "../.."));
+    const rel = relative(rot, realpathSync(fil));
+    if (rel === "" || (!rel.startsWith("../") && !isAbsolute(rel))) throw new Error("Filen ligger i kodrepot");
+    const provning: Publiceringsprovning = JSON.parse(readFileSync(fil, "utf8"));
+    provningshash = publiceringsprovningshash(provning);
+    kontrolleraPubliceringsprovning(provning, paket, manifest.hash, provningshash);
+  } catch {
+    throw new Error("Privat publiceringsprövning saknas eller kan inte verifieras");
+  }
+  const granskare = kontrolleraPubliceringsbeslut(miljo, historik, manifest.hash, provningshash);
   const bas = lasPubliceringsbas(repo);
   if (bas.revision !== paket.foreRevision) throw new Error("Sajten har fått en annan version sedan underlaget skapades; nytt granskningspaket krävs");
   console.log(`Publiceringspaket ${manifest.hash} godkänt av ${granskare}. Artefakt: ${namn}.`);
