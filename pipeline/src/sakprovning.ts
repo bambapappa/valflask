@@ -11,6 +11,8 @@ import { tillampaNollforslag, type FrystNollforslag } from "./nollforslag.ts";
 
 import { tillampaRubrikforslag, type FrystRubrikforslag } from "./rubrikforslag.ts";
 
+import { tillampaGruppforslag, type FrystGruppforslag } from "./gruppforslag.ts";
+
 export interface Sakreferens {
   id: string;
   slag: "kalla" | "regel";
@@ -19,7 +21,7 @@ export interface Sakreferens {
 }
 export interface Sakunderlag {
   version: "sakunderlag/1";
-  forslag: FrystLoftesforslag | FrystKalkylforslag | FrystUtrakningsforslag | FrystSortforslag | FrystAnkarforslag | FrystNollforslag | FrystRubrikforslag;
+  forslag: FrystLoftesforslag | FrystKalkylforslag | FrystUtrakningsforslag | FrystSortforslag | FrystAnkarforslag | FrystNollforslag | FrystRubrikforslag | FrystGruppforslag;
   poster: BundetUnderlag;
   referenser: Sakreferens[];
   hash: string;
@@ -100,6 +102,18 @@ export function byggRubrikunderlag(forslag: FrystRubrikforslag, loften: PromiseE
     if (ids.has(andra.rad.id)) throw new Error("Dubblerad ändring i sakunderlag");
     ids.add(andra.rad.id);
     tillampaRubrikforslag(andra, loften, andra.hash);
+    efter = efter.map((p) => p.id === andra.rad.id ? andra.nyttLofte : p);
+  }
+  return bindSlutform(forslag, efter, material);
+}
+
+export function byggGruppunderlag(forslag: FrystGruppforslag, loften: PromiseEntry[], material: readonly Sakreferens[], samtidiga: readonly FrystGruppforslag[] = []): Sakunderlag {
+  let efter = tillampaGruppforslag(forslag, loften, forslag.hash);
+  const ids = new Set([forslag.rad.id]);
+  for (const andra of samtidiga) {
+    if (ids.has(andra.rad.id)) throw new Error("Dubblerad ändring i sakunderlag");
+    ids.add(andra.rad.id);
+    tillampaGruppforslag(andra, loften, andra.hash);
     efter = efter.map((p) => p.id === andra.rad.id ? andra.nyttLofte : p);
   }
   return bindSlutform(forslag, efter, material);
