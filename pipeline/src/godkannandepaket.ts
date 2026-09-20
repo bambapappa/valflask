@@ -77,7 +77,8 @@ export function kontrolleraGodkannandepaket(paket: Godkannandepaket, dataDir: st
     Object.keys(beslut).sort().join(",") !== "bedomare,forslagshash,kalla,motivering,utfall" ||
     beslut.utfall !== "godkann" ||
     !beslut.bedomare?.trim() ||
-    beslut.motivering?.trim().length < GODKANNANDE_MIN_TECKEN ||
+    typeof beslut.motivering !== "string" ||
+    beslut.motivering.trim().length < GODKANNANDE_MIN_TECKEN ||
     beslut.forslagshash !== godkannandeforslagshash(paket) ||
     Object.keys(beslut.kalla ?? {}).sort().join(",") !== "actor,association,handelse,system" ||
     beslut.kalla.system !== "github" ||

@@ -61,6 +61,11 @@ it("binder förslag, sakprövning, slutform och verifierad mänsklig beslutskäl
     const utkast = forberedGodkannandepaket([{ args, underlag, provningshash: underlag.provningshash }], dir, new Date("2026-09-15T08:00:00Z"));
     assert.throws(() => verkstallGodkannandepaket(dir, utkast, godkannandepakethash(utkast)), /mänskligt godkännande/u);
     const paket = klart(utkast);
+    const tomMotivering = structuredClone(paket); tomMotivering.beslut!.motivering = "";
+    assert.throws(() => verkstallGodkannandepaket(dir, tomMotivering, godkannandepakethash(tomMotivering)), /mänskligt godkännande/u);
+    const utanMotivering = structuredClone(paket);
+    utanMotivering.beslut!.motivering = null as unknown as string;
+    assert.throws(() => verkstallGodkannandepaket(dir, utanMotivering, godkannandepakethash(utanMotivering)), /mänskligt godkännande/u);
     const felActor = structuredClone(paket);
     felActor.beslut!.kalla.actor = "annat-konto";
     assert.throws(() => verkstallGodkannandepaket(dir, felActor, godkannandepakethash(felActor)), /mänskligt godkännande/u);
@@ -142,10 +147,15 @@ it("GitHub-bryggan binder rätt issue, mänsklig aktör och exakt förslag utan 
     assert.equal(parseReviewCommand(`/godkänn paket ${hash} annat`), null);
     const bundet = bindGithubGodkannande(paket, event);
     assert.equal(paket.beslut, null);
+    assert.notEqual(bundet.rader, paket.rader);
     assert.equal(bundet.beslut!.bedomare, event.actor);
     for (const fel of [{ actorType: "Bot" }, { actor: "annan" }, { association: "MEMBER" }, { issue: 2 }, { repository: "annat/repo" }, { handelse: event.handelse + "x" }, { forslagshash: "0".repeat(64) }, { reviewId: "0".repeat(12) }]) {
       assert.throws(() => bindGithubGodkannande(paket, { ...event, ...fel }));
     }
+    for (const handelse of ["", "https://github.com/", "https://github.com/test/repo/issues/1", "https://github.com.evil.test/test/repo/issues/1#issuecomment-1"]) {
+      assert.throws(() => bindGithubGodkannande(paket, { ...event, handelse }));
+    }
+    for (const actor of ["", "   "]) assert.throws(() => bindGithubGodkannande(paket, { ...event, actor }));
     assert.throws(() => bindGithubGodkannande(bundet, event), /redan/u);
     const fil = join(root, "privat.json");
     writeFileSync(fil, JSON.stringify(paket), { mode: 0o600 });
