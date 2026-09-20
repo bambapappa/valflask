@@ -27,7 +27,7 @@ try {
   const zipfil = join(dir, "paket.zip"), paketfil = join(dir, "paket.json");
   writeFileSync(zipfil, zip, { flag: "wx", mode: 0o600 });
   // Läs en enda namngiven fil. Extrahera aldrig sökvägar ur ZIP-arkivet.
-  const bytes = execFileSync("python3", ["-c", "import sys,zipfile; z=zipfile.ZipFile(sys.argv[1]); assert z.namelist()==['paket.json']; i=z.getinfo('paket.json'); assert i.file_size<=64*1024*1024; sys.stdout.buffer.write(z.read(i))", zipfil], { maxBuffer: 65 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] });
+  const bytes = execFileSync("python3", ["-c", "import sys,zipfile\nz=zipfile.ZipFile(sys.argv[1])\nif z.namelist()!=['paket.json']: raise ValueError('Fel filuppsättning')\ni=z.getinfo('paket.json')\nif i.file_size>64*1024*1024: raise ValueError('För stort paket')\nsys.stdout.buffer.write(z.read(i))", zipfil], { maxBuffer: 65 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] });
   const paket = JSON.parse(bytes.toString()) as Godkannandepaket;
   if (paket.version !== "godkannandepaket/1" || paket.beslut !== null || godkannandeforslagshash(paket) !== cmd.hash) throw new Error("Fel paket");
   writeFileSync(paketfil, bytes, { flag: "wx", mode: 0o600 });
