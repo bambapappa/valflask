@@ -66,7 +66,7 @@ describe("parseAmountsMsek — kräver penningenhet", () => {
    * en riktig uträkning som att den inte namngav något belopp, och svepet
    * 2026-08-08 gav tre falsklarm av just det skälet.
    */
-  it("läser förkortningarna uträkningarna skriver: mnkr, mn kr, msek, mkr, mdkr", () => {
+  it("läser förkortningarna uträkningarna skriver: mnkr, mn kr, msek, mkr, mdkr, mdr", () => {
     // Bara talet som bär enheten räknas: i "16 - 8 = 8 mnkr" är det svaret.
     assert.deepEqual(parseAmountsMsek("Ökning = 16 - 8 = 8 mnkr/år"), [8]);
     assert.deepEqual(
@@ -77,6 +77,8 @@ describe("parseAmountsMsek — kräver penningenhet", () => {
     assert.deepEqual(parseAmountsMsek("anger 13 000 msek/år"), [13000]);
     assert.deepEqual(parseAmountsMsek("grovt 0–5 mkr"), [5]);
     assert.deepEqual(parseAmountsMsek("2,5 mdkr"), [2500]);
+    assert.deepEqual(parseAmountsMsek("1 mdr kr"), [1000]);
+    assert.deepEqual(parseAmountsMsek("1 mdr"), [1000]);
   });
 
   it("tar INTE tal utan penningenhet — det var den gamla sökningens fel", () => {
@@ -272,6 +274,23 @@ describe("findZeroWithCalculatedSum — nollan stämmer, men inte texten bredvid
     assert.equal(found.length, 1, JSON.stringify(found));
     assert.equal(found[0]!.id, "p-1");
     assert.ok(found[0]!.stated > 0);
+  });
+
+  it("skalar miljardbelopp en gång när slutsumman verkligen motsäger nollan", () => {
+    const found = findZeroWithCalculatedSum([
+      p({ id: "p-1", cost: { msek_base: 0, period: "per_ar", basis: "llm_estimat", calculation: "Summan blir 1 mdkr per år." } }),
+    ]);
+    assert.equal(found[0]?.stated, 1000);
+  });
+
+  it("tolkar inte övre spannet för ett brett inriktningslöfte som basbelopp", () => {
+    const calc =
+      "Citatet anger endast riktning för hela politikområdet utan något enskilt åtagande, program eller belopp. " +
+      "Enligt regeln för breda inriktningslöften sätts base 0; ev. kostnader för konkreta program prissätts när partiet lovar dem specifikt. " +
+      "Övre spannet (~1 mdkr) speglar att en återuppbyggnad kan kosta betydande summor, men underlag i löftet saknas helt — osäkerheten ligger i spannet, inte i basen.";
+    assert.deepEqual(findZeroWithCalculatedSum([
+      p({ id: "p-2026-0958", cost: { msek_base: 0, period: "per_ar", basis: "llm_estimat", calculation: calc } }),
+    ]), []);
   });
 
   it("tiger när uträkningen förklarar nollan", () => {

@@ -138,7 +138,7 @@ export function parseAmountsMsek(text: string): number[] {
     // Singularformen skalar förstås likadant som pluralen — «1 miljard kronor»
     // är 1 000 miljoner, inte 1. Att bara pluralen skalades var samma lucka som
     // att bara pluralen lästes.
-    const miljard = unit.startsWith("miljard") || unit === "mdkr";
+    const miljard = MILJARDENHETER.test(unit);
     out.push(miljard ? n * 1000 : n);
   }
   return out;
@@ -562,7 +562,11 @@ export function findZeroWithCalculatedSum(
     if (statedBaseMsek(calc) === 0) continue;
     const belopp = splitSentences(calc)
       .filter((s) => CONCLUSION.test(s) && !REJECTED.test(s))
-      .flatMap((s) => parseAmountsMsek(s).map((n) => n * sentenceScale(s)));
+      // En övre/nedre spännvidd är inte uträkningens slutsumma. Men en mening
+      // som faktiskt säger "Summan blir 285–950" ska fortfarande rapporteras.
+      .filter((s) => !/(?:^|[^\p{L}])(?:övre|nedre)\s+spann(?:et)?\b/iu.test(s))
+      // parseAmountsMsek har redan skalat mdkr/miljarder till msek.
+      .flatMap((s) => parseAmountsMsek(s));
     const stated = belopp.length === 0 ? 0 : Math.max(...belopp);
     if (stated === 0) continue;
     out.push({
