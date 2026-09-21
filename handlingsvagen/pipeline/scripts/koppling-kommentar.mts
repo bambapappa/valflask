@@ -7,7 +7,7 @@
  *
  *   result: approved | rejected | error
  */
-import { appendFileSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { appendFileSync, readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
 import { hamtaAvslagsunderlag } from "../src/avslagsunderlag.ts";
@@ -29,6 +29,7 @@ import {
   fetchYrkanden,
 } from "../src/riksdagen.ts";
 import { lasProvningar } from "../../../pipeline/src/provningar.ts";
+import { lasKopplingslage, skrivKopplingsbeslut } from "../src/kopplingsskrivning.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 // Kvalitetsfiltrets index ligger i valflasks rot-data — en logg för alla tre
@@ -48,10 +49,6 @@ function output(result: "approved" | "rejected" | "error", message: string): voi
 
 function lasJson<T>(path: string, fallback: T): T {
   return existsSync(path) ? (JSON.parse(readFileSync(path, "utf8")) as T) : fallback;
-}
-
-function skrivJson(path: string, data: unknown): void {
-  writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
 }
 
 const title = process.env["ISSUE_TITLE"] ?? "";
@@ -75,8 +72,7 @@ if (!cmd) {
   process.exit(0);
 }
 
-const koPath = join(DATA_DIR, "kopplingsforslag.json");
-const ko = lasJson<KoPost[]>(koPath, []);
+const { fore: filfore, ko, kopplingar } = lasKopplingslage(DATA_DIR);
 const index = findIndexByKopplingId(ko, id);
 if (index < 0) {
   output("error", `Posten (koppling-id ${id}) finns inte längre i kön — troligen redan hanterad. Ingen ändring gjord.`);
@@ -85,7 +81,7 @@ if (index < 0) {
 
 if (cmd.action === "reject") {
   const res = avvisaForslag(ko, index);
-  skrivJson(koPath, res.ko);
+  skrivKopplingsbeslut(DATA_DIR, filfore, res.ko, kopplingar);
   output("rejected", `Avvisad: ${res.post.promise_id ?? res.post.stance_id} ↔ ${res.post.handling_id} — ${cmd.reason}`);
   process.exit(0);
 }
@@ -131,12 +127,11 @@ if (avslagsbeslut(cmd.bevis ?? post.bevis.citat)) {
   }
 }
 
-const kopplingarPath = join(DATA_DIR, "kopplingar.json");
 try {
   const res = godkannForslag(
     ko,
     index,
-    lasJson<KopplingPost[]>(kopplingarPath, []),
+    kopplingar,
     handlingar,
     {
       ...(cmd.motionstyp ? { motionstyp: cmd.motionstyp } : {}),
@@ -145,8 +140,7 @@ try {
     },
     lasProvningar(ROT_DATA),
   );
-  skrivJson(kopplingarPath, res.kopplingar);
-  skrivJson(koPath, res.ko);
+  skrivKopplingsbeslut(DATA_DIR, filfore, res.ko, res.kopplingar);
   output(
     "approved",
     `Godkänd som **${res.koppling.id}** — ${res.koppling.promise_id ?? res.koppling.stance_id} ↔ ${res.koppling.handling_id} (${res.koppling.riktning}).` +
