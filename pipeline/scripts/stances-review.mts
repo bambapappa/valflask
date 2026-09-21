@@ -2,7 +2,7 @@
  * Frågevågen — review-CLI för ståndpunktskön (data/stances_review.json).
  *
  *   pnpm stances:review                    lista kön med id, grindar och citat
- *   pnpm stances:review approve <id>       godkänn → statement publiceras i cellen
+ *   pnpm stances:review approve <id>       stoppas tills verifierat beslutspaket finns
  *   pnpm stances:review reject <id> <skäl> avvisa → kö och minne skrivs tillsammans
  *
  * Integritetsregler (kan inte kringgås härifrån):
@@ -61,6 +61,10 @@ if (action !== "approve" && action !== "reject") {
 }
 if (!id) {
   console.error("Ange post-id (kör utan argument för att lista kön).");
+  process.exit(1);
+}
+if (action === "approve") {
+  console.error("Ståndpunktspublicering är spärrad tills fryst sakprövning och verifierat mänskligt beslut kan bindas till exakt köpost och celler.");
   process.exit(1);
 }
 

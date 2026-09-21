@@ -69,6 +69,11 @@ test("verkligt stances:review-kommando stoppar trasigt minne före köändring",
     const ko = JSON.stringify([post], null, 2) + "\n";
     writeFileSync(join(data, "stances_review.json"), ko);
     writeFileSync(join(data, "avvisade.json"), "{trasigt\n");
+    const approve = spawnSync(process.execPath, ["--import", "tsx/esm", join(scripts, "stances-review.mts"), "approve", stanceReviewId(post)], { cwd: pipeline, encoding: "utf8" });
+    assert.notEqual(approve.status, 0);
+    assert.match(approve.stderr, /publicering är spärrad/u);
+    assert.equal(readFileSync(join(data, "stances_review.json"), "utf8"), ko);
+    assert.equal(readFileSync(join(data, "stances.json"), "utf8"), readFileSync(resolve(pipeline, "..", "data", "stances.json"), "utf8"));
     const run = () => spawnSync(process.execPath, ["--import", "tsx/esm", join(scripts, "stances-review.mts"), "reject", stanceReviewId(post), skal], { cwd: pipeline, encoding: "utf8" });
     assert.notEqual(run().status, 0);
     assert.equal(readFileSync(join(data, "stances_review.json"), "utf8"), ko);
