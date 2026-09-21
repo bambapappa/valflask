@@ -26,8 +26,10 @@ import {
   verifyStance,
   type ProcessedStance,
   type StanceGateFailure,
-  type StanceReviewEntry,
 } from "./stance-pipeline.ts";
+import { lasStanceReview } from "./stance-review-lage.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "./datatransaktion.ts";
+import { kanoniskJson } from "./underlagsversion.ts";
 import type { IssuesFile, StanceCell } from "./stances.ts";
 
 export interface PipelineContext {
@@ -113,6 +115,22 @@ export async function runPipeline(
   // rad i loggen sa emot. Talen ligger i loggen och inte i resultatet — de
   // skiljer sig mellan två körningar, och resultatet ska inte göra det.
   const t0 = Date.now();
+  // Kontrollera befintlig Frågevågsdata före hämtning och andra skrivningar.
+  // Ett trasigt underlag är aldrig en tom kö eller ett avstängt delpass.
+  const existingStanceReview = ctx.stancesEnabled ? lasStanceReview(ctx.outputDir) : [];
+  const stanceFore = ctx.stancesEnabled ? lasFillage(ctx.outputDir, ["stances.json", "stances_review.json"]) : null;
+  const issuesFile: IssuesFile | null = ctx.stancesEnabled
+    ? JSON.parse(readFileSync(`${ctx.dataDir}/issues.json`, "utf8")) as IssuesFile : null;
+  const stanceCells: StanceCell[] = ctx.stancesEnabled
+    ? JSON.parse(readFileSync(`${ctx.dataDir}/stances.json`, "utf8")) as StanceCell[] : [];
+  if (ctx.stancesEnabled && (!Array.isArray(issuesFile?.issues) || !Array.isArray(stanceCells))) {
+    throw new Error("Frågevågens frågor eller celler har ogiltigt format");
+  }
+  if (stanceFore && (stanceFore["stances.json"] === null ||
+      kanoniskJson(JSON.parse(stanceFore["stances.json"]!)) !== kanoniskJson(stanceCells) ||
+      kanoniskJson(JSON.parse(stanceFore["stances_review.json"] ?? "[]")) !== kanoniskJson(existingStanceReview))) {
+    throw new Error("Frågevågens föreläge motsvarar inte kö och celler som ska prövas");
+  }
   const articles = await ctx.articleSource.fetch();
   const hamtningMs = Date.now() - t0;
   // Processprioritet inom budgeten: (1) page och index — partiernas egna
@@ -202,19 +220,8 @@ export async function runPipeline(
 
   // ── Frågevågen: ladda taxonomi + celler EN gång (passet delar artikelloopen,
   // annars hade seen.json redan markerat artiklarna som behandlade).
-  let issuesFile: IssuesFile | null = null;
-  let stanceCells: StanceCell[] = [];
   const processedStances: ProcessedStance[] = [];
   const stanceGateReview: Array<{ candidate: unknown; failures: StanceGateFailure[]; article: NormalizedArticle }> = [];
-  if (ctx.stancesEnabled) {
-    try {
-      issuesFile = JSON.parse(readFileSync(`${ctx.dataDir}/issues.json`, "utf8")) as IssuesFile;
-      stanceCells = JSON.parse(readFileSync(`${ctx.dataDir}/stances.json`, "utf8")) as StanceCell[];
-    } catch (e) {
-      console.error(`[stances] kunde inte ladda issues/stances — passet hoppas över: ${e instanceof Error ? e.message : String(e)}`);
-      issuesFile = null;
-    }
-  }
 
   // Dubblettkollen på ett ställe: den körs två gånger nedan — en gång i det
   // samtidiga passet mot beståndet som det såg ut när körningen startade, och
@@ -588,13 +595,6 @@ export async function runPipeline(
   // changelog-post bär stances_added/stances_changed.
   let stanceSummary: { added: string[]; changed: string[] } | undefined;
   if (issuesFile) {
-    const existingStanceReview: StanceReviewEntry[] = (() => {
-      try {
-        return JSON.parse(readFileSync(`${ctx.outputDir}/stances_review.json`, "utf8")) as StanceReviewEntry[];
-      } catch {
-        return [];
-      }
-    })();
     const stanceResult = publishStances({
       processed: processedStances,
       gateReview: stanceGateReview,
@@ -605,8 +605,10 @@ export async function runPipeline(
       now: ctx.now,
       mode: ctx.stancesMode ?? "review",
     });
-    writeFileSync(`${ctx.outputDir}/stances.json`, JSON.stringify(stanceResult.cells, null, 2) + "\n");
-    writeFileSync(`${ctx.outputDir}/stances_review.json`, JSON.stringify(stanceResult.review, null, 2) + "\n");
+    const json = (v: unknown) => JSON.stringify(v, null, 2) + "\n";
+    skrivFilpaket(ctx.outputDir, skapaFilpaket(stanceFore!, {
+      "stances.json": json(stanceResult.cells), "stances_review.json": json(stanceResult.review),
+    }));
     stanceSummary = { added: stanceResult.stancesAdded, changed: stanceResult.stancesChanged };
     console.error(
       `[stances] publicerade=${stanceResult.stancesAdded.length} ändringar=${stanceResult.stancesChanged.length} review=${stanceResult.review.length - existingStanceReview.length} (nya) omskördar=${stanceResult.stancesOmskordade.length}`,

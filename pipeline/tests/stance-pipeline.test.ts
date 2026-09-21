@@ -469,7 +469,7 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
       }
     }
 
-    async function runOnce(stancesEnabled: boolean, stancesMode?: "auto" | "review"): Promise<string> {
+    async function runOnce(stancesEnabled: boolean, stancesMode?: "auto" | "review", trasigKo = false, saknadeFragor = false, byttKo = false): Promise<string> {
       const tmp = mkdtempSync(join(tmpdir(), "fragevagen-"));
       try {
         writeFileSync(join(tmp, "promises.json"), "[]\n");
@@ -478,12 +478,18 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
         writeFileSync(join(tmp, "seen.json"), "{}\n");
         writeFileSync(join(tmp, "issues.json"), JSON.stringify(issuesFile, null, 2));
         writeFileSync(join(tmp, "stances.json"), JSON.stringify(skeleton(), null, 2));
+        const cellerFore = readFileSync(join(tmp, "stances.json"), "utf8");
+        if (trasigKo) writeFileSync(join(tmp, "stances_review.json"), "{trasigt\n");
+        if (saknadeFragor) rmSync(join(tmp, "issues.json"));
 
-        await runPipeline({
+        const korning = runPipeline({
           now: NOW,
           runId: "integrationstest",
           llm: new DispatchLlm(),
-          articleSource: new MemorySource([makeArticle()]),
+          articleSource: byttKo ? { fetch: async () => {
+            writeFileSync(join(tmp, "stances_review.json"), "[]\n");
+            return [makeArticle()];
+          } } : new MemorySource([makeArticle()]),
           outputDir: tmp,
           dataDir: tmp,
           allowlist: ["svt.se"],
@@ -493,6 +499,23 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
           stancesEnabled,
           stancesMode,
         });
+        if (trasigKo) {
+          await assert.rejects(korning, /Ståndpunktskön kan inte läsas/u);
+          assert.equal(readFileSync(join(tmp, "stances_review.json"), "utf8"), "{trasigt\n");
+          assert.equal(readFileSync(join(tmp, "stances.json"), "utf8"), cellerFore);
+          return "stoppad";
+        }
+        if (saknadeFragor) {
+          await assert.rejects(korning, /ENOENT/u);
+          assert.equal(readFileSync(join(tmp, "stances.json"), "utf8"), cellerFore);
+          return "stoppad";
+        }
+        if (byttKo) {
+          await assert.rejects(korning, /föreläge/u);
+          assert.equal(readFileSync(join(tmp, "stances.json"), "utf8"), cellerFore);
+          return "stoppad";
+        }
+        await korning;
 
         if (!existsSync(join(tmp, "stances_review.json")) && !stancesEnabled) return "";
         return readFileSync(join(tmp, "stances.json"), "utf8");
@@ -504,6 +527,9 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
     // AV (default): review-filen skapas inte, cellerna förblir tomma.
     const offResult = await runOnce(false);
     assert.equal(offResult, "", "utan flaggan ska inga ståndpunktsfiler skrivas");
+    assert.equal(await runOnce(true, "review", true), "stoppad", "trasig befintlig kö får inte ersättas med en ny tom kö");
+    assert.equal(await runOnce(true, "review", false, true), "stoppad", "saknad frågelista får inte tyst stänga av Frågevågen");
+    assert.equal(await runOnce(true, "review", false, false, true), "stoppad", "förändrad kö under skörden får inte skrivas över");
 
     // PÅ utan STANCES_MODE: säkra defaulten är review — inget publiceras.
     const defaultResult = JSON.parse(await runOnce(true)) as StanceCell[];
