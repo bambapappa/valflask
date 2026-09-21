@@ -3,7 +3,7 @@
  *
  *   pnpm stances:review                    lista kön med id, grindar och citat
  *   pnpm stances:review approve <id>       godkänn → statement publiceras i cellen
- *   pnpm stances:review reject <id> [skäl] avvisa → posten tas bort (skälet loggas)
+ *   pnpm stances:review reject <id> <skäl> avvisa → kö och minne skrivs tillsammans
  *
  * Integritetsregler (kan inte kringgås härifrån):
  *  - Poster med hårda grindfel (G1/G2/G3/G6/G7/G8) kan ALDRIG godkännas —
@@ -13,7 +13,6 @@
  *  - Godkännande av VERIFY/RIKTNINGSBYTE/MODE-poster är själva den mänskliga
  *    granskning grindarna kräver; ändringsdetekteringen (RS5) sker mekaniskt.
  */
-import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import {
@@ -23,7 +22,8 @@ import {
   type StanceVerifyResult,
 } from "../src/stance-pipeline.ts";
 import { validateStanceInvariants, type IssuesFile, type StanceCell } from "../src/stances.ts";
-import { avvisa, type Avvisning } from "../src/avvisningar.ts";
+import { lasFillage, skrivFilpaket } from "../src/datatransaktion.ts";
+import { forberedStandpunktsavvisning, stanceReviewId, STANDPUNKTSAVVISNINGSFILER } from "../src/standpunktsavvisning.ts";
 import { lasProvningar, provningsGrind, standpunktNyckel } from "../src/provningar.ts";
 import { svenskDag } from "../src/dagen.ts";
 
@@ -31,14 +31,6 @@ const ROOT = resolve(import.meta.dirname, "../../");
 const DATA = join(ROOT, "data");
 
 const HARD_GATES = new Set(["G1", "G2", "G3", "G6", "G7", "G8"]);
-
-export function stanceReviewId(e: StanceReviewEntry): string {
-  const c = e.candidate as Partial<StanceCandidate> | null | undefined;
-  return createHash("sha256")
-    .update(`${e.articleUrl}::${c?.subquestion_id ?? ""}::${c?.party ?? ""}::${c?.quote ?? ""}`)
-    .digest("hex")
-    .slice(0, 12);
-}
 
 const queue = JSON.parse(readFileSync(join(DATA, "stances_review.json"), "utf8")) as StanceReviewEntry[];
 const issuesFile = JSON.parse(readFileSync(join(DATA, "issues.json"), "utf8")) as IssuesFile;
@@ -80,29 +72,10 @@ if (idx === -1) {
 const entry = queue[idx]!;
 
 if (action === "reject") {
-  const reason = rest.join(" ") || "avvisad via stances:review";
-  queue.splice(idx, 1);
-  writeFileSync(join(DATA, "stances_review.json"), JSON.stringify(queue, null, 2) + "\n");
-
-  // Avvisningen lämnar spår, precis som i löftesflödet. Utan minnet hittar
-  // nästa skörd samma besked i samma källa och lägger in det på nytt.
-  // Mänskligt beslut 2026-08-09; se `src/avvisningar.ts`.
-  const kandidat = entry.candidate as { quote?: string; source?: { url?: string } };
-  const url = kandidat.source?.url ?? "";
-  const citat = kandidat.quote ?? "";
-  if (url !== "" && citat !== "") {
-    const fil = join(DATA, "avvisade.json");
-    let minne: Avvisning[] = [];
-    try {
-      minne = JSON.parse(readFileSync(fil, "utf8")) as Avvisning[];
-    } catch {
-      minne = [];
-    }
-    writeFileSync(
-      fil,
-      JSON.stringify(avvisa(minne, url, citat, reason, svenskDag()), null, 2) + "\n",
-    );
-  }
+  const reason = rest.join(" ");
+  const fore = lasFillage(DATA, STANDPUNKTSAVVISNINGSFILER);
+  const paket = forberedStandpunktsavvisning(id, reason, fore, new Date());
+  skrivFilpaket(DATA, paket);
   console.log(`Avvisad ${id}: ${reason}`);
   process.exit(0);
 }
