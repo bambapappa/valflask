@@ -30,7 +30,10 @@ test("kommandot läser artefakt och GitHub-svar; nätfel och fel försök ger av
     const manifest = await bindPubliceringsartefakt(fil, id);
     const path = join(dir, "manifest.json");
     writeFileSync(path, JSON.stringify(manifest));
-    const provning = forberedPubliceringsprovning(paket, manifest.hash, {});
+    const refs = [{ id: "k", slag: "kalla" as const, adress: "test:k", innehall: "Syntetisk kodgranskning" }, { id: "r", slag: "regel" as const, adress: "test:r", innehall: "Syntetisk metodgranskning" }];
+    const provning = forberedPubliceringsprovning(paket, manifest.hash, {}, refs);
+    provning.helhet.bedomare = "Syntetiskt formatprov, ingen mänsklig attest";
+    for (const b of provning.helhet.bedomningar) { b.utfall = "styrkt"; b.motivering = "Tekniskt kontraktsprov, inte sakbedömning."; b.belagg = ["k", "r"]; }
     const provningshash = publiceringsprovningshash(provning);
     const privatfil = join(dir, "privat.json");
     writeFileSync(privatfil, JSON.stringify(provning));

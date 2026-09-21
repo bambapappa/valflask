@@ -17,7 +17,11 @@ try {
     const mal = resolve(realpathSync(dirname(resolve(utfil))), basename(utfil));
     const rel = relative(rot, mal);
     if (!rel || (!rel.startsWith("../") && !isAbsolute(rel))) throw new Error("Privat utdata får inte ligga i kodrepot");
-    const p = forberedPubliceringsprovning(paket, manifest.hash, las(indatafil));
+    const material = las(indatafil);
+    if (!material || Array.isArray(material) || typeof material !== "object" ||
+        Object.keys(material).some(k => !["poster", "helhet"].includes(k)) ||
+        !material.poster || !Array.isArray(material.helhet)) throw new Error("Ange både poster och helhet");
+    const p = forberedPubliceringsprovning(paket, manifest.hash, material.poster, material.helhet);
     writeFileSync(mal, JSON.stringify(p, null, 2)+"\n", { flag: "wx", mode: 0o600 });
     console.log("Privat utkast sparat. Alla sakmoment är oavgjorda; inget beslut skapat.");
   } else if (kommando === "kontroll" && !utfil) {

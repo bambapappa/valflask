@@ -25,13 +25,13 @@ const refs: Sakreferens[] = [{ id: "kalla", slag: "kalla", adress: "test:kalla",
 const material = Object.fromEntries(paket.andringar.map(a => [a.rot, refs]));
 function klart(p: Publiceringsprovning): Publiceringsprovning {
   const ny = structuredClone(p);
-  for (const rad of ny.poster) {
+  for (const rad of [ny.helhet, ...ny.poster]) {
     rad.bedomare = "Syntetiskt formatprov, ingen mänsklig attest";
     for (const b of rad.bedomningar) { b.utfall = "styrkt"; b.motivering = "Tekniskt kontraktsprov, inte sakbedömning."; b.belagg = ["kalla", "regel"]; }
   }
   return ny;
 }
-const utkast = () => forberedPubliceringsprovning(paket, manifest, material);
+const utkast = () => forberedPubliceringsprovning(paket, manifest, material, refs);
 test("verklig beroendeändring kräver separat prövning för varje direkt och indirekt ändrad rot", () => {
   assert.ok(paket.andringar.some(a => !a.direkt));
   const p = utkast();
@@ -76,7 +76,7 @@ test("borttagen, dubblerad, extra, avvikande eller ofullständigt bedömd post s
     const ny = structuredClone(p); mutate(ny);
     assert.throws(() => kontrolleraPubliceringsprovning(ny, paket, manifest, publiceringsprovningshash(ny)));
   }
-  assert.throws(() => forberedPubliceringsprovning(paket, manifest, { saknas: refs }), /okänd/u);
+  assert.throws(() => forberedPubliceringsprovning(paket, manifest, { saknas: refs }, refs), /okänd/u);
 });
 
 test("publiceringsvalideraren kör utan installerade pipelineberoenden", () => {
@@ -86,4 +86,25 @@ test("publiceringsvalideraren kör utan installerade pipelineberoenden", () => {
     const r = spawnSync(process.execPath, ["--experimental-strip-types", "--input-type=module", "-e", "const m=await import(process.argv[1]); if(typeof m.kontrolleraPubliceringsprovning!=='function')process.exit(2)", pathToFileURL(resolve(dir, "publiceringsprovning.ts")).href], { cwd: dir, encoding: "utf8" });
     assert.equal(r.status, 0, r.stderr);
   } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+
+test("kodändring utan ändrade register kräver full helhetsprövning", () => {
+  const kodpaket = byggPubliceringspaket("a".repeat(40), "b".repeat(40), fore, fore,
+    { sokvagar: ["src/lib/aggregates.ts"], patch: "Syntetisk ändring av summering" });
+  assert.equal(kodpaket.andringar.length, 0);
+  const p = forberedPubliceringsprovning(kodpaket, manifest, {}, refs);
+  assert.throws(() => kontrolleraPubliceringsprovning(p, kodpaket, manifest, publiceringsprovningshash(p)), /moment/);
+  const f = klart(p);
+  kontrolleraPubliceringsprovning(f, kodpaket, manifest, publiceringsprovningshash(f));
+  for (const mutate of [
+    (v: Publiceringsprovning) => { delete (v as any).helhet; },
+    (v: Publiceringsprovning) => { v.helhet.bedomare = null; },
+    (v: Publiceringsprovning) => { v.helhet.bedomningar.pop(); },
+    (v: Publiceringsprovning) => { v.helhet.referenser = []; },
+    (v: Publiceringsprovning) => { v.helhet.bedomningar[0]!.utfall = "oavgjort"; },
+  ]) {
+    const ny = structuredClone(f); mutate(ny);
+    assert.throws(() => kontrolleraPubliceringsprovning(ny, kodpaket, manifest, publiceringsprovningshash(ny)));
+  }
 });
