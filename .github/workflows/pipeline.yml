@@ -149,7 +149,8 @@ jobs:
           PIPELINE_MODE: ${{ vars.PIPELINE_MODE }}
           # Frågevågen PÅ som default (mänskligt beslut 2026-07-11); stäng av genom att
           # sätta repovariabeln STANCES_ENABLED=false. STANCES_MODE osatt = review
-          # (torrkörning, steg 2) — växlas till auto först i steg 4.
+          # Frågevågen accepterar nu bara review tills individuell sakprövning
+          # kan bindas till varje publicerat besked.
           STANCES_ENABLED: ${{ vars.STANCES_ENABLED || 'true' }}
           STANCES_MODE: ${{ vars.STANCES_MODE }}
           ALERT_EMAIL: ${{ vars.ALERT_EMAIL }}

@@ -297,15 +297,14 @@ export function buildContextFromEnv(
   // Frågevågen: hård grind — passet är AV tills ägaren uttryckligen slår på
   // det (efter dubbel-/trippelverifiering av delfrågor och källor).
   const stancesEnabled = (getEnv(env, "STANCES_ENABLED") ?? "false").toLowerCase() === "true";
-  // Egen mode-ratt för Frågevågen: PIPELINE_MODE delas med löftesflödet, och
-  // torrkörningen (steg 2) får inte tvinga löftena till review — eller omvänt
-  // låta auto-läget autopublicera ståndpunkter. Default REVIEW tills ägaren
-  // uttryckligen växlar (steg 4 i ops/FRAGEVAGEN-LANSERING.md).
+  // Frågevågen får samla kandidater för granskning men inte autopublicera.
+  // Ett gammalt STANCES_MODE=auto måste stoppa körningen, inte ge sken av att
+  // publicering har fått individuell sakprövning.
   const stancesModeRaw = (getEnv(env, "STANCES_MODE") ?? "review").toLowerCase();
-  if (stancesModeRaw !== "review" && stancesModeRaw !== "auto") {
-    throw new Error(`Ogiltig STANCES_MODE: "${stancesModeRaw}" (tillåtet: review | auto)`);
+  if (stancesModeRaw !== "review") {
+    throw new Error(`STANCES_MODE=${stancesModeRaw} stoppas: Frågevågen får endast köras i review-läge`);
   }
-  const stancesMode = stancesModeRaw as "review" | "auto";
+  const stancesMode = "review" as const;
 
   const { config, dataDir } = opts;
   if (!config.feeds || config.feeds.length === 0) {

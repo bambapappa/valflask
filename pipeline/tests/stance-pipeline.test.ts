@@ -435,7 +435,7 @@ describe("A6-extraktion", () => {
 /* ─────────────────────────────── integration: flaggan STANCES_ENABLED ── */
 
 describe("runPipeline-integration — passet är hårt gatat", () => {
-  test("utan stancesEnabled skrivs inga ståndpunktsfiler; med flaggan publiceras beskedet", async () => {
+  test("utan stancesEnabled skrivs inga ståndpunktsfiler; review ger kö och auto stoppas", async () => {
     const { mkdtempSync, rmSync, writeFileSync, existsSync, readFileSync } = await import("node:fs");
     const { join } = await import("node:path");
     const { tmpdir } = await import("node:os");
@@ -536,11 +536,8 @@ describe("runPipeline-integration — passet är hårt gatat", () => {
     const defaultCell = defaultResult.find((c) => c.subquestion_id === "sq-energi-karnkraft" && c.party === "m")!;
     assert.equal(defaultCell.statements.length, 0, "default STANCES_MODE ska vara review");
 
-    // PÅ med uttryckligt STANCES_MODE=auto: beskedet publiceras i cellen.
-    const onResult = JSON.parse(await runOnce(true, "auto")) as StanceCell[];
-    const cell = onResult.find((c) => c.subquestion_id === "sq-energi-karnkraft" && c.party === "m")!;
-    assert.equal(cell.statements.length, 1);
-    assert.equal(cell.current.position, "ja");
+    // PÅ med uttryckligt STANCES_MODE=auto: stoppa före källhämtning och skrivning.
+    await assert.rejects(runOnce(true, "auto"), /endast köras i review-läge/u);
   });
 });
 

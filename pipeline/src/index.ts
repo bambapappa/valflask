@@ -109,6 +109,9 @@ interface ProcessedCandidate {
 export async function runPipeline(
   ctx: PipelineContext,
 ): Promise<PipelineResult> {
+  if (ctx.stancesEnabled && ctx.stancesMode === "auto") {
+    throw new Error("Frågevågen får endast köras i review-läge tills individuella sakbeslut är bundna till publiceringen");
+  }
   // Tiden mäts och skrivs ut, för att nästa beslut om takt och budget ska
   // kunna vila på en mätning. Det förra vilade inte på en: kommentaren i
   // pipeline.yml sa 73–87 minuter medan körningarna tog 201–325, och ingen
