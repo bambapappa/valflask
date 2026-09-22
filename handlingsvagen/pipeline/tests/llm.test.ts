@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { OpenRouterClient } from "../src/llm.ts";
+import { OpenRouterClient, tolkaLlmHuvuden } from "../src/llm.ts";
 
 const GO = "https://go.example/v1";
 const OR = "https://or.example/v1";
@@ -20,6 +20,36 @@ function svar(status: number, opts: { retryAfter?: string; text?: string } = {})
 
 const svarOk = (innehall: string) =>
   svar(200, { text: JSON.stringify({ choices: [{ message: { content: innehall } }] }) });
+
+test("förslagsklienten skickar sessionshuvudet till rätt led i varje anrop", async () => {
+  const sedda: Array<{ url: string; session: string | undefined; reserv: string | undefined }> = [];
+  const klient = new OpenRouterClient({
+    apiKey: "primärnyckel", baseUrl: GO,
+    fallbackApiKey: "reservnyckel", fallbackBaseUrl: OR,
+    huvuden: tolkaLlmHuvuden("x-opencode-session: utlovat-{körning}", "LLM_HUVUDEN")!,
+    fallbackHuvuden: tolkaLlmHuvuden("x-reserv: annan", "LLM_FALLBACK_HUVUDEN")!,
+    maxRetries: 0, minIntervalMs: 0,
+    onReservSvarade: () => {},
+    httpFetch: async (url, init) => {
+      const headers = init?.headers as Record<string, string>;
+      sedda.push({ url, session: headers["x-opencode-session"], reserv: headers["x-reserv"] });
+      return url.startsWith(GO) ? svar(400) : svarOk("klart");
+    },
+  });
+  assert.equal(await klient.complete("a", { model: "modell" }), "klart");
+  assert.equal(await klient.complete("b", { model: "modell" }), "klart");
+  assert.equal(sedda.length, 4);
+  assert.match(sedda[0]!.session ?? "", /^utlovat-[0-9a-f]{16}$/u);
+  assert.equal(sedda[0]!.session, sedda[2]!.session);
+  assert.equal(sedda[0]!.reserv, undefined);
+  assert.equal(sedda[1]!.session, undefined);
+  assert.equal(sedda[1]!.reserv, "annan");
+});
+
+test("felaktiga eller skyddade LLM-huvuden stoppas före anrop", () => {
+  assert.throws(() => tolkaLlmHuvuden("x-opencode-session", "LLM_HUVUDEN"), /LLM_HUVUDEN/u);
+  assert.throws(() => new OpenRouterClient({ apiKey: "k", huvuden: { authorization: "annan" } }), /skyddat/u);
+});
 
 /** Klient med attrapp-fetch och klocka vi styr; sömn räknas men tar ingen tid. */
 function bygg(handlare: (url: string) => Response | Promise<Response>) {

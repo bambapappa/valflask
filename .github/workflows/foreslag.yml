@@ -179,12 +179,14 @@ jobs:
           # koppla in den skulle bara lägga ett garanterat 402-försök på varje
           # par). opencode-go har kvar sin OpenRouter-reserv som förut.
           LLM_BASE_URL: ${{ env.PRIMAR == 'zai-glm' && vars.LLM_ZAI_BASE_URL || vars.LLM_BASE_URL }}
+          LLM_HUVUDEN: ${{ (env.PRIMAR == 'zai-glm' && vars.LLM_ZAI_HUVUDEN) || (env.PRIMAR != 'zai-glm' && vars.LLM_HUVUDEN) || '' }}
           LLM_API_KEY: ${{ env.PRIMAR == 'zai-glm' && secrets.LLM_ZAI_API_KEY || secrets.LLM_API_KEY }}
           OPENROUTER_API_KEY: ${{ env.PRIMAR == 'zai-glm' && '' || secrets.OPENROUTER_API_KEY }}
           # Base-URL är inte hemlig — läs den ur variabler i första hand
           # (secrets kvar som reserv). Nyckelnamnet har historiskt stavats
           # LLM_FALLBACK_KEY i detta repo (HANDOFF-varning); godta båda.
           LLM_FALLBACK_BASE_URL: ${{ env.PRIMAR == 'zai-glm' && '' || (vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL) }}
+          LLM_FALLBACK_HUVUDEN: ${{ env.PRIMAR != 'zai-glm' && vars.LLM_FALLBACK_HUVUDEN || '' }}
           LLM_FALLBACK_API_KEY: ${{ env.PRIMAR == 'zai-glm' && '' || (secrets.LLM_FALLBACK_API_KEY || secrets.LLM_FALLBACK_KEY) }}
           MODEL_KOPPLING: ${{ env.PRIMAR == 'zai-glm' && vars.MODEL_KOPPLING_ZAI || vars.MODEL_KOPPLING }}
           MODEL_KOPPLING_FALLBACK: ${{ env.PRIMAR == 'zai-glm' && '' || vars.MODEL_KOPPLING_FALLBACK }}
