@@ -154,6 +154,8 @@ describe("luckan får inte växa", () => {
       method_note: "beskriver metoden, inte beloppet",
       basis_url: "LUCKA — källan till grunden kan bytas utan att prövningen blir gammal",
       anchor_ids: "LUCKA — ankaret kan bytas utan att prövningen blir gammal",
+      harledning: "LUCKA — härledningen är ny och ligger ännu inte i kanon(); " +
+        "att lägga den där åldrar varje prövning och är ett mänskligt beslut",
     };
     const schema = JSON.parse(
       readFileSync(join(REPO, "pipeline/schemas/promises.schema.json"), "utf8"),
