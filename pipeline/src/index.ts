@@ -698,6 +698,7 @@ export async function runPipeline(
     publishedTotal: publishResult.promises.length,
     queuedTotal: publishResult.queuedTotal,
     bySource,
+    ...(ctx.articleSource.getFeedOutcomes ? { feedOutcomes: ctx.articleSource.getFeedOutcomes() } : {}),
   };
   writeRunReport(ctx, runStats, publishResult.dataHash);
 

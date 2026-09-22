@@ -329,6 +329,27 @@ describe("Wayback archive med retry/backoff", () => {
 /* ──────────────────────── LiveSource med mockade anrop ── */
 
 describe("LiveSource med mock-HTTP", () => {
+  test("skiljer frisk tom RSS från fallerad feed", async () => {
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      if (url.includes("nere.test")) throw new Error("timeout");
+      return new Response('<rss version="2.0"><channel><title>Tom</title></channel></rss>', { status: 200 });
+    };
+    const source = new LiveSource({
+      feeds: [
+        { id: "tom", type: "rss", url: "https://frisk.test/feed" },
+        { id: "nere", type: "rss", url: "https://nere.test/feed" },
+      ],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+    assert.deepEqual(await source.fetch(), []);
+    assert.deepEqual(source.getFeedOutcomes(), [
+      { id: "tom", type: "rss", fetched: 0, accepted: 0, status: "ok" },
+      { id: "nere", type: "rss", fetched: 0, accepted: 0, status: "failed", error: "timeout" },
+    ]);
+  });
+
   test("hämtar RSS-artiklar via mock", async () => {
     const rssXml = readFixture("party-rss.xml");
 

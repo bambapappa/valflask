@@ -91,6 +91,24 @@ test("tom eller självmotsägande mätning får inte bli ett lyckat pass", () =>
   assert.throws(() => korutfall({ fetched: 1, unseen: 1, attempted: 1, succeeded: 1, failed: 1 } as Kormatning), /går inte ihop/u);
 });
 
+test("misslyckad källhämtning syns i rapporten och fäller körningen även utan artikelfel", async () => {
+  await medKorning(async (ctx, root) => {
+    ctx.articleSource = {
+      fetch: async () => [],
+      getFeedOutcomes: () => [
+        { id: "tom-men-frisk", type: "rss", fetched: 0, accepted: 0, status: "ok" },
+        { id: "nere", type: "rss", fetched: 0, accepted: 0, status: "failed", error: "timeout" },
+      ],
+    };
+    await assert.rejects(koraPipeline(ctx), /1 källflöden misslyckades \(nere\)/u);
+    const report = JSON.parse(readFileSync(join(root, ".report/utfallsprov.json"), "utf8"));
+    assert.equal(report.outcome, "delvis");
+    assert.equal(report.failed, 0);
+    assert.equal(report.feedOutcomes[0].status, "ok");
+    assert.equal(report.feedOutcomes[1].error, "timeout");
+  });
+});
+
 test("köbeståndet mäter sparad verklig kö efter rensning även utan nya kandidater", async () => {
   await medKorning(async (ctx, root) => {
     const queue = JSON.parse(readFileSync(join(repo, "data/needs_review.json"), "utf8"));

@@ -5,11 +5,13 @@ import { DATE_WINDOW_DAYS, type NormalizedArticle } from "./gates.ts";
 import { kartaSamtidigt } from "./samtidigt.ts";
 import { parseRetryAfterMs } from "./takten.ts";
 import { kanoniskAdress } from "./adressen.ts";
+import type { Feedhamtning } from "./korutfall.ts";
 
 /* ──────────────────────── ArticleSource (M2 injicerbart gränssnitt) ── */
 
 export interface ArticleSource {
   fetch(): Promise<NormalizedArticle[]>;
+  getFeedOutcomes?(): Feedhamtning[];
 }
 
 export class MemorySource implements ArticleSource {
@@ -996,6 +998,7 @@ export class LiveSource implements ArticleSource {
    */
   private robotsPagaende: Map<string, Promise<RobotsRule[]>>;
   private stats: Map<string, number>;
+  private feedOutcomes: Feedhamtning[];
   /**
    * Adresserna körningen ska begränsas till, eller null för alla.
    *
@@ -1034,14 +1037,21 @@ export class LiveSource implements ArticleSource {
     this.robotsCache = new Map();
     this.robotsPagaende = new Map();
     this.stats = new Map();
+    this.feedOutcomes = [];
   }
 
   getStats(): Map<string, number> {
     return new Map(this.stats);
   }
 
+  getFeedOutcomes(): Feedhamtning[] {
+    return this.feedOutcomes.map((f) => ({ ...f }));
+  }
+
   async fetch(): Promise<NormalizedArticle[]> {
     const articles: NormalizedArticle[] = [];
+    this.stats.clear();
+    this.feedOutcomes = [];
     const etagCache = loadEtagCache(this.cacheDir);
 
     // Hämta ALLA feeds (ingen global kapning här). Annars äter feeds högt upp i
@@ -1059,6 +1069,7 @@ export class LiveSource implements ArticleSource {
                 ? await this.fetchSitemap(feed, etagCache)
                 : await this.fetchRss(feed, etagCache);
 
+        let accepted = 0;
         for (const article of feedArticles) {
           if (article.text.length < this.limits.min_chars) continue;
           // RSS, page och riksdagen går inte genom `hamtaSidor` och har alltså
@@ -1066,12 +1077,16 @@ export class LiveSource implements ArticleSource {
           // tyst släppa igenom allt från just de källtyperna.
           if (this.urlar && !this.urlar.has(kanoniskAdress(article.url))) continue;
           articles.push({ ...article, feedType: feed.type });
+          accepted += 1;
         }
 
         this.stats.set(feed.id, feedArticles.length);
+        this.feedOutcomes.push({ id: feed.id, type: feed.type, fetched: feedArticles.length, accepted, status: "ok" });
       } catch (e) {
-        console.error(`[fetch] feed ${feed.id} failed: ${e instanceof Error ? e.message : e}`);
+        const error = (e instanceof Error ? e.message : String(e)).slice(0, 500);
+        console.error(`[fetch] feed ${feed.id} failed: ${error}`);
         this.stats.set(feed.id, 0);
+        this.feedOutcomes.push({ id: feed.id, type: feed.type, fetched: 0, accepted: 0, status: "failed", error });
       }
     }
 
