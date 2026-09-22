@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   provaOmpekning,
+  provaOmpekningslista,
   pekaOm,
   malUtanKvarvarandeKoppling,
   type LoftesUppgift,
@@ -71,6 +72,26 @@ test("ett tillbakadraget löfte är inget mål", () => {
   const svar = provaOmpekning(koppling(), FRAN, dragen, [koppling()], rad());
   assert.equal(svar.ok, false);
   assert.match(svar.fel.join(" "), /status tillbakadragen/u);
+});
+
+test("ett saknat ursprungslöfte får inte kringgå grupplåset", () => {
+  const svar = provaOmpekning(koppling(), undefined, TILL, [koppling()], rad());
+  assert.match(svar.fel.join(" "), /ursprungslöftet .* saknas/u);
+});
+
+test("ett andra byte får inte skriva över kopplingens tidigare ompekning", () => {
+  const tidigare = koppling({ ompekad: { datum: "2026-08-24", fran: "p-2026-0001", till: FRAN.id, skal: SKAL } });
+  assert.match(provaOmpekning(tidigare, FRAN, TILL, [tidigare], rad()).fel.join(" "), /tidigare spåret/u);
+});
+
+test("hela listan stoppar dubbla rader och en krock som uppstår först efter två flyttar", () => {
+  const andra = koppling({ id: "k-2026-0416", promise_id: "p-2026-0390" });
+  const franAndra: LoftesUppgift = { id: "p-2026-0390", status: "aktiv", group_id: "g-c-stoppa-kompetensutvisning" };
+  const lista = [rad(), rad({ id: andra.id })];
+  const fel = provaOmpekningslista([koppling(), andra], [FRAN, franAndra, TILL], lista);
+  assert.match(fel.join(" "), /samma handling/u);
+  const dubbla = provaOmpekningslista([koppling()], [FRAN, TILL], [rad(), rad()]);
+  assert.match(dubbla.join(" "), /två gånger/u);
 });
 
 test("en redan indragen koppling flyttas inte", () => {

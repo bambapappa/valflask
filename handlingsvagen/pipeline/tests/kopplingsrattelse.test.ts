@@ -90,3 +90,57 @@ test("verkligt motiveringskommando rättar båda filerna och stoppar trasig rät
     assert.equal(existsSync(join(data, ".datatransaktion")), false);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
+
+test("ompekning av en verklig koppling skriver synlig rättelse och lämnar inget halvt läge", () => {
+  const root = mkdtempSync(join(tmpdir(), "koppling-peka-om-cli-"));
+  try {
+    const project = resolve(import.meta.dirname, "../../..");
+    const scripts = join(root, "handlingsvagen", "pipeline", "scripts");
+    const data = join(root, "handlingsvagen", "data");
+    mkdirSync(scripts, { recursive: true });
+    mkdirSync(data);
+    mkdirSync(join(root, "pipeline"));
+    mkdirSync(join(root, "data"));
+    copyFileSync(join(project, "handlingsvagen", "pipeline", "scripts", "koppling-peka-om.mts"), join(scripts, "koppling-peka-om.mts"));
+    symlinkSync(join(project, "handlingsvagen", "pipeline", "src"), join(root, "handlingsvagen", "pipeline", "src"), "dir");
+    symlinkSync(join(project, "pipeline", "src"), join(root, "pipeline", "src"), "dir");
+    copyFileSync(join(project, "data", "promises.json"), join(root, "data", "promises.json"));
+    copyFileSync(join(project, "handlingsvagen", "data", "kopplingar.json"), join(data, "kopplingar.json"));
+    const promises = JSON.parse(readFileSync(join(root, "data", "promises.json"), "utf8")) as Array<{ id: string; group_id: string | null; status: string }>;
+    const links = JSON.parse(readFileSync(join(data, "kopplingar.json"), "utf8")) as Array<{ id: string; promise_id?: string; handling_id: string; status: string; ompekad?: unknown }>;
+    const byId = new Map(promises.map((p) => [p.id, p]));
+    const occupied = new Set(links.filter((k) => k.status === "aktiv").map((k) => JSON.stringify([k.handling_id, k.promise_id])));
+    let found: { link: (typeof links)[number]; to: string } | undefined;
+    for (const link of links) {
+      if (link.status !== "aktiv" || link.ompekad) continue;
+      const source = byId.get(link.promise_id ?? "");
+      if (!source?.group_id) continue;
+      const target = promises.find((p) => p.id !== source.id && p.status === "aktiv" && p.group_id === source.group_id && !occupied.has(JSON.stringify([link.handling_id, p.id])));
+      if (target) { found = { link, to: target.id }; break; }
+    }
+    assert.ok(found, "det aktuella beståndet måste ha en giltig ompekning att prova");
+    const before = readFileSync(join(data, "kopplingar.json"), "utf8");
+    const list = join(root, "lista.txt");
+    const row = `${found.link.id}\t${found.to}\tHandlingen gäller samma dokumenterade åtagande och belägget ska följa det kvarvarande löftet.\n`;
+    writeFileSync(list, row);
+    writeFileSync(join(data, "rattelser.json"), "trasigt\n");
+    const args = ["--import", "tsx/esm", join(scripts, "koppling-peka-om.mts"), list, "--skriv"];
+    const run = () => spawnSync(process.execPath, args, { cwd: join(project, "handlingsvagen", "pipeline"), encoding: "utf8" });
+    assert.notEqual(run().status, 0, "trasig rättelselogg ska stoppa före kopplingsändring");
+    assert.equal(readFileSync(join(data, "kopplingar.json"), "utf8"), before);
+    writeFileSync(join(data, "rattelser.json"), "[]\n");
+    writeFileSync(list, row + row);
+    assert.notEqual(run().status, 0, "samma koppling två gånger ska stoppa hela listan");
+    assert.equal(readFileSync(join(data, "kopplingar.json"), "utf8"), before);
+    writeFileSync(list, row);
+    const valid = run();
+    assert.equal(valid.status, 0, valid.stderr);
+    const after = JSON.parse(readFileSync(join(data, "kopplingar.json"), "utf8")) as typeof links;
+    assert.equal(after.find((k) => k.id === found.link.id)?.promise_id, found.to);
+    const notes = JSON.parse(readFileSync(join(data, "rattelser.json"), "utf8")) as Array<{ affects: string }>;
+    assert.equal(notes.length, 1);
+    assert.match(notes[0]!.affects, new RegExp(found.link.promise_id!));
+    assert.match(notes[0]!.affects, new RegExp(found.to));
+    assert.equal(existsSync(join(data, ".datatransaktion")), false);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
