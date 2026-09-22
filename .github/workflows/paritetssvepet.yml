@@ -49,7 +49,9 @@ jobs:
         working-directory: pipeline
       - name: Kör paritetssvepet
         id: svep
-        run: pnpm paritetssvepet -- --skriv | tee /tmp/paritet.txt
+        run: |
+          set -o pipefail
+          pnpm paritetssvepet -- --skriv | tee /tmp/paritet.txt
         working-directory: pipeline
       # App-tokens lever en timme — mynta en färsk precis före pushen.
       - name: Mint fresh push token

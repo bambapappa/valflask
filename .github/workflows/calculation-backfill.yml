@@ -70,6 +70,7 @@ jobs:
           LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
           MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
         run: |
+          set -o pipefail
           FLAGS="--seed=${{ inputs.seed }} --factor=${{ inputs.factor }} --rounds=${{ inputs.rounds }}"
           if [ "${{ inputs.all }}" = "true" ]; then FLAGS="$FLAGS --all"; else FLAGS="$FLAGS --sample=${{ inputs.sample }}"; fi
           if [ "${{ inputs.dry_run }}" = "true" ]; then FLAGS="$FLAGS --dry-run"; fi
