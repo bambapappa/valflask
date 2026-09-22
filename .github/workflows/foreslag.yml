@@ -154,7 +154,13 @@ jobs:
             exit 1
           fi
       - name: Spara köns startläge
-        run: cp data/kopplingsforslag.json /tmp/ko-start.json
+        run: |
+          cp data/kopplingsforslag.json /tmp/ko-start.json
+          if [ -f data/sokta-loften.json ]; then
+            cp data/sokta-loften.json /tmp/sok-start.json
+          else
+            printf '{"poster":{}}\n' > /tmp/sok-start.json
+          fi
       - name: Förnya botens token inför push
         id: push-token
         # Botens token lever EN timme, och jobbet kan hålla på mycket längre.
@@ -294,6 +300,11 @@ jobs:
           push_delta() {
             cp data/kopplingsforslag.json /tmp/ko-resultat.json
             cp data/provade-par.json /tmp/provade-resultat.json
+            if [ -f data/sokta-loften.json ]; then
+              cp data/sokta-loften.json /tmp/sok-resultat.json
+            else
+              cp /tmp/sok-start.json /tmp/sok-resultat.json
+            fi
             fornya_token_vid_behov
             for attempt in 1 2 3 4 5; do
               # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
@@ -305,19 +316,24 @@ jobs:
                 continue
               fi
               git reset --hard "origin/$DEFAULT_BRANCH"
-              if ! (cd pipeline && node --import tsx/esm scripts/forslagsdelta-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json /tmp/provade-resultat.json); then
+              # Filen kan vara ny och ospårad på runnern; reset tar inte bort den.
+              git clean -f -- data/sokta-loften.json
+              if ! (cd pipeline && node --import tsx/esm scripts/forslagsdelta-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json /tmp/provade-resultat.json /tmp/sok-start.json /tmp/sok-resultat.json); then
                 echo "förslagsdelta kunde inte skrivas — avbryter utan commit"
                 exit 1
               fi
               git add data/kopplingsforslag.json data/provade-par.json
+              if [ -f data/sokta-loften.json ]; then git add data/sokta-loften.json; fi
               if git diff --cached --quiet; then
                 cp data/kopplingsforslag.json /tmp/ko-start.json
+                if [ -f data/sokta-loften.json ]; then cp data/sokta-loften.json /tmp/sok-start.json; fi
                 return 0
               fi
               git commit -m "data: förslagskörning via workflow (löpande)"
               if git push origin "HEAD:$DEFAULT_BRANCH"; then
                 echo "  push lyckades (försök $attempt)"
                 cp data/kopplingsforslag.json /tmp/ko-start.json
+                if [ -f data/sokta-loften.json ]; then cp data/sokta-loften.json /tmp/sok-start.json; fi
                 return 0
               fi
               echo "  push-försök $attempt misslyckades — gör om från färsk defaultgren..."
@@ -413,6 +429,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cp data/kopplingsforslag.json /tmp/ko-resultat.json
           cp data/provade-par.json /tmp/provade-resultat.json
+          if [ -f data/sokta-loften.json ]; then
+            cp data/sokta-loften.json /tmp/sok-resultat.json
+          else
+            cp /tmp/sok-start.json /tmp/sok-resultat.json
+          fi
           for attempt in 1 2 3 4 5; do
             # Hämtningen MÅSTE lyckas. Går den inte fram står vi kvar på ett
             # gammalt träd, och då blir allt efteråt fel — en misslyckad push
@@ -423,11 +444,13 @@ jobs:
               continue
             fi
             git reset --hard "origin/$DEFAULT_BRANCH"
-            if ! (cd pipeline && node --import tsx/esm scripts/forslagsdelta-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json /tmp/provade-resultat.json); then
+            git clean -f -- data/sokta-loften.json
+            if ! (cd pipeline && node --import tsx/esm scripts/forslagsdelta-uppdatera.mts /tmp/ko-start.json /tmp/ko-resultat.json /tmp/provade-resultat.json /tmp/sok-start.json /tmp/sok-resultat.json); then
               echo "förslagsdelta kunde inte skrivas — avbryter utan commit"
               exit 1
             fi
             git add data/kopplingsforslag.json data/provade-par.json
+            if [ -f data/sokta-loften.json ]; then git add data/sokta-loften.json; fi
             if git diff --cached --quiet; then
               echo "Inget nytt att committa."
               exit 0
