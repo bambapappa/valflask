@@ -157,3 +157,12 @@ test("huvudgrenens skörd förmedlar konfigurerade HTTP-huvuden till alla LLM-le
   assert.equal(env.LLM_FALLBACK_HUVUDEN, "${{ vars.LLM_FALLBACK_HUVUDEN }}");
   assert.equal(env.LLM_ZAI_HUVUDEN, "${{ vars.LLM_ZAI_HUVUDEN }}");
 });
+
+test("Handlingsvågens förslagskörning förmedlar sessionshuvud för vald primär", () => {
+  const dok = parseYaml(readFileSync(join(WORKFLOWS, "foreslag.yml"), "utf8")) as unknown;
+  const env = envBlock(dok).find((block) => block.MODEL_KOPPLING !== undefined && block.LOFTE !== undefined);
+  assert.ok(env, "hittade inte förslagskörningens LLM-miljö");
+  assert.match(String(env.LLM_HUVUDEN), /vars\.LLM_HUVUDEN/u);
+  assert.match(String(env.LLM_HUVUDEN), /vars\.LLM_ZAI_HUVUDEN/u);
+  assert.match(String(env.LLM_FALLBACK_HUVUDEN), /vars\.LLM_FALLBACK_HUVUDEN/u);
+});
