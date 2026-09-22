@@ -13,12 +13,14 @@
  * Rader som börjar med # är kommentarer.
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { avvisaForslag, findIndexByKopplingId, GranskningsFel, type KoPost } from "../src/granskning.ts";
+import { lasKopplingslage, skrivKopplingsbeslut } from "../src/kopplingsskrivning.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
-const koPath = resolve(rot, "data/kopplingsforslag.json");
+const dataDir = resolve(rot, "data");
+const koPath = resolve(dataDir, "kopplingsforslag.json");
 
 const [listfil] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const skriv = process.argv.includes("--skriv");
@@ -36,7 +38,8 @@ const rader = readFileSync(resolve(listfil), "utf8")
     return { id: (id ?? "").trim(), skal: rest.join("\t").trim() };
   });
 
-let ko: KoPost[] = JSON.parse(readFileSync(koPath, "utf8"));
+const { fore: filfore, ko: koVidStart, kopplingar } = lasKopplingslage(dataDir);
+let ko: KoPost[] = koVidStart;
 const fore = ko.length;
 const fel: string[] = [];
 for (const { id, skal } of rader) {
@@ -66,9 +69,11 @@ if (fel.length > 0) {
   console.error("Inget skrivet — rätta listan och kör om.");
   process.exit(1);
 }
-if (skriv) {
-  writeFileSync(koPath, JSON.stringify(ko, null, 2) + "\n");
+if (skriv && rader.length > 0) {
+  skrivKopplingsbeslut(dataDir, filfore, ko, kopplingar);
   console.log(`skrivet: ${koPath} (${ko.length} kvar)`);
+} else if (skriv) {
+  console.log("tom lista — inget skrivet.");
 } else {
   console.log("torrkörning — lägg till --skriv för att verkställa.");
 }
