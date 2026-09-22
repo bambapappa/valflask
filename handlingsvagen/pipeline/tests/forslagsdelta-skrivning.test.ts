@@ -93,6 +93,23 @@ test("både pushloop och salvage använder ett enda stoppande förslagsdelta", (
   assert.doesNotMatch(workflow, /scripts\/(?:ko|provade)-uppdatera\.mts/u);
 });
 
+test("pushloop och salvage avbryter om Git-förberedelse eller diffkontroll faller", () => {
+  const workflow = readFileSync(resolve(import.meta.dirname, "../../../.github/workflows/foreslag.yml"), "utf8");
+  const start = workflow.indexOf("push_delta() {");
+  const salvage = workflow.indexOf("name: Committa kön (slutlig salvage av sista löftet)", start);
+  assert.ok(start >= 0);
+  assert.ok(salvage > start);
+  const delar = [workflow.slice(start, salvage), workflow.slice(salvage)];
+  for (const del of delar) {
+    assert.match(del, /git reset --hard "origin\/\$DEFAULT_BRANCH" \|\| (?:return|exit) 1/u);
+    assert.match(del, /git clean -f -- data\/sokta-loften\.json \|\| (?:return|exit) 1/u);
+    assert.match(del, /git add data\/kopplingsforslag\.json data\/provade-par\.json \|\| (?:return|exit) 1/u);
+    assert.match(del, /git add data\/sokta-loften\.json \|\| (?:return|exit) 1/u);
+    assert.match(del, /if \[ "\$diff_rc" -ne 1 \]; then.*(?:return|exit) 1/u);
+    assert.match(del, /git commit -m "data: förslagskörning via workflow(?: \(löpande\))?" \|\| (?:return|exit) 1/u);
+  }
+});
+
 test("färskare sökmätning bevaras när samma post ändrats efter körningens start", () => {
   const start: Sokregister = { poster: { "p-x": { senast: "2026-09-21", kandidater: 1 } } };
   const resultat: Sokregister = { poster: {
