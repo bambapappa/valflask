@@ -999,6 +999,7 @@ export class LiveSource implements ArticleSource {
   private robotsPagaende: Map<string, Promise<RobotsRule[]>>;
   private stats: Map<string, number>;
   private feedOutcomes: Feedhamtning[];
+  private feedIssues: Map<string, Array<{ url: string; error: string }>>;
   /**
    * Adresserna körningen ska begränsas till, eller null för alla.
    *
@@ -1038,6 +1039,7 @@ export class LiveSource implements ArticleSource {
     this.robotsPagaende = new Map();
     this.stats = new Map();
     this.feedOutcomes = [];
+    this.feedIssues = new Map();
   }
 
   getStats(): Map<string, number> {
@@ -1045,13 +1047,20 @@ export class LiveSource implements ArticleSource {
   }
 
   getFeedOutcomes(): Feedhamtning[] {
-    return this.feedOutcomes.map((f) => ({ ...f }));
+    return this.feedOutcomes.map((f) => ({ ...f, ...(f.failures ? { failures: f.failures.map((x) => ({ ...x })) } : {}) }));
+  }
+
+  private noteFeedIssue(feedId: string, url: string, cause: unknown): void {
+    const issues = this.feedIssues.get(feedId) ?? [];
+    issues.push({ url, error: (cause instanceof Error ? cause.message : String(cause)).slice(0, 500) });
+    this.feedIssues.set(feedId, issues);
   }
 
   async fetch(): Promise<NormalizedArticle[]> {
     const articles: NormalizedArticle[] = [];
     this.stats.clear();
     this.feedOutcomes = [];
+    this.feedIssues.clear();
     const etagCache = loadEtagCache(this.cacheDir);
 
     // Hämta ALLA feeds (ingen global kapning här). Annars äter feeds högt upp i
@@ -1081,7 +1090,9 @@ export class LiveSource implements ArticleSource {
         }
 
         this.stats.set(feed.id, feedArticles.length);
-        this.feedOutcomes.push({ id: feed.id, type: feed.type, fetched: feedArticles.length, accepted, status: "ok" });
+        const failures = this.feedIssues.get(feed.id) ?? [];
+        this.feedOutcomes.push({ id: feed.id, type: feed.type, fetched: feedArticles.length, accepted,
+          status: failures.length ? "partial" : "ok", ...(failures.length ? { failures } : {}) });
       } catch (e) {
         const error = (e instanceof Error ? e.message : String(e)).slice(0, 500);
         console.error(`[fetch] feed ${feed.id} failed: ${error}`);
@@ -1175,6 +1186,7 @@ export class LiveSource implements ArticleSource {
             contentHash: sha256(text),
           };
         } catch (e) {
+          this.noteFeedIssue(feedId, lank, e);
           console.error(
             `[fetch] ${feedId}: ${ordet} ${lank} föll: ${e instanceof Error ? e.message : e}`,
           );
@@ -1340,6 +1352,7 @@ export class LiveSource implements ArticleSource {
             djupare.add(l);
           }
         } catch (e) {
+          this.noteFeedIssue(feed.id, gren, e);
           console.error(
             `[fetch] ${feed.id}: grenen ${gren} föll: ${e instanceof Error ? e.message : e}`,
           );
@@ -1461,6 +1474,7 @@ export class LiveSource implements ArticleSource {
           skipStale: true,
         }));
       } catch (e) {
+        this.noteFeedIssue(feed.id, pdfUrl, e);
         console.error(`[fetch] följd PDF ${pdfUrl} failed: ${e instanceof Error ? e.message : e}`);
       }
     }

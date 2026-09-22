@@ -11,8 +11,9 @@ export interface Feedhamtning {
   type: string;
   fetched: number;
   accepted: number;
-  status: "ok" | "failed";
+  status: "ok" | "partial" | "failed";
   error?: string;
+  failures?: Array<{ url: string; error: string }>;
 }
 
 export interface Kormatning extends Artikelmatning {
@@ -36,24 +37,27 @@ export function korutfall(m: Kormatning): "klar" | "delvis" | "misslyckad" {
   for (const f of feeds) {
     if (!f.id || !Number.isSafeInteger(f.fetched) || f.fetched < 0 ||
         !Number.isSafeInteger(f.accepted) || f.accepted < 0 || f.accepted > f.fetched ||
-        (f.status !== "ok" && f.status !== "failed") ||
+        (f.status !== "ok" && f.status !== "partial" && f.status !== "failed") ||
+        (f.status === "partial" && !f.failures?.length) ||
+        (f.status === "ok" && !!f.failures?.length) ||
+        (f.failures?.some((x) => !x.url || !x.error) ?? false) ||
         (f.status === "failed" && (f.fetched !== 0 || f.accepted !== 0 || !f.error))) {
       throw new Error("Ogiltig källhämtning");
     }
   }
-  const falleradeFeeds = feeds.filter((f) => f.status === "failed").length;
-  if (m.failed === 0 && falleradeFeeds === 0) return "klar";
-  if (m.succeeded === 0 && (m.failed > 0 || (feeds.length > 0 && falleradeFeeds === feeds.length))) {
+  const problemFeeds = feeds.filter((f) => f.status !== "ok").length;
+  if (m.failed === 0 && problemFeeds === 0) return "klar";
+  if (m.succeeded === 0 && (m.failed > 0 || (feeds.length > 0 && feeds.every((f) => f.status === "failed")))) {
     return "misslyckad";
   }
   return "delvis";
 }
 
 export function sammanfattaKorning(m: Kormatning): string {
-  const falleradeFeeds = (m.feedOutcomes ?? []).filter((f) => f.status === "failed");
+  const problemFeeds = (m.feedOutcomes ?? []).filter((f) => f.status !== "ok");
   return `Omgång ${korutfall(m)}: ${m.attempted} artiklar, ${m.succeeded} lyckade, ` +
-    `${m.failed} artikelfel, ${falleradeFeeds.length} källflödesfel` +
-    (falleradeFeeds.length ? ` (${falleradeFeeds.map((f) => f.id).join(", ")})` : "") +
+    `${m.failed} artikelfel, ${problemFeeds.length} källflödesfel` +
+    (problemFeeds.length ? ` (${problemFeeds.map((f) => f.id).join(", ")})` : "") +
     `, ${m.reviewCandidates} löfteskandidater till granskning, ` +
     `${m.publishedAdded} nya publicerade löften. ` +
     `Bestånd: ${m.publishedTotal} löften; kö: ${m.queuedTotal} poster.`;

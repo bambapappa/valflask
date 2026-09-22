@@ -440,6 +440,7 @@ describe("LiveSource med mock-HTTP", () => {
     const articles = await source.fetch();
     assert.equal(articles.length, 0, "304 = inga nya artiklar");
     assert.equal(callCount, 1, "En request för feeden");
+    assert.equal(source.getFeedOutcomes()[0]!.status, "ok", "cacheträff är inte källfel");
   });
 
   test("kapar INTE på fetch-nivå — budgeten ligger i runPipeline (maxNewArticles)", async () => {
@@ -1044,6 +1045,13 @@ describe("LiveSource med mock-HTTP", () => {
     const articles = await source.fetch();
     assert.equal(articles.length, 1, "den hela artikeln kom med");
     assert.ok(articles[0]!.url.endsWith("2026-08-03-funkar"));
+    const outcome = source.getFeedOutcomes()[0]!;
+    assert.equal(outcome.status, "partial");
+    assert.equal(outcome.fetched, 1);
+    assert.deepEqual(outcome.failures, [{
+      url: "https://testpartiet.se/nyheter/2026-08-02-trasig",
+      error: "HTTP 500 for https://testpartiet.se/nyheter/2026-08-02-trasig",
+    }]);
   });
 
   test("page-källa auto-följer manifest-PDF länkad från sidan", async () => {

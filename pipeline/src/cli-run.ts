@@ -395,10 +395,10 @@ export async function koraPipeline(ctx: PipelineContext): Promise<void> {
   }
 
   if (korutfall(result.runStats) !== "klar") {
-    const feedFailures = (result.runStats.feedOutcomes ?? []).filter((f) => f.status === "failed");
+    const feedFailures = (result.runStats.feedOutcomes ?? []).filter((f) => f.status !== "ok");
     throw new Error(
       `${result.runStats.failed} av ${result.runStats.attempted} artiklar misslyckades. ` +
-      `${feedFailures.length} källflöden misslyckades${feedFailures.length ? ` (${feedFailures.map((f) => f.id).join(", ")})` : ""}. ` +
+      `${feedFailures.length} källflöden hade fel${feedFailures.length ? ` (${feedFailures.map((f) => f.id).join(", ")})` : ""}. ` +
       "Artikelfelen är fortfarande osedda och behöver provas igen. Delresultat finns i körningens arbetskatalog.",
     );
   }
