@@ -109,9 +109,11 @@ jobs:
         working-directory: pipeline
         env:
           LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          LLM_HUVUDEN: ${{ vars.LLM_HUVUDEN }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           LLM_FALLBACK_BASE_URL: ${{ vars.LLM_FALLBACK_BASE_URL || secrets.LLM_FALLBACK_BASE_URL }}
+          LLM_FALLBACK_HUVUDEN: ${{ vars.LLM_FALLBACK_HUVUDEN }}
           LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
           # Kedjan är tre led, och varje led bär sin egen adress, sin egen
           # nyckel och sina EGNA modellnamn. Leverantörerna har olika
@@ -131,6 +133,7 @@ jobs:
           MODEL_COPY_FALLBACK: ${{ vars.MODEL_COPY_FALLBACK }}
           MODEL_KOSTNAD_FALLBACK: ${{ vars.MODEL_KOSTNAD_FALLBACK }}
           LLM_ZAI_BASE_URL: ${{ vars.LLM_ZAI_BASE_URL }}
+          LLM_ZAI_HUVUDEN: ${{ vars.LLM_ZAI_HUVUDEN }}
           LLM_ZAI_API_KEY: ${{ secrets.LLM_ZAI_API_KEY }}
           MODEL_EXTRACT_ZAI: ${{ vars.MODEL_EXTRACT_ZAI }}
           MODEL_VERIFY_ZAI: ${{ vars.MODEL_VERIFY_ZAI }}

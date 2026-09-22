@@ -148,3 +148,12 @@ test("läsaren hittar env-block hur djupt de än ligger", () => {
   assert.equal(block.length, 1);
   assert.equal(block[0]!.LLM_BASE_URL, "u");
 });
+
+test("huvudgrenens skörd förmedlar konfigurerade HTTP-huvuden till alla LLM-led", () => {
+  const dok = parseYaml(readFileSync(join(WORKFLOWS, "pipeline.yml"), "utf8")) as unknown;
+  const env = envBlock(dok).find((block) => block.MODEL_EXTRACT === "${{ vars.MODEL_EXTRACT }}");
+  assert.ok(env, "hittade inte skördens LLM-miljö");
+  assert.equal(env.LLM_HUVUDEN, "${{ vars.LLM_HUVUDEN }}");
+  assert.equal(env.LLM_FALLBACK_HUVUDEN, "${{ vars.LLM_FALLBACK_HUVUDEN }}");
+  assert.equal(env.LLM_ZAI_HUVUDEN, "${{ vars.LLM_ZAI_HUVUDEN }}");
+});
