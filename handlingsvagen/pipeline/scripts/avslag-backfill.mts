@@ -18,12 +18,10 @@
  * Hämtningarna cachas i data/.kallcache/ (delad med ko-kontrollera).
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { avslagsbeslut } from "../src/grindar.ts";
 import { hamtaAvslagsunderlag } from "../src/avslagsunderlag.ts";
-import type { KopplingPost } from "../src/granskning.ts";
-import type { Handling } from "../src/handlingar.ts";
+import { lasAvslagsbackfill, skrivAvslagsbackfill } from "../src/avslagsbackfill-skrivning.ts";
 import {
   fetchMotionDokId,
   fetchUtskottspunkter,
@@ -32,14 +30,14 @@ import {
 import { cachat, politeFetch } from "./kallcache.mts";
 
 const rot = resolve(import.meta.dirname, "../..");
-const kopplingarPath = resolve(rot, "data/kopplingar.json");
+const dataDir = resolve(rot, "data");
+const kopplingarPath = resolve(dataDir, "kopplingar.json");
 
 const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 const bara = argv.includes("--koppling") ? argv[argv.indexOf("--koppling") + 1] : undefined;
 
-const kopplingar: KopplingPost[] = JSON.parse(readFileSync(kopplingarPath, "utf8"));
-const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
+const { fore, kopplingar, handlingar } = lasAvslagsbackfill(dataDir);
 const hById = new Map(handlingar.map((h) => [h.id, h]));
 
 const behover = kopplingar.filter(
@@ -91,9 +89,11 @@ if (fel.length > 0) {
   console.error("Inget skrivet — rätta felen och kör om.");
   process.exit(1);
 }
-if (skriv) {
-  writeFileSync(kopplingarPath, JSON.stringify(kopplingar, null, 2) + "\n");
+if (skriv && fyllda > 0) {
+  skrivAvslagsbackfill(dataDir, fore, kopplingar);
   console.log(`skrivet: ${kopplingarPath}`);
+} else if (skriv) {
+  console.log("inga ändringar — inget skrivet.");
 } else {
   console.log("torrkörning — lägg till --skriv för att verkställa.");
 }
