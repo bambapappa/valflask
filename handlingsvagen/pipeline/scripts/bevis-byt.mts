@@ -25,7 +25,7 @@
  * Faller en enda rad skrivs ingenting. En halv verkställighet syns inte.
  */
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
 import {
@@ -42,9 +42,11 @@ import { normalizeForVerbatim } from "../src/grindar.ts";
 import { cachat, politeFetch } from "./kallcache.mts";
 import { kanon, lasProvningar } from "../../../pipeline/src/provningar.ts";
 import { svenskDag } from "../../../pipeline/src/dagen.ts";
+import { lasKopplingsrattelselage, skrivKopplingsrattelse } from "../src/kopplingsrattelse.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const rotData = resolve(rot, "../data");
+const dataDir = resolve(rot, "data");
 const kopplingarPath = resolve(rot, "data/kopplingar.json");
 const rattelserPath = resolve(rot, "data/rattelser.json");
 
@@ -69,7 +71,7 @@ const byten: Byte[] = readFileSync(resolve(listfil), "utf8")
     };
   });
 
-const kopplingar: KopplingPost[] = JSON.parse(readFileSync(kopplingarPath, "utf8"));
+const { fore: filfore, kopplingar, rattelser } = lasKopplingsrattelselage(dataDir);
 const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
 
 const punktCache = new Map<string, Utskottspunkt[]>();
@@ -212,9 +214,6 @@ const inaktuella = gjorda
   .map(({ koppling }) => koppling.id);
 
 const nyaKopplingar = kopplingar.map((k) => uppdaterade.get(k.id) ?? k);
-const rattelser: unknown[] = existsSync(rattelserPath)
-  ? JSON.parse(readFileSync(rattelserPath, "utf8"))
-  : [];
 const post = rattelsePost(gjorda, datum);
 
 // Bär motiveringen spår av att NUVARANDE citat valdes av en människa, med
@@ -247,8 +246,7 @@ if (!skriv) {
   process.exit(0);
 }
 
-writeFileSync(kopplingarPath, JSON.stringify(nyaKopplingar, null, 2) + "\n");
-writeFileSync(rattelserPath, JSON.stringify([...rattelser, post], null, 2) + "\n");
+skrivKopplingsrattelse(dataDir, filfore, nyaKopplingar, [...rattelser, post]);
 console.log(`\nskrivet: ${kopplingarPath}, ${rattelserPath}`);
 console.log(
   "Kvar att göra för hand:\n" +

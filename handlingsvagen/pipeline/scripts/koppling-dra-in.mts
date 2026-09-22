@@ -21,9 +21,8 @@
  * **Faller en enda rad skrivs ingenting.** En halvt verkställd genomgång är
  * värre än ingen: rutnätet visar då ett läge ingen har beslutat om.
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import type { KopplingPost } from "../src/granskning.ts";
 import {
   provaIndragning,
   draIn,
@@ -31,6 +30,7 @@ import {
   type Indragningsrad,
 } from "../src/indragning.ts";
 import { svenskDag } from "../../../pipeline/src/dagen.ts";
+import { lasKopplingsrattelselage, skrivKopplingsrattelse } from "../src/kopplingsrattelse.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
@@ -64,8 +64,8 @@ if (rader.length === 0) {
   process.exit(1);
 }
 
-const kopplingarPath = resolve(rot, "data/kopplingar.json");
-const kopplingar: KopplingPost[] = JSON.parse(readFileSync(kopplingarPath, "utf8"));
+const dataDir = resolve(rot, "data");
+const { fore: filfore, kopplingar, rattelser } = lasKopplingsrattelselage(dataDir);
 const perId = new Map(kopplingar.map((k) => [k.id, k]));
 
 const fel: string[] = [];
@@ -114,13 +114,7 @@ const nya = kopplingar.map((k) => {
   if (k.promise_id) berorda.add(k.promise_id);
   return draIn(k, rad.skal, datum);
 });
-writeFileSync(kopplingarPath, JSON.stringify(nya, null, 2) + "\n");
-
 /** En rättelsepost för hela genomgången — rättelser samlas. */
-const rattelserPath = resolve(rot, "data/rattelser.json");
-const rattelser: unknown[] = existsSync(rattelserPath)
-  ? JSON.parse(readFileSync(rattelserPath, "utf8"))
-  : [];
 rattelser.push({
   date: datum,
   affects:
@@ -142,7 +136,7 @@ rattelser.push({
       "kallat den en handling. Bedömningen av de kopplingar som står kvar är oförändrad.",
   commit: "0000000",
 });
-writeFileSync(rattelserPath, JSON.stringify(rattelser, null, 2) + "\n");
+skrivKopplingsrattelse(dataDir, filfore, nya, rattelser);
 
 console.log(`\nSkrivet: data/kopplingar.json — ${rader.length} kopplingar tillbakadragna`);
 console.log("Skrivet: data/rattelser.json — en post för hela genomgången");
