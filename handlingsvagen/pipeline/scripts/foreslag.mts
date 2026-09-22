@@ -22,7 +22,7 @@ import { resolve } from "node:path";
 import { fetchDokumentText, fetchUtskottspunkter, fetchYrkanden, type HttpFetch, type Utskottspunkt, type Yrkande } from "../src/riksdagen.ts";
 import type { Betankande } from "../src/betankanden.ts";
 import type { Handling } from "../src/handlingar.ts";
-import { OpenRouterClient } from "../src/llm.ts";
+import { OpenRouterClient, tolkaLlmHuvuden } from "../src/llm.ts";
 import { rankaKandidater, rankaVoteringsKandidater, skapaForslag, type Lofte, type TermIndex } from "../src/foreslag.ts";
 import { dokumentfrekvenser, slaIhopSkarvor, type Skarva } from "../src/nyckelord.ts";
 import { LAGE_A_FONSTER, type KopplingsForslag } from "../src/grindar.ts";
@@ -184,9 +184,13 @@ async function main() {
     model = process.env["MODEL_KOPPLING"] ?? "";
     if (!apiKey || !model) throw new Error("LLM_API_KEY (eller OPENROUTER_API_KEY) och MODEL_KOPPLING krävs (eller kör --dry-run)");
     const fallbackModel = process.env["MODEL_KOPPLING_FALLBACK"];
+    const huvuden = tolkaLlmHuvuden(process.env["LLM_HUVUDEN"], "LLM_HUVUDEN");
+    const fallbackHuvuden = tolkaLlmHuvuden(process.env["LLM_FALLBACK_HUVUDEN"], "LLM_FALLBACK_HUVUDEN");
     llm = new OpenRouterClient({
       apiKey,
       ...(baseUrl ? { baseUrl } : {}),
+      ...(huvuden ? { huvuden } : {}),
+      ...(fallbackHuvuden ? { fallbackHuvuden } : {}),
       ...(process.env["LLM_FALLBACK_BASE_URL"] ? { fallbackBaseUrl: process.env["LLM_FALLBACK_BASE_URL"] } : {}),
       ...(process.env["LLM_FALLBACK_API_KEY"] ? { fallbackApiKey: process.env["LLM_FALLBACK_API_KEY"] } : {}),
       ...(fallbackModel ? { fallbackModelMap: { [model]: fallbackModel } } : {}),

@@ -4,6 +4,8 @@
  * backoff, throttle och primär→fallback-endpoint med modell per endpoint.
  */
 
+import { randomBytes } from "node:crypto";
+
 export interface LlmOptions {
   systemPrompt?: string;
   temperature?: number;
@@ -18,6 +20,30 @@ export interface LlmClient {
 }
 
 type HttpFetch = (url: string, init?: RequestInit) => Promise<Response>;
+
+/** Samma variabelformat som huvudskörden: ett HTTP-huvud per rad. */
+export function tolkaLlmHuvuden(varde: string | undefined, variabel: string): Record<string, string> | undefined {
+  if (!varde) return undefined;
+  const ut: Record<string, string> = {};
+  for (const rad of varde.split("\n")) {
+    if (!rad.trim()) continue;
+    const delare = rad.indexOf(":");
+    if (delare <= 0 || !rad.slice(0, delare).trim() || !rad.slice(delare + 1).trim()) {
+      throw new Error(`${variabel}: ange ett HTTP-huvud per rad som namn: värde`);
+    }
+    ut[rad.slice(0, delare).trim()] = rad.slice(delare + 1).trim();
+  }
+  return Object.keys(ut).length ? ut : undefined;
+}
+
+function kontrolleraHuvuden(huvuden: Record<string, string> | undefined): Record<string, string> | undefined {
+  for (const [namn, varde] of Object.entries(huvuden ?? {})) {
+    if (!/^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/u.test(namn) || /^(authorization|content-type)$/iu.test(namn) || /[\r\n]/u.test(varde)) {
+      throw new Error(`Ogiltigt eller skyddat LLM-huvud: ${namn}`);
+    }
+  }
+  return huvuden;
+}
 
 /** Tolkar Retry-After (sekunder eller HTTP-datum) till ms, kapat. */
 function parseRetryAfterMs(h: string | null, capMs: number): number | null {
@@ -35,6 +61,9 @@ export class OpenRouterClient implements LlmClient {
   private fallbackBaseUrl: string | undefined;
   private fallbackApiKey: string | undefined;
   private fallbackModelMap: Record<string, string>;
+  private huvuden: Record<string, string> | undefined;
+  private fallbackHuvuden: Record<string, string> | undefined;
+  private korningsId = randomBytes(8).toString("hex");
   private timeoutMs: number;
   private maxRetries: number;
   private baseDelayMs: number;
@@ -77,6 +106,9 @@ export class OpenRouterClient implements LlmClient {
     baseUrl?: string;
     fallbackBaseUrl?: string;
     fallbackApiKey?: string;
+    /** Extra HTTP-huvuden per endpoint; {körning} byts mot klientens id. */
+    huvuden?: Record<string, string>;
+    fallbackHuvuden?: Record<string, string>;
     /**
      * Översätter primärmodell-ID (OpenRouters leverantör/modell-slug) till
      * fallback-endpointens eget modell-ID (t.ex. OpenCode Zens namn). Samma
@@ -134,6 +166,8 @@ export class OpenRouterClient implements LlmClient {
     this.baseUrl = opts.baseUrl ?? "https://openrouter.ai/api/v1";
     this.fallbackBaseUrl = opts.fallbackBaseUrl;
     this.fallbackApiKey = opts.fallbackApiKey;
+    this.huvuden = kontrolleraHuvuden(opts.huvuden);
+    this.fallbackHuvuden = kontrolleraHuvuden(opts.fallbackHuvuden);
     this.fallbackModelMap = opts.fallbackModelMap ?? {};
     this.timeoutMs = opts.timeoutMs ?? 90_000;
     this.maxRetries = opts.maxRetries ?? 4;
@@ -226,12 +260,13 @@ export class OpenRouterClient implements LlmClient {
     // Namnet står med i varje felrad. Utan det är två led mot samma adress
     // omöjliga att skilja åt i loggen — felet läses då som att en och samma
     // endpoint svarat två gånger, i stället för att reserven hoppats över.
-    const endpoints: Array<{ namn: string; url: string; key: string; model: string }> = [
+    const endpoints: Array<{ namn: string; url: string; key: string; model: string; huvuden?: Record<string, string> }> = [
       {
         namn: "primär",
         url: `${this.baseUrl}/chat/completions`,
         key: this.apiKey,
         model: primaryModel,
+        ...(this.huvuden ? { huvuden: this.huvuden } : {}),
       },
     ];
     if (this.fallbackBaseUrl && this.fallbackApiKey) {
@@ -240,6 +275,7 @@ export class OpenRouterClient implements LlmClient {
         url: `${this.fallbackBaseUrl}/chat/completions`,
         key: this.fallbackApiKey,
         model: this.fallbackModelMap[primaryModel] ?? primaryModel,
+        ...(this.fallbackHuvuden ? { huvuden: this.fallbackHuvuden } : {}),
       });
     }
 
@@ -268,6 +304,8 @@ export class OpenRouterClient implements LlmClient {
           const res = await this.httpFetch(ep.url, {
             method: "POST",
             headers: {
+              ...Object.fromEntries(Object.entries(ep.huvuden ?? {}).map(([namn, varde]) =>
+                [namn, varde.replaceAll("{körning}", this.korningsId)])),
               "Content-Type": "application/json",
               Authorization: `Bearer ${ep.key}`,
             },
