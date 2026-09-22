@@ -6008,5 +6008,84 @@
       }
     ],
     "verifyReason": "Citatet nämner inte specifikt nettonollmålet 2045 eller att det ska ligga fast, utan säger bara allmänt att klimatmålen ska nås, vilket kräver tolkning för att bli ett besked i frågan."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "villkorat",
+      "condition_note": "S vill stoppa läckage av resurser till skolkoncerner, finansierat genom att överkompensationen tas bort och statsbidrag görs om till sektorsbidrag.",
+      "quote": "Därför vill vi se små klasser för små barn i lågstadiet, samtidigt som vi stoppar läckaget av resurser till skolkoncerner",
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "partiledare"
+      }
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-05-01-s-gar-till-val-pa-smaskolereform-med-sma-klasser-for-sma-barn",
+    "articleTitle": "S går till val på småskolereform med små klasser för små barn\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-05-01-s-gar-till-val-pa-smaskolereform-med-sma-klasser-for-sma-barn",
+    "archiveUrl": null,
+    "dateStated": "2026-05-01",
+    "extractModel": "glm-5.3-flash",
+    "verifyModel": "muse-spark-1.3-contributor",
+    "runId": "run-2026-09-22-19-43",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet talar bara om att 'stoppa läckaget av resurser till skolkoncerner' utan att nämna vinstutdelning eller lagstiftning — textens egen förklaring är finansieringsreformer (borttagen överkompensation, sektorsbidrag), inte förbud eller begränsning av vinstutdelning i lag — så varken avgränsningen besvaras eller 'villkorat' härledas ur citatet ensamt."
+      }
+    ],
+    "verifyReason": "Citatet talar bara om att 'stoppa läckaget av resurser till skolkoncerner' utan att nämna vinstutdelning eller lagstiftning — textens egen förklaring är finansieringsreformer (borttagen överkompensation, sektorsbidrag), inte förbud eller begränsning av vinstutdelning i lag — så varken avgränsningen besvaras eller 'villkorat' härledas ur citatet ensamt."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Dessutom ska vi ha lagstiftning på plats om att skolans pengar ska stanna i skolan genom ett totalförbud mot värdeöverföringar.",
+      "person": {
+        "name": "Magdalena Andersson",
+        "role": "partiledare, Socialdemokraterna"
+      }
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-09-10-socialdemokraternas-plan-for-att-vanda-skolresultaten",
+    "articleTitle": "Socialdemokraternas plan för att vända skolresultaten\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/nyheter/nyheter/2026-09-10-socialdemokraternas-plan-for-att-vanda-skolresultaten",
+    "archiveUrl": null,
+    "dateStated": "2026-09-10",
+    "extractModel": "glm-5.3-flash",
+    "verifyModel": "muse-spark-1.3-contributor",
+    "runId": "run-2026-09-22-19-43",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-energi-karnkraft",
+      "party": "mp",
+      "position": "nej",
+      "condition_note": null,
+      "quote": "Inte bygga ny kärnkraft i Sverige. Ny kärnkraft innebär stora kostnader, långa byggtider och omfattande ekonomiska risker för skattebetalarna.",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/karnkraft/",
+    "articleTitle": "Miljöpartiets energipolitik",
+    "sourceUrl": "https://www.mp.se/politik/karnkraft/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-23",
+    "extractModel": "glm-5.3-flash",
+    "verifyModel": "muse-spark-1.3-contributor",
+    "runId": "run-2026-09-22-19-43",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
