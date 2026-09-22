@@ -18,11 +18,11 @@
  * **Faller en enda rad skrivs ingenting.** En halvt verkställd genomgång
  * lämnar rutnätet i ett läge ingen har beslutat om.
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import type { KopplingPost } from "../src/granskning.ts";
 import { bytMotivering, provaMotivering, rattelsePost, type Motiveringsrad } from "../src/motiveringsbyte.ts";
 import { svenskDag } from "../../../pipeline/src/dagen.ts";
+import { lasKopplingsrattelselage, skrivKopplingsrattelse } from "../src/kopplingsrattelse.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
@@ -51,8 +51,8 @@ if (rader.length === 0) {
   process.exit(1);
 }
 
-const kopplingarPath = resolve(rot, "data/kopplingar.json");
-const kopplingar: KopplingPost[] = JSON.parse(readFileSync(kopplingarPath, "utf8"));
+const dataDir = resolve(rot, "data");
+const { fore, kopplingar, rattelser } = lasKopplingsrattelselage(dataDir);
 const perId = new Map(kopplingar.map((k) => [k.id, k]));
 
 const fel: string[] = [];
@@ -95,14 +95,10 @@ const nya = kopplingar.map((k) => {
   if (k.promise_id) loften.add(k.promise_id);
   return bytMotivering(k, rad);
 });
-writeFileSync(kopplingarPath, JSON.stringify(nya, null, 2) + "\n");
-
-const rattelserPath = resolve(rot, "data/rattelser.json");
-const rattelser: unknown[] = existsSync(rattelserPath)
-  ? JSON.parse(readFileSync(rattelserPath, "utf8"))
-  : [];
-rattelser.push(rattelsePost(rader, [...loften].sort(), datum, varfor));
-writeFileSync(rattelserPath, JSON.stringify(rattelser, null, 2) + "\n");
+skrivKopplingsrattelse(dataDir, fore, nya, [
+  ...rattelser,
+  rattelsePost(rader, [...loften].sort(), datum, varfor),
+]);
 
 console.log(`\nSkrivet: data/kopplingar.json — ${rader.length} motiveringar omskrivna`);
 console.log("Skrivet: data/rattelser.json — en post för hela genomgången");

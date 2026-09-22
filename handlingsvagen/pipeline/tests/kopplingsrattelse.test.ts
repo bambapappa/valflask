@@ -60,3 +60,33 @@ test("verkligt dra-in-kommando skriver offentlig koppling och rättelselogg till
     assert.equal(existsSync(join(data, ".datatransaktion")), false);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
+
+test("verkligt motiveringskommando rättar båda filerna och stoppar trasig rättelselogg", () => {
+  const root = mkdtempSync(join(tmpdir(), "koppling-motivering-cli-"));
+  try {
+    const project = resolve(import.meta.dirname, "../../..");
+    const scripts = join(root, "handlingsvagen", "pipeline", "scripts");
+    const data = join(root, "handlingsvagen", "data");
+    mkdirSync(scripts, { recursive: true });
+    mkdirSync(data);
+    mkdirSync(join(root, "pipeline"));
+    copyFileSync(join(project, "handlingsvagen", "pipeline", "scripts", "koppling-motivering.mts"), join(scripts, "koppling-motivering.mts"));
+    symlinkSync(join(project, "handlingsvagen", "pipeline", "src"), join(root, "handlingsvagen", "pipeline", "src"), "dir");
+    symlinkSync(join(project, "pipeline", "src"), join(root, "pipeline", "src"), "dir");
+    const original = JSON.stringify([{ ...link, bevis: { citat: "Motionen kräver samma åtgärd." }, method_note: "Gammal motivering." }]) + "\n";
+    writeFileSync(join(data, "kopplingar.json"), original);
+    writeFileSync(join(data, "rattelser.json"), "trasigt\n");
+    const list = join(root, "lista.txt");
+    writeFileSync(list, `${link.id}\tMotionen föreslår samma åtgärd som löftet beskriver.\tDen äldre motiveringen förklarade inte citatet.\n`);
+    const args = ["--import", "tsx/esm", join(scripts, "koppling-motivering.mts"), list, "--skriv", "--varfor", "Motiveringen behövde rättas efter kontroll av motionen."];
+    const invalid = spawnSync(process.execPath, args, { cwd: join(project, "handlingsvagen", "pipeline"), encoding: "utf8" });
+    assert.notEqual(invalid.status, 0);
+    assert.equal(readFileSync(join(data, "kopplingar.json"), "utf8"), original);
+    writeFileSync(join(data, "rattelser.json"), "[]\n");
+    const valid = spawnSync(process.execPath, args, { cwd: join(project, "handlingsvagen", "pipeline"), encoding: "utf8" });
+    assert.equal(valid.status, 0, valid.stderr);
+    assert.match(JSON.parse(readFileSync(join(data, "kopplingar.json"), "utf8"))[0].method_note, /samma åtgärd/u);
+    assert.equal(JSON.parse(readFileSync(join(data, "rattelser.json"), "utf8")).length, 1);
+    assert.equal(existsSync(join(data, ".datatransaktion")), false);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
