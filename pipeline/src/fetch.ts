@@ -123,6 +123,21 @@ export interface CacheEntry {
   etag?: string;
   lastModified?: string;
   lastFetched: string;
+  contentType?: string | null;
+  bodyBase64?: string;
+  bodySha256?: string;
+  accept?: string;
+}
+
+// Stora dokument hämtas ovillkorligt i stället för att göra Actions-cachen stor.
+const MAX_CACHED_BODY_BYTES = 1_000_000;
+
+function cachedBody(entry: CacheEntry | undefined, accept: string | undefined): { bytes: Uint8Array; contentType: string | null } | null {
+  if (!entry?.bodyBase64 || !entry.bodySha256 || entry.accept !== accept) return null;
+  if (entry.bodyBase64.length > Math.ceil(MAX_CACHED_BODY_BYTES * 4 / 3) + 4) return null;
+  const bytes = Buffer.from(entry.bodyBase64, "base64");
+  if (bytes.length > MAX_CACHED_BODY_BYTES || sha256(bytes) !== entry.bodySha256) return null;
+  return { bytes, contentType: entry.contentType ?? null };
 }
 
 export function loadEtagCache(cacheDir: string | null): Map<string, CacheEntry> {
@@ -895,7 +910,7 @@ export function parseRiksdagenAnforandelista(json: Record<string, unknown>): Arr
 
 /* ──────────────────────── SHA-256 & dedup ── */
 
-export function sha256(input: string): string {
+export function sha256(input: string | Uint8Array): string {
   return createHash("sha256").update(input).digest("hex");
 }
 
@@ -1219,7 +1234,10 @@ export class LiveSource implements ArticleSource {
     };
 
     const cached = etagCache.get(url);
-    if (cached) {
+    const body = cachedBody(cached, extraHeaders?.Accept);
+    // En validator utan sparad kropp får aldrig orsaka 304: då försvinner
+    // även osedda artiklar från ett oförändrat RSS/index/sidregister.
+    if (cached && body) {
       if (cached.etag) headers["If-None-Match"] = cached.etag;
       if (cached.lastModified) headers["If-Modified-Since"] = cached.lastModified;
     }
@@ -1244,21 +1262,31 @@ export class LiveSource implements ArticleSource {
       await this.sleep(ra ?? Math.min(MAX_TAKTVANTAN_MS, 1000 * 2 ** forsok));
     }
 
-    if (res.status === 304) return null;
+    if (res.status === 304) {
+      if (!body) throw new Error(`HTTP 304 utan sparad kropp för ${url}`);
+      return { ...body, status: 304 };
+    }
 
     if (!res.ok) {
       throw new Error(`HTTP ${res.status} for ${url}`);
     }
 
+    const bytes = new Uint8Array(await res.arrayBuffer());
     const entry: CacheEntry = { lastFetched: new Date().toISOString() };
     const etag = res.headers.get("etag");
     const lm = res.headers.get("last-modified");
     if (etag) entry.etag = etag;
     if (lm) entry.lastModified = lm;
+    if (bytes.length <= MAX_CACHED_BODY_BYTES && (etag || lm)) {
+      entry.contentType = res.headers.get("content-type");
+      entry.bodyBase64 = Buffer.from(bytes).toString("base64");
+      entry.bodySha256 = sha256(bytes);
+      if (extraHeaders?.Accept) entry.accept = extraHeaders.Accept;
+    }
     etagCache.set(url, entry);
 
     return {
-      bytes: new Uint8Array(await res.arrayBuffer()),
+      bytes,
       contentType: res.headers.get("content-type"),
       status: res.status,
     };

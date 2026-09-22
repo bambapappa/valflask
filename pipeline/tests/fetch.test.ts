@@ -421,7 +421,7 @@ describe("LiveSource med mock-HTTP", () => {
     assert.equal(articles.length, 0, "Blockerat av robots.txt");
   });
 
-  test("hanterar 304 Not Modified (ETag-cache)", async () => {
+  test("304 utan sparad kropp är källfel, inte tomt friskt feed", async () => {
     let callCount = 0;
     const mockFetch: HttpFetchFn = async (url) => {
       if (url.includes("robots.txt")) {
@@ -438,9 +438,93 @@ describe("LiveSource med mock-HTTP", () => {
     });
 
     const articles = await source.fetch();
-    assert.equal(articles.length, 0, "304 = inga nya artiklar");
+    assert.equal(articles.length, 0);
     assert.equal(callCount, 1, "En request för feeden");
-    assert.equal(source.getFeedOutcomes()[0]!.status, "ok", "cacheträff är inte källfel");
+    assert.equal(source.getFeedOutcomes()[0]!.status, "failed");
+    assert.match(source.getFeedOutcomes()[0]!.error!, /304 utan sparad kropp/u);
+  });
+
+  test("sparad svarskropp gör 304 återspelbar även i ny instans", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "etag-body-"));
+    const rssXml = readFixture("party-rss.xml");
+    const seenHeaders: Array<Record<string, string>> = [];
+    const mockFetch: HttpFetchFn = async (url, init) => {
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      const headers = init?.headers as Record<string, string>;
+      seenHeaders.push(headers);
+      return headers["If-None-Match"]
+        ? new Response(null, { status: 304 })
+        : new Response(rssXml, { status: 200, headers: { etag: '"rss-v1"', "content-type": "application/xml" } });
+    };
+    const create = () => new LiveSource({
+      feeds: [{ id: "rss", type: "rss", url: "https://testpartiet.se/feed/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 }, httpFetch: mockFetch, cacheDir: dir,
+    });
+    try {
+      const first = await create().fetch();
+      const secondSource = create();
+      const second = await secondSource.fetch();
+      assert.ok(first.length > 0);
+      assert.deepEqual(second, first, "304 lämnar samma artiklar till seen-/återförsöksgrinden");
+      assert.equal(seenHeaders[0]!["If-None-Match"], undefined);
+      assert.equal(seenHeaders[1]!["If-None-Match"], '"rss-v1"');
+      assert.equal(secondSource.getFeedOutcomes()[0]!.status, "ok");
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("gammal cache med bara validator hämtar kroppen ovillkorligt", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "etag-old-"));
+    saveEtagCache(dir, new Map([["https://testpartiet.se/feed/", { etag: '"old"', lastFetched: "2026-09-01" }]]));
+    let conditional = false;
+    const mockFetch: HttpFetchFn = async (url, init) => {
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      conditional = !!(init?.headers as Record<string, string>)["If-None-Match"];
+      return new Response(readFixture("party-rss.xml"), { status: 200 });
+    };
+    try {
+      const source = new LiveSource({ feeds: [{ id: "rss", type: "rss", url: "https://testpartiet.se/feed/" }],
+        limits: { max_articles_per_run: 50, min_chars: 10 }, httpFetch: mockFetch, cacheDir: dir });
+      assert.ok((await source.fetch()).length > 0);
+      assert.equal(conditional, false);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("samma länk i två feeds kan återspela 304 inom samma körning", async () => {
+    const rssXml = readFixture("party-rss.xml");
+    let requests = 0;
+    const mockFetch: HttpFetchFn = async (url, init) => {
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      requests++;
+      return (init?.headers as Record<string, string>)["If-None-Match"]
+        ? new Response(null, { status: 304 })
+        : new Response(rssXml, { status: 200, headers: { etag: '"rss-v1"' } });
+    };
+    const source = new LiveSource({ feeds: [
+      { id: "ett", type: "rss", url: "https://testpartiet.se/feed/" },
+      { id: "tva", type: "rss", url: "https://testpartiet.se/feed/" },
+    ], limits: { max_articles_per_run: 50, min_chars: 10 }, httpFetch: mockFetch });
+    const articles = await source.fetch();
+    assert.equal(requests, 2);
+    assert.ok(articles.length >= 4, "båda feeds läser samma innehåll före dedup");
+    assert.deepEqual(source.getFeedOutcomes().map((f) => f.status), ["ok", "ok"]);
+  });
+
+  test("stor kropp får ingen validator som kan ge 304 utan kropp", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "etag-large-"));
+    const html = `<html><body>${"a".repeat(1_000_001)}</body></html>`;
+    const conditional: boolean[] = [];
+    const mockFetch: HttpFetchFn = async (url, init) => {
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      conditional.push(!!(init?.headers as Record<string, string>)["If-None-Match"]);
+      return new Response(html, { status: 200, headers: { etag: '"large"', "content-type": "text/html" } });
+    };
+    const create = () => new LiveSource({ feeds: [{ id: "page", type: "page", url: "https://testpartiet.se/val/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 }, httpFetch: mockFetch, cacheDir: dir });
+    try {
+      await create().fetch();
+      await create().fetch();
+      assert.deepEqual(conditional, [false, false]);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 
   test("kapar INTE på fetch-nivå — budgeten ligger i runPipeline (maxNewArticles)", async () => {

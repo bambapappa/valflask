@@ -90,11 +90,10 @@ jobs:
       - name: Install site deps
         run: pnpm install --frozen-lockfile
         working-directory: site
-      # Etag-cachen mellan körningar. Utan det här steget startade varje
-      # körning med tom cache och hämtade om alla ~1 500 sidor i sin helhet;
-      # med det svarar de oförändrade 304 utan kropp. Cachen är bara ett minne
-      # av vad vi redan hämtat — går den förlorad blir körningen långsam, aldrig
-      # fel, och seen.json (som ligger i git) är det som styr vad som bearbetas.
+      # Etag-cachen mellan körningar bär nu också små svarskroppar. En 304
+      # utan sparad kropp skulle tappa osedda artiklar vid återförsök.
+      # Stora dokument och gammal metadata-only-cache hämtas ovillkorligt.
+      # Går cachen förlorad hämtas källorna om; seen.json avgör bearbetningen.
       # Nyckeln bär run_id så varje körning sparar en färsk kopia; restore-keys
       # plockar den senaste.
       - name: Cache för hämtningen (etag)
