@@ -3,7 +3,7 @@
  *
  *   pnpm quality:scan              # alla tre sökningarna
  *   pnpm quality:scan --belopp     # bara belopp mot uträkning
- *   pnpm quality:scan --nollor     # bara nollor vars uträkning räknar fram en summa
+ *   pnpm quality:scan --nollor     # nollbas med en summa i uträkningen
  *   pnpm quality:scan --grupper    # bara löften som hör hemma i en grupp
  *   pnpm quality:scan --datid      # bara citat som beskriver genomförd politik
  *   pnpm quality:scan --strikt     # avsluta med felkod om något hittas
@@ -54,7 +54,7 @@ if (wants("--belopp")) {
 }
 
 if (wants("--nollor")) {
-  heading("Nollade belopp vars uträkning ändå räknar fram en summa");
+  heading("Nollbas med en summa i uträkningen");
   const found = findZeroWithCalculatedSum(promises);
   hits += found.length;
   if (found.length === 0) {
@@ -64,8 +64,8 @@ if (wants("--nollor")) {
       console.log(`  ${f.id} [${f.parties.join("/")}] ${f.detail}`);
     }
     console.log(
-      `\n  ${found.length} träffar. Nollan kan vara riktig — det är TEXTEN som ska skrivas om,` +
-        "\n  så att den förklarar nollan i stället för att räkna fram ett annat belopp.",
+      `\n  ${found.length} granskningsförslag. Läs hela kalkylen och källan innan du avgör` +
+        "\n  om nollan eller texten behöver rättas.",
     );
   }
 }

@@ -576,8 +576,8 @@ export function findZeroWithCalculatedSum(
       stated,
       direction: "för lågt",
       detail:
-        `beloppet är 0 men uträkningen räknar fram upp till ${stated} msek och ` +
-        `förklarar aldrig nollan — ${p.title.slice(0, 60)}`,
+        `basbeloppet är 0 och uträkningen nämner upp till ${stated} msek; ` +
+        `kontrollera vad summan avser — ${p.title.slice(0, 60)}`,
     });
   }
   return out.sort((a, b) => b.stated - a.stated);
