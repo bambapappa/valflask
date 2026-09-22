@@ -5,6 +5,7 @@ import {
   statedBaseMsek,
   findAmountMismatches,
   findZeroWithCalculatedSum,
+  findLongHorizonLumpSums,
   findUngroupedTwins,
   looksLikeCompletedPolicy,
   findCompletedPolicyQuotes,
@@ -344,6 +345,29 @@ describe("findZeroWithCalculatedSum — nollan stämmer, men inte texten bredvid
       ]),
       [],
     );
+  });
+});
+
+describe("findLongHorizonLumpSums — slutår utanför fyrårsperioden är en läsfråga", () => {
+  it("fångar de tre kända flerårsfallen men inte mål inom 2027–2030", () => {
+    const found = findLongHorizonLumpSums([
+      p({ id: "p-2026-2926", quote: "210 miljarder kronor tillförs under planperioden 2026–2037.", cost: { msek_base: 210000, period: "engang", basis: "parti" } }),
+      p({ id: "p-2026-2923", quote: "Tillföra 354 miljarder för vägunderhåll till år 2037.", cost: { msek_base: 354000, period: "engang", basis: "parti" } }),
+      p({ id: "p-2026-2450", quote: "Underhållsskulden ska vara borta senast 2035.", cost: { msek_base: 70000, period: "engang", basis: "llm_estimat" } }),
+      p({ id: "p-2026-3086", quote: "150 000 laddpunkter till 2030.", cost: { msek_base: 20000, period: "engang", basis: "llm_estimat" } }),
+    ], 2030);
+    assert.deepEqual(found.map((f) => [f.id, f.endYear]), [
+      ["p-2026-2923", 2037], ["p-2026-2926", 2037], ["p-2026-2450", 2035],
+    ]);
+  });
+
+  it("tolkar inte tillbakadraget, årligt eller nollat belopp som en engångssumma", () => {
+    const quote = "Hela programmet ska vara klart till 2035.";
+    assert.deepEqual(findLongHorizonLumpSums([
+      p({ id: "withdrawn", status: "tillbakadragen", quote, cost: { msek_base: 100, period: "engang", basis: "parti" } }),
+      p({ id: "annual", quote, cost: { msek_base: 100, period: "per_ar", basis: "parti" } }),
+      p({ id: "zero", quote, cost: { msek_base: 0, period: "engang", basis: "parti" } }),
+    ], 2030), []);
   });
 });
 

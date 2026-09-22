@@ -1,9 +1,10 @@
 /**
  * Kvalitetssökning över publicerade löften.
  *
- *   pnpm quality:scan              # alla tre sökningarna
+ *   pnpm quality:scan              # alla sökningar
  *   pnpm quality:scan --belopp     # bara belopp mot uträkning
  *   pnpm quality:scan --nollor     # nollbas med en summa i uträkningen
+ *   pnpm quality:scan --period     # engångsbelopp vars citat går bortom 2030
  *   pnpm quality:scan --grupper    # bara löften som hör hemma i en grupp
  *   pnpm quality:scan --datid      # bara citat som beskriver genomförd politik
  *   pnpm quality:scan --strikt     # avsluta med felkod om något hittas
@@ -17,6 +18,7 @@ import { join, resolve } from "node:path";
 import {
   findAmountMismatches,
   findZeroWithCalculatedSum,
+  findLongHorizonLumpSums,
   findUngroupedTwins,
   findCompletedPolicyQuotes,
   type ScanPromise,
@@ -67,6 +69,20 @@ if (wants("--nollor")) {
       `\n  ${found.length} granskningsförslag. Läs hela kalkylen och källan innan du avgör` +
         "\n  om nollan eller texten behöver rättas.",
     );
+  }
+}
+
+if (wants("--period")) {
+  heading("Engångsbelopp med slutår efter mandatperioden 2027–2030");
+  const found = findLongHorizonLumpSums(promises, 2030);
+  hits += found.length;
+  if (found.length === 0) {
+    console.log("  Inga.");
+  } else {
+    for (const f of found) {
+      console.log(`  ${f.id} [${f.parties.join("/")}] ${f.detail}`);
+    }
+    console.log(`\n  ${found.length} granskningsförslag. Årtalet anger inte vilken del som är en ny kostnad 2027–2030.`);
   }
 }
 
