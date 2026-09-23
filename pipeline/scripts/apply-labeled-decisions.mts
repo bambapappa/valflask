@@ -53,10 +53,10 @@ const HEADERS = {
   "User-Agent": "utlovat-review-apply",
 };
 
-async function api(path: string, init?: RequestInit): Promise<{ status: number; json: unknown }> {
+async function api(path: string, init?: RequestInit, acceptedErrors: number[] = []): Promise<{ status: number; json: unknown }> {
   const res = await fetch(`${API}${path}`, { ...init, headers: { ...HEADERS, ...init?.headers } });
   const text = await res.text();
-  if (!res.ok && res.status !== 422 && res.status !== 404) {
+  if (!res.ok && !acceptedErrors.includes(res.status)) {
     throw new Error(`GitHub API ${res.status} för ${path}: ${text.slice(0, 200)}`);
   }
   return { status: res.status, json: text ? JSON.parse(text) : null };
@@ -81,10 +81,11 @@ if (mode === "notify") {
       body: JSON.stringify({ body: n.body }),
     });
     if (n.removeLabel) {
-      await fetch(`${API}/repos/${repo}/issues/${n.number}/labels/${encodeURIComponent(n.removeLabel)}`, {
+      // En omkörning får redan ha tagit bort etiketten. Andra API-fel ska
+      // däremot fälla notify, annars ser körningen grön ut utan åtgärd.
+      await api(`/repos/${repo}/issues/${n.number}/labels/${encodeURIComponent(n.removeLabel)}`, {
         method: "DELETE",
-        headers: HEADERS,
-      });
+      }, [404]);
     }
     if (n.close) {
       await api(`/repos/${repo}/issues/${n.number}`, {
@@ -101,20 +102,26 @@ if (mode === "notify") {
 /* ─────────────────────────── apply-fasen ── */
 
 /** Beslutsetiketterna måste finnas för att kunna väljas i UI:t (422 = finns redan). */
-await api(`/repos/${repo}/labels`, {
+const approveLabel = await api(`/repos/${repo}/labels`, {
   method: "POST",
   body: JSON.stringify({
     name: APPROVE_LABEL, color: "0e8a16",
     description: "Godkänn med föreslagen kostnad (bulk-bar via listvyn)",
   }),
-});
-await api(`/repos/${repo}/labels`, {
+}, [422]);
+if (approveLabel.status === 422) {
+  await api(`/repos/${repo}/labels/${encodeURIComponent(APPROVE_LABEL)}`);
+}
+const rejectLabel = await api(`/repos/${repo}/labels`, {
   method: "POST",
   body: JSON.stringify({
     name: REJECT_LABEL, color: "d93f0b",
     description: "Avvisa posten (bulk-bar via listvyn)",
   }),
-});
+}, [422]);
+if (rejectLabel.status === 422) {
+  await api(`/repos/${repo}/labels/${encodeURIComponent(REJECT_LABEL)}`);
+}
 
 interface Issue { number: number; title: string; labels: Array<{ name: string }> }
 
