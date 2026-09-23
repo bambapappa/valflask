@@ -105,6 +105,7 @@ interface Kartpost {
 }
 
 const kartan: Kartpost[] = [];
+const saknade: string[] = [];
 // Kö-posterna har ingen status — de är förslag, inte kopplingar. Filtret på
 // "aktiv" gäller därför bara det publicerade beståndet; körs det över kön
 // faller varje post bort och kartan blir tom.
@@ -127,12 +128,14 @@ for (const k of aktiva) {
   if (++n % 100 === 0) console.error(`  ${n}/${aktiva.length}`);
   if (h === undefined || dokId === "") {
     console.error(`  ${nyckeln(k)}: handlingen saknar dokument-id — hoppas över`);
+    saknade.push(nyckeln(k));
     continue;
   }
 
   const text = await cachat(`text-${dokId}`, () => fetchDokumentText(politeFetch, dokId));
   if (text === null) {
     console.error(`  ${nyckeln(k)}: ${dokId} gick inte att hämta — ingenting prövat`);
+    saknade.push(nyckeln(k));
     continue;
   }
   const citat = normalizeForVerbatim(k.bevis.citat);
@@ -233,6 +236,15 @@ for (const [slag, poster] of [...perSlag].sort((a, b) => b[1].length - a[1].leng
   if (visaIdn) {
     for (const p of poster) console.log(`        ${p.koppling}  ${p.promise_id ?? "—"}  ${p.dok_id}`);
   }
+}
+
+const nycklar = new Set(kartan.map((p) => p.koppling));
+if (saknade.length > 0 || kartan.length !== aktiva.length || nycklar.size !== kartan.length) {
+  throw new Error(
+    `Ofullständig handlingsklass: ${kartan.length}/${aktiva.length} källposter mätta, ` +
+    `${saknade.length} utan källdokument, ${kartan.length - nycklar.size} dubblerade nycklar. ` +
+    `Ingen karta skrevs. Saknade: ${saknade.slice(0, 20).join(", ")}${saknade.length > 20 ? " …" : ""}`,
+  );
 }
 
 if (skriv) {
