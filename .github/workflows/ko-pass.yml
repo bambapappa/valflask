@@ -1,12 +1,12 @@
 name: ko-pass
-# Prövar båda köerna genom kvalitetsfiltret, schemalagt.
+# Prövar båda köerna genom kvalitetsfiltret efter förslagskörningen.
 #
 # Godkännandet släpper inte igenom något som inte gått genom filtret. Kön fylls
 # på schemalagt — foreslag varje dygn 07:00, skörden måndagar 04:00 — medan
 # prövningen kördes för hand. Skillnaden byggde upp 623 oprövade köposter på en
 # vecka, och godkännandevägen föll på varenda en utan att något sa ifrån.
 #
-# **Att det här alls går att schemalägga är nytt.** Kö-passet antogs kräva en
+# **Att det här alls går att automatisera är nytt.** Kö-passet antogs kräva en
 # session med omdöme, och en schemalagd session fastnade på en behörighetsfråga
 # ingen besvarar klockan fem på morgonen. Men antagandet gällde BESLUTEN. Själva
 # prövningen är deterministiska skript hela vägen — mätning, härledning,
@@ -16,13 +16,18 @@ name: ko-pass
 # PR:en; en människa slår ihop den. Godkännandet av enskilda poster är kvar hos
 # ägaren. Samma delning som gällt sedan 2026-08-09.
 on:
-  schedule:
-    # En timme efter foreslag-körningen, så dygnets nya förslag är med.
-    - cron: "0 8 * * *"
+  # En fast timmes förskjutning räckte inte: 2026-09-23 började foreslag
+  # 12:35 UTC och fortsatte pusha köposter till 17:33, medan ko-pass hann
+  # avslutas 13:04. Resultatet var 104 prövade av senare 456 köposter.
+  # Kör därför först när producenten är färdig, även vid avbrott efter salvage.
+  workflow_run:
+    workflows: [foreslag]
+    types: [completed]
+    branches: [main]
   workflow_dispatch: {}
   pull_request:
     # Ändras passet självt ska ändringen köras — som torrkörning, utan att något
-    # skrivs. Utan det är en ändring i passet oprövad tills nästa natt.
+    # skrivs. Utan det är en ändring oprövad tills nästa förslagskörning.
     paths:
       - ".github/workflows/ko-pass.yml"
       - "pipeline/scripts/ko-pass.sh"
@@ -114,7 +119,7 @@ jobs:
       issues: write
     uses: ./.github/workflows/larm.yml
     with:
-      rubrik: "Det schemalagda kö-passet"
+      rubrik: "Kö-passet efter förslagskörningen"
       etikett: "larm-ko-pass"
       atgard: |
             Kö-passet föll, och köerna slutar därför gå att godkänna så snart
