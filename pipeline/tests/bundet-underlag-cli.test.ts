@@ -7,7 +7,7 @@ import { spawnSync } from "node:child_process";
 
 const pipeline = resolve(import.meta.dirname, "..");
 const repo = resolve(pipeline, "..");
-const files = ["data/promises.json", "data/stances.json", "handlingsvagen/data/kopplingar.json", "handlingsvagen/data/handlingar.json"];
+const files = ["data/promises.json", "data/parties.json", "data/stances.json", "handlingsvagen/data/kopplingar.json", "handlingsvagen/data/handlingar.json"];
 const run = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx/esm", "scripts/bundet-underlag.mts", ...args], { cwd: pipeline, encoding: "utf8", maxBuffer: 20 * 1024 * 1024 });
 
 test("kommandot upptäcker ett ändrat verkligt kalkylankare utan att skriva i datat", () => {

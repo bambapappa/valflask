@@ -56,7 +56,8 @@ test("kommandot binder verkliga commit-versioner och lämnar lokala data orörda
     const onlyFile = run(efter, tredje);
     assert.equal(onlyFile.status, 0, onlyFile.stderr);
     const filePacket = JSON.parse(onlyFile.stdout);
-    assert.equal(filePacket.andringar.length, 0);
+    assert.equal(filePacket.andringar.find((p: any) => p.rot === `parti:${parties[0].code}`)!.direkt, true);
+    assert.ok(filePacket.andringar.some((p: any) => p.rot.startsWith("lofte:") && !p.direkt));
     assert.deepEqual(filePacket.filer.sokvagar, ["data/parties.json"]);
     assert.ok(filePacket.filer.patch.includes("Ändrat partinamn"));
     assert.equal(filePacket.summor.efter.partier[0].namn, "Ändrat partinamn");

@@ -12,11 +12,11 @@ import { forberedPubliceringsprovning, kontrolleraPubliceringsprovning, publicer
 import type { Sakreferens } from "../src/sakprovning.ts";
 const root = resolve(import.meta.dirname, "../..");
 const read = (file: string) => JSON.parse(readFileSync(resolve(root, file), "utf8"));
-const register = byggUnderlagsregister({ loften: read("data/promises.json"), standpunkter: read("data/stances.json"), kopplingar: read("handlingsvagen/data/kopplingar.json"), handlingar: read("handlingsvagen/data/handlingar.json") });
-const post = register.find(p => p.slag === "lofte" && p.beroenden.length)!;
+const register = byggUnderlagsregister({ loften: read("data/promises.json"), standpunkter: read("data/stances.json"), kopplingar: read("handlingsvagen/data/kopplingar.json"), handlingar: read("handlingsvagen/data/handlingar.json"), partier: read("data/parties.json") });
+const post = register.find(p => p.slag === "lofte" && p.beroenden.some(d => d.startsWith("lofte:")))!;
 assert.ok(post);
 const fore = bindUnderlag(`lofte:${post.id}`, register).poster;
-const efter = structuredClone(fore), anchor = efter.find(p => `lofte:${p.id}` === post.beroenden[0])!;
+const efter = structuredClone(fore), anchor = efter.find(p => `lofte:${p.id}` === post.beroenden.find(d => d.startsWith("lofte:")))!;
 assert.ok(anchor);
 (anchor.innehall.cost as Record<string, any>).msek_base += 1;
 const paket = byggPubliceringspaket("a".repeat(40), "b".repeat(40), fore, efter);

@@ -40,6 +40,10 @@ function underlag(): PubliceratUnderlag {
   const forst = lofte("p-2026-9001");
   (forst.cost as Record<string, unknown>)["anchor_ids"] = ["p-2026-9003"];
   return {
+    partier: [
+      { code: "s", name: "Socialdemokraterna", mandate_2022: 107, manifest_2026: "Publicerat." },
+      { code: "m", name: "Moderaterna", mandate_2022: 68, manifest_2026: "Publicerat." },
+    ],
     loften: [forst, lofte("p-2026-9002"), ankare],
     handlingar: [{ id: "h-2026-9001", dok_id: "HX00001", titel: "En motion" }],
     standpunkter: [],
@@ -126,16 +130,13 @@ describe("fyra ändringar efter godkännandet", () => {
     });
   }
 
-  // Femte fallet, utanför uppgiftens fyra: partiernas EGEN metadata.
-  // Mandattal och manifeststatus visas på partisidan men ligger varken i
-  // paketet eller i prövningens hash — inget av skydden ser en ändring där.
-  test("partiernas egen metadata ligger utanför båda skydden", () => {
-    const register = byggUnderlagsregister(underlag());
-    const text = JSON.stringify(register);
-    assert.equal(text.includes("mandate_2022"), false, "paketet bär ingen partimetadata");
-    assert.equal(text.includes("manifest_2026"), false);
-    // Prövningens hash läser bara löftets partikoder, inte partiets uppgifter.
-    const med = roten(underlag());
-    assert.equal(kanon("lofte", med), kanon("lofte", { ...med, parties: ["s"] }));
+  // Partiets metadata visas på sajten och binds därför till publiceringspaketet.
+  test("ändrad manifeststatus stoppar ett tidigare godkänt paket", () => {
+    const godkant = bundet(underlag());
+    const efter = underlag();
+    efter.partier![0]!.manifest_2026 = "Manifestet har ändrats.";
+    assert.equal(sammaUnderlag(godkant, bundet(efter)), false);
+    // Den äldre prövningshashen täcker bara löftets partikod, inte partiposten.
+    assert.equal(provningsGrind(provningFor(underlag()), ["p-2026-9001"], "lofte", roten(efter)).ok, true);
   });
 });

@@ -12,8 +12,20 @@ const data: PubliceratUnderlag = {
   kopplingar: read("handlingsvagen/data/kopplingar.json"),
   handlingar: read("handlingsvagen/data/handlingar.json"),
   standpunkter: read("data/stances.json"),
+  partier: read("data/parties.json"),
 };
 const register = byggUnderlagsregister(data);
+
+test("partiets egen manifeststatus binds till löftets underlag", () => {
+  const p = data.loften.find((x) => x.status === "aktiv" && Array.isArray(x.parties) && x.parties.length)!;
+  const packet = bindUnderlag(`lofte:${p.id}`, register);
+  const code = (p.parties as string[])[0]!;
+  assert.ok(packet.poster.some((x) => x.slag === "parti" && x.id === code));
+  const changed = structuredClone(data);
+  const party = changed.partier!.find((x) => x.code === code)!;
+  party.manifest_2026 = `${party.manifest_2026} Ändrat efter godkännande.`;
+  assert.equal(sammaUnderlag(packet, bindUnderlag(packet.rot, byggUnderlagsregister(changed))), false);
+});
 
 test("verkliga kalkylankare följer med från data utan en manuellt skriven beroendelista", () => {
   const p = data.loften.find((x: any) => x.status === "aktiv" && x.cost.anchor_ids?.length)!;

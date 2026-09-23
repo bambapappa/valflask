@@ -25,7 +25,7 @@ try {
     };
     return byggUnderlagsregister({ loften: rader("data/promises.json"),
       standpunkter: rader("data/stances.json"), kopplingar: rader("handlingsvagen/data/kopplingar.json"),
-      handlingar: rader("handlingsvagen/data/handlingar.json") });
+      handlingar: rader("handlingsvagen/data/handlingar.json"), partier: rader("data/parties.json") });
   };
   const paket = byggPubliceringspaket(foreRevision, efterRevision, las(foreRevision), las(efterRevision),
     lasPubliceringsfiler(repo, foreRevision, efterRevision),
