@@ -982,23 +982,6 @@ const USER_AGENT = "UtlovatBot/1.0 (+https://utlovat.se/om)";
  */
 const MAX_TAKTVANTAN_MS = 30_000;
 
-/**
- * Vad ett flöde gav i en körning: hämtade artiklar, och felet om det föll.
- *
- * Ett fallet flöde och ett tomt flöde såg förut likadana ut. Båda skrev noll i
- * `stats`, och den enda skillnaden stod i loggen — som ingen mätning läser.
- * Det gör bortfallet osynligt just där det är störst: en källa som svarar 403
- * på allt rapporterar samma nolla som en källa där inget nytt hänt.
- *
- * `fel` är därför skild från `hamtade`: noll med `fel: null` betyder att
- * flödet svarade och inte hade något nytt, noll med ett `fel` betyder att vi
- * inte vet vad som fanns där.
- */
-export interface Flodesutfall {
-  hamtade: number;
-  fel: string | null;
-}
-
 export class LiveSource implements ArticleSource {
   private feeds: SourceFeed[];
   private limits: SourceConfig["limits"];
@@ -1013,8 +996,6 @@ export class LiveSource implements ArticleSource {
    */
   private robotsPagaende: Map<string, Promise<RobotsRule[]>>;
   private stats: Map<string, number>;
-  /** Per flöde: hämtade artiklar och eventuellt fel. Se `Flodesutfall`. */
-  private flodesutfall: Map<string, Flodesutfall>;
   /**
    * Adresserna körningen ska begränsas till, eller null för alla.
    *
@@ -1053,24 +1034,15 @@ export class LiveSource implements ArticleSource {
     this.robotsCache = new Map();
     this.robotsPagaende = new Map();
     this.stats = new Map();
-    this.flodesutfall = new Map();
   }
 
   getStats(): Map<string, number> {
     return new Map(this.stats);
   }
 
-  /** Flödenas utfall i den SENASTE körningen — nollställs vid varje `fetch`. */
-  getFlodesutfall(): Map<string, Flodesutfall> {
-    return new Map(this.flodesutfall);
-  }
-
   async fetch(): Promise<NormalizedArticle[]> {
     const articles: NormalizedArticle[] = [];
     const etagCache = loadEtagCache(this.cacheDir);
-    // Utfallet gäller DEN HÄR körningen. Ett fel som står kvar från förra
-    // hämtningen skulle beskriva ett läge som redan är över.
-    this.flodesutfall.clear();
 
     // Hämta ALLA feeds (ingen global kapning här). Annars äter feeds högt upp i
     // listan — partiernas RSS — upp budgeten innan riksdagen/media ens hämtas.
@@ -1097,12 +1069,9 @@ export class LiveSource implements ArticleSource {
         }
 
         this.stats.set(feed.id, feedArticles.length);
-        this.flodesutfall.set(feed.id, { hamtade: feedArticles.length, fel: null });
       } catch (e) {
-        const fel = e instanceof Error ? e.message : String(e);
-        console.error(`[fetch] feed ${feed.id} failed: ${fel}`);
+        console.error(`[fetch] feed ${feed.id} failed: ${e instanceof Error ? e.message : e}`);
         this.stats.set(feed.id, 0);
-        this.flodesutfall.set(feed.id, { hamtade: 0, fel });
       }
     }
 

@@ -686,13 +686,6 @@ export async function runPipeline(
     // svårläst — och det är två olika åtgärder.
     m.kandidater += ut.kandidater.length + ut.gateReview.length;
   }
-  // Flödenas utfall, om källan kan svara på det. `MemorySource` och
-  // `FixtureSource` kan inte, och då utelämnas fältet i stället för att fyllas
-  // med nollor som ser ut som en mätning.
-  const flodeskalla = ctx.articleSource as { getFlodesutfall?: () => Map<string, { hamtade: number; fel: string | null }> };
-  const floden = typeof flodeskalla.getFlodesutfall === "function"
-    ? Object.fromEntries(flodeskalla.getFlodesutfall())
-    : undefined;
   const runStats: Kormatning = {
     fetched: articles.length,
     unseen: newArticles.length,
@@ -705,7 +698,6 @@ export async function runPipeline(
     queuedTotal: publishResult.queuedTotal,
     bySource,
     kandidater: reviewItems.length,
-    ...(floden ? { floden } : {}),
   };
   writeRunReport(ctx, runStats, publishResult.dataHash);
 

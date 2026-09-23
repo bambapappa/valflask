@@ -18,14 +18,6 @@ export interface Artikelmatning {
 
 export interface Kormatning extends Artikelmatning {
   reviewCandidates: number;
-  /**
-   * Per flöde i `sources.yaml`: hämtade artiklar och eventuellt fel.
-   *
-   * `bySource` byggs ur artiklarna som KOM FRAM och kan därför inte visa en
-   * källa som inte gav något alls — den saknas helt i den tabellen. Ett flöde
-   * som föll syns bara här.
-   */
-  floden?: Record<string, { hamtade: number; fel: string | null }>;
   publishedAdded: number;
   publishedTotal: number;
   queuedTotal: number;
