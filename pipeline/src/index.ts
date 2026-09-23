@@ -677,7 +677,7 @@ export async function runPipeline(
   const bySource: Record<string, Artikelmatning> = {};
   const source = (a: NormalizedArticle): Artikelmatning => {
     const key = `${a.domain}/${a.feedType ?? "okand"}`;
-    return bySource[key] ??= { fetched: 0, unseen: 0, attempted: 0, succeeded: 0, failed: 0 };
+    return bySource[key] ??= { fetched: 0, unseen: 0, attempted: 0, succeeded: 0, failed: 0, kandidater: 0 };
   };
   for (const a of articles) source(a).fetched += 1;
   for (const a of newArticles) source(a).unseen += 1;
@@ -686,6 +686,10 @@ export async function runPipeline(
     m.attempted += 1;
     if (ut.fel) m.failed += 1;
     else m.succeeded += 1;
+    // Kandidater OCH grindavslag räknas: båda är poster artikeln lämnade
+    // ifrån sig. En källa som bara ger grindavslag är inte tom, den är
+    // svårläst — och det är två olika åtgärder.
+    m.kandidater += ut.kandidater.length + ut.gateReview.length;
   }
   const runStats: Kormatning = {
     fetched: articles.length,
@@ -699,6 +703,7 @@ export async function runPipeline(
     queuedTotal: publishResult.queuedTotal,
     bySource,
     ...(ctx.articleSource.getFeedOutcomes ? { feedOutcomes: ctx.articleSource.getFeedOutcomes() } : {}),
+    kandidater: reviewItems.length,
   };
   writeRunReport(ctx, runStats, publishResult.dataHash);
 

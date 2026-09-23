@@ -4,6 +4,16 @@ export interface Artikelmatning {
   attempted: number;
   succeeded: number;
   failed: number;
+  /**
+   * Hur många poster källan lämnade till granskning — kandidater och
+   * grindavslag tillsammans.
+   *
+   * Utan det talet slutar mätningen vid `succeeded`, och en källa som läses
+   * varje körning utan att någonsin ge en kandidat ser ut som en källa som
+   * fungerar. Det är den vanligaste tysta förlustpunkten i kedjan: sidan
+   * hämtas, tolkas utan fel, och bär inget löfte.
+   */
+  kandidater: number;
 }
 
 export interface Feedhamtning {
