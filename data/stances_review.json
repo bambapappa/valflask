@@ -6087,5 +6087,103 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Vi vill stoppa aktiebolag i skolan, införa full insyn i skattefinansierad skolverksamhet och ge kommuner möjlighet att säga nej till nyetableringar",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/skola/",
+    "articleTitle": "Miljöpartiets skol- och utbildningspolitik",
+    "sourceUrl": "https://www.mp.se/politik/skola/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-23",
+    "extractModel": "glm-5.3-flash",
+    "verifyModel": "muse-spark-1.3-contributor",
+    "runId": "run-2026-09-23-04-36",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet handlar om att stoppa aktiebolag som huvudmän (en ägarforms-/existensfråga som avgränsningen uttryckligen utesluter), insyn och kommunalt etableringsveto – inte om att förbjuda eller begränsa vinstutdelning i lag; att utläsa ett 'ja' på just vinstutdelning kräver en välvillig tolkningskedja (aktiebolag → vinst → stopp) som citatet ensamt inte bär, och är därmed inget besked, medan partiattributionen till MP däremot stämmer med källtexten."
+      }
+    ],
+    "verifyReason": "Citatet handlar om att stoppa aktiebolag som huvudmän (en ägarforms-/existensfråga som avgränsningen uttryckligen utesluter), insyn och kommunalt etableringsveto – inte om att förbjuda eller begränsa vinstutdelning i lag; att utläsa ett 'ja' på just vinstutdelning kräver en välvillig tolkningskedja (aktiebolag → vinst → stopp) som citatet ensamt inte bär, och är därmed inget besked, medan partiattributionen till MP däremot stämmer med källtexten."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-sjukvard-vinst",
+      "party": "mp",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Miljöpartiet vill avskaffa marknadsskolan, låta vinster från skattefinansierad välfärd stanna i välfärden och ge alla en jämlik välfärd.",
+      "person": null
+    },
+    "articleUrl": "https://www.mp.se/politik/vinster-i-valfarden/",
+    "articleTitle": "Miljöpartiets - Vinster i välfärden",
+    "sourceUrl": "https://www.mp.se/politik/vinster-i-valfarden/",
+    "archiveUrl": null,
+    "dateStated": "2026-06-26",
+    "extractModel": "glm-5.3-flash",
+    "verifyModel": "muse-spark-1.3-contributor",
+    "runId": "run-2026-09-23-04-36",
+    "failures": [
+      {
+        "gate": "VERIFY",
+        "reason": "Citatet (som till övervägande del handlar om skolan och om välfärd i allmänhet) driver kravet att vinster ska 'stanna i välfärden' — en förbudsinriktad ståndpunkt som varken nämner vård specifikt eller lagstiftad begränsning som avgränsning, utan snarare motsvarar totalförbudet som frågan explicit skiljer sig ifrån; därmed följer svaret 'ja' inte ur citatet ensamt utan kräver välvillig tolkning."
+      }
+    ],
+    "verifyReason": "Citatet (som till övervägande del handlar om skolan och om välfärd i allmänhet) driver kravet att vinster ska 'stanna i välfärden' — en förbudsinriktad ståndpunkt som varken nämner vård specifikt eller lagstiftad begränsning som avgränsning, utan snarare motsvarar totalförbudet som frågan explicit skiljer sig ifrån; därmed följer svaret 'ja' inte ur citatet ensamt utan kräver välvillig tolkning."
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-skola-vinst",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Socialdemokraterna vill förbjuda vinstuttag och göra gymnasieskolan obligatorisk för att alla unga ska få en stark grund för jobb eller vidare studier.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/gymnasieskola",
+    "articleTitle": "Gymnasieskola\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/gymnasieskola",
+    "archiveUrl": null,
+    "dateStated": "2026-08-27",
+    "extractModel": "glm-5.3-flash",
+    "verifyModel": "muse-spark-1.3-contributor",
+    "runId": "run-2026-09-23-04-36",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
+  },
+  {
+    "candidate": {
+      "subquestion_id": "sq-aldre-sprakkrav",
+      "party": "s",
+      "position": "ja",
+      "condition_note": null,
+      "quote": "Det ska vara en självklarhet att personalen talar bra svenska och har rätt kompetens för att din vård ska vara säker.",
+      "person": null
+    },
+    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/hemtjanst",
+    "articleTitle": "Hemtjänst\n| Socialdemokraterna",
+    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/hemtjanst",
+    "archiveUrl": null,
+    "dateStated": "2026-08-19",
+    "extractModel": "glm-5.3-flash",
+    "verifyModel": "muse-spark-1.3-contributor",
+    "runId": "run-2026-09-23-04-36",
+    "failures": [
+      {
+        "gate": "MODE",
+        "reason": "PIPELINE_MODE=review: allt till granskning"
+      }
+    ]
   }
 ]
