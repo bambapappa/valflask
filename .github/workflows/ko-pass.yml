@@ -23,6 +23,7 @@ on:
   workflow_run:
     workflows: [foreslag]
     types: [completed]
+    branches: [main]
   workflow_dispatch: {}
   pull_request:
     # Ändras passet självt ska ändringen köras — som torrkörning, utan att något
