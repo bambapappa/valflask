@@ -125,11 +125,13 @@ async function main() {
   const brutna = utfall.filter((u) => u.ordagrant === false);
   const oprovade = utfall.filter((u) => u.ordagrant === null);
   const brodtext = utfall.filter((u) => u.i_handlingen === false);
+  const platsOklara = utfall.filter((u) => u.i_handlingen === null);
   console.log(`${utfall.length} poster prövade mot källdokumenten`);
   console.log(`  ${utfall.length - brutna.length - oprovade.length} står ordagrant i sin källa`);
   console.log(`  ${brutna.length} gör INTE det`);
   console.log(`  ${oprovade.length} kunde inte prövas (hämtningen föll)`);
   console.log(`  ${brodtext.length} står i brödtexten, inte i handlingens egen del`);
+  console.log(`  ${platsOklara.length} kunde inte platsprövas i handlingens egen del`);
   for (const u of brutna) console.log(`  BRUTET: ${u.koppling_id} ${u.handling_id} "${u.citat.slice(0, 70)}…"`);
 
   if (utPath) {
