@@ -64,6 +64,8 @@ test("kommandot binder verkliga commit-versioner och lämnar lokala data orörda
     const html = run(efter, tredje, "--html");
     assert.equal(html.status, 0, html.stderr);
     assert.ok(html.stdout.includes("Summor för mandatperioden"));
+    assert.ok(html.stdout.includes("Ändringar i löften, partier, ståndpunkter, kopplingar och handlingar"));
+    assert.ok(html.stdout.includes(`parti:${parties[0].code}`));
     assert.ok(html.stdout.includes("Ändrat partinamn: finansieringsgap"));
     assert.notEqual(filePacket.hash, JSON.parse(run(efter, efter).stdout).hash);
     assert.equal(run(fore, "saknad-revision").status, 1);

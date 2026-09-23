@@ -50,7 +50,7 @@ export function publiceringsvy(paket: Paket): string {
 <details><summary>Visa beräkningskodens kontrollsummor</summary><p>Före: <code>${html(fore.berakningshash)}</code></p><p>Efter: <code>${html(efter.berakningshash)}</code></p></details></section>`;
   };
   const filvy = paket.filer === null
-    ? "<p>Filjämförelse saknas. Underlaget omfattar endast de fyra postregistren och räcker inte för publiceringsbeslut.</p>"
+    ? "<p>Filjämförelse saknas. Underlaget omfattar endast de fem postregistren och räcker inte för publiceringsbeslut.</p>"
     : `<section id="filer"><h2>Alla filändringar</h2><p>${paket.filer.sokvagar.length} ändrade filer mellan revisionerna. Listan omfattar även kod, övriga data och texter som inte visas som poster nedan.</p>
 ${paket.filer.sokvagar.length ? `<ul>${paket.filer.sokvagar.map((p) => `<li><code>${html(p)}</code></li>`).join("")}</ul><details><summary>Visa hela filjämförelsen</summary><p>Binära filer återges i Gits patchformat och behöver även granskas i sitt ursprungliga format.</p><pre>${html(paket.filer.patch)}</pre></details>` : "<p>Inga spårade filer har ändrats.</p>"}</section>`;
   const rubrik = (andring: Paket["andringar"][number]) => {
@@ -87,6 +87,6 @@ ${paket.driftbas ? `<dt>Föregående lyckade publicering</dt><dd>${html(paket.dr
 <p>${paket.andringar.length} berörda poster. Registret innehåller ${paket.antalFore} poster före och ${paket.antalEfter} efter.</p>
 ${summorvy()}
 ${filvy}
-<h2>Ändringar i löften, ståndpunkter, kopplingar och handlingar</h2>
-${rader || "<p>Inga ändringar i de fyra postregistren.</p>"}</main></html>\n`;
+<h2>Ändringar i löften, partier, ståndpunkter, kopplingar och handlingar</h2>
+${rader || "<p>Inga ändringar i de fem postregistren.</p>"}</main></html>\n`;
 }

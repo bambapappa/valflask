@@ -50,7 +50,7 @@ test("filändringar utanför postregistren syns och binds till paketets hash", (
   assert.ok(vy.includes("data/parties.json"));
   assert.ok(vy.includes("&lt;script&gt;ändrad text&lt;/script&gt;"));
   assert.ok(!vy.includes("<script>"));
-  assert.ok(vy.includes("Inga ändringar i de fyra postregistren"));
+  assert.ok(vy.includes("Inga ändringar i de fem postregistren"));
   const andrat = structuredClone(paket);
   andrat.filer!.patch = "annan text";
   assert.throws(() => publiceringsvy(andrat), /ogiltigt/);
