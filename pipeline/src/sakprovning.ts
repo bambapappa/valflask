@@ -3,6 +3,8 @@ export { ordnaSakreferenser, sakmomentensBeredskap, SAKMOMENT, type Sakreferens,
 import { tillampaIndragningsforslag, type FrystIndragningsforslag } from "./indragningsforslag.ts";
 import { tillampaCitatforslag, type FrystCitatforslag } from "./citatforslag.ts";
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { bindUnderlag, kanoniskJson, sammaUnderlag, type BundetUnderlag } from "./underlagsversion.ts";
 import { byggUnderlagsregister } from "./underlagsregister.ts";
 import { tillampaLoftesforslag, type FrystLoftesforslag, type PromiseEntry } from "./loftesforslag.ts";
@@ -35,17 +37,23 @@ export interface Sakprovning {
 function hash(value: unknown): string {
   return createHash("sha256").update(kanoniskJson(value)).digest("hex");
 }
+function lasPartier(): Record<string, unknown>[] {
+  const poster: unknown = JSON.parse(readFileSync(join(import.meta.dirname, "../../data/parties.json"), "utf8"));
+  if (!Array.isArray(poster)) throw new Error("Partiregistret kräver en lista");
+  return poster as Record<string, unknown>[];
+}
 /** Binder sparad slutform och rekursiva grupp-/ankarberoenden; hämtar inga källor. */
 export function byggSakunderlag(
   forslag: FrystLoftesforslag | FrystKalkylforslag,
   loften: PromiseEntry[],
   kopost: ReviewCandidate,
   material: readonly Sakreferens[],
+  partier: Record<string, unknown>[] = lasPartier(),
 ): Sakunderlag {
   const efter = forslag.version === "kalkylforslag/1"
     ? tillampaKalkylforslag(forslag, loften, kopost, forslag.hash)
     : tillampaLoftesforslag(forslag, loften, kopost, forslag.hash);
-  return bindSlutform(forslag, efter, material);
+  return bindSlutform(forslag, efter, material, partier);
 }
 
 /** Befintliga löftens textändring behöver ingen påhittad köpost. */
@@ -139,10 +147,11 @@ export function byggNollunderlag(forslag: FrystNollforslag, loften: PromiseEntry
   return bindSlutform(forslag, efter, material);
 }
 
-function bindSlutform(forslag: Sakunderlag["forslag"], efter: PromiseEntry[], material: readonly Sakreferens[]): Sakunderlag {
+function bindSlutform(forslag: Sakunderlag["forslag"], efter: PromiseEntry[], material: readonly Sakreferens[], partier = lasPartier()): Sakunderlag {
   const register = byggUnderlagsregister({
     loften: efter as unknown as Record<string, unknown>[],
     handlingar: [], kopplingar: [], standpunkter: [],
+    partier,
   });
   const payload = {
     version: "sakunderlag/1" as const,

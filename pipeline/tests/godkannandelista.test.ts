@@ -15,8 +15,9 @@ const items = ko.filter((p) => p.candidate?.quote && p.cost?.calculation && p.co
 assert.equal(items.length, 2);
 const target = loften.find((p: { status: string; group_id: string | null }) => p.status === "aktiv" && !p.group_id);
 assert.ok(target);
-const files = ["promises.json", "needs_review.json", "changelog.json", "provningar.json"];
+const files = ["promises.json", "needs_review.json", "changelog.json", "provningar.json", "parties.json"];
 function init(dir: string) {
+  cpSync(join(import.meta.dirname, "../../data/parties.json"), join(dir, "parties.json"));
   writeFileSync(join(dir, "promises.json"), JSON.stringify(loften));
   writeFileSync(join(dir, "needs_review.json"), JSON.stringify(items));
   writeFileSync(join(dir, "changelog.json"), "[]");

@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, copyFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { approve, prepare, loesKoArgument, type Beslutsunderlag, type ReviewCandidate } from "../../src/review.ts";
@@ -7,6 +7,8 @@ import { kanoniskJson } from "../../src/underlagsversion.ts";
 
 /** Endast teststruktur. Inga verkliga källkontroller, sakbedömningar eller attester. */
 export function provatBeslutsunderlag(args: string[], dir: string): Beslutsunderlag {
+  const partifil = join(dir, "parties.json");
+  if (!existsSync(partifil)) copyFileSync(join(import.meta.dirname, "../../../data/parties.json"), partifil);
   const forslag = prepare(args, dir);
   const loften = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8"));
   const ko: ReviewCandidate[] = JSON.parse(readFileSync(join(dir, "needs_review.json"), "utf8"));

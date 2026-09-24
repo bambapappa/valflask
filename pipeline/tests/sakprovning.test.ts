@@ -10,6 +10,7 @@ import { byggSakunderlag, skapaSakprovning, sakprovningsBeredskap } from "../src
 
 const data = join(import.meta.dirname, "../../data");
 const loften: PromiseEntry[] = JSON.parse(readFileSync(join(data, "promises.json"), "utf8"));
+const partier: Record<string, unknown>[] = JSON.parse(readFileSync(join(data, "parties.json"), "utf8"));
 const ko: ReviewCandidate[] = JSON.parse(readFileSync(join(data, "needs_review.json"), "utf8"));
 const index = ko.findIndex((p) => p.candidate?.quote && p.cost?.calculation && p.cost.calculation.length <= 800);
 assert.ok(index >= 0);
@@ -32,6 +33,17 @@ it("utkast binder slutform och gruppberoende men avstår i varje moment", () => 
   assert.ok(provning.bedomningar.every((p) => p.utfall === "oavgjort" && p.belagg.length === 0));
   assert.equal(sakprovningsBeredskap(provning, underlag).klar, false);
   assert.equal(provning.bedomare, null);
+});
+
+it("sakprövningen blir inaktuell när partiets metadata ändras", () => {
+  const original = byggSakunderlag(forslag, loften, item, material, partier);
+  const kopia = structuredClone(partier);
+  const parti = kopia.find((p) => p.code === forslag.nyttLofte.parties[0]);
+  assert.ok(parti);
+  parti.name = `${String(parti.name)} ändrat`;
+  const andrat = byggSakunderlag(forslag, loften, item, material, kopia);
+  assert.notEqual(original.poster.hash, andrat.poster.hash);
+  assert.equal(sakprovningsBeredskap(skapaSakprovning(original), andrat).klar, false);
 });
 
 it("saknat material, ändrad regel och ändrat förslag ger inte beredskap", () => {

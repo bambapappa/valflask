@@ -12,7 +12,7 @@ export interface Listgodkannande {
   underlag: Beslutsunderlag;
   provningshash: string;
 }
-const FILER = ["promises.json", "needs_review.json", "changelog.json", "provningar.json"] as const;
+const FILER = ["promises.json", "needs_review.json", "changelog.json", "provningar.json", "parties.json"] as const;
 
 function lasLage(dataDir: string): Record<string, string | null> {
   return Object.fromEntries(FILER.map((fil) => {

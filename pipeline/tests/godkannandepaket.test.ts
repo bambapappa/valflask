@@ -23,6 +23,7 @@ const kandidat = ko.find((p) => p.candidate?.quote && p.cost?.calculation && p.c
 assert.ok(kandidat);
 
 function init(dir: string): void {
+  cpSync(join(import.meta.dirname, "../../data/parties.json"), join(dir, "parties.json"));
   writeFileSync(join(dir, "promises.json"), JSON.stringify(loften));
   writeFileSync(join(dir, "needs_review.json"), JSON.stringify([kandidat]));
   writeFileSync(join(dir, "changelog.json"), "[]");

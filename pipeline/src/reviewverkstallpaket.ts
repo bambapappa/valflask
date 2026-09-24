@@ -6,12 +6,12 @@ import { lasFillage, skapaFilpaket, type Filpaket } from "./datatransaktion.ts";
 import type { Verkstallrapport } from "./reviewverkstall.ts";
 import type { Beslut } from "./reviewbeslut.ts";
 
-export const VERKSTALLFILER = ["promises.json", "needs_review.json", "provningar.json", "changelog.json", "rattelser.json", "avvisade.json"] as const;
+export const VERKSTALLFILER = ["promises.json", "needs_review.json", "provningar.json", "changelog.json", "rattelser.json", "avvisade.json", "parties.json"] as const;
 /** Alla mutationer sker i kopian; originalet får endast det färdiga paketet. */
 export function forberedReviewverkstallMedRapport(rader: readonly Beslut[], dataDir: string): { paket: Filpaket; rapport: Verkstallrapport } {
   if (!Array.isArray(rader) || rader.length === 0) throw new Error("Beslutslistan är tom");
   const fore = lasFillage(dataDir, VERKSTALLFILER);
-  for (const fil of ["promises.json", "needs_review.json", "provningar.json"]) if (fore[fil] === null) throw new Error(`Saknar ${fil}`);
+  for (const fil of ["promises.json", "needs_review.json", "provningar.json", "parties.json"]) if (fore[fil] === null) throw new Error(`Saknar ${fil}`);
   const dir = mkdtempSync(join(tmpdir(), "reviewverkstall-"));
   try {
     for (const [fil, text] of Object.entries(fore)) if (text !== null) writeFileSync(join(dir, fil), text);

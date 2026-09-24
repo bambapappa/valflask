@@ -704,7 +704,7 @@ function approveLast(
   periodFlag: string | undefined,
   noteFlag: string | undefined,
 ): { id: string; title: string; msekBase: number } {
-  const fore = lasFillage(dataDir, ["promises.json", "needs_review.json", "changelog.json", "provningar.json"]);
+  const fore = lasFillage(dataDir, ["promises.json", "needs_review.json", "changelog.json", "provningar.json", "parties.json"]);
   const { forslag: nyberett, befintliga, item, items, index, cost } = forberedLast(
     dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag,
   );
@@ -749,7 +749,10 @@ function approveLast(
   if (forvantatForslag.hash !== forslag.hash) {
     throw new Error("Godkännandets argument eller underlag skiljer sig från det sparade förslaget");
   }
-  const aktuellt = byggSakunderlag(forslag, befintliga, item, beslutsunderlag.aktuellaReferenser);
+  if (typeof fore["parties.json"] !== "string") throw new Error("Saknar partiregister före godkännande");
+  const partier: unknown = JSON.parse(fore["parties.json"]);
+  if (!Array.isArray(partier)) throw new Error("Partiregistret kräver en lista");
+  const aktuellt = byggSakunderlag(forslag, befintliga, item, beslutsunderlag.aktuellaReferenser, partier);
   const beredskap = sakprovningsBeredskap(beslutsunderlag.provning, aktuellt);
   if (!beredskap.klar) throw new Error(`Sakprövningen är inte klar: ${beredskap.hinder.join("; ")}`);
 
@@ -773,6 +776,7 @@ function approveLast(
     "needs_review.json": JSON.stringify(remaining, null, 2) + "\n",
     "changelog.json": JSON.stringify(log, null, 2) + "\n",
     "provningar.json": fore["provningar.json"] ?? null,
+    "parties.json": fore["parties.json"],
   }));
 
   const linkNote = group_id ? ` [länkad till group ${group_id}]` : "";

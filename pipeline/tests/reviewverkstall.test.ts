@@ -18,6 +18,7 @@ const items = ko.filter((p) => p.candidate?.quote && p.cost?.calculation && p.co
 assert.equal(items.length, 3);
 const target = loften.find((p: { status: string; group_id: string | null }) => p.status === "aktiv" && !p.group_id);
 function init(dir: string): Beslut[] {
+  cpSync(join(import.meta.dirname, "../../data/parties.json"), join(dir, "parties.json"));
   writeFileSync(join(dir, "promises.json"), JSON.stringify(loften));
   writeFileSync(join(dir, "needs_review.json"), JSON.stringify(items));
   for (const n of ["changelog.json", "rattelser.json", "avvisade.json"]) writeFileSync(join(dir, n), "[]");
@@ -119,6 +120,21 @@ it("kalkylflyttens ändrade löfte, rättelse och avvisning finns i samma paket"
     assert.equal(JSON.parse(paket.efter["rattelser.json"]!).length, 1);
     assert.equal(JSON.parse(paket.efter["avvisade.json"]!).length, 2);
     assert.equal(JSON.parse(paket.efter["needs_review.json"]!).length, 1);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+it("verkställningspaketet stoppas om partiposter ändrats efter förprövningen", () => {
+  const dir = mkdtempSync(join(tmpdir(), "verkstall-parti-"));
+  try {
+    const beslut = init(dir).slice(0, 1);
+    const paket = forberedReviewverkstall(beslut, dir);
+    assert.equal(paket.efter["parties.json"], paket.fore["parties.json"]);
+    const loftenFore = readFileSync(join(dir, "promises.json"), "utf8");
+    const partier = JSON.parse(readFileSync(join(dir, "parties.json"), "utf8"));
+    partier[0].name += " ändrat";
+    writeFileSync(join(dir, "parties.json"), JSON.stringify(partier));
+    assert.throws(() => skrivFilpaket(dir, paket), /föreläge har ändrats/u);
+    assert.equal(readFileSync(join(dir, "promises.json"), "utf8"), loftenFore);
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 

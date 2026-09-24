@@ -23,7 +23,7 @@ const nu = new Date("2026-09-14T10:00:00Z");
 it("verklig CLI kräver privat paket, klar prövning och externt beslut", () => {
   const root = mkdtempSync(join(tmpdir(), "citatcli-")), d = join(root, "data"), pipe = join(root, "pipeline");
   try {
-    mkdirSync(d); mkdirSync(join(pipe, "scripts"), { recursive: true });
+    mkdirSync(d); cpSync(join(import.meta.dirname, "../../data/parties.json"), join(d, "parties.json")); mkdirSync(join(pipe, "scripts"), { recursive: true });
     for (const n of ["src", "schemas", "prompts"]) cpSync(join(import.meta.dirname, "..", n), join(pipe, n), { recursive: true });
     cpSync(join(import.meta.dirname, "../package.json"), join(pipe, "package.json"));
     cpSync(join(import.meta.dirname, "../scripts/citat-byt.mts"), join(pipe, "scripts/citat-byt.mts"));
