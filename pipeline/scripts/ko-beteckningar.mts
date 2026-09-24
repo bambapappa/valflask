@@ -14,8 +14,8 @@
  * `cost.anchor_ids` och beskrivs i ord i texten; en regelkod skrivs ut som vad
  * regeln säger.
  *
- * RÖR BARA KÖN. Publicerade löften har sina egna verktyg — ankarpasset och
- * regelnollningen — och deras texter är rättelsepliktiga på ett annat sätt.
+ * RÖR BARA KÖN. Publicerade löften kräver en separat, sakprövad rättelse;
+ * den äldre skrivvägen i ankarpasset är spärrad.
  */
 import { readFileSync } from "node:fs";
 import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";

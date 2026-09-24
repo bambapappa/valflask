@@ -2,7 +2,7 @@
  * Betar av ankarskulden, ett läst pass i taget.
  *
  *   pnpm ankarpasset -- <fil>                       # torrkörning, alltid först
- *   pnpm ankarpasset -- <fil> --skriv --varfor "…"
+ *   --skriv är spärrat tills de fyra samhöriga filerna kan journalföras ihop.
  *
  * En rad per löfte, fyra fält åtskilda av tabb:
  *
@@ -22,12 +22,10 @@
  * Kör `pnpm ankarsvepet -- --beroende <id>` före ett pass som rör ett löfte
  * andra lånar av.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { computeDataHash } from "../src/publish.ts";
-import { ankarbrott, lanarUtanSparbartAnkare } from "../src/ankarkravet.ts";
-import { provaRad, tillampa, type Ankarrad, type Lofte, type Utfall } from "../src/ankarpasset.ts";
-import { svenskDag } from "../src/dagen.ts";
+import { lanarUtanSparbartAnkare } from "../src/ankarkravet.ts";
+import { provaRad, type Ankarrad, type Lofte, type Utfall } from "../src/ankarpasset.ts";
 
 const ROT = join(import.meta.dirname, "../..");
 const DATA = join(ROT, "data");
@@ -35,10 +33,13 @@ const FACIT = join(ROT, "pipeline/facit/ankarskulden.json");
 
 const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
+if (skriv) {
+  console.error("Ankarpasset kan tills vidare bara torrköras. Dess äldre --skriv-väg ändrar löften, facit, ändringslogg och rättelser separat. En journalförd fyrfilsväg med privat sakprövning behövs före verkställning; ankarsattning är ett annat verktyg och ersätter inte grupp/egen.");
+  process.exit(1);
+}
 const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const varfor = varde("--varfor");
 const fil = argv.find((a) => !a.startsWith("--") && a !== varfor);
-const datum = svenskDag();
 
 if (!fil) {
   console.error("Ange en fil: <id>\\t<ankare|grupp|egen>\\t<värde>\\t<skäl>. Se skriptets huvud.");
@@ -122,50 +123,4 @@ if (fel.length > 0) {
   );
 }
 
-if (!skriv) {
-  console.log("\nIngenting skrivet. Kör med --skriv för att verkställa.");
-  process.exit(0);
-}
-if (!varfor) {
-  console.error("\n--varfor krävs vid --skriv: rättelseloggen ska förklara varför, inte bara vad.");
-  process.exit(1);
-}
-
-const nya = loften.map((l) => {
-  const rad = rader.find((r) => r.id === l.id);
-  return rad ? tillampa(l, rad) : l;
-});
-writeFileSync(join(DATA, "promises.json"), JSON.stringify(nya, null, 2) + "\n");
-
-// Skulden krymper med exakt de poster som lämnat den — mätt om, inte antaget.
-const kvar = ankarbrott(nya as never[]);
-const lamnade = skuld.ids.filter((id) => !kvar.includes(id));
-skuld.ids = skuld.ids.filter((id) => kvar.includes(id));
-skuld.count = skuld.ids.length;
-writeFileSync(FACIT, JSON.stringify(skuld, null, 2) + "\n");
-
-// Hashen i sista changelog-posten ska beskriva filen som ligger där.
-const changelogPath = join(DATA, "changelog.json");
-const changelog = JSON.parse(readFileSync(changelogPath, "utf8")) as Array<Record<string, unknown>>;
-changelog[changelog.length - 1]!["data_hash"] = computeDataHash(nya);
-writeFileSync(changelogPath, JSON.stringify(changelog, null, 2) + "\n");
-
-const rattelserPath = join(DATA, "rattelser.json");
-const rattelser = JSON.parse(readFileSync(rattelserPath, "utf8")) as unknown[];
-const perUtfall = (u: Utfall) => rader.filter((r) => r.utfall === u).length;
-rattelser.push({
-  date: datum,
-  affects: `Löftessidorna för ${rader.map((r) => r.id).sort().join(", ")} — uträkningens grund`,
-  what:
-    `${rader.length} uträkningar som lånade ett belopp ur ett annat löfte har fått sin grund ` +
-    `utskriven: ${perUtfall("ankare")} pekar nu ut löftet de lånar av, ${perUtfall("grupp")} visade sig vara ` +
-    `samma reform och räknas nu en gång, och ${perUtfall("egen")} har fått en uträkning som står på egen ` +
-    "aritmetik. Inget basbelopp har ändrats av själva kopplingen.",
-  why: varfor,
-  commit: "0000000",
-});
-writeFileSync(rattelserPath, JSON.stringify(rattelser, null, 2) + "\n");
-
-console.log(`\nSkrivet: data/promises.json, pipeline/facit/ankarskulden.json, data/changelog.json, data/rattelser.json`);
-console.log(`Skulden: ${skuld.count} kvar (${lamnade.length} lämnade listan)`);
-console.log("\nKvar att göra för hand: backfilla commit-hashen i rättelseposten (andra commiten).");
+console.log("\nIngenting skrivet. Verkställning kräver en ny journalförd fyrfilsväg och privat sakprövning.");
