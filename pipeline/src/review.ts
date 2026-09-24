@@ -298,25 +298,6 @@ function saveJson(path: string, data: unknown): void {
   writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
 }
 
-/**
- * Appenda en changelog-post så `data_hash` och "senast uppdaterad" följer med
- * varje godkännande — annars släpar de efter promises.json tills nästa
- * pipelinekörning (samma post-form som publish.ts skriver). Saknad changelog ⇒
- * börja tom (robust i tester och första körning). Avvisningar loggas ALDRIG:
- * kön är inte publicerad data och promises.json/hashen ändras inte.
- */
-function appendChangelog(dataDir: string, entry: ChangelogEntry): void {
-  const path = join(dataDir, "changelog.json");
-  let log: ChangelogEntry[];
-  try {
-    log = loadJson<ChangelogEntry[]>(path);
-  } catch {
-    log = [];
-  }
-  log.push(entry);
-  saveJson(path, log);
-}
-
 function list(dataDir: string = DATA_DIR): void {
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
   if (items.length === 0) {
@@ -460,12 +441,7 @@ export function approve(
   beslutsunderlag?: Beslutsunderlag,
   beslutetsProvningshash?: string,
 ): { id: string; title: string; msekBase: number } {
-  const slappLas = taLaset(dataDir, "review approve");
-  try {
-    return approveLast(dataDir, beslutsunderlag, beslutetsProvningshash, ...lasGodkannandeArgument(rawArgs));
-  } finally {
-    slappLas();
-  }
+  return approveLast(dataDir, beslutsunderlag, beslutetsProvningshash, ...lasGodkannandeArgument(rawArgs));
 }
 
 /** Samma kontroller som godkännandet, utan att ändra sakdata. */
@@ -714,7 +690,7 @@ function forberedLast(
   return { forslag, befintliga, item, items, index, cost };
 }
 
-/** Själva godkännandet. Bruten ur `approve` bara för att låset ska ha ett finally. */
+/** Godkännandet binds till samma föreläge som det journalförda filpaketet. */
 function approveLast(
   dataDir: string,
   beslutsunderlag: Beslutsunderlag | undefined,
@@ -728,6 +704,7 @@ function approveLast(
   periodFlag: string | undefined,
   noteFlag: string | undefined,
 ): { id: string; title: string; msekBase: number } {
+  const fore = lasFillage(dataDir, ["promises.json", "needs_review.json", "changelog.json", "provningar.json"]);
   const { forslag: nyberett, befintliga, item, items, index, cost } = forberedLast(
     dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag,
   );
@@ -779,12 +756,11 @@ function approveLast(
   const promises = tillampaLoftesforslag(forslag, befintliga, item, forslag.hash);
   const remaining = items.filter((_, i) => i !== index);
 
-  saveJson(join(dataDir, "promises.json"), promises);
-  saveJson(join(dataDir, "needs_review.json"), remaining);
-
   // Håll data_hash + "senast uppdaterad" i synk vid varje godkännande (annars
   // släpar de tills nästa pipelinekörning — se DECISION_LOG 2026-07-08).
-  appendChangelog(dataDir, {
+  const log = fore["changelog.json"] === null ? [] : JSON.parse(fore["changelog.json"]!) as ChangelogEntry[];
+  if (!Array.isArray(log)) throw new Error("Ogiltig changelog före godkännande");
+  log.push({
     run_id: `review-${newId}`,
     added: [newId],
     updated: forslag.gruppandring ? [forslag.gruppandring.id] : [],
@@ -792,6 +768,12 @@ function approveLast(
     data_hash: computeDataHash(promises),
     timestamp: forslag.tidpunkt,
   });
+  skrivFilpaket(dataDir, skapaFilpaket(fore, {
+    "promises.json": JSON.stringify(promises, null, 2) + "\n",
+    "needs_review.json": JSON.stringify(remaining, null, 2) + "\n",
+    "changelog.json": JSON.stringify(log, null, 2) + "\n",
+    "provningar.json": fore["provningar.json"] ?? null,
+  }));
 
   const linkNote = group_id ? ` [länkad till group ${group_id}]` : "";
   console.log(`Godkänd: ${newId} "${title}" — ${cost.msek_base} msek (${cost.basis})${linkNote}`);

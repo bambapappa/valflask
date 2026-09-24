@@ -257,6 +257,24 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
     }
   });
 
+  it("lämnar löfte och kö orörda om ändringsloggen är trasig", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-atomic-"));
+    try {
+      const loften = JSON.stringify([pub]);
+      const ko = JSON.stringify([queueItem]);
+      writeFileSync(join(dir, "promises.json"), loften);
+      writeFileSync(join(dir, "needs_review.json"), ko);
+      writeFileSync(join(dir, "changelog.json"), "{trasig");
+      skrivProvning(dir);
+      assert.throws(() => approve(["0"], dir), /JSON|position|property/u);
+      assert.equal(readFileSync(join(dir, "promises.json"), "utf8"), loften);
+      assert.equal(readFileSync(join(dir, "needs_review.json"), "utf8"), ko);
+      assert.equal(readFileSync(join(dir, "changelog.json"), "utf8"), "{trasig");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   /**
    * Källnivån ska beskriva det belopp som står bredvid den — inte det belopp
    * kö-posten råkade bära.
