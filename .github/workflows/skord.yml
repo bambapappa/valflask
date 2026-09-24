@@ -66,6 +66,9 @@ jobs:
           # för den färska: "Invalid username or token". Bara pushstegen
           # behöver autentisering, och de bär sin färska token i URL:en.
           persist-credentials: false
+      - name: Bind skörden till inläst huvudgren
+        id: start
+        run: echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
         with:
           node-version: 22
@@ -142,6 +145,7 @@ jobs:
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           PUSH_TOKEN: ${{ steps.push-token.outputs.token }}
+          START_COMMIT: ${{ steps.start.outputs.commit }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -165,6 +169,13 @@ jobs:
               echo "försök $attempt: kunde inte hämta $DEFAULT_BRANCH"
               sleep $((attempt * 5))
               continue
+            fi
+            # Vi får bara återföra skördens filer om just dessa filer ännu är
+            # samma version som när skörden började. Annars skulle cp efter
+            # reset ersätta en nyare huvudgrensändring utan Git-konflikt.
+            if ! bash pipeline/scripts/skord-skydd.sh "$START_COMMIT" "origin/$DEFAULT_BRANCH"; then
+              echo "::error::Ingen äldre skördekopia får ersätta nyare huvudgrensdata."
+              exit 1
             fi
             git reset --hard "origin/$DEFAULT_BRANCH"
             for p in roster personer.json betankanden.json handlingar.json; do
