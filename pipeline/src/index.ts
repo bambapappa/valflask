@@ -28,7 +28,7 @@ import {
   type StanceGateFailure,
 } from "./stance-pipeline.ts";
 import { lasStanceReview } from "./stance-review-lage.ts";
-import { lasFillage, skapaFilpaket, skrivFilpaket } from "./datatransaktion.ts";
+import { lasFillage, type Fillage } from "./datatransaktion.ts";
 import { kanoniskJson } from "./underlagsversion.ts";
 import type { IssuesFile, StanceCell } from "./stances.ts";
 
@@ -594,9 +594,10 @@ export async function runPipeline(
     if (!erroredUrls.has(a.url)) updatedSeen.set(seenKey(a), a.url);
   }
 
-  // ── Frågevågen: publicera ståndpunkter FÖRE publish() så att körningens
-  // changelog-post bär stances_added/stances_changed.
+  // ── Frågevågen: beräkna före publish(), men skriv i samma filpaket så
+  // körningens changelog-post och celler aldrig får olika versioner.
   let stanceSummary: { added: string[]; changed: string[] } | undefined;
+  let stanceFiles: { fore: Fillage; efter: Fillage } | undefined;
   if (issuesFile) {
     const stanceResult = publishStances({
       processed: processedStances,
@@ -609,9 +610,9 @@ export async function runPipeline(
       mode: ctx.stancesMode ?? "review",
     });
     const json = (v: unknown) => JSON.stringify(v, null, 2) + "\n";
-    skrivFilpaket(ctx.outputDir, skapaFilpaket(stanceFore!, {
+    stanceFiles = { fore: stanceFore!, efter: {
       "stances.json": json(stanceResult.cells), "stances_review.json": json(stanceResult.review),
-    }));
+    } };
     stanceSummary = { added: stanceResult.stancesAdded, changed: stanceResult.stancesChanged };
     console.error(
       `[stances] publicerade=${stanceResult.stancesAdded.length} ändringar=${stanceResult.stancesChanged.length} review=${stanceResult.review.length - existingStanceReview.length} (nya) omskördar=${stanceResult.stancesOmskordade.length}`,
@@ -633,6 +634,7 @@ export async function runPipeline(
     outputDir: ctx.outputDir,
     seen: seenObj,
     stanceSummary,
+    stanceFiles,
   });
 
   // Veckans fläsk (A4, §7 steg 7): generera/uppdatera krönikan för aktuell

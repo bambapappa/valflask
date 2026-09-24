@@ -65,6 +65,27 @@ describe("publish: needs_review är en beständig kö (merge, inte överskrivnin
     }
   });
 
+  it("skriver inte Frågevågens resultat om löftespubliceringen faller", () => {
+    const dir = mkdtempSync(join(tmpdir(), "publish-stance-"));
+    try {
+      writeFileSync(join(dir, "promises.json"), "[]\n");
+      writeFileSync(join(dir, "needs_review.json"), "[]\n");
+      writeFileSync(join(dir, "changelog.json"), "{trasig");
+      writeFileSync(join(dir, "stances.json"), "[]\n");
+      writeFileSync(join(dir, "stances_review.json"), "[]\n");
+      const fore = { "stances.json": "[]\n", "stances_review.json": "[]\n" };
+      assert.throws(() => publish({
+        processedCandidates: [], reviewItems: [], existingPromises: [],
+        runId: "run-test", now: new Date("2026-06-25T00:00:00Z"), outputDir: dir,
+        stanceFiles: { fore, efter: { "stances.json": '[{"id":"ny"}]\n', "stances_review.json": "[]\n" } },
+      }), SyntaxError);
+      assert.equal(readFileSync(join(dir, "stances.json"), "utf8"), "[]\n");
+      assert.equal(readFileSync(join(dir, "stances_review.json"), "utf8"), "[]\n");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it("stoppar om löftesbeståndet ändrats efter körningens läsning", () => {
     const dir = mkdtempSync(join(tmpdir(), "publish-stale-"));
     try {

@@ -13,7 +13,7 @@ import {
 import { arAvvisad, type Avvisning } from "./avvisningar.ts";
 import type { CostEstimate } from "./cost.ts";
 import type { VerifyResult } from "./verify.ts";
-import { lasFillage, skapaFilpaket, skrivFilpaket } from "./datatransaktion.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket, type Fillage } from "./datatransaktion.ts";
 
 export interface PipelinePromise {
   id: string;
@@ -109,6 +109,8 @@ export interface PublishInput {
   seen?: Record<string, string>;
   /** Frågevågen: körningens ståndpunktsresultat, in i samma changelog-post. */
   stanceSummary?: { added: string[]; changed: string[] } | undefined;
+  /** Frågevågens beräknade resultat och det föreläge som lästes före körningen. */
+  stanceFiles?: { fore: Fillage; efter: Fillage } | undefined;
 }
 
 export interface PublishResult {
@@ -180,7 +182,16 @@ export function publish(input: PublishInput): PublishResult {
   const allPromises = [...existingPromises];
   const addedIds: string[] = [];
   mkdirSync(outputDir, { recursive: true });
-  const fore = lasFillage(outputDir, ["promises.json", "needs_review.json", "changelog.json", ...(input.seen === undefined ? [] : ["seen.json"])]);
+  const huvudfiler = ["promises.json", "needs_review.json", "changelog.json", ...(input.seen === undefined ? [] : ["seen.json"])];
+  const stanceNamn = Object.keys(input.stanceFiles?.fore ?? {});
+  if (stanceNamn.some((namn) => huvudfiler.includes(namn)) ||
+      stanceNamn.sort().join() !== Object.keys(input.stanceFiles?.efter ?? {}).sort().join()) {
+    throw new Error("Frågevågens filpaket har fel filuppsättning");
+  }
+  const fore = lasFillage(outputDir, [...huvudfiler, ...stanceNamn]);
+  for (const namn of stanceNamn) {
+    if (fore[namn] !== input.stanceFiles?.fore[namn]) throw new Error(`Frågevågens föreläge har ändrats: ${namn}`);
+  }
   const lasLista = <T>(namn: keyof typeof fore): T[] => {
     const text = fore[namn];
     if (text === undefined) throw new Error(`Saknat föreläge: ${namn}`);
@@ -410,6 +421,7 @@ export function publish(input: PublishInput): PublishResult {
     "needs_review.json": json(stadadReview),
     "changelog.json": json(existingChangelog),
     ...(input.seen === undefined ? {} : { "seen.json": json(input.seen) }),
+    ...(input.stanceFiles?.efter ?? {}),
   }));
 
   return {
