@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { harledLoftestyp } from "./loftestyp.ts";
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import {
   passesAmountCapR5,
@@ -13,6 +13,7 @@ import {
 import { arAvvisad, type Avvisning } from "./avvisningar.ts";
 import type { CostEstimate } from "./cost.ts";
 import type { VerifyResult } from "./verify.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "./datatransaktion.ts";
 
 export interface PipelinePromise {
   id: string;
@@ -176,6 +177,20 @@ export function publish(input: PublishInput): PublishResult {
   const newPromises: PipelinePromise[] = [];
   const allPromises = [...existingPromises];
   const addedIds: string[] = [];
+  mkdirSync(outputDir, { recursive: true });
+  const fore = lasFillage(outputDir, ["promises.json", "needs_review.json", "changelog.json"]);
+  const lasLista = <T>(namn: keyof typeof fore): T[] => {
+    const text = fore[namn];
+    if (text === undefined) throw new Error(`Saknat föreläge: ${namn}`);
+    if (text === null) return [];
+    const poster: unknown = JSON.parse(text);
+    if (!Array.isArray(poster)) throw new Error(`Ogiltig ${namn}: väntade en lista`);
+    return poster as T[];
+  };
+  if (fore["promises.json"] !== null &&
+      canonicalStringify(lasLista<PipelinePromise>("promises.json")) !== canonicalStringify(existingPromises)) {
+    throw new Error("Löftesbeståndet har ändrats sedan körningens start");
+  }
 
   for (const pc of processedCandidates) {
     if (!passesAmountCapR5(pc.cost.msek_base)) {
@@ -280,12 +295,6 @@ export function publish(input: PublishInput): PublishResult {
     changelogEntry.stances_changed = input.stanceSummary.changed;
   }
 
-  mkdirSync(outputDir, { recursive: true });
-
-  writeFileSync(
-    `${outputDir}/promises.json`,
-    JSON.stringify(allPromises, null, 2) + "\n",
-  );
   const utanSkiljetecken = (s: string): string =>
     s.toLowerCase().normalize("NFC").replace(/[^a-z0-9åäöéèü]+/giu, "");
   // Slå ihop med befintlig review-kö i stället för att skriva över den. Annars
@@ -308,15 +317,7 @@ export function publish(input: PublishInput): PublishResult {
     );
     return c.length >= 30 ? `${r.articleUrl ?? ""}::${c}` : null;
   };
-  const existingReview: NeedsReviewEntry[] = (() => {
-    try {
-      return JSON.parse(
-        readFileSync(`${outputDir}/needs_review.json`, "utf8"),
-      ) as NeedsReviewEntry[];
-    } catch {
-      return [];
-    }
-  })();
+  const existingReview = lasLista<NeedsReviewEntry>("needs_review.json");
   const mergedReview = [...existingReview];
   const existingKeys = new Set(existingReview.map(reviewKey));
   const existingCitat = new Set(
@@ -399,25 +400,14 @@ export function publish(input: PublishInput): PublishResult {
           .join("\n  "),
     );
   }
-  writeFileSync(
-    `${outputDir}/needs_review.json`,
-    JSON.stringify(stadadReview, null, 2) + "\n",
-  );
-
-  const existingChangelog = (() => {
-    try {
-      return JSON.parse(
-        readFileSync(`${outputDir}/changelog.json`, "utf8"),
-      ) as ChangelogEntry[];
-    } catch {
-      return [];
-    }
-  })();
+  const existingChangelog = lasLista<ChangelogEntry>("changelog.json");
   existingChangelog.push(changelogEntry);
-  writeFileSync(
-    `${outputDir}/changelog.json`,
-    JSON.stringify(existingChangelog, null, 2) + "\n",
-  );
+  const json = (value: unknown): string => JSON.stringify(value, null, 2) + "\n";
+  skrivFilpaket(outputDir, skapaFilpaket(fore, {
+    "promises.json": json(allPromises),
+    "needs_review.json": json(stadadReview),
+    "changelog.json": json(existingChangelog),
+  }));
 
   return {
     promises: allPromises,

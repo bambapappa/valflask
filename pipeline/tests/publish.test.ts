@@ -30,6 +30,35 @@ function readReview(dir: string): NeedsReviewEntry[] {
 }
 
 describe("publish: needs_review är en beständig kö (merge, inte överskrivning)", () => {
+  it("lämnar löften och kö orörda om ändringsloggen är trasig", () => {
+    const dir = mkdtempSync(join(tmpdir(), "publish-atomic-"));
+    try {
+      const loften = "[]\n";
+      const ko = JSON.stringify([reviewItem("https://a.se/1", "Löfte A")]) + "\n";
+      writeFileSync(join(dir, "promises.json"), loften);
+      writeFileSync(join(dir, "needs_review.json"), ko);
+      writeFileSync(join(dir, "changelog.json"), "{trasig");
+      assert.throws(() => run(dir, [reviewItem("https://b.se/2", "Löfte B")]), SyntaxError);
+      assert.equal(readFileSync(join(dir, "promises.json"), "utf8"), loften);
+      assert.equal(readFileSync(join(dir, "needs_review.json"), "utf8"), ko);
+      assert.equal(readFileSync(join(dir, "changelog.json"), "utf8"), "{trasig");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("stoppar om löftesbeståndet ändrats efter körningens läsning", () => {
+    const dir = mkdtempSync(join(tmpdir(), "publish-stale-"));
+    try {
+      const loften = '[{"id":"p-annan"}]\n';
+      writeFileSync(join(dir, "promises.json"), loften);
+      assert.throws(() => run(dir, []), /Löftesbeståndet har ändrats/u);
+      assert.equal(readFileSync(join(dir, "promises.json"), "utf8"), loften);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it("lägger till nya poster utan att radera befintliga; tom körning bevarar kön", () => {
     const dir = mkdtempSync(join(tmpdir(), "publish-merge-"));
     try {
