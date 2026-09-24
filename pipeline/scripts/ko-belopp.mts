@@ -18,7 +18,8 @@
  * Fälten sätts likadant som `approve()` sätter dem, och `koBeloppTest` i
  * testsviten låser fast att de två inte glider isär.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 import { join } from "node:path";
 import { reviewId, type ReviewCandidate } from "../src/review.ts";
 import { senaste, type Beslut } from "../src/reviewbeslut.ts";
@@ -26,6 +27,8 @@ import { koKostnad } from "../src/kobelopp.ts";
 import { skrivOmBeteckningar, type Loftesuppgift } from "../src/beteckningar.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
+const fore = lasFillage(DATA, ["needs_review.json", "promises.json"]);
+if (typeof fore["needs_review.json"] !== "string" || typeof fore["promises.json"] !== "string") throw new Error("Köpasset kräver kö och löftesbestånd");
 const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 const fil = argv.find((a) => !a.startsWith("--"));
@@ -38,13 +41,13 @@ const beslut = senaste(
   readFileSync(fil, "utf8").split("\n").filter((r) => r.trim()).map((r) => JSON.parse(r) as Beslut),
 ).filter((b) => b.val === "godkann_belopp");
 
-const ko = JSON.parse(readFileSync(join(DATA, "needs_review.json"), "utf8")) as ReviewCandidate[];
+const ko = JSON.parse(fore["needs_review.json"]) as ReviewCandidate[];
 const perId = new Map(ko.map((p) => [reviewId(p), p]));
 // Granskarens anteckning BLIR uträkningen, och uträkningen visas publikt. Bär
 // noten ett löftes-id måste det bli ord här — annars fälls posten först vid
 // godkännandet, efter att prövningarna redan svepts mot fel text.
 const loften = new Map<string, Loftesuppgift>(
-  (JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Loftesuppgift[]).map((p) => [p.id, p]),
+  (JSON.parse(fore["promises.json"]) as Loftesuppgift[]).map((p) => [p.id, p]),
 );
 
 let satta = 0, skrivnaOm = 0, rattade = 0;
@@ -83,6 +86,9 @@ console.log(`${beslut.length} beslut med eget belopp · ${satta} skrivna på kö
   (saknas.length > 0 ? ` · ${saknas.length} utan spann: ${saknas.slice(0, 5).join(", ")}` : ""));
 
 if (!skriv) { console.log("\nTorrkörning. Lägg till --skriv för att verkställa."); process.exit(0); }
-writeFileSync(join(DATA, "needs_review.json"), JSON.stringify(ko, null, 2) + "\n");
+skrivFilpaket(DATA, skapaFilpaket(fore, {
+  "needs_review.json": JSON.stringify(ko, null, 2) + "\n",
+  "promises.json": fore["promises.json"],
+}));
 console.log("Skrivet: data/needs_review.json");
 console.log("Kör svepet över kön och skriv prövningarna innan du godkänner.");
