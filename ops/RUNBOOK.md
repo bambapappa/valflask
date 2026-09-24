@@ -163,13 +163,13 @@ bash ops/drill.sh
 
 ---
 
-## S8 — AI-agenter stängs ute (Cloudflares managed robots.txt)
+## S8 — AI-agenter stängs ute i robots.txt eller på HTTP-nivå
 
 **Symptom:** en AI-agent svarar att den inte kommer åt utlovat.se, ungefär
 "sidans tekniska inställningar blockerar min sökrobot". Sajten fungerar för
 läsare, alla sidor svarar 200, och `site/public/robots.txt` ser rätt ut i repot.
 
-**Orsak:** Cloudflares *managed robots.txt* är påslagen på zonen. Den lägger in
+**Tidigare uppmätt orsak (2026-08-01):** Cloudflares *managed robots.txt* var påslagen på zonen. Den lägger in
 ett eget block **överst** i den utlevererade filen som säger `Disallow: /` för
 Google-Extended, GPTBot, ClaudeBot, CCBot, Applebot-Extended, meta-externalagent,
 Bytespider och Amazonbot, plus `Content-Signal: ai-train=no`. Vårt eget block,
@@ -177,6 +177,12 @@ som välkomnar samma agenter, hamnar under. Robotar är oense om vad som gäller
 samma namn står i två grupper — flera tar den första de ser, och då är svaret
 nej. Ingenting blockeras på HTTP-nivå: bot-agenterna får 200. Det är bara
 robots.txt.
+
+**Nytt uppmätt fel 2026-09-24:** levererad `robots.txt` tillåter ClaudeBot,
+men samma fem sidor som svarar 200 för en vanlig läsare svarar 403 och
+`Your request was blocked.` för ClaudeBot. Detta är en separat HTTP-blockering,
+inte ett managed-robots-fel. Kontrollera därför WAF-/botreglerna i Cloudflare
+för just detta svar; ändra inte `robots.txt` i repot för att lösa ett 403.
 
 Att det inte syns i repot är hela poängen med felet — filen skrivs om på vägen
 ut. Därför läser kontrollen skarp adress:
@@ -198,7 +204,8 @@ sitt innehåll utan JavaScript. Samma kontroll kör dagligen i workflowen
 3. Slå **av** managed robots.txt / blockeringen av AI-robotar. Vill man ändå
    ha kvar en policy: välj den variant som bara blockerar träningsrobotar och
    släpper in svarsmotorerna — men sajtens hållning är att alla är välkomna.
-4. Kontrollera att inga WAF- eller bot-regler blockerar AI-robotar separat.
+4. Kontrollera WAF- och botreglerna separat. Om `robots.txt` tillåter agenten
+   men själva sidan ger 403 är det denna HTTP-blockering som måste lösas.
 5. Verifiera: `node ops/ai-atkomst.mjs` ska ge `AI-ATKOMST OK`.
 6. Cachen kan hålla kvar den gamla filen — rensa `utlovat.se/robots.txt` i
    Cloudflares cache om steg 5 fortfarande visar det gamla innehållet.
