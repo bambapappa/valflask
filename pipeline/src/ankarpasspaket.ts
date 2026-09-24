@@ -35,6 +35,9 @@ export function forberedAnkarpasspaket(indata: Ankarpassindata, lage: ReturnType
   const facit = JSON.parse(lage.facit) as { ids: string[]; count: number; [k: string]: unknown };
   if (!Array.isArray(facit.ids) || facit.count !== facit.ids.length) throw new Error("Ankarfacit är ogiltigt");
   const brottFore = new Set(ankarbrott(loften));
+  if (facit.ids.some((id) => !brottFore.has(id))) {
+    throw new Error("Ankarfacit innehåller en redan rättad post; stäm av skulden före nytt beslut");
+  }
   for (const rad of indata.rader) {
     if (!["ankare", "grupp", "egen"].includes(rad.utfall)) throw new Error(`Okänt utfall för ${rad.id}`);
     const prov = provaRad(rad, perId);
@@ -52,6 +55,9 @@ export function forberedAnkarpasspaket(indata: Ankarpassindata, lage: ReturnType
   const brottEfter = new Set(ankarbrott(nya));
   if (ids.some((id) => brottEfter.has(id))) throw new Error("Ändringen lämnar målpost kvar i ankarskulden");
   if ([...brottEfter].some((id) => !brottFore.has(id))) throw new Error("Ändringen skapar ny ankarskuld");
+  if (facit.ids.some((id) => !brottEfter.has(id) && !perRad.has(id))) {
+    throw new Error("Beslutet skulle ändra facit för en post som inte finns i ändringslistan");
+  }
   const facitEfter = { ...facit, ids: facit.ids.filter((id) => brottEfter.has(id)) };
   facitEfter.count = facitEfter.ids.length;
   const föreSumma = totalFlasket(loften as unknown as PipelinePromise[]);

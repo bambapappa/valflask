@@ -87,3 +87,12 @@ test("exakt prövat paket skriver fyra filer och behåller partibindningen", () 
     assert.equal(JSON.parse(efter.data["changelog.json"]!).length, 1);
   } finally { rmSync(f.root, { recursive: true, force: true }); }
 });
+
+test("osynkat facit får inte rättas tyst av ett annat ankarbeslut", () => {
+  const f = fixture();
+  try {
+    const path = join(f.root, "pipeline/facit/ankarskulden.json");
+    writeFileSync(path, JSON.stringify({ count: 4, ids: ["a", "c", "e", "b"] }) + "\n");
+    assert.throws(() => forberedAnkarpasspaket(f.indata, lasAnkarskuldslage(f.dataDir), new Date("2026-09-24T12:00:00Z")), /redan rättad post/u);
+  } finally { rmSync(f.root, { recursive: true, force: true }); }
+});

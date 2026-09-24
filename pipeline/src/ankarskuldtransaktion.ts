@@ -73,6 +73,9 @@ function kontrolleraFore(dataDir: string, p: Ankarskuldpaket): void {
 }
 function kontrolleraAterstallning(dataDir: string, p: Ankarskuldpaket): void {
   const lage = lasAnkarskuldslage(dataDir);
+  if (lage.partier !== p.partierFore) {
+    throw new Error("Återställning stoppad: partifilen har ändrats utanför transaktionen");
+  }
   for (const n of ANKARSKULDFILER) {
     if (lage.data[n] !== p.data.fore[n] && lage.data[n] !== p.data.efter[n]) {
       throw new Error(`Återställning stoppad: ${n} har ändrats utanför transaktionen`);

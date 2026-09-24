@@ -93,6 +93,21 @@ test("främmande ändring efter avbrott stoppar återställning och behåller sp
   } finally { rmSync(f.root, { recursive: true, force: true }); }
 });
 
+test("ändrad partifil efter avbrott stoppar återställning utan överskrivning", () => {
+  const f = fixture();
+  try {
+    assert.equal(avbrott(f.dataDir, f.paket, "avbrott").status, 91);
+    const annan = "[{\"code\":\"M\"}]\n";
+    writeFileSync(join(f.dataDir, "parties.json"), annan);
+    const script = new URL("../scripts/data-aterstall.mts", import.meta.url).pathname;
+    const run = spawnSync(process.execPath, ["--import", "tsx/esm", script, f.dataDir, "--skriv"], { encoding: "utf8" });
+    assert.notEqual(run.status, 0);
+    assert.match(run.stderr, /partifilen har ändrats/u);
+    assert.equal(readFileSync(join(f.dataDir, "parties.json"), "utf8"), annan);
+    assert.ok(existsSync(join(f.dataDir, TRANSAKTION)));
+  } finally { rmSync(f.root, { recursive: true, force: true }); }
+});
+
 test("ändrat paket och växande fryst skuld stoppas före skrivning", () => {
   const f = fixture();
   try {
