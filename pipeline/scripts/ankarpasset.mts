@@ -2,7 +2,8 @@
  * Betar av ankarskulden, ett läst pass i taget.
  *
  *   pnpm ankarpasset -- <fil>                       # torrkörning, alltid först
- *   --skriv är spärrat tills de fyra samhöriga filerna kan journalföras ihop.
+ *   --skriv är spärrat. För verkställning: förbered ett privat paket med
+ *   `pnpm ankarpass-beslut -- forbered`, sakpröva och använd paketets hash.
  *
  * En rad per löfte, fyra fält åtskilda av tabb:
  *
@@ -34,7 +35,7 @@ const FACIT = join(ROT, "pipeline/facit/ankarskulden.json");
 const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 if (skriv) {
-  console.error("Ankarpasset kan tills vidare bara torrköras. Dess äldre --skriv-väg ändrar löften, facit, ändringslogg och rättelser separat. En journalförd fyrfilsväg med privat sakprövning behövs före verkställning; ankarsattning är ett annat verktyg och ersätter inte grupp/egen.");
+  console.error("Ankarpassets äldre --skriv-väg är spärrad. Förbered i stället ett privat JSON-paket med pnpm ankarpass-beslut -- forbered; sakpröva alla rader och verkställ med paketets exakta hash. Ankarsattning är ett annat verktyg och ersätter inte grupp/egen.");
   process.exit(1);
 }
 const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
@@ -123,4 +124,4 @@ if (fel.length > 0) {
   );
 }
 
-console.log("\nIngenting skrivet. Verkställning kräver en ny journalförd fyrfilsväg och privat sakprövning.");
+console.log("\nIngenting skrivet. För verkställning: skapa ett privat JSON-paket med ankarpass-beslut, sakpröva och använd exakt beslutad pakethash.");

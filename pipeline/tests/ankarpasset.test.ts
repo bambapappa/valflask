@@ -36,7 +36,7 @@ test("den äldre direkta skrivvägen stoppas före filläsning", () => {
   const run = spawnSync(process.execPath, ["--import", "tsx/esm", "scripts/ankarpasset.mts", "saknas.tsv", "--skriv"],
     { cwd: pipeline, encoding: "utf8" });
   assert.equal(run.status, 1);
-  assert.match(run.stderr, /journalförd fyrfilsväg/u);
+  assert.match(run.stderr, /ankarpass-beslut/u);
   assert.doesNotMatch(run.stderr, /ENOENT/u);
 });
 
