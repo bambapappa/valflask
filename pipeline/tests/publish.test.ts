@@ -47,6 +47,24 @@ describe("publish: needs_review är en beständig kö (merge, inte överskrivnin
     }
   });
 
+  it("skriver inte läsregistret om samma publiceringspaket fälls", () => {
+    const dir = mkdtempSync(join(tmpdir(), "publish-seen-"));
+    try {
+      writeFileSync(join(dir, "promises.json"), "[]\n");
+      writeFileSync(join(dir, "needs_review.json"), "[]\n");
+      writeFileSync(join(dir, "changelog.json"), "{trasig");
+      writeFileSync(join(dir, "seen.json"), '{"gammal":"hash"}\n');
+      assert.throws(() => publish({
+        processedCandidates: [], reviewItems: [], existingPromises: [],
+        runId: "run-test", now: new Date("2026-06-25T00:00:00Z"), outputDir: dir,
+        seen: { ny: "hash" },
+      }), SyntaxError);
+      assert.equal(readFileSync(join(dir, "seen.json"), "utf8"), '{"gammal":"hash"}\n');
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it("stoppar om löftesbeståndet ändrats efter körningens läsning", () => {
     const dir = mkdtempSync(join(tmpdir(), "publish-stale-"));
     try {

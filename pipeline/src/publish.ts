@@ -105,6 +105,8 @@ export interface PublishInput {
   runId: string;
   now: Date;
   outputDir: string;
+  /** Körningens läsregister skrivs tillsammans med löften och kö. */
+  seen?: Record<string, string>;
   /** Frågevågen: körningens ståndpunktsresultat, in i samma changelog-post. */
   stanceSummary?: { added: string[]; changed: string[] } | undefined;
 }
@@ -178,7 +180,7 @@ export function publish(input: PublishInput): PublishResult {
   const allPromises = [...existingPromises];
   const addedIds: string[] = [];
   mkdirSync(outputDir, { recursive: true });
-  const fore = lasFillage(outputDir, ["promises.json", "needs_review.json", "changelog.json"]);
+  const fore = lasFillage(outputDir, ["promises.json", "needs_review.json", "changelog.json", ...(input.seen === undefined ? [] : ["seen.json"])]);
   const lasLista = <T>(namn: keyof typeof fore): T[] => {
     const text = fore[namn];
     if (text === undefined) throw new Error(`Saknat föreläge: ${namn}`);
@@ -407,6 +409,7 @@ export function publish(input: PublishInput): PublishResult {
     "promises.json": json(allPromises),
     "needs_review.json": json(stadadReview),
     "changelog.json": json(existingChangelog),
+    ...(input.seen === undefined ? {} : { "seen.json": json(input.seen) }),
   }));
 
   return {

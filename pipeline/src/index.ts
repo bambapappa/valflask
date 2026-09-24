@@ -621,6 +621,9 @@ export async function runPipeline(
     for (const rad of stanceResult.stancesOmskordade) console.error(`[stances] omskörd: ${rad}`);
   }
 
+  const seenObj: Record<string, string> = {};
+  for (const [k, v] of updatedSeen) seenObj[k] = v;
+
   const publishResult = publish({
     processedCandidates,
     reviewItems,
@@ -628,14 +631,9 @@ export async function runPipeline(
     runId: ctx.runId,
     now: ctx.now,
     outputDir: ctx.outputDir,
+    seen: seenObj,
     stanceSummary,
   });
-
-  const seenObj: Record<string, string> = {};
-  for (const [k, v] of updatedSeen) {
-    seenObj[k] = v;
-  }
-  writeFileSync(`${ctx.outputDir}/seen.json`, JSON.stringify(seenObj, null, 2) + "\n");
 
   // Veckans fläsk (A4, §7 steg 7): generera/uppdatera krönikan för aktuell
   // ISO-vecka ur veckans nya löften. Best-effort — fel fäller aldrig körningen.
