@@ -127,14 +127,16 @@ describe("parseReviewCommand — issue-kommentar till beslut", () => {
     assert.equal(parseReviewCommand("/godkänn femhundra"), null);
   });
 
-  it("/avvisa med och utan skäl", () => {
+  it("/avvisa kräver fryst pakethash för verkställning", () => {
+    const hash = "a".repeat(64);
+    assert.deepEqual(parseReviewCommand(`/avvisa paket ${hash}`), { action: "reject-package", hash });
     assert.deepEqual(parseReviewCommand("/avvisa slogan, inget löfte"), {
       action: "reject",
       reason: "slogan, inget löfte",
     });
     assert.deepEqual(parseReviewCommand("/avvisa"), {
       action: "reject",
-      reason: "Avvisad via review-issue utan angivet särskilt skäl.",
+      reason: "",
     });
   });
 

@@ -159,6 +159,7 @@ export type ReviewCommand =
       period?: Period;
     }
   | { action: "approve-package"; hash: string }
+  | { action: "reject-package"; hash: string }
   | { action: "reject"; reason: string };
 
 /**
@@ -168,7 +169,7 @@ export type ReviewCommand =
  *  /godkänn --group p-2026-0123   → ja, länka som dublett (delad group_id)
  *  /godkänn 0 4500 9000 --typ intäktsminskning → ja, med angiven kostnadstyp
  *  /godkänn 52500 70000 94500 --period per_ar  → ja, med beloppet omräknat till årstakt
- *  /avvisa <skäl>                 → nej
+ *  /avvisa paket <hash>          → nej till ett redan fryst privat paket
  * Engelska alias: /approve, /reject. Endast FÖRSTA raden tolkas som kommando.
  * En rad som börjar "Uträkning:" blir uträkningen bakom beloppet och visas
  * publikt på löftessidan; övrig text är fritext och används inte. Okänt
@@ -179,6 +180,8 @@ export function parseReviewCommand(body: string): ReviewCommand | null {
   const line = text.split("\n", 1)[0]!.trim();
   const paket = line.match(/^\/(?:godkänn|godkann|approve) paket ([0-9a-f]{64})$/u);
   if (paket) return { action: "approve-package", hash: paket[1]! };
+  const avvisningspaket = line.match(/^\/(?:avvisa|reject) paket ([0-9a-f]{64})$/u);
+  if (avvisningspaket) return { action: "reject-package", hash: avvisningspaket[1]! };
   // Uträkningen bakom ett eget belopp anges med en rad som börjar "Uträkning:".
   // Den visas PUBLIKT på löftessidan, så den måste vara uttryckligen märkt —
   // annars hade vilken kommentar som helst under kommandot hamnat på sajten.
@@ -239,7 +242,7 @@ export function parseReviewCommand(body: string): ReviewCommand | null {
   const reject = line.match(/^\/(?:avvisa|reject)\b(.*)$/iu);
   if (reject) {
     const reason = reject[1]!.trim();
-    return { action: "reject", reason: reason === "" ? "Avvisad via review-issue utan angivet särskilt skäl." : reason };
+    return { action: "reject", reason };
   }
   return null;
 }

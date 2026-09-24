@@ -1,8 +1,8 @@
 name: review-apply
-# Etikettbeslut ("knappen"/bulk): beslut:godkänn eller beslut:avvisa på
-# review-kö-issues exekveras här. Etiketter kan bulk-appliceras i issuelistans
-# vy — markera många issues → Label → beslut:godkänn — och kan bara sättas av
-# användare med triage-behörighet (= ägaren), så etiketten ÄR auktorisationen.
+# Etikettsvep: beslut:godkänn och beslut:avvisa ger vägledning men verkställer
+# inget innehållsbeslut utan ett privat, hashbundet paket.
+# På review-kö-issues avetiketteras äldre beslutsetiketter med ett tydligt
+# svar. Ett verkligt beslut görs via review.yml med fryst privat paket.
 #
 # Svepet är idempotent (tar ALLA etikettbeslut varje körning) — därför är
 # concurrency-koalesceringen ofarlig: slängda köade körningar förlorar inget,

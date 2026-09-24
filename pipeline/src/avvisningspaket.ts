@@ -12,7 +12,7 @@ export interface Avvisningsbeslut { bedomare: string; utfall: "avvisa"; motiveri
 export interface Avvisningspaket { version: "avvisningspaket/1"; tidpunkt: string; rader: Avvisningsrad[]; kandidater: ReviewCandidate[]; beslut: Avvisningsbeslut | null; filer: Filpaket }
 export function avvisningspakethash(p: Avvisningspaket): string { return createHash("sha256").update(kanoniskJson(p)).digest("hex"); }
 function lista<T>(f: Fillage, n: string): T[] { const t = f[n]; if (typeof t !== "string") throw new Error(`Fil saknas: ${n}`); const v: unknown = JSON.parse(t); if (!Array.isArray(v)) throw new Error(`Kräver lista: ${n}`); return v as T[]; }
-function forslagshash(p: Omit<Avvisningspaket, "beslut" | "filer">): string { return createHash("sha256").update(kanoniskJson(p)).digest("hex"); }
+function forslagshash(p: Omit<Avvisningspaket, "beslut">): string { return createHash("sha256").update(kanoniskJson(p)).digest("hex"); }
 export function forberedAvvisningspaket(rader: Avvisningsrad[], fore: Fillage, nu: Date): Avvisningspaket {
   if (Object.keys(fore).sort().join() !== [...AVVISNINGSFILER].sort().join()) throw new Error("Fel filuppsättning");
   if (!rader.length || new Set(rader.map((r) => r.id)).size !== rader.length ||
@@ -32,7 +32,7 @@ export function kontrolleraAvvisningspaket(p: Avvisningspaket, aktuellt: Fillage
   if (kanoniskJson(p.filer.fore) !== kanoniskJson(aktuellt)) throw new Error("Paketets föreläge har ändrats");
   const nytt = forberedAvvisningspaket(p.rader, aktuellt, new Date(p.tidpunkt));
   if (kanoniskJson({ ...p, beslut: null }) !== kanoniskJson(nytt)) throw new Error("Avvisningens slutform eller kandidater har ändrats");
-  const b = p.beslut, fh = forslagshash({ version: p.version, tidpunkt: p.tidpunkt, rader: p.rader, kandidater: p.kandidater });
+  const b = p.beslut, fh = avvisningsforslagshash(p);
   if (!b || Object.keys(b).sort().join(",") !== "bedomare,forslagshash,kalla,motivering,utfall" || b.utfall !== "avvisa" ||
       !b.bedomare?.trim() || b.motivering?.trim().length < AVVISNINGSSKAL_MIN_TECKEN || b.forslagshash !== fh ||
       Object.keys(b.kalla ?? {}).sort().join(",") !== "actor,association,handelse,system" || b.kalla.system !== "github" ||
@@ -42,4 +42,40 @@ export function kontrolleraAvvisningspaket(p: Avvisningspaket, aktuellt: Fillage
   }
 }
 export function verkstallAvvisningspaket(dir: string, p: Avvisningspaket, h: string): void { if (!/^[0-9a-f]{64}$/u.test(h) || avvisningspakethash(p) !== h) throw new Error("Beslutet gäller inte hela paketet"); kontrolleraAvvisningspaket(p, lasFillage(dir, AVVISNINGSFILER)); skrivFilpaket(dir, p.filer); }
-export function avvisningsforslagshash(p: Avvisningspaket): string { return forslagshash({ version: p.version, tidpunkt: p.tidpunkt, rader: p.rader, kandidater: p.kandidater }); }
+export function avvisningsforslagshash(p: Avvisningspaket): string { return forslagshash({ version: p.version, tidpunkt: p.tidpunkt, rader: p.rader, kandidater: p.kandidater, filer: p.filer }); }
+
+export interface GithubAvvisning {
+  repository: string; issue: number; reviewId: string; actor: string; actorType: string;
+  association: string; handelse: string; forslagshash: string;
+}
+
+/** Bind ett redan fryst privat förslag till ägarens verifierade kommentar. */
+export function bindGithubAvvisning(paket: Avvisningspaket, event: GithubAvvisning): Avvisningspaket {
+  if (paket.beslut !== null) throw new Error("Paketet har redan ett beslut");
+  const url = new URL(event.handelse);
+  if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(event.repository) ||
+      !Number.isSafeInteger(event.issue) || event.issue < 1 ||
+      url.origin !== "https://github.com" || url.username || url.password || url.search ||
+      url.pathname !== `/${event.repository}/issues/${event.issue}` ||
+      !/^#issuecomment-[1-9][0-9]*$/u.test(url.hash)) {
+    throw new Error("Beslutets händelse gäller inte angivet repo och issue");
+  }
+  if (event.association !== "OWNER" || event.actorType !== "User" ||
+      !event.actor || event.actor.toLowerCase() !== event.repository.split("/")[0]!.toLowerCase()) {
+    throw new Error("Beslutet måste komma från repots mänskliga ägare");
+  }
+  if (!/^[0-9a-f]{64}$/u.test(event.forslagshash) || event.forslagshash !== avvisningsforslagshash(paket)) {
+    throw new Error("Beslutets hash gäller inte det frysta avslagsförslaget");
+  }
+  if (!/^[0-9a-f]{12}$/u.test(event.reviewId) || paket.rader.length !== 1 ||
+      paket.rader[0]?.id !== event.reviewId) {
+    throw new Error("Paketet gäller inte issue-postens stabila review-id");
+  }
+  const result = structuredClone(paket);
+  result.beslut = {
+    bedomare: event.actor, utfall: "avvisa", motivering: paket.rader[0]!.skal,
+    forslagshash: event.forslagshash,
+    kalla: { system: "github", association: "OWNER", actor: event.actor, handelse: event.handelse },
+  };
+  return result;
+}

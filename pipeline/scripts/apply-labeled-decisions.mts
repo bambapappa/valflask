@@ -4,7 +4,7 @@
  * så ägaren kan godkänna/avvisa MÅNGA poster i ett klick:
  *
  *   beslut:godkänn  → stoppa och hänvisa till ett redan förberett paket
- *   beslut:avvisa   → avvisa genom ett fullständigt avvisningspaket
+ *   beslut:avvisa   → stoppa och hänvisa till ett redan förberett paket
  *
  * Ett ja får inte bygga sitt löftesförslag och sin sakprövning efter klicket.
  * Etiketter kan sättas av användare med triage-behörighet. Närvaron räcker
@@ -26,8 +26,6 @@ import {
   findIndexByReviewId,
   type ReviewCandidate,
 } from "../src/review.ts";
-import { lasFillage } from "../src/datatransaktion.ts";
-import { AVVISNINGSFILER, avvisningsforslagshash, avvisningspakethash, forberedAvvisningspaket, verkstallAvvisningspaket } from "../src/avvisningspaket.ts";
 import { verifieraEtikettbeslut, type GitHubEtiketthandelse } from "../src/github-etikettbeslut.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
@@ -116,7 +114,7 @@ const rejectLabel = await api(`/repos/${repo}/labels`, {
   method: "POST",
   body: JSON.stringify({
     name: REJECT_LABEL, color: "d93f0b",
-    description: "Avvisa posten (bulk-bar via listvyn)",
+    description: "Kräver privat avvisningspaket och separat sakskäl; etiketten verkställer inte",
   }),
 }, [422]);
 if (rejectLabel.status === 422) {
@@ -194,18 +192,12 @@ for (const issue of issues) {
   }
 
   if (wantsReject) {
-    const skal = "Avvisad genom verifierat etikettbeslut i GitHub.";
-    const paket = forberedAvvisningspaket([{ id, skal }], lasFillage(DATA_DIR, AVVISNINGSFILER), new Date());
-    paket.beslut = { bedomare: etikettbeslut.actor, utfall: "avvisa", motivering: skal,
-      forslagshash: avvisningsforslagshash(paket), kalla: { system: "github", association: "OWNER", actor: etikettbeslut.actor, handelse: etikettbeslut.handelse } };
-    verkstallAvvisningspaket(DATA_DIR, paket, avvisningspakethash(paket));
-    const title = items[index]!.candidate?.title ?? items[index]!.articleTitle ?? "(okänd)";
     notifications.push({
       number: issue.number,
-      body: `❌ Avvisad via etikett: "${title}"`,
-      close: "not_planned",
+      body: "⚠️ Avslaget verkställdes inte. Etiketten bär varken ett fryst köunderlag eller ett individuellt sakskäl. Förbered ett privat avvisningspaket och använd `/avvisa paket <hash>` efter granskning.",
+      removeLabel: REJECT_LABEL,
     });
-    rejected++;
+    skipped++;
   } else {
     notifications.push({
       number: issue.number,

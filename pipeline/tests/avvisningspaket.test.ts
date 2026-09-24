@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync, mkdtempSync, rmSync, mkdirSync, cpSync, sy
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
-import { AVVISNINGSFILER, avvisningsforslagshash, avvisningspakethash, forberedAvvisningspaket, verkstallAvvisningspaket, type Avvisningspaket } from "../src/avvisningspaket.ts";
+import { AVVISNINGSFILER, avvisningsforslagshash, avvisningspakethash, bindGithubAvvisning, forberedAvvisningspaket, verkstallAvvisningspaket, type Avvisningspaket } from "../src/avvisningspaket.ts";
 import { lasFillage } from "../src/datatransaktion.ts";
 import { reviewId, type ReviewCandidate } from "../src/review.ts";
 const ko: ReviewCandidate[] = JSON.parse(readFileSync(new URL("../../data/needs_review.json", import.meta.url), "utf8")); assert.ok(ko.length > 0);
@@ -14,3 +14,27 @@ it("verklig CLI kräver privat paket och separat beslut", () => { const root = m
 it("binder exakt kandidat, skäl, separat beslut och båda efterfilerna", () => { const d = mkdtempSync(join(tmpdir(), "avvisning-")); try { for (const [n, s] of Object.entries(fore)) writeFileSync(join(d, n), s); const u = forberedAvvisningspaket([rad], fore, new Date("2026-09-14T14:00:00Z")); assert.throws(() => verkstallAvvisningspaket(d, u, avvisningspakethash(u)), /mänskligt avslagsbeslut/u); const p = besluta(u), h = avvisningspakethash(p); assert.throws(() => verkstallAvvisningspaket(d, p, "0".repeat(64)), /hela paketet/u); const bytt = structuredClone(p); bytt.rader[0]!.skal += " ändrat"; assert.throws(() => verkstallAvvisningspaket(d, bytt, avvisningspakethash(bytt)), /slutform/u); assert.deepEqual(lasFillage(d, AVVISNINGSFILER), fore); verkstallAvvisningspaket(d, p, h); assert.deepEqual(lasFillage(d, AVVISNINGSFILER), p.filer.efter); assert.throws(() => verkstallAvvisningspaket(d, p, h), /föreläge/u); } finally { rmSync(d, { recursive: true, force: true }); } });
 it("avvisar korta skäl, okända radfält och dubblerade köidentiteter", () => { assert.throws(() => forberedAvvisningspaket([{ id: rad.id, skal: "kort" }], fore, new Date()), /motiverad/u); assert.throws(() => forberedAvvisningspaket([{ ...rad, extra: true } as never], fore, new Date()), /motiverad/u); assert.throws(() => forberedAvvisningspaket([rad], { ...fore, "needs_review.json": JSON.stringify([ko[0], ko[0]]) }, new Date()), /Dubblerad kandidatidentitet/u); });
 it("binder bedömaren till aktören i den verifierade GitHub-händelsen", () => { const d = mkdtempSync(join(tmpdir(), "avvisningsaktor-")); try { for (const [n, s] of Object.entries(fore)) writeFileSync(join(d, n), s); const p = besluta(forberedAvvisningspaket([rad], fore, new Date("2026-09-14T14:00:00Z"))); p.beslut!.kalla.actor = "annat-konto"; assert.throws(() => verkstallAvvisningspaket(d, p, avvisningspakethash(p)), /mänskligt avslagsbeslut/u); assert.deepEqual(lasFillage(d, AVVISNINGSFILER), fore); } finally { rmSync(d, { recursive: true, force: true }); } });
+
+it("GitHub-beslutet gäller bara fryst kandidat, sakskäl och rätt issue", () => {
+  const d = mkdtempSync(join(tmpdir(), "avvisningsbindning-"));
+  try {
+    for (const [n, s] of Object.entries(fore)) writeFileSync(join(d, n), s);
+    const p = forberedAvvisningspaket([rad], fore, new Date("2026-09-24T00:00:00Z"));
+    const event = { repository: "bambapappa/valflask", issue: 42, reviewId: rad.id,
+      actor: "bambapappa", actorType: "User", association: "OWNER",
+      handelse: "https://github.com/bambapappa/valflask/issues/42#issuecomment-7",
+      forslagshash: avvisningsforslagshash(p) };
+    const bundet = bindGithubAvvisning(p, event);
+    assert.equal(bundet.beslut?.motivering, rad.skal);
+    for (const fel of [{ issue: 43 }, { reviewId: "0".repeat(12) }, { actorType: "Bot" },
+      { actor: "annan" }, { association: "NONE" }, { forslagshash: "0".repeat(64) }]) {
+      assert.throws(() => bindGithubAvvisning(p, { ...event, ...fel }));
+    }
+    const andrad = structuredClone(ko);
+    andrad[0]!.candidate!.quote = `${ko[0]!.candidate!.quote} ändrat citat`;
+    assert.equal(reviewId(andrad[0]!), rad.id);
+    writeFileSync(join(d, "needs_review.json"), JSON.stringify(andrad));
+    assert.throws(() => verkstallAvvisningspaket(d, bundet, avvisningspakethash(bundet)), /föreläge/u);
+    assert.equal(readFileSync(join(d, "avvisade.json"), "utf8"), fore["avvisade.json"]);
+  } finally { rmSync(d, { recursive: true, force: true }); }
+});

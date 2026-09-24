@@ -10,6 +10,10 @@ it("väljer exakt paket och stoppar saknat, dubblerat, utgånget och orimligt un
   assert.deepEqual(valjPrivatArtefakt([artifact], 2, hash), artifact);
   for (const lista of [[], [artifact, artifact], [{ ...artifact, expired: true }], [{ ...artifact, digest: "" }], [{ ...artifact, size_in_bytes: 33 * 1024 * 1024 }]]) assert.throws(() => valjPrivatArtefakt(lista, 2, hash));
   assert.throws(() => valjPrivatArtefakt([artifact], 3, hash));
+  const avslag = { ...artifact, name: privatPaketnamn(2, hash, "avvisningspaket") };
+  assert.deepEqual(valjPrivatArtefakt([avslag], 2, hash, "avvisningspaket"), avslag);
+  assert.throws(() => valjPrivatArtefakt([artifact], 2, hash, "avvisningspaket"));
+  kontrolleraPrivatKorning(avslag, { ...run, path: ".github/workflows/avvisningspaket.yml" }, "avvisningspaket");
   assert.throws(() => privatPaketnamn(0, hash));
 });
 it("kräver lyckad producent på huvudgrenen med samma repo, revision och körning", () => {

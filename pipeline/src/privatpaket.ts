@@ -9,13 +9,13 @@ export interface PrivatKorning {
   head_branch: string; head_sha: string; repository: { id: number }; head_repository: { id: number };
 }
 
-export function privatPaketnamn(issue: number, hash: string): string {
+export function privatPaketnamn(issue: number, hash: string, typ: "godkannandepaket" | "avvisningspaket" = "godkannandepaket"): string {
   if (!Number.isSafeInteger(issue) || issue < 1 || !/^[0-9a-f]{64}$/u.test(hash)) throw new Error("Ogiltig paketidentitet");
-  return `godkannandepaket-${issue}-${hash}`;
+  return `${typ}-${issue}-${hash}`;
 }
 
-export function valjPrivatArtefakt(artefakter: PrivatArtefakt[], issue: number, hash: string): PrivatArtefakt {
-  const namn = privatPaketnamn(issue, hash);
+export function valjPrivatArtefakt(artefakter: PrivatArtefakt[], issue: number, hash: string, typ: "godkannandepaket" | "avvisningspaket" = "godkannandepaket"): PrivatArtefakt {
+  const namn = privatPaketnamn(issue, hash, typ);
   return valjMedNamn(artefakter, namn);
 }
 
@@ -29,7 +29,7 @@ function valjMedNamn(artefakter: PrivatArtefakt[], namn: string): PrivatArtefakt
   return a;
 }
 
-export function kontrolleraPrivatKorning(a: PrivatArtefakt, run: PrivatKorning, typ: "godkannandepaket" | "publiceringsprovning" = "godkannandepaket"): void {
+export function kontrolleraPrivatKorning(a: PrivatArtefakt, run: PrivatKorning, typ: "godkannandepaket" | "avvisningspaket" | "publiceringsprovning" = "godkannandepaket"): void {
   const w = a.workflow_run;
   if (run.id !== w.id || run.path !== `.github/workflows/${typ}.yml` ||
       run.event !== "workflow_dispatch" || run.status !== "completed" || run.conclusion !== "success" ||

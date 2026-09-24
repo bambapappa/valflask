@@ -3,7 +3,7 @@
  * kö-post, så ägaren kan besluta direkt i GitHub-gränssnittet:
  *
  *   förberett beslutspaket        ja — exakt förslag och sakprövning
- *   /avvisa <skäl>                nej genom verifierat avvisningspaket
+ *   /avvisa paket <hash>         nej genom redan fryst privat avvisningspaket
  *
  * Besluten exekveras av .github/workflows/review.yml. Varje issue bär postens
  * review-id i titeln ([review <id>]) — stabilt även när kö-index förskjuts.
@@ -193,7 +193,7 @@ function issueBody(entry: ReviewCandidate, id: string): string {
     "och en separat prövningshash från beslutet. Använd det förberedda beslutspaketet; " +
     "en kommentar eller etikett får inte bygga underlaget efter att beslutet tagits.");
   lines.push("");
-  lines.push("Ett avslag kan anges med etiketten `beslut:avvisa` eller kommentaren `/avvisa <skäl>`. ");
+  lines.push("Ett avslag kräver ett privat förberett paket med individuellt sakskäl. Efter granskning anger ägaren `/avvisa paket <hash>` här; etiketten `beslut:avvisa` verkställer inget avslag. ");
   lines.push("");
   lines.push(`<sub>review-id \`${id}\` · ett verkställt beslut ska vara spårbart till detta issue och sitt exakta paket.</sub>`);
   return lines.join("\n");

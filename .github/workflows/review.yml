@@ -1,6 +1,6 @@
 name: review
-# Granskningsbeslut via issue-kommentarer: /godkänn, /godkänn <low> <base> <high>,
-# /godkänn --group p-2026-XXXX, /avvisa <skäl>. Endast repo-ÄGARENS kommentarer
+# Granskningsbeslut via issue-kommentarer: /godkänn paket <hash> eller
+# /avvisa paket <hash>. Endast repo-ÄGARENS kommentarer
 # på issues med etiketten "review-kö" exekveras — allt annat i issuet är data.
 on:
   issue_comment:
@@ -88,7 +88,7 @@ jobs:
             import { appendFileSync } from "node:fs";
             import { parseReviewCommand } from "./src/review.ts";
             const c = parseReviewCommand(process.env.COMMENT_BODY ?? "");
-            appendFileSync(process.env.GITHUB_OUTPUT, `hamta=${c?.action === "approve-package"}\n`);
+            appendFileSync(process.env.GITHUB_OUTPUT, `hamta=${c?.action === "approve-package" || c?.action === "reject-package"}\n`);
           '
       - name: Läsbehörighet för privat paket
         if: steps.paketkommando.outputs.hamta == 'true'

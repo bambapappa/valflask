@@ -2,7 +2,7 @@
  * Exekverar ett granskningsbeslut från en issue-kommentar (review.yml).
  * Läser ISSUE_TITLE + COMMENT_BODY ur miljön (aldrig via shell-interpolering —
  * kommentartext är data, inte kod), slår upp kö-posten via review-id i titeln
- * och kör samma approve/reject som CLI:t. Skriver resultatet till
+ * och verkställer endast redan frysta privata beslutspaket. Skriver resultatet till
  * GITHUB_OUTPUT (result, message) så workflown kan kommentera och stänga.
  *
  *   result: approved | rejected | error
@@ -15,8 +15,7 @@ import {
   findIndexByReviewId,
   type ReviewCandidate,
 } from "../src/review.ts";
-import { lasFillage } from "../src/datatransaktion.ts";
-import { AVVISNINGSFILER, avvisningsforslagshash, avvisningspakethash, forberedAvvisningspaket, verkstallAvvisningspaket } from "../src/avvisningspaket.ts";
+import { bindGithubAvvisning, avvisningspakethash, verkstallAvvisningspaket, type Avvisningspaket } from "../src/avvisningspaket.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -53,8 +52,7 @@ const cmd = parseReviewCommand(body);
 if (!cmd) {
   output(
     "error",
-    "Oklart kommando. Ett avslag anges med `/avvisa <skäl>`. Ett godkännande kräver ett " +
-      "redan förberett beslutspaket med fullständig sakprövning och separat prövningshash.",
+    "Oklart kommando. Använd `/godkänn paket <hash>` eller `/avvisa paket <hash>` för ett redan förberett privat beslutspaket.",
   );
   process.exit(0);
 }
@@ -67,9 +65,7 @@ if (index < 0) {
   output("error", `Posten (review-id ${id}) finns inte längre i kön — troligen redan hanterad. Ingen ändring gjord.`);
   process.exit(0);
 }
-const entry = items[index]!;
-
-if (cmd.action === "approve-package") {
+if (cmd.action === "approve-package" || cmd.action === "reject-package") {
   try {
     const fil = process.env.GODKANNANDEPAKET_FIL;
     if (!fil) throw new Error("Privat paketfil saknas");
@@ -77,33 +73,30 @@ if (cmd.action === "approve-package") {
     if (!inomRepo.startsWith(".." + "/") && !isAbsolute(inomRepo)) {
       throw new Error("Paketfilen måste ligga privat utanför kodrepot");
     }
-    const paket = bindGithubGodkannande(JSON.parse(readFileSync(fil, "utf8")) as Godkannandepaket, {
+    const event = {
       repository: process.env.GITHUB_REPOSITORY ?? "",
       issue: Number(process.env.ISSUE_NUMBER), reviewId: id,
       actor: decisionActor, actorType: process.env.DECISION_ACTOR_TYPE ?? "",
       association: decisionAssociation, handelse: decisionRef, forslagshash: cmd.hash,
-    });
-    verkstallGodkannandepaket(DATA_DIR, paket, godkannandepakethash(paket));
-    output("approved", "Det exakta beslutspaketet har verkställts. Publicering prövas separat.");
+    };
+    if (cmd.action === "approve-package") {
+      const paket = bindGithubGodkannande(JSON.parse(readFileSync(fil, "utf8")) as Godkannandepaket, event);
+      verkstallGodkannandepaket(DATA_DIR, paket, godkannandepakethash(paket));
+      output("approved", "Det exakta beslutspaketet har verkställts. Publicering prövas separat.");
+    } else {
+      const paket = bindGithubAvvisning(JSON.parse(readFileSync(fil, "utf8")) as Avvisningspaket, event);
+      verkstallAvvisningspaket(DATA_DIR, paket, avvisningspakethash(paket));
+      output("rejected", `Det exakta avvisningspaketet har verkställts för review-id ${id}.`);
+    }
   } catch {
     // Privat sakunderlag och filinnehåll får inte hamna i det publika issuets svar.
-    output("error", "Godkännandepaketet kunde inte verifieras. Kontrollera privat fil, hash, issue, beslutsaktör och oförändrat föreläge. Ingen publicering har gjorts.");
+    output("error", "Det privata beslutspaketet kunde inte verifieras. Kontrollera fil, hash, issue, beslutsaktör och oförändrat föreläge. Ingen dataändring har gjorts.");
   }
   process.exit(0);
 }
 
 if (cmd.action === "reject") {
-  const paket = forberedAvvisningspaket([{ id, skal: cmd.reason }], lasFillage(DATA_DIR, AVVISNINGSFILER), new Date());
-  paket.beslut = {
-    bedomare: decisionActor,
-    utfall: "avvisa",
-    motivering: cmd.reason,
-    forslagshash: avvisningsforslagshash(paket),
-    kalla: { system: "github", association: "OWNER", actor: decisionActor, handelse: decisionRef },
-  };
-  verkstallAvvisningspaket(DATA_DIR, paket, avvisningspakethash(paket));
-  const t = entry.candidate?.title ?? entry.articleTitle ?? "(okänd)";
-  output("rejected", `Avvisad: "${t}" — ${cmd.reason}`);
+  output("error", "Avslaget verkställdes inte. Förbered ett privat avvisningspaket med individuellt sakskäl och använd `/avvisa paket <hash>` efter granskning.");
   process.exit(0);
 }
 
