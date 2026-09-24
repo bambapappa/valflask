@@ -13,10 +13,10 @@
  *
  * Miljö: GITHUB_TOKEN (issues:write), GITHUB_REPOSITORY ("ägare/repo").
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { reviewId, type ReviewCandidate } from "../src/review.ts";
 import { ankarflagga } from "../src/utrakningen.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 const LABEL = "review-kö";
@@ -199,7 +199,9 @@ function issueBody(entry: ReviewCandidate, id: string): string {
   return lines.join("\n");
 }
 
-const alla = JSON.parse(readFileSync(join(DATA_DIR, "needs_review.json"), "utf8")) as ReviewCandidate[];
+const fore = lasFillage(DATA_DIR, ["needs_review.json"]);
+if (fore["needs_review.json"] === null) throw new Error("Saknar needs_review.json");
+const alla = JSON.parse(fore["needs_review.json"]!) as ReviewCandidate[];
 console.log(`Kön: ${alla.length} poster. Hämtar befintliga issues …`);
 const { alla: existing, stangda } = await existingIssueIds();
 console.log(`Redan issue-satta: ${existing.size} (varav ${stangda.size} stängda).`);
@@ -222,7 +224,9 @@ console.log(`Redan issue-satta: ${existing.size} (varav ${stangda.size} stängda
 const avgjorda = alla.filter((e) => stangda.has(reviewId(e)));
 const items = alla.filter((e) => !stangda.has(reviewId(e)));
 if (avgjorda.length > 0) {
-  writeFileSync(join(DATA_DIR, "needs_review.json"), `${JSON.stringify(items, null, 2)}\n`);
+  skrivFilpaket(DATA_DIR, skapaFilpaket(fore, {
+    "needs_review.json": `${JSON.stringify(items, null, 2)}\n`,
+  }));
   console.log(`Rensade ${avgjorda.length} redan avgjorda poster ur kön:`);
   for (const e of avgjorda) {
     const c = (e.candidate ?? {}) as { title?: string; parties?: string[] };
