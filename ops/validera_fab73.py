@@ -5,7 +5,7 @@ Kollar mot en byggd sajt (byggkatalog eller live-URL):
   1. JSON-LD Dataset + DataCatalog på startsidan (license CC-BY-4.0, distribution)
   2. /api/v1/openapi.json finns, parsar som JSON, täcker huvudendpoints
   3. llms.txt länkar till openapi.json
-  4. robots.txt släpper in de sju AI-sök/user-agenterna
+  4. robots.txt släpper in de åtta AI-sök/user-agenterna
 
 Användning:
   python3 validera_fab73.py --live                  # mot https://utlovat.se
@@ -16,7 +16,7 @@ import json
 import re
 import subprocess
 import sys
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 BASE = "https://utlovat.se"
 UA_LAESARE = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
@@ -117,22 +117,62 @@ def validera() -> None:
 
     # 4. robots.txt släpper in agenterna
     robots = haemta("robots.txt")
-    # parsa: User-agent-rader i följd delar regler (samma logik som ai-atkomst.mjs)
-    regler: dict[str, list[str]] = {}
-    namn: list[str] = []
+    # Parsning enligt ai-atkomst.mjs: agentgrupper (User-agent-rader i följd
+    # delar regler), exakt agentmatch med '*'-fallback, längsta regeln vinner,
+    # oavgjort går till tillåtelse. En Disallow: / i agentens grupp fäller —
+    # även om en ANNAN grupp med samma namn har Allow (Cloudflare-läran 0801).
+    grupper: List[Tuple[str, List[Tuple[str, bool]]]] = []
+    namn: List[str] = []
+    regler_grupp: List[Tuple[str, bool]] = []
+
+    def stang_grupp() -> None:
+        if namn and regler_grupp:
+            for nm in namn:
+                grupper.append((nm, list(regler_grupp)))
+        namn.clear()
+        regler_grupp.clear()
+
+    sist_var_namn = False
     for rad in robots.splitlines():
-        r = rad.strip().lower()
-        if r.startswith("user-agent:"):
-            namn.append(r.split(":", 1)[1].strip())
-        elif r.startswith("allow:") or r.startswith("disallow:"):
-            for n in namn:
-                regler.setdefault(n, []).append(r)
-        elif not r:
-            namn = []
+        trimmad = re.sub(r"#.*$", "", rad).strip()
+        if not trimmad:
+            continue
+        low = trimmad.lower()
+        if low.startswith("user-agent:"):
+            if not sist_var_namn:
+                stang_grupp()
+            namn.append(low.split(":", 1)[1].strip())
+            sist_var_namn = True
+            continue
+        sist_var_namn = False
+        if low.startswith("disallow:"):
+            regler_grupp.append((low.split(":", 1)[1].strip(), False))
+        elif low.startswith("allow:"):
+            vag = low.split(":", 1)[1].strip()
+            if vag:
+                regler_grupp.append((vag, True))
+    stang_grupp()
+
+    def slapper_in(regler: List[Tuple[str, bool]], vag: str = "/") -> bool:
+        basta = -1
+        tillat = True
+        for r_vag, r_tillat in regler:
+            if r_vag == "":
+                continue
+            if vag.startswith(r_vag) and len(r_vag) >= basta:
+                if len(r_vag) > basta:
+                    tillat = r_tillat
+                    basta = len(r_vag)
+                else:
+                    tillat = tillat or r_tillat
+        return tillat
+
     for agent in SOK_AGENTER:
         n = agent.lower()
-        m = [r for r in regler.get(n, []) if r.startswith("allow:")]
-        kolla(bool(m), f"robots.txt: {agent} saknar Allow")
+        rg = next((r for namn2, r in grupper if namn2 == n), None)
+        if rg is None:
+            rg = next((r for nm, r in grupper if nm == "*"), [])
+        kolla(slapper_in(rg), f"robots.txt: {agent} släpps inte in (Disallow vinner eller saknas)")
 
     # redirect-kedja ≤ 3 hopp (live-koll bara)
     if not ARGS.dist:
