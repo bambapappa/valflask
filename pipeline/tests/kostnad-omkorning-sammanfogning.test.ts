@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, copyFileSync, symlinkSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, copyFileSync, existsSync, symlinkSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
@@ -64,6 +64,32 @@ test("workflowen bevarar färsk main och använder radvis sammanfogning", () => 
   assert.match(workflow, /kostnad-omkorning-sammanfoga\.mts/u);
   assert.match(workflow, /\[ -d data\/\.datatransaktion \]/u);
   assert.doesNotMatch(workflow, /cp \/tmp\/needs_review\.json data\/needs_review\.json/u);
+});
+
+test("workflowets CLI skriver sammanfogad kö via filpaket", () => {
+  const dir = mkdtempSync(join(tmpdir(), "kostnad-sammanfoga-"));
+  try {
+    const bas = [post("a"), post("b")];
+    const resultat = structuredClone(bas);
+    resultat[0]!.cost = { msek_base: 100 };
+    const aktuell = [post("b"), post("c"), post("a")];
+    aktuell[0]!.costReason = "senare köbeslut";
+    const basfil = join(dir, "bas.json");
+    const resultatfil = join(dir, "resultat.json");
+    const data = join(dir, "data");
+    mkdirSync(data);
+    const aktuellFil = join(data, "needs_review.json");
+    for (const [fil, innehall] of [[basfil, bas], [resultatfil, resultat], [aktuellFil, aktuell]] as const) {
+      writeFileSync(fil, JSON.stringify(innehall, null, 2) + "\n");
+    }
+    const pipeline = resolve(import.meta.dirname, "..");
+    const run = spawnSync(process.execPath, ["--import", "tsx/esm", join(pipeline, "scripts/kostnad-omkorning-sammanfoga.mts"),
+      basfil, resultatfil, aktuellFil], { cwd: pipeline, encoding: "utf8" });
+    assert.equal(run.status, 0, run.stderr);
+    const efter = JSON.parse(readFileSync(aktuellFil, "utf8"));
+    assert.deepEqual(efter, sammanfogaKostnadOmkorning(bas, resultat, aktuell));
+    assert.equal(existsSync(join(data, ".datatransaktion")), false);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
 test("stubomkörning checkpointar en post i isolerad kö", () => {
