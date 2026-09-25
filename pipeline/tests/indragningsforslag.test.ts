@@ -1,0 +1,33 @@
+import { it } from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { forberedIndragningsforslag, tillampaIndragningsforslag } from "../src/indragningsforslag.ts";
+import { byggIndragningsunderlag, skapaSakprovning, sakprovningsBeredskap } from "../src/sakprovning.ts";
+import type { PromiseEntry } from "../src/loftesforslag.ts";
+const loften: PromiseEntry[] = JSON.parse(readFileSync(new URL("../../data/promises.json", import.meta.url), "utf8"));
+const mal = loften.find(p => p.status === "aktiv")!;
+assert.ok(mal);
+const rad = { id: mal.id, skal: "Syntetiskt kontraktsprov, inte en sakbedömning." };
+const nu = new Date("2026-09-20T00:00:00Z");
+it("fryser enbart indragnings och historik och lämnar original samt sakprövning orörda", () => {
+  const fore = JSON.stringify(loften);
+  const f = forberedIndragningsforslag(rad, loften, nu);
+  assert.deepEqual({ ...f.nyttLofte, status: mal.status, history: mal.history }, mal);
+  assert.equal(f.nyttLofte.status, "tillbakadragen");
+  assert.equal(f.nyttLofte.history.length, mal.history.length + 1);
+  assert.deepEqual(tillampaIndragningsforslag(f, loften, f.hash).find(p => p.id === mal.id), f.nyttLofte);
+  const u = byggIndragningsunderlag(f, loften, []), prov = skapaSakprovning(u);
+  assert.ok(prov.bedomningar.every(b => b.utfall === "oavgjort"));
+  assert.equal(sakprovningsBeredskap(prov, u).klar, false);
+  assert.equal(JSON.stringify(loften), fore);
+});
+it("tomt bestånd, okänt mål, ändrat föreläge, manipulerad slutform och fel hash stoppas", () => {
+  assert.throws(() => forberedIndragningsforslag(rad, [], nu));
+  assert.throws(() => forberedIndragningsforslag({ ...rad, id: "saknas" }, loften, nu));
+  const f = forberedIndragningsforslag(rad, loften, nu);
+  assert.throws(() => tillampaIndragningsforslag(f, loften, "0".repeat(64)));
+  const andra = structuredClone(loften); andra[0]!.quote += " ändrad";
+  assert.throws(() => tillampaIndragningsforslag(f, andra, f.hash));
+  f.nyttLofte.parties = ["annat"];
+  assert.throws(() => tillampaIndragningsforslag(f, loften, f.hash));
+});

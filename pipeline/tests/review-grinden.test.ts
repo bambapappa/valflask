@@ -34,7 +34,7 @@ const WORKFLOW = join(import.meta.dirname, "..", "..", ".github", "workflows", "
 interface Jobb {
   if?: string;
   permissions?: Record<string, string>;
-  steps?: Array<{ run?: string }>;
+  steps?: Array<{ run?: string; env?: Record<string, string> }>;
 }
 
 function jobben(): Record<string, Jobb> {
@@ -86,6 +86,20 @@ describe("review-grinden avvisar aldrig ett kommando tyst", () => {
     assert.doesNotMatch(kommandon, /\bgit\s+(push|commit)\b/u, "svaret ändrar ingen data");
   });
 
+  it("beslutssteget binder GitHubs aktör, behörighetsrelation och händelselänk", () => {
+    const steg = (jobben()["handle"]!.steps ?? []).find((s) => /handle-review-comment/u.test(s.run ?? ""));
+    assert.ok(steg, "hittade inte beslutssteget");
+    assert.deepEqual(
+      Object.keys(steg!.env ?? {}).filter((k) => k.startsWith("DECISION_")).sort(),
+      ["DECISION_ACTOR", "DECISION_ACTOR_TYPE", "DECISION_ASSOCIATION", "DECISION_REF"],
+    );
+    assert.equal(steg!.env?.DECISION_ACTOR_TYPE, "${{ github.event.comment.user.type }}");
+    const handler = readFileSync(join(import.meta.dirname, "..", "scripts", "handle-review-comment.mts"), "utf8");
+    assert.match(handler, /decisionAssociation !== "OWNER"/u);
+    assert.match(handler, /decisionActor/u);
+    assert.match(handler, /decisionRef/u);
+  });
+
   it("svarssteget körs även när beslutet föll — annars blir issuet tyst", () => {
     // Den andra vägen in i samma tystnad. `handle` svarar med grön körning och
     // förklarande kommentar när kommandot är fel skrivet, men kvalitetsfiltret
@@ -99,6 +113,8 @@ describe("review-grinden avvisar aldrig ett kommando tyst", () => {
     const svar = steg.find((s) => /gh issue comment/u.test(s.run ?? ""));
     assert.ok(svar, "hittade inget steg som svarar på issuet");
     assert.equal(svar!.if, "always()", "svaret måste köras även när beslutssteget föll");
+    assert.match(svar!.run ?? "", /if \[ "\$DECISION_OUTCOME" != "success" \]/u);
+    assert.ok((svar!.run ?? "").indexOf('exit 0') < (svar!.run ?? "").indexOf('case "$RESULT"'), "misslyckad push får inte gå vidare till godkännande eller stängning");
     assert.match(
       svar!.run ?? "",
       /^\s*""\)/mu,

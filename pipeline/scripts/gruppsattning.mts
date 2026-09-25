@@ -1,175 +1,28 @@
-/**
- * Sätter `group_id` på löften som lovar samma sak.
- *
- *   pnpm gruppsattning -- <fil>                       # torrkörning, alltid först
- *   pnpm gruppsattning -- <fil> --skriv --varfor "…" --orsak <kod>
- *
- * Grupperingen flyttar en publicerad summa och är därför en rättelse. Posten i
- * `data/rattelser.json` bär en orsakskod som alla andra rättelser sedan
- * 2026-09-02 — utan den fälls datat av rättelseschemats grind, vilket det gjorde
- * första gången verktyget kördes efter att koden infördes.
- *
- * En rad per grupp, fälten åtskilda av tabb:
- *
- *   g-sankt-matmoms<TAB>p-2026-2448,p-2026-0658<TAB>fyra partier lovar samma sänkning
- *
- * VAD EN GRUPP GÖR. Fläskvågen räknar gruppen EN gång — `dedupeByGroup` låter
- * gruppens största post bära summan, och de övriga räknas inte. Rikssumman
- * SJUNKER därför när en grupp bildas. Handlingsvågen fäller däremot en dom per
- * löfte, så varje parti svarar fortfarande för sitt eget.
- *
- * Det är alltså inte en sammanslagning: alla löften står kvar och syns för
- * läsaren med sina egna belopp. Det som ändras är bara att samma politik inte
- * räknas flera gånger i en total.
- *
- * **Skriptet avgör aldrig att två löften lovar samma sak.** Det är en läsning,
- * och den ska vara gjord innan raden skrivs. Vad skriptet prövar är att
- * medlemmarna finns, är aktiva, inte redan sitter i en ANNAN grupp, och att
- * gruppen har minst två medlemmar — en grupp med en enda post är ingen grupp.
- *
- * Faller en enda rad skrivs ingenting.
- */
+/** Förbered, sakpröva och besluta om hela paketet före verkställning. */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
-import { svenskDag } from "../src/dagen.ts";
-import { lasOrsak, ORSAKKODER } from "../src/orsakkoder.ts";
-import {
-  mandatperioden as period,
-  provaGrupprad,
-  sankning as sankningFor,
-  sankningsdelta,
-  tillampa,
-  type Grupplofte as Lofte,
-  type Grupprad as Rad,
-} from "../src/gruppsattning.ts";
-
+import { taLaset } from "../src/datalas.ts";
+import { lasFillage } from "../src/datatransaktion.ts";
+import { GRUPPFILER, forberedGrupppaket, kontrolleraGrupppaket, grupppakethash, verkstallGrupppaket, type Gruppindata, type Grupppaket } from "../src/grupppaket.ts";
 const DATA = join(import.meta.dirname, "../../data");
-const argv = process.argv.slice(2);
-const skriv = argv.includes("--skriv");
-const varde = (f: string) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
-const varfor = varde("--varfor");
-const orsakArg = lasOrsak(process.argv);
-const fil = argv.find((a) => !a.startsWith("--") && a !== varfor);
-const datum = svenskDag();
-
-if (!fil) {
-  console.error("Ange en fil: <group_id>\\t<id,id,…>\\t<skäl>. Se skriptets huvud.");
-  process.exit(1);
-}
-
-const rader: Rad[] = readFileSync(fil, "utf8")
-  .split("\n")
-  .map((r) => r.replace(/\r$/u, ""))
-  .filter((r) => r.trim() !== "" && !r.startsWith("#"))
-  .map((r) => {
-    const [grupp, ids, skal] = r.split("\t");
-    return {
-      grupp: (grupp ?? "").trim(),
-      ids: (ids ?? "").split(",").map((s) => s.trim()).filter(Boolean),
-      skal: (skal ?? "").trim(),
-    };
-  });
-
-const loften = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Lofte[];
-const karta = new Map(loften.map((p) => [p.id, p]));
-
-const fel: string[] = [];
-for (const rad of rader) fel.push(...provaGrupprad(rad, karta).fel);
-// Ett id får inte stå i två grupper i SAMMA fil; det ser modulen inte, för den
-// prövar en rad i taget.
-const sedda = new Set<string>();
-for (const rad of rader) for (const id of rad.ids) {
-  if (sedda.has(id)) fel.push(`${id} står i två grupper i samma fil`);
-  sedda.add(id);
-}
-
-let sankning = 0;
-for (const rad of rader) {
-  // Gruppen som den blir: raden plus dem som redan står i den. Utökas en
-  // befintlig grupp är det de sammanlagda medlemmarna som avgör vem som bär
-  // summan, inte bara de nytillkomna.
-  const redan = loften.filter((p) => p.group_id === rad.grupp && (p.status ?? "aktiv") === "aktiv");
-  const nya = rad.ids.map((i) => karta.get(i)).filter((p): p is Lofte => Boolean(p) && p!.group_id !== rad.grupp);
-  const med = [...redan, ...nya];
-  if (med.length < 2) continue;
-  const storst = Math.max(...med.map(period));
-  const bortraknat = sankningsdelta(rad, loften);
-  sankning += bortraknat;
-  const utokning = redan.length > 0 ? `utökas med ${nya.length}, blir ${med.length}` : `${med.length} löften`;
-  console.log(`${rad.grupp}  (${utokning}, ${bortraknat.toLocaleString("sv-SE")} msek räknas inte längre dubbelt)`);
-  for (const p of med) {
-    const bar = period(p) === storst ? " ← bär summan" : "";
-    const nyhet = redan.includes(p) ? "  " : "+ ";
-    console.log(`   ${nyhet}${p.id} [${(p.parties ?? []).join(",")}] ${period(p).toLocaleString("sv-SE").padStart(9)}  ${(p.title ?? "").slice(0, 54)}${bar}`);
-  }
-  console.log(`     skäl: ${rad.skal}`);
-  console.log();
-}
-void sankningFor;
-
-if (fel.length > 0) {
-  console.error(`FÄLLDA RADER (${fel.length}) — ingenting skrivet:`);
-  for (const f of fel) console.error(`  · ${f}`);
-  process.exit(1);
-}
-
-console.log(`${rader.length} grupper · rikssumman sjunker med ${sankning.toLocaleString("sv-SE")} msek för mandatperioden`);
-
-if (!skriv) { console.log("\nIngenting skrivet. Kör med --skriv för att verkställa."); process.exit(0); }
-if (orsakArg === null) {
-  console.error(
-    "\nEn rättelsepost kräver --orsak med en av koderna (grind: rattelseschema.test.ts):",
-  );
-  for (const k of ORSAKKODER) console.error(`  ${k}`);
-  process.exit(1);
-}
-if (!varfor) { console.error("\n--skriv kräver --varfor."); process.exit(1); }
-
-const nya = loften.map((p) => {
-  const rad = rader.find((r) => r.ids.includes(p.id));
-  if (!rad) return p;
-  // Den som redan står i gruppen får ingen ny historikpost — ingenting hände
-  // med den. Medlemsantalet i texten är däremot gruppens hela, inte radens.
-  if (p.group_id === rad.grupp) return p;
-  const helaGruppen = [
-    ...loften.filter((q) => q.group_id === rad.grupp && (q.status ?? "aktiv") === "aktiv"),
-    ...rad.ids.map((i) => karta.get(i)!).filter((q) => q && q.group_id !== rad.grupp),
-  ];
-  return tillampa(p, rad, helaGruppen, datum);
-});
-
-// En rad kan bilda en ny grupp eller utöka en som finns. Notens ord ska säga
-// vilket — «bildade» om en grupp som redan har medlemmar är ett påstående om
-// att politiken upptäcktes i dag, och det stämmer inte.
-const antalUtokade = rader.filter((r) => loften.some((p) => p.group_id === r.grupp)).length;
-const bildadeEllerUtokade =
-  antalUtokade === 0 ? "bildade" : antalUtokade === rader.length ? "utökade" : "bildade eller utökade";
-
-const rattelser = JSON.parse(readFileSync(join(DATA, "rattelser.json"), "utf8")) as unknown[];
-rattelser.push({
-  date: datum,
-  affects: `Löftessidorna för ${rader.flatMap((r) => r.ids).join(", ")}`,
-  what:
-    `${rader.length} grupper ${bildadeEllerUtokade} över ${rader.flatMap((r) => r.ids).length} löften. Samma politik ` +
-    "räknas nu en gång i stället för flera. Alla löften står kvar och syns med sina egna " +
-    `belopp; det som ändras är totalen, som sjunker med ${sankning.toLocaleString("sv-SE")} miljoner ` +
-    "kronor för mandatperioden. " + rader.map((r) => r.skal).join(" "),
-  why: varfor,
-  orsak: orsakArg,
-  commit: "0000000",
-});
-
-const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as ChangelogEntry[];
-changelog.push({
-  run_id: `gruppsattning-${datum}`,
-  added: [], updated: rader.flatMap((r) => r.ids), retracted: [],
-  data_hash: computeDataHash(nya),
-  timestamp: new Date().toISOString(),
-});
-
-writeFileSync(join(DATA, "promises.json"), JSON.stringify(nya, null, 2) + "\n");
-writeFileSync(join(DATA, "rattelser.json"), JSON.stringify(rattelser, null, 2) + "\n");
-writeFileSync(join(DATA, "changelog.json"), JSON.stringify(changelog, null, 2) + "\n");
-console.log("\nSkrivet: promises.json, rattelser.json, changelog.json");
-console.log("Kvar: backfilla commit-hashen (pnpm backfilla-commit), bygg om läskopian.");
+const [kommando, fil, argument, skriv, ...extra] = process.argv.slice(2);
+const las = (f: string): unknown => JSON.parse(readFileSync(f, "utf8"));
+if (extra.length || !fil) throw new Error("Använd gruppsattning forbered <indata.json> <privat paket.json>, kontroll <paket.json>, eller verkstall <paket.json> <beslutets pakethash> --skriv");
+if (kommando === "forbered" && argument && !skriv) {
+  const slapp = taLaset(DATA, "förbered grupppaket");
+  try {
+    const p = forberedGrupppaket(las(fil) as Gruppindata, lasFillage(DATA, GRUPPFILER), new Date());
+    writeFileSync(argument, JSON.stringify(p, null, 2) + "\n", { flag: "wx", mode: 0o600 });
+    console.log("Privat paket sparat. Alla sakmoment är oavgjorda. Inga publicerade filer ändrade.");
+  } finally { slapp(); }
+} else if (kommando === "kontroll" && !argument && !skriv) {
+  const slapp = taLaset(DATA, "kontrollera grupppaket");
+  try {
+    const p = las(fil) as Grupppaket;
+    kontrolleraGrupppaket(p, lasFillage(DATA, GRUPPFILER));
+    console.log(`Paketets hash: ${grupppakethash(p)}. Kontrollen är inte ett mänskligt godkännande.`);
+  } finally { slapp(); }
+} else if (kommando === "verkstall" && argument && skriv === "--skriv") {
+  verkstallGrupppaket(DATA, las(fil) as Grupppaket, argument);
+  console.log("Exakt beslutat paket skrivet med historik, rättelse och körlogg. Commit-hashens separata komplettering återstår.");
+} else throw new Error("Äldre direktkommandon verkställs inte. Förbered paket, sakpröva det och ange beslutets hash vid verkställning.");

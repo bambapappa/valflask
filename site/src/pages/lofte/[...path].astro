@@ -11,6 +11,7 @@ import { getPromises, getParties, getPeople, getConstants } from "../../lib/data
 import { promisePageTitle } from "../../lib/seo";
 import { formatMsek, formatBasisLabel, formatCostType, formatDateShort, getPartyByCode } from "../../lib/calc";
 import { promiseTotalMsek, computeComparisons, formatComparison, dryLine } from "../../lib/aggregates";
+import { valdagEtikett, valdagKategori } from "../../lib/loftesfilter";
 
 export function getStaticPaths() {
   const promises = getPromises();
@@ -80,6 +81,7 @@ const jsonLd = [
 
       <h1>{promise.title}</h1>
       <p class="etikett loften-underlag">{promise.loftestyp === "reform" ? "REFORMLÖFTE" : "INRIKTNINGS-/POLICYLÖFTE"} · {underlagsetikett}</p>
+      <p class="etikett valdag-etikett">{valdagEtikett(promise)} · Valdagen 13 september 2026{valdagKategori(promise) === "oklar" && <> · Källans datum behöver beläggas</>}</p>
 
       {(promise.status === 'uppdaterad' || promise.status === 'tillbakadragen') && (
         <div class="stampel-wrap">
@@ -134,7 +136,7 @@ const jsonLd = [
           <p class="ankarnot">
             Beloppet är lånat som riktmärke från
             {ankare.map((a, i) => (
-              <>{i > 0 ? ', ' : ' '}<a href={`/lofte/${a.slug}/`}>{a.title}</a></>
+              <>{i > 0 ? ', ' : ' '}<a href={`/lofte/${a.id}/${a.slug}/`}>{a.title}</a></>
             ))}.
           </p>
         )}

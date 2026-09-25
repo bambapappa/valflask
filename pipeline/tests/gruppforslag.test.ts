@@ -1,0 +1,34 @@
+import { it } from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { forberedGruppforslag, tillampaGruppforslag } from "../src/gruppforslag.ts";
+import { byggGruppunderlag, skapaSakprovning, sakprovningsBeredskap } from "../src/sakprovning.ts";
+import type { PromiseEntry } from "../src/loftesforslag.ts";
+const loften: PromiseEntry[] = JSON.parse(readFileSync(new URL("../../data/promises.json", import.meta.url), "utf8"));
+const valda = loften.filter(p => p.status === "aktiv" && !p.group_id).slice(0, 2);
+const mal = valda[0]!;
+assert.equal(valda.length, 2);
+const rad = { id: mal.id, grupp: "g-tekniskt-kontraktsprov", ids: valda.map(p => p.id), skal: "Syntetiskt kontraktsprov, inte en sakbedömning." };
+const nu = new Date("2026-09-20T00:00:00Z");
+it("fryser enbart grupp och historik och lämnar original samt sakprövning orörda", () => {
+  const fore = JSON.stringify(loften);
+  const f = forberedGruppforslag(rad, loften, nu);
+  assert.deepEqual({ ...f.nyttLofte, group_id: mal.group_id, history: mal.history }, mal);
+  assert.equal(f.nyttLofte.group_id, rad.grupp);
+  assert.equal(f.nyttLofte.history.length, mal.history.length + 1);
+  assert.deepEqual(tillampaGruppforslag(f, loften, f.hash).find(p => p.id === mal.id), f.nyttLofte);
+  const u = byggGruppunderlag(f, loften, []), prov = skapaSakprovning(u);
+  assert.ok(prov.bedomningar.every(b => b.utfall === "oavgjort"));
+  assert.equal(sakprovningsBeredskap(prov, u).klar, false);
+  assert.equal(JSON.stringify(loften), fore);
+});
+it("tomt bestånd, okänt mål, ändrat föreläge, manipulerad slutform och fel hash stoppas", () => {
+  assert.throws(() => forberedGruppforslag(rad, [], nu));
+  assert.throws(() => forberedGruppforslag({ ...rad, id: "saknas" }, loften, nu));
+  const f = forberedGruppforslag(rad, loften, nu);
+  assert.throws(() => tillampaGruppforslag(f, loften, "0".repeat(64)));
+  const andra = structuredClone(loften); andra[0]!.quote += " ändrad";
+  assert.throws(() => tillampaGruppforslag(f, andra, f.hash));
+  f.nyttLofte.parties = ["annat"];
+  assert.throws(() => tillampaGruppforslag(f, loften, f.hash));
+});

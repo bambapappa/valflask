@@ -22,7 +22,8 @@
  *
  * Faller en enda rad skrivs ingenting.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 import { join } from "node:path";
 import { reviewId, type ReviewCandidate } from "../src/review.ts";
 import {
@@ -35,6 +36,8 @@ import {
 } from "../src/koankare.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
+const fore = lasFillage(DATA, ["needs_review.json", "promises.json"]);
+if (typeof fore["needs_review.json"] !== "string" || typeof fore["promises.json"] !== "string") throw new Error("Köpasset kräver kö och löftesbestånd");
 const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 const fil = argv.find((a) => !a.startsWith("--"));
@@ -58,10 +61,10 @@ const rader: Koankarrad[] = readFileSync(fil, "utf8")
     };
   });
 
-const ko = JSON.parse(readFileSync(join(DATA, "needs_review.json"), "utf8")) as ReviewCandidate[];
+const ko = JSON.parse(fore["needs_review.json"]) as ReviewCandidate[];
 const perId = new Map(ko.map((p) => [reviewId(p), p]));
 const malen = new Map<string, Ankarmal>(
-  (JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Array<{
+  (JSON.parse(fore["promises.json"]) as Array<{
     id: string; status?: string; title?: string; cost?: { msek_base?: number; period?: string; type?: string };
   }>).map((p) => [
     p.id,
@@ -113,6 +116,9 @@ for (const rad of attGora) {
   const post = perId.get(rad.id)!;
   (post as { cost?: unknown }).cost = sattAnkare((post.cost ?? {}) as Kokostnadslage, rad);
 }
-writeFileSync(join(DATA, "needs_review.json"), JSON.stringify(ko, null, 2) + "\n");
+skrivFilpaket(DATA, skapaFilpaket(fore, {
+  "needs_review.json": JSON.stringify(ko, null, 2) + "\n",
+  "promises.json": fore["promises.json"],
+}));
 console.log("\nSkrivet: data/needs_review.json");
 console.log("Kör svepet över kön och skriv prövningarna innan du godkänner.");

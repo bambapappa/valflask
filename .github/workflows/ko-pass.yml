@@ -31,6 +31,7 @@ on:
     paths:
       - ".github/workflows/ko-pass.yml"
       - "pipeline/scripts/ko-pass.sh"
+      - "pipeline/scripts/ko-pass-bevara-datum.py"
 permissions:
   contents: read
 concurrency:

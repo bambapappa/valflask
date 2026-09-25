@@ -52,6 +52,8 @@ import {
   type Loftetsslag,
 } from "../src/anslagsbararen.ts";
 import { svenskDag } from "../../../pipeline/src/dagen.ts";
+import { lasKopplingslage, skrivKopplingsbeslut } from "../src/kopplingsskrivning.ts";
+import { lasKopplingsrattelselage, skrivKopplingsrattelse } from "../src/kopplingsrattelse.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
@@ -69,9 +71,10 @@ if (matningsfil === undefined) {
 }
 
 const matningar: Anslagsmatning[] = JSON.parse(readFileSync(resolve(matningsfil), "utf8"));
-const kopplingarPath = resolve(rot, kon ? "data/kopplingsforslag.json" : "data/kopplingar.json");
-const kopplingar: Array<KopplingPost | KoPost> = JSON.parse(readFileSync(kopplingarPath, "utf8"));
-const rattelserPath = resolve(rot, "data/rattelser.json");
+const dataDir = resolve(rot, "data");
+const koLage = kon ? lasKopplingslage(dataDir) : null;
+const pubLage = kon ? null : lasKopplingsrattelselage(dataDir);
+const kopplingar: Array<KopplingPost | KoPost> = kon ? koLage!.ko : pubLage!.kopplingar;
 
 interface Lasning {
   las: Array<{ id: string; slag: Loftetsslag; skal: string }>;
@@ -291,11 +294,14 @@ for (const r of kon ? [] : drasIn) {
   if (k.promise_id) berordaLoften.add(k.promise_id);
 }
 
-writeFileSync(kopplingarPath, JSON.stringify(kopplingar, null, 2) + "\n");
-
 // Ingenting av det här är publicerat i kö-läget, och en rättelsenot om något
 // ingen läsare sett vore en osann uppgift i den offentliga rättelseloggen.
 if (kon) {
+  if (rorda.length === 0) {
+    console.log("\nIngen köpost ändras. Ingenting skrivet.");
+    process.exit(0);
+  }
+  skrivKopplingsbeslut(dataDir, koLage!.fore, kopplingar as KoPost[], koLage!.kopplingar);
   console.log(`\nSkrivet: data/kopplingsforslag.json — ${rorda.length} kö-poster har fått anslagsraden i motiveringen`);
   if (drasIn.length > 0) {
     console.log(`\nDe ${drasIn.length} som inte bär löftet — de avgörs av den som beslutar, inget är rört:`);
@@ -305,7 +311,11 @@ if (kon) {
 }
 
 /** En rättelsepost för hela genomgången — rättelser samlas. */
-const rattelser = JSON.parse(readFileSync(rattelserPath, "utf8")) as unknown[];
+if (rorda.length === 0) {
+  console.log("\nIngen publicerad koppling ändras. Ingenting skrivet.");
+  process.exit(0);
+}
+const rattelser = pubLage!.rattelser;
 rattelser.push({
   date: datum,
   affects:
@@ -333,7 +343,7 @@ rattelser.push({
     "belägget som blivit möjligt att granska.",
   commit: "0000000",
 });
-writeFileSync(rattelserPath, JSON.stringify(rattelser, null, 2) + "\n");
+skrivKopplingsrattelse(dataDir, pubLage!.fore, kopplingar as KopplingPost[], rattelser);
 
 console.log(`\nSkrivet: data/kopplingar.json — ${rorda.length} kopplingar rörda`);
 console.log(`  ${barLoftet.length} har fått anslagsraden i motiveringen`);

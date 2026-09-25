@@ -2,7 +2,7 @@
  * test-interval.mts — enhetstest för totalFlasketInterval (viktad totalformel,
  * DECISION_LOG 2026-06-29). Körs i sajtens teststil (node --experimental-strip-types).
  */
-import { totalFlasketInterval } from "../src/lib/aggregates.ts";
+import { totalFlasket, totalFlasketInterval } from "../src/lib/aggregates.ts";
 import type { PromisePost } from "../src/lib/data";
 
 let errors = 0;
@@ -44,6 +44,15 @@ function p(
 {
   const r = totalFlasketInterval([p("utgift", 10, 10, 10, "engang")], 0.3, 0.8);
   check("engång → ×1, base = 10", r.base === 10, `fick ${r.base}`);
+}
+
+// En tillbakadragen gruppmedlem får varken höja summan eller ersätta den aktiva.
+{
+  const active = { ...p("utgift", 80, 100, 120), id: "p-a", group_id: "g-1" };
+  const withdrawn = { ...p("utgift", 800, 1000, 1200), id: "p-b", group_id: "g-1", status: "tillbakadragen" };
+  const set = [active, withdrawn] as PromisePost[];
+  const r = totalFlasketInterval(set);
+  check("intervallets bas följer huvudsummans aktiva gruppmedlem", r.base === totalFlasket(set) && r.base === 400, `fick ${r.base}`);
 }
 
 // ρ monotonicitet: högre korrelation → bredare band (≥2 osäkra löften).

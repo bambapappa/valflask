@@ -30,10 +30,12 @@
  * inte har. Därför prövar `film-arkiv.test.ts` att fältet bara sätts på
  * filmkällor och bara med `/varchive/`-adresser.
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { arVideokopia, slaUppGhostarchive } from "../src/archive.ts";
 import { arFilm, filmensAdress } from "../src/filmkallan.ts";
+import { lasFillage } from "../src/datatransaktion.ts";
+import { skrivUnderlagskomplettering } from "../src/underlagskomplettering.ts";
+import { svenskDag } from "../src/dagen.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const SKRIV = process.argv.includes("--skriv");
@@ -44,9 +46,11 @@ interface Kalla {
   archive_url: string | null;
   video_archive_url?: string | null;
 }
-interface Lofte { id: string; status?: string; source: Kalla }
+interface Lofte { id: string; status?: string; source: Kalla; history?: { date: string; change: string; commit: string }[] }
 
-const promises = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Lofte[];
+const fore = lasFillage(DATA, ["promises.json", "changelog.json"]);
+if (typeof fore["promises.json"] !== "string") throw new Error("Saknar promises.json");
+const promises = JSON.parse(fore["promises.json"]) as Lofte[];
 
 const perFilm = new Map<string, Lofte[]>();
 for (const p of promises) {
@@ -83,10 +87,21 @@ if (funna.size === 0) {
 }
 
 let rorda = 0;
+const andradeId: string[] = [];
+const nu = new Date();
 for (const [adress, loften] of perFilm) {
   const kopia = funna.get(adress);
   if (!kopia) continue;
-  for (const p of loften) { p.source.video_archive_url = kopia; rorda++; }
+  for (const p of loften) {
+    p.source.video_archive_url = kopia;
+    p.history = [...(p.history ?? []), {
+      date: svenskDag(nu),
+      change: "En videokopia av källsändningen har lagts till. Den är ett komplement till avskriften och har inte använts som ordagrant citatbelägg. Citat, belopp och bedömning är oförändrade.",
+      commit: "0000000",
+    }];
+    andradeId.push(p.id);
+    rorda++;
+  }
 }
 
 console.log(`\n${funna.size} sändningar → ${rorda} löften får en videokopia.`);
@@ -94,9 +109,6 @@ if (!SKRIV) {
   console.log("torrkörning — lägg till --skriv för att verkställa.");
   process.exit(0);
 }
-writeFileSync(join(DATA, "promises.json"), JSON.stringify(promises, null, 2) + "\n");
-console.log("skrivet: promises.json");
-console.log(
-  "Kvar att göra: räkna om data_hash i changelogens sista post, och kontrollera\n" +
-    "att metodsidans rad om videokopior stämmer (den skrivs ur datat).",
-);
+skrivUnderlagskomplettering(DATA, fore, promises, andradeId, "film-arkiv", nu);
+console.log("skrivet: promises.json och changelog.json i samma paket");
+console.log("Kvar att göra: backfilla historikens commit-hash i andra commiten och kontrollera metodsidans rad om videokopior.");

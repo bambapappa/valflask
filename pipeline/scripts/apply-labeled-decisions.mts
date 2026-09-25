@@ -3,13 +3,13 @@
  * beslut satta som etiketter — GitHubs listvy kan bulk-applicera etiketter,
  * så ägaren kan godkänna/avvisa MÅNGA poster i ett klick:
  *
- *   beslut:godkänn  → godkänn med den föreslagna kostnaden som den är
- *   beslut:avvisa   → avvisa
+ *   beslut:godkänn  → stoppa och hänvisa till ett redan förberett paket
+ *   beslut:avvisa   → stoppa och hänvisa till ett redan förberett paket
  *
- * "Ja med ändrade belopp" kräver fortfarande kommentar (/godkänn låg bas hög) —
- * belopp går inte att uttrycka i en etikett. Etiketter kan bara sättas av
- * användare med triage-behörighet (= ägaren i detta repo), så etikettens
- * närvaro ÄR auktorisationen.
+ * Ett ja får inte bygga sitt löftesförslag och sin sakprövning efter klicket.
+ * Etiketter kan sättas av användare med triage-behörighet. Närvaron räcker
+ * därför inte som beslut: den senaste etiketteringshändelsen måste kunna
+ * bindas till repots ägare, och ett ja måste dessutom avse ett fryst paket.
  *
  * TVÅ FASER (så att en omgjord push aldrig tappar beslut):
  *   apply  — muterar data/ och skriver planerade issue-notifieringar till
@@ -23,11 +23,10 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import {
-  approve,
-  reject,
   findIndexByReviewId,
   type ReviewCandidate,
 } from "../src/review.ts";
+import { verifieraEtikettbeslut, type GitHubEtiketthandelse } from "../src/github-etikettbeslut.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 const QUEUE_LABEL = "review-kö";
@@ -37,10 +36,11 @@ const API = "https://api.github.com";
 
 const token = process.env.GITHUB_TOKEN;
 const repo = process.env.GITHUB_REPOSITORY;
+const repoOwner = process.env.GITHUB_REPOSITORY_OWNER;
 const notifyFile = process.env.NOTIFY_FILE;
 const mode = process.argv[2] ?? "apply";
-if (!token || !repo || !notifyFile) {
-  console.error("Kräver GITHUB_TOKEN, GITHUB_REPOSITORY och NOTIFY_FILE.");
+if (!token || !repo || !repoOwner || !notifyFile) {
+  console.error("Kräver GITHUB_TOKEN, GITHUB_REPOSITORY, GITHUB_REPOSITORY_OWNER och NOTIFY_FILE.");
   process.exit(1);
 }
 
@@ -51,10 +51,10 @@ const HEADERS = {
   "User-Agent": "utlovat-review-apply",
 };
 
-async function api(path: string, init?: RequestInit): Promise<{ status: number; json: unknown }> {
+async function api(path: string, init?: RequestInit, acceptedErrors: number[] = []): Promise<{ status: number; json: unknown }> {
   const res = await fetch(`${API}${path}`, { ...init, headers: { ...HEADERS, ...init?.headers } });
   const text = await res.text();
-  if (!res.ok && res.status !== 422 && res.status !== 404) {
+  if (!res.ok && !acceptedErrors.includes(res.status)) {
     throw new Error(`GitHub API ${res.status} för ${path}: ${text.slice(0, 200)}`);
   }
   return { status: res.status, json: text ? JSON.parse(text) : null };
@@ -79,10 +79,11 @@ if (mode === "notify") {
       body: JSON.stringify({ body: n.body }),
     });
     if (n.removeLabel) {
-      await fetch(`${API}/repos/${repo}/issues/${n.number}/labels/${encodeURIComponent(n.removeLabel)}`, {
+      // En omkörning får redan ha tagit bort etiketten. Andra API-fel ska
+      // däremot fälla notify, annars ser körningen grön ut utan åtgärd.
+      await api(`/repos/${repo}/issues/${n.number}/labels/${encodeURIComponent(n.removeLabel)}`, {
         method: "DELETE",
-        headers: HEADERS,
-      });
+      }, [404]);
     }
     if (n.close) {
       await api(`/repos/${repo}/issues/${n.number}`, {
@@ -99,22 +100,39 @@ if (mode === "notify") {
 /* ─────────────────────────── apply-fasen ── */
 
 /** Beslutsetiketterna måste finnas för att kunna väljas i UI:t (422 = finns redan). */
-await api(`/repos/${repo}/labels`, {
+const approveLabel = await api(`/repos/${repo}/labels`, {
   method: "POST",
   body: JSON.stringify({
     name: APPROVE_LABEL, color: "0e8a16",
     description: "Godkänn med föreslagen kostnad (bulk-bar via listvyn)",
   }),
-});
-await api(`/repos/${repo}/labels`, {
+}, [422]);
+if (approveLabel.status === 422) {
+  await api(`/repos/${repo}/labels/${encodeURIComponent(APPROVE_LABEL)}`);
+}
+const rejectLabel = await api(`/repos/${repo}/labels`, {
   method: "POST",
   body: JSON.stringify({
     name: REJECT_LABEL, color: "d93f0b",
-    description: "Avvisa posten (bulk-bar via listvyn)",
+    description: "Kräver privat avvisningspaket och separat sakskäl; etiketten verkställer inte",
   }),
-});
+}, [422]);
+if (rejectLabel.status === 422) {
+  await api(`/repos/${repo}/labels/${encodeURIComponent(REJECT_LABEL)}`);
+}
 
 interface Issue { number: number; title: string; labels: Array<{ name: string }> }
+
+async function verifieradEtikett(issue: Issue, namn: string): Promise<{ actor: string; handelse: string } | null> {
+  const handelser: GitHubEtiketthandelse[] = [];
+  for (let page = 1; page <= 20; page++) {
+    const { json } = await api(`/repos/${repo}/issues/${issue.number}/events?per_page=100&page=${page}`);
+    const batch = json as GitHubEtiketthandelse[];
+    handelser.push(...batch);
+    if (batch.length < 100) break;
+  }
+  return verifieraEtikettbeslut(handelser, namn, repoOwner!, repo!, issue.number);
+}
 
 const issues: Issue[] = [];
 for (let page = 1; page <= 20; page++) {
@@ -148,6 +166,18 @@ for (const issue of issues) {
     continue;
   }
 
+  const beslutsnamn = wantsReject ? REJECT_LABEL : APPROVE_LABEL;
+  const etikettbeslut = await verifieradEtikett(issue, beslutsnamn);
+  if (!etikettbeslut) {
+    notifications.push({
+      number: issue.number,
+      body: `⚠️ Etiketten \`${beslutsnamn}\` saknar en verifierad etiketteringshändelse från repots ägare. Ingen data ändrades.`,
+      removeLabel: beslutsnamn,
+    });
+    skipped++;
+    continue;
+  }
+
   // Kön läses om per beslut — index förskjuts när tidigare poster tas bort.
   const items = JSON.parse(readFileSync(join(DATA_DIR, "needs_review.json"), "utf8")) as ReviewCandidate[];
   const index = findIndexByReviewId(items, id);
@@ -162,79 +192,22 @@ for (const issue of issues) {
   }
 
   if (wantsReject) {
-    const { title } = reject(String(index), "avvisad via etikett", DATA_DIR);
     notifications.push({
       number: issue.number,
-      body: `❌ Avvisad via etikett: "${title}"`,
-      close: "not_planned",
+      body: "⚠️ Avslaget verkställdes inte. Etiketten bär varken ett fryst köunderlag eller ett individuellt sakskäl. Förbered ett privat avvisningspaket och använd `/avvisa paket <hash>` efter granskning.",
+      removeLabel: REJECT_LABEL,
     });
-    rejected++;
+    skipped++;
   } else {
-    const entry = items[index]!;
-    if (!entry.cost) {
-      notifications.push({
-        number: issue.number,
-        body: "⚠️ Posten saknar föreslagen kostnad — etikettbeslut går inte här. Kommentera i stället: `/godkänn <low> <base> <high>` (msek).",
-        removeLabel: APPROVE_LABEL,
-      });
-      skipped++;
-      continue;
-    }
-    // GRUPPEN LIGGER PÅ KÖ-POSTEN, OCH DEN MÅSTE FÖLJA MED HIT.
-    // `ko-grupp` skriver `group_id` på posten FÖRE godkännandet, eftersom
-    // fältet ingår i prövningens hash — sätts gruppen först vid godkännandet
-    // beskriver prövningen en annan version och grinden fäller posten. Svepet
-    // läste den aldrig tillbaka: 2026-08-30 publicerades sex poster med
-    // `group_id: null` trots att kö-posten bar sin grupp, och ingenting sa
-    // ifrån. Kommentarsvägen skickar `--group`; den här gjorde det inte.
-    //
-    // `approve` tar en MEDLEM av gruppen, inte gruppens id, och återanvänder
-    // medlemmens `group_id`. Därför slås en medlem upp i stället för att
-    // gruppens id räknas om ur namnet — en namngiven grupp som
-    // `g-slopa-mangdrabatt` fungerar då likadant som `g-p-2026-0123`.
-    const args = [String(index)];
-    const gruppen = (entry as { group_id?: string | null }).group_id;
-    if (gruppen) {
-      const publicerade = JSON.parse(
-        readFileSync(join(DATA_DIR, "promises.json"), "utf8"),
-      ) as Array<{ id: string; group_id?: string | null; status?: string }>;
-      // EN NY GRUPP HAR ÄNNU INGEN MEDLEM. `approve --group <mal>` är det som
-      // SKAPAR gruppen genom att sätta `group_id` på målet, så uppslaget på en
-      // befintlig medlem hittar ingenting första gången. `ko-grupp` namnger en
-      // ny grupp `g-<mal>`, och då är målet utläsbart ur namnet. Två fall,
-      // i den här ordningen:
-      //   1. gruppen finns redan (även namngiven, som g-slopa-mangdrabatt)
-      //      → skicka en aktiv medlem, så återanvänds medlemmens group_id
-      //   2. gruppen är ny och heter g-<löftes-id> → skicka det löftet
-      // Faller båda vet vi inte vad posten ska länkas till, och då publiceras
-      // den inte. Mätt 2026-08-30: kontrollen kunde bara det första fallet, och
-      // stoppade två poster vars mål levde och var helt i sin ordning.
-      const nyttMal = /^g-(p-\d{4}-\d{4})$/.exec(gruppen)?.[1];
-      const medlem =
-        publicerade.find((p) => p.group_id === gruppen && p.status === "aktiv") ??
-        publicerade.find((p) => p.id === nyttMal && p.status === "aktiv");
-      if (!medlem) {
-        notifications.push({
-          number: issue.number,
-          body:
-            `⚠️ Kö-posten bär gruppen \`${gruppen}\`, men varken ett aktivt löfte i gruppen ` +
-            "eller ett aktivt mål utläst ur gruppens namn går att hitta. Gruppen kan inte " +
-            "sättas, och posten publiceras inte utan den — annars räknas samma politik " +
-            "två gånger. Kontrollera målet.",
-          removeLabel: APPROVE_LABEL,
-        });
-        skipped++;
-        continue;
-      }
-      args.push("--group", medlem.id);
-    }
-    const res = approve(args, DATA_DIR);
     notifications.push({
       number: issue.number,
-      body: `✅ Publicerad via etikett som **${res.id}** — "${res.title}", ${res.msekBase} msek. Livesajten uppdateras vid nästa bygge.`,
-      close: "completed",
+      body:
+        "⚠️ Godkännandet verkställdes inte. Etiketten kan inte ensam bära det sparade " +
+        "löftesförslaget, den fullständiga sakprövningen och beslutets separata prövningshash. " +
+        "Använd det förberedda beslutspaketet.",
+      removeLabel: APPROVE_LABEL,
     });
-    approved++;
+    skipped++;
   }
 }
 

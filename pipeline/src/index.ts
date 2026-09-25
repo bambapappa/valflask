@@ -26,8 +26,10 @@ import {
   verifyStance,
   type ProcessedStance,
   type StanceGateFailure,
-  type StanceReviewEntry,
 } from "./stance-pipeline.ts";
+import { lasStanceReview } from "./stance-review-lage.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket, type Fillage } from "./datatransaktion.ts";
+import { kanoniskJson } from "./underlagsversion.ts";
 import type { IssuesFile, StanceCell } from "./stances.ts";
 
 export interface PipelineContext {
@@ -107,12 +109,31 @@ interface ProcessedCandidate {
 export async function runPipeline(
   ctx: PipelineContext,
 ): Promise<PipelineResult> {
+  if (ctx.stancesEnabled && ctx.stancesMode === "auto") {
+    throw new Error("Frågevågen får endast köras i review-läge tills individuella sakbeslut är bundna till publiceringen");
+  }
   // Tiden mäts och skrivs ut, för att nästa beslut om takt och budget ska
   // kunna vila på en mätning. Det förra vilade inte på en: kommentaren i
   // pipeline.yml sa 73–87 minuter medan körningarna tog 201–325, och ingen
   // rad i loggen sa emot. Talen ligger i loggen och inte i resultatet — de
   // skiljer sig mellan två körningar, och resultatet ska inte göra det.
   const t0 = Date.now();
+  // Kontrollera befintlig Frågevågsdata före hämtning och andra skrivningar.
+  // Ett trasigt underlag är aldrig en tom kö eller ett avstängt delpass.
+  const existingStanceReview = ctx.stancesEnabled ? lasStanceReview(ctx.outputDir) : [];
+  const stanceFore = ctx.stancesEnabled ? lasFillage(ctx.outputDir, ["stances.json", "stances_review.json"]) : null;
+  const issuesFile: IssuesFile | null = ctx.stancesEnabled
+    ? JSON.parse(readFileSync(`${ctx.dataDir}/issues.json`, "utf8")) as IssuesFile : null;
+  const stanceCells: StanceCell[] = ctx.stancesEnabled
+    ? JSON.parse(readFileSync(`${ctx.dataDir}/stances.json`, "utf8")) as StanceCell[] : [];
+  if (ctx.stancesEnabled && (!Array.isArray(issuesFile?.issues) || !Array.isArray(stanceCells))) {
+    throw new Error("Frågevågens frågor eller celler har ogiltigt format");
+  }
+  if (stanceFore && (stanceFore["stances.json"] === null ||
+      kanoniskJson(JSON.parse(stanceFore["stances.json"]!)) !== kanoniskJson(stanceCells) ||
+      kanoniskJson(JSON.parse(stanceFore["stances_review.json"] ?? "[]")) !== kanoniskJson(existingStanceReview))) {
+    throw new Error("Frågevågens föreläge motsvarar inte kö och celler som ska prövas");
+  }
   const articles = await ctx.articleSource.fetch();
   const hamtningMs = Date.now() - t0;
   // Processprioritet inom budgeten: (1) page och index — partiernas egna
@@ -202,19 +223,8 @@ export async function runPipeline(
 
   // ── Frågevågen: ladda taxonomi + celler EN gång (passet delar artikelloopen,
   // annars hade seen.json redan markerat artiklarna som behandlade).
-  let issuesFile: IssuesFile | null = null;
-  let stanceCells: StanceCell[] = [];
   const processedStances: ProcessedStance[] = [];
   const stanceGateReview: Array<{ candidate: unknown; failures: StanceGateFailure[]; article: NormalizedArticle }> = [];
-  if (ctx.stancesEnabled) {
-    try {
-      issuesFile = JSON.parse(readFileSync(`${ctx.dataDir}/issues.json`, "utf8")) as IssuesFile;
-      stanceCells = JSON.parse(readFileSync(`${ctx.dataDir}/stances.json`, "utf8")) as StanceCell[];
-    } catch (e) {
-      console.error(`[stances] kunde inte ladda issues/stances — passet hoppas över: ${e instanceof Error ? e.message : String(e)}`);
-      issuesFile = null;
-    }
-  }
 
   // Dubblettkollen på ett ställe: den körs två gånger nedan — en gång i det
   // samtidiga passet mot beståndet som det såg ut när körningen startade, och
@@ -584,17 +594,11 @@ export async function runPipeline(
     if (!erroredUrls.has(a.url)) updatedSeen.set(seenKey(a), a.url);
   }
 
-  // ── Frågevågen: publicera ståndpunkter FÖRE publish() så att körningens
-  // changelog-post bär stances_added/stances_changed.
+  // ── Frågevågen: beräkna före publish(), men skriv i samma filpaket så
+  // körningens changelog-post och celler aldrig får olika versioner.
   let stanceSummary: { added: string[]; changed: string[] } | undefined;
+  let stanceFiles: { fore: Fillage; efter: Fillage } | undefined;
   if (issuesFile) {
-    const existingStanceReview: StanceReviewEntry[] = (() => {
-      try {
-        return JSON.parse(readFileSync(`${ctx.outputDir}/stances_review.json`, "utf8")) as StanceReviewEntry[];
-      } catch {
-        return [];
-      }
-    })();
     const stanceResult = publishStances({
       processed: processedStances,
       gateReview: stanceGateReview,
@@ -605,8 +609,10 @@ export async function runPipeline(
       now: ctx.now,
       mode: ctx.stancesMode ?? "review",
     });
-    writeFileSync(`${ctx.outputDir}/stances.json`, JSON.stringify(stanceResult.cells, null, 2) + "\n");
-    writeFileSync(`${ctx.outputDir}/stances_review.json`, JSON.stringify(stanceResult.review, null, 2) + "\n");
+    const json = (v: unknown) => JSON.stringify(v, null, 2) + "\n";
+    stanceFiles = { fore: stanceFore!, efter: {
+      "stances.json": json(stanceResult.cells), "stances_review.json": json(stanceResult.review),
+    } };
     stanceSummary = { added: stanceResult.stancesAdded, changed: stanceResult.stancesChanged };
     console.error(
       `[stances] publicerade=${stanceResult.stancesAdded.length} ändringar=${stanceResult.stancesChanged.length} review=${stanceResult.review.length - existingStanceReview.length} (nya) omskördar=${stanceResult.stancesOmskordade.length}`,
@@ -616,6 +622,9 @@ export async function runPipeline(
     for (const rad of stanceResult.stancesOmskordade) console.error(`[stances] omskörd: ${rad}`);
   }
 
+  const seenObj: Record<string, string> = {};
+  for (const [k, v] of updatedSeen) seenObj[k] = v;
+
   const publishResult = publish({
     processedCandidates,
     reviewItems,
@@ -623,21 +632,18 @@ export async function runPipeline(
     runId: ctx.runId,
     now: ctx.now,
     outputDir: ctx.outputDir,
+    seen: seenObj,
     stanceSummary,
+    stanceFiles,
   });
-
-  const seenObj: Record<string, string> = {};
-  for (const [k, v] of updatedSeen) {
-    seenObj[k] = v;
-  }
-  writeFileSync(`${ctx.outputDir}/seen.json`, JSON.stringify(seenObj, null, 2) + "\n");
 
   // Veckans fläsk (A4, §7 steg 7): generera/uppdatera krönikan för aktuell
   // ISO-vecka ur veckans nya löften. Best-effort — fel fäller aldrig körningen.
   try {
+    const chronicleFore = lasFillage(ctx.outputDir, ["chronicles.json"]);
     const existingChronicles: ChronicleEntry[] = (() => {
       try {
-        return JSON.parse(readFileSync(`${ctx.outputDir}/chronicles.json`, "utf8")) as ChronicleEntry[];
+        return chronicleFore["chronicles.json"] === null ? [] : JSON.parse(chronicleFore["chronicles.json"]!) as ChronicleEntry[];
       } catch {
         return [];
       }
@@ -662,7 +668,9 @@ export async function runPipeline(
       reformBudgetMsek,
     });
     if (generated) {
-      writeFileSync(`${ctx.outputDir}/chronicles.json`, JSON.stringify(chronicles, null, 2) + "\n");
+      skrivFilpaket(ctx.outputDir, skapaFilpaket(chronicleFore, {
+        "chronicles.json": JSON.stringify(chronicles, null, 2) + "\n",
+      }));
       console.log(`Veckans fläsk: genererade krönika ${generated.slug} (${generated.promise_ids.length} löften).`);
     }
   } catch (e) {
@@ -672,7 +680,7 @@ export async function runPipeline(
   const bySource: Record<string, Artikelmatning> = {};
   const source = (a: NormalizedArticle): Artikelmatning => {
     const key = `${a.domain}/${a.feedType ?? "okand"}`;
-    return bySource[key] ??= { fetched: 0, unseen: 0, attempted: 0, succeeded: 0, failed: 0 };
+    return bySource[key] ??= { fetched: 0, unseen: 0, attempted: 0, succeeded: 0, failed: 0, kandidater: 0 };
   };
   for (const a of articles) source(a).fetched += 1;
   for (const a of newArticles) source(a).unseen += 1;
@@ -681,6 +689,10 @@ export async function runPipeline(
     m.attempted += 1;
     if (ut.fel) m.failed += 1;
     else m.succeeded += 1;
+    // Kandidater OCH grindavslag räknas: båda är poster artikeln lämnade
+    // ifrån sig. En källa som bara ger grindavslag är inte tom, den är
+    // svårläst — och det är två olika åtgärder.
+    m.kandidater += ut.kandidater.length + ut.gateReview.length;
   }
   const runStats: Kormatning = {
     fetched: articles.length,
@@ -693,6 +705,8 @@ export async function runPipeline(
     publishedTotal: publishResult.promises.length,
     queuedTotal: publishResult.queuedTotal,
     bySource,
+    ...(ctx.articleSource.getFeedOutcomes ? { feedOutcomes: ctx.articleSource.getFeedOutcomes() } : {}),
+    kandidater: reviewItems.length,
   };
   writeRunReport(ctx, runStats, publishResult.dataHash);
 

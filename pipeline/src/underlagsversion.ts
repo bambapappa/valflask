@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 
-export type Underlagsslag = "lofte" | "koppling" | "standpunkt" | "handling";
+export type Underlagsslag = "lofte" | "koppling" | "standpunkt" | "handling" | "parti";
 export interface Underlagspost {
   slag: Underlagsslag;
   id: string;

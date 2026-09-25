@@ -1,8 +1,12 @@
 import { describe, test } from "node:test";
 import assert from "node:assert/strict";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 import { arDatumdom, inomFonstret } from "../scripts/datumgrind-omprovning.mts";
 import { DATE_WINDOW_DAYS } from "../src/gates.ts";
+import { lasDatumgrindKo, skrivDatumgrindKo } from "../src/datumgrind-ko.ts";
 
 describe("datumgrindens omprövning", () => {
   test("bara datumdomen väljs — inte beloppets", () => {
@@ -47,5 +51,19 @@ describe("datumgrindens omprövning", () => {
     const nu = new Date("2026-08-19T12:00:00.000Z");
     assert.equal(inomFonstret("2021-11-19T13:16:50+01:00", nu), false);
     assert.equal(inomFonstret("2026-06-23T11:53:39+02:00", nu), true);
+  });
+
+  test("ett senare köbeslut under källhämtningen får inte skrivas över", () => {
+    const dir = mkdtempSync(join(tmpdir(), "datumgrind-ko-"));
+    try {
+      const fil = join(dir, "needs_review.json");
+      writeFileSync(fil, '[{"id":"a","failures":[{"gate":"G4"}]}]\n');
+      const fore = lasDatumgrindKo(dir);
+      writeFileSync(fil, '[{"id":"a","beslut":"senare"}]\n');
+      assert.throws(() => skrivDatumgrindKo(dir, fore, [{ id: "a", failures: [] }]), /föreläge har ändrats/);
+      assert.match(readFileSync(fil, "utf8"), /senare/);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

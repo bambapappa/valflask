@@ -1,8 +1,7 @@
 /**
  * Kvalitetssökningar över publicerade löften.
  *
- * Tre sökningar som bygger på fel som hittats manuellt, en per session, under
- * omräkningen 2026-07-27–28:
+ * Läsande sökningar som bygger på manuellt upptäckta kvalitetsfrågor:
  *
  * 1. `findAmountMismatches` — beloppet stämmer inte med uträkningen i samma
  *    fält. Den gamla sökningen läste fragment ("Bas 2 500 kr per förlossning"
@@ -15,6 +14,8 @@
  *    betydde det att samma politik prissattes olika hos olika partier.
  * 3. `findCompletedPolicyQuotes` — citatet beskriver genomförd politik utan
  *    åtagande om framtiden. Sju sådana har dragits tillbaka manuellt.
+ * 4. `findLongHorizonLumpSums` — ett engångsbelopp med uttalat slutår efter
+ *    mandatperioden kan inte utan vidare läggas i fyraårssumman.
  *
  * Sökningarna FÖRESLÅR bara — de ändrar aldrig belopp. Ett träffat löfte kan
  * mycket väl vara rätt; det är en människa som avgör.
@@ -52,6 +53,11 @@ export interface TwinFinding extends Finding {
   groupId: string;
   overlap: string[];
   score: number;
+}
+
+export interface LongHorizonFinding extends Finding {
+  endYear: number;
+  base: number;
 }
 
 /**
@@ -138,7 +144,7 @@ export function parseAmountsMsek(text: string): number[] {
     // Singularformen skalar förstås likadant som pluralen — «1 miljard kronor»
     // är 1 000 miljoner, inte 1. Att bara pluralen skalades var samma lucka som
     // att bara pluralen lästes.
-    const miljard = unit.startsWith("miljard") || unit === "mdkr";
+    const miljard = MILJARDENHETER.test(unit);
     out.push(miljard ? n * 1000 : n);
   }
   return out;
@@ -562,7 +568,11 @@ export function findZeroWithCalculatedSum(
     if (statedBaseMsek(calc) === 0) continue;
     const belopp = splitSentences(calc)
       .filter((s) => CONCLUSION.test(s) && !REJECTED.test(s))
-      .flatMap((s) => parseAmountsMsek(s).map((n) => n * sentenceScale(s)));
+      // En övre/nedre spännvidd är inte uträkningens slutsumma. Men en mening
+      // som faktiskt säger "Summan blir 285–950" ska fortfarande rapporteras.
+      .filter((s) => !/(?:^|[^\p{L}])(?:övre|nedre)\s+spann(?:et)?\b/iu.test(s))
+      // parseAmountsMsek har redan skalat mdkr/miljarder till msek.
+      .flatMap((s) => parseAmountsMsek(s));
     const stated = belopp.length === 0 ? 0 : Math.max(...belopp);
     if (stated === 0) continue;
     out.push({
@@ -572,11 +582,41 @@ export function findZeroWithCalculatedSum(
       stated,
       direction: "för lågt",
       detail:
-        `beloppet är 0 men uträkningen räknar fram upp till ${stated} msek och ` +
-        `förklarar aldrig nollan — ${p.title.slice(0, 60)}`,
+        `basbeloppet är 0 och uträkningen nämner upp till ${stated} msek; ` +
+        `kontrollera vad summan avser — ${p.title.slice(0, 60)}`,
     });
   }
   return out.sort((a, b) => b.stated - a.stated);
+}
+
+/**
+ * Engångsbelopp vars citerade mål ligger efter den period som sajten summerar.
+ * Årtalet är en söksignal, inte bevis för hur utgiften fördelas över åren.
+ * Bara explicita årintervall och slutårsfraser tas; andra tidsbeskrivningar
+ * behöver fortsatt manuell läsning.
+ */
+export function findLongHorizonLumpSums(
+  promises: readonly ScanPromise[],
+  mandateEndYear: number,
+): LongHorizonFinding[] {
+  const out: LongHorizonFinding[] = [];
+  for (const p of promises) {
+    if (p.status === "tillbakadragen" || p.cost.period !== "engang" || p.cost.msek_base <= 0) continue;
+    const ends = [
+      ...[...p.quote.matchAll(/\b20\d{2}\s*[–—-]\s*(20\d{2})\b/gu)].map((m) => Number(m[1])),
+      ...[...p.quote.matchAll(/\b(?:fram till|senast|till)\s+(?:år\s+)?(20\d{2})\b/giu)].map((m) => Number(m[1])),
+    ];
+    const endYear = Math.max(0, ...ends);
+    if (endYear <= mandateEndYear) continue;
+    out.push({
+      id: p.id,
+      parties: p.parties,
+      endYear,
+      base: p.cost.msek_base,
+      detail: `citatet anger slutår ${endYear} men ${p.cost.msek_base} msek bokförs som engångsbelopp; pröva period och redan beslutad basnivå — ${p.title.slice(0, 60)}`,
+    });
+  }
+  return out.sort((a, b) => b.base - a.base);
 }
 
 const STOPWORDS = new Set([

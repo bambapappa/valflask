@@ -9,7 +9,10 @@ import { taLaset } from "./datalas.ts";
 import { internaBeteckningar } from "./publicerad-text.ts";
 import { LANAR_BELOPP, barBelopp } from "./ankarkravet.ts";
 import { svenskDag } from "./dagen.ts";
-import { harledLoftestyp } from "./loftestyp.ts";
+import { byggSakunderlag, sakprovningsBeredskap, type Sakprovning, type Sakreferens } from "./sakprovning.ts";
+import { kanoniskJson } from "./underlagsversion.ts";
+import { forberedLoftesforslag, tillampaLoftesforslag, type PromiseEntry, type FrystLoftesforslag } from "./loftesforslag.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "./datatransaktion.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 
@@ -155,6 +158,8 @@ export type ReviewCommand =
       costType?: Kostnadstyp;
       period?: Period;
     }
+  | { action: "approve-package"; hash: string }
+  | { action: "reject-package"; hash: string }
   | { action: "reject"; reason: string };
 
 /**
@@ -164,7 +169,7 @@ export type ReviewCommand =
  *  /godkänn --group p-2026-0123   → ja, länka som dublett (delad group_id)
  *  /godkänn 0 4500 9000 --typ intäktsminskning → ja, med angiven kostnadstyp
  *  /godkänn 52500 70000 94500 --period per_ar  → ja, med beloppet omräknat till årstakt
- *  /avvisa <skäl>                 → nej
+ *  /avvisa paket <hash>          → nej till ett redan fryst privat paket
  * Engelska alias: /approve, /reject. Endast FÖRSTA raden tolkas som kommando.
  * En rad som börjar "Uträkning:" blir uträkningen bakom beloppet och visas
  * publikt på löftessidan; övrig text är fritext och används inte. Okänt
@@ -173,6 +178,10 @@ export type ReviewCommand =
 export function parseReviewCommand(body: string): ReviewCommand | null {
   const text = (body ?? "").trim();
   const line = text.split("\n", 1)[0]!.trim();
+  const paket = line.match(/^\/(?:godkänn|godkann|approve) paket ([0-9a-f]{64})$/u);
+  if (paket) return { action: "approve-package", hash: paket[1]! };
+  const avvisningspaket = line.match(/^\/(?:avvisa|reject) paket ([0-9a-f]{64})$/u);
+  if (avvisningspaket) return { action: "reject-package", hash: avvisningspaket[1]! };
   // Uträkningen bakom ett eget belopp anges med en rad som börjar "Uträkning:".
   // Den visas PUBLIKT på löftessidan, så den måste vara uttryckligen märkt —
   // annars hade vilken kommentar som helst under kommandot hamnat på sajten.
@@ -233,7 +242,7 @@ export function parseReviewCommand(body: string): ReviewCommand | null {
   const reject = line.match(/^\/(?:avvisa|reject)\b(.*)$/iu);
   if (reject) {
     const reason = reject[1]!.trim();
-    return { action: "reject", reason: reason === "" ? "avvisad via review-issue" : reason };
+    return { action: "reject", reason };
   }
   return null;
 }
@@ -284,71 +293,8 @@ export interface ReviewCandidate {
   cost?: CostShape;
 }
 
-interface PromiseEntry {
-  /** Reform eller inriktning. Härleds ur citatet och prissättningen. */
-  loftestyp?: "reform" | "inriktning";
-  id: string;
-  group_id: string | null;
-  title: string;
-  slug: string;
-  parties: string[];
-  person: { name: string; role: string } | null;
-  quote: string;
-  date_stated: string;
-  source: { url: string; domain: string; archive_url: string | null; fetched_at: string };
-  category: string;
-  cost: Record<string, unknown>;
-  financing_claimed: Record<string, unknown>;
-  comparisons: string[];
-  quip: string | null;
-  status: string;
-  history: unknown[];
-  extraction: Record<string, unknown>;
-}
-
-function slugify(title: string): string {
-  const s = title
-    .toLowerCase()
-    .replace(/[åä]/g, "a")
-    .replace(/ö/g, "o")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  return s.length > 0 ? s : "lofte";
-}
-
 function loadJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
-}
-
-function saveJson(path: string, data: unknown): void {
-  writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
-}
-
-/**
- * Appenda en changelog-post så `data_hash` och "senast uppdaterad" följer med
- * varje godkännande — annars släpar de efter promises.json tills nästa
- * pipelinekörning (samma post-form som publish.ts skriver). Saknad changelog ⇒
- * börja tom (robust i tester och första körning). Avvisningar loggas ALDRIG:
- * kön är inte publicerad data och promises.json/hashen ändras inte.
- */
-function appendChangelog(dataDir: string, entry: ChangelogEntry): void {
-  const path = join(dataDir, "changelog.json");
-  let log: ChangelogEntry[];
-  try {
-    log = loadJson<ChangelogEntry[]>(path);
-  } catch {
-    log = [];
-  }
-  log.push(entry);
-  saveJson(path, log);
-}
-
-function domainOf(url: string): string {
-  try {
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return ""; // manuell källa kan vara fritext (t.ex. "SVT Aktuellt, rikssänt")
-  }
 }
 
 function list(dataDir: string = DATA_DIR): void {
@@ -396,18 +342,7 @@ function list(dataDir: string = DATA_DIR): void {
   console.log(`Totalt: ${items.length} post(er) i needs_review.`);
 }
 
-function nextId(promises: PromiseEntry[]): string {
-  const maxNum = promises.reduce((max, p) => {
-    const m = p.id.match(/^p-2026-(\d+)$/);
-    return m ? Math.max(max, parseInt(m[1]!, 10)) : max;
-  }, 0);
-  return `p-2026-${String(maxNum + 1).padStart(4, "0")}`;
-}
-
-export function approve(
-  rawArgs: string[],
-  dataDir: string = DATA_DIR,
-): { id: string; title: string; msekBase: number } {
+function lasGodkannandeArgument(rawArgs: string[]) {
   // Plocka ut --group <id> / --group=<id> (länkning av dublett), --calc <text>
   // (uträkningen bakom ett belopp satt för hand), --typ <kostnadstyp> och
   // --period <per_ar|engang> ur
@@ -488,18 +423,46 @@ export function approve(
     args.push(a);
   }
 
-  // Ingen skrivning medan sviten muterar data/ — dess återställning skulle ta
-  // bort den utan ett ord. Se datalas.ts för vad det kostade.
-  const slappLas = taLaset(dataDir, "review approve");
+  return [args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag] as const;
+}
+
+export interface Beslutsunderlag {
+  forslag: FrystLoftesforslag;
+  provning: Sakprovning;
+  aktuellaReferenser: Sakreferens[];
+  /** Hashen för den fullständiga prövning som beslutet avser. */
+  provningshash: string;
+}
+
+export function approve(
+  rawArgs: string[],
+  dataDir: string = DATA_DIR,
+  beslutsunderlag?: Beslutsunderlag,
+  beslutetsProvningshash?: string,
+): { id: string; title: string; msekBase: number } {
+  return approveLast(dataDir, beslutsunderlag, beslutetsProvningshash, ...lasGodkannandeArgument(rawArgs));
+}
+
+/** Samma kontroller som godkännandet, utan att ändra sakdata. */
+export function prepare(rawArgs: string[], dataDir: string = DATA_DIR): FrystLoftesforslag {
+  const slappLas = taLaset(dataDir, "review prepare");
   try {
-    return approveLast(dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag);
+    return forberedLast(dataDir, ...lasGodkannandeArgument(rawArgs)).forslag;
   } finally {
     slappLas();
   }
 }
 
-/** Själva godkännandet. Bruten ur `approve` bara för att låset ska ha ett finally. */
-function approveLast(
+/** En befintlig fil får aldrig ersättas av ett nytt granskningsförslag. */
+export function prepareToFile(rawArgs: string[], file: string, dataDir: string = DATA_DIR): FrystLoftesforslag {
+  if (!file?.trim()) throw new Error("Ange fil för granskningsförslaget");
+  const forslag = prepare(rawArgs, dataDir);
+  writeFileSync(file, JSON.stringify(forslag, null, 2) + "\n", { flag: "wx" });
+  return forslag;
+}
+
+/** Förbereder slutformen efter de befintliga käll- och kostnadskontrollerna. */
+function forberedLast(
   dataDir: string,
   args: string[],
   linkTo: string | undefined,
@@ -509,7 +472,7 @@ function approveLast(
   basisUrlFlag: string | undefined,
   periodFlag: string | undefined,
   noteFlag: string | undefined,
-): { id: string; title: string; msekBase: number } {
+) {
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
   const index = loesKoArgument(items, args[0]);
 
@@ -536,8 +499,8 @@ function approveLast(
       `Källan tillhör ett annat parti. Löftet tillskrivs ${tillskrivna.join("/")}, men\n` +
         `${item.articleUrl}\nligger på ${kallansParti}:s egen sajt — det är motståndarens\n` +
         "beskrivning av partiet, inte partiets eget ord.\n\n" +
-        "Hitta partiets egen källa, eller avvisa posten:\n" +
-        `  pnpm review reject ${index} "källan är ett annat partis sajt"`,
+        "Hitta partiets egen källa, eller förbered ett granskningsbundet avslag med:\n" +
+        "  pnpm avvisa-lista forbered <rader.json> <privat-paket.json>",
     );
     process.exit(1);
   }
@@ -721,72 +684,34 @@ function approveLast(
     process.exit(1);
   }
 
-  const promises = loadJson<PromiseEntry[]>(join(dataDir, "promises.json"));
-  const newId = nextId(promises);
-  const title = cand.title ?? item.articleTitle ?? "Okänt löfte";
+  const befintliga = loadJson<PromiseEntry[]>(join(dataDir, "promises.json"));
+  const forslag = forberedLoftesforslag(item, cost, befintliga, linkTo, new Date());
+  return { forslag, befintliga, item, items, index, cost };
+}
 
-  // Dublettlänkning: dela group_id med målet (R3 räknar gruppen en gång).
-  let group_id: string | null = null;
-  let groupTargetModified = false;
-  if (linkTo) {
-    const target = promises.find((p) => p.id === linkTo);
-    if (!target) {
-      console.error(`Hittade inget löfte att länka till: ${linkTo}`);
-      process.exit(1);
-    }
-    group_id = target.group_id ?? `g-${linkTo}`;
-    if (!target.group_id) {
-      target.group_id = group_id;
-      groupTargetModified = true;
-    }
-  }
-
-  const newPromise: PromiseEntry = {
-    id: newId,
-    group_id,
-    // Sorten härleds ur citatet och prissättningen, samma regel som resten av
-    // beståndet. Fältet sattes inte alls vid godkännandet: 164 löften
-    // publicerade 2026-08-25 kom ut utan sort, och utan den går en nolla inte
-    // att läsa — syns det inte om åtgärden är gratis eller om det inte finns
-    // någon åtgärd att prissätta? Sorten styr dessutom kopplingssteget.
-    loftestyp: harledLoftestyp(cand.quote ?? "", cost as never),
-    title,
-    slug: slugify(title),
-    parties: cand.parties ?? [],
-    person: cand.person ?? null,
-    quote: cand.quote ?? "",
-    date_stated: svenskDag(),
-    source: {
-      url: item.articleUrl,
-      domain: domainOf(item.articleUrl),
-      // Fylls av arkiv-backfillsteget (scripts/archive-backfill.mts) vid nästa
-      // pipelinekörning — SPEC §6.2 "nytt försök nästa run tills satt".
-      archive_url: null,
-      fetched_at: new Date().toISOString(),
-    },
-    category: cand.category ?? "övrigt",
-    cost: { ...cost },
-    // Beloppet i citatet är INTE en finansieringsuppgift. Fältet fylldes förut
-    // med `amount_in_text_msek`, och då hamnade ISK-gränsen på 500 000 kronor,
-    // barnavdragets 10 000 per barn och ett anslag på 16 miljoner i fältet för
-    // vad partiet säger att löftet finansieras med — och drogs av från vad
-    // partiernas löften kostar. Beskriver löftet ingen finansiering är fältet
-    // tomt (rättat på p-2026-0463, p-2026-0465 och p-2026-0571).
-    financing_claimed: {
-      described: false,
-      summary: null,
-      msek: null,
-    },
-    comparisons: [],
-    quip: null,
-    status: "aktiv",
-    history: [],
-    extraction: {
-      model: "review",
-      verified_by: "owner",
-      run_id: `review-${new Date().toISOString().slice(0, 13)}`,
-    },
-  };
+/** Godkännandet binds till samma föreläge som det journalförda filpaketet. */
+function approveLast(
+  dataDir: string,
+  beslutsunderlag: Beslutsunderlag | undefined,
+  beslutetsProvningshash: string | undefined,
+  args: string[],
+  linkTo: string | undefined,
+  calculationFlag: string | undefined,
+  typFlag: string | undefined,
+  basisFlag: string | undefined,
+  basisUrlFlag: string | undefined,
+  periodFlag: string | undefined,
+  noteFlag: string | undefined,
+): { id: string; title: string; msekBase: number } {
+  const fore = lasFillage(dataDir, ["promises.json", "needs_review.json", "changelog.json", "provningar.json", "parties.json"]);
+  const { forslag: nyberett, befintliga, item, items, index, cost } = forberedLast(
+    dataDir, args, linkTo, calculationFlag, typFlag, basisFlag, basisUrlFlag, periodFlag, noteFlag,
+  );
+  // Kostnadsargumenten prövas även när en tidigare slutform används.
+  const forslag = beslutsunderlag?.forslag ?? nyberett;
+  const cand = item.candidate;
+  const newPromise = forslag.nyttLofte;
+  const { id: newId, title, group_id } = newPromise;
 
   // Kvalitetsfiltret, som grind. Hashen räknas på löftet som det FAKTISKT
   // kommer att publiceras — inte på kö-posten — så ett belopp satt för hand
@@ -808,23 +733,50 @@ function approveLast(
     process.exit(1);
   }
 
-  promises.push(newPromise);
-  promises.sort((a, b) => a.id.localeCompare(b.id));
-  const remaining = items.filter((_, i) => i !== index);
+  if (!beslutsunderlag) {
+    throw new Error("Godkännandet kräver sparat löftesförslag och separat sakprövning; äldre prövningsindex räcker inte.");
+  }
+  // Referensen kommer från beslutskällan, inte från filen som kontrolleras.
+  if (!/^[0-9a-f]{64}$/u.test(beslutetsProvningshash ?? "") ||
+      beslutetsProvningshash !== beslutsunderlag.provningshash) {
+    throw new Error("Beslutets separata prövningshash saknas eller avser en annan prövning");
+  }
+  if (createHash("sha256").update(kanoniskJson(beslutsunderlag.provning)).digest("hex") !== beslutsunderlag.provningshash) {
+    throw new Error("Sakprövningen matchar inte beslutets prövningshash");
+  }
+  const forvantatForslag = forberedLoftesforslag(item, cost, befintliga, linkTo, new Date(forslag.tidpunkt));
+  if (forvantatForslag.hash !== forslag.hash) {
+    throw new Error("Godkännandets argument eller underlag skiljer sig från det sparade förslaget");
+  }
+  if (typeof fore["parties.json"] !== "string") throw new Error("Saknar partiregister före godkännande");
+  const partier: unknown = JSON.parse(fore["parties.json"]);
+  if (!Array.isArray(partier)) throw new Error("Partiregistret kräver en lista");
+  const aktuellt = byggSakunderlag(forslag, befintliga, item, beslutsunderlag.aktuellaReferenser, partier);
+  const beredskap = sakprovningsBeredskap(beslutsunderlag.provning, aktuellt);
+  if (!beredskap.klar) throw new Error(`Sakprövningen är inte klar: ${beredskap.hinder.join("; ")}`);
 
-  saveJson(join(dataDir, "promises.json"), promises);
-  saveJson(join(dataDir, "needs_review.json"), remaining);
+  const promises = tillampaLoftesforslag(forslag, befintliga, item, forslag.hash);
+  const remaining = items.filter((_, i) => i !== index);
 
   // Håll data_hash + "senast uppdaterad" i synk vid varje godkännande (annars
   // släpar de tills nästa pipelinekörning — se DECISION_LOG 2026-07-08).
-  appendChangelog(dataDir, {
+  const log = fore["changelog.json"] === null ? [] : JSON.parse(fore["changelog.json"]!) as ChangelogEntry[];
+  if (!Array.isArray(log)) throw new Error("Ogiltig changelog före godkännande");
+  log.push({
     run_id: `review-${newId}`,
     added: [newId],
-    updated: groupTargetModified ? [linkTo!] : [],
+    updated: forslag.gruppandring ? [forslag.gruppandring.id] : [],
     retracted: [],
     data_hash: computeDataHash(promises),
-    timestamp: new Date().toISOString(),
+    timestamp: forslag.tidpunkt,
   });
+  skrivFilpaket(dataDir, skapaFilpaket(fore, {
+    "promises.json": JSON.stringify(promises, null, 2) + "\n",
+    "needs_review.json": JSON.stringify(remaining, null, 2) + "\n",
+    "changelog.json": JSON.stringify(log, null, 2) + "\n",
+    "provningar.json": fore["provningar.json"] ?? null,
+    "parties.json": fore["parties.json"],
+  }));
 
   const linkNote = group_id ? ` [länkad till group ${group_id}]` : "";
   console.log(`Godkänd: ${newId} "${title}" — ${cost.msek_base} msek (${cost.basis})${linkNote}`);
@@ -837,38 +789,30 @@ export function reject(
   reason: string,
   dataDir: string = DATA_DIR,
 ): { title: string } {
-  // Samma skäl som i `approve`: sviten återställer data/ ur en säkerhetskopia,
-  // och en avvisning skriven under tiden försvinner spårlöst.
-  const slappLas = taLaset(dataDir, "review reject");
-  try {
-    return rejectLast(indexStr, reason, dataDir);
-  } finally {
-    slappLas();
-  }
-}
-
-/** Själva avvisningen. Bruten ur `reject` bara för att låset ska ha ett finally. */
-function rejectLast(indexStr: string, reason: string, dataDir: string): { title: string } {
-  const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
+  const filer = ["needs_review.json", "avvisade.json"] as const;
+  const fore = lasFillage(dataDir, filer);
+  if (typeof fore["needs_review.json"] !== "string") throw new Error("Saknar needs_review.json");
+  const items = JSON.parse(fore["needs_review.json"]) as ReviewCandidate[];
   const index = loesKoArgument(items, indexStr);
 
   const item = items[index]!;
   const title = item.candidate?.title ?? item.articleTitle ?? "(okänd)";
   const remaining = items.filter((_, i) => i !== index);
-  saveJson(join(dataDir, "needs_review.json"), remaining);
 
   // Avvisningen ska lämna spår. Utan minnet hittar nästa skörd samma mening i
   // samma dokument och lägger in den på nytt — det hände tre gånger i rad i
   // början av augusti. Mänskligt beslut 2026-08-09; se `avvisningar.ts`.
   const url = item.articleUrl ?? "";
   const citat = item.candidate?.quote ?? "";
+  let avvisadeEfter = fore["avvisade.json"] ?? null;
   if (url !== "" && citat !== "") {
-    const minne = lasAvvisade(dataDir);
-    saveJson(
-      join(dataDir, "avvisade.json"),
-      avvisa(minne, url, citat, reason, svenskDag()),
-    );
+    const minne = typeof fore["avvisade.json"] === "string" ? JSON.parse(fore["avvisade.json"]) as Avvisning[] : [];
+    avvisadeEfter = JSON.stringify(avvisa(minne, url, citat, reason, svenskDag()), null, 2) + "\n";
   }
+  skrivFilpaket(dataDir, skapaFilpaket(fore, {
+    "needs_review.json": JSON.stringify(remaining, null, 2) + "\n",
+    "avvisade.json": avvisadeEfter,
+  }));
   console.log(`Avvisad: "${title}" — ${reason}`);
   return { title };
 }
@@ -890,13 +834,14 @@ export function lasAvvisade(dataDir: string = DATA_DIR): Avvisning[] {
  * skälet står kvar — historik skrivs inte om.
  */
 export function havAvvisning(nyckel: string, skal: string, dataDir: string = DATA_DIR): void {
-  const minne = lasAvvisade(dataDir);
+  const fore = lasFillage(dataDir, ["avvisade.json"]);
+  const minne = fore["avvisade.json"] === null ? [] : JSON.parse(fore["avvisade.json"]!) as Avvisning[];
   const ut = hav(minne, nyckel, skal, svenskDag());
   if (!ut) {
     console.error(`Ingen avvisning med nyckeln ${nyckel}. Kör \`pnpm review avvisade\` för att se dem.`);
     process.exit(1);
   }
-  saveJson(join(dataDir, "avvisade.json"), ut);
+  skrivFilpaket(dataDir, skapaFilpaket(fore, { "avvisade.json": JSON.stringify(ut, null, 2) + "\n" }));
   const post = ut.find((a) => a.nyckel === nyckel)!;
   console.log(`Hävd: ${nyckel}\n  avvisades ${post.datum}: ${post.skal}\n  hävs ${post.havd!.datum}: ${skal}`);
 }
@@ -925,7 +870,7 @@ export function listaAvvisade(dataDir: string = DATA_DIR): void {
  * granskaren vouchar för källan vid approve. Mall: {title, parties, quote,
  * category, source, date_stated?, amount_in_text_msek?, person?, cost?}.
  */
-function add(file: string | undefined, dataDir: string = DATA_DIR): void {
+export function add(file: string | undefined, dataDir: string = DATA_DIR): void {
   if (!file) {
     console.error('Användning: pnpm review add <fil.json>');
     console.error('  Filen ska innehålla: {"title","parties":["s"],"quote","category","source", ...}');
@@ -977,9 +922,12 @@ function add(file: string | undefined, dataDir: string = DATA_DIR): void {
   };
   if (m.cost) entry.cost = m.cost as CostShape;
 
-  const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
+  const fore = lasFillage(dataDir, ["needs_review.json"]);
+  if (fore["needs_review.json"] === null) throw new Error("Saknar needs_review.json");
+  const items = JSON.parse(fore["needs_review.json"]!) as ReviewCandidate[];
+  if (!Array.isArray(items)) throw new Error("Ogiltig granskningskö");
   items.push(entry);
-  saveJson(join(dataDir, "needs_review.json"), items);
+  skrivFilpaket(dataDir, skapaFilpaket(fore, { "needs_review.json": JSON.stringify(items, null, 2) + "\n" }));
 
   console.log(`Tillagd i needs_review som [${items.length - 1}]: "${m.title}".`);
   console.log(
@@ -1022,12 +970,23 @@ switch (command) {
     break;
   }
   case "reject-id": {
-    const index = resolveIdOrExit(args[0]);
-    if (!args[1]) {
-      console.error("Användning: pnpm review reject-id <review-id> <orsak>");
-      process.exit(1);
-    }
-    reject(String(index), args.slice(1).join(" "));
+    console.error(
+      "Direktavslag är avstängt. Använd pnpm avvisa-lista forbered, kontroll och verkstall " +
+      "så att köpost, skäl, verifierad beslutskälla och hela filpaketet binds till samma beslut.",
+    );
+    process.exit(1);
+    break;
+  }
+  case "prepare": {
+    if (!args[0] || !args[1]) throw new Error("Användning: pnpm review prepare <fil.json> <post> [kostnadsargument]");
+    const forslag = prepareToFile(args.slice(1), args[0]);
+    console.log(`Granskningsförslag sparat: ${args[0]} (${forslag.hash}). Inget godkännande eller publicering.`);
+    break;
+  }
+  case "approve-reviewed": {
+    if (!args[0] || !args[1] || !args[2]) throw new Error("Användning: pnpm review approve-reviewed <beslutsunderlag.json> <beslutets-prövningshash> <post> [kostnadsargument]");
+    const underlag = loadJson<Beslutsunderlag>(args[0]);
+    approve(args.slice(2), DATA_DIR, underlag, args[1]);
     break;
   }
   case "approve":
@@ -1055,23 +1014,22 @@ switch (command) {
     break;
   }
   case "reject":
-    if (!args[0] || !args[1]) {
-      console.error("Användning: pnpm review reject <post> <orsak>  (<post> = review-id eller index)");
-      process.exit(1);
-    }
-    reject(args[0], args.slice(1).join(" "));
+    console.error(
+      "Direktavslag är avstängt. Använd pnpm avvisa-lista forbered, kontroll och verkstall " +
+      "så att köpost, skäl, verifierad beslutskälla och hela filpaketet binds till samma beslut.",
+    );
+    process.exit(1);
     break;
   case "add":
     add(args[0]);
     break;
   default:
-    console.log("Användning: pnpm review <list|approve|reject|add>");
+    console.log("Användning: pnpm review <list|prepare|approve|add>");
+    console.log("  prepare <fil.json> <post> [kostnadsargument]  Spara förslag för prövning, utan godkännande");
     console.log("  list                         Visa poster i needs_review");
     console.log("  approve <post> [low base high] [--group p-XXXX]  Godkänn; kostnad; länka dublett");
     console.log("           [--typ <kostnadstyp>] [--period <per_ar|engang>] [--basis <källnivå>]");
-    console.log("  reject <post> <orsak>        Avvisa post\n" +
-      "  <post> är ett review-id (tolv tecken ur listningen) eller ett index.\n" +
-      "  Skriv id. Index flyttar sig så snart en post ovanför avgörs.");
+    console.log("  avslag                       Använd pnpm avvisa-lista forbered, kontroll och verkstall");
     console.log("  avvisade                     Visa avvisningsminnet");
     console.log("  hav <nyckel> <skäl>          Häv en avvisning så posten kan komma tillbaka");
     console.log("  add <fil.json>               Lägg in ett manuellt inrapporterat löfte för granskning");

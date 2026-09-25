@@ -28,7 +28,18 @@ const { count } = Astro.props;
       <label><input type="radio" name="loftestyp" value="alla" /><span>Alla löften</span></label>
     </div>
   </fieldset>
-  <p class="loftesfilter__status" data-loftesfilter-status>Visar partiernas egna belopp för reformlöften. <span data-loftesfilter-count>{count}</span> löften.</p>
+  <fieldset class="loftesfilter__grupp">
+    <legend><span>3.</span> Tidpunkt för löftet</legend>
+    <div class="loftesfilter__segment" role="radiogroup" aria-label="Tidpunkt i förhållande till valdagen 13 september 2026">
+      <label><input type="radio" name="valdag" value="fore" checked /><span>Före valdagen</span></label>
+      <label><input type="radio" name="valdag" value="valdagen" /><span>På valdagen</span></label>
+      <label><input type="radio" name="valdag" value="efter" /><span>Efter valdagen</span></label>
+      <label><input type="radio" name="valdag" value="oklar" /><span>Oklart datum</span></label>
+      <label><input type="radio" name="valdag" value="alla" /><span>Alla tidpunkter</span></label>
+    </div>
+  </fieldset>
+  <p class="loftesfilter__forklaring">Valdagen var 13 september 2026. Indelningen bygger på registrerat datum, som inte alltid visar när ett löfte gavs första gången. Äldre poster kan ha insamlingsdatum. Efter valet krävs belagt publiceringsdatum; odaterade och enbart ändringsdaterade källor hamnar under ”Oklart datum”.</p>
+  <p class="loftesfilter__status" data-loftesfilter-status>Visar partiernas egna belopp för reformlöften före valdagen. <span data-loftesfilter-count>{count}</span> löften.</p>
 </form>
 
 <style>

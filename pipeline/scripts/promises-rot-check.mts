@@ -42,8 +42,8 @@
  * hade mätt varje vecka och kastat mätningen. Frågevågens motsvarighet gör
  * redan så här: en ändrad källa är data, inte ett fel.
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 import { computeDataHash } from "../src/publish.ts";
 import { extractPdfText, looksLikePdf, stripHtml } from "../src/fetch.ts";
 import {
@@ -59,7 +59,8 @@ import { arTaladKalla } from "../src/talad-kalla.ts";
 import { svenskDag } from "../src/dagen.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
-const PROMISES = join(ROOT, "data", "promises.json");
+const DATA = join(ROOT, "data");
+const PROMISES = join(DATA, "promises.json");
 const UA = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 const args = process.argv.slice(2);
 const har = (f: string) => args.includes(f);
@@ -109,7 +110,9 @@ interface Promise_ {
   };
 }
 
-const promises = JSON.parse(readFileSync(PROMISES, "utf8")) as Promise_[];
+const fore = lasFillage(DATA, ["promises.json", "changelog.json"]);
+if (typeof fore["promises.json"] !== "string" || typeof fore["changelog.json"] !== "string") throw new Error("Källrötekontrollen kräver löften och ändringslogg");
+const promises = JSON.parse(fore["promises.json"]) as Promise_[];
 // Talade källor tas ur kön helt. En spelarsida bär aldrig talade ord som text,
 // så kontrollen skulle stämpla varenda sändning som «citatet står inte längre
 // där» — en anklagelse mot källan för en fråga sidan inte kan besvara. Samma
@@ -233,15 +236,13 @@ if (trasiga.length > 0) {
 }
 
 if (!torr && oppnade > 0) {
-  writeFileSync(PROMISES, JSON.stringify(promises, null, 2) + "\n");
   // Changelog-posten skrivs här och inte för hand. Sedan bevakningen ligger i
   // rot-watch.yml committar en robot promises.json varje måndag, och kravet
   // att sista postens data_hash matchar computeDataHash(promises.json) hade
   // brutits tyst varje gång. Samma postform som publish.ts och review.ts.
   // Inget löfte är tillagt, ändrat eller tillbakadraget — bara stämplarna —
   // så de tre listorna är tomma med flit.
-  const CHANGELOG = join(ROOT, "data", "changelog.json");
-  const logg = JSON.parse(readFileSync(CHANGELOG, "utf8")) as unknown[];
+  const logg = JSON.parse(fore["changelog.json"]) as unknown[];
   logg.push({
     run_id: `rot-check-${idag}`,
     added: [],
@@ -250,7 +251,10 @@ if (!torr && oppnade > 0) {
     data_hash: computeDataHash(promises),
     timestamp: new Date().toISOString(),
   });
-  writeFileSync(CHANGELOG, JSON.stringify(logg, null, 2) + "\n");
+  skrivFilpaket(DATA, skapaFilpaket(fore, {
+    "promises.json": JSON.stringify(promises, null, 2) + "\n",
+    "changelog.json": JSON.stringify(logg, null, 2) + "\n",
+  }));
   console.log(`\nSkrev ${PROMISES} och en changelog-post med omräknad data_hash.`);
 }
 

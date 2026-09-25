@@ -1,18 +1,5 @@
-# Bakåtfyllnad av cost.calculation för äldre LLM-estimat (full spårbarhet).
-#
-# Två jobb, med flit åtskilda:
-#   backfill  — långt (LLM ~1,5–3 h). Kör estimaten, laddar upp datat som artifact.
-#               Pushar INGENTING (behöver ingen token som kan hinna löpa ut).
-#   commit    — kort. Mintar en FÄRSK bot-token, hämtar dataartifacten och pushar.
-#               Eftersom det är snabbt är tokenen alltid giltig (buggen i
-#               run 30028792947: en enda 1,5 h-token hann dö före push).
-#
-# Kör de gamla estimaten genom samma estimator igen och fäster den rekonstruerade
-# uträkningen DÄR det nya beloppet ligger nära det publicerade. Avvikelser rör
-# aldrig löftet — de hamnar i data/calculation_review.json för mänskligt beslut.
-#
-# Börja med sample=10, dry_run=true för att kalibrera. source_run_id = applicera
-# en TIDIGARE körnings artifact utan att räkna om (återhämtning).
+# Skapar granskningsförslag; publicerade data ändras inte av denna workflow.
+# Även återhämtade äldre artefakter importeras endast som granskningskö.
 name: calculation-backfill
 on:
   workflow_dispatch:
@@ -83,6 +70,7 @@ jobs:
           LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
           MODEL_EXTRACT: ${{ vars.MODEL_EXTRACT }}
         run: |
+          set -o pipefail
           FLAGS="--seed=${{ inputs.seed }} --factor=${{ inputs.factor }} --rounds=${{ inputs.rounds }}"
           if [ "${{ inputs.all }}" = "true" ]; then FLAGS="$FLAGS --all"; else FLAGS="$FLAGS --sample=${{ inputs.sample }}"; fi
           if [ "${{ inputs.dry_run }}" = "true" ]; then FLAGS="$FLAGS --dry-run"; fi
@@ -103,10 +91,7 @@ jobs:
         with:
           name: calc-backfill-data
           path: |
-            data/promises.json
             data/calculation_review.json
-            data/changelog.json
-            data/rattelser.json
           if-no-files-found: ignore
 
   commit:
@@ -146,11 +131,8 @@ jobs:
         run: |
           git config user.name "utlovat-bot" && git config user.email "bot@utlovat.se"
           git remote set-url origin "https://x-access-token:${PUSH_TOKEN}@github.com/${{ github.repository }}.git"
-          for f in promises.json calculation_review.json changelog.json rattelser.json; do
-            src="$(find artifact-data -name "$f" | head -1)"
-            [ -n "$src" ] && cp "$src" "data/$f" && echo "applicerade data/$f"
-          done
-          git add -A data/
+          python3 pipeline/scripts/import-calculation-review.py artifact-data data/calculation_review.json
+          git add data/calculation_review.json
           if git diff --cached --quiet; then
             echo "Inga ändringar — inget att committa."
             exit 0

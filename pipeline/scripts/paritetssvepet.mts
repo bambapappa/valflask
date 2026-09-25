@@ -15,7 +15,6 @@
  * vanliga vägen med rättelsenot.
  */
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   mandatperioden,
@@ -29,9 +28,11 @@ import {
   type ParitetsLofte,
 } from "../src/pariteten.ts";
 import { svenskDag } from "../src/dagen.ts";
+import { lasParitetsunderlag, skrivParitetsko } from "../src/paritetsko-fil.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
-const koFil = resolve(rot, "data/paritetskon.json");
+const dataDir = resolve(rot, "data");
+const koFil = resolve(dataDir, "paritetskon.json");
 
 const SYFTE =
   "Nollade reformlöften som liknar ett prissatt löfte hos ett annat parti. " +
@@ -59,16 +60,17 @@ const finns = (namn: string): boolean => process.argv.includes(namn);
 
 const idag = (): string => svenskDag();
 
-const lasKo = (): Kofil =>
-  existsSync(koFil)
-    ? (JSON.parse(readFileSync(koFil, "utf8")) as Kofil)
-    : { syfte: SYFTE, kord: idag(), fynd: [] };
+const fore = lasParitetsunderlag(dataDir);
+if (!fore["promises.json"]) throw new Error("Löftesbeståndet saknas");
+const lasKo = (): Kofil => fore["paritetskon.json"]
+  ? (JSON.parse(fore["paritetskon.json"]) as Kofil)
+  : { syfte: SYFTE, kord: idag(), fynd: [] };
 
 const skrivKo = (ko: Kofil): void => {
-  writeFileSync(koFil, JSON.stringify(ko, null, 2) + "\n");
+  skrivParitetsko(dataDir, fore, ko);
 };
 
-const loften: ParitetsLofte[] = JSON.parse(readFileSync(resolve(rot, "data/promises.json"), "utf8"));
+const loften: ParitetsLofte[] = JSON.parse(fore["promises.json"]);
 const fynd = paritetsfynd(loften);
 
 // Den andra hälften. Rapporterande och utan kö: det här är en läslista, och

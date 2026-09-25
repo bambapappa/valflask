@@ -7,10 +7,10 @@ import { spawnSync } from "node:child_process";
 
 const pipeline = resolve(import.meta.dirname, "..");
 const repo = resolve(pipeline, "..");
-const files = ["data/promises.json", "data/stances.json", "handlingsvagen/data/kopplingar.json", "handlingsvagen/data/handlingar.json"];
+const files = ["data/promises.json", "data/parties.json", "data/stances.json", "handlingsvagen/data/kopplingar.json", "handlingsvagen/data/handlingar.json"];
 const run = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx/esm", "scripts/bundet-underlag.mts", ...args], { cwd: pipeline, encoding: "utf8", maxBuffer: 20 * 1024 * 1024 });
 
-test("kommandot upptäcker ett ändrat verkligt kalkylankare utan att skriva i datat", () => {
+test("kommandot stoppar ändrat kalkylankare och partistatus utan att skriva i datat", () => {
   const temp = mkdtempSync(join(tmpdir(), "bundet-underlag-"));
   try {
     const promises = JSON.parse(readFileSync(join(repo, files[0]!), "utf8"));
@@ -26,6 +26,16 @@ test("kommandot upptäcker ett ändrat verkligt kalkylankare utan att skriva i d
       mkdirSync(dirname(join(temp, file)), { recursive: true });
       writeFileSync(join(temp, file), readFileSync(join(repo, file)));
     }
+    const partyFile = join(temp, "data/parties.json");
+    const parties = JSON.parse(readFileSync(partyFile, "utf8"));
+    const party = parties.find((p: any) => p.code === promise.parties[0]);
+    assert.ok(party);
+    party.manifest_2026 += " Ändrat efter paketet.";
+    writeFileSync(partyFile, JSON.stringify(parties));
+    const changedParty = run("kontrollera", temp, packet);
+    assert.equal(changedParty.status, 1, changedParty.stdout);
+    assert.match(changedParty.stderr, /ny prövning krävs/u);
+    writeFileSync(partyFile, readFileSync(join(repo, "data/parties.json")));
     const anchor = promises.find((p: any) => p.id === promise.cost.anchor_ids[0]);
     anchor.cost.msek_base += 1;
     writeFileSync(join(temp, files[0]!), JSON.stringify(promises));

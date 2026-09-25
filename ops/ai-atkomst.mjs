@@ -160,6 +160,7 @@ if (robots) {
 console.log("\nSidor (läsare / ClaudeBot):");
 const BOT_UA =
   "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; ClaudeBot/1.0; +claudebot@anthropic.com)";
+let botStartsida;
 for (const [vag, vad] of SIDOR) {
   try {
     const [manniska, bot] = await Promise.all([
@@ -167,6 +168,7 @@ for (const [vag, vad] of SIDOR) {
       hamta(`${BAS}${vag}`, { "User-Agent": BOT_UA }),
     ]);
     const ok = manniska.status === 200 && bot.status === 200;
+    if (vag === "/") botStartsida = bot;
     console.log(`  ${ok ? "OK  " : "FEL "} ${vag.padEnd(24)} ${manniska.status} / ${bot.status}  ${vad}`);
     if (manniska.status !== 200) fel.push(`${vag} svarade ${manniska.status}`);
     else if (bot.status !== 200) fel.push(`${vag} svarade ${bot.status} för en AI-agent men 200 för en läsare`);
@@ -252,16 +254,16 @@ try {
 
 // 4. Bär förstasidan sitt innehåll utan att JavaScript körs? En agent som inte
 //    kör skript ska ändå se siffrorna.
-try {
-  const { text } = await hamta(BAS, { "User-Agent": BOT_UA });
+if (botStartsida?.status === 200) {
+  const { text } = botStartsida;
   const utanTaggar = text.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<[^>]+>/g, " ");
   const ord = utanTaggar.split(/\s+/).filter(Boolean).length;
   const harJsonLd = /application\/ld\+json/i.test(text);
   console.log(`\nFörstasidan utan JavaScript: ${ord} ord, JSON-LD ${harJsonLd ? "finns" : "SAKNAS"}`);
   if (ord < 200) fel.push(`förstasidan bär bara ${ord} ord utan JavaScript — agenter som inte kör skript ser nästan inget`);
   if (!harJsonLd) fel.push("förstasidan saknar JSON-LD");
-} catch (e) {
-  fel.push(`förstasidan gick inte att läsa: ${e.message}`);
+} else {
+  console.log("\nFörstasidans innehåll: kan inte prövas förrän ClaudeBot får HTTP 200.");
 }
 
 console.log("");

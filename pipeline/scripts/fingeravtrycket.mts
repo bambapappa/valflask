@@ -15,14 +15,18 @@
  * `pnpm backfilla-commit <hash>` rätt verktyg — det gör båda leden i rätt
  * ordning.
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash } from "../src/publish.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 
-const loften = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as unknown[];
-const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as Array<{
+const fore = lasFillage(DATA, ["promises.json", "changelog.json"]);
+if (typeof fore["promises.json"] !== "string" || typeof fore["changelog.json"] !== "string") {
+  throw new Error("Fingeravtrycket kräver löften och ändringslogg");
+}
+const loften = JSON.parse(fore["promises.json"]) as unknown[];
+const changelog = JSON.parse(fore["changelog.json"]) as Array<{
   run_id: string;
   data_hash: string;
 }>;
@@ -41,5 +45,8 @@ if (sist.data_hash === ratt) {
 
 const forut = sist.data_hash;
 sist.data_hash = ratt;
-writeFileSync(join(DATA, "changelog.json"), JSON.stringify(changelog, null, 2) + "\n");
+skrivFilpaket(DATA, skapaFilpaket(fore, {
+  "promises.json": fore["promises.json"],
+  "changelog.json": JSON.stringify(changelog, null, 2) + "\n",
+}));
 console.log(`«${sist.run_id}»: ${forut} → ${ratt}`);
