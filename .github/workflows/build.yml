@@ -216,6 +216,10 @@ jobs:
       - name: Run T3 (schema + HTML validation)
         run: pnpm test:t3
         working-directory: site
+      - name: Agenternas HTTP-regression
+        run: python3 -m unittest discover -s ops -p 'test_validera_fab73.py' -v
+      - name: Maskinläsbar metadata i byggd sajt
+        run: python3 ops/validera_fab73.py --dist site/dist
       # Handlingsvågen byggs som egen Astro-sajt med basstigen /handlingsvagen
       # och läggs som katalog i samma utdata. Ett bygge, en domän, en
       # driftsättning — det är hela skälet till att vågarna bor i ett repo
