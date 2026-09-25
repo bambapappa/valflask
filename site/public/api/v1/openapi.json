@@ -1,0 +1,82 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "utlovat.se — öppna API för vallöften 2026",
+    "description": "Statiskt JSON-API för utlovat.se: oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför riksdagsvalet 2026, med kostnadsuppskattningar och partiernas besked per delfråga. Licens CC BY 4.0 — ange 'utlovat.se' som källa.",
+    "version": "1.0.0",
+    "license": { "name": "CC-BY-4.0", "url": "https://creativecommons.org/licenses/by/4.0/" }
+  },
+  "servers": [{ "url": "https://utlovat.se" }],
+  "paths": {
+    "/api/v1/summary.json": {
+      "get": {
+        "summary": "Sammanfattning",
+        "description": "Totaler: summa löften (mdkr), antal löften, finansieringsgap per parti, generated_at och data_hash.",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/promises.json": {
+      "get": {
+        "summary": "Alla löften",
+        "description": "Kompletta löftesposter: ordagrant citat, källa.url, källa.archive_url, parti, kategori, kostnad med osäkerhetsspann, generated_at och data_hash.",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/parties.json": {
+      "get": {
+        "summary": "Partimetadata",
+        "description": "Kod, namn, färg, mandat, röster och block för de åtta riksdagspartierna.",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/issues.json": {
+      "get": {
+        "summary": "Frågevågen — valets stora frågor",
+        "description": "Delfrågor med urvalsbevis; partiernas besked hämtas via stances.json.",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/stances.json": {
+      "get": {
+        "summary": "Partiernas besked per delfråga",
+        "description": "Append-only med ändringshistorik: varje ändring är en egen post med gammalt och nytt citat. Besked saknas = inget citat i källorna ensamt räcker som belägg.",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/comparisons.json": {
+      "get": {
+        "summary": "Jämförelsetal per löfte",
+        "description": "Enbart fysiska jämförelser: myntstapel mot avstånd.",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/constants.json": {
+      "get": {
+        "summary": "Konstanter",
+        "description": "Fast storheter, t.ex. reformutrymme (mdkr per år).",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/integrity.json": {
+      "get": {
+        "summary": "Integritetsrapport",
+        "description": "data_hash och kontrollsummor för datamängden.",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/changelog.json": {
+      "get": {
+        "summary": "Ändringslogg",
+        "description": "Öppna sifferändringar (rättelseloggen i maskinläsbar form).",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/promise-traces.json": {
+      "get": {
+        "summary": "Löftesspår",
+        "description": "Spår per löfte: beräkningskedja och underlag.",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    }
+  }
+}
