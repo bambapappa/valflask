@@ -5,27 +5,15 @@
  *   pnpm stances:review approve <id>       stoppas tills verifierat beslutspaket finns
  *   pnpm stances:review reject <id> <skäl> avvisa → kö och minne skrivs tillsammans
  *
- * Integritetsregler (kan inte kringgås härifrån):
- *  - Poster med hårda grindfel (G1/G2/G3/G6/G7/G8) kan ALDRIG godkännas —
- *    verbatimkedjan är inte förhandlingsbar; avvisa och invänta ny källa.
- *  - Poster på delfrågor med formulation_status "utkast" kan inte godkännas
- *    förrän delfrågan är verifierad och låst i data/issues.json (UTKAST-grinden).
- *  - Godkännande av VERIFY/RIKTNINGSBYTE/MODE-poster är själva den mänskliga
- *    granskning grindarna kräver; ändringsdetekteringen (RS5) sker mekaniskt.
+ * Godkännande är avstängt här tills ett versionsbundet beslutspaket finns.
+ * Avvisning kräver ett individuellt skäl och skriver kö och avvisningsminne
+ * tillsammans genom ett journalfört filpaket.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import {
-  publishStances,
-  type StanceCandidate,
-  type StanceReviewEntry,
-  type StanceVerifyResult,
-} from "../src/stance-pipeline.ts";
-import { validateStanceInvariants, type IssuesFile, type StanceCell } from "../src/stances.ts";
+import { type StanceCandidate, type StanceReviewEntry } from "../src/stance-pipeline.ts";
 import { lasFillage, skrivFilpaket } from "../src/datatransaktion.ts";
 import { forberedStandpunktsavvisning, stanceReviewId, STANDPUNKTSAVVISNINGSFILER } from "../src/standpunktsavvisning.ts";
-import { lasProvningar, provningsGrind, standpunktNyckel } from "../src/provningar.ts";
-import { svenskDag } from "../src/dagen.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
 const DATA = join(ROOT, "data");
@@ -33,8 +21,6 @@ const DATA = join(ROOT, "data");
 const HARD_GATES = new Set(["G1", "G2", "G3", "G6", "G7", "G8"]);
 
 const queue = JSON.parse(readFileSync(join(DATA, "stances_review.json"), "utf8")) as StanceReviewEntry[];
-const issuesFile = JSON.parse(readFileSync(join(DATA, "issues.json"), "utf8")) as IssuesFile;
-const cells = JSON.parse(readFileSync(join(DATA, "stances.json"), "utf8")) as StanceCell[];
 
 const [, , action, id, ...rest] = process.argv;
 
@@ -73,130 +59,8 @@ if (idx === -1) {
   console.error(`Ingen köpost med id ${id}.`);
   process.exit(1);
 }
-const entry = queue[idx]!;
-
-if (action === "reject") {
-  const reason = rest.join(" ");
-  const fore = lasFillage(DATA, STANDPUNKTSAVVISNINGSFILER);
-  const paket = forberedStandpunktsavvisning(id, reason, fore, new Date());
-  skrivFilpaket(DATA, paket);
-  console.log(`Avvisad ${id}: ${reason}`);
-  process.exit(0);
-}
-
-// approve
-const hardFailures = entry.failures.filter((f) => HARD_GATES.has(f.gate));
-if (hardFailures.length > 0) {
-  console.error(
-    `Posten har hårda grindfel och kan inte godkännas (${hardFailures.map((f) => `${f.gate}: ${f.reason}`).join("; ")}).\n` +
-      "Verbatimkedjan är inte förhandlingsbar — avvisa posten och invänta en källa där citatet faktiskt står.",
-  );
-  process.exit(1);
-}
-
-// Kvalitetsfiltret, som grind. Den satt i Fläskvågens och Handlingsvågens
-// godkännanden sedan 2026-08-07 men inte i Frågevågens — och `logg.py` kunde
-// dessutom inte slå upp en kö-post här, så en ståndpunkt gick inte att pröva
-// förrän efter beslutet. Båda är lagade 2026-08-09.
-//
-// Hashen räknas på beskedet som det FAKTISKT publiceras, så ett ändrat citat
-// eller en ändrad position vid godkännandet gör prövningen inaktuell. Den raden
-// stod här redan 2026-08-09 utan att stämma: objektet nedan bär citatet platt
-// medan hashen letade under `current`, så den täckte bara cellens adress —
-// samma hash oavsett besked och citat, och grinden vaktade ingenting. Rättat
-// samma dag i `standpunktensBesked()`; nu bär hashen det den utger sig för.
-{
-  const kandidat = entry.candidate as StanceCandidate & { condition_note?: string | null };
-  const grind = provningsGrind(
-    lasProvningar(DATA),
-    // Kö-postens eget id, det innehållshärledda som överlever en omskörd, och
-    // den identitet loggen ger ett publicerat besked — en prövning kan vara
-    // skriven mot vilken som helst av dem.
-    [
-      `ko:${id}`,
-      standpunktNyckel(entry.sourceUrl, kandidat.subquestion_id, kandidat.party, kandidat.quote),
-      `${kandidat.subquestion_id}::${kandidat.party}`,
-    ],
-    "standpunkt",
-    {
-      id: `${kandidat.subquestion_id}/${kandidat.party}`,
-      subquestion_id: kandidat.subquestion_id,
-      party: kandidat.party,
-      position: kandidat.position,
-      quote: kandidat.quote,
-      condition_note: kandidat.condition_note ?? null,
-      source: { url: entry.sourceUrl, archive_url: entry.archiveUrl },
-      date_stated: entry.dateStated,
-    } as unknown as Record<string, unknown>,
-  );
-  if (!grind.ok) {
-    console.error(`Godkännandet stoppades: posten ${grind.skal}`);
-    process.exit(1);
-  }
-}
-
-const candidate = entry.candidate as StanceCandidate;
-const sq = issuesFile.issues.flatMap((i) => i.subquestions).find((s) => s.id === candidate.subquestion_id);
-if (!sq || sq.formulation_status !== "verifierad") {
-  console.error(
-    `Delfrågan ${candidate.subquestion_id} är inte verifierad (formulation_status: ${sq?.formulation_status ?? "saknas"}).\n` +
-      "Verifiera och lås formuleringen i data/issues.json (via PR) innan besked kan publiceras — UTKAST-grinden gäller även människor.",
-  );
-  process.exit(1);
-}
-
-const approvedVerify: StanceVerifyResult = {
-  quote_on_topic: true,
-  position_follows_from_quote_alone: true,
-  party_correct: true,
-  verdict: "publish",
-  reason: `mänskligt godkänd via stances:review (${id})`,
-};
-
-const result = publishStances({
-  processed: [
-    {
-      candidate,
-      article: {
-        // sourceUrl bär citatets exakta #page-ankare (PDF); articleUrl är
-        // chunk-ankaret och förblir köpostens identitet (stanceReviewId).
-        url: entry.sourceUrl ?? entry.articleUrl,
-        domain: new URL(entry.articleUrl).hostname.replace(/^www\./, ""),
-        title: entry.articleTitle,
-        text: candidate.quote, // citatet är redan verbatimgranskat i grindkedjan
-        published: `${entry.dateStated ?? svenskDag()}T00:00:00Z`,
-      },
-      verify: approvedVerify,
-      archiveUrl: entry.archiveUrl ?? null,
-      extractModel: entry.extractModel ?? "okänd",
-      verifyModel: entry.verifyModel ?? "okänd",
-    },
-  ],
-  gateReview: [],
-  issuesFile,
-  cells,
-  existingReview: [],
-  runId: entry.runId ?? "manual-review",
-  now: new Date(),
-  mode: "auto",
-  humanApproved: true,
-});
-
-if (result.stancesAdded.length === 0) {
-  console.error("Inget publicerades — troligen dublett av redan registrerat citat. Posten lämnas i kön.");
-  process.exit(1);
-}
-
-const rsErrors = validateStanceInvariants(issuesFile, result.cells);
-if (rsErrors.length > 0) {
-  console.error(`RS-brott efter godkännande — INGET skrivs:\n  ${rsErrors.join("\n  ")}`);
-  process.exit(1);
-}
-
-queue.splice(idx, 1);
-writeFileSync(join(DATA, "stances.json"), JSON.stringify(result.cells, null, 2) + "\n");
-writeFileSync(join(DATA, "stances_review.json"), JSON.stringify(queue, null, 2) + "\n");
-console.log(
-  `Godkänd ${id}: ${result.stancesAdded.join(", ")} publicerad${result.stancesChanged.length > 0 ? ` · ändring registrerad (${result.stancesChanged.join(", ")})` : ""}.\n` +
-    `Committa data/ med meddelandet "data: stance review approve ${id}".`,
-);
+const reason = rest.join(" ");
+const fore = lasFillage(DATA, STANDPUNKTSAVVISNINGSFILER);
+const paket = forberedStandpunktsavvisning(id, reason, fore, new Date());
+skrivFilpaket(DATA, paket);
+console.log(`Avvisad ${id}: ${reason}`);
