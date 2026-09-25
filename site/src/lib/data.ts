@@ -55,6 +55,8 @@ export interface PromisePost {
     domain: string;
     archive_url: string | null;
     fetched_at: string;
+    /** Källans eget datum eller enbart den dag vi läste en odaterad källa. */
+    date_basis?: "kalla" | "osakert-kalldatum" | "insamling";
     kind?: "webb" | "tal";
     /** Satt av `pnpm promises:rot-check`. Saknas på källor som aldrig öppnats igen. */
     source_status?: Kallstatus;

@@ -1190,6 +1190,8 @@ export class LiveSource implements ArticleSource {
           const html = new TextDecoder("utf-8").decode(res.bytes);
           const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
           const text = stripHtml(html);
+          const datumIAdress = datumUrAdress(lank);
+          const datumPaSidan = datumUrHtml(html);
           return {
             url: lank,
             domain: extractDomain(lank),
@@ -1197,7 +1199,8 @@ export class LiveSource implements ArticleSource {
             text,
             // Adressens datum är sannast när det finns; annars artikelns eget.
             // Hämtningstiden är sista utvägen och gör en gammal artikel färsk.
-            published: datumUrAdress(lank) ?? datumUrHtml(html) ?? new Date().toISOString(),
+            published: datumIAdress ?? datumPaSidan ?? new Date().toISOString(),
+            dateBasis: datumIAdress ? "kalla" as const : datumPaSidan ? "osakert-kalldatum" as const : "insamling" as const,
             contentHash: sha256(text),
           };
         } catch (e) {
@@ -1322,6 +1325,7 @@ export class LiveSource implements ArticleSource {
         title: item.title,
         text,
         published,
+        dateBasis: item.pubDate && !Number.isNaN(Date.parse(item.pubDate)) ? "kalla" : "insamling",
       });
     }
 
@@ -1482,6 +1486,7 @@ export class LiveSource implements ArticleSource {
       title,
       text,
       published: new Date().toISOString(),
+      dateBasis: "insamling",
       contentHash: sha256(text),
     }];
 
@@ -1544,6 +1549,7 @@ export class LiveSource implements ArticleSource {
           : `${baseTitle} (s. ${start + 1}–${start + chunkPages.length})`,
         text,
         published,
+        dateBasis: pdf.published ? "osakert-kalldatum" : "insamling",
         // Per chunk: en ny manifestversion omprocessar bara ändrade sidintervall.
         contentHash: sha256(text),
         // Per-sidtext följer med så publiceringen kan ankra källänken på
@@ -1603,6 +1609,7 @@ export class LiveSource implements ArticleSource {
         title: doc.titel,
         text: text || doc.titel,
         published: date,
+        dateBasis: doc.datum ? "kalla" : "insamling",
       });
     }
 
@@ -1644,6 +1651,7 @@ export class LiveSource implements ArticleSource {
         title,
         text: text || title,
         published: date,
+        dateBasis: item.dok_datum ? "kalla" : "insamling",
       });
     }
 

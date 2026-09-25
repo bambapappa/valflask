@@ -33,6 +33,7 @@ export interface PipelinePromise {
     domain: string;
     archive_url: string | null;
     fetched_at: string;
+    date_basis?: "kalla" | "osakert-kalldatum" | "insamling";
   };
   category: string;
   /** "reform" pekar ut en åtgärd som går att prissätta. "inriktning" säger vart partiet vill utan medel. */
@@ -266,6 +267,7 @@ export function publish(input: PublishInput): PublishResult {
         domain: pc.article.domain,
         archive_url: archiveUrl,
         fetched_at: pc.article.published,
+        date_basis: pc.article.dateBasis ?? "insamling",
       },
       category: pc.candidate.category,
       loftestyp: harledLoftestyp(pc.candidate.quote, pc.cost),

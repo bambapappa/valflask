@@ -15,7 +15,7 @@ export interface PromiseEntry {
   person: { name: string; role: string } | null;
   quote: string;
   date_stated: string;
-  source: { url: string; domain: string; archive_url: string | null; fetched_at: string };
+  source: { url: string; domain: string; archive_url: string | null; fetched_at: string; date_basis?: "kalla" | "osakert-kalldatum" | "insamling" };
   category: string;
   cost: Record<string, unknown>;
   financing_claimed: Record<string, unknown>;
@@ -123,6 +123,7 @@ export function forberedLoftesforslag(
       // pipelinekörning — SPEC §6.2 "nytt försök nästa run tills satt".
       archive_url: null,
       fetched_at: nu.toISOString(),
+      date_basis: "insamling",
     },
     category: cand.category ?? "övrigt",
     cost: { ...cost },
