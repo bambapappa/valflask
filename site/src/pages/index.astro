@@ -55,22 +55,22 @@ const jsonLd = [{
   "@type": "DataCatalog",
   "name": "utlovat.se — öppna data",
   "url": `${baseUrl}/api`,
-  "description": "Maskinläsbara data om riksdagspartiernas vallöften 2026: löften, kostnader, partiernas besked och frågevågen — CC BY 4.0.",
+  "description": "Maskinläsbara data om riksdagspartiernas löften under 2026: löften, kostnader, partiernas besked och frågevågen — CC BY 4.0.",
   "license": "https://creativecommons.org/licenses/by/4.0/",
   "isAccessibleForFree": true,
   "dataset": {
     "@type": "Dataset",
-    "name": "utlovat.se — vallöften 2026",
-    "description": "Oberoende, källspårad sammanställning av svenska riksdagspartiers vallöften inför valet 2026, med kostnadsuppskattning per löfte, parti och koalition.",
+    "name": "utlovat.se — löften 2026",
+    "description": "Oberoende, källspårad sammanställning av svenska riksdagspartiers löften under 2026, med kostnadsuppskattningar per löfte och parti.",
     "url": `${baseUrl}/api`,
     "license": "https://creativecommons.org/licenses/by/4.0/",
     "isAccessibleForFree": true,
     "creator": { "@type": "Organization", "name": "utlovat.se", "url": baseUrl },
     "variableMeasured": [
-      "vallöfte (ordagrant citat + källänk + arkivkopia)",
+      "löfte (ordagrant citat, källänk och arkivkopia när sådan finns)",
       "kostnadsuppskattning (mdkr, med osäkerhetsspann)",
       "partibesked per delfråga (append-only med ändringshistorik)",
-      "finansieringsgap per parti och koalition"
+      "finansieringsgap per parti"
     ],
     "distribution": [
       { "@type": "DataDownload", "name": "summary.json", "contentUrl": `${baseUrl}/api/v1/summary.json`, "encodingFormat": "application/json" },
