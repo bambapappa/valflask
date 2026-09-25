@@ -6,6 +6,7 @@ Kollar mot en byggd sajt (byggkatalog eller live-URL):
   2. /api/v1/openapi.json finns, parsar som JSON, täcker huvudendpoints
   3. llms.txt länkar till openapi.json
   4. robots.txt släpper in de åtta AI-sök/user-agenterna
+  5. Live: agenterna får faktiskt HTTP 200, inte bara tillåtelse i robots.txt
 
 Användning:
   python3 validera_fab73.py --live                  # mot https://utlovat.se
@@ -173,6 +174,26 @@ def validera() -> None:
         if rg is None:
             rg = next((r for nm, r in grupper if nm == "*"), [])
         kolla(slapper_in(rg), f"robots.txt: {agent} släpps inte in (Disallow vinner eller saknas)")
+
+    # robots.txt är en avsiktsförklaring. Cloudflare kan fortfarande svara 403
+    # för samma agent på HTML och API, vilket då måste fälla live-grinden.
+    if not ARGS.dist:
+        for agent in SOK_AGENTER:
+            ut = subprocess.run(
+                ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}",
+                 "--max-time", "30", "-A", agent, BASE + "/"],
+                capture_output=True, text=True, check=False,
+            )
+            kolla(ut.returncode == 0 and ut.stdout.strip() == "200",
+                  f"startsida: {agent} får HTTP {ut.stdout.strip() or 'inget svar'} i stället för 200")
+        for vag in ("/llms.txt", "/api/v1/promises.json"):
+            ut = subprocess.run(
+                ["curl", "-s", "-o", "/dev/null", "-w", "%{http_code}",
+                 "--max-time", "30", "-A", "ClaudeBot", BASE + vag],
+                capture_output=True, text=True, check=False,
+            )
+            kolla(ut.returncode == 0 and ut.stdout.strip() == "200",
+                  f"{vag}: ClaudeBot får HTTP {ut.stdout.strip() or 'inget svar'} i stället för 200")
 
     # redirect-kedja ≤ 3 hopp (live-koll bara)
     if not ARGS.dist:
