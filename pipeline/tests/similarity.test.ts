@@ -457,6 +457,22 @@ describe("findPolicyDuplicate — samma uppgift, inte samma text", () => {
     },
   ];
 
+  it("allmän regeringsfras gör inte järnväg eller klimat till dublett av textilstrategi", () => {
+    const textil: ExistingPromiseLite[] = [{
+      id: "p-2026-3976",
+      title: "Nationell strategi för omställning till hållbar textil- och modebransch",
+      parties: ["mp"], category: "klimat-miljö", group_id: null, status: "aktiv",
+      quote: "Miljöpartiet vill att nästa regering under kommande mandatperiod tar fram en nationell strategi för omställningen till en hållbar textil- och modebransch.",
+    }];
+    const andra = [
+      "Miljöpartiet vill att nästa regering omedelbart återupptar planeringen av sammanhängande nya stambanor i södra Sverige, med Jönköping som nav.",
+      "Miljöpartiet vill också att nästa regering inrättar ett klimatkabinett under statsministerns ledning.",
+    ];
+    for (const quote of andra) {
+      assert.equal(findPolicyDuplicate({ quote, parties: ["mp"] }, textil), null);
+    }
+  });
+
   it("facit [6]: samma tal fäller, fast citaten inte delar en enda mening", () => {
     const träff = findPolicyDuplicate(
       {
