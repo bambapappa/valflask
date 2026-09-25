@@ -297,10 +297,6 @@ function loadJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
 }
 
-function saveJson(path: string, data: unknown): void {
-  writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
-}
-
 function list(dataDir: string = DATA_DIR): void {
   const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
   if (items.length === 0) {
@@ -838,13 +834,14 @@ export function lasAvvisade(dataDir: string = DATA_DIR): Avvisning[] {
  * skälet står kvar — historik skrivs inte om.
  */
 export function havAvvisning(nyckel: string, skal: string, dataDir: string = DATA_DIR): void {
-  const minne = lasAvvisade(dataDir);
+  const fore = lasFillage(dataDir, ["avvisade.json"]);
+  const minne = fore["avvisade.json"] === null ? [] : JSON.parse(fore["avvisade.json"]!) as Avvisning[];
   const ut = hav(minne, nyckel, skal, svenskDag());
   if (!ut) {
     console.error(`Ingen avvisning med nyckeln ${nyckel}. Kör \`pnpm review avvisade\` för att se dem.`);
     process.exit(1);
   }
-  saveJson(join(dataDir, "avvisade.json"), ut);
+  skrivFilpaket(dataDir, skapaFilpaket(fore, { "avvisade.json": JSON.stringify(ut, null, 2) + "\n" }));
   const post = ut.find((a) => a.nyckel === nyckel)!;
   console.log(`Hävd: ${nyckel}\n  avvisades ${post.datum}: ${post.skal}\n  hävs ${post.havd!.datum}: ${skal}`);
 }
@@ -873,7 +870,7 @@ export function listaAvvisade(dataDir: string = DATA_DIR): void {
  * granskaren vouchar för källan vid approve. Mall: {title, parties, quote,
  * category, source, date_stated?, amount_in_text_msek?, person?, cost?}.
  */
-function add(file: string | undefined, dataDir: string = DATA_DIR): void {
+export function add(file: string | undefined, dataDir: string = DATA_DIR): void {
   if (!file) {
     console.error('Användning: pnpm review add <fil.json>');
     console.error('  Filen ska innehålla: {"title","parties":["s"],"quote","category","source", ...}');
@@ -925,9 +922,12 @@ function add(file: string | undefined, dataDir: string = DATA_DIR): void {
   };
   if (m.cost) entry.cost = m.cost as CostShape;
 
-  const items = loadJson<ReviewCandidate[]>(join(dataDir, "needs_review.json"));
+  const fore = lasFillage(dataDir, ["needs_review.json"]);
+  if (fore["needs_review.json"] === null) throw new Error("Saknar needs_review.json");
+  const items = JSON.parse(fore["needs_review.json"]!) as ReviewCandidate[];
+  if (!Array.isArray(items)) throw new Error("Ogiltig granskningskö");
   items.push(entry);
-  saveJson(join(dataDir, "needs_review.json"), items);
+  skrivFilpaket(dataDir, skapaFilpaket(fore, { "needs_review.json": JSON.stringify(items, null, 2) + "\n" }));
 
   console.log(`Tillagd i needs_review som [${items.length - 1}]: "${m.title}".`);
   console.log(

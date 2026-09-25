@@ -28,7 +28,7 @@ import {
   type StanceGateFailure,
 } from "./stance-pipeline.ts";
 import { lasStanceReview } from "./stance-review-lage.ts";
-import { lasFillage, type Fillage } from "./datatransaktion.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket, type Fillage } from "./datatransaktion.ts";
 import { kanoniskJson } from "./underlagsversion.ts";
 import type { IssuesFile, StanceCell } from "./stances.ts";
 
@@ -640,9 +640,10 @@ export async function runPipeline(
   // Veckans fläsk (A4, §7 steg 7): generera/uppdatera krönikan för aktuell
   // ISO-vecka ur veckans nya löften. Best-effort — fel fäller aldrig körningen.
   try {
+    const chronicleFore = lasFillage(ctx.outputDir, ["chronicles.json"]);
     const existingChronicles: ChronicleEntry[] = (() => {
       try {
-        return JSON.parse(readFileSync(`${ctx.outputDir}/chronicles.json`, "utf8")) as ChronicleEntry[];
+        return chronicleFore["chronicles.json"] === null ? [] : JSON.parse(chronicleFore["chronicles.json"]!) as ChronicleEntry[];
       } catch {
         return [];
       }
@@ -667,7 +668,9 @@ export async function runPipeline(
       reformBudgetMsek,
     });
     if (generated) {
-      writeFileSync(`${ctx.outputDir}/chronicles.json`, JSON.stringify(chronicles, null, 2) + "\n");
+      skrivFilpaket(ctx.outputDir, skapaFilpaket(chronicleFore, {
+        "chronicles.json": JSON.stringify(chronicles, null, 2) + "\n",
+      }));
       console.log(`Veckans fläsk: genererade krönika ${generated.slug} (${generated.promise_ids.length} löften).`);
     }
   } catch (e) {
