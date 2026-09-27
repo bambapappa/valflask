@@ -218,6 +218,8 @@ jobs:
         working-directory: site
       - name: Agenternas HTTP-regression
         run: python3 -m unittest discover -s ops -p 'test_validera_fab73.py' -v
+      - name: Skilj åtkomstfel från innehållsfel
+        run: node --test ops/test_ai_atkomst.mjs
       - name: Maskinläsbar metadata i byggd sajt
         run: python3 ops/validera_fab73.py --dist site/dist
       # Handlingsvågen byggs som egen Astro-sajt med basstigen /handlingsvagen
