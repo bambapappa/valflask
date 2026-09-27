@@ -253,13 +253,18 @@ try {
 // 4. Bär förstasidan sitt innehåll utan att JavaScript körs? En agent som inte
 //    kör skript ska ändå se siffrorna.
 try {
-  const { text } = await hamta(BAS, { "User-Agent": BOT_UA });
-  const utanTaggar = text.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<[^>]+>/g, " ");
-  const ord = utanTaggar.split(/\s+/).filter(Boolean).length;
-  const harJsonLd = /application\/ld\+json/i.test(text);
-  console.log(`\nFörstasidan utan JavaScript: ${ord} ord, JSON-LD ${harJsonLd ? "finns" : "SAKNAS"}`);
-  if (ord < 200) fel.push(`förstasidan bär bara ${ord} ord utan JavaScript — agenter som inte kör skript ser nästan inget`);
-  if (!harJsonLd) fel.push("förstasidan saknar JSON-LD");
+  const svar = await hamta(BAS, { "User-Agent": BOT_UA });
+  if (svar.status !== 200) {
+    console.log(`\nFörstasidan utan JavaScript: kan inte bedömas (ClaudeBot fick HTTP ${svar.status})`);
+    // Åtkomstfelet finns redan i sidkontrollen. En felsida är inget belägg om innehållet.
+  } else {
+    const utanTaggar = svar.text.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<[^>]+>/g, " ");
+    const ord = utanTaggar.split(/\s+/).filter(Boolean).length;
+    const harJsonLd = /application\/ld\+json/i.test(svar.text);
+    console.log(`\nFörstasidan utan JavaScript: ${ord} ord, JSON-LD ${harJsonLd ? "finns" : "SAKNAS"}`);
+    if (ord < 200) fel.push(`förstasidan bär bara ${ord} ord utan JavaScript — agenter som inte kör skript ser nästan inget`);
+    if (!harJsonLd) fel.push("förstasidan saknar JSON-LD");
+  }
 } catch (e) {
   fel.push(`förstasidan gick inte att läsa: ${e.message}`);
 }
