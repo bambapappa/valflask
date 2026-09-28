@@ -34,6 +34,8 @@ export interface NormalizedArticle {
   text: string;
   /** Källans publiceringstidpunkt, ISO 8601. */
   published: string;
+  /** Om datumet kommer från källan eller bara är när den odaterade sidan hämtades. */
+  dateBasis?: "kalla" | "osakert-kalldatum" | "insamling";
   /**
    * SHA-256 av texten — sätts av page-källan (B). Går in i seen-nyckeln så att
    * en OMSKRIVEN manifestsida/PDF processas om (löpande bevakning), medan

@@ -12,6 +12,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { spawnSync } from "node:child_process";
 import { provaRad, tillampa, type Ankarrad, type Lofte } from "../src/ankarpasset.ts";
 import { ankarbrott } from "../src/ankarkravet.ts";
 
@@ -29,6 +30,15 @@ const lofte = (id: string, over: Partial<Lofte> = {}): Lofte =>
 const karta = (...l: Lofte[]) => new Map(l.map((x) => [x.id, x]));
 const rad = (over: Partial<Ankarrad> = {}): Ankarrad =>
   ({ id: "p-2026-0001", utfall: "ankare", varde: "p-2026-0002", skal: "läsningen fann X", ...over });
+
+test("den äldre direkta skrivvägen stoppas före filläsning", () => {
+  const pipeline = resolve(import.meta.dirname, "..");
+  const run = spawnSync(process.execPath, ["--import", "tsx/esm", "scripts/ankarpasset.mts", "saknas.tsv", "--skriv"],
+    { cwd: pipeline, encoding: "utf8" });
+  assert.equal(run.status, 1);
+  assert.match(run.stderr, /ankarpass-beslut/u);
+  assert.doesNotMatch(run.stderr, /ENOENT/u);
+});
 
 test("ett ankare som finns och lever godtas", () => {
   const m = karta(lofte("p-2026-0001"), lofte("p-2026-0002"));

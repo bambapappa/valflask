@@ -60,6 +60,10 @@ export function provaSortrad(lofte: Sortlofte | undefined, rad: Sortrad): Sortpr
   if (rad.sort === "inriktning" && (lofte.cost?.msek_base ?? 0) !== 0) {
     fel.push(`${rad.id}: ett inriktningslöfte bär aldrig ett basbelopp, och posten står på ${lofte.cost?.msek_base}`);
   }
+  if (rad.sort === "inriktning" &&
+      [lofte.cost?.msek_low, lofte.cost?.msek_base, lofte.cost?.msek_high].some((tal) => tal !== 0)) {
+    fel.push(`${rad.id}: inriktning kräver uttryckligt nollat låg-, bas- och högbelopp; saknat belopp är inte noll`);
+  }
   if (rad.utrakning.trim().length < UTRAKNING_MIN_TECKEN) {
     fel.push(`${rad.id}: den nya uträkningen är för kort för att förklara sorten`);
   }

@@ -23,7 +23,7 @@
  * Rader som börjar med # är kommentarer.
  */
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
 import { hamtaAvslagsunderlag } from "../src/avslagsunderlag.ts";
@@ -44,12 +44,12 @@ import {
   type KoPost,
 } from "../src/granskning.ts";
 import { lasProvningar } from "../../../pipeline/src/provningar.ts";
+import { lasKopplingslage, skrivKopplingsbeslut } from "../src/kopplingsskrivning.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const rotData = resolve(rot, "../data");
 const provningar = lasProvningar(rotData);
-const koPath = resolve(rot, "data/kopplingsforslag.json");
-const kopplingarPath = resolve(rot, "data/kopplingar.json");
+const dataDir = resolve(rot, "data");
 
 const [listfil] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const skriv = process.argv.includes("--skriv");
@@ -66,10 +66,9 @@ const rader = readFileSync(resolve(listfil), "utf8")
     return { id: id!.trim(), bevis: bevis?.trim() || undefined };
   });
 
-let ko: KoPost[] = JSON.parse(readFileSync(koPath, "utf8"));
-let kopplingar: KopplingPost[] = existsSync(kopplingarPath)
-  ? JSON.parse(readFileSync(kopplingarPath, "utf8"))
-  : [];
+const { fore: filfore, ko: koVidStart, kopplingar: kopplingarVidStart } = lasKopplingslage(dataDir);
+let ko: KoPost[] = koVidStart;
+let kopplingar: KopplingPost[] = kopplingarVidStart;
 const handlingar: Handling[] = JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8"));
 
 const fore = kopplingar.length;
@@ -156,9 +155,8 @@ if (fel.length > 0) {
   process.exit(1);
 }
 if (skriv) {
-  writeFileSync(kopplingarPath, JSON.stringify(kopplingar, null, 2) + "\n");
-  writeFileSync(koPath, JSON.stringify(ko, null, 2) + "\n");
-  console.log(`skrivet: ${kopplingarPath}, ${koPath}`);
+  skrivKopplingsbeslut(dataDir, filfore, ko, kopplingar);
+  console.log(`skrivet: kopplingar.json, kopplingsforslag.json`);
 } else {
   console.log("torrkörning — lägg till --skriv för att verkställa.");
 }

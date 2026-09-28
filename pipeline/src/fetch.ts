@@ -5,11 +5,13 @@ import { DATE_WINDOW_DAYS, type NormalizedArticle } from "./gates.ts";
 import { kartaSamtidigt } from "./samtidigt.ts";
 import { parseRetryAfterMs } from "./takten.ts";
 import { kanoniskAdress } from "./adressen.ts";
+import type { Feedhamtning } from "./korutfall.ts";
 
 /* ──────────────────────── ArticleSource (M2 injicerbart gränssnitt) ── */
 
 export interface ArticleSource {
   fetch(): Promise<NormalizedArticle[]>;
+  getFeedOutcomes?(): Feedhamtning[];
 }
 
 export class MemorySource implements ArticleSource {
@@ -121,6 +123,21 @@ export interface CacheEntry {
   etag?: string;
   lastModified?: string;
   lastFetched: string;
+  contentType?: string | null;
+  bodyBase64?: string;
+  bodySha256?: string;
+  accept?: string;
+}
+
+// Stora dokument hämtas ovillkorligt i stället för att göra Actions-cachen stor.
+const MAX_CACHED_BODY_BYTES = 1_000_000;
+
+function cachedBody(entry: CacheEntry | undefined, accept: string | undefined): { bytes: Uint8Array; contentType: string | null } | null {
+  if (!entry?.bodyBase64 || !entry.bodySha256 || entry.accept !== accept) return null;
+  if (entry.bodyBase64.length > Math.ceil(MAX_CACHED_BODY_BYTES * 4 / 3) + 4) return null;
+  const bytes = Buffer.from(entry.bodyBase64, "base64");
+  if (bytes.length > MAX_CACHED_BODY_BYTES || sha256(bytes) !== entry.bodySha256) return null;
+  return { bytes, contentType: entry.contentType ?? null };
 }
 
 export function loadEtagCache(cacheDir: string | null): Map<string, CacheEntry> {
@@ -893,7 +910,7 @@ export function parseRiksdagenAnforandelista(json: Record<string, unknown>): Arr
 
 /* ──────────────────────── SHA-256 & dedup ── */
 
-export function sha256(input: string): string {
+export function sha256(input: string | Uint8Array): string {
   return createHash("sha256").update(input).digest("hex");
 }
 
@@ -996,6 +1013,8 @@ export class LiveSource implements ArticleSource {
    */
   private robotsPagaende: Map<string, Promise<RobotsRule[]>>;
   private stats: Map<string, number>;
+  private feedOutcomes: Feedhamtning[];
+  private feedIssues: Map<string, Array<{ url: string; error: string }>>;
   /**
    * Adresserna körningen ska begränsas till, eller null för alla.
    *
@@ -1034,14 +1053,29 @@ export class LiveSource implements ArticleSource {
     this.robotsCache = new Map();
     this.robotsPagaende = new Map();
     this.stats = new Map();
+    this.feedOutcomes = [];
+    this.feedIssues = new Map();
   }
 
   getStats(): Map<string, number> {
     return new Map(this.stats);
   }
 
+  getFeedOutcomes(): Feedhamtning[] {
+    return this.feedOutcomes.map((f) => ({ ...f, ...(f.failures ? { failures: f.failures.map((x) => ({ ...x })) } : {}) }));
+  }
+
+  private noteFeedIssue(feedId: string, url: string, cause: unknown): void {
+    const issues = this.feedIssues.get(feedId) ?? [];
+    issues.push({ url, error: (cause instanceof Error ? cause.message : String(cause)).slice(0, 500) });
+    this.feedIssues.set(feedId, issues);
+  }
+
   async fetch(): Promise<NormalizedArticle[]> {
     const articles: NormalizedArticle[] = [];
+    this.stats.clear();
+    this.feedOutcomes = [];
+    this.feedIssues.clear();
     const etagCache = loadEtagCache(this.cacheDir);
 
     // Hämta ALLA feeds (ingen global kapning här). Annars äter feeds högt upp i
@@ -1059,6 +1093,7 @@ export class LiveSource implements ArticleSource {
                 ? await this.fetchSitemap(feed, etagCache)
                 : await this.fetchRss(feed, etagCache);
 
+        let accepted = 0;
         for (const article of feedArticles) {
           if (article.text.length < this.limits.min_chars) continue;
           // RSS, page och riksdagen går inte genom `hamtaSidor` och har alltså
@@ -1066,12 +1101,18 @@ export class LiveSource implements ArticleSource {
           // tyst släppa igenom allt från just de källtyperna.
           if (this.urlar && !this.urlar.has(kanoniskAdress(article.url))) continue;
           articles.push({ ...article, feedType: feed.type });
+          accepted += 1;
         }
 
         this.stats.set(feed.id, feedArticles.length);
+        const failures = this.feedIssues.get(feed.id) ?? [];
+        this.feedOutcomes.push({ id: feed.id, type: feed.type, fetched: feedArticles.length, accepted,
+          status: failures.length ? "partial" : "ok", ...(failures.length ? { failures } : {}) });
       } catch (e) {
-        console.error(`[fetch] feed ${feed.id} failed: ${e instanceof Error ? e.message : e}`);
+        const error = (e instanceof Error ? e.message : String(e)).slice(0, 500);
+        console.error(`[fetch] feed ${feed.id} failed: ${error}`);
         this.stats.set(feed.id, 0);
+        this.feedOutcomes.push({ id: feed.id, type: feed.type, fetched: 0, accepted: 0, status: "failed", error });
       }
     }
 
@@ -1149,6 +1190,8 @@ export class LiveSource implements ArticleSource {
           const html = new TextDecoder("utf-8").decode(res.bytes);
           const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
           const text = stripHtml(html);
+          const datumIAdress = datumUrAdress(lank);
+          const datumPaSidan = datumUrHtml(html);
           return {
             url: lank,
             domain: extractDomain(lank),
@@ -1156,10 +1199,12 @@ export class LiveSource implements ArticleSource {
             text,
             // Adressens datum är sannast när det finns; annars artikelns eget.
             // Hämtningstiden är sista utvägen och gör en gammal artikel färsk.
-            published: datumUrAdress(lank) ?? datumUrHtml(html) ?? new Date().toISOString(),
+            published: datumIAdress ?? datumPaSidan ?? new Date().toISOString(),
+            dateBasis: datumIAdress ? "kalla" as const : datumPaSidan ? "osakert-kalldatum" as const : "insamling" as const,
             contentHash: sha256(text),
           };
         } catch (e) {
+          this.noteFeedIssue(feedId, lank, e);
           console.error(
             `[fetch] ${feedId}: ${ordet} ${lank} föll: ${e instanceof Error ? e.message : e}`,
           );
@@ -1192,7 +1237,10 @@ export class LiveSource implements ArticleSource {
     };
 
     const cached = etagCache.get(url);
-    if (cached) {
+    const body = cachedBody(cached, extraHeaders?.Accept);
+    // En validator utan sparad kropp får aldrig orsaka 304: då försvinner
+    // även osedda artiklar från ett oförändrat RSS/index/sidregister.
+    if (cached && body) {
       if (cached.etag) headers["If-None-Match"] = cached.etag;
       if (cached.lastModified) headers["If-Modified-Since"] = cached.lastModified;
     }
@@ -1217,21 +1265,31 @@ export class LiveSource implements ArticleSource {
       await this.sleep(ra ?? Math.min(MAX_TAKTVANTAN_MS, 1000 * 2 ** forsok));
     }
 
-    if (res.status === 304) return null;
+    if (res.status === 304) {
+      if (!body) throw new Error(`HTTP 304 utan sparad kropp för ${url}`);
+      return { ...body, status: 304 };
+    }
 
     if (!res.ok) {
       throw new Error(`HTTP ${res.status} for ${url}`);
     }
 
+    const bytes = new Uint8Array(await res.arrayBuffer());
     const entry: CacheEntry = { lastFetched: new Date().toISOString() };
     const etag = res.headers.get("etag");
     const lm = res.headers.get("last-modified");
     if (etag) entry.etag = etag;
     if (lm) entry.lastModified = lm;
+    if (bytes.length <= MAX_CACHED_BODY_BYTES && (etag || lm)) {
+      entry.contentType = res.headers.get("content-type");
+      entry.bodyBase64 = Buffer.from(bytes).toString("base64");
+      entry.bodySha256 = sha256(bytes);
+      if (extraHeaders?.Accept) entry.accept = extraHeaders.Accept;
+    }
     etagCache.set(url, entry);
 
     return {
-      bytes: new Uint8Array(await res.arrayBuffer()),
+      bytes,
       contentType: res.headers.get("content-type"),
       status: res.status,
     };
@@ -1267,6 +1325,7 @@ export class LiveSource implements ArticleSource {
         title: item.title,
         text,
         published,
+        dateBasis: item.pubDate && !Number.isNaN(Date.parse(item.pubDate)) ? "kalla" : "insamling",
       });
     }
 
@@ -1325,6 +1384,7 @@ export class LiveSource implements ArticleSource {
             djupare.add(l);
           }
         } catch (e) {
+          this.noteFeedIssue(feed.id, gren, e);
           console.error(
             `[fetch] ${feed.id}: grenen ${gren} föll: ${e instanceof Error ? e.message : e}`,
           );
@@ -1426,6 +1486,7 @@ export class LiveSource implements ArticleSource {
       title,
       text,
       published: new Date().toISOString(),
+      dateBasis: "insamling",
       contentHash: sha256(text),
     }];
 
@@ -1446,6 +1507,7 @@ export class LiveSource implements ArticleSource {
           skipStale: true,
         }));
       } catch (e) {
+        this.noteFeedIssue(feed.id, pdfUrl, e);
         console.error(`[fetch] följd PDF ${pdfUrl} failed: ${e instanceof Error ? e.message : e}`);
       }
     }
@@ -1487,6 +1549,7 @@ export class LiveSource implements ArticleSource {
           : `${baseTitle} (s. ${start + 1}–${start + chunkPages.length})`,
         text,
         published,
+        dateBasis: pdf.published ? "osakert-kalldatum" : "insamling",
         // Per chunk: en ny manifestversion omprocessar bara ändrade sidintervall.
         contentHash: sha256(text),
         // Per-sidtext följer med så publiceringen kan ankra källänken på
@@ -1546,6 +1609,7 @@ export class LiveSource implements ArticleSource {
         title: doc.titel,
         text: text || doc.titel,
         published: date,
+        dateBasis: doc.datum ? "kalla" : "insamling",
       });
     }
 
@@ -1587,6 +1651,7 @@ export class LiveSource implements ArticleSource {
         title,
         text: text || title,
         published: date,
+        dateBasis: item.dok_datum ? "kalla" : "insamling",
       });
     }
 

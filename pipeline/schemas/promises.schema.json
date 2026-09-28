@@ -345,6 +345,13 @@
             "type": "number",
             "minimum": 0,
             "maximum": 1
+          },
+          "harledning": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Kalkylens härledning som struktur: ett led per tal med sin roll (partiets uppgift, extern källa, egen beräkning, antagande, redan beslutad basnivå), år och källa, plus årsprofil och en markering när beloppet inte kan fastställas. Valfritt och bakåtkompatibelt — saknas fältet läses uträkningstexten som i dag. Se src/harledningen.ts."
           }
         }
       },

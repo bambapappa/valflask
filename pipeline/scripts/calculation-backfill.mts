@@ -1,34 +1,19 @@
 /**
- * Bakåtfyllnad av `cost.calculation` för äldre LLM-estimat (full spårbarhet).
- *
- * Äldre löften saknar den stegvisa uträkningen — den infördes framåtriktat. Här
- * körs varje sådant löfte genom SAMMA estimator (A5 + grannkontroll) på nytt, och
- * resultatet triageras ärligt:
- *   • Nytt belopp NÄRA det publicerade  → fäst den nya (rekonstruerade) uträkningen,
- *     BEHÅLL det publicerade beloppet (ingen tyst ändring, ingen rättelse).
- *   • Nytt belopp AVVIKER kraftigt        → rör inte löftet; lägg i granskningskön
- *     (data/calculation_review.json) för mänskligt beslut.
- *
- * Uträkningen märks öppet som rekonstruerad i efterhand — originalresonemanget
- * sparades aldrig, så vi utger den inte för att vara det.
- *
- * Idempotent (hoppar löften som redan har calculation) och därmed återupptagbart.
- *
- *   pnpm calc:backfill --sample=10 --dry-run     # kalibrering, skriver inget
- *   pnpm calc:backfill --all                      # skarp körning
- *   Flaggor: --sample=N | --all, --dry-run, --seed=N, --factor=1.5, --stub
+ * Rekonstruerar kostnadsförslag för separat granskning. Ändrar aldrig publicerade
+ * löften, rättelser eller changelog. Närhet till befintligt belopp prioriterar
+ * granskningen; den innebär inget sakligt eller mänskligt godkännande.
+ * pnpm calc:backfill --sample=10 --dry-run; pnpm calc:backfill --all
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { estimateCost, type CostEstimate } from "../src/cost.ts";
 import {
   findComparableCosts,
   type ComparablePromiseLite,
 } from "../src/similarity.ts";
-import { computeDataHash } from "../src/publish.ts";
+import { kalkylPosthash, lasKalkylko, sparaKalkylko } from "../src/kalkylko.ts";
 import { OpenRouterClient, type LlmClient } from "../src/llm.ts";
 import { byggLed } from "../src/cli-run.ts";
-import { svenskDag } from "../src/dagen.ts";
 
 const DATA = resolve(import.meta.dirname, "../../data");
 
@@ -147,8 +132,10 @@ async function main(): Promise<void> {
     msek_base: p.cost.msek_base, period: p.cost.period, basis: p.cost.basis, status: p.status,
   }));
 
+  const { llm, model } = buildLlm();
+  const befintligaForslag = lasKalkylko(DATA);
   const targets = promises.filter(
-    (p) => p.status !== "tillbakadragen" && p.cost.basis === "llm_estimat" && !p.cost.calculation,
+    (p) => p.status !== "tillbakadragen" && p.cost.basis === "llm_estimat" && !p.cost.calculation && !befintligaForslag.some((f) => f.version === "calculation-proposal/1" && f.model === model && f.fore_hash === kalkylPosthash(p)),
   );
   const selected = ALL ? targets : sample(targets, SAMPLE, SEED);
 
@@ -158,14 +145,12 @@ async function main(): Promise<void> {
       `${DRY ? "  [DRY-RUN]" : ""}${STUB ? "  [STUB]" : ""}\n`,
   );
 
-  const { llm, model } = buildLlm();
   let near = 0, diverge = 0, skip = 0;
   const divergences: Array<Record<string, unknown>> = [];
   const skipReasons = new Map<string, number>();
 
   /**
-   * Ett löfte: returnerar true om det behandlades (uträkning fäst eller lagd
-   * till granskning), false om det hoppades.
+   * Ett löfte: returnerar true om det behandlades (förslag sparat för granskning), false om det hoppades.
    *
    * Skip-orsaken YTAS. I körning 30028792947 föll 243 av 357 löften bort och
    * loggades alla som "modellen gav ingen uträkning" — men det var API:et som
@@ -210,31 +195,26 @@ async function main(): Promise<void> {
     );
     if (DRY) console.log(`         ${est.calculation}`);
 
-    if (t.near) {
-      near++;
-      if (!DRY) p.cost.calculation = markReconstructed(est.calculation);
-    } else {
-      diverge++;
-      divergences.push({
-        id: p.id, parties: p.parties, title: p.title,
-        published: { low: p.cost.msek_low, base: p.cost.msek_base, high: p.cost.msek_high },
-        reestimated: { base: est.msek_base, low: est.msek_low, high: est.msek_high },
-        factor: t.factor, calculation: est.calculation,
-      });
-    }
+    if (t.near) near++; else diverge++;
+    divergences.push({
+      version: "calculation-proposal/1", status: "needs_review",
+      id: p.id, model, fore_hash: kalkylPosthash(p),
+      published: structuredClone(p), reestimated: structuredClone(est),
+      near: t.near, factor: t.factor, reason: t.reason,
+    });
     return true;
   }
 
   // Checkpointing: skriv löpande så inget arbete går förlorat om körningen
   // dödas (6-timmarstaket, nätfel, OOM). save() är en no-op i dry-run.
-  if (!DRY) save = buildSave(promises, divergences, { near: () => near });
+  if (!DRY) save = (() => sparaKalkylko(DATA, divergences));
 
   // Runnern skickar SIGTERM innan den dödar jobbet — sista chansen att spara.
   let saving = false;
   const saveAndExit = (sig: string) => {
     if (saving) return;
     saving = true;
-    console.log(`\n${sig} mottagen — sparar ${near} uträkningar och ${diverge} avvikelser innan avslut.`);
+    console.log(`\n${sig} mottagen — sparar ${near} nära och ${diverge} avvikande förslag innan avslut.`);
     try { save(); } catch (e) { console.error("Kunde inte spara vid avbrott:", e); }
     process.exit(0);
   };
@@ -272,7 +252,7 @@ async function main(): Promise<void> {
       if (!DRY && ++sinceSave >= 10) {
         sinceSave = 0;
         save();
-        console.log(`   [checkpoint sparad — ${near} uträkningar, ${diverge} avvikelser]`);
+        console.log(`   [checkpoint sparad — ${near} nära och ${diverge} avvikande förslag]`);
       }
     }
     if (!outOfTime && failed.length === pending.length && round > 1) {
@@ -284,7 +264,7 @@ async function main(): Promise<void> {
   }
   skip = pending.length + notAttempted;
 
-  console.log(`\nSummering: ${near} nära (uträkning fästs), ${diverge} avviker (till granskning), ${skip} hoppade.`);
+  console.log(`\nSummering: ${near} nära och ${diverge} avvikande — samtliga till granskning, ${skip} hoppade.`);
   if (skipReasons.size > 0) {
     console.log("Skip-orsaker (sista varvet):");
     for (const [why, n] of [...skipReasons.entries()].sort((a, b) => b[1] - a[1])) {
@@ -295,7 +275,7 @@ async function main(): Promise<void> {
   if (DRY) { console.log("\n[DRY-RUN] Inget skrivet."); return; }
 
   save();
-  console.log(`\nSkrivet: ${near} uträkningar → promises.json; ${diverge} → calculation_review.json.`);
+  console.log(`\nSkrivet: ${near + diverge} förslag → calculation_review.json. Publicerade data är oförändrade.`);
 }
 
 /**
@@ -304,57 +284,12 @@ async function main(): Promise<void> {
  *
  * Bakgrund: körning 30191490153 slog i GitHubs 6-timmarstak och dödades. Allt
  * skrevs först efter loopen, så flera timmars LLM-arbete försvann. Nu ligger
- * resultatet alltid på disk, och eftersom skriptet hoppar löften som redan har
- * en uträkning betar nästa körning bara av resten.
+ * förslag på disk efter varje checkpoint. En ny körning hoppar poster där
+ * samma modell redan har lämnat ett förslag för exakt samma publicerade post.
  *
  * Sätts av main() innan loopen startar.
  */
 let save: () => void = () => {};
-
-function buildSave(
-  promises: PromiseEntry[],
-  divergences: Array<Record<string, unknown>>,
-  counts: { near: () => number },
-): () => void {
-  return () => {
-    writeFileSync(join(DATA, "promises.json"), JSON.stringify(promises, null, 2) + "\n");
-    writeFileSync(join(DATA, "calculation_review.json"), JSON.stringify(divergences, null, 2) + "\n");
-    if (counts.near() === 0) return;
-
-    // Changelog: ersätt körningens egen post i stället för att lägga en ny vid
-    // varje checkpoint, annars växer loggen med hundratals poster.
-    const runId = `calc-backfill-${svenskDag()}`;
-    const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as Array<{ run_id?: string }>;
-    const rest = changelog.filter((e) => e.run_id !== runId);
-    rest.push({
-      run_id: runId,
-      added: [],
-      updated: promises
-        .filter((p) => p.cost.calculation?.startsWith("Rekonstruerad"))
-        .map((p) => p.id),
-      retracted: [], data_hash: computeDataHash(promises), timestamp: new Date().toISOString(),
-    } as never);
-    writeFileSync(join(DATA, "changelog.json"), JSON.stringify(rest, null, 2) + "\n");
-
-    // EN samlad rättelse-post för hela kvalitetshöjningen — inte en per löfte.
-    // Den nära-grenen ändrar inga belopp (bara tillagd uträkning), så det är en
-    // förbättring av rutinen, inte enskilda felrättningar. Idempotent via sentinel.
-    const rPath = join(DATA, "rattelser.json");
-    const SENTINEL = "systematisk kvalitetshöjning";
-    const rattelser = JSON.parse(readFileSync(rPath, "utf8")) as Array<{ date: string; affects: string; what: string; why: string }>;
-    if (!rattelser.some((r) => r.affects.includes(SENTINEL))) {
-      rattelser.unshift({
-        date: svenskDag(),
-        affects: "Kostnadsuppskattningar som bygger på beräkning (systematisk kvalitetshöjning)",
-        what:
-          "Sättet vi uppskattar kostnader på har förbättrats. Nya uppskattningar jämförs nu med liknande, redan publicerade löften så att samma politik hamnar i samma storleksordning, och varje uppskattning får en stegvis, öppet redovisad uträkning. För äldre uppskattningar har uträkningen räknats om i efterhand och lagts till där den nya beräkningen bekräftar det tidigare beloppet. Där beräkningen pekade på ett annat belopp ändrades ingenting automatiskt — de löftena ses över för hand. Uträkningar som lagts till i efterhand är märkta som rekonstruerade.",
-        why:
-          "Tidigare sparades aldrig uträkningen bakom en uppskattning, och uppskattningar för snarlik politik kunde skilja sig åt utan skäl. Nu finns både spårbarhet och konsekvens. Denna post samlar hela kvalitetshöjningen i en enda rättelse i stället för en per löfte — det är en förbättring av rutinen, inte en enskild felrättning.",
-      });
-      writeFileSync(rPath, JSON.stringify(rattelser, null, 1) + "\n");
-    }
-  };
-}
 
 const isCli = process.argv[1]?.endsWith("calculation-backfill.mts");
 if (isCli) main().catch((e: unknown) => { console.error(e); process.exit(1); });

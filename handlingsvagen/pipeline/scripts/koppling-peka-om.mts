@@ -14,20 +14,20 @@
  *
  *   k-2026-0415<TAB>p-2026-0349<TAB>Samma politik som det indragna löftet, …
  *
- * **Faller en enda rad skrivs ingenting.** En halvt verkställd flytt lämnar
- * rutnätet i ett läge ingen har beslutat om — samma regel som indragningen.
+ * **Faller en enda rad skrivs ingenting.** Koppling och synlig rättelse
+ * skrivs i samma återställbara filpaket.
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
-import type { KopplingPost } from "../src/granskning.ts";
 import {
-  provaOmpekning,
+  provaOmpekningslista,
   pekaOm,
   malUtanKvarvarandeKoppling,
   type LoftesUppgift,
   type Ompekningsrad,
 } from "../src/ompekning.ts";
 import { svenskDag } from "../../../pipeline/src/dagen.ts";
+import { lasKopplingsrattelselage, skrivKopplingsrattelse } from "../src/kopplingsrattelse.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
@@ -44,13 +44,13 @@ if (!existsSync(fil)) {
   process.exit(1);
 }
 
-const kopplingsfil = resolve(rot, "data/kopplingar.json");
+const dataDir = resolve(rot, "data");
 const loftesfil = resolve(rot, "../data/promises.json");
-const kopplingar = JSON.parse(readFileSync(kopplingsfil, "utf8")) as KopplingPost[];
-const loften = JSON.parse(readFileSync(loftesfil, "utf8")) as LoftesUppgift[];
+const { fore: filfore, kopplingar, rattelser } = lasKopplingsrattelselage(dataDir);
+const loftesText = readFileSync(loftesfil, "utf8");
+const loften = JSON.parse(loftesText) as LoftesUppgift[];
 
 const kopplingPerId = new Map(kopplingar.map((k) => [k.id, k]));
-const loftePerId = new Map(loften.map((p) => [p.id, p]));
 
 const rader: Ompekningsrad[] = readFileSync(fil, "utf8")
   .split("\n")
@@ -66,13 +66,7 @@ if (rader.length === 0) {
   process.exit(1);
 }
 
-const fel: string[] = [];
-for (const rad of rader) {
-  const k = kopplingPerId.get(rad.id);
-  const fran = k?.promise_id === undefined ? undefined : loftePerId.get(k.promise_id);
-  const prov = provaOmpekning(k, fran, loftePerId.get(rad.till), kopplingar, rad);
-  fel.push(...prov.fel);
-}
+const fel = provaOmpekningslista(kopplingar, loften, rader);
 
 if (fel.length > 0) {
   console.error(`${fel.length} rad(er) går inte att verkställa. Ingenting skrivs.\n`);
@@ -103,10 +97,29 @@ if (!skriv) {
   process.exit(0);
 }
 
+// Gruppen och målet får inte ändras under den här körningens prövning.
+if (readFileSync(loftesfil, "utf8") !== loftesText) {
+  throw new Error("Löftesbeståndet ändrades under ompekningen — kör om från början");
+}
+const radPerId = new Map(rader.map((r) => [r.id, r]));
 const nya = kopplingar.map((k) => {
-  const rad = rader.find((r) => r.id === k.id);
+  const rad = radPerId.get(k.id);
   return rad === undefined ? k : pekaOm(k, rad.till, rad.skal, datum);
 });
-writeFileSync(kopplingsfil, `${JSON.stringify(nya, null, 2)}\n`);
-console.log(`\nSkrivet till ${kopplingsfil}.`);
+const berorda = new Set<string>();
+for (const rad of rader) {
+  const fran = kopplingPerId.get(rad.id)?.promise_id;
+  if (fran) berorda.add(fran);
+  berorda.add(rad.till);
+}
+rattelser.push({
+  date: datum,
+  affects: `Handlingsvågens rutnät och löftessidorna för ${[...berorda].sort().join(", ")} — ${rader.length} kopplingar har pekats om.`,
+  what: `${rader.length} publicerade kopplingar har flyttats till andra löften inom samma dokumenterade grupp. Handling, citat och riktning är oförändrade; tidigare och nytt löfte står på varje koppling.`,
+  why: rader.map((r) => r.skal).join(" "),
+  commit: "0000000",
+});
+skrivKopplingsrattelse(dataDir, filfore, nya, rattelser);
+console.log(`\nSkrivet: data/kopplingar.json — ${rader.length} kopplingar ompekade`);
+console.log("Skrivet: data/rattelser.json — en post för hela genomgången");
 console.log("Kör `npm run domar -- --promises ../../data/promises.json` innan du committar.");

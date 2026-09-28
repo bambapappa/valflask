@@ -20,9 +20,9 @@
  *     mode=save            — begär även nya Wayback-kopior (bunden budget)
  *     --dry-run            — skriv inget, visa bara vad som skulle ske
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { quoteInSnapshotText, snapshotText } from "../src/archive-verify.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const args = process.argv.slice(2);
@@ -51,7 +51,10 @@ interface StanceCell {
   statements?: Statement[];
 }
 
-const cells = JSON.parse(readFileSync(join(DATA, "stances.json"), "utf8")) as StanceCell[];
+const fore = lasFillage(DATA, ["stances.json"]);
+if (!fore["stances.json"]) throw new Error("Ståndpunktscellerna saknas");
+const cells = JSON.parse(fore["stances.json"]) as StanceCell[];
+if (!Array.isArray(cells)) throw new Error("Ståndpunktscellerna har ogiltigt format");
 const statements = cells.flatMap((c) => c.statements ?? []);
 const missing = statements.filter((s) => !s.source?.archive_url);
 
@@ -162,7 +165,7 @@ if (changed.length === 0) {
 } else if (DRY) {
   console.log(`\nTorrkörning: ${changed.length} besked skulle få arkivlänk (${changed.join(", ")}).`);
 } else {
-  writeFileSync(join(DATA, "stances.json"), JSON.stringify(cells, null, 2) + "\n");
+  skrivFilpaket(DATA, skapaFilpaket(fore, { "stances.json": JSON.stringify(cells, null, 2) + "\n" }));
   console.log(`\nKLART: ${changed.length} besked fick arkivlänk (${resolved.size}/${urls.length} URL:er lösta).`);
 }
 console.log(

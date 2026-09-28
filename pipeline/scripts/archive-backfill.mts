@@ -18,7 +18,7 @@
  *   mode=save   — fas A + B + C (begär saves för det som saknas)
  * I pipelinen körs 'save' med lågt maxSaves varje run (gradvis, snällt mot Wayback).
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 import { taLaset } from "../src/datalas.ts";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
@@ -69,20 +69,20 @@ function canonical(d: unknown): string {
   const o = d as Record<string, unknown>;
   return "{" + Object.keys(o).sort().map((k) => JSON.stringify(k) + ":" + canonical(o[k])).join(",") + "}";
 }
-const save = (path: string, data: unknown) => writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
+const json = (data: unknown) => JSON.stringify(data, null, 2) + "\n";
 
 interface Promise_ { id: string; quote: string; source: { url: string; archive_url: string | null; fetched_at?: string }; }
-// LÅSET TAS FÖRE LÄSNINGEN, INTE FÖRE SKRIVNINGEN.
-//
-// Körningen läser promises.json i början och skriver den i slutet, med tiotals
-// minuters arkivanrop emellan. Allt som skrivs däremellan skrivs över när den
-// är klar — den här körningen var den första som visade det, och samma
-// kapplöpning tog sedan en indragning som redan var bokförd i rättelseloggen.
-// Se pipeline/src/datalas.ts.
-const slappLas = taLaset(DATA, "archive:backfill");
-process.on("exit", slappLas);
-
-const promises = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Promise_[];
+// Nätverkssteget kan ta timmar. Frys alla tre före-versioner här och låt det
+// journalförda paketet vägra skriva om någon annan publicerat data under tiden.
+const fore = (() => {
+  const slapp = taLaset(DATA, "archive-backfill läser föreläge");
+  try { return lasFillage(DATA, ["promises.json", "changelog.json", "arkivvantan.json"]); }
+  finally { slapp(); }
+})();
+if (typeof fore["promises.json"] !== "string" || typeof fore["changelog.json"] !== "string") {
+  throw new Error("Arkiv-backfill kräver löften och ändringslogg");
+}
+const promises = JSON.parse(fore["promises.json"]) as Promise_[];
 
 const stripFrag = (u: string) => u.split("#")[0]!;
 const tsDigits = (iso?: string) => (iso ? iso.replace(/[^0-9]/g, "").slice(0, 14) : "");
@@ -375,17 +375,18 @@ for (const p of promises) {
   changed.push(p.id);
 }
 
+const foreEfter = { ...fore };
 if (changed.length > 0) {
   promises.sort((a, b) => a.id.localeCompare(b.id));
-  save(join(DATA, "promises.json"), promises);
   const dataHash = createHash("sha256").update(canonical(promises)).digest("hex");
-  const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as unknown[];
+  const changelog = JSON.parse(fore["changelog.json"]) as unknown[];
   changelog.push({
     run_id: `archive-backfill-${svenskDag()}`,
     added: [], updated: changed, retracted: [],
     data_hash: dataHash, timestamp: new Date().toISOString(),
   });
-  save(join(DATA, "changelog.json"), changelog);
+  foreEfter["promises.json"] = json(promises);
+  foreEfter["changelog.json"] = json(changelog);
   console.log(`\nKLART: ${changed.length} löften fick archive_url (${resolved.size}/${urls.length} URL:er lösta). Ny data_hash: ${dataHash.slice(0, 16)}…`);
 } else {
   console.log("\nInga archive_url uppdaterade.");
@@ -397,12 +398,9 @@ if (changed.length > 0) {
 // när ingenting ändrades — det är just då den behöver stämma.
 {
   const nu = new Date().toISOString();
-  let vantan: Vantan = TOM_VANTAN;
-  try {
-    vantan = JSON.parse(readFileSync(join(DATA, "arkivvantan.json"), "utf8")) as Vantan;
-  } catch { /* första körningen: filen finns inte än */ }
+  let vantan: Vantan = fore["arkivvantan.json"] === null ? TOM_VANTAN : JSON.parse(fore["arkivvantan.json"]!) as Vantan;
   for (const [url, utfall] of utfallPerUrl) vantan = skrivForsok(vantan, url, utfall, nu);
-  save(join(DATA, "arkivvantan.json"), vantan);
+  foreEfter["arkivvantan.json"] = json(vantan);
 
   const besked = provaVantan(vantan, nu);
   if (besked.vantande.length > 0) {
@@ -420,6 +418,8 @@ if (changed.length > 0) {
     }
   }
 }
+
+skrivFilpaket(DATA, skapaFilpaket(fore, foreEfter));
 
 console.log(`Kvar utan arkiv: ${promises.filter((p) => !p.source.archive_url).length} löften.`);
 {

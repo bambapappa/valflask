@@ -116,6 +116,10 @@ fi
 steg "Exporterar prövningsindexet"
 python3 "$SKILL/logg.py" "$HANDOFF" export --valflask "$VALFLASK"
 
+# Loggen bevarar dagens kontroll. I indexet är ett nytt datum utan ändrat
+# utfall eller underlag bara diffbrus som annars öppnar en PR varje dygn.
+python3 "$VALFLASK/pipeline/scripts/ko-pass-bevara-datum.py" "$VALFLASK"
+
 # ── 5. Pusha grenen. ko-pass-pr.yml öppnar PR:en. ───────────────────────────
 #
 # Grennamnet är inte fritt: `ko-pass-pr.yml` lyssnar på `arbete/ko-pass-**`.

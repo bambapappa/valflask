@@ -24,7 +24,6 @@
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import type { KopplingPost } from "../src/granskning.ts";
 import { radensBelopp, type Inkomstrad } from "../src/inkomsttabell.ts";
 import {
   provaInkomstbararen,
@@ -35,6 +34,7 @@ import {
   type Skatteslag,
 } from "../src/inkomstbararen.ts";
 import { svenskDag } from "../../../pipeline/src/dagen.ts";
+import { lasKopplingsrattelselage, skrivKopplingsrattelse } from "../src/kopplingsrattelse.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 const argv = process.argv.slice(2);
@@ -53,9 +53,8 @@ if (matningsfil === undefined) {
 type Matning = Inkomstmatning & { rader?: Inkomstrad[] };
 const matningar: Matning[] = JSON.parse(readFileSync(resolve(matningsfil), "utf8"));
 
-const kopplingarPath = resolve(rot, "data/kopplingar.json");
-const kopplingar: KopplingPost[] = JSON.parse(readFileSync(kopplingarPath, "utf8"));
-const rattelserPath = resolve(rot, "data/rattelser.json");
+const dataDir = resolve(rot, "data");
+const { fore: filfore, kopplingar, rattelser } = lasKopplingsrattelselage(dataDir);
 
 interface Skatteslagslasning {
   las: Array<{ id: string; slag: Skatteslag; skal: string }>;
@@ -200,6 +199,11 @@ const drasIn = utfall.filter((r) => r.atgard === "dra-in");
 const berordaLoften = new Set<string>();
 let rorda = 0;
 
+if (barLoftet.length === 0 && drasIn.length === 0) {
+  console.log("\nIngen publicerad koppling ändras. Ingenting skrivet.");
+  process.exit(0);
+}
+
 for (const r of barLoftet) {
   const k = perId.get(r.koppling);
   const rad = radPerId.get(r.koppling);
@@ -222,10 +226,7 @@ for (const r of drasIn) {
   if (k.promise_id) berordaLoften.add(k.promise_id);
 }
 
-writeFileSync(kopplingarPath, JSON.stringify(kopplingar, null, 2) + "\n");
-
 /** En rättelsepost för hela genomgången — rättelser samlas. */
-const rattelser = JSON.parse(readFileSync(rattelserPath, "utf8")) as unknown[];
 rattelser.push({
   date: datum,
   affects:
@@ -251,7 +252,7 @@ rattelser.push({
     "kopplingar som står kvar är oförändrad; det är belägget som blivit möjligt att granska.",
   commit: "0000000",
 });
-writeFileSync(rattelserPath, JSON.stringify(rattelser, null, 2) + "\n");
+skrivKopplingsrattelse(dataDir, filfore, kopplingar, rattelser);
 
 console.log(`\nSkrivet: data/kopplingar.json — ${rorda} kopplingar rörda`);
 console.log(`  ${barLoftet.length} har fått inkomstraden i motiveringen`);

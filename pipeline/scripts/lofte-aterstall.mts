@@ -16,10 +16,11 @@
  * Faller en enda rad skrivs ingenting.
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash, type ChangelogEntry } from "../src/publish.ts";
 import { svenskDag } from "../src/dagen.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 import {
   aterstall, mandatperioden, provaAterstallning,
   type Aterstallningslofte as Lofte, type Aterstallningsrad as Rad,
@@ -45,7 +46,13 @@ const rader: Rad[] = readFileSync(fil, "utf8")
   .filter((r) => r.trim() !== "" && !r.startsWith("#"))
   .map((r) => { const [id, skal] = r.split("\t"); return { id: (id ?? "").trim(), skal: (skal ?? "").trim() }; });
 
-const loften = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Lofte[];
+const fillage = lasFillage(DATA, ["promises.json", "rattelser.json", "changelog.json"]);
+const las = (namn: keyof typeof fillage): unknown => {
+  const text = fillage[namn];
+  if (text === null || text === undefined) throw new Error(`Saknar ${namn}`);
+  return JSON.parse(text);
+};
+const loften = las("promises.json") as Lofte[];
 const nu = new Map(loften.map((p) => [p.id, p]));
 const fore = new Map(
   (JSON.parse(execFileSync("git", ["show", `${revision}:data/promises.json`], { cwd: ROT, maxBuffer: 1 << 28 }).toString()) as Lofte[])
@@ -79,7 +86,7 @@ const nya = loften.map((p) => {
   return rad ? aterstall(p, fore.get(p.id)!, rad, datum) : p;
 });
 
-const rattelser = JSON.parse(readFileSync(join(DATA, "rattelser.json"), "utf8")) as unknown[];
+const rattelser = las("rattelser.json") as unknown[];
 rattelser.push({
   date: datum,
   affects: `Löftessidorna för ${rader.map((r) => r.id).join(", ")}`,
@@ -91,14 +98,17 @@ rattelser.push({
   why: varfor,
   commit: "0000000",
 });
-const changelog = JSON.parse(readFileSync(join(DATA, "changelog.json"), "utf8")) as ChangelogEntry[];
+const changelog = las("changelog.json") as ChangelogEntry[];
 changelog.push({
   run_id: `lofte-aterstall-${datum}`, added: [], updated: rader.map((r) => r.id), retracted: [],
   data_hash: computeDataHash(nya), timestamp: new Date().toISOString(),
 });
 
-writeFileSync(join(DATA, "promises.json"), JSON.stringify(nya, null, 2) + "\n");
-writeFileSync(join(DATA, "rattelser.json"), JSON.stringify(rattelser, null, 2) + "\n");
-writeFileSync(join(DATA, "changelog.json"), JSON.stringify(changelog, null, 2) + "\n");
+const json = (value: unknown): string => JSON.stringify(value, null, 2) + "\n";
+skrivFilpaket(DATA, skapaFilpaket(fillage, {
+  "promises.json": json(nya),
+  "rattelser.json": json(rattelser),
+  "changelog.json": json(changelog),
+}));
 console.log("\nSkrivet: promises.json, rattelser.json, changelog.json");
 console.log("Kvar: pnpm backfilla-commit, bygg om läskopian, och skriv nya prövningar.");

@@ -40,7 +40,8 @@ for (const p of ["/", "/topplistor", "/regeringar", "/jamfor"]) urls.add(`${BASE
 for (const p of parties) urls.add(`${BASE}/parti/${p.code}`);
 
 if (all) {
-  for (const p of promises) if (p.status === "aktiv") urls.add(`${BASE}/lofte/${p.id}/${p.slug}`);
+  // Även indragna löftens adresser ska besökas igen efter en samlad omgång.
+  for (const p of promises) urls.add(`${BASE}/lofte/${p.id}/${p.slug}`);
 } else {
   // Bara löften ur senaste changelog-posten (added/updated/retracted). Retract:
   // sidan är borta → submit ändå så sökmotorn recrawlar och avindexerar.
@@ -59,18 +60,17 @@ console.log(`IndexNow: skickar ${urlList.length} URL:er (${all ? "backfill" : "�
 if (process.argv.includes("--dry-run")) {
   console.log(urlList.join("\n"));
   console.log("(--dry-run: inget skickat)");
-  process.exit(0);
-}
-
-const res = await fetch(ENDPOINT, {
-  method: "POST",
-  headers: { "Content-Type": "application/json; charset=utf-8" },
-  body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList }),
-});
-
-// 200 = mottaget, 202 = accepterat/köat. Andra koder loggas men fäller inget.
-if (res.ok || res.status === 202) {
-  console.log(`IndexNow OK (HTTP ${res.status}).`);
 } else {
-  console.warn(`::warning::IndexNow svarade HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const res = await fetch(ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList }),
+  });
+
+  // 200 = mottaget, 202 = accepterat/köat. Andra koder loggas men fäller inget.
+  if (res.ok || res.status === 202) {
+    console.log(`IndexNow OK (HTTP ${res.status}).`);
+  } else {
+    console.warn(`::warning::IndexNow svarade HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  }
 }

@@ -1,0 +1,47 @@
+import { it } from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { forberedCitatforslag, tillampaCitatforslag, citatadress } from "../src/citatforslag.ts";
+import { byggCitatunderlag, skapaSakprovning, sakprovningsBeredskap } from "../src/sakprovning.ts";
+import type { PromiseEntry } from "../src/loftesforslag.ts";
+const loften: PromiseEntry[] = JSON.parse(readFileSync(new URL("../../data/promises.json", import.meta.url), "utf8"));
+const mal = loften.find(p => p.status === "aktiv" && p.source.url.startsWith("https://") && !/youtube|youtu.be|svtplay/.test(p.source.url))!;
+assert.ok(mal);
+const rad = { id: mal.id, citat: "Detta är en syntetisk testmening om en möjlig åtgärd och dess tydligt angivna omfattning." };
+const nu = new Date("2026-09-20T00:00:00Z");
+const kalla = { url: citatadress(rad, mal), text: rad.citat, hamtad: nu.toISOString() };
+it("fryser citat och källtext, avstår i sakfrågor och bevarar övriga fält", () => {
+  const fore = JSON.stringify(loften), f = forberedCitatforslag(rad, loften, kalla, nu);
+  assert.deepEqual({ ...f.nyttLofte, quote: mal.quote, history: mal.history }, mal);
+  assert.equal(f.nyttLofte.history.length, mal.history.length + 1);
+  assert.deepEqual(tillampaCitatforslag(f, loften, f.hash).find(p => p.id === mal.id), f.nyttLofte);
+  const u = byggCitatunderlag(f, loften, []), prov = skapaSakprovning(u);
+  assert.ok(u.referenser.some(r => r.id === "hamtad-kalla" && r.innehall === kalla.text));
+  assert.ok(prov.bedomningar.every(b => b.utfall === "oavgjort"));
+  assert.equal(sakprovningsBeredskap(prov, u).klar, false);
+  assert.equal(JSON.stringify(loften), fore);
+});
+it("källbyte bevarar avsändaren och rensar gammal arkivkopia", () => {
+  const ny = new URL("/tekniskt-prov", mal.source.url).href;
+  const r = { ...rad, kalla: ny }, k = { ...kalla, url: ny };
+  const f = forberedCitatforslag(r, loften, k, nu);
+  assert.equal(f.nyttLofte.source.url, ny);
+  assert.equal(f.nyttLofte.source.archive_url, null);
+  assert.equal(f.nyttLofte.source.fetched_at, nu.toISOString());
+  assert.throws(() => citatadress({ ...rad, kalla: "https://annan-avsandare.invalid/test" }, mal), /samma värdnamn/u);
+  assert.throws(() => citatadress({ ...rad, kalla: ny.replace("https:", "http:") }, mal), /https/u);
+  assert.throws(() => citatadress(rad, { ...mal, source: { ...mal.source, url: "https://youtube.com/watch?v=prov" } }), /avskrift/u);
+});
+it("fel citat, källa, tid, föreläge, slutform och hash stoppas", () => {
+  assert.throws(() => forberedCitatforslag(rad, [], kalla, nu));
+  assert.throws(() => forberedCitatforslag({ ...rad, id: "saknas" }, loften, kalla, nu));
+  assert.throws(() => forberedCitatforslag(rad, loften, { ...kalla, text: "Annan text." }, nu));
+  assert.throws(() => forberedCitatforslag(rad, loften, { ...kalla, url: "https://fel.invalid" }, nu));
+  assert.throws(() => forberedCitatforslag(rad, loften, { ...kalla, hamtad: "2027-01-01" }, nu));
+  const f = forberedCitatforslag(rad, loften, kalla, nu);
+  assert.throws(() => tillampaCitatforslag(f, loften, "0".repeat(64)));
+  const andra = structuredClone(loften); andra[0]!.quote += " ändrad";
+  assert.throws(() => tillampaCitatforslag(f, andra, f.hash));
+  f.kalla.text += " Ändrat sammanhang.";
+  assert.throws(() => tillampaCitatforslag(f, loften, f.hash));
+});

@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { harledLoftestyp } from "./loftestyp.ts";
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import {
   passesAmountCapR5,
@@ -13,6 +13,7 @@ import {
 import { arAvvisad, type Avvisning } from "./avvisningar.ts";
 import type { CostEstimate } from "./cost.ts";
 import type { VerifyResult } from "./verify.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket, type Fillage } from "./datatransaktion.ts";
 
 export interface PipelinePromise {
   id: string;
@@ -32,6 +33,7 @@ export interface PipelinePromise {
     domain: string;
     archive_url: string | null;
     fetched_at: string;
+    date_basis?: "kalla" | "osakert-kalldatum" | "insamling";
   };
   category: string;
   /** "reform" pekar ut en åtgärd som går att prissätta. "inriktning" säger vart partiet vill utan medel. */
@@ -104,8 +106,12 @@ export interface PublishInput {
   runId: string;
   now: Date;
   outputDir: string;
+  /** Körningens läsregister skrivs tillsammans med löften och kö. */
+  seen?: Record<string, string>;
   /** Frågevågen: körningens ståndpunktsresultat, in i samma changelog-post. */
   stanceSummary?: { added: string[]; changed: string[] } | undefined;
+  /** Frågevågens beräknade resultat och det föreläge som lästes före körningen. */
+  stanceFiles?: { fore: Fillage; efter: Fillage } | undefined;
 }
 
 export interface PublishResult {
@@ -176,6 +182,29 @@ export function publish(input: PublishInput): PublishResult {
   const newPromises: PipelinePromise[] = [];
   const allPromises = [...existingPromises];
   const addedIds: string[] = [];
+  mkdirSync(outputDir, { recursive: true });
+  const huvudfiler = ["promises.json", "needs_review.json", "changelog.json", ...(input.seen === undefined ? [] : ["seen.json"])];
+  const stanceNamn = Object.keys(input.stanceFiles?.fore ?? {});
+  if (stanceNamn.some((namn) => huvudfiler.includes(namn)) ||
+      stanceNamn.sort().join() !== Object.keys(input.stanceFiles?.efter ?? {}).sort().join()) {
+    throw new Error("Frågevågens filpaket har fel filuppsättning");
+  }
+  const fore = lasFillage(outputDir, [...huvudfiler, ...stanceNamn]);
+  for (const namn of stanceNamn) {
+    if (fore[namn] !== input.stanceFiles?.fore[namn]) throw new Error(`Frågevågens föreläge har ändrats: ${namn}`);
+  }
+  const lasLista = <T>(namn: keyof typeof fore): T[] => {
+    const text = fore[namn];
+    if (text === undefined) throw new Error(`Saknat föreläge: ${namn}`);
+    if (text === null) return [];
+    const poster: unknown = JSON.parse(text);
+    if (!Array.isArray(poster)) throw new Error(`Ogiltig ${namn}: väntade en lista`);
+    return poster as T[];
+  };
+  if (fore["promises.json"] !== null &&
+      canonicalStringify(lasLista<PipelinePromise>("promises.json")) !== canonicalStringify(existingPromises)) {
+    throw new Error("Löftesbeståndet har ändrats sedan körningens start");
+  }
 
   for (const pc of processedCandidates) {
     if (!passesAmountCapR5(pc.cost.msek_base)) {
@@ -238,6 +267,7 @@ export function publish(input: PublishInput): PublishResult {
         domain: pc.article.domain,
         archive_url: archiveUrl,
         fetched_at: pc.article.published,
+        date_basis: pc.article.dateBasis ?? "insamling",
       },
       category: pc.candidate.category,
       loftestyp: harledLoftestyp(pc.candidate.quote, pc.cost),
@@ -280,12 +310,6 @@ export function publish(input: PublishInput): PublishResult {
     changelogEntry.stances_changed = input.stanceSummary.changed;
   }
 
-  mkdirSync(outputDir, { recursive: true });
-
-  writeFileSync(
-    `${outputDir}/promises.json`,
-    JSON.stringify(allPromises, null, 2) + "\n",
-  );
   const utanSkiljetecken = (s: string): string =>
     s.toLowerCase().normalize("NFC").replace(/[^a-z0-9åäöéèü]+/giu, "");
   // Slå ihop med befintlig review-kö i stället för att skriva över den. Annars
@@ -308,15 +332,7 @@ export function publish(input: PublishInput): PublishResult {
     );
     return c.length >= 30 ? `${r.articleUrl ?? ""}::${c}` : null;
   };
-  const existingReview: NeedsReviewEntry[] = (() => {
-    try {
-      return JSON.parse(
-        readFileSync(`${outputDir}/needs_review.json`, "utf8"),
-      ) as NeedsReviewEntry[];
-    } catch {
-      return [];
-    }
-  })();
+  const existingReview = lasLista<NeedsReviewEntry>("needs_review.json");
   const mergedReview = [...existingReview];
   const existingKeys = new Set(existingReview.map(reviewKey));
   const existingCitat = new Set(
@@ -399,25 +415,16 @@ export function publish(input: PublishInput): PublishResult {
           .join("\n  "),
     );
   }
-  writeFileSync(
-    `${outputDir}/needs_review.json`,
-    JSON.stringify(stadadReview, null, 2) + "\n",
-  );
-
-  const existingChangelog = (() => {
-    try {
-      return JSON.parse(
-        readFileSync(`${outputDir}/changelog.json`, "utf8"),
-      ) as ChangelogEntry[];
-    } catch {
-      return [];
-    }
-  })();
+  const existingChangelog = lasLista<ChangelogEntry>("changelog.json");
   existingChangelog.push(changelogEntry);
-  writeFileSync(
-    `${outputDir}/changelog.json`,
-    JSON.stringify(existingChangelog, null, 2) + "\n",
-  );
+  const json = (value: unknown): string => JSON.stringify(value, null, 2) + "\n";
+  skrivFilpaket(outputDir, skapaFilpaket(fore, {
+    "promises.json": json(allPromises),
+    "needs_review.json": json(stadadReview),
+    "changelog.json": json(existingChangelog),
+    ...(input.seen === undefined ? {} : { "seen.json": json(input.seen) }),
+    ...(input.stanceFiles?.efter ?? {}),
+  }));
 
   return {
     promises: allPromises,

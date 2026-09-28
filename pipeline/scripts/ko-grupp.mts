@@ -20,13 +20,16 @@
  *
  * Faller en enda rad skrivs ingenting.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 import { join } from "node:path";
 import { reviewId, type ReviewCandidate } from "../src/review.ts";
 import { senaste, type Beslut } from "../src/reviewbeslut.ts";
 import { harledGrupp, provaKogrupprad, type Gruppmal } from "../src/kogrupp.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
+const fore = lasFillage(DATA, ["needs_review.json", "promises.json"]);
+if (typeof fore["needs_review.json"] !== "string" || typeof fore["promises.json"] !== "string") throw new Error("Köpasset kräver kö och löftesbestånd");
 const argv = process.argv.slice(2);
 const skriv = argv.includes("--skriv");
 // `--utom` håller tillbaka enskilda rader. Gruppen är en UTSAGA om att två
@@ -47,10 +50,10 @@ const beslut = senaste(
   readFileSync(fil, "utf8").split("\n").filter((r) => r.trim()).map((r) => JSON.parse(r) as Beslut),
 ).filter((b) => b.val === "delat");
 
-const ko = JSON.parse(readFileSync(join(DATA, "needs_review.json"), "utf8")) as ReviewCandidate[];
+const ko = JSON.parse(fore["needs_review.json"]) as ReviewCandidate[];
 const perId = new Map(ko.map((p) => [reviewId(p), p]));
 const loften = new Map<string, Gruppmal>(
-  (JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Gruppmal[]).map((p) => [p.id, p]),
+  (JSON.parse(fore["promises.json"]) as Gruppmal[]).map((p) => [p.id, p]),
 );
 
 const fel: string[] = [];
@@ -90,6 +93,9 @@ if (!skriv) { console.log("\nTorrkörning. Lägg till --skriv för att verkstäl
 for (const r of attSatta) {
   (perId.get(r.id) as { group_id?: string | null }).group_id = r.grupp;
 }
-writeFileSync(join(DATA, "needs_review.json"), JSON.stringify(ko, null, 2) + "\n");
+skrivFilpaket(DATA, skapaFilpaket(fore, {
+  "needs_review.json": JSON.stringify(ko, null, 2) + "\n",
+  "promises.json": fore["promises.json"],
+}));
 console.log("\nSkrivet: data/needs_review.json");
 console.log("Kör svepet över kön och skriv prövningarna innan du godkänner.");

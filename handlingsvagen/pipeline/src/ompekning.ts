@@ -67,8 +67,14 @@ export function provaOmpekning(
   if (koppling.status !== "aktiv") {
     fel.push(`${rad.id} har status ${koppling.status}, inte aktiv`);
   }
+  if (koppling.ompekad !== undefined) {
+    fel.push(`${rad.id} har redan pekats om — en ny flytt får inte skriva över det tidigare spåret`);
+  }
   if (koppling.promise_id === undefined) {
     fel.push(`${rad.id} pekar inte på något löfte — en ståndpunktskoppling flyttas inte så här`);
+  }
+  if (koppling.promise_id !== undefined && fran === undefined) {
+    fel.push(`${rad.id}: ursprungslöftet ${koppling.promise_id} saknas i promises.json`);
   }
   if (till === undefined) {
     fel.push(`${rad.id}: målet ${rad.till} finns inte i promises.json`);
@@ -122,6 +128,43 @@ export function provaOmpekning(
   }
 
   return { ok: fel.length === 0, fel };
+}
+
+/** Hela listan prövas mot sin tänkta slutform, inte bara rad för rad mot föreläget. */
+export function provaOmpekningslista(
+  kopplingar: KopplingPost[],
+  loften: LoftesUppgift[],
+  rader: Ompekningsrad[],
+): string[] {
+  const kopplingPerId = new Map(kopplingar.map((k) => [k.id, k]));
+  const loftePerId = new Map(loften.map((p) => [p.id, p]));
+  const flyttas = new Map<string, string>();
+  const fel: string[] = [];
+  for (const rad of rader) {
+    if (flyttas.has(rad.id)) {
+      fel.push(`${rad.id} står två gånger i listan`);
+      continue;
+    }
+    flyttas.set(rad.id, rad.till);
+    const k = kopplingPerId.get(rad.id);
+    const fran = k?.promise_id === undefined ? undefined : loftePerId.get(k.promise_id);
+    fel.push(...provaOmpekning(k, fran, loftePerId.get(rad.till), kopplingar, rad).fel);
+  }
+
+  const perHandlingOchMal = new Map<string, KopplingPost>();
+  for (const k of kopplingar) {
+    if (k.status !== "aktiv") continue;
+    const mal = flyttas.get(k.id) ?? k.promise_id;
+    if (mal === undefined) continue;
+    const nyckel = JSON.stringify([k.handling_id, mal]);
+    const tidigare = perHandlingOchMal.get(nyckel);
+    if (tidigare && (flyttas.has(k.id) || flyttas.has(tidigare.id))) {
+      fel.push(`${k.id} och ${tidigare.id} skulle belägga samma handling på ${mal} efter flytten`);
+    } else if (!tidigare) {
+      perHandlingOchMal.set(nyckel, k);
+    }
+  }
+  return fel;
 }
 
 /**

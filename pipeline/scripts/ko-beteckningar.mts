@@ -14,23 +14,26 @@
  * `cost.anchor_ids` och beskrivs i ord i texten; en regelkod skrivs ut som vad
  * regeln säger.
  *
- * RÖR BARA KÖN. Publicerade löften har sina egna verktyg — ankarpasset och
- * regelnollningen — och deras texter är rättelsepliktiga på ett annat sätt.
+ * RÖR BARA KÖN. Publicerade löften kräver en separat, sakprövad rättelse;
+ * den äldre skrivvägen i ankarpasset är spärrad.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 import { join } from "node:path";
 import { internaBeteckningar } from "../src/publicerad-text.ts";
 import { skrivOmBeteckningar, type Loftesuppgift } from "../src/beteckningar.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
+const fore = lasFillage(DATA, ["needs_review.json", "promises.json"]);
+if (typeof fore["needs_review.json"] !== "string" || typeof fore["promises.json"] !== "string") throw new Error("Köpasset kräver kö och löftesbestånd");
 const skriv = process.argv.includes("--skriv");
 
-const ko = JSON.parse(readFileSync(join(DATA, "needs_review.json"), "utf8")) as Array<{
+const ko = JSON.parse(fore["needs_review.json"]) as Array<{
   candidate?: { title?: string };
   cost?: Record<string, unknown> | null;
 }>;
 const loften = new Map<string, Loftesuppgift>(
-  (JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Loftesuppgift[]).map((p) => [p.id, p]),
+  (JSON.parse(fore["promises.json"]) as Loftesuppgift[]).map((p) => [p.id, p]),
 );
 
 let rorda = 0, kvar = 0, ankarsatta = 0;
@@ -79,5 +82,8 @@ if (!skriv) {
   console.log("\nTorrkörning. Lägg till --skriv för att verkställa.");
   process.exit(0);
 }
-writeFileSync(join(DATA, "needs_review.json"), JSON.stringify(ko, null, 2) + "\n");
+skrivFilpaket(DATA, skapaFilpaket(fore, {
+  "needs_review.json": JSON.stringify(ko, null, 2) + "\n",
+  "promises.json": fore["promises.json"],
+}));
 console.log("Skrivet: data/needs_review.json");

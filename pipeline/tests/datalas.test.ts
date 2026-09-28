@@ -1,9 +1,9 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, writeFileSync, existsSync, readFileSync, rmSync } from "node:fs";
+import { mkdtempSync, writeFileSync, existsSync, readFileSync, rmSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { taLaset, lasinnehav, kravFrittData, LASFIL } from "../src/datalas.ts";
 
 function kat(): string {
@@ -72,12 +72,13 @@ describe("datalås — sviten och ett skrivande verktyg får inte köra samtidig
     }
   });
 
-  it("en oläslig låsfil är inte ett lås", () => {
+  it("en oläslig låsfil stoppar skrivning och bevaras för kontroll", () => {
     const dir = kat();
     try {
       writeFileSync(join(dir, LASFIL), "{trasig");
-      assert.equal(lasinnehav(dir), null);
-      assert.equal(existsSync(join(dir, LASFIL)), false);
+      assert.throws(() => lasinnehav(dir), /oläslig/u);
+      assert.throws(() => taLaset(dir, "skrivare"), /oläslig/u);
+      assert.equal(readFileSync(join(dir, LASFIL), "utf8"), "{trasig");
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
@@ -147,4 +148,66 @@ describe("datalås — sviten och ett skrivande verktyg får inte köra samtidig
       rmSync(dir, { recursive: true, force: true });
     }
   });
+});
+
+
+describe("exklusivt låsbyte", () => {
+  it("ett avbrutet låsbyte stoppar både läsning och ny innehavare", () => {
+    const dir = kat();
+    try {
+      mkdirSync(join(dir, ".datalas-byte"));
+      assert.throws(() => lasinnehav(dir), /låsbyte/u);
+      assert.throws(() => taLaset(dir, "ny"), /låsbyte/u);
+      assert.equal(existsSync(join(dir, LASFIL)), false);
+      assert.ok(existsSync(join(dir, ".datalas-byte")));
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+  it("ogiltig processidentitet får inte städas som död process", () => {
+    const dir = kat();
+    try {
+      for (const pid of [0, -1, null, "123"]) {
+        const text = JSON.stringify({ pid });
+        writeFileSync(join(dir, LASFIL), text);
+        assert.throws(() => taLaset(dir, "ny"), /processidentitet/u);
+        assert.equal(readFileSync(join(dir, LASFIL), "utf8"), text);
+      }
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+});
+
+
+it("samtidiga processer får exakt en innehavare även efter ett dött lås", { timeout: 15_000 }, async () => {
+  const dir = kat();
+  const children: ReturnType<typeof spawn>[] = [];
+  let ready = 0;
+  try {
+    writeFileSync(join(dir, LASFIL), JSON.stringify({ pid: 4_194_305, hallare: "död", sedan: "2026-01-01" }));
+    const program = `import {taLaset} from ${JSON.stringify(new URL("../src/datalas.ts", import.meta.url).href)};
+      process.send({ready:true}); process.once('message', () => {
+        try { taLaset(process.argv[1], 'samtidigt'); process.send({won:true,pid:process.pid}); }
+        catch { process.send({won:false,pid:process.pid}); }
+        process.once('message', () => process.exit(0));
+      });`;
+    const pending = Array.from({ length: 8 }, () => {
+      const child = spawn(process.execPath, ["--import", "tsx/esm", "-e", program, dir], { stdio: ["ignore", "ignore", "pipe", "ipc"] });
+      children.push(child);
+      return new Promise<{ won: boolean; pid: number }>((resolve, reject) => {
+        child.once("error", reject);
+        child.once("exit", (code) => { if (code !== 0) reject(new Error(`barnprocess ${code}`)); });
+        child.on("message", (m: { ready?: boolean; won?: boolean; pid: number }) => {
+          if (m.ready) { ready++; if (ready === 8) for (const c of children) c.send("start"); }
+          else resolve(m as { won: boolean; pid: number });
+        });
+      });
+    });
+    const results = await Promise.all(pending);
+    const winners = results.filter((r) => r.won);
+    assert.equal(winners.length, 1);
+    assert.equal(lasinnehav(dir)?.pid, winners[0]!.pid);
+    await Promise.all(children.map((c) => new Promise<void>((resolve) => { c.once("exit", () => resolve()); c.send("exit"); })));
+    assert.equal(lasinnehav(dir), null);
+  } finally {
+    for (const c of children) if (c.exitCode === null) c.kill();
+    rmSync(dir, { recursive: true, force: true });
+  }
 });

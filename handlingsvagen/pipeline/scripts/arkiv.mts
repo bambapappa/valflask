@@ -34,12 +34,13 @@
  *   --om-saknas    ta om posterna som står `saknas` (annars hoppas de över)
  *   --bara-uppslag slå upp om en kopia finns, öppna den inte (halva svaret)
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { normalizeForVerbatim } from "../src/grindar.ts";
 import { dokumentUrl, htmlTillText, type HttpFetch } from "../src/riksdagen.ts";
 import { politeFetch } from "./hamta.mts";
 import { svenskDag } from "../../../pipeline/src/dagen.ts";
+import { lasArkivfil, skrivArkivfil } from "../src/arkivfil.ts";
 
 interface Koppling {
   id: string;
@@ -185,8 +186,11 @@ async function main() {
   const handlingar = new Map<string, Handling>(
     (JSON.parse(readFileSync(resolve(rot, "data/handlingar.json"), "utf8")) as Handling[]).map((h) => [h.id, h]),
   );
-  const arkivPath = resolve(rot, "data/arkiv.json");
-  const arkiv: ArkivPost[] = existsSync(arkivPath) ? JSON.parse(readFileSync(arkivPath, "utf8")) : [];
+  const dataDir = resolve(rot, "data");
+  const arkivPath = resolve(dataDir, "arkiv.json");
+  let fore = lasArkivfil(dataDir);
+  const arkiv: ArkivPost[] = fore["arkiv.json"] ? JSON.parse(fore["arkiv.json"]) : [];
+  const sparaArkiv = () => { fore = skrivArkivfil(dataDir, fore, arkiv); };
   // Hoppa över det som redan är avgjort. `oavgjort` är aldrig avgjort — det var
   // nätet som föll — så den tas alltid om. `saknas` tas om bara med --om-saknas,
   // eftersom en ny availability-fråga sällan ger ett annat svar.
@@ -259,14 +263,14 @@ async function main() {
         const i = arkiv.findIndex((a) => a.handling_id === h.id);
         if (i >= 0) arkiv[i] = post;
         else arkiv.push(post);
-        writeFileSync(arkivPath, JSON.stringify(arkiv, null, 2) + "\n");
+        sparaArkiv();
         break;
       }
     }
     const i = arkiv.findIndex((a) => a.handling_id === h.id);
     if (i >= 0) arkiv[i] = post;
     else arkiv.push(post);
-    writeFileSync(arkivPath, JSON.stringify(arkiv, null, 2) + "\n"); // delspara per handling
+    sparaArkiv(); // delspara per handling, men bara om föreläget är oförändrat
   }
   const rakna = (u: Utfall) => arkiv.filter((a) => a.utfall === u).length;
   console.log(`klart: ${nya} prövade i den här körningen, ${bekraftade} nya verifierade → ${arkivPath}`);

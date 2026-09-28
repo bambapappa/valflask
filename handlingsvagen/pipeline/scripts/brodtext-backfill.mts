@@ -16,18 +16,17 @@
  *   npm run brodtext-backfill              # torrkörning, alltid först
  *   npm run brodtext-backfill -- --skriv
  *
- * Detta är ingen rättelse: ingen publicerad text ändras, bara den maskinläsbara
- * spegeln av text som redan är publicerad.
+ * Detta ändrar inte publicerad prosa, bara dess maskinläsbara spegel. Om en
+ * metadataändring också behöver en synlig rättelse avgörs separat.
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import type { KopplingPost } from "../src/granskning.ts";
 import { grundenIProsan } from "../src/brodtextspar.ts";
+import { lasBrodtextbackfill, skrivBrodtextbackfill } from "../src/brodtext-backfill-skrivning.ts";
 
 const skriv = process.argv.includes("--skriv");
-const path = resolve(import.meta.dirname, "../../data/kopplingar.json");
-const kopplingar: KopplingPost[] = JSON.parse(readFileSync(path, "utf8"));
+const dataDir = resolve(import.meta.dirname, "../../data");
+const { fore, kopplingar } = lasBrodtextbackfill(dataDir);
 
 let satta = 0;
 let redan = 0;
@@ -61,5 +60,8 @@ if (!skriv) {
   process.exit(0);
 }
 
-writeFileSync(path, JSON.stringify(kopplingar, null, 2) + "\n");
-console.log(`\nSkrivet: data/kopplingar.json — ${satta} fält satta`);
+if (satta === 0) {
+  console.log("\nInga ändringar — inget skrivet.");
+} else if (skrivBrodtextbackfill(dataDir, fore, kopplingar)) {
+  console.log(`\nSkrivet: data/kopplingar.json — ${satta} fält satta`);
+}

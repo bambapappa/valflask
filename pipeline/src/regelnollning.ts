@@ -138,6 +138,13 @@ export function provaNollrad(lofte: Lofte | undefined, rad: Nollrad): Nollprovni
   if (bas === 0) {
     fel.push(`${rad.id} står redan på noll — det finns ingenting att nolla`);
   }
+  // Ett uttryckligt partibelopp får inte försvinna genom en regelklassning.
+  // Dubblettregeln är undantaget: beloppet används då på gruppens bärande
+  // post och tas bort här just för att inte räknas två gånger.
+  const partibelopp = /(?:\d[\d\s.,]*\s*(?:miljoner|miljarder|mnkr|mkr|mdkr|kronor|kr)\b)/iu.test(lofte.quote ?? "");
+  if (partibelopp && rad.regel !== "dubbelrakning") {
+    fel.push(`${rad.id}: citatet bär partiets egen siffra och får inte nollas med ${rad.regel}`);
+  }
   if (rad.spann) {
     const { low, base, high } = rad.spann;
     if (!(low <= base && base <= high)) {

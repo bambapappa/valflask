@@ -25,6 +25,7 @@ try {
     kopplingar: read("handlingsvagen/data/kopplingar.json"),
     handlingar: read("handlingsvagen/data/handlingar.json"),
     standpunkter: read("data/stances.json"),
+    partier: read("data/parties.json"),
   });
   if (command === "skapa") {
     process.stdout.write(JSON.stringify(bindUnderlag(target, register), null, 2) + "\n");

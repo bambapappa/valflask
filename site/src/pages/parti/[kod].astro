@@ -9,7 +9,7 @@ import Loftesfilter from "../../components/Loftesfilter.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
 import { formatMsek, formatMsekShort } from "../../lib/calc";
 import { partyTotalMsek, getPromisesForParty, totalFlasket, categoryBreakdown, flasketPerRost, promiseNetMsek, groupBearersForParty, partyCoverage } from "../../lib/aggregates";
-import { filtreraLoeften, filterNyckel, type Loeftesfilter } from "../../lib/loftesfilter";
+import { STANDARD_LOFTESFILTER, filterNyckel, loftesvyer, valdagEtikett } from "../../lib/loftesfilter";
 import { getIssuesFile, getStances, cellFor, emptyCellText, statementById, POSITION_LABEL } from "../../lib/stances";
 
 export function getStaticPaths() {
@@ -22,13 +22,7 @@ const parties = getParties();
 const constants = getConstants();
 const party = parties.find((p) => p.code === kod)!;
 const promiseById = new Map(promises.map((p) => [p.id, p]));
-const filters: Loeftesfilter[] = [
-  { underlag: "parti", loftestyp: "reform" }, { underlag: "parti", loftestyp: "inriktning" }, { underlag: "parti", loftestyp: "alla" },
-  { underlag: "utlovat", loftestyp: "reform" }, { underlag: "utlovat", loftestyp: "inriktning" }, { underlag: "utlovat", loftestyp: "alla" },
-  { underlag: "alla", loftestyp: "reform" }, { underlag: "alla", loftestyp: "inriktning" }, { underlag: "alla", loftestyp: "alla" },
-];
-const views = filters.map((filter) => {
-  const selected = filtreraLoeften(promises, filter);
+const views = loftesvyer(promises).map(({ key, keys, selected }) => {
   const partyPromises = getPromisesForParty(selected, kod!);
   const bearers = groupBearersForParty(selected, kod!);
   const promiseRows = partyPromises.map((p) => {
@@ -38,7 +32,7 @@ const views = filters.map((filter) => {
   });
   const tackning = partyCoverage(selected, kod!);
   return {
-    key: filterNyckel(filter),
+    key, keys,
     count: partyPromises.length,
     total: partyTotalMsek(selected, kod!),
     perRost: flasketPerRost(partyTotalMsek(selected, kod!), party.votes_2022),
@@ -50,8 +44,8 @@ const views = filters.map((filter) => {
     koncentrerat: tackning.topp3Andel >= 0.7,
   };
 });
-const defaultKey = "parti:reform";
-const defaultView = views.find((view) => view.key === defaultKey)!;
+const defaultKey = filterNyckel(STANDARD_LOFTESFILTER);
+const defaultView = views.find((view) => view.keys.includes(defaultKey))!;
 const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 const canonicalPath = `/parti/${kod}`;
 const issuesFile = getIssuesFile();
@@ -80,7 +74,7 @@ const jsonLd = [{
     <MetodLank />
 
     {views.map((view) => (
-      <div data-loftesfilter-vy={view.key} data-loftesfilter-vy-antal={view.count} hidden={view.key !== defaultKey}>
+      <div data-loftesfilter-vy={view.keys.join(" ")} data-loftesfilter-vy-antal={view.count} hidden={!view.keys.includes(defaultKey)}>
         <Lopsedel total={formatMsek(view.total)} subtitle={party.name.toUpperCase()} count={view.count} date="2026" headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
 
         <div class="prosa-content prosa-content--centered">
@@ -101,8 +95,8 @@ const jsonLd = [{
           <p class="notis">Urvalet gäller bara det partiet självt har lovat, med ordagrant citat och källa. Ett parti som publicerar mer material får därför fler löften här — det säger något om underlaget, inte om hur mycket partiet vill spendera.</p>
         </section>
 
-        <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} partiBelopp={view.key.startsWith("parti:")} />
-        <p class="prosa-content totalscope">Mätaren gäller samtliga partiers löften i samma urval. Talen ovan gäller enbart {party.name}.</p>
+        {view.count > 0 && <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} partiBelopp={view.key.startsWith("parti:")} />}
+        {view.count > 0 && <p class="prosa-content totalscope">Mätaren gäller samtliga partiers löften i samma urval. Talen ovan gäller enbart {party.name}.</p>}
 
         <section class="sektion">
           <h2>Kategorifördelning</h2>
@@ -113,8 +107,8 @@ const jsonLd = [{
 
         <section class="sektion">
           <h2>{party.name}:s löften</h2>
-          <div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Löfte</th><th>Kategori</th><th>Typ</th><th>Beloppsunderlag</th><th class="num">Kostnad, minus för besparing</th><th>Status</th></tr></thead><tbody>
-            {view.promiseRows.map(({ p, bearer, underlag }, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td><td>{p.category}</td><td>{p.loftestyp === "reform" ? "Reform" : "Inriktning/policy"}</td><td>{underlag === "parti" ? "Partiet" : "Utlovat.se"}</td><td class:list={["num", "belopp", { partibelopp: underlag === "parti" }]}>{bearer ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span> : formatMsek(promiseNetMsek(p), p.cost.basis)}</td><td>{p.status}</td></tr>)}
+          <div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Löfte</th><th>Tidpunkt</th><th>Kategori</th><th>Typ</th><th>Beloppsunderlag</th><th class="num">Kostnad, minus för besparing</th><th>Status</th></tr></thead><tbody>
+            {view.promiseRows.map(({ p, bearer, underlag }, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td><td>{valdagEtikett(p)}</td><td>{p.category}</td><td>{p.loftestyp === "reform" ? "Reform" : "Inriktning/policy"}</td><td>{underlag === "parti" ? "Partiet" : "Utlovat.se"}</td><td class:list={["num", "belopp", { partibelopp: underlag === "parti" }]}>{bearer ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span> : formatMsek(promiseNetMsek(p), p.cost.basis)}</td><td>{p.status}</td></tr>)}
           </tbody></table></div>
         </section>
       </div>

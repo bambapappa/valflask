@@ -6,12 +6,12 @@
  *  - Läser och skriver ALDRIG seen.json — ordinarie dedup förblir orörd och
  *    löftesflödet påverkas inte.
  *  - Rör aldrig promises.json eller needs_review.json.
- *  - Skriver endast stances.json (last_searched) och stances_review.json.
+ *  - Skriver endast stances_review.json; publicerade celler förblir byteidentiska.
  *  - Publicerar ALDRIG: mode är hårdkodat "review" — allt går till kön,
  *    oavsett STANCES_MODE. Backfill är underlag för mänsklig granskning
  *    (steg 2–3 i ops/FRAGEVAGEN-LANSERING.md), aldrig en publiceringsväg.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { LlmClient } from "./llm.ts";
 import type { ArticleSource } from "./fetch.ts";
@@ -24,9 +24,11 @@ import {
   verifyStance,
   type ProcessedStance,
   type StanceGateFailure,
-  type StanceReviewEntry,
 } from "./stance-pipeline.ts";
 import type { IssuesFile, StanceCell } from "./stances.ts";
+import { lasStanceReview } from "./stance-review-lage.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "./datatransaktion.ts";
+import { kanoniskJson } from "./underlagsversion.ts";
 
 export interface StanceBackfillContext {
   now: Date;
@@ -55,9 +57,11 @@ export interface StanceBackfillResult {
 export async function runStanceBackfill(ctx: StanceBackfillContext): Promise<StanceBackfillResult> {
   const issuesFile = JSON.parse(readFileSync(join(ctx.dataDir, "issues.json"), "utf8")) as IssuesFile;
   const cells = JSON.parse(readFileSync(join(ctx.dataDir, "stances.json"), "utf8")) as StanceCell[];
-  const existingReview = JSON.parse(
-    readFileSync(join(ctx.dataDir, "stances_review.json"), "utf8"),
-  ) as StanceReviewEntry[];
+  const existingReview = lasStanceReview(ctx.dataDir);
+  const fore = lasFillage(ctx.outputDir, ["stances_review.json"]);
+  if (kanoniskJson(JSON.parse(fore["stances_review.json"] ?? "[]")) !== kanoniskJson(existingReview)) {
+    throw new Error("Ståndpunktsköns föreläge har ändrats");
+  }
 
   const fetched = await ctx.articleSource.fetch();
   // Deterministisk ordning + budgettak (PDF:er chunkas till flera artiklar).
@@ -124,13 +128,15 @@ export async function runStanceBackfill(ctx: StanceBackfillContext): Promise<Sta
       `Backfill försökte publicera ${result.stancesAdded.length} statements — avbrutet utan skrivning.`,
     );
   }
+  const utanSokdatum = result.cells.map((cell, i) => ({ ...cell, last_searched: cells[i]?.last_searched }));
+  if (kanoniskJson(utanSokdatum) !== kanoniskJson(cells)) {
+    throw new Error("Backfill försökte ändra publicerade ståndpunktsceller");
+  }
 
   if (!ctx.dryRun) {
-    writeFileSync(join(ctx.outputDir, "stances.json"), JSON.stringify(result.cells, null, 2) + "\n");
-    writeFileSync(
-      join(ctx.outputDir, "stances_review.json"),
-      JSON.stringify(result.review, null, 2) + "\n",
-    );
+    skrivFilpaket(ctx.outputDir, skapaFilpaket(fore, {
+      "stances_review.json": JSON.stringify(result.review, null, 2) + "\n",
+    }));
   }
 
   return {

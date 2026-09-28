@@ -19,12 +19,14 @@
  * Slutkoden är 1 om något publicerat citat INTE bär, så en körning i CI eller
  * för hand fäller på det som är fel och inte på det som saknas.
  */
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { looseNormalize } from "../src/import-vallen.ts";
 import { normalizeForVerbatim } from "../src/gates.ts";
 import { arTaladKalla, filmensId, tidpunktISekunder } from "../src/talad-kalla.ts";
 import { svenskDag } from "../src/dagen.ts";
+import { lasFillage } from "../src/datatransaktion.ts";
+import { skrivUnderlagskomplettering } from "../src/underlagskomplettering.ts";
 
 const args = process.argv.slice(2);
 const har = (f: string) => args.includes(f);
@@ -65,7 +67,9 @@ interface Lofte {
   history?: { date: string; change: string; commit: string }[];
 }
 
-const promises = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Lofte[];
+const fore = lasFillage(DATA, ["promises.json", "changelog.json"]);
+if (typeof fore["promises.json"] !== "string") throw new Error("Saknar promises.json");
+const promises = JSON.parse(fore["promises.json"]) as Lofte[];
 const talade = promises.filter(
   (p) => p.status === "aktiv" && arTaladKalla(p.source.url) && !p.source.archive_url,
 );
@@ -131,17 +135,24 @@ console.log(
 );
 
 if (har("--skriv")) {
+  if (räkna("bar-inte") > 0) {
+    console.error("Publicerade citat som avskriften inte bär hittades. Inget skrivs.");
+    process.exit(1);
+  }
   const idag = svenskDag();
   let satta = 0;
+  const andradeId: string[] = [];
   for (const r of rader) {
     if (r.utfall !== "strikt" && r.utfall !== "mjuk") continue;
     const p = promises.find((x) => x.id === r.lofte.id)!;
-    p.source.transcript_held = {
+    const nyKontroll = {
       video_id: r.videoId!,
       vault: `${VALV_REPO}/transcripts/${r.videoId}.txt`,
       checked_at: idag,
       comparison: r.utfall,
     };
+    if (JSON.stringify(p.source.transcript_held ?? null) === JSON.stringify(nyKontroll)) continue;
+    p.source.transcript_held = nyKontroll;
     p.history = [
       ...(p.history ?? []),
       {
@@ -155,9 +166,10 @@ if (har("--skriv")) {
       },
     ];
     satta++;
+    andradeId.push(p.id);
   }
-  writeFileSync(join(DATA, "promises.json"), `${JSON.stringify(promises, null, 2)}\n`);
-  console.log(`Skrev transcript_held på ${satta} löften. Kom ihåg changelog och data_hash.`);
+  if (satta > 0) skrivUnderlagskomplettering(DATA, fore, promises, andradeId, "avskrift-kontroll", new Date());
+  console.log(`Skrev transcript_held på ${satta} löften tillsammans med ändringslogg och data_hash.`);
 }
 
 process.exit(räkna("bar-inte") > 0 ? 1 : 0);

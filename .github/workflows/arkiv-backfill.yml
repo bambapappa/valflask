@@ -85,8 +85,8 @@ jobs:
         # bli längre än tokenens timme. Samma fälla som kastade arkiv- och
         # skördekörningarnas resultat i augusti 2026.
         #
-        # always() med flit: skriptet skriver löpande, så det som hunnit bli
-        # klart ska räddas även när körningen slår i taket eller faller.
+        # always() med flit: token förnyas även när arkivsteget faller, så
+        # commit-steget kan kontrollera om ett helt filpaket hann skrivas.
         if: ${{ always() }}
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
         with:

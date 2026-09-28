@@ -72,6 +72,15 @@ jobs:
             });
 
             if (oppna.data.length > 0) {
+              // Håll den senaste felhändelsen synlig även i ärendelistan.
+              // En kommentar på ett gammalt ärende ändrar inte dess rubrik.
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: oppna.data[0].number,
+                title: `LARM: ${RUBRIK} föll (${dag})`,
+                body: kropp,
+              });
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,

@@ -6,6 +6,7 @@ export interface PubliceratUnderlag {
   kopplingar: Rad[];
   handlingar: Rad[];
   standpunkter: Rad[];
+  partier?: Rad[];
 }
 
 function text(value: unknown, field: string): string {
@@ -24,6 +25,9 @@ export function byggUnderlagsregister(data: PubliceratUnderlag): Underlagspost[]
     result.push({ slag, id, innehall, beroenden });
   };
   const grupper = new Map<string, string[]>();
+  for (const party of data.partier ?? []) {
+    add("parti", text(party.code, "partikod"), party, []);
+  }
   for (const p of data.loften) {
     if (p.group_id && p.status !== "tillbakadragen") {
       const group = text(p.group_id, "gruppidentitet");
@@ -38,6 +42,10 @@ export function byggUnderlagsregister(data: PubliceratUnderlag): Underlagspost[]
     const anchors = c.anchor_ids ?? [];
     if (!Array.isArray(anchors)) throw new Error(`Ogiltig ankarlista för ${id}`);
     const beroenden = anchors.map((a) => underlagsnyckel("lofte", text(a, "kalkylankare")));
+    if (data.partier) {
+      if (!Array.isArray(p.parties)) throw new Error(`Ogiltig partilista för ${id}`);
+      for (const party of p.parties) beroenden.push(underlagsnyckel("parti", text(party, "partikod")));
+    }
     if (p.group_id && p.status !== "tillbakadragen") {
       for (const member of grupper.get(String(p.group_id)) ?? []) {
         if (member !== id) beroenden.push(underlagsnyckel("lofte", member));
@@ -48,7 +56,7 @@ export function byggUnderlagsregister(data: PubliceratUnderlag): Underlagspost[]
   for (const h of data.handlingar) add("handling", text(h.id, "handlingsidentitet"), h, []);
   for (const s of data.standpunkter) {
     const id = `${text(s.subquestion_id, "delfråga")}::${text(s.party, "parti")}`;
-    add("standpunkt", id, s, []);
+    add("standpunkt", id, s, data.partier ? [underlagsnyckel("parti", text(s.party, "parti"))] : []);
   }
   for (const k of data.kopplingar) {
     const id = text(k.id, "kopplingsidentitet");

@@ -1,3 +1,4 @@
+import { godkannMedTestunderlag as approve } from "./fixtures/provat-beslutsunderlag.ts";
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { mkdtempSync, writeFileSync, readFileSync, rmSync } from "node:fs";
@@ -8,7 +9,6 @@ import {
   parseReviewCommand,
   reviewId,
   findIndexByReviewId,
-  approve,
   type ReviewCandidate,
 } from "../src/review.ts";
 import { computeDataHash } from "../src/publish.ts";
@@ -127,14 +127,16 @@ describe("parseReviewCommand — issue-kommentar till beslut", () => {
     assert.equal(parseReviewCommand("/godkänn femhundra"), null);
   });
 
-  it("/avvisa med och utan skäl", () => {
+  it("/avvisa kräver fryst pakethash för verkställning", () => {
+    const hash = "a".repeat(64);
+    assert.deepEqual(parseReviewCommand(`/avvisa paket ${hash}`), { action: "reject-package", hash });
     assert.deepEqual(parseReviewCommand("/avvisa slogan, inget löfte"), {
       action: "reject",
       reason: "slogan, inget löfte",
     });
     assert.deepEqual(parseReviewCommand("/avvisa"), {
       action: "reject",
-      reason: "avvisad via review-issue",
+      reason: "",
     });
   });
 
@@ -252,6 +254,24 @@ describe("approve — synkar changelog + data_hash vid godkännande", () => {
       assert.equal(last.data_hash, computeDataHash(promises), "hashen matchar promises.json");
       assert.match(last.run_id, /^review-p-2026-\d{4}$/);
       assert.ok(last.timestamp, "timestamp satt (matar 'senast uppdaterad')");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("lämnar löfte och kö orörda om ändringsloggen är trasig", () => {
+    const dir = mkdtempSync(join(tmpdir(), "review-atomic-"));
+    try {
+      const loften = JSON.stringify([pub]);
+      const ko = JSON.stringify([queueItem]);
+      writeFileSync(join(dir, "promises.json"), loften);
+      writeFileSync(join(dir, "needs_review.json"), ko);
+      writeFileSync(join(dir, "changelog.json"), "{trasig");
+      skrivProvning(dir);
+      assert.throws(() => approve(["0"], dir), /JSON|position|property/u);
+      assert.equal(readFileSync(join(dir, "promises.json"), "utf8"), loften);
+      assert.equal(readFileSync(join(dir, "needs_review.json"), "utf8"), ko);
+      assert.equal(readFileSync(join(dir, "changelog.json"), "utf8"), "{trasig");
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

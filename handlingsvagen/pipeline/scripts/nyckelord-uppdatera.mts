@@ -1,6 +1,6 @@
 /**
  * Slår ihop en körnings nyckelordsskärvor med dem som redan ligger på
- * defaultgrenen — samma race-säkra mönster som provade-uppdatera.mts.
+ * defaultgrenen — samma additiva unionprincip som minnet i förslagsdeltat.
  *
  * Indexet är additivt: en handling som någon annan hunnit indexera ska
  * aldrig försvinna för att den här körningen inte kände till den. Vid

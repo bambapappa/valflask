@@ -22,12 +22,13 @@
  *   pnpm kostnad:om --lista         # visa bara vilka poster som är fallna
  *   Flaggor: --stub (ingen modell, för prov), --max=N
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { estimateCost, type CostEstimate } from "../src/cost.ts";
 import { OpenRouterClient, type LlmClient } from "../src/llm.ts";
 import { byggLed } from "../src/cli-run.ts";
+import { taLaset } from "../src/datalas.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 
 /**
  * Ordgrinden, hämtad med en **beräknad** sökväg — samma väg som indragningen
@@ -116,7 +117,14 @@ function byggLlm(): { llm: LlmClient; model: string } {
 
 async function main(): Promise<void> {
   const fil = resolve(DATA, "needs_review.json");
-  const poster = JSON.parse(readFileSync(fil, "utf8")) as KoPost[];
+  const fore = (() => {
+    const slapp = taLaset(DATA, "kostnadsomkörning läser kö");
+    try { return lasFillage(DATA, ["needs_review.json"]); }
+    finally { slapp(); }
+  })();
+  const foreText = fore["needs_review.json"];
+  if (typeof foreText !== "string") throw new Error("Saknar löfteskö");
+  const poster = JSON.parse(foreText) as KoPost[];
   const fallna = poster
     .map((p, i) => ({ p, i }))
     .filter(({ p }) => kostnadenFoll(p));
@@ -165,14 +173,12 @@ async function main(): Promise<void> {
     if (SKRIV) {
       p.cost = ny;
       p.costReason = `LLM-estimat (confidence ${ny.confidence}) — omkörd efter haveri, bekräfta/justera belopp`;
-      // Skriv EFTER VARJE post, inte på slutet. Skrivningen låg förut efter
-      // hela loopen, och då är en lång körning allt-eller-inget: körning
-      // 31949952846 malde i nästan två timmar mot jobbets tak utan att en enda
-      // post hade kunnat räddas om den slagit i det. Samma lärdom som
-      // foreslag.yml redan bär, där varje klart löfte pushas direkt.
-      // Filen är liten och skrivningen kostar millisekunder mot ett
-      // modellanrop som kostar minuter.
-      writeFileSync(fil, `${JSON.stringify(poster, null, 2)}\n`, "utf8");
+      // Behåll checkpoint efter varje post: en lång modellkörning får inte
+      // kasta de tidigare resultaten vid tidsgränsen. Varje checkpoint
+      // kräver dock exakt föreläge; en ändrad kö stoppar nästa skrivning.
+      const efter = { "needs_review.json": `${JSON.stringify(poster, null, 2)}\n` };
+      skrivFilpaket(DATA, skapaFilpaket(fore, efter));
+      fore["needs_review.json"] = efter["needs_review.json"];
     }
   }
 

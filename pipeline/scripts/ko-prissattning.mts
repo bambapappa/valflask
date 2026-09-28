@@ -24,7 +24,6 @@
  *   Flaggor: --sample=N | --all, --dry-run, --seed=N, --rounds=N,
  *            --max-minutes=N, --stub
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { estimateCost, type CostEstimate } from "../src/cost.ts";
 import { findComparableCosts, type ComparablePromiseLite } from "../src/similarity.ts";
@@ -33,7 +32,7 @@ import { harledAnkare, LANAR_BELOPP } from "../src/ankarkravet.ts";
 import { internaBeteckningar } from "../src/publicerad-text.ts";
 import { OpenRouterClient, type LlmClient } from "../src/llm.ts";
 import { byggLed } from "../src/cli-run.ts";
-import { taLaset } from "../src/datalas.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket, type Fillage } from "../src/datatransaktion.ts";
 
 const DATA = resolve(import.meta.dirname, "../../data");
 /** Samma tak som schemat och godkännandegrinden. */
@@ -146,22 +145,16 @@ function byggLlm(): { llm: LlmClient; model: string } {
 }
 
 async function main(): Promise<void> {
-  // Sviten återställer data/ ur en säkerhetskopia. En kostnad skriven under
-  // tiden försvinner spårlöst — samma skäl som review och arkivbackfillen tar
-  // låset. Körningen är lång, så låset tas före första läsningen.
-  const slappLas = DRY ? () => {} : taLaset(DATA, "ko:prissatt");
-  try {
-    await kor();
-  } finally {
-    slappLas();
-  }
+  await kor();
 }
 
 let spara: () => void = () => {};
 
 async function kor(): Promise<void> {
-  const poster = JSON.parse(readFileSync(join(DATA, "needs_review.json"), "utf8")) as KoPost[];
-  const promises = JSON.parse(readFileSync(join(DATA, "promises.json"), "utf8")) as Array<Record<string, any>>;
+  const fore = lasFillage(DATA, ["needs_review.json", "ko_prissattning_anmarkningar.json", "promises.json"]);
+  if (fore["needs_review.json"] === null || fore["promises.json"] === null) throw new Error("Saknar kö eller löftesbestånd");
+  const poster = JSON.parse(fore["needs_review.json"]!) as KoPost[];
+  const promises = JSON.parse(fore["promises.json"]!) as Array<Record<string, any>>;
   const pool: ComparablePromiseLite[] = promises
     .filter((p) => p.status !== "tillbakadragen")
     .map((p) => ({
@@ -263,7 +256,7 @@ async function kor(): Promise<void> {
     return true;
   }
 
-  if (!DRY) spara = byggSpara(poster, anmarkningar);
+  if (!DRY) spara = byggSpara(DATA, fore, poster, anmarkningar);
 
   // Runnern skickar SIGTERM innan den dödar jobbet — sista chansen att spara.
   let sparar = false;
@@ -271,7 +264,7 @@ async function kor(): Promise<void> {
     if (sparar) return;
     sparar = true;
     console.log(`\n${sig} mottagen — sparar ${fasta} kostnader och ${anmarkta} anmärkningar.`);
-    try { spara(); } catch (e) { console.error("Kunde inte spara vid avbrott:", e); }
+    try { spara(); } catch (e) { console.error("Kunde inte spara vid avbrott:", e); process.exit(1); }
     process.exit(0);
   };
   process.on("SIGTERM", () => sparaOchAvsluta("SIGTERM"));
@@ -339,13 +332,16 @@ async function kor(): Promise<void> {
  * körning 30191490153 slog i GitHubs sextimmarstak och dödades med allt arbete
  * kvar i minnet. Körningen är idempotent, så nästa körning betar av resten.
  */
-function byggSpara(poster: KoPost[], anmarkningar: Array<Record<string, unknown>>): () => void {
+export function byggSpara(dir: string, start: Fillage, poster: KoPost[], anmarkningar: Array<Record<string, unknown>>): () => void {
+  let fore = start;
   return () => {
-    writeFileSync(join(DATA, "needs_review.json"), JSON.stringify(poster, null, 2) + "\n");
-    writeFileSync(
-      join(DATA, "ko_prissattning_anmarkningar.json"),
-      JSON.stringify(anmarkningar, null, 2) + "\n",
-    );
+    const efter = {
+      "needs_review.json": JSON.stringify(poster, null, 2) + "\n",
+      "ko_prissattning_anmarkningar.json": JSON.stringify(anmarkningar, null, 2) + "\n",
+      "promises.json": fore["promises.json"] ?? null,
+    };
+    skrivFilpaket(dir, skapaFilpaket(fore, efter));
+    fore = efter;
   };
 }
 

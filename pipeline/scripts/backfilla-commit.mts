@@ -32,10 +32,10 @@
  * platshållare. Fem av fem räknades som andras vid första verkliga körningen.
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeDataHash } from "../src/publish.ts";
 import { stampla } from "../src/backfillen.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 
 const DATA = join(import.meta.dirname, "../../data");
 const argv = process.argv.slice(2);
@@ -81,7 +81,12 @@ function committat(fil: string): unknown | null {
   }
 }
 
-const innehall = new Map(filer.map((f) => [f, JSON.parse(readFileSync(join(DATA, f), "utf8"))]));
+const fore = lasFillage(DATA, filer);
+const innehall = new Map(filer.map((f) => {
+  const text = fore[f];
+  if (typeof text !== "string") throw new Error(`Saknar ${f}`);
+  return [f, JSON.parse(text)] as const;
+}));
 let bytta = 0;
 let hoppade = 0;
 for (const f of filer) {
@@ -106,7 +111,9 @@ const ratt = computeDataHash(loften);
 const rord = sist !== undefined && sist.data_hash !== ratt;
 if (sist !== undefined) sist.data_hash = ratt;
 
-for (const f of filer) writeFileSync(join(DATA, f), JSON.stringify(innehall.get(f), null, 2) + "\n");
+skrivFilpaket(DATA, skapaFilpaket(fore, Object.fromEntries(
+  filer.map((f) => [f, JSON.stringify(innehall.get(f), null, 2) + "\n"]),
+)));
 
 console.log(`${bytta} platshållare → ${kort}`);
 console.log(rord ? `changelogens sista data_hash omräknad → ${ratt}` : "changelogens data_hash stämde redan");

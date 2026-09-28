@@ -64,6 +64,21 @@ describe("ankarsättningens spärrar", () => {
     assert.match(fel.join(" "), /pekar tillbaka/u);
   });
 
+  it("fäller en indirekt ankarkedja tillbaka till målposten", () => {
+    const mellan = ankare({ id: "p-2026-0003", cost: kostnad({ msek_low: 1000, msek_base: 2000, msek_high: 3000, anchor_ids: ["p-2026-0001"] }) });
+    const topp = ankare({ cost: kostnad({ msek_low: 2000, msek_base: 4000, msek_high: 8000, anchor_ids: [mellan.id] }) });
+    const { ok, fel } = provaAnkarrad(lofte(), topp, rad(), [lofte(), topp, mellan]);
+    assert.equal(ok, false);
+    assert.match(fel.join(" "), /ankarkedjan.*tillbaka/u);
+  });
+
+  it("fäller saknad länk i ankarkedjan", () => {
+    const topp = ankare({ cost: kostnad({ msek_low: 2000, msek_base: 4000, msek_high: 8000, anchor_ids: ["p-2026-9999"] }) });
+    const { ok, fel } = provaAnkarrad(lofte(), topp, rad(), [lofte(), topp]);
+    assert.equal(ok, false);
+    assert.match(fel.join(" "), /saknade löftet/u);
+  });
+
   it("fäller ett ankare utan belopp att låna ut", () => {
     const { ok, fel } = provaAnkarrad(lofte(), ankare({ cost: kostnad({ msek_base: 0 }) }), rad());
     assert.equal(ok, false);
@@ -76,6 +91,24 @@ describe("ankarsättningens spärrar", () => {
     const { ok, fel } = provaAnkarrad(lofte({ cost: kostnad({ msek_base: 500 }) }), ankare(), rad());
     assert.equal(ok, false);
     assert.match(fel.join(" "), /står redan på 500/u);
+  });
+
+  it("kräver uttryckligt nollspann på målposten", () => {
+    const { ok, fel } = provaAnkarrad(lofte({ cost: kostnad({ msek_low: null }) }), ankare(), rad());
+    assert.equal(ok, false);
+    assert.match(fel.join(" "), /uttryckligt nollspann/u);
+  });
+
+  it("kräver ändligt och ordnat spann på ankaret", () => {
+    for (const cost of [
+      kostnad({ msek_low: null, msek_base: 4000, msek_high: 8000 }),
+      kostnad({ msek_low: 5000, msek_base: 4000, msek_high: 8000 }),
+      kostnad({ msek_low: 2000, msek_base: Number.NaN, msek_high: 8000 }),
+    ]) {
+      const { ok, fel } = provaAnkarrad(lofte(), ankare({ cost }), rad());
+      assert.equal(ok, false);
+      assert.match(fel.join(" "), /ändligt och ordnat/u);
+    }
   });
 
   it("fäller olika period — ett engångsbelopp är inte ett årligt", () => {

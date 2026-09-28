@@ -427,14 +427,18 @@ function innehallsord(s: string): string[] {
 }
 
 /**
- * Ord som inte skiljer två löften åt. Listan är kort med flit: den ska fånga
- * satsbindningen, inte politiken.
+ * Ord som inte skiljer två löften åt: satsbindning, partiets eget namn och
+ * allmänna regeringsfraser. Annars räknades «Miljöpartiet vill att nästa
+ * regering» som två sällsynta sakuttryck och kopplade järnväg och klimatkabinett
+ * till ett publicerat löfte om textilstrategi.
  */
 const SMAORD = new Set(
   ("och att det som en ett för med vill ska inte den de vi vår vårt våra av på till är kan " +
     "bör måste också samt eller men om så där här detta denna dessa alla varje mer fler mest " +
     "fram göra får har hade blir vara vid från under över mellan efter före genom utan andra " +
-    "annan annat man sig sitt sin sina all bland exempelvis").split(" "),
+    "annan annat man sig sitt sin sina all bland exempelvis nästa kommande regering regeringen " +
+    "socialdemokraterna moderaterna sverigedemokraterna centerpartiet vänsterpartiet " +
+    "kristdemokraterna liberalerna miljöpartiet").split(" "),
 );
 
 /**

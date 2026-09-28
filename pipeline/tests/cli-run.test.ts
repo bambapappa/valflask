@@ -62,6 +62,13 @@ describe("cli-run buildContextFromEnv", () => {
     assert.equal(buildContextFromEnv(envWith({ PIPELINE_MODE: "auto" }), opts).mode, "auto");
   });
 
+  it("vägrar STANCES_MODE=auto i produktionskonfigurationen", () => {
+    assert.throws(
+      () => buildContextFromEnv(envWith({ STANCES_MODE: "auto", STANCES_ENABLED: "true" }), opts),
+      /Frågevågen får endast köras i review-läge/u,
+    );
+  });
+
   it("kastar utan OPENROUTER_API_KEY", () => {
     assert.throws(() => buildContextFromEnv(envWithout("OPENROUTER_API_KEY"), opts), /halvt konfigurerat/);
   });

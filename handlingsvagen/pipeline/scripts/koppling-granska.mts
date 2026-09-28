@@ -11,7 +11,7 @@
  * skriptet är verktyget, inte beslutsfattaren.
  */
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
 import { hamtaAvslagsunderlag } from "../src/avslagsunderlag.ts";
@@ -28,20 +28,16 @@ import {
   type KoPost,
 } from "../src/granskning.ts";
 import { lasProvningar } from "../../../pipeline/src/provningar.ts";
+import { lasKopplingslage, skrivKopplingsbeslut } from "../src/kopplingsskrivning.ts";
 
 const rot = resolve(import.meta.dirname, "../..");
 // Kvalitetsfiltrets index ligger i valflasks rot-data, inte Handlingsvågens —
 // en logg för alla tre vågarna, ett index.
 const rotData = resolve(rot, "../data");
-const koPath = resolve(rot, "data/kopplingsforslag.json");
-const kopplingarPath = resolve(rot, "data/kopplingar.json");
+const dataDir = resolve(rot, "data");
 
 function lasJson<T>(path: string, fallback: T): T {
   return existsSync(path) ? (JSON.parse(readFileSync(path, "utf8")) as T) : fallback;
-}
-
-function skrivJson(path: string, data: unknown): void {
-  writeFileSync(path, JSON.stringify(data, null, 2) + "\n");
 }
 
 function resolveIndex(ko: KoPost[], nyckel: string | undefined): number {
@@ -75,8 +71,7 @@ function list(ko: KoPost[], handlingar: Handling[]): void {
 }
 
 const [kommando, ...args] = process.argv.slice(2);
-const ko = lasJson<KoPost[]>(koPath, []);
-const kopplingar = lasJson<KopplingPost[]>(kopplingarPath, []);
+const { fore: filfore, ko, kopplingar } = lasKopplingslage(dataDir);
 const handlingar = lasJson<Handling[]>(resolve(rot, "data/handlingar.json"), []);
 
 try {
@@ -122,8 +117,7 @@ try {
         },
         lasProvningar(rotData),
       );
-      skrivJson(kopplingarPath, res.kopplingar);
-      skrivJson(koPath, res.ko);
+      skrivKopplingsbeslut(dataDir, filfore, res.ko, res.kopplingar);
       console.log(`Godkänd: ${res.koppling.id} — ${res.koppling.promise_id ?? res.koppling.stance_id} ↔ ${res.koppling.handling_id} (${res.koppling.riktning})`);
       console.log(`Commit-meddelande: data: koppling godkänd ${res.koppling.id}`);
       break;
@@ -136,7 +130,7 @@ try {
         process.exit(1);
       }
       const res = avvisaForslag(ko, index);
-      skrivJson(koPath, res.ko);
+      skrivKopplingsbeslut(dataDir, filfore, res.ko, kopplingar);
       console.log(`Avvisad: ${res.post.promise_id ?? res.post.stance_id} ↔ ${res.post.handling_id} — ${skal}`);
       break;
     }

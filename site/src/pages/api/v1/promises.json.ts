@@ -1,5 +1,6 @@
 import { getPromises } from "../../../lib/data";
 import { computeDataHash } from "../../../lib/canonical";
+import { valdagKategori } from "../../../lib/loftesfilter";
 
 export const prerender = true;
 
@@ -15,7 +16,8 @@ export async function GET() {
     person: p.person ? { name: p.person.name, role: p.person.role } : null,
     quote: p.quote,
     date_stated: p.date_stated,
-    source: { url: p.source.url, domain: p.source.domain, archive_url: p.source.archive_url },
+    valdag_kategori: valdagKategori(p),
+    source: { url: p.source.url, domain: p.source.domain, archive_url: p.source.archive_url, date_basis: p.source.date_basis ?? null },
     category: p.category,
     cost: { type: p.cost.type, period: p.cost.period, msek_low: p.cost.msek_low, msek_base: p.cost.msek_base, msek_high: p.cost.msek_high, basis: p.cost.basis, basis_url: p.cost.basis_url, method_note: p.cost.method_note, calculation: p.cost.calculation, confidence: p.cost.confidence },
     financing_claimed: { described: p.financing_claimed.described, summary: p.financing_claimed.summary, msek: p.financing_claimed.msek },

@@ -2,10 +2,8 @@
  * Synkar review-kön (data/needs_review.json) till GitHub-issues: ETT issue per
  * kö-post, så ägaren kan besluta direkt i GitHub-gränssnittet:
  *
- *   /godkänn                      ja — föreslagen kostnad tas som den är
- *   /godkänn 500 1000 2000        ja med ändrade belopp (msek: low base high)
- *   /godkänn --group p-2026-0123  ja, länka som dublett (delad group_id)
- *   /avvisa <skäl>                nej
+ *   förberett beslutspaket        ja — exakt förslag och sakprövning
+ *   /avvisa paket <hash>         nej genom redan fryst privat avvisningspaket
  *
  * Besluten exekveras av .github/workflows/review.yml. Varje issue bär postens
  * review-id i titeln ([review <id>]) — stabilt även när kö-index förskjuts.
@@ -15,10 +13,10 @@
  *
  * Miljö: GITHUB_TOKEN (issues:write), GITHUB_REPOSITORY ("ägare/repo").
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { reviewId, type ReviewCandidate } from "../src/review.ts";
 import { ankarflagga } from "../src/utrakningen.ts";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 
 const DATA_DIR = join(import.meta.dirname, "../../data");
 const LABEL = "review-kö";
@@ -173,10 +171,10 @@ function issueBody(entry: ReviewCandidate, id: string): string {
       lines.push(`<sub>platshållare: ${fmtMsek(c.msek_low)} / ${fmtMsek(c.msek_base)} / ${fmtMsek(c.msek_high)} · ${c.method_note || ""}</sub>`);
     }
     lines.push("");
-    lines.push("Godkännandet kräver båda:");
+    lines.push("Det förberedda godkännandepaketet måste bära båda:");
     lines.push("");
     lines.push("```");
-    lines.push("/godkänn <low> <base> <high>");
+    lines.push("belopp: <low> <base> <high>");
     lines.push("Uträkning: …");
     lines.push("```");
     if (cand.amount_in_text_msek != null) {
@@ -191,18 +189,19 @@ function issueBody(entry: ReviewCandidate, id: string): string {
     lines.push("");
   }
   lines.push(`### Ditt beslut`);
-  lines.push("| Beslut | Snabbast (etikett — funkar i bulk från listvyn) | Kommentar |");
-  lines.push("|---|---|---|");
-  lines.push("| ✅ Ja | sätt `beslut:godkänn` | `/godkänn` |");
-  lines.push("| ✏️ Ja, med ändrat belopp | — | `/godkänn <low> <base> <high>` (msek) |");
-  if (entry.duplicateOf) lines.push(`| 🔗 Ja, länka som dublett | — | \`/godkänn --group ${entry.duplicateOf}\` |`);
-  lines.push("| ❌ Nej | sätt `beslut:avvisa` | `/avvisa <skäl>` |");
+  lines.push("Ett godkännande kräver ett redan sparat löftesförslag, fullständig sakprövning " +
+    "och en separat prövningshash från beslutet. Använd det förberedda beslutspaketet; " +
+    "en kommentar eller etikett får inte bygga underlaget efter att beslutet tagits.");
   lines.push("");
-  lines.push(`<sub>review-id \`${id}\` · beslutet exekveras av review-workflown och committas till main — full spårbarhet i git + detta issue.</sub>`);
+  lines.push("Ett avslag kräver ett privat förberett paket med individuellt sakskäl. Efter granskning anger ägaren `/avvisa paket <hash>` här; etiketten `beslut:avvisa` verkställer inget avslag. ");
+  lines.push("");
+  lines.push(`<sub>review-id \`${id}\` · ett verkställt beslut ska vara spårbart till detta issue och sitt exakta paket.</sub>`);
   return lines.join("\n");
 }
 
-const alla = JSON.parse(readFileSync(join(DATA_DIR, "needs_review.json"), "utf8")) as ReviewCandidate[];
+const fore = lasFillage(DATA_DIR, ["needs_review.json"]);
+if (fore["needs_review.json"] === null) throw new Error("Saknar needs_review.json");
+const alla = JSON.parse(fore["needs_review.json"]!) as ReviewCandidate[];
 console.log(`Kön: ${alla.length} poster. Hämtar befintliga issues …`);
 const { alla: existing, stangda } = await existingIssueIds();
 console.log(`Redan issue-satta: ${existing.size} (varav ${stangda.size} stängda).`);
@@ -225,7 +224,9 @@ console.log(`Redan issue-satta: ${existing.size} (varav ${stangda.size} stängda
 const avgjorda = alla.filter((e) => stangda.has(reviewId(e)));
 const items = alla.filter((e) => !stangda.has(reviewId(e)));
 if (avgjorda.length > 0) {
-  writeFileSync(join(DATA_DIR, "needs_review.json"), `${JSON.stringify(items, null, 2)}\n`);
+  skrivFilpaket(DATA_DIR, skapaFilpaket(fore, {
+    "needs_review.json": `${JSON.stringify(items, null, 2)}\n`,
+  }));
   console.log(`Rensade ${avgjorda.length} redan avgjorda poster ur kön:`);
   for (const e of avgjorda) {
     const c = (e.candidate ?? {}) as { title?: string; parties?: string[] };

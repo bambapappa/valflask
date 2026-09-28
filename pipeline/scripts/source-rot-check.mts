@@ -15,8 +15,8 @@
  *   pnpm stances:rot-check            kontrollera + skriv data/stances.json
  *   pnpm stances:rot-check --dry-run  rapportera enbart
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 import { extractPdfText, looksLikePdf, stripHtml } from "../src/fetch.ts";
 import { normalizeForVerbatim } from "../src/gates.ts";
 import { archiveWithFallback } from "../src/archive.ts";
@@ -25,11 +25,14 @@ import type { StanceCell } from "../src/stances.ts";
 import { svenskDag } from "../src/dagen.ts";
 
 const ROOT = resolve(import.meta.dirname, "../../");
-const STANCES_PATH = join(ROOT, "data", "stances.json");
+const DATA = join(ROOT, "data");
+const STANCES_PATH = join(DATA, "stances.json");
 const USER_AGENT = "UtlovatBot/1.0 (+https://utlovat.se/om)";
 const dryRun = process.argv.includes("--dry-run");
 
-const cells = JSON.parse(readFileSync(STANCES_PATH, "utf8")) as StanceCell[];
+const fore = lasFillage(DATA, ["stances.json"]);
+if (typeof fore["stances.json"] !== "string") throw new Error("Källrötekontrollen kräver ståndpunktsfilen");
+const cells = JSON.parse(fore["stances.json"]) as StanceCell[];
 const today = svenskDag();
 
 type CheckResult = "ok" | "andrad" | "borttagen" | "obestamd";
@@ -134,7 +137,7 @@ console.log(`Källröta-kontroll ${today}: ${checked} statements, ${byUrl.size} 
 for (const line of report) console.log(`  ${line}`);
 
 if (!dryRun && checked > 0) {
-  writeFileSync(STANCES_PATH, JSON.stringify(cells, null, 2) + "\n");
+  skrivFilpaket(DATA, skapaFilpaket(fore, { "stances.json": JSON.stringify(cells, null, 2) + "\n" }));
   const parts = [changed > 0 ? `${changed} ändringar` : "", archived > 0 ? `${archived} arkiv` : ""].filter(Boolean).join(", ");
   console.log(parts
     ? `Skrev ${STANCES_PATH}. Committa med "data: källröta-kontroll ${today} (${parts})".`

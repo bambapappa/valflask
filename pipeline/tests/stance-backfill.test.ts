@@ -5,8 +5,8 @@
  */
 import { test, describe } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync, copyFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
 import { MemorySource } from "../src/fetch.ts";
@@ -79,7 +79,8 @@ describe("stance-backfill: isoleringskontraktet", () => {
       writeFileSync(join(tmp, "promises.json"), PROMISES);
       writeFileSync(join(tmp, "needs_review.json"), NEEDS);
       writeFileSync(join(tmp, "issues.json"), JSON.stringify(issuesFile));
-      writeFileSync(join(tmp, "stances.json"), JSON.stringify(buildSkeleton(issuesFile, [])));
+      const CELLS = JSON.stringify(buildSkeleton(issuesFile, []));
+      writeFileSync(join(tmp, "stances.json"), CELLS);
       writeFileSync(join(tmp, "stances_review.json"), "[]\n");
 
       const result = await runStanceBackfill({
@@ -105,7 +106,7 @@ describe("stance-backfill: isoleringskontraktet", () => {
       assert.ok(queue[0].failures.some((f: { gate: string }) => f.gate === "MODE"));
       const cells = JSON.parse(readFileSync(join(tmp, "stances.json"), "utf8")) as StanceCell[];
       assert.ok(cells.every((c) => c.statements.length === 0));
-      assert.ok(cells.every((c) => c.last_searched === "2026-07-12"));
+      assert.equal(readFileSync(join(tmp, "stances.json"), "utf8"), CELLS, "backfill får inte ändra publicerade celler eller sökdatum");
 
       // Isoleringskontraktet: löftesflödets filer är BYTE-identiska.
       assert.equal(readFileSync(join(tmp, "seen.json"), "utf8"), SEEN);
@@ -143,6 +144,46 @@ describe("stance-backfill: isoleringskontraktet", () => {
     } finally {
       rmSync(tmp, { recursive: true, force: true });
     }
+  });
+
+  test("ändrad kö under backfill stoppas utan cellskrivning", async () => {
+    const tmp = mkdtempSync(join(tmpdir(), "backfill-stale-"));
+    try {
+      writeFileSync(join(tmp, "issues.json"), JSON.stringify(issuesFile));
+      const CELLS = JSON.stringify(buildSkeleton(issuesFile, []));
+      writeFileSync(join(tmp, "stances.json"), CELLS);
+      writeFileSync(join(tmp, "stances_review.json"), "[]\n");
+      await assert.rejects(runStanceBackfill({
+        now: new Date("2026-07-12T12:00:00Z"), runId: "stances-backfill-stale",
+        llm: new DispatchLlm(),
+        articleSource: { fetch: async () => {
+          writeFileSync(join(tmp, "stances_review.json"), "[ ]\n");
+          return [article];
+        } },
+        dataDir: tmp, outputDir: tmp, allowlist: ["moderaterna.se"],
+        archiveFn: mockArchive, models: { extract: "a", verify: "b" },
+      }), /föreläge/u);
+      assert.equal(readFileSync(join(tmp, "stances.json"), "utf8"), CELLS);
+      assert.equal(readFileSync(join(tmp, "stances_review.json"), "utf8"), "[ ]\n");
+    } finally { rmSync(tmp, { recursive: true, force: true }); }
+  });
+
+  test("befintliga publicerade celler från sparat bestånd bevaras byte för byte", async () => {
+    const tmp = mkdtempSync(join(tmpdir(), "backfill-verkliga-celler-"));
+    try {
+      const data = resolve(import.meta.dirname, "../../data");
+      for (const name of ["issues.json", "stances.json", "stances_review.json"]) {
+        copyFileSync(join(data, name), join(tmp, name));
+      }
+      const fore = readFileSync(join(tmp, "stances.json"), "utf8");
+      await runStanceBackfill({
+        now: new Date("2026-09-21T12:00:00Z"), runId: "stances-backfill-bevarande",
+        llm: new DispatchLlm(), articleSource: new MemorySource([]),
+        dataDir: tmp, outputDir: tmp, allowlist: [], archiveFn: mockArchive,
+        models: { extract: "a", verify: "b" },
+      });
+      assert.equal(readFileSync(join(tmp, "stances.json"), "utf8"), fore);
+    } finally { rmSync(tmp, { recursive: true, force: true }); }
   });
 
   test("budgettak respekteras (maxArticles)", async () => {

@@ -11,7 +11,7 @@ import assert from "node:assert/strict";
 import { provaSortrad, tillampa, type Sortlofte, type Sortrad } from "../src/sortbyte.ts";
 
 const lofte = (o: Partial<Sortlofte> = {}): Sortlofte =>
-  ({ id: "p-2026-0625", status: "aktiv", loftestyp: "inriktning", cost: { msek_base: 0, calculation: "gammal" }, ...o });
+  ({ id: "p-2026-0625", status: "aktiv", loftestyp: "inriktning", cost: { msek_low: 0, msek_base: 0, msek_high: 0, calculation: "gammal" }, ...o });
 const rad = (o: Partial<Sortrad> = {}): Sortrad => ({
   id: "p-2026-0625", sort: "reform",
   utrakning:
@@ -22,6 +22,17 @@ const rad = (o: Partial<Sortrad> = {}): Sortrad => ({
 });
 
 describe("sortbytets spärrar", () => {
+  it("kräver tre uttryckliga nollor och avvisar okända eller icke-nollade spann", () => {
+    const nollor = { msek_low: 0, msek_base: 0, msek_high: 0 };
+    for (const falt of ["msek_low", "msek_base", "msek_high"] as const) {
+      for (const v of [undefined, null, 1, -1, NaN, Infinity, "0"]) {
+        const cost = { ...nollor, [falt]: v } as NonNullable<Sortlofte["cost"]>;
+        const p = lofte({ loftestyp: "reform", cost });
+        assert.equal(provaSortrad(p, rad({ sort: "inriktning" })).ok, false, `${falt}: ${String(v)}`);
+      }
+    }
+    assert.equal(provaSortrad(lofte({ loftestyp: "reform", cost: null }), rad({ sort: "inriktning" })).ok, false);
+  });
   it("godtar ett byte från inriktning till reform på en nolla", () => {
     assert.deepEqual(provaSortrad(lofte(), rad()), { ok: true, fel: [] });
   });

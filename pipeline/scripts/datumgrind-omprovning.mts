@@ -30,10 +30,10 @@
  *   pnpm datumgrind:om --skriv    # skarp körning
  *   Flaggor: --max=N
  */
-import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { datumUrAdress, datumUrHtml } from "../src/fetch.ts";
 import { DATE_WINDOW_DAYS } from "../src/gates.ts";
+import { lasDatumgrindKo, skrivDatumgrindKo } from "../src/datumgrind-ko.ts";
 
 const DATA = resolve(import.meta.dirname, "../../data");
 const USER_AGENT = "UtlovatBot/1.0 (+https://utlovat.se/om)";
@@ -78,8 +78,8 @@ export function inomFonstret(iso: string, nu: Date): boolean {
 }
 
 async function main(): Promise<void> {
-  const fil = resolve(DATA, "needs_review.json");
-  const poster = JSON.parse(readFileSync(fil, "utf8")) as KoPost[];
+  const fore = lasDatumgrindKo(DATA);
+  const poster = JSON.parse(fore["needs_review.json"]!) as KoPost[];
   const dömda = poster.map((p, i) => ({ p, i })).filter(({ p }) => (p.failures ?? []).some(arDatumdom));
 
   // En sida i taget, inte en post i taget: femtionio poster ligger på tretton
@@ -135,8 +135,8 @@ async function main(): Promise<void> {
     console.log("Torrkörning — inget skrevs. Kör om med --skriv.");
     return;
   }
-  writeFileSync(fil, JSON.stringify(poster, null, 2) + "\n", "utf8");
-  console.log(`Skrivet till ${fil}.`);
+  skrivDatumgrindKo(DATA, fore, poster);
+  console.log(`Skrivet till ${resolve(DATA, "needs_review.json")}.`);
   console.log(
     "De befriade posterna saknar fortfarande belopp. Nästa steg: pnpm kostnad:om — och därefter en människa.",
   );

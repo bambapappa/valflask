@@ -137,7 +137,7 @@ export function totalFlasketInterval(
   rho = 0.3,
   level = 0.8,
 ): FlasketInterval {
-  const cost = dedupeByGroup(promises).filter((p) => isCostType(p));
+  const cost = dedupeByGroup(promises.filter(isActive)).filter((p) => isCostType(p));
   let base = 0;
   let sumVar = 0;
   let sumSd = 0;
