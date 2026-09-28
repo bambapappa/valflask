@@ -22,6 +22,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import type { Handling } from "../src/handlingar.ts";
+import { hamtaIssueSidor } from "../src/github-issue-pages.ts";
 import {
   byggIssueBody,
   byggIssueTitel,
@@ -59,15 +60,9 @@ async function api(path: string, init?: RequestInit): Promise<unknown> {
 /** Alla koppling-id:n som redan har ett issue (öppet eller stängt). */
 async function existingIssueIds(): Promise<Set<string>> {
   const ids = new Set<string>();
-  for (let page = 1; page <= 20; page++) {
-    const batch = (await api(
-      `/repos/${repo}/issues?labels=${encodeURIComponent(LABEL)}&state=all&per_page=100&page=${page}`,
-    )) as Array<{ title: string }>;
-    for (const issue of batch) {
-      const m = issue.title.match(/^\[koppling ([0-9a-f]{12})\]/u);
-      if (m) ids.add(m[1]!);
-    }
-    if (batch.length < 100) break;
+  for (const issue of await hamtaIssueSidor<{ title: string }>(repo, LABEL, "all", api)) {
+    const m = issue.title.match(/^\[koppling ([0-9a-f]{12})\]/u);
+    if (m) ids.add(m[1]!);
   }
   return ids;
 }
@@ -79,15 +74,9 @@ async function existingIssueIds(): Promise<Set<string>> {
  */
 async function openIssues(): Promise<Array<{ number: number; id: string; body: string }>> {
   const out: Array<{ number: number; id: string; body: string }> = [];
-  for (let page = 1; page <= 20; page++) {
-    const batch = (await api(
-      `/repos/${repo}/issues?labels=${encodeURIComponent(LABEL)}&state=open&per_page=100&page=${page}`,
-    )) as Array<{ number: number; title: string; body: string | null }>;
-    for (const issue of batch) {
-      const m = issue.title.match(/^\[koppling ([0-9a-f]{12})\]/u);
-      if (m) out.push({ number: issue.number, id: m[1]!, body: issue.body ?? "" });
-    }
-    if (batch.length < 100) break;
+  for (const issue of await hamtaIssueSidor<{ number: number; title: string; body: string | null }>(repo, LABEL, "open", api)) {
+    const m = issue.title.match(/^\[koppling ([0-9a-f]{12})\]/u);
+    if (m) out.push({ number: issue.number, id: m[1]!, body: issue.body ?? "" });
   }
   return out;
 }
