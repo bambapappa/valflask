@@ -178,6 +178,24 @@ for (const [vag, vad] of SIDOR) {
   }
 }
 
+// En grön ClaudeBot-kontroll säger inget om övriga välkomnade robotar.
+// Ett enda representativt dokument per agent fångar namnberoende kantblockering
+// utan att mångdubbla alla sidprov ovan. Versionen behövs: skarp Cloudflare
+// släppte igenom "GPTBot" men blockerade "GPTBot/1.0" 2026-09-28.
+console.log("\nÖvriga välkomnade agenter (/llms.txt):");
+for (const [agent] of VALKOMNA) {
+  if (agent === "ClaudeBot") continue; // redan provad mot alla SIDOR
+  try {
+    const userAgent = agent === "CCBot" ? "CCBot/2.0" : `${agent}/1.0`;
+    const svar = await hamta(`${BAS}/llms.txt`, { "User-Agent": userAgent });
+    console.log(`  ${svar.status === 200 ? "OK  " : "FEL "} ${agent.padEnd(20)} ${svar.status}`);
+    if (svar.status !== 200) fel.push(`/llms.txt svarade ${svar.status} för ${agent}`);
+  } catch (e) {
+    console.log(`  FEL ${agent.padEnd(20)} ${e.message}`);
+    fel.push(`/llms.txt gick inte att hämta för ${agent}: ${e.message}`);
+  }
+}
+
 // 3. Kan ämnessidan anropa Riksdagens söktjänst? `_headers` är bara repots
 //    avsikt; Cloudflare kan leverera en annan policy. Därför prövas både den
 //    levererade CSP:n och Riksdagens CORS-svar från den skarpa adressen.
