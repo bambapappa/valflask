@@ -178,11 +178,15 @@ samma namn står i två grupper — flera tar den första de ser, och då är sv
 nej. Ingenting blockeras på HTTP-nivå: bot-agenterna får 200. Det är bara
 robots.txt.
 
-**Nytt uppmätt fel 2026-09-24:** levererad `robots.txt` tillåter ClaudeBot,
-men samma fem sidor som svarar 200 för en vanlig läsare svarar 403 och
-`Your request was blocked.` för ClaudeBot. Detta är en separat HTTP-blockering,
-inte ett managed-robots-fel. Kontrollera därför WAF-/botreglerna i Cloudflare
-för just detta svar; ändra inte `robots.txt` i repot för att lösa ett 403.
+**Nytt uppmätt fel 2026-09-24, avgränsat 2026-09-28:** levererad `robots.txt`
+tillåter de välkomnade agenterna, men fem sidor som svarar 200 för en vanlig
+läsare svarar 403 och `Your request was blocked.` för ClaudeBot. Även
+`GPTBot/1.0` och `CCBot/2.0` får 403 på `/llms.txt`, medan kort `GPTBot` får
+200. Detta är en separat HTTP-blockering, inte ett managed-robots-fel.
+Sök Ray ID `a4214558994aac1a-GOT` (GPTBot) och
+`a4214558bd05ac16-GOT` (CCBot) omkring 08:10 UTC 2026-09-28 i Cloudflares
+Security Events. Händelsens tjänst, regel och åtgärd måste läsas innan en
+snäv rättelse görs. Ändra inte `robots.txt` i repot för att lösa ett 403.
 
 Att det inte syns i repot är hela poängen med felet — filen skrivs om på vägen
 ut. Därför läser kontrollen skarp adress:
@@ -192,20 +196,21 @@ node ops/ai-atkomst.mjs            # mot https://utlovat.se
 node ops/ai-atkomst.mjs http://127.0.0.1:4321   # mot en lokal server
 ```
 
-Den listar varje välkomnad agent som öppen eller utestängd, kontrollerar att
-sidorna svarar likadant för en robot som för en läsare, och att förstasidan bär
-sitt innehåll utan JavaScript. Samma kontroll kör dagligen i workflowen
+Den läser robotsreglerna för alla sju välkomnade agenter, jämför läsare och
+ClaudeBot på sex vägar, provar HTTP-åtkomst till `/llms.txt` för övriga sex
+med versionerade User-Agent-strängar och kontrollerar förstasidans innehåll
+utan JavaScript. Samma kontroll kör dagligen i workflowen
 `ai-atkomst` och öppnar ett ärende (etikett `ai-atkomst`) när den brister.
 
 **Åtgärd — en människas steg, kräver Cloudflare-panelen:**
 
 1. Logga in på Cloudflare, välj zonen `utlovat.se`.
-2. Gå till **AI Crawl Control** (har hetat *AI Audit* och *Block AI bots*).
-3. Slå **av** managed robots.txt / blockeringen av AI-robotar. Vill man ändå
-   ha kvar en policy: välj den variant som bara blockerar träningsrobotar och
-   släpper in svarsmotorerna — men sajtens hållning är att alla är välkomna.
-4. Kontrollera WAF- och botreglerna separat. Om `robots.txt` tillåter agenten
-   men själva sidan ger 403 är det denna HTTP-blockering som måste lösas.
+2. Sök först aktuellt Ray ID och tid i **Security Events**. Läs tjänst, regel
+   och åtgärd för det faktiska 403-svaret. Kontrollera även **AI Crawl Control**.
+3. Om *managed robots.txt* åter har lagt in ett `Disallow` eller `ai-train=no`,
+   stäng av just den överstyrningen. Den var avstängd vid provet 2026-09-28.
+4. Om `robots.txt` tillåter agenten men HTTP-svaret är 403, rätta bara den
+   identifierade WAF-/bot-/AI-regeln och kontrollera att övrigt skydd består.
 5. Verifiera: `node ops/ai-atkomst.mjs` ska ge `AI-ATKOMST OK`.
 6. Cachen kan hålla kvar den gamla filen — rensa `utlovat.se/robots.txt` i
    Cloudflares cache om steg 5 fortfarande visar det gamla innehållet.
