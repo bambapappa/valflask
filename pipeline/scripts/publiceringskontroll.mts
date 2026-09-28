@@ -65,6 +65,11 @@ try {
   const granskare = kontrolleraPubliceringsbeslut(miljo, historik, manifest.hash, provningshash);
   const bas = lasPubliceringsbas(repo);
   if (bas.revision !== paket.foreRevision) throw new Error("Sajten har fått en annan version sedan underlaget skapades; nytt granskningspaket krävs");
+  const huvudgren = api(`repos/${repo}/git/ref/heads/main`);
+  if (huvudgren.ref !== "refs/heads/main" || huvudgren.object?.type !== "commit" ||
+      huvudgren.object.sha !== revision) {
+    throw new Error("Huvudgrenen har ändrats sedan publiceringsunderlaget skapades; starta en ny omgång");
+  }
   console.log(`Publiceringspaket ${manifest.hash} godkänt av ${granskare}. Artefakt: ${namn}.`);
 } catch (error) {
   // HTTP-fel kan innehålla intern tjänstedata. Publicera inte råa svar eller token.

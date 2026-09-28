@@ -48,6 +48,8 @@ test("kommandot läser artefakt och GitHub-svar; nätfel och fel försök ger av
           reviewers: [{ type: "User", reviewer: user }] }] },
       "repos/bambapappa/valflask/actions/runs/123/approvals": [{ state: "approved", user,
         comment: `Godkänn publiceringspaket ${manifest.hash} med sakprövning ${provningshash}`, environments: [{ id: 789 }] }],
+      "repos/bambapappa/valflask/git/ref/heads/main": { ref: "refs/heads/main",
+        object: { type: "commit", sha: id.revision } },
     };
     const zipfil = join(dir, "provning.zip");
     execFileSync("python3", ["-c", "import sys,zipfile; z=zipfile.ZipFile(sys.argv[1],'w'); z.write(sys.argv[2],'paket.json'); z.close()", zipfil, privatfil]);
@@ -56,7 +58,7 @@ test("kommandot läser artefakt och GitHub-svar; nätfel och fel försök ger av
     const privateRun = { id: 8, path: ".github/workflows/publiceringsprovning.yml", event: "workflow_dispatch", status: "completed", conclusion: "success", head_branch: "main", head_sha: "c".repeat(40), repository: { id: 9 }, head_repository: { id: 9 } };
     Object.assign(svar, { [`repos/${privateRepo}/actions/artifacts?name=${artifact.name}&per_page=100`]: [{ artifacts: [artifact] }], [`repos/${privateRepo}/actions/runs/8`]: privateRun });
     const gh = join(dir, "gh");
-    writeFileSync(gh, `#!${process.execPath}\nconst svar=${JSON.stringify(svar)}; if(process.env.PROV_NATFEL)process.exit(1); if(process.argv[3]===${JSON.stringify(`repos/${privateRepo}/actions/artifacts/7/zip`)}){const z=Buffer.from(${JSON.stringify(zip.toString("base64"))},"base64");if(process.env.PROV_TRASIGZIP)z[0]^=1;process.stdout.write(z);process.exit(0);} let s=svar[process.argv[3]]; if(process.argv[3]==='graphql'){s=${JSON.stringify(driftSvar)}; if(process.env.PROV_ANDRAD_BAS)s[0].data.repository.deployments.nodes[0].commitOid='b'.repeat(40);} if(!s)process.exit(2); console.log(JSON.stringify(s));\n`);
+    writeFileSync(gh, `#!${process.execPath}\nconst svar=${JSON.stringify(svar)}; if(process.env.PROV_NATFEL)process.exit(1); if(process.argv[3]===${JSON.stringify(`repos/${privateRepo}/actions/artifacts/7/zip`)}){const z=Buffer.from(${JSON.stringify(zip.toString("base64"))},"base64");if(process.env.PROV_TRASIGZIP)z[0]^=1;process.stdout.write(z);process.exit(0);} let s=svar[process.argv[3]]; if(process.argv[3]==='graphql'){s=${JSON.stringify(driftSvar)}; if(process.env.PROV_ANDRAD_BAS)s[0].data.repository.deployments.nodes[0].commitOid='b'.repeat(40);} if(process.argv[3]==='repos/bambapappa/valflask/git/ref/heads/main'&&process.env.PROV_NY_MAIN)s.object.sha='b'.repeat(40); if(!s)process.exit(2); console.log(JSON.stringify(s));\n`);
     chmodSync(gh, 0o755);
     const env = { ...process.env, PATH: `${dir}:${process.env.PATH}`, GITHUB_REPOSITORY: id.repo,
       GITHUB_RUN_ID: id.korning, GITHUB_SHA: id.revision, GITHUB_RUN_ATTEMPT: "1", GITHUB_REF: "refs/heads/main", GITHUB_EVENT_NAME: "schedule", PUBLICERINGSPROVNING_FIL: privatfil };
@@ -82,6 +84,9 @@ test("kommandot läser artefakt och GitHub-svar; nätfel och fel försök ger av
     const byttBas = kor({ PROV_ANDRAD_BAS: "1" });
     assert.equal(byttBas.status, 1);
     assert.match(byttBas.stderr, /Sajten har fått en annan version/);
+    const nyHuvudgren = kor({ PROV_NY_MAIN: "1" });
+    assert.equal(nyHuvudgren.status, 1);
+    assert.match(nyHuvudgren.stderr, /Huvudgrenen har ändrats/);
     const byttPaket = structuredClone(paket);
     byttPaket.foreRevision = "c".repeat(40);
     writeFileSync(paketfil, JSON.stringify(byttPaket));
