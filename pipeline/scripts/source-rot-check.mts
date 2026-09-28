@@ -18,7 +18,7 @@
 import { join, resolve } from "node:path";
 import { lasFillage, skapaFilpaket, skrivFilpaket } from "../src/datatransaktion.ts";
 import { extractPdfText, looksLikePdf, stripHtml } from "../src/fetch.ts";
-import { normalizeForVerbatim } from "../src/gates.ts";
+import { CitatkontrollPerKalla, type Kalltext } from "../src/stance-source-check.ts";
 import { archiveWithFallback } from "../src/archive.ts";
 import { snapshotBacksQuote } from "../src/archive-verify.ts";
 import type { StanceCell } from "../src/stances.ts";
@@ -35,9 +35,7 @@ if (typeof fore["stances.json"] !== "string") throw new Error("Källrötekontrol
 const cells = JSON.parse(fore["stances.json"]) as StanceCell[];
 const today = svenskDag();
 
-type CheckResult = "ok" | "andrad" | "borttagen" | "obestamd";
-
-async function checkUrl(url: string, quote: string): Promise<CheckResult> {
+async function hamtaKalltext(url: string): Promise<Kalltext> {
   let res: Response;
   try {
     res = await fetch(url, {
@@ -46,12 +44,17 @@ async function checkUrl(url: string, quote: string): Promise<CheckResult> {
       signal: AbortSignal.timeout(30_000),
     });
   } catch {
-    return "obestamd"; // nätverksfel — ingen anklagelse
+    return { utfall: "obestamd" }; // nätverksfel — ingen anklagelse
   }
-  if (res.status === 404 || res.status === 410) return "borttagen";
-  if (!res.ok) return "obestamd"; // 5xx/429 m.m. — försök igen nästa vecka
+  if (res.status === 404 || res.status === 410) return { utfall: "borttagen" };
+  if (!res.ok) return { utfall: "obestamd" }; // 5xx/429 m.m. — försök igen nästa vecka
 
-  const bytes = new Uint8Array(await res.arrayBuffer());
+  let bytes: Uint8Array;
+  try {
+    bytes = new Uint8Array(await res.arrayBuffer());
+  } catch {
+    return { utfall: "obestamd" };
+  }
   let text: string;
   if (looksLikePdf(res.headers.get("content-type"), bytes)) {
     try {
@@ -59,12 +62,12 @@ async function checkUrl(url: string, quote: string): Promise<CheckResult> {
       // hade kraschat körningen på första PDF-källan (26 av 52 statements).
       text = (await extractPdfText(bytes)).pages.join("\n");
     } catch {
-      return "obestamd";
+      return { utfall: "obestamd" };
     }
   } else {
     text = stripHtml(new TextDecoder("utf-8").decode(bytes));
   }
-  return normalizeForVerbatim(text).includes(normalizeForVerbatim(quote)) ? "ok" : "andrad";
+  return { text };
 }
 
 let checked = 0;
@@ -72,8 +75,8 @@ let changed = 0;
 let archived = 0;
 const report: string[] = [];
 
-// Max en kontroll per URL per körning — flera statements kan dela källa.
-const byUrl = new Map<string, CheckResult>();
+// En hämtning per URL, men en separat citatkontroll för varje besked.
+const kontroll = new CitatkontrollPerKalla(hamtaKalltext);
 // Arkiv-backfill: en arkiveringsförfrågan per bas-URL per körning.
 const archiveByBase = new Map<string, string | null>();
 
@@ -106,14 +109,10 @@ async function backfillArchive(st: StanceCell["statements"][number]): Promise<bo
 for (const cell of cells) {
   for (const st of cell.statements) {
     checked++;
-    let result = byUrl.get(st.source.url);
-    if (result === undefined) {
-      result = await checkUrl(st.source.url, st.quote);
-      byUrl.set(st.source.url, result);
+    const forstaPaUrl = !kontroll.har(st.source.url);
+    const result = await kontroll.kontrollera(st.source.url, st.quote);
+    if (forstaPaUrl) {
       await new Promise((r) => setTimeout(r, 1200)); // snäll takt
-    } else if (result !== "obestamd" && result !== "ok") {
-      // Delad URL men annat citat: verbatimkontrollen är per citat — kör om.
-      result = await checkUrl(st.source.url, st.quote);
     }
     if (result === "obestamd") continue;
     if (st.source_status !== result) {
@@ -133,7 +132,7 @@ for (const cell of cells) {
   }
 }
 
-console.log(`Källröta-kontroll ${today}: ${checked} statements, ${byUrl.size} URL:er, ${changed} statusändringar, ${archived} nya arkiv.`);
+console.log(`Källröta-kontroll ${today}: ${checked} statements, ${kontroll.antalKallor()} URL:er, ${changed} statusändringar, ${archived} nya arkiv.`);
 for (const line of report) console.log(`  ${line}`);
 
 if (!dryRun && checked > 0) {
