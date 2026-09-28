@@ -36,7 +36,7 @@ const LABEL = "koppling-kö";
 const API = "https://api.github.com";
 
 const token = process.env["GITHUB_TOKEN"];
-const repo = process.env["GITHUB_REPOSITORY"];
+const repo = process.env["GITHUB_REPOSITORY"] ?? "";
 if (!token || !repo) {
   console.error("Kräver GITHUB_TOKEN och GITHUB_REPOSITORY.");
   process.exit(1);
