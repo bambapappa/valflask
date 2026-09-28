@@ -262,8 +262,12 @@ if (botStartsida?.status === 200) {
   console.log(`\nFörstasidan utan JavaScript: ${ord} ord, JSON-LD ${harJsonLd ? "finns" : "SAKNAS"}`);
   if (ord < 200) fel.push(`förstasidan bär bara ${ord} ord utan JavaScript — agenter som inte kör skript ser nästan inget`);
   if (!harJsonLd) fel.push("förstasidan saknar JSON-LD");
+} else if (botStartsida) {
+  // Åtkomstfelet finns redan i sidkontrollen. En felsida är inget belägg om innehållet.
+  console.log(`\nFörstasidan utan JavaScript: kan inte bedömas (ClaudeBot fick HTTP ${botStartsida.status})`);
 } else {
-  console.log("\nFörstasidans innehåll: kan inte prövas förrän ClaudeBot får HTTP 200.");
+  // Ett nätfel har redan journalförts av sidkontrollen.
+  console.log("\nFörstasidan utan JavaScript: kan inte bedömas (ClaudeBot-svar saknas)");
 }
 
 console.log("");
