@@ -1,6 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { dokumentlistaUrl, fetchDokument, fetchVoteringsIdn, type HttpFetch } from "../src/riksdagen.ts";
+import {
+  dokumentlistaUrl,
+  fetchDokument,
+  fetchVoteringsIdn,
+  parseVotering,
+  SaknarRostlista,
+  type HttpFetch,
+} from "../src/riksdagen.ts";
 import { mergeHandlingar, normaliseraDokument, type Handling } from "../src/handlingar.ts";
 import {
   franDatumUrData,
@@ -98,6 +105,18 @@ test("fönsterskörd fångar en handling daterad efter valdagen trots rm 2025/26
   const andra = fejk(septProp);
   const efter2 = await skorda(andra.fetcher, efter1);
   assert.equal(efter2.length - efter1.length, 0);
+});
+
+test("parseVotering: omröstning utan röstlista ger SaknarRostlista, trasigt svar ger vanligt fel", () => {
+  // Formen riksdagen svarar med för t.ex. "Omröstning 2025/26:0311-1" (mätt 2026-09-29).
+  const utanRostlista = {
+    votering: { dokument: { dok_id: "HD190311-1", rm: "2025/26", beteckning: "0311-1", typrubrik: "Omröstning 2025/26:0311-1" } },
+  };
+  assert.throws(() => parseVotering(utanRostlista), SaknarRostlista);
+  assert.throws(
+    () => parseVotering({}),
+    (e: unknown) => e instanceof Error && !(e instanceof SaknarRostlista),
+  );
 });
 
 test("riksmoteFor: riksmötet löper september–augusti", () => {

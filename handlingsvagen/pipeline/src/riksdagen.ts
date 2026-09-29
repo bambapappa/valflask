@@ -216,9 +216,25 @@ export async function fetchVoteringsIdn(fetcher: HttpFetch, rm: string, opts: { 
   return idn;
 }
 
+/**
+ * Voteringen finns men riksdagen levererar ingen röstlista för den. Gäller
+ * t.ex. "Omröstning 2025/26:0311-1" — kammaromröstningar utan betänkande som
+ * publicerades 2026-09-09 och som /votering/<id>/json svarar på med bara
+ * dokumenthuvudet (mätt 2026-09-29). Egen klass så att skörden kan hoppa
+ * över just dessa synligt, medan ett trasigt svar fortfarande fäller den.
+ */
+export class SaknarRostlista extends Error {
+  constructor(readonly dokId: string) {
+    super(`votering ${dokId}: riksdagen levererar ingen röstlista`);
+    this.name = "SaknarRostlista";
+  }
+}
+
 /** Tolkar ett /votering/<id>/json-svar till per-ledamotsrader. Exporterad för tester. */
 export function parseVotering(payload: unknown): RdVoteringRad[] {
-  const dv = (payload as { votering?: { dokvotering?: { votering?: unknown } } }).votering?.dokvotering;
+  const v = (payload as { votering?: { dokument?: { dok_id?: unknown }; dokvotering?: { votering?: unknown } } }).votering;
+  const dv = v?.dokvotering;
+  if (!dv && v?.dokument) throw new SaknarRostlista(String(v.dokument.dok_id ?? ""));
   if (!dv) throw new Error("svar utan dokvotering");
   return asArray(dv.votering as Record<string, unknown> | Array<Record<string, unknown>> | undefined).map((v) => ({
     votering_id: String(v["votering_id"] ?? ""),

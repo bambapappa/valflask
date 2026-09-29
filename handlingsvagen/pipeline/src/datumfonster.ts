@@ -82,7 +82,7 @@ export function franDatumUrData(handlingar: ReadonlyArray<{ datum: string }>, ov
 /** Voterings-id som ännu inte finns bland handlingarna — bara de behöver hämtas. */
 export function okandaVoteringsIdn(
   idn: readonly string[],
-  handlingar: ReadonlyArray<{ votering_id?: string | undefined }>,
+  handlingar: ReadonlyArray<{ votering_id?: string | null | undefined }>,
 ): string[] {
   const kanda = new Set(handlingar.map((h) => h.votering_id).filter(Boolean));
   return idn.filter((id) => !kanda.has(id));
