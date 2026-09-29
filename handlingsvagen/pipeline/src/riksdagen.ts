@@ -5,7 +5,7 @@
 
 import type { Datumfonster } from "./datumfonster.ts";
 
-export type HttpFetch =(url: string) => Promise<{ status: number; text(): Promise<string> }>;
+export type HttpFetch = (url: string) => Promise<{ status: number; text(): Promise<string> }>;
 
 const BASE = "https://data.riksdagen.se";
 
@@ -152,7 +152,8 @@ export async function fetchDokument(
     pages += 1;
   }
   if (url === null && traffar !== null && out.length !== traffar) {
-    throw new Error(`dokumentlista ${doktyp} ${rm ?? ""}: fick ${out.length} dokument men @traffar=${traffar}`);
+    const urval = [rm, opts.fonster ? `${opts.fonster.from}–${opts.fonster.tom}` : null].filter(Boolean).join(" ");
+    throw new Error(`dokumentlista ${doktyp} ${urval}: fick ${out.length} dokument men @traffar=${traffar}`);
   }
   return out;
 }
