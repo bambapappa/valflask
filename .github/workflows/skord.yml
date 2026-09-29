@@ -15,8 +15,15 @@ name: skord
 # eller katastrofåterställningskörning); en schema-triggad körning har inga
 # inputs alls och skördar då bara INNEVARANDE riksmöte, beräknat av steget
 # "Bestäm riksmöte" nedan — annars skulle varje vecka skörda om fyra års
-# historik i onödan. foreslag.yml är schemalagd tre timmar senare samma dag,
-# så den nya datan hinner committas innan matchningen läser den.
+# historik i onödan. foreslag.yml går dagligen 07:00 UTC, så den nya datan
+# hinner committas innan matchningen läser den.
+#
+# FÖNSTERSKÖRD: efter riksmötesskörden hämtas allt riksdagen daterat sedan
+# senaste kända handling (minus ett överlapp, --from auto), oavsett riksmöte.
+# Riksmötestaggen halkar efter: propositioner och frågor från september 2026
+# bar rm 2025/26 och missades av en skörd av innevarande riksmöte. Eftersom
+# fönstret räknas ur datat och inte ur veckan tas en utebliven körning igen
+# nästa gång. Manuellt: ange from (och ev. tom) för ett uttryckligt fönster.
 on:
   workflow_dispatch:
     inputs:
@@ -29,8 +36,19 @@ on:
         description: "Riksmöten (mellanslagsseparerade) — tomt = innevarande (räknat från datumet körningen sker)"
         required: false
         default: "2022/23 2023/24 2024/25 2025/26"
+      from:
+        description: "Fönsterskördens första dag ÅÅÅÅ-MM-DD — tomt = räknat ur datat (auto)"
+        required: false
+        default: ""
+      tom:
+        description: "Fönsterskördens sista dag ÅÅÅÅ-MM-DD — tomt = i dag"
+        required: false
+        default: ""
   schedule:
-    - cron: "0 4 * * 1"
+    # Inte på hel timme: GitHub fördröjer och tappar schemalagda körningar på
+    # :00 under hög last. Måndagen 2026-09-28 avfyrades 04:00-körningen inte
+    # alls, och tidigare körningar startade 4,5–6 timmar sent.
+    - cron: "17 4 * * 1"
 permissions:
   contents: write
 concurrency:
@@ -99,6 +117,18 @@ jobs:
         run: |
           args=()
           for r in $RM; do args+=(--rm "$r"); done
+          node --import tsx/esm scripts/harvest.mts "${args[@]}"
+        working-directory: handlingsvagen/pipeline
+      - name: Fönsterskörd (allt daterat sedan senaste kända handling, oavsett riksmöte)
+        id: fonster
+        if: ${{ inputs.typ == 'bada' || inputs.typ == 'dok' || inputs.typ == '' }}
+        continue-on-error: true
+        env:
+          FROM: ${{ inputs.from || 'auto' }}
+          TOM: ${{ inputs.tom }}
+        run: |
+          args=(--from "$FROM" --typ mot,prop,ip,fr,vot,bet)
+          if [ -n "$TOM" ]; then args+=(--tom "$TOM"); fi
           node --import tsx/esm scripts/harvest.mts "${args[@]}"
         working-directory: handlingsvagen/pipeline
       - name: Röstskörd
@@ -197,9 +227,9 @@ jobs:
           echo "Push misslyckades efter 5 försök."
           exit 1
       - name: Fall röd om ett skördesteg föll
-        if: steps.dok.outcome == 'failure' || steps.roster.outcome == 'failure' || steps.bet.outcome == 'failure'
+        if: steps.dok.outcome == 'failure' || steps.fonster.outcome == 'failure' || steps.roster.outcome == 'failure' || steps.bet.outcome == 'failure'
         run: |
-          echo "Ett skördesteg föll (dok: ${{ steps.dok.outcome }}, roster: ${{ steps.roster.outcome }}, bet: ${{ steps.bet.outcome }})."
+          echo "Ett skördesteg föll (dok: ${{ steps.dok.outcome }}, fönster: ${{ steps.fonster.outcome }}, roster: ${{ steps.roster.outcome }}, bet: ${{ steps.bet.outcome }})."
           echo "Delresultat är committade — omkörning fortsätter där det slutade."
           exit 1
 
