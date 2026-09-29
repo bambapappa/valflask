@@ -19,6 +19,7 @@ import { resolve } from "node:path";
 import { ORSAK_FRAN, ORSAKKODER } from "../src/orsakkoder.ts"; // ORSAK_FRAN = 2026-09-02: fem 09-01-poster skrevs före fältet
 
 const FIL = resolve(import.meta.dirname, "../../data/rattelser.json");
+const SCHEMA = resolve(import.meta.dirname, "../schemas/rattelser.schema.json");
 /** Fälten `rattelsenoter.ts` läser direkt. Ingen post får sakna dem. */
 const KRAV = ["date", "affects", "what"] as const;
 
@@ -50,6 +51,13 @@ const UTAN_BETECKNING_TAK = 42;
 
 describe("rättelseloggens schema", () => {
   const poster = JSON.parse(readFileSync(FIL, "utf8")) as Array<Record<string, unknown>>;
+
+  it("orsakskoderna är samma i dataregeln och JSON-schemat", () => {
+    const schema = JSON.parse(readFileSync(SCHEMA, "utf8")) as {
+      items: { properties: { orsak: { enum: string[] } } };
+    };
+    assert.deepEqual(schema.items.properties.orsak.enum, [...ORSAKKODER]);
+  });
 
   it("hittar rättelser att mäta", () => {
     assert.ok(poster.length > 50, "en tom logg intygar ingenting");
