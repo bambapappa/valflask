@@ -3,6 +3,8 @@
  * Deterministisk och testbar: all nätverksåtkomst går via injicerbar fetch.
  */
 
+import type { Datumfonster } from "./datumfonster.ts";
+
 export type HttpFetch = (url: string) => Promise<{ status: number; text(): Promise<string> }>;
 
 const BASE = "https://data.riksdagen.se";
@@ -63,7 +65,12 @@ async function getJson(fetcher: HttpFetch, url: string): Promise<unknown> {
 }
 
 /** Tolkar en dokumentlista-sida till typade dokument. Exporterad för tester. */
-export function parseDokumentLista(payload: unknown): { dokument: RdDokument[]; nextUrl: string | null } {
+export function parseDokumentLista(payload: unknown): {
+  dokument: RdDokument[];
+  nextUrl: string | null;
+  /** Svarets egen räkning av träffar i hela urvalet (alla sidor), om den finns. */
+  traffar: number | null;
+} {
   const dl = (payload as { dokumentlista?: Record<string, unknown> }).dokumentlista;
   if (!dl) throw new Error("svar utan dokumentlista");
   const docs = asArray(dl["dokument"] as Record<string, unknown> | Array<Record<string, unknown>> | undefined).map(
@@ -91,26 +98,62 @@ export function parseDokumentLista(payload: unknown): { dokument: RdDokument[]; 
     },
   );
   const next = dl["@nasta_sida"];
-  return { dokument: docs, nextUrl: typeof next === "string" && next.length > 0 ? next : null };
+  const traffar = Number(dl["@traffar"]);
+  return {
+    dokument: docs,
+    nextUrl: typeof next === "string" && next.length > 0 ? next : null,
+    traffar: dl["@traffar"] !== undefined && Number.isFinite(traffar) ? traffar : null,
+  };
 }
 
-/** Hämtar samtliga dokument av en typ för ett riksmöte, med paginering. */
+/**
+ * Adressen till första sidan av en dokumentlista. Urvalet är ett riksmöte,
+ * ett datumfönster eller båda. Med fönster utan rm väljer riksdagen på datum
+ * oavsett riksmötestagg — mätt 2026-09-28: propositioner från september 2026
+ * bär rm 2025/26 och kommer bara med den vägen.
+ */
+export function dokumentlistaUrl(doktyp: DokTyp, urval: { rm?: string; fonster?: Datumfonster }): string {
+  if (!urval.rm && !urval.fonster) throw new Error(`dokumentlista ${doktyp}: urvalet kräver rm eller datumfönster`);
+  const params = new URLSearchParams({ doktyp });
+  if (urval.rm) params.set("rm", urval.rm);
+  if (urval.fonster) {
+    params.set("from", urval.fonster.from);
+    params.set("tom", urval.fonster.tom);
+  }
+  for (const [k, v] of Object.entries({ sz: "200", sort: "datum", sortorder: "asc", utformat: "json" })) params.set(k, v);
+  return `${BASE}/dokumentlista/?${params}`;
+}
+
+/**
+ * Hämtar samtliga dokument av en typ för ett riksmöte och/eller ett
+ * datumfönster, med paginering. När alla sidor hämtats jämförs antalet mot
+ * svarets egen @traffar — en tyst avkortad lista ska fälla skörden, inte se
+ * fullständig ut.
+ */
 export async function fetchDokument(
   fetcher: HttpFetch,
   doktyp: DokTyp,
-  rm: string,
-  opts: { maxPages?: number } = {},
+  rm: string | null,
+  opts: { maxPages?: number; fonster?: Datumfonster } = {},
 ): Promise<RdDokument[]> {
   const out: RdDokument[] = [];
-  let url: string | null =
-    `${BASE}/dokumentlista/?doktyp=${doktyp}&rm=${encodeURIComponent(rm)}&sz=200&sort=datum&sortorder=asc&utformat=json`;
+  let url: string | null = dokumentlistaUrl(doktyp, {
+    ...(rm ? { rm } : {}),
+    ...(opts.fonster ? { fonster: opts.fonster } : {}),
+  });
   let pages = 0;
+  let traffar: number | null = null;
   const maxPages = opts.maxPages ?? Infinity;
   while (url && pages < maxPages) {
     const parsed = parseDokumentLista(await getJson(fetcher, url));
+    if (pages === 0) traffar = parsed.traffar;
     out.push(...parsed.dokument);
     url = parsed.nextUrl ? parsed.nextUrl.replace(/^http:/, "https:") : null;
     pages += 1;
+  }
+  if (url === null && traffar !== null && out.length !== traffar) {
+    const urval = [rm, opts.fonster ? `${opts.fonster.from}–${opts.fonster.tom}` : null].filter(Boolean).join(" ");
+    throw new Error(`dokumentlista ${doktyp} ${urval}: fick ${out.length} dokument men @traffar=${traffar}`);
   }
   return out;
 }
@@ -149,10 +192,17 @@ export async function fetchVoteringar(
 /**
  * Hämtar id-listan över riksmötets voteringspunkter (gruppering=votering_id).
  * Grupperat svar är litet (~600–800 rader per riksmöte) och trunkeras inte;
- * längden kontrolleras ändå mot svarets @antal.
+ * längden kontrolleras ändå mot svarets @antal, och ett svar som fyller hela
+ * sidan räknas som avkortat.
+ *
+ * Riksmötet är obligatoriskt och det finns inget datumfönster: voteringlista
+ * ignorerar from/tom (mätt 2026-09-29, med och utan rm) och svarar då med
+ * hela beståndet i stället för urvalet.
  */
-export async function fetchVoteringsIdn(fetcher: HttpFetch, rm: string): Promise<string[]> {
-  const params = new URLSearchParams({ rm, sz: "20000", utformat: "json", gruppering: "votering_id" });
+export async function fetchVoteringsIdn(fetcher: HttpFetch, rm: string, opts: { sz?: number } = {}): Promise<string[]> {
+  if (!rm) throw new Error("voteringslistan kräver ett riksmöte — utan rm väljer riksdagen inte alls");
+  const sz = opts.sz ?? 20000;
+  const params = new URLSearchParams({ rm, sz: String(sz), utformat: "json", gruppering: "votering_id" });
   const payload = (await getJson(fetcher, `${BASE}/voteringlista/?${params}`)) as {
     voteringlista?: Record<string, unknown>;
   };
@@ -163,12 +213,32 @@ export async function fetchVoteringsIdn(fetcher: HttpFetch, rm: string): Promise
     .filter(Boolean);
   const antal = Number(vl["@antal"] ?? idn.length);
   if (idn.length !== antal) throw new Error(`voteringslista ${rm}: fick ${idn.length} id men @antal=${antal}`);
+  if (antal >= sz) throw new Error(`voteringslista ${rm}: ${antal} id fyller hela sidan (sz=${sz}) — svaret kan vara trunkerat`);
   return idn;
+}
+
+/**
+ * Voteringen finns men riksdagen levererar ingen röstlista för den. Gäller
+ * t.ex. "Omröstning 2025/26:0311-1" — kammaromröstningar utan betänkande som
+ * publicerades 2026-09-09 och som /votering/<id>/json svarar på med bara
+ * dokumenthuvudet (mätt 2026-09-29). Egen klass så att skörden kan hoppa
+ * över just dessa synligt, medan ett trasigt svar fortfarande fäller den.
+ */
+export class SaknarRostlista extends Error {
+  readonly dokId: string;
+
+  constructor(dokId: string) {
+    super(`votering ${dokId}: riksdagen levererar ingen röstlista`);
+    this.dokId = dokId;
+    this.name = "SaknarRostlista";
+  }
 }
 
 /** Tolkar ett /votering/<id>/json-svar till per-ledamotsrader. Exporterad för tester. */
 export function parseVotering(payload: unknown): RdVoteringRad[] {
-  const dv = (payload as { votering?: { dokvotering?: { votering?: unknown } } }).votering?.dokvotering;
+  const v = (payload as { votering?: { dokument?: { dok_id?: unknown }; dokvotering?: { votering?: unknown } } }).votering;
+  const dv = v?.dokvotering;
+  if (!dv && v?.dokument) throw new SaknarRostlista(String(v.dokument.dok_id ?? ""));
   if (!dv) throw new Error("svar utan dokvotering");
   return asArray(dv.votering as Record<string, unknown> | Array<Record<string, unknown>> | undefined).map((v) => ({
     votering_id: String(v["votering_id"] ?? ""),

@@ -79,7 +79,7 @@ on:
     # Klockslaget är valt: 07:00 UTC ligger mellan pipelinekörningarna
     # (03:10, 09:10, 15:10 UTC), som tar 73–87 minuter, så de två pushar
     # aldrig mot main samtidigt. Dokumentskörden (skord.yml) går fortfarande
-    # veckovis på måndagar 04:00 — nya riksdagsdokument kommer sällan under
+    # veckovis på måndagar 04:17 — nya riksdagsdokument kommer sällan under
     # sommaruppehållet, och matchningen har ändå alltid hela det skördade
     # beståndet att arbeta mot.
     - cron: "0 7 * * *"
