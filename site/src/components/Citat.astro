@@ -37,7 +37,7 @@ const sourceLabel = isTal ? "se i talet" : sourceLinkLabel(sourceUrl);
   — {person || party}, {domain}, {date}
   {isTal && <> · <span class="tal-markor" title="Löftet är sagt i tal och kontrolleras mot en sparad textversion (se /metod)">talat löfte</span></>}
   {' '}· <a href={sourceUrl}>{sourceLabel}<span aria-hidden="true"> ↗</span></a>
-  {archiveUrl && <> · <a href={archiveUrl}>{archiveLinkLabel(archiveUrl)}<span aria-hidden="true"> ↗</span></a></>}
+  {archiveUrl && <> · <a href={archiveUrl}>{archiveLinkLabel(archiveUrl, date)}<span aria-hidden="true"> ↗</span></a></>}
   {transcriptHeld && (
     <> · <span
       class="avskrift-markor"

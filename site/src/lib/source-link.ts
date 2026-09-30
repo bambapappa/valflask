@@ -21,9 +21,20 @@ export function sourceLinkLabel(url: string, base = "källa"): string {
   return page === null ? base : `${base} (PDF, s. ${page})`;
 }
 
-/** Motsvarande för arkivlänken. */
-export function archiveLinkLabel(url: string): string {
-  return sourceLinkLabel(url, "arkiv");
+/** En Wayback-länk anger kopians datum, inte när uttalandet gjordes. */
+export function archiveCaptureDate(url: string): string | null {
+  const match = /^https:\/\/web\.archive\.org\/web\/(\d{4})(\d{2})(\d{2})\d{6}(?:[a-z_]+)?\//iu.exec(url);
+  if (!match) return null;
+  const date = `${match[1]}-${match[2]}-${match[3]}`;
+  const parsed = new Date(`${date}T00:00:00Z`);
+  return Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== date ? null : date;
+}
+
+/** Visa kopians dag och säg när den är senare än uttalandets angivna dag. */
+export function archiveLinkLabel(url: string, statedDate?: string): string {
+  const captured = archiveCaptureDate(url);
+  if (!captured) return sourceLinkLabel(url, "arkiv");
+  return sourceLinkLabel(url, `arkiv (${captured}${statedDate && captured > statedDate ? ", senare kopia" : ""})`);
 }
 
 /**
