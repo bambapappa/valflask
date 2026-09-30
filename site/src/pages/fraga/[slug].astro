@@ -167,7 +167,7 @@ const jsonLd = [
                         <>
                           <a href={st.source.url}>{sourceLinkLabel(st.source.url)}<span aria-hidden="true"> ↗</span></a>
                           {st.source.archive_url && (
-                            <> · <a href={st.source.archive_url}>{archiveLinkLabel(st.source.archive_url)}<span aria-hidden="true"> ↗</span></a></>
+                            <> · <a href={st.source.archive_url}>{archiveLinkLabel(st.source.archive_url, st.date_stated)}<span aria-hidden="true"> ↗</span></a></>
                           )}
                         </>
                       ) : (
