@@ -225,8 +225,11 @@ export async function fetchVoteringsIdn(fetcher: HttpFetch, rm: string, opts: { 
  * över just dessa synligt, medan ett trasigt svar fortfarande fäller den.
  */
 export class SaknarRostlista extends Error {
-  constructor(readonly dokId: string) {
+  readonly dokId: string;
+
+  constructor(dokId: string) {
     super(`votering ${dokId}: riksdagen levererar ingen röstlista`);
+    this.dokId = dokId;
     this.name = "SaknarRostlista";
   }
 }
