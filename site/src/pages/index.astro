@@ -96,7 +96,7 @@ const jsonLd = [{
     <Loftesfilter count={defaultView.count} />
     <MetodLank />
     {views.map((view) => (
-      <div data-loftesfilter-vy={view.keys.join(" ")} data-loftesfilter-vy-antal={view.count} hidden={!view.keys.includes(defaultKey)}>
+      <div data-loftesfilter-vy={view.keys.join(" ")} data-loftesfilter-vy-antal={view.count} data-loftesfilter-default={view.keys.includes(defaultKey) ? "true" : undefined} hidden={!view.keys.includes(defaultKey)}>
         <Lopsedel total={formatMsek(view.flasket)} subtitle="Valfläsket hittills" count={view.count} date="2026" taxameterValue={view.flasket} headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
         <div class="prosa-content prosa-content--centered"><p>Riksdagspartiernas valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(view.flasket)}</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften från åtta partier.</p></div>
         {view.count > 0 && <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} reformutrymmeSource={constants.reformutrymme_msek_per_ar.source_url} partiBelopp={view.key.startsWith("parti:")} />}

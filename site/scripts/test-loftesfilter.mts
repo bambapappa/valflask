@@ -1,4 +1,4 @@
-import { ALLA_LOFTESFILTER, filtreraLoeften, filterNyckel, loftesvyer, matcharLoeftesfilter, valdagKategori } from "../src/lib/loftesfilter.ts";
+import { ALLA_LOFTESFILTER, filtreraLoeften, filterNyckel, loftesvyer, matcharLoeftesfilter, valdagKategori, STANDARD_LOFTESFILTER } from "../src/lib/loftesfilter.ts";
 import { getParties, getPromises, type PromisePost } from "../src/lib/data.ts";
 import { getPromisesForParty } from "../src/lib/aggregates.ts";
 
@@ -8,20 +8,22 @@ function check(name: string, ok: boolean, detail = ""): void {
   else { errors += 1; console.error(`FEL ${name}${detail ? `: ${detail}` : ""}`); }
 }
 
-function promise(id: string, basis: string, loftestyp: "reform" | "inriktning", date = "2026-09-12", dateBasis: "kalla" | "insamling" = "kalla"): PromisePost {
+function promise(id: string, basis: string, loftestyp: "reform" | "inriktning", date = "2026-09-12", dateBasis?: "kalla" | "osakert-kalldatum" | "insamling"): PromisePost {
   return {
-    id, loftestyp, date_stated: date, source: { date_basis: dateBasis },
+    id, loftestyp, date_stated: date, source: dateBasis ? { date_basis: dateBasis } : {},
     cost: { basis },
   } as PromisePost;
 }
 
-const partietsReform = promise("p-parti-reform", "parti", "reform");
-const partietsPolicy = promise("p-parti-policy", "parti", "inriktning");
-const egenReform = promise("p-egen-reform", "llm_estimat", "reform");
-const myndighetsankrad = promise("p-myndighet", "myndighet", "reform");
+const partietsReform = promise("p-parti-reform", "parti", "reform", "2026-09-12", "kalla");
+const partietsPolicy = promise("p-parti-policy", "parti", "inriktning", "2026-09-12", "kalla");
+const egenReform = promise("p-egen-reform", "llm_estimat", "reform", "2026-09-12", "kalla");
+const myndighetsankrad = promise("p-myndighet", "myndighet", "reform", "2026-09-12", "kalla");
 const alla = [partietsReform, partietsPolicy, egenReform, myndighetsankrad];
 
+check("standardurvalet döljer inte poster med okänd datumgrund", STANDARD_LOFTESFILTER.valdag === "alla");
 check("standardurvalet visar bara partiets reform", filtreraLoeften(alla, { underlag: "parti", loftestyp: "reform", valdag: "fore" }).map((p) => p.id).join(",") === "p-parti-reform");
+check("källdaterat löfte före valet visas före", valdagKategori(partietsReform) === "fore");
 check("inriktning är oberoende av beloppsunderlag", matcharLoeftesfilter(partietsPolicy, { underlag: "parti", loftestyp: "inriktning", valdag: "fore" }));
 check("Utlovat.se omfattar även myndighetsankrad egen beräkning", matcharLoeftesfilter(myndighetsankrad, { underlag: "utlovat", loftestyp: "reform", valdag: "fore" }));
 check("partiets belopp blandas inte in bland Utlovat.se:s", !matcharLoeftesfilter(partietsReform, { underlag: "utlovat", loftestyp: "alla", valdag: "fore" }));
@@ -35,19 +37,28 @@ check("partiets och Utlovat.se:s underlag delar upp hela populationen", ["reform
 }));
 check("alla-läget innehåller båda underlagen", filtreraLoeften(alla, { underlag: "alla", loftestyp: "reform", valdag: "alla" }).map((p) => p.id).join(",") === "p-parti-reform,p-egen-reform,p-myndighet");
 
-const paValdagen = promise("p-valdag", "parti", "reform", "2026-09-13");
-const efter = promise("p-efter", "parti", "reform", "2026-09-14");
+const paValdagen = promise("p-valdag", "parti", "reform", "2026-09-13", "kalla");
+const efter = promise("p-efter", "parti", "reform", "2026-09-14", "kalla");
 const baraInsamlat = promise("p-oklar", "parti", "reform", "2026-09-14", "insamling");
 const valdagBaraInsamlat = promise("p-valdag-oklar", "parti", "reform", "2026-09-13", "insamling");
+const foreBaraInsamlat = promise("p-fore-insamlat", "parti", "reform", "2026-09-12", "insamling");
+const foreOsakertKallDatum = promise("p-fore-osakert", "parti", "reform", "2026-09-12", "osakert-kalldatum");
+const foreUtanKallgrund = promise("p-fore-utan-grund", "parti", "reform", "2026-09-12");
 const sidUppdateradEfter = { ...efter, id: "p-siduppdaterad", source: { date_basis: "osakert-kalldatum" as const } };
 check("valdagen är en egen kategori", valdagKategori(paValdagen) === "valdagen");
 check("källdaterat efter valet visas efter", valdagKategori(efter) === "efter");
 check("insamlat efter valet räknas inte som nytt löfte", valdagKategori(baraInsamlat) === "oklar");
 check("insamlat på valdagen räknas inte som uttalat på valdagen", valdagKategori(valdagBaraInsamlat) === "oklar");
+check("insamlat före valet räknas inte som belägg för ett löfte före valet", valdagKategori(foreBaraInsamlat) === "oklar");
+check("osäkert källdatum före valet förblir oklart", valdagKategori(foreOsakertKallDatum) === "oklar");
+check("saknad datumgrund före valet förblir oklart", valdagKategori(foreUtanKallgrund) === "oklar");
 check("sidans ändringsdatum efter valet räknas inte som nytt löfte", valdagKategori(sidUppdateradEfter) === "oklar");
-check("alla tidpunkter delar upp populationen utan bortfall", ["fore", "valdagen", "efter", "oklar"].reduce((n, valdag) => n + filtreraLoeften([...alla, paValdagen, efter, baraInsamlat], { underlag: "alla", loftestyp: "alla", valdag: valdag as "fore" | "valdagen" | "efter" | "oklar" }).length, 0) === 7);
+const dateCases = [...alla, paValdagen, efter, baraInsamlat, valdagBaraInsamlat, foreBaraInsamlat, foreOsakertKallDatum, foreUtanKallgrund, sidUppdateradEfter];
+check("alla tidpunkter delar upp populationen utan bortfall", ["fore", "valdagen", "efter", "oklar"].reduce((n, valdag) => n + filtreraLoeften(dateCases, { underlag: "alla", loftestyp: "alla", valdag: valdag as "fore" | "valdagen" | "efter" | "oklar" }).length, 0) === dateCases.length);
 
 const published = getPromises().filter((p) => p.status !== "tillbakadragen");
+const utanKallgrund = published.filter((p) => p.source.date_basis !== "kalla");
+check("publicerade löften utan verifierad källgrund visas som oklara", utanKallgrund.every((p) => valdagKategori(p) === "oklar"));
 const views = loftesvyer(published);
 const keys = views.flatMap((view) => view.keys);
 check("alla 45 filterval pekar på exakt en vy", keys.length === ALLA_LOFTESFILTER.length && new Set(keys).size === keys.length && ALLA_LOFTESFILTER.every((filter) => keys.includes(filterNyckel(filter))));
