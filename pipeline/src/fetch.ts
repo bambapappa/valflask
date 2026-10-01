@@ -661,7 +661,7 @@ function valideratKallDatum(raw: string): Date | null {
   // Only the ISO and explicit month-name formats validated above are trusted.
   if (!supported) return null;
   const timestamp = monthFirst && monthFirst[4] === undefined
-    ? Date.parse(\`${monthFirst[3]}-${String(manader.get(monthFirst[1]!.toLowerCase())).padStart(2, "0")}-${monthFirst[2]!.padStart(2, "0")}T00:00:00Z\`)
+    ? Date.parse(`${monthFirst[3]}-${String(manader.get(monthFirst[1]!.toLowerCase())).padStart(2, "0")}-${monthFirst[2]!.padStart(2, "0")}T00:00:00Z`)
     : Date.parse(raw);
   return Number.isNaN(timestamp) ? null : new Date(timestamp);
 }
