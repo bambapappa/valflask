@@ -699,8 +699,12 @@ export function datumUrHtml(html: string): string | null {
 export function datumUrAdress(url: string): string | null {
   const m = url.match(/(\d{4})-(\d{2})-(\d{2})/u);
   if (!m) return null;
-  const d = new Date(`${m[1]}-${m[2]}-${m[3]}T12:00:00.000Z`);
-  return Number.isNaN(d.getTime()) ? null : d.toISOString();
+  const iso = `${m[1]}-${m[2]}-${m[3]}`;
+  const d = new Date(`${iso}T12:00:00.000Z`);
+  // Date normalizes impossible days (for example February 31) into March.
+  // Reject them so malformed URL dates cannot become verified source dates.
+  if (Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== iso) return null;
+  return d.toISOString();
 }
 
 /**

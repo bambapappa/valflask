@@ -803,6 +803,11 @@ describe("LiveSource med mock-HTTP", () => {
       "2026-07-23T12:00:00.000Z",
     );
     assert.equal(datumUrAdress("https://example.se/utan-datum"), null);
+    assert.equal(datumUrAdress("https://example.se/2026-02-31-ogiltigt"), null);
+    assert.equal(
+      datumUrAdress("https://example.se/2028-02-29-skottar"),
+      "2028-02-29T12:00:00.000Z",
+    );
   });
 
   test("findArticleLinks: article_pattern för partier med odaterade adresser", () => {
