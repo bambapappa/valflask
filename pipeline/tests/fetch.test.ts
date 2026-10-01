@@ -402,6 +402,25 @@ describe("LiveSource med mock-HTTP", () => {
     assert.ok(articles.every((article) => article.published !== "2026-03-03T10:00:00.000Z"));
   });
 
+  test("bevarar källans kalenderdag när tidszon flyttar tidpunkten över midnatt UTC", async () => {
+    const rssXml = '<rss version="2.0"><channel><item>' +
+      '<title>Löfte på valdagen</title><link>https://testpartiet.se/lofte</link>' +
+      '<pubDate>Sun, 13 Sep 2026 00:30:00 +0200</pubDate>' +
+      '<description>Vi lovar att förbättra skolan.</description>' +
+      '</item></channel></rss>';
+    const mockFetch: HttpFetchFn = async (url) => url.includes("robots.txt")
+      ? new Response("User-agent: *\nAllow: /", { status: 200 })
+      : new Response(rssXml, { status: 200, headers: { "content-type": "application/xml" } });
+    const source = new LiveSource({
+      feeds: [{ id: "test", type: "rss", url: "https://testpartiet.se/feed/" }],
+      limits: { max_articles_per_run: 50, min_chars: 1 },
+      httpFetch: mockFetch,
+    });
+    const [article] = await source.fetch();
+    assert.equal(article?.published, "2026-09-12T22:30:00.000Z");
+    assert.equal(article?.dateStated, "2026-09-13");
+  });
+
   test("respekterar min_chars-filter", async () => {
     const rssXml = readFixture("party-rss.xml");
 

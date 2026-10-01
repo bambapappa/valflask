@@ -244,7 +244,7 @@ export function publish(input: PublishInput): PublishResult {
     }
 
     const id = nextId(allPromises);
-    const date = pc.article.published.slice(0, 10);
+    const date = pc.article.dateStated ?? pc.article.published.slice(0, 10);
 
     // PDF-chunk: ankra källänken på citatets exakta sida (citatet är redan
     // G3-verbatimgranskat). Samma ankare på arkivkopian.

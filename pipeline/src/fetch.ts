@@ -670,6 +670,30 @@ function valideratKallDatum(raw: string): Date | null {
   return Number.isNaN(timestamp) ? null : new Date(timestamp);
 }
 
+/** Kalenderdagen uttryckt av källan, oberoende av tidszonens UTC-förskjutning. */
+function kallansKalenderdag(raw: string): string | null {
+  const iso = raw.match(/^(\d{4}-\d{2}-\d{2})/u);
+  if (iso && valideratKallDatum(raw)) return iso[1]!;
+  const rfc = raw.match(/^(?:[a-z]{3},\s*)?(\d{1,2})\s+([a-z]{3,9})\s+(\d{4})\s+/iu);
+  const monthFirst = raw.match(/^([a-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})/iu);
+  const match = rfc
+    ? { year: rfc[3]!, month: rfc[2]!, day: rfc[1]! }
+    : monthFirst
+      ? { year: monthFirst[3]!, month: monthFirst[1]!, day: monthFirst[2]! }
+      : null;
+  if (!match) return null;
+  const months: Record<string, string> = {
+    jan: "01", january: "01", feb: "02", february: "02", mar: "03", march: "03",
+    apr: "04", april: "04", may: "05", jun: "06", june: "06", jul: "07", july: "07",
+    aug: "08", august: "08", sep: "09", sept: "09", september: "09", oct: "10",
+    october: "10", nov: "11", november: "11", dec: "12", december: "12",
+  };
+  const month = months[match.month.toLowerCase()];
+  if (!month) return null;
+  const day = `${match.year}-${month}-${match.day.padStart(2, "0")}`;
+  return valideratKallDatum(raw) ? day : null;
+}
+
 /** Första träffen bland mönstren som ger ett giltigt datum, som ISO-tid. */
 
 function forstaGiltigaDatum(html: string, monster: readonly RegExp[]): string | null {
@@ -751,6 +775,26 @@ export function datumUrHtml(html: string): string | null {
       /<time[^>]+datetime="([^"]+)"/i,
     ])
   );
+}
+
+/** Behåller källans skrivna dag för publiceringsdatum från HTML. */
+function datumKalenderdagUrHtml(html: string): string | null {
+  const matchers = [
+    /<meta[^>]+property="article:modified_time"[^>]+content="([^"]+)"/i,
+    /<meta[^>]+content="([^"]+)"[^>]+property="article:modified_time"/i,
+    /<meta[^>]+property="og:updated_time"[^>]+content="([^"]+)"/i,
+    /<meta[^>]+content="([^"]+)"[^>]+property="og:updated_time"/i,
+    /"dateModified"\s*:\s*"([^"]+)"/i,
+    /<meta[^>]+property="article:published_time"[^>]+content="([^"]+)"/i,
+    /<meta[^>]+content="([^"]+)"[^>]+property="article:published_time"/i,
+    /"datePublished"\s*:\s*"([^"]+)"/i,
+    /<time[^>]+datetime="([^"]+)"/i,
+  ];
+  for (const matcher of matchers) {
+    const raw = html.match(matcher)?.[1];
+    if (raw && valideratKallDatum(raw)) return kallansKalenderdag(raw);
+  }
+  return null;
 }
 
 /** Datumet ur en artikeladress, som ISO-tid. G4 prövar publiceringsdatumet,
@@ -1251,6 +1295,7 @@ export class LiveSource implements ArticleSource {
           const text = stripHtml(html);
           const datumIAdress = datumUrAdress(lank);
           const datumPaSidan = datumUrHtml(html);
+          const datumKall = datumIAdress?.slice(0, 10) ?? datumKalenderdagUrHtml(html);
           return {
             url: lank,
             domain: extractDomain(lank),
@@ -1259,6 +1304,7 @@ export class LiveSource implements ArticleSource {
             // Adressens datum är sannast när det finns; annars artikelns eget.
             // Hämtningstiden är sista utvägen och gör en gammal artikel färsk.
             published: datumIAdress ?? datumPaSidan ?? new Date().toISOString(),
+            ...(datumKall ? { dateStated: datumKall } : {}),
             dateBasis: datumIAdress ? "kalla" as const : datumPaSidan ? "osakert-kalldatum" as const : "insamling" as const,
             contentHash: sha256(text),
           };
@@ -1377,6 +1423,7 @@ export class LiveSource implements ArticleSource {
       const text = stripHtml(item.content || item.description);
       const domain = extractDomain(item.link);
       const published = parseRssDate(item.pubDate);
+      const dateStated = kallansKalenderdag(item.pubDate);
 
       articles.push({
         url: item.link,
@@ -1384,6 +1431,7 @@ export class LiveSource implements ArticleSource {
         title: item.title,
         text,
         published,
+        ...(dateStated ? { dateStated } : {}),
         dateBasis: item.pubDate && valideratKallDatum(item.pubDate) ? "kalla" : "insamling",
       });
     }
@@ -1669,6 +1717,7 @@ export class LiveSource implements ArticleSource {
         title: doc.titel,
         text: text || doc.titel,
         published: date,
+        ...(sourceDate && doc.datum ? { dateStated: doc.datum.slice(0, 10) } : {}),
         dateBasis: sourceDate ? "kalla" : "insamling",
       });
     }
@@ -1712,6 +1761,7 @@ export class LiveSource implements ArticleSource {
         title,
         text: text || title,
         published: date,
+        ...(sourceDate && item.dok_datum ? { dateStated: item.dok_datum.slice(0, 10) } : {}),
         dateBasis: sourceDate ? "kalla" : "insamling",
       });
     }
