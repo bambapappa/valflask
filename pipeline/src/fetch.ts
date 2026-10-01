@@ -612,13 +612,41 @@ export function sitemapLinks(
   return { urls: [...funna].sort().slice(0, Math.max(0, maxArticles)), index: false };
 }
 
+/** Validerar en kalenderdag innan Date får normalisera indata. */
+function giltigKalenderdag(year: number, month: number, day: number): boolean {
+  if (month < 1 || month > 12 || day < 1) return false;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const dagar = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day <= dagar[month - 1]!;
+}
+
+/**
+ * Parses source dates without accepting impossible days that JavaScript would
+ * silently roll into the next month (for example 2026-02-31 → 2026-03-03).
+ */
+function valideratKallDatum(raw: string): Date | null {
+  const iso = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?!\d)/u);
+  if (iso && !giltigKalenderdag(Number(iso[1]), Number(iso[2]), Number(iso[3]))) return null;
+
+  const rfc = raw.match(/(?:^|,\s*)(\d{1,2})\s+([a-z]{3,9})\s+(\d{4})(?:\s|$)/iu);
+  if (rfc) {
+    const manader = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    const month = manader.indexOf(rfc[2]!.slice(0, 3).toLowerCase()) + 1;
+    if (!month || !giltigKalenderdag(Number(rfc[3]), month, Number(rfc[1]))) return null;
+  }
+
+  const timestamp = Date.parse(raw);
+  return Number.isNaN(timestamp) ? null : new Date(timestamp);
+}
+
 /** Första träffen bland mönstren som ger ett giltigt datum, som ISO-tid. */
+
 function forstaGiltigaDatum(html: string, monster: readonly RegExp[]): string | null {
   for (const r of monster) {
     const m = html.match(r);
     if (!m) continue;
-    const d = new Date(m[1]!);
-    if (!Number.isNaN(d.getTime())) return d.toISOString();
+    const d = valideratKallDatum(m[1]!);
+    if (d) return d.toISOString();
   }
   return null;
 }
@@ -699,12 +727,8 @@ export function datumUrHtml(html: string): string | null {
 export function datumUrAdress(url: string): string | null {
   const m = url.match(/(\d{4})-(\d{2})-(\d{2})/u);
   if (!m) return null;
-  const iso = `${m[1]}-${m[2]}-${m[3]}`;
-  const d = new Date(`${iso}T12:00:00.000Z`);
-  // Date normalizes impossible days (for example February 31) into March.
-  // Reject them so malformed URL dates cannot become verified source dates.
-  if (Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== iso) return null;
-  return d.toISOString();
+  const d = valideratKallDatum(`${m[1]}-${m[2]}-${m[3]}T12:00:00.000Z`);
+  return d?.toISOString() ?? null;
 }
 
 /**
@@ -1329,7 +1353,7 @@ export class LiveSource implements ArticleSource {
         title: item.title,
         text,
         published,
-        dateBasis: item.pubDate && !Number.isNaN(Date.parse(item.pubDate)) ? "kalla" : "insamling",
+        dateBasis: item.pubDate && valideratKallDatum(item.pubDate) ? "kalla" : "insamling",
       });
     }
 
@@ -1605,7 +1629,8 @@ export class LiveSource implements ArticleSource {
         text = doc.titel;
       }
 
-      const date = doc.datum ? `${doc.datum}T00:00:00Z` : new Date().toISOString();
+      const sourceDate = doc.datum ? valideratKallDatum(doc.datum) : null;
+      const date = sourceDate?.toISOString() ?? new Date().toISOString();
 
       articles.push({
         url: doc.url,
@@ -1613,7 +1638,7 @@ export class LiveSource implements ArticleSource {
         title: doc.titel,
         text: text || doc.titel,
         published: date,
-        dateBasis: doc.datum ? "kalla" : "insamling",
+        dateBasis: sourceDate ? "kalla" : "insamling",
       });
     }
 
@@ -1647,7 +1672,8 @@ export class LiveSource implements ArticleSource {
         ? `${item.avsnittsrubrik} — ${item.talare}`
         : `Anförande ${item.anforande_id} — ${item.talare}`;
 
-      const date = item.dok_datum ? `${item.dok_datum}T00:00:00Z` : new Date().toISOString();
+      const sourceDate = item.dok_datum ? valideratKallDatum(item.dok_datum) : null;
+      const date = sourceDate?.toISOString() ?? new Date().toISOString();
 
       articles.push({
         url: `https://data.riksdagen.se/anforande/${item.anforande_id}`,
@@ -1655,7 +1681,7 @@ export class LiveSource implements ArticleSource {
         title,
         text: text || title,
         published: date,
-        dateBasis: item.dok_datum ? "kalla" : "insamling",
+        dateBasis: sourceDate ? "kalla" : "insamling",
       });
     }
 
@@ -1677,8 +1703,6 @@ function extractDomain(urlStr: string): string {
 }
 
 function parseRssDate(dateStr: string): string {
-  if (!dateStr) return new Date().toISOString();
-  const parsed = Date.parse(dateStr);
-  if (!Number.isNaN(parsed)) return new Date(parsed).toISOString();
-  return dateStr;
+  const parsed = dateStr ? valideratKallDatum(dateStr) : null;
+  return parsed?.toISOString() ?? new Date().toISOString();
 }
