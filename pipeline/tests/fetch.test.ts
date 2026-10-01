@@ -932,6 +932,23 @@ describe("LiveSource med mock-HTTP", () => {
       null,
       "ett omöjligt månad-först-datum får inte normaliseras till mars",
     );
+    const originalTimezone = process.env.TZ;
+    process.env.TZ = "Europe/Stockholm";
+    try {
+      assert.equal(
+        datumUrHtml('<meta property="article:published_time" content="2026-09-13T00:30:00" />'),
+        "2026-09-13T00:30:00.000Z",
+        "ISO-tid utan tidszon behåller källans kalenderdag oberoende av körmiljön",
+      );
+      assert.equal(
+        datumUrHtml('<meta property="article:published_time" content="September 13, 2026 00:30" />'),
+        "2026-09-13T00:30:00.000Z",
+        "månad-först-tid utan tidszon behåller källans kalenderdag",
+      );
+    } finally {
+      if (originalTimezone === undefined) delete process.env.TZ;
+      else process.env.TZ = originalTimezone;
+    }
     assert.equal(
       datumUrHtml('<meta property="article:published_time" content="February 28, 2026" />'),
       "2026-02-28T00:00:00.000Z",
