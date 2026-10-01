@@ -724,21 +724,29 @@ function forstaGiltigaDatum(html: string, monster: readonly RegExp[]): string | 
  * första hör till en puff i en artikellista, inte till sidan.
  */
 export function uppdateringsdatumUrHtml(html: string): string | null {
-  const metadata = forstaGiltigaDatum(html, [
+  const raw = uppdateringsdatumKallaUrHtml(html);
+  const parsed = raw ? valideratKallDatum(raw) : null;
+  return parsed?.toISOString() ?? null;
+}
+
+function uppdateringsdatumKallaUrHtml(html: string): string | null {
+  const matchers = [
     /<meta[^>]+property="article:modified_time"[^>]+content="([^"]+)"/i,
     /<meta[^>]+content="([^"]+)"[^>]+property="article:modified_time"/i,
     /<meta[^>]+property="og:updated_time"[^>]+content="([^"]+)"/i,
     /<meta[^>]+content="([^"]+)"[^>]+property="og:updated_time"/i,
     /"dateModified"\s*:\s*"([^"]+)"/i,
-  ]);
-  if (metadata) return metadata;
+  ];
+  for (const matcher of matchers) {
+    const raw = html.match(matcher)?.[1];
+    if (raw && valideratKallDatum(raw)) return raw;
+  }
 
   for (const tagg of html.match(/<time[^>]*>/gi) ?? []) {
     if (!/class="[^"]*\bupdated\b[^"]*"|aria-label="[Uu]ppdaterad"/.test(tagg)) continue;
     const m = tagg.match(/datetime="([^"]+)"/i);
     if (!m) continue;
-    const d = valideratKallDatum(m[1]!);
-    if (d) return d.toISOString();
+    if (valideratKallDatum(m[1]!)) return m[1]!;
   }
 
   // Synlig text är sista utvägen: Liberalerna skriver "(Senast uppdaterad:
@@ -748,8 +756,7 @@ export function uppdateringsdatumUrHtml(html: string): string | null {
   );
   if (synlig) {
     const iso = synlig[1] ?? `${synlig[4]}-${synlig[3]}-${synlig[2]}`;
-    const d = valideratKallDatum(`${iso}T12:00:00.000Z`);
-    if (d) return d.toISOString();
+    if (valideratKallDatum(iso)) return iso;
   }
   return null;
 }
@@ -766,33 +773,31 @@ export function uppdateringsdatumUrHtml(html: string): string | null {
  * som finns, och då gäller det.
  */
 export function datumUrHtml(html: string): string | null {
-  return (
-    uppdateringsdatumUrHtml(html) ??
-    forstaGiltigaDatum(html, [
+  const raw = uppdateringsdatumKallaUrHtml(html) ?? forstaGiltigaKallstrang(html, [
       /<meta[^>]+property="article:published_time"[^>]+content="([^"]+)"/i,
       /<meta[^>]+content="([^"]+)"[^>]+property="article:published_time"/i,
       /"datePublished"\s*:\s*"([^"]+)"/i,
       /<time[^>]+datetime="([^"]+)"/i,
-    ])
-  );
+    ]);
+  const parsed = raw ? valideratKallDatum(raw) : null;
+  return parsed?.toISOString() ?? null;
 }
 
 /** Behåller källans skrivna dag för publiceringsdatum från HTML. */
 function datumKalenderdagUrHtml(html: string): string | null {
-  const matchers = [
-    /<meta[^>]+property="article:modified_time"[^>]+content="([^"]+)"/i,
-    /<meta[^>]+content="([^"]+)"[^>]+property="article:modified_time"/i,
-    /<meta[^>]+property="og:updated_time"[^>]+content="([^"]+)"/i,
-    /<meta[^>]+content="([^"]+)"[^>]+property="og:updated_time"/i,
-    /"dateModified"\s*:\s*"([^"]+)"/i,
+  const raw = uppdateringsdatumKallaUrHtml(html) ?? forstaGiltigaKallstrang(html, [
     /<meta[^>]+property="article:published_time"[^>]+content="([^"]+)"/i,
     /<meta[^>]+content="([^"]+)"[^>]+property="article:published_time"/i,
     /"datePublished"\s*:\s*"([^"]+)"/i,
     /<time[^>]+datetime="([^"]+)"/i,
-  ];
-  for (const matcher of matchers) {
+  ]);
+  return raw ? kallansKalenderdag(raw) : null;
+}
+
+function forstaGiltigaKallstrang(html: string, monster: readonly RegExp[]): string | null {
+  for (const matcher of monster) {
     const raw = html.match(matcher)?.[1];
-    if (raw && valideratKallDatum(raw)) return kallansKalenderdag(raw);
+    if (raw && valideratKallDatum(raw)) return raw;
   }
   return null;
 }

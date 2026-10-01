@@ -1050,7 +1050,8 @@ describe("LiveSource med mock-HTTP", () => {
     const lista = '<a href="/nyhet/ett-lofte/">Ett löfte</a>';
     const artikel =
       '<html><head><title>Ett löfte</title>' +
-      '<meta property="article:published_time" content="2026-07-02T09:00:00+00:00" />' +
+      '<meta property="article:published_time" content="2026-09-11T12:00:00Z" />' +
+      '<meta property="article:modified_time" content="2026-09-13T00:30:00+02:00" />' +
       `</head><body><p>${"Vi lovar saker. ".repeat(40)}</p></body></html>`;
     const mockFetch: HttpFetchFn = async (url) => {
       if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
@@ -1067,11 +1068,8 @@ describe("LiveSource med mock-HTTP", () => {
     });
     const articles = await source.fetch();
     assert.equal(articles.length, 1);
-    assert.equal(
-      articles[0]!.published,
-      "2026-07-02T09:00:00.000Z",
-      "artikelns eget datum, inte hämtningsdagen",
-    );
+    assert.equal(articles[0]!.published, "2026-09-12T22:30:00.000Z", "artikelns exakta tidpunkt");
+    assert.equal(articles[0]!.dateStated, "2026-09-13", "källans dag styr valperioden");
   });
 
   test("findManifestPdfLinks: manifest från ett tidigare val följs inte", () => {
