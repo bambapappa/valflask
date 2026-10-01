@@ -713,8 +713,8 @@ export function uppdateringsdatumUrHtml(html: string): string | null {
     if (!/class="[^"]*\bupdated\b[^"]*"|aria-label="[Uu]ppdaterad"/.test(tagg)) continue;
     const m = tagg.match(/datetime="([^"]+)"/i);
     if (!m) continue;
-    const d = new Date(m[1]!);
-    if (!Number.isNaN(d.getTime())) return d.toISOString();
+    const d = valideratKallDatum(m[1]!);
+    if (d) return d.toISOString();
   }
 
   // Synlig text är sista utvägen: Liberalerna skriver "(Senast uppdaterad:
@@ -724,8 +724,8 @@ export function uppdateringsdatumUrHtml(html: string): string | null {
   );
   if (synlig) {
     const iso = synlig[1] ?? `${synlig[4]}-${synlig[3]}-${synlig[2]}`;
-    const d = new Date(`${iso}T12:00:00.000Z`);
-    if (!Number.isNaN(d.getTime())) return d.toISOString();
+    const d = valideratKallDatum(`${iso}T12:00:00.000Z`);
+    if (d) return d.toISOString();
   }
   return null;
 }
