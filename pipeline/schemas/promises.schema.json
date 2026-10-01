@@ -140,6 +140,15 @@
           "fetched_at": {
             "type": "string"
           },
+          "date_basis": {
+            "type": "string",
+            "enum": [
+              "kalla",
+              "osakert-kalldatum",
+              "insamling"
+            ],
+            "description": "Källans eget publiceringsdatum, osäkert källdatum eller dagen vi hämtade en odaterad källa. Saknat fält betyder att grunden inte har verifierats."
+          },
           "kind": {
             "type": "string",
             "enum": [
