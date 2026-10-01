@@ -386,7 +386,7 @@ describe("LiveSource med mock-HTTP", () => {
       '<description>Vi lovar att förbättra skolan.</description>' +
       '</item></channel></rss>';
     const mockFetch: HttpFetchFn = async (url) => url.includes("robots.txt")
-      ? new Response("User-agent: *\\nAllow: /", { status: 200 })
+      ? new Response("User-agent: *\nAllow: /", { status: 200 })
       : new Response(rssXml, { status: 200, headers: { "content-type": "application/xml" } });
     const source = new LiveSource({
       feeds: [{ id: "test", type: "rss", url: "https://testpartiet.se/feed/" }],
