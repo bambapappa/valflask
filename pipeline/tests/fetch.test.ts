@@ -384,6 +384,9 @@ describe("LiveSource med mock-HTTP", () => {
       '<title>Ett löfte</title><link>https://testpartiet.se/lofte</link>' +
       '<pubDate>Tue, 31 Feb 2026 10:00:00 GMT</pubDate>' +
       '<description>Vi lovar att förbättra skolan.</description>' +
+      '</item><item><title>Ett annat löfte</title><link>https://testpartiet.se/annat-lofte</link>' +
+      '<pubDate>Wed, 10 Jun 2026 10:00:00 +9999</pubDate>' +
+      '<description>Vi lovar också att förbättra skolan.</description>' +
       '</item></channel></rss>';
     const mockFetch: HttpFetchFn = async (url) => url.includes("robots.txt")
       ? new Response("User-agent: *\nAllow: /", { status: 200 })
@@ -393,10 +396,10 @@ describe("LiveSource med mock-HTTP", () => {
       limits: { max_articles_per_run: 50, min_chars: 1 },
       httpFetch: mockFetch,
     });
-    const [article] = await source.fetch();
-    assert.ok(article);
-    assert.equal(article.dateBasis, "insamling");
-    assert.notEqual(article.published, "2026-03-03T10:00:00.000Z");
+    const articles = await source.fetch();
+    assert.equal(articles.length, 2);
+    assert.ok(articles.every((article) => article.dateBasis === "insamling"));
+    assert.ok(articles.every((article) => article.published !== "2026-03-03T10:00:00.000Z"));
   });
 
   test("respekterar min_chars-filter", async () => {
@@ -933,6 +936,11 @@ describe("LiveSource med mock-HTTP", () => {
       datumUrHtml('<meta property="article:published_time" content="February 28, 2026" />'),
       "2026-02-28T00:00:00.000Z",
       "ett giltigt månad-först-datum kan fortfarande läsas",
+    );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="Januaryyyy 28, 2026" />'),
+      null,
+      "felstavat månadsnamn lämnas ogranskat",
     );
     assert.equal(
       datumUrHtml('<meta property="article:published_time" content="02/03/2026" />'),
