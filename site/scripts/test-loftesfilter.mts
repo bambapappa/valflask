@@ -44,6 +44,7 @@ const valdagBaraInsamlat = promise("p-valdag-oklar", "parti", "reform", "2026-09
 const foreBaraInsamlat = promise("p-fore-insamlat", "parti", "reform", "2026-09-12", "insamling");
 const foreOsakertKallDatum = promise("p-fore-osakert", "parti", "reform", "2026-09-12", "osakert-kalldatum");
 const foreUtanKallgrund = promise("p-fore-utan-grund", "parti", "reform", "2026-09-12");
+const omojligtKallDatum = promise("p-omojligt-datum", "parti", "reform", "2026-02-31", "kalla");
 const sidUppdateradEfter = { ...efter, id: "p-siduppdaterad", source: { date_basis: "osakert-kalldatum" as const } };
 check("valdagen är en egen kategori", valdagKategori(paValdagen) === "valdagen");
 check("källdaterat efter valet visas efter", valdagKategori(efter) === "efter");
@@ -52,8 +53,9 @@ check("insamlat på valdagen räknas inte som uttalat på valdagen", valdagKateg
 check("insamlat före valet räknas inte som belägg för ett löfte före valet", valdagKategori(foreBaraInsamlat) === "oklar");
 check("osäkert källdatum före valet förblir oklart", valdagKategori(foreOsakertKallDatum) === "oklar");
 check("saknad datumgrund före valet förblir oklart", valdagKategori(foreUtanKallgrund) === "oklar");
+check("omöjligt kalenderdatum med källgrund förblir oklart", valdagKategori(omojligtKallDatum) === "oklar");
 check("sidans ändringsdatum efter valet räknas inte som nytt löfte", valdagKategori(sidUppdateradEfter) === "oklar");
-const dateCases = [...alla, paValdagen, efter, baraInsamlat, valdagBaraInsamlat, foreBaraInsamlat, foreOsakertKallDatum, foreUtanKallgrund, sidUppdateradEfter];
+const dateCases = [...alla, paValdagen, efter, baraInsamlat, valdagBaraInsamlat, foreBaraInsamlat, foreOsakertKallDatum, foreUtanKallgrund, omojligtKallDatum, sidUppdateradEfter];
 check("alla tidpunkter delar upp populationen utan bortfall", ["fore", "valdagen", "efter", "oklar"].reduce((n, valdag) => n + filtreraLoeften(dateCases, { underlag: "alla", loftestyp: "alla", valdag: valdag as "fore" | "valdagen" | "efter" | "oklar" }).length, 0) === dateCases.length);
 
 const published = getPromises().filter((p) => p.status !== "tillbakadragen");
