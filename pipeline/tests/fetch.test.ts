@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 16439)
-Total output lines: 1483
-
 import { test, describe } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -503,7 +500,537 @@ describe("LiveSource med mock-HTTP", () => {
     saveEtagCache(dir, new Map([["https://testpartiet.se/feed/", { etag: '"old"', lastFetched: "2026-09-01" }]]));
     let conditional = false;
     const mockFetch: HttpFetchFn = async (url, init) => {
- …6439 tokens truncated…ml><head><title>Ett löfte</title>' +
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      conditional = !!(init?.headers as Record<string, string>)["If-None-Match"];
+      return new Response(readFixture("party-rss.xml"), { status: 200 });
+    };
+    try {
+      const source = new LiveSource({ feeds: [{ id: "rss", type: "rss", url: "https://testpartiet.se/feed/" }],
+        limits: { max_articles_per_run: 50, min_chars: 10 }, httpFetch: mockFetch, cacheDir: dir });
+      assert.ok((await source.fetch()).length > 0);
+      assert.equal(conditional, false);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("samma länk i två feeds kan återspela 304 inom samma körning", async () => {
+    const rssXml = readFixture("party-rss.xml");
+    let requests = 0;
+    const mockFetch: HttpFetchFn = async (url, init) => {
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      requests++;
+      return (init?.headers as Record<string, string>)["If-None-Match"]
+        ? new Response(null, { status: 304 })
+        : new Response(rssXml, { status: 200, headers: { etag: '"rss-v1"' } });
+    };
+    const source = new LiveSource({ feeds: [
+      { id: "ett", type: "rss", url: "https://testpartiet.se/feed/" },
+      { id: "tva", type: "rss", url: "https://testpartiet.se/feed/" },
+    ], limits: { max_articles_per_run: 50, min_chars: 10 }, httpFetch: mockFetch });
+    const articles = await source.fetch();
+    assert.equal(requests, 2);
+    assert.ok(articles.length >= 4, "båda feeds läser samma innehåll före dedup");
+    assert.deepEqual(source.getFeedOutcomes().map((f) => f.status), ["ok", "ok"]);
+  });
+
+  test("stor kropp får ingen validator som kan ge 304 utan kropp", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "etag-large-"));
+    const html = `<html><body>${"a".repeat(1_000_001)}</body></html>`;
+    const conditional: boolean[] = [];
+    const mockFetch: HttpFetchFn = async (url, init) => {
+      if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
+      conditional.push(!!(init?.headers as Record<string, string>)["If-None-Match"]);
+      return new Response(html, { status: 200, headers: { etag: '"large"', "content-type": "text/html" } });
+    };
+    const create = () => new LiveSource({ feeds: [{ id: "page", type: "page", url: "https://testpartiet.se/val/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 }, httpFetch: mockFetch, cacheDir: dir });
+    try {
+      await create().fetch();
+      await create().fetch();
+      assert.deepEqual(conditional, [false, false]);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
+  test("kapar INTE på fetch-nivå — budgeten ligger i runPipeline (maxNewArticles)", async () => {
+    // Den gamla globala slice(0, max) på fetch-nivå svalt feeds sent i listan
+    // (page-källorna = manifesten) innan dedup ens såg dem. LiveSource ska
+    // returnera ALLT; processbudgeten på NYA artiklar tillämpas i runPipeline.
+    const rssXml = readFixture("party-rss.xml");
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      return new Response(rssXml, { status: 200 });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "test", type: "rss", url: "https://testpartiet.se/feed/" }],
+      limits: { max_articles_per_run: 1, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    const articles = await source.fetch();
+    assert.ok(articles.length > 1, `Alla feedens artiklar returneras: ${articles.length}`);
+  });
+
+  test("skickar User-Agent och ETag-headers", async () => {
+    const rssXml = readFixture("party-rss.xml");
+    const receivedHeaders: Record<string, string> = {};
+
+    const mockFetch: HttpFetchFn = async (url, init) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      const h = init?.headers as Record<string, string> | undefined;
+      if (h) {
+        for (const [k, v] of Object.entries(h)) {
+          receivedHeaders[k] = v;
+        }
+      }
+      return new Response(rssXml, { status: 200, headers: { etag: '"test-etag"' } });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "test", type: "rss", url: "https://testpartiet.se/feed/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    await source.fetch();
+    assert.equal(receivedHeaders["User-Agent"], "UtlovatBot/1.0 (+https://utlovat.se/om)");
+  });
+
+  test("hämtar page-källa (HTML-sida) via mock", async () => {
+    const html =
+      "<html><head><title>Centerpartiets valmanifest 2026</title></head>" +
+      "<body><h1>Vår politik</h1><p>Vi lovar att korta köerna i vården och " +
+      "anställa fler poliser under nästa mandatperiod.</p></body></html>";
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      if (url.includes("val2026.centerpartiet.se")) {
+        return new Response(html, { status: 200, headers: { "content-type": "text/html" } });
+      }
+      return new Response("Not found", { status: 404 });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "c-valmanifest", type: "page", url: "https://val2026.centerpartiet.se/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 1, "Page-källa ger exakt en artikel");
+    assert.equal(articles[0]!.url, "https://val2026.centerpartiet.se/");
+    assert.equal(articles[0]!.domain, "val2026.centerpartiet.se");
+    assert.equal(articles[0]!.title, "Centerpartiets valmanifest 2026", "Title ur <title>");
+    assert.ok(articles[0]!.text.includes("korta köerna i vården"), `Text: ${articles[0]!.text}`);
+    assert.ok(!articles[0]!.text.includes("<"), "HTML-taggar strippade");
+  });
+
+  test("page-källa avkodar HTML-entiteter så G3 verbatim matchar", async () => {
+    // mp.se serverar &ouml;/&auml;/&aring; i stället för ö/ä/å. Utan avkodning
+    // blir verbatim-grinden (G3) 0/5 fastän löftet finns på sidan.
+    const html =
+      "<html><head><title>Almedalstal</title></head><body>" +
+      "<p>Vi lovar ett systemskifte i t&aring;gpolitiken och att korta k&ouml;erna.</p>" +
+      "</body></html>";
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      return new Response(html, { status: 200 });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "mp-almedalstal", type: "page", url: "https://www.mp.se/just-nu/daniel-helldens-almedalstal/" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 1);
+    assert.ok(
+      articles[0]!.text.includes("systemskifte i tågpolitiken"),
+      `å avkodad: ${articles[0]!.text}`,
+    );
+    assert.ok(articles[0]!.text.includes("korta köerna"), "ö avkodad");
+    assert.ok(!articles[0]!.text.includes("&aring;"), "inga råa entiteter kvar");
+  });
+
+  test("stripHtml tar bort script/style/noscript-INNEHÅLL och kommentarer", () => {
+    const html =
+      "<html><head><style>.a{color:red}</style><script>var nonce='x9f2';</script></head>" +
+      "<body><!-- byggd 2026-07-03 --><p>Vi lovar fler poliser.</p>" +
+      "<noscript>Aktivera JS</noscript></body></html>";
+    const text = stripHtml(html);
+    assert.ok(text.includes("Vi lovar fler poliser."));
+    assert.ok(!text.includes("nonce"), "inline-skript borta (annars instabil contentHash + LLM-brus)");
+    assert.ok(!text.includes("color"), "style-innehåll borta");
+    assert.ok(!text.includes("Aktivera JS"), "noscript borta");
+    assert.ok(!text.includes("byggd 2026"), "HTML-kommentarer borta");
+  });
+
+  test("seenKey: page med nytt innehåll får ny nyckel, oförändrad samma", () => {
+    const v1 = { url: "https://x.se/manifest/", contentHash: sha256("text v1") };
+    const v2 = { url: "https://x.se/manifest/", contentHash: sha256("text v2") };
+    const rss = { url: "https://x.se/manifest/" };
+    assert.equal(seenKey(v1), seenKey({ ...v1 }), "samma innehåll ⇒ samma nyckel");
+    assert.notEqual(seenKey(v1), seenKey(v2), "ändrat innehåll ⇒ ny nyckel ⇒ omprocessas");
+    assert.equal(
+      seenKey(rss),
+      sha256(kanoniskAdress(rss.url)),
+      "utan contentHash: hash över adressen ensam (RSS/API)",
+    );
+  });
+
+  test("page-källa hämtar PDF-manifest: text, dehyphenering, metadata", async () => {
+    // Centerpartiets valmanifest 2026 finns bara som PDF — page-källan måste
+    // auto-detektera och textextrahera den, annars faller hela dokumentet bort.
+    const pdfBytes = readFileSync(join(import.meta.dirname, "..", "fixtures", "pdf", "manifest-2p.pdf"));
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      return new Response(new Uint8Array(pdfBytes), {
+        status: 200,
+        headers: { "content-type": "application/pdf" },
+      });
+    };
+
+    const source = new LiveSource({
+      feeds: [{
+        id: "c-valmanifest-pdf",
+        type: "page",
+        url: "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf",
+      }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 1, "2 sidor ≤ chunkstorleken ⇒ EN artikel");
+    const a = articles[0]!;
+    assert.equal(a.url, "https://val2026.centerpartiet.se/wp-content/uploads/2026/06/Valmanifest-2026.pdf", "en chunk ⇒ url utan #page-ankare");
+    assert.equal(a.domain, "val2026.centerpartiet.se");
+    assert.equal(a.title, "Valmanifest Testpartiet 2026", "Title ur PDF-metadata");
+    assert.equal(a.published, "2026-06-04T12:00:00.000Z", "published ur CreationDate");
+    assert.ok(
+      a.text.includes("anställa fler poliser i hela landet"),
+      `radslutsavstavning ihopsydd (po- + liser) och åäö avkodade: ${a.text}`,
+    );
+    assert.ok(a.text.includes("Sida två handlar om skatter"), "sida 2 med i texten");
+  });
+
+  test("PDF över chunkstorleken delas i #page-ankrade artiklar", async () => {
+    const pdfBytes = readFileSync(join(import.meta.dirname, "..", "fixtures", "pdf", "manifest-12p.pdf"));
+
+    const mockFetch: HttpFetchFn = async (url) => {
+      if (url.includes("robots.txt")) {
+        return new Response("User-agent: *\nAllow: /", { status: 200 });
+      }
+      // Utan content-type-header — %PDF-signaturen ska räcka för detektion.
+      return new Response(new Uint8Array(pdfBytes), { status: 200 });
+    };
+
+    const source = new LiveSource({
+      feeds: [{ id: "stort-manifest", type: "page", url: "https://sd.se/manifest.pdf" }],
+      limits: { max_articles_per_run: 50, min_chars: 10 },
+      httpFetch: mockFetch,
+    });
+
+    const articles = await source.fetch();
+    assert.equal(articles.length, 2, `12 sidor / ${PDF_PAGES_PER_CHUNK} per chunk = 2 artiklar`);
+    assert.equal(articles[0]!.url, "https://sd.se/manifest.pdf#page=1");
+    assert.equal(articles[1]!.url, "https://sd.se/manifest.pdf#page=11");
+    assert.equal(articles[0]!.title, "Stort manifest (s. 1–10)");
+    assert.equal(articles[1]!.title, "Stort manifest (s. 11–12)");
+    assert.ok(articles[0]!.text.includes("Löfte nummer 10"), "chunk 1 t.o.m. sida 10");
+    assert.ok(!articles[0]!.text.includes("Löfte nummer 11"), "sida 11 hör till chunk 2");
+    assert.ok(articles[1]!.text.includes("Löfte nummer 12"), "chunk 2 t.o.m. sista sidan");
+    assert.notEqual(sha256(articles[0]!.url), sha256(articles[1]!.url), "chunk-url:er dedupas separat");
+    // pdfPages bär per-sidtext så publiceringen kan slå upp citatets exakta sida.
+    assert.equal(articles[0]!.pdfPages?.firstPage, 1);
+    assert.equal(articles[0]!.pdfPages?.texts.length, 10, "chunk 1 = 10 sidor");
+    assert.equal(articles[1]!.pdfPages?.firstPage, 11);
+    assert.equal(articles[1]!.pdfPages?.texts.length, 2, "chunk 2 = 2 sidor");
+    assert.ok(articles[1]!.pdfPages?.texts[1]!.includes("Löfte nummer 12"), "sida 12 är sista i chunk 2");
+  });
+
+  test("findManifestPdfLinks: samma domän, .pdf + manifestnyckelord, relativa löses", () => {
+    const html =
+      '<a href="/download/18.abc/1771599906618/Valplattform.pdf">Ladda ner</a>' +
+      '<a href="https://www.testpartiet.se/wp-content/valmanifest-2026.pdf">Manifest</a>' +
+      '<a href="https://annandoman.se/valmanifest.pdf">Extern</a>' +
+      '<a href="/appresource/manifest.webmanifest">PWA</a>' +
+      '<a href="/rapporter/arsredovisning.pdf">Årsredovisning</a>';
+    const links = findManifestPdfLinks(html, "https://testpartiet.se/val-2026");
+    assert.deepEqual(links, [
+      "https://testpartiet.se/download/18.abc/1771599906618/Valplattform.pdf",
+      "https://www.testpartiet.se/wp-content/valmanifest-2026.pdf",
+    ], "relativ löst mot basen; extern domän, webmanifest och omatchad PDF exkluderade");
+  });
+
+  test("findArticleLinks: daterade artiklar på samma domän, nyast först", () => {
+    // Adressformerna är verkliga, hämtade 2026-08-03: S och C daterar sina
+    // artikeladresser, vilket är det som skiljer en artikel från menyer,
+    // taggsidor och paginering.
+    const html =
+      '<a href="/nyheter/nyheter/2026-07-31-socialdemokraterna-vill-starka-skyddet">Äldre</a>' +
+      '<a href="/nyheter/nyheter/2026-08-03-socialdemokraterna-gar-till-val-pa-en-modell">Nyare</a>' +
+      '<a href="/nyheter">Alla nyheter</a>' +
+      '<a href="/vart-parti/vara-politiker/magdalena-andersson">Politiker</a>' +
+      '<a href="https://annandoman.se/nyheter/2026-08-03-nagot">Extern</a>' +
+      '<a href="/bilder/2026-08-03-bild.jpg">Bild</a>';
+    const links = findArticleLinks(html, "https://www.socialdemokraterna.se/");
+    assert.deepEqual(links, [
+      "https://www.socialdemokraterna.se/nyheter/nyheter/2026-08-03-socialdemokraterna-gar-till-val-pa-en-modell",
+      "https://www.socialdemokraterna.se/nyheter/nyheter/2026-07-31-socialdemokraterna-vill-starka-skyddet",
+    ], "nyast först; odaterade, externa och bilder exkluderade");
+  });
+
+  test("findArticleLinks: kapas vid taket och tar de nyaste", () => {
+    const html = Array.from({ length: MAX_INDEX_ARTICLES + 5 }, (_, i) => {
+      const dag = String(i + 1).padStart(2, "0");
+      return `<a href="/nyheter/arkiv-2026/2026-06-${dag}-artikel-${i}">A${i}</a>`;
+    }).join("");
+    const links = findArticleLinks(html, "https://www.centerpartiet.se/nyheter");
+    assert.equal(links.length, MAX_INDEX_ARTICLES, "kapat vid taket");
+    assert.ok(
+      links[0]!.includes("2026-06-17"),
+      `nyaste först, fick ${links[0]}`,
+    );
+    assert.ok(
+      !links.some((u) => u.includes("2026-06-01")),
+      "de äldsta föll bort, inte de nyaste",
+    );
+  });
+
+  test("findArticleLinks: listsidan själv blir aldrig en artikel", () => {
+    // Listan är rubriker utan brödtext. Kom den med hade grindarna fått
+    // skräp att avvisa varje körning.
+    const html = '<a href="https://www.centerpartiet.se/nyheter">Nyheter</a>';
+    assert.deepEqual(findArticleLinks(html, "https://www.centerpartiet.se/nyheter"), []);
+  });
+
+  test("datumUrAdress: publiceringsdatum tas ur adressen, inte hämtningstiden", () => {
+    // G4 prövar publiceringsdatumet. Sattes det till "nu" hade en gammal
+    // artikel sett färsk ut varje gång vi läste om den.
+    assert.equal(
+      datumUrAdress("https://www.centerpartiet.se/nyheter/arkiv-2026/2026-07-23-pfas"),
+      "2026-07-23T12:00:00.000Z",
+    );
+    assert.equal(datumUrAdress("https://example.se/utan-datum"), null);
+    assert.equal(datumUrAdress("https://example.se/2026-02-31-ogiltigt"), null);
+    assert.equal(
+      datumUrAdress("https://example.se/2028-02-29-skottar"),
+      "2028-02-29T12:00:00.000Z",
+    );
+  });
+
+  test("findArticleLinks: article_pattern för partier med odaterade adresser", () => {
+    // De fem WordPress-partierna daterar inte sina adresser men samlar
+    // artiklarna under ett eget prefix. Mönstret är precisare än att gissa.
+    const html =
+      '<a href="/nyhet/det-ska-inte-vara-livsfarligt/">Artikel</a>' +
+      '<a href="/nyhet/brott-ska-straffa-sig/">Artikel</a>' +
+      '<a href="/nyheter/">Nyhetslistan</a>' +
+      '<a href="/var-politik/">Politik</a>' +
+      '<a href="/nyhet/">Prefixet självt</a>';
+    assert.deepEqual(
+      findArticleLinks(html, "https://moderaterna.se/nyheter/", "^/nyhet/"),
+      [
+        "https://moderaterna.se/nyhet/brott-ska-straffa-sig/",
+        "https://moderaterna.se/nyhet/det-ska-inte-vara-livsfarligt/",
+      ],
+      "bara artiklar under prefixet; prefixet självt och annan politik utesluts",
+    );
+  });
+
+  test("findArticleLinks: paginering är fler listor, inte artiklar", () => {
+    // L:s nyhetslista länkar sida 2 till 117. Följdes de blev varje sida en
+    // artikel utan brödtext och åt hela budgeten.
+    const html =
+      '<a href="/nyheter/hbtq-personers-frihet">Artikel</a>' +
+      '<a href="/nyheter/page/2">Sida 2</a>' +
+      '<a href="/nyheter/page/117">Sida 117</a>' +
+      '<a href="/nyheter/sida/3/">Sida 3</a>';
+    assert.deepEqual(
+      findArticleLinks(html, "https://www.liberalerna.se/nyheter/", "^/nyheter/(?!page/)"),
+      ["https://www.liberalerna.se/nyheter/hbtq-personers-frihet"],
+    );
+  });
+
+  test("findArticleLinks: en katalog i bokstavsordning når förbi tolvtaket", () => {
+    // KD:s A–Ö har 220 undersidor, en per sakfråga, och sorteras på adress
+    // eftersom den saknar datum. Med tolvtaket följdes bara "a-kassa" …
+    // "arbetsratt" — varje körning, för alltid. Det var inte en fördröjning
+    // utan ett tak på hur långt in i alfabetet vi kunde se, och det kostade
+    // oss KD:s löfte om reavinstskatten. Höjt tak per källa är fixen.
+    const prefix = "/var-politik/politik-a-till-o";
+    const sidor = ["a-kassa", "abort", "adoption", "aganderatt", "ai", "aktenskap",
+      "aldre", "aldreboendegaranti", "amorteringskrav", "andts", "anhoriginvandring",
+      "anhorigvard", "arbetsratt", "reavinstskatt", "vardnad"];
+    const html = sidor.map((s) => `<a href="${prefix}/${s}">${s}</a>`).join("") +
+      `<a href="${prefix}">Registret självt</a>`;
+    const bas = `https://kristdemokraterna.se${prefix}`;
+    const mönster = "^/var-politik/politik-a-till-o/.";
+
+    const utanTak = findArticleLinks(html, bas, mönster);
+    assert.equal(utanTak.length, MAX_INDEX_ARTICLES, "standardtaket gäller fortfarande");
+    assert.ok(
+      !utanTak.some((u) => u.endsWith("/reavinstskatt")),
+      "utan eget tak nås aldrig bokstaven R — det är felet testet vaktar",
+    );
+
+    const medTak = findArticleLinks(html, bas, mönster, 250);
+    assert.equal(medTak.length, sidor.length, "alla undersidor följs");
+    assert.ok(medTak.some((u) => u.endsWith("/reavinstskatt")), "reavinstskatt nås");
+    assert.ok(!medTak.includes(bas), "registret självt är aldrig en artikel");
+  });
+
+  test("findArticleLinks: adresser byggda i JavaScript är inte länkar", () => {
+    // MP:s sida bär `href="` inne i skriptsträngar. Utan filtret följde vi
+    // adresser som /just-nu/'+a[s][2]+' och fick skräp varje körning.
+    const html =
+      "<script>var x = 'href=\"/just-nu/'+a[s][2]+'\"';</script>" +
+      '<a href="/just-nu/daniel-helldens-almedalstal/">Riktig</a>';
+    assert.deepEqual(
+      findArticleLinks(html, "https://www.mp.se/just-nu/", "^/just-nu/"),
+      ["https://www.mp.se/just-nu/daniel-helldens-almedalstal/"],
+    );
+  });
+
+  test("datumUrHtml: publiceringsdatum ur artikelns egen HTML", () => {
+    // Behövs för partierna vars adresser saknar datum. Alla tre formerna är
+    // verkliga: M publicerar article:published_time, MP ett <time datetime>.
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="2026-08-02T13:23:03+00:00" />'),
+      "2026-08-02T13:23:03.000Z",
+    );
+    assert.equal(
+      datumUrHtml('<script>{"datePublished":"2026-06-26T11:43:32+02:00"}</script>'),
+      "2026-06-26T09:43:32.000Z",
+    );
+    assert.equal(
+      datumUrHtml('<time class="updated" datetime="2026-06-26T11:43:33+02:00">'),
+      "2026-06-26T09:43:33.000Z",
+    );
+    assert.equal(datumUrHtml("<p>ingen tid alls</p>"), null);
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="2026-02-31T13:23:03+00:00" />'),
+      null,
+      "ett omöjligt kalenderdatum får inte normaliseras till mars",
+    );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="February 31, 2026" />'),
+      null,
+      "ett omöjligt månad-först-datum får inte normaliseras till mars",
+    );
+    const originalTimezone = process.env.TZ;
+    process.env.TZ = "Europe/Stockholm";
+    try {
+      assert.equal(
+        datumUrHtml('<meta property="article:published_time" content="2026-09-13T00:30:00" />'),
+        "2026-09-13T00:30:00.000Z",
+        "ISO-tid utan tidszon behåller källans kalenderdag oberoende av körmiljön",
+      );
+      assert.equal(
+        datumUrHtml('<meta property="article:published_time" content="September 13, 2026 00:30" />'),
+        "2026-09-13T00:30:00.000Z",
+        "månad-först-tid utan tidszon behåller källans kalenderdag",
+      );
+    } finally {
+      if (originalTimezone === undefined) delete process.env.TZ;
+      else process.env.TZ = originalTimezone;
+    }
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="February 28, 2026" />'),
+      "2026-02-28T00:00:00.000Z",
+      "ett giltigt månad-först-datum kan fortfarande läsas",
+    );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="Januaryyyy 28, 2026" />'),
+      null,
+      "felstavat månadsnamn lämnas ogranskat",
+    );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="02/03/2026" />'),
+      null,
+      "ett tvetydigt numeriskt datum lämnas ogranskat",
+    );
+  });
+
+  test("datumUrHtml: uppdateringsdatumet går före skapandedatumet", () => {
+    // Miljöpartiets djursida, ord för ord ur sidans egen HTML 2026-08-19:
+    // skapad 2021, omskriven 2026. Läses skapandedatumet avvisar G4:s
+    // datumfönster partiets nu gällande djurpolitik som fem år gammal.
+    const mp =
+      '<time datetime="2026-06-16" class="post-item__item-date">Puff i lista</time>' +
+      '<script type="application/ld+json">{"datePublished":"2021-11-19T13:16:50+01:00",' +
+      '"dateModified":"2026-06-23T11:53:39+02:00"}</script>' +
+      '<time datetime="2021-11-19T13:16:50+01:00" aria-label="Publicerad">Publicerad</time>' +
+      '<time class="updated" datetime="2026-06-23T11:53:39+02:00" aria-label="Uppdaterad">Uppdaterad</time>';
+    assert.equal(datumUrHtml(mp), "2026-06-23T09:53:39.000Z");
+
+    // Liberalernas abortsida: skapad 2015, omskriven 2026.
+    const liberalerna =
+      '<meta property="article:modified_time" content="2026-05-26T11:42:43+00:00" />' +
+      '<script type="application/ld+json">{"datePublished":"2015-06-24T18:00:20+00:00"}</script>';
+    assert.equal(datumUrHtml(liberalerna), "2026-05-26T11:42:43.000Z");
+  });
+
+  test("uppdateringsdatumUrHtml: bara märkta uppdateringar räknas", () => {
+    // Omärkt <time> i en artikellista är inte sidans uppdateringsdatum. MP:s
+    // djursida har fyra <time>, och det första hör till en puff.
+    assert.equal(
+      uppdateringsdatumUrHtml('<time datetime="2026-06-16" class="post-item__item-date">'),
+      null,
+    );
+    assert.equal(
+      uppdateringsdatumUrHtml('<time datetime="2026-06-23T11:53:39+02:00" aria-label="Uppdaterad">'),
+      "2026-06-23T09:53:39.000Z",
+    );
+    assert.equal(
+      uppdateringsdatumUrHtml('<time datetime="2026-09-31" aria-label="Uppdaterad">'),
+      null,
+      "ett omöjligt kalenderdatum får inte normaliseras i en märkt time-tagg",
+    );
+    assert.equal(
+      uppdateringsdatumUrHtml('<meta content="2026-05-26T11:42:43+00:00" property="og:updated_time">'),
+      "2026-05-26T11:42:43.000Z",
+    );
+    // Synlig text är sista utvägen: Liberalerna skriver den i brödtexten.
+    assert.equal(
+      uppdateringsdatumUrHtml("<p>(Senast uppdaterad: 26.05.2026)</p>"),
+      "2026-05-26T12:00:00.000Z",
+    );
+    assert.equal(uppdateringsdatumUrHtml("<p>Senast uppdaterad 2026-05-26</p>"), "2026-05-26T12:00:00.000Z");
+    assert.equal(
+      uppdateringsdatumUrHtml("<p>Senast uppdaterad: 2026-02-31</p>"),
+      null,
+      "ett omöjligt synligt datum förblir ogranskat",
+    );
+    assert.equal(uppdateringsdatumUrHtml('<meta property="article:published_time" content="2026-08-02T13:23:03+00:00" />'), null);
+  });
+
+  test("datumUrHtml: utan uppdatering gäller skapandedatumet", () => {
+    // Finns ingen omskrivning är den skapade versionen den enda som finns.
+    const bara =
+      '<script type="application/ld+json">{"datePublished":"2026-06-26T11:43:32+02:00"}</script>' +
+      '<time datetime="2020-01-01" class="post-item__item-date">Puff i lista</time>';
+    assert.equal(datumUrHtml(bara), "2026-06-26T09:43:32.000Z");
+  });
+
+  test("index-källa: odaterad adress tar datum ur artikeln", async () => {
+    const lista = '<a href="/nyhet/ett-lofte/">Ett löfte</a>';
+    const artikel =
+      '<html><head><title>Ett löfte</title>' +
       '<meta property="article:published_time" content="2026-07-02T09:00:00+00:00" />' +
       `</head><body><p>${"Vi lovar saker. ".repeat(40)}</p></body></html>`;
     const mockFetch: HttpFetchFn = async (url) => {
