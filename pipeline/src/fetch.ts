@@ -621,21 +621,44 @@ function giltigKalenderdag(year: number, month: number, day: number): boolean {
 }
 
 /**
- * Parses source dates without accepting impossible days that JavaScript would
- * silently roll into the next month (for example 2026-02-31 → 2026-03-03).
+ * Parses supported source dates without accepting impossible days that
+ * JavaScript would silently roll into the next month.
  */
 function valideratKallDatum(raw: string): Date | null {
-  const iso = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?!\d)/u);
-  if (iso && !giltigKalenderdag(Number(iso[1]), Number(iso[2]), Number(iso[3]))) return null;
+  const manader = new Map([
+    ["jan", 1], ["feb", 2], ["mar", 3], ["apr", 4], ["may", 5], ["jun", 6],
+    ["jul", 7], ["aug", 8], ["sep", 9], ["oct", 10], ["nov", 11], ["dec", 12],
+  ]);
+  const iso = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?:[Tt](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?(Z|[+-]\d{2}:?\d{2})?)?$/u);
+  const rfc = raw.match(/^(?:[a-z]{3},\s*)?(\d{1,2})\s+([a-z]{3,9})\s+(\d{4})\s+(\d{2}):(\d{2})(?::(\d{2}))?\s+(?:gmt|utc|ut|z|[+-]\d{4})$/iu);
+  const monthFirst = raw.match(/^([a-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?(?:\s+(?:gmt|utc|ut|z))?)?$/iu);
+  let supported = false;
 
-  const rfc = raw.match(/(?:^|,\s*)(\d{1,2})\s+([a-z]{3,9})\s+(\d{4})(?:\s|$)/iu);
-  if (rfc) {
-    const manader = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-    const month = manader.indexOf(rfc[2]!.slice(0, 3).toLowerCase()) + 1;
+  if (iso) {
+    const [, year, month, day, hour, minute, second, , offset] = iso;
+    if (!giltigKalenderdag(Number(year), Number(month), Number(day))) return null;
+    if (hour !== undefined && (Number(hour) > 23 || Number(minute) > 59 || Number(second ?? 0) > 59)) return null;
+    const offsetMatch = offset?.match(/^[+-](\d{2}):?(\d{2})$/u);
+    if (offsetMatch && (Number(offsetMatch[1]) > 23 || Number(offsetMatch[2]) > 59)) return null;
+    supported = true;
+  } else if (rfc) {
+    const month = manader.get(rfc[2]!.slice(0, 3).toLowerCase());
     if (!month || !giltigKalenderdag(Number(rfc[3]), month, Number(rfc[1]))) return null;
+    if (Number(rfc[4]) > 23 || Number(rfc[5]) > 59 || Number(rfc[6] ?? 0) > 59) return null;
+    supported = true;
+  } else if (monthFirst) {
+    const month = manader.get(monthFirst[1]!.slice(0, 3).toLowerCase());
+    if (!month || !giltigKalenderdag(Number(monthFirst[3]), month, Number(monthFirst[2]))) return null;
+    if (monthFirst[4] !== undefined && (Number(monthFirst[4]) > 23 || Number(monthFirst[5]) > 59 || Number(monthFirst[6] ?? 0) > 59)) return null;
+    supported = true;
   }
 
-  const timestamp = Date.parse(raw);
+  // Date.parse also accepts ambiguous formats and normalizes impossible dates.
+  // Only the ISO and explicit month-name formats validated above are trusted.
+  if (!supported) return null;
+  const timestamp = monthFirst && monthFirst[4] === undefined
+    ? Date.UTC(Number(monthFirst[3]), manader.get(monthFirst[1]!.slice(0, 3).toLowerCase())! - 1, Number(monthFirst[2]))
+    : Date.parse(raw);
   return Number.isNaN(timestamp) ? null : new Date(timestamp);
 }
 
