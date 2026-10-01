@@ -660,9 +660,13 @@ function valideratKallDatum(raw: string): Date | null {
   // Date.parse also accepts ambiguous formats and normalizes impossible dates.
   // Only the ISO and explicit month-name formats validated above are trusted.
   if (!supported) return null;
-  const timestamp = monthFirst && monthFirst[4] === undefined
-    ? Date.parse(`${monthFirst[3]}-${String(manader.get(monthFirst[1]!.toLowerCase())).padStart(2, "0")}-${monthFirst[2]!.padStart(2, "0")}T00:00:00Z`)
-    : Date.parse(raw);
+  // Källor utan tidszon får behålla sin utskrivna kalenderdag; Date.parse
+  // skulle annars tolka dem i körmiljöns lokala tidszon och kunna flytta dagen.
+  const timestamp = monthFirst
+    ? Date.parse(`${monthFirst[3]}-${String(manader.get(monthFirst[1]!.toLowerCase())).padStart(2, "0")}-${monthFirst[2]!.padStart(2, "0")}T${(monthFirst[4] ?? "00").padStart(2, "0")}:${(monthFirst[5] ?? "00").padStart(2, "0")}:${(monthFirst[6] ?? "00").padStart(2, "0")}Z`)
+    : iso?.[4] !== undefined && iso[8] === undefined
+      ? Date.parse(`${raw.slice(0, 10)}T${raw.slice(11)}Z`)
+      : Date.parse(raw);
   return Number.isNaN(timestamp) ? null : new Date(timestamp);
 }
 
