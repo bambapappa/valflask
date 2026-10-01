@@ -626,11 +626,13 @@ function giltigKalenderdag(year: number, month: number, day: number): boolean {
  */
 function valideratKallDatum(raw: string): Date | null {
   const manader = new Map([
-    ["jan", 1], ["feb", 2], ["mar", 3], ["apr", 4], ["may", 5], ["jun", 6],
-    ["jul", 7], ["aug", 8], ["sep", 9], ["oct", 10], ["nov", 11], ["dec", 12],
+    ["jan", 1], ["january", 1], ["feb", 2], ["february", 2], ["mar", 3], ["march", 3],
+    ["apr", 4], ["april", 4], ["may", 5], ["jun", 6], ["june", 6],
+    ["jul", 7], ["july", 7], ["aug", 8], ["august", 8], ["sep", 9], ["sept", 9], ["september", 9],
+    ["oct", 10], ["october", 10], ["nov", 11], ["november", 11], ["dec", 12], ["december", 12],
   ]);
   const iso = raw.match(/^(\d{4})-(\d{2})-(\d{2})(?:[Tt](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?(Z|[+-]\d{2}:?\d{2})?)?$/u);
-  const rfc = raw.match(/^(?:[a-z]{3},\s*)?(\d{1,2})\s+([a-z]{3,9})\s+(\d{4})\s+(\d{2}):(\d{2})(?::(\d{2}))?\s+(?:gmt|utc|ut|z|[+-]\d{4})$/iu);
+  const rfc = raw.match(/^(?:[a-z]{3},\s*)?(\d{1,2})\s+([a-z]{3,9})\s+(\d{4})\s+(\d{2}):(\d{2})(?::(\d{2}))?\s+(gmt|utc|ut|z|[+-]\d{4})$/iu);
   const monthFirst = raw.match(/^([a-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?(?:\s+(?:gmt|utc|ut|z))?)?$/iu);
   let supported = false;
 
@@ -642,12 +644,14 @@ function valideratKallDatum(raw: string): Date | null {
     if (offsetMatch && (Number(offsetMatch[1]) > 23 || Number(offsetMatch[2]) > 59)) return null;
     supported = true;
   } else if (rfc) {
-    const month = manader.get(rfc[2]!.slice(0, 3).toLowerCase());
+    const month = manader.get(rfc[2]!.toLowerCase());
     if (!month || !giltigKalenderdag(Number(rfc[3]), month, Number(rfc[1]))) return null;
     if (Number(rfc[4]) > 23 || Number(rfc[5]) > 59 || Number(rfc[6] ?? 0) > 59) return null;
+    const offsetMatch = rfc[7]!.match(/^[+-](\d{2})(\d{2})$/u);
+    if (offsetMatch && (Number(offsetMatch[1]) > 23 || Number(offsetMatch[2]) > 59)) return null;
     supported = true;
   } else if (monthFirst) {
-    const month = manader.get(monthFirst[1]!.slice(0, 3).toLowerCase());
+    const month = manader.get(monthFirst[1]!.toLowerCase());
     if (!month || !giltigKalenderdag(Number(monthFirst[3]), month, Number(monthFirst[2]))) return null;
     if (monthFirst[4] !== undefined && (Number(monthFirst[4]) > 23 || Number(monthFirst[5]) > 59 || Number(monthFirst[6] ?? 0) > 59)) return null;
     supported = true;
@@ -657,7 +661,7 @@ function valideratKallDatum(raw: string): Date | null {
   // Only the ISO and explicit month-name formats validated above are trusted.
   if (!supported) return null;
   const timestamp = monthFirst && monthFirst[4] === undefined
-    ? Date.UTC(Number(monthFirst[3]), manader.get(monthFirst[1]!.slice(0, 3).toLowerCase())! - 1, Number(monthFirst[2]))
+    ? Date.parse(\`${monthFirst[3]}-${String(manader.get(monthFirst[1]!.toLowerCase())).padStart(2, "0")}-${monthFirst[2]!.padStart(2, "0")}T00:00:00Z\`)
     : Date.parse(raw);
   return Number.isNaN(timestamp) ? null : new Date(timestamp);
 }
