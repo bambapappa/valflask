@@ -204,10 +204,17 @@ const startPage = resolve(DIST_DIR, "index.html");
 let taxameterOk = false;
 if (existsSync(startPage)) {
   const content = readFileSync(startPage, "utf8");
-  const match = content.match(/data-taxameter="(\d+(?:\.\d+)?)"/);
+  const viewStarts = [...content.matchAll(/<div data-loftesfilter-vy="[^"]*" data-loftesfilter-vy-antal="\d+"[^>]*>/g)];
+  const defaultStart = viewStarts.find((candidate) => candidate[0].includes('data-loftesfilter-default="true"'));
+  const defaultBlock = defaultStart
+    ? content.slice(defaultStart.index, content.indexOf('<div data-loftesfilter-vy=', defaultStart.index! + defaultStart[0].length) === -1
+      ? content.length
+      : content.indexOf('<div data-loftesfilter-vy=', defaultStart.index! + defaultStart[0].length))
+    : "";
+  const match = defaultBlock.match(/data-taxameter="(\d+(?:\.\d+)?)"/);
   if (match) {
     const val = parseFloat(match[1]);
-    // Startsidan börjar med partiernas egna belopp för reformlöften. Detta
+    // Standardvyn visar partiernas reformlöften oavsett verifierad tidpunkt. Detta
     // filter ska tillämpas före grupperingen: vid "båda" skulle en medlem
     // från ett annat beloppsunderlag annars kunna bli grupprepresentant.
     const aktiva = data.filter((p: any) =>
@@ -234,7 +241,7 @@ if (existsSync(startPage)) {
       fail(`data-taxameter="${match[1]}" != expected flasket ${expectedFlasket}`);
     }
   } else {
-    fail("data-taxameter attribute not found on start page");
+    fail("data-taxameter attribute not found on the default start-page view");
   }
 } else {
   fail("start page index.html not found");

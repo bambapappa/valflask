@@ -3,7 +3,7 @@
 (() => {
   const KEY_UNDERLAG = "loftesfilter-underlag";
   const KEY_TYP = "loftesfilter-loftestyp";
-  const KEY_VALDAG = "loftesfilter-valdag";
+  const KEY_VALDAG = "loftesfilter-valdag-v2";
   const validUnderlag = new Set(["parti", "utlovat", "alla"]);
   const validTyp = new Set(["reform", "inriktning", "alla"]);
   const validValdag = new Set(["fore", "valdagen", "efter", "oklar", "alla"]);
@@ -50,7 +50,7 @@
     if (!forms.length) return;
     let underlag = storageGet(KEY_UNDERLAG, "parti", validUnderlag);
     let typ = storageGet(KEY_TYP, "reform", validTyp);
-    let valdag = storageGet(KEY_VALDAG, "fore", validValdag);
+    let valdag = storageGet(KEY_VALDAG, "alla", validValdag);
     if (needsEstimates(underlag) && !hasAcceptedEstimates()) underlag = "parti";
     for (const form of forms) {
       form.querySelector(`input[name="underlag"][value="${underlag}"]`).checked = true;

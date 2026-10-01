@@ -30,6 +30,34 @@ function readReview(dir: string): NeedsReviewEntry[] {
 }
 
 describe("publish: needs_review är en beständig kö (merge, inte överskrivning)", () => {
+  it("publicerar källans kalenderdag, inte UTC-dagen efter tidszonskonvertering", () => {
+    const dir = mkdtempSync(join(tmpdir(), "publish-date-boundary-"));
+    try {
+      const result = publish({
+        processedCandidates: [{
+          candidate: {
+            title: "Löfte på valdagen", parties: ["Testpartiet"], person: null,
+            quote: "Vi lovar att förbättra skolan", category: "skola",
+            amount_in_text_msek: 10, financing_mentioned: false,
+          },
+          article: {
+            url: "https://testpartiet.se/lofte", domain: "testpartiet.se", title: "Löfte",
+            text: "Vi lovar att förbättra skolan", published: "2026-09-12T22:30:00.000Z",
+            dateStated: "2026-09-13", dateBasis: "kalla",
+          },
+          verifyResult: { is_promise: true, party_correct: true, amount_in_text: true, verdict: "publish", reason: "" },
+          cost: { type: "utgift", period: "per_ar", msek_low: 10, msek_base: 10, msek_high: 10, basis: "parti", basis_url: null, method_note: "", calculation: "10 mkr per år", confidence: 1 },
+          quip: "", archiveUrl: null, extractModel: "test", verifyModel: "test",
+        }],
+        reviewItems: [], existingPromises: [], runId: "run-date-boundary",
+        now: new Date("2026-09-13T00:00:00Z"), outputDir: dir,
+      });
+      assert.equal(result.promises[0]?.date_stated, "2026-09-13");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it("lämnar löften och kö orörda om ändringsloggen är trasig", () => {
     const dir = mkdtempSync(join(tmpdir(), "publish-atomic-"));
     try {

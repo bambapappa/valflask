@@ -379,6 +379,48 @@ describe("LiveSource med mock-HTTP", () => {
     assert.ok(articles[0]!.domain.length > 0);
   });
 
+  test("ogiltigt RSS-datum blir insamlingsdatum i stället för ett normaliserat källdatum", async () => {
+    const rssXml = '<rss version="2.0"><channel><item>' +
+      '<title>Ett löfte</title><link>https://testpartiet.se/lofte</link>' +
+      '<pubDate>Tue, 31 Feb 2026 10:00:00 GMT</pubDate>' +
+      '<description>Vi lovar att förbättra skolan.</description>' +
+      '</item><item><title>Ett annat löfte</title><link>https://testpartiet.se/annat-lofte</link>' +
+      '<pubDate>Wed, 10 Jun 2026 10:00:00 +9999</pubDate>' +
+      '<description>Vi lovar också att förbättra skolan.</description>' +
+      '</item></channel></rss>';
+    const mockFetch: HttpFetchFn = async (url) => url.includes("robots.txt")
+      ? new Response("User-agent: *\nAllow: /", { status: 200 })
+      : new Response(rssXml, { status: 200, headers: { "content-type": "application/xml" } });
+    const source = new LiveSource({
+      feeds: [{ id: "test", type: "rss", url: "https://testpartiet.se/feed/" }],
+      limits: { max_articles_per_run: 50, min_chars: 1 },
+      httpFetch: mockFetch,
+    });
+    const articles = await source.fetch();
+    assert.equal(articles.length, 2);
+    assert.ok(articles.every((article) => article.dateBasis === "insamling"));
+    assert.ok(articles.every((article) => article.published !== "2026-03-03T10:00:00.000Z"));
+  });
+
+  test("bevarar källans kalenderdag när tidszon flyttar tidpunkten över midnatt UTC", async () => {
+    const rssXml = '<rss version="2.0"><channel><item>' +
+      '<title>Löfte på valdagen</title><link>https://testpartiet.se/lofte</link>' +
+      '<pubDate>Sun, 13 Sep 2026 00:30:00 +0200</pubDate>' +
+      '<description>Vi lovar att förbättra skolan.</description>' +
+      '</item></channel></rss>';
+    const mockFetch: HttpFetchFn = async (url) => url.includes("robots.txt")
+      ? new Response("User-agent: *\nAllow: /", { status: 200 })
+      : new Response(rssXml, { status: 200, headers: { "content-type": "application/xml" } });
+    const source = new LiveSource({
+      feeds: [{ id: "test", type: "rss", url: "https://testpartiet.se/feed/" }],
+      limits: { max_articles_per_run: 50, min_chars: 1 },
+      httpFetch: mockFetch,
+    });
+    const [article] = await source.fetch();
+    assert.equal(article?.published, "2026-09-12T22:30:00.000Z");
+    assert.equal(article?.dateStated, "2026-09-13");
+  });
+
   test("respekterar min_chars-filter", async () => {
     const rssXml = readFixture("party-rss.xml");
 
@@ -803,6 +845,11 @@ describe("LiveSource med mock-HTTP", () => {
       "2026-07-23T12:00:00.000Z",
     );
     assert.equal(datumUrAdress("https://example.se/utan-datum"), null);
+    assert.equal(datumUrAdress("https://example.se/2026-02-31-ogiltigt"), null);
+    assert.equal(
+      datumUrAdress("https://example.se/2028-02-29-skottar"),
+      "2028-02-29T12:00:00.000Z",
+    );
   });
 
   test("findArticleLinks: article_pattern för partier med odaterade adresser", () => {
@@ -894,6 +941,48 @@ describe("LiveSource med mock-HTTP", () => {
       "2026-06-26T09:43:33.000Z",
     );
     assert.equal(datumUrHtml("<p>ingen tid alls</p>"), null);
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="2026-02-31T13:23:03+00:00" />'),
+      null,
+      "ett omöjligt kalenderdatum får inte normaliseras till mars",
+    );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="February 31, 2026" />'),
+      null,
+      "ett omöjligt månad-först-datum får inte normaliseras till mars",
+    );
+    const originalTimezone = process.env.TZ;
+    process.env.TZ = "Europe/Stockholm";
+    try {
+      assert.equal(
+        datumUrHtml('<meta property="article:published_time" content="2026-09-13T00:30:00" />'),
+        "2026-09-13T00:30:00.000Z",
+        "ISO-tid utan tidszon behåller källans kalenderdag oberoende av körmiljön",
+      );
+      assert.equal(
+        datumUrHtml('<meta property="article:published_time" content="September 13, 2026 00:30" />'),
+        "2026-09-13T00:30:00.000Z",
+        "månad-först-tid utan tidszon behåller källans kalenderdag",
+      );
+    } finally {
+      if (originalTimezone === undefined) delete process.env.TZ;
+      else process.env.TZ = originalTimezone;
+    }
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="February 28, 2026" />'),
+      "2026-02-28T00:00:00.000Z",
+      "ett giltigt månad-först-datum kan fortfarande läsas",
+    );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="Januaryyyy 28, 2026" />'),
+      null,
+      "felstavat månadsnamn lämnas ogranskat",
+    );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="02/03/2026" />'),
+      null,
+      "ett tvetydigt numeriskt datum lämnas ogranskat",
+    );
   });
 
   test("datumUrHtml: uppdateringsdatumet går före skapandedatumet", () => {
@@ -927,6 +1016,11 @@ describe("LiveSource med mock-HTTP", () => {
       "2026-06-23T09:53:39.000Z",
     );
     assert.equal(
+      uppdateringsdatumUrHtml('<time datetime="2026-09-31" aria-label="Uppdaterad">'),
+      null,
+      "ett omöjligt kalenderdatum får inte normaliseras i en märkt time-tagg",
+    );
+    assert.equal(
       uppdateringsdatumUrHtml('<meta content="2026-05-26T11:42:43+00:00" property="og:updated_time">'),
       "2026-05-26T11:42:43.000Z",
     );
@@ -936,6 +1030,11 @@ describe("LiveSource med mock-HTTP", () => {
       "2026-05-26T12:00:00.000Z",
     );
     assert.equal(uppdateringsdatumUrHtml("<p>Senast uppdaterad 2026-05-26</p>"), "2026-05-26T12:00:00.000Z");
+    assert.equal(
+      uppdateringsdatumUrHtml("<p>Senast uppdaterad: 2026-02-31</p>"),
+      null,
+      "ett omöjligt synligt datum förblir ogranskat",
+    );
     assert.equal(uppdateringsdatumUrHtml('<meta property="article:published_time" content="2026-08-02T13:23:03+00:00" />'), null);
   });
 
@@ -951,7 +1050,8 @@ describe("LiveSource med mock-HTTP", () => {
     const lista = '<a href="/nyhet/ett-lofte/">Ett löfte</a>';
     const artikel =
       '<html><head><title>Ett löfte</title>' +
-      '<meta property="article:published_time" content="2026-07-02T09:00:00+00:00" />' +
+      '<meta property="article:published_time" content="2026-09-11T12:00:00Z" />' +
+      '<meta property="article:modified_time" content="2026-09-13T00:30:00+02:00" />' +
       `</head><body><p>${"Vi lovar saker. ".repeat(40)}</p></body></html>`;
     const mockFetch: HttpFetchFn = async (url) => {
       if (url.includes("robots.txt")) return new Response("User-agent: *\nAllow: /", { status: 200 });
@@ -968,11 +1068,8 @@ describe("LiveSource med mock-HTTP", () => {
     });
     const articles = await source.fetch();
     assert.equal(articles.length, 1);
-    assert.equal(
-      articles[0]!.published,
-      "2026-07-02T09:00:00.000Z",
-      "artikelns eget datum, inte hämtningsdagen",
-    );
+    assert.equal(articles[0]!.published, "2026-09-12T22:30:00.000Z", "artikelns exakta tidpunkt");
+    assert.equal(articles[0]!.dateStated, "2026-09-13", "källans dag styr valperioden");
   });
 
   test("findManifestPdfLinks: manifest från ett tidigare val följs inte", () => {

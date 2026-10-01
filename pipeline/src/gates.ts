@@ -34,6 +34,8 @@ export interface NormalizedArticle {
   text: string;
   /** Källans publiceringstidpunkt, ISO 8601. */
   published: string;
+  /** Kalenderdagen som källan själv angav; undviker UTC att flytta valdagen. */
+  dateStated?: string;
   /** Om datumet kommer från källan eller bara är när den odaterade sidan hämtades. */
   dateBasis?: "kalla" | "osakert-kalldatum" | "insamling";
   /**

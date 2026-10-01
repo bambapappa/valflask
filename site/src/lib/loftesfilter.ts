@@ -15,7 +15,9 @@ export interface Loeftesfilter {
 export const STANDARD_LOFTESFILTER: Loeftesfilter = {
   underlag: "parti",
   loftestyp: "reform",
-  valdag: "fore",
+  // Unknown legacy date provenance must not blank the site's default view.
+  // Each promise keeps its verified period label, and readers can filter it.
+  valdag: "alla",
 };
 
 export const ALLA_LOFTESFILTER: Loeftesfilter[] =
@@ -27,10 +29,17 @@ export const ALLA_LOFTESFILTER: Loeftesfilter[] =
 /** En insamling efter valet är inte i sig belägg för när löftet gavs. */
 export function valdagKategori(promise: PromisePost): Exclude<ValdagFilter, "alla"> {
   const date = promise.date_stated;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) return "oklar";
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return "oklar";
+  const parsedDate = new Date(`${date}T00:00:00Z`);
+  // JavaScript normalizes impossible calendar dates; require an exact roundtrip.
+  if (Number.isNaN(parsedDate.getTime()) || parsedDate.toISOString().slice(0, 10) !== date) return "oklar";
+  // A date before election day needs the same source evidence as a later date.
+  // Legacy date_stated values may be collection dates, not when the promise
+  // was first made; without a source date basis, do not label them "before".
+  if (promise.source.date_basis !== "kalla") return "oklar";
   if (date < VALDAGEN_2026) return "fore";
-  if (date === VALDAGEN_2026) return promise.source.date_basis === "kalla" ? "valdagen" : "oklar";
-  return promise.source.date_basis === "kalla" ? "efter" : "oklar";
+  if (date === VALDAGEN_2026) return "valdagen";
+  return "efter";
 }
 
 export function valdagEtikett(promise: PromisePost): string {
