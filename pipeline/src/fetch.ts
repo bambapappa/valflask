@@ -756,7 +756,7 @@ function uppdateringsdatumKallaUrHtml(html: string): string | null {
   );
   if (synlig) {
     const iso = synlig[1] ?? `${synlig[4]}-${synlig[3]}-${synlig[2]}`;
-    if (valideratKallDatum(iso)) return iso;
+    if (valideratKallDatum(iso)) return `${iso}T12:00:00.000Z`;
   }
   return null;
 }
