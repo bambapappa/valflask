@@ -56,3 +56,18 @@ for (const [datafil, schemafil] of PAR) {
     assert.ok(ok, `${datafil} bryter mot ${schemafil}:\n  ${fel}`);
   });
 }
+
+test("promises date_basis accepts only the pipeline provenance values", () => {
+  const schema = JSON.parse(readFileSync(resolve(SCHEMAN, "promises.schema.json"), "utf8"));
+  const rows = JSON.parse(readFileSync(resolve(DATA, "promises.json"), "utf8"));
+  const ajv = new Ajv2020({ allErrors: true, strict: false });
+  const validate = ajv.compile(schema);
+  for (const basis of ["kalla", "osakert-kalldatum", "insamling"]) {
+    const candidate = structuredClone(rows);
+    candidate[0].source.date_basis = basis;
+    assert.equal(validate(candidate), true, `giltig datumgrund avvisades: ${basis}`);
+  }
+  const candidate = structuredClone(rows);
+  candidate[0].source.date_basis = "gissad";
+  assert.equal(validate(candidate), false, "okänd datumgrund måste avvisas");
+});
