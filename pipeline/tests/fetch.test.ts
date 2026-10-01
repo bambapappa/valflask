@@ -924,6 +924,21 @@ describe("LiveSource med mock-HTTP", () => {
       null,
       "ett omöjligt kalenderdatum får inte normaliseras till mars",
     );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="February 31, 2026" />'),
+      null,
+      "ett omöjligt månad-först-datum får inte normaliseras till mars",
+    );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="February 28, 2026" />'),
+      "2026-02-28T00:00:00.000Z",
+      "ett giltigt månad-först-datum kan fortfarande läsas",
+    );
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="02/03/2026" />'),
+      null,
+      "ett tvetydigt numeriskt datum lämnas ogranskat",
+    );
   });
 
   test("datumUrHtml: uppdateringsdatumet går före skapandedatumet", () => {
