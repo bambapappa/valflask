@@ -379,6 +379,26 @@ describe("LiveSource med mock-HTTP", () => {
     assert.ok(articles[0]!.domain.length > 0);
   });
 
+  test("ogiltigt RSS-datum blir insamlingsdatum i stället för ett normaliserat källdatum", async () => {
+    const rssXml = '<rss version="2.0"><channel><item>' +
+      '<title>Ett löfte</title><link>https://testpartiet.se/lofte</link>' +
+      '<pubDate>Tue, 31 Feb 2026 10:00:00 GMT</pubDate>' +
+      '<description>Vi lovar att förbättra skolan.</description>' +
+      '</item></channel></rss>';
+    const mockFetch: HttpFetchFn = async (url) => url.includes("robots.txt")
+      ? new Response("User-agent: *\\nAllow: /", { status: 200 })
+      : new Response(rssXml, { status: 200, headers: { "content-type": "application/xml" } });
+    const source = new LiveSource({
+      feeds: [{ id: "test", type: "rss", url: "https://testpartiet.se/feed/" }],
+      limits: { max_articles_per_run: 50, min_chars: 1 },
+      httpFetch: mockFetch,
+    });
+    const [article] = await source.fetch();
+    assert.ok(article);
+    assert.equal(article.dateBasis, "insamling");
+    assert.notEqual(article.published, "2026-03-03T10:00:00.000Z");
+  });
+
   test("respekterar min_chars-filter", async () => {
     const rssXml = readFixture("party-rss.xml");
 
@@ -899,6 +919,11 @@ describe("LiveSource med mock-HTTP", () => {
       "2026-06-26T09:43:33.000Z",
     );
     assert.equal(datumUrHtml("<p>ingen tid alls</p>"), null);
+    assert.equal(
+      datumUrHtml('<meta property="article:published_time" content="2026-02-31T13:23:03+00:00" />'),
+      null,
+      "ett omöjligt kalenderdatum får inte normaliseras till mars",
+    );
   });
 
   test("datumUrHtml: uppdateringsdatumet går före skapandedatumet", () => {
