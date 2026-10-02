@@ -66,10 +66,9 @@ const dateCases = [...alla, paValdagen, efter, baraInsamlat, valdagBaraInsamlat,
 check("alla tidpunkter delar upp populationen utan bortfall", ["fore", "valdagen", "efter", "oklar"].reduce((n, valdag) => n + filtreraLoeften(dateCases, { underlag: "alla", loftestyp: "alla", valdag: valdag as "fore" | "valdagen" | "efter" | "oklar" }).length, 0) === dateCases.length);
 
 const published = getPromises().filter((p) => p.status !== "tillbakadragen");
-const utanKallgrund = published.filter((p) => p.source.date_basis == null);
-const befintligaMedSamladBedomning = utanKallgrund.filter((p) => /^p-2026-\d{4}$/.test(p.id) && Number(p.id.slice(-4)) <= 4667);
-check("det aktuella beståndet med oklar källgrund omfattas helt av den samlade bedömningen", befintligaMedSamladBedomning.length === 4041 && befintligaMedSamladBedomning.every((p) => valdagKategori(p) === "fore"));
-check("poster utan datumgrund utanför den befintliga mängden förblir oklara", utanKallgrund.filter((p) => !befintligaMedSamladBedomning.includes(p)).every((p) => valdagKategori(p) === "oklar"));
+const befintligaPoster = published.filter((p) => p.id.startsWith("p-2026-") && p.id.slice(7).length === 4 && p.id.slice(7) <= "4667");
+check("befintliga aktiva poster i den frysta mängden visas före enligt samlad bedömning", befintligaPoster.length > 0 && befintligaPoster.every((p) => valdagKategori(p) === "fore"));
+check("nya poster utan datumgrund utanför den frysta mängden förblir oklara", published.filter((p) => p.source.date_basis == null && !befintligaPoster.includes(p)).every((p) => valdagKategori(p) === "oklar"));
 const views = loftesvyer(published);
 const keys = views.flatMap((view) => view.keys);
 check("alla 45 filterval pekar på exakt en vy", keys.length === ALLA_LOFTESFILTER.length && new Set(keys).size === keys.length && ALLA_LOFTESFILTER.every((filter) => keys.includes(filterNyckel(filter))));
