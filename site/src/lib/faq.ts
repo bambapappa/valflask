@@ -46,6 +46,7 @@ import {
   totalFlasket,
   totalFinancingClaimed,
   financingGap,
+  dedupeByGroup,
   isActive,
 } from "./aggregates.ts";
 import { computeDataHash } from "./canonical.ts";
@@ -251,11 +252,13 @@ function kostnadsSvar(
     ? totalFinancingClaimed(loften)
     : partyFinancingClaimedMsek(loften, partiKod);
   const gap = partiKod === null ? financingGap(loften) : partyFinancingGapMsek(loften, partiKod);
-  const antal = loften.filter(isActive).length;
-  const urval = dyrasteMedArkiv(
-    partiKod === null ? loften : loften.filter((p) => isActive(p) && p.parties.includes(partiKod)),
-    3,
-  );
+  // Samma population som partisidornas summor: aktiva löften, grupper räknade
+  // en gång (dedupeByGroup efter partifiltret).
+  const population = partiKod === null
+    ? loften.filter(isActive)
+    : dedupeByGroup(loften.filter((p) => isActive(p) && p.parties.includes(partiKod)));
+  const antal = population.length;
+  const urval = dyrasteMedArkiv(partiKod === null ? loften : population, 3);
   // Utan citert belägg finns inget citerbart svar — detsamma gäller ett blänkt
   // underlag. Då är ärliga svaret ingen sida alls.
   if (urval.length === 0) return null;

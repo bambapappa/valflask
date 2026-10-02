@@ -44,7 +44,7 @@ import { fileURLToPath } from "node:url";
 import { faqFragor, faqEfterSlug, blankaFaq, type FaqSvar } from "../src/lib/faq.ts";
 import { getPromises, getParties, getChangelog } from "../src/lib/data.ts";
 import { getIssuesFile, getStances } from "../src/lib/stances.ts";
-import { partyTotalMsek, partyFinancingClaimedMsek, partyFinancingGapMsek } from "../src/lib/aggregates.ts";
+import { partyTotalMsek, partyFinancingClaimedMsek, partyFinancingGapMsek, dedupeByGroup, isActive } from "../src/lib/aggregates.ts";
 import { formatMsek } from "../src/lib/calc.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -124,8 +124,12 @@ for (const s of svar) {
     check(`${s.slug}: totalen är partiets räkning`, d.total_msek === total, `${d.total_msek} != ${total}`);
     check(`${s.slug}: finansieringen är partiets räkning`, d.finansiering_msek === fin, `${d.finansiering_msek} != ${fin}`);
     check(`${s.slug}: gapet är partiets räkning`, d.gap_msek === gap, `${d.gap_msek} != ${gap}`);
-    check(`${s.slug}: beloppet står i korta svaret`, s.answer_short.includes(formatMsek(total)));
+    // Antalet ska vara partiets grupperade population — inte hela beståndet
+    // (felmått som räknade rikets 4 500 löften i ett partisvar).
+    const expectAntal = dedupeByGroup(promises.filter((p) => isActive(p) && p.parties.includes(parti.code))).length;
     const antal = (s.data as { antal_loften: number }).antal_loften;
+    check(`${s.slug}: antal löften är partiets grupperade population`, antal === expectAntal, `${antal} != ${expectAntal}`);
+    check(`${s.slug}: beloppet står i korta svaret`, s.answer_short.includes(formatMsek(total)));
     check(`${s.slug}: antal löften står i korta svaret`, s.answer_short.includes(String(antal)));
   }
   if (s.typ === "delfraga") {
