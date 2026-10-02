@@ -67,6 +67,16 @@ föreslå ett belopp (osant och i konflikt med AI-avsnittet); återställa den
 separata kostnadsrollen (löser inte ankarets begreppsfel); göra prosagrinden
 blind för kostnadssteget (tar bort kontrollen i stället för att mäta rätt sak).
 
+## 2026-10-02 — Befintliga löften räknas före valdagen enligt samlad bedömning
+
+**Gäller:** Fläskvågen och dess periodfilter. Själva löftesposterna och deras källfält ändras inte.
+
+**Beslut:** På användarens uttryckliga instruktion behandlas det befintliga beståndet som före valdagen 13 september 2026. Den verifierade Pages-artefakten från `dbbe7cdf` innehåller 4 543 poster, varav 4 041 aktiva. Alla aktiva poster har ett registrerat datum mellan 1 april och 7 september 2026, men saknar källgrund för datumet. Sajten får därför visa det frysta, befintliga ID-beståndet till och med `p-2026-4667` som före valdagen när postens registrerade datum föregår valdagen. Den frysta serien slutar vid det högsta befintliga ID:t och nya ID:n ärver inte bedömningen. Det är en samlad mänsklig bedömning, inte ett enskilt källdatum. Nya ID:n utan egen datumgrund förblir oklara; nya poster med belagt källdatum kan visas före, på eller efter valdagen. Sajten ska säga detta öppet.
+
+**Motiv:** Läsaren ska kunna skilja befintliga löften från eftervalslöften utan att ett insamlingsdatum presenteras som källbevis. Att skriva `source.date_basis: kalla` i efterhand skulle felaktigt hävda att varje ursprungskälla granskats.
+
+**Förkastade alternativ:** låta alla poster förbli oklara (går emot användarens periodbedömning); tillämpa undantaget på alla framtida poster (skulle blanda samman insamlingsdag och löftesdag); skriva in samlad bedömning som verifierad källdatumgrund.
+
 ## 2026-08-26 — WebMCP visar underlag utan att dra en politisk slutsats
 
 **Gäller:** Fläskvågen och Frågevågen. Handlingsvågen har inte ett eget

@@ -8,9 +8,10 @@ function check(name: string, ok: boolean, detail = ""): void {
   else { errors += 1; console.error(`FEL ${name}${detail ? `: ${detail}` : ""}`); }
 }
 
-function promise(id: string, basis: string, loftestyp: "reform" | "inriktning", date = "2026-09-12", dateBasis?: "kalla" | "osakert-kalldatum" | "insamling"): PromisePost {
+function promise(id: string, basis: string, loftestyp: "reform" | "inriktning", date = "2026-09-12", dateBasis?: "kalla" | "osakert-kalldatum" | "insamling" | null, fetchedAt = "2026-09-12T12:00:00Z"): PromisePost {
   return {
-    id, loftestyp, date_stated: date, source: dateBasis ? { date_basis: dateBasis } : {},
+    id, loftestyp, date_stated: date,
+    source: { fetched_at: fetchedAt, ...(dateBasis ? { date_basis: dateBasis } : {}) },
     cost: { basis },
   } as PromisePost;
 }
@@ -45,6 +46,9 @@ const foreBaraInsamlat = promise("p-fore-insamlat", "parti", "reform", "2026-09-
 const foreOsakertKallDatum = promise("p-fore-osakert", "parti", "reform", "2026-09-12", "osakert-kalldatum");
 const foreUtanKallgrund = promise("p-fore-utan-grund", "parti", "reform", "2026-09-12");
 const omojligtKallDatum = promise("p-omojligt-datum", "parti", "reform", "2026-02-31", "kalla");
+const befintligtEnligtSamladBedomning = promise("p-2026-4667", "parti", "reform", "2026-09-07", null, "2026-09-12T12:00:00Z");
+const nyPostUtanKallgrund = promise("p-2026-4668", "parti", "reform", "2026-09-07", null, "2026-09-20T12:00:00Z");
+const befintligtMedUttryckligtInsamlingsdatum = promise("p-2026-4667", "parti", "reform", "2026-09-07", "insamling", "2026-09-12T12:00:00Z");
 const sidUppdateradEfter = { ...efter, id: "p-siduppdaterad", source: { date_basis: "osakert-kalldatum" as const } };
 check("valdagen är en egen kategori", valdagKategori(paValdagen) === "valdagen");
 check("källdaterat efter valet visas efter", valdagKategori(efter) === "efter");
@@ -54,13 +58,17 @@ check("insamlat före valet räknas inte som belägg för ett löfte före valet
 check("osäkert källdatum före valet förblir oklart", valdagKategori(foreOsakertKallDatum) === "oklar");
 check("saknad datumgrund före valet förblir oklart", valdagKategori(foreUtanKallgrund) === "oklar");
 check("omöjligt kalenderdatum med källgrund förblir oklart", valdagKategori(omojligtKallDatum) === "oklar");
+check("befintligt bestånd visas före enligt samlad mänsklig bedömning", valdagKategori(befintligtEnligtSamladBedomning) === "fore");
+check("ny post ärver inte den samlade bedömningen", valdagKategori(nyPostUtanKallgrund) === "oklar");
+check("uttryckligt insamlingsdatum blir inte ett källdatum", valdagKategori(befintligtMedUttryckligtInsamlingsdatum) === "oklar");
 check("sidans ändringsdatum efter valet räknas inte som nytt löfte", valdagKategori(sidUppdateradEfter) === "oklar");
-const dateCases = [...alla, paValdagen, efter, baraInsamlat, valdagBaraInsamlat, foreBaraInsamlat, foreOsakertKallDatum, foreUtanKallgrund, omojligtKallDatum, sidUppdateradEfter];
+const dateCases = [...alla, paValdagen, efter, baraInsamlat, valdagBaraInsamlat, foreBaraInsamlat, foreOsakertKallDatum, foreUtanKallgrund, omojligtKallDatum, befintligtEnligtSamladBedomning, nyPostUtanKallgrund, befintligtMedUttryckligtInsamlingsdatum, sidUppdateradEfter];
 check("alla tidpunkter delar upp populationen utan bortfall", ["fore", "valdagen", "efter", "oklar"].reduce((n, valdag) => n + filtreraLoeften(dateCases, { underlag: "alla", loftestyp: "alla", valdag: valdag as "fore" | "valdagen" | "efter" | "oklar" }).length, 0) === dateCases.length);
 
 const published = getPromises().filter((p) => p.status !== "tillbakadragen");
-const utanKallgrund = published.filter((p) => p.source.date_basis !== "kalla");
-check("publicerade löften utan verifierad källgrund visas som oklara", utanKallgrund.every((p) => valdagKategori(p) === "oklar"));
+const befintligaPoster = published.filter((p) => p.id.startsWith("p-2026-") && p.id.slice(7).length === 4 && p.id.slice(7) <= "4667");
+check("befintliga aktiva poster i den frysta mängden visas före enligt samlad bedömning", befintligaPoster.length > 0 && befintligaPoster.every((p) => valdagKategori(p) === "fore"));
+check("nya poster utan datumgrund utanför den frysta mängden förblir oklara", published.filter((p) => p.source.date_basis == null && !befintligaPoster.includes(p)).every((p) => valdagKategori(p) === "oklar"));
 const views = loftesvyer(published);
 const keys = views.flatMap((view) => view.keys);
 check("alla 45 filterval pekar på exakt en vy", keys.length === ALLA_LOFTESFILTER.length && new Set(keys).size === keys.length && ALLA_LOFTESFILTER.every((filter) => keys.includes(filterNyckel(filter))));
