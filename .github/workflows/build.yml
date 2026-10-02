@@ -200,6 +200,11 @@ jobs:
       - name: Grindar för beslutsloggen
         run: node --experimental-strip-types scripts/test-beslutsloggen.mts
         working-directory: site
+      # Periodfiltret har en uttrycklig, versionsbunden mänsklig bedömning för
+      # det befintliga beståndet. Kör dess regressionsprov i varje PR-bygge.
+      - name: Grindar för löftenas valperiod
+        run: node --experimental-strip-types scripts/test-loftesfilter.mts
+        working-directory: site
       - name: Build site + OG images
         run: pnpm build
         working-directory: site
