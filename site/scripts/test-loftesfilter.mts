@@ -69,7 +69,7 @@ check("alla tidpunkter delar upp populationen utan bortfall", ["fore", "valdagen
 
 const published = getPromises().filter((p) => p.status !== "tillbakadragen");
 const utanKallgrund = published.filter((p) => p.source.date_basis == null);
-const befintligaMedSamladBedomning = utanKallgrund.filter((p) => /^p-2026-\\d{4}$/.test(p.id) && Number(p.id.slice(-4)) <= 4667);
+const befintligaMedSamladBedomning = utanKallgrund.filter((p) => /^p-2026-\d{4}$/.test(p.id) && Number(p.id.slice(-4)) <= 4667);
 check("det aktuella beståndet med oklar källgrund omfattas helt av den samlade bedömningen", befintligaMedSamladBedomning.length === 4041 && befintligaMedSamladBedomning.every((p) => valdagKategori(p) === "fore"));
 check("poster utan datumgrund utanför den befintliga mängden förblir oklara", utanKallgrund.filter((p) => !befintligaMedSamladBedomning.includes(p)).every((p) => valdagKategori(p) === "oklar"));
 const views = loftesvyer(published);
