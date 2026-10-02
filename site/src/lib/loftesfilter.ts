@@ -26,17 +26,37 @@ export const ALLA_LOFTESFILTER: Loeftesfilter[] =
       (["fore", "valdagen", "efter", "oklar", "alla"] as const).map((valdag) =>
         ({ underlag, loftestyp, valdag }))));
 
-/** En insamling efter valet är inte i sig belägg för när löftet gavs. */
+/**
+ * Samlad mänsklig bedömning 2026-10-02 av det befintliga beståndet.
+ * Den gäller ID-serien fram till p-2026-4667, vars publicerade dataversion
+ * var 9ac291b8b39a796bbd50c4c28735ae5de2e7d678d2e34eb218956fb17a597344.
+ * Endast poster som också samlades in före valdagen och har ett datum före
+ * valdagen omfattas. Nya ID:n måste ha egen källgrund.
+ */
+const SAMMANLAGD_FORVALSDAGSBEDOMNING = { maxLofteNummer: 4667 } as const;
+
+function giltigtKalenderdatum(date: string): boolean {
+  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)) return false;
+  const parsed = new Date(`${date}T00:00:00Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === date;
+}
+
+function omfattasAvSamladBedomning(promise: PromisePost, date: string): boolean {
+  if (date >= VALDAGEN_2026 || promise.source.date_basis != null) return false;
+  const match = /^p-2026-(\\d{4})$/.exec(promise.id);
+  if (!match || Number(match[1]) > SAMMANLAGD_FORVALSDAGSBEDOMNING.maxLofteNummer) return false;
+  const fetchedAt = promise.source.fetched_at;
+  if (typeof fetchedAt !== "string") return false;
+  const fetchedDate = fetchedAt.slice(0, 10);
+  return giltigtKalenderdatum(fetchedDate) && fetchedDate < VALDAGEN_2026;
+}
+
+/** Insamlingsdag ensam styr inte perioden för nya löften. */
 export function valdagKategori(promise: PromisePost): Exclude<ValdagFilter, "alla"> {
   const date = promise.date_stated;
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return "oklar";
-  const parsedDate = new Date(`${date}T00:00:00Z`);
-  // JavaScript normalizes impossible calendar dates; require an exact roundtrip.
-  if (Number.isNaN(parsedDate.getTime()) || parsedDate.toISOString().slice(0, 10) !== date) return "oklar";
-  // A date before election day needs the same source evidence as a later date.
-  // Legacy date_stated values may be collection dates, not when the promise
-  // was first made; without a source date basis, do not label them "before".
-  if (promise.source.date_basis !== "kalla") return "oklar";
+  if (!giltigtKalenderdatum(date)) return "oklar";
+  const harKallgrund = promise.source.date_basis === "kalla";
+  if (!harKallgrund && !omfattasAvSamladBedomning(promise, date)) return "oklar";
   if (date < VALDAGEN_2026) return "fore";
   if (date === VALDAGEN_2026) return "valdagen";
   return "efter";
