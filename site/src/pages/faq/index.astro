@@ -1,0 +1,79 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { faqFragor } from "../../lib/faq";
+
+const svar = faqFragor();
+const delfragor = svar.filter((s) => s.typ === "delfraga");
+const kostnader = svar.filter((s) => s.typ !== "delfraga");
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", position: 1, name: "Hem", item: "https://utlovat.se/" },
+      { "@type": "ListItem", position: 2, name: "Frågor och svar", item: "https://utlovat.se/faq" },
+    ],
+  },
+];
+---
+<Layout title="Frågor och svar — utlovat.se" description="Korta, källbelagda svar om partiernas löften, kostnader och besked — med citat, källa och arkivkopia i varje svar." jsonLd={jsonLd} canonicalPath="/faq">
+  <div class="page-content">
+    <div class="prosa-content prosa-content--centered">
+      <h1>Frågor och svar</h1>
+      <p>Korta svar på vanliga frågor om partiernas löften — vart och ett byggt ur publicerat data och belagt med citat, källa och arkivkopia. Varje fråga har en egen sida och ett maskinläsbart JSON-svar med källor och datum.</p>
+    </div>
+
+    <section class="sektion">
+      <h2>Valets stora frågor — partiernas besked</h2>
+      <ul class="faqlista">
+        {delfragor.map((s) => (
+          <li>
+            <a href={`/faq/${s.slug}/`}>{s.question}</a>
+            <div class="etikett">{s.kontext}</div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="sektion">
+      <h2>Vad löftena kostar</h2>
+      <ul class="faqlista">
+        {kostnader.map((s) => (
+          <li>
+            <a href={`/faq/${s.slug}/`}>{s.question}</a>
+            <div class="etikett">{s.kontext}</div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="sektion">
+      <h2>För datorer</h2>
+      <p class="prosa-content">Alla svar finns också som JSON med källor, datum och licens: <a href="/api/v1/faq.json">/api/v1/faq.json</a> listar alla frågor, och varje fråga har sitt eget svar under <code>/api/v1/faq/&lt;slug&gt;.json</code>. Licensen är CC BY 4.0 — ange utlovat.se som källa och hämtningsdatum.</p>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .prosa-content--centered {
+    margin: 1.5rem auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .faqlista {
+    list-style: none;
+    padding: 0;
+  }
+  .faqlista li {
+    border-top: 1px solid var(--linje-svag);
+    padding: 0.6rem 0;
+  }
+  .faqlista a {
+    font-weight: 700;
+  }
+  .etikett {
+    margin-top: 0.25rem;
+  }
+</style>

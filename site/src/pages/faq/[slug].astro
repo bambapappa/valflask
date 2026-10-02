@@ -1,0 +1,234 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import MetodLank from "../../components/MetodLank.astro";
+import { faqFragor, type FaqSvar } from "../../lib/faq";
+import { emptyCellText, POSITION_LABEL, cellFor, statementById, getStances } from "../../lib/stances";
+import { getParties } from "../../lib/data";
+import { formatMsek } from "../../lib/calc";
+import { sourceLinkLabel, archiveLinkLabel } from "../../lib/source-link";
+
+export function getStaticPaths() {
+  return faqFragor().map((s) => ({ params: { slug: s.slug } }));
+}
+
+/** Titelbudgeten (80 tecken): frågan klipps vid ordgräns — h1 bär hela. */
+function titelBudget(text: string): string {
+  const max = 67;
+  if (text.length <= max) return text;
+  const klipp = text.slice(0, max);
+  const sistaMellanslag = klipp.lastIndexOf(" ");
+  return `${(sistaMellanslag > 40 ? klipp.slice(0, sistaMellanslag) : klipp).trimEnd()}…`;
+}
+
+const { slug } = Astro.params;
+const svar: FaqSvar | undefined = faqFragor().find((s) => s.slug === slug);
+if (!svar) throw new Error(`okänd FAQ-fråga: ${slug}`);
+
+const canonicalPath = `/faq/${svar.slug}/`;
+const stances = getStances();
+const parties = getParties();
+const partiNamn = new Map(parties.map((p) => [p.code, p.name] as const));
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: "sv",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: svar.question,
+        answerCount: 1,
+        acceptedAnswer: {
+          "@type": "Answer",
+          url: `https://utlovat.se${canonicalPath}`,
+          text: svar.answer_short,
+        },
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Hem", item: "https://utlovat.se/" },
+      { "@type": "ListItem", position: 2, name: "Frågor och svar", item: "https://utlovat.se/faq" },
+      { "@type": "ListItem", position: 3, name: svar.question, item: `https://utlovat.se${canonicalPath}` },
+    ],
+  },
+];
+---
+<Layout title={`${titelBudget(svar.question)} — utlovat.se`} description={svar.answer_short} jsonLd={jsonLd} canonicalPath={canonicalPath}>
+  <div class="page-content">
+    <div class="arendehuvud num">
+      FRÅGA OCH SVAR · {svar.kontext.toUpperCase()} · UPPDATERAT {svar.updated_at}
+    </div>
+
+    <div class="prosa-content prosa-content--centered">
+      <h1>{svar.question}</h1>
+      <p id="svar">{svar.answer_short}</p>
+    </div>
+
+    <MetodLank />
+
+    {svar.typ === "delfraga" && (
+      <section class="sektion">
+        <h2>Partiernas besked</h2>
+        <div class="datavy datavy--scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Parti</th>
+                <th>Besked</th>
+                <th>Citat</th>
+                <th class="num">Datum</th>
+                <th>Källa</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(svar.data.parti_besked ?? []).map((pb) => {
+                const cell = cellFor(stances, svar.data.subquestion_id!, pb.parti_kod);
+                const st = cell ? statementById(cell, cell.current.statement_id) : undefined;
+                return (
+                  <tr id={pb.parti_kod}>
+                    <td>{pb.parti_namn}</td>
+                    <td class="besked num">{POSITION_LABEL[pb.position]}</td>
+                    {st ? (
+                      <td class="citatcell"><em>”{st.quote}”</em></td>
+                    ) : (
+                      <td class="citatcell tomcell">{emptyCellText(cell?.last_searched ?? null)}</td>
+                    )}
+                    <td class="num">{st?.date_stated ?? "—"}</td>
+                    <td>
+                      {st ? (
+                        <>
+                          <a href={st.source.url}>{sourceLinkLabel(st.source.url, st.source.domain)}<span aria-hidden="true"> ↗</span></a>
+                          {st.source.archive_url && (
+                            <> · <a href={st.source.archive_url}>{archiveLinkLabel(st.source.archive_url, st.date_stated)}<span aria-hidden="true"> ↗</span></a></>
+                          )}
+                        </>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        {svar.data.fraga_url && (
+          <p class="prosa-content">Hela frågan med tidslinje över alla registrerade besked: <a href={svar.data.fraga_url.replace("https://utlovat.se", "")}>{svar.kontext.replace("Valets stora frågor — ", "")}<span aria-hidden="true"> →</span></a></p>
+        )}
+      </section>
+    )}
+
+    {(svar.typ === "partikostnad" || svar.typ === "totalkostnad") && (
+      <section class="sektion">
+        <h2>Talen</h2>
+        <div class="datavy datavy--scroll">
+          <table>
+            <thead>
+              <tr>
+                <th class="num">Prissatta löften</th>
+                <th class="num">Kostnad (netto)</th>
+                <th class="num">Angiven finansiering</th>
+                <th class="num">Finansieringsgap</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="num">{svar.data.antal_loften}</td>
+                <td class="num belopp">{formatMsek(svar.data.total_msek!)}</td>
+                <td class="num">{formatMsek(svar.data.finansiering_msek!)}</td>
+                <td class="num">{formatMsek(svar.data.gap_msek!)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {(svar.data.dyraste_loftena ?? []).length > 0 && (
+          <>
+            <h3>Dyraste löftena med bevarad källkopia</h3>
+            <ul class="lofteslista">
+              {(svar.data.dyraste_loftena ?? []).map((l) => (
+                <li>
+                  <a href={`/lofte/${l.id}/${l.slug}`}>{l.titel}</a>
+                  <span class="num belopp"> {formatMsek(l.net_msek)}</span>
+                  <div class="etikett num">{l.datum} · <a href={l.url}>{sourceLinkLabel(l.url)}<span aria-hidden="true"> ↗</span></a>{l.arkiv_url && (
+                    <> · <a href={l.arkiv_url}>{archiveLinkLabel(l.arkiv_url, l.datum)}<span aria-hidden="true"> ↗</span></a></>
+                  )}</div>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </section>
+    )}
+
+    <section class="sektion" id="kallor">
+      <h2>Belägg</h2>
+      <ul class="kallista">
+        {svar.sources.map((k) => (
+          <li>
+            {k.parti && <strong>{k.parti}: </strong>}
+            {k.quote && <em>”{k.quote}” </em>}
+            <span class="etikett num">{k.date} · <a href={k.url}>{sourceLinkLabel(k.url)}<span aria-hidden="true"> ↗</span></a>
+              {k.archive_url && (
+                <> · <a href={k.archive_url}>{archiveLinkLabel(k.archive_url, k.date)}<span aria-hidden="true"> ↗</span></a></>
+              )}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="sektion" id="citera">
+      <h2>Citera detta svar</h2>
+      <p class="prosa-content">Maskinläsbart svar med källor, datum och licens: <a href={`/api/v1/faq/${svar.slug}.json`}>/api/v1/faq/{svar.slug}.json</a>. Ange “utlovat.se” som källa (CC BY 4.0) och datumet ovan — talen uppdateras när nya löften vägs in.</p>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .arendehuvud {
+    border: 1px solid var(--svarta);
+    padding: 0.5rem 0.75rem;
+    margin-bottom: var(--mellanrum, 1rem);
+    font-size: 0.8125rem;
+  }
+  .prosa-content--centered {
+    margin: 1.5rem auto;
+  }
+  .sektion {
+    margin-top: 2rem;
+  }
+  .datavy--scroll {
+    overflow-x: auto;
+  }
+  .besked {
+    white-space: nowrap;
+    font-weight: 700;
+  }
+  .citatcell {
+    max-width: 34ch;
+  }
+  .tomcell {
+    color: var(--dis);
+  }
+  .kallista,
+  .lofteslista {
+    list-style: none;
+    padding: 0;
+  }
+  .kallista li,
+  .lofteslista li {
+    border-top: 1px solid var(--linje-svag);
+    padding: 0.6rem 0;
+    margin: 0;
+  }
+  .kallista em {
+    display: block;
+  }
+  h3 {
+    margin-top: 1.25rem;
+  }
+</style>
