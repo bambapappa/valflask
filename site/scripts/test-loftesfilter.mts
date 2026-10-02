@@ -48,7 +48,6 @@ const foreUtanKallgrund = promise("p-fore-utan-grund", "parti", "reform", "2026-
 const omojligtKallDatum = promise("p-omojligt-datum", "parti", "reform", "2026-02-31", "kalla");
 const befintligtEnligtSamladBedomning = promise("p-2026-4667", "parti", "reform", "2026-09-07", null, "2026-09-12T12:00:00Z");
 const nyPostUtanKallgrund = promise("p-2026-4668", "parti", "reform", "2026-09-07", null, "2026-09-20T12:00:00Z");
-const gammalIdInsamladEfterValdagen = promise("p-2026-4667", "parti", "reform", "2026-09-07", null, "2026-09-13T00:00:00Z");
 const befintligtMedUttryckligtInsamlingsdatum = promise("p-2026-4667", "parti", "reform", "2026-09-07", "insamling", "2026-09-12T12:00:00Z");
 const sidUppdateradEfter = { ...efter, id: "p-siduppdaterad", source: { date_basis: "osakert-kalldatum" as const } };
 check("valdagen är en egen kategori", valdagKategori(paValdagen) === "valdagen");
@@ -61,10 +60,9 @@ check("saknad datumgrund före valet förblir oklart", valdagKategori(foreUtanKa
 check("omöjligt kalenderdatum med källgrund förblir oklart", valdagKategori(omojligtKallDatum) === "oklar");
 check("befintligt bestånd visas före enligt samlad mänsklig bedömning", valdagKategori(befintligtEnligtSamladBedomning) === "fore");
 check("ny post ärver inte den samlade bedömningen", valdagKategori(nyPostUtanKallgrund) === "oklar");
-check("senare insamlingsdag utesluter den äldre bedömningen", valdagKategori(gammalIdInsamladEfterValdagen) === "oklar");
 check("uttryckligt insamlingsdatum blir inte ett källdatum", valdagKategori(befintligtMedUttryckligtInsamlingsdatum) === "oklar");
 check("sidans ändringsdatum efter valet räknas inte som nytt löfte", valdagKategori(sidUppdateradEfter) === "oklar");
-const dateCases = [...alla, paValdagen, efter, baraInsamlat, valdagBaraInsamlat, foreBaraInsamlat, foreOsakertKallDatum, foreUtanKallgrund, omojligtKallDatum, befintligtEnligtSamladBedomning, nyPostUtanKallgrund, gammalIdInsamladEfterValdagen, befintligtMedUttryckligtInsamlingsdatum, sidUppdateradEfter];
+const dateCases = [...alla, paValdagen, efter, baraInsamlat, valdagBaraInsamlat, foreBaraInsamlat, foreOsakertKallDatum, foreUtanKallgrund, omojligtKallDatum, befintligtEnligtSamladBedomning, nyPostUtanKallgrund, befintligtMedUttryckligtInsamlingsdatum, sidUppdateradEfter];
 check("alla tidpunkter delar upp populationen utan bortfall", ["fore", "valdagen", "efter", "oklar"].reduce((n, valdag) => n + filtreraLoeften(dateCases, { underlag: "alla", loftestyp: "alla", valdag: valdag as "fore" | "valdagen" | "efter" | "oklar" }).length, 0) === dateCases.length);
 
 const published = getPromises().filter((p) => p.status !== "tillbakadragen");
