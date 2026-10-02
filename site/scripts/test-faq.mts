@@ -203,6 +203,9 @@ if (!existsSync(resolve(DIST, "faq"))) {
       check(`faq/${s.slug}: tabellen märker kostnaden före avdrag`, html.includes("Kostnad före avdrag") && !html.includes("Kostnad (netto)"));
       check(`faq/${s.slug}: tabellen visar avdraget`, html.includes("Besparingar och intäktsökningar") && html.includes(formatMsek(s.data.besparingar_msek!)));
     }
+    if (s.sources.some((source) => !source.archive_url)) {
+      check(`faq/${s.slug}: saknad arkivkopia anges för läsaren`, html.includes("Ingen arkivkopia i underlaget"));
+    }
     const jsonSokvag = resolve(DIST, `api/v1/faq/${s.slug}.json`);
     if (!existsSync(jsonSokvag)) {
       check(`dist/api/v1/faq/${s.slug}.json finns`, false);

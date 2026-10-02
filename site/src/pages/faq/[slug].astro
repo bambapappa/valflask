@@ -175,9 +175,9 @@ const jsonLd = [
             {k.parti && <strong>{k.parti}: </strong>}
             {k.quote && <em>”{k.quote}” </em>}
             <span class="etikett num">{k.date} · <a href={k.url}>{sourceLinkLabel(k.url)}<span aria-hidden="true"> ↗</span></a>
-              {k.archive_url && (
+              {k.archive_url ? (
                 <> · <a href={k.archive_url}>{archiveLinkLabel(k.archive_url, k.date)}<span aria-hidden="true"> ↗</span></a></>
-              )}</span>
+              ) : <> · Ingen arkivkopia i underlaget</>}</span>
           </li>
         ))}
       </ul>
