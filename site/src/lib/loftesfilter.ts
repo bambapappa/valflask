@@ -36,14 +36,14 @@ export const ALLA_LOFTESFILTER: Loeftesfilter[] =
 const SAMMANLAGD_FORVALSDAGSBEDOMNING = { maxLofteNummer: 4667 } as const;
 
 function giltigtKalenderdatum(date: string): boolean {
-  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)) return false;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return false;
   const parsed = new Date(`${date}T00:00:00Z`);
   return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === date;
 }
 
 function omfattasAvSamladBedomning(promise: PromisePost, date: string): boolean {
   if (date >= VALDAGEN_2026 || promise.source.date_basis != null) return false;
-  const match = /^p-2026-(\\d{4})$/.exec(promise.id);
+  const match = /^p-2026-(\d{4})$/.exec(promise.id);
   if (!match || Number(match[1]) > SAMMANLAGD_FORVALSDAGSBEDOMNING.maxLofteNummer) return false;
   const fetchedAt = promise.source.fetched_at;
   if (typeof fetchedAt !== "string") return false;
