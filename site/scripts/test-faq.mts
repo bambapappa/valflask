@@ -44,7 +44,7 @@ import { fileURLToPath } from "node:url";
 import { faqFragor, faqEfterSlug, blankaFaq, type FaqSvar } from "../src/lib/faq.ts";
 import { getPromises, getParties, getChangelog } from "../src/lib/data.ts";
 import { getIssuesFile, getStances } from "../src/lib/stances.ts";
-import { partyTotalMsek, partyFinancingClaimedMsek, partyFinancingGapMsek, dedupeByGroup, isActive } from "../src/lib/aggregates.ts";
+import { partyTotalMsek, partyFinancingClaimedMsek, partyFinancingGapMsek, dedupeByGroup, isActive, totalFlasket, totalBesparingar, totalFinancingClaimed, financingGap } from "../src/lib/aggregates.ts";
 import { formatMsek } from "../src/lib/calc.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -132,7 +132,20 @@ for (const s of svar) {
     check(`${s.slug}: beloppet står i korta svaret`, s.answer_short.includes(formatMsek(total)));
     check(`${s.slug}: antal löften står i korta svaret`, s.answer_short.includes(String(antal)));
   }
+  if (s.typ === "totalkostnad") {
+    const d = s.data;
+    const spar = totalBesparingar(promises);
+    check(`${s.slug}: totalen följer kostnadspopulationen`, d.total_msek === totalFlasket(promises));
+    check(`${s.slug}: finansieringen räknas fram`, d.finansiering_msek === totalFinancingClaimed(promises));
+    check(`${s.slug}: avdragen räknas fram`, d.besparingar_msek === spar);
+    check(`${s.slug}: gapet räknas fram`, d.gap_msek === financingGap(promises));
+    check(`${s.slug}: gapets tre termer är förenliga`, d.gap_msek === d.total_msek! - d.besparingar_msek! - d.finansiering_msek!);
+    check(`${s.slug}: brutto anges uttryckligen`, s.answer_short.includes("före avdrag för besparingar och intäktsökningar"));
+    check(`${s.slug}: besparingsavdraget visas`, s.answer_short.includes(`Besparingar och intäktsökningar: ${formatMsek(spar)}.`));
+  }
   if (s.typ === "delfraga") {
+    const arkiv = s.sources.filter((k) => (k.archive_url ?? "").startsWith("http")).length;
+    check(`${s.slug}: arkivtäckningen visas korrekt`, s.answer_short.includes(`Arkivkopia finns för ${arkiv} av ${s.sources.length} besked.`));
     const sqId = (s.data as { subquestion_id: string }).subquestion_id;
     const celler = stances.filter((c) => c.subquestion_id === sqId);
     const medBesked = celler.filter((c) => c.current.statement_id !== null);
@@ -186,12 +199,17 @@ if (!existsSync(resolve(DIST, "faq"))) {
     check(`faq/${s.slug}: FAQPage bär frågan`, faqPage !== undefined && faqPage.includes(JSON.stringify(s.question).slice(1, -1).slice(0, 40)));
     check(`faq/${s.slug}: korta svaret syns på sidan`, html.includes(s.answer_short.slice(0, 40)));
 
+    if (s.typ === "totalkostnad") {
+      check(`faq/${s.slug}: tabellen märker kostnaden före avdrag`, html.includes("Kostnad före avdrag") && !html.includes("Kostnad (netto)"));
+      check(`faq/${s.slug}: tabellen visar avdraget`, html.includes("Besparingar och intäktsökningar") && html.includes(formatMsek(s.data.besparingar_msek!)));
+    }
     const jsonSokvag = resolve(DIST, `api/v1/faq/${s.slug}.json`);
     if (!existsSync(jsonSokvag)) {
       check(`dist/api/v1/faq/${s.slug}.json finns`, false);
       continue;
     }
     const js = JSON.parse(readFileSync(jsonSokvag, "utf8"));
+    check(`api faq/${s.slug}: samma hela svar`, js.answer_short === s.answer_short);
     check(`api faq/${s.slug}: samma data_hash som modulen`, js.data_hash === s.data_hash, `${js.data_hash} != ${s.data_hash}`);
     check(`api faq/${s.slug}: licens och updated_at`, js.license === "CC-BY-4.0" && js.updated_at === s.updated_at);
   }

@@ -44,6 +44,7 @@ import {
   partyFinancingClaimedMsek,
   partyFinancingGapMsek,
   totalFlasket,
+  totalBesparingar,
   totalFinancingClaimed,
   financingGap,
   dedupeByGroup,
@@ -90,6 +91,7 @@ export interface FaqSvar {
     antal_loften?: number;
     total_msek?: number;
     finansiering_msek?: number;
+    besparingar_msek?: number;
     gap_msek?: number;
     dyraste_loftena?: Array<{ id: string; titel: string; slug: string; net_msek: number; url: string; arkiv_url: string | null; datum: string }>;
   };
@@ -167,7 +169,8 @@ function delfrageSvar(
     (utanBesked.length > 0
       ? `Övriga ${utanBesked.length} har inget tydligt besked publicerat. `
       : "") +
-    `Varje besked bygger på ett ordagrant citat med källa och arkivkopia.`;
+    `Varje besked bygger på ett ordagrant citat med källa. ` +
+    `Arkivkopia finns för ${medBesked.filter((c) => (c.st!.source.archive_url ?? "").startsWith("http")).length} av ${medBesked.length} besked.`;
 
   const sources: FaqKalla[] = medBesked.map((c) => ({
     parti: c.parti.name,
@@ -248,6 +251,7 @@ function kostnadsSvar(
   const total = partiKod === null
     ? totalFlasket(loften)
     : partyTotalMsek(loften, partiKod);
+  const besparingar = partiKod === null ? totalBesparingar(loften) : undefined;
   const fin = partiKod === null
     ? totalFinancingClaimed(loften)
     : partyFinancingClaimedMsek(loften, partiKod);
@@ -265,7 +269,8 @@ function kostnadsSvar(
 
   const answer_short =
     `${partinamn ?? "Riksdagspartierna"} har ${antal} prissatta vallöften som sammanlagt kostar ` +
-    `≈ ${formatMsek(total)} för mandatperioden, enligt utlovat.se:s prissättning. ` +
+    `≈ ${formatMsek(total)} för mandatperioden${partiKod === null ? " före avdrag för besparingar och intäktsökningar" : " netto"}, enligt utlovat.se:s prissättning. ` +
+    (besparingar !== undefined ? `Besparingar och intäktsökningar: ${formatMsek(besparingar)}. ` : "") +
     `Angiven finansiering: ${formatMsek(fin)}. Finansieringsgap: ${formatMsek(gap)}. ` +
     `Beloppen är uppskattningar med osäkerhetsspann; hela underlaget finns i promises.json.`;
 
@@ -274,6 +279,7 @@ function kostnadsSvar(
     antal_loften: antal,
     total_msek: total,
     finansiering_msek: fin,
+    ...(besparingar !== undefined ? { besparingar_msek: besparingar } : {}),
     gap_msek: gap,
     dyraste_loftena: urval.map((p) => ({
       id: p.id,

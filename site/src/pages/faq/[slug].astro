@@ -131,7 +131,8 @@ const jsonLd = [
             <thead>
               <tr>
                 <th class="num">Prissatta löften</th>
-                <th class="num">Kostnad (netto)</th>
+                <th class="num">{svar.typ === "totalkostnad" ? "Kostnad före avdrag" : "Kostnad (netto)"}</th>
+                {svar.typ === "totalkostnad" && <th class="num">Besparingar och intäktsökningar</th>}
                 <th class="num">Angiven finansiering</th>
                 <th class="num">Finansieringsgap</th>
               </tr>
@@ -140,6 +141,7 @@ const jsonLd = [
               <tr>
                 <td class="num">{svar.data.antal_loften}</td>
                 <td class="num belopp">{formatMsek(svar.data.total_msek!)}</td>
+                {svar.typ === "totalkostnad" && <td class="num">{formatMsek(svar.data.besparingar_msek!)}</td>}
                 <td class="num">{formatMsek(svar.data.finansiering_msek!)}</td>
                 <td class="num">{formatMsek(svar.data.gap_msek!)}</td>
               </tr>
