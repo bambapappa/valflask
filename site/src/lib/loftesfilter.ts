@@ -30,8 +30,8 @@ export const ALLA_LOFTESFILTER: Loeftesfilter[] =
  * Samlad mänsklig bedömning 2026-10-02 av det befintliga beståndet.
  * Den gäller ID-serien fram till p-2026-4667, vars publicerade dataversion
  * var 9ac291b8b39a796bbd50c4c28735ae5de2e7d678d2e34eb218956fb17a597344.
- * Endast poster som också samlades in före valdagen och har ett datum före
- * valdagen omfattas. Nya ID:n måste ha egen källgrund.
+ * Poster i denna frysta ID-serie med ett registrerat datum före valdagen
+ * omfattas. Nya ID:n måste ha egen källgrund.
  */
 const SAMMANLAGD_FORVALSDAGSBEDOMNING = { maxLofteNummer: 4667 } as const;
 
@@ -45,10 +45,7 @@ function omfattasAvSamladBedomning(promise: PromisePost, date: string): boolean 
   if (date >= VALDAGEN_2026 || promise.source.date_basis != null) return false;
   const match = /^p-2026-(\d{4})$/.exec(promise.id);
   if (!match || Number(match[1]) > SAMMANLAGD_FORVALSDAGSBEDOMNING.maxLofteNummer) return false;
-  const fetchedAt = promise.source.fetched_at;
-  if (typeof fetchedAt !== "string") return false;
-  const fetchedDate = fetchedAt.slice(0, 10);
-  return giltigtKalenderdatum(fetchedDate) && fetchedDate < VALDAGEN_2026;
+  return true;
 }
 
 /** Insamlingsdag ensam styr inte perioden för nya löften. */
