@@ -6,6 +6,7 @@ import { join, resolve, dirname } from "node:path";
 import { tmpdir } from "node:os";
 import { kontrolleraPubliceringsartefakt } from "../src/publiceringsartefakt.ts";
 import { publiceringsvy } from "../src/publiceringsvy.ts";
+import { packaUppPubliceringspaket } from "../src/publiceringslagring.ts";
 
 test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd drift stoppar paketet", async () => {
   const dir = mkdtempSync(join(tmpdir(), "publiceringsforbered-"));
@@ -49,7 +50,8 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
       });
     const ok = run("ok");
     assert.equal(ok.status, 0, ok.stderr);
-    const paket = JSON.parse(readFileSync(join(dir, "ok/paket.json"), "utf8"));
+    const paket = packaUppPubliceringspaket(JSON.parse(readFileSync(join(dir, "ok/paket.json"), "utf8")));
+    assert.ok(paket.driftbas && paket.summor && paket.filer);
     const manifest = JSON.parse(readFileSync(join(dir, "ok/manifest.json"), "utf8"));
     assert.equal(paket.foreRevision, fore);
     assert.equal(paket.driftbas.revision, fore);

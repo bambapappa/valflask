@@ -6,6 +6,7 @@ import { lasPubliceringsbas } from "../src/publiceringsbas.ts";
 import { bindPubliceringsbas } from "../src/publiceringspaket.ts";
 import { arPubliceringsomgang } from "../src/publiceringsomgang.ts";
 import { publiceringsvy } from "../src/publiceringsvy.ts";
+import { packaPubliceringspaket } from "../src/publiceringslagring.ts";
 
 try {
   const [fil, artefaktId, ut, ...extra] = process.argv.slice(2);
@@ -26,11 +27,6 @@ try {
   if (!paket.summor) throw new Error("Summor före och efter saknas");
   const vy = publiceringsvy(paket);
   const manifest = await bindPubliceringsartefakt(fil, { repo, revision, korning, forsok, artefaktId, pakethash: paket.hash });
-  mkdirSync(ut, { recursive: true });
-  writeFileSync(join(ut, "paket.json"), JSON.stringify(paket, null, 2));
-  writeFileSync(join(ut, "granska.html"), vy);
-  writeFileSync(join(ut, "andringar.patch"), paket.filer.patch);
-  writeFileSync(join(ut, "manifest.json"), JSON.stringify(manifest, null, 2));
   const omgang = arPubliceringsomgang(process.env.GITHUB_EVENT_NAME ?? "", process.env.GITHUB_REF ?? "", process.env.PUBLICERA ?? "");
   const publicera = omgang && paket.filer.sokvagar.length > 0;
   const beslutstext = publicera
@@ -40,7 +36,18 @@ try {
   const besked = `Granska underlaget i artefakten publiceringsunderlag-${korning}-${forsok}.\n\n` +
     `Läs både poständringarna och filjämförelsen i granska.html. Hela filjämförelsen finns även i andringar.patch.\n\n` +
     beslutstext;
-  writeFileSync(join(ut, "LAS-MIG.txt"), besked);
+  const filer = {
+    "paket.json": JSON.stringify(packaPubliceringspaket(paket)),
+    "granska.html": vy,
+    "andringar.patch": paket.filer.patch,
+    "manifest.json": JSON.stringify(manifest, null, 2),
+    "LAS-MIG.txt": besked,
+  };
+  if (Object.values(filer).reduce((n, text) => n + Buffer.byteLength(text), 0) > 64 * 1024 * 1024) {
+    throw new Error("Publiceringsunderlaget överskrider storleksgränsen");
+  }
+  mkdirSync(ut, { recursive: true });
+  for (const [namn, text] of Object.entries(filer)) writeFileSync(join(ut, namn), text);
   if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `publicera=${publicera}\n`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, besked);
 } catch (error) {
