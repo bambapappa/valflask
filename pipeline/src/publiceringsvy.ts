@@ -9,7 +9,23 @@ const html = (value: string) => value.replace(/[&<>"']/g, (c) =>
 export function publiceringsvy(paket: Paket): string {
   kontrolleraPubliceringspaket(paket);
   const { hash } = paket;
-  const visa = (value: unknown) => html(JSON.stringify(value, null, 2));
+  // JSON ligger bara i textnoder i pre, aldrig i attribut eller skript.
+  const visa = (value: unknown) => JSON.stringify(value).replace(/[&<>]/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]!);
+  const delade = new Map<string, { id: string; post: NonNullable<Paket["andringar"][number]["fore"]>["poster"][number] }>();
+  const snapshotvy = (s: Paket["andringar"][number]["fore"]): string => {
+    if (s === null) return "<p>Posten saknades i denna revision.</p>";
+    const { poster, ...metadata } = s;
+    return `<pre>${visa(metadata)}</pre><ol>` + poster.map((post) => {
+      const key = kanoniskJson(post);
+      let entry = delade.get(key);
+      if (!entry) {
+        entry = { id: `belagg-${delade.size}`, post };
+        delade.set(key, entry);
+      }
+      return `<li><a href="#${entry.id}">${html(`${post.slag}:${post.id}`)}</a> — hela denna postversion och dess beroenden</li>`;
+    }).join("") + "</ol>";
+  };
   const etiketter: Record<string, string> = { title: "Rubrik", cost: "Kostnad och uträkning",
     source: "Källa", party: "Parti", parties: "Partier", status: "Status", promise_type: "Löftestyp",
     group_id: "Grupp", history: "Historik", evidence: "Belägg", direction: "Riktning" };
@@ -65,8 +81,10 @@ ${rubrik(andring)}
 <p>${andring.sort === "tillagd" ? "Tillagd" : andring.sort === "borttagen" ? "Borttagen" : "Ändrad"} · ${andring.direkt ? "Postens eget underlag ändrat" : "Ett beroende har ändrats"}</p>
 ${falt(andring)}
 <details><summary>Visa hela underlaget och alla beroenden</summary>
-<div class="jamforelse"><section><h3>Före</h3>${andring.fore === null ? "<p>Posten saknades.</p>" : `<pre>${visa(andring.fore)}</pre>`}</section>
-<section><h3>Efter</h3>${andring.efter === null ? "<p>Posten borttagen.</p>" : `<pre>${visa(andring.efter)}</pre>`}</section></div></details></article>`).join("\n");
+<div class="jamforelse"><section><h3>Före</h3>${snapshotvy(andring.fore)}</section>
+<section><h3>Efter</h3>${snapshotvy(andring.efter)}</section></div></details></article>`).join("\n");
+  const belagg = [...delade.values()].map(({ id, post }) =>
+    `<section id="${id}"><h3>${html(`${post.slag}:${post.id}`)}</h3><pre>${visa(post)}</pre></section>`).join("\n");
   return `<!doctype html><html lang="sv"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
@@ -88,5 +106,6 @@ ${paket.driftbas ? `<dt>Föregående lyckade publicering</dt><dd>${html(paket.dr
 ${summorvy()}
 ${filvy}
 <h2>Ändringar i löften, partier, ståndpunkter, kopplingar och handlingar</h2>
-${rader || "<p>Inga ändringar i de fem postregistren.</p>"}</main></html>\n`;
+${rader || "<p>Inga ändringar i de fem postregistren.</p>"}
+${belagg ? `<section><h2>Hela postversioner och beroenden</h2><p>Identiska postversioner visas en gång. Hänvisningarna i före- och efterunderlagen ovan pekar på exakt den version som ingår där. Alla fält och beroenden visas nedan.</p>${belagg}</section>` : ""}</main></html>\n`;
 }

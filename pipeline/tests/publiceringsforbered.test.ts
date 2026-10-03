@@ -6,6 +6,7 @@ import { join, resolve, dirname } from "node:path";
 import { tmpdir } from "node:os";
 import { kontrolleraPubliceringsartefakt } from "../src/publiceringsartefakt.ts";
 import { publiceringsvy } from "../src/publiceringsvy.ts";
+import { packaUppPubliceringspaket } from "../src/publiceringslagring.ts";
 
 test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd drift stoppar paketet", async () => {
   const dir = mkdtempSync(join(tmpdir(), "publiceringsforbered-"));
@@ -49,7 +50,8 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
       });
     const ok = run("ok");
     assert.equal(ok.status, 0, ok.stderr);
-    const paket = JSON.parse(readFileSync(join(dir, "ok/paket.json"), "utf8"));
+    const paket = packaUppPubliceringspaket(JSON.parse(readFileSync(join(dir, "ok/paket.json"), "utf8")));
+    assert.ok(paket.driftbas && paket.summor && paket.filer);
     const manifest = JSON.parse(readFileSync(join(dir, "ok/manifest.json"), "utf8"));
     assert.equal(paket.foreRevision, fore);
     assert.equal(paket.driftbas.revision, fore);
@@ -85,5 +87,17 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
       assert.ok(!besked.includes("Godkänn publiceringspaket"));
       assert.ok(readFileSync(outputs, "utf8").endsWith("publicera=false\n"));
     }
+    // En verklig Git-patch med mycket text får inte skapa ett för stort paket
+    // eller skriva publicera=true innan storlekskontrollen har passerat.
+    const foreOutputs = readFileSync(outputs, "utf8");
+    const foreSummary = readFileSync(summary, "utf8");
+    writeFileSync(join(repo, "site/storlek-prov.txt"), '"'.repeat(8 * 1024 * 1024));
+    const storRevision = commit();
+    const forStort = run("for-stort", { GITHUB_SHA: storRevision });
+    assert.equal(forStort.status, 1, forStort.stderr);
+    assert.match(forStort.stderr, /storleksgränsen/);
+    assert.equal(existsSync(join(dir, "for-stort")), false);
+    assert.equal(readFileSync(outputs, "utf8"), foreOutputs);
+    assert.equal(readFileSync(summary, "utf8"), foreSummary);
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
