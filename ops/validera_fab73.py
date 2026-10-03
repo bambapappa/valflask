@@ -4,9 +4,12 @@
 Kollar mot en byggd sajt (byggkatalog eller live-URL):
   1. JSON-LD Dataset + DataCatalog på startsidan (license CC-BY-4.0, distribution)
   2. /api/v1/openapi.json finns, parsar som JSON, täcker huvudendpoints
-  3. llms.txt länkar till openapi.json
+  3. llms.txt länkar till openapi.json och FAQ
   4. robots.txt släpper in de åtta AI-sök/user-agenterna
   5. Live: agenterna får faktiskt HTTP 200, inte bara tillåtelse i robots.txt
+  6. FAQ: minst 10 byggda frågesidor, var och en med FAQPage-markup,
+     och ett matchande /api/v1/faq/<slug>.json med källa (url + arkivlänk),
+     datum och licens
 
 Användning:
   python3 validera_fab73.py --live                  # mot https://utlovat.se
@@ -46,6 +49,13 @@ def haemta(vag: str) -> str:
         capture_output=True, text=True, check=True,
     )
     return ut.stdout
+
+
+def haemta_sida(vag: str) -> str:
+    """En sida på dess kanoniska adress: index.html i dist, katalogväg live."""
+    if not ARGS.dist:
+        vag = vag.replace("/index.html", "/")
+    return haemta(vag)
 
 
 def kolla(villkor: bool, medd: str) -> None:
@@ -111,10 +121,14 @@ def validera() -> None:
         paths = spec.get("paths", {})
         for ep in ENDPOINTS:
             kolla(ep in paths, f"openapi.json: paths saknar {ep}")
+        kolla("/api/v1/faq.json" in paths, "openapi.json: paths saknar /api/v1/faq.json")
+        kolla(any(p.startswith("/api/v1/faq/") and p.endswith(".json") for p in paths),
+              "openapi.json: paths saknar FAQ-mallen /api/v1/faq/{slug}.json")
 
-    # 3. llms.txt länkar openapi.json
-    kolla("api/v1/openapi.json" in haemta("llms.txt"),
-          "llms.txt: länkar inte api/v1/openapi.json")
+    # 3. llms.txt länkar openapi.json och FAQ
+    llms = haemta("llms.txt")
+    kolla("api/v1/openapi.json" in llms, "llms.txt: länkar inte api/v1/openapi.json")
+    kolla("/faq" in llms, "llms.txt: länkar inte FAQ")
 
     # 4. robots.txt släpper in agenterna
     robots = haemta("robots.txt")
@@ -205,6 +219,44 @@ def validera() -> None:
         status, hopp = ut.stdout.split()
         kolla(status.startswith("2"), f"startsida: oväntad status {status}")
         kolla(int(hopp) <= 3, f"startsida: {hopp} redirect-hopp (> 3)")
+
+    # 6. FAQ: byggda frågesidor med FAQPage + citerbara JSON-svar
+    faq_index_tom = False
+    try:
+        faq_index = json.loads(haemta("api/v1/faq.json"))
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        fel.append("api/v1/faq.json saknas")
+        faq_index_tom = True
+    except json.JSONDecodeError:
+        fel.append("api/v1/faq.json är inte giltig JSON")
+        faq_index_tom = True
+    if not faq_index_tom:
+        poster = faq_index.get("faq", [])
+        kolla(len(poster) >= 10, f"FAQ: färre än 10 frågor ({len(poster)})")
+        for post in poster:
+            slug = post.get("slug", "")
+            kolla(bool(re.fullmatch(r"[a-z0-9-]+", slug)), f"FAQ: ogiltig slug {slug!r}")
+            try:
+                sida = haemta_sida(f"faq/{slug}/index.html")
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                fel.append(f"faq/{slug}/: sidan saknas")
+                continue
+            kolla("FAQPage" in sida, f"faq/{slug}/: FAQPage saknas i JSON-LD")
+            try:
+                svar = json.loads(haemta(f"api/v1/faq/{slug}.json"))
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                fel.append(f"api/v1/faq/{slug}.json saknas")
+                continue
+            except json.JSONDecodeError:
+                fel.append(f"api/v1/faq/{slug}.json är inte giltig JSON")
+                continue
+            kolla(svar.get("license") == "CC-BY-4.0", f"faq/{slug}: svar saknar licens")
+            kolla(bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}", svar.get("updated_at", ""))),
+                  f"faq/{slug}: svar saknar updated_at")
+            kallor = svar.get("sources", [])
+            kolla(any((k.get("archive_url") or "").startswith("http") and k.get("url", "").startswith("http")
+                      for k in kallor),
+                  f"faq/{slug}: ingen källa med url och arkivlänk")
 
 
 def main() -> int:

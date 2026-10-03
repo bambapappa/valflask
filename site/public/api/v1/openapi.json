@@ -77,6 +77,21 @@
         "description": "Spår per löfte: beräkningskedja och underlag.",
         "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
       }
+    },
+    "/api/v1/faq.json": {
+      "get": {
+        "summary": "FAQ — alla frågor",
+        "description": "Frågeformaterade, citerbara svar byggda ur publicerat data. Index listar alla frågor med slug, uppdateringsdatum, sid- och api-länk.",
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
+    },
+    "/api/v1/faq/{slug}.json": {
+      "get": {
+        "summary": "FAQ — ett svar",
+        "description": "Kort svar med källor (citat, url, tillgängliga arkivkopior), underlagets datum i updated_at, licens CC-BY-4.0 och data_hash. Slugs finns i faq.json.",
+        "parameters": [{ "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "object" } } } } }
+      }
     }
   }
 }

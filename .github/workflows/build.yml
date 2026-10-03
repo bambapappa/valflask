@@ -219,6 +219,12 @@ jobs:
       - name: Run T3 (schema + HTML validation)
         run: pnpm test:t3
         working-directory: site
+      - name: FAQ-grinden (citerbara svar med belägg)
+        run: pnpm test:faq
+        working-directory: site
+      - name: OpenAPI-grinden (tvåvägskoll mot byggd sajt)
+        run: pnpm test:openapi
+        working-directory: site
       - name: Agenternas HTTP-regression
         run: python3 -m unittest discover -s ops -p 'test_validera_fab73.py' -v
       - name: Skilj åtkomstfel från innehållsfel

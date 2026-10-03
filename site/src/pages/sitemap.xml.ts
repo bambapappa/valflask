@@ -1,5 +1,6 @@
 import { getPromises, getParties, getPeople } from "../lib/data";
 import { getIssuesFile } from "../lib/stances";
+import { faqFragor } from "../lib/faq";
 
 export const prerender = true;
 
@@ -31,6 +32,11 @@ export async function GET() {
 
   for (const issue of getIssuesFile().issues) {
     urls.push({ loc: `${BASE}/fraga/${issue.slug}`, changefreq: "daily", priority: "0.9" });
+  }
+
+  urls.push({ loc: `${BASE}/faq`, changefreq: "daily", priority: "0.8" });
+  for (const f of faqFragor()) {
+    urls.push({ loc: `${BASE}/faq/${f.slug}/`, changefreq: "daily", priority: "0.8" });
   }
 
   for (const p of parties) {
