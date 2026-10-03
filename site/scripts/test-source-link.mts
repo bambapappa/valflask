@@ -1,4 +1,4 @@
-import { archiveCaptureDate, archiveLinkLabel } from "../src/lib/source-link.ts";
+import { archiveCaptureDate, archiveLinkLabel, KALLSTATUS_ETIKETT } from "../src/lib/source-link.ts";
 
 let failed = 0;
 function check(name: string, ok: boolean): void {
@@ -15,4 +15,7 @@ check("kopia före angivet uttalande kallas inte senare", archiveLinkLabel(earli
 check("PDF-arkiv behåller sidnumret", archiveLinkLabel("https://web.archive.org/web/20260712090000/https://example.org/rapport.pdf#page=7", "2026-07-01") === "arkiv (2026-07-12, senare kopia) (PDF, s. 7)");
 check("ogiltigt kalenderdatum räknas inte som kopia", archiveCaptureDate("https://web.archive.org/web/20260230010203/https://example.org/") === null);
 check("okänd arkivtjänst behåller neutral etikett", archiveLinkLabel("https://archive.ph/example", "2026-08-15") === "arkiv");
+check("ändrad källa intygar inte arkivbelägg", KALLSTATUS_ETIKETT.andrad === "KÄLLAN HAR ÄNDRATS — CITATET BEHÖVER KONTROLLERAS");
+check("borttagen källa intygar inte arkivbelägg", KALLSTATUS_ETIKETT.borttagen === "KÄLLAN HAR TAGITS BORT — CITATET BEHÖVER KONTROLLERAS");
+check("oförändrad källa ger ingen varning", KALLSTATUS_ETIKETT.ok === null);
 if (failed) process.exit(1);
