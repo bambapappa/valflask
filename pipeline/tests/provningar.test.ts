@@ -213,3 +213,12 @@ test("kö-nyckeln duger när det publicerade id:t saknas", () => {
   );
   assert.equal(svar.ok, true);
 });
+
+ test("kopplingsprövning binds to stance target and rejects target substitution", () => {
+  const before = { stance_id: "st-2026-0001", handling_id: "h-test", riktning: "stodjer", status: "aktiv", bevis: { citat: "Identiskt citat vid målbyte" } };
+  const after = { ...before, stance_id: "st-2026-0002" };
+  assert.notEqual(kanon("koppling", before), kanon("koppling", after));
+  const trials = new Map<string, Provning>([["ko:test", { id: "ko:test", slag: "koppling", datum: "2026-10-03", utfall: "haller", underlag_hash: kanon("koppling", before) }]]);
+  assert.equal(provningsGrind(trials, ["ko:test"], "koppling", before).ok, true);
+  assert.equal(provningsGrind(trials, ["ko:test"], "koppling", after).ok, false);
+});

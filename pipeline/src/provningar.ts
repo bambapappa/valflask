@@ -97,6 +97,8 @@ export function kanon(slag: Slag, obj: Record<string, unknown>): string {
     const bevis = (obj["bevis"] ?? {}) as Record<string, unknown>;
     del = {
       promise_id: obj["promise_id"] ?? null,
+      // Keep promise-target hashes stable; bind stance targets explicitly.
+      ...(obj["stance_id"] ? { stance_id: obj["stance_id"] } : {}),
       handling_id: obj["handling_id"] ?? null,
       riktning: obj["riktning"] ?? null,
       status: obj["status"] ?? null,
