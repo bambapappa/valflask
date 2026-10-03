@@ -24,8 +24,7 @@ const { quote, person, party, domain, date, sourceUrl, archiveUrl, kind, sourceS
   Astro.props;
 const isTal = kind === "tal";
 // En källa som ändrats eller tagits bort ska synas där citatet står, inte i en
-// logg. Läsaren som klickar på källänken ska veta innan hen klickar att det är
-// arkivkopian som bär citatet.
+// logg. Läsaren som klickar på källänken ska veta innan hen klickar att citatet behöver kontrolleras och om arkivkopia saknas.
 const kallstatus = sourceStatus ? KALLSTATUS_ETIKETT[sourceStatus] : null;
 // Talat löfte länkar till filmen (tidsstämpel); webb/PDF får "källa (PDF, s. N)".
 const sourceLabel = isTal ? "se i talet" : sourceLinkLabel(sourceUrl);
@@ -48,7 +47,7 @@ const sourceLabel = isTal ? "se i talet" : sourceLinkLabel(sourceUrl);
 {/* Stämpeln pekar vidare: den som ser att en källa ändrats ska kunna se VAD som
     ändrats, inte bara att något gjort det. Fallet står på /andrade-kallor när
     det har en arkivkopia och en människa öppnat båda länkarna. */}
-{kallstatus && <div class="etikett etikett--sub kallstatus"><a href="/andrade-kallor">{kallstatus}</a></div>}
+{kallstatus && <div class="etikett etikett--sub kallstatus"><a href="/andrade-kallor">{kallstatus}{!archiveUrl && " · ARKIVKOPIA SAKNAS"}</a></div>}
 
 <style>
   .citat-attribution {

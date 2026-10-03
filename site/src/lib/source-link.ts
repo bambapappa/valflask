@@ -41,7 +41,8 @@ export function archiveLinkLabel(url: string, statedDate?: string): string {
  * Källans skick, som läsaren ser det.
  *
  * `ok` säger ingenting — en fungerande källa behöver ingen stämpel. De två
- * andra gör det, och de säger samma sak till läsaren: *gå till arkivkopian*.
+ * andra gör det: citatet behöver kontrolleras. En eventuell arkivlänk visas
+ * separat och är inte i sig ett intyg om att kopian innehåller citatet.
  * Frågevågen har visat den här etiketten sedan lanseringen; Fläskvågen fick
  * den 2026-08-09, när den första rötsvepningen över löftenas källor visade att
  * tre publicerade citat inte längre står i sin levande källa.
@@ -53,8 +54,8 @@ export type Kallstatus = "ok" | "andrad" | "borttagen";
 
 export const KALLSTATUS_ETIKETT: Record<Kallstatus, string | null> = {
   ok: null,
-  andrad: "KÄLLAN HAR ÄNDRATS — ARKIVKOPIAN GÄLLER",
-  borttagen: "KÄLLAN HAR TAGITS BORT — ARKIVKOPIAN GÄLLER",
+  andrad: "KÄLLAN HAR ÄNDRATS — CITATET BEHÖVER KONTROLLERAS",
+  borttagen: "KÄLLAN HAR TAGITS BORT — CITATET BEHÖVER KONTROLLERAS",
 };
 
 /**
