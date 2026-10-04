@@ -1206,31 +1206,6 @@
   },
   {
     "candidate": {
-      "subquestion_id": "sq-migration-miniminiva",
-      "party": "s",
-      "position": "ja",
-      "condition_note": null,
-      "quote": "Den strama migrationspolitiken ligger fast.",
-      "person": null
-    },
-    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
-    "articleTitle": "Val 2026\n| Socialdemokraterna",
-    "sourceUrl": "https://www.socialdemokraterna.se/val-2026",
-    "archiveUrl": null,
-    "dateStated": "2026-08-19",
-    "extractModel": "deepseek-v4-pro",
-    "verifyModel": "kimi-k2.7-code",
-    "runId": "run-2026-08-19-01-47",
-    "failures": [
-      {
-        "gate": "VERIFY",
-        "reason": "Citatet säger att den strama migrationspolitiken ligger fast, men nämner inte EU-rättens miniminivå och besvarar därmed inte delfrågans avgränsning."
-      }
-    ],
-    "verifyReason": "Citatet säger att den strama migrationspolitiken ligger fast, men nämner inte EU-rättens miniminivå och besvarar därmed inte delfrågans avgränsning."
-  },
-  {
-    "candidate": {
       "subquestion_id": "sq-aldre-sprakkrav",
       "party": "s",
       "position": "ja",
@@ -1808,31 +1783,6 @@
   },
   {
     "candidate": {
-      "subquestion_id": "sq-aldre-bemanning",
-      "party": "s",
-      "position": "ja",
-      "condition_note": null,
-      "quote": "Mer personal och språkkrav i äldreomsorgen.",
-      "person": null
-    },
-    "articleUrl": "https://www.socialdemokraterna.se/val-2026",
-    "articleTitle": "Val 2026\n| Socialdemokraterna",
-    "sourceUrl": "https://www.socialdemokraterna.se/val-2026",
-    "archiveUrl": null,
-    "dateStated": "2026-08-20",
-    "extractModel": "deepseek-v4-flash",
-    "verifyModel": "kimi-k2.7-code",
-    "runId": "run-2026-08-20-16-45",
-    "failures": [
-      {
-        "gate": "VERIFY",
-        "reason": "Citatet uttrycker endast en önskan om mer personal och språkkrav i äldreomsorgen, men säger inget om det ska regleras genom en nationell bemanningsnorm eller på annat sätt, så det svarar inte på frågans avgränsning."
-      }
-    ],
-    "verifyReason": "Citatet uttrycker endast en önskan om mer personal och språkkrav i äldreomsorgen, men säger inget om det ska regleras genom en nationell bemanningsnorm eller på annat sätt, så det svarar inte på frågans avgränsning."
-  },
-  {
-    "candidate": {
       "subquestion_id": "sq-sjukvard-vinst",
       "party": "v",
       "position": "nej",
@@ -1903,31 +1853,6 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
-  },
-  {
-    "candidate": {
-      "subquestion_id": "sq-skola-vinst",
-      "party": "mp",
-      "position": "ja",
-      "condition_note": null,
-      "quote": "Vi vill stoppa aktiebolag i skolan, införa full insyn i skattefinansierad skolverksamhet och ge kommuner möjlighet att säga nej till nyetableringar som försvårar en långsiktig skolplanering.",
-      "person": null
-    },
-    "articleUrl": "https://www.mp.se/politik/skola/",
-    "articleTitle": "Miljöpartiets skol- och utbildningspolitik",
-    "sourceUrl": "https://www.mp.se/politik/skola/",
-    "archiveUrl": null,
-    "dateStated": "2026-06-23",
-    "extractModel": "deepseek-v4-flash",
-    "verifyModel": "kimi-k2.7-code",
-    "runId": "run-2026-08-20-16-45",
-    "failures": [
-      {
-        "gate": "VERIFY",
-        "reason": "Citatet handlar om att stoppa aktiebolag som skolform, inte specifikt om vinstutdelning från friskolekoncerner i lag, och ger därmed inte besked på den avgränsade delfrågan."
-      }
-    ],
-    "verifyReason": "Citatet handlar om att stoppa aktiebolag som skolform, inte specifikt om vinstutdelning från friskolekoncerner i lag, och ger därmed inte besked på den avgränsade delfrågan."
   },
   {
     "candidate": {
@@ -2191,31 +2116,6 @@
       }
     ],
     "verifyReason": "Citatet handlar om att bygga ut vindkraft och snabbare tillståndsprocesser, men nämner inte det kommunala vetot, så det besvarar inte den specifika delfrågan."
-  },
-  {
-    "candidate": {
-      "subquestion_id": "sq-ekonomi-matmoms",
-      "party": "s",
-      "position": "ja",
-      "condition_note": null,
-      "quote": "Vi har krävt tillfälligt sänkt matmoms till 6 procent och att en matpriskommission inrättas som ska motverka skenande priser.",
-      "person": null
-    },
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/ekonomi",
-    "articleTitle": "Ekonomi\n| Socialdemokraterna",
-    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/ekonomi",
-    "archiveUrl": null,
-    "dateStated": "2026-08-19",
-    "extractModel": "deepseek-v4-flash",
-    "verifyModel": "kimi-k2.7-code",
-    "runId": "run-2026-08-21-04-49",
-    "failures": [
-      {
-        "gate": "VERIFY",
-        "reason": "Citatet säger bara att S har krävt en tillfällig sänkning av matmomsen, inte om den tillfälliga ordningen ska göras permanent."
-      }
-    ],
-    "verifyReason": "Citatet säger bara att S har krävt en tillfällig sänkning av matmomsen, inte om den tillfälliga ordningen ska göras permanent."
   },
   {
     "candidate": {
@@ -3156,31 +3056,6 @@
       }
     ],
     "verifyReason": "Citatet nämner vinstuttag i kontexten av klasstorlekar och är en allmän princip om att skolans pengar ska gå till eleverna, men det tar inte ställning till om vinstutdelning ska förbjudas eller begränsas i lag — och positionen 'nej' följer inte av ett citat som snarare kritiserar vinstuttag."
-  },
-  {
-    "candidate": {
-      "subquestion_id": "sq-ekonomi-matmoms",
-      "party": "s",
-      "position": "nej",
-      "condition_note": null,
-      "quote": "Vi har krävt tillfälligt sänkt matmoms till 6 procent",
-      "person": null
-    },
-    "articleUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/ekonomi",
-    "articleTitle": "Ekonomi\n| Socialdemokraterna",
-    "sourceUrl": "https://www.socialdemokraterna.se/var-politik/a-till-o/ekonomi",
-    "archiveUrl": null,
-    "dateStated": "2026-08-19",
-    "extractModel": "deepseek-v4-flash",
-    "verifyModel": "glm-5.2",
-    "runId": "run-2026-08-24-18-20",
-    "failures": [
-      {
-        "gate": "VERIFY",
-        "reason": "Citatet anger att S har krävt en tillfällig matmomssänkning, men säger inget om huruvida den ska göras permanent — att tolka ordet 'tillfälligt' som ett nej kräver en välvillig tolkning som inte utgör ett besked."
-      }
-    ],
-    "verifyReason": "Citatet anger att S har krävt en tillfällig matmomssänkning, men säger inget om huruvida den ska göras permanent — att tolka ordet 'tillfälligt' som ett nej kräver en välvillig tolkning som inte utgör ett besked."
   },
   {
     "candidate": {
@@ -6087,31 +5962,6 @@
         "reason": "PIPELINE_MODE=review: allt till granskning"
       }
     ]
-  },
-  {
-    "candidate": {
-      "subquestion_id": "sq-skola-vinst",
-      "party": "mp",
-      "position": "ja",
-      "condition_note": null,
-      "quote": "Vi vill stoppa aktiebolag i skolan, införa full insyn i skattefinansierad skolverksamhet och ge kommuner möjlighet att säga nej till nyetableringar",
-      "person": null
-    },
-    "articleUrl": "https://www.mp.se/politik/skola/",
-    "articleTitle": "Miljöpartiets skol- och utbildningspolitik",
-    "sourceUrl": "https://www.mp.se/politik/skola/",
-    "archiveUrl": null,
-    "dateStated": "2026-06-23",
-    "extractModel": "glm-5.3-flash",
-    "verifyModel": "muse-spark-1.3-contributor",
-    "runId": "run-2026-09-23-04-36",
-    "failures": [
-      {
-        "gate": "VERIFY",
-        "reason": "Citatet handlar om att stoppa aktiebolag som huvudmän (en ägarforms-/existensfråga som avgränsningen uttryckligen utesluter), insyn och kommunalt etableringsveto – inte om att förbjuda eller begränsa vinstutdelning i lag; att utläsa ett 'ja' på just vinstutdelning kräver en välvillig tolkningskedja (aktiebolag → vinst → stopp) som citatet ensamt inte bär, och är därmed inget besked, medan partiattributionen till MP däremot stämmer med källtexten."
-      }
-    ],
-    "verifyReason": "Citatet handlar om att stoppa aktiebolag som huvudmän (en ägarforms-/existensfråga som avgränsningen uttryckligen utesluter), insyn och kommunalt etableringsveto – inte om att förbjuda eller begränsa vinstutdelning i lag; att utläsa ett 'ja' på just vinstutdelning kräver en välvillig tolkningskedja (aktiebolag → vinst → stopp) som citatet ensamt inte bär, och är därmed inget besked, medan partiattributionen till MP däremot stämmer med källtexten."
   },
   {
     "candidate": {
