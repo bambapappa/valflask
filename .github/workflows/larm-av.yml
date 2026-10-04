@@ -54,14 +54,18 @@ on:
 
 jobs:
   avblas:
-    # Bara gröna körningar på defaultgrenen. En grön körning i en PR säger
-    # ingenting om att main är hel, och det är main larmet handlar om.
+    # Defaultgrenen samt kö-passets egna push-grenar i detta repository.
+    # Kö-passets workflow körs aldrig på main; dess identitet kontrolleras nedan.
     if: >-
       github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch == github.event.repository.default_branch
+      github.event.workflow_run.head_repository.id == github.event.repository.id &&
+      (github.event.workflow_run.head_branch == github.event.repository.default_branch ||
+       (github.event.workflow_run.name == 'ko-pass-pr' &&
+        startsWith(github.event.workflow_run.head_branch, 'arbete/ko-pass-')))
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      actions: read
       issues: write
     steps:
       - name: Stäng larmärendet för den körning som gått igenom
@@ -71,6 +75,18 @@ jobs:
             const gron = context.payload.workflow_run;
             const owner = context.repo.owner;
             const repo = context.repo.repo;
+
+            if (gron.head_branch !== context.payload.repository.default_branch) {
+              const workflow = await github.rest.actions.getWorkflow({owner, repo, workflow_id: gron.workflow_id});
+              if (workflow.data.path !== ".github/workflows/ko-pass-pr.yml"
+                  || gron.name !== "ko-pass-pr"
+                  || !/^arbete\/ko-pass-/.test(gron.head_branch)
+                  || gron.event !== "push"
+                  || gron.head_repository?.id !== context.payload.repository.id) {
+                core.notice("Körningen är inte ett betrott kö-pass — inga larm återställs.");
+                return;
+              }
+            }
 
             const oppna = await github.paginate(github.rest.issues.listForRepo, {
               owner,
@@ -107,6 +123,13 @@ jobs:
               }
 
               if (fallen.data.workflow_id !== gron.workflow_id) continue;
+
+              const start = Date.parse(gron.created_at);
+              const senasteLarm = Date.parse(arende.updated_at);
+              if (!Number.isFinite(start) || !Number.isFinite(senasteLarm) || start <= senasteLarm) {
+                core.notice(`#${arende.number}: larmet är nyare än framgången — lämnas öppet.`);
+                continue;
+              }
 
               const kropp = [
                 `**${gron.name}** har gått igenom igen — larmet blåses av.`,
