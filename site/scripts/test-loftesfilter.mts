@@ -1,4 +1,4 @@
-import { ALLA_LOFTESFILTER, filtreraLoeften, filterNyckel, loftesvyer, matcharLoeftesfilter, valdagKategori, STANDARD_LOFTESFILTER } from "../src/lib/loftesfilter.ts";
+import { regeringKategori, allaLoeftesfilter, ALLA_LOFTESFILTER, filtreraLoeften, filterNyckel, loftesvyer, matcharLoeftesfilter, valdagKategori, STANDARD_LOFTESFILTER } from "../src/lib/loftesfilter.ts";
 import { getParties, getPromises, type PromisePost } from "../src/lib/data.ts";
 import { getPromisesForParty } from "../src/lib/aggregates.ts";
 
@@ -88,4 +88,24 @@ check("varje partis urval delas utan bortfall eller överlapp", getParties().eve
   return own + estimated === combined;
 })));
 
+const grans = { datum: "2026-10-15", kalla: "https://www.regeringen.se/test-fixtur-formellt-tilltrade/" };
+const paTilltradet = promise("p-tilltrade", "parti", "reform", "2026-10-15", "kalla");
+const efterTilltrade = promise("p-efter-tilltrade", "parti", "reform", "2026-10-16", "kalla");
+check("okänd regeringsgräns ger ingen antagen klassificering", regeringKategori(efter) === "ej_faststalld");
+check("efter valet kan samtidigt vara före regeringens tillträde", valdagKategori(efter) === "efter" && regeringKategori(efter, grans) === "fore");
+check("tillträdesdagen är egen kategori", regeringKategori(paTilltradet, grans) === "tilltradesdagen");
+check("källdaterat löfte efter tillträdet klassas efter", regeringKategori(efterTilltrade, grans) === "efter");
+check("insamlingsdatum klassar inte regeringsperiod", regeringKategori(baraInsamlat, grans) === "oklar");
+check("samlad före-valdagsbedömning är också före senare regering", regeringKategori(befintligtEnligtSamladBedomning, grans) === "fore");
+check("uttryckligt insamlingsdatum ärver ingen före-regeringsbedömning", regeringKategori(befintligtMedUttryckligtInsamlingsdatum, grans) === "oklar");
+check("regeringsval och valdagsval fungerar oberoende", matcharLoeftesfilter(efter, {underlag:"parti",loftestyp:"reform",valdag:"efter",regering:"fore"}, grans));
+check("motsägande kombination döljer posten", !matcharLoeftesfilter(efter, {underlag:"parti",loftestyp:"reform",valdag:"fore",regering:"fore"}, grans));
+const governmentCases = [efter,paTilltradet,efterTilltrade,baraInsamlat];
+check("regeringsperioder delar populationen utan bortfall", ["fore","tilltradesdagen","efter","oklar"].reduce((n, regering) => n + filtreraLoeften(governmentCases,{underlag:"alla",loftestyp:"alla",valdag:"alla",regering:regering as "fore"|"tilltradesdagen"|"efter"|"oklar"},grans).length,0) === governmentCases.length);
+const futureViews = loftesvyer(governmentCases, grans);
+check("alla 225 kombinationer har exakt en statisk vy med fastställd gräns", allaLoeftesfilter(grans).length === 225 && new Set(futureViews.flatMap(v=>v.keys)).size === 225);
+for (const bad of [{datum:"2026-02-31",kalla:grans.kalla},{datum:grans.datum,kalla:null},{datum:grans.datum,kalla:"https://example.com/"}]) {
+  let refused = false; try { regeringKategori(efter,bad); } catch { refused = true; }
+  check(`ogiltig regeringsgräns vägras ${bad.datum}/${bad.kalla}`,refused);
+}
 if (errors) process.exit(1);
