@@ -4,7 +4,7 @@ import Loftesfilter from "../components/Loftesfilter.astro";
 import { getPromises, getParties } from "../lib/data";
 import { formatMsek } from "../lib/calc";
 import { promiseNetMsek, partyTotalMsek, flasketPerRost, categoryBreakdown, groupedPromises } from "../lib/aggregates";
-import { STANDARD_LOFTESFILTER, filterNyckel, loftesvyer, valdagEtikett } from "../lib/loftesfilter";
+import { STANDARD_LOFTESFILTER, filterNyckel, loftesvyer, valdagEtikett, regeringEtikett } from "../lib/loftesfilter";
 
 const promises = getPromises();
 const parties = getParties();
@@ -32,7 +32,7 @@ const jsonLd = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", i
     {views.map((view) => (
       <div data-loftesfilter-vy={view.keys.join(" ")} data-loftesfilter-vy-antal={view.count} hidden={!view.keys.includes(defaultKey)}>
         <section class="sektion"><h2>Största löftena</h2><p class="prosa-content listnot">Delade löften räknas en gång. Partierna bakom löftet står utskrivna.</p>
-          <ol class="promise-list">{view.fetaste.map((g) => <li><a href={`/lofte/${g.promise.id}/${g.promise.slug}`}><strong>{g.promise.title}</strong></a><div class="etikett etikett--sub">{g.parties.map((c) => parties.find((p) => p.code === c)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: g.promise.cost.basis === "parti" }]}>{formatMsek(promiseNetMsek(g.promise), g.promise.cost.basis)}</span> · {valdagEtikett(g.promise)}{g.shared && <> · <span class="delat">delat löfte, {g.memberIds.length} formuleringar</span></>}</div></li>)}</ol>
+          <ol class="promise-list">{view.fetaste.map((g) => <li><a href={`/lofte/${g.promise.id}/${g.promise.slug}`}><strong>{g.promise.title}</strong></a><div class="etikett etikett--sub">{g.parties.map((c) => parties.find((p) => p.code === c)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: g.promise.cost.basis === "parti" }]}>{formatMsek(promiseNetMsek(g.promise), g.promise.cost.basis)}</span> · {valdagEtikett(g.promise)} · {regeringEtikett(g.promise)}{g.shared && <> · <span class="delat">delat löfte, {g.memberIds.length} formuleringar</span></>}</div></li>)}</ol>
         </section>
         <section class="sektion sektion--lg"><h2>Partier, totalt</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Parti</th><th class="num">Totalt</th></tr></thead><tbody>{view.partyTotals.map((p, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${p.code}`}>{p.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(p.total)}</td></tr>)}</tbody></table></div></section>
         <section class="sektion sektion--lg"><h2>Partier, per röst</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Parti</th><th class="num">Kr per röst</th></tr></thead><tbody>{view.partyPerVote.map((p, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${p.code}`}>{p.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{Math.round(p.perVote).toLocaleString("sv-SE")} kr</td></tr>)}</tbody></table></div></section>

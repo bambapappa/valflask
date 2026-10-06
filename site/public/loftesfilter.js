@@ -3,6 +3,8 @@
 (() => {
   const KEY_UNDERLAG = "loftesfilter-underlag";
   const KEY_TYP = "loftesfilter-loftestyp";
+  const KEY_REGERING = "loftesfilter-regering-v1";
+  const validRegering = new Set(["fore", "tilltradesdagen", "efter", "oklar", "alla"]);
   const KEY_VALDAG = "loftesfilter-valdag-v2";
   const validUnderlag = new Set(["parti", "utlovat", "alla"]);
   const validTyp = new Set(["reform", "inriktning", "alla"]);
@@ -17,18 +19,21 @@
   function storageSet(key, value) { try { localStorage.setItem(key, value); } catch (_) {} }
   function hasAcceptedEstimates() { return document.documentElement.dataset.estimat === "pa"; }
   function needsEstimates(underlag) { return underlag === "utlovat" || underlag === "alla"; }
-  function label(underlag, typ, valdag) {
+  function label(underlag, typ, valdag, regering) {
     const source = underlag === "parti" ? "partiernas egna belopp" : underlag === "utlovat" ? "Utlovat.se:s beräkningar" : "båda beloppsunderlagen";
     const kind = typ === "reform" ? "reformlöften" : typ === "inriktning" ? "inriktnings- och policylöften" : "alla löften";
     const when = { fore: "före valdagen", valdagen: "på valdagen", efter: "efter valdagen", oklar: "med oklar tidpunkt", alla: "oavsett tidpunkt" }[valdag];
-    return `Visar ${source} för ${kind} ${when}.`;
+    const government = { fore: "före regeringens tillträde", tilltradesdagen: "på tillträdesdagen", efter: "efter regeringens tillträde", oklar: "med oklar tidpunkt mot regeringen", alla: "" }[regering];
+    return `Visar ${source} för ${kind} ${when}${government ? `, ${government}` : ""}.`;
   }
-  function apply(underlag, typ, valdag) {
+  function apply(underlag, typ, valdag, regering) {
     const html = document.documentElement;
     html.dataset.loftesfilterUnderlag = underlag;
     html.dataset.loftesfilterTyp = typ;
     html.dataset.loftesfilterValdag = valdag;
-    const viewKey = `${underlag}:${typ}:${valdag}`;
+    html.dataset.loftesfilterRegering = regering;
+    const hasGovernmentFilter = [...document.querySelectorAll("[data-loftesfilter]")].every((form) => form.querySelector('input[name="regering"]'));
+    const viewKey = hasGovernmentFilter ? `${underlag}:${typ}:${valdag}:${regering}` : `${underlag}:${typ}:${valdag}`;
     const views = [...document.querySelectorAll("[data-loftesfilter-vy]")];
     views.forEach((view) => { view.hidden = !view.dataset.loftesfilterVy.split(" ").includes(viewKey); });
     const activeView = views.find((view) => view.dataset.loftesfilterVy.split(" ").includes(viewKey));
@@ -39,11 +44,11 @@
       if (show) visible += 1;
     });
     document.querySelectorAll("[data-loftesfilter-status]").forEach((status) => {
-      status.firstChild.textContent = `${label(underlag, typ, valdag)} `;
+      status.firstChild.textContent = `${label(underlag, typ, valdag, regering)} `;
     });
     const viewCount = activeView?.dataset.loftesfilterVyAntal;
     document.querySelectorAll("[data-loftesfilter-count]").forEach((count) => { count.textContent = viewCount ?? String(visible); });
-    document.dispatchEvent(new CustomEvent("loftesfilter:andrat", { detail: { underlag, typ, valdag, visible } }));
+    document.dispatchEvent(new CustomEvent("loftesfilter:andrat", { detail: { underlag, typ, valdag, regering, visible } }));
   }
   function init() {
     const forms = [...document.querySelectorAll("[data-loftesfilter]")];
@@ -51,41 +56,48 @@
     let underlag = storageGet(KEY_UNDERLAG, "parti", validUnderlag);
     let typ = storageGet(KEY_TYP, "reform", validTyp);
     let valdag = storageGet(KEY_VALDAG, "alla", validValdag);
+    let regering = forms.every((form) => form.dataset.regeringsgrans) ? storageGet(KEY_REGERING, "alla", validRegering) : "alla";
     if (needsEstimates(underlag) && !hasAcceptedEstimates()) underlag = "parti";
     for (const form of forms) {
       form.querySelector(`input[name="underlag"][value="${underlag}"]`).checked = true;
       form.querySelector(`input[name="loftestyp"][value="${typ}"]`).checked = true;
       form.querySelector(`input[name="valdag"][value="${valdag}"]`).checked = true;
+      const governmentInput = form.querySelector(`input[name="regering"][value="${regering}"]`);
+      if (governmentInput) governmentInput.checked = true;
       form.addEventListener("change", (event) => {
         const nextUnderlag = form.querySelector('input[name="underlag"]:checked').value;
         const nextTyp = form.querySelector('input[name="loftestyp"]:checked').value;
         const nextValdag = form.querySelector('input[name="valdag"]:checked').value;
+        const nextRegering = form.dataset.regeringsgrans ? form.querySelector('input[name="regering"]:checked').value : "alla";
         if (needsEstimates(nextUnderlag) && !hasAcceptedEstimates()) {
           event.preventDefault();
           form.querySelector(`input[name="underlag"][value="${underlag}"]`).checked = true;
-          document.dispatchEvent(new CustomEvent("estimat:oppna", { detail: { underlag: nextUnderlag, typ: nextTyp, valdag: nextValdag } }));
+          document.dispatchEvent(new CustomEvent("estimat:oppna", { detail: { underlag: nextUnderlag, typ: nextTyp, valdag: nextValdag, regering: nextRegering } }));
           return;
         }
-        underlag = nextUnderlag; typ = nextTyp; valdag = nextValdag;
-        storageSet(KEY_UNDERLAG, underlag); storageSet(KEY_TYP, typ); storageSet(KEY_VALDAG, valdag); apply(underlag, typ, valdag);
+        underlag = nextUnderlag; typ = nextTyp; valdag = nextValdag; regering = nextRegering;
+        storageSet(KEY_UNDERLAG, underlag); storageSet(KEY_TYP, typ); storageSet(KEY_VALDAG, valdag); storageSet(KEY_REGERING, regering); apply(underlag, typ, valdag, regering);
       });
     }
     document.addEventListener("estimat:pa", () => {
       const pending = window.__loftesfilterPending;
       if (!pending) return;
       underlag = pending.underlag; typ = pending.typ; valdag = pending.valdag;
-      storageSet(KEY_UNDERLAG, underlag); storageSet(KEY_TYP, typ); storageSet(KEY_VALDAG, valdag);
+      regering = forms.every((form) => form.dataset.regeringsgrans) && validRegering.has(pending.regering) ? pending.regering : "alla";
+      storageSet(KEY_UNDERLAG, underlag); storageSet(KEY_TYP, typ); storageSet(KEY_VALDAG, valdag); storageSet(KEY_REGERING, regering);
       forms.forEach((form) => {
         form.querySelector(`input[name="underlag"][value="${underlag}"]`).checked = true;
         form.querySelector(`input[name="loftestyp"][value="${typ}"]`).checked = true;
         form.querySelector(`input[name="valdag"][value="${valdag}"]`).checked = true;
+      const governmentInput = form.querySelector(`input[name="regering"][value="${regering}"]`);
+      if (governmentInput) governmentInput.checked = true;
       });
-      delete window.__loftesfilterPending; apply(underlag, typ, valdag);
+      delete window.__loftesfilterPending; apply(underlag, typ, valdag, regering);
     });
     document.addEventListener("estimat:oppna", (event) => {
       window.__loftesfilterPending = event.detail;
     });
-    apply(underlag, typ, valdag);
+    apply(underlag, typ, valdag, regering);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

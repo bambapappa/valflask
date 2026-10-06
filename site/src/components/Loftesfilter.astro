@@ -4,12 +4,14 @@
  * läsarens val och synkar alla filter på sidan. Belopp från Utlovat.se öppnar
  * den befintliga godkännanderutan innan de kan väljas.
  */
+import { REGERINGSGRANS_2026, verifieradRegeringsgrans } from "../lib/regeringsgrans";
+const regeringsdatum = verifieradRegeringsgrans(REGERINGSGRANS_2026);
 interface Props {
   count: number;
 }
 const { count } = Astro.props;
 ---
-<form class="loftesfilter" data-loftesfilter aria-label="Filtrera löften">
+<form class="loftesfilter" data-loftesfilter data-regeringsgrans={regeringsdatum ?? ""} aria-label="Filtrera löften">
   <p class="etikett loftesfilter__rubrik">Välj urval</p>
   <fieldset class="loftesfilter__grupp">
     <legend><span>1.</span> Beloppsunderlag</legend>
@@ -39,6 +41,17 @@ const { count } = Astro.props;
     </div>
   </fieldset>
   <p class="loftesfilter__forklaring">De löften som redan fanns i materialet före valet räknas som före valdagen enligt en samlad mänsklig bedömning. Källans exakta publiceringsdatum är inte verifierat för varje löfte. Nya löften placeras före, på eller efter valdagen först när de har en egen daterad grund; insamlingsdatum ensamt räcker inte. Saknad eller osäker datumgrund visas som ”Oklart datum”.</p>
+  <fieldset class="loftesfilter__grupp" disabled={!regeringsdatum}>
+    <legend><span>4.</span> Regeringens formella tillträde</legend>
+    <div class="loftesfilter__segment" role="radiogroup" aria-label="Tidpunkt i förhållande till regeringens tillträde">
+      <label><input type="radio" name="regering" value="fore" /><span>Före tillträdet</span></label>
+      <label><input type="radio" name="regering" value="tilltradesdagen" /><span>På tillträdesdagen</span></label>
+      <label><input type="radio" name="regering" value="efter" /><span>Efter tillträdet</span></label>
+      <label><input type="radio" name="regering" value="oklar" /><span>Oklart datum</span></label>
+      <label><input type="radio" name="regering" value="alla" checked /><span>Alla tidpunkter</span></label>
+    </div>
+  </fieldset>
+  <p class="loftesfilter__forklaring">{regeringsdatum ? <>Regeringens formella tillträde: {regeringsdatum}. <a href={REGERINGSGRANS_2026.kalla!}>Läs datumkällan</a>. Gränsen är separat från valdagen.</> : <>Tillträdesdatumet för regeringen efter valet är ännu inte fastställt i underlaget. Filtret blir tillgängligt när datumet har belagts. Valdagsfiltret kan användas samtidigt.</>}</p>
   <p class="loftesfilter__status" data-loftesfilter-status>Visar partiernas egna belopp för reformlöften oavsett tidpunkt. <span data-loftesfilter-count>{count}</span> löften.</p>
 </form>
 

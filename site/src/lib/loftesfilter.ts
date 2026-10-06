@@ -1,15 +1,18 @@
 import type { PromisePost } from "./data";
+import { REGERINGSGRANS_2026, verifieradRegeringsgrans, type Regeringsgrans } from "./regeringsgrans.ts";
 
-/** Tre oberoende läsval: beloppsunderlag, löftestyp och tidpunkt. */
+/** Oberoende läsval för belopp, löftestyp, valdag och regeringens tillträde. */
 export type Beloppsunderlag = "parti" | "utlovat" | "alla";
 export type LoeftestypFilter = "reform" | "inriktning" | "alla";
 export type ValdagFilter = "fore" | "valdagen" | "efter" | "oklar" | "alla";
+export type RegeringFilter = "fore" | "tilltradesdagen" | "efter" | "oklar" | "alla";
 export const VALDAGEN_2026 = "2026-09-13";
 
 export interface Loeftesfilter {
   underlag: Beloppsunderlag;
   loftestyp: LoeftestypFilter;
   valdag: ValdagFilter;
+  regering?: RegeringFilter;
 }
 
 export const STANDARD_LOFTESFILTER: Loeftesfilter = {
@@ -18,13 +21,17 @@ export const STANDARD_LOFTESFILTER: Loeftesfilter = {
   // Unknown legacy date provenance must not blank the site's default view.
   // Each promise keeps its verified period label, and readers can filter it.
   valdag: "alla",
+  regering: "alla",
 };
 
-export const ALLA_LOFTESFILTER: Loeftesfilter[] =
-  (["parti", "utlovat", "alla"] as const).flatMap((underlag) =>
+export function allaLoeftesfilter(grans: Regeringsgrans = REGERINGSGRANS_2026): Loeftesfilter[] {
+  return   (["parti", "utlovat", "alla"] as const).flatMap((underlag) =>
     (["reform", "inriktning", "alla"] as const).flatMap((loftestyp) =>
-      (["fore", "valdagen", "efter", "oklar", "alla"] as const).map((valdag) =>
-        ({ underlag, loftestyp, valdag }))));
+      (["fore", "valdagen", "efter", "oklar", "alla"] as const).flatMap((valdag) =>
+        (verifieradRegeringsgrans(grans) ? ["fore", "tilltradesdagen", "efter", "oklar", "alla"] as const : ["alla"] as const).map((regering) =>
+          ({ underlag, loftestyp, valdag, regering })))));
+}
+export const ALLA_LOFTESFILTER = allaLoeftesfilter();
 
 /**
  * Samlad mänsklig bedömning 2026-10-02 av det befintliga beståndet.
@@ -59,6 +66,20 @@ export function valdagKategori(promise: PromisePost): Exclude<ValdagFilter, "all
   return "efter";
 }
 
+/** En samlad före-valdagsbedömning ger ingen exakt dag för regeringsgränsen. */
+export function regeringKategori(promise: PromisePost, grans: Regeringsgrans = REGERINGSGRANS_2026): Exclude<RegeringFilter, "alla"> | "ej_faststalld" {
+  const tilltrade = verifieradRegeringsgrans(grans);
+  if (tilltrade === null) return "ej_faststalld";
+  if (valdagKategori(promise) === "fore" && tilltrade >= VALDAGEN_2026) return "fore";
+  const datum = promise.date_stated;
+  if (promise.source.date_basis !== "kalla" || !giltigtKalenderdatum(datum)) return "oklar";
+  return datum < tilltrade ? "fore" : datum === tilltrade ? "tilltradesdagen" : "efter";
+}
+
+export function regeringEtikett(promise: PromisePost): string {
+  return { fore: "Före regeringens tillträde", tilltradesdagen: "På tillträdesdagen", efter: "Efter regeringens tillträde", oklar: "Tidpunkt mot regeringen oklar", ej_faststalld: "Regeringens tillträdesdatum inte fastställt" }[regeringKategori(promise)];
+}
+
 export function valdagEtikett(promise: PromisePost): string {
   switch (valdagKategori(promise)) {
     case "fore": return "Före valdagen";
@@ -82,29 +103,30 @@ export function arUtlovatBerakning(promise: PromisePost): boolean {
   return !harPartietsBelopp(promise);
 }
 
-export function matcharLoeftesfilter(promise: PromisePost, filter: Loeftesfilter): boolean {
+export function matcharLoeftesfilter(promise: PromisePost, filter: Loeftesfilter, grans: Regeringsgrans = REGERINGSGRANS_2026): boolean {
   const rattUnderlag =
     filter.underlag === "alla" ||
     (filter.underlag === "parti" ? harPartietsBelopp(promise) : arUtlovatBerakning(promise));
   const rattTyp = filter.loftestyp === "alla" || promise.loftestyp === filter.loftestyp;
   const rattValdag = filter.valdag === "alla" || valdagKategori(promise) === filter.valdag;
-  return rattUnderlag && rattTyp && rattValdag;
+  const rattRegering = !filter.regering || filter.regering === "alla" || regeringKategori(promise, grans) === filter.regering;
+  return rattUnderlag && rattTyp && rattValdag && rattRegering;
 }
 
-export function filtreraLoeften(promises: PromisePost[], filter: Loeftesfilter): PromisePost[] {
-  return promises.filter((promise) => matcharLoeftesfilter(promise, filter));
+export function filtreraLoeften(promises: PromisePost[], filter: Loeftesfilter, grans: Regeringsgrans = REGERINGSGRANS_2026): PromisePost[] {
+  return promises.filter((promise) => matcharLoeftesfilter(promise, filter, grans));
 }
 
 export function filterNyckel(filter: Loeftesfilter): string {
-  return `${filter.underlag}:${filter.loftestyp}:${filter.valdag}`;
+  return `${filter.underlag}:${filter.loftestyp}:${filter.valdag}:${filter.regering ?? "alla"}`;
 }
 
 /** Dela samma statiska vy när flera datumval ännu ger exakt samma urval. */
-export function loftesvyer(promises: PromisePost[]): Array<{ key: string; keys: string[]; selected: PromisePost[] }> {
+export function loftesvyer(promises: PromisePost[], grans: Regeringsgrans = REGERINGSGRANS_2026): Array<{ key: string; keys: string[]; selected: PromisePost[] }> {
   const views: Array<{ key: string; keys: string[]; selected: PromisePost[] }> = [];
   const seen = new Map<string, (typeof views)[number]>();
-  for (const filter of ALLA_LOFTESFILTER) {
-    const selected = filtreraLoeften(promises, filter);
+  for (const filter of allaLoeftesfilter(grans)) {
+    const selected = filtreraLoeften(promises, filter, grans);
     const key = filterNyckel(filter);
     const signature = `${filter.underlag}:${filter.loftestyp}:${selected.map((promise) => promise.id).join(",")}`;
     const existing = seen.get(signature);
