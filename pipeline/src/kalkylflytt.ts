@@ -1,3 +1,4 @@
+import { provaAldreKalkylbyte, kravAldreKalkylbyte } from "./kalkylbyte-grind.ts";
 /**
  * Flyttar en kö-kandidats kostnad till det publicerade löfte den dubblerar.
  *
@@ -84,6 +85,7 @@ export function provaFlytt(rad: Flyttrad, mal: Malpost | undefined): Provning {
     fel.push(`${namn}: ${rad.till} har status ${mal.status} — en indragen post publicerar ingenting`);
   }
 
+  fel.push(...provaAldreKalkylbyte(mal.cost, rad.kostnad));
   const ny = rad.kostnad;
   const bas = ny.msek_base;
   if (bas === null || bas === undefined) {
@@ -164,6 +166,7 @@ export const forandring = (rad: Flyttrad, mal: Malpost): number =>
 
 /** Målposten med den nya kostnaden och en historikpost som säger varifrån den kom. */
 export function flytta<T extends Malpost>(mal: T, rad: Flyttrad, datum: string): T {
+  kravAldreKalkylbyte(mal.cost, rad.kostnad);
   const gammal = mal.cost ?? {};
   const ny = rad.kostnad;
   // Ett basbelopp gör en inriktning till en reform. Samma regel som
