@@ -179,4 +179,27 @@ runInNewContext(client, {
 });
 await new Promise((resolve) => setTimeout(resolve, 10));
 check("det kanoniska snedstrecket laddar ett delat granskningskort", sharedBriefRendered);
+// Kör den verkligt byggda klienten mot API-null, aldrig ett påhittat nollbelopp.
+for (const pathname of ["/", "/webmcp/"]) {
+  const tools = new Map<string, Tool>();
+  const fixture = structuredClone(responses) as any;
+  fixture["/api/v1/promises.json"].data[0].cost = {msek_low: null, msek_high: null, period: "per_ar", belopp_status: "okant"};
+  Object.assign(fixture["/api/v1/summary.json"].data.parties[0], {ofullstandig_summa: true, antal_okanda_belopp: 1, okanda_loften: ["p-2026-0001"]});
+  runInNewContext(client, {
+    document: {...document, modelContext: {registerTool: async (tool: Tool) => {tools.set(tool.name, tool);}}},
+    fetch: async (path: string) => ({ok: true, json: async () => fixture[path]}),
+    window: {location: {pathname, search: "", assign: () => undefined}},
+    console, URL, URLSearchParams, Object, Map, Set, Promise, Array, Math,
+  });
+  await new Promise(resolve => setTimeout(resolve, 10));
+  const result = await tools.get("search_verified_evidence")!.execute({party_codes: ["s"], kind: "loften"});
+  const items = result.evidence as Array<{title: string; detail: string}>;
+  const detail = items.find(item => item.title === "Ett löfte")!.detail;
+  check(`${pathname}: API-null visas som okänd kostnad`, detail.includes(pathname === "/" ? "kan inte fastställas" : "cannot be determined"));
+  check(`${pathname}: okänt belopp tolkas inte som gratis`, detail.includes(pathname === "/" ? "inte att åtgärden är gratis" : "does not mean the measure is free") && !detail.includes("0 mkr"));
+  check(`${pathname}: känd metodnolla behåller sitt intervall`, items.find(item => item.title === "Bygga fler bostäder")!.detail.includes("0 mkr"));
+  const comparison = await tools.get("show_party_comparison")!.execute({party_codes: ["s"]});
+  const party = (comparison.parties as any[])[0];
+  check(`${pathname}: agentjämförelsen bevarar täckningsmetadata`, party.ofullstandig_summa === true && party.antal_okanda_belopp === 1 && party.okanda_loften[0] === "p-2026-0001");
+}
 if (errors) process.exit(1);

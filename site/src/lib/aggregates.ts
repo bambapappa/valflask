@@ -1,3 +1,4 @@
+import { harOkantBelopp, kostnadsluckor } from "./kostnadsluckor.ts";
 import type { PromisePost, Party, Constants, ConstantItem } from "./data";
 
 export type { PromisePost, Party, Constants, ConstantItem };
@@ -326,7 +327,7 @@ export interface GroupNote {
   hasSpread: boolean;
 }
 
-export interface CoalitionResult {
+export interface CoalitionResult extends Kostnadstackning {
   totalFlasket: number;
   totalBesparingar: number;
   totalFinancingClaimed: number;
@@ -346,11 +347,13 @@ export function coalitionAggregates(
     (p) => isActive(p) && p.parties.some((c) => partySet.has(c))
   );
 
+  const grupperMedLucka = new Set(relevant.filter(harOkantBelopp).map(p => p.group_id).filter(Boolean));
+
   // Gruppnoterna behöver ALLA medlemmar: spannet mellan partiernas prislappar
   // på samma politik är just skillnaden mellan dem.
   const seenGroups = new Map<string, { min: number; max: number; parties: Set<string> }>();
   for (const p of relevant) {
-    if (!p.group_id) continue;
+    if (!p.group_id || grupperMedLucka.has(p.group_id)) continue;
     const t = promiseTotalMsek(p);
     const existing = seenGroups.get(p.group_id);
     if (existing) {
@@ -394,6 +397,7 @@ export function coalitionAggregates(
     .reduce((s, p) => s + p.mandate_2022, 0);
 
   return {
+    ...kostnadstackning(relevant),
     totalFlasket: totalFlasketVal,
     totalBesparingar: totalBesparingVal,
     totalFinancingClaimed: totalFinancingVal,
@@ -517,7 +521,18 @@ export function computeComparisons(
   return kosmiska.slice(0, 3);
 }
 
-export interface SummaryData {
+export interface Kostnadstackning {
+  ofullstandig_summa?: true;
+  antal_okanda_belopp?: number;
+  okanda_loften?: string[];
+}
+
+function kostnadstackning(promises: PromisePost[]): Kostnadstackning {
+  const luckor = kostnadsluckor(promises);
+  return luckor.antal > 0 ? { ofullstandig_summa: true, antal_okanda_belopp: luckor.antal, okanda_loften: luckor.ids } : {};
+}
+
+export interface SummaryData extends Kostnadstackning {
   generated_at: string;
   data_hash: string;
   total_parties: number;
@@ -528,7 +543,7 @@ export interface SummaryData {
   financing_gap_msek: number;
   reformutrymme_msek_per_ar: number | "VERIFIERA";
   reformutrymme_total_msek: number | null;
-  parties: Array<{
+  parties: Array<Kostnadstackning & {
     code: string;
     name: string;
     total_msek: number;
@@ -558,6 +573,7 @@ export function buildSummary(
   return {
     generated_at: new Date().toISOString(),
     data_hash: hash,
+    ...kostnadstackning(promises),
     total_parties: parties.length,
     total_promises: countPromises(promises),
     total_msek_flasket: totalFlasket(promises),
@@ -569,6 +585,7 @@ export function buildSummary(
     parties: parties.map((p) => {
       const t = partyTotalMsek(promises, p.code);
       return {
+        ...kostnadstackning(promises.filter(post => post.parties.includes(p.code))),
         code: p.code,
         name: p.name,
         total_msek: t,

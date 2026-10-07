@@ -1,10 +1,4 @@
-/*
- * WebMCP: Utlovat.se som gemensamt granskningsbord.
- *
- * Verktygen läser bara samma publika, källspårade JSON som sajten visar.
- * De kan sortera och synliggöra underlaget, men varken rekommendera ett parti
- * eller fylla ett tomrum med en politisk slutsats.
- */
+/* WebMCP: publika belägg, ingen politisk rekommendation. */
 
 
 
@@ -75,6 +69,11 @@ function englishCostBasis(basis         )         {
 }
 
 function costIntervalDetail(cost                     )         {
+  if (cost.belopp_status === "okant" || cost.msek_low === null || cost.msek_high === null) {
+    return isEnglishContestEntry()
+      ? `Cost cannot be determined. This does not mean the measure is free.`
+      : `Kostnaden kan inte fastställas. Det betyder inte att åtgärden är gratis.`;
+  }
   const estimated = cost.basis !== "parti";
   const marker = estimated ? "≈ " : "";
   if (isEnglishContestEntry()) {
@@ -404,7 +403,7 @@ async function getEvidenceBoardStatus() {
 async function showPartyComparison(input                           ) {
   const partyCodes = selectedPartyCodes(input.party_codes);
   if (partyCodes.length === 0) throw new Error("Välj minst en giltig partikod.");
-  const summaryResponse = await getJson                                                                                                                                                         ("/api/v1/summary.json");
+  const summaryResponse = await getJson                                                                                                                                                                                                                                            ("/api/v1/summary.json");
   const summary = summaryResponse.data;
   if (!summary || !Array.isArray(summary.parties)) throw new Error("Utlovats publicerade sammanfattning har oväntat format.");
   const url = `/jamfor?parties=${encodeURIComponent(partyCodes.join(","))}`;

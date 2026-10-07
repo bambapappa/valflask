@@ -1,4 +1,5 @@
 interface PartyRow {
+  ofullstandig_summa?: true;
   code: string;
   name: string;
   total_msek: number;
@@ -27,7 +28,7 @@ interface PromiseItem {
   id: string;
   group_id: string | null;
   parties: string[];
-  cost: { type: string; period: string; msek_base: number };
+  cost: { type: string; period: string; msek_base: number | null; belopp_status?: "okant" };
   financing_claimed: { msek: number | null; period?: "per_ar" | "engang" };
   status: string;
 }
@@ -41,6 +42,7 @@ interface GroupNote {
 }
 
 interface CoalitionResult {
+  okandaLoften: string[];
   totalFlasket: number;
   totalBesparingar: number;
   totalFinancingClaimed: number;
@@ -51,7 +53,7 @@ interface CoalitionResult {
 }
 
 function promiseTotal(p: PromiseItem): number {
-  return p.cost.msek_base * (p.cost.period === "per_ar" ? 4 : 1);
+  return (p.cost.msek_base ?? 0) * (p.cost.period === "per_ar" ? 4 : 1);
 }
 
 function isActive(p: PromiseItem): boolean {
@@ -80,6 +82,8 @@ function financingClaimed(p: PromiseItem): number {
 function computeCoalition(promises: PromiseItem[], partyCodes: string[]): CoalitionResult {
   const partySet = new Set(partyCodes);
   const relevant = promises.filter((p) => isActive(p) && p.parties.some((c) => partySet.has(c)));
+  const okandaLoften = relevant.filter(p => p.cost.belopp_status === "okant").map(p => p.id);
+  const grupperMedLucka = new Set(relevant.filter(p => p.cost.belopp_status === "okant").map(p => p.group_id).filter(Boolean));
   const seenGroups = new Map<string, { min: number; max: number; parties: Set<string> }>();
   let totalFlasket = 0;
   let totalBesparingar = 0;
@@ -89,7 +93,7 @@ function computeCoalition(promises: PromiseItem[], partyCodes: string[]): Coalit
 
   // Gruppnoterna behöver ALLA medlemmar: spannet är skillnaden mellan dem.
   for (const p of relevant) {
-    if (!p.group_id) continue;
+    if (!p.group_id || grupperMedLucka.has(p.group_id)) continue;
     const t = promiseTotal(p);
     const existing = seenGroups.get(p.group_id);
     if (existing) {
@@ -135,6 +139,7 @@ function computeCoalition(promises: PromiseItem[], partyCodes: string[]): Coalit
     .map(([gid, v]) => ({ group_id: gid, parties: Array.from(v.parties), minMsek: v.min, maxMsek: v.max, hasSpread: true }));
 
   return {
+    okandaLoften,
     totalFlasket,
     totalBesparingar,
     totalFinancingClaimed: totalFinancing,
@@ -215,7 +220,10 @@ async function init() {
     const coalition = computeCoalition(promisesData!, checked);
     const mandates = checked.reduce((s, c) => s + (partyMap.get(c)?.mandates ?? 0), 0);
 
-    let html = '<table class="resultat__tabell"><thead><tr>';
+    let html = coalition.okandaLoften.length > 0
+      ? `<aside role="note"><strong>Summorna är ofullständiga.</strong> För ${coalition.okandaLoften.length} löften i detta urval kan beloppet inte fastställas. Dessa kostnader eller besparingar ingår inte i beloppssummorna. Det betyder inte att åtgärderna är gratis.</aside>`
+      : "";
+    html += '<table class="resultat__tabell"><thead><tr>';
     html += '<th class="radnr">#</th><th>Parti</th><th class="num">Totalt</th><th class="num">Löften</th><th class="num">Mandat</th>';
     html += '</tr></thead><tbody>';
 
@@ -224,7 +232,7 @@ async function init() {
       if (!p) return;
       html += `<tr><td class="radnr">${i + 1}</td>`;
       html += `<td>${escapeHtml(p.name)}</td>`;
-      html += `<td class="num">${formatMsek(p.total_msek)}</td>`;
+      html += `<td class="num">${formatMsek(p.total_msek)}${p.ofullstandig_summa ? " (ofullständig summa)" : ""}</td>`;
       html += `<td class="num">${p.promises_count}</td>`;
       html += `<td class="num">${p.mandates}</td></tr>`;
     });

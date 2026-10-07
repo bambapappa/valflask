@@ -75,6 +75,7 @@ it("verklig CLI för blandade beslut torrkör, stoppar sent fel och skriver gilt
     cpSync(join(import.meta.dirname, "../scripts/review-verkstall.mts"), join(pipeline, "scripts/review-verkstall.mts"));
     mkdirSync(join(root, "site/src/lib"), { recursive: true });
     cpSync(new URL("../../site/src/lib/aggregates.ts", import.meta.url), join(root, "site/src/lib/aggregates.ts"));
+    cpSync(new URL("../../site/src/lib/kostnadsluckor.ts", import.meta.url), join(root, "site/src/lib/kostnadsluckor.ts"));
     symlinkSync(join(import.meta.dirname, "../node_modules"), join(pipeline, "node_modules"), "dir");
     const beslut = init(dir), fore = lasFillage(dir, VERKSTALLFILER);
     const fil = join(root, "beslut.jsonl");

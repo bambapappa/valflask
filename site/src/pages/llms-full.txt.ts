@@ -1,6 +1,8 @@
 import { getPromises, getParties, getConstants, getChangelog } from "../lib/data";
-import { buildSummary, promiseNetMsek } from "../lib/aggregates";
+import { buildSummary } from "../lib/aggregates";
 import { formatMsek } from "../lib/calc";
+
+import { formatPromiseNetCost, harOkantBelopp } from "../lib/kostnadsvisning";
 
 export const prerender = true;
 
@@ -19,7 +21,7 @@ export async function GET() {
 
 ## Sammanfattning
 
-- Totalt antal löften: ${summary.total_promises}
+${summary.ofullstandig_summa ? `Summorna är ofullständiga: ${summary.antal_okanda_belopp} löften saknar fastställbart belopp. Kostnader eller besparingar för dem ingår inte i beloppssummorna. Okänt belopp betyder inte gratis.\n\n` : ""}- Totalt antal löften: ${summary.total_promises}
 - Totalt fläsket (utgifter + intäktsminskningar): ${formatMsek(summary.total_msek_flasket)}
 - Totalt besparingar: ${formatMsek(summary.total_msek_besparingar)}
 - Finansieringsgap: ${formatMsek(summary.financing_gap_msek)}
@@ -32,7 +34,7 @@ export async function GET() {
 `;
 
   for (const p of summary.parties) {
-    md += `| ${p.name} | ${formatMsek(p.total_msek)} | ${p.promises_count} | ${p.mandates} |\n`;
+    md += `| ${p.name} | ${formatMsek(p.total_msek)}${p.ofullstandig_summa ? " (ofullständig summa)" : ""} | ${p.promises_count} | ${p.mandates} |\n`;
   }
 
   md += `
@@ -42,13 +44,13 @@ export async function GET() {
 
   for (const p of promises) {
     const partyNames = p.parties.map((c) => parties.find((pp) => pp.code === c)?.name || c).join(", ");
-    const total = formatMsek(promiseNetMsek(p), p.cost.basis);
+    const total = formatPromiseNetCost(p);
     md += `### [${p.title}](${BASE}/lofte/${p.id}/${p.slug})
 
 - ID: ${p.id}
 - Parti: ${partyNames}
 - Kategori: ${p.category}
-- Kostnad: ${total} (${p.cost.period === "per_ar" ? "per år ×4" : "engång"})
+- Kostnad: ${total} (${harOkantBelopp(p) ? "belopp saknas" : p.cost.period === "per_ar" ? "per år ×4" : "engång"})
 - Källa: ${p.source.domain}
 - Datum: ${p.date_stated}
 - Status: ${p.status}

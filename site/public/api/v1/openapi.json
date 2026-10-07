@@ -43,7 +43,30 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "cost"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "cost": {
+                            "$ref": "#/components/schemas/PromiseCost"
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -239,6 +262,95 @@
             }
           }
         }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PromiseCost": {
+        "type": "object",
+        "required": [
+          "msek_low",
+          "msek_base",
+          "msek_high"
+        ],
+        "properties": {
+          "msek_low": {
+            "type": "number",
+            "nullable": true,
+            "description": "Miljoner kronor; null när beloppet inte kan fastställas."
+          },
+          "msek_base": {
+            "type": "number",
+            "nullable": true,
+            "description": "Miljoner kronor; null när beloppet inte kan fastställas."
+          },
+          "msek_high": {
+            "type": "number",
+            "nullable": true,
+            "description": "Miljoner kronor; null när beloppet inte kan fastställas."
+          },
+          "belopp_status": {
+            "type": "string",
+            "enum": [
+              "okant"
+            ]
+          },
+          "belopp_skal": {
+            "type": "string",
+            "minLength": 1
+          },
+          "harledning": {
+            "type": "object",
+            "description": "Strukturerat beräkningsunderlag när det finns."
+          }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "belopp_status",
+              "belopp_skal"
+            ],
+            "properties": {
+              "msek_low": {
+                "enum": [
+                  null
+                ]
+              },
+              "msek_base": {
+                "enum": [
+                  null
+                ]
+              },
+              "msek_high": {
+                "enum": [
+                  null
+                ]
+              }
+            }
+          },
+          {
+            "not": {
+              "required": [
+                "belopp_status"
+              ]
+            },
+            "properties": {
+              "msek_low": {
+                "type": "number",
+                "nullable": false
+              },
+              "msek_base": {
+                "type": "number",
+                "nullable": false
+              },
+              "msek_high": {
+                "type": "number",
+                "nullable": false
+              }
+            }
+          }
+        ]
       }
     }
   }

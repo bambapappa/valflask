@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Kostnadslucka from "../components/Kostnadslucka.astro";
 import MetodLank from "../components/MetodLank.astro";
 import { getPromises, getParties } from "../lib/data";
 import { formatMsek } from "../lib/calc";
@@ -46,6 +47,7 @@ const jsonLd = [
       return (
         <section class="sektion">
           <h2>{c.label}</h2>
+          <Kostnadslucka antal={a.antal_okanda_belopp ?? 0} />
           <p class="etikett">{c.description} · {a.mandatesSum} mandat</p>
           <div class="datavy datavy--scroll">
             <table>

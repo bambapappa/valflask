@@ -7,7 +7,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 
 const pipeline = resolve(import.meta.dirname, "..");
 const repo = resolve(pipeline, "..");
-const files = ["data/promises.json", "data/parties.json", "site/src/lib/aggregates.ts", "data/stances.json", "handlingsvagen/data/kopplingar.json", "handlingsvagen/data/handlingar.json"];
+const files = ["data/promises.json", "data/parties.json", "site/src/lib/aggregates.ts", "site/src/lib/kostnadsluckor.ts", "data/stances.json", "handlingsvagen/data/kopplingar.json", "handlingsvagen/data/handlingar.json"];
 
 test("kommandot binder verkliga commit-versioner och lämnar lokala data orörda", () => {
   const temp = mkdtempSync(join(tmpdir(), "publiceringspaket-"));

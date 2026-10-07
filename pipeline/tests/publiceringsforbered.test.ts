@@ -21,7 +21,7 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
     return g("rev-parse", "HEAD").trim();
   };
   try {
-    for (const path of ["data/promises.json", "data/parties.json", "data/stances.json", "handlingsvagen/data/handlingar.json", "handlingsvagen/data/kopplingar.json", "site/src/lib/aggregates.ts"]) {
+    for (const path of ["data/promises.json", "data/parties.json", "data/stances.json", "handlingsvagen/data/handlingar.json", "handlingsvagen/data/kopplingar.json", "site/src/lib/aggregates.ts", "site/src/lib/kostnadsluckor.ts"]) {
       mkdirSync(dirname(join(repo, path)), { recursive: true });
       writeFileSync(join(repo, path), readFileSync(join(root, path)));
     }

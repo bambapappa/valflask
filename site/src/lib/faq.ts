@@ -52,6 +52,7 @@ import {
 } from "./aggregates.ts";
 import { computeDataHash } from "./canonical.ts";
 import { formatMsek } from "./calc.ts";
+import { harOkantBelopp, kostnadsluckor } from "./kostnadsvisning.ts";
 
 export type FaqTyp = "delfraga" | "partikostnad" | "totalkostnad";
 
@@ -89,10 +90,13 @@ export interface FaqSvar {
     parti_besked?: FaqPartiBesked[];
     parti_kod?: string;
     antal_loften?: number;
-    total_msek?: number;
+    total_msek?: number | null;
     finansiering_msek?: number;
-    besparingar_msek?: number;
-    gap_msek?: number;
+    besparingar_msek?: number | null;
+    gap_msek?: number | null;
+    ofullstandig_summa?: true;
+    antal_okanda_belopp?: number;
+    okanda_loften?: string[];
     dyraste_loftena?: Array<{ id: string; titel: string; slug: string; net_msek: number; url: string; arkiv_url: string | null; datum: string }>;
   };
 }
@@ -214,7 +218,7 @@ function delfrageSvar(
 
 function dyrasteMedArkiv(promises: PromisePost[], antal: number): PromisePost[] {
   return [...promises]
-    .filter((p) => isActive(p) && (p.source.archive_url ?? "").startsWith("http"))
+    .filter((p) => isActive(p) && !harOkantBelopp(p) && (p.source.archive_url ?? "").startsWith("http"))
     .sort((a, b) => promiseNetMsek(b) - promiseNetMsek(a) || a.id.localeCompare(b.id))
     .slice(0, antal);
 }
@@ -263,24 +267,31 @@ function kostnadsSvar(
     : dedupeByGroup(loften.filter((p) => isActive(p) && p.parties.includes(partiKod)));
   const antal = population.length;
   const urval = dyrasteMedArkiv(partiKod === null ? loften : population, 3);
+  const luckor = kostnadsluckor(partiKod === null ? loften : loften.filter((p) => p.parties.includes(partiKod)));
+  const enbartOkanda = population.length > 0 && population.every(harOkantBelopp);
+  const kallor = urval.length > 0 ? urval : population.filter((p) => (p.source.archive_url ?? "").startsWith("http")).slice(0, 3);
   // Utan citert belägg finns inget citerbart svar — detsamma gäller ett blänkt
   // underlag. Då är ärliga svaret ingen sida alls.
-  if (urval.length === 0) return null;
+  if (kallor.length === 0) return null;
 
   const answer_short =
-    `${partinamn ?? "Riksdagspartierna"} har ${antal} prissatta vallöften som sammanlagt kostar ` +
-    `≈ ${formatMsek(total)} för mandatperioden${partiKod === null ? " före avdrag för besparingar och intäktsökningar" : " netto"}, enligt utlovat.se:s prissättning. ` +
-    (besparingar !== undefined ? `Besparingar och intäktsökningar: ${formatMsek(besparingar)}. ` : "") +
-    `Angiven finansiering: ${formatMsek(fin)}. Finansieringsgap: ${formatMsek(gap)}. ` +
+    (luckor.antal > 0
+      ? `${partinamn ?? "Riksdagspartierna"} har ${antal} vallöften. ${enbartOkanda ? "Ingen sammanlagd kostnad kan fastställas. " : "Summan av fastställbara belopp är "}`
+      : `${partinamn ?? "Riksdagspartierna"} har ${antal} prissatta vallöften som sammanlagt kostar `) +
+    (enbartOkanda ? "" : `≈ ${formatMsek(total)} för mandatperioden${partiKod === null ? " före avdrag för besparingar och intäktsökningar" : " netto"}, enligt utlovat.se:s prissättning. `) +
+    (besparingar !== undefined && !enbartOkanda ? `Besparingar och intäktsökningar: ${formatMsek(besparingar)}. ` : "") +
+    `Angiven finansiering: ${formatMsek(fin)}. Finansieringsgap: ${enbartOkanda ? "kan inte fastställas" : formatMsek(gap)}. ` +
+    (luckor.antal > 0 ? `Summorna är ofullständiga: för ${luckor.antal} löften kan beloppet inte fastställas. Dessa kostnader eller besparingar ingår inte i beloppssummorna. Det betyder inte att åtgärderna är gratis. ` : "") +
     `Beloppen är uppskattningar med osäkerhetsspann; hela underlaget finns i promises.json.`;
 
   const data: FaqSvar["data"] = {
     parti_kod: partiKod ?? undefined,
     antal_loften: antal,
-    total_msek: total,
+    total_msek: enbartOkanda ? null : total,
     finansiering_msek: fin,
-    ...(besparingar !== undefined ? { besparingar_msek: besparingar } : {}),
-    gap_msek: gap,
+    ...(besparingar !== undefined ? { besparingar_msek: enbartOkanda ? null : besparingar } : {}),
+    gap_msek: enbartOkanda ? null : gap,
+    ...(luckor.antal > 0 ? { ofullstandig_summa: true as const, antal_okanda_belopp: luckor.antal, okanda_loften: luckor.ids } : {}),
     dyraste_loftena: urval.map((p) => ({
       id: p.id,
       titel: p.title,
@@ -300,8 +311,8 @@ function kostnadsSvar(
     answer_short,
     updated_at: senasteUnderlagsdag(changelog, loften),
     license: "CC-BY-4.0",
-    data_hash: hashUtan("data_hash", { question, slug, sources: urval.map((p) => loftesKalla(p, parties)), data }),
-    sources: urval.map((p) => loftesKalla(p, parties)),
+    data_hash: hashUtan("data_hash", { question, slug, sources: kallor.map((p) => loftesKalla(p, parties)), data }),
+    sources: kallor.map((p) => loftesKalla(p, parties)),
     data,
   };
 }
