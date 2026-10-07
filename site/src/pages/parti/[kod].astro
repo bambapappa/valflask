@@ -100,7 +100,8 @@ const jsonLd = [{
           <p class="notis">Urvalet gäller bara det partiet självt har lovat, med ordagrant citat och källa. Ett parti som publicerar mer material får därför fler löften här — det säger något om underlaget, inte om hur mycket partiet vill spendera.</p>
         </section>
 
-        {view.count > 0 && <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} partiBelopp={view.key.startsWith("parti:")} />}
+        {view.count > 0 && view.luckor === 0 && <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} partiBelopp={view.key.startsWith("parti:")} />}
+        {view.luckor > 0 && <p class="prosa-content">Löftena kan inte jämföras med reformutrymmet eftersom summan är ofullständig.</p>}
         {view.count > 0 && <p class="prosa-content totalscope">Mätaren gäller samtliga partiers löften i samma urval. Talen ovan gäller enbart {party.name}.</p>}
 
         <section class="sektion">

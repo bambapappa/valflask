@@ -47,6 +47,10 @@ try {
   const knownCoalition = await coalitionHtml(["s"]);
   assert.ok(!knownCoalition.includes("Kan inte fastställas"));
   assert.ok(!knownCoalition.includes("Summorna är ofullständiga"));
+  const mixedHome = html("");
+  const mixedHomeView = mixedHome.slice(mixedHome.indexOf("alla:alla:alla:alla")).split('<section class="sektion"')[0];
+  assert.ok(mixedHomeView.includes("summan är ofullständig"));
+  assert.ok(!mixedHomeView.includes('class="gapmatare"'), "Ofullständig totalsumma får ingen finansieringsmätare");
   const summary = json("api/v1/summary.json").data;
   assert.equal(summary.parties.find((p: any) => p.code === "c").per_vote, null);
   assert.equal(typeof summary.parties.find((p: any) => p.code === "s").per_vote, "number");
@@ -82,6 +86,11 @@ try {
   assert.ok(homeIndex >= 0);
   assert.match(home.slice(homeIndex), /href="\/parti\/c"[\s\S]*?<td[^>]*>Kan inte fastställas<\/td>/);
   assert.match(html("parti/c"), new RegExp(`${unknown.category}[\\s\\S]*?<td[^>]*>Kan inte fastställas</td>`));
+  const unknownHomeView = home.slice(homeIndex).split('<section class="sektion"')[0];
+  assert.ok(unknownHomeView.includes("summan är ofullständig"));
+  assert.ok(!unknownHomeView.includes('class="gapmatare"'));
+  const unknownPartyView = html("parti/c").split('class="gapmatare"');
+  assert.equal(unknownPartyView.length, 1, "Helt okänt parti får ingen mätare eller ryms-stämpel");
   const unknownPanel = home.slice(homeIndex).match(/<div\b[^>]*class="[^"]*num-stor[^"]*"[^>]*>Kan inte fastställas<\/div>/)?.[0];
   assert.ok(unknownPanel, "Helt okänd startsumma får ingen nollprislapp");
   assert.ok(!unknownPanel.includes("data-taxameter"));
