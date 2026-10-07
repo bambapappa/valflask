@@ -15,3 +15,19 @@ export function kostnadsluckor(posts: PromisePost[]): { antal: number; ids: stri
   const ids = posts.filter(p => p.status !== "tillbakadragen" && harOkantBelopp(p)).map(p => p.id);
   return { antal: ids.length, ids };
 }
+
+/** Publikt API får inte översätta en saknad prislapp till kostnadsfrihet. */
+export function apiCost(p: PromisePost) {
+  const c = p.cost;
+  const unknown = harOkantBelopp(p);
+  return {
+    type: c.type, period: c.period,
+    msek_low: unknown ? null : c.msek_low,
+    msek_base: unknown ? null : c.msek_base,
+    msek_high: unknown ? null : c.msek_high,
+    basis: c.basis, basis_url: c.basis_url, method_note: c.method_note,
+    calculation: c.calculation, confidence: c.confidence,
+    ...(c.harledning ? {harledning: c.harledning} : {}),
+    ...(unknown ? {belopp_status: "okant", belopp_skal: c.harledning!.belopp_okant!.skal} : {}),
+  };
+}
