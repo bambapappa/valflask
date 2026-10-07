@@ -43,10 +43,10 @@ interface GroupNote {
 
 interface CoalitionResult {
   okandaLoften: string[];
-  totalFlasket: number;
-  totalBesparingar: number;
+  totalFlasket: number | null;
+  totalBesparingar: number | null;
   totalFinancingClaimed: number;
-  financingGap: number;
+  financingGap: number | null;
   promisesCount: number;
   mandatesSum: number;
   groupNotes: GroupNote[];
@@ -83,6 +83,7 @@ function computeCoalition(promises: PromiseItem[], partyCodes: string[]): Coalit
   const partySet = new Set(partyCodes);
   const relevant = promises.filter((p) => isActive(p) && p.parties.some((c) => partySet.has(c)));
   const okandaLoften = relevant.filter(p => p.cost.belopp_status === "okant").map(p => p.id);
+  const enbartOkanda = relevant.length > 0 && okandaLoften.length === relevant.length;
   const grupperMedLucka = new Set(relevant.filter(p => p.cost.belopp_status === "okant").map(p => p.group_id).filter(Boolean));
   const seenGroups = new Map<string, { min: number; max: number; parties: Set<string> }>();
   let totalFlasket = 0;
@@ -140,10 +141,10 @@ function computeCoalition(promises: PromiseItem[], partyCodes: string[]): Coalit
 
   return {
     okandaLoften,
-    totalFlasket,
-    totalBesparingar,
+    totalFlasket: enbartOkanda ? null : totalFlasket,
+    totalBesparingar: enbartOkanda ? null : totalBesparingar,
     totalFinancingClaimed: totalFinancing,
-    financingGap: totalFlasket - totalBesparingar - totalFinancing,
+    financingGap: enbartOkanda ? null : totalFlasket - totalBesparingar - totalFinancing,
     promisesCount: count,
     mandatesSum: 0,
     groupNotes,
@@ -243,7 +244,7 @@ async function init() {
     html += `<tr><td colspan="2">Besparingar</td><td class="num" colspan="3">${formatMsek(coalition.totalBesparingar)}</td></tr>`;
     html += `<tr><td colspan="2">Finansiering angiven</td><td class="num" colspan="3">${formatMsek(coalition.totalFinancingClaimed)}</td></tr>`;
 
-    const gapLabel = coalition.financingGap < 0
+    const gapLabel = coalition.financingGap === null ? "Kan inte fastställas" : coalition.financingGap < 0
       ? `ÖVERTÄCKT (${formatMsek(Math.abs(coalition.financingGap))})`
       : formatMsek(coalition.financingGap);
     html += `<tr><td colspan="2"><strong>Finansieringsgap</strong></td><td class="num" colspan="3"><strong class="num">${gapLabel}</strong></td></tr>`;

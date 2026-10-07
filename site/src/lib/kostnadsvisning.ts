@@ -3,7 +3,7 @@ import { formatMsek } from "./calc.ts";
 import { promiseNetMsek } from "./aggregates.ts";
 
 import { harOkantBelopp } from "./kostnadsluckor.ts";
-export { harOkantBelopp, kostnadsluckor } from "./kostnadsluckor.ts";
+export { harOkantBelopp, kostnadsluckor, enbartOkandaBelopp } from "./kostnadsluckor.ts";
 
 export function formatPromiseCost(p: PromisePost, period: "mandatperiod" | "grund" = "mandatperiod"): string {
   if (harOkantBelopp(p)) return "Kan inte fastställas";

@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { enbartOkandaBelopp } from "../lib/kostnadsluckor";
 import Kostnadslucka from "../components/Kostnadslucka.astro";
 import MetodLank from "../components/MetodLank.astro";
 import { getPromises, getParties } from "../lib/data";
@@ -43,7 +44,8 @@ const jsonLd = [
 
     {results.map((c) => {
       const a = c.aggregates;
-      const gapLabel = a.financingGap < 0 ? `RYMS (${formatMsek(Math.abs(a.financingGap))} över)` : formatMsek(a.financingGap);
+      const enbartOkanda = enbartOkandaBelopp(promises.filter(p => p.parties.some(code => c.parties.includes(code))));
+      const gapLabel = enbartOkanda ? "Kan inte fastställas" : a.financingGap < 0 ? `RYMS (${formatMsek(Math.abs(a.financingGap))} över)` : formatMsek(a.financingGap);
       return (
         <section class="sektion">
           <h2>{c.label}</h2>
@@ -78,11 +80,11 @@ const jsonLd = [
               <tfoot>
                 <tr>
                   <td colspan="2"><strong>Fläsket (delade löften räknas en gång)</strong></td>
-                  <td class="num" colspan="2"><strong class="num belopp">{formatMsek(a.totalFlasket)}</strong></td>
+                  <td class="num" colspan="2"><strong class="num belopp">{enbartOkanda ? "Kan inte fastställas" : formatMsek(a.totalFlasket)}</strong></td>
                 </tr>
                 <tr>
                   <td colspan="2">Sparande</td>
-                  <td class="num belopp" colspan="2">{formatMsek(a.totalBesparingar)}</td>
+                  <td class="num belopp" colspan="2">{enbartOkanda ? "Kan inte fastställas" : formatMsek(a.totalBesparingar)}</td>
                 </tr>
                 <tr>
                   <td colspan="2">Angiven finansiering</td>

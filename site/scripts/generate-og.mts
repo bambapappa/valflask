@@ -22,7 +22,7 @@ import {
   totalFlasket,
 } from "../src/lib/aggregates.ts";
 import { formatBasisLabel, formatMsek } from "../src/lib/calc.ts";
-import { formatPromiseCost, harOkantBelopp, kostnadsluckor } from "../src/lib/kostnadsvisning.ts";
+import { formatPromiseCost, harOkantBelopp, kostnadsluckor, enbartOkandaBelopp } from "../src/lib/kostnadsvisning.ts";
 import type { PromisePost } from "../src/lib/data";
 
 /**
@@ -32,6 +32,10 @@ import type { PromisePost } from "../src/lib/data";
  */
 function ogBelopp(msek: number, basis?: string): string {
   return formatMsek(msek, basis).toUpperCase();
+}
+
+export function summaryOgBelopp(posts: PromisePost[], total: number): string {
+  return enbartOkandaBelopp(posts) ? "OKÄNT" : ogBelopp(total);
 }
 
 export function promiseOgBelopp(p: PromisePost): string {
@@ -222,7 +226,7 @@ async function main() {
 
   const startPng = await generateOgImage({
     topLabel: "UTLOVAT.SE · FLÄSKVÅGEN",
-    bigNumber: ogBelopp(flasket),
+    bigNumber: summaryOgBelopp(promises, flasket),
     title: "RIKSDAGSPARTIERNAS VALLÖFTEN 2026",
     bottomLine: kostnadsluckor(promises).antal > 0 ? `${kostnadsluckor(promises).antal} löften utan fastställbart belopp · Ofullständig summa` : "utlovat.se · Uppskattningar enligt öppen metod",
   });
@@ -235,7 +239,7 @@ async function main() {
 
     const png = await generateOgImage({
       topLabel: `UTLOVAT.SE · PARTI`,
-      bigNumber: ogBelopp(partyTotal),
+      bigNumber: summaryOgBelopp(getPromisesForParty(promises, party.code), partyTotal),
       title: `VAD KOSTAR ${party.name.toUpperCase()}S VALLÖFTEN?`,
       bottomLine: kostnadsluckor(getPromisesForParty(promises, party.code)).antal > 0 ? `${partyCount} löften · ${kostnadsluckor(getPromisesForParty(promises, party.code)).antal} belopp okända · Ofullständig summa` : `${partyCount} löften · utlovat.se`,
     });

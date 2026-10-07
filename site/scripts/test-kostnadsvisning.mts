@@ -8,7 +8,7 @@ import { runInNewContext } from "node:vm";
 import { buildSummary, coalitionAggregates, promiseNetMsek } from "../src/lib/aggregates.ts";
 import { formatMsek } from "../src/lib/calc.ts";
 import { formatPromiseCost, kostnadsluckor, apiCost, formatPromiseNetCost } from "../src/lib/kostnadsvisning.ts";
-import { promiseOgBelopp } from "./generate-og.mts";
+import { promiseOgBelopp, summaryOgBelopp } from "./generate-og.mts";
 const posts = JSON.parse(readFileSync(new URL("../../data/promises.json", import.meta.url), "utf8")) as PromisePost[];
 
 test("verkligt bestånd behåller sin befintliga beloppspresentation", () => {
@@ -29,6 +29,9 @@ test("obestämbart belopp skiljs från metodnolla och indragna luckor", () => {
   assert.ok(p);
   const unknown: PromisePost = {...p, cost: {...p.cost, msek_base: 0, msek_low: 0, msek_high: 0,
     harledning: {version: "harledning/1", led: [], arsprofil: {status: "okand", skal: "Syntetisk testprofil"}, belopp_okant: {skal: "Syntetiskt testunderlag saknas"}}}};
+  assert.equal(summaryOgBelopp([unknown], 0), "OKÄNT");
+  assert.equal(summaryOgBelopp([], 0), "0 MKR");
+  assert.notEqual(summaryOgBelopp([p], p.cost.msek_base), "OKÄNT");
   const summary = buildSummary([unknown, {...unknown, id: "withdrawn-fixture", status: "tillbakadragen"}], getParties(), getConstants(), []);
   assert.equal(summary.ofullstandig_summa, true);
   assert.equal(summary.total_msek_flasket, null);

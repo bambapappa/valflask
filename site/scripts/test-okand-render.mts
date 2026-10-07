@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import {runInNewContext} from "node:vm";
 import {mkdtempSync, mkdirSync, cpSync, symlinkSync, readdirSync, readFileSync, writeFileSync, rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {resolve, join} from "node:path";
@@ -22,6 +23,30 @@ try {
   execFileSync(join(root, "site/node_modules/.bin/astro"), ["build"], {cwd: site, stdio: "pipe", timeout: 120000, maxBuffer: 16*1024*1024});
   const html = (path: string) => readFileSync(join(site, "dist", path, "index.html"), "utf8");
   const json = (path: string) => JSON.parse(readFileSync(join(site, "dist", path), "utf8"));
+  async function coalitionHtml(parties: string[]): Promise<string> {
+    const result = {innerHTML: ""};
+    const boxes = parties.map(value => ({value, checked: false, addEventListener() {}}));
+    let start: () => Promise<void>;
+    runInNewContext(readFileSync(join(root, "site/public/kombinator.js"), "utf8"), {
+      document: {
+        getElementById: (id: string) => id === "kombinator-resultat" ? result : {querySelectorAll: () => boxes},
+        addEventListener: (_event: string, callback: () => Promise<void>) => { start = callback; },
+      },
+      window: {location: {search: `?parties=${parties.join(",")}`}}, URLSearchParams,
+      fetch: async (path: string) => ({json: async () => json(path.slice(1))}),
+    });
+    await start!();
+    return result.innerHTML;
+  }
+  const unknownCoalition = await coalitionHtml(["c"]);
+  const footer = unknownCoalition.split("<tfoot>")[1];
+  assert.ok(footer);
+  assert.match(footer, /Fläsket[\s\S]*?Kan inte fastställas/);
+  assert.match(footer, /Besparingar[\s\S]*?Kan inte fastställas/);
+  assert.match(footer, /Finansieringsgap[\s\S]*?Kan inte fastställas/);
+  const knownCoalition = await coalitionHtml(["s"]);
+  assert.ok(!knownCoalition.includes("Kan inte fastställas"));
+  assert.ok(!knownCoalition.includes("Summorna är ofullständiga"));
   const summary = json("api/v1/summary.json").data;
   assert.equal(summary.parties.find((p: any) => p.code === "c").per_vote, null);
   assert.equal(typeof summary.parties.find((p: any) => p.code === "s").per_vote, "number");
@@ -52,6 +77,16 @@ try {
   assert.equal(allUnknown.total_msek_flasket, null);
   assert.equal(allUnknown.total_msek_besparingar, null);
   assert.equal(allUnknown.financing_gap_msek, null);
+  const home = html("");
+  const homeIndex = home.indexOf("alla:alla:alla:alla");
+  assert.ok(homeIndex >= 0);
+  assert.match(home.slice(homeIndex), /href="\/parti\/c"[\s\S]*?<td[^>]*>Kan inte fastställas<\/td>/);
+  assert.match(html("parti/c"), new RegExp(`${unknown.category}[\\s\\S]*?<td[^>]*>Kan inte fastställas</td>`));
+  const unknownPanel = home.slice(homeIndex).match(/<div\b[^>]*class="[^"]*num-stor[^"]*"[^>]*>Kan inte fastställas<\/div>/)?.[0];
+  assert.ok(unknownPanel, "Helt okänd startsumma får ingen nollprislapp");
+  assert.ok(!unknownPanel.includes("data-taxameter"));
+  assert.ok(html("parti/c").match(/class="[^"]*num-stor[^"]*"[^>]*>Kan inte fastställas/));
+  assert.ok((html("regeringar").match(/Kan inte fastställas/g) ?? []).length >= 3);
   const text = readFileSync(join(site, "dist/llms-full.txt"), "utf8");
   assert.ok(text.includes("Totalt fläsket (utgifter + intäktsminskningar): Kan inte fastställas"));
   assert.ok(text.includes("Finansieringsgap: Kan inte fastställas"));

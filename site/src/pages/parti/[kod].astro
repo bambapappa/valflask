@@ -1,6 +1,6 @@
 ---
 import Kostnadslucka from "../../components/Kostnadslucka.astro";
-import { formatPromiseNetCost, harOkantBelopp, kostnadsluckor } from "../../lib/kostnadsvisning";
+import { formatPromiseNetCost, harOkantBelopp, kostnadsluckor, enbartOkandaBelopp } from "../../lib/kostnadsvisning";
 import Layout from "../../layouts/Layout.astro";
 import Lopsedel from "../../components/Lopsedel.astro";
 import GapMatare from "../../components/GapMatare.astro";
@@ -34,13 +34,14 @@ const views = loftesvyer(promises).map(({ key, keys, selected }) => {
   });
   const tackning = partyCoverage(selected, kod!);
   return {
+    enbartOkanda: enbartOkandaBelopp(partyPromises),
     luckor: kostnadsluckor(partyPromises).antal,
     key, keys,
     count: partyPromises.length,
     total: partyTotalMsek(selected, kod!),
     perRost: flasketPerRost(partyTotalMsek(selected, kod!), party.votes_2022),
     flasket: totalFlasket(selected),
-    categories: categoryBreakdown(partyPromises),
+    categories: categoryBreakdown(partyPromises).map(cat => ({...cat, okant: enbartOkandaBelopp(partyPromises.filter(p => p.category === cat.category)), luckor: kostnadsluckor(partyPromises.filter(p => p.category === cat.category)).antal})),
     promiseRows,
     tackning,
     andelEgna: tackning.antal > 0 ? Math.round((100 * tackning.egna) / tackning.antal) : 0,
@@ -79,10 +80,10 @@ const jsonLd = [{
     {views.map((view) => (
       <div data-loftesfilter-vy={view.keys.join(" ")} data-loftesfilter-vy-antal={view.count} hidden={!view.keys.includes(defaultKey)}>
         <Kostnadslucka antal={view.luckor} />
-        <Lopsedel total={formatMsek(view.total)} subtitle={party.name.toUpperCase()} count={view.count} date="2026" headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
+        <Lopsedel total={view.enbartOkanda ? "Kan inte fastställas" : formatMsek(view.total)} subtitle={party.name.toUpperCase()} count={view.count} date="2026" headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
 
         <div class="prosa-content prosa-content--centered">
-          <p><strong>{party.name}s</strong> valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsekShort(view.total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften. Fläsk per röst: <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{view.luckor > 0 ? "Kan inte fastställas" : `${Math.round(view.perRost).toLocaleString("sv-SE")} kr`}</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
+          <p><strong>{party.name}s</strong> valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{view.enbartOkanda ? "Kan inte fastställas" : `${formatMsekShort(view.total)} mdkr`}</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften. Fläsk per röst: <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{view.luckor > 0 ? "Kan inte fastställas" : `${Math.round(view.perRost).toLocaleString("sv-SE")} kr`}</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
         </div>
 
         <section class="sektion prosa-content prosa-content--centered underlag">
@@ -105,7 +106,7 @@ const jsonLd = [{
         <section class="sektion">
           <h2>Kategorifördelning</h2>
           <div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Kategori</th><th class="num">Totalt (mdkr)</th><th class="num">Löften</th></tr></thead><tbody>
-            {view.categories.map((cat, i) => <tr><td class="radnr">{i + 1}</td><td>{cat.category}</td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(cat.totalMsek)}</td><td class="num">{cat.count}</td></tr>)}
+            {view.categories.map((cat, i) => <tr><td class="radnr">{i + 1}</td><td>{cat.category}</td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{cat.okant ? "Kan inte fastställas" : formatMsek(cat.totalMsek)}{cat.luckor > 0 && !cat.okant ? " (ofullständig summa)" : ""}</td><td class="num">{cat.count}</td></tr>)}
           </tbody></table></div>
         </section>
 

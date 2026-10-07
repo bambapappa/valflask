@@ -10,3 +10,8 @@ export function kostnadsluckor(posts: PromisePost[]): { antal: number; ids: stri
   return { antal: ids.length, ids };
 }
 
+
+export function enbartOkandaBelopp(posts: PromisePost[]): boolean {
+  const active = posts.filter(p => p.status !== "tillbakadragen");
+  return active.length > 0 && active.every(harOkantBelopp);
+}
