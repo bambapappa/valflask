@@ -1,4 +1,4 @@
-/* WebMCP: publika belägg, ingen politisk rekommendation. */
+/* Publika belägg, inga partirekommendationer. */
 
 
 
@@ -403,7 +403,7 @@ async function getEvidenceBoardStatus() {
 async function showPartyComparison(input                           ) {
   const partyCodes = selectedPartyCodes(input.party_codes);
   if (partyCodes.length === 0) throw new Error("Välj minst en giltig partikod.");
-  const summaryResponse = await getJson                                                                                                                                                                                                                                            ("/api/v1/summary.json");
+  const summaryResponse = await getJson                                                                                                                                                                                                                                                          ("/api/v1/summary.json");
   const summary = summaryResponse.data;
   if (!summary || !Array.isArray(summary.parties)) throw new Error("Utlovats publicerade sammanfattning har oväntat format.");
   const url = `/jamfor?parties=${encodeURIComponent(partyCodes.join(","))}`;

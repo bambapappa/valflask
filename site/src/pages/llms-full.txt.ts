@@ -4,6 +4,8 @@ import { formatMsek } from "../lib/calc";
 
 import { formatPromiseNetCost, harOkantBelopp } from "../lib/kostnadsvisning";
 
+const formatSummaryMsek = (value: number | null) => value === null ? "Kan inte fastställas" : formatMsek(value);
+
 export const prerender = true;
 
 export async function GET() {
@@ -22,9 +24,9 @@ export async function GET() {
 ## Sammanfattning
 
 ${summary.ofullstandig_summa ? `Summorna är ofullständiga: ${summary.antal_okanda_belopp} löften saknar fastställbart belopp. Kostnader eller besparingar för dem ingår inte i beloppssummorna. Okänt belopp betyder inte gratis.\n\n` : ""}- Totalt antal löften: ${summary.total_promises}
-- Totalt fläsket (utgifter + intäktsminskningar): ${formatMsek(summary.total_msek_flasket)}
-- Totalt besparingar: ${formatMsek(summary.total_msek_besparingar)}
-- Finansieringsgap: ${formatMsek(summary.financing_gap_msek)}
+- Totalt fläsket (utgifter + intäktsminskningar): ${formatSummaryMsek(summary.total_msek_flasket)}
+- Totalt besparingar: ${formatSummaryMsek(summary.total_msek_besparingar)}
+- Finansieringsgap: ${formatSummaryMsek(summary.financing_gap_msek)}
 - Antal partier: ${summary.total_parties}
 
 ## Partiöversikt
@@ -34,7 +36,7 @@ ${summary.ofullstandig_summa ? `Summorna är ofullständiga: ${summary.antal_oka
 `;
 
   for (const p of summary.parties) {
-    md += `| ${p.name} | ${formatMsek(p.total_msek)}${p.ofullstandig_summa ? " (ofullständig summa)" : ""} | ${p.promises_count} | ${p.mandates} |\n`;
+    md += `| ${p.name} | ${formatSummaryMsek(p.total_msek)}${p.ofullstandig_summa ? " (ofullständig summa)" : ""} | ${p.promises_count} | ${p.mandates} |\n`;
   }
 
   md += `

@@ -2,12 +2,12 @@ interface PartyRow {
   ofullstandig_summa?: true;
   code: string;
   name: string;
-  total_msek: number;
+  total_msek: number | null;
   mandates: number;
   votes: number;
-  per_vote: number;
+  per_vote: number | null;
   promises_count: number;
-  financing_gap_msek: number;
+  financing_gap_msek: number | null;
 }
 
 interface SummaryData {
@@ -15,10 +15,10 @@ interface SummaryData {
   data_hash: string;
   total_parties: number;
   total_promises: number;
-  total_msek_flasket: number;
-  total_msek_besparingar: number;
+  total_msek_flasket: number | null;
+  total_msek_besparingar: number | null;
   total_financing_claimed_msek: number;
-  financing_gap_msek: number;
+  financing_gap_msek: number | null;
   reformutrymme_msek_per_ar: number | "VERIFIERA";
   reformutrymme_total_msek: number | null;
   parties: PartyRow[];
@@ -150,7 +150,8 @@ function computeCoalition(promises: PromiseItem[], partyCodes: string[]): Coalit
   };
 }
 
-function formatMsek(msek: number): string {
+function formatMsek(msek: number | null): string {
+  if (msek === null) return "Kan inte fastställas";
   if (msek >= 1000) {
     const mdkr = msek / 1000;
     return mdkr >= 10

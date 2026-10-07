@@ -226,7 +226,7 @@ jobs:
         run: pnpm test:openapi
         working-directory: site
       - name: Kostnadsredovisning och okända FAQ-belopp
-        run: pnpm test:kostnadsvisning && pnpm test:faq-okand
+        run: pnpm test:kostnadsvisning && pnpm test:faq-okand && pnpm test:okand-render
         working-directory: site
       - name: WebMCP-klientens belägg och kostnadsintervall
         run: node --experimental-strip-types scripts/test-webmcp.mts

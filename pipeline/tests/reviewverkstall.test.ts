@@ -169,3 +169,20 @@ it("enbart oavgjorda beslut ger explicit rapport och identiska före-/efterfiler
     assert.deepEqual(rapport.oavgjorda, [reviewId(items[0]!)]);
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
+
+it("kalkylflytt som behåller gammal okändmarkör stoppas efter förprövning utan originalskrivning", () => {
+  const dir = mkdtempSync(join(tmpdir(), "blandat-okant-"));
+  try {
+    init(dir);
+    const first = kalkylrad(dir);
+    const best = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8"));
+    const mal = best.find((p: any) => p.id === first.kalkyl_till);
+    assert.ok(mal);
+    mal.cost.msek_low = mal.cost.msek_base = mal.cost.msek_high = 0;
+    mal.cost.harledning = {version: "harledning/1", led: [], arsprofil: {status: "okand", skal: "Test"}, belopp_okant: {skal: "Test"}};
+    writeFileSync(join(dir, "promises.json"), JSON.stringify(best));
+    const rad = kalkylrad(dir), before = lasFillage(dir, VERKSTALLFILER);
+    assert.throws(() => forberedReviewverkstall([rad], dir), /okänt belopp/);
+    assert.deepEqual(lasFillage(dir, VERKSTALLFILER), before);
+  } finally {rmSync(dir, {recursive: true, force: true});}
+});

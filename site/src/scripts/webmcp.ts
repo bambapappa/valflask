@@ -1,4 +1,4 @@
-/* WebMCP: publika belägg, ingen politisk rekommendation. */
+/* Publika belägg, inga partirekommendationer. */
 
 type Source = { url: string; domain: string; archive_url: string | null };
 type PromiseItem = { id: string; title: string; slug: string; parties: string[]; quote: string; date_stated: string; category: string; status: string; source: Source; cost: { msek_low: number | null; msek_high: number | null; belopp_status?: "okant"; belopp_skal?: string; period: string; basis?: string } };
@@ -403,7 +403,7 @@ async function getEvidenceBoardStatus() {
 async function showPartyComparison(input: { party_codes: string[] }) {
   const partyCodes = selectedPartyCodes(input.party_codes);
   if (partyCodes.length === 0) throw new Error("Välj minst en giltig partikod.");
-  const summaryResponse = await getJson<{ data: { data_hash: string; parties: Array<{ code: string; name: string; total_msek: number; promises_count: number; financing_gap_msek: number; ofullstandig_summa?: true; antal_okanda_belopp?: number; okanda_loften?: string[] }> } }>("/api/v1/summary.json");
+  const summaryResponse = await getJson<{ data: { data_hash: string; parties: Array<{ code: string; name: string; total_msek: number | null; promises_count: number; financing_gap_msek: number | null; ofullstandig_summa?: true; antal_okanda_belopp?: number; okanda_loften?: string[] }> } }>("/api/v1/summary.json");
   const summary = summaryResponse.data;
   if (!summary || !Array.isArray(summary.parties)) throw new Error("Utlovats publicerade sammanfattning har oväntat format.");
   const url = `/jamfor?parties=${encodeURIComponent(partyCodes.join(","))}`;

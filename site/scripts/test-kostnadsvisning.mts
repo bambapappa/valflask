@@ -31,9 +31,14 @@ test("obestämbart belopp skiljs från metodnolla och indragna luckor", () => {
     harledning: {version: "harledning/1", led: [], arsprofil: {status: "okand", skal: "Syntetisk testprofil"}, belopp_okant: {skal: "Syntetiskt testunderlag saknas"}}}};
   const summary = buildSummary([unknown, {...unknown, id: "withdrawn-fixture", status: "tillbakadragen"}], getParties(), getConstants(), []);
   assert.equal(summary.ofullstandig_summa, true);
+  assert.equal(summary.total_msek_flasket, null);
+  assert.equal(summary.financing_gap_msek, null);
+  assert.equal(summary.parties.find(x => x.code === "c")!.total_msek, null);
   assert.deepEqual(summary.okanda_loften, [p.id]);
   assert.equal(summary.antal_okanda_belopp, 1);
   assert.equal(summary.parties.find(x => x.code === "c")!.ofullstandig_summa, true);
+  assert.equal(summary.parties.find(x => x.code === "c")!.per_vote, null);
+  assert.equal(typeof summary.parties.find(x => x.code === "s")!.per_vote, "number");
   assert.equal(summary.parties.find(x => x.code === "s")!.ofullstandig_summa, undefined);
   assert.equal(buildSummary(posts, getParties(), getConstants(), []).ofullstandig_summa, undefined);
   const zero: PromisePost = {...p, cost: {...p.cost, msek_base: 0, msek_low: 0, msek_high: 0}};

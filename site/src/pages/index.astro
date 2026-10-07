@@ -20,6 +20,7 @@ const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 const hash = dataHash(changelog);
 const tackning = tackningensTal();
 const views = loftesvyer(promises).map(({ key, keys, selected }) => {
+  const unknownIds = new Set(kostnadsluckor(selected).ids);
   const partyRows = parties.map((p) => ({
     code: p.code,
     name: p.name,
@@ -32,7 +33,7 @@ const views = loftesvyer(promises).map(({ key, keys, selected }) => {
     count: countPromises(selected),
     flasket: totalFlasket(selected),
     partyRows,
-    dyraste: groupedPromises(selected).filter(g => !harOkantBelopp(g.promise)).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 5),
+    dyraste: groupedPromises(selected).filter(g => !g.memberIds.some(id => unknownIds.has(id))).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 5),
     senaste: selected.filter((p) => p.status !== "tillbakadragen").sort((a, b) => b.date_stated.localeCompare(a.date_stated)).slice(0, 5),
   };
 });

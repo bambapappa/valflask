@@ -82,7 +82,7 @@ const jsonLd = [{
         <Lopsedel total={formatMsek(view.total)} subtitle={party.name.toUpperCase()} count={view.count} date="2026" headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
 
         <div class="prosa-content prosa-content--centered">
-          <p><strong>{party.name}s</strong> valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsekShort(view.total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften. Fläsk per röst: <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{Math.round(view.perRost).toLocaleString("sv-SE")} kr</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
+          <p><strong>{party.name}s</strong> valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsekShort(view.total)} mdkr</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften. Fläsk per röst: <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{view.luckor > 0 ? "Kan inte fastställas" : `${Math.round(view.perRost).toLocaleString("sv-SE")} kr`}</strong> ({party.mandate_2022} mandat, {party.votes_2022.toLocaleString("sv-SE")} röster 2022).</p>
         </div>
 
         <section class="sektion prosa-content prosa-content--centered underlag">

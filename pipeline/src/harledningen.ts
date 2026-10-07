@@ -209,3 +209,17 @@ export function harledningsvy(kalkyl: Kalkyl): Harledningsvy {
     fynd,
   };
 }
+
+
+/** Stoppar motstridiga okändmarkörer innan ett granskningspaket kan skrivas. */
+export function kontrolleraOkandaBelopp(poster: readonly {id: string; cost: Kalkyl}[]): void {
+  for (const p of poster) {
+    const h = p.cost?.harledning;
+    if (!h || !Object.hasOwn(h, "belopp_okant")) continue;
+    const marker = h.belopp_okant;
+    if (!marker || typeof marker.skal !== "string" || !marker.skal.trim() ||
+        [p.cost.msek_low, p.cost.msek_base, p.cost.msek_high].some(v => v !== 0)) {
+      throw new Error(`${p.id}: okänt belopp kräver tre nollplatshållare och ett tydligt skäl; inga originaldata skrivna.`);
+    }
+  }
+}
