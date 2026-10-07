@@ -1,3 +1,4 @@
+import {tillampa, provaUtrakningsrad} from "../src/utrakningsbyte.ts";
 import {test} from "node:test";
 import assert from "node:assert/strict";
 import {flytta, provaFlytt} from "../src/kalkylflytt.ts";
@@ -36,4 +37,12 @@ test("källans härledning stoppas även när mottagaren saknar struktur", () =>
   assert.throws(() => flytta(target, move, "2026-10-07"), /härledning/);
   assert.throws(() => satt(target, anchor, row, "2026-10-07"), /härledning/);
   assert.equal(JSON.stringify([target, anchor, move]), before);
+});
+
+test("textbyte får inte lämna ny uträkning med gammal strukturerad härledning", () => {
+  const row = {id: post.id, utrakning: "Ny uträkning för beloppet.", skal: "Ny bedömning ersätter tidigare resonemang i kalkylen."};
+  const before = JSON.stringify(post);
+  assert.ok(provaUtrakningsrad(row, new Map([[post.id, post]])).fel.some(x => x.includes("härledning")));
+  assert.throws(() => tillampa(post, row), /härledning/);
+  assert.equal(JSON.stringify(post), before);
 });
