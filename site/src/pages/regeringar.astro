@@ -45,7 +45,7 @@ const jsonLd = [
     {results.map((c) => {
       const a = c.aggregates;
       const enbartOkanda = enbartOkandaBelopp(promises.filter(p => p.parties.some(code => c.parties.includes(code))));
-      const gapLabel = enbartOkanda ? "Kan inte fastställas" : a.financingGap < 0 ? `RYMS (${formatMsek(Math.abs(a.financingGap))} över)` : formatMsek(a.financingGap);
+      const gapLabel = (a.antal_okanda_belopp ?? 0) > 0 ? "Kan inte fastställas" : a.financingGap < 0 ? `RYMS (${formatMsek(Math.abs(a.financingGap))} över)` : formatMsek(a.financingGap);
       return (
         <section class="sektion">
           <h2>{c.label}</h2>

@@ -72,6 +72,7 @@ test("Byggd kombinator och server varnar för vald okänd post utan falskt grupp
   assert.deepEqual(a.okanda_loften, [unknown.id]);
   assert.deepEqual(a.groupNotes, []);
   const summary = buildSummary(fixture, getParties(), getConstants(), []);
+  assert.equal(summary.financing_gap_msek, null, "Blandat urval med okänt belopp får inget numeriskt finansieringsgap");
   const result = {innerHTML: ""};
   const cb = {value: "c", checked: false, addEventListener() {}};
   let init: () => Promise<void>;

@@ -44,6 +44,8 @@ try {
   assert.match(footer, /Fläsket[\s\S]*?Kan inte fastställas/);
   assert.match(footer, /Besparingar[\s\S]*?Kan inte fastställas/);
   assert.match(footer, /Finansieringsgap[\s\S]*?Kan inte fastställas/);
+  const mixedCoalition = await coalitionHtml(["c", "s"]);
+  assert.match(mixedCoalition.split("<tfoot>")[1], /Finansieringsgap[\s\S]*?Kan inte fastställas/);
   const knownCoalition = await coalitionHtml(["s"]);
   assert.ok(!knownCoalition.includes("Kan inte fastställas"));
   assert.ok(!knownCoalition.includes("Summorna är ofullständiga"));
@@ -52,10 +54,13 @@ try {
   assert.ok(mixedHomeView.includes("summan är ofullständig"));
   assert.ok(!mixedHomeView.includes('class="gapmatare"'), "Ofullständig totalsumma får ingen finansieringsmätare");
   const summary = json("api/v1/summary.json").data;
+  assert.equal(summary.financing_gap_msek, null);
   assert.equal(summary.parties.find((p: any) => p.code === "c").per_vote, null);
   assert.equal(typeof summary.parties.find((p: any) => p.code === "s").per_vote, "number");
   assert.ok(html("parti/c").includes("Kan inte fastställas"));
   assert.ok(!html("parti/s").includes("Summorna är ofullständiga"));
+  const knownPartyView = html("parti/s").slice(html("parti/s").indexOf("alla:alla:alla:alla")).split('<section class="sektion"')[0];
+  assert.ok(!knownPartyView.includes('class="gapmatare"'), "Riksmätaren på känt partis sida kräver också komplett nationellt urval");
   assert.ok(html("topplistor").includes("Partier med okända belopp i urvalet är inte med i denna jämförelse."));
   const topHtml = html("topplistor");
   const allIndex = topHtml.indexOf("alla:alla:alla:alla");

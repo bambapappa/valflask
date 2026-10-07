@@ -28,7 +28,7 @@ const views = loftesvyer(promises).map(({ key, keys, selected }) => {
     okant: enbartOkandaBelopp(getPromisesForParty(selected, p.code)),
     luckor: kostnadsluckor(getPromisesForParty(selected, p.code)).antal,
     count: selected.filter((promise) => promise.parties.includes(p.code) && promise.status !== "tillbakadragen").length,
-  })).sort((a, b) => b.total - a.total);
+  })).sort((a, b) => Number(a.luckor > 0) - Number(b.luckor > 0) || (a.luckor > 0 ? a.name.localeCompare(b.name, "sv") : b.total - a.total));
   return {
     enbartOkanda: enbartOkandaBelopp(selected),
     luckor: kostnadsluckor(selected).antal,
@@ -112,7 +112,7 @@ const jsonLd = [{
         {view.luckor > 0 && <p class="prosa-content">Löftena kan inte jämföras med reformutrymmet eftersom summan är ofullständig.</p>}
 
         <section class="sektion"><h2>Fläsk per parti</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Parti</th><th class="num">Totalt (mdkr)</th><th class="num">Löften</th><th class="num">Sidor lästa</th></tr></thead><tbody>
-          {view.partyRows.map((row, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${row.code}`}>{row.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{row.okant ? "Kan inte fastställas" : formatMsek(row.total)}{row.luckor > 0 && !row.okant ? " (ofullständig summa)" : ""}</td><td class="num">{row.count}</td><td class="num">{sidorFor(tackning, row.code)}</td></tr>)}
+          {view.partyRows.map((row, i) => <tr><td class="radnr">{row.luckor > 0 ? "—" : i + 1}</td><td><a href={`/parti/${row.code}`}>{row.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{row.okant ? "Kan inte fastställas" : formatMsek(row.total)}{row.luckor > 0 && !row.okant ? " (ofullständig summa)" : ""}</td><td class="num">{row.count}</td><td class="num">{sidorFor(tackning, row.code)}</td></tr>)}
         </tbody></table></div><p class="tackningsnot">Sista kolumnen är hur många sidor vi hunnit läsa på partiets egen webbplats. Den är ett insamlingsmått och ändras därför inte med löftesurvalet. <a href="/metod#tackning">Så jämnar vi ut det</a>.</p></section>
 
         <section class="sektion"><h2>Dyraste löftena</h2><ol class="promise-list">{view.dyraste.map(({ promise: p, parties: gp }) => <li><a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a><div class="etikett etikett--sub">{gp.map((code) => parties.find((party) => party.code === code)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: p.cost.basis === "parti" }]}>{formatPromiseNetCost(p)}</span></div></li>)}</ol></section>

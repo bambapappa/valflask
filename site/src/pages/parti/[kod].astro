@@ -41,11 +41,12 @@ const views = loftesvyer(promises).map(({ key, keys, selected }) => {
     total: partyTotalMsek(selected, kod!),
     perRost: flasketPerRost(partyTotalMsek(selected, kod!), party.votes_2022),
     flasket: totalFlasket(selected),
+    riksLuckor: kostnadsluckor(selected).antal,
     categories: categoryBreakdown(partyPromises).map(cat => ({...cat, okant: enbartOkandaBelopp(partyPromises.filter(p => p.category === cat.category)), luckor: kostnadsluckor(partyPromises.filter(p => p.category === cat.category)).antal})),
     promiseRows,
     tackning,
     andelEgna: tackning.antal > 0 ? Math.round((100 * tackning.egna) / tackning.antal) : 0,
-    koncentrerat: tackning.topp3Andel >= 0.7,
+    koncentrerat: kostnadsluckor(partyPromises).antal === 0 && tackning.topp3Andel >= 0.7,
   };
 });
 const defaultKey = filterNyckel(STANDARD_LOFTESFILTER);
@@ -100,14 +101,14 @@ const jsonLd = [{
           <p class="notis">Urvalet gäller bara det partiet självt har lovat, med ordagrant citat och källa. Ett parti som publicerar mer material får därför fler löften här — det säger något om underlaget, inte om hur mycket partiet vill spendera.</p>
         </section>
 
-        {view.count > 0 && view.luckor === 0 && <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} partiBelopp={view.key.startsWith("parti:")} />}
-        {view.luckor > 0 && <p class="prosa-content">Löftena kan inte jämföras med reformutrymmet eftersom summan är ofullständig.</p>}
-        {view.count > 0 && <p class="prosa-content totalscope">Mätaren gäller samtliga partiers löften i samma urval. Talen ovan gäller enbart {party.name}.</p>}
+        {view.count > 0 && view.riksLuckor === 0 && <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} partiBelopp={view.key.startsWith("parti:")} />}
+        {view.riksLuckor > 0 && <p class="prosa-content">Löftena kan inte jämföras med reformutrymmet eftersom summan är ofullständig.</p>}
+        {view.count > 0 && view.riksLuckor === 0 && <p class="prosa-content totalscope">Mätaren gäller samtliga partiers löften i samma urval. Talen ovan gäller enbart {party.name}.</p>}
 
         <section class="sektion">
           <h2>Kategorifördelning</h2>
           <div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Kategori</th><th class="num">Totalt (mdkr)</th><th class="num">Löften</th></tr></thead><tbody>
-            {view.categories.map((cat, i) => <tr><td class="radnr">{i + 1}</td><td>{cat.category}</td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{cat.okant ? "Kan inte fastställas" : formatMsek(cat.totalMsek)}{cat.luckor > 0 && !cat.okant ? " (ofullständig summa)" : ""}</td><td class="num">{cat.count}</td></tr>)}
+            {view.categories.map((cat, i) => <tr><td class="radnr">{cat.luckor > 0 ? "—" : i + 1}</td><td>{cat.category}</td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{cat.okant ? "Kan inte fastställas" : formatMsek(cat.totalMsek)}{cat.luckor > 0 && !cat.okant ? " (ofullständig summa)" : ""}</td><td class="num">{cat.count}</td></tr>)}
           </tbody></table></div>
         </section>
 

@@ -581,7 +581,7 @@ export function buildSummary(
     total_msek_flasket: allUnknown ? null : totalFlasket(promises),
     total_msek_besparingar: allUnknown ? null : totalBesparingar(promises),
     total_financing_claimed_msek: totalFinancingClaimed(promises),
-    financing_gap_msek: allUnknown ? null : financingGap(promises),
+    financing_gap_msek: kostnadsluckor(promises).antal > 0 ? null : financingGap(promises),
     reformutrymme_msek_per_ar: reformutrymme,
     reformutrymme_total_msek: refTotal,
     parties: parties.map((p) => {

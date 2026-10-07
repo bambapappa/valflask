@@ -144,7 +144,7 @@ function computeCoalition(promises: PromiseItem[], partyCodes: string[]): Coalit
     totalFlasket: enbartOkanda ? null : totalFlasket,
     totalBesparingar: enbartOkanda ? null : totalBesparingar,
     totalFinancingClaimed: totalFinancing,
-    financingGap: enbartOkanda ? null : totalFlasket - totalBesparingar - totalFinancing,
+    financingGap: okandaLoften.length > 0 ? null : totalFlasket - totalBesparingar - totalFinancing,
     promisesCount: count,
     mandatesSum: 0,
     groupNotes,
