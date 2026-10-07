@@ -55,7 +55,7 @@ ops/              drift och lanseringsrutiner
 
 ## Bygg lokalt
 
-Koden i det här repot bygger hela sajten. Med en aktuell Node.js-version och pnpm installerat:
+Kommandona nedan bygger Fläskvågen och Frågevågen. Med en aktuell Node.js-version och pnpm installerat:
 
 ```bash
 git clone https://github.com/bambapappa/valflask.git
@@ -63,8 +63,12 @@ cd valflask/site
 pnpm install --frozen-lockfile
 pnpm dev      # utvecklingsserver
 pnpm build    # statiskt bygge till dist/
-pnpm test     # sajternas kontroller
+pnpm test     # kontroller för Fläskvågen och Frågevågen
 ```
+
+Handlingsvågen byggs separat från `handlingsvagen/site/`. Stegen för att
+bygga och kontrollera alla tre vågar och samla dem i samma utdata finns i
+[byggflödet](.github/workflows/build.yml).
 
 ## Licens & kontakt
 
