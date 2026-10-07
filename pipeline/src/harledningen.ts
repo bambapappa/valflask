@@ -46,6 +46,8 @@ export interface Led {
   /** Vilket år talet gäller. Ett tal utan år åldras tyst. */
   ar?: number | null;
   kalla?: string | null;
+  /** ID i sakprövningens frysta referensmaterial; adress ensam binder inget innehåll. */
+  kalla_ref?: string;
   /**
    * Ingår ledet i summan som blir `msek_base`?
    *

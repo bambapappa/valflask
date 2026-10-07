@@ -1,3 +1,4 @@
+import {kravHarledningsreferenser} from "./harledningsreferenser.ts";
 import { ordnaSakreferenser, sakmomentensBeredskap, SAKMOMENT, type Sakreferens, type Sakbedomning, type Sakmoment } from "./sakmoment.ts";
 export { ordnaSakreferenser, sakmomentensBeredskap, SAKMOMENT, type Sakreferens, type Sakbedomning, type Sakmoment } from "./sakmoment.ts";
 import { tillampaIndragningsforslag, type FrystIndragningsforslag } from "./indragningsforslag.ts";
@@ -159,6 +160,7 @@ function bindSlutform(forslag: Sakunderlag["forslag"], efter: PromiseEntry[], ma
     poster: bindUnderlag(`lofte:${forslag.nyttLofte.id}`, register),
     referenser: ordnaSakreferenser(material),
   };
+  kravHarledningsreferenser(payload.poster.poster, payload.referenser);
   return { ...payload, hash: hash(payload) };
 }
 
