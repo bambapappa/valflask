@@ -1,3 +1,4 @@
+import { provaAldreKalkylbyte, kravAldreKalkylbyte } from "./kalkylbyte-grind.ts";
 /**
  * Sortbytet: `loftestyp` kan vara fel medan beloppet är rätt.
  *
@@ -52,6 +53,7 @@ export interface Sortprovning { ok: boolean; fel: string[] }
 export function provaSortrad(lofte: Sortlofte | undefined, rad: Sortrad): Sortprovning {
   const fel: string[] = [];
   if (!lofte) return { ok: false, fel: [`${rad.id} finns inte`] };
+  fel.push(...provaAldreKalkylbyte(lofte.cost));
   if ((lofte.status ?? "aktiv") !== "aktiv") fel.push(`${rad.id} har status ${lofte.status}`);
   if (!SORTER.includes(rad.sort as Sort)) fel.push(`${rad.id}: sorten måste vara reform eller inriktning`);
   if (rad.sort === lofte.loftestyp) fel.push(`${rad.id} är redan ${rad.sort}`);
@@ -78,6 +80,7 @@ export function provaSortrad(lofte: Sortlofte | undefined, rad: Sortrad): Sortpr
 
 /** Posten med ny sort och ny uträkning. Beloppet står stilla. */
 export function tillampa<T extends Sortlofte>(lofte: T, rad: Sortrad, datum: string): T {
+  kravAldreKalkylbyte(lofte.cost);
   return {
     ...lofte,
     loftestyp: rad.sort,

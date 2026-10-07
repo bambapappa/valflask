@@ -1,3 +1,5 @@
+import {tillampa as bytSort, provaSortrad} from "../src/sortbyte.ts";
+import {tillampa as bytAnkartext, provaRad as provaAnkartext} from "../src/ankarpasset.ts";
 import {tillampa, provaUtrakningsrad} from "../src/utrakningsbyte.ts";
 import {test} from "node:test";
 import assert from "node:assert/strict";
@@ -45,4 +47,19 @@ test("textbyte får inte lämna ny uträkning med gammal strukturerad härlednin
   assert.ok(provaUtrakningsrad(row, new Map([[post.id, post]])).fel.some(x => x.includes("härledning")));
   assert.throws(() => tillampa(post, row), /härledning/);
   assert.equal(JSON.stringify(post), before);
+});
+
+
+test("sort- och ankarpass får inte ärva härledning bakom ändrad kalkyltext eller ankare", () => {
+  const p = {...post, status: "aktiv", loftestyp: "inriktning"};
+  const sort = {id: p.id, sort: "reform", utrakning: "Regeländringen ändrar förutsättningarna utan ny direkt statlig kostnad.", skal: "Källan anger en konkret åtgärd som ska klassas som reform."};
+  const before = JSON.stringify(p);
+  assert.ok(provaSortrad(p, sort).fel.some(x => x.includes("härledning")));
+  assert.throws(() => bytSort(p, sort, "2026-10-07"), /härledning/);
+  for (const utfall of ["egen", "ankare"] as const) {
+    const row = {id: p.id, utfall, varde: "Kalkylen förklaras med ett nytt underlag utan att den gamla strukturen får stå kvar.", skal: "Kalkylgrunden har omprövats mot ett annat underlag."};
+    assert.ok(provaAnkartext(row, new Map([[p.id, p]])).fel.some(x => x.includes("härledning")));
+    assert.throws(() => bytAnkartext(p, row), /härledning/);
+  }
+  assert.equal(JSON.stringify(p), before);
 });

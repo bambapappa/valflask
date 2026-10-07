@@ -86,6 +86,13 @@ try {
   assert.ok(unknownPanel, "Helt okänd startsumma får ingen nollprislapp");
   assert.ok(!unknownPanel.includes("data-taxameter"));
   assert.ok(html("parti/c").match(/class="[^"]*num-stor[^"]*"[^>]*>Kan inte fastställas/));
+  const allUnknownTop = html("topplistor");
+  const allUnknownView = allUnknownTop.slice(allUnknownTop.indexOf("alla:alla:alla:alla"));
+  const categorySection = allUnknownView.match(/<h2\b[^>]*>Kategorier<\/h2>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(categorySection, "Byggd kategoritabell måste finnas");
+  assert.match(categorySection, new RegExp(`${unknown.category}[\\s\\S]*?<td[^>]*>Kan inte fastställas</td>`));
+  assert.match(categorySection, /<td\b[^>]*class="radnr"[^>]*>—<\/td>/, "Okänd kategorisumma får ingen beloppsrang");
+
   assert.ok((html("regeringar").match(/Kan inte fastställas/g) ?? []).length >= 3);
   const text = readFileSync(join(site, "dist/llms-full.txt"), "utf8");
   assert.ok(text.includes("Totalt fläsket (utgifter + intäktsminskningar): Kan inte fastställas"));

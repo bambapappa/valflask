@@ -1,6 +1,6 @@
 ---
 import Kostnadslucka from "../components/Kostnadslucka.astro";
-import { formatPromiseNetCost, harOkantBelopp, kostnadsluckor } from "../lib/kostnadsvisning";
+import { formatPromiseNetCost, enbartOkandaBelopp, kostnadsluckor } from "../lib/kostnadsvisning";
 import Layout from "../layouts/Layout.astro";
 import Loftesfilter from "../components/Loftesfilter.astro";
 import { getPromises, getParties } from "../lib/data";
@@ -20,7 +20,7 @@ const views = loftesvyer(promises).map(({ key, keys, selected }) => {
     luckor: kostnadsluckor(selected).antal,
     key, keys, count: selected.filter((p) => p.status !== "tillbakadragen").length,
     fetaste: groupedPromises(selected).filter(g => !g.memberIds.some(id => unknownIds.has(id))).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 10),
-    partyTotals, partyPerVote, categories: categoryBreakdown(selected),
+    partyTotals, partyPerVote, categories: categoryBreakdown(selected).map(cat => ({...cat, okant: enbartOkandaBelopp(selected.filter(p => p.category === cat.category)), luckor: kostnadsluckor(selected.filter(p => p.category === cat.category)).antal})).sort((a, b) => Number(a.luckor > 0) - Number(b.luckor > 0) || (a.luckor > 0 ? a.category.localeCompare(b.category, "sv") : b.totalMsek - a.totalMsek)),
   };
 });
 const defaultKey = filterNyckel(STANDARD_LOFTESFILTER);
@@ -41,7 +41,7 @@ const jsonLd = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", i
         </section>
         <section class="sektion sektion--lg"><h2>Partier, totalt</h2>{view.luckor > 0 && <p>Partier med okända belopp i urvalet är inte med i denna rangordning.</p>}<div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Parti</th><th class="num">Totalt</th></tr></thead><tbody>{view.partyTotals.map((p, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${p.code}`}>{p.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(p.total)}</td></tr>)}</tbody></table></div></section>
         <section class="sektion sektion--lg"><h2>Partier, per röst</h2>{view.luckor > 0 && <p>Partier med okända belopp i urvalet är inte med i denna jämförelse.</p>}<div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Parti</th><th class="num">Kr per röst</th></tr></thead><tbody>{view.partyPerVote.map((p, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${p.code}`}>{p.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{Math.round(p.perVote).toLocaleString("sv-SE")} kr</td></tr>)}</tbody></table></div></section>
-        <section class="sektion sektion--lg"><h2>Kategorier</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Kategori</th><th class="num">Totalt</th><th class="num">Löften</th></tr></thead><tbody>{view.categories.map((c, i) => <tr><td class="radnr">{i + 1}</td><td>{c.category}</td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(c.totalMsek)}</td><td class="num">{c.count}</td></tr>)}</tbody></table></div></section>
+        <section class="sektion sektion--lg"><h2>Kategorier</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Kategori</th><th class="num">Totalt</th><th class="num">Löften</th></tr></thead><tbody>{view.categories.map((c, i) => <tr><td class="radnr">{c.luckor > 0 ? "—" : i + 1}</td><td>{c.category}</td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{c.okant ? "Kan inte fastställas" : formatMsek(c.totalMsek)}{c.luckor > 0 && !c.okant && " (ofullständig summa)"}</td><td class="num">{c.count}</td></tr>)}</tbody></table></div></section>
       </div>
     ))}
   </div>
