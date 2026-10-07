@@ -1,5 +1,6 @@
 ---
-import { formatPromiseNetCost, harOkantBelopp } from "../lib/kostnadsvisning";
+import Kostnadslucka from "../components/Kostnadslucka.astro";
+import { formatPromiseNetCost, harOkantBelopp, kostnadsluckor } from "../lib/kostnadsvisning";
 import Layout from "../layouts/Layout.astro";
 import Lopsedel from "../components/Lopsedel.astro";
 import GapMatare from "../components/GapMatare.astro";
@@ -26,6 +27,7 @@ const views = loftesvyer(promises).map(({ key, keys, selected }) => {
     count: selected.filter((promise) => promise.parties.includes(p.code) && promise.status !== "tillbakadragen").length,
   })).sort((a, b) => b.total - a.total);
   return {
+    luckor: kostnadsluckor(selected).antal,
     key, keys,
     count: countPromises(selected),
     flasket: totalFlasket(selected),
@@ -99,6 +101,7 @@ const jsonLd = [{
     <MetodLank />
     {views.map((view) => (
       <div data-loftesfilter-vy={view.keys.join(" ")} data-loftesfilter-vy-antal={view.count} data-loftesfilter-default={view.keys.includes(defaultKey) ? "true" : undefined} hidden={!view.keys.includes(defaultKey)}>
+        <Kostnadslucka antal={view.luckor} />
         <Lopsedel total={formatMsek(view.flasket)} subtitle="Valfläsket hittills" count={view.count} date="2026" taxameterValue={view.flasket} headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
         <div class="prosa-content prosa-content--centered"><p>Riksdagspartiernas valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(view.flasket)}</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften från åtta partier.</p></div>
         {view.count > 0 && <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} reformutrymmeSource={constants.reformutrymme_msek_per_ar.source_url} partiBelopp={view.key.startsWith("parti:")} />}

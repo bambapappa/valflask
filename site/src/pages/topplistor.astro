@@ -1,5 +1,6 @@
 ---
-import { formatPromiseNetCost, harOkantBelopp } from "../lib/kostnadsvisning";
+import Kostnadslucka from "../components/Kostnadslucka.astro";
+import { formatPromiseNetCost, harOkantBelopp, kostnadsluckor } from "../lib/kostnadsvisning";
 import Layout from "../layouts/Layout.astro";
 import Loftesfilter from "../components/Loftesfilter.astro";
 import { getPromises, getParties } from "../lib/data";
@@ -15,6 +16,7 @@ const views = loftesvyer(promises).map(({ key, keys, selected }) => {
   const partyPerVote = partyTotals.map((p) => ({ ...p, perVote: flasketPerRost(p.total, p.votes_2022) }))
     .sort((a, b) => b.perVote - a.perVote);
   return {
+    luckor: kostnadsluckor(selected).antal,
     key, keys, count: selected.filter((p) => p.status !== "tillbakadragen").length,
     fetaste: groupedPromises(selected).filter(g => !harOkantBelopp(g.promise)).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 10),
     partyTotals, partyPerVote, categories: categoryBreakdown(selected),
@@ -32,6 +34,7 @@ const jsonLd = [{ "@context": "https://schema.org", "@type": "BreadcrumbList", i
     <Loftesfilter count={views.find((view) => view.keys.includes(defaultKey))!.count} />
     {views.map((view) => (
       <div data-loftesfilter-vy={view.keys.join(" ")} data-loftesfilter-vy-antal={view.count} hidden={!view.keys.includes(defaultKey)}>
+        <Kostnadslucka antal={view.luckor} />
         <section class="sektion"><h2>Största löftena</h2><p class="prosa-content listnot">Delade löften räknas en gång. Partierna bakom löftet står utskrivna.</p>
           <ol class="promise-list">{view.fetaste.map((g) => <li><a href={`/lofte/${g.promise.id}/${g.promise.slug}`}><strong>{g.promise.title}</strong></a><div class="etikett etikett--sub">{g.parties.map((c) => parties.find((p) => p.code === c)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: g.promise.cost.basis === "parti" }]}>{formatPromiseNetCost(g.promise)}</span> · {valdagEtikett(g.promise)} · {regeringEtikett(g.promise)}{g.shared && <> · <span class="delat">delat löfte, {g.memberIds.length} formuleringar</span></>}</div></li>)}</ol>
         </section>

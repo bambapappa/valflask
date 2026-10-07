@@ -1,5 +1,6 @@
 ---
-import { formatPromiseNetCost, harOkantBelopp } from "../../lib/kostnadsvisning";
+import Kostnadslucka from "../../components/Kostnadslucka.astro";
+import { formatPromiseNetCost, harOkantBelopp, kostnadsluckor } from "../../lib/kostnadsvisning";
 import Layout from "../../layouts/Layout.astro";
 import Lopsedel from "../../components/Lopsedel.astro";
 import GapMatare from "../../components/GapMatare.astro";
@@ -33,6 +34,7 @@ const views = loftesvyer(promises).map(({ key, keys, selected }) => {
   });
   const tackning = partyCoverage(selected, kod!);
   return {
+    luckor: kostnadsluckor(partyPromises).antal,
     key, keys,
     count: partyPromises.length,
     total: partyTotalMsek(selected, kod!),
@@ -76,6 +78,7 @@ const jsonLd = [{
 
     {views.map((view) => (
       <div data-loftesfilter-vy={view.keys.join(" ")} data-loftesfilter-vy-antal={view.count} hidden={!view.keys.includes(defaultKey)}>
+        <Kostnadslucka antal={view.luckor} />
         <Lopsedel total={formatMsek(view.total)} subtitle={party.name.toUpperCase()} count={view.count} date="2026" headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
 
         <div class="prosa-content prosa-content--centered">
