@@ -21,7 +21,7 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
     return g("rev-parse", "HEAD").trim();
   };
   try {
-    for (const path of ["data/promises.json", "data/parties.json", "data/stances.json", "handlingsvagen/data/handlingar.json", "handlingsvagen/data/kopplingar.json", "site/src/lib/aggregates.ts"]) {
+    for (const path of ["data/promises.json", "data/parties.json", "data/stances.json", "handlingsvagen/data/handlingar.json", "handlingsvagen/data/kopplingar.json", "site/src/lib/aggregates.ts", "site/src/lib/kostnadsluckor.ts"]) {
       mkdirSync(dirname(join(repo, path)), { recursive: true });
       writeFileSync(join(repo, path), readFileSync(join(root, path)));
     }
@@ -81,7 +81,8 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
       ["tomt", { GITHUB_SHA: fore }, "Inga filer har ändrats"],
       ["prov", { GITHUB_EVENT_NAME: "pull_request", GITHUB_REF: "refs/pull/1/merge" }, "provunderlag"],
     ] as const) {
-      assert.equal(run(name, extra).status, 0);
+      const result = run(name, extra);
+      assert.equal(result.status, 0, result.stderr);
       const besked = readFileSync(join(dir, name, "LAS-MIG.txt"), "utf8");
       assert.ok(besked.includes(text));
       assert.ok(!besked.includes("Godkänn publiceringspaket"));

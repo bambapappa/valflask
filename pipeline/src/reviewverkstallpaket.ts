@@ -1,3 +1,4 @@
+import { kontrolleraOkandaBelopp } from "./harledningen.ts";
 import { mkdtempSync, writeFileSync, rmSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -12,6 +13,7 @@ export function forberedReviewverkstallMedRapport(rader: readonly Beslut[], data
   if (!Array.isArray(rader) || rader.length === 0) throw new Error("Beslutslistan är tom");
   const fore = lasFillage(dataDir, VERKSTALLFILER);
   for (const fil of ["promises.json", "needs_review.json", "provningar.json", "parties.json"]) if (fore[fil] === null) throw new Error(`Saknar ${fil}`);
+  kontrolleraOkandaBelopp(JSON.parse(fore["promises.json"]!));
   const dir = mkdtempSync(join(tmpdir(), "reviewverkstall-"));
   try {
     for (const [fil, text] of Object.entries(fore)) if (text !== null) writeFileSync(join(dir, fil), text);
@@ -20,7 +22,9 @@ export function forberedReviewverkstallMedRapport(rader: readonly Beslut[], data
     if (r.error || r.status !== 0) throw new Error(`Förprövningen avbröts; inga originaldata skrivna. ${r.error?.message ?? r.stderr}`);
     const rapport = JSON.parse(readFileSync(join(dir, "rapport.json"), "utf8")) as Verkstallrapport;
     if (rapport.version !== "verkstallrapport/1") throw new Error("Okänd verkställighetsrapport");
-    return { paket: skapaFilpaket(fore, lasFillage(dir, VERKSTALLFILER)), rapport };
+    const efter = lasFillage(dir, VERKSTALLFILER);
+    kontrolleraOkandaBelopp(JSON.parse(efter["promises.json"]!));
+    return { paket: skapaFilpaket(fore, efter), rapport };
   } finally { rmSync(dir, { recursive: true, force: true }); }
 }
 

@@ -1,3 +1,4 @@
+import { harOkantBelopp, kostnadsluckor } from "./kostnadsluckor.ts";
 import type { PromisePost, Party, Constants, ConstantItem } from "./data";
 
 export type { PromisePost, Party, Constants, ConstantItem };
@@ -326,7 +327,7 @@ export interface GroupNote {
   hasSpread: boolean;
 }
 
-export interface CoalitionResult {
+export interface CoalitionResult extends Kostnadstackning {
   totalFlasket: number;
   totalBesparingar: number;
   totalFinancingClaimed: number;
@@ -346,11 +347,13 @@ export function coalitionAggregates(
     (p) => isActive(p) && p.parties.some((c) => partySet.has(c))
   );
 
+  const grupperMedLucka = new Set(relevant.filter(harOkantBelopp).map(p => p.group_id).filter(Boolean));
+
   // Gruppnoterna behöver ALLA medlemmar: spannet mellan partiernas prislappar
   // på samma politik är just skillnaden mellan dem.
   const seenGroups = new Map<string, { min: number; max: number; parties: Set<string> }>();
   for (const p of relevant) {
-    if (!p.group_id) continue;
+    if (!p.group_id || grupperMedLucka.has(p.group_id)) continue;
     const t = promiseTotalMsek(p);
     const existing = seenGroups.get(p.group_id);
     if (existing) {
@@ -394,6 +397,7 @@ export function coalitionAggregates(
     .reduce((s, p) => s + p.mandate_2022, 0);
 
   return {
+    ...kostnadstackning(relevant),
     totalFlasket: totalFlasketVal,
     totalBesparingar: totalBesparingVal,
     totalFinancingClaimed: totalFinancingVal,
@@ -517,26 +521,37 @@ export function computeComparisons(
   return kosmiska.slice(0, 3);
 }
 
-export interface SummaryData {
+export interface Kostnadstackning {
+  ofullstandig_summa?: true;
+  antal_okanda_belopp?: number;
+  okanda_loften?: string[];
+}
+
+function kostnadstackning(promises: PromisePost[]): Kostnadstackning {
+  const luckor = kostnadsluckor(promises);
+  return luckor.antal > 0 ? { ofullstandig_summa: true, antal_okanda_belopp: luckor.antal, okanda_loften: luckor.ids } : {};
+}
+
+export interface SummaryData extends Kostnadstackning {
   generated_at: string;
   data_hash: string;
   total_parties: number;
   total_promises: number;
-  total_msek_flasket: number;
-  total_msek_besparingar: number;
+  total_msek_flasket: number | null;
+  total_msek_besparingar: number | null;
   total_financing_claimed_msek: number;
-  financing_gap_msek: number;
+  financing_gap_msek: number | null;
   reformutrymme_msek_per_ar: number | "VERIFIERA";
   reformutrymme_total_msek: number | null;
-  parties: Array<{
+  parties: Array<Kostnadstackning & {
     code: string;
     name: string;
-    total_msek: number;
+    total_msek: number | null;
     mandates: number;
     votes: number;
-    per_vote: number;
+    per_vote: number | null;
     promises_count: number;
-    financing_gap_msek: number;
+    financing_gap_msek: number | null;
   }>;
 }
 
@@ -555,32 +570,38 @@ export function buildSummary(
   const refTotal =
     reformutrymme !== "VERIFIERA" ? (reformutrymme as number) * 4 : null;
 
+  const active = promises.filter(isActive);
+  const allUnknown = active.length > 0 && active.every(harOkantBelopp);
   return {
     generated_at: new Date().toISOString(),
     data_hash: hash,
+    ...kostnadstackning(promises),
     total_parties: parties.length,
     total_promises: countPromises(promises),
-    total_msek_flasket: totalFlasket(promises),
-    total_msek_besparingar: totalBesparingar(promises),
+    total_msek_flasket: allUnknown ? null : totalFlasket(promises),
+    total_msek_besparingar: allUnknown ? null : totalBesparingar(promises),
     total_financing_claimed_msek: totalFinancingClaimed(promises),
-    financing_gap_msek: financingGap(promises),
+    financing_gap_msek: kostnadsluckor(promises).antal > 0 ? null : financingGap(promises),
     reformutrymme_msek_per_ar: reformutrymme,
     reformutrymme_total_msek: refTotal,
     parties: parties.map((p) => {
       const t = partyTotalMsek(promises, p.code);
+      const selected = promises.filter(post => isActive(post) && post.parties.includes(p.code));
+      const partyUnknown = selected.length > 0 && selected.every(harOkantBelopp);
       return {
+        ...kostnadstackning(promises.filter(post => post.parties.includes(p.code))),
         code: p.code,
         name: p.name,
-        total_msek: t,
+        total_msek: partyUnknown ? null : t,
         mandates: p.mandate_2022,
         votes: p.votes_2022,
-        per_vote: flasketPerRost(t, p.votes_2022),
+        per_vote: kostnadsluckor(promises.filter(post => post.parties.includes(p.code))).antal > 0 ? null : flasketPerRost(t, p.votes_2022),
         // Antalet räknar löftesPOSTER — samma lista partisidan visar — medan
         // beloppen räknar politik och tar en grupp en gång. De två svarar på
         // olika frågor och får därför skilja sig; det är beloppen som måste
         // vila på samma population, och de gör det nu genom funktionerna nedan.
         promises_count: getPromisesForParty(promises, p.code).length,
-        financing_gap_msek: partyFinancingGapMsek(promises, p.code),
+        financing_gap_msek: partyUnknown ? null : partyFinancingGapMsek(promises, p.code),
       };
     }),
   };

@@ -1,12 +1,13 @@
 interface PartyRow {
+  ofullstandig_summa?: true;
   code: string;
   name: string;
-  total_msek: number;
+  total_msek: number | null;
   mandates: number;
   votes: number;
-  per_vote: number;
+  per_vote: number | null;
   promises_count: number;
-  financing_gap_msek: number;
+  financing_gap_msek: number | null;
 }
 
 interface SummaryData {
@@ -14,10 +15,10 @@ interface SummaryData {
   data_hash: string;
   total_parties: number;
   total_promises: number;
-  total_msek_flasket: number;
-  total_msek_besparingar: number;
+  total_msek_flasket: number | null;
+  total_msek_besparingar: number | null;
   total_financing_claimed_msek: number;
-  financing_gap_msek: number;
+  financing_gap_msek: number | null;
   reformutrymme_msek_per_ar: number | "VERIFIERA";
   reformutrymme_total_msek: number | null;
   parties: PartyRow[];
@@ -27,7 +28,7 @@ interface PromiseItem {
   id: string;
   group_id: string | null;
   parties: string[];
-  cost: { type: string; period: string; msek_base: number };
+  cost: { type: string; period: string; msek_base: number | null; belopp_status?: "okant" };
   financing_claimed: { msek: number | null; period?: "per_ar" | "engang" };
   status: string;
 }
@@ -41,17 +42,18 @@ interface GroupNote {
 }
 
 interface CoalitionResult {
-  totalFlasket: number;
-  totalBesparingar: number;
+  okandaLoften: string[];
+  totalFlasket: number | null;
+  totalBesparingar: number | null;
   totalFinancingClaimed: number;
-  financingGap: number;
+  financingGap: number | null;
   promisesCount: number;
   mandatesSum: number;
   groupNotes: GroupNote[];
 }
 
 function promiseTotal(p: PromiseItem): number {
-  return p.cost.msek_base * (p.cost.period === "per_ar" ? 4 : 1);
+  return (p.cost.msek_base ?? 0) * (p.cost.period === "per_ar" ? 4 : 1);
 }
 
 function isActive(p: PromiseItem): boolean {
@@ -80,6 +82,9 @@ function financingClaimed(p: PromiseItem): number {
 function computeCoalition(promises: PromiseItem[], partyCodes: string[]): CoalitionResult {
   const partySet = new Set(partyCodes);
   const relevant = promises.filter((p) => isActive(p) && p.parties.some((c) => partySet.has(c)));
+  const okandaLoften = relevant.filter(p => p.cost.belopp_status === "okant").map(p => p.id);
+  const enbartOkanda = relevant.length > 0 && okandaLoften.length === relevant.length;
+  const grupperMedLucka = new Set(relevant.filter(p => p.cost.belopp_status === "okant").map(p => p.group_id).filter(Boolean));
   const seenGroups = new Map<string, { min: number; max: number; parties: Set<string> }>();
   let totalFlasket = 0;
   let totalBesparingar = 0;
@@ -89,7 +94,7 @@ function computeCoalition(promises: PromiseItem[], partyCodes: string[]): Coalit
 
   // Gruppnoterna behöver ALLA medlemmar: spannet är skillnaden mellan dem.
   for (const p of relevant) {
-    if (!p.group_id) continue;
+    if (!p.group_id || grupperMedLucka.has(p.group_id)) continue;
     const t = promiseTotal(p);
     const existing = seenGroups.get(p.group_id);
     if (existing) {
@@ -135,17 +140,19 @@ function computeCoalition(promises: PromiseItem[], partyCodes: string[]): Coalit
     .map(([gid, v]) => ({ group_id: gid, parties: Array.from(v.parties), minMsek: v.min, maxMsek: v.max, hasSpread: true }));
 
   return {
-    totalFlasket,
-    totalBesparingar,
+    okandaLoften,
+    totalFlasket: enbartOkanda ? null : totalFlasket,
+    totalBesparingar: enbartOkanda ? null : totalBesparingar,
     totalFinancingClaimed: totalFinancing,
-    financingGap: totalFlasket - totalBesparingar - totalFinancing,
+    financingGap: okandaLoften.length > 0 ? null : totalFlasket - totalBesparingar - totalFinancing,
     promisesCount: count,
     mandatesSum: 0,
     groupNotes,
   };
 }
 
-function formatMsek(msek: number): string {
+function formatMsek(msek: number | null): string {
+  if (msek === null) return "Kan inte fastställas";
   if (msek >= 1000) {
     const mdkr = msek / 1000;
     return mdkr >= 10
@@ -215,7 +222,10 @@ async function init() {
     const coalition = computeCoalition(promisesData!, checked);
     const mandates = checked.reduce((s, c) => s + (partyMap.get(c)?.mandates ?? 0), 0);
 
-    let html = '<table class="resultat__tabell"><thead><tr>';
+    let html = coalition.okandaLoften.length > 0
+      ? `<aside role="note"><strong>Summorna är ofullständiga.</strong> För ${coalition.okandaLoften.length} löften i detta urval kan beloppet inte fastställas. Dessa kostnader eller besparingar ingår inte i beloppssummorna. Det betyder inte att åtgärderna är gratis.</aside>`
+      : "";
+    html += '<table class="resultat__tabell"><thead><tr>';
     html += '<th class="radnr">#</th><th>Parti</th><th class="num">Totalt</th><th class="num">Löften</th><th class="num">Mandat</th>';
     html += '</tr></thead><tbody>';
 
@@ -224,7 +234,7 @@ async function init() {
       if (!p) return;
       html += `<tr><td class="radnr">${i + 1}</td>`;
       html += `<td>${escapeHtml(p.name)}</td>`;
-      html += `<td class="num">${formatMsek(p.total_msek)}</td>`;
+      html += `<td class="num">${formatMsek(p.total_msek)}${p.ofullstandig_summa ? " (ofullständig summa)" : ""}</td>`;
       html += `<td class="num">${p.promises_count}</td>`;
       html += `<td class="num">${p.mandates}</td></tr>`;
     });
@@ -234,7 +244,7 @@ async function init() {
     html += `<tr><td colspan="2">Besparingar</td><td class="num" colspan="3">${formatMsek(coalition.totalBesparingar)}</td></tr>`;
     html += `<tr><td colspan="2">Finansiering angiven</td><td class="num" colspan="3">${formatMsek(coalition.totalFinancingClaimed)}</td></tr>`;
 
-    const gapLabel = coalition.financingGap < 0
+    const gapLabel = coalition.financingGap === null ? "Kan inte fastställas" : coalition.financingGap < 0
       ? `ÖVERTÄCKT (${formatMsek(Math.abs(coalition.financingGap))})`
       : formatMsek(coalition.financingGap);
     html += `<tr><td colspan="2"><strong>Finansieringsgap</strong></td><td class="num" colspan="3"><strong class="num">${gapLabel}</strong></td></tr>`;

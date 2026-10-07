@@ -1,3 +1,4 @@
+import { provaAldreKalkylbyte, kravAldreKalkylbyte } from "./kalkylbyte-grind.ts";
 /**
  * Nollar publicerade belopp som en redan fastställd kostnadsregel säger ska
  * vara noll.
@@ -128,6 +129,7 @@ export interface Nollprovning {
 export function provaNollrad(lofte: Lofte | undefined, rad: Nollrad): Nollprovning {
   const fel: string[] = [];
   if (!lofte) return { ok: false, fel: [`${rad.id} finns inte i promises.json`] };
+  fel.push(...provaAldreKalkylbyte(lofte.cost));
   if (lofte.status === "tillbakadragen") {
     fel.push(`${rad.id} är redan tillbakadragen — en tillbakadragen post räknas inte i någon summa`);
   }
@@ -214,6 +216,7 @@ export function paverkan(lofte: Lofte): number {
  * mycket: den nya texten står för hela det som blir kvar.
  */
 export function nolla<T extends Lofte>(lofte: T, rad: Nollrad, datum: string): T {
+  kravAldreKalkylbyte(lofte.cost);
   const fore = lofte.cost.msek_base ?? 0;
   const enhet = lofte.cost.period === "per_ar" ? "miljoner kronor per år" : "miljoner kronor";
   const nytt = rad.spann ?? { low: 0, base: 0, high: 0 };

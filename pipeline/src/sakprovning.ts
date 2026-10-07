@@ -1,3 +1,5 @@
+import {omprovaKostnadsforslag, type FrystKostnadsforslag} from "./kostnadsforslag.ts";
+import {kravHarledningsreferenser} from "./harledningsreferenser.ts";
 import { ordnaSakreferenser, sakmomentensBeredskap, SAKMOMENT, type Sakreferens, type Sakbedomning, type Sakmoment } from "./sakmoment.ts";
 export { ordnaSakreferenser, sakmomentensBeredskap, SAKMOMENT, type Sakreferens, type Sakbedomning, type Sakmoment } from "./sakmoment.ts";
 import { tillampaIndragningsforslag, type FrystIndragningsforslag } from "./indragningsforslag.ts";
@@ -21,7 +23,7 @@ import { tillampaGruppforslag, type FrystGruppforslag } from "./gruppforslag.ts"
 
 export interface Sakunderlag {
   version: "sakunderlag/1";
-  forslag: FrystLoftesforslag | FrystKalkylforslag | FrystUtrakningsforslag | FrystSortforslag | FrystAnkarforslag | FrystNollforslag | FrystRubrikforslag | FrystCitatforslag | FrystIndragningsforslag | FrystGruppforslag;
+  forslag: FrystKostnadsforslag | FrystLoftesforslag | FrystKalkylforslag | FrystUtrakningsforslag | FrystSortforslag | FrystAnkarforslag | FrystNollforslag | FrystRubrikforslag | FrystCitatforslag | FrystIndragningsforslag | FrystGruppforslag;
   poster: BundetUnderlag;
   referenser: Sakreferens[];
   hash: string;
@@ -147,6 +149,20 @@ export function byggNollunderlag(forslag: FrystNollforslag, loften: PromiseEntry
   return bindSlutform(forslag, efter, material);
 }
 
+/** Binder fryst kostnadsersättning för sakprövning; inga originalfiler ändras. */
+export function byggKostnadsunderlag(forslag: FrystKostnadsforslag, loften: PromiseEntry[], material: readonly Sakreferens[], samtidiga: readonly FrystKostnadsforslag[] = []): Sakunderlag {
+  const current = omprovaKostnadsforslag(forslag, loften, material, forslag.hash);
+  let efter = structuredClone(loften.map(p => p.id === current.nyttLofte.id ? current.nyttLofte : p));
+  const ids = new Set([current.rad.id]);
+  for (const f of samtidiga) {
+    if (ids.has(f.rad.id)) throw new Error("Dubblerad kostnadsändring i sakunderlag");
+    ids.add(f.rad.id);
+    const checked = omprovaKostnadsforslag(f, loften, f.referenser, f.hash);
+    efter = efter.map(p => p.id === checked.nyttLofte.id ? checked.nyttLofte : p);
+  }
+  return bindSlutform(current, efter, material);
+}
+
 function bindSlutform(forslag: Sakunderlag["forslag"], efter: PromiseEntry[], material: readonly Sakreferens[], partier = lasPartier()): Sakunderlag {
   const register = byggUnderlagsregister({
     loften: efter as unknown as Record<string, unknown>[],
@@ -159,6 +175,7 @@ function bindSlutform(forslag: Sakunderlag["forslag"], efter: PromiseEntry[], ma
     poster: bindUnderlag(`lofte:${forslag.nyttLofte.id}`, register),
     referenser: ordnaSakreferenser(material),
   };
+  kravHarledningsreferenser(payload.poster.poster, payload.referenser);
   return { ...payload, hash: hash(payload) };
 }
 

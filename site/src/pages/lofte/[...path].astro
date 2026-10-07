@@ -10,6 +10,7 @@ import Dela from "../../components/Dela.astro";
 import { getPromises, getParties, getPeople, getConstants } from "../../lib/data";
 import { promisePageTitle } from "../../lib/seo";
 import { formatMsek, formatBasisLabel, formatCostType, formatDateShort, getPartyByCode } from "../../lib/calc";
+import { formatPromiseCost, harOkantBelopp } from "../../lib/kostnadsvisning";
 import { promiseTotalMsek, computeComparisons, formatComparison, dryLine } from "../../lib/aggregates";
 import { valdagEtikett, valdagKategori, regeringEtikett } from "../../lib/loftesfilter";
 
@@ -32,20 +33,21 @@ const allaLoften = getPromises();
 const ankare = (promise.cost.anchor_ids ?? [])
   .map((id) => allaLoften.find((q) => q.id === id))
   .filter((q): q is NonNullable<typeof q> => q !== undefined);
-const total = formatMsek(promiseTotalMsek(promise), promise.cost.basis);
+const okantBelopp = harOkantBelopp(promise);
+const total = formatPromiseCost(promise);
 // En besparing eller en ny intäkt är ingen kostnad. Etiketten följer typen, så
 // att sidan inte påstår att partiet lovar bort pengar det vill spara in.
 const sparar = promise.cost.type === "besparing" || promise.cost.type === "intäktsökning";
 const beloppsord = sparar ? "Besparing" : "Kostnad";
 const personName = promise.person?.name || null;
-const comparisons = computeComparisons(promise, constants);
+const comparisons = okantBelopp ? [] : computeComparisons(promise, constants);
 const canonicalPath = `/lofte/${promise.id}/${promise.slug}`;
 const totalBasis = promise.cost.basis;
 const arPartibelopp = promise.cost.basis === "parti";
 const underlagsetikett = arPartibelopp ? "PARTIETS EGET BELOPP" : "UTLOVAT.SE:S BERÄKNING";
 
 // formatMsek bär redan "≈ " vid llm_estimat (tidigare mall dubblerade tecknet).
-const pageTitle = promisePageTitle(promise.title, formatMsek(promiseTotalMsek(promise), totalBasis));
+const pageTitle = promisePageTitle(promise.title, total);
 
 const jsonLd = [
   {
@@ -91,7 +93,7 @@ const jsonLd = [
       )}
 
       <p class="lofte-summary">
-        {partyNames} lovar {promise.title.toLowerCase()}. {beloppsord}: <strong class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{total}</strong> för de fyra åren 2027–2030.
+        {partyNames} lovar {promise.title.toLowerCase()}. {beloppsord}: <strong class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{total}</strong>{!okantBelopp && <> för de fyra åren 2027–2030</>}.
       </p>
 
       <Citat
@@ -109,6 +111,7 @@ const jsonLd = [
 
       <section class="sektion" id="kostnad">
         <h2>{beloppsord}</h2>
+        {okantBelopp && <p role="note"><strong>Beloppet kan inte fastställas.</strong> {promise.cost.harledning?.belopp_okant?.skal} Det betyder inte att åtgärden är gratis.</p>}
         <div class="datavy datavy--scroll" tabindex="0" role="region" aria-label="Kostnadstabell">
           <table>
             <thead>
@@ -125,10 +128,10 @@ const jsonLd = [
               <tr>
                 <td>{formatCostType(promise.cost.type)}</td>
                 <td>{promise.cost.period === 'per_ar' ? 'per år' : 'engång'}</td>
-                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{promise.cost.msek_low.toLocaleString('sv-SE')}</td>
-                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{promise.cost.msek_base.toLocaleString('sv-SE')}</td>
-                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{promise.cost.msek_high.toLocaleString('sv-SE')}</td>
-                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{formatMsek(promiseTotalMsek(promise), promise.cost.basis)}</td>
+                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{okantBelopp ? 'Kan inte fastställas' : promise.cost.msek_low.toLocaleString('sv-SE')}</td>
+                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{okantBelopp ? 'Kan inte fastställas' : promise.cost.msek_base.toLocaleString('sv-SE')}</td>
+                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{okantBelopp ? 'Kan inte fastställas' : promise.cost.msek_high.toLocaleString('sv-SE')}</td>
+                <td class:list={["num", "belopp", { partibelopp: arPartibelopp }]}>{total}</td>
               </tr>
             </tbody>
           </table>
@@ -141,7 +144,7 @@ const jsonLd = [
             ))}.
           </p>
         )}
-        {promise.loftestyp === 'inriktning' && (
+        {!okantBelopp && promise.loftestyp === 'inriktning' && (
           <p class="inriktningsnot">
             <strong>Inriktningslöfte.</strong> Citatet säger vart partiet vill, men inte
             med vilket medel — ingen åtgärd, nivå eller mottagare pekas ut. Nollan betyder
@@ -194,7 +197,7 @@ const jsonLd = [
         </div>
       )}
 
-      <Marginalanteckning text={promise.quip || dryLine(promise)} />
+      {!okantBelopp && <Marginalanteckning text={promise.quip || dryLine(promise)} />}
 
       {promise.history.length > 0 && (
         <section class="sektion">

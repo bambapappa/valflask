@@ -1,3 +1,4 @@
+import { provaAldreKalkylbyte, kravAldreKalkylbyte } from "./kalkylbyte-grind.ts";
 /**
  * Sätter ett belopp på ett nollat löfte som pekar ut en åtgärd, ur ett
  * namngivet ankare.
@@ -78,6 +79,7 @@ export function provaAnkarrad(
   if (!lofte) return { ok: false, fel: [`${rad.id} finns inte i promises.json`] };
   if (!ankare) return { ok: false, fel: [`${rad.id}: ankaret ${rad.ankare} finns inte i promises.json`] };
 
+  fel.push(...provaAldreKalkylbyte(lofte.cost, ankare.cost));
   if (lofte.status === "tillbakadragen") fel.push(`${rad.id} är tillbakadragen`);
   if (ankare.status === "tillbakadragen") {
     fel.push(`${rad.id}: ankaret ${rad.ankare} är tillbakadraget och kan inte bära ett belopp`);
@@ -176,6 +178,7 @@ export function paverkan(ankare: Lofte): number {
  * fel här fortplantar sig till Handlingsvågen.
  */
 export function satt<T extends Lofte>(lofte: T, ankare: Lofte, rad: Ankarrad, datum: string): T {
+  kravAldreKalkylbyte(lofte.cost, ankare.cost);
   const c = ankare.cost;
   const enhet = c.period === "per_ar" ? "miljoner kronor per år" : "miljoner kronor";
   const bytteSort = lofte.loftestyp === "inriktning" && (c.msek_base ?? 0) !== 0;

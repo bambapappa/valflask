@@ -1,3 +1,4 @@
+import { provaAldreKalkylbyte, kravAldreKalkylbyte } from "./kalkylbyte-grind.ts";
 /**
  * Byter uträkning på redan publicerade löften, utan att röra beloppet.
  *
@@ -59,6 +60,7 @@ export function provaUtrakningsrad(
   const fel: string[] = [];
   const p = loften.get(rad.id);
   if (!p) return { ok: false, fel: [`${rad.id} finns inte i promises.json`] };
+  fel.push(...provaAldreKalkylbyte(p.cost));
   if ((p.status ?? "aktiv") !== "aktiv") fel.push(`${rad.id} har status ${p.status}`);
   if (rad.skal.trim().length < SKAL_MIN_TECKEN) {
     fel.push(
@@ -104,5 +106,6 @@ export function provaUtrakningsrad(
 
 /** Löftet efter bytet. Beloppet står stilla — se modulens huvud. */
 export function tillampa(lofte: Utrakningspost, rad: Utrakningsrad): Utrakningspost {
+  kravAldreKalkylbyte(lofte.cost);
   return { ...lofte, cost: { ...lofte.cost, calculation: rad.utrakning.trim() } };
 }

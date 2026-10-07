@@ -1,4 +1,6 @@
 ---
+import Kostnadslucka from "../components/Kostnadslucka.astro";
+import { formatPromiseNetCost, harOkantBelopp, kostnadsluckor, enbartOkandaBelopp } from "../lib/kostnadsvisning";
 import Layout from "../layouts/Layout.astro";
 import Lopsedel from "../components/Lopsedel.astro";
 import GapMatare from "../components/GapMatare.astro";
@@ -6,7 +8,7 @@ import MetodLank from "../components/MetodLank.astro";
 import Loftesfilter from "../components/Loftesfilter.astro";
 import { getPromises, getParties, getConstants, getChangelog } from "../lib/data";
 import { totalFlasket, formatMsek, countPromises, dataHash, formatDateShort } from "../lib/calc";
-import { partyTotalMsek, promiseNetMsek, groupedPromises } from "../lib/aggregates";
+import { getPromisesForParty, partyTotalMsek, promiseNetMsek, groupedPromises } from "../lib/aggregates";
 import { tackningensTal, sidorFor } from "../lib/tackningens-tal";
 import { STANDARD_LOFTESFILTER, filterNyckel, loftesvyer, valdagEtikett } from "../lib/loftesfilter";
 
@@ -18,18 +20,23 @@ const reformutrymme = constants.reformutrymme_msek_per_ar.value;
 const hash = dataHash(changelog);
 const tackning = tackningensTal();
 const views = loftesvyer(promises).map(({ key, keys, selected }) => {
+  const unknownIds = new Set(kostnadsluckor(selected).ids);
   const partyRows = parties.map((p) => ({
     code: p.code,
     name: p.name,
     total: partyTotalMsek(selected, p.code),
+    okant: enbartOkandaBelopp(getPromisesForParty(selected, p.code)),
+    luckor: kostnadsluckor(getPromisesForParty(selected, p.code)).antal,
     count: selected.filter((promise) => promise.parties.includes(p.code) && promise.status !== "tillbakadragen").length,
-  })).sort((a, b) => b.total - a.total);
+  })).sort((a, b) => Number(a.luckor > 0) - Number(b.luckor > 0) || (a.luckor > 0 ? a.name.localeCompare(b.name, "sv") : b.total - a.total));
   return {
+    enbartOkanda: enbartOkandaBelopp(selected),
+    luckor: kostnadsluckor(selected).antal,
     key, keys,
     count: countPromises(selected),
     flasket: totalFlasket(selected),
     partyRows,
-    dyraste: groupedPromises(selected).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 5),
+    dyraste: groupedPromises(selected).filter(g => !g.memberIds.some(id => unknownIds.has(id))).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 5),
     senaste: selected.filter((p) => p.status !== "tillbakadragen").sort((a, b) => b.date_stated.localeCompare(a.date_stated)).slice(0, 5),
   };
 });
@@ -98,15 +105,17 @@ const jsonLd = [{
     <MetodLank />
     {views.map((view) => (
       <div data-loftesfilter-vy={view.keys.join(" ")} data-loftesfilter-vy-antal={view.count} data-loftesfilter-default={view.keys.includes(defaultKey) ? "true" : undefined} hidden={!view.keys.includes(defaultKey)}>
-        <Lopsedel total={formatMsek(view.flasket)} subtitle="Valfläsket hittills" count={view.count} date="2026" taxameterValue={view.flasket} headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
-        <div class="prosa-content prosa-content--centered"><p>Riksdagspartiernas valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(view.flasket)}</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften från åtta partier.</p></div>
-        {view.count > 0 && <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} reformutrymmeSource={constants.reformutrymme_msek_per_ar.source_url} partiBelopp={view.key.startsWith("parti:")} />}
+        <Kostnadslucka antal={view.luckor} />
+        <Lopsedel total={view.enbartOkanda ? "Kan inte fastställas" : formatMsek(view.flasket)} subtitle="Valfläsket hittills" count={view.count} date="2026" {...(view.enbartOkanda ? {} : {taxameterValue: view.flasket})} headingLevel="h2" partiBelopp={view.key.startsWith("parti:")} />
+        <div class="prosa-content prosa-content--centered"><p>Riksdagspartiernas valda löften väger <strong class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{view.enbartOkanda ? "Kan inte fastställas" : formatMsek(view.flasket)}</strong> för de fyra åren 2027–2030, fördelat på {view.count} löften från åtta partier.</p></div>
+        {view.count > 0 && view.luckor === 0 && <GapMatare flasket={view.flasket} reformutrymme={reformutrymme} reformutrymmeSource={constants.reformutrymme_msek_per_ar.source_url} partiBelopp={view.key.startsWith("parti:")} />}
+        {view.luckor > 0 && <p class="prosa-content">Löftena kan inte jämföras med reformutrymmet eftersom summan är ofullständig.</p>}
 
         <section class="sektion"><h2>Fläsk per parti</h2><div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Parti</th><th class="num">Totalt (mdkr)</th><th class="num">Löften</th><th class="num">Sidor lästa</th></tr></thead><tbody>
-          {view.partyRows.map((row, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${row.code}`}>{row.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(row.total)}</td><td class="num">{row.count}</td><td class="num">{sidorFor(tackning, row.code)}</td></tr>)}
+          {view.partyRows.map((row, i) => <tr><td class="radnr">{row.luckor > 0 ? "—" : i + 1}</td><td><a href={`/parti/${row.code}`}>{row.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{row.okant ? "Kan inte fastställas" : formatMsek(row.total)}{row.luckor > 0 && !row.okant ? " (ofullständig summa)" : ""}</td><td class="num">{row.count}</td><td class="num">{sidorFor(tackning, row.code)}</td></tr>)}
         </tbody></table></div><p class="tackningsnot">Sista kolumnen är hur många sidor vi hunnit läsa på partiets egen webbplats. Den är ett insamlingsmått och ändras därför inte med löftesurvalet. <a href="/metod#tackning">Så jämnar vi ut det</a>.</p></section>
 
-        <section class="sektion"><h2>Dyraste löftena</h2><ol class="promise-list">{view.dyraste.map(({ promise: p, parties: gp }) => <li><a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a><div class="etikett etikett--sub">{gp.map((code) => parties.find((party) => party.code === code)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: p.cost.basis === "parti" }]}>{formatMsek(promiseNetMsek(p), p.cost.basis)}</span></div></li>)}</ol></section>
+        <section class="sektion"><h2>Dyraste löftena</h2><ol class="promise-list">{view.dyraste.map(({ promise: p, parties: gp }) => <li><a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a><div class="etikett etikett--sub">{gp.map((code) => parties.find((party) => party.code === code)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: p.cost.basis === "parti" }]}>{formatPromiseNetCost(p)}</span></div></li>)}</ol></section>
 
         <section class="sektion"><h2>Senaste löften</h2><ol class="promise-list">{view.senaste.map((p) => <li><a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a><div class="etikett etikett--sub">{p.parties.map((code) => parties.find((party) => party.code === code)?.name).join(", ")} · {formatDateShort(p.date_stated)} · {valdagEtikett(p)}</div></li>)}</ol></section>
       </div>

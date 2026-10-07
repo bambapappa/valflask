@@ -1,0 +1,7 @@
+---
+interface Props { antal: number; }
+const { antal } = Astro.props;
+---
+{antal > 0 && <aside class="kostnadslucka prosa-content" role="note">
+  <p><strong>Summorna är ofullständiga.</strong> För {antal} {antal === 1 ? 'löfte' : 'löften'} i detta urval kan beloppet inte fastställas. Dessa kostnader eller besparingar ingår inte i beloppssummorna eller jämförelserna per röst. Det betyder inte att åtgärderna är gratis.</p>
+</aside>}

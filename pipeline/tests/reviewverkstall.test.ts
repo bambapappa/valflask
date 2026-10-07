@@ -75,6 +75,7 @@ it("verklig CLI för blandade beslut torrkör, stoppar sent fel och skriver gilt
     cpSync(join(import.meta.dirname, "../scripts/review-verkstall.mts"), join(pipeline, "scripts/review-verkstall.mts"));
     mkdirSync(join(root, "site/src/lib"), { recursive: true });
     cpSync(new URL("../../site/src/lib/aggregates.ts", import.meta.url), join(root, "site/src/lib/aggregates.ts"));
+    cpSync(new URL("../../site/src/lib/kostnadsluckor.ts", import.meta.url), join(root, "site/src/lib/kostnadsluckor.ts"));
     symlinkSync(join(import.meta.dirname, "../node_modules"), join(pipeline, "node_modules"), "dir");
     const beslut = init(dir), fore = lasFillage(dir, VERKSTALLFILER);
     const fil = join(root, "beslut.jsonl");
@@ -167,4 +168,22 @@ it("enbart oavgjorda beslut ger explicit rapport och identiska före-/efterfiler
     assert.deepEqual(rapport.hallna, []);
     assert.deepEqual(rapport.oavgjorda, [reviewId(items[0]!)]);
   } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+it("kalkylflytt med strukturerad okändmarkör stoppas före mutation utan originalskrivning", () => {
+  const dir = mkdtempSync(join(tmpdir(), "blandat-okant-"));
+  try {
+    init(dir);
+    const first = kalkylrad(dir);
+    const best = JSON.parse(readFileSync(join(dir, "promises.json"), "utf8"));
+    const mal = best.find((p: any) => p.id === first.kalkyl_till);
+    assert.ok(mal);
+    mal.cost.msek_low = mal.cost.msek_base = mal.cost.msek_high = 0;
+    mal.cost.harledning = {version: "harledning/1", led: [], arsprofil: {status: "okand", skal: "Test"}, belopp_okant: {skal: "Test"}};
+    writeFileSync(join(dir, "promises.json"), JSON.stringify(best));
+    const before = lasFillage(dir, VERKSTALLFILER);
+    assert.throws(() => kalkylrad(dir), /Strukturerad härledning/);
+    assert.throws(() => forberedReviewverkstall([first], dir));
+    assert.deepEqual(lasFillage(dir, VERKSTALLFILER), before);
+  } finally {rmSync(dir, {recursive: true, force: true});}
 });

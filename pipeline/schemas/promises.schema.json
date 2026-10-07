@@ -356,13 +356,235 @@
             "maximum": 1
           },
           "harledning": {
-            "type": [
-              "object",
-              "null"
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "version",
+              "led",
+              "arsprofil"
             ],
+            "properties": {
+              "version": {
+                "const": "harledning/1"
+              },
+              "led": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "roll",
+                    "text"
+                  ],
+                  "properties": {
+                    "roll": {
+                      "type": "string",
+                      "enum": [
+                        "partiets-uppgift",
+                        "extern-kalla",
+                        "egen-berakning",
+                        "antagande",
+                        "redan-beslutad-basniva"
+                      ]
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "tal": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "enhet": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "ar": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "kalla": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "kalla_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "ingar_i_summan": {
+                      "type": "boolean"
+                    }
+                  },
+                  "allOf": [
+                    {
+                      "if": {
+                        "required": [
+                          "tal"
+                        ],
+                        "properties": {
+                          "tal": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "then": {
+                        "required": [
+                          "enhet",
+                          "ar"
+                        ],
+                        "properties": {
+                          "enhet": {
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "\\S"
+                          },
+                          "ar": {
+                            "type": "integer",
+                            "minimum": 1
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "arsprofil": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "status",
+                      "ar"
+                    ],
+                    "properties": {
+                      "status": {
+                        "const": "kand"
+                      },
+                      "ar": {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "ar",
+                            "msek"
+                          ],
+                          "properties": {
+                            "ar": {
+                              "type": "integer",
+                              "minimum": 1
+                            },
+                            "msek": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "status",
+                      "skal"
+                    ],
+                    "properties": {
+                      "status": {
+                        "const": "okand"
+                      },
+                      "skal": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                      }
+                    }
+                  }
+                ]
+              },
+              "belopp_okant": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "skal"
+                ],
+                "properties": {
+                  "skal": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  }
+                }
+              },
+              "summeras": {
+                "type": "boolean"
+              }
+            },
             "description": "Kalkylens härledning som struktur: ett led per tal med sin roll (partiets uppgift, extern källa, egen beräkning, antagande, redan beslutad basnivå), år och källa, plus årsprofil och en markering när beloppet inte kan fastställas. Valfritt och bakåtkompatibelt — saknas fältet läses uträkningstexten som i dag. Se src/harledningen.ts."
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "harledning"
+              ],
+              "properties": {
+                "harledning": {
+                  "type": "object",
+                  "required": [
+                    "belopp_okant"
+                  ],
+                  "properties": {
+                    "belopp_okant": {}
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "msek_low": {
+                  "const": 0
+                },
+                "msek_base": {
+                  "const": 0
+                },
+                "msek_high": {
+                  "const": 0
+                },
+                "harledning": {
+                  "properties": {
+                    "belopp_okant": {
+                      "type": "object",
+                      "required": [
+                        "skal"
+                      ],
+                      "properties": {
+                        "skal": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          }
+        ]
       },
       "financing_claimed": {
         "type": "object",
@@ -415,7 +637,15 @@
               ],
               "properties": {
                 "described": {
-                  "const": true
+                  "type": "boolean"
+                },
+                "period": {
+                  "type": "string",
+                  "enum": [
+                    "per_ar",
+                    "engang"
+                  ],
+                  "description": "Avser finansieringsbeloppet ett år eller hela mandatperioden? Krävs när msek är ett tal, för beloppet dras från kostnader räknade för perioden."
                 }
               }
             }

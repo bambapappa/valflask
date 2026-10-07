@@ -18,7 +18,7 @@ test("summorna följer data och beräkningskod i respektive commit", () => {
   };
   try {
     git("init", "-q");
-    for (const path of ["site/src/lib/aggregates.ts", "data/promises.json", "data/parties.json"]) {
+    for (const path of ["site/src/lib/aggregates.ts", "site/src/lib/kostnadsluckor.ts", "data/promises.json", "data/parties.json"]) {
       mkdirSync(dirname(join(dir, path)), { recursive: true });
       writeFileSync(join(dir, path), readFileSync(join(root, path)));
     }
@@ -48,6 +48,13 @@ test("summorna följer data och beräkningskod i respektive commit", () => {
     const nyMetod = lasPubliceringssummor(dir, commit());
     assert.notEqual(nyMetod.berakningshash, andrat.berakningshash);
     assert.notEqual(nyMetod.utgifter, andrat.utgifter);
+    const luckfil = join(dir, "site/src/lib/kostnadsluckor.ts");
+    const luckkod = readFileSync(luckfil, "utf8");
+    writeFileSync(luckfil, luckkod + "\n// Syntetisk versionsändring i runtimeberoendet.\n");
+    const nyttBeroende = lasPubliceringssummor(dir, commit());
+    assert.notEqual(nyttBeroende.berakningshash, nyMetod.berakningshash);
+    assert.equal(nyttBeroende.utgifter, nyMetod.utgifter);
+    writeFileSync(luckfil, "Avsiktligt trasig lokal beroendekod");
     writeFileSync(kodfil, "Avsiktligt trasig arbetskopia");
     assert.deepEqual(lasPubliceringssummor(dir, fore), original);
     writeFileSync(promisesPath, "[]");

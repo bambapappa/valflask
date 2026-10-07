@@ -1,3 +1,4 @@
+import type { Harledning } from "../../../pipeline/src/harledningen";
 import { readFileSync, statSync } from "node:fs";
 import type { Kallandring, Kallstatus } from "./source-link.ts";
 import { resolve } from "node:path";
@@ -90,6 +91,7 @@ export interface PromisePost {
     method_note: string;
     calculation?: string;
     confidence: number;
+    harledning?: Harledning;
   };
   financing_claimed: {
     described: boolean;

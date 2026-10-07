@@ -1,3 +1,4 @@
+import { provaAldreKalkylbyte, kravAldreKalkylbyte } from "./kalkylbyte-grind.ts";
 /**
  * Ankarpasset: betar av ankarskulden, en läst hög i taget.
  *
@@ -83,6 +84,7 @@ export function provaRad(
     fel.push(`${rad.id} bryter inte mot ankarkravet — den hör inte till skulden`);
   }
 
+  if (rad.utfall !== "grupp") fel.push(...provaAldreKalkylbyte(p.cost));
   if (rad.utfall === "ankare") {
     const mal = rad.varde.split(",").map((s) => s.trim()).filter(Boolean);
     if (mal.length === 0) fel.push(`${rad.id} saknar ankar-id`);
@@ -119,6 +121,7 @@ export function provaRad(
 
 /** Löftet efter passet. Beloppet står stilla — det är grunden som får en adress. */
 export function tillampa(lofte: Lofte, rad: Ankarrad): Lofte {
+  if (rad.utfall !== "grupp") kravAldreKalkylbyte(lofte.cost);
   if (rad.utfall === "ankare") {
     const mal = rad.varde.split(",").map((s) => s.trim()).filter(Boolean);
     return { ...lofte, cost: { ...lofte.cost, anchor_ids: mal } };

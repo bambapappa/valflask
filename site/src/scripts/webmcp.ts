@@ -1,13 +1,7 @@
-/*
- * WebMCP: Utlovat.se som gemensamt granskningsbord.
- *
- * Verktygen läser bara samma publika, källspårade JSON som sajten visar.
- * De kan sortera och synliggöra underlaget, men varken rekommendera ett parti
- * eller fylla ett tomrum med en politisk slutsats.
- */
+/* Publika belägg, inga partirekommendationer. */
 
 type Source = { url: string; domain: string; archive_url: string | null };
-type PromiseItem = { id: string; title: string; slug: string; parties: string[]; quote: string; date_stated: string; category: string; status: string; source: Source; cost: { msek_low: number; msek_high: number; period: string; basis?: string } };
+type PromiseItem = { id: string; title: string; slug: string; parties: string[]; quote: string; date_stated: string; category: string; status: string; source: Source; cost: { msek_low: number | null; msek_high: number | null; belopp_status?: "okant"; belopp_skal?: string; period: string; basis?: string } };
 type Statement = { id: string; quote: string; date_stated: string; source: Source; position: string };
 type StanceCell = { party: string; subquestion_id: string; current: { statement_id: string | null; position: string }; statements: Statement[]; last_searched?: string };
 type Issue = { title: string; slug: string; category: string; subquestions: Array<{ id: string; text: string }> };
@@ -75,6 +69,11 @@ function englishCostBasis(basis?: string): string {
 }
 
 function costIntervalDetail(cost: PromiseItem["cost"]): string {
+  if (cost.belopp_status === "okant" || cost.msek_low === null || cost.msek_high === null) {
+    return isEnglishContestEntry()
+      ? `Cost cannot be determined. This does not mean the measure is free.`
+      : `Kostnaden kan inte fastställas. Det betyder inte att åtgärden är gratis.`;
+  }
   const estimated = cost.basis !== "parti";
   const marker = estimated ? "≈ " : "";
   if (isEnglishContestEntry()) {
@@ -404,7 +403,7 @@ async function getEvidenceBoardStatus() {
 async function showPartyComparison(input: { party_codes: string[] }) {
   const partyCodes = selectedPartyCodes(input.party_codes);
   if (partyCodes.length === 0) throw new Error("Välj minst en giltig partikod.");
-  const summaryResponse = await getJson<{ data: { data_hash: string; parties: Array<{ code: string; name: string; total_msek: number; promises_count: number; financing_gap_msek: number }> } }>("/api/v1/summary.json");
+  const summaryResponse = await getJson<{ data: { data_hash: string; parties: Array<{ code: string; name: string; total_msek: number | null; promises_count: number; financing_gap_msek: number | null; ofullstandig_summa?: true; antal_okanda_belopp?: number; okanda_loften?: string[] }> } }>("/api/v1/summary.json");
   const summary = summaryResponse.data;
   if (!summary || !Array.isArray(summary.parties)) throw new Error("Utlovats publicerade sammanfattning har oväntat format.");
   const url = `/jamfor?parties=${encodeURIComponent(partyCodes.join(","))}`;

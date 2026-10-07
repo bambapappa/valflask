@@ -22,6 +22,7 @@ import {
   totalFlasket,
 } from "../src/lib/aggregates.ts";
 import { formatBasisLabel, formatMsek } from "../src/lib/calc.ts";
+import { formatPromiseCost, harOkantBelopp, kostnadsluckor, enbartOkandaBelopp } from "../src/lib/kostnadsvisning.ts";
 import type { PromisePost } from "../src/lib/data";
 
 /**
@@ -31,6 +32,14 @@ import type { PromisePost } from "../src/lib/data";
  */
 function ogBelopp(msek: number, basis?: string): string {
   return formatMsek(msek, basis).toUpperCase();
+}
+
+export function summaryOgBelopp(posts: PromisePost[], total: number): string {
+  return enbartOkandaBelopp(posts) ? "OKÄNT" : ogBelopp(total);
+}
+
+export function promiseOgBelopp(p: PromisePost): string {
+  return harOkantBelopp(p) ? "OKÄNT" : formatPromiseCost(p).toUpperCase();
 }
 
 /*
@@ -105,7 +114,7 @@ const fonts = [
   { name: "IBM Plex Mono", data: plexMono700, weight: 700, style: "normal" as const },
 ];
 
-async function generateOgImage(opts: {
+export async function generateOgImage(opts: {
   topLabel: string;
   bigNumber: string;
   title: string;
@@ -217,9 +226,9 @@ async function main() {
 
   const startPng = await generateOgImage({
     topLabel: "UTLOVAT.SE · FLÄSKVÅGEN",
-    bigNumber: ogBelopp(flasket),
+    bigNumber: summaryOgBelopp(promises, flasket),
     title: "RIKSDAGSPARTIERNAS VALLÖFTEN 2026",
-    bottomLine: "utlovat.se · Uppskattningar enligt öppen metod",
+    bottomLine: kostnadsluckor(promises).antal > 0 ? `${kostnadsluckor(promises).antal} löften utan fastställbart belopp · Ofullständig summa` : "utlovat.se · Uppskattningar enligt öppen metod",
   });
   writeFileSync(resolve(ogDir, "start.png"), startPng);
   console.log(`OG: start.png (${ogBelopp(flasket)})`);
@@ -230,9 +239,9 @@ async function main() {
 
     const png = await generateOgImage({
       topLabel: `UTLOVAT.SE · PARTI`,
-      bigNumber: ogBelopp(partyTotal),
+      bigNumber: summaryOgBelopp(getPromisesForParty(promises, party.code), partyTotal),
       title: `VAD KOSTAR ${party.name.toUpperCase()}S VALLÖFTEN?`,
-      bottomLine: `${partyCount} löften · utlovat.se`,
+      bottomLine: kostnadsluckor(getPromisesForParty(promises, party.code)).antal > 0 ? `${partyCount} löften · ${kostnadsluckor(getPromisesForParty(promises, party.code)).antal} belopp okända · Ofullständig summa` : `${partyCount} löften · utlovat.se`,
     });
     writeFileSync(resolve(ogDir, `parti-${party.code}.png`), png);
     console.log(`OG: parti-${party.code}.png`);
@@ -275,9 +284,9 @@ async function main() {
 
     const png = await generateOgImage({
       topLabel: `UTLOVAT.SE · ÄRENDE ${p.id} · ${p.source.domain}`,
-      bigNumber: ogBelopp(total, p.cost.basis),
+      bigNumber: promiseOgBelopp(p),
       title: p.title.toUpperCase(),
-      bottomLine: `Källa: ${formatBasisLabel(p.cost.basis)} · Hämtad ${p.source.fetched_at.slice(0, 10)} · utlovat.se`,
+      bottomLine: harOkantBelopp(p) ? "Belopp kan inte fastställas · utlovat.se" : `Källa: ${formatBasisLabel(p.cost.basis)} · Hämtad ${p.source.fetched_at.slice(0, 10)} · utlovat.se`,
     });
     const promiseDir = resolve(ogDir, p.id);
     if (!existsSync(promiseDir)) mkdirSync(promiseDir, { recursive: true });

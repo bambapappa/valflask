@@ -46,6 +46,8 @@ export interface Led {
   /** Vilket år talet gäller. Ett tal utan år åldras tyst. */
   ar?: number | null;
   kalla?: string | null;
+  /** ID i sakprövningens frysta referensmaterial; adress ensam binder inget innehåll. */
+  kalla_ref?: string;
   /**
    * Ingår ledet i summan som blir `msek_base`?
    *
@@ -118,7 +120,7 @@ export function provaHarledning(kalkyl: Kalkyl): Fynd[] {
   }
 
   const bas = kalkyl.msek_base ?? 0;
-  if (h.belopp_okant && (bas !== 0 || (kalkyl.msek_high ?? 0) !== 0)) {
+  if (h.belopp_okant && ((kalkyl.msek_low ?? 0) !== 0 || bas !== 0 || (kalkyl.msek_high ?? 0) !== 0)) {
     // Ett okänt belopp får inte bära ett tal som ser ut som ett svar.
     fynd.push({
       sort: "okant-belopp-som-noll",
@@ -208,4 +210,18 @@ export function harledningsvy(kalkyl: Kalkyl): Harledningsvy {
     arsprofil,
     fynd,
   };
+}
+
+
+/** Stoppar motstridiga okändmarkörer innan ett granskningspaket kan skrivas. */
+export function kontrolleraOkandaBelopp(poster: readonly {id: string; cost: Kalkyl}[]): void {
+  for (const p of poster) {
+    const h = p.cost?.harledning;
+    if (!h || !Object.hasOwn(h, "belopp_okant")) continue;
+    const marker = h.belopp_okant;
+    if (!marker || typeof marker.skal !== "string" || !marker.skal.trim() ||
+        [p.cost.msek_low, p.cost.msek_base, p.cost.msek_high].some(v => v !== 0)) {
+      throw new Error(`${p.id}: okänt belopp kräver tre nollplatshållare och ett tydligt skäl; inga originaldata skrivna.`);
+    }
+  }
 }

@@ -130,7 +130,7 @@ const jsonLd = [
           <table>
             <thead>
               <tr>
-                <th class="num">Prissatta löften</th>
+                <th class="num">{svar.data.ofullstandig_summa ? "Löften" : "Prissatta löften"}</th>
                 <th class="num">{svar.typ === "totalkostnad" ? "Kostnad före avdrag" : "Kostnad (netto)"}</th>
                 {svar.typ === "totalkostnad" && <th class="num">Besparingar och intäktsökningar</th>}
                 <th class="num">Angiven finansiering</th>
@@ -140,10 +140,10 @@ const jsonLd = [
             <tbody>
               <tr>
                 <td class="num">{svar.data.antal_loften}</td>
-                <td class="num belopp">{formatMsek(svar.data.total_msek!)}</td>
-                {svar.typ === "totalkostnad" && <td class="num">{formatMsek(svar.data.besparingar_msek!)}</td>}
+                <td class="num belopp">{svar.data.total_msek === null ? "Kan inte fastställas" : formatMsek(svar.data.total_msek!)}</td>
+                {svar.typ === "totalkostnad" && <td class="num">{svar.data.besparingar_msek === null ? "Kan inte fastställas" : formatMsek(svar.data.besparingar_msek!)}</td>}
                 <td class="num">{formatMsek(svar.data.finansiering_msek!)}</td>
-                <td class="num">{formatMsek(svar.data.gap_msek!)}</td>
+                <td class="num">{svar.data.gap_msek === null ? "Kan inte fastställas" : formatMsek(svar.data.gap_msek!)}</td>
               </tr>
             </tbody>
           </table>

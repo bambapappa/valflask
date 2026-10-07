@@ -22,6 +22,7 @@ export function lasPubliceringssummor(repo: string, revision: string): Publiceri
     encoding: "utf8", maxBuffer: 128 * 1024 * 1024,
   });
   const kod = las("site/src/lib/aggregates.ts");
+  const luckkod = kod.includes('from "./kostnadsluckor.ts"') ? las("site/src/lib/kostnadsluckor.ts") : null;
   const loften = JSON.parse(las("data/promises.json"));
   const partier = JSON.parse(las("data/parties.json"));
   if (!Array.isArray(loften) || !loften.length || !Array.isArray(partier) || !partier.length ||
@@ -31,8 +32,9 @@ export function lasPubliceringssummor(repo: string, revision: string): Publiceri
   try {
     const fil = join(dir, "aggregates.mts");
     writeFileSync(fil, kod);
-    // Beräkningsmodulen har bara typimporter. Ett nytt runtimeberoende ska ge fel,
-    // inte råka läsas från arbetskopian och blandas med den äldre revisionen.
+    // Explicit stöd för den rena täckningsmodulen, alltid från samma revision.
+    // Övriga nya runtimeberoenden ska fortfarande stoppa, aldrig läsas lokalt.
+    if (luckkod !== null) writeFileSync(join(dir, "kostnadsluckor.ts"), luckkod);
     const program = `import {readFileSync} from 'node:fs';
 const a = await import(process.argv[1]);
 const {loften,partier} = JSON.parse(readFileSync(0,'utf8'));
@@ -46,6 +48,6 @@ finansiering:a.partyFinancingClaimedMsek(loften,p.code),gap:a.partyFinancingGapM
     const tal = [svar.utgifter, svar.besparingar, svar.finansiering, svar.gap,
       ...svar.partier.flatMap((p: Publiceringssummor["partier"][number]) => [p.netto, p.finansiering, p.gap])];
     if (!tal.every((n) => typeof n === "number" && Number.isFinite(n))) throw new Error("Summeringen gav ogiltiga belopp");
-    return { revision, berakningshash: createHash("sha256").update(kod).digest("hex"), ...svar };
+    return { revision, berakningshash: createHash("sha256").update(luckkod === null ? kod : JSON.stringify({aggregates: kod, kostnadsluckor: luckkod})).digest("hex"), ...svar };
   } finally { rmSync(dir, { recursive: true, force: true }); }
 }

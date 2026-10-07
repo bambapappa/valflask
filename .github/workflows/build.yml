@@ -225,6 +225,12 @@ jobs:
       - name: OpenAPI-grinden (tvåvägskoll mot byggd sajt)
         run: pnpm test:openapi
         working-directory: site
+      - name: Kostnadsredovisning och okända FAQ-belopp
+        run: pnpm test:kostnadsvisning && pnpm test:faq-okand && pnpm test:okand-render
+        working-directory: site
+      - name: WebMCP-klientens belägg och kostnadsintervall
+        run: node --experimental-strip-types scripts/test-webmcp.mts
+        working-directory: site
       - name: Agenternas HTTP-regression
         run: python3 -m unittest discover -s ops -p 'test_validera_fab73.py' -v
       - name: Skilj åtkomstfel från innehållsfel
