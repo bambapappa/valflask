@@ -71,3 +71,23 @@ test("promises date_basis accepts only the pipeline provenance values", () => {
   candidate[0].source.date_basis = "gissad";
   assert.equal(validate(candidate), false, "okänd datumgrund måste avvisas");
 });
+
+
+test("okänt belopp kräver nollplatshållare och skäl i det kanoniska schemat", () => {
+  const schema = JSON.parse(readFileSync(resolve(SCHEMAN, "promises.schema.json"), "utf8"));
+  const validate = new Ajv2020({strict: false}).compile(schema);
+  const posts = JSON.parse(readFileSync(resolve(ROT, "data/promises.json"), "utf8"));
+  const p = structuredClone(posts.find((p: any) => p.id === "p-2026-2944"));
+  assert.ok(p);
+  p.cost.msek_low = p.cost.msek_base = p.cost.msek_high = 0;
+  p.cost.harledning = {belopp_okant: {skal: "Syntetiskt saknat underlag"}};
+  assert.ok(validate([p]), JSON.stringify(validate.errors));
+  for (const field of ["msek_low", "msek_base", "msek_high"]) {
+    const bad = structuredClone(p); bad.cost[field] = 1;
+    assert.equal(validate([bad]), false, field);
+  }
+  for (const marker of [null, {}, {skal: ""}]) {
+    const bad = structuredClone(p); bad.cost.harledning.belopp_okant = marker;
+    assert.equal(validate([bad]), false);
+  }
+});

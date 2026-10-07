@@ -362,7 +362,53 @@
             ],
             "description": "Kalkylens härledning som struktur: ett led per tal med sin roll (partiets uppgift, extern källa, egen beräkning, antagande, redan beslutad basnivå), år och källa, plus årsprofil och en markering när beloppet inte kan fastställas. Valfritt och bakåtkompatibelt — saknas fältet läses uträkningstexten som i dag. Se src/harledningen.ts."
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "required": [
+                "harledning"
+              ],
+              "properties": {
+                "harledning": {
+                  "type": "object",
+                  "required": [
+                    "belopp_okant"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "msek_low": {
+                  "const": 0
+                },
+                "msek_base": {
+                  "const": 0
+                },
+                "msek_high": {
+                  "const": 0
+                },
+                "harledning": {
+                  "properties": {
+                    "belopp_okant": {
+                      "type": "object",
+                      "required": [
+                        "skal"
+                      ],
+                      "properties": {
+                        "skal": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
       },
       "financing_claimed": {
         "type": "object",

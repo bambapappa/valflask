@@ -124,6 +124,10 @@ describe("de två fel dagens form inte kan uttrycka", () => {
       led: [{ roll: "antagande", text: "en gissning", tal: 500, enhet: "mkr", ar: 2027 }],
     };
     assert.ok(provaHarledning({ ...bas, harledning }).some((f) => f.sort === "okant-belopp-som-noll"));
+    for (const field of ["msek_low", "msek_base", "msek_high"] as const) {
+      const cost = { msek_low: 0, msek_base: 0, msek_high: 0, harledning, [field]: -1 };
+      assert.ok(provaHarledning(cost).some(f => f.sort === "okant-belopp-som-noll"), field);
+    }
   });
 });
 

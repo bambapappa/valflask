@@ -118,7 +118,7 @@ export function provaHarledning(kalkyl: Kalkyl): Fynd[] {
   }
 
   const bas = kalkyl.msek_base ?? 0;
-  if (h.belopp_okant && (bas !== 0 || (kalkyl.msek_high ?? 0) !== 0)) {
+  if (h.belopp_okant && ((kalkyl.msek_low ?? 0) !== 0 || bas !== 0 || (kalkyl.msek_high ?? 0) !== 0)) {
     // Ett okänt belopp får inte bära ett tal som ser ut som ett svar.
     fynd.push({
       sort: "okant-belopp-som-noll",
