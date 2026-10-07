@@ -1,5 +1,6 @@
 import type { PromisePost } from "./data";
 import { formatMsek } from "./calc.ts";
+import { promiseNetMsek } from "./aggregates.ts";
 
 /** Obestämbart är inte samma sak som en kostnadsfri åtgärd. */
 export function harOkantBelopp(p: PromisePost): boolean {
@@ -30,4 +31,8 @@ export function apiCost(p: PromisePost) {
     ...(c.harledning ? {harledning: c.harledning} : {}),
     ...(unknown ? {belopp_status: "okant", belopp_skal: c.harledning!.belopp_okant!.skal} : {}),
   };
+}
+
+export function formatPromiseNetCost(p: PromisePost): string {
+  return harOkantBelopp(p) ? "Kan inte fastställas" : formatMsek(promiseNetMsek(p), p.cost.basis);
 }

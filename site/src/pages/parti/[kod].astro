@@ -1,4 +1,5 @@
 ---
+import { formatPromiseNetCost, harOkantBelopp } from "../../lib/kostnadsvisning";
 import Layout from "../../layouts/Layout.astro";
 import Lopsedel from "../../components/Lopsedel.astro";
 import GapMatare from "../../components/GapMatare.astro";
@@ -108,7 +109,7 @@ const jsonLd = [{
         <section class="sektion">
           <h2>{party.name}:s löften</h2>
           <div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Löfte</th><th>Tidpunkt</th><th>Kategori</th><th>Typ</th><th>Beloppsunderlag</th><th class="num">Kostnad, minus för besparing</th><th>Status</th></tr></thead><tbody>
-            {view.promiseRows.map(({ p, bearer, underlag }, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td><td>{valdagEtikett(p)}<br /><small>{regeringEtikett(p)}</small></td><td>{p.category}</td><td>{p.loftestyp === "reform" ? "Reform" : "Inriktning/policy"}</td><td>{underlag === "parti" ? "Partiet" : "Utlovat.se"}</td><td class:list={["num", "belopp", { partibelopp: underlag === "parti" }]}>{bearer ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span> : formatMsek(promiseNetMsek(p), p.cost.basis)}</td><td>{p.status}</td></tr>)}
+            {view.promiseRows.map(({ p, bearer, underlag }, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td><td>{valdagEtikett(p)}<br /><small>{regeringEtikett(p)}</small></td><td>{p.category}</td><td>{p.loftestyp === "reform" ? "Reform" : "Inriktning/policy"}</td><td>{underlag === "parti" ? "Partiet" : "Utlovat.se"}</td><td class:list={["num", "belopp", { partibelopp: underlag === "parti" }]}>{harOkantBelopp(p) ? formatPromiseNetCost(p) : bearer ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span> : formatPromiseNetCost(p)}</td><td>{p.status}</td></tr>)}
           </tbody></table></div>
         </section>
       </div>

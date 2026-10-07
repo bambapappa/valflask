@@ -1,4 +1,5 @@
 ---
+import { formatPromiseNetCost, harOkantBelopp } from "../lib/kostnadsvisning";
 import Layout from "../layouts/Layout.astro";
 import Lopsedel from "../components/Lopsedel.astro";
 import GapMatare from "../components/GapMatare.astro";
@@ -29,7 +30,7 @@ const views = loftesvyer(promises).map(({ key, keys, selected }) => {
     count: countPromises(selected),
     flasket: totalFlasket(selected),
     partyRows,
-    dyraste: groupedPromises(selected).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 5),
+    dyraste: groupedPromises(selected).filter(g => !harOkantBelopp(g.promise)).sort((a, b) => promiseNetMsek(b.promise) - promiseNetMsek(a.promise)).slice(0, 5),
     senaste: selected.filter((p) => p.status !== "tillbakadragen").sort((a, b) => b.date_stated.localeCompare(a.date_stated)).slice(0, 5),
   };
 });
@@ -106,7 +107,7 @@ const jsonLd = [{
           {view.partyRows.map((row, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/parti/${row.code}`}>{row.name}</a></td><td class:list={["num", "belopp", { partibelopp: view.key.startsWith("parti:") }]}>{formatMsek(row.total)}</td><td class="num">{row.count}</td><td class="num">{sidorFor(tackning, row.code)}</td></tr>)}
         </tbody></table></div><p class="tackningsnot">Sista kolumnen är hur många sidor vi hunnit läsa på partiets egen webbplats. Den är ett insamlingsmått och ändras därför inte med löftesurvalet. <a href="/metod#tackning">Så jämnar vi ut det</a>.</p></section>
 
-        <section class="sektion"><h2>Dyraste löftena</h2><ol class="promise-list">{view.dyraste.map(({ promise: p, parties: gp }) => <li><a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a><div class="etikett etikett--sub">{gp.map((code) => parties.find((party) => party.code === code)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: p.cost.basis === "parti" }]}>{formatMsek(promiseNetMsek(p), p.cost.basis)}</span></div></li>)}</ol></section>
+        <section class="sektion"><h2>Dyraste löftena</h2><ol class="promise-list">{view.dyraste.map(({ promise: p, parties: gp }) => <li><a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a><div class="etikett etikett--sub">{gp.map((code) => parties.find((party) => party.code === code)?.name).join(", ")} · <span class:list={["num", "belopp", { partibelopp: p.cost.basis === "parti" }]}>{formatPromiseNetCost(p)}</span></div></li>)}</ol></section>
 
         <section class="sektion"><h2>Senaste löften</h2><ol class="promise-list">{view.senaste.map((p) => <li><a href={`/lofte/${p.id}/${p.slug}`}><strong>{p.title}</strong></a><div class="etikett etikett--sub">{p.parties.map((code) => parties.find((party) => party.code === code)?.name).join(", ")} · {formatDateShort(p.date_stated)} · {valdagEtikett(p)}</div></li>)}</ol></section>
       </div>
