@@ -163,6 +163,26 @@ export function byggKostnadsunderlag(forslag: FrystKostnadsforslag, loften: Prom
   return bindSlutform(current, efter, material);
 }
 
+/** Binder båda ändringstyperna mot en omprövad gemensam slutlista. */
+export function byggSamordnadeKostnadsunderlag(kostnader: readonly FrystKostnadsforslag[], indragningar: readonly FrystIndragningsforslag[], loften: PromiseEntry[], material: Record<string, Sakreferens[]>): Sakunderlag[] {
+  const ids = new Set<string>();
+  let efter = structuredClone(loften);
+  for (const f of kostnader) {
+    if (ids.has(f.rad.id)) throw new Error("Dubblerad samordnad ändring");
+    ids.add(f.rad.id);
+    omprovaKostnadsforslag(f, loften, material[f.rad.id] ?? [], f.hash);
+    efter = efter.map(p => p.id === f.rad.id ? f.nyttLofte : p);
+  }
+  const efterKostnader = structuredClone(efter);
+  for (const f of indragningar) {
+    if (ids.has(f.rad.id)) throw new Error("Dubblerad samordnad ändring");
+    ids.add(f.rad.id);
+    tillampaIndragningsforslag(f, efterKostnader, f.hash);
+    efter = efter.map(p => p.id === f.rad.id ? f.nyttLofte : p);
+  }
+  return [...kostnader, ...indragningar].map(f => bindSlutform(f, efter, material[f.rad.id] ?? []));
+}
+
 function bindSlutform(forslag: Sakunderlag["forslag"], efter: PromiseEntry[], material: readonly Sakreferens[], partier = lasPartier()): Sakunderlag {
   const register = byggUnderlagsregister({
     loften: efter as unknown as Record<string, unknown>[],
