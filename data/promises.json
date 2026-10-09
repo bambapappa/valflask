@@ -111763,8 +111763,24 @@
       "basis": "granskare",
       "basis_url": null,
       "method_note": "Delarna prissätts var för sig, på partiets egna löften om att skydda 30 procent av land och hav och om att återställa förstörda ekosystem. (belopp satt av granskare)",
-      "calculation": "Löftet räknar upp två åtgärder som partiet lovar var för sig: att skydda 30 procent av naturen och att restaurera förstörda ekosystem. Båda är prissatta på de egna löftena — skyddet till 2 000 miljoner kronor per år, restaureringen på sitt eget löfte. Att lägga ett belopp här också vore att räkna samma politik två gånger.",
-      "confidence": 0.9
+      "calculation": "Löftet samlar två åtgärder som partiet också beskriver var för sig: skydd av30 procent av land och hav samt restaurering av skogar, våtmarker och vattendrag. De behandlas på respektive separata löftespost. Här bokförs ingen ytterligare kostnad för sammanfattningen; det betyder inte att skyddet eller restaureringen är kostnadsfria. Deras belopp, antaganden och osäkerheter ska läsas på respektive post.",
+      "confidence": 0.9,
+      "harledning": {
+        "version": "harledning/1",
+        "led": [
+          {
+            "roll": "egen-berakning",
+            "text": "Ingen ytterligare bokföring för sammanfattningen; delarnas egna kostnadsbedömningar behålls.",
+            "kalla": "https://github.com/bambapappa/valflask/blob/596d0e4f8821aa44f9edf4b1ce8a3611742b1b6f/data/promises.json",
+            "kalla_ref": "delposter",
+            "ingar_i_summan": false
+          }
+        ],
+        "arsprofil": {
+          "status": "okand",
+          "skal": "Ingen ny årsprofil för delåtgärderna fastställs genom att rätta sammanfattningens hänvisning."
+        }
+      }
     },
     "financing_claimed": {
       "described": false,
@@ -111774,7 +111790,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-10-08",
+        "commit": "0000000",
+        "change": "Ta bort sammanfattningens inaktuella sifferhänvisning till2 000 miljoner kronor. Behåll noll för tillkommande sammanfattningskostnad, klassning, citat och åtagande; gör inga nya kostnads- eller finansieringspåståenden om delarna."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
