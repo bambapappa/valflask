@@ -117,3 +117,28 @@ test("enbart gruppborttagning går att bereda med oförändrad strukturerad kost
   assert.equal(f.nyttLofte.group_id, null);
   assert.throws(() => forberedKostnadsforslag(rad, [grouped], [], now), /oförändrad/);
 });
+
+test("kostnad och uttrycklig löftestyp får en gemensam fryst slutform", () => {
+  const original = {...structuredClone(old), loftestyp: "reform" as const};
+  const before = structuredClone(original);
+  const f = forberedKostnadsforslag({...rad, loftestyp: "inriktning"}, [original], [], now);
+  assert.equal(f.nyttLofte.loftestyp, "inriktning");
+  assert.deepEqual(f.nyttLofte.cost, cost);
+  assert.match((f.nyttLofte.history.at(-1) as {change: string}).change, /Löftestyp ändrad från reform till inriktning/);
+  assert.deepEqual(original, before);
+  assert.deepEqual(f.nyttLofte.source, original.source);
+  assert.equal(f.nyttLofte.quote, original.quote);
+  const ordinary = forberedKostnadsforslag(rad, [original], [], now);
+  assert.equal(ordinary.nyttLofte.loftestyp, "reform");
+  assert.notEqual(f.hash, ordinary.hash);
+  assert.throws(() => omprovaKostnadsforslag(f, [{...original, loftestyp: "inriktning"}], [], f.hash), /ändrats/);
+});
+
+test("enbart löftestyp går att rätta men ogiltigt val och belopp på inriktning stoppas", () => {
+  const original = {...structuredClone(old), loftestyp: "reform" as const, cost: structuredClone(cost)};
+  const f = forberedKostnadsforslag({...rad, loftestyp: "inriktning"}, [original], [], now);
+  assert.deepEqual(f.nyttLofte.cost, original.cost);
+  for (const value of [null, "", "annan", false]) assert.throws(() => forberedKostnadsforslag({...rad, loftestyp: value} as any, [original], [], now), /löftestyp/i);
+  assert.throws(() => forberedKostnadsforslag({...rad, loftestyp: "inriktning", kostnad: {...cost, msek_base: 25}}, [original], [], now), /inriktning/i);
+  assert.throws(() => forberedKostnadsforslag({...rad, loftestyp: "reform"}, [original], [], now), /oförändrad/);
+});

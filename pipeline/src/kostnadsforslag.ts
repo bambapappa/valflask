@@ -11,15 +11,16 @@ const ajv = new Ajv2020({allErrors: true, strict: true});
 ajv.addFormat("uri", {type: "string", validate: (s: string) => {try {return Boolean(new URL(s).protocol);} catch {return false;}}});
 const valid = ajv.compile(JSON.parse(readFileSync(new URL("../schemas/promises.schema.json", import.meta.url), "utf8")));
 const hash = (v: unknown) => createHash("sha256").update(kanoniskJson(v)).digest("hex");
-export interface Kostnadsrad {id: string; kostnad: Record<string, unknown>; skal: string; ta_ur_grupp?: true;}
+export interface Kostnadsrad {id: string; kostnad: Record<string, unknown>; skal: string; ta_ur_grupp?: true; loftestyp?: "reform" | "inriktning";}
 export interface FrystKostnadsforslag {
   version: "kostnadsforslag/1"; fore: string; tidpunkt: string; rad: Kostnadsrad;
   referenser: Sakreferens[]; tidigareLofte: PromiseEntry; nyttLofte: PromiseEntry; hash: string;
 }
 /** Förbereder endast underlag: ingen skrivning, attest eller publicering. */
 export function forberedKostnadsforslag(rad: Kostnadsrad, loften: PromiseEntry[], material: readonly Sakreferens[], nu: Date): FrystKostnadsforslag {
-  if (Object.keys(rad).some(k => !["id", "kostnad", "skal", "ta_ur_grupp"].includes(k))) throw new Error("Okänt fält i kostnadsförslaget");
+  if (Object.keys(rad).some(k => !["id", "kostnad", "skal", "ta_ur_grupp", "loftestyp"].includes(k))) throw new Error("Okänt fält i kostnadsförslaget");
   if (Object.hasOwn(rad, "ta_ur_grupp") && rad.ta_ur_grupp !== true) throw new Error("Gruppborttagning måste uttryckligen vara true");
+  if (Object.hasOwn(rad, "loftestyp") && rad.loftestyp !== "reform" && rad.loftestyp !== "inriktning") throw new Error("Löftestyp måste uttryckligen vara reform eller inriktning");
   if (!loften.length || new Set(loften.map(p => p.id)).size !== loften.length) throw new Error("Tomt eller dubblerat bestånd");
   const old = loften.find(p => p.id === rad.id);
   if (!old || old.status !== "aktiv") throw new Error("Kostnadsförslaget kräver ett aktivt publicerat löfte");
@@ -30,7 +31,11 @@ export function forberedKostnadsforslag(rad: Kostnadsrad, loften: PromiseEntry[]
   const next = structuredClone(old);
   next.cost = cost; // Hela kostnaden ersätts; gamla led eller ankare ärvs inte.
   if (rad.ta_ur_grupp) next.group_id = null;
-  const change = rad.skal.trim() + (rad.ta_ur_grupp ? " Löftet tas ur sin tidigare kostnadsgrupp och redovisas separat." : "");
+  if (rad.loftestyp) next.loftestyp = rad.loftestyp;
+  const typeChanged = next.loftestyp !== old.loftestyp;
+  if (next.loftestyp === "inriktning" && [cost.msek_low, cost.msek_base, cost.msek_high].some(v => v !== 0)) throw new Error("En inriktning får inte bära ett belopp");
+  const change = rad.skal.trim() + (rad.ta_ur_grupp ? " Löftet tas ur sin tidigare kostnadsgrupp och redovisas separat." : "") +
+    (typeChanged ? ` Löftestyp ändrad från ${old.loftestyp ?? "ej angiven"} till ${next.loftestyp}.` : "");
   next.history = [...old.history, {date: svenskDag(nu), commit: "0000000", change}];
   if (!valid([next])) throw new Error(`Ogiltig slutform: ${ajv.errorsText(valid.errors)}`);
   const profile = (cost as Kalkyl).harledning!.arsprofil;
@@ -40,7 +45,7 @@ export function forberedKostnadsforslag(rad: Kostnadsrad, loften: PromiseEntry[]
   if (fynd.length) throw new Error(fynd.map(f => f.text).join("; "));
   const referenser = ordnaSakreferenser(material);
   kravHarledningsreferenser([{innehall: next as unknown as Record<string, unknown>}], referenser);
-  if (hash(old.cost) === hash(cost) && !rad.ta_ur_grupp) throw new Error("Kostnaden är oförändrad");
+  if (hash(old.cost) === hash(cost) && !rad.ta_ur_grupp && !typeChanged) throw new Error("Kostnaden är oförändrad");
   const payload = {version: "kostnadsforslag/1" as const, fore: hash(loften), tidpunkt: nu.toISOString(), rad: structuredClone(rad), referenser, tidigareLofte: structuredClone(old), nyttLofte: next};
   return structuredClone({...payload, hash: hash(payload)});
 }
