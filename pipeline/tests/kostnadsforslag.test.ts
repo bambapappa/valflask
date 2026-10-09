@@ -85,3 +85,35 @@ test("två poster för samma år får inte maskeras av en korrekt totalsumma", (
   assert.throws(() => forberedKostnadsforslag({...rad, kostnad: next}, [old], [], now), /dubblerade år/);
   assert.equal(JSON.stringify(old), before);
 });
+
+
+test("explicit grupprättelse fryser borttagning och bevarar övriga fält", () => {
+  const grouped = {...structuredClone(old), group_id: "g-test-grupp"};
+  const before = JSON.stringify(grouped);
+  const f = forberedKostnadsforslag({...rad, ta_ur_grupp: true}, [grouped], [], now);
+  assert.equal(f.nyttLofte.group_id, null);
+  assert.equal(f.tidigareLofte.group_id, "g-test-grupp");
+  assert.equal(JSON.stringify(grouped), before);
+  assert.match((f.nyttLofte.history.at(-1) as {change: string}).change, /tas ur sin tidigare kostnadsgrupp/);
+  assert.deepEqual(omprovaKostnadsforslag(f, [grouped], [], f.hash), f);
+  assert.throws(() => omprovaKostnadsforslag(f, [{...grouped, group_id: "g-annan"}], [], f.hash), /ändrats/);
+  const ordinary = forberedKostnadsforslag(rad, [grouped], [], now);
+  assert.equal(ordinary.nyttLofte.group_id, "g-test-grupp");
+});
+
+test("grupprättelse kräver uttryckligt giltigt val och en befintlig grupp", () => {
+  const grouped = {...structuredClone(old), group_id: "g-test-grupp"};
+  for (const value of [false, null, "true", 1]) {
+    assert.throws(() => forberedKostnadsforslag({...rad, ta_ur_grupp: value} as any, [grouped], [], now), /grupp/i);
+  }
+  assert.throws(() => forberedKostnadsforslag({...rad, ta_ur_grupp: true}, [{...grouped, group_id: null}], [], now), /grupp/i);
+  assert.throws(() => forberedKostnadsforslag({...rad, group_id: "g-annan"} as any, [grouped], [], now), /fält/);
+});
+
+test("enbart gruppborttagning går att bereda med oförändrad strukturerad kostnad", () => {
+  const grouped = {...structuredClone(old), group_id: "g-test-grupp", cost: structuredClone(cost)};
+  const f = forberedKostnadsforslag({...rad, ta_ur_grupp: true}, [grouped], [], now);
+  assert.deepEqual(f.nyttLofte.cost, grouped.cost);
+  assert.equal(f.nyttLofte.group_id, null);
+  assert.throws(() => forberedKostnadsforslag(rad, [grouped], [], now), /oförändrad/);
+});
