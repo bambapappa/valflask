@@ -9,6 +9,27 @@ const rows = posts.map((p: any) => ({id: p.id, kostnad: {...p.cost, msek_low: 0,
 const fore = {"promises.json": JSON.stringify(posts), "rattelser.json": "[]", "changelog.json": "[]", "provningar.json": '{"poster":[]}', "provningsskulden.json": '{"count":0,"ids":[]}'};
 const input = {rader: rows, material: {}, varfor: "Syntetiskt kontraktsprov", orsak: "annat" as const};
 const now = new Date("2026-10-07T12:00:00Z");
+test("gemensam klassning och kostnad binds i alla sakunderlag och rättelsen", () => {
+  const original = posts.map((p: any) => ({...p, loftestyp: "reform"}));
+  const files = {...fore, "promises.json": JSON.stringify(original)};
+  const packet = forberedKostnadspaket({...input, rader: rows.map((r: any) => ({...r, loftestyp: "inriktning" as const}))}, files, now);
+  const after = JSON.parse(packet.filer.efter["promises.json"]!);
+  assert.ok(after.every((p: any) => p.loftestyp === "inriktning"));
+  assert.match(packet.filer.efter["rattelser.json"]!, /Löftestyp ändrad från reform till inriktning/);
+  for (const review of packet.provningar) {
+    assert.ok(review.underlag.poster.poster.filter(p => p.slag === "lofte").every(p => (p.innehall as any).loftestyp === "inriktning"));
+    assert.equal(review.bedomare, null);
+    assert.ok(review.bedomningar.every(b => b.utfall === "oavgjort"));
+  }
+  assert.throws(() => kontrolleraKostnadspaket(packet, files), /inte klar/);
+  const ordinary = forberedKostnadspaket(input, files, now);
+  assert.notDeepEqual(packet.provningar.map(p => p.underlag.hash), ordinary.provningar.map(p => p.underlag.hash));
+  const changed = structuredClone(packet);
+  const altered = JSON.parse(changed.filer.efter["promises.json"]!); altered[0].loftestyp = "reform";
+  changed.filer.efter["promises.json"] = JSON.stringify(altered);
+  assert.throws(() => kontrolleraKostnadspaket(changed, files), /slutform/);
+});
+
 test("kostnadsbulk binder samtidiga gruppändringar och lämnar föreläget orört", () => {
   const before = JSON.stringify(fore), p = forberedKostnadspaket(input, fore, now);
   assert.equal(p.forslag.length, 2);
