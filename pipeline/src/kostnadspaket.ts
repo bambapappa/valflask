@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { kanoniskJson } from "./underlagsversion.ts";
 import { skapaFilpaket, type Fillage, type Filpaket } from "./datatransaktion.ts";
 import { forberedKostnadsforslag, type FrystKostnadsforslag } from "./kostnadsforslag.ts";
-import { byggKostnadsunderlag, skapaSakprovning, sakprovningsBeredskap, type Sakprovning, type Sakreferens } from "./sakprovning.ts";
+import { byggKostnadsunderlag, byggSamordnadeKostnadsunderlag, skapaSakprovning, sakprovningsBeredskap, type Sakprovning, type Sakreferens } from "./sakprovning.ts";
 import { ORSAKKODER, type Orsakkod } from "./orsakkoder.ts";
 import { computeDataHash } from "./publish.ts";
 import { kanon, type Provning } from "./provningar.ts";
@@ -10,20 +10,27 @@ import { svenskDag } from "./dagen.ts";
 import type { Kostnadsrad } from "./kostnadsforslag.ts";
 import type { PromiseEntry } from "./loftesforslag.ts";
 
+import {forberedIndragningspaket, INDRAGNINGSFILER} from "./indragningspaket.ts";
+import type {Indragningsrad} from "./indragning.ts";
+import type {FrystIndragningsforslag} from "./indragningsforslag.ts";
+
 export const KOSTNADSVAGAR = {
   "promises.json": "data/promises.json", "rattelser.json": "data/rattelser.json",
   "changelog.json": "data/changelog.json", "provningar.json": "data/provningar.json",
-  "provningsskulden.json": "pipeline/facit/provningsskulden.json",
+  "provningsskulden.json": "pipeline/facit/provningsskulden.json", "avvisade.json": "data/avvisade.json",
 } as const;
-export const KOSTNADSFILER = Object.keys(KOSTNADSVAGAR) as (keyof typeof KOSTNADSVAGAR)[];
-export interface Kostnadsindata { rader: Kostnadsrad[]; material: Record<string, Sakreferens[]>; varfor: string; orsak: Orsakkod; sakexport?: Provning[] }
+export const KOSTNADSFILER = Object.keys(KOSTNADSVAGAR).filter(n => n !== "avvisade.json") as (keyof typeof KOSTNADSVAGAR)[];
+export interface Kostnadsindata { rader: Kostnadsrad[]; material: Record<string, Sakreferens[]>; varfor: string; orsak: Orsakkod; sakexport?: Provning[]; indragningar?: Indragningsrad[] }
 export interface Kostnadspaket {
   version: "kostnadspaket/1";
   tidpunkt: string;
   indata: Kostnadsindata;
-  forslag: FrystKostnadsforslag[];
+  forslag: (FrystKostnadsforslag | FrystIndragningsforslag)[];
   provningar: Sakprovning[];
   filer: Filpaket;
+}
+export function kostnadsfiler(indata: Kostnadsindata): (keyof typeof KOSTNADSVAGAR)[] {
+  return indata.indragningar ? [...KOSTNADSFILER, "avvisade.json"] : KOSTNADSFILER;
 }
 export function kostnadspakethash(p: Kostnadspaket): string {
   return createHash("sha256").update(kanoniskJson(p)).digest("hex");
@@ -37,10 +44,12 @@ function lista(fore: Fillage, fil: string): unknown[] {
 }
 /** Fryser offentliga loggar tillsammans med förslagen; inga bedömningar fylls i. */
 export function forberedKostnadspaket(indata: Kostnadsindata, fore: Fillage, nu: Date): Kostnadspaket {
-  if (Object.keys(fore).sort().join() !== [...KOSTNADSFILER].sort().join()) throw new Error("Fel filuppsättning");
+  if (Object.keys(fore).sort().join() !== [...kostnadsfiler(indata)].sort().join()) throw new Error("Fel filuppsättning");
   if (!indata.rader.length || new Set(indata.rader.map((r) => r.id)).size !== indata.rader.length) throw new Error("Tom eller dubblerad ändringslista");
   if (!indata.varfor?.trim() || !ORSAKKODER.includes(indata.orsak)) throw new Error("Rättelsen kräver skäl och giltig orsak");
-  if (Object.keys(indata.material).some((id) => !indata.rader.some((r) => r.id === id))) throw new Error("Referenser för okänt mål");
+  const indragningar = indata.indragningar ?? [];
+  if (Object.hasOwn(indata, "indragningar") && (!Array.isArray(indragningar) || !indragningar.length || indragningar.some(r => !r || Object.keys(r).sort().join() !== "id,skal") || new Set([...indata.rader, ...indragningar].map(r => r.id)).size !== indata.rader.length + indragningar.length)) throw new Error("Dubblerad eller ogiltig samordnad indragning");
+  if (Object.keys(indata.material).some((id) => ![...indata.rader, ...indragningar].some((r) => r.id === id))) throw new Error("Referenser för okänt mål");
   const loften = lista(fore, "promises.json") as PromiseEntry[];
   const forslag = indata.rader.map((r) => forberedKostnadsforslag(r, loften, indata.material[r.id] ?? [], nu));
   const provningar = forslag.map((f) => skapaSakprovning(byggKostnadsunderlag(f, loften, indata.material[f.rad.id] ?? [], forslag.filter((andra) => andra.rad.id !== f.rad.id))));
@@ -75,6 +84,16 @@ export function forberedKostnadspaket(indata: Kostnadsindata, fore: Fillage, nu:
     data_hash: computeDataHash(nya), timestamp: nu.toISOString(),
   }];
   const json = (v: unknown): string => JSON.stringify(v, null, 2) + "\n";
+  const kostnadsEfter: Fillage = { "promises.json": json(nya), "rattelser.json": json(rattelser), "changelog.json": json(changelog),
+      "provningar.json": sakexport.length ? JSON.stringify(nyttIndex, null, 1) + "\n" : fore["provningar.json"]!,
+      "provningsskulden.json": nyaSkuldIds.length !== skuld.ids.length ? json(nySkuld) : fore["provningsskulden.json"]! };
+  if (indragningar.length) {
+    const indragning = forberedIndragningspaket({rader: indragningar, material: Object.fromEntries(indragningar.map(r => [r.id, indata.material[r.id] ?? []])), varfor: indata.varfor, orsak: indata.orsak},
+      Object.fromEntries(INDRAGNINGSFILER.map(n => [n, kostnadsEfter[n] ?? fore[n]!])), nu);
+    return {version: "kostnadspaket/1", tidpunkt: nu.toISOString(), indata: structuredClone(indata), forslag: [...forslag, ...indragning.forslag],
+      provningar: byggSamordnadeKostnadsunderlag(forslag, indragning.forslag, loften, indata.material).map(skapaSakprovning),
+      filer: skapaFilpaket(fore, {...kostnadsEfter, ...indragning.filer.efter})};
+  }
   return { version: "kostnadspaket/1", tidpunkt: nu.toISOString(), indata: structuredClone(indata), forslag, provningar,
     filer: skapaFilpaket(fore, { "promises.json": json(nya), "rattelser.json": json(rattelser), "changelog.json": json(changelog),
       "provningar.json": sakexport.length ? JSON.stringify(nyttIndex, null, 1) + "\n" : fore["provningar.json"]!,
@@ -91,5 +110,5 @@ export function kontrolleraKostnadspaket(p: Kostnadspaket, aktuellt: Fillage): v
     const prov = sakprovningsBeredskap(provning, nytt.provningar[i]!.underlag);
     if (!prov.klar) throw new Error(`Sakprövningen är inte klar: ${prov.hinder.join("; ")}`);
   });
-  if (p.indata.sakexport?.length !== p.forslag.length) throw new Error("Sakexport saknas för ett eller flera kostnadsförslag");
+  if (p.indata.sakexport?.length !== p.indata.rader.length) throw new Error("Sakexport saknas för ett eller flera kostnadsförslag");
 }
