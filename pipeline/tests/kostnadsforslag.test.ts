@@ -144,7 +144,8 @@ test("enbart löftestyp går att rätta men ogiltigt val och belopp på inriktni
 });
 
 test('samordnad rubrik och kostnad fryses mot samma citat och bevarar övriga fält',()=>{
- const post=structuredClone(seed.find((p:any)=>p.id==='p-2026-3302'));
+ const frozen=JSON.parse(readFileSync(new URL('./fixtures/norrland-fore-rattelse-2f88b22a.json',import.meta.url),'utf8'));
+ const post=structuredClone(frozen.rows.find((p:any)=>p.id==='p-2026-3302'));
  const rubrik='Glesbygdsmiljard nationellt, varav 500 miljoner till Norrland';
  const f=forberedKostnadsforslag({...rad,id:post.id,rubrik},[post],[],now);
  assert.equal(f.nyttLofte.title,rubrik);assert.equal(f.nyttLofte.quote,post.quote);

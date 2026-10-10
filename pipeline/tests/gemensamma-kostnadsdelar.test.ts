@@ -5,7 +5,10 @@ const {totalFlasket, partyTotalMsek, categoryBreakdown, totalFlasketInterval, pr
 import {totalFlasket as pipelineTotal} from '../src/chronicle.ts';
 const all = JSON.parse(readFileSync(new URL('../../data/promises.json', import.meta.url),'utf8'));
 const ids = ['p-2026-0613','p-2026-0926','p-2026-0927','p-2026-0928','p-2026-3302'];
-const family = all.filter((p:any)=>ids.includes(p.id));
+// Historical regression input stays frozen after the correction is published.
+const family = JSON.parse(readFileSync(new URL('./fixtures/norrland-fore-rattelse-2f88b22a.json',import.meta.url),'utf8')).rows;
+assert.deepEqual(family.map((p:any)=>p.id).sort(),[...ids].sort());
+const historicalAll=all.map((p:any)=>family.find((r:any)=>r.id===p.id) ?? p);
 function prepared() {
  const rows = structuredClone(family);
  const parts:Record<string,any[]> = {
@@ -61,9 +64,10 @@ test('koalition, publikt sammanfattningssvar och hela beståndet använder samma
  const summary=buildSummary(next,parties,constants,[]);
  assert.equal(summary.total_msek_flasket,17600);
  assert.equal(summary.parties.find((p:any)=>p.code==='v').total_msek,17600);
- const full=all.map((p:any)=>next.find((n:any)=>n.id===p.id) ?? p);
- assert.equal(totalFlasket(all)-totalFlasket(full),3200);
- assert.equal(pipelineTotal(all)-pipelineTotal(full),3200);
+ const before=all.map((p:any)=>family.find((n:any)=>n.id===p.id) ?? p);
+ const full=before.map((p:any)=>next.find((n:any)=>n.id===p.id) ?? p);
+ assert.equal(totalFlasket(before)-totalFlasket(full),3200);
+ assert.equal(pipelineTotal(before)-pipelineTotal(full),3200);
 });
 
 test('frysning av slutform kräver korrekt uppdelning och varje dels källreferens', async()=>{
@@ -73,13 +77,13 @@ test('frysning av slutform kräver korrekt uppdelning och varje dels källrefere
  const row=prepared().find((p:any)=>p.id==='p-2026-0926');
  const rad={id:row.id,kostnad:row.cost,skal:'Syntetiskt teknikprov av fryst delbeloppsrepresentation; ingen innehållsattest.'};
  const ref={id:'norrland',slag:'kalla' as const,adress:'https://example.test/norrland',innehall:'Syntetiskt teknikmaterial; inte ett ekonomiskt belägg.'};
- assert.throws(()=>forberedKostnadsforslag(rad,all,[],new Date('2026-10-10T00:00:00Z')),/källreferens/);
- const frozen=forberedKostnadsforslag(rad,all,[ref],new Date('2026-10-10T00:00:00Z'));
+ assert.throws(()=>forberedKostnadsforslag(rad,historicalAll,[],new Date('2026-10-10T00:00:00Z')),/källreferens/);
+ const frozen=forberedKostnadsforslag(rad,historicalAll,[ref],new Date('2026-10-10T00:00:00Z'));
  assert.deepEqual(frozen.nyttLofte.cost,row.cost);
- const proof=skapaSakprovning(byggKostnadsunderlag(frozen,all,[ref]));
+ const proof=skapaSakprovning(byggKostnadsunderlag(frozen,historicalAll,[ref]));
  assert.ok(proof.bedomningar.every((b:any)=>b.utfall==='oavgjort'));
  const bad=structuredClone(rad); bad.kostnad.harledning.summadelar[0].msek_high=900;
- assert.throws(()=>forberedKostnadsforslag(bad,all,[ref],new Date('2026-10-10T00:00:00Z')),/summa/);
+ assert.throws(()=>forberedKostnadsforslag(bad,historicalAll,[ref],new Date('2026-10-10T00:00:00Z')),/summa/);
  for(const change of [(x:any)=>x.msek_low=-1,(x:any)=>x.msek_high=NaN,(x:any)=>x.kalla_ref='']) {
   const cost=structuredClone(row.cost);change(cost.harledning.summadelar[0]);assert.throws(()=>kontrolleraSummadelar(cost));
  }
