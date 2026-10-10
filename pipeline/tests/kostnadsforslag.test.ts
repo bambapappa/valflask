@@ -152,3 +152,23 @@ test('samordnad rubrik och kostnad fryses mot samma citat och bevarar övriga f�
  assert.throws(()=>forberedKostnadsforslag({...rad,id:post.id,rubrik:'Inför rymdturism på Mars'},[post],[],now),/rubrik|citat/i);
  assert.throws(()=>forberedKostnadsforslag({...rad,id:post.id,rubrik:123} as any,[post],[],now),/rubrik/i);
 });
+
+test('felaktig personkoppling kan tas bort i samma frysta kostnadsrättelse utan nytt namn eller sakattest',()=>{
+ const post=structuredClone(seed.find((p:any)=>p.id==='p-2026-0011'));
+ const before=structuredClone(post);
+ assert.ok(post.person?.name);
+ const f=forberedKostnadsforslag({...rad,id:post.id,person:null},[post],[],now);
+ assert.equal(f.nyttLofte.person,null);
+ assert.deepEqual(f.nyttLofte.parties,post.parties);
+ assert.equal(f.nyttLofte.quote,post.quote);assert.deepEqual(f.nyttLofte.source,post.source);
+ assert.deepEqual(post,before);
+ assert.equal(f.nyttLofte.history.length,post.history.length+1);
+ assert.match((f.nyttLofte.history.at(-1) as {change:string}).change,/personattribution/i);
+ const proof=skapaSakprovning(byggKostnadsunderlag(f,[post],[]));
+ assert.equal(proof.bedomare,null);assert.ok(proof.bedomningar.every(b=>b.utfall==='oavgjort'));
+ assert.deepEqual(omprovaKostnadsforslag(f,[post],[],f.hash),f);
+ assert.throws(()=>omprovaKostnadsforslag(f,[{...post,person:null}],[],f.hash),/ändrats|person/i);
+ for(const invalid of [undefined,false,'Annat namn',{name:'Ny person',role:'ny roll'}]) {
+  assert.throws(()=>forberedKostnadsforslag({...rad,id:post.id,person:invalid} as any,[post],[],now),/person/i);
+ }
+});
