@@ -1,3 +1,4 @@
+import {raknadeKostnadsdelar} from "./kostnadsdelar.ts";
 /**
  * chronicle.ts — "Veckans fläsk" (§7 steg 7, bilaga A4). Genererar en
  * veckokrönika ur veckans NYA löften och lagrar den i data/chronicles.json.
@@ -119,7 +120,7 @@ export function chronicleUnderlag(weekPromises: PipelinePromise[]): string {
  * granskning 2026-07-16: krönikan sade 12 978 mdkr, startsidan 8 184).
  */
 export function totalFlasket(promises: PipelinePromise[]): number {
-  return dedupeByGroup(promises.filter(isActive)).filter(isCostType).reduce((s, p) => s + promiseTotal(p), 0);
+  return raknadeKostnadsdelar(dedupeByGroup(promises.filter(isActive)).filter(isCostType)).reduce((s, p) => s + p.base, 0);
 }
 
 /** Lägg till eller ersätt krönikan för dess vecka (idempotent per slug). */

@@ -23,6 +23,7 @@ export function lasPubliceringssummor(repo: string, revision: string): Publiceri
   });
   const kod = las("site/src/lib/aggregates.ts");
   const luckkod = kod.includes('from "./kostnadsluckor.ts"') ? las("site/src/lib/kostnadsluckor.ts") : null;
+  const delkod = kod.includes('from "../../../pipeline/src/kostnadsdelar.ts"') ? las("pipeline/src/kostnadsdelar.ts") : null;
   const loften = JSON.parse(las("data/promises.json"));
   const partier = JSON.parse(las("data/parties.json"));
   if (!Array.isArray(loften) || !loften.length || !Array.isArray(partier) || !partier.length ||
@@ -31,7 +32,8 @@ export function lasPubliceringssummor(repo: string, revision: string): Publiceri
   const dir = mkdtempSync(join(tmpdir(), "publiceringssummor-"));
   try {
     const fil = join(dir, "aggregates.mts");
-    writeFileSync(fil, kod);
+    writeFileSync(fil, delkod === null ? kod : kod.replace('from "../../../pipeline/src/kostnadsdelar.ts"', 'from "./kostnadsdelar.ts"'));
+    if (delkod !== null) writeFileSync(join(dir,"kostnadsdelar.ts"),delkod);
     // Explicit stöd för den rena täckningsmodulen, alltid från samma revision.
     // Övriga nya runtimeberoenden ska fortfarande stoppa, aldrig läsas lokalt.
     if (luckkod !== null) writeFileSync(join(dir, "kostnadsluckor.ts"), luckkod);
@@ -48,6 +50,6 @@ finansiering:a.partyFinancingClaimedMsek(loften,p.code),gap:a.partyFinancingGapM
     const tal = [svar.utgifter, svar.besparingar, svar.finansiering, svar.gap,
       ...svar.partier.flatMap((p: Publiceringssummor["partier"][number]) => [p.netto, p.finansiering, p.gap])];
     if (!tal.every((n) => typeof n === "number" && Number.isFinite(n))) throw new Error("Summeringen gav ogiltiga belopp");
-    return { revision, berakningshash: createHash("sha256").update(luckkod === null ? kod : JSON.stringify({aggregates: kod, kostnadsluckor: luckkod})).digest("hex"), ...svar };
+    return { revision, berakningshash: createHash("sha256").update(delkod !== null ? JSON.stringify({aggregates:kod,kostnadsluckor:luckkod,kostnadsdelar:delkod}) : luckkod === null ? kod : JSON.stringify({aggregates: kod, kostnadsluckor: luckkod})).digest("hex"), ...svar };
   } finally { rmSync(dir, { recursive: true, force: true }); }
 }

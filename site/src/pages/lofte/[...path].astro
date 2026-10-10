@@ -136,6 +136,16 @@ const jsonLd = [
             </tbody>
           </table>
         </div>
+        {promise.cost.harledning?.summadelar && (
+          <details class="uträkning">
+            <summary>Delar som ingår i beloppet</summary>
+            <p>Här visas löftets hela belopp. Gemensamma delar räknas en gång när de berörda löftena summeras tillsammans.</p>
+            <ul>{promise.cost.harledning.summadelar.map(del => (
+              <li>{del.text}: {del.msek_base.toLocaleString('sv-SE')} mkr {promise.cost.period === 'per_ar' ? 'per år' : 'totalt'}.
+                {del.gemensam_id && <> Ingår även i andra löften.</>}</li>
+            ))}</ul>
+          </details>
+        )}
         {ankare.length > 0 && (
           <p class="ankarnot">
             Beloppet är lånat som riktmärke från

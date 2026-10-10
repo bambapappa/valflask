@@ -7,7 +7,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 
 const pipeline = resolve(import.meta.dirname, "..");
 const repo = resolve(pipeline, "..");
-const files = ["data/promises.json", "data/parties.json", "site/src/lib/aggregates.ts", "site/src/lib/kostnadsluckor.ts", "data/stances.json", "handlingsvagen/data/kopplingar.json", "handlingsvagen/data/handlingar.json"];
+const files = ["data/promises.json", "data/parties.json", "site/src/lib/aggregates.ts", "site/src/lib/kostnadsluckor.ts", "pipeline/src/kostnadsdelar.ts", "data/stances.json", "handlingsvagen/data/kopplingar.json", "handlingsvagen/data/handlingar.json"];
 
 test("kommandot binder verkliga commit-versioner och lämnar lokala data orörda", () => {
   const temp = mkdtempSync(join(tmpdir(), "publiceringspaket-"));
@@ -21,7 +21,7 @@ test("kommandot binder verkliga commit-versioner och lämnar lokala data orörda
     }
     git("init", "-q");
     const commit = () => {
-      git("add", "data", "handlingsvagen", "site");
+      git("add", "data", "handlingsvagen", "site", "pipeline");
       git("-c", "user.name=Prov", "-c", "user.email=prov@example.invalid", "-c", "commit.gpgsign=false", "commit", "-qm", "Underlag");
       return git("rev-parse", "HEAD").trim();
     };

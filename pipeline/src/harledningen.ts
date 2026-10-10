@@ -1,3 +1,4 @@
+import {kontrolleraSummadelar, type Summadel} from './kostnadsdelar.ts';
 /**
  * Kalkylens härledning som struktur — vem som säger vad, och vad vi själva lagt till.
  *
@@ -64,6 +65,8 @@ export type Arsprofil =
 
 export interface Harledning {
   version: "harledning/1";
+  /** Full kostnadsuppdelning; belagda gemensamma delar räknas en gång i urvalets summa. */
+  summadelar?: readonly Summadel[];
   led: readonly Led[];
   arsprofil: Arsprofil;
   /** Satt när beloppet inte kan fastställas. Då är siffrorna inte ett svar. */
@@ -89,6 +92,7 @@ export function ledSummeras(led: Led): boolean {
 
 /** Fynd en läsande granskning kan göra på en härledning. */
 export type Fynd =
+  | { sort: "ogiltiga-summadelar"; text: string }
   | { sort: "dubbelraknad-basniva"; text: string }
   | { sort: "okant-belopp-som-noll"; text: string }
   | { sort: "summan-stammer-inte"; text: string; summa: number; bas: number }
@@ -105,6 +109,8 @@ export function provaHarledning(kalkyl: Kalkyl): Fynd[] {
   const h = kalkyl.harledning;
   if (!h) return [];
   const fynd: Fynd[] = [];
+  try { kontrolleraSummadelar({...kalkyl, msek_low:kalkyl.msek_low ?? 0, msek_base:kalkyl.msek_base ?? 0, msek_high:kalkyl.msek_high ?? 0}); }
+  catch(error) { fynd.push({sort:"ogiltiga-summadelar",text:String(error)}); }
 
   for (const led of h.led) {
     if (led.roll === "redan-beslutad-basniva" && ledSummeras(led)) {

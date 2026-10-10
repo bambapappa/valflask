@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, symlinkSync, readFileSync, writeFileSync, chmodSync, rmSync, existsSync } from "node:fs";
+import { mkdtempSync, mkdirSync, symlinkSync, cpSync, readFileSync, writeFileSync, chmodSync, rmSync, existsSync } from "node:fs";
 import { spawnSync, execFileSync } from "node:child_process";
 import { join, resolve, dirname } from "node:path";
 import { tmpdir } from "node:os";
@@ -16,7 +16,7 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
   const git = execFileSync("which", ["git"], { encoding: "utf8" }).trim();
   const g = (...args: string[]) => execFileSync(git, args, { cwd: repo, encoding: "utf8" });
   const commit = () => {
-    g("add", "data", "site", "handlingsvagen");
+    g("add", "data", "site", "handlingsvagen", "pipeline/src/kostnadsdelar.ts");
     g("-c", "user.name=Prov", "-c", "user.email=prov@example.invalid", "-c", "commit.gpgsign=false", "commit", "-qm", "Underlag");
     return g("rev-parse", "HEAD").trim();
   };
@@ -25,7 +25,8 @@ test("förberedelsen binder verkliga Git-data, vy och godkännandetext; okänd d
       mkdirSync(dirname(join(repo, path)), { recursive: true });
       writeFileSync(join(repo, path), readFileSync(join(root, path)));
     }
-    symlinkSync(join(root, "pipeline"), join(repo, "pipeline"));
+    cpSync(join(root,"pipeline"),join(repo,"pipeline"),{recursive:true,filter:p=>!p.includes("node_modules")});
+    symlinkSync(join(root,"pipeline/node_modules"),join(repo,"pipeline/node_modules"));
     g("init", "-q");
     const fore = commit();
     const partier = JSON.parse(readFileSync(join(repo, "data/parties.json"), "utf8"));

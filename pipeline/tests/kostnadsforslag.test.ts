@@ -142,3 +142,13 @@ test("enbart löftestyp går att rätta men ogiltigt val och belopp på inriktni
   assert.throws(() => forberedKostnadsforslag({...rad, loftestyp: "inriktning", kostnad: {...cost, msek_base: 25}}, [original], [], now), /inriktning/i);
   assert.throws(() => forberedKostnadsforslag({...rad, loftestyp: "reform"}, [original], [], now), /oförändrad/);
 });
+
+test('samordnad rubrik och kostnad fryses mot samma citat och bevarar övriga fält',()=>{
+ const post=structuredClone(seed.find((p:any)=>p.id==='p-2026-3302'));
+ const rubrik='Glesbygdsmiljard nationellt, varav 500 miljoner till Norrland';
+ const f=forberedKostnadsforslag({...rad,id:post.id,rubrik},[post],[],now);
+ assert.equal(f.nyttLofte.title,rubrik);assert.equal(f.nyttLofte.quote,post.quote);
+ assert.deepEqual(f.nyttLofte.source,post.source);assert.equal(f.tidigareLofte.title,post.title);
+ assert.throws(()=>forberedKostnadsforslag({...rad,id:post.id,rubrik:'Inför rymdturism på Mars'},[post],[],now),/rubrik|citat/i);
+ assert.throws(()=>forberedKostnadsforslag({...rad,id:post.id,rubrik:123} as any,[post],[],now),/rubrik/i);
+});

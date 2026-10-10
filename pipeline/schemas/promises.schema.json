@@ -530,6 +530,50 @@
               },
               "summeras": {
                 "type": "boolean"
+              },
+              "summadelar": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "text",
+                    "msek_low",
+                    "msek_base",
+                    "msek_high",
+                    "kalla_ref"
+                  ],
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "kalla_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "gemensam_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "msek_low": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "msek_base": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "msek_high": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  }
+                }
               }
             },
             "description": "Kalkylens härledning som struktur: ett led per tal med sin roll (partiets uppgift, extern källa, egen beräkning, antagande, redan beslutad basnivå), år och källa, plus årsprofil och en markering när beloppet inte kan fastställas. Valfritt och bakåtkompatibelt — saknas fältet läses uträkningstexten som i dag. Se src/harledningen.ts."

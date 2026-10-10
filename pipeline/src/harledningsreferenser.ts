@@ -5,8 +5,12 @@ export function kravHarledningsreferenser(poster: readonly {innehall: Record<str
   for (const post of poster) {
     const cost = post.innehall.cost as Record<string, unknown> | undefined;
     if (!cost || !Object.hasOwn(cost, "harledning")) continue;
-    const h = cost.harledning as {led?: unknown} | null;
+    const h = cost.harledning as {led?: unknown; summadelar?: {kalla_ref: string}[]} | null;
     if (!h || !Array.isArray(h.led)) throw new Error("Ogiltig strukturerad härledning i sakunderlaget");
+    for(const del of h.summadelar ?? []) {
+      const ref=refs.get(del.kalla_ref);
+      if(!ref || ref.slag!=="kalla") throw new Error("Kostnadsdelen saknar fryst källreferens");
+    }
     for (const value of h.led) {
       if (!value || typeof value !== "object") throw new Error("Ogiltigt härledningsled");
       const led = value as Record<string, unknown>;

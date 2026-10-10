@@ -18,7 +18,7 @@ test("summorna följer data och beräkningskod i respektive commit", () => {
   };
   try {
     git("init", "-q");
-    for (const path of ["site/src/lib/aggregates.ts", "site/src/lib/kostnadsluckor.ts", "data/promises.json", "data/parties.json"]) {
+    for (const path of ["site/src/lib/aggregates.ts", "site/src/lib/kostnadsluckor.ts", "pipeline/src/kostnadsdelar.ts", "data/promises.json", "data/parties.json"]) {
       mkdirSync(dirname(join(dir, path)), { recursive: true });
       writeFileSync(join(dir, path), readFileSync(join(root, path)));
     }

@@ -1,3 +1,4 @@
+import {raknadeKostnadsdelar} from "../../../pipeline/src/kostnadsdelar.ts";
 import { harOkantBelopp, kostnadsluckor } from "./kostnadsluckor.ts";
 import type { PromisePost, Party, Constants, ConstantItem } from "./data";
 
@@ -91,14 +92,21 @@ export function dedupeByGroup(promises: PromisePost[]): PromisePost[] {
   return out;
 }
 
+function kostnadsbidrag(rows: PromisePost[]): Map<string,number> {
+  const out=new Map<string,number>();
+  for(const sign of [1,-1]) for(const del of raknadeKostnadsdelar(rows.filter(sign===1?isCostType:isBesparing),p=>p.cost.period === "per_ar" ? 4 : 1))
+    out.set(del.id,(out.get(del.id)??0)+sign*del.base);
+  return out;
+}
+
 export function totalFlasket(promises: PromisePost[]): number {
   // isActive-filtret speglas i pipelinens chronicle.totalFlasket — krönikan
   // och startsidan får aldrig räkna olika (extern granskning 2026-07-16).
-  return dedupeByGroup(promises.filter(isActive)).filter((p) => isCostType(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+  return raknadeKostnadsdelar(dedupeByGroup(promises.filter(isActive)).filter(isCostType),p=>p.cost.period === "per_ar" ? 4 : 1).reduce((s, p) => s + p.base, 0);
 }
 
 export function totalBesparingar(promises: PromisePost[]): number {
-  return dedupeByGroup(promises.filter(isActive)).filter((p) => isBesparing(p)).reduce((s, p) => s + promiseTotalMsek(p), 0);
+  return raknadeKostnadsdelar(dedupeByGroup(promises.filter(isActive)).filter(isBesparing),p=>p.cost.period === "per_ar" ? 4 : 1).reduce((s, p) => s + p.base, 0);
 }
 
 /**
@@ -142,15 +150,24 @@ export function totalFlasketInterval(
   let base = 0;
   let sumVar = 0;
   let sumSd = 0;
-  for (const p of cost) {
-    const mult = p.cost.period === "per_ar" ? 4 : 1;
-    const lo = p.cost.msek_low * mult;
-    const ba = p.cost.msek_base * mult;
-    const hi = p.cost.msek_high * mult;
-    base += ba;
-    const v = Math.max(0, triangularVariance(lo, ba, hi));
-    sumVar += v;
-    sumSd += Math.sqrt(v);
+  // Delar av samma löfte delar osäkerhet. En gemensam del förbinder de
+  // berörda löftena; hela den sammanhängande familjen räknas försiktigt som
+  // korrelerad. Identiska pengar blir aldrig en extra oberoende observation.
+  const parts=raknadeKostnadsdelar(cost,p=>p.cost.period === "per_ar" ? 4 : 1);
+  const parent=new Map<string,string>();
+  const root=(id:string):string=>{const next=parent.get(id);return next && next!==id ? root(next) : id;};
+  for(const del of parts) for(const id of del.ids) {
+    const a=root(del.id),b=root(id); if(a!==b) parent.set(b,a);
+  }
+  const clusters=new Map<string,{low:number;base:number;high:number}>();
+  for(const del of parts) {
+    const key=root(del.id), row=clusters.get(key) ?? {low:0,base:0,high:0};
+    row.low+=del.low;row.base+=del.base;row.high+=del.high;clusters.set(key,row);
+  }
+  for(const p of [...clusters.values()].sort((a,b)=>a.base-b.base || a.low-b.low || a.high-b.high)) {
+    base+=p.base;
+    const v=Math.max(0,triangularVariance(p.low,p.base,p.high));
+    sumVar+=v;sumSd+=Math.sqrt(v);
   }
   const varTotal = (1 - rho) * sumVar + rho * sumSd * sumSd;
   const sd = Math.sqrt(Math.max(0, varTotal));
@@ -214,7 +231,8 @@ function partiPopulation(promises: PromisePost[], partyCode: string): PromisePos
 }
 
 export function partyTotalMsek(promises: PromisePost[], partyCode: string): number {
-  return partiPopulation(promises, partyCode).reduce((s, p) => s + promiseNetMsek(p), 0);
+  const rows=partiPopulation(promises, partyCode);
+  return totalFlasket(rows)-totalBesparingar(rows);
 }
 
 /**
@@ -307,10 +325,11 @@ export interface CategoryBreakdown {
 }
 
 export function categoryBreakdown(promises: PromisePost[]): CategoryBreakdown[] {
+  const bidrag=kostnadsbidrag(dedupeByGroup(promises.filter(isActive)));
   const map = new Map<string, { total: number; count: number }>();
   for (const p of dedupeByGroup(promises.filter(isActive))) {
     const entry = map.get(p.category) ?? { total: 0, count: 0 };
-    entry.total += promiseNetMsek(p);
+    entry.total += bidrag.get(p.id) ?? 0;
     entry.count += 1;
     map.set(p.category, entry);
   }
@@ -369,15 +388,12 @@ export function coalitionAggregates(
   // förut gruppens FÖRST påträffade medlem medan `dedupeByGroup` väljer den med
   // högst belopp, så koalitionsvyn och startsidan kunde visa olika tal för
   // samma grupp (2 720 miljoner kronor isär, mätt 2026-08-04).
-  let totalFlasketVal = 0;
-  let totalBesparingVal = 0;
+  const totalFlasketVal = totalFlasket(relevant);
+  const totalBesparingVal = totalBesparingar(relevant);
   let totalFinancingVal = 0;
   let promisesCount = 0;
 
   for (const p of dedupeByGroup(relevant)) {
-    const t = promiseTotalMsek(p);
-    if (isCostType(p)) totalFlasketVal += t;
-    else if (isBesparing(p)) totalBesparingVal += t;
     totalFinancingVal += financingClaimedMsek(p);
     promisesCount += 1;
   }
@@ -753,8 +769,8 @@ export function partyCoverage(promises: PromisePost[], code: string): PartyCover
   // Andelarna mäts mot samma tal som rubriken visar: gruppdedupade belopp med
   // tecken. Utan dedupen hade en grupp räknats flera gånger i nämnaren.
   const total = Math.abs(partyTotalMsek(promises, code));
-  const belopp = dedupeByGroup(egnaLoften)
-    .map((p) => Math.abs(promiseNetMsek(p)))
+  const belopp = [...kostnadsbidrag(dedupeByGroup(egnaLoften)).values()]
+    .map((belopp) => Math.abs(belopp))
     .sort((a, b) => b - a);
   const topp3 = (belopp[0] ?? 0) + (belopp[1] ?? 0) + (belopp[2] ?? 0);
 

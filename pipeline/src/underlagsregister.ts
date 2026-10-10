@@ -25,6 +25,13 @@ export function byggUnderlagsregister(data: PubliceratUnderlag): Underlagspost[]
     result.push({ slag, id, innehall, beroenden });
   };
   const grupper = new Map<string, string[]>();
+  const delar=new Map<string,string[]>();
+  const delnycklar=(p:Rad):string[]=>{
+    const h=(p.cost as Rad | undefined)?.harledning as {summadelar?: {gemensam_id?:string}[]} | undefined;
+    return (h?.summadelar ?? []).flatMap(d=>d.gemensam_id ? [text(d.gemensam_id,"gemensam kostnadsdel")] : []);
+  };
+  for(const p of data.loften) if(p.status!=="tillbakadragen") for(const key of delnycklar(p))
+    delar.set(key,[...(delar.get(key)??[]),text(p.id,"löftesidentitet")]);
   for (const party of data.partier ?? []) {
     add("parti", text(party.code, "partikod"), party, []);
   }
@@ -51,7 +58,9 @@ export function byggUnderlagsregister(data: PubliceratUnderlag): Underlagspost[]
         if (member !== id) beroenden.push(underlagsnyckel("lofte", member));
       }
     }
-    add("lofte", id, p, beroenden);
+    if(p.status!=="tillbakadragen") for(const key of delnycklar(p)) for(const peer of delar.get(key)??[])
+      if(peer!==id) beroenden.push(underlagsnyckel("lofte",peer));
+    add("lofte", id, p, [...new Set(beroenden)]);
   }
   for (const h of data.handlingar) add("handling", text(h.id, "handlingsidentitet"), h, []);
   for (const s of data.standpunkter) {
