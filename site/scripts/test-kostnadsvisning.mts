@@ -11,10 +11,23 @@ import { formatPromiseCost, kostnadsluckor, apiCost, formatPromiseNetCost } from
 import { promiseOgBelopp, summaryOgBelopp } from "./generate-og.mts";
 const posts = JSON.parse(readFileSync(new URL("../../data/promises.json", import.meta.url), "utf8")) as PromisePost[];
 
-test("verkligt bestånd behåller sin befintliga beloppspresentation", () => {
+test("verkligt bestånd visar kända belopp och kostnadsluckor utan falska nollor", () => {
   assert.ok(posts.length > 4000);
-  assert.equal(kostnadsluckor(posts).antal, 0);
+  const unknownIds = posts.filter(p => p.status !== "tillbakadragen" && p.cost.harledning?.belopp_okant).map(p => p.id);
+  assert.deepEqual(kostnadsluckor(posts), {antal: unknownIds.length, ids: unknownIds});
   for (const p of posts) {
+    if (p.cost.harledning?.belopp_okant) {
+      assert.equal(formatPromiseNetCost(p), "Kan inte fastställas");
+      assert.equal(formatPromiseCost(p), "Kan inte fastställas");
+      assert.equal(promiseOgBelopp(p), "OKÄNT");
+      const cost = apiCost(p);
+      assert.equal(cost.msek_base, null);
+      assert.equal(cost.msek_low, null);
+      assert.equal(cost.msek_high, null);
+      assert.equal(cost.belopp_status, "okant");
+      assert.equal(cost.belopp_skal, p.cost.harledning.belopp_okant.skal);
+      continue;
+    }
     assert.equal(promiseOgBelopp(p), formatPromiseCost(p).toUpperCase());
     assert.equal(formatPromiseNetCost(p), formatMsek(promiseNetMsek(p), p.cost.basis));
     assert.equal(apiCost(p).msek_base, p.cost.msek_base);
@@ -43,7 +56,7 @@ test("obestämbart belopp skiljs från metodnolla och indragna luckor", () => {
   assert.equal(summary.parties.find(x => x.code === "c")!.per_vote, null);
   assert.equal(typeof summary.parties.find(x => x.code === "s")!.per_vote, "number");
   assert.equal(summary.parties.find(x => x.code === "s")!.ofullstandig_summa, undefined);
-  assert.equal(buildSummary(posts, getParties(), getConstants(), []).ofullstandig_summa, undefined);
+  assert.equal(buildSummary(posts, getParties(), getConstants(), []).ofullstandig_summa, kostnadsluckor(posts).antal > 0 ? true : undefined);
   const zero: PromisePost = {...p, cost: {...p.cost, msek_base: 0, msek_low: 0, msek_high: 0}};
   assert.equal(formatPromiseNetCost(unknown), "Kan inte fastställas");
   assert.equal(promiseOgBelopp(unknown), "OKÄNT");

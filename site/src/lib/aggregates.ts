@@ -311,6 +311,11 @@ export function groupedPromises(promises: PromisePost[]): GroupedPromise[] {
  * partiets egen medlem. Partisidan listar alla löften men visar beloppet bara
  * på bäraren, så listan och rubrikens summa går ihop.
  */
+/** Radens bidrag till partiets summa, efter samma urval och gemensamma delar. */
+export function partyCostContributions(promises: PromisePost[], code: string): Map<string, number> {
+  return kostnadsbidrag(dedupeByGroup(promises.filter(p => isActive(p) && p.parties.includes(code))));
+}
+
 export function groupBearersForParty(promises: PromisePost[], code: string): Map<string, string> {
   const egna = promises.filter((p) => isActive(p) && p.parties.includes(code));
   const bearers = new Map<string, string>();

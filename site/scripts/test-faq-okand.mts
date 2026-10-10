@@ -42,7 +42,8 @@ test("Enbart okända belopp har källor men ingen nollprislapp eller rankning", 
 });
 
 test("Blandat urval varnar bara för berörda partier och rankar aldrig okänd post", () => {
-  const rows = run(original.map((p: any) => p.id === unknown.id ? unknown : p));
+  // Den isolerade frågan provar en ny lucka, oberoende av andra verkliga luckor.
+  const rows = run(original.filter((p: any) => !p.cost.harledning?.belopp_okant).map((p: any) => p.id === unknown.id ? unknown : p));
   for (const slug of ["kostnad-c", "kostnad-totalt"]) {
     const row = rows.find((r: any) => r.slug === slug);
     assert.equal(row.data.ofullstandig_summa, true);
