@@ -231,10 +231,18 @@ if (existsSync(startPage)) {
     }
     // Behåll exakt en post per grupp: representanten.
     const deduped = aktiva.filter((p: any) => !p.group_id || rep.get(p.group_id).id === p.id);
+    const countedParts = new Set<string>();
     const expectedFlasket = deduped.reduce((sum: number, p: any) => {
       if (p.cost.type !== "utgift" && p.cost.type !== "intäktsminskning") return sum;
       const mult = p.cost.period === "per_ar" ? 4 : 1;
-      return sum + p.cost.msek_base * mult;
+      // Kontrollera HTML mot källans delar, utan sajtens beräkningsfunktion.
+      const parts = p.cost.harledning?.summadelar ?? [{msek_base: p.cost.msek_base}];
+      for (const part of parts) {
+        if (part.gemensam_id && countedParts.has(part.gemensam_id)) continue;
+        if (part.gemensam_id) countedParts.add(part.gemensam_id);
+        sum += part.msek_base * mult;
+      }
+      return sum;
     }, 0);
     taxameterOk = val === expectedFlasket;
     if (!taxameterOk) {

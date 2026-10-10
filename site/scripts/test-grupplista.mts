@@ -16,6 +16,7 @@ import { readFileSync } from "node:fs";
 import {
   dedupeByGroup,
   groupBearersForParty,
+  partyCostContributions,
   groupedPromises,
   arPartiegenKalla,
   partyCoverage,
@@ -134,6 +135,20 @@ console.log("=== Grupperade listor ===");
   );
 }
 
+// Gemensamma delbelopp ska även fördelas i den synliga partisidan.
+{
+  const family = getPromises().filter(x => ["p-2026-0613", "p-2026-0926", "p-2026-3302"].includes(x.id));
+  const costs = partyCostContributions(family, "v");
+  check("Norrlands tre rader visar exakt 17 600 tillsammans", [...costs.values()].reduce((a,b)=>a+b,0) === 17600);
+  check("delbeloppen har deterministiska bärare", costs.get("p-2026-0613") === 12000 && costs.get("p-2026-0926") === 3600 && costs.get("p-2026-3302") === 2000);
+  check("urval utan annan bärare räknar hela återstående löftet", partyCostContributions(family.filter(x=>x.id==="p-2026-3302"), "v").get("p-2026-3302") === 4000);
+  check("listordningen ändrar inte delarnas bärare", JSON.stringify([...partyCostContributions([...family].reverse(), "v")]) === JSON.stringify([...costs]));
+  check("partifiltret hindrar andra partiers delbelopp", partyCostContributions(family, "s").size === 0);
+  check("indragna löften får inga listbidrag", partyCostContributions(family.map(x=>({...x,status:"tillbakadragen"})), "v").size === 0);
+  const saving = p("saving", 150, ["v"]); saving.cost.type = "besparing";
+  check("listbidrag behåller besparingens minustecken", partyCostContributions([saving], "v").get("saving") === -600);
+}
+
 // ── Mot verkliga datat ────────────────────────────────────────────────────
 const alla = getPromises();
 
@@ -152,10 +167,11 @@ const alla = getPromises();
   // visas bara på bäraren, alltså är summan av de visade beloppen = totalen.
   for (const kod of ["s", "m", "sd", "c", "v", "kd", "l", "mp"]) {
     const bearers = groupBearersForParty(alla, kod);
+    const contributions = partyCostContributions(alla, kod);
     const listade = alla.filter((x) => x.status !== "tillbakadragen" && x.parties.includes(kod));
     const visad = listade
       .filter((x) => !x.group_id || bearers.get(x.group_id) === x.id)
-      .reduce((s, x) => s + promiseNetMsek(x), 0);
+      .reduce((s, x) => s + (contributions.get(x.id) ?? 0), 0);
     const rubrik = partyTotalMsek(alla, kod);
     check(
       `${kod}: listans visade belopp summerar till rubrikens total`,
@@ -198,6 +214,7 @@ const alla = getPromises();
   );
 
   const parti = läs("../src/pages/parti/[kod].astro");
+  check("partisidan visar räknat bidrag och hela löftets belopp separat", /partyCostContributions\(selected/.test(parti) && /formatMsek\(bidrag/.test(parti) && /Hela löftet/.test(parti));
   check(
     "partisidan räknar fram vilka löften som bär beloppet",
     /groupBearersForParty\(/.test(parti),

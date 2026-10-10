@@ -10,7 +10,7 @@ import Dela from "../../components/Dela.astro";
 import Loftesfilter from "../../components/Loftesfilter.astro";
 import { getPromises, getParties, getConstants } from "../../lib/data";
 import { formatMsek, formatMsekShort } from "../../lib/calc";
-import { partyTotalMsek, getPromisesForParty, totalFlasket, categoryBreakdown, flasketPerRost, promiseNetMsek, groupBearersForParty, partyCoverage } from "../../lib/aggregates";
+import { partyTotalMsek, getPromisesForParty, totalFlasket, categoryBreakdown, flasketPerRost, promiseNetMsek, groupBearersForParty, partyCostContributions, partyCoverage } from "../../lib/aggregates";
 import { STANDARD_LOFTESFILTER, filterNyckel, loftesvyer, valdagEtikett, regeringEtikett } from "../../lib/loftesfilter";
 import { getIssuesFile, getStances, cellFor, emptyCellText, statementById, POSITION_LABEL } from "../../lib/stances";
 
@@ -27,10 +27,11 @@ const promiseById = new Map(promises.map((p) => [p.id, p]));
 const views = loftesvyer(promises).map(({ key, keys, selected }) => {
   const partyPromises = getPromisesForParty(selected, kod!);
   const bearers = groupBearersForParty(selected, kod!);
+  const contributions = partyCostContributions(selected, kod!);
   const promiseRows = partyPromises.map((p) => {
     const bearerId = p.group_id ? bearers.get(p.group_id) : undefined;
     const bearer = bearerId && bearerId !== p.id ? promiseById.get(bearerId) : undefined;
-    return { p, bearer, underlag: p.cost.basis === "parti" ? "parti" : "utlovat" };
+    return { p, bearer, bidrag: contributions.get(p.id) ?? 0, underlag: p.cost.basis === "parti" ? "parti" : "utlovat" };
   });
   const tackning = partyCoverage(selected, kod!);
   return {
@@ -115,7 +116,7 @@ const jsonLd = [{
         <section class="sektion">
           <h2>{party.name}:s löften</h2>
           <div class="datavy datavy--scroll"><table><thead><tr><th class="radnr">#</th><th>Löfte</th><th>Tidpunkt</th><th>Kategori</th><th>Typ</th><th>Beloppsunderlag</th><th class="num">Kostnad, minus för besparing</th><th>Status</th></tr></thead><tbody>
-            {view.promiseRows.map(({ p, bearer, underlag }, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td><td>{valdagEtikett(p)}<br /><small>{regeringEtikett(p)}</small></td><td>{p.category}</td><td>{p.loftestyp === "reform" ? "Reform" : "Inriktning/policy"}</td><td>{underlag === "parti" ? "Partiet" : "Utlovat.se"}</td><td class:list={["num", "belopp", { partibelopp: underlag === "parti" }]}>{harOkantBelopp(p) ? formatPromiseNetCost(p) : bearer ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span> : formatPromiseNetCost(p)}</td><td>{p.status}</td></tr>)}
+            {view.promiseRows.map(({ p, bearer, bidrag, underlag }, i) => <tr><td class="radnr">{i + 1}</td><td><a href={`/lofte/${p.id}/${p.slug}`}>{p.title}</a></td><td>{valdagEtikett(p)}<br /><small>{regeringEtikett(p)}</small></td><td>{p.category}</td><td>{p.loftestyp === "reform" ? "Reform" : "Inriktning/policy"}</td><td>{underlag === "parti" ? "Partiet" : "Utlovat.se"}</td><td class:list={["num", "belopp", { partibelopp: underlag === "parti" }]}>{harOkantBelopp(p) ? formatPromiseNetCost(p) : bearer ? <span class="raknas">räknas en gång, i <a href={`/lofte/${bearer.id}/${bearer.slug}`}>{bearer.title}</a></span> : bidrag !== promiseNetMsek(p) ? <>{formatMsek(bidrag, p.cost.basis)}<br /><small>Bidrag till summan. Hela löftet: {formatPromiseNetCost(p)}. Gemensamma delbelopp räknas en gång.</small></> : formatPromiseNetCost(p)}</td><td>{p.status}</td></tr>)}
           </tbody></table></div>
         </section>
       </div>
