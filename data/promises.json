@@ -146360,15 +146360,48 @@
     "category": "infrastruktur",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 265500,
-      "msek_base": 354000,
-      "msek_high": 477900,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
-      "calculation": "Partiet anger själv beloppet i källtexten: 354 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 265 500–477 900 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten.",
-      "confidence": 0.5
+      "period": "per_ar",
+      "msek_low": 29500,
+      "msek_base": 29500,
+      "msek_high": 29500,
+      "basis": "granskare",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/regeringens-skrivelse/nationell-planering-for-transportinfrastrukturen_hd03259/html/",
+      "method_note": "Jämförelsekostnad enligt användarens val att fördela planramen jämnt över 2026–2037. Beloppet ingår redan i den beslutade nationella planen och är inte nya pengar utöver planen. Inte faktisk årsbudget eller utfall.",
+      "calculation": "Moderaternas planbelopp är 354 mdkr för väg i den nationella planen 2026–2037, uttryckt i 2025 års priser. Med användarens valda jämförelsemetod fördelas 354000 mnkr jämnt över 12 planår: 354000/12 = 29500 mnkr per år. Fyra överlappande jämförelseår 2027–2030 ger 29500 × 4 = 118000 mnkr. Detta är planandelens jämförelsekostnad. Den är redan en del av den beslutade nationella planen och ska inte adderas som nya pengar utöver den. Årsprofilen är ett öppet beräkningsantagande, inte planens faktiska årsanslag eller utfall. Eventuellt innehållsöverlapp med andra löften visas separat; ingen ogrundad avdragsandel görs.",
+      "confidence": 0.5,
+      "harledning": {
+        "version": "harledning/1",
+        "led": [
+          {
+            "roll": "partiets-uppgift",
+            "text": "Moderaternas källa anger 354 miljarder kronor till vägunderhåll under planperioden 2026–2037. Beloppet avser den beslutade planen, inte ett separat tillskott.",
+            "tal": 354000,
+            "enhet": "mnkr",
+            "ar": 2026,
+            "kalla": "https://moderaterna.se/var-politik/trafik-och-infrastruktur/",
+            "kalla_ref": "originalkalla",
+            "ingar_i_summan": false
+          },
+          {
+            "roll": "antagande",
+            "text": "Användarens valda metod: jämn fördelning av 354000 mnkr över planens 12 år, 2026–2037. Fyra överlappande jämförelseår är 2027–2030. Planandelen är redan beslutad och inte ett nytt tillskott utöver planen.",
+            "ingar_i_summan": false
+          },
+          {
+            "roll": "egen-berakning",
+            "text": "354000/12 = 29500 mnkr per år; 29500 × 4 jämförelseår (2027–2030) = 118000 mnkr. Beloppet används som planandelens jämförelsekostnad och inte som nya pengar utöver den beslutade planen.",
+            "tal": 29500,
+            "enhet": "mnkr per jämförelseår",
+            "ar": 2027,
+            "ingar_i_summan": true
+          }
+        ],
+        "arsprofil": {
+          "status": "okand",
+          "skal": "Faktiska anslag och utfall per år är inte belagda. Den jämna årsprofilen i jämförelsen är användarens valda öppna beräkningsantagande."
+        },
+        "summeras": true
+      }
     },
     "financing_claimed": {
       "described": false,
@@ -146378,7 +146411,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-10-10",
+        "commit": "0000000",
+        "change": "Ny privat beredning efter användarens metodbeslut 2026-10-10: visa planandelen som jämförelsekostnad med synligt antagande, och skilj den uttryckligen från nya pengar utöver redan beslutad plan. Detta är rekommendation för granskning, inte användarens sakattest."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
@@ -146504,15 +146543,48 @@
     "category": "infrastruktur",
     "cost": {
       "type": "utgift",
-      "period": "engang",
-      "msek_low": 157500,
-      "msek_base": 210000,
-      "msek_high": 283500,
-      "basis": "parti",
-      "basis_url": null,
-      "method_note": "Belopp angivet i källtext; källan anger ingen takt — perioden måste avgöras av en människa.",
+      "period": "per_ar",
+      "msek_low": 17500,
+      "msek_base": 17500,
+      "msek_high": 17500,
+      "basis": "granskare",
+      "basis_url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/regeringens-skrivelse/nationell-planering-for-transportinfrastrukturen_hd03259/html/",
+      "method_note": "Jämförelsekostnad enligt användarens val att fördela planramen jämnt över 2026–2037. Beloppet ingår redan i den beslutade nationella planen och är inte nya pengar utöver planen. Inte faktisk årsbudget eller utfall.",
       "confidence": 0.5,
-      "calculation": "Partiet anger själv beloppet i källtexten: 210 000 miljoner kronor. Den siffran är partiets och byts inte ut mot en egen. Spannet är vårt, inte partiets: 157 500–283 500 miljoner kronor, en fjärdedel under och drygt en tredjedel över partiets siffra. Det står för att källtexten anger en nivå utan att skriva ut hur den fasas in eller fördelas över åren. Källan säger inte om beloppet återkommer varje år eller gäller en gång. Takten är därför inte satt av oss, utan lämnad till den som granskar posten."
+      "calculation": "Moderaternas planbelopp är 210 mdkr för järnväg i den nationella planen 2026–2037, uttryckt i 2025 års priser. Med användarens valda jämförelsemetod fördelas 210000 mnkr jämnt över 12 planår: 210000/12 = 17500 mnkr per år. Fyra överlappande jämförelseår 2027–2030 ger 17500 × 4 = 70000 mnkr. Detta är planandelens jämförelsekostnad. Den är redan en del av den beslutade nationella planen och ska inte adderas som nya pengar utöver den. Årsprofilen är ett öppet beräkningsantagande, inte planens faktiska årsanslag eller utfall. Eventuellt innehållsöverlapp med andra löften visas separat; ingen ogrundad avdragsandel görs.",
+      "harledning": {
+        "version": "harledning/1",
+        "led": [
+          {
+            "roll": "partiets-uppgift",
+            "text": "Moderaternas källa anger 210 miljarder kronor till järnvägsunderhåll under planperioden 2026–2037. Beloppet avser den beslutade planen, inte ett separat tillskott.",
+            "tal": 210000,
+            "enhet": "mnkr",
+            "ar": 2026,
+            "kalla": "https://moderaterna.se/var-politik/trafik-och-infrastruktur/",
+            "kalla_ref": "originalkalla",
+            "ingar_i_summan": false
+          },
+          {
+            "roll": "antagande",
+            "text": "Användarens valda metod: jämn fördelning av 210000 mnkr över planens 12 år, 2026–2037. Fyra överlappande jämförelseår är 2027–2030. Planandelen är redan beslutad och inte ett nytt tillskott utöver planen.",
+            "ingar_i_summan": false
+          },
+          {
+            "roll": "egen-berakning",
+            "text": "210000/12 = 17500 mnkr per år; 17500 × 4 jämförelseår (2027–2030) = 70000 mnkr. Beloppet används som planandelens jämförelsekostnad och inte som nya pengar utöver den beslutade planen.",
+            "tal": 17500,
+            "enhet": "mnkr per jämförelseår",
+            "ar": 2027,
+            "ingar_i_summan": true
+          }
+        ],
+        "arsprofil": {
+          "status": "okand",
+          "skal": "Faktiska anslag och utfall per år är inte belagda. Den jämna årsprofilen i jämförelsen är användarens valda öppna beräkningsantagande."
+        },
+        "summeras": true
+      }
     },
     "financing_claimed": {
       "described": false,
@@ -146522,7 +146594,13 @@
     "comparisons": [],
     "quip": null,
     "status": "aktiv",
-    "history": [],
+    "history": [
+      {
+        "date": "2026-10-10",
+        "commit": "0000000",
+        "change": "Ny privat beredning efter användarens metodbeslut 2026-10-10: visa planandelen som jämförelsekostnad med synligt antagande, och skilj den uttryckligen från nya pengar utöver redan beslutad plan. Detta är rekommendation för granskning, inte användarens sakattest."
+      }
+    ],
     "extraction": {
       "model": "review",
       "verified_by": "owner",
