@@ -560,6 +560,10 @@
                       "minLength": 1,
                       "pattern": "\\S"
                     },
+                    "period": {
+                      "enum": ["engang"],
+                      "description": "The amount is a fixed total for the time window named in text, even when the promise's full cost is unknown."
+                    },
                     "msek_low": {
                       "type": "number",
                       "minimum": 0
