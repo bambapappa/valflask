@@ -35,6 +35,16 @@ test('verkliga fem poster: tre aktiva 20,8 till 17,6; egna belopp och indragning
  assert.deepEqual(next.filter((p:any)=>p.status==='tillbakadragen'),family.filter((p:any)=>p.status==='tillbakadragen'));
  assert.deepEqual(next.filter((p:any)=>p.status==='aktiv').map(promiseTotalMsek).sort((a:number,b:number)=>a-b),[4000,4800,12000]);
 });
+
+
+test('okänd helkostnad kan räknas med en gemensam känd del bara en gång',()=>{
+ const part={text:'Gemensam planandel 2027–2028; full kostnad per löfte okänd.',period:'engang',msek_low:11000,msek_base:11000,msek_high:11000,kalla_ref:'mp-budget-2025-26-3770',gemensam_id:'mp-skyddsvard-natur-2027-2028'};
+ const unknown={version:'harledning/1',led:[],arsprofil:{status:'okand',skal:'Motionen anger ingen full årsprofil för jämförelseperioden.'},belopp_okant:{skal:'Känd gemensam planandel saknar fördelning per löfte och belägg för 2029–2030.'},summadelar:[part]};
+ const rows=['p-2026-2263','p-2026-3304'].map(id=>({id,status:'aktiv',cost:{type:'utgift',period:'per_ar',msek_low:0,msek_base:0,msek_high:0,harledning:structuredClone(unknown)}})) as any[];
+ assert.equal(totalFlasket(rows),11000);
+ assert.equal(totalFlasket([...rows].reverse()),11000);
+ assert.ok(rows.every(p=>p.cost.msek_low===0&&p.cost.msek_base===0&&p.cost.msek_high===0));
+});
 test('delmängder avräknar bara gemensamma pengar som faktiskt finns i urvalet',()=>{
  const next=prepared().filter((p:any)=>p.status==='aktiv');
  const [women,regional,rural]=['p-2026-0613','p-2026-0926','p-2026-3302'].map(id=>next.find((p:any)=>p.id===id));

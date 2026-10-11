@@ -3047,3 +3047,15 @@ Utlovat.se:s beräkningar och "Båda" fortsätter att kräva den befintliga
 kvitteringen. De två diskreta valen presenteras som segmenterade beslutsrader,
 inte som en slider: en slider skulle felaktigt antyda en skala mellan kategorier
 som inte går att blanda gradvis.
+
+## 2026-10-11 — Känd delkostnad med okänd helkostnad
+
+**Gäller:** Fläskvågen. Det publicerade kostnadsbeståndet kontrolleras mot samma summeringsregler; andra vågar och deras poster ändras inte.
+
+**Beslut:** när `belopp_okant` finns ligger löftets tre beloppsfält kvar som nollplatshållare. `summadelar` får samtidigt innehålla separata, källbundna kända delar. En del med `gemensam_id` räknas en gång i summan även om den förekommer på flera löften. Delens valfria `period: "engang"` betyder en fast totalsumma för tidsfönstret som anges i deltexten; den multipliceras inte som en årlig kostnad. Helkostnaden visas fortfarande som okänd.
+
+**Motiv:** naturvårdsmotionen ger cirka 11 mdkr gemensamt för 2027–2028 men varken belopp per löfte eller kostnad för 2029–2030. Den kända delen ska påverka jämförelsesumman en gång utan att bli helkostnad för något av löftena.
+
+**Förkastat alternativ:** lägga hela delbeloppet på ett löfte eller multiplicera det över fyra år. Båda alternativen tillskriver beloppet fel omfattning.
+
+**Genomfört:** schemat och kostnadsdelarnas summering stöder den avgränsade delperioden; regressionstestet använder två okända helkostnader med samma kända del och kräver att den räknas till 11 000 mnkr exakt en gång.
