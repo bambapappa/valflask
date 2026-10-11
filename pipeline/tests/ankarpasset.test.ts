@@ -67,6 +67,16 @@ test("en post som inte bryter mot ankarkravet hör inte till passet", () => {
   assert.match(provaRad(rad(), m).fel.join(" "), /bryter inte mot ankarkravet/u);
 });
 
+test("en varning om innehållsöverlapp är inte ett lånat kostnadsankare", () => {
+  const p = lofte("p-2026-2923", {
+    cost: {
+      calculation: "Planandelen visas som jämförelse. Eventuellt innehållsöverlapp med andra löften visas separat; ingen ogrundad avdragsandel görs.",
+      msek_base: 118_000,
+    },
+  });
+  assert.deepEqual(ankarbrott([p]), []);
+});
+
 test("«egen» måste ta bort lånet, inte skriva om meningen runt det", () => {
   const m = karta(lofte("p-2026-0001"));
   const kvar = provaRad(rad({ utfall: "egen", varde: "Beloppet sätts där jämförbara löften ligger, cirka 15 msek per år." }), m);

@@ -54,7 +54,11 @@
 
 /** Uträkningen säger att beloppet kommer från ett annat löfte. */
 export const LANAR_BELOPP =
-  /jämförbar\w*\s+(?:löfte|löften|investering|reform|post|åtgärd|satsning|strategiuppdrag)|liknande löfte|motsvarande löfte|annat löfte|andra löften|jämförbara löften/iu;
+  /jämförbar\w*\s+(?:löfte|löften|investering|reform|post|åtgärd|satsning|strategiuppdrag)|liknande löfte|motsvarande löfte|annat löfte|andra löften/iu;
+
+/** En saköverlappningsvarning säger inte att kostnadsbeloppet har lånats. */
+const OVARLAPP_UTAN_LAN =
+  /(?:eventuellt\s+)?innehållsöverlapp med andra löften visas separat; ingen ogrundad avdragsandel görs/giu;
 
 export interface AnkarPost {
   id: string;
@@ -77,7 +81,8 @@ export function barBelopp(post: AnkarPost): boolean {
 
 /** Sant om posten lånar ett belopp utan en spårbar koppling till källan. */
 export function lanarUtanSparbartAnkare(post: AnkarPost): boolean {
-  if (!LANAR_BELOPP.test(post.cost.calculation ?? "")) return false;
+  const kalkyl = (post.cost.calculation ?? "").replace(OVARLAPP_UTAN_LAN, "");
+  if (!LANAR_BELOPP.test(kalkyl)) return false;
   // En nolla lånar ingenting. Se docstringen ovan.
   if (!barBelopp(post)) return false;
   if (post.cost.anchor_ids && post.cost.anchor_ids.length > 0) return false;
