@@ -39,7 +39,7 @@ jobs:
         id: app-token
         # Efter sammanslagningen pushar den här körningen till valflasks main,
         # där direktpush kräver botens token (samma väg som pipeline.yml).
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510  # v3.3.0
         with:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_APP_KEY }}
@@ -79,7 +79,7 @@ jobs:
         # skrivit in just den i git-configen. Samma fälla kostade
         # nyckelordsbygget en hel körning 2026-08-01.
         if: ${{ always() }}
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510  # v3.3.0
         with:
           app-id: ${{ secrets.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_APP_KEY }}
